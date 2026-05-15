@@ -1013,14 +1013,15 @@ Current boundary: legacy `(clock name)` actors and reusable-library
 clock/reset bindings remain one-clock-domain scheduled artifacts. The parser
 now accepts actor-scoped `(clock-domains ...)` metadata and the scheduler can
 partition accepted actors by domain. Public multi-domain `lower(...)` now
-emits domain-specific scheduled `.fsm` artifacts, while `report(...)`,
-generated top wiring, and CDC artifacts remain future leaves. Different clock
-signal names, library clock/reset bindings, and generated-top system-port
-links are not CDC semantics by themselves.
+emits domain-specific scheduled `.fsm` artifacts plus generated top wiring for
+domain modules and explicit CDC child interfaces, while `report(...)` and
+generated HDL for the multi-domain top/CDC path remain future leaves.
+Different clock signal names, library clock/reset bindings, and generated-top
+system-port links are not CDC semantics by themselves.
 
 The future feature must still define at least:
 
-- generated top wiring and explicit CDC artifacts;
+- concrete generated HDL for the explicit CDC child implementation;
 - what bounded schedule-report metadata and fixtures prove the behavior.
 
 Until that contract ships, direct same-cycle reads or writes across domains
@@ -1055,26 +1056,25 @@ owning domain clock; asynchronous resets are direct external reset pins, not
 DT-generated logic. Reusing one reset signal across domains is only legal when
 kind and polarity match exactly, and it is reset fanout rather than data CDC.
 
-Crossing decision: the first legal future crossing primitive is an
-acknowledged single-bit event channel declared in actor-scoped
+Crossing decision: the first legal crossing primitive is an acknowledged
+single-bit event channel declared in actor-scoped
 `(crossings ...)` source. It has a source-domain event request, generated
-source-domain `ready`, and generated destination-domain one-cycle pulse. It
-owns its request toggle, destination synchronizer, acknowledgement path, and
-source ready logic. It carries no payload and promises no same-cycle timing.
-Direct cross-domain reads, writes, triggers, activations, parent/child
-bindings, and reset assertion/deassertion events remain fail-closed unless a
-shipped primitive or protocol actor owns that path. Payload handshakes and
-dual-clock FIFO-like actors remain future backlog.
+source-domain `ready`, and generated destination-domain one-cycle pulse.
+Lowering represents it as an explicit CDC child interface in the generated top;
+concrete synchronizer RTL remains future generated-HDL work. It carries no
+payload and promises no same-cycle timing. Direct cross-domain reads, writes,
+triggers, activations, parent/child bindings, and reset assertion/deassertion
+events remain fail-closed unless a shipped primitive or protocol actor owns
+that path. Payload handshakes and dual-clock FIFO-like actors remain future
+backlog.
 
 Lowering decision: current multi-domain lowering validates a domain-local
 partition, rejects unowned crossings, and emits normal single-clock scheduled
 `.fsm` artifacts named `<actor>__domain_<domain>.fsm`. The generated top owns
-only inter-module wiring and remains future work. Acknowledged event crossings
-emit explicit generated CDC artifacts with source and destination
-clocks/resets, request toggle, destination synchronizer, destination pulse,
-acknowledgement synchronizer, and source ready logic. Normal scheduled `.fsm`
-modules are not silently widened into multi-clock modules. Bounded
-schedule-report metadata and fixtures remain future work.
+only inter-module wiring and now instantiates explicit CDC child interfaces for
+accepted event crossings. Normal scheduled `.fsm` modules are not silently
+widened into multi-clock modules. Bounded schedule-report metadata, concrete
+CDC child HDL, and fixtures remain future work.
 
 ## Backends And Validation
 

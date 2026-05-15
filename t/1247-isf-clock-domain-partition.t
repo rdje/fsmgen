@@ -84,8 +84,8 @@ ISF
     my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
     is_deeply(
         sorted([keys %{$lowered->{files}}]),
-        [qw(clock_domain_partition__domain_bus.fsm clock_domain_partition__domain_core.fsm)],
-        'multi-domain lower emits one scheduled .fsm artifact per declared domain',
+        [qw(clock_domain_partition__domain_bus.fsm clock_domain_partition__domain_core.fsm clock_domain_partition_top.fsm)],
+        'multi-domain lower emits one scheduled .fsm artifact per declared domain plus the generated top',
     );
     my $core_fsm = $lowered->{files}{'clock_domain_partition__domain_core.fsm'};
     like($core_fsm, qr/\A\(\?fsm:clock_domain_partition__domain_core\b/, 'core artifact uses the domain module name');
@@ -103,6 +103,12 @@ ISF
     like($bus_fsm, qr/\(bus_evt 1\)/, 'bus artifact contains the bus input');
     like($bus_fsm, qr/\(bus_reg 1\)/, 'bus artifact contains bus-owned storage');
     unlike($bus_fsm, qr/\bclk\b|\bstart\b|\bcore_done\b|\bcore_reg\b|\bh0_start\b/, 'bus artifact excludes core-domain signals and helpers');
+    my $top_fsm = $lowered->{files}{'clock_domain_partition_top.fsm'};
+    like($top_fsm, qr/\A\(\?top:clock_domain_partition_top\b/, 'multi-domain lower emits a generated top artifact');
+    like($top_fsm, qr/\(\?fsmc:core clock_domain_partition__domain_core\)/, 'generated top instantiates the core domain module');
+    like($top_fsm, qr/\(\?fsmc:bus clock_domain_partition__domain_bus\)/, 'generated top instantiates the bus domain module');
+    like($top_fsm, qr{/clk/core\.clk/}, 'generated top wires the core clock');
+    like($top_fsm, qr{/bus_clk/bus\.bus_clk/}, 'generated top wires the bus clock');
 
     assert_report_rejected(
         $source,
@@ -161,13 +167,65 @@ ISF
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', $path],
     );
-    ok(!$success, 'multi-domain CLI HDL generation fails until generated top emission ships');
+    ok(!$success, 'multi-domain CLI HDL generation fails until HDL support for generated top artifacts ships');
     is(join('', @{$stdout_buf || []}), '', 'multi-domain CLI boundary keeps stdout empty');
     like(
         join('', @{$stderr_buf || []}),
-        qr/generated top\/HDL entry emission is not implemented yet/,
-        'multi-domain CLI diagnostic points at the unshipped generated top entry',
+        qr/generated HDL for multi-domain top\/CDC artifacts is not implemented yet/,
+        'multi-domain CLI diagnostic points at the unshipped generated HDL path',
     );
+};
+
+subtest 'acknowledged event crossings add domain endpoints and explicit top artifact wiring' => sub {
+    my $source = <<'ISF';
+(actor event_crossing_top
+  (clock-domains
+    (domain bus  (clock bus_clk) (reset bus_rst_n) :default)
+    (domain core (clock clk)     (reset rst_n)))
+  (crossings
+    (event rx_done
+      (from bus rx_req)
+      (to core rx_pulse)
+      (ready rx_ready)))
+  (interface
+    (input bus_start (domain bus))
+    (output core_done (domain core)))
+  (transaction bus_tx
+    (domain bus)
+    (on bus_start)
+    (await rx_ready)
+    (complete rx_req))
+  (transaction core_tx
+    (domain core)
+    (on rx_pulse)
+    (complete core_done)))
+ISF
+
+    my $actor = parse_source($source, 'event-crossing-top');
+    is($actor->{crossings}[0]{ready}{domain}, 'bus', 'parser assigns crossing ready to the source domain');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    is_deeply(
+        sorted([keys %{$lowered->{files}}]),
+        [qw(event_crossing_top__domain_bus.fsm event_crossing_top__domain_core.fsm event_crossing_top_top.fsm)],
+        'event crossing lower emits domain artifacts and one generated top artifact',
+    );
+
+    my $bus_fsm = $lowered->{files}{'event_crossing_top__domain_bus.fsm'};
+    like($bus_fsm, qr/\(rx_ready 1\)/, 'source domain artifact has the crossing ready input');
+    like($bus_fsm, qr/\(rx_req 1\)/, 'source domain artifact has the crossing request output');
+    unlike($bus_fsm, qr/\brx_pulse\b/, 'source domain artifact excludes the destination pulse');
+
+    my $core_fsm = $lowered->{files}{'event_crossing_top__domain_core.fsm'};
+    like($core_fsm, qr/\(rx_pulse 1\)/, 'destination domain artifact has the crossing pulse input');
+    unlike($core_fsm, qr/\brx_req\b|\brx_ready\b/, 'destination domain artifact excludes source crossing endpoints');
+
+    my $top_fsm = $lowered->{files}{'event_crossing_top_top.fsm'};
+    like($top_fsm, qr/\(\?rtl:rx_done_cdc event_crossing_top__cdc_event_rx_done\)/, 'top names an explicit CDC RTL child');
+    like($top_fsm, qr{/bus\.rx_req/rx_done_cdc\.request/}, 'top wires the source request into the CDC child');
+    like($top_fsm, qr{/rx_done_cdc\.ready/bus\.rx_ready/}, 'top wires source ready back to the source domain');
+    like($top_fsm, qr{/rx_done_cdc\.pulse/core\.rx_pulse/}, 'top wires destination pulse into the destination domain');
+    like($top_fsm, qr/\(\?rtlif:event_crossing_top__cdc_event_rx_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the CDC child interface artifact');
 };
 
 subtest 'direct unowned cross-domain references fail closed before emission' => sub {

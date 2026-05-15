@@ -45,10 +45,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(clock-domains ...)` metadata, partitions accepted actors by domain in
   `LoweringIR`, and rejects direct unowned cross-domain references before
   emission. `ISF-CLOCK-DOMAINS.5.3` now emits one domain-local scheduled
-  `.fsm` artifact per declared domain from public `lower(...)`, while
-  `report(...)`, generated top wiring, and CDC artifacts remain blocked. The
-  current frontier is `ISF-CLOCK-DOMAINS.5.4`, the generated multi-domain top
-  and event-crossing artifact.
+  `.fsm` artifact per declared domain from public `lower(...)`.
+  `ISF-CLOCK-DOMAINS.5.4` now emits the generated multi-domain top and
+  explicit CDC child-interface artifacts for accepted event crossings, while
+  `report(...)` and generated HDL for the multi-domain top/CDC path remain
+  blocked. The current frontier is `ISF-CLOCK-DOMAINS.6`, diagnostics,
+  reports, and fixtures for multi-clock behavior.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -162,13 +164,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   direct unowned crossings remain fail-closed. Domain resets are owned inside
   domain entries; synchronous resets are sampled on the owning domain clock,
   and asynchronous resets are direct external reset pins, not DT-generated
-  logic. The first planned crossing primitive is an acknowledged single-bit
+  logic. The first accepted crossing primitive is an acknowledged single-bit
   event channel with generated source-domain `ready`, generated
   destination-domain pulse, one outstanding event, and no payload. Current
   lowering validates the domain partition, rejects unowned crossings, and
-  emits one normal single-clock `.fsm` artifact per domain. Future leaves move
-  multi-domain top wiring plus CDC primitive logic into explicit generated
-  artifacts and add bounded report projection.
+  emits one normal single-clock `.fsm` artifact per domain plus generated
+  top wiring with explicit CDC child interfaces. Future leaves add concrete
+  CDC child HDL, bounded report projection, and fixtures.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width

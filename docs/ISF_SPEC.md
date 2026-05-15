@@ -466,8 +466,10 @@ Multi-clock boundary:
   behavior.
 - ISF now accepts parser metadata for named domains and builds an internal
   scheduler partition. Public `lower(...)` emits one domain scheduled `.fsm`
-  artifact per declared domain, but generated multi-domain top wiring, CDC
-  artifacts, and schedule-report projection remain unshipped.
+  artifact per declared domain plus a generated multi-domain top that wires
+  explicit CDC child-interface artifacts for accepted event crossings.
+  Schedule-report projection and generated HDL for the multi-domain top/CDC
+  path remain unshipped.
 - Direct reads or writes between domains are not accepted by implication. A
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
@@ -536,8 +538,9 @@ Selected source model and current implementation status:
   existing single-clock scheduled `.fsm` path. Multi-domain sources build a
   validated internal domain partition, then public `lower(...)` returns
   domain-specific scheduled `.fsm` artifacts named
-  `<actor>__domain_<domain>.fsm`.
-- Report metadata, generated top wiring, and CDC artifact emission remain
+  `<actor>__domain_<domain>.fsm` and a generated `<actor>_top.fsm` top
+  artifact.
+- Report metadata and generated HDL for the multi-domain top/CDC path remain
   future leaves of the `ISF-CLOCK-DOMAINS` task tree. Reset ownership and the
   first legal crossing primitive are selected below.
 
@@ -599,8 +602,10 @@ Selected future crossing primitive, not implemented yet:
 - The destination pulse occurs after synchronizer/acknowledgement latency. No
   same-cycle relationship is promised between source request and destination
   pulse.
-- The primitive owns its generated request toggle, destination synchronizer,
-  destination pulse, acknowledgement synchronizer, and source ready logic.
+- The generated top represents the primitive as an explicit CDC child
+  interface with source clock/reset, destination clock/reset, request, ready,
+  and pulse ports. Concrete synchronizer RTL remains future generated-HDL
+  work.
 - Payload transfer, multi-bit data, level sampling, reset crossing, and
   FIFO-like storage remain outside this first primitive.
 - Direct cross-domain reads, writes, triggers, activations, parent/child
@@ -623,18 +628,17 @@ Selected lowering artifact strategy and current implementation status:
   generated event primitive endpoints for that domain.
 - No domain `.fsm` directly references another domain's local state, generated
   helper, transaction, rule, or port.
-- A generated top artifact named `<actor>_top.fsm`, or a successor top artifact
-  if the existing `.fsm` composition-top form cannot express the required
-  system ports, owns the inter-module wiring. It must not hide clocked
-  behavior in top-level DT logic.
-- The acknowledged event primitive emits an explicit generated CDC artifact
-  with source clock/reset, destination clock/reset, request toggle,
-  destination synchronizer, destination pulse, acknowledgement synchronizer,
-  and source ready logic. It is not an ordinary single-domain `.fsm` state
-  chain.
+- A generated top artifact named `<actor>_top.fsm` owns inter-module wiring.
+  It instantiates domain modules and explicit CDC child interfaces through
+  `?rtl`/`?rtlif` entries. It must not hide clocked behavior in top-level DT
+  logic.
+- The acknowledged event primitive emits an explicit generated CDC child
+  interface with source clock/reset, destination clock/reset, request, ready,
+  and pulse ports. It is not an ordinary single-domain `.fsm` state chain.
 - Schedule-report metadata for domain artifacts, generated top wiring, and
-  crossing artifacts remains future work. Until that report projection ships,
-  public `report(...)` rejects multi-domain actors after partition validation.
+  crossing artifacts, plus generated HDL for the CDC child implementation,
+  remains future work. Until that report projection ships, public
+  `report(...)` rejects multi-domain actors after partition validation.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.

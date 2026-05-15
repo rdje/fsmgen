@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF multi-domain top artifacts shipped
+- Completed `ISF-CLOCK-DOMAINS.5.4` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- The parser now accepts actor-scoped `(crossings ...)` event declarations for
+  the selected acknowledged single-bit event primitive.
+- Public multi-domain `FSM::Scheduler::ISF->lower(...)` now emits
+  `<actor>_top.fsm`, instantiating each domain module and explicit CDC child
+  interfaces through generated `?rtl`/`?rtlif` entries.
+- Domain artifacts gain generated crossing endpoint ports only for their own
+  source or destination domain.
+- Public `report(...)` and generated HDL for the multi-domain top/CDC path
+  remain blocked until `ISF-CLOCK-DOMAINS.6`.
+- The current frontier is `ISF-CLOCK-DOMAINS.6`, diagnostics, reports, and
+  fixtures for multi-clock behavior.
 ## 2026-05-15: ISF domain scheduled artifacts shipped
 - Completed `ISF-CLOCK-DOMAINS.5.3` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

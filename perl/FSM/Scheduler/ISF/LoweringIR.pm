@@ -429,6 +429,7 @@ sub _build_domain_partition($self, $actor) {
             rules         => [],
             child_instances => [],
             library_uses  => [],
+            crossings     => [],
         };
     }
 
@@ -456,6 +457,20 @@ sub _build_domain_partition($self, $actor) {
     }
     for my $use (@{$actor->{library_uses} || []}) {
         push @{$groups{_domain_for_entry($use, $default_domain)}{library_uses}}, $use->{instance};
+    }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'event';
+        push @{$groups{$crossing->{from}{domain}}{crossings}}, {
+            event  => $crossing->{name},
+            role   => 'source',
+            signal => $crossing->{from}{signal},
+            ready  => $crossing->{ready}{signal},
+        } if exists $groups{$crossing->{from}{domain}};
+        push @{$groups{$crossing->{to}{domain}}{crossings}}, {
+            event  => $crossing->{name},
+            role   => 'destination',
+            signal => $crossing->{to}{signal},
+        } if exists $groups{$crossing->{to}{domain}};
     }
 
     my %generated_children = _generated_child_transaction_refs($actor);
@@ -558,8 +573,45 @@ sub _actor_domain_signal_map {
             };
         }
     }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'event';
+        _register_domain_signal(
+            \%signals,
+            $crossing->{from}{signal},
+            $crossing->{from}{domain},
+            'crossing_request',
+        );
+        _register_domain_signal(
+            \%signals,
+            $crossing->{ready}{signal},
+            $crossing->{from}{domain},
+            'crossing_ready',
+        );
+        _register_domain_signal(
+            \%signals,
+            $crossing->{to}{signal},
+            $crossing->{to}{domain},
+            'crossing_pulse',
+        );
+    }
 
     return %signals;
+}
+
+sub _register_domain_signal {
+    my ($signals, $name, $domain, $kind) = @_;
+    return unless defined($name) && !ref($name) && length($name);
+    if (exists $signals->{$name}) {
+        my $existing = $signals->{$name};
+        confess "ISF clock-domain violation: signal '$name' is owned by both domain '$existing->{domain}' and domain '$domain'\n"
+            if defined($existing->{domain}) && defined($domain) && $existing->{domain} ne $domain;
+        return 1;
+    }
+    $signals->{$name} = {
+        domain => $domain,
+        kind   => $kind,
+    };
+    return 1;
 }
 
 sub _validate_transaction_domain_refs($self, $actor, $signal_domains, $transaction_domains, $constants, $drive_use_domains, $default_domain) {

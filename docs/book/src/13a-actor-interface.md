@@ -39,8 +39,10 @@ Multi-clock, asynchronous, and interacting clock-domain semantics are owned by
 the active `ISF-CLOCK-DOMAINS` feature tree. The parser now accepts the
 selected actor-scoped named-domain metadata and the scheduler builds an
 internal domain partition. Multi-domain public `lower(...)` now emits one
-domain scheduled `.fsm` artifact per declared domain, while `report(...)`,
-generated top wiring, and CDC artifacts remain later leaves.
+domain scheduled `.fsm` artifact per declared domain plus a generated top that
+wires explicit CDC child-interface artifacts for accepted event crossings.
+`report(...)` and generated HDL for the multi-domain top/CDC path remain later
+leaves.
 
 The selected authoring shape is an actor-level `(clock-domains ...)` block:
 
@@ -100,8 +102,8 @@ not generate or gate arbitrary asynchronous reset trees. Reusing one reset
 signal across multiple domains is only a shared external reset pin when kind
 and polarity match exactly, not a CDC primitive or data synchronizer.
 
-The first selected future crossing primitive is an acknowledged single-bit
-event channel. Its syntax is still future work, but the planned shape is:
+The first selected crossing primitive is an acknowledged single-bit event
+channel:
 
 ```lisp
 (crossings
@@ -114,17 +116,20 @@ event channel. Its syntax is still future work, but the planned shape is:
 The source side requests an event only when the generated source-domain
 `ready` signal is true. The destination side receives a generated one-cycle
 pulse after synchronizer and acknowledgement latency; no same-cycle timing is
-promised. The primitive carries no payload. Direct cross-domain reads, writes,
-triggers, activations, child bindings, or reset assertion/deassertion events
-remain illegal until a shipped crossing primitive owns that path.
+promised. The primitive carries no payload. Lowering represents it as an
+explicit CDC child interface in the generated top; concrete synchronizer RTL
+and schedule-report projection remain future work. Direct cross-domain reads,
+writes, triggers, activations, child bindings, or reset assertion/deassertion
+events remain illegal unless a shipped crossing primitive owns that path.
 
 The selected lowering strategy keeps each future emitted domain as its own
 single-clock scheduled `.fsm` artifact named `<actor>__domain_<domain>.fsm`.
 The current implementation emits those domain artifacts after validated
-partitioning and fail-closed cross-domain checks. Generated top wiring, CDC
-primitive artifacts, and schedule-report projection remain later leaves;
-ordinary `.fsm` modules are not silently widened into multi-clock scheduled
-modules.
+partitioning and fail-closed cross-domain checks, then emits
+`<actor>_top.fsm` to wire domain modules and explicit CDC child interfaces.
+Schedule-report projection and generated HDL for the multi-domain top/CDC path
+remain later leaves; ordinary `.fsm` modules are not silently widened into
+multi-clock scheduled modules.
 
 ## Watchdog
 

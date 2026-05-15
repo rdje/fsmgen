@@ -256,11 +256,12 @@ clock domains use the actor-scoped named-domain source model tracked in
 [ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md). The parser now accepts
 that metadata and the scheduler validates an internal domain partition, while
 public multi-domain `lower(...)` now emits one normal single-clock scheduled
-`.fsm` artifact per declared domain. Public `report(...)`, multi-domain top
-wiring, and CDC primitive artifacts remain later leaves. Direct cross-domain
-reads, writes, triggers, activations, bindings, and multi-domain drive reuse
-remain illegal unless a shipped CDC primitive or protocol actor owns the
-crossing semantics. The plain
+`.fsm` artifact per declared domain plus a generated top that wires domain
+modules and explicit CDC child interfaces for accepted event crossings. Public
+`report(...)` and generated HDL for the multi-domain top/CDC path remain later
+leaves. Direct cross-domain reads, writes, triggers, activations, bindings,
+and multi-domain drive reuse remain illegal unless a shipped CDC primitive or
+protocol actor owns the crossing semantics. The plain
 `file.isf` CLI path is audited to reach generated HDL with clean stderr,
 including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including

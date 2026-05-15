@@ -52,6 +52,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
 #     storage       => [ { kind => "var"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     constants     => [ { name => ..., value => ... }, ... ],
+#     crossings     => [ { kind => "event", name => ..., from => ..., to => ..., ready => ... }, ... ],
 #     priorities    => [ ... ],
 #     imports       => [ ... ],
 #     library_uses  => [ ... ],
@@ -93,6 +94,7 @@ sub parse_source($self, $source_text, $source_label) {
     my $result = $self->_build_actor($actor_ast, $source_label);
     $self->_resolve_library_uses($result, $forms, $source_label);
     $self->_finalize_actor_domain_annotations($result);
+    $self->_finalize_actor_crossings($result);
     fsm_debug("Actor '" . $result->{actor_name} . "' parsed: "
         . scalar(@{$result->{transactions}}) . " tx, "
         . scalar(@{$result->{rules}}) . " rules, "
@@ -126,6 +128,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         resources    => [],
         storage      => [],
         constants    => [],
+        crossings    => [],
         priorities   => [],
         drives       => {},
         phases       => [],
@@ -206,6 +209,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('constants') {
                 $self->_claim_singleton_actor_clause($actor_name, 'constants', \%singleton_actor_clauses);
                 $result->{constants} = $self->_parse_actor_constants($clause, $actor_name);
+            }
+            when ('crossings') {
+                $self->_claim_singleton_actor_clause($actor_name, 'crossings', \%singleton_actor_clauses);
+                $result->{crossings} = $self->_parse_crossings($clause, $actor_name);
             }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
@@ -407,6 +414,35 @@ sub _finalize_actor_domain_annotations($self, $actor) {
             "actor '$actor_name' library use '$use->{instance}'",
             $has_clock_domains,
         );
+    }
+
+    return 1;
+}
+
+sub _finalize_actor_crossings($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    return 1 unless @{$actor->{crossings} || []};
+
+    confess "Error: actor '$actor_name' crossings require '(clock-domains ...)'\n"
+        unless ref($actor->{clock_domains}) eq 'HASH';
+
+    my %declared_domains = map {
+        $_->{name} => 1
+    } @{$actor->{clock_domains}{domains} || []};
+
+    for my $crossing (@{$actor->{crossings} || []}) {
+        my $name = $crossing->{name};
+        my $from = $crossing->{from};
+        my $to = $crossing->{to};
+
+        confess "Error: actor '$actor_name' crossing event '$name' source domain '$from->{domain}' is not declared\n"
+            unless $declared_domains{$from->{domain}};
+        confess "Error: actor '$actor_name' crossing event '$name' destination domain '$to->{domain}' is not declared\n"
+            unless $declared_domains{$to->{domain}};
+        confess "Error: actor '$actor_name' crossing event '$name' source and destination domains must differ\n"
+            if $from->{domain} eq $to->{domain};
+
+        $crossing->{ready}{domain} = $from->{domain};
     }
 
     return 1;
@@ -1105,6 +1141,89 @@ sub _parse_clock_domains($self, $clause, $actor_name) {
         default => $default,
         domains => \@domains,
     };
+}
+
+sub _parse_crossings($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' crossings require '(crossings (event name ...) ...)'\n"
+        unless @$clause >= 2;
+
+    my @crossings;
+    my %seen_event;
+    my %seen_signal;
+
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' crossings entries require '(event name (from domain signal) (to domain signal) (ready signal))'\n"
+            unless ref($entry) eq 'ARRAY'
+                && @$entry >= 5
+                && defined($entry->[0])
+                && !ref($entry->[0])
+                && $entry->[0] eq 'event';
+
+        my $name = $entry->[1];
+        confess "Error: actor '$actor_name' crossing event names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: actor '$actor_name' has duplicate crossing event '$name'\n"
+            if $seen_event{$name}++;
+
+        my (%seen_subclause, $from, $to, $ready);
+        for my $part (@{$entry}[2 .. $#$entry]) {
+            confess "Error: actor '$actor_name' crossing event '$name' subclauses must be '(from domain signal)', '(to domain signal)', or '(ready signal)'\n"
+                unless ref($part) eq 'ARRAY'
+                    && @$part
+                    && defined($part->[0])
+                    && !ref($part->[0])
+                    && length($part->[0]);
+
+            my $head = $part->[0];
+            confess "Error: actor '$actor_name' crossing event '$name' has duplicate '$head' subclause\n"
+                if $seen_subclause{$head}++;
+
+            if ($head eq 'from' || $head eq 'to') {
+                confess "Error: actor '$actor_name' crossing event '$name' requires '($head domain signal)'\n"
+                    unless @$part == 3
+                        && _is_hdl_identifier($part->[1])
+                        && _is_hdl_identifier($part->[2]);
+                my $parsed = {
+                    domain => $part->[1],
+                    signal => $part->[2],
+                };
+                $from = $parsed if $head eq 'from';
+                $to = $parsed if $head eq 'to';
+                next;
+            }
+
+            if ($head eq 'ready') {
+                confess "Error: actor '$actor_name' crossing event '$name' requires '(ready signal)'\n"
+                    unless @$part == 2 && _is_hdl_identifier($part->[1]);
+                $ready = { signal => $part->[1] };
+                next;
+            }
+
+            confess "Error: actor '$actor_name' crossing event '$name' has unsupported subclause '$head'\n";
+        }
+
+        confess "Error: actor '$actor_name' crossing event '$name' requires '(from domain signal)'\n"
+            unless $from;
+        confess "Error: actor '$actor_name' crossing event '$name' requires '(to domain signal)'\n"
+            unless $to;
+        confess "Error: actor '$actor_name' crossing event '$name' requires '(ready signal)'\n"
+            unless $ready;
+
+        for my $endpoint ($from->{signal}, $to->{signal}, $ready->{signal}) {
+            confess "Error: actor '$actor_name' crossing endpoint signal '$endpoint' is used by multiple crossing endpoints\n"
+                if $seen_signal{$endpoint}++;
+        }
+
+        push @crossings, {
+            kind  => 'event',
+            name  => $name,
+            from  => $from,
+            to    => $to,
+            ready => $ready,
+        };
+    }
+
+    return \@crossings;
 }
 
 sub _finalize_actor_clock_domain_timing($self, $actor, $singleton_actor_clauses) {
@@ -1863,6 +1982,21 @@ sub _validate_storage_actor_names($self, $actor) {
                     && defined($domain->{reset}{name})
                     && length($domain->{reset}{name});
         }
+    }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        my $name = $crossing->{name};
+        $reserved{$crossing->{from}{signal}} = "crossing event '$name' request"
+            if ref($crossing->{from}) eq 'HASH'
+                && defined($crossing->{from}{signal})
+                && length($crossing->{from}{signal});
+        $reserved{$crossing->{to}{signal}} = "crossing event '$name' pulse"
+            if ref($crossing->{to}) eq 'HASH'
+                && defined($crossing->{to}{signal})
+                && length($crossing->{to}{signal});
+        $reserved{$crossing->{ready}{signal}} = "crossing event '$name' ready"
+            if ref($crossing->{ready}) eq 'HASH'
+                && defined($crossing->{ready}{signal})
+                && length($crossing->{ready}{signal});
     }
     $reserved{can_accept} = 'scheduler-generated signal';
 

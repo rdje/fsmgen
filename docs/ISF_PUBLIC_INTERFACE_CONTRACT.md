@@ -739,14 +739,15 @@ bindings emit explicit generated-top `?wiring` list links such as
 `(clk rx.lib_clk)` to the library child system ports; the reusable actor still
 owns reset kind and polarity. That reusable-library system-binding surface is
 still signal-name binding, not CDC behavior by itself.
-The clock-domain partition slice adds parser and internal scheduler handoff
-metadata for the selected future `(clock-domains ...)` source model. Accepted
-multi-domain actors are partitioned by declared domain inside `LoweringIR`, and
-direct unowned cross-domain reads, writes, triggers, activations, bindings, and
-drive reuse fail closed before emission. Public `lower(...)` now emits
-domain-specific scheduled `.fsm` artifacts named
-`<actor>__domain_<domain>.fsm`; public `report(...)` still rejects
-multi-domain actors until schedule-report domain projection ships.
+The clock-domain lowering slices add parser and scheduler handoff metadata for
+the selected `(clock-domains ...)` and `(crossings ...)` source model.
+Accepted multi-domain actors are partitioned by declared domain inside
+`LoweringIR`, and direct unowned cross-domain reads, writes, triggers,
+activations, bindings, and drive reuse fail closed before emission. Public
+`lower(...)` now emits domain-specific scheduled `.fsm` artifacts named
+`<actor>__domain_<domain>.fsm` plus a generated multi-domain top that wires
+domain modules and explicit CDC child interfaces; public `report(...)` still
+rejects multi-domain actors until schedule-report domain projection ships.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters
@@ -873,12 +874,14 @@ The current public parser handoff also advertises bounded actor timing fields:
 when `clock_domains` is present, `reset` is null when omitted or a hash with
 scalar `name`, `kind`, and `polarity` for the default domain, and `watchdog` is
 null when omitted or a positive integer. Public multi-domain `lower(...)`
-emits domain-specific scheduled `.fsm` artifacts; public `report(...)` still
-fails closed until domain report projection ships. The machine-readable
-contract advertises this through `actor_shell_timing_shape`.
-Those timing fields, along with `interface`, parser-carried `resources`, and
-parser-carried `storage`, are source-level singleton actor clauses. The
-`clock-domains` clause is also singleton and is mutually exclusive with
+emits domain-specific scheduled `.fsm` artifacts plus a generated multi-domain
+top; public `report(...)` still fails closed until domain report projection
+ships. The machine-readable contract advertises this through
+`actor_shell_timing_shape`.
+Those timing fields, along with `interface`, parser-carried `resources`,
+parser-carried `storage`, and parser-carried `crossings`, are source-level
+singleton actor clauses. The `clock-domains` clause is also singleton and is
+mutually exclusive with
 actor-level `clock` and `reset`. Repeating one is a parser boundary error; the
 parser does not merge duplicate interface/resources/storage/clock-domain
 blocks or let later clock/reset/watchdog clauses overwrite earlier ones.
@@ -989,20 +992,21 @@ files
 ```
 
 `files` is a hash reference mapping `.fsm` basenames to scheduled module,
-specialized library-child module, or generated composition-top `.fsm` source
-text. The generated `.fsm` text is a reviewable compiler artifact and then
-flows through the existing `.fsm` pipeline.
+multi-domain domain scheduled module, specialized library-child module,
+generated multi-domain top, or generated composition-top `.fsm` source text.
+The generated `.fsm` text is a reviewable compiler artifact and then flows
+through the existing `.fsm` pipeline where that path is implemented.
 The plain `file.isf` CLI path lowers through that pipeline into generated HDL.
 Each public `files` key is a `.fsm` basename with no directory components.
 Scheduled module values, including emitted multi-domain domain artifacts, are
-`.fsm` source text rooted at `(?fsm:<basename-stem> ...)`; generated
-composition-top values are `.fsm` source text rooted at
-`(?top:<basename-stem> ...)`.
+`.fsm` source text rooted at `(?fsm:<basename-stem> ...)`; generated top
+values are `.fsm` source text rooted at `(?top:<basename-stem> ...)` and may
+append embedded `(?rtlif:...)` declarations for explicit CDC child interfaces.
 
 The `--outdir` CLI path materializes the same lower-result `.fsm`
 basename/text map on disk for HDL-ready multi-file lowerings. Multi-domain
-CLI HDL generation still waits for the generated top/HDL entry leaf and fails
-with a targeted diagnostic.
+CLI HDL generation still waits for generated HDL support for multi-domain
+top/CDC artifacts and fails with a targeted diagnostic.
 
 The full lower-result hash is not yet a broad public API beyond the advertised
 keys.

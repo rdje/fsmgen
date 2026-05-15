@@ -192,7 +192,7 @@ sub build_isf_public_interface_contract {
         actor_shell_rule_shape => isf_public_interface_actor_shell_rule_shape(),
         actor_shell_drive_shape => isf_public_interface_actor_shell_drive_shape(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
-        lower_result_file_map_shape => 'hash reference mapping .fsm basename to scheduled module, multi-domain domain scheduled module, specialized library-child module, or generated composition-top .fsm source text',
+        lower_result_file_map_shape => 'hash reference mapping .fsm basename to scheduled module, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, or generated composition-top .fsm source text',
         lower_result_file_name_shape => isf_public_interface_lower_result_file_name_shape(),
         lower_result_file_text_shape => isf_public_interface_lower_result_file_text_shape(),
         dt_assignment_operator_family_map => isf_public_interface_dt_assignment_operator_family_map(),
@@ -408,7 +408,7 @@ sub build_isf_public_interface_contract {
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
             'Treat the contract as live: exact metadata audits describe the current advertised surface, not a promise that ISF or the schedule-report schema is frozen.',
             'The public in-process seam is the parser/scheduler facade pair, not the raw parser AST or LoweringIR internals.',
-            'The lower(...) result currently advertises the files map as scheduled module, multi-domain domain scheduled module, specialized library-child module, and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
+            'The lower(...) result currently advertises the files map as scheduled module, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
             'The library catalog path list and shipped_library_definitions entries are live discovery metadata for reusable ISF definitions; add or change entries only with source, limitations, and tests updated together.',
             'The schedule report currently advertises only the named top-level and summary key families; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
             'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',
@@ -723,7 +723,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
@@ -731,7 +731,7 @@ sub isf_public_interface_actor_shell_actor_name_shape {
 }
 
 sub isf_public_interface_actor_shell_timing_shape {
-    return 'clock is a non-empty scalar when configured and is the default-domain clock when clock_domains is present; reset is null when omitted or a hash with scalar name, kind, and polarity for the default domain; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, storage, and clock-domains clauses are singleton actor clauses; multi-domain scheduler lower emits domain-specific scheduled .fsm artifacts, while report calls fail closed until domain report projection ships';
+    return 'clock is a non-empty scalar when configured and is the default-domain clock when clock_domains is present; reset is null when omitted or a hash with scalar name, kind, and polarity for the default domain; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, storage, clock-domains, and crossings clauses are singleton actor clauses; multi-domain scheduler lower emits domain-specific scheduled .fsm artifacts plus a generated multi-domain top, while report calls fail closed until domain report projection ships';
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
@@ -783,7 +783,7 @@ sub isf_public_interface_lower_result_file_name_shape {
 }
 
 sub isf_public_interface_lower_result_file_text_shape {
-    return 'scheduled module, multi-domain domain scheduled module, or specialized library-child .fsm source text rooted at (?fsm:<basename-stem> ...) or generated composition-top .fsm text rooted at (?top:<basename-stem> ...)';
+    return 'scheduled module, multi-domain domain scheduled module, or specialized library-child .fsm source text rooted at (?fsm:<basename-stem> ...) or generated top .fsm text rooted at (?top:<basename-stem> ...), optionally followed by embedded (?rtlif:...) interface declarations for explicit CDC children';
 }
 
 sub isf_public_interface_dt_assignment_operator_family_map {

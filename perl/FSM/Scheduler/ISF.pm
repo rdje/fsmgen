@@ -144,6 +144,7 @@ sub _emit_multi_domain_scheduled_artifacts($self, $actor, $ir) {
         my $domain_ir = $self->{ir}->build_module($domain_actor);
         $files{$file_name} = $self->{fsm_emitter}->emit($domain_ir);
     }
+    $files{"$actor->{actor_name}_top.fsm"} = _emit_multi_domain_top($actor, $partition);
 
     return \%files;
 }
@@ -185,6 +186,7 @@ sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
             @{$actor->{interface}{outputs} || []}
         ],
     };
+    _add_crossing_endpoint_ports($actor, \%domain_actor, $domain_name);
     $domain_actor{storage} = [
         map { _clone_isf_value($_) }
         grep { _entry_domain($_, $default_domain) eq $domain_name }
@@ -209,6 +211,201 @@ sub _domain_actor_for_scheduled_artifact($actor, $domain, $default_domain) {
     $domain_actor{priorities} = _domain_priorities($actor, \%owner_names);
 
     return \%domain_actor;
+}
+
+sub _add_crossing_endpoint_ports($actor, $domain_actor, $domain_name) {
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'event';
+        if (($crossing->{from}{domain} // '') eq $domain_name) {
+            _ensure_domain_interface_port(
+                $domain_actor->{interface},
+                $crossing->{from}{signal},
+                'output',
+                "crossing event '$crossing->{name}' request",
+            );
+            _ensure_domain_interface_port(
+                $domain_actor->{interface},
+                $crossing->{ready}{signal},
+                'input',
+                "crossing event '$crossing->{name}' ready",
+            );
+        }
+        if (($crossing->{to}{domain} // '') eq $domain_name) {
+            _ensure_domain_interface_port(
+                $domain_actor->{interface},
+                $crossing->{to}{signal},
+                'input',
+                "crossing event '$crossing->{name}' destination pulse",
+            );
+        }
+    }
+    return 1;
+}
+
+sub _ensure_domain_interface_port($interface, $name, $direction, $context) {
+    return 1 unless defined($name) && !ref($name) && length($name);
+    for my $existing_direction (qw(inputs outputs)) {
+        for my $port (@{$interface->{$existing_direction} || []}) {
+            next unless $port->{name} eq $name;
+            my $port_direction = $existing_direction eq 'inputs' ? 'input' : 'output';
+            confess "FSM::Scheduler::ISF->lower $context endpoint '$name' conflicts with an existing $port_direction port\n"
+                unless $port_direction eq $direction;
+            confess "FSM::Scheduler::ISF->lower $context endpoint '$name' conflicts with an existing $direction port of different width\n"
+                if ($port->{width} // 1) != 1;
+            return 1;
+        }
+    }
+    my $bucket = $direction eq 'input' ? 'inputs' : 'outputs';
+    push @{$interface->{$bucket}}, {
+        name   => $name,
+        width  => 1,
+        domain => undef,
+    };
+    return 1;
+}
+
+sub _emit_multi_domain_top($actor, $partition) {
+    my $top_name = "$actor->{actor_name}_top";
+    my @lines;
+
+    push @lines, "(?top:$top_name";
+    push @lines, _emit_multi_domain_top_ports($actor, $partition);
+    for my $domain (@{$partition->{domains} || []}) {
+        push @lines, _emit_domain_instance($domain);
+    }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'event';
+        push @lines, _emit_crossing_instance($actor, $crossing);
+    }
+    push @lines, _emit_multi_domain_wiring($actor, $partition);
+    push @lines, ')';
+
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'event';
+        push @lines, '';
+        push @lines, _emit_crossing_rtlif($actor, $crossing);
+    }
+
+    return join("\n", @lines) . "\n";
+}
+
+sub _emit_multi_domain_top_ports($actor, $partition) {
+    my @tokens;
+    my %seen;
+
+    for my $domain (@{$partition->{domains} || []}) {
+        _push_top_port_token(\@tokens, \%seen, $domain->{clock}, 'input', 1);
+        _push_top_port_token(\@tokens, \%seen, $domain->{reset}{name}, 'input', 1)
+            if ref($domain->{reset}) eq 'HASH';
+    }
+    for my $input (@{$actor->{interface}{inputs} || []}) {
+        _push_top_port_token(\@tokens, \%seen, $input->{name}, 'input', $input->{width} // 1);
+    }
+    for my $output (@{$actor->{interface}{outputs} || []}) {
+        _push_top_port_token(\@tokens, \%seen, $output->{name}, 'output', $output->{width} // 1);
+    }
+
+    my @lines = ('  (?ports:public_io');
+    push @lines, map { "    $_" } @tokens;
+    push @lines, '  )';
+    return join("\n", @lines);
+}
+
+sub _emit_domain_instance($domain) {
+    my $module = _scheduled_module_name($domain);
+    return "  (?fsmc:$domain->{name} $module)";
+}
+
+sub _emit_crossing_instance($actor, $crossing) {
+    return "  (?rtl:" . _crossing_instance_name($crossing) . ' ' . _crossing_module_name($actor, $crossing) . ')';
+}
+
+sub _emit_multi_domain_wiring($actor, $partition) {
+    my @links;
+    my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
+
+    for my $domain (@{$partition->{domains} || []}) {
+        my $instance = $domain->{name};
+        push @links, _link($domain->{clock}, "$instance.$domain->{clock}");
+        push @links, _link($domain->{reset}{name}, "$instance.$domain->{reset}{name}")
+            if ref($domain->{reset}) eq 'HASH';
+    }
+    for my $input (@{$actor->{interface}{inputs} || []}) {
+        my $domain = _entry_domain($input, $partition->{default_domain});
+        push @links, _link($input->{name}, "$domain.$input->{name}");
+    }
+    for my $output (@{$actor->{interface}{outputs} || []}) {
+        my $domain = _entry_domain($output, $partition->{default_domain});
+        push @links, _link("$domain.$output->{name}", $output->{name});
+    }
+    for my $crossing (@{$actor->{crossings} || []}) {
+        next unless ($crossing->{kind} // '') eq 'event';
+        my $source_domain = $domain_by_name{$crossing->{from}{domain}};
+        my $dest_domain = $domain_by_name{$crossing->{to}{domain}};
+        my $instance = _crossing_instance_name($crossing);
+        push @links, _link($source_domain->{clock}, "$instance.source_clk");
+        push @links, _link($dest_domain->{clock}, "$instance.dest_clk");
+        push @links, _link($source_domain->{reset}{name}, "$instance.source_reset")
+            if ref($source_domain->{reset}) eq 'HASH';
+        push @links, _link($dest_domain->{reset}{name}, "$instance.dest_reset")
+            if ref($dest_domain->{reset}) eq 'HASH';
+        push @links, _link("$crossing->{from}{domain}.$crossing->{from}{signal}", "$instance.request");
+        push @links, _link("$instance.ready", "$crossing->{from}{domain}.$crossing->{ready}{signal}");
+        push @links, _link("$instance.pulse", "$crossing->{to}{domain}.$crossing->{to}{signal}");
+    }
+
+    my @lines = ('  (?wiring:domain_wiring');
+    push @lines, map { "    $_" } @links;
+    push @lines, '  )';
+    return join("\n", @lines);
+}
+
+sub _emit_crossing_rtlif($actor, $crossing) {
+    my @lines;
+    push @lines, '(?rtlif:' . _crossing_module_name($actor, $crossing);
+    push @lines, '  source_clk:clock';
+    push @lines, '  dest_clk:clock';
+    push @lines, '  source_reset:reset';
+    push @lines, '  dest_reset:reset';
+    push @lines, '  request<:data';
+    push @lines, '  ready>:data';
+    push @lines, '  pulse>:data';
+    push @lines, ')';
+    return join("\n", @lines);
+}
+
+sub _push_top_port_token($tokens, $seen, $name, $direction, $width) {
+    return if !defined($name) || ref($name) || !length($name);
+    return if $seen->{$name}++;
+    push @$tokens, _format_top_port_token($name, $direction, $width);
+}
+
+sub _format_top_port_token($name, $direction, $width) {
+    $width = 1 unless defined($width) && $width > 0;
+    return $name if $direction eq 'input' && $width == 1;
+    return "$name<$width" if $direction eq 'input';
+    return "$name>" if $width == 1;
+    return "$name>$width";
+}
+
+sub _link($from, $to) {
+    confess "FSM::Scheduler::ISF->lower generated top wiring has an undefined endpoint\n"
+        unless defined($from) && defined($to);
+    return "/$from/$to/";
+}
+
+sub _scheduled_module_name($domain) {
+    my $module = $domain->{scheduled_fsm};
+    $module =~ s/\.fsm\z//;
+    return $module;
+}
+
+sub _crossing_instance_name($crossing) {
+    return "$crossing->{name}_cdc";
+}
+
+sub _crossing_module_name($actor, $crossing) {
+    return "$actor->{actor_name}__cdc_event_$crossing->{name}";
 }
 
 sub _entry_domain($entry, $default_domain) {

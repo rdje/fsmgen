@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: multi-domain top emits structure before HDL implementation
+- `ISF-CLOCK-DOMAINS.5.4` emits a reviewable generated top for multi-domain
+  actors without claiming that the CDC child implementation is synthesizable
+  yet.
+- Event crossings lower to explicit `?rtl`/`?rtlif` child interfaces rather
+  than a fake single-clock `.fsm` state chain. That keeps the two-clock
+  boundary visible in the generated artifact and leaves concrete synchronizer
+  RTL to the fixture/report leaf.
+- The CLI HDL path stays fail-closed for multi-domain sources because the
+  generated top can now be reviewed, but generated HDL for the CDC child path
+  is not implemented.
 ## 2026-05-15: domain artifacts ship before generated multi-domain top
 - `ISF-CLOCK-DOMAINS.5.3` emits the reviewable single-clock scheduled `.fsm`
   artifacts selected by the lowering strategy without pretending the full

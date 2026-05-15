@@ -549,6 +549,16 @@ if ($fsm_file =~ /\.isf$/i) {
     }
 
     my $files = $result->{files};
+    if (ref($actor->{clock_domains}) eq 'HASH'
+        && ref($actor->{clock_domains}{domains}) eq 'ARRAY'
+        && @{$actor->{clock_domains}{domains}} > 1)
+    {
+        die normalize_cli_error_text(
+            "ISF multi-domain lowering emitted domain/top artifacts, "
+            . "but generated HDL for multi-domain top/CDC artifacts is not implemented yet\n",
+        );
+    }
+
     my $entry_basename = exists $files->{"$actor->{actor_name}_top.fsm"}
         ? "$actor->{actor_name}_top.fsm"
         : exists $files->{"$actor->{actor_name}.fsm"}

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF multi-domain top artifacts emitted
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.4`.
+- Public multi-domain `lower(...)` now emits `<actor>_top.fsm`, instantiating
+  each domain module and explicit CDC child interfaces for accepted event
+  crossings.
+- Parser support now includes actor-scoped `(crossings ...)` event
+  declarations for the acknowledged single-bit event primitive.
+- Public `report(...)` and generated HDL for the multi-domain top/CDC path
+  remain blocked for `ISF-CLOCK-DOMAINS.6`.
+- The active frontier advances to `ISF-CLOCK-DOMAINS.6`, diagnostics,
+  reports, and fixtures for multi-clock behavior.
+
 ## 2026-05-15: R14 — ISF domain scheduled artifacts emitted
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.3`.
 - Public multi-domain `lower(...)` now emits one domain-local scheduled `.fsm`

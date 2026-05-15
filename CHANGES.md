@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF multi-domain top artifacts emitted
+- Completed `ISF-CLOCK-DOMAINS.5.4`.
+- Added parser support for actor-scoped `(crossings ...)` event declarations
+  for the acknowledged single-bit event primitive.
+- Multi-domain public `lower(...)` now emits `<actor>_top.fsm`, instantiating
+  domain modules and explicit CDC child interfaces through generated
+  `?rtl`/`?rtlif` entries.
+- Domain artifacts receive generated request, ready, and pulse endpoint ports
+  only for their own crossing role, and the generated top wires those endpoints
+  between the source domain, CDC child interface, and destination domain.
+- Public `report(...)` and generated HDL for the multi-domain top/CDC path
+  remain blocked for `ISF-CLOCK-DOMAINS.6`.
+- Updated public contract metadata, mdBook chapters, spec, task tree, and
+  focused regressions. The active R14 frontier advances to
+  `ISF-CLOCK-DOMAINS.6`, diagnostics, reports, and fixtures for multi-clock
+  behavior.
 ### R14 — ISF domain scheduled artifacts emitted
 - Completed `ISF-CLOCK-DOMAINS.5.3`.
 - Multi-domain public `lower(...)` now emits one scheduled `.fsm` artifact per

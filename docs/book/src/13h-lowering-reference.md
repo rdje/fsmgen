@@ -29,8 +29,10 @@ This chapter shows the exact generated `.fsm` for each construct.
 Single-domain `(clock-domains ...)` actors lower through the same one-clock
 scheduled `.fsm` path using the declared domain clock/reset. Multi-domain
 actors emit validated per-domain scheduled `.fsm` artifacts named
-`<actor>__domain_<domain>.fsm`. Generated top wiring, explicit CDC artifacts,
-and schedule-report projection remain future leaves.
+`<actor>__domain_<domain>.fsm` plus `<actor>_top.fsm` generated top wiring.
+Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
+child interfaces in the generated top. Schedule-report projection and
+generated HDL for the multi-domain top/CDC path remain future leaves.
 
 ## Interface → +size
 
