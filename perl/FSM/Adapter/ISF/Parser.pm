@@ -42,6 +42,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     actor_name    => "apb_requester",
 #     clock         => "clk",
 #     reset         => { name => "rst_n", kind => "async", polarity => "active_low" },
+#     clock_domains => undef, # or { default => "core", domains => [...] }
 #     watchdog      => 65536,
 #     interface     => { inputs => [...], outputs => [...] },
 #     handshakes    => {}, # deprecated compatibility placeholder; parsed
@@ -91,6 +92,7 @@ sub parse_source($self, $source_text, $source_label) {
     fsm_debug("Building typed actor AST", 3);
     my $result = $self->_build_actor($actor_ast, $source_label);
     $self->_resolve_library_uses($result, $forms, $source_label);
+    $self->_finalize_actor_domain_annotations($result);
     fsm_debug("Actor '" . $result->{actor_name} . "' parsed: "
         . scalar(@{$result->{transactions}}) . " tx, "
         . scalar(@{$result->{rules}}) . " rules, "
@@ -115,6 +117,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         actor_name   => $actor_name,
         clock        => undef,
         reset        => undef,
+        clock_domains => undef,
         watchdog     => undef,
         interface    => { inputs => [], outputs => [] },
         handshakes   => {},
@@ -148,6 +151,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('clock')     {
                 $self->_claim_singleton_actor_clause($actor_name, 'clock', \%singleton_actor_clauses);
                 $result->{clock} = $self->_parse_clock($clause);
+            }
+            when ('clock-domains') {
+                $self->_claim_singleton_actor_clause($actor_name, 'clock-domains', \%singleton_actor_clauses);
+                $result->{clock_domains} = $self->_parse_clock_domains($clause, $actor_name);
             }
             when ('reset')     {
                 $self->_claim_singleton_actor_clause($actor_name, 'reset', \%singleton_actor_clauses);
@@ -220,6 +227,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
+    $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
     $self->_validate_actor_priority_targets($result);
@@ -323,6 +331,98 @@ sub _validate_actor_constant_names($self, $actor) {
     return 1;
 }
 
+sub _finalize_actor_domain_annotations($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my $clock_domains = $actor->{clock_domains};
+    my $has_clock_domains = ref($clock_domains) eq 'HASH';
+    my %declared_domains = $has_clock_domains
+        ? map { $_->{name} => 1 } @{$clock_domains->{domains} || []}
+        : (default => 1);
+    my $default_domain = $has_clock_domains
+        ? $clock_domains->{default}
+        : 'default';
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{$actor->{interface}{$direction} || []}) {
+            $self->_finalize_domain_annotation(
+                $port,
+                $default_domain,
+                \%declared_domains,
+                "actor '$actor_name' interface port '$port->{name}'",
+                $has_clock_domains,
+            );
+        }
+    }
+
+    for my $entry (@{$actor->{storage} || []}) {
+        $self->_finalize_domain_annotation(
+            $entry,
+            $default_domain,
+            \%declared_domains,
+            "actor '$actor_name' storage '$entry->{name}'",
+            $has_clock_domains,
+        );
+        if (exists $entry->{domain}) {
+            for my $signal (@{$entry->{signals} || []}) {
+                $signal->{domain} = $entry->{domain};
+            }
+        }
+    }
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        $self->_finalize_domain_annotation(
+            $tx,
+            $default_domain,
+            \%declared_domains,
+            "actor '$actor_name' transaction '$tx->{name}'",
+            $has_clock_domains,
+        );
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        $self->_finalize_domain_annotation(
+            $rule,
+            $default_domain,
+            \%declared_domains,
+            "actor '$actor_name' rule '$rule->{name}'",
+            $has_clock_domains,
+        );
+    }
+
+    for my $use (@{$actor->{uses} || []}) {
+        $self->_finalize_domain_annotation(
+            $use,
+            $default_domain,
+            \%declared_domains,
+            "actor '$actor_name' use '$use->{instance}'",
+            $has_clock_domains,
+        );
+    }
+
+    for my $use (@{$actor->{library_uses} || []}) {
+        $self->_finalize_domain_annotation(
+            $use,
+            $default_domain,
+            \%declared_domains,
+            "actor '$actor_name' library use '$use->{instance}'",
+            $has_clock_domains,
+        );
+    }
+
+    return 1;
+}
+
+sub _finalize_domain_annotation($self, $entry, $default_domain, $declared_domains, $context, $materialize_default) {
+    confess "Error: $context uses unknown clock domain '$entry->{domain}'\n"
+        if exists($entry->{domain}) && !$declared_domains->{$entry->{domain}};
+
+    if (!exists($entry->{domain}) && $materialize_default) {
+        $entry->{domain} = $default_domain;
+    }
+
+    return 1;
+}
+
 sub _parse_imports($self, $clause, $actor_name) {
     my @imports;
     my %seen_alias;
@@ -368,7 +468,7 @@ sub _parse_imports($self, $clause, $actor_name) {
 }
 
 sub _parse_use($self, $clause, $actor_name) {
-    confess "Error: actor '$actor_name' use requires '(use alias.actor as instance [(params ...)] (bind ...))'\n"
+    confess "Error: actor '$actor_name' use requires '(use alias.actor as instance [(domain name)] [(params ...)] (bind ...))'\n"
         unless @$clause >= 4
             && defined($clause->[1])
             && !ref($clause->[1])
@@ -383,6 +483,7 @@ sub _parse_use($self, $clause, $actor_name) {
     my %seen_subclause;
     my @params;
     my @bindings;
+    my $domain;
     my $saw_bind;
 
     for my $subclause (@{$clause}[4 .. $#$clause]) {
@@ -396,6 +497,13 @@ sub _parse_use($self, $clause, $actor_name) {
 
         if ($head eq 'params') {
             @params = @{$self->_parse_use_params($subclause, $actor_name, $clause->[3])};
+            next;
+        }
+        if ($head eq 'domain') {
+            $domain = _parse_domain_option(
+                $subclause,
+                "Error: actor '$actor_name' use '$clause->[3]' domain",
+            );
             next;
         }
         if ($head eq 'bind') {
@@ -415,6 +523,7 @@ sub _parse_use($self, $clause, $actor_name) {
         instance            => $clause->[3],
         parameter_overrides => \@params,
         bindings            => \@bindings,
+        (defined($domain) ? (domain => $domain) : ()),
     };
 }
 
@@ -548,6 +657,7 @@ sub _resolve_library_uses($self, $actor, $forms, $source_label) {
             actor               => _clone_isf_value($exported_actor),
             parameter_overrides => _clone_isf_value($use->{parameter_overrides} || []),
             bindings            => $bindings,
+            (defined($use->{domain}) ? (domain => $use->{domain}) : ()),
         };
     }
 
@@ -899,6 +1009,123 @@ sub _parse_reset($self, $clause) {
     return { name => $name, kind => $kind, polarity => $polarity };
 }
 
+sub _parse_clock_domains($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' clock-domains require '(clock-domains (domain name (clock clk) ...) ...)'\n"
+        unless @$clause >= 2;
+
+    my @domains;
+    my %seen_domain;
+    my %seen_clock;
+    my %reset_by_name;
+    my @default_domains;
+
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' clock-domains entries require '(domain name (clock clk) ...)'\n"
+            unless ref($entry) eq 'ARRAY'
+                && @$entry >= 3
+                && defined($entry->[0])
+                && !ref($entry->[0])
+                && $entry->[0] eq 'domain';
+
+        my $name = $entry->[1];
+        confess "Error: actor '$actor_name' clock-domain names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: actor '$actor_name' has duplicate clock domain '$name'\n"
+            if $seen_domain{$name}++;
+
+        my (%seen_subclause, $clock, $reset);
+        my $is_default = 0;
+        for my $part (@{$entry}[2 .. $#$entry]) {
+            if (defined($part) && !ref($part) && $part eq ':default') {
+                confess "Error: actor '$actor_name' clock domain '$name' has duplicate ':default' marker\n"
+                    if $is_default++;
+                push @default_domains, $name;
+                next;
+            }
+
+            confess "Error: actor '$actor_name' clock domain '$name' entries must be '(clock ...)', '(reset ...)', or ':default'\n"
+                unless ref($part) eq 'ARRAY'
+                    && @$part
+                    && defined($part->[0])
+                    && !ref($part->[0])
+                    && length($part->[0]);
+
+            my $head = $part->[0];
+            confess "Error: actor '$actor_name' clock domain '$name' has duplicate '$head' subclause\n"
+                if $seen_subclause{$head}++;
+
+            if ($head eq 'clock') {
+                $clock = $self->_parse_clock($part);
+                next;
+            }
+            if ($head eq 'reset') {
+                confess "Error: actor '$actor_name' clock domain '$name' reset requires '(reset name_or_reset_spec)'\n"
+                    unless @$part == 2;
+                $reset = $self->_parse_reset($part);
+                next;
+            }
+
+            confess "Error: actor '$actor_name' clock domain '$name' has unsupported subclause '$head'\n";
+        }
+
+        confess "Error: actor '$actor_name' clock domain '$name' requires '(clock name)'\n"
+            unless defined($clock);
+        confess "Error: actor '$actor_name' clock signal '$clock' is used by multiple clock domains\n"
+            if $seen_clock{$clock}++;
+
+        if ($reset) {
+            my $previous = $reset_by_name{$reset->{name}};
+            confess "Error: actor '$actor_name' reset '$reset->{name}' is reused with conflicting clock-domain reset policy\n"
+                if $previous
+                    && (($previous->{kind} // 'sync') ne ($reset->{kind} // 'sync')
+                        || ($previous->{polarity} // 'active_high') ne ($reset->{polarity} // 'active_high'));
+            $reset_by_name{$reset->{name}} = $reset;
+        }
+
+        my %domain = (
+            name  => $name,
+            clock => $clock,
+        );
+        $domain{reset} = $reset if $reset;
+        $domain{default} = 1 if $is_default;
+        push @domains, \%domain;
+    }
+
+    my $default;
+    if (@domains == 1 && !@default_domains) {
+        $default = $domains[0]{name};
+        $domains[0]{default} = 1;
+    } else {
+        confess "Error: actor '$actor_name' multi-domain clock-domains require exactly one ':default' domain\n"
+            unless @default_domains == 1;
+        $default = $default_domains[0];
+    }
+
+    return {
+        default => $default,
+        domains => \@domains,
+    };
+}
+
+sub _finalize_actor_clock_domain_timing($self, $actor, $singleton_actor_clauses) {
+    return 1 unless ref($actor->{clock_domains}) eq 'HASH';
+
+    my $actor_name = $actor->{actor_name};
+    confess "Error: actor '$actor_name' cannot mix '(clock ...)' with '(clock-domains ...)'\n"
+        if $singleton_actor_clauses->{clock};
+    confess "Error: actor '$actor_name' cannot mix actor-level '(reset ...)' with '(clock-domains ...)'\n"
+        if $singleton_actor_clauses->{reset};
+
+    my $default_domain = $actor->{clock_domains}{default};
+    my ($domain) = grep { $_->{name} eq $default_domain } @{$actor->{clock_domains}{domains} || []};
+    confess "Error: actor '$actor_name' clock-domains default '$default_domain' is not declared\n"
+        unless $domain;
+
+    $actor->{clock} = $domain->{clock};
+    $actor->{reset} = _clone_isf_value($domain->{reset}) if $domain->{reset};
+    return 1;
+}
+
 sub _parse_watchdog($self, $clause) {
     confess "Error: (watchdog ...) requires a positive integer\n" unless @$clause == 2;
     confess "Error: (watchdog ...) requires a positive integer\n"
@@ -917,6 +1144,7 @@ sub _parse_interface($self, $clause) {
         my $dir = $port->[0];
         my $name = $port->[1];
         my $width = 1;
+        my $domain;
 
         confess "Error: interface port direction must be input or output\n"
             unless defined($dir) && !ref($dir) && ($dir eq 'input' || $dir eq 'output');
@@ -925,8 +1153,14 @@ sub _parse_interface($self, $clause) {
         confess "Error: duplicate interface port '$name'\n" if $seen_names{$name}++;
 
         # Check for (width N) in remaining elements
+        my %seen_options;
         for my $j (2 .. $#$port) {
             my $prop = $port->[$j];
+            next unless ref($prop) eq 'ARRAY' && @$prop;
+            my $option_name = $prop->[0];
+            next unless defined($option_name) && !ref($option_name);
+            confess "Error: interface port '$name' has duplicate '$option_name' option\n"
+                if $seen_options{$option_name}++;
             if (ref($prop) eq 'ARRAY' && $prop->[0] eq 'width') {
                 confess "Error: interface port '$name' width must be a positive integer\n"
                     unless @$prop == 2
@@ -934,10 +1168,19 @@ sub _parse_interface($self, $clause) {
                         && !ref($prop->[1])
                         && $prop->[1] =~ /\A[1-9][0-9]*\z/;
                 $width = $prop->[1];
+                next;
+            }
+            if ($prop->[0] eq 'domain') {
+                $domain = _parse_domain_option(
+                    $prop,
+                    "Error: interface port '$name' domain",
+                );
+                next;
             }
         }
 
         my $entry = { name => $name, width => $width };
+        $entry->{domain} = $domain if defined $domain;
         if ($dir eq 'input')  { push @inputs,  $entry; }
         if ($dir eq 'output') { push @outputs, $entry; }
     }
@@ -990,6 +1233,13 @@ sub _parse_storage($self, $clause, $actor_name) {
                 );
                 next;
             }
+            if ($option_name eq 'domain') {
+                $parsed_options{domain_value} = _parse_domain_option(
+                    $option,
+                    "Error: actor '$actor_name' storage '$name' domain",
+                );
+                next;
+            }
 
             confess "Error: actor '$actor_name' storage '$name' has unsupported option '$option_name'\n";
         }
@@ -1023,6 +1273,8 @@ sub _parse_storage($self, $clause, $actor_name) {
             signals => \@signals,
             ($kind eq 'bank' ? (depth => $parsed_options{depth_value}) : ()),
         };
+        $entries[-1]{domain} = $parsed_options{domain_value}
+            if defined($parsed_options{domain_value});
     }
 
     return \@entries;
@@ -1047,6 +1299,20 @@ sub _parse_storage_positive_integer_option {
             && $option->[1] =~ /\A[1-9][0-9]*\z/;
 
     return 0 + $option->[1];
+}
+
+sub _parse_domain_option {
+    my ($option, $context) = @_;
+
+    confess "$context requires '(domain name)'\n"
+        unless ref($option) eq 'ARRAY'
+            && @$option == 2
+            && defined($option->[0])
+            && !ref($option->[0])
+            && $option->[0] eq 'domain'
+            && _is_hdl_identifier($option->[1]);
+
+    return $option->[1];
 }
 
 sub _parse_handshake($self, $clause) {
@@ -1089,6 +1355,7 @@ sub _parse_transaction($self, $clause) {
     my @clauses;
     my $ports = { inputs => [], outputs => [] };
     my $saw_ports;
+    my $domain;
 
     for my $i (2 .. $#$clause) {
         my $body_clause = $clause->[$i];
@@ -1103,12 +1370,28 @@ sub _parse_transaction($self, $clause) {
             $ports = $self->_parse_transaction_ports($body_clause, $name);
             next;
         }
+        if (ref($body_clause) eq 'ARRAY'
+            && @$body_clause
+            && defined($body_clause->[0])
+            && !ref($body_clause->[0])
+            && $body_clause->[0] eq 'domain')
+        {
+            confess "Error: transaction '$name' accepts only one '(domain ...)' clause\n"
+                if defined $domain;
+            $domain = _parse_domain_option(
+                $body_clause,
+                "Error: transaction '$name' domain",
+            );
+            next;
+        }
 
         push @clauses, $body_clause;
     }
     $self->_validate_transaction_phase_stage_clauses(\@clauses);
 
-    return { name => $name, ports => $ports, clauses => \@clauses };
+    my %transaction = (name => $name, ports => $ports, clauses => \@clauses);
+    $transaction{domain} = $domain if defined $domain;
+    return \%transaction;
 }
 
 sub _parse_transaction_ports($self, $clause, $transaction_name) {
@@ -1174,6 +1457,27 @@ sub _parse_rule($self, $clause) {
     my $when;
     my @actions;
     my @body = @{$clause}[2 .. $#$clause];
+    my $domain;
+    my @domain_filtered_body;
+
+    for my $elem (@body) {
+        if (ref($elem) eq 'ARRAY'
+            && @$elem
+            && defined($elem->[0])
+            && !ref($elem->[0])
+            && $elem->[0] eq 'domain')
+        {
+            confess "Error: rule '$name' accepts only one '(domain ...)' clause\n"
+                if defined $domain;
+            $domain = _parse_domain_option(
+                $elem,
+                "Error: rule '$name' domain",
+            );
+            next;
+        }
+        push @domain_filtered_body, $elem;
+    }
+    @body = @domain_filtered_body;
 
     if (@body && defined($body[0]) && !ref($body[0])) {
         $when = $self->_parse_rule_when(['when', shift @body], $name);
@@ -1192,7 +1496,9 @@ sub _parse_rule($self, $clause) {
         }
     }
 
-    return { name => $name, when => $when, actions => \@actions };
+    my %rule = (name => $name, when => $when, actions => \@actions);
+    $rule{domain} = $domain if defined $domain;
+    return \%rule;
 }
 
 sub _parse_rule_when($self, $clause, $rule_name) {
@@ -1548,6 +1854,16 @@ sub _validate_storage_actor_names($self, $actor) {
         if ref($actor->{reset}) eq 'HASH'
             && defined($actor->{reset}{name})
             && length($actor->{reset}{name});
+    if (ref($actor->{clock_domains}) eq 'HASH') {
+        for my $domain (@{$actor->{clock_domains}{domains} || []}) {
+            $reserved{$domain->{clock}} = "clock-domain '$domain->{name}' clock"
+                if defined($domain->{clock}) && length($domain->{clock});
+            $reserved{$domain->{reset}{name}} = "clock-domain '$domain->{name}' reset"
+                if ref($domain->{reset}) eq 'HASH'
+                    && defined($domain->{reset}{name})
+                    && length($domain->{reset}{name});
+        }
+    }
     $reserved{can_accept} = 'scheduler-generated signal';
 
     for my $entry (@{$actor->{storage} || []}) {

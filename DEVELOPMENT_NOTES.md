@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: domain partitioning ships before multi-domain emission
+- `ISF-CLOCK-DOMAINS.5.2` deliberately stops at parser metadata, internal IR
+  partitioning, and fail-closed crossing checks. That keeps the selected source
+  model executable without letting multi-domain actors silently pass through
+  the old single-clock emitter.
+- Single-domain `(clock-domains ...)` sources are safe to lower through the
+  existing scheduled `.fsm` path because they still describe one clock/reset
+  region. Multi-domain sources validate the partition and then public
+  `lower(...)`/`report(...)` reject until the domain artifact and report
+  leaves ship.
+- The first partition is internal rather than a public report schema. The
+  report surface waits for `ISF-CLOCK-DOMAINS.6` so downstream consumers get a
+  bounded, intentional domain/crossing projection instead of raw `LoweringIR`.
 ## 2026-05-15: multi-domain lowering preserves single-clock .fsm meaning
 - `ISF-CLOCK-DOMAINS.5.1` selects per-domain scheduled `.fsm` artifacts rather
   than widening ordinary `.fsm` modules into implicit multi-clock modules.

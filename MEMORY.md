@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF clock-domain partitioning handoff shipped
+- Completed `ISF-CLOCK-DOMAINS.5.2` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- The parser now accepts selected `(clock-domains ...)` metadata plus
+  `(domain NAME)` ownership annotations on interface ports, storage entries,
+  transactions, rules, reusable `use` instances, and generated child
+  activations.
+- `LoweringIR` builds an internal domain partition that groups domain-owned
+  ports, storage, transactions, rules, library uses, and generated child
+  instances before emission.
+- Direct unowned cross-domain reads, writes, triggers, activations, bindings,
+  and multi-domain drive reuse now fail closed before existing emitters run.
+- Single-domain `(clock-domains ...)` sources can use the existing
+  single-clock scheduled `.fsm` path. Multi-domain public `lower(...)` and
+  `report(...)` remain blocked until domain-specific artifacts and report
+  projection ship.
+- The current frontier is `ISF-CLOCK-DOMAINS.5.3`, domain-specific scheduled
+  `.fsm` emission.
 ## 2026-05-15: ISF clock-domain lowering artifacts selected
 - Completed `ISF-CLOCK-DOMAINS.5.1` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

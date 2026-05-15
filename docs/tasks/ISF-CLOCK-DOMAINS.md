@@ -89,13 +89,13 @@ asynchronous, and interacting clock-domain designs.
   Commit: `ISF-CLOCK-DOMAINS.5.1: specify lowering artifacts`
 
 - ID: `ISF-CLOCK-DOMAINS.5.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Partition accepted multi-domain actors into domain-local lowering IR.`
   Acceptance: `Parser/scheduler handoff can group ports, storage,
   transactions, rules, and child instances by declared domain while rejecting
   unowned cross-domain references before emission.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1204-isf-child-composition-clause-boundary.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1162-isf-public-actor-shell-interface-shape-audit.t t/1163-isf-public-actor-shell-transaction-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1166-isf-public-actor-shell-rule-shape-audit.t t/1230-isf-library-import-resolution.t t/1215-isf-spawn-parameter-binding.t t/1241-isf-transaction-port-bindings.t t/1232-isf-actor-storage-declarations.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CLOCK-DOMAINS.5.2: partition domain lowering IR`
 
 - ID: `ISF-CLOCK-DOMAINS.5.3`
   Status: `pending`
@@ -126,13 +126,14 @@ asynchronous, and interacting clock-domain designs.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CLOCK-DOMAINS.5.2` | `pending` | The artifact strategy is selected; the next executable leaf is the domain-partitioning IR handoff. |
+| 1 | `ISF-CLOCK-DOMAINS.5.3` | `pending` | Domain partitioning is validated; the next executable leaf is emitting domain-specific scheduled .fsm artifacts. |
 
 ## Selected Source Model
 
-`ISF-CLOCK-DOMAINS.2` selects the planned source model without shipping parser
-or lowering support yet. Existing `(clock name)` remains the only implemented
-clock syntax today.
+`ISF-CLOCK-DOMAINS.2` selected the source model, and
+`ISF-CLOCK-DOMAINS.5.2` ships parser metadata plus the internal scheduler
+handoff for that model. Existing `(clock name)` remains the shorthand for one
+implicit actor domain named `default`.
 
 The future multi-clock source surface is actor-scoped:
 
@@ -142,21 +143,24 @@ The future multi-clock source surface is actor-scoped:
   (domain bus  (clock bus_clk)))
 ```
 
-Rules for the planned syntax:
+Rules for the implemented parser metadata:
 
 - `(clock name)` remains shorthand for one implicit actor domain named
   `default`.
 - `(clock-domains ...)` replaces `(clock ...)` when an actor needs named
-  domains. A source may not use both forms in the same actor.
+  domains. A source may not use both forms in the same actor, and
+  actor-level `(reset ...)` may not be mixed with `(clock-domains ...)`.
 - Domain names are unique non-empty identifiers inside the actor.
 - Clock names inside domain entries are scalar signal names. Reusing the same
   clock signal for multiple domain names is rejected unless a later alias
   feature defines that semantics explicitly.
 - A single-domain `(clock-domains ...)` block has an implicit default. A
   multi-domain block must mark exactly one domain as `:default`.
-- Interface ports, actor-owned storage entries, transactions, rules, and
-  generated/reusable child instances may reference only actor-declared domain
-  names. Omitted domain references inherit the actor default domain.
+- Interface ports, actor-owned storage entries, transactions, rules, reusable
+  `use` instances, and generated child activations may reference only
+  actor-declared domain names through `(domain NAME)` annotations. Omitted
+  domain references inherit the actor default domain when `(clock-domains ...)`
+  is present.
 - Drives do not own clock domains. A drive body inherits the domain of its
   activation site, and sharing a drive across multiple domains remains
   fail-closed until a later leaf defines a safe reuse rule.
@@ -168,6 +172,12 @@ Rules for the planned syntax:
 - Child-instance domain annotations bind the child instance's local domain to
   a parent actor domain. They are not CDC primitives; cross-domain parent/child
   interaction still needs an explicit legal crossing surface.
+- A single-domain `(clock-domains ...)` block has an implicit default and can
+  still lower through the existing single-clock scheduled `.fsm` path. A
+  multi-domain source builds a validated internal domain partition, then
+  public `lower(...)` and `report(...)` fail closed until
+  `ISF-CLOCK-DOMAINS.5.3`, `.5.4`, and `.6` ship the artifacts and report
+  projection.
 
 Malformed combinations fail closed:
 
@@ -175,24 +185,25 @@ Malformed combinations fail closed:
 - Duplicate domain names.
 - Missing or duplicate default domain in a multi-domain actor.
 - Mixing `(clock ...)` with `(clock-domains ...)`.
-- Port, storage, transaction, rule, or child annotations that refer to domains
-  not declared by the actor.
+- Port, storage, transaction, rule, `use`, or child activation annotations
+  that refer to domains not declared by the actor.
 - Any direct read, write, trigger, activation, or binding that crosses domains
   without a shipped CDC primitive or protocol actor.
+- Reusing one drive body from multiple domains without a safe reuse rule.
 - Any attempt to use DT logic as asynchronous reset gating.
 
-This source model deliberately leaves report metadata and lowering artifacts to
-`ISF-CLOCK-DOMAINS.5` and `ISF-CLOCK-DOMAINS.6`. Reset ownership and the first
-legal crossing primitive are selected below.
+This source model deliberately leaves multi-domain report metadata and emitted
+artifacts to `ISF-CLOCK-DOMAINS.5.3`, `.5.4`, and `.6`. Reset ownership and
+the first legal crossing primitive are selected below.
 
 ## Selected Reset Ownership Model
 
-`ISF-CLOCK-DOMAINS.3` selects the planned reset ownership model without
-shipping parser or lowering support yet. Existing `(reset ...)` remains the
-only implemented reset syntax today.
+`ISF-CLOCK-DOMAINS.3` selected reset ownership, and
+`ISF-CLOCK-DOMAINS.5.2` ships parser validation for domain-owned reset
+metadata. Existing actor-level `(reset ...)` remains the single-domain
+shorthand.
 
-The future multi-domain source surface puts reset ownership inside each domain
-entry:
+The multi-domain source surface puts reset ownership inside each domain entry:
 
 ```lisp
 (clock-domains
@@ -200,11 +211,11 @@ entry:
   (domain bus  (clock bus_clk) (reset (bus_rst_n async active_low))))
 ```
 
-Rules for the planned reset syntax:
+Rules for the implemented parser reset metadata:
 
 - Existing actor-level `(clock name)` plus optional actor-level `(reset ...)`
   remains the shorthand for one implicit domain named `default`.
-- A future actor using `(clock-domains ...)` must not also use actor-level
+- An actor using `(clock-domains ...)` must not also use actor-level
   `(clock ...)` or actor-level `(reset ...)`.
 - Each domain owns zero or one reset. A domain with no reset clause has no
   generated reset for its clocked state.
@@ -235,9 +246,9 @@ Malformed reset combinations fail closed:
 - Any attempt to treat reset assertion/deassertion as an ordinary
   cross-domain data event.
 
-This reset model deliberately leaves report metadata and lowering artifact
-structure to `ISF-CLOCK-DOMAINS.5` and `ISF-CLOCK-DOMAINS.6`. The first legal
-CDC primitive is selected below.
+This reset model deliberately leaves multi-domain report metadata and emitted
+artifact structure to `ISF-CLOCK-DOMAINS.5.3`, `.5.4`, and `.6`. The first
+legal CDC primitive is selected below.
 
 ## Selected Crossing Primitive
 
@@ -296,14 +307,19 @@ specified.
 
 ## Selected Lowering Artifact Strategy
 
-`ISF-CLOCK-DOMAINS.5.1` selects the future lowering artifact strategy without
-shipping parser or lowering support yet.
+`ISF-CLOCK-DOMAINS.5.1` selected the future lowering artifact strategy.
+`ISF-CLOCK-DOMAINS.5.2` now ships the internal domain partition and
+fail-closed direct-crossing checks before emission.
 
-Rules for future lowering:
+Rules for the current partition plus future lowering:
 
-- Multi-domain actors are partitioned into domain-local scheduled artifacts.
-- Each declared domain emits one scheduled `.fsm` artifact named
-  `<actor>__domain_<domain>.fsm`.
+- Multi-domain actors are partitioned by declared domain in `LoweringIR`,
+  grouping interface endpoints, storage entries, transactions, rules, reusable
+  library uses, and generated child activations.
+- Direct cross-domain reads, writes, triggers, activations, bindings, and
+  multi-domain drive reuse are rejected before emission.
+- Future artifact leaves will emit one scheduled `.fsm` artifact per declared
+  domain named `<actor>__domain_<domain>.fsm`.
 - A domain `.fsm` remains a normal single-clock scheduled module. Its `+system`
   clause uses only the domain clock and that domain's reset policy.
 - Domain artifacts contain only domain-owned interface endpoints, storage,
@@ -338,10 +354,11 @@ explicitly defines a new multi-clock `.fsm` structure.
 - `2026-05-15`: Direct cross-domain same-cycle reads/writes are not a safe
   default. A shipped CDC primitive or protocol actor must own the runtime
   crossing semantics.
-- `2026-05-15`: The selected future source model is actor-scoped named
-  domains. Ports, storage, transactions, rules, and child instances may only
-  reference domains declared by the actor; drives inherit the activation-site
-  domain. This is not parser support yet.
+- `2026-05-15`: The selected source model is actor-scoped named domains.
+  Ports, storage, transactions, rules, and child instances may only reference
+  domains declared by the actor; drives inherit the activation-site domain.
+  Parser support and the internal partitioning handoff shipped later in
+  `ISF-CLOCK-DOMAINS.5.2`.
 - `2026-05-15`: Future multi-domain resets are domain-owned. Synchronous
   resets are sampled on the owning domain clock; asynchronous resets are direct
   external reset pins and must not be generated or gated through ISF DT logic.
@@ -353,6 +370,12 @@ explicitly defines a new multi-clock `.fsm` structure.
   scheduled `.fsm` artifact per domain and represents multi-domain wiring plus
   CDC primitives as explicit generated artifacts. Normal `.fsm` modules are
   not silently widened into multi-clock scheduled modules.
+- `2026-05-15`: The parser now accepts `(clock-domains ...)` metadata and
+  `(domain NAME)` ownership annotations for ports, storage, transactions,
+  rules, reusable `use` instances, and generated child activations.
+  `LoweringIR` builds an internal domain partition and rejects unowned direct
+  cross-domain access before emission. Multi-domain public `lower(...)` and
+  `report(...)` remain blocked until the artifact and report leaves ship.
 
 ## Open Questions
 
@@ -374,6 +397,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.5.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CLOCK-DOMAINS.5.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1204-isf-child-composition-clause-boundary.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1162-isf-public-actor-shell-interface-shape-audit.t t/1163-isf-public-actor-shell-transaction-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1166-isf-public-actor-shell-rule-shape-audit.t t/1230-isf-library-import-resolution.t t/1215-isf-spawn-parameter-binding.t t/1241-isf-transaction-port-bindings.t t/1232-isf-actor-storage-declarations.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -384,6 +408,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 | `ISF-CLOCK-DOMAINS.3` | `ISF-CLOCK-DOMAINS.3: specify domain reset ownership` | Selects per-domain reset ownership and forbids DT-generated asynchronous reset glue without shipping parser/lowering support. |
 | `ISF-CLOCK-DOMAINS.4` | `ISF-CLOCK-DOMAINS.4: specify event crossing primitive` | Selects an acknowledged single-bit event channel as the first legal future crossing primitive. |
 | `ISF-CLOCK-DOMAINS.5.1` | `ISF-CLOCK-DOMAINS.5.1: specify lowering artifacts` | Selects per-domain scheduled .fsm artifacts plus explicit generated top and CDC artifacts as the future lowering strategy. |
+| `ISF-CLOCK-DOMAINS.5.2` | `ISF-CLOCK-DOMAINS.5.2: partition domain lowering IR` | Adds parser metadata, internal domain partitioning, and fail-closed direct crossing checks while keeping multi-domain public emission/reporting blocked. |
 
 ## Changelog
 
@@ -401,3 +426,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 - `2026-05-15`: Split `ISF-CLOCK-DOMAINS.5` into executable lowering leaves
   and completed `ISF-CLOCK-DOMAINS.5.1`, selecting the future lowering
   artifact strategy; current frontier advances to `ISF-CLOCK-DOMAINS.5.2`.
+- `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.5.2`, accepting selected
+  domain metadata, building an internal domain partition, and rejecting
+  unowned direct cross-domain references before emission; current frontier
+  advances to `ISF-CLOCK-DOMAINS.5.3`.

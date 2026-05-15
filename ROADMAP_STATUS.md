@@ -34,17 +34,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the active ISF task-tree workflow, and `ISF-PUBLIC-CONTRACT.4` added
   exact public guidance that feature-driven public changes move matching
   contract/manifest audit tests in the same implementation slice.
-  `ISF-CLOCK-DOMAINS.2` selected actor-scoped named domains as the future
-  source model without shipping parser/lowering support, and
+  `ISF-CLOCK-DOMAINS.2` selected actor-scoped named domains as the source
+  model, and
   `ISF-CLOCK-DOMAINS.3` selected per-domain reset ownership for that future
   model, and `ISF-CLOCK-DOMAINS.4` selected an acknowledged single-bit event
   channel as the first future legal crossing primitive.
   `ISF-CLOCK-DOMAINS.5.1` split the lowering work and selected one
   single-clock scheduled `.fsm` artifact per domain plus explicit generated top
-  and CDC artifacts. Existing `(clock name)` and actor-level `(reset ...)`
-  remain the only accepted clock/reset syntax today; no `(clock-domains ...)`
-  or `(crossings ...)` source is accepted yet. The current frontier is
-  `ISF-CLOCK-DOMAINS.5.2`, domain-partitioning IR handoff.
+  and CDC artifacts. `ISF-CLOCK-DOMAINS.5.2` now accepts selected
+  `(clock-domains ...)` metadata, partitions accepted actors by domain in
+  `LoweringIR`, and rejects direct unowned cross-domain references before
+  emission. Multi-domain public `lower(...)` and `report(...)` remain blocked
+  until domain-specific artifacts and report projection ship. The current
+  frontier is `ISF-CLOCK-DOMAINS.5.3`, domain-specific scheduled `.fsm`
+  emission.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -146,24 +149,25 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(var name (width N))`, with `(variable ...)` accepted as the verbose
   alias. `(state ...)` and `(register ...)` are rejected as source
   vocabulary.
-- ISF clock-domain backlog update: current ISF remains one clock domain per
-  actor/generated top. Multi-clock, asynchronous, and interacting
-  clock-domain semantics are now tracked as the active
-  `ISF-CLOCK-DOMAINS` task tree. Different clock signal names and
+- ISF clock-domain backlog update: legacy `(clock name)` actors and reusable
+  library clock/reset bindings remain one-clock-domain behavior. Multi-clock,
+  asynchronous, and interacting clock-domain semantics are tracked as the
+  active `ISF-CLOCK-DOMAINS` task tree. Different clock signal names and
   generated-top system-port links are signal-name binding only; they do not
-  imply CDC behavior. The selected future source model is actor-scoped named
-  domains through an unimplemented `(clock-domains ...)` block. Ports,
-  storage, transactions, rules, and child instances may reference only domains
-  declared by the actor, drives inherit their activation-site domain, and
+  imply CDC behavior. The selected source model is actor-scoped named domains
+  through `(clock-domains ...)` metadata. Ports, storage, transactions, rules,
+  reusable `use` instances, and generated child activations may reference only
+  actor-declared domains, drives inherit their activation-site domain, and
   direct unowned crossings remain fail-closed. Domain resets are owned inside
   domain entries; synchronous resets are sampled on the owning domain clock,
   and asynchronous resets are direct external reset pins, not DT-generated
   logic. The first planned crossing primitive is an acknowledged single-bit
   event channel with generated source-domain `ready`, generated
-  destination-domain pulse, one outstanding event, and no payload. Future
-  lowering keeps domain behavior in one normal single-clock `.fsm` artifact
-  per domain and moves multi-domain top wiring plus CDC primitive logic into
-  explicit generated artifacts.
+  destination-domain pulse, one outstanding event, and no payload. Current
+  lowering validates the domain partition and blocks multi-domain emission;
+  future leaves emit one normal single-clock `.fsm` artifact per domain and
+  move multi-domain top wiring plus CDC primitive logic into explicit
+  generated artifacts.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width

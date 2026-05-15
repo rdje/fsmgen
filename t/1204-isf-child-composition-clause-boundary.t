@@ -54,7 +54,7 @@ ISF
 };
 
 subtest 'malformed child composition clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(params \(NAME value\) \.\.\.\)\] \[\(bind \.\.\.\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(domain name\)\] \[\(params \(NAME value\) \.\.\.\)\] \[\(bind \.\.\.\)\]\)' in transaction body/);
 (actor do_missing_target
   (clock clk)
   (interface (input start) (output done))
@@ -64,7 +64,7 @@ subtest 'malformed child composition clauses fail before scheduled emission' => 
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(params \(NAME value\) \.\.\.\)\] \[\(bind \.\.\.\)\]\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'nested do target', qr/\ATransaction 'parent': do requires '\(do transaction \[\(domain name\)\] \[\(params \(NAME value\) \.\.\.\)\] \[\(bind \.\.\.\)\]\)' in transaction body/);
 (actor do_nested_target
   (clock clk)
   (interface (input start) (output done))
@@ -76,7 +76,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra do operand', qr/\ATransaction 'parent': do subclauses must be '\(params \.\.\.\)' or '\(bind \.\.\.\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra do operand', qr/\ATransaction 'parent': do subclauses must be '\(domain \.\.\.\)', '\(params \.\.\.\)', or '\(bind \.\.\.\)' in transaction body/);
 (actor do_extra_operand
   (clock clk)
   (interface (input start) (output done))

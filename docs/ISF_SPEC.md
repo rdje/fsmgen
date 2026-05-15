@@ -458,23 +458,26 @@ Reset rules:
 - Sync resets lower to `.fsm` `(sreset name)`.
 
 Multi-clock boundary:
-- The shipped ISF model has one clock domain per actor/generated top.
+- Legacy `(clock name)` ISF actors have one clock domain per actor/generated
+  top.
 - Library clock/reset bindings and generated-top system-port links are
-  signal-name binding inside that one-domain model. They do not create a
-  second clock domain and they do not model clock-domain crossing behavior.
-- ISF has no shipped source syntax yet for declaring multiple domains,
-  assigning interface ports or child instances to domains, or marking a
-  transaction/rule as belonging to a different clock domain.
-- Direct reads or writes between future domains must not be accepted by
-  implication. A future feature must provide explicit CDC primitives or
-  protocol actors with specified runtime behavior, lowering, diagnostics, and
-  report metadata before such crossings are legal.
+  signal-name binding inside the one-domain library-binding model. They do
+  not create a second clock domain and they do not model clock-domain crossing
+  behavior.
+- ISF now accepts parser metadata for named domains and builds an internal
+  scheduler partition, but public multi-domain `.fsm` emission and
+  schedule-report projection remain unshipped.
+- Direct reads or writes between domains are not accepted by implication. A
+  shipped CDC primitive or protocol actor must provide specified runtime
+  behavior, lowering, diagnostics, and report metadata before such crossings
+  are legal.
 - Asynchronous reset trees are not DTs. FSMGen does not use ISF DT logic to
   build arbitrary asynchronous reset gating.
 
-Selected future source model, not implemented yet:
-- Named domains are actor-scoped. The planned multi-domain spelling is an
-  actor-level `(clock-domains ...)` block:
+Selected source model and current implementation status:
+- Named domains are actor-scoped. The parser now accepts the selected
+  actor-level `(clock-domains ...)` block as metadata for the domain
+  partitioning handoff:
 
 ```lisp
 (clock-domains
@@ -482,17 +485,42 @@ Selected future source model, not implemented yet:
   (domain bus  (clock bus_clk)))
 ```
 
-- Existing `(clock clk)` remains the shipped shorthand for one implicit actor
-  domain named `default`.
-- A future actor source must not mix `(clock ...)` with `(clock-domains ...)`.
+- Existing `(clock clk)` remains the shorthand for one implicit actor domain
+  named `default`.
+- Actor source must not mix `(clock ...)` with `(clock-domains ...)`, and must
+  not mix actor-level `(reset ...)` with `(clock-domains ...)`.
 - A multi-domain actor must declare unique domain names, scalar clock names,
   and exactly one default domain. A single-domain block has an implicit
   default.
 - Interface ports, actor-owned storage entries, transactions, rules, and
-  child instances may only reference actor-declared domain names. Omitted
-  domain references inherit the actor default domain.
+  child instances may only reference actor-declared domain names through
+  `(domain NAME)` annotations. Omitted domain references inherit the actor
+  default domain when `(clock-domains ...)` is present.
+- Domain annotations are accepted on interface ports, storage entries,
+  transactions, rules, reusable `use` instances, and generated child
+  activations:
+
+```lisp
+(interface
+  (input start (domain core))
+  (output bus_done (domain bus)))
+(storage
+  (var core_reg (width 1) (domain core)))
+(transaction bus_tx
+  (domain bus)
+  ...)
+(rule core_rule
+  (domain core)
+  ...)
+(use lib.actor as rx
+  (domain bus)
+  (bind ...))
+(spawn worker as w0
+  (domain core))
+```
+
 - Drives do not own domains; they inherit the domain of their activation site.
-  Reusing one drive body from multiple domains remains rejected until a later
+  Reusing one drive body from multiple domains is rejected until a later
   feature defines safe cross-domain drive reuse.
 - Transactions and rules are indivisible domain-owned regions. One
   transaction or rule may not be split across multiple domains.
@@ -503,15 +531,20 @@ Selected future source model, not implemented yet:
   duplicate domain names, duplicate or missing default domain markers in a
   multi-domain actor, duplicate clock names that pretend to be distinct
   domains, and any direct unowned crossing are rejected before lowering.
-- Report metadata and lowering artifacts remain future leaves of the
-  `ISF-CLOCK-DOMAINS` task tree. Reset ownership and the first legal crossing
-  primitive are selected below.
+- Single-domain `(clock-domains ...)` sources can still lower through the
+  existing single-clock scheduled `.fsm` path. Multi-domain sources build a
+  validated internal domain partition, then public `lower(...)` and
+  `report(...)` fail closed until domain-specific artifacts and report
+  projection ship in later leaves.
+- Report metadata and multi-domain artifact emission remain future leaves of
+  the `ISF-CLOCK-DOMAINS` task tree. Reset ownership and the first legal
+  crossing primitive are selected below.
 
-Selected future reset ownership model, not implemented yet:
+Selected reset ownership model and current implementation status:
 - Existing actor-level `(clock clk)` plus optional actor-level `(reset ...)`
   remains the shipped shorthand for one implicit domain named `default`.
-- A future actor using `(clock-domains ...)` must put reset ownership inside
-  each domain entry and must not also use actor-level `(reset ...)`:
+- An actor using `(clock-domains ...)` must put reset ownership inside each
+  domain entry and must not also use actor-level `(reset ...)`:
 
 ```lisp
 (clock-domains
@@ -573,9 +606,15 @@ Selected future crossing primitive, not implemented yet:
   bindings, and reset assertion/deassertion events remain rejected unless a
   shipped crossing primitive or protocol actor owns that path.
 
-Selected future lowering artifact strategy, not implemented yet:
-- Future multi-domain lowering emits one domain-local scheduled `.fsm` artifact
-  per declared domain, named `<actor>__domain_<domain>.fsm`.
+Selected lowering artifact strategy and current implementation status:
+- Current multi-domain lowering builds an internal domain partition that groups
+  interface endpoints, storage, transactions, rules, reusable library uses, and
+  generated child activations by declared domain. It rejects direct unowned
+  cross-domain reads, writes, triggers, activations, bindings, and multi-domain
+  drive reuse before emission.
+- The planned multi-domain artifact emission will emit one domain-local
+  scheduled `.fsm` artifact per declared domain, named
+  `<actor>__domain_<domain>.fsm`.
 - Each domain `.fsm` remains a normal single-clock scheduled module. Its
   `+system` clause uses only the domain clock and that domain's reset policy.
 - A domain `.fsm` contains only domain-owned interface endpoints, storage,
@@ -593,7 +632,8 @@ Selected future lowering artifact strategy, not implemented yet:
   and source ready logic. It is not an ordinary single-domain `.fsm` state
   chain.
 - Schedule-report metadata for domain artifacts, generated top wiring, and
-  crossing artifacts remains future work.
+  crossing artifacts remains future work. Until that report projection ships,
+  public `report(...)` rejects multi-domain actors after partition validation.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.

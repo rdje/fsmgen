@@ -57,6 +57,7 @@ sub lower($self, @args) {
     fsm_trace_enter("Scheduler lower: $actor->{actor_name}", 2);
 
     my $ir     = $self->{ir}->build_module($actor);
+    _confess_unemitted_multi_domain($ir, 'lower');
     my %files;
 
     # Emit parent
@@ -82,6 +83,7 @@ sub report($self, @args) {
     fsm_trace_enter("Scheduler report: $actor->{actor_name}", 2);
 
     my $ir   = $self->{ir}->build_module($actor);
+    _confess_unemitted_multi_domain($ir, 'report');
     my $json = $self->{json_emitter}->emit($ir);
 
     fsm_trace_exit("Scheduler report completed", 2);
@@ -108,6 +110,13 @@ sub _validate_actor_arg($method, @args) {
         unless ref($actor->{interface}) eq 'HASH';
 
     return ($actor);
+}
+
+sub _confess_unemitted_multi_domain($ir, $method) {
+    my $partition = $ir->{domain_partition};
+    return 1 unless ref($partition) eq 'HASH' && ($partition->{kind} // '') eq 'multi_domain';
+
+    confess "FSM::Scheduler::ISF->$method validated the multi-domain partition for actor '$ir->{actor_name}', but multi-domain .fsm artifact emission and schedule-report projection are not implemented yet\n";
 }
 
 1;

@@ -402,6 +402,7 @@ sub build_isf_public_interface_contract {
             't/1244-isf-wait-clause-lowering.t',
             't/1245-isf-transaction-loop-lowering.t',
             't/1246-isf-setter-syntax.t',
+            't/1247-isf-clock-domain-partition.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -722,7 +723,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
@@ -730,19 +731,19 @@ sub isf_public_interface_actor_shell_actor_name_shape {
 }
 
 sub isf_public_interface_actor_shell_timing_shape {
-    return 'clock is a non-empty scalar when configured; reset is null when omitted or a hash with scalar name, kind, and polarity; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, and storage clauses are singleton actor clauses';
+    return 'clock is a non-empty scalar when configured and is the default-domain clock when clock_domains is present; reset is null when omitted or a hash with scalar name, kind, and polarity for the default domain; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, storage, and clock-domains clauses are singleton actor clauses; multi-domain scheduler lower/report calls fail closed until domain-specific artifact and report projection ship';
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
-    return 'interface has inputs and outputs arrays; each public port entry has unique non-empty scalar name and positive integer width, defaulting omitted source widths to 1';
+    return 'interface has inputs and outputs arrays; each public port entry has unique non-empty scalar name and positive integer width, defaulting omitted source widths to 1; accepted clock-domain sources may include scalar domain ownership metadata on port entries';
 }
 
 sub isf_public_interface_actor_shell_transaction_shape {
-    return 'transactions is an array of public transaction shell entries; each entry has unique non-empty scalar name, ports hash with inputs/outputs arrays, and clauses array, while clause payload contents remain private scheduler input';
+    return 'transactions is an array of public transaction shell entries; each entry has unique non-empty scalar name, ports hash with inputs/outputs arrays, clauses array, and optional scalar domain ownership metadata, while clause payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_actor_shell_rule_shape {
-    return 'rules is an array of public rule shell entries; each entry has unique non-empty scalar name, optional normalized when clause, and actions array; scalar or expression shorthand rule guards normalize into when while rule payload contents remain private scheduler input';
+    return 'rules is an array of public rule shell entries; each entry has unique non-empty scalar name, optional normalized when clause, actions array, and optional scalar domain ownership metadata; scalar or expression shorthand rule guards normalize into when while rule payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_actor_shell_drive_shape {

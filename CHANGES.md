@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF clock-domain partitioning handoff shipped
+- Completed `ISF-CLOCK-DOMAINS.5.2`.
+- Added parser support for selected `(clock-domains ...)` metadata and
+  `(domain NAME)` ownership annotations on interface ports, storage entries,
+  transactions, rules, reusable `use` instances, and generated child
+  activations.
+- Added internal `LoweringIR` domain partitioning for accepted sources,
+  grouping ports, storage, transactions, rules, library uses, and generated
+  child instances by declared domain.
+- Added fail-closed checks for direct unowned cross-domain reads, writes,
+  triggers, activations, bindings, and multi-domain drive reuse before
+  emission.
+- Single-domain `(clock-domains ...)` actors lower through the existing
+  single-clock scheduled `.fsm` path. Multi-domain `lower(...)` and
+  `report(...)` calls validate the partition, then reject until
+  domain-specific artifacts and report projection ship.
+- Updated ISF public contract metadata, mdBook chapters, spec, task tree, and
+  focused regressions. The active R14 frontier advances to
+  `ISF-CLOCK-DOMAINS.5.3`, domain-specific scheduled `.fsm` emission.
 ### R14 — ISF clock-domain lowering artifacts selected
 - Completed `ISF-CLOCK-DOMAINS.5.1` and split `ISF-CLOCK-DOMAINS.5` into
   executable lowering leaves.

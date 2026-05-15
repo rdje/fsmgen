@@ -1009,22 +1009,26 @@ Status: proposed task tree under
 Goal: give ISF a deliberate model for designs with multiple clock domains,
 asynchronous boundaries, and interacting domains.
 
-Current boundary: ISF currently has one clock domain per actor/generated top.
-Different clock signal names, library clock/reset bindings, and generated-top
-system-port links are signal-name binding within that model. They are not CDC
-semantics.
+Current boundary: legacy `(clock name)` actors and reusable-library
+clock/reset bindings remain one-clock-domain scheduled artifacts. The parser
+now accepts actor-scoped `(clock-domains ...)` metadata and the scheduler can
+partition accepted actors by domain, but public multi-domain `lower(...)` and
+`report(...)` calls still fail closed until the artifact and report leaves
+ship. Different clock signal names, library clock/reset bindings, and
+generated-top system-port links are not CDC semantics by themselves.
 
 The future feature must still define at least:
 
+- emitted domain-specific scheduled `.fsm` artifacts and generated top wiring;
 - what bounded schedule-report metadata and fixtures prove the behavior.
 
 Until that contract ships, direct same-cycle reads or writes across domains
 must not be inferred from ordinary signal access.
 
-Source-model decision: the selected future source model is actor-scoped named
-domains. Existing `(clock name)` remains the shipped shorthand for one implicit
-actor domain named `default`. Future multi-domain source will use an
-actor-level `(clock-domains ...)` block such as:
+Source-model decision: the selected source model is actor-scoped named
+domains. Existing `(clock name)` remains the shorthand for one implicit actor
+domain named `default`. Multi-domain source uses an actor-level
+`(clock-domains ...)` block such as:
 
 ```lisp
 (clock-domains
@@ -1032,16 +1036,19 @@ actor-level `(clock-domains ...)` block such as:
   (domain bus  (clock bus_clk)))
 ```
 
-Interface ports, actor-owned storage entries, transactions, rules, and child
-instances may reference only domains declared by the actor and otherwise
-inherit the default. Drives inherit the activation-site domain. Port and child
-domain annotations are ownership metadata, not CDC primitives, so direct
-cross-domain reads, writes, triggers, activations, or bindings still fail
-closed until a legal crossing primitive ships.
+Interface ports, actor-owned storage entries, transactions, rules, reusable
+`use` instances, and generated child activations may reference only domains
+declared by the actor through `(domain NAME)` annotations and otherwise inherit
+the default. A single-domain `(clock-domains ...)` block has an implicit
+default and can still lower through the existing single-clock path. Drives
+inherit the activation-site domain. Domain annotations are ownership metadata,
+not CDC primitives, so direct cross-domain reads, writes, triggers,
+activations, bindings, or multi-domain drive reuse fail closed until a legal
+crossing primitive ships.
 
-Reset-ownership decision: future multi-domain source puts reset ownership
-inside each domain entry. Existing actor-level `(reset ...)` remains the
-single-domain shorthand, but it must not be mixed with `(clock-domains ...)`.
+Reset-ownership decision: multi-domain source puts reset ownership inside each
+domain entry. Existing actor-level `(reset ...)` remains the single-domain
+shorthand, but it must not be mixed with `(clock-domains ...)`.
 Each domain owns zero or one reset. Synchronous resets are sampled on the
 owning domain clock; asynchronous resets are direct external reset pins, not
 DT-generated logic. Reusing one reset signal across domains is only legal when
@@ -1058,14 +1065,15 @@ bindings, and reset assertion/deassertion events remain fail-closed unless a
 shipped primitive or protocol actor owns that path. Payload handshakes and
 dual-clock FIFO-like actors remain future backlog.
 
-Lowering decision: future multi-domain lowering keeps domain behavior in
-normal single-clock scheduled `.fsm` artifacts named
-`<actor>__domain_<domain>.fsm`. The generated top owns only inter-module
-wiring. Acknowledged event crossings emit explicit generated CDC artifacts with
-source and destination clocks/resets, request toggle, destination
-synchronizer, destination pulse, acknowledgement synchronizer, and source
-ready logic. Normal scheduled `.fsm` modules are not silently widened into
-multi-clock modules. Bounded schedule-report metadata and fixtures remain
+Lowering decision: current multi-domain lowering stops at a validated
+domain-local internal partition and fail-closed cross-domain checks. Future
+artifact emission keeps domain behavior in normal single-clock scheduled
+`.fsm` artifacts named `<actor>__domain_<domain>.fsm`. The generated top owns
+only inter-module wiring. Acknowledged event crossings emit explicit generated
+CDC artifacts with source and destination clocks/resets, request toggle,
+destination synchronizer, destination pulse, acknowledgement synchronizer, and
+source ready logic. Normal scheduled `.fsm` modules are not silently widened
+into multi-clock modules. Bounded schedule-report metadata and fixtures remain
 future work.
 
 ## Backends And Validation

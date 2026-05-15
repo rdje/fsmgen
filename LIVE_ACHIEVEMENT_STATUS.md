@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF clock-domain partitioning handoff shipped
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.2`.
+- Parser accepts selected `(clock-domains ...)` metadata and `(domain NAME)`
+  ownership annotations for ports, storage, transactions, rules, reusable
+  `use` instances, and generated child activations.
+- `LoweringIR` groups accepted sources by declared domain and rejects direct
+  unowned cross-domain references before emission.
+- Single-domain `(clock-domains ...)` sources still lower through the existing
+  single-clock path. Multi-domain `lower(...)` and `report(...)` validate the
+  partition, then reject until domain artifacts and report projection ship.
+- The active frontier advances to `ISF-CLOCK-DOMAINS.5.3`,
+  domain-specific scheduled `.fsm` emission.
+
 ## 2026-05-15: R14 — ISF clock-domain lowering artifacts selected
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.1`.
 - Future multi-domain lowering emits one normal single-clock scheduled `.fsm`

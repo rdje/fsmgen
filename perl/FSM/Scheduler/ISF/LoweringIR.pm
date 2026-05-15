@@ -61,6 +61,7 @@ my %TRANSACTION_CONTEXT_LABEL = (
 );
 
 sub build_module($self, $actor) {
+    my $domain_partition = $self->_build_domain_partition($actor);
     $self->_validate_child_transaction_refs($actor);
     my %generated_children = $self->_collect_generated_child_transaction_refs($actor);
     $self->_validate_transaction_parameter_clauses($actor, \%generated_children);
@@ -87,6 +88,7 @@ sub build_module($self, $actor) {
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children);
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;
+    $parent_ir->{domain_partition} = $domain_partition if $domain_partition;
     return $parent_ir;
 }
 
@@ -404,6 +406,562 @@ sub _generated_child_transaction_refs {
         }
     }
     return %s;
+}
+
+sub _build_domain_partition($self, $actor) {
+    return undef unless _actor_has_clock_domains($actor);
+
+    my $clock_domains = $actor->{clock_domains};
+    my $default_domain = $clock_domains->{default};
+    my @domain_order = map { $_->{name} } @{$clock_domains->{domains} || []};
+    my %groups;
+
+    for my $domain (@{$clock_domains->{domains} || []}) {
+        my $name = $domain->{name};
+        $groups{$name} = {
+            name          => $name,
+            clock         => $domain->{clock},
+            reset         => _clone_isf_value($domain->{reset}),
+            scheduled_fsm => "$actor->{actor_name}__domain_${name}.fsm",
+            ports         => { inputs => [], outputs => [] },
+            storage       => [],
+            transactions  => [],
+            rules         => [],
+            child_instances => [],
+            library_uses  => [],
+        };
+    }
+
+    my %signal_domains = _actor_domain_signal_map($actor, $default_domain);
+    my %transaction_domains = map {
+        $_->{name} => _domain_for_entry($_, $default_domain)
+    } @{$actor->{transactions} || []};
+    my %constants = map { $_->{name} => 1 } @{$actor->{constants} || []};
+    my %drive_use_domains;
+
+    for my $input (@{$actor->{interface}{inputs} || []}) {
+        push @{$groups{_domain_for_entry($input, $default_domain)}{ports}{inputs}}, $input->{name};
+    }
+    for my $output (@{$actor->{interface}{outputs} || []}) {
+        push @{$groups{_domain_for_entry($output, $default_domain)}{ports}{outputs}}, $output->{name};
+    }
+    for my $storage (@{$actor->{storage} || []}) {
+        push @{$groups{_domain_for_entry($storage, $default_domain)}{storage}}, $storage->{name};
+    }
+    for my $tx (@{$actor->{transactions} || []}) {
+        push @{$groups{_domain_for_entry($tx, $default_domain)}{transactions}}, $tx->{name};
+    }
+    for my $rule (@{$actor->{rules} || []}) {
+        push @{$groups{_domain_for_entry($rule, $default_domain)}{rules}}, $rule->{name};
+    }
+    for my $use (@{$actor->{library_uses} || []}) {
+        push @{$groups{_domain_for_entry($use, $default_domain)}{library_uses}}, $use->{instance};
+    }
+
+    my %generated_children = _generated_child_transaction_refs($actor);
+    my %do_ordinals;
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $owner_domain = _domain_for_entry($tx, $default_domain);
+        for my $clause (@{$tx->{clauses} || []}) {
+            next unless ref($clause) eq 'ARRAY' && @$clause;
+            my $keyword = $clause->[0];
+            next unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do');
+
+            my $target = $clause->[1];
+            my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, 'transaction body') // $owner_domain;
+            confess "Transaction '$tx->{name}': $keyword target '$target' uses unknown clock domain '$activation_domain'\n"
+                unless exists $groups{$activation_domain};
+            my $include_instance = $keyword eq 'spawn' || ($keyword eq 'do' && $generated_children{$target});
+            if ($include_instance) {
+                my $ordinal = $do_ordinals{$tx->{name}} // 0;
+                $do_ordinals{$tx->{name}} = $ordinal + 1 if $keyword eq 'do';
+                my $instance = $keyword eq 'spawn'
+                    ? $clause->[3]
+                    : _generated_do_instance_name($tx->{name}, $target, $ordinal);
+                push @{$groups{$activation_domain}{child_instances}}, {
+                    kind   => $keyword,
+                    owner  => $tx->{name},
+                    child  => $target,
+                    instance => $instance,
+                };
+            } elsif ($keyword eq 'do') {
+                $do_ordinals{$tx->{name}}++;
+            }
+        }
+    }
+
+    $self->_validate_transaction_domain_refs(
+        $actor,
+        \%signal_domains,
+        \%transaction_domains,
+        \%constants,
+        \%drive_use_domains,
+        $default_domain,
+    );
+    $self->_validate_rule_domain_refs(
+        $actor,
+        \%signal_domains,
+        \%transaction_domains,
+        \%constants,
+        $default_domain,
+    );
+    $self->_validate_library_use_domain_refs($actor, \%signal_domains, $default_domain);
+    _validate_drive_reuse_domains(\%drive_use_domains);
+
+    return {
+        kind => @domain_order > 1 ? 'multi_domain' : 'single_domain',
+        default_domain => $default_domain,
+        domains => [ map { $groups{$_} } @domain_order ],
+    };
+}
+
+sub _actor_has_clock_domains {
+    my ($actor) = @_;
+    return ref($actor->{clock_domains}) eq 'HASH'
+        && ref($actor->{clock_domains}{domains}) eq 'ARRAY'
+        && @{$actor->{clock_domains}{domains}};
+}
+
+sub _domain_for_entry {
+    my ($entry, $default_domain) = @_;
+    return ref($entry) eq 'HASH' && defined($entry->{domain})
+        ? $entry->{domain}
+        : $default_domain;
+}
+
+sub _actor_domain_signal_map {
+    my ($actor, $default_domain) = @_;
+    my %signals;
+
+    for my $input (@{$actor->{interface}{inputs} || []}) {
+        $signals{$input->{name}} = {
+            domain => _domain_for_entry($input, $default_domain),
+            kind   => 'actor_input',
+        };
+    }
+    for my $output (@{$actor->{interface}{outputs} || []}) {
+        $signals{$output->{name}} = {
+            domain => _domain_for_entry($output, $default_domain),
+            kind   => 'actor_output',
+        };
+    }
+    for my $storage (@{$actor->{storage} || []}) {
+        my $domain = _domain_for_entry($storage, $default_domain);
+        $signals{$storage->{name}} = {
+            domain => $domain,
+            kind   => 'actor_storage',
+        };
+        for my $signal (@{$storage->{signals} || []}) {
+            $signals{$signal->{name}} = {
+                domain => $domain,
+                kind   => 'actor_storage',
+            };
+        }
+    }
+
+    return %signals;
+}
+
+sub _validate_transaction_domain_refs($self, $actor, $signal_domains, $transaction_domains, $constants, $drive_use_domains, $default_domain) {
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $domain = _domain_for_entry($tx, $default_domain);
+        my %local_signals = _transaction_local_signal_domains($tx, $domain);
+        for my $clause (@{$tx->{clauses} || []}) {
+            _validate_transaction_clause_domain_refs(
+                $clause,
+                $actor,
+                $tx,
+                $domain,
+                $signal_domains,
+                \%local_signals,
+                $transaction_domains,
+                $constants,
+                $drive_use_domains,
+                'transaction body',
+            );
+        }
+    }
+    return 1;
+}
+
+sub _validate_rule_domain_refs($self, $actor, $signal_domains, $transaction_domains, $constants, $default_domain) {
+    for my $rule (@{$actor->{rules} || []}) {
+        my $domain = _domain_for_entry($rule, $default_domain);
+        my %local_signals;
+        if (my $when = $rule->{when}) {
+            _validate_domain_expr_reads(
+                $when->[1],
+                $domain,
+                $signal_domains,
+                \%local_signals,
+                $constants,
+                "rule '$rule->{name}' guard",
+            );
+        }
+
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action;
+            my $keyword = $action->[0];
+            next unless defined($keyword) && !ref($keyword);
+
+            if ($keyword eq 'trigger') {
+                my $target = $action->[1];
+                _validate_same_domain_target(
+                    "rule '$rule->{name}' trigger target '$target'",
+                    $domain,
+                    $transaction_domains->{$target},
+                    'transaction',
+                );
+                for my $binding (_activation_bindings_from_clause($action, $rule->{name}, 'rule trigger')->@*) {
+                    if ($binding->{role} eq 'input') {
+                        _validate_domain_expr_reads(
+                            $binding->{actor_expr},
+                            $domain,
+                            $signal_domains,
+                            \%local_signals,
+                            $constants,
+                            "rule '$rule->{name}' trigger input binding '$binding->{port}'",
+                        );
+                    } else {
+                        _validate_domain_signal_access(
+                            $binding->{actor_signal},
+                            'write',
+                            $domain,
+                            $signal_domains,
+                            \%local_signals,
+                            $constants,
+                            "rule '$rule->{name}' trigger output binding '$binding->{port}'",
+                        );
+                    }
+                }
+                next;
+            }
+            next if $keyword eq 'priority';
+
+            if ($keyword eq 'set') {
+                _validate_domain_signal_access($action->[1], 'write', $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' set action");
+                _validate_domain_expr_reads($action->[2], $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' set action");
+                next;
+            }
+            if ($keyword eq 'store') {
+                _validate_domain_signal_access($action->[1], 'write', $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' store action");
+                _validate_domain_expr_reads($action->[2], $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' store index");
+                _validate_domain_expr_reads($action->[3], $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' store value");
+                next;
+            }
+            if ($keyword eq 'load') {
+                _validate_domain_signal_access($action->[1], 'read', $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' load action");
+                _validate_domain_expr_reads($action->[2], $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' load index");
+                _validate_domain_signal_access($action->[4], 'write', $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' load target");
+                next;
+            }
+
+            _validate_domain_signal_access($keyword, 'write', $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' assignment");
+            _validate_domain_expr_reads($action->[1], $domain, $signal_domains, \%local_signals, $constants, "rule '$rule->{name}' assignment");
+        }
+    }
+    return 1;
+}
+
+sub _validate_library_use_domain_refs($self, $actor, $signal_domains, $default_domain) {
+    my %local_signals;
+    my %constants;
+    for my $use (@{$actor->{library_uses} || []}) {
+        my $domain = _domain_for_entry($use, $default_domain);
+        for my $binding (@{$use->{bindings} || []}) {
+            next unless ($binding->{role} // '') eq 'input' || ($binding->{role} // '') eq 'output';
+            _validate_domain_signal_access(
+                $binding->{parent_name},
+                $binding->{role} eq 'input' ? 'read' : 'write',
+                $domain,
+                $signal_domains,
+                \%local_signals,
+                \%constants,
+                "library use '$use->{instance}' $binding->{role} binding '$binding->{library_name}'",
+            );
+        }
+    }
+    return 1;
+}
+
+sub _transaction_local_signal_domains {
+    my ($tx, $domain) = @_;
+    my %signals;
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
+            $signals{$port->{name}} = $domain;
+        }
+    }
+    _collect_transaction_local_signals($tx->{clauses}, $domain, \%signals);
+    return %signals;
+}
+
+sub _collect_transaction_local_signals {
+    my ($clauses, $domain, $signals) = @_;
+    return unless ref($clauses) eq 'ARRAY';
+
+    for my $clause (@$clauses) {
+        next unless ref($clause) eq 'ARRAY' && @$clause;
+        my $keyword = $clause->[0];
+        next unless defined($keyword) && !ref($keyword);
+
+        if (($keyword eq 'sample' || $keyword eq 'load') && @$clause >= 4) {
+            $signals->{$clause->[-1]} = $domain
+                if defined($clause->[-1]) && !ref($clause->[-1]);
+            next;
+        }
+        if (($keyword eq 'update' || $keyword eq 'set' || $keyword eq 'shift_left' || $keyword eq 'shift_right')
+            && defined($clause->[1])
+            && !ref($clause->[1]))
+        {
+            $signals->{$clause->[1]} = $domain;
+        }
+        if ($keyword eq 'assemble') {
+            my $as_idx = _as_index($clause, 2);
+            if (defined($as_idx) && defined($clause->[$as_idx + 1]) && !ref($clause->[$as_idx + 1])) {
+                $signals->{$clause->[$as_idx + 1]} = $domain;
+            }
+        }
+        if ($keyword eq 'extract') {
+            for my $item (@{$clause}[3 .. $#$clause]) {
+                next if ref($item);
+                $signals->{$item} = $domain if defined($item);
+            }
+        }
+
+        if ($keyword eq 'when' || $keyword eq 'repeat' || $keyword eq 'while' || $keyword eq 'until') {
+            _collect_transaction_local_signals([@{$clause}[2 .. $#$clause]], $domain, $signals);
+        } elsif ($keyword eq 'switch') {
+            for my $branch (@{$clause}[2 .. $#$clause]) {
+                next unless ref($branch) eq 'ARRAY';
+                _collect_transaction_local_signals([@{$branch}[1 .. $#$branch]], $domain, $signals);
+            }
+        }
+    }
+}
+
+sub _validate_transaction_clause_domain_refs {
+    my ($clause, $actor, $tx, $domain, $signal_domains, $local_signals, $transaction_domains, $constants, $drive_use_domains, $label) = @_;
+    return unless ref($clause) eq 'ARRAY' && @$clause;
+
+    my $keyword = $clause->[0];
+    return unless defined($keyword) && !ref($keyword);
+    my $context = "transaction '$tx->{name}'";
+
+    if ($keyword eq 'domain' || $keyword eq 'ports' || $keyword eq 'params' || $keyword eq 'phase' || $keyword eq 'latency') {
+        return 1;
+    }
+    if ($keyword eq 'stage') {
+        for my $subclause (@{$clause}[2 .. $#$clause]) {
+            next unless ref($subclause) eq 'ARRAY' && @$subclause == 2;
+            my ($role, $signal) = @$subclause;
+            next unless defined($role) && !ref($role);
+            if ($role eq 'input') {
+                _validate_domain_signal_access($signal, 'read', $domain, $signal_domains, $local_signals, $constants, "$context stage '$clause->[1]'");
+            } elsif ($role eq 'output') {
+                _validate_domain_signal_access($signal, 'write', $domain, $signal_domains, $local_signals, $constants, "$context stage '$clause->[1]'");
+            }
+        }
+        return 1;
+    }
+    if ($keyword eq 'contract') {
+        my $eventual = $clause->[2];
+        _validate_domain_signal_access($eventual->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context contract '$clause->[1]'")
+            if ref($eventual) eq 'ARRAY' && @$eventual >= 2;
+        return 1;
+    }
+    if ($keyword eq 'on' || $keyword eq 'await') {
+        _validate_domain_signal_access($clause->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
+        if ($keyword eq 'on') {
+            for my $subclause (@{$clause}[2 .. $#$clause]) {
+                _validate_transaction_clause_domain_refs($subclause, $actor, $tx, $domain, $signal_domains, $local_signals, $transaction_domains, $constants, $drive_use_domains, 'on body');
+            }
+        }
+        return 1;
+    }
+    if ($keyword eq 'await_all' || $keyword eq 'await_any') {
+        _validate_domain_signal_access($clause->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
+        return 1;
+    }
+    if ($keyword eq 'sample') {
+        _validate_domain_signal_access($clause->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context sample clause");
+        return 1;
+    }
+    if ($keyword eq 'complete') {
+        _validate_domain_signal_access($clause->[1], 'write', $domain, $signal_domains, $local_signals, $constants, "$context complete clause");
+        return 1;
+    }
+    if ($keyword eq 'wait') {
+        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context wait clause");
+        return 1;
+    }
+    if ($keyword eq 'update' || $keyword eq 'set') {
+        _validate_domain_signal_access($clause->[1], 'write', $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
+        _validate_domain_expr_reads($clause->[2], $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
+        return 1;
+    }
+    if ($keyword eq 'shift_left' || $keyword eq 'shift_right') {
+        _validate_domain_signal_access($clause->[1], 'write', $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
+        _validate_domain_signal_access($clause->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
+        _validate_domain_expr_reads($clause->[2], $domain, $signal_domains, $local_signals, $constants, "$context $keyword clause");
+        return 1;
+    }
+    if ($keyword eq 'assemble') {
+        my $as_idx = _as_index($clause, 2);
+        if (defined $as_idx) {
+            for my $part (@{$clause}[1 .. $as_idx - 1]) {
+                _validate_domain_expr_reads($part, $domain, $signal_domains, $local_signals, $constants, "$context assemble clause");
+            }
+            _validate_domain_signal_access($clause->[$as_idx + 1], 'write', $domain, $signal_domains, $local_signals, $constants, "$context assemble clause");
+        }
+        return 1;
+    }
+    if ($keyword eq 'extract') {
+        _validate_domain_signal_access($clause->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context extract clause");
+        for my $item (@{$clause}[3 .. $#$clause]) {
+            next if ref($item);
+            _validate_domain_signal_access($item, 'write', $domain, $signal_domains, $local_signals, $constants, "$context extract clause");
+        }
+        return 1;
+    }
+    if ($keyword eq 'store') {
+        _validate_domain_signal_access($clause->[1], 'write', $domain, $signal_domains, $local_signals, $constants, "$context store clause");
+        _validate_domain_expr_reads($clause->[2], $domain, $signal_domains, $local_signals, $constants, "$context store index");
+        _validate_domain_expr_reads($clause->[3], $domain, $signal_domains, $local_signals, $constants, "$context store value");
+        return 1;
+    }
+    if ($keyword eq 'load') {
+        _validate_domain_signal_access($clause->[1], 'read', $domain, $signal_domains, $local_signals, $constants, "$context load clause");
+        _validate_domain_expr_reads($clause->[2], $domain, $signal_domains, $local_signals, $constants, "$context load index");
+        _validate_domain_signal_access($clause->[4], 'write', $domain, $signal_domains, $local_signals, $constants, "$context load target");
+        return 1;
+    }
+    if ($keyword eq 'drive') {
+        if (defined($clause->[1]) && !ref($clause->[1]) && exists(($actor->{drives} || {})->{$clause->[1]})) {
+            $drive_use_domains->{$clause->[1]}{$domain} = 1;
+            for my $arg (@{$clause}[2 .. $#$clause]) {
+                _validate_domain_expr_reads($arg, $domain, $signal_domains, $local_signals, $constants, "$context drive '$clause->[1]' call");
+            }
+        } else {
+            for my $assignment (@{$clause}[2 .. $#$clause]) {
+                next unless ref($assignment) eq 'ARRAY' && @$assignment >= 2;
+                _validate_domain_signal_access($assignment->[0], 'write', $domain, $signal_domains, $local_signals, $constants, "$context inline drive");
+                _validate_domain_expr_reads($assignment->[1], $domain, $signal_domains, $local_signals, $constants, "$context inline drive");
+            }
+        }
+        return 1;
+    }
+    if ($keyword eq 'do' || $keyword eq 'spawn') {
+        my $target = $clause->[1];
+        _validate_same_domain_target(
+            "$context $keyword target '$target'",
+            $domain,
+            $transaction_domains->{$target},
+            'transaction',
+        );
+        if (my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, $label)) {
+            _validate_same_domain_target(
+                "$context $keyword instance domain '$activation_domain'",
+                $domain,
+                $activation_domain,
+                'activation',
+            );
+        }
+        for my $binding (_activation_bindings_from_clause($clause, $tx->{name}, $label)->@*) {
+            if ($binding->{role} eq 'input') {
+                _validate_domain_expr_reads($binding->{actor_expr}, $domain, $signal_domains, $local_signals, $constants, "$context $keyword input binding '$binding->{port}'");
+            } else {
+                _validate_domain_signal_access($binding->{actor_signal}, 'write', $domain, $signal_domains, $local_signals, $constants, "$context $keyword output binding '$binding->{port}'");
+            }
+        }
+        return 1;
+    }
+    if ($keyword eq 'when' || $keyword eq 'while' || $keyword eq 'until') {
+        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context $keyword condition");
+        for my $subclause (@{$clause}[2 .. $#$clause]) {
+            _validate_transaction_clause_domain_refs($subclause, $actor, $tx, $domain, $signal_domains, $local_signals, $transaction_domains, $constants, $drive_use_domains, "$keyword body");
+        }
+        return 1;
+    }
+    if ($keyword eq 'repeat') {
+        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context repeat count");
+        for my $subclause (@{$clause}[2 .. $#$clause]) {
+            _validate_transaction_clause_domain_refs($subclause, $actor, $tx, $domain, $signal_domains, $local_signals, $transaction_domains, $constants, $drive_use_domains, 'repeat body');
+        }
+        return 1;
+    }
+    if ($keyword eq 'switch') {
+        _validate_domain_expr_reads($clause->[1], $domain, $signal_domains, $local_signals, $constants, "$context switch selector");
+        for my $branch (@{$clause}[2 .. $#$clause]) {
+            next unless ref($branch) eq 'ARRAY';
+            for my $subclause (@{$branch}[1 .. $#$branch]) {
+                _validate_transaction_clause_domain_refs($subclause, $actor, $tx, $domain, $signal_domains, $local_signals, $transaction_domains, $constants, $drive_use_domains, 'switch branch');
+            }
+        }
+        return 1;
+    }
+
+    return 1;
+}
+
+sub _validate_domain_expr_reads {
+    my ($expr, $domain, $signal_domains, $local_signals, $constants, $context) = @_;
+    return unless defined $expr;
+
+    if (!ref($expr)) {
+        _validate_domain_signal_access($expr, 'read', $domain, $signal_domains, $local_signals, $constants, $context);
+        return 1;
+    }
+    return 1 unless ref($expr) eq 'ARRAY';
+
+    for my $index (0 .. $#$expr) {
+        next if $index == 0 && defined($expr->[$index]) && !ref($expr->[$index]);
+        _validate_domain_expr_reads($expr->[$index], $domain, $signal_domains, $local_signals, $constants, $context);
+    }
+    return 1;
+}
+
+sub _validate_domain_signal_access {
+    my ($name, $access, $domain, $signal_domains, $local_signals, $constants, $context) = @_;
+    return 1 unless defined($name) && !ref($name) && _is_hdl_identifier($name);
+
+    my ($owner_domain, $owner_kind);
+    if (exists $signal_domains->{$name}) {
+        $owner_domain = $signal_domains->{$name}{domain};
+        $owner_kind = $signal_domains->{$name}{kind};
+    } elsif (exists $local_signals->{$name}) {
+        $owner_domain = $local_signals->{$name};
+        $owner_kind = 'transaction_local';
+    } else {
+        return 1;
+    }
+
+    confess "ISF clock-domain violation: $context $access signal '$name' owned by domain '$owner_domain' from domain '$domain' without a crossing primitive\n"
+        if defined($owner_domain) && defined($domain) && $owner_domain ne $domain;
+
+    return 1;
+}
+
+sub _validate_same_domain_target {
+    my ($context, $owner_domain, $target_domain, $target_kind) = @_;
+    return 1 unless defined($target_domain) && defined($owner_domain);
+
+    confess "ISF clock-domain violation: $context references $target_kind in domain '$target_domain' from domain '$owner_domain' without a crossing primitive\n"
+        if $target_domain ne $owner_domain;
+
+    return 1;
+}
+
+sub _validate_drive_reuse_domains {
+    my ($drive_use_domains) = @_;
+
+    for my $drive (sort keys %$drive_use_domains) {
+        my @domains = sort keys %{$drive_use_domains->{$drive} || {}};
+        confess "ISF clock-domain violation: drive '$drive' is called from multiple domains (" . join(', ', @domains) . ") without a safe cross-domain drive reuse rule\n"
+            if @domains > 1;
+    }
+    return 1;
 }
 
 sub _validate_child_transaction_refs($self, $actor) {
@@ -1600,7 +2158,7 @@ sub _validate_child_action_clause {
     my $keyword = $clause->[0];
 
     if ($keyword eq 'do') {
-        confess "Transaction '$tn': do requires '(do transaction [(params (NAME value) ...)] [(bind ...)])' in $label\n"
+        confess "Transaction '$tn': do requires '(do transaction [(domain name)] [(params (NAME value) ...)] [(bind ...)])' in $label\n"
             unless @$clause >= 2
                 && defined($clause->[1])
                 && !ref($clause->[1])
@@ -1608,7 +2166,7 @@ sub _validate_child_action_clause {
 
         my %seen_subclause;
         for my $subclause (@{$clause}[2 .. $#$clause]) {
-            confess "Transaction '$tn': do subclauses must be '(params ...)' or '(bind ...)' in $label\n"
+            confess "Transaction '$tn': do subclauses must be '(domain ...)', '(params ...)', or '(bind ...)' in $label\n"
                 unless ref($subclause) eq 'ARRAY'
                     && @$subclause
                     && defined($subclause->[0])
@@ -1621,6 +2179,10 @@ sub _validate_child_action_clause {
                 _parse_activation_params_clause($subclause, $tn, 'do', $clause->[1], $label);
                 next;
             }
+            if ($head eq 'domain') {
+                _activation_domain_from_clause(['do', $clause->[1], $subclause], $tn, $label);
+                next;
+            }
             if ($head eq 'bind') {
                 _parse_activation_bind_clause($subclause, "Transaction '$tn': do target '$clause->[1]'");
                 next;
@@ -1631,7 +2193,7 @@ sub _validate_child_action_clause {
         return 1;
     }
 
-    confess "Transaction '$tn': spawn requires '(spawn transaction as instance [(params (NAME value) ...)] [(bind ...)])' in $label\n"
+    confess "Transaction '$tn': spawn requires '(spawn transaction as instance [(domain name)] [(params (NAME value) ...)] [(bind ...)])' in $label\n"
         unless @$clause >= 4
             && defined($clause->[1])
             && !ref($clause->[1])
@@ -1645,7 +2207,7 @@ sub _validate_child_action_clause {
 
     my %seen_subclause;
     for my $subclause (@{$clause}[4 .. $#$clause]) {
-        confess "Transaction '$tn': spawn subclauses must be '(params ...)' or '(bind ...)' in $label\n"
+        confess "Transaction '$tn': spawn subclauses must be '(domain ...)', '(params ...)', or '(bind ...)' in $label\n"
             unless ref($subclause) eq 'ARRAY'
                 && @$subclause
                 && defined($subclause->[0])
@@ -1656,6 +2218,10 @@ sub _validate_child_action_clause {
             if $seen_subclause{$head}++;
         if ($head eq 'params') {
             _parse_activation_params_clause($subclause, $tn, 'spawn', $clause->[3], $label);
+            next;
+        }
+        if ($head eq 'domain') {
+            _activation_domain_from_clause(['spawn', $clause->[1], 'as', $clause->[3], $subclause], $tn, $label);
             next;
         }
         if ($head eq 'bind') {
@@ -1729,6 +2295,8 @@ sub _spawn_ref_from_clause {
         instance => $instance,
         parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body'),
     };
+    my $domain = _activation_domain_from_clause($clause, $tn, 'transaction body');
+    $ref->{domain} = $domain if defined $domain;
     my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'transaction body');
     $ref->{port_bindings} = $port_bindings if @$port_bindings;
     return $ref;
@@ -1749,6 +2317,8 @@ sub _do_ref_from_clause {
         my $instance = _generated_do_instance_name($tn, $child, $ordinal);
         $ref->{instance} = $instance;
         $ref->{parameter_overrides} = $overrides;
+        my $domain = _activation_domain_from_clause($clause, $tn, 'transaction body');
+        $ref->{domain} = $domain if defined $domain;
         my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'transaction body');
         $ref->{port_bindings} = $port_bindings if @$port_bindings;
     }
@@ -1786,6 +2356,31 @@ sub _activation_parameter_overrides {
         return _parse_activation_params_clause($subclause, $tn, $keyword, $instance, $label);
     }
     return [];
+}
+
+sub _activation_domain_from_clause {
+    my ($clause, $tn, $label) = @_;
+    return undef unless ref($clause) eq 'ARRAY' && @$clause;
+    my $keyword = $clause->[0];
+    return undef unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do');
+    my $start = $keyword eq 'spawn' ? 4 : 2;
+    return undef if $#$clause < $start;
+
+    my $domain;
+    for my $subclause (@{$clause}[$start .. $#$clause]) {
+        next unless ref($subclause) eq 'ARRAY'
+            && @$subclause
+            && defined($subclause->[0])
+            && !ref($subclause->[0])
+            && $subclause->[0] eq 'domain';
+        confess "Transaction '$tn': $keyword has duplicate '(domain ...)' subclause in $label\n"
+            if defined $domain;
+        confess "Transaction '$tn': $keyword domain requires '(domain name)' in $label\n"
+            unless @$subclause == 2 && _is_hdl_identifier($subclause->[1]);
+        $domain = $subclause->[1];
+    }
+
+    return $domain;
 }
 
 sub _parse_spawn_params_clause {
@@ -1864,6 +2459,7 @@ sub _activation_bindings_from_clause {
                 && length($subclause->[0]);
         my $head = $subclause->[0];
         next if ($keyword eq 'spawn' || $keyword eq 'do') && $head eq 'params';
+        next if ($keyword eq 'spawn' || $keyword eq 'do') && $head eq 'domain';
         confess "Transaction '$owner': activation has duplicate '(bind ...)' subclause in $label\n"
             if $head eq 'bind' && $saw_bind++;
         confess "Transaction '$owner': activation supports only '(bind ...)' subclauses in $label\n"

@@ -737,8 +737,15 @@ and the library child instance. Same-name clock/reset bindings use the existing
 composition system-port auto-wiring path. Differently named clock/reset
 bindings emit explicit generated-top `?wiring` list links such as
 `(clk rx.lib_clk)` to the library child system ports; the reusable actor still
-owns reset kind and polarity. ISF still has one actor clock domain in this
-shipped surface.
+owns reset kind and polarity. That reusable-library system-binding surface is
+still signal-name binding, not CDC behavior by itself.
+The clock-domain partition slice adds parser and internal scheduler handoff
+metadata for the selected future `(clock-domains ...)` source model. Accepted
+multi-domain actors are partitioned by declared domain inside `LoweringIR`, and
+direct unowned cross-domain reads, writes, triggers, activations, bindings, and
+drive reuse fail closed before emission. Public `lower(...)` and `report(...)`
+still reject multi-domain actors after validation because domain-specific
+`.fsm` artifacts and schedule-report domain projection are later leaves.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters
@@ -823,6 +830,12 @@ Actor roots may also carry parser-validated actor-local constants through a
 singleton `(constants ...)` clause. That field is not a required actor shell
 key, but the advertised value-shape string records that `constants` is an
 optional array reference when present.
+Actor roots may also carry parser-validated clock-domain declarations through
+a singleton `(clock-domains ...)` clause. That field is not a required actor
+shell key, but the advertised value-shape string records that `clock_domains`
+is null for legacy one-clock actors or optional live metadata for accepted
+domain declarations. When `clock_domains` is present, the compatibility
+`clock` and `reset` fields expose the selected default domain only.
 The bank access forms `(store <bank-name> <index> <value>)` and
 `(load <bank-name> <index> as <target>)` are now public parser support for
 declared actor-owned banks in rules and supported transaction contexts. The
@@ -836,14 +849,17 @@ ordinary rule assignment and transaction `update` surfaces.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
 port entry has unique non-empty scalar `name` plus positive integer `width`,
-with omitted source widths normalized to `1`. The machine-readable contract
-advertises this through `actor_shell_interface_shape`.
+with omitted source widths normalized to `1`. Accepted clock-domain sources may
+carry scalar `domain` ownership metadata on those port entries. The
+machine-readable contract advertises this through
+`actor_shell_interface_shape`.
 This is current live-contract metadata for scheduler-consumable parser output;
 it does not make actor fields outside the advertised shell public or freeze
 future ISF interface extensions before they are documented and audited.
 The current public parser handoff also advertises a bounded transaction-entry
 shell: `transactions` is an array of entries with unique non-empty scalar
-`name` and `clauses` array fields. The machine-readable contract advertises this through
+`name`, `clauses` array fields, and optional scalar `domain` ownership
+metadata. The machine-readable contract advertises this through
 `actor_shell_transaction_shape`. The `clauses` array is a scheduler-consumable
 container; its payload contents are intentionally not frozen as a public API by
 this field.
@@ -852,18 +868,23 @@ The current public parser handoff also advertises the actor identity shell:
 root. The machine-readable contract advertises this through
 `actor_shell_actor_name_shape`.
 The current public parser handoff also advertises bounded actor timing fields:
-`clock` is a non-empty scalar when configured, `reset` is null when omitted or a
-hash with scalar `name`, `kind`, and `polarity`, and `watchdog` is null when
-omitted or a positive integer. The machine-readable contract advertises this
-through `actor_shell_timing_shape`.
+`clock` is a non-empty scalar when configured and is the default-domain clock
+when `clock_domains` is present, `reset` is null when omitted or a hash with
+scalar `name`, `kind`, and `polarity` for the default domain, and `watchdog` is
+null when omitted or a positive integer. Public multi-domain `lower(...)` and
+`report(...)` calls still fail closed until domain-specific artifacts and
+report projection ship. The machine-readable contract advertises this through
+`actor_shell_timing_shape`.
 Those timing fields, along with `interface`, parser-carried `resources`, and
-parser-carried `storage`, are source-level singleton actor clauses. Repeating
-one is a parser boundary error; the parser does not merge duplicate
-interface/resources/storage blocks or let later clock/reset/watchdog clauses
-overwrite earlier ones.
+parser-carried `storage`, are source-level singleton actor clauses. The
+`clock-domains` clause is also singleton and is mutually exclusive with
+actor-level `clock` and `reset`. Repeating one is a parser boundary error; the
+parser does not merge duplicate interface/resources/storage/clock-domain
+blocks or let later clock/reset/watchdog clauses overwrite earlier ones.
 The current public parser handoff also advertises a bounded rule-entry shell:
 `rules` is an array of entries with unique non-empty scalar `name`, optional
-`when`, and `actions` array fields. The machine-readable contract advertises this through
+`when`, `actions` array fields, and optional scalar `domain` ownership
+metadata. The machine-readable contract advertises this through
 `actor_shell_rule_shape`. Rule condition/action payload contents remain private
 scheduler input.
 Authored `(rule name condition actions...)` shorthand and long-form

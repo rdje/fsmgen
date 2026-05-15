@@ -13,10 +13,12 @@
 Every actor has a clock, an optional reset, and optional watchdog.
 The actor is the top-level unit — one hardware agent.
 
-The parser treats `(clock ...)`, `(reset ...)`, `(watchdog ...)`,
-`(interface ...)`, and `(storage ...)` as singleton actor clauses. Each may
-appear at most once in an actor; repeated clauses are rejected before the
-public actor shell is returned rather than merged or overwritten.
+The parser treats `(clock ...)`, `(clock-domains ...)`, `(reset ...)`,
+`(watchdog ...)`, `(interface ...)`, and `(storage ...)` as singleton actor
+clauses. Each may appear at most once in an actor; repeated clauses are
+rejected before the public actor shell is returned rather than merged or
+overwritten. `(clock-domains ...)` is mutually exclusive with actor-level
+`(clock ...)` and `(reset ...)`.
 
 ## Clock
 
@@ -24,9 +26,9 @@ public actor shell is returned rather than merged or overwritten.
 (clock clk)
 ```
 
-The shipped ISF model has one clock domain per actor/generated top. The clock
-name is an authored signal name for that domain; using a name other than `clk`
-does not create a second domain.
+Legacy `(clock name)` ISF actors have one clock domain per actor/generated top.
+The clock name is an authored signal name for that domain; using a name other
+than `clk` does not create a second domain.
 
 Generated-top clock/reset links for reusable libraries are still
 single-domain signal-name bindings. They are not clock-domain-crossing
@@ -34,14 +36,13 @@ constructs, and they do not specify synchronizers, handshakes, dual-clock
 storage, or any other CDC behavior.
 
 Multi-clock, asynchronous, and interacting clock-domain semantics are owned by
-the active `ISF-CLOCK-DOMAINS` feature tree. The future source model, reset
-ownership, and first event crossing primitive are selected below, but ISF still
-cannot accept that source until lowering artifacts, diagnostics, report
-metadata, and fixtures are defined and implemented.
+the active `ISF-CLOCK-DOMAINS` feature tree. The parser now accepts the
+selected actor-scoped named-domain metadata and the scheduler builds an
+internal domain partition, but multi-domain public `lower(...)` and
+`report(...)` calls still fail closed until the later artifact and report
+leaves ship.
 
-The selected future source model is actor-scoped named domains, but it is not
-implemented yet. The planned authoring shape is an actor-level
-`(clock-domains ...)` block:
+The selected authoring shape is an actor-level `(clock-domains ...)` block:
 
 ```lisp
 (clock-domains
@@ -49,15 +50,20 @@ implemented yet. The planned authoring shape is an actor-level
   (domain bus  (clock bus_clk)))
 ```
 
-Existing `(clock clk)` stays the shipped shorthand for one implicit actor
-domain named `default`. A future multi-domain actor will not be allowed to mix
-`(clock ...)` and `(clock-domains ...)`; it will need unique domain names,
-scalar clock names, and exactly one default domain. Interface ports, storage,
-transactions, rules, and child instances will reference actor-declared domain
-names or inherit the default. Drives inherit the domain of their activation
-site. None of those annotations are CDC primitives: direct cross-domain reads,
-writes, triggers, activations, or bindings still fail closed until a later leaf
-ships an explicit legal crossing construct.
+Existing `(clock clk)` stays the shorthand for one implicit actor domain named
+`default`. A multi-domain actor may not mix `(clock ...)` and
+`(clock-domains ...)`; it needs unique domain names, scalar clock names, and
+exactly one default domain. A single-domain `(clock-domains ...)` block has an
+implicit default and can still lower through the existing single-clock `.fsm`
+path.
+
+Interface ports, storage entries, transactions, rules, reusable `use`
+instances, and generated child activations can carry `(domain NAME)`
+annotations, or inherit the default when `(clock-domains ...)` is present.
+Drives inherit the domain of their activation site. None of those annotations
+are CDC primitives: direct cross-domain reads, writes, triggers, activations,
+bindings, or multi-domain drive reuse fail closed before emission unless a
+shipped crossing primitive owns that path.
 
 ## Reset
 
@@ -78,8 +84,8 @@ Reset name convention: `*_n` or `*_b` suffix → `active_low`. Otherwise `active
 | `(reset (rst async))` | `(areset rst)` |
 | `(reset rst_n)` | `(sreset rst_n)` |
 
-For the future multi-domain source model, reset ownership lives inside each
-domain entry. This is not accepted syntax yet, but the planned shape is:
+For the multi-domain source model, reset ownership lives inside each domain
+entry:
 
 ```lisp
 (clock-domains
@@ -95,7 +101,7 @@ signal across multiple domains is only a shared external reset pin when kind
 and polarity match exactly, not a CDC primitive or data synchronizer.
 
 The first selected future crossing primitive is an acknowledged single-bit
-event channel. It is not accepted syntax yet, but the planned shape is:
+event channel. Its syntax is still future work, but the planned shape is:
 
 ```lisp
 (crossings
@@ -112,9 +118,11 @@ promised. The primitive carries no payload. Direct cross-domain reads, writes,
 triggers, activations, child bindings, or reset assertion/deassertion events
 remain illegal until a shipped crossing primitive owns that path.
 
-The selected future lowering strategy keeps each domain as its own
+The selected lowering strategy keeps each future emitted domain as its own
 single-clock scheduled `.fsm` artifact named `<actor>__domain_<domain>.fsm`.
-Generated top wiring and CDC primitive logic are separate reviewable artifacts;
+The current implementation stops at the validated partition and fail-closed
+cross-domain checks for multi-domain actors. Generated top wiring, CDC
+primitive artifacts, and schedule-report projection remain later leaves;
 ordinary `.fsm` modules are not silently widened into multi-clock scheduled
 modules.
 
@@ -144,6 +152,10 @@ Ports become `.fsm` `+size` declarations and module ports. Inferred scheduler
 storage is not emitted a second time when it shares a name with a declared port.
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.
+When an actor uses `(clock-domains ...)`, a port may add `(domain NAME)` to
+declare the owning domain; omitted port domains inherit the actor default
+domain. The annotation is ownership metadata only, not permission for another
+domain to sample or drive the port directly.
 
 ## Actor-Owned Storage
 
@@ -176,6 +188,9 @@ element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing `(width N)`,
 missing bank `(depth N)`, duplicate storage names, duplicate scalarized element
 names, and repeated storage clauses fail closed before scheduler handoff.
+When `(clock-domains ...)` is present, storage entries may add `(domain NAME)`.
+The domain applies to every scalar signal produced by that entry, including
+scalarized bank elements.
 
 Declared storage is emitted in scheduled `.fsm` `+size`, contributes width
 evidence to later lowering, and appears in schedule reports as `kind:
