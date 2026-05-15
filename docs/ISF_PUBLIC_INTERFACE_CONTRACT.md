@@ -139,12 +139,19 @@ for sampled aliases, extracted fields, assembled targets, explicit-width
 shift registers, and completion pulses.
 Actor-owned fixed storage declarations are checked by
 [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
-for parser shape, scalarized bank lowering, `actor_storage` report metadata,
-fail-closed diagnostics, and SystemVerilog generation for used storage.
+for parser shape, authored `(state ...)` scalar storage, scalarized bank
+lowering, `actor_storage` report metadata, fail-closed diagnostics, and
+SystemVerilog generation for used storage.
 Rule expression guards are checked by
 [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 for shorthand and long-form guard normalization, scheduled `.fsm` DT-DTE
 emission, HDL generation, and targeted parser diagnostics.
+The depth-4 FIFO controller matrix is checked by
+[t/1235-isf-fifo-same-cycle-update-matrix.t](../t/1235-isf-fifo-same-cycle-update-matrix.t)
+for the real controller interface, actor-maintained full/empty flags,
+pointer/occupancy state updates, equality-based disjoint-rule proof, scheduled
+`.fsm`, schedule report, and SystemVerilog reachability without inventing a
+FIFO data-bank datapath.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
@@ -691,8 +698,10 @@ Actor roots may also carry parser-validated actor-owned storage declarations
 through a singleton `(storage ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `storage` is an
 optional array reference when present. The shipped storage entries are
-fixed-width `register` declarations and fixed-depth `bank` declarations whose
-scalarized element names are scheduler input.
+fixed-width authored `state` declarations and fixed-depth `bank` declarations
+whose scalarized element names are scheduler input. Schedule reports still use
+coarse `kind: register` for generated storage class; that report value is not
+the source vocabulary.
 The current public parser handoff also advertises one bounded subshape inside
 that shell: `interface` contains `inputs` and `outputs` arrays, and each public
 port entry has unique non-empty scalar `name` plus positive integer `width`,
@@ -752,10 +761,11 @@ transaction in the same actor. This prevents a misspelled rule trigger from
 inventing an otherwise unowned `transaction_start` fan-in path.
 Lowering also performs best-effort static conflict checks for rule data writes:
 provable incompatible rule/rule writes to the same target fail closed, while
-same-target rule writes with direct contradictory guard literals are accepted
-as disjoint. This proof is conservative and currently recognizes simple
-signal and negated-signal terms, including conjunctions used by FIFO fire
-predicates. Rule/drive same-target overlap is marked internally because
+same-target rule writes with direct contradictory guard facts are accepted as
+disjoint. This proof is conservative and currently recognizes simple signal
+and negated-signal terms plus equality facts, including conjunctions used by
+FIFO fire predicates and pointer/occupancy matrix cases. Rule/drive
+same-target overlap is marked internally because
 compile-time proof is not doable in that case. Nonfatal rule/drive overlap is
 now projected into successful schedule-report `compile_issues`; reports with
 no nonfatal issues still keep that array empty.

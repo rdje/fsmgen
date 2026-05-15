@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-LIBRARIES` | `active` | `R14` | `ISF-LIBRARIES.4.4.3` | [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md) |
+| `ISF-LIBRARIES` | `active` | `R14` | `ISF-LIBRARIES.4.4.4` | [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
 ## Proposed Task Trees
@@ -34,6 +34,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
 | `FSMGEN-IR-AUDIT` | `proposed` | `architecture backlog` | `FSMGEN-IR-AUDIT.1` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
+| `ISF-CONTROL-FLOW` | `proposed` | `R14` | `ISF-CONTROL-FLOW.1` | [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) |
 
 ## Completed Task Trees
 
@@ -71,6 +72,7 @@ as done work unless a future task reopens them.
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
+| Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW` |
 | ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |
 
 ## ISF Task-Tree Rule

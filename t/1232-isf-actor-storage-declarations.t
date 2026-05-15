@@ -18,7 +18,7 @@ subtest 'actor-owned storage declarations lower to deterministic scalar storage'
     my $actor = FSM::Adapter::ISF->new()->parse_source($source, 'storage-fixture.isf');
 
     ok(ref($actor->{storage}) eq 'ARRAY', 'parser returns actor storage array');
-    is(scalar(@{$actor->{storage}}), 4, 'parser records three registers and one bank');
+    is(scalar(@{$actor->{storage}}), 4, 'parser records three state entries and one bank');
 
     my ($bank) = grep { $_->{kind} eq 'bank' && $_->{name} eq 'data' } @{$actor->{storage}};
     ok($bank, 'parser records the data storage bank');
@@ -89,12 +89,23 @@ subtest 'actor-owned storage declarations fail closed for unsupported shapes' =>
     (complete done)))
 ISF
 
+    assert_parse_rejected(<<'ISF', qr/storage entry kind must be 'state' or 'bank'/, 'register spelling is not accepted');
+(actor rejected_register_storage
+  (clock clk)
+  (interface (input start) (output done))
+  (storage
+    (register rd_ptr (width 2)))
+  (transaction main
+    (on start)
+    (complete done)))
+ISF
+
     assert_parse_rejected(<<'ISF', qr/storage signal 'rd_ptr' conflicts with interface input port 'rd_ptr'/, 'storage cannot reuse an interface port name');
 (actor storage_port_conflict
   (clock clk)
   (interface (input start) (input rd_ptr) (output done))
   (storage
-    (register rd_ptr (width 2)))
+    (state rd_ptr (width 2)))
   (transaction main
     (on start)
     (complete done)))
@@ -105,7 +116,7 @@ ISF
   (clock clk)
   (interface (input start) (output done))
   (storage
-    (register data_0 (width 8))
+    (state data_0 (width 8))
     (bank data (width 8) (depth 4)))
   (transaction main
     (on start)
@@ -117,9 +128,9 @@ ISF
   (clock clk)
   (interface (input start) (output done))
   (storage
-    (register rd_ptr (width 2)))
+    (state rd_ptr (width 2)))
   (storage
-    (register wr_ptr (width 2)))
+    (state wr_ptr (width 2)))
   (transaction main
     (on start)
     (complete done)))
@@ -138,9 +149,9 @@ sub storage_fixture_source {
     (input wdata (width 8))
     (output done))
   (storage
-    (register rd_ptr (width 2))
-    (register wr_ptr (width 2))
-    (register occupancy (width 3))
+    (state rd_ptr (width 2))
+    (state wr_ptr (width 2))
+    (state occupancy (width 3))
     (bank data (width 8) (depth 4)))
   (transaction main
     (on start)

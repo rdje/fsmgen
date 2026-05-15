@@ -20,33 +20,27 @@ subtest 'provably disjoint rule guards may drive one storage target' => sub {
   (clock clk)
   (reset (rst_n async active_low))
   (interface
-    (input push)
-    (input pop)
-    (input full)
-    (input empty)
-    (input wdata (width 8))
-    (output write_fire)
-    (output read_fire)
-    (output idle_fire))
+    (input write_req)
+    (input data_in (width 8))
+    (input read_req)
+    (output full)
+    (output empty)
+    (output data_out (width 8)))
   (storage
-    (register wr_ptr (width 2))
-    (register rd_ptr (width 2))
-    (register occupancy (width 3))
-    (bank data (width 8) (depth 4)))
-  (rule idle_case (& (! push) (! pop))
-    (idle_fire 1)
+    (state wr_ptr (width 2))
+    (state rd_ptr (width 2))
+    (state occupancy (width 3)))
+  (rule idle_case (& (! write_req) (! read_req))
     (occupancy occupancy))
-  (rule push_only (& push (! pop) (! full))
-    (write_fire 1)
+  (rule push_only (& write_req (! read_req) (! full))
     (wr_ptr (+ wr_ptr 1))
-    (occupancy (+ occupancy 1)))
-  (rule pop_only (& pop (! push) (! empty))
-    (read_fire 1)
+    (occupancy (+ occupancy 1))
+    (empty 0))
+  (rule pop_only (& read_req (! write_req) (! empty))
     (rd_ptr (+ rd_ptr 1))
-    (occupancy (- occupancy 1)))
-  (rule push_pop (& push pop (! empty))
-    (write_fire 1)
-    (read_fire 1)
+    (occupancy (- occupancy 1))
+    (full 0))
+  (rule push_pop (& write_req read_req (! empty))
     (wr_ptr (+ wr_ptr 1))
     (rd_ptr (+ rd_ptr 1))
     (occupancy occupancy)))
@@ -59,21 +53,20 @@ ISF
     my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'disjoint_fifo_rule_writes.fsm'};
     like(
         $fsm,
-        qr/\(-push_only\s+<\(& push \(! pop\) \(! full\)\)[\s\S]*\(<- \(occupancy \(\+ occupancy 1\)\)\)/,
+        qr/\(-push_only\s+<\(& write_req \(! read_req\) \(! full\)\)[\s\S]*\(<- \(occupancy \(\+ occupancy 1\)\)\)/,
         'push-only rule emits the increment under the expression DTE',
     );
     like(
         $fsm,
-        qr/\(-pop_only\s+<\(& pop \(! push\) \(! empty\)\)[\s\S]*\(<- \(occupancy \(- occupancy 1\)\)\)/,
+        qr/\(-pop_only\s+<\(& read_req \(! write_req\) \(! empty\)\)[\s\S]*\(<- \(occupancy \(- occupancy 1\)\)\)/,
         'pop-only rule emits the decrement under the expression DTE',
     );
     like(
         $fsm,
-        qr/\(-push_pop\s+<\(& push pop \(! empty\)\)[\s\S]*\(<- \(occupancy occupancy\)\)/,
+        qr/\(-push_pop\s+<\(& write_req read_req \(! empty\)\)[\s\S]*\(<- \(occupancy occupancy\)\)/,
         'simultaneous push-pop rule may preserve occupancy under a disjoint expression DTE',
     );
-    like($fsm, qr/\(data_0\s+8\)/, '4-entry FIFO fixture emits data_0 storage');
-    like($fsm, qr/\(data_3\s+8\)/, '4-entry FIFO fixture emits data_3 storage');
+    unlike($fsm, qr/\bdata_0\b/, 'controller fixture does not invent scalarized data-bank storage');
 
     assert_fsm_reaches_hdl($fsm, 'disjoint_fifo_rule_writes');
 };
@@ -103,6 +96,34 @@ ISF
         $diagnostic,
         qr/ISF conflict 'isf_conflicting_rule_writes' on target 'valid'/,
         'overlapping diagnostic keeps the existing conflict code',
+    );
+};
+
+subtest 'nonliteral equality guards do not prove disjointness' => sub {
+    my $ok = eval {
+        my $actor = FSM::Adapter::ISF->new()->parse_source(<<'ISF', 'nonliteral-equality-rule-writes.isf');
+(actor nonliteral_equality_rule_writes
+  (clock clk)
+  (interface
+    (input selector)
+    (input lhs_value)
+    (input rhs_value)
+    (output valid))
+  (rule r0 (== selector lhs_value)
+    (valid 1))
+  (rule r1 (== selector rhs_value)
+    (valid 0)))
+ISF
+        FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+        1;
+    };
+    my $diagnostic = $@;
+
+    ok(!$ok, 'signal-valued equality guards are not treated as mutually exclusive');
+    like(
+        $diagnostic,
+        qr/ISF conflict 'isf_conflicting_rule_writes' on target 'valid'/,
+        'nonliteral equality guard diagnostic keeps the existing conflict code',
     );
 };
 

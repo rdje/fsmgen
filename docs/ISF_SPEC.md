@@ -19,6 +19,13 @@ then uses the ordinary `.fsm` pipeline for HDL generation.
 
 Cycles are not hidden. They are inferred into a generated `.fsm` artifact and a
 schedule JSON report that can be reviewed.
+ISF intentionally borrows familiar programming-language control-flow shape for
+transaction authoring. Existing forms such as `when`, `repeat`, `do`, and
+spawned-child activation, plus proposed forms such as `wait`, `while`, and
+`until`, should still read naturally to authors. That source shape does not
+change the hardware contract: every shipped form must lower to explicit RTL
+intent with reviewable scheduled `.fsm` states, decision points, counters,
+handshakes, or DTs.
 
 ## 1.1 Intent Abstraction Layers
 
@@ -328,15 +335,17 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.4.2` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.4.4.3` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
 provenance, records the real FIFO requirements before any FIFO fixture is
 shipped, adds the first actor-owned storage declaration surface, lets rule
 guards be scalar or list expressions for direct FIFO fire predicates, and
-accepts same-target rule writes when direct contradictory guard literals prove
-that the writes cannot fire in the same cycle.
+accepts same-target rule writes when direct contradictory guard facts prove
+that the writes cannot fire in the same cycle. A depth-4 FIFO-controller
+matrix now lowers through scheduled `.fsm`, schedule JSON, and SystemVerilog
+with actor-maintained pointer/occupancy/full/empty state.
 
 No FIFO library fixture is shipped yet. A depth-1 element is not considered a
 FIFO for this library catalog; it is a register/holding element and would hide
@@ -349,26 +358,28 @@ be accepted when the FIFO is not full, pop-only must be accepted when the FIFO
 is not empty, simultaneous push+pop must derive its read-fire and write-fire
 predicates from the same pre-cycle occupancy/full/empty snapshot, and idle
 must preserve state. Depth 4 gives the first fixture concrete review points:
-four storage entries, 2-bit pointer wrap, occupancy values 0 through 4, and
-full/empty derivation. Transaction `(when condition body...)` remains ordered
+2-bit pointer wrap, occupancy values 0 through 4, and full/empty derivation.
+`full` is maintained by the actor and is `1` exactly when occupancy is 4;
+`empty` is maintained by the actor and is `1` exactly when occupancy is 0.
+Transaction `(when condition body...)` remains ordered
 control flow; it must not be used to pretend FIFO ports are concurrent when a
 push and pop request arrive in the same cycle. The storage primitive needed
 for that target is now available as actor-owned fixed storage:
-`(register name (width N))` for pointer/occupancy state and
-`(bank name (width N) (depth 4))` for the four data entries.
+`(state name (width N))` for pointer/occupancy state.
 Hardware components modeled by ISF are persistent regions, not software
 processes that die when work is done. Actors, transactions, DTs, and rules can
 be inactive, but while the design is powered, clocked, and released from reset
 their logic remains present. FIFO write and read behavior should therefore be
 modeled as concurrently evaluable actor logic that interacts with shared
-multi-entry storage. The write pointer names the entry that the next accepted
-push writes; the read pointer names the entry that the next accepted pop
-reads; for the first depth-4 target both pointers wrap from entry 3 back to
-entry 0.
+controller state. The write pointer names the entry selected for the next
+accepted push; the read pointer names the entry selected for the next accepted
+pop; for the first depth-4 target both pointers wrap from entry 3 back to
+entry 0. The controller slice does not model an internal data bank: data
+storage and data muxing remain a datapath/library-fixture concern.
 Parameter-driven interface widths, arbitrary-depth memory-backed FIFO
 generation beyond the first `DEPTH=4` fixture, automatic non-zero reset values
-such as empty=1, same-cycle FIFO update semantics, reusable FIFO library
-source, standalone transaction/drive exports, symbolic constants, derived
+such as empty=1, reusable FIFO library source including the data-storage
+datapath, standalone transaction/drive exports, symbolic constants, derived
 parameter expressions, clock/reset name remapping, and library actors that
 import other libraries remain deferred.
 
@@ -430,15 +441,15 @@ clause:
 
 ```lisp
 (storage
-  (register rd_ptr (width 2))
-  (register wr_ptr (width 2))
-  (register occupancy (width 3))
+  (state rd_ptr (width 2))
+  (state wr_ptr (width 2))
+  (state occupancy (width 3))
   (bank data (width 8) (depth 4)))
 ```
 
 The first shipped storage forms are:
 
-- `(register name (width N))`: a fixed-width actor-owned internal register.
+- `(state name (width N))`: a fixed-width actor-owned internal state value.
 - `(bank name (width N) (depth N))`: a fixed-depth actor-owned storage bank.
 
 All widths and depths are positive integer literals in the current shipped
@@ -465,6 +476,9 @@ operations can reuse the existing expression and mux paths. Schedule reports
 include declared storage entries in `inferred_storage` with kind `register`,
 role `actor_storage`, and positive integer `width`. Used storage signals reach
 SystemVerilog generation through the existing scalar assignment path.
+The report `kind` is the generated storage class; authored scalar storage uses
+the ISF source word `state`, and `(register ...)` is rejected as a storage
+entry spelling.
 
 ## 6. Drive Definitions and Calls
 
@@ -1057,10 +1071,11 @@ Current lowering:
   the same target to incompatible values fail closed with
   `isf_conflicting_rule_writes`; compatible same-target/same-value rule writes
   remain accepted. The checker also accepts same-target rule writes when their
-  rule guards contain a direct contradictory literal, such as `push` versus
-  `(! push)` or `pop` versus `(! pop)`, proving that the assignments cannot
-  fire in the same cycle. This disjointness proof is intentionally
-  conservative; guards that are not proved disjoint still use the existing
+  rule guards contain a direct contradictory fact, such as `push` versus
+  `(! push)`, `pop` versus `(! pop)`, or equality facts that require a signal
+  like `occupancy` or `wr_ptr` to equal two different constants, proving that
+  the assignments cannot fire in the same cycle. This disjointness proof is
+  intentionally conservative; guards that are not proved disjoint still use the existing
   compatible fan-in, priority-resolution, or fail-closed conflict paths.
   Rule/drive overlap is tracked internally as
   `isf_unproven_rule_drive_overlap` with `proof_status => not_doable` because
@@ -1587,17 +1602,30 @@ Focused tests:
 - [t/1232-isf-actor-storage-declarations.t](../t/1232-isf-actor-storage-declarations.t)
 - [t/1233-isf-rule-expression-guards.t](../t/1233-isf-rule-expression-guards.t)
 - [t/1234-isf-disjoint-rule-writes.t](../t/1234-isf-disjoint-rule-writes.t)
+- [t/1235-isf-fifo-same-cycle-update-matrix.t](../t/1235-isf-fifo-same-cycle-update-matrix.t)
 
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
   same-name generated-top, actor-owned fixed-storage, and expression-valued
-  rule-guard/disjoint-rule slices: complete same-cycle FIFO read/write update
-  semantics, the real reusable FIFO actor fixture, standalone
-  transaction/drive exports, symbolic constants, derived parameter
-  expressions, parameter-derived storage dimensions, clock/reset name
-  remapping, memory-array backend emission, and library actors that import
-  other libraries.
+  rule-guard/disjoint-rule/FIFO-controller-matrix slices: the real reusable
+  FIFO actor fixture with explicit data-buffer access and data-storage
+  datapath, standalone transaction/drive exports, symbolic constants, derived
+  parameter expressions,
+  parameter-derived storage dimensions, clock/reset name remapping,
+  memory-array backend emission, and library actors that import other
+  libraries.
+- Unconditional transaction delay `(wait N)`. The proposed first contract is a
+  positive-integer literal delay that advances after exactly `N` clock cycles
+  without checking an external condition. Dynamic counts remain deferred until
+  zero-count, width, reset, latency, and report semantics are specified.
+- Transaction-local dynamic loops `(while cond body...)` and
+  `(until cond body...)`. The proposed contract makes `while` a pre-test
+  zero-or-more loop and `until` a body-first one-or-more loop. Conditions are
+  sampled once in generated decision states, not continuously during body
+  execution. Parser support remains deferred until loop diagnostics,
+  watchdog/latency interaction, body-clause coverage, and report visibility
+  are specified.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

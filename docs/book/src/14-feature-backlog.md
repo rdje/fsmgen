@@ -271,6 +271,44 @@ Remaining backlog: nested stages, stage-local latency, compute/action bodies,
 multiple ready/valid endpoints, registered-valid variants, skid-buffer
 behavior, and richer stage report families for future stage kinds.
 
+### Transaction Unconditional Wait
+
+Status: backlog.
+
+Goal: support an unconditional cycle delay such as `(wait N)` inside a
+transaction body.
+
+Proposed contract: `(wait N)` advances only after exactly `N` clock cycles,
+without checking an external condition. It is different from `(await cond)`,
+which waits for a signal condition, and different from `(repeat N body...)`,
+which repeats a body. The first shipped surface should probably require `N` to
+be a positive integer literal so the scheduled `.fsm` review artifact has a
+clear fixed delay; dynamic wait counts can follow later if the zero-count,
+width, reset, and latency/report semantics are specified.
+
+### Transaction Dynamic Loops
+
+Status: backlog.
+
+Goal: support transaction-local loops such as `(while cond body...)` and
+`(until cond body...)`.
+
+Proposed contract: `(while cond body...)` is a pre-test loop. The scheduler
+emits a decision state that samples `cond` once per iteration; true enters the
+body, and false exits to the next transaction clause. Zero iterations are
+therefore possible. `(until cond body...)` is a body-first loop. It executes
+the body once, then samples `cond` in a generated decision state; true exits,
+and false loops back to the body. That spelling means one-or-more iterations.
+A pre-test "run while not done" loop should be authored as
+`(while (! done) body...)` rather than overloading `until`.
+
+Loop bodies must be non-empty and should initially reuse the same body-clause
+surface as `when` and `repeat`. The condition uses the same scalar or
+list-expression condition surface as `when`. These loops can be unbounded at
+runtime, so the first implementation must define diagnostics, watchdog or
+latency interaction, and schedule-report visibility before parser acceptance
+becomes a support claim.
+
 ### Temporal Contract Lowering
 
 Status: backlog.
@@ -439,17 +477,18 @@ be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
 Current boundary: the first reusable ISF library import, same-name
-generated-top, actor-owned fixed-storage, expression-valued rule-guard, and
-disjoint-rule write slices have shipped. Actor roots may
+generated-top, actor-owned fixed-storage, expression-valued rule-guard,
+disjoint-rule write, and FIFO-controller matrix slices have shipped. Actor roots may
 import library roots, use an exported actor, validate use-site parameters and
 explicit bindings, emit a specialized child scheduled `.fsm` artifact, wire
 the library actor through a generated top, reach SystemVerilog generation for
 the covered generated-top path, project bounded `library_uses`
-schedule-report metadata, declare fixed actor-owned registers/banks, author
+schedule-report metadata, declare fixed actor-owned state/banks, author
 rule fire predicates as expressions, accept same-target rule writes when
-direct contradictory guard literals prove disjointness, and record real FIFO
-requirements. No FIFO fixture is shipped yet. Clock/reset name remapping
-remains fail-closed.
+direct contradictory guard facts prove disjointness, and prove a depth-4
+FIFO-controller same-cycle update matrix for pointers, occupancy, full, and
+empty. No reusable FIFO library fixture is shipped yet. Clock/reset name
+remapping remains fail-closed.
 
 Shipped source model for actor exports:
 
@@ -563,40 +602,43 @@ Shipped actor-owned storage model:
 ```lisp
 (actor fifo
   (storage
-    (register rd_ptr (width 2))
-    (register wr_ptr (width 2))
-    (register occupancy (width 3))
-    (bank data (width 8) (depth 4)))
+    (state rd_ptr (width 2))
+    (state wr_ptr (width 2))
+    (state occupancy (width 3)))
   ...)
 ```
 
-`(register name (width N))` declares one fixed-width internal actor register.
-`(bank name (width N) (depth N))` declares fixed-depth actor-owned storage and
-currently scalarizes to `<name>_0` through `<name>_<depth-1>` in scheduled
-`.fsm`. This is the first `DEPTH=4` FIFO storage path; parameter-derived
-dimensions, indexed source access, generalized arbitrary-depth elaboration,
-and memory-array backend emission remain future work.
+`(state name (width N))` declares one fixed-width internal actor state value.
+`(bank name (width N) (depth N))` remains the fixed-depth actor-owned storage
+form, but the FIFO-controller matrix does not use an internal bank. Data
+storage and data muxing belong to the later reusable FIFO fixture/datapath
+work.
 
 The first FIFO fixture must be a real FIFO actor, not a depth-1 placeholder.
 A depth-1 element may be useful as a register slice or holding element, but it
 does not exercise FIFO depth, pointers, or occupancy semantics. The first
 fixture uses `DEPTH=4`. It must explicitly model the four request cases: no
 request, push without pop, pop without push, and push with pop. Push-only
-updates storage and occupancy when not full; pop-only updates read state and
-occupancy when not empty; simultaneous push+pop derives write-fire and
-read-fire from the same pre-cycle state and updates both sides atomically;
-idle preserves state. Depth 4 gives the initial implementation concrete
-storage indices, 2-bit pointer wrap, occupancy values 0 through 4, and
+updates occupancy and the write pointer when not full; pop-only updates
+occupancy and the read pointer when not empty; simultaneous push+pop derives
+the write and read effects from the same pre-cycle state and updates both
+sides atomically; idle preserves state. Depth 4 gives the initial
+implementation concrete 2-bit pointer wrap, occupancy values 0 through 4, and
 full/empty flag checks before arbitrary-depth elaboration is generalized.
-`wr_ptr` names the next entry written by an accepted push; `rd_ptr` names the
-next entry read by an accepted pop. For the depth-4 fixture both pointers wrap
-from entry 3 back to entry 0.
+`full` is actor-maintained and is `1` when `occupancy == 4`; `empty` is
+actor-maintained and is `1` when `occupancy == 0`. `wr_ptr` names the next
+entry selected by an accepted push; `rd_ptr` names the next entry selected by
+an accepted pop. For the depth-4 controller matrix both pointers wrap from
+entry 3 back to entry 0.
 Transaction `(when condition body...)` is ordered control flow, so using a
 chain of `when` branches to model FIFO ports would be misleading. Disjoint-rule
 proof for same-target FIFO-style rule writes is shipped for direct
-contradictory guard literals. The next FIFO slice must prove same-cycle
-two-port update semantics on top of the declared storage primitives, then
-author and prove the reusable FIFO library.
+contradictory guard literals and equality facts, such as one case requiring
+`(== occupancy 1)` while another requires `(== occupancy 2)`. Same-cycle
+two-port controller semantics are now proven on actor-owned state. The next
+FIFO slice must specify real data-buffer access before the reusable FIFO
+library can honestly model pointer-selected writes into storage and reads to
+`data_out`.
 
 ## Backends And Validation
 

@@ -366,6 +366,7 @@ sub build_isf_public_interface_contract {
             't/1232-isf-actor-storage-declarations.t',
             't/1233-isf-rule-expression-guards.t',
             't/1234-isf-disjoint-rule-writes.t',
+            't/1235-isf-fifo-same-cycle-update-matrix.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -587,7 +588,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference when actor-owned storage is declared';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored state and bank declarations when actor-owned storage is declared';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {

@@ -1,5 +1,56 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF FIFO controller same-cycle matrix
+- The `ISF-LIBRARIES.4.4.3` fixture is intentionally a controller matrix, not
+  a full FIFO datapath. It proves the real control boundary and same-cycle
+  state update behavior before the language has a source-level way to write
+  `data_in` into the entry selected by `wr_ptr` or drive `data_out` from the
+  entry selected by `rd_ptr`.
+- The public controller interface is `write_req`, `data_in`, `read_req`,
+  `full`, `empty`, and `data_out`. `full` and `empty` are outputs maintained
+  by actor state; they are not inputs supplied by the environment.
+- `full` is selected when occupancy is the depth-4 maximum, and `empty` is
+  selected when occupancy is zero. The matrix enumerates the five occupancy
+  values for idle, push-only, pop-only, and push+pop, then enumerates pointer
+  wrap rules for accepted write and read sides.
+- Authored scalar storage now uses `(state name (width N))`. We rejected
+  `(register ...)` as source vocabulary because the actor is describing
+  persistent intent-level state, while `kind: register` in schedule reports is
+  only the backend storage class after lowering.
+- The disjoint-rule proof was widened from boolean literal contradictions to
+  equality facts. A pair of guards requiring `(== wr_ptr 0)` and
+  `(== wr_ptr 1)` is mutually exclusive even when both guards also contain
+  unproven subexpressions such as `(| (! (== occupancy 4)) read_req)`. The
+  proof still stays conservative: it only accepts a pair when the known facts
+  are enough to show they cannot both fire.
+- The next FIFO slice should not add ad hoc `data_0` references to fixtures.
+  It needs a real data-buffer access surface with pointer-selected writes and
+  reads, documented lowering, diagnostics, report visibility, and regression
+  coverage.
+## 2026-05-15: ISF unconditional wait backlog
+- `(wait N)` is a useful missing transaction construct for exact-cycle delay
+  without an external condition. It should not be modeled as `(await cond)`
+  with a fake condition or as `(repeat N ...)` with an empty body.
+- The first safe public surface should require a positive integer literal
+  count and lower to a reviewable fixed-cycle state/counter sequence.
+  Dynamic counts can be added later only after zero-count behavior, counter
+  width, reset behavior, latency/report projection, and diagnostics are
+  specified.
+## 2026-05-15: ISF transaction loop backlog
+- ISF is allowed to feel like a small programming language at the authoring
+  surface, and that is useful for readability. The engineering boundary is
+  that every accepted construct still has RTL semantics and lowers into
+  reviewable `.fsm`.
+- `(while cond body...)` and `(until cond body...)` are useful, but they need
+  explicit runtime sampling semantics. Conditions should be evaluated once in
+  a generated decision state per iteration; they should not be interpreted as
+  continuously active guards over every state in the body.
+- The clean split is `while` as a pre-test zero-or-more loop and `until` as a
+  body-first one-or-more loop. A pre-test "until done" form should be authored
+  as `(while (! done) ...)`.
+- Because these loops may be unbounded, implementation needs a deliberate
+  watchdog/latency/report contract and targeted diagnostics before parser
+  acceptance can be treated as shipped support.
 ## 2026-05-14: ISF disjoint rule writes
 - The FIFO work treats ISF actors, transactions, DTs, and rules as hardware
   regions. They come into existence with the powered, clocked design after
@@ -12,11 +63,12 @@ This document captures engineering rationale, design constraints, and working de
   boilerplate. Anything more subtle remains unproved until a stronger boolean
   proof engine is introduced.
 - The depth-4 FIFO target now has a clearer model: one persistent actor owns
-  the multi-entry data storage, write pointer, read pointer, occupancy, and
-  flags. The write process uses `wr_ptr` as the next push location; the read
-  process uses `rd_ptr` as the next pop location. Both pointers wrap after the
-  maximum entry. The next slice must prove that update matrix over the current
-  actor-owned storage surface.
+  controller state for write pointer, read pointer, occupancy, and flags, and
+  will later own data-buffer storage once pointer-selected access syntax is
+  specified. The write process uses `wr_ptr` as the next push location; the
+  read process uses `rd_ptr` as the next pop location. Both pointers wrap
+  after the maximum entry. The next slice must prove that update matrix over
+  the current actor-owned storage surface.
 - Keeping the proof in the scheduler conflict path preserves the existing
   scheduled `.fsm` review contract. The emitted rule DTs still show the
   authored guards; the checker simply avoids rejecting pairs that it can
@@ -39,7 +91,7 @@ This document captures engineering rationale, design constraints, and working de
   repeating a complex FIFO predicate on every action.
 ## 2026-05-14: ISF actor-owned storage declarations
 - The first storage implementation deliberately lowers fixed-depth banks to
-  scalar register names instead of adding a second backend memory-array path.
+  scalar storage signals instead of adding a second backend memory-array path.
   The existing `.fsm` and SystemVerilog pipeline already has the required
   width, mux, and flop machinery for scalar signals, so this gives FIFO work a
   reviewable path while keeping the slice bounded.
@@ -75,9 +127,9 @@ This document captures engineering rationale, design constraints, and working de
   is useful for transaction sequencing, but it is the wrong abstraction for
   modeling two FIFO ports that act in the same clock cycle.
 - The next FIFO implementation work should add the missing ISF surfaces first:
-  actor-owned indexed storage for four entries, 2-bit pointer wrap,
-  occupancy state for values 0 through 4, reset values, and same-cycle
-  multi-update lowering.
+  actor-owned indexed data-buffer access for four entries, reset values, and
+  any remaining same-cycle data transfer lowering after pointer/occupancy
+  controller updates are proven.
 ## 2026-05-14: ISF library generated top wiring
 - Library actor instances now use the same generated-top composition route as
   spawned children instead of inventing a separate HDL path. That keeps review

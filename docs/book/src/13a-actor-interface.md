@@ -76,15 +76,15 @@ the interface block itself is a singleton actor clause.
 
 ```lisp
 (storage
-  (register rd_ptr (width 2))
-  (register wr_ptr (width 2))
-  (register occupancy (width 3))
+  (state rd_ptr (width 2))
+  (state wr_ptr (width 2))
+  (state occupancy (width 3))
   (bank data (width 8) (depth 4)))
 ```
 
 The first shipped actor-owned storage forms are fixed-width internal
-registers and fixed-depth banks. A register lowers to one internal storage
-signal with the authored name. A bank lowers to deterministic scalar element
+state values and fixed-depth banks. A state entry lowers to one internal
+storage signal with the authored name. A bank lowers to deterministic scalar element
 names in the scheduled `.fsm` review artifact: `data_0`, `data_1`, `data_2`,
 and `data_3` for the example above.
 
@@ -105,6 +105,9 @@ Declared storage is emitted in scheduled `.fsm` `+size`, contributes width
 evidence to later lowering, and appears in schedule reports as `kind:
 register`, `role: actor_storage`, with positive integer `width`. Used storage
 signals reach SystemVerilog through the normal scalar assignment path.
+The report `kind` is the generated storage class; authored scalar storage uses
+the ISF source word `state`, and `(register ...)` is not an accepted storage
+entry spelling.
 
 ### Complete Example — APB Interface
 

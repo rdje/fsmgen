@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
-- Last updated: `2026-05-14`
+- Last updated: `2026-05-15`
 - Owner: repo-local workflow
 
 ## Goal
@@ -140,8 +140,8 @@ reusable ISF design intent, not only scalar constants or types.
   Status: `done`
   Goal: `Specify and implement FIFO actor-owned storage primitives.`
   Acceptance: `ISF actors can declare reusable actor-owned fixed-width
-  registers and fixed-depth banks needed by the first 4-entry FIFO, including
-  data storage and pointer/occupancy state, with deterministic scheduled
+  state values and fixed-depth banks needed by the first 4-entry FIFO,
+  including data storage and pointer/occupancy state, with deterministic scheduled
   `.fsm`, schedule-report metadata, SystemVerilog generation for used storage,
   and targeted fail-closed diagnostics for unsupported shapes.`
   Verification: `prove -I perl t/1232-isf-actor-storage-declarations.t
@@ -165,7 +165,7 @@ reusable ISF design intent, not only scalar constants or types.
   avoid modeling port concurrency as a sequential chain of blocking
   transaction branches.`
   Children: `ISF-LIBRARIES.4.4.1`, `ISF-LIBRARIES.4.4.2`,
-  `ISF-LIBRARIES.4.4.3`
+  `ISF-LIBRARIES.4.4.3`, `ISF-LIBRARIES.4.4.4`
   Verification: `pending; see child leaves`
   Commit: `pending; see child leaves`
 
@@ -197,12 +197,40 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.4.2: accept disjoint rule writes`
 
 - ID: `ISF-LIBRARIES.4.4.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Prove the FIFO same-cycle update matrix on actor-owned storage.`
-  Acceptance: `A focused 4-entry FIFO-like actor uses actor-owned storage and
-  same-cycle rules to model idle, push-only, pop-only, and push+pop update
-  cases through scheduled '.fsm', schedule report, and SystemVerilog
-  generation.`
+  Acceptance: `A focused depth-4 FIFO controller actor uses the real public
+  controller interface, actor-owned state, and same-cycle rules to model idle,
+  push-only, pop-only, and push+pop update cases for occupancy, write pointer,
+  read pointer, full, and empty through scheduled '.fsm', schedule report, and
+  SystemVerilog generation. The fixture deliberately does not invent data-bank
+  entries or pretend the FIFO data-storage datapath has shipped.`
+  Verification: `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `prove -I perl t/1192-isf-singleton-actor-clause-boundary.t
+  t/1232-isf-actor-storage-declarations.t
+  t/1234-isf-disjoint-rule-writes.t
+  t/1235-isf-fifo-same-cycle-update-matrix.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1160-isf-public-actor-shell-value-shape-audit.t
+  t/1183-ci-regression-tier-selection.t`;
+  `./bin/fsmgen --emit-schedule-json isf/fifo_controller.isf`;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-LIBRARIES.4.4.3: prove FIFO controller matrix`
+
+- ID: `ISF-LIBRARIES.4.4.4`
+  Status: `pending`
+  Goal: `Specify the FIFO data-buffer access surface before the reusable
+  library fixture.`
+  Acceptance: `The task tree, live docs, mdBook, and implementation plan name
+  the source syntax and lowering contract needed to write data into a depth-4
+  FIFO entry and read data from the selected entry without ad hoc data_0
+  hacks. The contract must explain pointer-indexed access, same-cycle
+  push+pop behavior, actor-owned buffer lifetime, report visibility,
+  diagnostics, and why the controller-only matrix from ISF-LIBRARIES.4.4.3 is
+  not a complete FIFO datapath.`
   Verification: `pending`
   Commit: `pending`
 
@@ -239,7 +267,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.4.3` | `pending` | Disjoint same-target rule writes are accepted; the next slice needs to prove the complete FIFO same-cycle update matrix on actor-owned storage. |
+| 1 | `ISF-LIBRARIES.4.4.4` | `pending` | The controller matrix is proven; the next slice needs a real FIFO data-buffer access surface before an importable FIFO library fixture can honestly model data storage. |
 
 ## Design Notes
 
@@ -276,7 +304,7 @@ reusable ISF design intent, not only scalar constants or types.
   depth-4 fixture both are 2-bit pointers and wrap from entry 3 back to entry
   0.
 - The first actor-owned storage surface is shipped as a singleton
-  `(storage ...)` actor clause. `(register name (width N))` declares fixed
+  `(storage ...)` actor clause. `(state name (width N))` declares fixed
   internal state such as `rd_ptr`, `wr_ptr`, or `occupancy`.
   `(bank name (width N) (depth N))` declares fixed-depth actor-owned storage
   and currently scalarizes to `<name>_0` through `<name>_<depth-1>` in the
@@ -296,10 +324,17 @@ reusable ISF design intent, not only scalar constants or types.
   predicates can be authored directly instead of materializing one scalar
   condition per case.
 - The static rule conflict checker now accepts same-target rule writes when
-  their rule guards have a direct contradictory literal, such as `pop` versus
-  `(! pop)` or `push` versus `(! push)`. This is intentionally conservative:
-  guards that are not proved disjoint still use the existing conflict or
-  priority paths.
+  their rule guards have directly contradictory facts, such as `pop` versus
+  `(! pop)`, `push` versus `(! push)`, or equality facts that require one
+  storage value to equal two different constants. This is intentionally
+  conservative: guards that are not proved disjoint still use the existing
+  conflict or priority paths.
+- The shipped depth-4 FIFO controller matrix uses only the public controller
+  interface: inputs `write_req`, `data_in`, and `read_req`; outputs `full`,
+  `empty`, and `data_out`. `full` and `empty` are actor-maintained flags
+  derived from occupancy. The matrix updates `wr_ptr`, `rd_ptr`, `occupancy`,
+  `full`, and `empty`, but it does not model buffer entries or `data_out`
+  transfer yet.
 - A library should be reusable source intent, not generated HDL pasted into a
   design. The imported definition should still lower through scheduled `.fsm`
   so users can inspect the exact cycle-level artifact.
@@ -605,10 +640,11 @@ Remaining boundary:
   it would hide the real two-port concurrency requirement.
 - Standalone transaction and drive exports still fail closed.
 - Symbolic parameter values and derived parameter expressions remain deferred.
-- Memory-backed 4-entry FIFO storage, indexed data storage,
-  pointer/occupancy state, parameter-driven interface widths, non-zero reset
-  values, and same-cycle push/pop policy/lowering remain follow-up FIFO
-  language and lowering work.
+- Memory-backed 4-entry FIFO data storage, indexed or pointer-selected data
+  buffer access, parameter-driven interface widths, non-zero reset values, and
+  the reusable FIFO data datapath remain follow-up FIFO language and lowering
+  work. Pointer/occupancy controller state and same-cycle controller updates
+  are now shipped for the depth-4 matrix fixture.
 - Library actor system clock/reset name remapping remains deferred; the
   current generated-top path requires same-name system ports.
 
@@ -649,6 +685,14 @@ Remaining boundary:
   push+pop, and idle cycles as distinct real-world request cases. Any ISF
   fixture that only exercises one side, or treats simultaneous requests as an
   artifact of branch order, is not acceptable.
+- `2026-05-15`: Authored actor-owned scalar storage uses `(state ...)`, not
+  `(register ...)`. The schedule report may still classify the generated
+  storage as coarse `kind: register` because that is backend storage class,
+  not source vocabulary.
+- `2026-05-15`: The first executable FIFO matrix is a controller matrix, not
+  a full FIFO datapath. It must not invent `data_0` entries or hidden buffer
+  transfer semantics. Real pointer-selected buffer write/read syntax is a
+  separate feature before the reusable FIFO library fixture can be honest.
 
 ## Open Questions
 
@@ -662,11 +706,13 @@ Remaining boundary:
 
 ## Blockers
 
-- The real FIFO fixture is blocked on missing ISF expressiveness: actor-owned
-  indexed storage access, complete same-cycle two-port update lowering,
-  parameter-driven widths/depths beyond the bounded `DEPTH=4` target, and
-  non-zero reset-value policy. Fixed actor-owned storage declarations and
-  pointer/occupancy register declarations are now shipped.
+- The real FIFO fixture is blocked on missing ISF expressiveness for
+  actor-owned data-buffer access: a source form must write `data_in` into the
+  entry selected by `wr_ptr` and drive `data_out` from the entry selected by
+  `rd_ptr` without hard-coded `data_0` hacks. Parameter-driven widths/depths
+  beyond the bounded `DEPTH=4` target and non-zero reset-value policy also
+  remain deferred. Fixed actor-owned storage declarations and
+  pointer/occupancy controller updates are now shipped.
 
 ## Verification Log
 
@@ -685,6 +731,7 @@ Remaining boundary:
 | `2026-05-14` | `ISF-LIBRARIES.4.3` | `prove -I perl t/1232-isf-actor-storage-declarations.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1148-isf-public-storage-metadata-audit.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1192-isf-singleton-actor-clause-boundary.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-LIBRARIES.4.4.1` | `prove -I perl t/1233-isf-rule-expression-guards.t t/1166-isf-public-actor-shell-rule-shape-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-LIBRARIES.4.4.2` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -I perl t/1234-isf-disjoint-rule-writes.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 142 files, 479 tests` |
+| `2026-05-15` | `ISF-LIBRARIES.4.4.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1192-isf-singleton-actor-clause-boundary.t t/1232-isf-actor-storage-declarations.t t/1234-isf-disjoint-rule-writes.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1144-isf-public-tested-by-metadata-audit.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/fsmgen --emit-schedule-json isf/fifo_controller.isf`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 7 files, 19 tests; ISF tier 143 files, 481 tests` |
 
 ## Commit Log
 
@@ -696,9 +743,10 @@ Remaining boundary:
 | `ISF-LIBRARIES.3` | `ISF-LIBRARIES.3: implement library import resolution` | Parser/lowerer resolve exported library actors from source-dir/FSMLIB/cwd roots, emit specialized child scheduled `.fsm`, and project `library_uses` report metadata. |
 | `ISF-LIBRARIES.4.1` | `ISF-LIBRARIES.4.1: wire library generated tops` | Generated top wiring for resolved library actor instances; same-name system ports use auto-wiring and remapping fails closed. |
 | `ISF-LIBRARIES.4.2` | `ISF-LIBRARIES.4.2: specify real FIFO requirements` | Rejected a depth-1 placeholder as a FIFO, captured same-cycle push/pop semantics, and split missing storage/concurrency support into follow-up leaves. |
-| `ISF-LIBRARIES.4.3` | `ISF-LIBRARIES.4.3: add actor storage declarations` | Singleton `(storage ...)` actor clauses with fixed-width registers and fixed-depth scalarized banks for the first depth-4 FIFO target. |
+| `ISF-LIBRARIES.4.3` | `ISF-LIBRARIES.4.3: add actor storage declarations` | Singleton `(storage ...)` actor clauses with authored fixed-width state values and fixed-depth scalarized banks for the first depth-4 FIFO target. |
 | `ISF-LIBRARIES.4.4.1` | `ISF-LIBRARIES.4.4.1: support rule expression guards` | Scalar or list-expression rule guards lower once as non-state DT DTEs for direct FIFO fire predicates. |
-| `ISF-LIBRARIES.4.4.2` | `ISF-LIBRARIES.4.4.2: accept disjoint rule writes` | Conservative direct-literal disjointness proof accepts FIFO-style same-target rule writes without priority boilerplate while preserving fail-closed overlap diagnostics. |
+| `ISF-LIBRARIES.4.4.2` | `ISF-LIBRARIES.4.4.2: accept disjoint rule writes` | Conservative direct-fact disjointness proof accepts FIFO-style same-target rule writes without priority boilerplate while preserving fail-closed overlap diagnostics. |
+| `ISF-LIBRARIES.4.4.3` | `ISF-LIBRARIES.4.4.3: prove FIFO controller matrix` | Depth-4 FIFO controller matrix with real interface, authored state storage, actor-maintained full/empty flags, pointer/occupancy updates, and HDL reachability. |
 
 ## Changelog
 
@@ -720,5 +768,10 @@ Remaining boundary:
   and fixed-depth banks, then widened rule guards to scalar-or-expression
   predicates so FIFO fire cases can be authored directly.
 - `2026-05-14`: Accepted conservative disjoint same-target rule writes when
-  direct contradictory guard literals prove FIFO-style request cases cannot
+  direct contradictory guard facts prove FIFO-style request cases cannot
   fire together.
+- `2026-05-15`: Proved the depth-4 FIFO controller matrix through scheduled
+  `.fsm`, schedule JSON, and SystemVerilog generation, switched authored
+  scalar storage vocabulary to `(state ...)`, and logged that real FIFO
+  data-buffer access remains the next required feature before a reusable FIFO
+  library fixture.

@@ -1,19 +1,59 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-15
+### R14 — ISF FIFO controller same-cycle matrix
+- Completed `ISF-LIBRARIES.4.4.3` by adding a depth-4 FIFO controller
+  fixture that lowers through scheduled `.fsm`, schedule JSON, and
+  SystemVerilog generation.
+- The fixture uses the real controller interface: `write_req`, `data_in`, and
+  `read_req` inputs; `full`, `empty`, and `data_out` outputs. `full` and
+  `empty` are actor-maintained flags derived from occupancy.
+- Authored actor-owned scalar storage now uses `(state name (width N))`;
+  `(register ...)` source is rejected. Schedule reports still use
+  `kind: register` as the lower-level generated storage class.
+- The rule disjointness proof now recognizes equality facts, allowing
+  occupancy and pointer matrix rules with guards such as `(== occupancy 3)`
+  and `(== wr_ptr 2)` to prove same-target writes mutually exclusive.
+- Added [isf/fifo_controller.isf](isf/fifo_controller.isf) and
+  [t/1235-isf-fifo-same-cycle-update-matrix.t](t/1235-isf-fifo-same-cycle-update-matrix.t).
+  The test explicitly asserts that this controller slice does not invent
+  scalarized data-bank storage such as `data_0`.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.4.4`, specifying
+  real FIFO data-buffer access before the reusable FIFO library fixture.
+### R14 — ISF unconditional wait backlog
+- Captured the proposed transaction-local `(wait N)` feature in the mdBook
+  backlog and spec deferred list.
+- The proposed first contract is an unconditional exact-cycle delay with a
+  positive integer literal count. Dynamic wait counts remain deferred until
+  zero-count behavior, width evidence, reset, latency, and report semantics
+  are specified.
+### R14 — ISF transaction loop backlog
+- Captured proposed transaction-local `(while cond body...)` and
+  `(until cond body...)` loop forms in the mdBook backlog and spec deferred
+  list.
+- Proposed semantics make `while` a pre-test zero-or-more loop and `until` a
+  body-first one-or-more loop. Conditions are sampled once in generated
+  decision states per iteration, not continuously during body execution.
+- Added the proposed
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) task tree
+  so future implementation can be activated and sliced without mining prose.
+- Clarified in the spec and book that programming-language-like ISF source
+  shape is intentional, but shipped constructs must still lower to explicit
+  RTL intent in scheduled `.fsm`.
 ## 2026-05-14
 ### R14 — ISF disjoint rule writes
 - Completed `ISF-LIBRARIES.4.4.2` by accepting same-target rule writes when
   rule guards are proved mutually exclusive through direct contradictory
-  literals.
+  facts.
 - The rule conflict checker now skips incompatible same-target rule pairs when
   one guard requires a signal and the other requires its negation, for example
   `push` versus `(! push)` or `pop` versus `(! pop)`.
-- The proof is conservative and local to simple guard literals. Unproved
+- The proof is conservative and local to simple guard facts. Unproved
   overlaps continue through compatible fan-in, priority resolution, or the
   existing `isf_conflicting_rule_writes` fail-closed diagnostic.
 - Added [t/1234-isf-disjoint-rule-writes.t](t/1234-isf-disjoint-rule-writes.t)
-  with a depth-4 FIFO-like actor shell, actor-owned bank storage, write/read
-  pointer registers, occupancy, and idle, push-only, pop-only, and
+  with a depth-4 FIFO-like actor shell, actor-owned controller state,
+  write/read pointer state, occupancy, and idle, push-only, pop-only, and
   simultaneous push+pop rule cases.
 - The active R14 PNT frontier advances to `ISF-LIBRARIES.4.4.3`.
 ### R14 — ISF expression-valued rule guards
@@ -32,7 +72,7 @@ This is the persistent technical change history for FSMGen.
 - Completed `ISF-LIBRARIES.4.3` by adding the first actor-owned storage
   declaration surface for reusable FIFO work.
 - Added parser support for singleton `(storage ...)` actor clauses with
-  fixed-width `(register name (width N))` entries and fixed-depth
+  fixed-width `(state name (width N))` entries and fixed-depth
   `(bank name (width N) (depth N))` entries.
 - Storage banks scalarize to deterministic signal names such as `data_0`
   through `data_3`, which keeps scheduled `.fsm` review artifacts and

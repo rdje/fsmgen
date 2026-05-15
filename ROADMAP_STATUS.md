@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.4.4.3`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.4.4.4`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -26,6 +26,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
+- Proposed transaction-local `(wait N)` is now logged as backlog: an
+  unconditional exact-cycle delay with a positive integer literal count first,
+  while dynamic counts remain deferred until zero-count, width, reset,
+  latency, and report semantics are specified.
+- Proposed transaction-local `(while cond body...)` and
+  `(until cond body...)` loops are now logged as backlog. `while` is proposed
+  as a pre-test zero-or-more loop, `until` as a body-first one-or-more loop,
+  and both need explicit watchdog/latency/report semantics before shipping.
 - `ISF-LIBRARIES` is now the active R14 feature tree for reusable ISF
   libraries/imports. The public term is "library"; implementation may reuse
   package/import infrastructure, but the feature target is reusable ISF design
@@ -115,7 +123,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   ordered control flow, not a model for same-cycle FIFO port concurrency. The
   active frontier advances to `ISF-LIBRARIES.4.3`.
 - `ISF-LIBRARIES.4.3` is complete. ISF actors now support singleton
-  `(storage ...)` clauses with fixed-width `(register name (width N))`
+  `(storage ...)` clauses with fixed-width `(state name (width N))`
   declarations and fixed-depth `(bank name (width N) (depth N))` declarations.
   Banks scalarize deterministically to `<name>_0` through
   `<name>_<depth-1>` in scheduled `.fsm`, declared storage width evidence is
@@ -131,7 +139,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(& push (! pop) (! full))`. The active frontier advances to
   `ISF-LIBRARIES.4.4.2`.
 - `ISF-LIBRARIES.4.4.2` is complete. Same-target rule writes are now accepted
-  when their rule guards are proved disjoint by direct contradictory literals,
+  when their rule guards are proved disjoint by direct contradictory facts,
   such as `push` versus `(! push)` or `pop` versus `(! pop)`. The proof is
   conservative: unproved overlaps still take the existing compatible fan-in,
   priority-resolution, or fail-closed conflict paths. The focused fixture uses
@@ -141,6 +149,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   transactions, DTs, and rules model persistent hardware regions that can be
   inactive but do not die while powered, clocked, and out of reset. The active
   frontier advances to `ISF-LIBRARIES.4.4.3`.
+- `ISF-LIBRARIES.4.4.3` is complete. A depth-4 FIFO controller matrix now
+  lowers through scheduled `.fsm`, schedule JSON, and SystemVerilog
+  generation. The fixture uses the real public controller interface
+  (`write_req`, `data_in`, `read_req`, `full`, `empty`, `data_out`), keeps
+  `full` and `empty` actor-maintained from occupancy, updates `wr_ptr`,
+  `rd_ptr`, `occupancy`, `full`, and `empty` for idle, push-only, pop-only,
+  and push+pop cases, and explicitly avoids inventing scalarized data-bank
+  storage or hidden `data_out` transfer semantics. Authored scalar storage is
+  now `(state ...)`; `(register ...)` source is rejected while schedule
+  reports continue to use `kind: register` for generated storage class. The
+  active frontier advances to `ISF-LIBRARIES.4.4.4`, the FIFO data-buffer
+  access contract needed before the reusable FIFO library fixture.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

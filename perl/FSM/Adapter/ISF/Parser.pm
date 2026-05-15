@@ -882,7 +882,7 @@ sub _parse_interface($self, $clause) {
 }
 
 sub _parse_storage($self, $clause, $actor_name) {
-    confess "Error: actor '$actor_name' storage requires '(storage (register name (width N)) ...)' entries\n"
+    confess "Error: actor '$actor_name' storage requires '(storage (state name (width N)) ...)' entries\n"
         unless @$clause >= 2;
 
     my @entries;
@@ -894,8 +894,8 @@ sub _parse_storage($self, $clause, $actor_name) {
             unless ref($entry) eq 'ARRAY' && @$entry;
 
         my ($kind, $name, @options) = @$entry;
-        confess "Error: actor '$actor_name' storage entry kind must be 'register' or 'bank'\n"
-            unless defined($kind) && !ref($kind) && ($kind eq 'register' || $kind eq 'bank');
+        confess "Error: actor '$actor_name' storage entry kind must be 'state' or 'bank'\n"
+            unless defined($kind) && !ref($kind) && ($kind eq 'state' || $kind eq 'bank');
         confess "Error: actor '$actor_name' storage '$kind' entry requires a scalar HDL identifier name\n"
             unless _is_hdl_identifier($name);
         confess "Error: actor '$actor_name' has duplicate storage name '$name'\n"
@@ -934,8 +934,8 @@ sub _parse_storage($self, $clause, $actor_name) {
             unless defined($width);
 
         my @signals;
-        if ($kind eq 'register') {
-            confess "Error: actor '$actor_name' storage register '$name' does not accept '(depth N)'\n"
+        if ($kind eq 'state') {
+            confess "Error: actor '$actor_name' storage $kind '$name' does not accept '(depth N)'\n"
                 if defined($parsed_options{depth_value});
             @signals = ({ name => $name, width => $width });
         } else {

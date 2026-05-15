@@ -2,17 +2,32 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF FIFO controller same-cycle matrix
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.4.3` is complete.
+- A depth-4 FIFO controller fixture now lowers through scheduled `.fsm`,
+  schedule JSON, and SystemVerilog generation.
+- The public boundary is controller-shaped: inputs `write_req`, `data_in`,
+  and `read_req`; outputs `full`, `empty`, and `data_out`.
+- `full` and `empty` are maintained by the actor from occupancy. The fixture
+  updates `wr_ptr`, `rd_ptr`, `occupancy`, `full`, and `empty` for idle,
+  push-only, pop-only, and push+pop cases.
+- Authored scalar storage uses `(state ...)`; `(register ...)` source is not
+  accepted. The report's `kind: register` remains generated storage-class
+  metadata.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.4`, the FIFO data-buffer
+  access contract needed before a real reusable FIFO library fixture.
+
 ## 2026-05-14: R14 — ISF disjoint rule writes
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.4.2` is complete.
 - Same-target rule writes are accepted when rule guards contain direct
-  contradictory literals proving the guarded assignments cannot fire in the
+  contradictory facts proving the guarded assignments cannot fire in the
   same cycle.
 - The regression fixture is depth 4 and includes actor-owned storage,
-  write/read pointer registers, occupancy, and the four FIFO request cases.
+  write/read pointer state, occupancy, and the four FIFO request cases.
 - Unproved overlaps remain conservative: compatible fan-in, priority
   resolution, or fail-closed conflict diagnostics still handle them.
 - The next active R14 frontier is `ISF-LIBRARIES.4.4.3`, the complete
-  same-cycle FIFO update matrix on actor-owned storage.
+  same-cycle FIFO controller update matrix on actor-owned storage.
 
 ## 2026-05-14: R14 — ISF expression-valued rule guards
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.4.1` is complete.
@@ -27,7 +42,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-14: R14 — ISF actor-owned storage declarations
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.3` is complete.
-- Actors can now declare fixed-width internal registers and fixed-depth
+- Actors can now declare fixed-width internal state values and fixed-depth
   storage banks through a singleton `(storage ...)` clause.
 - Storage banks lower to deterministic scalar element names such as
   `data_0` through `data_3`, giving the first `DEPTH=4` FIFO fixture concrete

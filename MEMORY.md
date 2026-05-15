@@ -1,22 +1,47 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF FIFO controller same-cycle matrix
+- Completed `ISF-LIBRARIES.4.4.3` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Added [isf/fifo_controller.isf](isf/fifo_controller.isf), a depth-4 FIFO
+  controller matrix with the real public boundary: inputs `write_req`,
+  `data_in`, and `read_req`; outputs `full`, `empty`, and `data_out`.
+- The fixture models controller state only: `wr_ptr`, `rd_ptr`, `occupancy`,
+  and actor-maintained `full`/`empty`. It deliberately does not invent a
+  `data_0` bank or a hidden `data_out` datapath.
+- Authored scalar actor-owned storage now uses `(state name (width N))`.
+  `(register ...)` source is rejected; report `kind: register` remains the
+  lower-level generated storage class.
+- The disjoint-rule proof now recognizes equality facts such as
+  `(== occupancy 0)` versus `(== occupancy 1)`, so the controller matrix can
+  prove mutually exclusive occupancy and pointer cases without priority
+  boilerplate.
+- The next active R14 frontier is `ISF-LIBRARIES.4.4.4`, specifying real
+  FIFO data-buffer access before an importable FIFO library fixture.
+- Also captured `(wait N)` as a proposed transaction-local unconditional
+  exact-cycle delay. The first contract should be positive-integer literal
+  only; dynamic counts remain deferred.
+- Captured `(while cond body...)` and `(until cond body...)` as proposed
+  transaction-local loops. `while` should be pre-test zero-or-more; `until`
+  should be body-first one-or-more, with conditions sampled once per
+  generated loop decision state.
 ## 2026-05-14: ISF disjoint rule writes for FIFO cases
 - Completed `ISF-LIBRARIES.4.4.2` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
 - Same-target rule writes are now accepted when the scheduler can prove their
-  rule guards are mutually exclusive through direct contradictory literals,
+  rule guards are mutually exclusive through direct contradictory facts,
   such as `push` versus `(! push)` or `pop` versus `(! pop)`.
 - The proof is intentionally conservative. Guards that are not proved
   disjoint still use the existing compatible fan-in, priority-resolution, or
   fail-closed conflict paths.
 - The focused regression uses a depth-4 FIFO-like actor shell with
-  actor-owned storage, write/read pointer registers, occupancy, and the four
+  actor-owned storage, write/read pointer state, occupancy, and the four
   request cases: idle, push-only, pop-only, and simultaneous push+pop.
 - FIFO modeling remains actor-first: the write and read sides are persistent
   hardware processes that interact with shared multi-entry storage and
   pointer state while the design is powered, clocked, and out of reset.
 - The next active R14 frontier is `ISF-LIBRARIES.4.4.3`, proving the complete
-  same-cycle FIFO update matrix on actor-owned storage.
+  same-cycle FIFO controller update matrix on actor-owned storage.
 ## 2026-05-14: ISF expression-valued rule guards
 - Completed `ISF-LIBRARIES.4.4.1` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
@@ -35,7 +60,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Completed `ISF-LIBRARIES.4.3` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
 - ISF actors now accept a singleton `(storage ...)` clause with fixed-width
-  `(register name (width N))` entries and fixed-depth
+  `(state name (width N))` entries and fixed-depth
   `(bank name (width N) (depth N))` entries.
 - Storage banks scalarize deterministically to `<name>_0`,
   `<name>_1`, ... `<name>_<depth-1>` in scheduled `.fsm` so the first

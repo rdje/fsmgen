@@ -2406,6 +2406,9 @@ sub _condition_literal_terms {
     if (!ref($condition)) {
         return {} if $condition eq '1';
         return { $1 => 0 } if $condition =~ /\A!([A-Za-z_]\w*)\z/;
+        return { "eq:$1" => _condition_term_value($3) }
+            if $condition =~ /\A([A-Za-z_]\w*(?:\[[^\]]+\])?)(==|=)(.+)\z/
+                && defined(_condition_term_value($3));
         return { $condition => 1 } if _is_condition_signal_term($condition);
         return undef;
     }
@@ -2418,17 +2421,28 @@ sub _condition_literal_terms {
         my %merged;
         for my $operand (@{$condition}[1 .. $#$condition]) {
             my $terms = _condition_literal_terms($operand);
-            return undef unless defined $terms;
+            next unless defined $terms;
             return { __unsat => 1 } if $terms->{__unsat};
             for my $signal (sort keys %$terms) {
                 next if $signal eq '__unsat';
-                if (exists($merged{$signal}) && $merged{$signal} != $terms->{$signal}) {
-                    return { __unsat => 1 };
+                if (exists($merged{$signal})) {
+                    return { __unsat => 1 }
+                        if $signal =~ /\Aeq:/ && $merged{$signal} ne $terms->{$signal};
+                    return { __unsat => 1 }
+                        if $signal !~ /\Aeq:/ && $merged{$signal} != $terms->{$signal};
                 }
                 $merged{$signal} = $terms->{$signal};
             }
         }
         return \%merged;
+    }
+
+    if (($head eq '==' || $head eq '=') && @$condition == 3) {
+        my ($signal, $value) = @{$condition}[1, 2];
+        return undef unless defined($signal) && !ref($signal) && _is_condition_signal_term($signal);
+        my $term_value = _condition_term_value($value);
+        return undef unless defined $term_value;
+        return { "eq:$signal" => $term_value };
     }
 
     if (($head eq '!' || $head eq '~') && @$condition == 2) {
@@ -2451,6 +2465,14 @@ sub _condition_literal_terms {
     return undef;
 }
 
+sub _condition_term_value {
+    my ($value) = @_;
+    return undef unless defined($value) && !ref($value);
+    $value =~ s/\A\s+|\s+\z//g;
+    return undef unless _is_numeric_or_exact_width_literal($value);
+    return $value;
+}
+
 sub _is_condition_signal_term {
     my ($term) = @_;
     return defined($term)
@@ -2469,7 +2491,8 @@ sub _condition_terms_prove_disjoint {
     for my $signal (sort keys %$left_terms) {
         next if $signal eq '__unsat';
         next unless exists $right_terms->{$signal};
-        return 1 if $left_terms->{$signal} != $right_terms->{$signal};
+        return 1 if $signal =~ /\Aeq:/ && $left_terms->{$signal} ne $right_terms->{$signal};
+        return 1 if $signal !~ /\Aeq:/ && $left_terms->{$signal} != $right_terms->{$signal};
     }
 
     return 0;

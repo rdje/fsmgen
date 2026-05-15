@@ -40,7 +40,7 @@ subtest 'single clock reset watchdog interface resources and storage clauses are
   (resources
     (resource shared_bus (arbiter priority)))
   (storage
-    (register rd_ptr (width 2)))
+    (state rd_ptr (width 2)))
   (transaction main
     (on start)
     (complete done)))
@@ -67,7 +67,7 @@ ISF
         $actor->{storage},
         [
             {
-                kind    => 'register',
+                kind    => 'state',
                 name    => 'rd_ptr',
                 width   => 2,
                 signals => [{ name => 'rd_ptr', width => 2 }],
@@ -128,9 +128,9 @@ ISF
   (clock clk)
   (interface (input start) (output done))
   (storage
-    (register rd_ptr (width 2)))
+    (state rd_ptr (width 2)))
   (storage
-    (register wr_ptr (width 2)))
+    (state wr_ptr (width 2)))
   (transaction main (on start) (complete done)))
 ISF
 };
