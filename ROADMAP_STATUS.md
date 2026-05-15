@@ -4,7 +4,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: select or activate the next user-visible `R14` feature
   tree before implementing more ISF behavior. `ISF-TRANSACTION-ACTIVATION` is
-  now active with `ISF-TRANSACTION-ACTIVATION.2` as the current frontier.
+  now active with `ISF-TRANSACTION-ACTIVATION.3` as the current frontier.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -78,6 +78,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   General activation-site parameter overrides remain backlog beyond spawned
   child specialization. The active frontier advances to
   `ISF-TRANSACTION-ACTIVATION.2`.
+- `ISF-TRANSACTION-ACTIVATION.2` is complete. Planned general activation-site
+  parameter overrides reuse the explicit `(params (NAME value) ...)` block, but
+  the values are static specialization values, not runtime payloads. Runtime
+  data/control values continue to use transaction ports plus `(bind ...)`.
+  Activation sites with different parameter values must eventually lower to
+  distinct specialized transaction instances or cloned scheduled regions. The
+  active frontier advances to `ISF-TRANSACTION-ACTIVATION.3`.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree

@@ -653,6 +653,31 @@ and those overrides specialize the static spawned child instance. General
 parameter overrides at `do`, rule `trigger`, or every transaction activation
 site remain future work and must not be inferred from the task-like analogy.
 
+The planned general activation-site parameter shape, when implemented, is the
+same explicit block already used by spawned children:
+
+```lisp
+(do child
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)))
+
+(trigger child
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)))
+```
+
+Those `params` values are static specialization values, not runtime payload
+actuals. Runtime-varying data/control values must use transaction ports and
+`(bind ...)`. If two activation sites override the same transaction parameter
+with different values, the eventual implementation must specialize distinct
+logical child instances or cloned scheduled regions. It must not lower the
+parameter as a mutable runtime signal shared by every activation of the
+transaction.
+
 Current transaction clauses:
 - `(on port body...)`
 - `(when condition body...)`

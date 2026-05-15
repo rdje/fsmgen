@@ -13,8 +13,12 @@ This is the live continuity document for fast session recovery after crashes, re
   `(params ...)` overrides for static generated-child specialization. General
   parameter overrides for `do`, rule `trigger`, and other activation sites
   remain backlog and must not be assumed from the task analogy.
-- The active frontier is `ISF-TRANSACTION-ACTIVATION.2`, specifying the general
-  activation-site parameter override syntax before implementation.
+- Completed `ISF-TRANSACTION-ACTIVATION.2`: future general activation-site
+  parameter overrides will reuse explicit `(params (NAME value) ...)` blocks,
+  but those values are static specialization parameters, not runtime payloads.
+  Runtime data/control actuals remain transaction ports plus `(bind ...)`.
+- The active frontier is `ISF-TRANSACTION-ACTIVATION.3`, implementing the next
+  selected parameter-override activation site.
 ## 2026-05-15: ISF scalar setter syntax
 - Completed `ISF-SETTER-SYNTAX.1` in
   [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md), closing

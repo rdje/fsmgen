@@ -10,6 +10,9 @@ This is the persistent technical change history for FSMGen.
   `(bind ...)` actuals are shipped for the documented scalar activation subset,
   while general parameter overrides at `do`, rule `trigger`, and other
   activation sites remain future work beyond spawned-child specialization.
+- Completed `ISF-TRANSACTION-ACTIVATION.2`: future general activation-site
+  parameter overrides use `(params (NAME value) ...)` as static specialization
+  syntax, and runtime-varying data remains in transaction ports plus `(bind ...)`.
 ### R14 — ISF scalar setter syntax
 - Completed `ISF-SETTER-SYNTAX.1` and closed the scalar setter syntax task tree.
 - Added `(set lhs expr)` as the canonical explicit scalar setter across rule

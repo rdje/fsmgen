@@ -155,10 +155,31 @@ an explicit source shape, compile-time versus runtime interpretation, value
 domain, diagnostics, lowering, report metadata, and HDL proof before they are
 public syntax.
 
-Likely first design question: whether general activation-site parameter
-overrides reuse the existing spawn `(params (NAME value) ...)` shape exactly, or
-whether ISF should visually distinguish static specialization parameters from
-runtime payload bindings carried by `(bind ...)`.
+Planned source shape: reuse the existing explicit spawn-style
+`(params (NAME value) ...)` block on activation sites that support static
+specialization, while keeping runtime payloads in `(bind ...)`:
+
+```lisp
+(do child
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)))
+
+(trigger child
+  (params
+    (WIDTH 16))
+  (bind
+    (input addr req_addr)))
+```
+
+Lowering rule: parameter overrides specialize hardware; they do not assign
+runtime parameter signals. If two activation sites pass different parameter
+values to the same transaction, the eventual lowerer must elaborate distinct
+logical child instances or cloned scheduled regions. If that cannot be done for
+a given activation form, the form must fail closed with a diagnostic that tells
+the author to move the value to a transaction input port and `(bind ...)` it as
+runtime data.
 
 ### Spawn Inside Repeat Bodies
 

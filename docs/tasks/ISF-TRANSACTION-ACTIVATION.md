@@ -62,15 +62,15 @@ signals or parameter values through explicit source syntax.
   Commit: `ISF-TRANSACTION-ACTIVATION.1: document task-like activation`
 
 - ID: `ISF-TRANSACTION-ACTIVATION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify general activation-site parameter override syntax.`
   Acceptance: The book/spec define whether `do`, rule `trigger`, and other
   activation forms share one `(params (NAME value) ...)` override shape, which
   value domain is supported first, how overrides interact with transaction
   defaults, and how diagnostics name missing, duplicate, unknown, or
   shape-incompatible parameters.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TRANSACTION-ACTIVATION.2: specify activation params`
 
 - ID: `ISF-TRANSACTION-ACTIVATION.3`
   Status: `pending`
@@ -95,7 +95,7 @@ signals or parameter values through explicit source syntax.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-ACTIVATION.2` | `pending` | General activation-site parameter overrides need an exact source-shape contract before parser/scheduler implementation. |
+| 1 | `ISF-TRANSACTION-ACTIVATION.3` | `pending` | The syntax contract is specified; implementation must choose and ship the next activation site. |
 
 ## Decisions
 
@@ -109,14 +109,18 @@ signals or parameter values through explicit source syntax.
   port actual bindings. Spawned child transactions already support per-instance
   parameter overrides; `do` and rule `trigger` parameter overrides need their
   own source-shape and lowering slices.
+- `2026-05-15`: General activation-site parameter overrides will reuse the
+  explicit spawn-style `(params (NAME value) ...)` block. They are static
+  specialization values, not runtime payload actuals.
+- `2026-05-15`: If one transaction is activated with different parameter values
+  at different sites, the future lowerer must specialize distinct logical
+  transaction instances or cloned scheduled regions. It must not assign mutable
+  runtime parameter signals.
 
 ## Open Questions
 
-- Which activation site should receive general parameter overrides first:
+- Which activation site should receive implementation first:
   blocking `do`, rule `trigger`, or another form?
-- Should general activation-site parameters reuse the existing spawn
-  `(params (NAME value) ...)` shape exactly, or distinguish compile-time
-  specialization from runtime payload binding more visibly?
 
 ## Blockers
 
@@ -127,12 +131,14 @@ signals or parameter values through explicit source syntax.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TRANSACTION-ACTIVATION.1` | `ISF-TRANSACTION-ACTIVATION.1: document task-like activation` | Formalized current activation boundary; tree remains active. |
+| `ISF-TRANSACTION-ACTIVATION.2` | `ISF-TRANSACTION-ACTIVATION.2: specify activation params` | Specified planned `(params ...)` activation syntax and static specialization semantics. |
 
 ## Changelog
 
@@ -140,3 +146,5 @@ signals or parameter values through explicit source syntax.
   `ISF-TRANSACTION-ACTIVATION.1`.
 - `2026-05-15`: Completed `ISF-TRANSACTION-ACTIVATION.1`; active frontier
   advances to `ISF-TRANSACTION-ACTIVATION.2`.
+- `2026-05-15`: Completed `ISF-TRANSACTION-ACTIVATION.2`; active frontier
+  advances to `ISF-TRANSACTION-ACTIVATION.3`.

@@ -10,9 +10,15 @@ This document captures engineering rationale, design constraints, and working de
   it does not imply that every activation site can override transaction
   parameters.
 - The next implementation decision is whether broader activation-site
-  parameters should reuse spawn's `(params (NAME value) ...)` syntax exactly or
-  use a different shape to make static specialization distinct from runtime
-  port binding.
+  parameters should ship first for blocking `do`, rule `trigger`, or another
+  activation form.
+- General activation-site parameters should reuse the existing spawn
+  `(params (NAME value) ...)` syntax, but the docs now make the distinction by
+  semantics rather than spelling: `params` is static specialization, while
+  `(bind ...)` is runtime data/control payload.
+- A future lowerer must not implement parameter overrides by writing mutable
+  parameter signals into one shared transaction body. Different overrides imply
+  specialized transaction instances or cloned scheduled regions.
 ## 2026-05-15: ISF scalar setter syntax
 - `set` is deliberately a shared source word, not a new timing operator. The
   owning context still decides timing and region: rule `set` stays actor-level
