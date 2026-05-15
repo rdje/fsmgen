@@ -404,6 +404,10 @@ Consecutive top-level runtime waits are shipped: a zero bypass from one wait
 immediately evaluates the next wait, and the final sampled-counter edge of an
 active wait splits into the following wait's positive sampled-counter and zero
 bypass paths.
+Additional top-level predecessor kinds are shipped for `await`, `stage`,
+`repeat` exit checks, `await_all`, and `await_any`; their own advance
+conditions are ANDed or ORed into the runtime count split, and their unrelated
+alternatives such as await timeouts or repeat loop-back edges are preserved.
 Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
 state, optional counter signal, and optional counter width. Static waits keep
@@ -417,16 +421,15 @@ actor/transaction parameter names, unknown-width dynamic names, or unsupported
 dynamic contexts fail closed today.
 
 Remaining backlog: runtime scalar waits after pending samples, inside
-`when`/`switch`/`repeat`/`while`/`until` bodies, after predecessor kinds whose
-edge split is not implemented yet, and with expression-valued or
-parameter-backed counts.
+`when`/`switch`/`repeat`/`while`/`until` bodies, after remaining predecessor
+kinds such as loop decision states whose edge split is not implemented yet,
+and with expression-valued or parameter-backed counts.
 
 Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
-top-level dynamic waits are shipped, so the next frontier is additional
-top-level predecessor kinds such as `await` and `stage`, then inline
-branch/loop bodies, then pending-sample preservation, and finally
-expression-valued runtime counts once their width/type/snapshot contract is
-specified.
+top-level dynamic waits and the requested additional top-level predecessor
+kinds are shipped, so the next frontier is inline branch/loop bodies, then
+pending-sample preservation, and finally expression-valued runtime counts once
+their width/type/snapshot contract is specified.
 
 ### Transaction Dynamic Loops
 

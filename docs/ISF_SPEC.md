@@ -1091,11 +1091,23 @@ counter cycle (`counter == 1`) performs that same split for the next wait
 without rereading the first count source and without adding an extra active
 cycle.
 
+Runtime waits are also supported after the shipped top-level predecessor
+states whose advance condition is known to the scheduler. After `(await
+ready)`, the ready edge splits into `ready && count != 0` and `ready && count
+== 0` while the watchdog timeout edge remains intact. After `(stage ...)`, the
+stage ready edge is split the same way while the valid output remains driven
+by the stage state. After a top-level `repeat`, the repeat-check exit edge
+`counter == 0` is split while the loop-back edge is preserved. After
+`await_all`, the split is gated by the logical AND of all collected done
+signals. After `await_any`, the split is gated by the logical OR of the
+collected done signals.
+
 The current runtime scalar implementation is still deliberately narrow.
 Runtime waits inside `when`, `switch`, `repeat`, `while`, or `until` bodies
 remain rejected. Runtime waits after pending samples, after predecessor states
-whose edge split is not implemented yet, and counts expressed as list
-expressions or parameter-backed values also remain rejected.
+whose edge split is not implemented yet, including loop decision states, and
+counts expressed as list expressions or parameter-backed values also remain
+rejected.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

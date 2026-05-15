@@ -330,14 +330,39 @@ performs the same split for the second wait:
 The second count is sampled only on the edge that enters the second wait. The
 first count source is not reread after the first wait starts.
 
+Top-level runtime waits can also follow the shipped predecessor states whose
+advance condition is explicit in the scheduler IR:
+
+- After `(await ready)`, the ready edge is split into `ready && cycles` and
+  `ready && cycles == 0`; the watchdog timeout transition remains in the await
+  state.
+- After `(stage name (input ready) (output valid))`, the stage state continues
+  driving `valid`, and only the ready edge is split.
+- After a top-level `repeat`, the repeat-check exit edge `counter == 0` is
+  split, while the loop-back edge remains available.
+- After `await_all`, the split condition is the AND of the collected done
+  signals plus the runtime count test.
+- After `await_any`, the split condition is the OR of the collected done
+  signals plus the runtime count test.
+
+For example, a wait after `await_all` lowers the synchronization edge and the
+runtime count check into one guard:
+
+```lisp
+(parent_await_all_3
+  (<- (parent_wait_4_cnt cycles) <(& w0_done w1_done cycles))
+  (-> parent_wait_4 <(& w0_done w1_done cycles))
+  (-> parent_done_5 <(& w0_done w1_done (== cycles 0))))
+```
+
 Runtime scalar wait report entries use `count_kind` `runtime_scalar`, keep
 `cycles` null because the exact count is runtime data, name the source signal
 in `count_source`, and expose the generated counter through `counter_signal`
 and `counter_width`.
 
 Runtime waits remain fail-closed in inline bodies, after pending samples, after
-predecessor states whose edge split is not implemented yet, and for
-expression-valued or parameter-backed counts.
+predecessor states whose edge split is not implemented yet, including loop
+decision states, and for expression-valued or parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

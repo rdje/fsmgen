@@ -8,8 +8,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
   bounded runtime scalar wait lowering, `ISF-DYNAMIC-WAIT.3.3.1` split the
   context-expansion work, `ISF-DYNAMIC-WAIT.3.3.2` shipped consecutive
-  top-level runtime scalar waits, and the current frontier is
-  `ISF-DYNAMIC-WAIT.3.3.3`: additional top-level predecessor kinds.
+  top-level runtime scalar waits, `ISF-DYNAMIC-WAIT.3.3.3` shipped additional
+  top-level predecessor kinds, and the current frontier is
+  `ISF-DYNAMIC-WAIT.3.3.4`: inline dynamic waits in branch and loop bodies.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -38,6 +39,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   recursively evaluate the next runtime wait, and the final sampled-counter
   edge of an active wait splits into the following wait's positive load and
   zero bypass paths without rereading the previous count source.
+  Runtime waits after top-level `await`, `stage`, `repeat_check`, `sync_all`,
+  and `sync_any` predecessors are also supported. Their predecessor advance
+  conditions are combined with the runtime count split while unrelated
+  alternatives such as await timeouts and repeat loop-back edges remain
+  intact.
   Inline branch/switch/repeat/loop dynamic waits, pending samples before a
   dynamic wait, count expressions, parameter-backed counts, and additional
   predecessor-edge splits remain fail-closed until their exact bypass and
@@ -46,9 +52,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   container with executable leaves for consecutive dynamic waits, additional
   top-level predecessor kinds, inline branch/loop bodies, pending-sample
   preservation, and expression-valued counts. Consecutive top-level dynamic
-  waits are shipped; the next implementation leaf is additional top-level
-  predecessor kinds because they extend the same edge-split contract to states
-  that already own guarded transitions.
+  waits and the requested additional top-level predecessor kinds are shipped;
+  the next implementation leaf is inline branch/loop bodies because it moves
+  the same zero-bypass/sampled-counter contract into nested control-flow
+  regions.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -163,6 +170,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   splits, so the second wait is never entered with an uninitialized sampled
   counter. The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.3`:
   additional top-level predecessor kinds.
+- `ISF-DYNAMIC-WAIT.3.3.3` is complete. Runtime waits now lower after top-level
+  `await`, `stage`, `repeat_check`, `sync_all`, and `sync_any` predecessors by
+  combining each predecessor's advance condition with the dynamic count split.
+  The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.4`: inline dynamic
+  waits in branch and loop bodies.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

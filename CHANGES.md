@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF dynamic waits after additional predecessors
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so runtime scalar waits can follow top-level `await`, `stage`,
+  `repeat_check`, `sync_all`, and `sync_any` predecessor states.
+- Added predecessor-condition helpers that combine await ready, stage ready,
+  repeat-check exit, await-all done AND, and await-any done OR conditions with
+  the dynamic wait positive-count and zero-bypass paths.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so await, repeat-check, await-all, and await-any special emitters preserve
+  expression-guarded dynamic-wait split transitions.
+- Extended
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  with focused HDL-reaching coverage for each newly supported predecessor
+  kind.
+- Refreshed the ISF spec, public contract doc, mdBook, feature backlog,
+  roadmap, task tree, and live docs. The active dynamic-wait frontier advances
+  to `ISF-DYNAMIC-WAIT.3.3.4`.
 ### R14 — ISF consecutive runtime scalar waits
 - Updated
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

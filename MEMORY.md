@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF dynamic waits after additional predecessors
+- Completed `ISF-DYNAMIC-WAIT.3.3.3` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Top-level runtime scalar waits now lower after `await`, `stage`,
+  `repeat_check`, `sync_all`, and `sync_any` predecessor states.
+- The lowerer combines each predecessor's own advance condition with the
+  runtime count split: await ready, stage ready, repeat-check exit, await-all
+  done AND, and await-any done OR.
+- Await watchdog timeout and repeat loop-back alternatives are preserved when
+  the dynamic wait follows those states.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.4`, inline dynamic waits in
+  branch and loop bodies.
 ## 2026-05-15: ISF consecutive runtime scalar waits
 - Completed `ISF-DYNAMIC-WAIT.3.3.2` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
@@ -11,12 +23,15 @@ This is the live continuity document for fast session recovery after crashes, re
 - When the first wait is active, its final sampled-counter edge
   (`counter == 1`) splits into the second wait's positive counter-load path or
   zero bypass without rereading the first count source.
-- The current frontier is `ISF-DYNAMIC-WAIT.3.3.3`, additional top-level
-  predecessor kinds.
+- Additional top-level predecessor kinds later shipped under
+  `ISF-DYNAMIC-WAIT.3.3.3`; the current frontier is recorded in the latest
+  dynamic-wait entry above.
 ## 2026-05-15: ISF dynamic wait expansion split
 - Split `ISF-DYNAMIC-WAIT.3.3` into executable child leaves.
-- The next frontier is `ISF-DYNAMIC-WAIT.3.3.2`: consecutive top-level runtime
-  scalar waits.
+- Consecutive top-level runtime scalar waits and additional top-level
+  predecessor kinds later shipped under `ISF-DYNAMIC-WAIT.3.3.2` and
+  `ISF-DYNAMIC-WAIT.3.3.3`; the current frontier is recorded in the latest
+  dynamic-wait entry above.
 - Later leaves track additional top-level predecessor kinds, inline
   branch/loop contexts, pending-sample preservation, and expression-valued
   runtime counts.

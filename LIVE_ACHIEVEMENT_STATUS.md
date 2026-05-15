@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF dynamic waits after additional predecessors
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.3`.
+- Top-level runtime scalar waits now lower after `await`, `stage`,
+  `repeat_check`, `sync_all`, and `sync_any` predecessor states.
+- The lowerer combines each predecessor's advance condition with the dynamic
+  count split while preserving unrelated alternatives such as await timeouts
+  and repeat loop-back edges.
+- The `.fsm` emitter now preserves expression-guarded split transitions inside
+  await, repeat-check, await-all, and await-any special rendering paths.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.4`, inline dynamic
+  waits in branch and loop bodies.
+
 ## 2026-05-15: R14 — ISF consecutive runtime scalar waits
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.2`.
 - Consecutive top-level runtime scalar waits now lower through recursive

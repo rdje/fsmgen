@@ -351,9 +351,11 @@ so `(wait N)` accepts non-negative integer literals and actor constants in
 transaction body contexts, lowers positive resolved counts to reviewable fixed
 wait-state chains, treats resolved zero as a transparent no-op, accepts the
 top-level known-width runtime scalar count subset including consecutive
-top-level runtime waits, reaches HDL generation, exposes `actor_constants[]`
-and `transaction_waits[]` provenance, and rejects malformed, unknown,
-parameter-backed, expression-valued, or unsupported dynamic counts.
+top-level runtime waits and waits after shipped `await`, `stage`, `repeat`
+exit, `await_all`, and `await_any` predecessors, reaches HDL generation,
+exposes `actor_constants[]` and `transaction_waits[]` provenance, and rejects
+malformed, unknown, parameter-backed, expression-valued, or unsupported
+dynamic counts.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test

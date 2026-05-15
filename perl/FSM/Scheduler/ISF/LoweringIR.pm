@@ -4710,19 +4710,68 @@ sub _link_dynamic_wait_predecessor {
     my $kind = $state->{kind} // '';
     my $source = $wait_state->{wait_count_source};
 
-    my $supported =
-        $kind eq 'entry'
-        || $kind eq 'sequential'
-        || $kind eq 'contract'
-        || ($kind eq 'wait' && !$state->{dynamic_wait_entry});
+    my $base_condition = _dynamic_wait_predecessor_condition_expr($state);
+    confess "Transaction '$tn': runtime dynamic wait count '$source' cannot follow state '$state->{name}' of kind '$kind' in the current dynamic-wait slice\n"
+        unless defined $base_condition;
 
-    confess "Transaction '$tn': runtime dynamic wait count '$source' cannot follow state '$state->{name}' of kind '$kind' in the first dynamic-wait slice\n"
-        unless $supported;
-
-    my $base_condition = $kind eq 'entry'
-        ? (_guard_condition_expr($state->{guard}) // '1')
-        : '1';
+    _preserve_dynamic_wait_predecessor_alternatives($tn, $state);
     _link_dynamic_wait_entry_edge($state, $wait_state, $base_condition);
+}
+
+sub _dynamic_wait_predecessor_condition_expr {
+    my ($state) = @_;
+    my $kind = $state->{kind} // '';
+
+    return _guard_condition_expr($state->{guard}) // '1'
+        if $kind eq 'entry';
+    return '1'
+        if $kind eq 'sequential'
+            || $kind eq 'contract'
+            || ($kind eq 'wait' && !$state->{dynamic_wait_entry});
+    return _guard_condition_expr($state->{guard})
+        if $kind eq 'await';
+    return $state->{ready}
+        if $kind eq 'stage' && defined($state->{ready}) && length($state->{ready});
+    return "(== $state->{counter} 0)"
+        if $kind eq 'repeat_check' && defined($state->{counter}) && length($state->{counter});
+    return _sync_all_condition_expr($state->{done_ports})
+        if $kind eq 'sync_all';
+    return _sync_any_condition_expr($state->{done_ports})
+        if $kind eq 'sync_any';
+    return undef;
+}
+
+sub _preserve_dynamic_wait_predecessor_alternatives {
+    my ($tn, $state) = @_;
+    my $kind = $state->{kind} // '';
+
+    if ($kind eq 'await') {
+        push @{$state->{transitions}}, {
+            target    => "${tn}_timeout",
+            condition => { signal => $state->{watchdog}{name}, op => '=', value => 0 },
+        } if $state->{watchdog} && defined($state->{watchdog}{name});
+    } elsif ($kind eq 'repeat_check') {
+        push @{$state->{transitions}}, {
+            target    => $state->{loop_target},
+            condition => { signal => $state->{counter}, op => '!=', value => 0 },
+        } if defined($state->{loop_target}) && defined($state->{counter});
+    }
+}
+
+sub _sync_all_condition_expr {
+    my ($ports) = @_;
+    my @ports = grep { defined($_) && length($_) } @{$ports || []};
+    return '1' unless @ports;
+    return $ports[0] if @ports == 1;
+    return '(& ' . join(' ', @ports) . ')';
+}
+
+sub _sync_any_condition_expr {
+    my ($ports) = @_;
+    my @ports = grep { defined($_) && length($_) } @{$ports || []};
+    return '1' unless @ports;
+    return $ports[0] if @ports == 1;
+    return '(| ' . join(' ', @ports) . ')';
 }
 
 sub _link_dynamic_wait_entry_edge {

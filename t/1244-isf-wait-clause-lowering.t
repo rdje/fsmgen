@@ -409,6 +409,163 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_pair');
 };
 
+subtest 'runtime scalar waits split additional top-level predecessor kinds' => sub {
+    my ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-await');
+(actor wait_dynamic_after_await
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input ready)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (await ready)
+    (wait cycles)
+    (drive tick)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_after_await.fsm'};
+    my $await = state_block($fsm, 'main_await_1');
+    like($await, qr/\(<- \(main_wait_2_cnt cycles\) <\(& ready cycles\)\)/,
+        'await ready edge samples the runtime count on the positive path');
+    like($await, qr/\(-> main_wait_2 <\(& ready cycles\)\)/,
+        'await ready edge enters the dynamic wait on a positive count');
+    like($await, qr/\(-> main_drive_3 <\(& ready \(== cycles 0\)\)\)/,
+        'await ready edge bypasses the dynamic wait on zero');
+    like($await, qr/\?main_wd[\s\S]*\(=0 \(-> main_timeout\)\)/,
+        'await watchdog timeout transition is preserved');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_await');
+
+    ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-stage');
+(actor wait_dynamic_after_stage
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input ready)
+    (input cycles (width 4))
+    (output valid)
+    (output done))
+  (transaction main
+    (on start)
+    (stage accept (input ready) (output valid))
+    (wait cycles)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_after_stage.fsm'};
+    my $stage = state_block($fsm, 'main_stage_1');
+    like($stage, qr/\(= \(valid> 1\)\)/, 'stage still drives valid while waiting for ready');
+    like($stage, qr/\(<- \(main_wait_2_cnt cycles\) <\(& ready cycles\)\)/,
+        'stage ready edge samples the runtime count on the positive path');
+    like($stage, qr/\(-> main_done_3 <\(& ready \(== cycles 0\)\)\)/,
+        'stage ready edge bypasses to the post-wait state on zero');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_stage');
+
+    ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-repeat');
+(actor wait_dynamic_after_repeat
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (repeat 1
+      (drive tick))
+    (wait cycles)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_after_repeat.fsm'};
+    my $repeat_check = state_block($fsm, 'main_repeat_check_3');
+    like($repeat_check, qr/\(<- \(main_wait_4_cnt cycles\) <\(& \(== main_cnt 0\) cycles\)\)/,
+        'repeat exit edge samples the runtime count on the positive path');
+    like($repeat_check, qr/\?main_cnt[\s\S]*\(=1 \(-> main_repeat_init_1\)\)/,
+        'repeat loop-back edge is preserved');
+    like($repeat_check, qr/\(-> main_done_5 <\(& \(== main_cnt 0\) \(== cycles 0\)\)\)/,
+        'repeat exit edge bypasses the dynamic wait on zero');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_repeat');
+
+    ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-sync-all');
+(actor wait_dynamic_after_sync_all
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction worker
+    (on start)
+    (drive tick)
+    (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (await_all done)
+    (wait cycles)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_after_sync_all.fsm'};
+    my $sync_all = state_block($fsm, 'parent_await_all_3');
+    like($sync_all, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& w0_done w1_done cycles\)\)/,
+        'await_all all-done edge samples the runtime count on the positive path');
+    like($sync_all, qr/\(-> parent_wait_4 <\(& w0_done w1_done cycles\)\)/,
+        'await_all all-done edge enters the dynamic wait on a positive count');
+    like($sync_all, qr/\(-> parent_done_5 <\(& w0_done w1_done \(== cycles 0\)\)\)/,
+        'await_all all-done edge bypasses the dynamic wait on zero');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_sync_all');
+
+    ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-sync-any');
+(actor wait_dynamic_after_sync_any
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction worker
+    (on start)
+    (drive tick)
+    (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (await_any done)
+    (wait cycles)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_after_sync_any.fsm'};
+    my $sync_any = state_block($fsm, 'parent_await_any_3');
+    like($sync_any, qr/\(<- \(parent_wait_4_cnt cycles\) <\(& \(\| w0_done w1_done\) cycles\)\)/,
+        'await_any any-done edge samples the runtime count on the positive path');
+    like($sync_any, qr/\(-> parent_wait_4 <\(& \(\| w0_done w1_done\) cycles\)\)/,
+        'await_any any-done edge enters the dynamic wait on a positive count');
+    like($sync_any, qr/\(-> parent_done_5 <\(& \(\| w0_done w1_done\) \(== cycles 0\)\)\)/,
+        'await_any any-done edge bypasses the dynamic wait on zero');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_sync_any');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_missing_count
@@ -478,14 +635,17 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'dynamic wait after await', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' cannot follow state 'main_await_1' of kind 'await' in the first dynamic-wait slice/);
-(actor wait_dynamic_after_await
+    assert_lower_rejected(<<'ISF', 'dynamic wait after loop decision', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' cannot follow state 'main_while_check_3' of kind 'loop_while' in the current dynamic-wait slice/);
+(actor wait_dynamic_after_loop
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input ready) (input cycles (width 4)) (output done))
+  (interface (input start) (input cond) (input cycles (width 4)) (output flag) (output done))
+  (drive tick
+    (flag 1))
   (transaction main
     (on start)
-    (await ready)
+    (while cond
+      (drive tick))
     (wait cycles)
     (complete done)))
 ISF

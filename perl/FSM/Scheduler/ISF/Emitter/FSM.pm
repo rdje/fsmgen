@@ -152,8 +152,21 @@ sub _emit_transitions($self, $state) {
 
     if ($state->{kind} eq 'repeat_check') {
         # Decision tree: (=0 -> exit), (!=0 -> loop)
-        push @lines, "    (?$state->{counter}";
-        for my $t (@$txs) {
+        my @counter_transitions = grep {
+            $_->{condition}
+                && $_->{condition}{signal}
+                && $_->{condition}{signal} eq $state->{counter}
+        } @$txs;
+        my @other_transitions = grep {
+            !($_->{condition}
+                && $_->{condition}{signal}
+                && $_->{condition}{signal} eq $state->{counter})
+        } @$txs;
+
+        if (@counter_transitions) {
+            push @lines, "    (?$state->{counter}";
+        }
+        for my $t (@counter_transitions) {
             my $c = $t->{condition};
             if ($c->{op} eq '!=') {
                 push @lines, "      (=1 (-> $t->{target}))";
@@ -161,7 +174,10 @@ sub _emit_transitions($self, $state) {
                 push @lines, "      (=0 (-> $t->{target}))";
             }
         }
-        push @lines, '    )';
+        push @lines, '    )' if @counter_transitions;
+        for my $t (@other_transitions) {
+            push @lines, $self->_emit_simple_transition($t);
+        }
         return @lines;
     }
 
@@ -175,6 +191,8 @@ sub _emit_transitions($self, $state) {
                 push @lines, "    (<$c->{port}";
                 push @lines, "      (-> $t->{target})";
                 push @lines, '    )';
+            } elsif ($c->{expr}) {
+                push @lines, $self->_emit_simple_transition($t);
             } elsif ($c->{signal}) {
                 # Watchdog: zero test and nonzero decrement both read current Q.
                 push @lines, "    (?$c->{signal}";
@@ -188,6 +206,9 @@ sub _emit_transitions($self, $state) {
 
     # Sync transitions: await_all / await_any
     if ($state->{kind} eq 'sync_all') {
+        return map { $self->_emit_simple_transition($_) } @$txs
+            if grep { $_->{condition} } @$txs;
+
         my @ports = @{$state->{done_ports}};
         my $target = $txs->[0]{target};
         if (!@ports) {
@@ -200,6 +221,9 @@ sub _emit_transitions($self, $state) {
         return @lines;
     }
     if ($state->{kind} eq 'sync_any') {
+        return map { $self->_emit_simple_transition($_) } @$txs
+            if grep { $_->{condition} } @$txs;
+
         my $target = $txs->[0]{target};
         my @ports = @{$state->{done_ports}};
         for my $p (@ports) {
@@ -253,22 +277,28 @@ sub _emit_transitions($self, $state) {
 
     # Simple transitions
     for my $t (@$txs) {
-        if ($t->{condition} && $t->{condition}{port}) {
-            push @lines, "    (<$t->{condition}{port}";
-            push @lines, "      (-> $t->{target})";
-            push @lines, '    )';
-        } elsif ($t->{condition} && $t->{condition}{expr}) {
-            push @lines, "    (-> $t->{target} <$t->{condition}{expr})";
-        } elsif ($t->{condition} && $t->{condition}{signal}) {
-            my $c = $t->{condition};
-            my $op = $c->{op} // '=';
-            $op = '=' if $op eq '==';
-            push @lines, "    (?$c->{signal}";
-            push @lines, "      ($op$c->{value} (-> $t->{target}))";
-            push @lines, '    )';
-        } else {
-            push @lines, "    (-> $t->{target})";
-        }
+        push @lines, $self->_emit_simple_transition($t);
+    }
+    return @lines;
+}
+
+sub _emit_simple_transition($self, $transition) {
+    my @lines;
+    if ($transition->{condition} && $transition->{condition}{port}) {
+        push @lines, "    (<$transition->{condition}{port}";
+        push @lines, "      (-> $transition->{target})";
+        push @lines, '    )';
+    } elsif ($transition->{condition} && $transition->{condition}{expr}) {
+        push @lines, "    (-> $transition->{target} <$transition->{condition}{expr})";
+    } elsif ($transition->{condition} && $transition->{condition}{signal}) {
+        my $c = $transition->{condition};
+        my $op = $c->{op} // '=';
+        $op = '=' if $op eq '==';
+        push @lines, "    (?$c->{signal}";
+        push @lines, "      ($op$c->{value} (-> $transition->{target}))";
+        push @lines, '    )';
+    } else {
+        push @lines, "    (-> $transition->{target})";
     }
     return @lines;
 }

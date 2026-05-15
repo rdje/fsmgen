@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: dynamic wait predecessor support is base-condition splitting
+- A dynamic wait after a guarded predecessor should not introduce a new
+  decision cycle. The predecessor's own advance condition becomes the base
+  condition for the dynamic wait entry helper.
+- `await` uses its ready condition as the base and preserves its watchdog
+  timeout edge. `stage` uses ready as the base while the stage state's
+  combinational valid drive remains active. `repeat_check` uses the exit edge
+  `counter == 0` as the base and preserves the loop-back edge.
+- `await_all` and `await_any` do not need bespoke dynamic-wait state shapes:
+  the collected done signals become one base condition, AND for all and OR for
+  any, before the runtime count split is applied.
+- The `.fsm` emitter must not let special transition renderers discard
+  expression-guarded transitions. Await, repeat-check, await-all, and await-any
+  now delegate those split edges to the same simple transition renderer used by
+  ordinary states.
 ## 2026-05-15: consecutive runtime waits are recursive edge splits
 - Back-to-back runtime waits are not handled by entering the second wait state
   unconditionally. If the first runtime count is zero, the first wait consumes

@@ -120,14 +120,14 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.2: support consecutive runtime waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Support additional top-level predecessor kinds.`
   Acceptance: Runtime waits after `await`, `stage`, `repeat_check`,
   `sync_all`, and `sync_any` either lower through exact combined predecessor
   conditions and counter loads or remain fail-closed with targeted diagnostics
   and book coverage for each predecessor kind.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.3: support dynamic wait predecessors`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.4`
   Status: `pending`
@@ -162,7 +162,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3.3` | `pending` | Additional top-level predecessor kinds are the next bounded edge-split expansion after consecutive dynamic waits. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3.4` | `pending` | Inline branch and loop bodies are the next dynamic wait expansion after top-level predecessor edges. |
 
 ## Decisions
 
@@ -213,6 +213,11 @@ changing the exact timing meaning of the shipped wait construct.
   sampled-counter edge of an active preceding wait. Both paths must evaluate
   the following wait's zero/positive split without entering the following wait
   uninitialized and without rereading the preceding wait source.
+- `2026-05-15`: Additional top-level dynamic-wait predecessors should be
+  modeled as one base advance condition plus any unrelated alternatives that
+  must survive. `await` preserves watchdog timeout, `repeat_check` preserves
+  loop-back, `stage` preserves valid driving while splitting ready, `sync_all`
+  uses the AND of collected done signals, and `sync_any` uses their OR.
 
 ## Open Questions
 
@@ -233,6 +238,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -244,6 +250,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.3.2` | `ISF-DYNAMIC-WAIT.3.2: ship runtime scalar waits` | Ships the first top-level known-width runtime scalar wait lowering and report metadata. |
 | `ISF-DYNAMIC-WAIT.3.3.1` | `ISF-DYNAMIC-WAIT.3.3.1: split dynamic wait expansion` | Splits context expansion into executable leaves. |
 | `ISF-DYNAMIC-WAIT.3.3.2` | `ISF-DYNAMIC-WAIT.3.3.2: support consecutive runtime waits` | Supports back-to-back top-level runtime waits with recursive zero-bypass and sampled-counter final-edge splits. |
+| `ISF-DYNAMIC-WAIT.3.3.3` | `ISF-DYNAMIC-WAIT.3.3.3: support dynamic wait predecessors` | Supports runtime waits after `await`, `stage`, `repeat_check`, `sync_all`, and `sync_any` predecessor states. |
 
 ## Changelog
 
@@ -265,3 +272,6 @@ changing the exact timing meaning of the shipped wait construct.
   runtime scalar waits now lower through recursive zero-bypass and active-wait
   final-edge splits. The current frontier advances to
   `ISF-DYNAMIC-WAIT.3.3.3`.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.3`; runtime waits now lower
+  after `await`, `stage`, `repeat_check`, `sync_all`, and `sync_any`
+  predecessors. The current frontier advances to `ISF-DYNAMIC-WAIT.3.3.4`.

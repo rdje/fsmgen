@@ -240,7 +240,10 @@ iterate any authored actions.
   that many active wait cycles with a generated counter. Consecutive top-level
   runtime waits are allowed; a zero bypass from one wait immediately evaluates
   the next wait's zero/positive split, and the final sampled-counter edge of
-  an active wait does the same for the following wait.
+  an active wait does the same for the following wait. Runtime waits can also
+  follow top-level `await`, `stage`, `repeat` exit checks, `await_all`, and
+  `await_any`, where the predecessor's own advance condition is combined with
+  the runtime count split.
 
 Pending samples immediately before a positive static wait piggyback onto the
 first wait state, using the same sample materialization rule as drive/await
