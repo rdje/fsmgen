@@ -888,13 +888,15 @@ assignments. Parameter overrides are narrower than port bindings: spawned child
 transactions and blocking `do` generated child activations support
 transaction-local `params` and per-instance `(params (NAME value) ...)`
 overrides through the generated composition path, and those overrides
-specialize static child instances. General parameter overrides at rule
-`trigger` or every transaction activation site remain future work and must not
-be inferred from the task-like analogy.
+specialize static child instances. The rule-trigger parameter override
+contract is selected but not implemented: a future parameterized trigger will
+specialize a generated child activation instance rather than mutate a shared
+transaction body. General parameter overrides at every transaction activation
+site remain future work and must not be inferred from the task-like analogy.
 
 The activation-site parameter shape is the same explicit block already used by
 spawned children. It is shipped for spawn and blocking `do`; the trigger form
-below documents the intended future spelling, not shipped behavior:
+below is the selected future spelling, not shipped behavior:
 
 ```lisp
 (do child
@@ -919,6 +921,14 @@ values, the implementation must specialize distinct logical child instances or
 cloned scheduled regions. It must not lower the parameter as a mutable runtime
 signal shared by every activation of the transaction.
 
+The selected future parameterized rule-trigger contract follows the same
+specialization rule. It elaborates a generated child activation instance named
+`{rule}_{transaction}_trigger_{ordinal}` for each lexical parameterized trigger
+site, applies the overrides on that generated `?fsmc` instance, and preserves
+the shipped rule-trigger pulse and input payload timing through generated
+handoff DTs. Rule-trigger output bindings remain unsupported because rules do
+not wait for transaction completion.
+
 Current transaction clauses:
 - `(on port body...)`
 - `(when condition body...)`
@@ -942,6 +952,7 @@ Current transaction clauses:
 - `(extract word as field... (widths N...))`
 - `(do transaction [(params (NAME value) ...)] [(bind ...)])`
 - `(spawn transaction as instance [(params (NAME value) ...)] [(bind ...)])`
+- Future, not shipped: `(trigger transaction [(params (NAME value) ...)] [(bind ...)])`
 - `(await_all done_port)`
 - `(await_any done_port)`
 - `(complete port)`
@@ -1864,6 +1875,16 @@ Current lowering:
   each rule source separately and emits one generated combinational fan-in DT
   per target transaction. That DT drives `transaction_start` from the OR of the
   rule sources without adding another cycle.
+- Future parameterized rule triggers use the source shape
+  `(trigger transaction (params (NAME value) ...) (bind ...))`. That shape is
+  selected but not implemented. The planned lowering creates one static
+  generated child activation instance per lexical parameterized trigger site,
+  named `{rule}_{transaction}_trigger_{ordinal}`, applies overrides through the
+  generated top's `?fsmc` `(params ...)` block, and preserves the current
+  rule-trigger timing by routing the existing per-rule trigger source and input
+  payload sources through a generated handoff DT. The rule does not wait for
+  the generated child `done` handoff, and rule-trigger output bindings remain
+  rejected.
 - Scheduled `.fsm` emission writes the rule guard as the non-state DT header
   DTE, for example:
 
@@ -1893,6 +1914,15 @@ Multi-rule fan-in example:
   (= (work_start (| r0_work r1_work)))
 )
 ```
+
+When the future parameterized trigger path is implemented, malformed trigger
+`params` blocks must fail before scheduled artifacts are emitted: more than one
+`params` block on one trigger action, malformed `(NAME value)` entries,
+non-HDL parameter names, duplicate override names, unknown target parameters,
+shape-incompatible values, unsupported symbolic/expression override values,
+and generated instance name or handoff-port collisions are all fail-closed
+diagnostics. A rule trigger with output bindings remains rejected; runtime data
+must continue to use input ports and `(bind ...)`.
 
 - Inline `(priority over other_rule)` is structurally validated by the parser,
   and `other_rule` must name a declared rule in the same actor. Forward

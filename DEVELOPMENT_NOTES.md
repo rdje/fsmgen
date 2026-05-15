@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: parameterized rule triggers specialize generated children
+- `ISF-ACTIVATION-PARAM-OVERRIDES.2` selects generated child activation for
+  future rule-trigger parameter overrides. That avoids the unsafe alternative
+  of writing override values into a shared local transaction body when
+  different trigger sites may require different static parameters.
+- The selected instance naming scheme is
+  `{rule}_{transaction}_trigger_{ordinal}`. The ordinal is lexical within the
+  rule/target trigger sites that require generated activation, so repeated
+  trigger actions cannot collide.
+- The implementation leaf must preserve existing trigger timing. Current
+  triggers produce a per-rule `<1` source and input payload sources, then a
+  combinational fan-in drives the target start and payload ports. The
+  parameterized path should replace the shared target fan-in with a generated
+  handoff DT that drives the generated instance start and input handoff ports
+  from those same sources.
+- Public contract code is intentionally unchanged in this specification slice.
+  The implementation leaf owns any bounded report metadata updates, especially
+  `generated_composition.instances[].activation_kind == trigger` and
+  parameter binding provenance if existing fields are widened.
 ## 2026-05-16: remaining activation params need their own tree
 - `ISF-ACTIVATION-PARAM-OVERRIDES.1` deliberately makes no scheduler change.
   The prior `ISF-TRANSACTION-ACTIVATION` tree closed after spawn and blocking

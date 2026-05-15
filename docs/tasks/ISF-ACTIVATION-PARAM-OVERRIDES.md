@@ -57,14 +57,14 @@ direct transaction activation boundary.
   Goal: `Attach the remaining activation parameter work to an active R14 task tree.`
   Acceptance: `Task-tree index, roadmap status, README index, live recovery docs, and change history name this tree as the active owner for rule-trigger and direct-activation parameter overrides, with no compiler behavior change.`
   Verification: `git diff --check`
-  Commit: `pending`
+  Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.1: open activation params tree`
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify the rule-trigger parameter override lowering contract.`
   Acceptance: `The task tree, spec, and mdBook state the exact source shape, specialization strategy, diagnostics, schedule-report/public-surface impact, and focused test plan for parameterized rule triggers before scheduler code changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.2: specify trigger params`
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES.3`
   Status: `pending`
@@ -91,7 +91,7 @@ direct transaction activation boundary.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `pending` | Rule-trigger parameter overrides are the next backlog item called out by the roadmap, and their lowering strategy must be fixed before scheduler edits. |
+| 1 | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `pending` | The rule-trigger source shape, specialization strategy, diagnostics, report impact, and focused test plan are now specified; implementation is the next executable leaf. |
 
 ## Decisions
 
@@ -108,6 +108,47 @@ direct transaction activation boundary.
   docs, mdBook behavior, schedule-report metadata if new activation instances
   are reported, and focused public-contract/audit updates only when bounded
   public surfaces change.
+- `2026-05-16`: `ISF-ACTIVATION-PARAM-OVERRIDES.2` selects generated child
+  activation as the rule-trigger parameter override strategy. The source shape
+  is `(trigger transaction (params (NAME value) ...) (bind ...))`; the
+  implementation leaf must elaborate one static generated child activation
+  instance per lexical parameterized trigger site, with deterministic names
+  `{rule}_{transaction}_trigger_{ordinal}`.
+- `2026-05-16`: The rule-trigger implementation must preserve the shipped
+  trigger timing: rule DTs still emit one-cycle trigger sources and input
+  payload sources, and generated handoff DTs route those sources to the
+  generated instance start and input handoff ports.
+- `2026-05-16`: Rule-trigger output bindings remain unsupported for the
+  parameterized path because a rule does not wait for transaction completion.
+  The generated child `done` handoff is still wired and reported for uniform
+  generated composition.
+- `2026-05-16`: The public sync scope for `.2` is documentation-only: spec,
+  mdBook, task tree, roadmap, and live docs. Public contract code and manifest
+  metadata remain unchanged until implementation introduces or changes bounded
+  report keys or tested guidance.
+
+## Focused Test Plan
+
+`ISF-ACTIVATION-PARAM-OVERRIDES.3` should cover at least:
+
+- Accepted parameterized rule trigger with one override, one input binding,
+  generated child `.fsm`, generated top `?fsmc` params, and HDL reach.
+- Multiple parameterized trigger sites to the same transaction with distinct
+  deterministic instances and no mutable shared parameter signal.
+- Mixed trigger sites when one target is generated: unparameterized trigger
+  sites must either lower through default-valued generated instances or fail
+  closed with a source-local diagnostic; they must not target a skipped local
+  transaction body.
+- Rule-trigger input binding timing remains source/payload based, and output
+  bindings remain rejected.
+- Malformed trigger params fail before scheduled artifacts: duplicate `params`
+  blocks, malformed entries, duplicate override names, unknown parameters,
+  incompatible aggregate/list values, unsupported symbolic/expression values,
+  and generated handoff-name collisions.
+- Schedule JSON exposes generated-composition instance metadata with
+  `activation_kind => trigger` and parameter binding provenance, or the
+  implementation leaf records why an existing bounded report field already
+  covers it without widening the public contract.
 
 ## Open Questions
 
@@ -124,13 +165,14 @@ direct transaction activation boundary.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.1` | `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.1` | `ISF-ACTIVATION-PARAM-OVERRIDES.1: open activation params tree` | Tree-opening slice; no compiler behavior change. |
-| `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `pending` | Pending. |
+| `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `ISF-ACTIVATION-PARAM-OVERRIDES.2: specify trigger params` | Selected generated child activation as the rule-trigger parameter override contract; implementation remains pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `pending` | Pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `pending` | Pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `pending` | Pending. |
@@ -140,3 +182,5 @@ direct transaction activation boundary.
 - `2026-05-16`: Created the active R14 task tree and completed
   `ISF-ACTIVATION-PARAM-OVERRIDES.1` as the tree-opening slice. The active
   frontier is now `ISF-ACTIVATION-PARAM-OVERRIDES.2`.
+- `2026-05-16`: Completed `ISF-ACTIVATION-PARAM-OVERRIDES.2`; the active
+  frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.3`.

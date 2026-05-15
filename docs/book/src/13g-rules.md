@@ -214,6 +214,30 @@ With a single rule source, the generated fan-in assigns the source directly:
 )
 ```
 
+Parameterized rule triggers are selected as future generated-child activations,
+not as writes to shared transaction parameters. The selected source shape is
+`(trigger transaction (params (NAME value) ...) (bind ...))`, reusing the
+same static parameter block shipped for spawn and blocking `do`; this spelling
+is still rejected by the shipped lowerer until
+`ISF-ACTIVATION-PARAM-OVERRIDES.3` implements it.
+
+The selected lowering preserves the shipped trigger timing. The rule DT still
+creates the per-rule trigger source and, for input bindings, per-rule payload
+sources. Instead of feeding the shared `transaction_start` fan-in, the
+parameterized path elaborates a static generated child instance named
+`{rule}_{transaction}_trigger_{ordinal}` and a generated trigger handoff DT
+drives `{instance}_start` plus the input handoff ports under that trigger
+source. The generated top applies the `(params ...)` overrides on that
+`?fsmc` instance. The parent wires `instance.done` back for uniform generated
+composition, but the rule does not wait for it. Rule-trigger output bindings
+remain unsupported because there is no completion point in the rule action.
+Malformed or ambiguous trigger parameter overrides must fail before scheduled
+artifacts are emitted: duplicate `params` blocks, duplicate override names,
+unknown target parameters, incompatible aggregate/list shapes, unsupported
+symbolic or expression override values, generated instance name collisions, and
+generated handoff-port collisions are all diagnostics rather than implicit
+fallbacks.
+
 ## Rule Examples
 
 ### Error Gate

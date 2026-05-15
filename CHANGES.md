@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF rule-trigger parameter override contract selected
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.2`.
+- Specified the future parameterized rule-trigger source shape as
+  `(trigger transaction (params (NAME value) ...) (bind ...))`, keeping
+  `(params ...)` as static specialization and `(bind ...)` as runtime payload.
+- Selected generated child activation as the lowering strategy. Each lexical
+  parameterized trigger site will elaborate a deterministic
+  `{rule}_{transaction}_trigger_{ordinal}` instance, and the generated top will
+  apply overrides through the existing `?fsmc` `(params ...)` surface.
+- Recorded that the implementation must preserve current rule-trigger pulse
+  and input payload timing by routing per-rule trigger/payload sources through
+  a generated handoff DT. Rule-trigger output bindings remain unsupported.
+- Updated the ISF spec, mdBook transaction/rule/lowering/backlog chapters,
+  task tree, roadmap, and live docs. This is specification-only; compiler
+  behavior, accepted public syntax, report shape, and HDL output are unchanged.
 ### R14 — ISF activation parameter override tree opened
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.1`.
 - Opened [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md)

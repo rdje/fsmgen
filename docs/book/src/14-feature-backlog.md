@@ -143,9 +143,11 @@ own specialization contract before becoming valid parameter values.
 
 ### General Transaction Activation Parameter Overrides
 
-Status: partially shipped; the original `ISF-TRANSACTION-ACTIVATION` tree is
-closed for spawn and blocking `do`. Rule-trigger or direct-activation
-parameter work needs a fresh explicit task-tree leaf before implementation.
+Status: partially shipped. The original `ISF-TRANSACTION-ACTIVATION` tree is
+closed for spawn and blocking `do`; the active
+`ISF-ACTIVATION-PARAM-OVERRIDES` tree owns the remaining rule-trigger and
+direct-activation work. `ISF-ACTIVATION-PARAM-OVERRIDES.2` selects the
+rule-trigger lowering contract; implementation remains pending.
 
 Goal: extend the task-like transaction activation model so activation sites can
 override declared transaction parameters where that is semantically valid.
@@ -154,17 +156,18 @@ Current boundary: transaction ports already provide formal data/control ports,
 and shipped activation-site `(bind ...)` blocks pass scalar actual signals for
 the supported `do`, `spawn`, and rule `trigger` subset. Spawned child
 transactions and blocking `do` child activations support per-instance
-`(params (NAME value) ...)` overrides through generated composition. That is
-still not a general trigger-site parameter-override contract. Parameter
-overrides on rule `trigger`, direct transaction activation, or other future
-activation forms need explicit source shape, compile-time versus runtime
-interpretation, value domain, diagnostics, lowering, report metadata, and HDL
-proof before they are public syntax.
+`(params (NAME value) ...)` overrides through generated composition. The
+selected future rule-trigger contract also uses generated composition, but it
+is not public syntax until implementation and tests land. Parameter overrides
+on direct transaction activation or other future activation forms still need
+explicit source shape, compile-time versus runtime interpretation, diagnostics,
+lowering, report metadata, and HDL proof before they are public syntax.
 
 Source shape: reuse the existing explicit spawn-style
 `(params (NAME value) ...)` block on activation sites that support static
 specialization, while keeping runtime payloads in `(bind ...)`. This is
-shipped for spawn and blocking `do`; the trigger example remains backlog:
+shipped for spawn and blocking `do`; the trigger example is the selected
+future spelling and remains unimplemented:
 
 ```lisp
 (do child
@@ -183,12 +186,20 @@ shipped for spawn and blocking `do`; the trigger example remains backlog:
 Lowering rule: parameter overrides specialize hardware; they do not assign
 runtime parameter signals. A parameterized blocking `do` elaborates a generated
 child activation instance named `{parent}_{child}_do_{ordinal}` and waits for
-that instance's `done` handoff. If two activation sites pass different
-parameter values to the same transaction, the lowerer must elaborate distinct
-logical child instances or cloned scheduled regions. If that cannot be done for
-a given activation form, the form must fail closed with a diagnostic that tells
-the author to move the value to a transaction input port and `(bind ...)` it as
-runtime data.
+that instance's `done` handoff. The selected parameterized rule-trigger
+lowering elaborates a generated child activation instance named
+`{rule}_{transaction}_trigger_{ordinal}`. The rule still emits the existing
+one-cycle trigger source and input payload sources, then a generated handoff DT
+drives the instance start and input handoff ports under that source. The
+generated top applies the static `(params ...)` overrides on the child
+`?fsmc` instance. The rule wires but does not await the generated child `done`
+handoff, and output bindings remain unsupported.
+
+If two activation sites pass different parameter values to the same
+transaction, the lowerer must elaborate distinct logical child instances or
+cloned scheduled regions. If that cannot be done for a given activation form,
+the form must fail closed with a diagnostic that tells the author to move the
+value to a transaction input port and `(bind ...)` it as runtime data.
 
 ### Spawn Inside Repeat Bodies
 

@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF rule-trigger parameter override contract selected
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.2` in
+  [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md).
+- The selected future source shape is
+  `(trigger transaction (params (NAME value) ...) (bind ...))`, reusing the
+  static activation parameter block shipped for spawn and blocking `do`.
+- The selected lowering strategy is generated child activation per lexical
+  parameterized trigger site, with deterministic instance names
+  `{rule}_{transaction}_trigger_{ordinal}`. The generated top applies
+  overrides through `?fsmc` `(params ...)`.
+- The rule-trigger implementation must preserve the shipped trigger pulse and
+  input payload timing: rule DTs keep per-rule trigger/payload sources, and a
+  generated handoff DT routes those sources to the generated instance start
+  and input handoff ports. Output bindings remain unsupported.
+- This slice is documentation/specification only. Compiler behavior, accepted
+  public syntax, report shape, and HDL output are unchanged.
+- The current frontier is `ISF-ACTIVATION-PARAM-OVERRIDES.3`, implementing
+  rule-trigger parameter overrides.
 ## 2026-05-16: ISF activation parameter override tree opened
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.1` in
   [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md).

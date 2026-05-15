@@ -12,8 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   behavior and does not move the active R14 frontier.
 - Next decision point: continue the active
   `ISF-ACTIVATION-PARAM-OVERRIDES` task tree. The current frontier is
-  `ISF-ACTIVATION-PARAM-OVERRIDES.2`, specifying the rule-trigger parameter
-  override lowering contract before scheduler edits.
+  `ISF-ACTIVATION-PARAM-OVERRIDES.3`, implementing rule-trigger parameter
+  overrides after the lowering contract selected generated child activation
+  per lexical parameterized trigger site.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
@@ -69,6 +70,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active `ISF-ACTIVATION-PARAM-OVERRIDES` tree. The tree-opening
   `ISF-ACTIVATION-PARAM-OVERRIDES.1` slice changed workflow state only; no
   compiler behavior, public syntax, report shape, or HDL output changed.
+  `ISF-ACTIVATION-PARAM-OVERRIDES.2` selected the rule-trigger parameter
+  override contract: future
+  `(trigger transaction (params (NAME value) ...) (bind ...))` source lowers
+  to a generated child activation instance named
+  `{rule}_{transaction}_trigger_{ordinal}`, preserving current rule-trigger
+  pulse and input-payload timing. Implementation remains pending for
+  `ISF-ACTIVATION-PARAM-OVERRIDES.3`, so accepted syntax and emitted artifacts
+  are unchanged by `.2`.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

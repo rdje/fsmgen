@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF rule-trigger parameter override contract selected
+- Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.2`.
+- The selected future source shape is
+  `(trigger transaction (params (NAME value) ...) (bind ...))`; `(params ...)`
+  remains static specialization, and `(bind ...)` remains runtime payload.
+- The selected lowering strategy is one generated child activation instance
+  per lexical parameterized trigger site, named
+  `{rule}_{transaction}_trigger_{ordinal}` and specialized through generated
+  top `?fsmc` params.
+- The implementation must preserve current rule-trigger pulse and input
+  payload timing through generated handoff DTs. Rule-trigger output bindings
+  remain unsupported.
+- This slice is specification-only. Compiler behavior, accepted public syntax,
+  report shape, and HDL output are unchanged.
+- The active frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.3`,
+  implementing rule-trigger parameter overrides.
+
 ## 2026-05-16: R14 — ISF activation parameter override tree opened
 - Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.1`.
 - [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md)
