@@ -25,7 +25,7 @@ subtest 'composition parser records package imports and embedded package roots' 
     status_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_local.mode.BUSY/status_out/
   )
 )
@@ -92,7 +92,7 @@ FSM
     packed_out>6
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_external.RESET_BYTE/shared_out/
     /=shared_local.mode.BUSY/shared_flag/
     /prefix,=shared_local.mode.IDLE,=shared_external.NIBBLE/packed_out/

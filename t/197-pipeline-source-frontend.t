@@ -78,7 +78,7 @@ subtest 'source frontend rebuilds the bounded composition parsing surface' => su
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /trigger/producer.trigger/
     /producer.serial_payload/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
@@ -168,7 +168,7 @@ FSM
     status_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_external.RESET_BYTE/status_out/
   )
 )
@@ -207,14 +207,14 @@ FSM
     );
 };
 
-subtest 'source frontend preserves brace-grouped explicit toplink tokens before composition parsing' => sub {
+subtest 'source frontend preserves brace-grouped explicit wiring tokens before composition parsing' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'source_frontend_nested_toplink_top.fsm');
+    my $composition_path = File::Spec->catfile($tempdir, 'source_frontend_nested_wiring_top.fsm');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:source_frontend_nested_toplink_top
+(?top:source_frontend_nested_wiring_top
   (?ports:public_io
     header_bus<3
     status_bus<2
@@ -222,7 +222,7 @@ subtest 'source frontend preserves brace-grouped explicit toplink tokens before 
     packed_status>10
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/packed_status/
     /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/
   )
@@ -246,36 +246,36 @@ FSM
     my $pipeline_result = $pipeline->generate_hdl_from_file($composition_path);
 
     is_deeply(
-        composition_toplink_tokens($frontend_raw_ast),
+        composition_wiring_tokens($frontend_raw_ast),
         [
             '/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/packed_status/',
             '/header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/',
         ],
-        'source frontend keeps brace-grouped raw toplink tokens intact in the raw AST',
+        'source frontend keeps brace-grouped raw wiring tokens intact in the raw AST',
     );
 
     is_deeply(
-        [map { $_->source } @{$frontend_spec->top->toplinks->[0]->links}],
+        [map { $_->source } @{$frontend_spec->top->wiring_blocks->[0]->links}],
         [
             'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
             'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
         ],
-        'source frontend keeps brace-grouped toplink sources intact when it builds the composition spec',
+        'source frontend keeps brace-grouped wiring sources intact when it builds the composition spec',
     );
 
     is_deeply(
-        [map { $_->source } @{$pipeline_result->{composition_spec}->top->toplinks->[0]->links}],
+        [map { $_->source } @{$pipeline_result->{composition_spec}->top->wiring_blocks->[0]->links}],
         [
             'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
             'header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}',
         ],
-        'pipeline keeps brace-grouped toplink sources intact on the carried composition spec surface',
+        'pipeline keeps brace-grouped wiring sources intact on the carried composition spec surface',
     );
 
     like(
         $pipeline_result->{hdl_code},
         qr/assign packed_status = \{header_bus, \{status_bus\[0\], 2'b10\}, \{payload_bus\[3:2\], payload_bus\[1:0\]\}\};/,
-        'pipeline emits nested concat grouping after the preserved raw toplink token reaches composition lowering',
+        'pipeline emits nested concat grouping after the preserved raw wiring token reaches composition lowering',
     );
 };
 
@@ -309,7 +309,7 @@ sub composition_spec_snapshot {
         top_name => $top->name,
         instance_count => scalar(@{$top->instances || []}),
         ports_block_count => scalar(@{$top->ports_blocks || []}),
-        toplink_count => scalar(@{$top->toplinks || []}),
+        wiring_count => scalar(@{$top->wiring_blocks || []}),
         ports_per_block => [map { scalar(@{$_->ports || []}) } @{$top->ports_blocks || []}],
         embedded_fsm_sources => [sort keys %{$composition_spec->embedded_fsm_sources || {}}],
         embedded_dt_sources => [sort keys %{$composition_spec->embedded_dt_sources || {}}],
@@ -333,22 +333,22 @@ sub write_file {
     close $fh or die "Cannot close $path: $!";
 }
 
-sub composition_toplink_tokens {
+sub composition_wiring_tokens {
     my ($raw_ast) = @_;
     my @tokens;
-    _collect_toplink_tokens($raw_ast, \@tokens);
+    _collect_wiring_tokens($raw_ast, \@tokens);
     return \@tokens;
 }
 
-sub _collect_toplink_tokens {
+sub _collect_wiring_tokens {
     my ($node, $tokens) = @_;
     return unless ref($node) eq 'ARRAY';
 
-    if (@$node >= 2 && !ref($node->[0]) && ($node->[0] // '') =~ /^\?toplink:/ && ref($node->[1]) eq 'ARRAY') {
+    if (@$node >= 2 && !ref($node->[0]) && ($node->[0] // '') =~ /^\?wiring:/ && ref($node->[1]) eq 'ARRAY') {
         push @$tokens, grep { defined($_) && !ref($_) && m{^/.+/.+/$} } @{$node->[1]};
     }
 
     for my $item (@$node) {
-        _collect_toplink_tokens($item, $tokens) if ref($item) eq 'ARRAY';
+        _collect_wiring_tokens($item, $tokens) if ref($item) eq 'ARRAY';
     }
 }

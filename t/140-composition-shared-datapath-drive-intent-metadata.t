@@ -26,7 +26,7 @@ subtest 'realized fsm children surface output drive-family metadata for shared-d
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/
@@ -420,7 +420,7 @@ subtest 'CLI prints per-child drive intent for shared-datapath candidates' => su
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/

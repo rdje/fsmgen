@@ -29,7 +29,7 @@ subtest 'composition tops now surface a structural_rtl_ir connectivity summary' 
   )
   (?fsmc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/producer.select/
     /producer.output_data/router.IN_A/
     /data_a/router.A/
@@ -242,7 +242,7 @@ FSM
         },
         'composition_plan now preserves the second instance connection expressions before structural serialization',
     );
-    is($structural_rtl_ir->{declared_link_count}, 5, 'structural_rtl_ir reports declared toplink count');
+    is($structural_rtl_ir->{declared_link_count}, 5, 'structural_rtl_ir reports declared wiring count');
     is_deeply(
         [
             sort map { join(' -> ', $_->{source}, $_->{target}, ($_->{origin_kind} // '')) }
@@ -250,11 +250,11 @@ FSM
         ],
         [
             sort { $a cmp $b } (
-                'data_a -> router.A -> declared_explicit_toplink',
-                'data_b -> router.B -> declared_explicit_toplink',
-                'producer.output_data -> router.IN_A -> declared_explicit_toplink',
-                'router.OUT -> result_data -> declared_explicit_toplink',
-                'select -> producer.select -> declared_explicit_toplink',
+                'data_a -> router.A -> declared_explicit_wiring',
+                'data_b -> router.B -> declared_explicit_wiring',
+                'producer.output_data -> router.IN_A -> declared_explicit_wiring',
+                'router.OUT -> result_data -> declared_explicit_wiring',
+                'select -> producer.select -> declared_explicit_wiring',
             )
         ],
         'structural_rtl_ir preserves declared explicit-link connectivity separately from resolved links',
@@ -268,12 +268,12 @@ FSM
         [
             sort { $a cmp $b } (
                 'clk -> producer.clk -> auto_system_port_link',
-                'data_a -> router.A -> declared_explicit_toplink',
-                'data_b -> router.B -> declared_explicit_toplink',
-                'producer.output_data -> router.IN_A -> declared_explicit_toplink',
-                'router.OUT -> result_data -> declared_explicit_toplink',
+                'data_a -> router.A -> declared_explicit_wiring',
+                'data_b -> router.B -> declared_explicit_wiring',
+                'producer.output_data -> router.IN_A -> declared_explicit_wiring',
+                'router.OUT -> result_data -> declared_explicit_wiring',
                 'rstn -> producer.rstn -> auto_system_port_link',
-                'select -> producer.select -> declared_explicit_toplink',
+                'select -> producer.select -> declared_explicit_wiring',
             )
         ],
         'structural_rtl_ir preserves explicit resolved-link connectivity',
@@ -352,16 +352,16 @@ FSM
     );
 
     is_deeply(
-        $structural_rtl_ir_obj->resolved_links_touching('select', 'declared_explicit_toplink'),
+        $structural_rtl_ir_obj->resolved_links_touching('select', 'declared_explicit_wiring'),
         [
             {
-                origin_kind => 'declared_explicit_toplink',
+                origin_kind => 'declared_explicit_wiring',
                 raw_token => '/select/producer.select/',
                 source => 'select',
                 target => 'producer.select',
             },
         ],
-        'structural_rtl_ir resolved-link lookup can answer which explicit toplinks touch a given endpoint',
+        'structural_rtl_ir resolved-link lookup can answer which explicit wiring_blocks touch a given endpoint',
     );
 
     my $port_metadata = $structural_rtl_ir_obj->port_metadata;

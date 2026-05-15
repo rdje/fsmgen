@@ -39,7 +39,7 @@ In [fx/perl/FSMGen.pm](fx/perl/FSMGen.pm), `top_exec(...)` recursively handled:
   - bind an external RTL module and load its interface
 - `?ports`
   - describe interface/port objects
-- `?toplink`
+- `?wiring`
   - reuse/remap another top-level interface
 - nested `?top`
   - recursively build more hierarchy
@@ -88,7 +88,7 @@ These historical concepts are still useful and are already reflected in the scop
   - external RTL instance with a declared interface
 - `?ports`
   - explicit interface declaration surface
-- `?toplink`
+- `?wiring`
   - connectivity/wiring concept between composition-level endpoints
 
 So the language ideas survive, but the implementation must be typed and deterministic.
@@ -179,7 +179,7 @@ Reason:
   - modern typed external RTL instance
 - Legacy `?ports`
   - modern typed interface declaration block
-- Legacy `?toplink`
+- Legacy `?wiring`
   - modern typed connectivity/link block
 
 The exact package names may evolve, but the active design direction is:

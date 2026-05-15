@@ -28,7 +28,7 @@ subtest 'registered peer-read shared-datapath families now lift internally witho
   (?fsmc:right right_src)
   (?fsmc:consumer_left consumer_left_src)
   (?fsmc:consumer_right consumer_right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer_left.select/
@@ -156,7 +156,7 @@ subtest 'CLI reports the internal-only lifted shared-register runtime for regist
   (?fsmc:right right_src)
   (?fsmc:consumer_left consumer_left_src)
   (?fsmc:consumer_right consumer_right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer_left.select/

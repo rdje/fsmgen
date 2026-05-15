@@ -148,7 +148,7 @@ DONE  --[!start]--------> IDLE
 
 ### Future decomposition
 - When the APB completer and interconnect actors are captured, they will
-  compose through `?top` and `?toplink` as demonstrated by the existing
+  compose through `?top` and `?wiring` as demonstrated by the existing
   `fsm/apb_tb.fsm` testbench harness.
 
 ## Stage 7: .fsm emission

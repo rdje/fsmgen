@@ -26,7 +26,7 @@ write_file(
     result_data>8
   )
   (?fsmc:producer producer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/result_data/
   )
 )
@@ -61,7 +61,7 @@ $exception = $@;
 like(
     $exception,
     qr/recognized and parsed into typed composition IR, .*C2 lane selection is blocked because the current active C2 lane requires at least two generated child instances such as '\?fsmc' or '\?dtc'/s,
-    'single generated child plus explicit toplink now says C2 lane selection is blocked',
+    'single generated child plus explicit wiring now says C2 lane selection is blocked',
 );
 
 my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(

@@ -81,9 +81,9 @@ Use this when:
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
-    /producer.output_data/consumer.input_data/
-    /consumer.final_data/result_data/
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.final_data result_data)
   )
 )
 ```
@@ -102,11 +102,11 @@ Use this when:
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
-    /=8'hA5/default_data/
-    /=8'hA5/uart_tx.data_in/
-    /=open/uart_tx.enable/
-    /uart_tx.serial_out/serial_out/
+  (?wiring:wiring
+    (=8'hA5 default_data)
+    (=8'hA5 uart_tx.data_in)
+    (=open uart_tx.enable)
+    (uart_tx.serial_out serial_out)
   )
 )
 ```
@@ -165,7 +165,7 @@ Use this when:
   (?ports:public_io
     packed_out>frame_t
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /=FRAME/packed_out/
   )
 )

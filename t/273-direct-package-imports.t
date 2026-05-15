@@ -210,7 +210,7 @@ FSM
   )
   (?fsmc:producer)
   (?fsmc:helper)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.out_byte/child_out/
     /producer.flag/child_flag/
     /helper.helper_flag/helper_seen/

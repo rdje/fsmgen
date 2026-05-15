@@ -289,7 +289,7 @@ Returns the explicit structural realized instance list.
 
 =head2 declared_links
 
-Returns the explicit structural declared top-link list.
+Returns the explicit structural declared wiring list.
 
 =head2 resolved_links
 

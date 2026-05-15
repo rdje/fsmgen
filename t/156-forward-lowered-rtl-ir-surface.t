@@ -74,7 +74,7 @@ subtest 'realized generated children preserve their forward lowered_rtl_ir summa
   )
   (?fsmc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/producer.select/
     /producer.output_data/router.IN_A/
     /data_a/router.A/

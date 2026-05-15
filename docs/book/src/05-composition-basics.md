@@ -20,13 +20,13 @@ The current active top-root body can contain:
   `+types`, and bounded `+import`
 - zero or one `?ports` block
 - one or more child instances
-- zero or more explicit `?toplink` wiring blocks
+- zero or more explicit `?wiring` wiring blocks
 - embedded generated child roots, embedded `?pkg` package roots, or embedded
   `?rtlif` metadata roots as companion source material
 
 Malformed top names, duplicate child declarations, duplicate top ports, several
 `?ports` blocks, empty child lists, malformed child entries, malformed port
-tokens, and malformed toplink tokens are rejected at the composition boundary
+tokens, and malformed wiring tokens are rejected at the composition boundary
 rather than being left for HDL emission.
 
 ## The Minimal Shape
@@ -127,7 +127,7 @@ Practical rules for declared same-name ports:
   same name
 - compatibility requires direction, width, and preserved declared type contract
   to agree
-- use explicit `?toplink` when you need renaming, remapping, or non-system
+- use explicit `?wiring` when you need renaming, remapping, or non-system
   child-to-child wiring
 
 ## Inference-First Top Boundaries
@@ -237,7 +237,7 @@ parameter default before HDL is emitted.
 
 ## Explicit Child-To-Child Wiring
 
-Once you have multiple children, the normal tool is `?toplink`.
+Once you have multiple children, the normal tool is `?wiring`.
 
 ```lisp
 (?top:two_child_top
@@ -248,14 +248,19 @@ Once you have multiple children, the normal tool is `?toplink`.
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
-    /producer.output_data/consumer.input_data/
-    /consumer.final_data/result_data/
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (consumer.final_data result_data)
   )
 )
 ```
 
-Plain port-to-port links are still the easiest starting point.
+Each list item is one directed link: `(source target)`.
+
+The verbose spelling `(connect source target)` is equivalent and can improve
+readability in dense wiring blocks. The older `/source/target/` token remains
+accepted as compatibility input, but new examples and generated artifacts use
+the list form.
 
 ## Same-Name Convention
 
@@ -296,9 +301,9 @@ External RTL is declared with `?rtl` and described by `.rtlif` metadata.
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
-    /producer.output_data/uart_tx.data_in/
-    /uart_tx.txd/serial_out/
+  (?wiring:wiring
+    (producer.output_data uart_tx.data_in)
+    (uart_tx.txd serial_out)
   )
 )
 ```
@@ -358,11 +363,11 @@ contract and give each `?rtl` child its own instance name:
   )
   (?rtl:u_uart_a uart_tx)
   (?rtl:u_uart_b uart_tx)
-  (?toplink:wiring
-    /data_a/u_uart_a.data_in/
-    /u_uart_a.txd/tx_a/
-    /data_b/u_uart_b.data_in/
-    /u_uart_b.txd/tx_b/
+  (?wiring:wiring
+    (data_a u_uart_a.data_in)
+    (u_uart_a.txd tx_a)
+    (data_b u_uart_b.data_in)
+    (u_uart_b.txd tx_b)
   )
 )
 

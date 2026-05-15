@@ -21,7 +21,7 @@ subtest 'top-expression inference spec collection owns returned leaf specs' => s
                 expr_kind => 'bit_select',
                 index => 3,
                 metadata => {
-                    contexts => ['toplink'],
+                    contexts => ['wiring'],
                 },
             },
             {
@@ -41,7 +41,7 @@ subtest 'top-expression inference spec collection owns returned leaf specs' => s
     is_deeply(
         $source_spec->{operands}[0]{metadata},
         {
-            contexts => ['toplink'],
+            contexts => ['wiring'],
         },
         'mutating returned top inference metadata cannot contaminate the source expression spec',
     );

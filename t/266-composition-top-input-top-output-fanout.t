@@ -32,7 +32,7 @@ subtest 'pipeline and CLI preserve direct top-input fanout to top outputs beside
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /start/tap_a/
     /start/tap_b/
     /start/left.payload/

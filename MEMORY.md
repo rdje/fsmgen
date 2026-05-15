@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: R11 Lisp-ish ?wiring forms
+- Created
+  [docs/tasks/COMPOSITION-WIRING-LISPISH.md](docs/tasks/COMPOSITION-WIRING-LISPISH.md)
+  to track the composition-link authoring cleanup.
+- `?wiring` blocks now accept canonical `(source target)` links and verbose
+  `(connect source target)` links. The older `/source/target/` token remains
+  accepted as compatibility input.
+- Source-side list expressions are accepted in the new link forms:
+  `(cat ...)` maps to bounded concat sources, and `(repeat COUNT operand)`
+  maps to bounded repeat groups.
+- ISF-generated composition tops now emit the canonical list-link spelling, so
+  generated artifacts read like the rest of the Lisp-ish source language.
+- `?wiring` is now the canonical shipped block name in parser diagnostics,
+  generated composition tops, examples, tests, and user-facing docs.
 ## 2026-05-15: ISF storage var-only source surface
 - Created
   [docs/tasks/ISF-STORAGE-VAR-SURFACE.md](docs/tasks/ISF-STORAGE-VAR-SURFACE.md)
@@ -41,8 +55,8 @@ This is the live continuity document for fast session recovery after crashes, re
   for the R14 reusable-library clock/reset binding follow-up.
 - Library actor use-site clock/reset bindings now support parent/child signal
   name remapping in generated tops. Same-name bindings continue to use
-  composition system-port auto-wiring; differently named bindings emit explicit
-  links such as `/clk/rx.lib_clk/` and `/rst_n/rx.lib_rst_n/`.
+  composition system-port auto-wiring; differently named bindings now emit
+  explicit list links such as `(clk rx.lib_clk)` and `(rst_n rx.lib_rst_n)`.
 - Direct `.fsm +system` now accepts any HDL-identifier-compatible clock name,
   so specialized library child artifacts with authored clock names reach HDL.
   Malformed clock identifiers still fail closed with a targeted diagnostic.
@@ -1032,7 +1046,7 @@ This is the live continuity document for fast session recovery after crashes, re
   parent, child, instance, start/done handoff, named-drive handoff, and
   parameter-binding summaries.
 - The projection explicitly excludes raw LoweringIR, raw composition parser
-  objects, raw `?toplink` arrays, assignment provenance, and private
+  objects, raw `?wiring` arrays, assignment provenance, and private
   port-inference internals. The active frontier is now `ISF-COMPOSITION.5.2`.
 ## 2026-05-14: ISF composition report/diagnostic split
 - Split broad `ISF-COMPOSITION.5` in
@@ -7531,7 +7545,7 @@ This is the live continuity document for fast session recovery after crashes, re
   to prove returned collected top and child expression specs cannot contaminate
   their source expression-spec trees.
 - Focused validation paired the new audit with the source-expression support,
-  top-port inference, linked-plan builder, and top-expression toplink suites.
+  top-port inference, linked-plan builder, and top-expression wiring suites.
   This is `R13` runtime contract-integrity hardening only; no public manifest
   shape, user-facing docs, mdBook content, generation behavior, or roadmap lane
   status changed.
@@ -7561,7 +7575,7 @@ This is the live continuity document for fast session recovery after crashes, re
   to prove returned endpoint descriptors cannot mutate original source
   descriptor containers.
 - Focused validation paired the new audit with linked-plan builder, structural
-  binding leaf consumer, and structural actual toplink suites. This is `R13`
+  binding leaf consumer, and structural actual wiring suites. This is `R13`
   runtime contract-integrity hardening only; no public manifest shape,
   user-facing docs, mdBook content, generation behavior, or roadmap lane status
   changed.
@@ -7576,8 +7590,8 @@ This is the live continuity document for fast session recovery after crashes, re
   [t/556-composition-actual-connection-expr-defensive-copy-boundary-audit.t](t/556-composition-actual-connection-expr-defensive-copy-boundary-audit.t)
   to prove returned connection expressions cannot contaminate source endpoint
   payloads, while target-width-bound actuals still lower to fresh bit vectors.
-- Focused validation paired the new audit with structural actual toplinks,
-  top-expression toplinks, structural connection-expression helpers, and the
+- Focused validation paired the new audit with structural actual wiring_blocks,
+  top-expression wiring_blocks, structural connection-expression helpers, and the
   binding expression clone audit. This is `R13` runtime contract-integrity
   hardening only; no public manifest shape, user-facing docs, mdBook content,
   generation behavior, or roadmap lane status changed.
@@ -8254,7 +8268,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-05-05: Composition top containers now return snapshots
 - Updated
   [perl/FSM/Composition/Top.pm](perl/FSM/Composition/Top.pm)
-  so top-level instance, ports-block, toplink, package-import, and raw AST
+  so top-level instance, ports-block, wiring, package-import, and raw AST
   containers are cloned at construction and from accessors. `top_symbols()`
   still returns the owned `FSM::Composition::TopSymbols` object.
 - Added
@@ -8266,16 +8280,16 @@ This is the live continuity document for fast session recovery after crashes, re
   is `R13` runtime contract-integrity hardening only; no public manifest shape,
   user-facing docs, generation behavior, or roadmap lane status changed.
 
-## 2026-05-05: Composition toplink blocks now clone link containers
+## 2026-05-05: Composition wiring blocks now clone link containers
 - Updated
-  [perl/FSM/Composition/TopLink.pm](perl/FSM/Composition/TopLink.pm)
-  so toplink link lists and raw AST payloads are cloned at construction and
+  [perl/FSM/Composition/WiringBlock.pm](perl/FSM/Composition/WiringBlock.pm)
+  so wiring link lists and raw AST payloads are cloned at construction and
   from `links()` / `raw_ast()` accessors.
 - Added
-  [t/515-composition-toplink-defensive-copy-boundary-audit.t](t/515-composition-toplink-defensive-copy-boundary-audit.t)
-  to prove constructor and accessor mutation cannot contaminate parsed toplink
+  [t/515-composition-wiring-block-defensive-copy-boundary-audit.t](t/515-composition-wiring-block-defensive-copy-boundary-audit.t)
+  to prove constructor and accessor mutation cannot contaminate parsed wiring
   containers.
-- Focused validation pairs the new TopLink audit with composition parser,
+- Focused validation pairs the new WiringBlock audit with composition parser,
   linked-plan builder, plan-builder, and top-port inference suites. This is
   `R13` runtime contract-integrity hardening only; no public manifest shape,
   user-facing docs, generation behavior, or roadmap lane status changed.
@@ -12725,7 +12739,7 @@ This is the live continuity document for fast session recovery after crashes, re
 
 ## 2026-04-18: user docs now show concrete composition intent-literal actuals
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md)
-  now includes one explicit `?toplink` example showing intent-sized literal
+  now includes one explicit `?wiring` example showing intent-sized literal
   direct actuals and concat actuals together, including `/=5'23/.../`,
   `/=8'-0xA/.../`, and `/=5'23,=8'-10,=20'x1/.../`, plus pointers to the
   maintained corpus fixtures that lock those spellings.
@@ -12754,12 +12768,12 @@ This is the live continuity document for fast session recovery after crashes, re
   over embedded `?rtlif` rather than a generated child module.
 
 ## 2026-04-18: composition intent-sized actuals now have pipeline/CLI coverage too
-- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t)
   now drives intent-sized exact-width direct actuals such as `=5'23`,
   `=8'-10`, `=8'-0b1010`, `=8'-0xA`, and `=20'x1` through the real
   composition pipeline and CLI, locking both top-output assignments and child
   input bindings.
-- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t)
   now drives those same intent-sized exact-width literal families through the
   concat-operand lane end to end, proving declared-width preservation,
   two-complement lowering, and zero synthetic-carrier emission on the C3 path.
@@ -12790,9 +12804,9 @@ This is the live continuity document for fast session recovery after crashes, re
   diagnostics stay precise on both direct actual and concat-operand paths.
 - Regression coverage:
   [t/286-composition-actual-literal-support.t](t/286-composition-actual-literal-support.t),
-  [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t),
+  [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t),
   and
-  [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
+  [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t)
   now lock the targeted remediation messages.
 
 ## 2026-04-18: trial_1 is explicit again and now sits in the external SV smoke
@@ -14572,13 +14586,13 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm)
     now treats declared or already inferred aggregate top-port paths such as
     `in_frame.tag` as exact-width operands while inferring one remaining
-    omitted whole top-port operand in explicit-toplink concat/repeat inference,
+    omitted whole top-port operand in explicit-wiring concat/repeat inference,
   - this mirrors the planner's existing fallback for ambiguous two-part tokens:
     if `in_frame` is a declared or inferred top port with an aggregate
     contract, `in_frame.tag` is a top aggregate path rather than a missing
     child endpoint,
   - expression width annotation is intentionally deferred until after
-    whole-root top-port inference scans the current `?toplink` block, so the
+    whole-root top-port inference scans the current `?wiring` block, so the
     accepted inferred-root behavior is order-independent within that block,
   - aggregate roots needed by explicit top expressions may now also be inferred
     from an unlinked same-name child input when that child input has one uniform
@@ -14603,7 +14617,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Saved the `R11` composition source-expression spec extraction slice.
 - Important continuity note:
   - [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm)
-    now owns bounded explicit-toplink source-expression parsing for top/child
+    now owns bounded explicit-wiring source-expression parsing for top/child
     bit-selects, slices, aggregate paths, concat groups, repeat groups,
     literal operands, top-symbol payload lookup, and inference/child-base
     collection,
@@ -14613,7 +14627,7 @@ This is the live continuity document for fast session recovery after crashes, re
     rich composition diagnostics,
   - [t/287-composition-source-expression-spec-support.t](t/287-composition-source-expression-spec-support.t)
     locks the support owner directly,
-  - existing composition expression coverage in [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t),
+  - existing composition expression coverage in [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t),
     [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t),
     and [t/275-composition-top-aggregate-values.t](t/275-composition-top-aggregate-values.t)
     stays green through the delegated path,
@@ -14637,8 +14651,8 @@ This is the live continuity document for fast session recovery after crashes, re
     rich composition diagnostics,
   - [t/286-composition-actual-literal-support.t](t/286-composition-actual-literal-support.t)
     locks the support owner directly,
-  - existing end-to-end coverage in [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t),
-    [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t),
+  - existing end-to-end coverage in [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t),
+    [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t),
     and [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t)
     stays green against the delegated path,
   - the static import closure from [bin/fsmgen](bin/fsmgen)
@@ -14765,7 +14779,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-04-10: composition links can now source typed aggregate members/items
 - Saved the next typed aggregate composition slice.
 - Important continuity note:
-  - `?toplink` source-side expressions now accept declared aggregate top-port
+  - `?wiring` source-side expressions now accept declared aggregate top-port
     paths such as `in_frame.tag` and `in_frame.payload[1]`,
   - they also accept declared aggregate generated-child output paths such as
     `producer.OUT_FRAME.tag` and `producer.OUT_FRAME.payload[1]`,
@@ -14958,7 +14972,7 @@ This is the live continuity document for fast session recovery after crashes, re
     stays approachable.
 
 ## 2026-04-08: inferred composition carrier nets now preserve declared type identity
-- Saved the next typed structural handoff slice after explicit `?toplink`
+- Saved the next typed structural handoff slice after explicit `?wiring`
   compatibility became declared-type-aware.
 - Important continuity note:
   - inferred internal carrier nets now preserve `declared_type_name` plus
@@ -14968,11 +14982,11 @@ This is the live continuity document for fast session recovery after crashes, re
   - and exported `structural_rtl_ir->{nets}` now preserves the same typed net
     identity instead of flattening internal carriers to width-only metadata.
 
-## 2026-04-08: explicit plain `?toplink` bindings are now declared-type-aware too
+## 2026-04-08: explicit plain `?wiring` bindings are now declared-type-aware too
 - Saved the next typed-composition compatibility slice after same-name
   convention and undeclared top-port inference were hardened.
 - Important continuity note:
-  - explicit plain port-to-port `?toplink` bindings now reject width-equal
+  - explicit plain port-to-port `?wiring` bindings now reject width-equal
     endpoints when both sides preserve incompatible `declared_type_spec`
     contracts,
   - the blocked failure-summary surface now keeps child-endpoint or top-port
@@ -15234,7 +15248,7 @@ This is the live continuity document for fast session recovery after crashes, re
   - composition-top `(+constants ...)` entries may now be scalar literals,
     non-empty lists, or nested hash-like aggregates,
   - local top-root references such as `BYTES[1]`, `FRAME.flag`, and
-    `NEST.header.nibble` now resolve on explicit `?toplink` direct-actual and
+    `NEST.header.nibble` now resolve on explicit `?wiring` direct-actual and
     concat-operand positions,
   - mixed local aggregate shapes are rejected explicitly at the composition
     parser boundary,
@@ -15334,8 +15348,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - the intended long-term semantic surface is `+constants`, `+enums`, and future `+types`, with aggregate values living through that same semantic package lane rather than through raw text tricks,
   - and per-instance parameterization should stay separate unless a later deliberate contract says a subset truly belongs in global/package scope.
 
-## 2026-04-06: composition-top named literal actuals now close the first no-magic-number gap in explicit toplinks
-- Stayed in the active `R11` lane and widened the explicit-toplink literal surface in a bounded way instead of pretending the future full type lane is already here.
+## 2026-04-06: composition-top named literal actuals now close the first no-magic-number gap in explicit wiring_blocks
+- Stayed in the active `R11` lane and widened the explicit-wiring literal surface in a bounded way instead of pretending the future full type lane is already here.
 - Important continuity note:
   - [perl/FSM/Composition/TopSymbols.pm](perl/FSM/Composition/TopSymbols.pm) now preserves composition-root `+constants` and `+enums` as canonical literal payloads on `?top` roots,
   - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now accepts those two symbol sections directly under `?top` and rejects malformed or non-literal entries at the parser boundary with composition-scoped wording,
@@ -15349,29 +15363,29 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed decimal concat operands such as `=-1`, `=0d-1`, and `='sd-1`,
   - those operands now use the minimum signed width required by the numeric value rather than borrowing width from the child-input target,
   - that means `=-1` lowers as `1'b1`, `=0d-2` lowers as `2'b10`, and `='sd-3` lowers as `3'b101` on the typed structural path,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that intrinsic-width signed-decimal concat family,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that intrinsic-width signed-decimal concat family,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) keeps the blocked concat-operand wording aligned with the widened family.
 
 ## 2026-04-05: SV unsized signed based actual spellings now alias the bounded structural literal family too
 - Stayed in the active `R11` lane and widened the signed literal surface without opening a separate signed-only parser or AST path.
 - Important continuity note:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed SV-style based spellings such as `='sb1010`, `='so645`, and `='shA5` on explicit `?toplink` actuals,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized signed SV-style based spellings such as `='sb1010`, `='so645`, and `='shA5` on explicit `?wiring` actuals,
   - direct realized-child-input and declared-top-output bindings now interpret those spellings as intrinsic-width signed payloads that sign-extend to the direct target width when the signed value fits,
   - bounded concat operands now also accept intrinsic-width `='sb...`, `='so...`, and `='sh...` forms on the same typed literal path,
   - no new AST node was added; those spellings normalize onto the existing structural bit-vector literal contract,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks direct sign-extension behavior plus blocked signed-width overflow,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now locks intrinsic-width signed-based concat success,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks direct sign-extension behavior plus blocked signed-width overflow,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now locks intrinsic-width signed-based concat success,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) keeps the concise blocked wording aligned with the widened signed-based alias family.
 
 ## 2026-04-05: standard unsized SV actual spellings now alias the bounded structural literal family
 - Stayed in the active `R11` lane and widened the literal surface one more bounded step without creating a second literal contract.
 - Important continuity note:
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized SV-style based spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5` on explicit `?toplink` actuals,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized SV-style based spellings such as `='b10100101`, `='d170`, `='sd-1`, `='o245`, and `='hA5` on explicit `?wiring` actuals,
   - direct realized-child-input and declared-top-output bindings treat `='b...`, `='d...`, `='o...`, and `='h...` exactly like the existing unsized binary/decimal/octal/hex direct-actual families, while `='sd...` aliases the existing unsized signed-decimal direct-binding lane,
   - bounded concat operands now also accept intrinsic-width `='b...`, `='d...`, `='o...`, and `='h...` forms on the same typed literal path,
   - no new AST node was added; those spellings normalize onto the existing unsized literal families,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for the new SV-style direct actual aliases,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now locks intrinsic-width SV-style concat alias success,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks direct linked-plan plus pipeline/CLI success for the new SV-style direct actual aliases,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now locks intrinsic-width SV-style concat alias success,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) keeps the concise blocked wording aligned with the widened alias family.
 
 ## 2026-04-05: signed based structural actuals now share the bounded literal path too
@@ -15381,8 +15395,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - those same exact-width signed based forms now also work inside bounded source-side concat operands,
   - they lower through the same exact-width `bit_vector_literal_expr` path already used by the unsigned exact-width literal family, so this widening stays on one backend-neutral structural-literal contract,
   - payloads whose width exceeds the declared size now fail explicitly instead of truncating,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for signed binary/octal/hex literals together with blocked signed-hex overflow,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now also locks exact-width signed binary/octal/hex literal success inside bounded concat,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks direct linked-plan plus pipeline/CLI success for signed binary/octal/hex literals together with blocked signed-hex overflow,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now also locks exact-width signed binary/octal/hex literal success inside bounded concat,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) keeps the concise actual-family and concat-family wording aligned with the widened signed-based literal slice.
 
 ## 2026-04-05: signed decimal structural actuals now share the bounded literal path too
@@ -15392,19 +15406,19 @@ This is the live continuity document for fast session recovery after crashes, re
   - those direct signed-decimal actuals now widen only when the numeric value fits the signed range of the direct binding target width, and then lower through the same exact-width two's-complement `bit_vector_literal_expr` path used by the existing structural literal families,
   - the same bounded literal path now also accepts exact-width signed decimal actuals such as `=8'sd-1` on direct bindings and bounded concat operands,
   - exact-width signed decimal payloads that exceed the declared signed range now fail explicitly instead of truncating or silently wrapping,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for unsized and exact-width signed decimal direct actuals together with blocked overflow cases,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now also locks exact-width signed decimal literal success inside bounded concat,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks direct linked-plan plus pipeline/CLI success for unsized and exact-width signed decimal direct actuals together with blocked overflow cases,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now also locks exact-width signed decimal literal success inside bounded concat,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) keeps the concise actual-family wording aligned with the widened signed-decimal slice.
 
-## 2026-04-05: bounded toplink repeat groups now share the typed top-expression path too
+## 2026-04-05: bounded wiring repeat groups now share the typed top-expression path too
 - Stayed in the active `R11` lane and widened the same typed source-expression family instead of inventing a renderer-only shortcut for replication syntax.
 - Important continuity note:
   - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) now provides first-class `repeat_expr(...)` nodes with recursive dependency recovery and backend rendering, so bounded replication groups survive as structural AST instead of raw text,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit `?toplink` path used by the existing top expressions,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit `?wiring` path used by the existing top expressions,
   - those repeat groups now work on direct child-input bindings, direct top-output assignments, and nested concat membership, and repeated child-output operands reuse the existing deterministic base carrier family instead of inventing repeat-only helper nets,
   - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm) now also infers one undeclared repeated whole-port operand when the child-target remainder width divides evenly across the repeat count, while uneven repeat-width splits fail explicitly,
   - [t/167-structural-connection-expr-helpers.t](t/167-structural-connection-expr-helpers.t) now locks helper/rendering support for `repeat_expr`,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for top-only and child-output repeat groups,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for top-only and child-output repeat groups,
   - [t/177-composition-top-port-inference-builder.t](t/177-composition-top-port-inference-builder.t) and [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) now lock repeat-aware omitted-port inference,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now keeps `Top expression '...'` context for blocked repeat-width inference failures.
 
@@ -15415,7 +15429,7 @@ This is the live continuity document for fast session recovery after crashes, re
   - those child-output concat operands now reuse one deterministic base carrier per referenced child output and lower into the same typed `concat_expr` path for realized child inputs and declared top outputs,
   - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm) now ignores those child-output concat operands for omitted/empty-`?ports` top inference while still inferring real top operands from the same concat source,
   - [perl/FSM/Composition/ProvenanceReportBuilder.pm](perl/FSM/Composition/ProvenanceReportBuilder.pm) now also treats those concat uses as first-class explicit child-output consumption,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for child-output concat operands on child-input and top-output targets,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for child-output concat operands on child-input and top-output targets,
   - [t/177-composition-top-port-inference-builder.t](t/177-composition-top-port-inference-builder.t) now locks that omitted-port inference still derives only undeclared top operands from mixed top-plus-child concat sources,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now keeps `Child expression '...'` summary context on blocked out-of-range child concat operands.
 
@@ -15426,16 +15440,16 @@ This is the live continuity document for fast session recovery after crashes, re
   - those operands now lower through the same typed `bit_vector_literal_expr` concat path as the other intrinsic-width unsized families,
   - their width now comes from the minimum number of bits required by the numeric value, so concat stays self-width-aware rather than target-width-aware,
   - direct bindings still keep their separate numeric widening contract, so this does not backslide into one implicit width rule for every numeric source,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for bare and `0d` decimal concat operands,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for bare and `0d` decimal concat operands,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now keeps the blocked-operand wording aligned with the widened concat family.
 
-## 2026-04-04: nested brace-group toplink concat sources now survive the full source frontend
+## 2026-04-04: nested brace-group wiring concat sources now survive the full source frontend
 - Stayed in the active `R11` lane and fixed the real source-boundary quality bug instead of papering over it in lowering.
 - Important continuity note:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now preserves brace-grouped slash-token text while reading `.fsm` files, so `{...}` inside `?toplink` source expressions survives raw parsing instead of being flattened by the Lispish reader before composition parsing,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now preserves brace-grouped slash-token text while reading `.fsm` files, so `{...}` inside `?wiring` source expressions survives raw parsing instead of being flattened by the Lispish reader before composition parsing,
   - that means nested bounded concat sources such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` now stay intact through raw AST, typed composition parsing, child-input bindings, direct top-output assignments, and omitted/empty-`?ports` inference,
   - [t/197-pipeline-source-frontend.t](t/197-pipeline-source-frontend.t) now locks the raw-token preservation boundary explicitly,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now also locks end-to-end nested child-input concat preservation,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now also locks end-to-end nested child-input concat preservation,
   - [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t) now also locks nested direct top-output assignment from that same source expression family,
   - and [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) now also locks omitted/empty-`?ports` inference through nested concat groups.
 
@@ -15445,7 +15459,7 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts intrinsic-width unsized binary/octal/hex concat operands such as `=0b1_0`, `=0o2`, `=0xA`, and `=A`,
   - those operands now become typed `bit_vector_literal_expr` concat members whose width comes from their digits rather than from the child-input target,
   - that initial intrinsic-width concat family later widened further to include unsized decimal spellings such as `=170` and `=0d170`,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that initial concat family, which then became the base for the later unsized-decimal widening too,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now locks linked-plan plus pipeline/CLI success for that initial concat family, which then became the base for the later unsized-decimal widening too,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now keeps the concise concat-operand wording aligned with the widened intrinsic-width family.
 
 ## 2026-04-04: prefixed unsized direct actuals now share the widened direct-binding family
@@ -15454,8 +15468,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts prefixed unsized direct actuals such as `=0b10100101`, `=0d170`, and `=0xA5` on realized child inputs and declared top outputs, widening them to the direct binding target width as numeric values and failing explicitly on overflow,
   - those prefixed forms now share the same direct-binding contract as the earlier bare unsized decimal/hex forms instead of remaining parser-shape rejects,
   - bounded concat operands still stay stricter than direct bindings, so prefixed unsized numeric widening does not silently appear inside concat,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for those prefixed direct actuals together with blocked unsupported-shape and binary-overflow cases,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now also keeps prefixed unsized concat operands blocked,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks direct linked-plan plus pipeline/CLI success for those prefixed direct actuals together with blocked unsupported-shape and binary-overflow cases,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now also keeps prefixed unsized concat operands blocked,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) keeps the widened structural-actual family wording aligned with the shipped direct-binding contract.
 
 ## 2026-04-04: future structured HDL mode should branch at the backend, with flattened staying default
@@ -15472,8 +15486,8 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts unsized positive decimal and hex direct actuals such as `=170` and `=A5` on realized child inputs and declared top outputs, widening them to the direct binding target width as numeric values and failing explicitly on overflow,
   - exact-width forms such as `=8'd165` and `=8'hA5` remain exact-width contracts instead of being widened again,
   - bounded concat operands still stay stricter than direct bindings, so unsized numeric widening does not silently appear inside concat,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for unsized decimal/hex direct actuals together with blocked unsupported-shape and overflow cases,
-  - [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t) now keeps concat honest by locking that unsized numeric operands still fail there,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks direct linked-plan plus pipeline/CLI success for unsized decimal/hex direct actuals together with blocked unsupported-shape and overflow cases,
+  - [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t) now keeps concat honest by locking that unsized numeric operands still fail there,
   - and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) continues to keep the widened family wording and blocked summary surface aligned with the shipped contract.
 
 ## 2026-04-04: next likely structural-actual widening is unsized decimal/hex direct bindings, not looser exact-width coercion
@@ -15488,7 +15502,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Important continuity note:
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now treats direct explicit-actual sources `=0` and `=1` as scalar numeric zero/one sources that widen to the realized child-input or declared top-output target width instead of behaving like accidental one-bit-only direct bindings,
   - bounded concat operands still keep `=0` / `=1` as one-bit operands unless the author spells an exact-width literal there, so the widening stays on the direct-binding path rather than silently changing concat semantics too,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks widened scalar direct actuals on child inputs and declared top outputs,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks widened scalar direct actuals on child inputs and declared top outputs,
   - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now keeps the family wording honest by saying the shipped structural-actual slice covers `=open`, scalar `=0` / `=1`, and exact-width binary/decimal/hex literal actuals,
   - and `=open` remains the only child-input-only sibling in that family because “unconnected” is still not honest top-output wiring.
 
@@ -15497,7 +15511,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Important continuity note:
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now emits direct top-output assignments for literal actual sources such as `=0`, `=1`, `=8'b10100101`, `=8'd165`, and `=8'hA5` instead of limiting those direct actual tokens to realized child-input bindings,
   - that means direct literal actuals and bounded concat operands now both reach declared top outputs through the same typed structural-expression/rendering path rather than splitting into “concat can, direct actual cannot,”
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t) now locks direct linked-plan plus pipeline/CLI success for literal-actual top-output assignments,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t) now locks direct linked-plan plus pipeline/CLI success for literal-actual top-output assignments,
   - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now keeps the still-blocked sibling honest by locking `=open`-to-top-output as the remaining explicit-actual source-role failure,
   - `=open` remains child-input-only on purpose because a declared top output still needs a concrete driven expression,
   - and the next honest sibling after this slice is no longer “actual-source to top-output” in general, but rather whether any broader non-literal explicit-actual family is worth opening at all.
@@ -15507,7 +15521,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Important continuity note:
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now emits direct top-output assignments from source-side top-port bit/slice and bounded concat expressions instead of blocking those expressions at the top boundary,
   - sibling child-input consumers may still reuse those same typed expressions in the same top without synthetic carrier nets, so direct child-input and direct top-output expression uses now share one planner path,
-  - [t/263-composition-toplink-top-expressions.t](t/263-composition-toplink-top-expressions.t) and [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t) now lock the linked-plan plus pipeline/CLI contract for that widened top-boundary expression slice,
+  - [t/263-composition-wiring-top-expressions.t](t/263-composition-wiring-top-expressions.t) and [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t) now lock the linked-plan plus pipeline/CLI contract for that widened top-boundary expression slice,
   - the old “direct actual-source to top-output” sibling is now partially closed by the later literal-actual slice, with `=open` still intentionally excluded there,
   - and the next honest sibling beyond these top-boundary expression/actual slices is now likely another structural-actual or shared-boundary widening rather than more top-expression hardening.
 
@@ -15536,14 +15550,14 @@ This is the live continuity document for fast session recovery after crashes, re
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width decimal literal actuals such as `=8'd165` beside the existing binary and hex forms, normalizing them into the same `bit_vector_literal_expr` payload used throughout the structural binding path,
   - the same exact-width decimal literal family now also works inside bounded source-side concat operands, so direct child-input actuals and concat-literal operands still share one backend-neutral literal contract,
   - unsized decimal-like spellings still fail explicitly, and decimal payloads whose numeric value exceeds the declared width now fail explicitly instead of truncating,
-  - [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now lock the widened direct/concat/summary contract,
+  - [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t), [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now lock the widened direct/concat/summary contract,
   - and the full regression stayed green after the slice (`Files=259`, `Tests=1980`, `PASS`).
 
 ## 2026-04-02: explicit-actual failure summaries now keep the actual token context too
 - Stayed in the active `R11` lane, but kept this as a follow-on contract-hardening slice rather than a new runtime-capability widening.
 - Important continuity note:
-  - [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) now recognizes the shipped structural-actual diagnostic wording directly, so blocked `?toplink` failures that say `uses actual source '...'` or `uses actual endpoint '...'` surface bounded `Actual source '...'` or `Actual endpoint '...'` context lines in the non-quiet composition failure summary,
-  - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks both the pipeline and CLI summary shape for blocked literal-source role failures and blocked actual-endpoint target failures on that explicit-toplink path,
+  - [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) now recognizes the shipped structural-actual diagnostic wording directly, so blocked `?wiring` failures that say `uses actual source '...'` or `uses actual endpoint '...'` surface bounded `Actual source '...'` or `Actual endpoint '...'` context lines in the non-quiet composition failure summary,
+  - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks both the pipeline and CLI summary shape for blocked literal-source role failures and blocked actual-endpoint target failures on that explicit-wiring path,
   - this does not widen runtime support beyond the already-shipped `=open` / `=0` / `=1` / exact-width `=N'b...` child-input binding slice,
   - and the full regression stayed green after the summary-only follow-up (`Files=257`, `Tests=1959`, `PASS`).
 
@@ -16701,7 +16715,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Saved shipped behavior:
   - `FSM::IR::StructuralRTLIR` now owns `top_port` and `resolved_links_touching`,
   - composition provenance endpoint resolution now consumes `top_port` instead of rebuilding a local top-port lookup table,
-  - and explicit-toplink override reporting now consumes `resolved_links_touching` instead of grepping resolved links locally for each top port.
+  - and explicit-wiring override reporting now consumes `resolved_links_touching` instead of grepping resolved links locally for each top port.
 - Important continuity note:
   - this removes another pair of small but real structural-query pockets from `HDLGenerator`,
   - it keeps more top/child connectivity lookup behavior with the structural layer that owns the ports and links,
@@ -16931,10 +16945,10 @@ This is the live continuity document for fast session recovery after crashes, re
   - it removes another small class of raw bookkeeping fallback from `HDLGenerator`,
   - and the next likely seam is another bounded helper that still rebuilds composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
 
-## 2026-03-23: structural rtl ir now carries declared toplinks too
+## 2026-03-23: structural rtl ir now carries declared wiring_blocks too
 - Saved shipped behavior:
-  - composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links`,
-  - block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared toplinks directly from plan internals,
+  - composition-top `structural_rtl_ir` now preserves declared explicit-wiring connectivity separately through `declared_links`,
+  - block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared wiring_blocks directly from plan internals,
   - and the existing resolved-link structural surface stays intact.
 - Important continuity note:
   - this makes the structural layer a more honest source of truth for explicit top/child wiring intent,
@@ -17172,7 +17186,7 @@ This is the live continuity document for fast session recovery after crashes, re
 - Important continuity note:
   - this slice did widen extractor behavior slightly and narrowed concise-reason text slightly,
   - but only at the failed-run summary layer,
-  - and it fixes a real misclassification where top-level `?ports` shape gates could previously show up as `?toplink` because the raw diagnostic mentioned the explicit-link `C2/C3` inference exception.
+  - and it fixes a real misclassification where top-level `?ports` shape gates could previously show up as `?wiring` because the raw diagnostic mentioned the explicit-link `C2/C3` inference exception.
 
 ## 2026-03-20: named generated-child parser summaries are now symmetric across count and shape failures
 - Saved shipped behavior:
@@ -17182,9 +17196,9 @@ This is the live continuity document for fast session recovery after crashes, re
   - it hardens the already-shipped named-child summary path,
   - and it closes the remaining symmetry gap in the named generated-child parser family.
 
-## 2026-03-20: blocked nested `?ports` and `?toplink` items now keep child context in CLI summaries
+## 2026-03-20: blocked nested `?ports` and `?wiring` items now keep child context in CLI summaries
 - Saved shipped behavior:
-  - failed composition summaries now keep `Child '?ports'` for blocked nested `?ports` items and `Child '?toplink'` for blocked nested `?toplink` items.
+  - failed composition summaries now keep `Child '?ports'` for blocked nested `?ports` items and `Child '?wiring'` for blocked nested `?wiring` items.
 - Important continuity note:
   - this slice did widen extractor behavior slightly,
   - but only at the failed-run summary layer,
@@ -17378,7 +17392,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-03-18: non-quiet failed composition runs now print a first bounded failure summary
 - Saved shipped behavior:
   - the pipeline can now derive a small composition failure report from blocked composition diagnostics,
-  - and the CLI now prints a bounded composition-failure summary during non-quiet failed composition runs when the raised diagnostic exposes a blocked composition boundary, including a `Lane:` line when that diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when that same diagnostic points clearly at one active syntax construct such as `?ports`, `?toplink`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a `Child source file:` line when a blocked generated-child realization failure already names the resolved external `.fsm` file, an `RTL metadata file:` line when a blocked `.rtlif` structure, token, sizing, typing, flatness, or declaration failure already names the resolved metadata file, a concise context line for the offending child/top-port/explicit-endpoint/metadata/token when that context can be separated honestly from longer follow-up detail, plus a concise blocked-reason line.
+  - and the CLI now prints a bounded composition-failure summary during non-quiet failed composition runs when the raised diagnostic exposes a blocked composition boundary, including a `Lane:` line when that diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when that same diagnostic points clearly at one active syntax construct such as `?ports`, `?wiring`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a `Child source file:` line when a blocked generated-child realization failure already names the resolved external `.fsm` file, an `RTL metadata file:` line when a blocked `.rtlif` structure, token, sizing, typing, flatness, or declaration failure already names the resolved metadata file, a concise context line for the offending child/top-port/explicit-endpoint/metadata/token when that context can be separated honestly from longer follow-up detail, plus a concise blocked-reason line.
 - Important continuity note:
   - quiet-mode failure behavior stays unchanged,
   - the original exception text still surfaces after the summary,
@@ -17395,7 +17409,7 @@ This is the live continuity document for fast session recovery after crashes, re
 
 ## 2026-03-18: unsupported composition child kinds now say child-kind support is blocked
 - Saved shipped behavior:
-  - composition parser diagnostics now say explicitly when composition child-kind support is blocked because a child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family.
+  - composition parser diagnostics now say explicitly when composition child-kind support is blocked because a child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?wiring` family.
 - Important continuity note:
   - this closes another older-wording pocket on a real composition parser family boundary,
   - it keeps the child-kind contract unchanged,
@@ -17409,11 +17423,12 @@ This is the live continuity document for fast session recovery after crashes, re
   - it keeps the child-kind contract unchanged,
   - and it removes the older undef-header warning path while adding focused pipeline plus CLI coverage.
 
-## 2026-03-18: `?toplink` naming cleanup is now tracked as future syntax work
-- Saved future note:
-  - `?toplink` is acceptable but not ideal as composition wiring syntax,
-  - a future syntax-cleanup pass may later decide whether it stays canonical or gains a clearer preferred alias such as `?wiring`,
-  - and compatibility should be preferred over abrupt source breakage if that future lane is taken.
+## 2026-03-18: `?wiring` naming cleanup is resolved
+- Saved public contract:
+  - `?wiring` is the canonical spelling for explicit composition wiring blocks,
+  - new examples and generated artifacts should use `?wiring` with Lisp-ish
+    list links,
+  - and there is no separate alias backlog for this block name.
 
 ## 2026-03-18: legacy `?ports` mapping directives now say port declaration mode is blocked
 - Saved shipped behavior:
@@ -17423,9 +17438,9 @@ This is the live continuity document for fast session recovery after crashes, re
   - it keeps the parser contract unchanged,
   - and it adds focused pipeline plus CLI coverage on top of the existing direct parser check.
 
-## 2026-03-18: malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
+## 2026-03-18: malformed `?ports` and `?wiring` parser items now say parser token boundaries are blocked
 - Saved shipped behavior:
-  - composition parser diagnostics now say blocked token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
+  - composition parser diagnostics now say blocked token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?wiring` items, and unsupported `?wiring` tokens.
 - Important continuity note:
   - this closes another older-wording pocket on real composition parser boundaries,
   - it keeps the parser token contract unchanged,
@@ -17561,7 +17576,7 @@ This is the live continuity document for fast session recovery after crashes, re
   - and it keeps the planner behavior unchanged.
 ## 2026-03-17: explicit-link lane-entry and topology failures now say they are blocked
 - Saved shipped behavior:
-  - explicit-link lane entry now says explicitly when it is blocked because `C2`/`C3` was entered without any `?toplink`,
+  - explicit-link lane entry now says explicitly when it is blocked because `C2`/`C3` was entered without any `?wiring`,
   - and explicit-link topology now says explicitly when it is blocked because a top input tries to drive a top output directly or one source tries to drive multiple top outputs.
 - Important continuity note:
   - this closes another older-wording pocket in the explicit-link family,
@@ -17575,10 +17590,10 @@ This is the live continuity document for fast session recovery after crashes, re
   - this closes the remaining unwired-port wording pocket in the explicit-link family,
   - it adds focused regression coverage instead of widening planner behavior,
   - and it keeps the same top-port and child-port detail in the exception text.
-## 2026-03-17: explicit toplink validation failures now say when the declared link is blocked
+## 2026-03-17: explicit wiring validation failures now say when the declared link is blocked
 - Saved shipped behavior:
-  - explicit `?toplink` endpoint resolution failures now say explicitly when the declared link is blocked by a missing endpoint,
-  - and explicit `?toplink` validation now says the declared link is blocked when direction, duplicate-drive, or width evidence prevents it from applying.
+  - explicit `?wiring` endpoint resolution failures now say explicitly when the declared link is blocked by a missing endpoint,
+  - and explicit `?wiring` validation now says the declared link is blocked when direction, duplicate-drive, or width evidence prevents it from applying.
 - Important continuity note:
   - this broadens the blocked-wording surface into the core explicit-link validation family,
   - it reuses the existing composition-error coverage rather than widening planner behavior,
@@ -17600,15 +17615,15 @@ This is the live continuity document for fast session recovery after crashes, re
   - it reuses existing focused coverage instead of widening planner behavior,
   - and the next diagnostics seam is now broader failure-path wording beyond these major composition families.
 - Updated [t/24-composition-connect-by-name.t](t/24-composition-connect-by-name.t) and [t/95-composition-connect-by-name-input-fanout.t](t/95-composition-connect-by-name-input-fanout.t) to lock the broadened blocked-wording surface for declared connect-by-name.
-## 2026-03-17: explicit-toplink top-port inference failures now say when inference is blocked
+## 2026-03-17: explicit-wiring top-port inference failures now say when inference is blocked
 - Saved shipped behavior:
-  - explicit-toplink-driven undeclared top-port inference failures now say explicitly when that inference path is blocked,
+  - explicit-wiring-driven undeclared top-port inference failures now say explicitly when that inference path is blocked,
   - and the mixed-role, width-mismatch, and type-mismatch branches all keep their explicit-link evidence in the exception text.
 - Important continuity note:
-  - this broadens the blocked-wording diagnostics into the explicit-toplink inference family,
+  - this broadens the blocked-wording diagnostics into the explicit-wiring inference family,
   - it also closes previously untested width/type wording branches there,
   - and the next diagnostics seam is now broader failure-path wording beyond these major convention-over-configuration inference paths.
-- Updated [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) to lock the broadened blocked-wording surface for explicit-toplink-driven undeclared top-port inference.
+- Updated [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) to lock the broadened blocked-wording surface for explicit-wiring-driven undeclared top-port inference.
 ## 2026-03-17: undeclared inference failure diagnostics now say when convention is blocked
 - Saved shipped behavior:
   - undeclared top-input inference failures now say explicitly when that convention-first path is blocked,
@@ -17644,7 +17659,7 @@ This is the live continuity document for fast session recovery after crashes, re
   - non-quiet `bin/fsmgen` runs now print a `Convention Overrides` summary when those events are present,
   - and composition `module_info` / `statistics` now carry the override count too.
 - Important continuity note:
-  - the currently shipped override events are bounded to explicit toplinks overriding same-name top-input/top-output convention and explicit top-output re-export of inferred internal carriers,
+  - the currently shipped override events are bounded to explicit wiring_blocks overriding same-name top-input/top-output convention and explicit top-output re-export of inferred internal carriers,
   - this closes the first “overridden” visibility gap,
   - and the next reporting/diagnostics gap is now mostly “blocked” cases rather than more successful-run override visibility.
 - [t/105-composition-override-reporting.t](t/105-composition-override-reporting.t) locks the new override-report surface.
@@ -17665,7 +17680,7 @@ This is the live continuity document for fast session recovery after crashes, re
   - and composition plans now carry `resolved_links` as the full planned-link set instead of exposing only the original `links` input.
 - Important continuity note:
   - this is additive, not a replacement of the older `links` field,
-  - the current metadata now distinguishes declared explicit ports/links, declared `=name`, inferred passthrough ports/links, explicit-toplink inferred ports, plain-explicit-port convention links, internal-carrier links/re-exports, and auto system-port links,
+  - the current metadata now distinguishes declared explicit ports/links, declared `=name`, inferred passthrough ports/links, explicit-wiring inferred ports, plain-explicit-port convention links, internal-carrier links/re-exports, and auto system-port links,
   - and this is the first bounded step toward the roadmap goal of explaining whether a port/link was inferred, blocked, or overridden.
 - [t/103-composition-provenance-metadata.t](t/103-composition-provenance-metadata.t) locks the new provenance surface.
 ## 2026-03-17: explicit-link `C2` / `C3` plain explicit top ports now reuse same-name convention
@@ -17692,13 +17707,13 @@ This is the live continuity document for fast session recovery after crashes, re
 - Continuity note:
   - this is now explicit roadmap work, not just one-session analysis,
   - and the intended follow-up is bounded seam-by-seam retirement while `R11` is still actively shaping composition/type contracts.
-## 2026-03-17: explicit-link `C2` / `C3` now infer top ports directly from explicit `?toplink`
+## 2026-03-17: explicit-link `C2` / `C3` now infer top ports directly from explicit `?wiring`
 - Saved shipped behavior:
   - explicit-link multi-child tops may now omit `?ports` entirely, or use an empty `(?ports)`,
-  - and the top boundary is now realized directly from explicit `?toplink` endpoints when those undeclared top endpoints imply one consistent direction plus exact width/type agreement.
+  - and the top boundary is now realized directly from explicit `?wiring` endpoints when those undeclared top endpoints imply one consistent direction plus exact width/type agreement.
 - Important continuity note:
   - same-name explicit top-input links now infer the top port declaration without duplicating the already-declared explicit bindings,
-  - renamed top endpoints are now supported through explicit `?toplink` evidence instead of requiring an explicit top-port declaration,
+  - renamed top endpoints are now supported through explicit `?wiring` evidence instead of requiring an explicit top-port declaration,
   - and undeclared top endpoints still fail explicitly when they are used as both inputs and outputs.
 - [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) locks generated-child renamed-endpoint success, RTL-backed renamed-endpoint success, and mixed-role undeclared-endpoint rejection.
 
@@ -17816,7 +17831,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-03-16: single external `?rtl` child composition now has a first shipped `R11` slice
 - Saved shipped behavior:
   - a lone `?rtl` child now works in `C1` passthrough tops,
-  - a lone `?rtl` child now works in `C3` explicit-toplink tops,
+  - a lone `?rtl` child now works in `C3` explicit-wiring tops,
   - and a lone `?rtl` child now works in `C4` declared connect-by-name tops.
 - Important continuity note:
   - the broadened planner rules do not invent a new lane or new syntax; they reuse the already-shipped C1/C3/C4 wiring contracts for a smaller child set.
@@ -17845,7 +17860,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-03-16: mixed generated-child plus external RTL declared connect-by-name now has a first shipped `R11` slice
 - `?top:name` now has regression-backed declared `=name` support for the mixed one-generated-child plus one-`?rtl` lane too.
 - Saved shipped behavior:
-  - mixed tops may combine explicit child-to-child `?toplink` wiring with by-name top exposure,
+  - mixed tops may combine explicit child-to-child `?wiring` wiring with by-name top exposure,
   - mixed `?fsmc` + `?rtl` and mixed `?dtc` + `?rtl` declared connect-by-name both work,
   - and cross-kind same-name ambiguity still fails explicitly.
 - Important bug fix continuity:
@@ -18886,7 +18901,7 @@ After each completed task, always do this in order:
 ## 2026-03-14: `R6` shipped `C5` width-mismatch diagnostics
 - Current worktree tightens the composition diagnostic boundary rather than widening the language surface again.
 - Scope of this slice:
-  - explicit `?toplink` width mismatches are now locked by focused regression,
+  - explicit `?wiring` width mismatches are now locked by focused regression,
   - declared connect-by-name width mismatches now name both endpoints and both widths directly.
 - Roadmap board update:
   - `ROADMAP_STATUS.md` now moves `R6` from `in progress` to `mostly done`,
@@ -18907,7 +18922,7 @@ After each completed task, always do this in order:
 - Scope of this slice:
   - expanded `docs/USER_GUIDE.md` with realistic `=name` patterns rather than only a synthetic minimal example,
   - added one child-FSM output passthrough example, one child-input passthrough example, and one external-RTL output passthrough example,
-  - added practical guidance about when to prefer `=name` versus explicit `?toplink`.
+  - added practical guidance about when to prefer `=name` versus explicit `?wiring`.
 - Roadmap board update:
   - no roadmap status/deliverable/active-lane change for this slice,
   - the live roadmap snapshot remains unchanged.
@@ -18970,11 +18985,11 @@ After each completed task, always do this in order:
 - Scope of this slice:
   - added `FSM::Composition::Net` and extended the typed runtime plan so multi-child tops can carry deterministic internal-net and binding data,
   - updated `FSM::Pipeline::HDLGenerator` to choose between `C1` and `C2` planning lanes,
-  - shipped `C2` support for multiple embedded `?fsmc` children with explicit `?toplink` endpoint resolution using top-port names and `instance.port` child endpoints,
+  - shipped `C2` support for multiple embedded `?fsmc` children with explicit `?wiring` endpoint resolution using top-port names and `instance.port` child endpoints,
   - added exact source/target role checks, exact width checks, deterministic internal-net naming, deterministic instance order preservation, and duplicate-driver rejection,
   - kept the active child-interface contract truthful by continuing to auto-wire only the shared `clk` / `rstn` system inputs and requiring explicit wiring for other child ports.
 - Regression coverage update:
-  - tightened `t/14-composition-parser.t` so dotted `instance.port` endpoints in `?toplink` are now locked explicitly,
+  - tightened `t/14-composition-parser.t` so dotted `instance.port` endpoints in `?wiring` are now locked explicitly,
   - added `t/21-composition-two-fsm-linking.t` for the shipped `C2` success path and CLI generation,
   - added `t/23-composition-errors.t` for duplicate-driver diagnostics.
 - Roadmap board update:
@@ -18995,7 +19010,7 @@ After each completed task, always do this in order:
 - Current worktree moves `R6` from parser/planning groundwork into the first real shipped composition runtime slice.
 - Scope of this slice:
   - added typed composition planning/runtime packages: `Port`, `Link`, `Plan`, and `RealizedInstance`,
-  - updated `FSM::Composition::Parser` so `?ports` and `?toplink` payloads are now stored as typed port/link objects instead of raw payloads,
+  - updated `FSM::Composition::Parser` so `?ports` and `?wiring` payloads are now stored as typed port/link objects instead of raw payloads,
   - updated `FSM::Pipeline::HDLGenerator` so `?top:name` can now realize one embedded `?fsmc` child, build a typed `C1` plan, validate explicit top-port exposure, and emit a generated top module,
   - captured the realized child interface as typed ports,
   - matched the active child-generator contract truthfully by treating `clk` / `rstn` as implicit system inputs and requiring user-facing child ports to be explicitly exposed by the child FSM itself.
@@ -19005,7 +19020,7 @@ After each completed task, always do this in order:
 - Roadmap board update:
   - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
   - `R6` `Done` now includes the first shipped `C1` realization/top-emission lane,
-  - the current next decision point is now `C2`-style multi-child planning plus typed `?toplink`/net resolution, not more single-child boundary work.
+  - the current next decision point is now `C2`-style multi-child planning plus typed `?wiring`/net resolution, not more single-child boundary work.
 - Validation is green for this slice:
   - `perl -I perl -c perl/FSM/Composition/RealizedInstance.pm`
   - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
@@ -19014,15 +19029,15 @@ After each completed task, always do this in order:
   - `prove -I perl t`
 - Immediate next direction after commit:
   - widen from shipped `C1` to `C2`,
-  - add multi-child top planning, typed explicit `?toplink`/net resolution, deterministic instance ordering, and duplicate-driver diagnostics.
+  - add multi-child top planning, typed explicit `?wiring`/net resolution, deterministic instance ordering, and duplicate-driver diagnostics.
 ## 2026-03-14: `R6` legacy mapping note plus first typed `?top` parser/IR slice
 - Current worktree continues `R6` by turning the composition boundary into a real typed parser seam instead of only a classifier/error seam.
 - Scope of this slice:
   - added `docs/COMPOSITION_LEGACY_MAPPING.md` to capture the obsolete `fx/bin/fsmgen` composition call tree (`start_from_file` -> `fsm_initialize` -> `top_exec`) and map legacy concepts onto the active architecture,
-  - documented the main historical lesson: keep `?top`, `?fsmc`, `?rtl`, `?ports`, and `?toplink` as language ideas, but do not revive the old `AUTOLOAD` / `PPlugin` / `.plg` mechanism,
-  - added typed composition packages under `perl/FSM/Composition/` for the first active parser boundary: `Spec`, `Top`, `Instance`, `PortsBlock`, `TopLink`, and `Parser`,
+  - documented the main historical lesson: keep `?top`, `?fsmc`, `?rtl`, `?ports`, and `?wiring` as language ideas, but do not revive the old `AUTOLOAD` / `PPlugin` / `.plg` mechanism,
+  - added typed composition packages under `perl/FSM/Composition/` for the first active parser boundary: `Spec`, `Top`, `Instance`, `PortsBlock`, `WiringBlock`, and `Parser`,
   - `FSM::Pipeline::HDLGenerator` now parses `?top:name` through `FSM::Composition::Parser` before failing at the still-unimplemented realization/emission stage,
-  - the parser now recognizes typed child-block structure for `?fsmc`, `?rtl`, `?ports`, and `?toplink`,
+  - the parser now recognizes typed child-block structure for `?fsmc`, `?rtl`, `?ports`, and `?wiring`,
   - explicit unsupported legacy residue is now called out truthfully:
     - inline top-port shorthand under `?top:name`,
     - multi-source `?fsmc`,
@@ -19040,13 +19055,13 @@ After each completed task, always do this in order:
   - `perl -I perl -c perl/FSM/Composition/Top.pm`
   - `perl -I perl -c perl/FSM/Composition/Instance.pm`
   - `perl -I perl -c perl/FSM/Composition/PortsBlock.pm`
-  - `perl -I perl -c perl/FSM/Composition/TopLink.pm`
+  - `perl -I perl -c perl/FSM/Composition/WiringBlock.pm`
   - `perl -I perl -c perl/FSM/Composition/Parser.pm`
   - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
   - `perl -I perl -c t/14-composition-parser.t`
   - `prove -I perl t/13-composition-source-classification.t t/14-composition-parser.t` (`Files=2`, `Tests=38`, `PASS`)
 - Immediate next direction after commit:
-  - define typed parsing/planning for explicit `?ports` / `?toplink` payloads instead of storing them as raw items,
+  - define typed parsing/planning for explicit `?ports` / `?wiring` payloads instead of storing them as raw items,
   - then implement the first `C1` realization path: one `?top:name`, one `?fsmc` child, explicit top-port exposure, and deterministic top planning.
 ## 2026-03-14: `R6` composition source-classification boundary slice
 - Current worktree lands the first executable composition-aware code path in the active architecture without claiming full composition support yet.
@@ -19060,7 +19075,7 @@ After each completed task, always do this in order:
 - Roadmap board update:
   - `ROADMAP_STATUS.md` still keeps `R6` at `in progress`,
   - `R6` `Done` now includes explicit top-level source classification plus deliberate composition-boundary failure,
-  - the current `R6` next decision point is now the first typed composition parser/IR slice for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?toplink`).
+  - the current `R6` next decision point is now the first typed composition parser/IR slice for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?wiring`).
 - Validation is green for this slice:
   - `perl -I perl -c perl/FSM/SourceClassifier.pm`
   - `perl -I perl -c perl/FSM/Pipeline/HDLGenerator.pm`
@@ -19110,7 +19125,7 @@ After each completed task, always do this in order:
 - Scope of this slice:
   - added `docs/COMPOSITION_SCOPE.md` as the normative scope and acceptance-boundary document for the first composition lane,
   - grounded the scope in the active pipeline boundary: `bin/fsmgen` -> `FSM::Pipeline::HDLGenerator` -> `FSM::Adapter::FSMGenFull::Parser`, which currently only supports `?fsm:name` / `+fsm`,
-  - defined the first supported composition source model around `?top:name`, `?fsmc`, `?rtl`, `?ports`, and `?toplink`,
+  - defined the first supported composition source model around `?top:name`, `?fsmc`, `?rtl`, `?ports`, and `?wiring`,
   - defined the first executable acceptance matrix (`C1`..`C6`) plus the planned focused composition test-file split.
 - Roadmap board update:
   - `ROADMAP_STATUS.md` now marks `R6` as `in progress`,
@@ -19118,7 +19133,7 @@ After each completed task, always do this in order:
   - the active-lane next step is now implementation of the first typed composition classifier/parser slice rather than more scope discovery.
 - Validation is green for this slice:
   - `git diff --check`
-  - `rg -n "COMPOSITION_SCOPE\\.md|\\?top:name|\\?fsmc|\\?rtl|\\?ports|\\?toplink|R6.*in progress|Composition-oriented language" README.md docs/USER_GUIDE.md docs/COMPOSITION_SCOPE.md ROADMAP_STATUS.md MEMORY.md CHANGES.md DEVELOPMENT_NOTES.md`
+  - `rg -n "COMPOSITION_SCOPE\\.md|\\?top:name|\\?fsmc|\\?rtl|\\?ports|\\?wiring|R6.*in progress|Composition-oriented language" README.md docs/USER_GUIDE.md docs/COMPOSITION_SCOPE.md ROADMAP_STATUS.md MEMORY.md CHANGES.md DEVELOPMENT_NOTES.md`
 - Immediate next direction after commit:
   - implement the first typed composition source classifier above the existing FSM-only parser,
   - then add the first executable composition acceptance tests from `docs/COMPOSITION_SCOPE.md`.
@@ -21146,7 +21161,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 ## 2026-03-19: explicit-link width-mismatch failed summaries now keep target context
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now recognizes the existing blocked explicit-link width-mismatch diagnostic shape (`links '...' (width ...) to '...' (width ...)`) as target context.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the reachable child-target width-mismatch summary shape so non-quiet failed runs keep:
-  - `Construct: ?toplink`
+  - `Construct: ?wiring`
   - `Context: Child endpoint 'consumer.input_data'`
   - `Blocked boundary: explicit link`
   - `Reason: the current active composition lanes require exact width agreement`
@@ -21162,7 +21177,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now recognizes the existing blocked explicit-link topology diagnostic shape `drives multiple top outputs from '...'` as structured context.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the reachable summary shape so non-quiet failed runs keep:
   - `Lane: C2`
-  - `Construct: ?toplink`
+  - `Construct: ?wiring`
   - `Context: Child endpoint 'producer.output_data'`
   - `Blocked boundary: explicit-link topology`
   - `Reason: the current active C2 lane supports at most one top-output target per resolved source`
@@ -21171,17 +21186,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now recognizes the sibling blocked topology diagnostic shape `links top input '...' directly to top output '...'` as structured context.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the reachable summary shape so non-quiet failed runs keep:
   - `Lane: C2`
-  - `Construct: ?toplink`
+  - `Construct: ?wiring`
   - `Context: Top port 'start'`
   - `Blocked boundary: explicit-link topology`
   - `Reason: the current active C2 lane only supports top inputs driving child inputs`
 
 ## 2026-03-19: explicit-link lane-entry summaries now explicitly avoid fabricated context
-- [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the missing-`?toplink` explicit-link lane-entry family so non-quiet failed runs keep:
+- [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the missing-`?wiring` explicit-link lane-entry family so non-quiet failed runs keep:
   - `Lane: C2`
-  - `Construct: ?toplink`
+  - `Construct: ?wiring`
   - `Blocked boundary: explicit-link lane entry`
-  - `Reason: the current active C2 lane requires explicit '?toplink' wiring`
+  - `Reason: the current active C2 lane requires explicit '?wiring' wiring`
   - and no `Context:` line
 - Runtime behavior was already correct here; this slice makes the no-invented-context contract provable.
 
@@ -21220,11 +21235,11 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - the blocked `child-source realization` boundary and the existing concise wrong-kind reason
 - Runtime behavior was already correct here; this slice makes the wrong-kind realization summary contract explicit for both generated-child constructs.
 
-## 2026-03-19: parser-boundary summaries now cover mapping directives and malformed top-link tokens
+## 2026-03-19: parser-boundary summaries now cover mapping directives and malformed wiring tokens
 - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now recognizes `mapping directive '...'` diagnostics as structured failed-run summary context.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shapes so non-quiet runs keep:
   - `Construct: ?ports` plus `Context: Mapping directive '/foo/bar/'`
-  - `Construct: ?toplink` plus `Context: Token 'child.result_data->result_data'`
+  - `Construct: ?wiring` plus `Context: Token 'child.result_data->result_data'`
   - the blocked parser-boundary labels and the existing concise parser reasons
 - Parser behavior was already correct here; this slice improves only the failed-run summary surface for the `?ports` mapping-directive family and makes both parser-boundary summary contracts explicit.
 
@@ -21251,16 +21266,16 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
 - Parser behavior is unchanged here; this slice improves only the failed-run summary surface for malformed child item-list payloads.
 
-## 2026-03-19: the dotted-pair child-item summary contract now covers ?toplink too
-- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?toplink:wiring` diagnostic beside the earlier `?fsmc:child` case.
+## 2026-03-19: the dotted-pair child-item summary contract now covers ?wiring too
+- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?wiring:wiring` diagnostic beside the earlier `?fsmc:child` case.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shape so non-quiet runs keep:
-  - `Construct: ?toplink`
-  - `Context: Child '?toplink:wiring'`
+  - `Construct: ?wiring`
+  - `Context: Child '?wiring:wiring'`
   - the blocked `child item-list shape` boundary and the existing concise dotted-pair-contract reason
-- Runtime behavior was already correct here; this slice makes the `?toplink` child-item summary contract explicit too.
+- Runtime behavior was already correct here; this slice makes the `?wiring` child-item summary contract explicit too.
 
 ## 2026-03-19: the dotted-pair child-item summary contract now covers ?ports too
-- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?ports` diagnostic beside the earlier `?fsmc:child` and `?toplink:wiring` cases.
+- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?ports` diagnostic beside the earlier `?fsmc:child` and `?wiring:wiring` cases.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shape so non-quiet runs keep:
   - `Construct: ?ports`
   - `Context: Child '?ports'`
@@ -21268,7 +21283,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Runtime behavior was already correct here; this slice makes the `?ports` child-item summary contract explicit too.
 
 ## 2026-03-19: the dotted-pair child-item summary contract now covers ?dtc too
-- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?dtc:child` diagnostic beside the earlier `?fsmc:child`, `?toplink:wiring`, and `?ports` cases.
+- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?dtc:child` diagnostic beside the earlier `?fsmc:child`, `?wiring:wiring`, and `?ports` cases.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shape so non-quiet runs keep:
   - `Construct: ?dtc`
   - `Context: Child '?dtc:child'`
@@ -21276,7 +21291,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - Runtime behavior was already correct here; this slice makes the `?dtc` child-item summary contract explicit too.
 
 ## 2026-03-19: the dotted-pair child-item summary contract now covers ?rtl too
-- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?rtl:uart_tx` diagnostic beside the earlier `?fsmc:child`, `?toplink:wiring`, `?ports`, and `?dtc:child` cases.
+- [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) now also locks the direct blocked dotted-pair `?rtl:uart_tx` diagnostic beside the earlier `?fsmc:child`, `?wiring:wiring`, `?ports`, and `?dtc:child` cases.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks the matching failed-run summary shape so non-quiet runs keep:
   - `Construct: ?rtl`
   - `Context: Child '?rtl:uart_tx'`
@@ -21428,7 +21443,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   - the active composition-top emitter now walks that typed node when rendering instance actual connections,
   - and shared-datapath candidate discovery now also reads structural binding signal names through that same typed node instead of depending only on a flat binding string.
 - The next structural-consumption step is also live through override/block resolved-link handling:
-  - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - composition override events now take their explicit-wiring and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
   - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
 - The next forward semantic widening step is also live through one unified composition child export:
   - composition-top `intent_hir` now carries `composition_child_count` plus one ordered `composition_children` export across realized `?fsmc`, `?dtc`, and `?rtl` children,
@@ -21506,7 +21521,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   realized-child rebinding logic directly.
 - Inferred multi-child top-port projection now also lives in
   `FSM::Composition::TopPortInferenceBuilder`, so `HDLGenerator` no longer
-  owns explicit-toplink top-port inference or undeclared same-name top-input
+  owns explicit-wiring top-port inference or undeclared same-name top-input
   and top-output inference directly.
 - Shared-datapath support now also lives in
   `FSM::Composition::SharedDatapathSupport`, so `HDLGenerator` no longer owns
@@ -21568,14 +21583,14 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
 - The paired direct `IntermediateSignalSupport` now narrows to filter policy
   over normalized intermediate metadata instead of mixing recovery and filter
   responsibilities together.
-- Explicit `?toplink` wiring now has a first real structural-actual slice:
+- Explicit `?wiring` wiring now has a first real structural-actual slice:
   `=open`, `=0`, `=1`, and exact-width `=N'b...` sources may now bind
   directly into realized child input ports.
 - `FSM::Composition::LinkedPlanBuilder` now preserves those actuals as typed
   `connection_expr` bindings instead of inventing carrier nets, and
   top-port inference / provenance block detection now treat those child
   inputs as already explicitly linked.
-- Explicit `?toplink` wiring may now also use declared top-port bit/slice
+- Explicit `?wiring` wiring may now also use declared top-port bit/slice
   expressions such as `payload_bus[15:8]` and `status_bus[0]` on the source
   side when the target is a realized child input.
 - `FSM::Composition::LinkedPlanBuilder` now resolves those source-side
@@ -21589,7 +21604,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   base-port width from the highest referenced bit while still rejecting
   incompatible exact-width full-port evidence instead of guessing one width
   contract silently.
-- Explicit `?toplink` wiring may now also use the bounded flat comma-separated
+- Explicit `?wiring` wiring may now also use the bounded flat comma-separated
   source-side concat form inside one `/source/target/` token, for example
   `header_bus,status_bus[0],=1,payload_bus[3:0]`, when the target is a
   realized child input.
@@ -21619,7 +21634,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `=1_70`, `=0o2_45`, `=A_5`, `=8'd1_65`, and `=8'hA_5`, while keeping the
   same normalized numeric value and the same direct-vs-concat support
   boundary.
-- Explicit `?toplink` wiring may now also use source-side child-output
+- Explicit `?wiring` wiring may now also use source-side child-output
   bit/slice expressions such as `producer.payload[7:4]` and
   `producer.payload[0]` when the target is a realized child input or a
   declared top output.

@@ -14,7 +14,7 @@ use FSM::Composition::Parser;
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 
-subtest 'parser tags declared top ports and explicit toplinks with provenance' => sub {
+subtest 'parser tags declared top ports and explicit wiring_blocks with provenance' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $path = File::Spec->catfile($tempdir, 'declared_metadata_top.fsm');
 
@@ -28,7 +28,7 @@ subtest 'parser tags declared top ports and explicit toplinks with provenance' =
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.mid/consumer.mid/
   )
 )
@@ -61,7 +61,7 @@ FSM
     my @ports = @{$spec->top->ports_blocks->[0]->ports};
     is($ports[0]->origin_kind, 'declared_explicit_port', 'plain explicit top port records declared-explicit provenance');
     is($ports[1]->origin_kind, 'declared_connect_by_name_port', 'by-name top port records declared connect-by-name provenance');
-    is($spec->top->toplinks->[0]->links->[0]->origin_kind, 'declared_explicit_toplink', 'explicit toplink records declared-explicit provenance');
+    is($spec->top->wiring_blocks->[0]->links->[0]->origin_kind, 'declared_explicit_wiring', 'explicit wiring records declared-explicit provenance');
 };
 
 subtest 'C1 omitted ports surface inferred passthrough provenance' => sub {
@@ -109,17 +109,17 @@ FSM
     );
 };
 
-subtest 'explicit-link omitted ports expose explicit-toplink and undeclared-port provenance' => sub {
+subtest 'explicit-link omitted ports expose explicit-wiring and undeclared-port provenance' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $path = File::Spec->catfile($tempdir, 'explicit_toplink_metadata_top.fsm');
+    my $path = File::Spec->catfile($tempdir, 'explicit_wiring_metadata_top.fsm');
 
     write_file(
         $path,
         <<'FSM'
-(?top:explicit_toplink_metadata_top
+(?top:explicit_wiring_metadata_top
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /start/producer.go/
     /start/consumer.go/
     /producer.payload/consumer.payload/
@@ -165,9 +165,9 @@ FSM
     my %resolved_link_origins;
     $resolved_link_origins{$_->origin_kind}++ for @{$result->{composition_plan}->resolved_links};
 
-    is($ports{start}->origin_kind, 'inferred_explicit_toplink_port', 'renamed top input inferred from explicit toplink carries explicit-toplink provenance');
-    is($ports{status}->origin_kind, 'inferred_explicit_toplink_port', 'renamed top output inferred from explicit toplink carries explicit-toplink provenance');
-    is($resolved_link_origins{declared_explicit_toplink} || 0, 4, 'resolved link set preserves explicit toplink provenance across all explicit links');
+    is($ports{start}->origin_kind, 'inferred_explicit_wiring_port', 'renamed top input inferred from explicit wiring carries explicit-wiring provenance');
+    is($ports{status}->origin_kind, 'inferred_explicit_wiring_port', 'renamed top output inferred from explicit wiring carries explicit-wiring provenance');
+    is($resolved_link_origins{declared_explicit_wiring} || 0, 4, 'resolved link set preserves explicit wiring provenance across all explicit links');
 };
 
 subtest 'resolved links expose convention and override provenance in explicit-link C2' => sub {
@@ -185,7 +185,7 @@ subtest 'resolved links expose convention and override provenance in explicit-li
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.mid/consumer.mid/
   )
 )
@@ -223,7 +223,7 @@ FSM
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/producer.go/
     /go/consumer.go/
   )
@@ -269,7 +269,7 @@ FSM
 
     is($convention_ports{payload_in}->origin_kind, 'declared_explicit_port', 'plain explicit top input stays declared in the plan');
     is($convention_ports{result_data}->origin_kind, 'declared_explicit_port', 'plain explicit top output stays declared in the plan');
-    is($convention_link_origins{declared_explicit_toplink} || 0, 1, 'explicit child-to-child wiring keeps explicit-toplink provenance');
+    is($convention_link_origins{declared_explicit_wiring} || 0, 1, 'explicit child-to-child wiring keeps explicit-wiring provenance');
     is($convention_link_origins{inferred_plain_explicit_top_input_link} || 0, 2, 'plain explicit top-input fanout links expose convention provenance');
     is($convention_link_origins{inferred_plain_explicit_top_output_link} || 0, 1, 'plain explicit top-output adoption exposes convention provenance');
 

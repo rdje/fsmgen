@@ -39,7 +39,7 @@ subtest 'pipeline and CLI emit top-expression direct top-output assignments' => 
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[15:8]/serial_hi/
     /status_bus[0]/serial_flag/
     /payload_bus[3:0],status_bus[0],status_bus[1],=2'b10/packed_status/
@@ -124,7 +124,7 @@ subtest 'pipeline and CLI emit nested concat top-expression top-output assignmen
     packed_status>10
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/packed_status/
     /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/
   )

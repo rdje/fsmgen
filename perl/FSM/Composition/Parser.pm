@@ -16,7 +16,7 @@ use FSM::Composition::Port;
 use FSM::Composition::PortWidthResolver;
 use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 use FSM::Composition::TopSymbols;
 use FSM::ParameterValueSupport;
 use FSM::Package::DeclarativeTypeSupport;
@@ -80,7 +80,7 @@ sub parse_top ($self, $top_ast) {
     my @instances;
     my @ports_blocks;
     my @pending_ports_blocks;
-    my @toplinks;
+    my @wiring_blocks;
     my @package_imports;
     my $top_symbols = FSM::Composition::TopSymbols->new();
     my @pending_constant_entries;
@@ -161,8 +161,8 @@ sub parse_top ($self, $top_ast) {
             push @instances, $parsed_child;
         } elsif ($kind eq 'ports') {
             push @ports_blocks, $parsed_child;
-        } elsif ($kind eq 'toplink') {
-            push @toplinks, $parsed_child;
+        } elsif ($kind eq 'wiring') {
+            push @wiring_blocks, $parsed_child;
         } else {
             confess "Internal error: unknown parsed composition child kind '$kind'";
         }
@@ -201,7 +201,7 @@ sub parse_top ($self, $top_ast) {
         name => $top_name,
         instances => \@instances,
         ports_blocks => \@ports_blocks,
-        toplinks => \@toplinks,
+        wiring_blocks => \@wiring_blocks,
         package_imports => \@package_imports,
         top_symbols => $top_symbols,
         raw_ast => $top_ast,
@@ -211,19 +211,19 @@ sub parse_top ($self, $top_ast) {
 sub parse_top_child ($self, $top_name, $child_ast) {
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'.".
         $self->scope_docs_suffix
         unless @$child_ast;
 
     my $header = $child_ast->[0];
     confess
         "Composition top '$top_name' contains a child entry that is empty or missing its header, ".
-        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'.".
+        "but composition child structure is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'.".
         $self->scope_docs_suffix
         unless defined($header) && length($header);
     confess
         "Composition top '$top_name' contains a child entry that does not begin with a string header, ".
-        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'.".
+        "but composition child header shape is blocked because every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'.".
         $self->scope_docs_suffix
         if ref($header);
 
@@ -254,8 +254,8 @@ sub parse_top_child ($self, $top_name, $child_ast) {
         my $block_name = defined($1) && length($1) ? $1 : undef;
         return ('ports', $self->parse_ports_block($top_name, $child_ast, $block_name, $items));
     }
-    if ($header =~ /^\?toplink:(\w+)$/) {
-        return ('toplink', $self->parse_toplink_block($top_name, $child_ast, $1, $items));
+    if ($header =~ /^\?wiring:(\w+)$/) {
+        return ('wiring', $self->parse_wiring_block($top_name, $child_ast, $1, $items));
     }
     if ($header =~ /^\?&/) {
         confess
@@ -272,7 +272,7 @@ sub parse_top_child ($self, $top_name, $child_ast) {
 
     confess
         "Composition top '$top_name' contains child '$header', ".
-        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', '+types', and '+import'.".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?wiring', '+constants', '+enums', '+types', and '+import'.".
         $self->scope_docs_suffix;
 }
 
@@ -1136,36 +1136,167 @@ sub parse_port_token ($self, $top_name, $token, $top_symbols = undef) {
     );
 }
 
-sub parse_toplink_block ($self, $top_name, $child_ast, $block_name, $items) {
+sub parse_wiring_block ($self, $top_name, $child_ast, $block_name, $items) {
     my @links;
 
     for my $item (@$items) {
-        confess "Composition top '$top_name' contains a nested '?toplink' item, ".
-            "but explicit top-link token flatness is blocked because the active composition parser only supports flat '/source/target/' link tokens.".
-            $self->scope_docs_suffix
-            if ref($item);
+        if (ref($item)) {
+            push @links, $self->parse_wiring_form($top_name, $item);
+            next;
+        }
 
         if ($item =~ m{^/([^/]+)/([^/]+)/$}) {
             push @links, FSM::Composition::Link->new(
                 source => $1,
                 target => $2,
                 raw_token => $item,
-                origin_kind => 'declared_explicit_toplink',
+                origin_kind => 'declared_explicit_wiring',
             );
             next;
         }
 
         confess
-            "Composition top '$top_name' contains '?toplink' token '$item', ".
-            "but explicit top-link token shape is blocked because the current parser only accepts simple '/source/target/' link forms.".
+            "Composition top '$top_name' contains '?wiring' token '$item', ".
+            "but explicit wiring token shape is blocked because the current parser accepts legacy '/source/target/' tokens, canonical '(source target)' forms, or verbose '(connect source target)' forms.".
             $self->scope_docs_suffix;
     }
 
-    return FSM::Composition::TopLink->new(
+    return FSM::Composition::WiringBlock->new(
         name => $block_name,
         links => \@links,
         raw_ast => $child_ast,
     );
+}
+
+sub parse_wiring_form ($self, $top_name, $form) {
+    my $rendered = $self->render_ast_fragment($form);
+    my @items = $self->wiring_form_items($form);
+
+    my ($source_ast, $target_ast);
+    if (@items && defined($items[0]) && !ref($items[0]) && $items[0] eq 'connect') {
+        confess
+            "Composition top '$top_name' contains '?wiring' link form '$rendered', ".
+            "but explicit wiring form shape is blocked because '(connect ...)' links must use exactly '(connect source target)'.".
+            $self->scope_docs_suffix
+            unless @items == 3;
+        ($source_ast, $target_ast) = @items[1, 2];
+    }
+    else {
+        confess
+            "Composition top '$top_name' contains '?wiring' link form '$rendered', ".
+            "but explicit wiring form shape is blocked because canonical list links must use exactly '(source target)' or '(connect source target)'.".
+            $self->scope_docs_suffix
+            unless @items == 2;
+        ($source_ast, $target_ast) = @items[0, 1];
+    }
+
+    my $source = $self->wiring_endpoint_spec(
+        $top_name,
+        $rendered,
+        $source_ast,
+        'source',
+    );
+    my $target = $self->wiring_endpoint_spec(
+        $top_name,
+        $rendered,
+        $target_ast,
+        'target',
+    );
+
+    return FSM::Composition::Link->new(
+        source => $source,
+        target => $target,
+        raw_token => $rendered,
+        origin_kind => 'declared_explicit_wiring',
+    );
+}
+
+sub wiring_form_items ($self, $form) {
+    return () unless ref($form) eq 'ARRAY';
+
+    if (@$form == 2 && !defined($form->[1])) {
+        return ($form->[0]);
+    }
+
+    if (
+        @$form == 2
+        && defined($form->[1])
+        && ref($form->[1]) eq 'ARRAY'
+    ) {
+        return ($form->[0], @{$form->[1]});
+    }
+
+    return @$form;
+}
+
+sub wiring_endpoint_spec ($self, $top_name, $link_form, $endpoint_ast, $role) {
+    my $endpoint = $self->unwrap_scalar_token($endpoint_ast);
+    if (defined($endpoint) && !ref($endpoint)) {
+        confess
+            "Composition top '$top_name' contains '?wiring' link form '$link_form', ".
+            "but explicit wiring endpoint shape is blocked because list-form endpoints must be non-empty scalar endpoint tokens.".
+            $self->scope_docs_suffix
+            unless length($endpoint);
+        confess
+            "Composition top '$top_name' contains '?wiring' link form '$link_form', ".
+            "but explicit wiring endpoint shape is blocked because list-form endpoints must not wrap legacy slash-link tokens; write either '(source target)' or '/source/target/', not both.".
+            $self->scope_docs_suffix
+            if $endpoint =~ m{\A/} || $endpoint =~ m{/\z};
+        return $endpoint;
+    }
+
+    return $self->wiring_source_expression_spec(
+        $top_name,
+        $link_form,
+        $endpoint_ast,
+    ) if $role eq 'source';
+
+    my $rendered = $self->render_ast_fragment($endpoint_ast);
+    confess
+        "Composition top '$top_name' contains '?wiring' link form '$link_form', ".
+        "but explicit wiring endpoint shape is blocked because target endpoints currently must be scalar top or child endpoint tokens, not '$rendered'.".
+        $self->scope_docs_suffix;
+}
+
+sub wiring_source_expression_spec ($self, $top_name, $link_form, $endpoint_ast) {
+    my @items = $self->wiring_form_items($endpoint_ast);
+    my $operator = @items ? $items[0] : undef;
+    my $rendered = $self->render_ast_fragment($endpoint_ast);
+
+    if (defined($operator) && !ref($operator) && ($operator eq 'cat' || $operator eq 'concat')) {
+        my @operands = @items[1 .. $#items];
+        confess
+            "Composition top '$top_name' contains '?wiring' link form '$link_form', ".
+            "but explicit wiring endpoint shape is blocked because '($operator ...)' source expressions require at least two operands.".
+            $self->scope_docs_suffix
+            unless @operands >= 2;
+        return '{' . join(',', map {
+            $self->wiring_endpoint_spec($top_name, $link_form, $_, 'source')
+        } @operands) . '}';
+    }
+
+    if (defined($operator) && !ref($operator) && $operator eq 'repeat') {
+        confess
+            "Composition top '$top_name' contains '?wiring' link form '$link_form', ".
+            "but explicit wiring endpoint shape is blocked because '(repeat ...)' source expressions must use exactly '(repeat COUNT operand)'.".
+            $self->scope_docs_suffix
+            unless @items == 3;
+
+        my $count = $self->unwrap_scalar_token($items[1]);
+        confess
+            "Composition top '$top_name' contains '?wiring' link form '$link_form', ".
+            "but explicit wiring endpoint shape is blocked because '(repeat COUNT operand)' requires COUNT to be a positive integer literal.".
+            $self->scope_docs_suffix
+            unless defined($count) && !ref($count) && $count =~ /\A[1-9]\d*\z/;
+
+        my $operand = $self->wiring_endpoint_spec($top_name, $link_form, $items[2], 'source');
+        return '{' . $count . '{' . $operand . '}}';
+    }
+
+    confess
+        "Composition top '$top_name' contains '?wiring' link form '$link_form', ".
+        "but explicit wiring endpoint shape is blocked because source endpoints currently accept scalar endpoint tokens, '(cat ...)'/'(concat ...)' source expressions, or '(repeat COUNT operand)' source expressions, not '$rendered'.".
+        $self->scope_docs_suffix;
 }
 
 sub collect_embedded_fsm_sources ($self, $raw_ast) {

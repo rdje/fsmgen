@@ -32,7 +32,7 @@ subtest 'mixed fsmc plus rtl composition supports declared connect-by-name on to
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
   )
 )
@@ -127,7 +127,7 @@ subtest 'mixed dtc plus rtl composition supports declared connect-by-name on top
   )
   (?dtc:router route_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /router.route_data/uart_tx.data_in/
   )
 )

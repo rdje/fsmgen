@@ -31,7 +31,7 @@ subtest 'multi-rtl composition supports explicit C3 child-to-child wiring' => su
   )
   (?rtl:uart_rx)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /serial_in/uart_rx.rxd/
     /uart_rx.data_out/uart_tx.data_in/
     /uart_tx.txd/serial_out/
@@ -119,7 +119,7 @@ subtest 'mixed generated-child plus multiple rtl children supports explicit C3 w
   (?dtc:router route_src)
   (?rtl:uart_tx)
   (?rtl:payload_probe)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/router.data_in/
     /router.route_data/uart_tx.data_in/
     /router.route_data/payload_probe.sample_in/
@@ -221,7 +221,7 @@ subtest 'one rtl interface can be instantiated several times with explicit insta
   )
   (?rtl:u_uart_a uart_tx)
   (?rtl:u_uart_b uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_a/u_uart_a.data_in/
     /u_uart_a.txd/serial_a/
     /payload_b/u_uart_b.data_in/
@@ -325,7 +325,7 @@ subtest 'rtl instance parameter overrides lower through structural IR into SV in
       (LANES_SUM (+ LOCAL_LANES LOCAL_LANE_INC))
     )
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/u_uart.data_in/
     /u_uart.txd/serial_out/
   )
@@ -467,7 +467,7 @@ subtest 'rtlif parameter default value names must resolve before generation' => 
       (WIDTH 8)
     )
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/u_uart.data_in/
     /u_uart.txd/serial_out/
   )
@@ -543,7 +543,7 @@ subtest 'rtl aggregate parameter overrides must match the rtlif default shape' =
       (LANES (8'hA5))
     )
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/u_uart.data_in/
     /u_uart.txd/serial_out/
   )
@@ -612,7 +612,7 @@ subtest 'rtl instance parameter overrides must be declared by the rtlif contract
       (MODE 1)
     )
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/u_uart.data_in/
     /u_uart.txd/serial_out/
   )
@@ -681,7 +681,7 @@ subtest 'rtl instance parameter override value names must resolve before generat
       (WIDTH NO_SUCH_SYMBOL)
     )
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/u_uart.data_in/
     /u_uart.txd/serial_out/
   )

@@ -25,7 +25,7 @@ subtest 'composition HDL now emits shared-datapath source-export bindings and ag
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/

@@ -24,11 +24,11 @@ subtest 'spawn fixture lowers a generated composition top with drive handoff wir
     like($top_fsm, qr/\A\(\?top:spawn_parent_top\b/, 'generated top is a composition root');
     like($top_fsm, qr/\(\?fsmc:spawn_parent spawn_parent\)/, 'generated top instantiates the parent');
     like($top_fsm, qr/\(\?fsmc:w0 child_worker\)/, 'generated top instantiates the first spawned child');
-    like($top_fsm, qr{/spawn_parent\.w0_start/w0\.start/}, 'top wires parent start output to child start input');
-    like($top_fsm, qr{/w0\.done/spawn_parent\.w0_done/}, 'top wires child done output to parent done input');
-    like($top_fsm, qr{/w0\.rdata_start/spawn_parent\.w0_rdata_start/}, 'top wires child drive request to parent per-instance input');
-    like($top_fsm, qr{/w0\.rdata_val/spawn_parent\.w0_rdata_val/}, 'top wires child drive payload to parent per-instance input');
-    like($top_fsm, qr{/trigger/w0\.trigger/}, 'top fans public actor inputs into spawned children');
+    like($top_fsm, qr/\(spawn_parent\.w0_start w0\.start\)/, 'top wires parent start output to child start input');
+    like($top_fsm, qr/\(w0\.done spawn_parent\.w0_done\)/, 'top wires child done output to parent done input');
+    like($top_fsm, qr/\(w0\.rdata_start spawn_parent\.w0_rdata_start\)/, 'top wires child drive request to parent per-instance input');
+    like($top_fsm, qr/\(w0\.rdata_val spawn_parent\.w0_rdata_val\)/, 'top wires child drive payload to parent per-instance input');
+    like($top_fsm, qr/\(trigger w0\.trigger\)/, 'top fans public actor inputs into spawned children');
 
     like($parent_fsm, qr/\(w0_rdata_start 1\)/, 'parent declares per-instance drive request input width');
     like($parent_fsm, qr/\(w0_rdata_val 32\)/, 'parent declares per-instance drive payload input width');

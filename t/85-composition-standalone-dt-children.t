@@ -91,7 +91,7 @@ subtest 'multi-child composition supports mixed fsmc and dtc generated children'
   )
   (?fsmc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/router.data_in/
     /router.final_data/final_data/
   )
@@ -170,7 +170,7 @@ subtest 'mixed dtc plus rtl composition resolves external dt child through --pat
   )
   (?dtc:router route_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /data_in/router.data_in/
     /router.route_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/

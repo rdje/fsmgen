@@ -28,7 +28,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -78,7 +78,7 @@ write_file(
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.output_data/result_data/
   )
 )
@@ -126,7 +126,7 @@ write_file(
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.output_data/result_data/
   )
 )

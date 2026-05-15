@@ -26,7 +26,7 @@ subtest 'shared-datapath candidates classify peer-read registered outputs as int
   (?fsmc:left left_src)
   (?fsmc:right right_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer.select/
@@ -137,7 +137,7 @@ subtest 'CLI prints shared-datapath visibility planning for peer-read registered
   (?fsmc:left left_src)
   (?fsmc:right right_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer.select/

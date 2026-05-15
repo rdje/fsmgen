@@ -26,11 +26,11 @@ subtest 'library actor use emits generated top wiring' => sub {
     like($top_fsm, qr/\A\(\?top:library_wrapper_top\b/, 'library generated top is a composition root');
     like($top_fsm, qr/\(\?fsmc:library_wrapper library_wrapper\)/, 'generated top instantiates the importing actor');
     like($top_fsm, qr/\(\?fsmc:rx library_wrapper__rx\b/, 'generated top instantiates the library actor instance');
-    unlike($top_fsm, qr{/clk/rx\.clk/}, 'generated top leaves same-name clock binding to system auto-wiring');
-    unlike($top_fsm, qr{/rst_n/rx\.rst_n/}, 'generated top leaves same-name reset binding to system auto-wiring');
-    like($top_fsm, qr{/trigger/rx\.trigger/}, 'generated top wires bound parent input to library input');
-    like($top_fsm, qr{/rx\.fired/fired/}, 'generated top wires library output to parent output');
-    unlike($top_fsm, qr{/library_wrapper\.fired/fired/}, 'generated top does not also drive a library-owned output from the parent');
+    unlike($top_fsm, qr/\(clk rx\.clk\)/, 'generated top leaves same-name clock binding to system auto-wiring');
+    unlike($top_fsm, qr/\(rst_n rx\.rst_n\)/, 'generated top leaves same-name reset binding to system auto-wiring');
+    like($top_fsm, qr/\(trigger rx\.trigger\)/, 'generated top wires bound parent input to library input');
+    like($top_fsm, qr/\(rx\.fired fired\)/, 'generated top wires library output to parent output');
+    unlike($top_fsm, qr/\(library_wrapper\.fired fired\)/, 'generated top does not also drive a library-owned output from the parent');
 };
 
 subtest 'CLI compiles library generated top through normal HDL generation' => sub {
@@ -97,8 +97,8 @@ ISF
     my $top_fsm = $lowered->{files}{'library_system_remap_top.fsm'};
 
     ok(defined($top_fsm), 'lowering emits generated top for remapped system bindings');
-    like($top_fsm, qr{/clk/rx\.lib_clk/}, 'generated top explicitly links parent clock to library clock');
-    like($top_fsm, qr{/rst_n/rx\.lib_rst_n/}, 'generated top explicitly links parent reset to library reset');
+    like($top_fsm, qr/\(clk rx\.lib_clk\)/, 'generated top explicitly links parent clock to library clock');
+    like($top_fsm, qr/\(rst_n rx\.lib_rst_n\)/, 'generated top explicitly links parent reset to library reset');
 
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => [

@@ -22,7 +22,7 @@ subtest 'composition tops now export unified forward child summaries across gene
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /trigger/producer.trigger/
     /producer.serial_payload/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
@@ -66,10 +66,10 @@ FSM
     my ($producer_instance, $uart_tx_instance) = @{$result->{composition_plan}->instances};
     my ($producer_export, $uart_tx_export) = @{$module_info->{composition_children}};
     my ($input_override) = grep {
-        ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_input_convention'
+        ($_->{kind} || '') eq 'explicit_wiring_overrides_same_name_top_input_convention'
     } @{$report->{override_events} || []};
     my ($output_override) = grep {
-        ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_output_convention'
+        ($_->{kind} || '') eq 'explicit_wiring_overrides_same_name_top_output_convention'
     } @{$report->{override_events} || []};
 
     is($intent_hir->{composition_child_count}, 2, 'top intent_hir counts all realized children');

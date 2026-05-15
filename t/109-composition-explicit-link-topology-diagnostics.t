@@ -12,12 +12,12 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
-my $missing_toplink_path = File::Spec->catfile($tempdir, 'missing_toplink_top.fsm');
+my $missing_wiring_path = File::Spec->catfile($tempdir, 'missing_wiring_top.fsm');
 
 write_file(
-    $missing_toplink_path,
+    $missing_wiring_path,
     <<'FSM'
-(?top:missing_toplink_top
+(?top:missing_wiring_top
   (?ports:public_io
     clk
     rstn
@@ -61,17 +61,17 @@ my $pipeline = FSM::Pipeline::HDLGenerator->new(
     quiet => 1,
 );
 
-subtest 'missing explicit toplink now says lane entry is blocked' => sub {
+subtest 'missing explicit wiring now says lane entry is blocked' => sub {
     my $exception = eval {
-        $pipeline->generate_hdl_from_file($missing_toplink_path);
+        $pipeline->generate_hdl_from_file($missing_wiring_path);
         undef;
     };
     $exception = $@;
 
     like(
         $exception,
-        qr/recognized and parsed into typed composition IR, .*explicit-link lane entry is blocked because the current active C2 lane requires explicit '\?toplink' wiring/s,
-        'missing explicit toplink now says explicit-link lane entry is blocked',
+        qr/recognized and parsed into typed composition IR, .*explicit-link lane entry is blocked because the current active C2 lane requires explicit '\?wiring' wiring/s,
+        'missing explicit wiring now says explicit-link lane entry is blocked',
     );
 };
 

@@ -7,7 +7,7 @@ FSM::Composition::LinkedPlanBuilder - Builder for explicit-link composition plan
 =head1 DESCRIPTION
 
 Builds the bounded explicit-link composition plans used by the active C2, C3,
-and C4 lanes. This package owns explicit-toplink lane entry, endpoint
+and C4 lanes. This package owns explicit-wiring lane entry, endpoint
 resolution, role validation, deterministic carrier-net allocation, system-port
 auto-wiring, and realized-child rebinding for linked composition plans.
 
@@ -46,16 +46,16 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
 use FSM::Package::PayloadLiteralSupport;
 use FSM::Package::PayloadTypeSupport;
 
-sub build_from_toplinks ($class, %args) {
+sub build_from_wiring_blocks ($class, %args) {
     my $lane = $args{lane} // '';
-    my $toplinks = $args{toplinks} || [];
+    my $wiring_blocks = $args{wiring_blocks} || [];
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
 
-    my @links = map { @{$_->links || []} } @$toplinks;
+    my @links = map { @{$_->links || []} } @$wiring_blocks;
     confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
-        "but explicit-link lane entry is blocked because the current active $lane lane requires explicit '?toplink' wiring. ".
+        "but explicit-link lane entry is blocked because the current active $lane lane requires explicit '?wiring' wiring. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless @links;
 
@@ -424,13 +424,13 @@ sub build_plan ($class, %args) {
         if ($top_port->direction eq 'input') {
             confess
                 "Composition source '$header' in '$fsm_file' declares top input '$top_port_name', ".
-                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?toplink' usage for every non-system top input. ".
+                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?wiring' usage for every non-system top input. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $top_port_usage{$top_port_name}{source};
         } else {
             confess
                 "Composition source '$header' in '$fsm_file' declares top output '$top_port_name', ".
-                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?toplink' usage for every top output. ".
+                "but explicit-link top wiring is blocked because the current active $lane lane requires explicit '?wiring' usage for every top output. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                 unless $top_port_usage{$top_port_name}{target};
         }
@@ -722,7 +722,7 @@ sub assert_declared_type_compatibility ($class, $source, $target, $fsm_file, $he
     confess
         "Composition source '$header' in '$fsm_file' links '".$source->{raw}."' to '".$target->{raw}."', ".
         "but explicit link is blocked because those endpoints preserve incompatible declared type contracts ('".$source_declared_type."' vs '".$target_declared_type."'). ".
-        "The current typed composition slice only allows direct port-to-port '?toplink' bindings when preserved declared type contracts stay compatible too. ".
+        "The current typed composition slice only allows direct port-to-port '?wiring' bindings when preserved declared type contracts stay compatible too. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
 }
 
@@ -1780,10 +1780,10 @@ __END__
 
 =head1 METHODS
 
-=head2 build_from_toplinks
+=head2 build_from_wiring_blocks
 
 Builds a linked composition plan after validating that the active lane has at
-least one explicit C<?toplink> entry.
+least one explicit C<?wiring> entry.
 
 =head2 build_plan
 

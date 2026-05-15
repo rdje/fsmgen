@@ -18,7 +18,7 @@ use FSM::Composition::PortsBlock;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     slice_expr
@@ -31,14 +31,14 @@ subtest 'linked plan builder preserves child bit-select and slice sources throug
         port('top_flag', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('child_expr_top'),
         top => FSM::Composition::Top->new(name => 'child_expr_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'producer.payload[7:4]', target => 'top_hi'),
@@ -100,7 +100,7 @@ subtest 'linked plan builder preserves child bit-select and slice sources throug
     );
 };
 
-subtest 'pipeline and CLI emit child bit-select and slice sources for explicit toplinks' => sub {
+subtest 'pipeline and CLI emit child bit-select and slice sources for explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'child_expr_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'child_expr_top.sv');
@@ -115,7 +115,7 @@ subtest 'pipeline and CLI emit child bit-select and slice sources for explicit t
   )
   (?rtl:producer)
   (?rtl:consumer)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload[7:4]/top_hi/
     /producer.payload[0]/top_flag/
     /producer.payload[7:4]/consumer.hi/
@@ -143,7 +143,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'child-expression explicit toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'child-expression explicit wiring_blocks stay on the C3 lane');
 
     my %producer_bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     my %consumer_bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[1]->port_bindings};
@@ -172,13 +172,13 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for explicit child-expression toplinks');
-    ok(-e $output_path, 'CLI writes HDL for explicit child-expression toplinks');
+    ok($success, 'CLI succeeds for explicit child-expression wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for explicit child-expression wiring_blocks');
 };
 
 subtest 'linked plan builder rejects out-of-range child expressions' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_child_expr_top'),
             top => FSM::Composition::Top->new(name => 'blocked_child_expr_top'),
@@ -187,8 +187,8 @@ subtest 'linked plan builder rejects out-of-range child expressions' => sub {
                 ports => [port('top_flag', 'output', 1, undef)],
             ),
             ports => [port('top_flag', 'output', 1, undef)],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => 'producer.payload[8]', target => 'top_flag'),

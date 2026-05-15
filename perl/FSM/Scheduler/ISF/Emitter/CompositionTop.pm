@@ -36,7 +36,7 @@ sub emit($self, $ir, $files) {
     push @lines, _emit_parent_instance($actor_name);
     push @lines, map { _emit_spawn_instance($_) } @spawn_instances;
     push @lines, map { _emit_library_instance($_) } @library_uses;
-    push @lines, _emit_toplink_block($ir, \@spawn_instances, \@library_uses);
+    push @lines, _emit_wiring_block($ir, \@spawn_instances, \@library_uses);
     push @lines, ')';
     push @lines, '';
     push @lines, _trim_trailing_newlines($files->{$parent_file});
@@ -142,7 +142,7 @@ sub _emit_library_instance {
     return join("\n", @lines);
 }
 
-sub _emit_toplink_block {
+sub _emit_wiring_block {
     my ($ir, $spawn_instances, $library_uses) = @_;
     my $actor_name = $ir->{actor_name};
     my %parent_port = map { $_->{name} => $_ } @{$ir->{ports} || []};
@@ -160,10 +160,10 @@ sub _emit_toplink_block {
         my $name = $port->{name};
         if ($port->{direction} eq 'output') {
             next if $library_output_parent{$name};
-            push @links, "/$actor_name.$name/$name/";
+            push @links, _link($actor_name . ".$name", $name);
         } else {
             next if $library_input_parent{$name};
-            push @links, "/$name/$actor_name.$name/";
+            push @links, _link($name, $actor_name . ".$name");
         }
     }
 
@@ -180,17 +180,20 @@ sub _emit_toplink_block {
                 my $name = $port->{name};
                 next unless exists $child_ports->{$name};
                 next unless ($child_ports->{$name}{direction} || '') eq 'input';
-                push @links, "/$name/$instance.$name/";
+                push @links, _link($name, $instance . ".$name");
             }
         }
 
         for my $binding (@{$spawn->{port_bindings} || []}) {
             next unless ($binding->{role} || '') eq 'input';
-            push @links, "/$actor_name.$binding->{parent_port}/$instance.$binding->{child_port}/";
+            push @links, _link(
+                $actor_name . ".$binding->{parent_port}",
+                $instance . ".$binding->{child_port}",
+            );
         }
 
-        push @links, "/$actor_name.${instance}_start/$instance.start/";
-        push @links, "/$instance.done/$actor_name.${instance}_done/";
+        push @links, _link($actor_name . ".${instance}_start", $instance . '.start');
+        push @links, _link($instance . '.done', $actor_name . ".${instance}_done");
 
         for my $port_name (sort keys %$child_ports) {
             next if $port_name eq 'done';
@@ -198,7 +201,7 @@ sub _emit_toplink_block {
             next unless ($port->{direction} || '') eq 'output';
             my $parent_handoff = "${instance}_${port_name}";
             next unless exists $parent_port{$parent_handoff};
-            push @links, "/$instance.$port_name/$actor_name.$parent_handoff/";
+            push @links, _link($instance . ".$port_name", $actor_name . ".$parent_handoff");
         }
     }
 
@@ -215,7 +218,7 @@ sub _emit_toplink_block {
                 my $child_clock = $use->{child_clock};
                 confess "CompositionTop emitter library use '$instance' has a clock binding but no child clock name\n"
                     unless defined($child_clock) && length($child_clock);
-                push @links, "/$parent_name/$instance.$child_clock/"
+                push @links, _link($parent_name, $instance . ".$child_clock")
                     unless $child_clock eq $parent_name;
                 next;
             }
@@ -224,7 +227,7 @@ sub _emit_toplink_block {
                 my $child_reset = $use->{child_reset};
                 confess "CompositionTop emitter library use '$instance' has a reset binding but no child reset name\n"
                     unless defined($child_reset) && length($child_reset);
-                push @links, "/$parent_name/$instance.$child_reset/"
+                push @links, _link($parent_name, $instance . ".$child_reset")
                     unless $child_reset eq $parent_name;
                 next;
             }
@@ -236,11 +239,11 @@ sub _emit_toplink_block {
                 unless exists $child_ports->{$library_name};
 
             if ($role eq 'input') {
-                push @links, "/$parent_name/$instance.$library_name/";
+                push @links, _link($parent_name, $instance . ".$library_name");
                 next;
             }
             if ($role eq 'output') {
-                push @links, "/$instance.$library_name/$parent_name/";
+                push @links, _link($instance . ".$library_name", $parent_name);
                 next;
             }
 
@@ -248,10 +251,15 @@ sub _emit_toplink_block {
         }
     }
 
-    my @lines = ('  (?toplink:isf_wiring');
+    my @lines = ('  (?wiring:isf_wiring');
     push @lines, map { "    $_" } @links;
     push @lines, '  )';
     return join("\n", @lines);
+}
+
+sub _link {
+    my ($source, $target) = @_;
+    return "($source $target)";
 }
 
 sub _library_output_parent_port_map {

@@ -266,8 +266,8 @@ Deliverable themes:
     - and explicit conversion helpers later where backend differences require them,
 - and harden mixed `?fsmc` / `?rtl` flows before adding broader composition syntax.
 - record one future composition-syntax cleanup decision instead of leaving it as untracked taste:
-  - decide whether `?toplink` should remain the canonical spelling,
-  - or whether a clearer preferred alias such as `?wiring` should be added above it while keeping `?toplink` as compatibility spelling until a deliberate syntax cleanup pass says otherwise.
+  - decide whether `?wiring` should remain the canonical spelling,
+  - or whether a clearer preferred alias such as `?wiring` should be added above it while keeping `?wiring` as compatibility spelling until a deliberate syntax cleanup pass says otherwise.
 - record one future bounded syntax-power direction instead of drifting either into verbosity or into a general macro language:
   - highest-leverage candidates currently look like:
     - interface bundles / protocol groups,
@@ -327,7 +327,7 @@ First shipped `R11` slice now in tree:
   - plus the sibling bounded registered peer-read internal-only runtime case through that same emitted shared top-level register and peer-input rebinding without invented public re-export assignments,
   - plus the sibling bounded registered public-only fanout runtime through that same emitted shared top-level register and preserved public top-output fanout without requiring peer-read child inputs,
   - bounded single-child `C1` top-interface inference when `?ports` is omitted or empty, with the inferred top interface matching the lone realized child interface exactly,
-  - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?toplink` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals plus source-side top-port bit/slice expressions whose highest referenced bit still yields one compatible inferred top-input contract,
+  - bounded explicit-link `C2` / `C3` omitted/empty-`?ports` inference when explicit `?wiring` endpoints themselves still make the top boundary unambiguous, including renamed top-boundary signals plus source-side top-port bit/slice expressions whose highest referenced bit still yields one compatible inferred top-input contract,
   - bounded explicit-link `C2` / `C3` undeclared top-input inference when same-name child inputs remain top-facing and agree exactly on direction, width, and type metadata,
   - bounded explicit-link `C2` / `C3` undeclared top-output inference when exactly one same-name child output remains top-facing and is not already consumed by explicit child-to-child wiring,
   - saved ergonomics direction: `?ports` should increasingly act as the explicit override/disambiguation surface for the public boundary rather than as required boilerplate, so future composition inference work should prefer omission-by-default when one safe top boundary can be recovered honestly,
@@ -339,7 +339,7 @@ First shipped `R11` slice now in tree:
     - and explicit top-boundary links still override that convention locally,
   - first bounded composition-plan transparency metadata:
     - top ports carry `origin_kind` so declared versus inferred top-boundary decisions remain visible,
-    - links carry `origin_kind` so explicit toplinks, `=name`, same-name convention links, internal-carrier links, and auto system-port links can be distinguished,
+    - links carry `origin_kind` so explicit wiring_blocks, `=name`, same-name convention links, internal-carrier links, and auto system-port links can be distinguished,
     - and the typed composition plan exposes `resolved_links` as the full resolved link set used by planning,
   - first bounded user-facing composition provenance reporting on top of that metadata:
     - composition generation results now carry `composition_report`,
@@ -348,10 +348,10 @@ First shipped `R11` slice now in tree:
     - the report now also surfaces the first shipped blocked convention events,
     - plain explicit top-port same-name convention failures now also say when that convention is blocked instead of only implying it,
     - undeclared top-input/top-output and undeclared internal-carrier inference failures now also say when those convention-first inference paths are blocked,
-    - explicit-toplink-driven undeclared top-port inference failures now also say when that inference path is blocked by direction, width, or type disagreement,
-    - explicit `?toplink` validation failures now also say when endpoint resolution, direction, duplicate-drive, or width evidence blocks the declared link,
+    - explicit-wiring-driven undeclared top-port inference failures now also say when that inference path is blocked by direction, width, or type disagreement,
+    - explicit `?wiring` validation failures now also say when endpoint resolution, direction, duplicate-drive, or width evidence blocks the declared link,
     - explicit-link top-wiring and realized-child-wiring failures now also say when declared top ports or realized child ports remain unwired in explicit-link lanes,
-    - explicit-link lane-entry and remaining topology failures now also say when explicit-link lanes are entered without `?toplink` or when a still-unsupported explicit-link topology is requested,
+    - explicit-link lane-entry and remaining topology failures now also say when explicit-link lanes are entered without `?wiring` or when a still-unsupported explicit-link topology is requested,
     - top-level composition lane/shape gates now also say when lane entry is blocked by missing child instances and when shape is blocked by invalid `?ports` multiplicity or omitted/empty `?ports` outside the bounded inference cases,
     - explicit top-output re-export mismatches for inferred same-name internal carriers now also say when that bounded re-export path is blocked by width or type disagreement,
     - declared `=name` connect-by-name failures now also say when the declared match is blocked by direction, width, ambiguity, or missing-endpoint evidence,
@@ -400,7 +400,7 @@ First shipped `R11` slice now in tree:
   - direct `?top` generation results now expose serialized `structural_rtl_ir`,
   - composition-top `module_info` now mirrors that same serialized structural surface,
   - the shipped slice currently covers explicit top ports, internal nets, realized instances, pin bindings, and auxiliary assignments,
-  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref`, source-side top-port `bit_select` / `slice` / `repeat` forms, source-side child-output `bit_select` / `slice` / `repeat` forms, and the first shipped explicit-toplink actual-source forms through `open` and bit-vector literals,
+  - those structural instance pin bindings now also preserve typed `connection_expr` nodes, currently bounded to backend-neutral `signal_ref`, source-side top-port `bit_select` / `slice` / `repeat` forms, source-side child-output `bit_select` / `slice` / `repeat` forms, and the first shipped explicit-wiring actual-source forms through `open` and bit-vector literals,
   - and realized composition-plan instances now also preserve those same typed nodes before structural serialization instead of forcing `StructuralRTLIR` to synthesize them late,
   - with that earlier binding normalization now owned by `FSM::Composition::RealizedInstance` itself instead of only by `HDLGenerator`,
   - and the current bounded `signal_ref` / `open` / bit-vector-literal construction, signal-name recovery, and backend-neutral text rendering for those actual-connection nodes now also live in dedicated `FSM::IR::StructuralRTLIR::ConnectionExpr` helpers instead of staying split across pipeline glue,
@@ -408,8 +408,8 @@ First shipped `R11` slice now in tree:
   - and the first bounded signal-ref binding constructor/update helpers now also live there, so the pipeline no longer hand-pairs `signal_name` and `connection_expr` when creating or rebinding structural instance bindings,
   - with normalized binding cloning/backfilling now also centralized there, so both `FSM::Composition::RealizedInstance` and structural instance-binding serialization consume the same bounded binding contract,
   - and the first bounded signal-ref binding-list ensure/set operations now also live there, so `HDLGenerator` no longer owns the low-level "reuse this binding versus append/update it" rules for structural port-binding lists,
-  - and explicit `?toplink` may now use `=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct forms such as `=0b10`, `='b10`, `=0d10`, `='d10`, `=-1`, `=0d-1`, `='sd-1`, `='sb1010`, `='so7`, `='shA`, `=0o7`, `='o7`, `=0xA`, `='hA`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `='b1010_0101`, `=1_70`, `='d1_70`, `=0o2_45`, `='o2_45`, `='so6_45`, `='hA_5`, and `=8'hA_5`, and exact-width `=N'b...` / `=N'sb...` / `=N'd...` / `=N'sd...` / `=N'o...` / `=N'so...` / `=N'h...` / `=N'sh...` as source actuals, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals widen when the signed value fits the signed range of that direct target width, exact-width literal actuals may now also drive declared top outputs, and linked planning preserves those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
-  - and bounded composition-root `+constants` / `+enums` symbols may now also feed those explicit `?toplink` literal-actual positions, so direct bindings and bounded concat operands can use named literal actuals such as `=RESET_BYTE`, `=BYTES[1]`, `=FRAME.flag`, or `=mode.BUSY` without opening a separate symbol-only lowering path or claiming the broader future type lane is already shipped,
+  - and explicit `?wiring` may now use `=open`, scalar `=0` / `=1`, unsized binary/decimal/signed-decimal/octal/hex direct forms such as `=0b10`, `='b10`, `=0d10`, `='d10`, `=-1`, `=0d-1`, `='sd-1`, `='sb1010`, `='so7`, `='shA`, `=0o7`, `='o7`, `=0xA`, `='hA`, `=170`, or `=A5`, underscore-separated spellings such as `=0b1010_0101`, `='b1010_0101`, `=1_70`, `='d1_70`, `=0o2_45`, `='o2_45`, `='so6_45`, `='hA_5`, and `=8'hA_5`, and exact-width `=N'b...` / `=N'sb...` / `=N'd...` / `=N'sd...` / `=N'o...` / `=N'so...` / `=N'h...` / `=N'sh...` as source actuals, with `=open` still targeting realized child inputs only while direct scalar `=0` / `=1` plus unsized binary/decimal/octal/hex direct actuals widen to the realized child-input or declared top-output target width, unsized signed decimal direct actuals plus unsized signed binary/octal/hex direct actuals widen when the signed value fits the signed range of that direct target width, exact-width literal actuals may now also drive declared top outputs, and linked planning preserves those bindings directly instead of inventing helper nets or undeclared same-name top inputs,
+  - and bounded composition-root `+constants` / `+enums` symbols may now also feed those explicit `?wiring` literal-actual positions, so direct bindings and bounded concat operands can use named literal actuals such as `=RESET_BYTE`, `=BYTES[1]`, `=FRAME.flag`, or `=mode.BUSY` without opening a separate symbol-only lowering path or claiming the broader future type lane is already shipped,
   - and the semantic package/import lane now also ships one bounded whole-aggregate slice on that same literal-actual path and the direct generated-root path: `?top` may use bounded `+import` blocks, shared `?pkg:name` roots may be embedded or resolved through the normal search roots, namespaced package symbols such as `=shared.RESET_BYTE`, `=shared.mode.BUSY`, `=shared.BYTES[1]`, `=shared.FRAME.flag`, `=shared.HEADER`, or `=shared.FRAME` now resolve onto the same direct/concat structural literal path, direct `?fsm` / `?dt` roots may now also use bounded `+import` blocks whose namespaced package scalar leaves and whole aggregate roots resolve in assignment RHS expressions and guard equality conditions, and hash-like whole roots now pack authored members left to right in declaration order when every leaf is still scalar-literal-lowerable,
   - and that same bounded aggregate-value contract now also covers local direct-root `+constants`, so direct `?fsm` / `?dt` sources may use local aggregate references such as `BYTES[1]`, `FRAME.flag`, and `NEST.header.nibble` plus whole aggregate roots such as `BYTES`, `TAIL`, or `FRAME` in assignment RHS expressions and guard equality conditions without moving those values into packages first,
   - and bounded aggregate values now also reuse same-scope named scalar ingredients through one declarative-resolution pass instead of parser order: local direct roots, local composition tops, and `?pkg:name` packages may now build aggregate values from constants, enum members, and whole aggregate roots such as `(PACKET (HEADER mode.IDLE))` and `(HEADER (mode.BUSY RESET_BYTE))` regardless of declaration order, while explicit dependency cycles now fail clearly,
@@ -450,10 +450,10 @@ First shipped `R11` slice now in tree:
   - `composition_report` now derives its resolved-link identity/origin list from that structural layer instead of rereading plan-only link state,
   - and compatible top-level accounting now keeps resolved-link counts aligned with `structural_rtl_ir`.
 - The next structural widening step is now also shipped through declared connectivity:
-  - composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links` instead of only carrying the post-resolution link graph,
-  - and block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared toplinks directly from the plan.
+  - composition-top `structural_rtl_ir` now preserves declared explicit-wiring connectivity separately through `declared_links` instead of only carrying the post-resolution link graph,
+  - and block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared wiring_blocks directly from the plan.
 - The next structural-consumption step is now also shipped through override/block resolved-link handling:
-  - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - composition override events now take their explicit-wiring and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
   - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
 - The next widening step is now also shipped through the composition provenance/reporting surface:
   - `composition_report` now preserves per-resolved-link endpoint context instead of only raw endpoint strings,
@@ -596,7 +596,7 @@ Deliverable themes:
 First bounded slice:
 - start with named in-repo protocol seeds instead of only anonymous fixture accumulation,
 - lock direct-root smoke for imported protocol actors such as `apb_requester`, `apb_completer`, and `amba_requester`,
-- lock one composed protocol harness such as `apb_tb` so the corpus includes a real generated-child/toplink path and not only leaf modules,
+- lock one composed protocol harness such as `apb_tb` so the corpus includes a real generated-child/wiring path and not only leaf modules,
 - promote that first slice into a small machine-checked corpus catalog so future support claims grow by explicit classification instead of ad hoc hardcoded test lists,
 - and widen that same first catalog beyond `supported_smoke` by proving at least one explicit compatibility-retained `legacy_out_of_scope` entry and one explicit `expected_failure` entry,
 - then prove that `expected_failure` is not just "strict-mode rejection" by adding at least one malformed-language contract entry with a normal pipeline/CLI rejection boundary,
@@ -887,7 +887,7 @@ The first honest `R11` slices are now:
   - and only keep stacking consolidation slices when the next feature is still materially blocked by that cleanup.
 - Forward-IR note: `StructuralRTLIR` actual-connection nodes are now wider than
   plain signal references; the current bounded family includes indexed and
-  sliced signal forms, including explicit-toplink source-side top-port and
+  sliced signal forms, including explicit-wiring source-side top-port and
   child-output projections, while keeping rendering deliberately scoped to
   the current Verilog-family backend until broader backend support is
   designed.
@@ -917,7 +917,7 @@ The first honest `R11` slices are now:
   structural semantics and should not be represented as a backend-specific text
   escape hatch.
 - Forward-IR note: that bounded `open` / literal actual family now also has its
-  first real composition producer/consumer path: explicit `?toplink` may use
+  first real composition producer/consumer path: explicit `?wiring` may use
   `=open`, `=0`, `=1`, exact-width `=N'b...`, exact-width `=N'd...`,
   exact-width `=N'o...`, and exact-width `=N'h...` as source actuals into
   realized child inputs without
@@ -930,7 +930,7 @@ The first honest `R11` slices are now:
   flat source-side concat forms such as `header_bus,status_bus[0],=1,payload`
   over declared whole top-port refs, top-port bit/slice refs, one-bit scalar
   actuals, intrinsic-width unsized binary/decimal/octal/hex actuals, intrinsic-width unsized signed decimal actuals, intrinsic-width unsized signed binary/octal/hex actuals, and
-  fixed-width binary/decimal/signed-decimal/octal/hex literal actuals in unsigned or signed form, so explicit `?toplink`
+  fixed-width binary/decimal/signed-decimal/octal/hex literal actuals in unsigned or signed form, so explicit `?wiring`
   child-input bindings can now reuse the already-shipped structural `concat`
   node directly instead of inventing carrier nets or backend-specific text
   escapes while keeping concat width intrinsic: binary/octal/hex use digit
@@ -1201,7 +1201,7 @@ The first honest `R11` slices are now:
 - Forward-IR note: another real composition-planning family split is now
   active too: inferred multi-child top-port projection now lives in
   `FSM::Composition::TopPortInferenceBuilder`, so `HDLGenerator` no longer
-  owns explicit-toplink top-port inference or undeclared same-name top-input
+  owns explicit-wiring top-port inference or undeclared same-name top-input
   and top-output inference directly.
 - Forward-IR note: another real composition-support family split is now
   active too: shared-datapath naming, generated-child source-export metadata,
@@ -1386,7 +1386,7 @@ The first honest `R11` slices are now:
   ports preserve one shared declared type contract when the eligible child
   evidence is uniform.
 - Forward-IR note: that same declared-type boundary now also feeds the live
-  explicit-link port-to-port path, so plain `?toplink` bindings no longer
+  explicit-link port-to-port path, so plain `?wiring` bindings no longer
   bypass declared type compatibility just because the author spelled the link
   explicitly; width-equal but alias-incompatible endpoints are now blocked on
   that path too, with the bounded failure-summary surface preserving concise
@@ -1434,7 +1434,7 @@ The first honest `R11` slices are now:
   `.item_1`, and partial aggregate LHS writes now map through the declared
   aggregate path to packed base-signal ranges before mux emission.
 - Forward-IR note: the matching bounded composition source-expression slice is
-  now also landed. Explicit `?toplink` sources may read declared aggregate
+  now also landed. Explicit `?wiring` sources may read declared aggregate
   top-port members/items such as `in_frame.tag` and `in_frame.payload[1]`, and
   declared aggregate generated-child output members/items such as
   `producer.OUT_FRAME.tag` and `producer.OUT_FRAME.payload[1]`. Generated-child

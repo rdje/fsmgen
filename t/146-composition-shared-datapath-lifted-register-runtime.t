@@ -28,7 +28,7 @@ subtest 'registered peer-read shared-datapath families now lift into one shared 
   (?fsmc:left left_src)
   (?fsmc:right right_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer.select/
@@ -136,7 +136,7 @@ subtest 'CLI reports the bounded lifted shared-register runtime for registered p
   (?fsmc:left left_src)
   (?fsmc:right right_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer.select/

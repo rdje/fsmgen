@@ -28,7 +28,7 @@ subtest 'composition generation orchestrator rebuilds the bounded result surface
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /trigger/producer.trigger/
     /producer.serial_payload/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/

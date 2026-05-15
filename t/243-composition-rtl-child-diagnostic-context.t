@@ -29,7 +29,7 @@ subtest 'external rtl metadata failures keep metadata and parent source context'
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -106,7 +106,7 @@ subtest 'embedded rtl metadata failures keep composition source context' => sub 
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )

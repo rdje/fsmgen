@@ -36,7 +36,7 @@ write_file(
 (?top:implicit_ports_generated_top
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /start/producer.go/
     /start/consumer.go/
     /producer.payload/consumer.payload/
@@ -85,7 +85,7 @@ write_file(
 (?top:implicit_ports_rtl_top
   (?ports:public_io)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -106,7 +106,7 @@ write_file(
 (?top:implicit_ports_mixed_role_top
   (?ports:public_io)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /shared/uart_tx.data_in/
     /uart_tx.txd/shared/
   )
@@ -126,7 +126,7 @@ write_file(
     <<'FSM'
 (?top:implicit_ports_top_expr_rtl_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[15:8]/byte_sink.data_in/
     /status_bus[0]/byte_sink.enable/
   )
@@ -144,7 +144,7 @@ write_file(
     <<'FSM'
 (?top:implicit_ports_top_concat_operand_infer_rtl_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,status_bus[0],payload_bus[3:0]/byte_sink.data_in/
   )
 )
@@ -160,7 +160,7 @@ write_file(
     <<'FSM'
 (?top:implicit_ports_nested_top_concat_operand_infer_rtl_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /{header_bus,{status_bus[0],payload_bus[3:0]}}/byte_sink.data_in/
   )
 )
@@ -176,7 +176,7 @@ write_file(
     <<'FSM'
 (?top:implicit_ports_repeat_top_concat_operand_infer_rtl_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /{2{payload_bus}}/byte_sink.data_in/
   )
 )
@@ -193,7 +193,7 @@ write_file(
 (?top:implicit_ports_width_mismatch_top
   (?ports:public_io)
   (?rtl:typed_width_iface)
-  (?toplink:wiring
+  (?wiring:wiring
     /shared/typed_width_iface.data_in/
     /shared/typed_width_iface.short_in/
   )
@@ -212,7 +212,7 @@ write_file(
 (?top:implicit_ports_type_mismatch_top
   (?ports:public_io)
   (?rtl:typed_type_iface)
-  (?toplink:wiring
+  (?wiring:wiring
     /shared/typed_type_iface.data_in/
     /shared/typed_type_iface.reset_like/
   )
@@ -405,7 +405,7 @@ subtest 'explicit-link C3 can infer one undeclared repeated whole-port operand f
     ok(-e $repeat_concat_infer_c3_out_path, 'CLI writes HDL output for explicit-link C3 with inferred repeated whole-port concat operands');
 };
 
-subtest 'explicit top-link port inference rejects one undeclared top endpoint used as both input and output' => sub {
+subtest 'explicit wiring port inference rejects one undeclared top endpoint used as both input and output' => sub {
     my $exception = eval {
         $pipeline->generate_hdl_from_file($mixed_role_path);
         undef;
@@ -414,12 +414,12 @@ subtest 'explicit top-link port inference rejects one undeclared top endpoint us
 
     like(
         $exception,
-        qr/omits top port 'shared', .*explicit top-link port inference is blocked because that same top endpoint is used as both an input and an output across explicit links/s,
-        'mixed-role undeclared top endpoints now say explicit top-link inference is blocked',
+        qr/omits top port 'shared', .*explicit wiring port inference is blocked because that same top endpoint is used as both an input and an output across explicit links/s,
+        'mixed-role undeclared top endpoints now say explicit wiring inference is blocked',
     );
 };
 
-subtest 'explicit top-link port inference says width disagreement blocks undeclared top-port inference' => sub {
+subtest 'explicit wiring port inference says width disagreement blocks undeclared top-port inference' => sub {
     my $exception = eval {
         $pipeline->generate_hdl_from_file($width_mismatch_path);
         undef;
@@ -428,12 +428,12 @@ subtest 'explicit top-link port inference says width disagreement blocks undecla
 
     like(
         $exception,
-        qr/omits top port 'shared', .*explicit top-link port inference is blocked because the linked child endpoints disagree on width \(8 vs 4\).*typed_width_iface\.data_in.*typed_width_iface\.short_in/s,
-        'width-mismatched undeclared top endpoints now say explicit top-link inference is blocked',
+        qr/omits top port 'shared', .*explicit wiring port inference is blocked because the linked child endpoints disagree on width \(8 vs 4\).*typed_width_iface\.data_in.*typed_width_iface\.short_in/s,
+        'width-mismatched undeclared top endpoints now say explicit wiring inference is blocked',
     );
 };
 
-subtest 'explicit top-link port inference says type disagreement blocks undeclared top-port inference' => sub {
+subtest 'explicit wiring port inference says type disagreement blocks undeclared top-port inference' => sub {
     my $exception = eval {
         $pipeline->generate_hdl_from_file($type_mismatch_path);
         undef;
@@ -442,8 +442,8 @@ subtest 'explicit top-link port inference says type disagreement blocks undeclar
 
     like(
         $exception,
-        qr/omits top port 'shared', .*explicit top-link port inference is blocked because the linked child endpoints disagree on interface type \('data' vs 'reset'\).*typed_type_iface\.data_in.*typed_type_iface\.reset_like/s,
-        'type-mismatched undeclared top endpoints now say explicit top-link inference is blocked',
+        qr/omits top port 'shared', .*explicit wiring port inference is blocked because the linked child endpoints disagree on interface type \('data' vs 'reset'\).*typed_type_iface\.data_in.*typed_type_iface\.reset_like/s,
+        'type-mismatched undeclared top endpoints now say explicit wiring inference is blocked',
     );
 };
 

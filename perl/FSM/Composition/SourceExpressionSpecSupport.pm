@@ -7,7 +7,7 @@ FSM::Composition::SourceExpressionSpecSupport - Composition source-expression pa
 =head1 DESCRIPTION
 
 Owns the bounded source-expression spec parser used by explicit composition
-toplinks. The linked-plan builder consumes these specs during endpoint
+wiring blocks. The linked-plan builder consumes these specs during endpoint
 resolution, but parsing concat/repeat/source operand forms lives here.
 
 =cut

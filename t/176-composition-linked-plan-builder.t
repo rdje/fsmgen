@@ -15,7 +15,7 @@ use FSM::Composition::PortsBlock;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 
 subtest 'linked plan builder assembles a bounded explicit-link plan with auto system wiring' => sub {
     my @ports = (
@@ -25,14 +25,14 @@ subtest 'linked plan builder assembles a bounded explicit-link plan with auto sy
         port('done', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C2',
         composition_spec => composition_spec('linked_plan_builder_top'),
         top => FSM::Composition::Top->new(name => 'linked_plan_builder_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'go', target => 'producer.go'),
@@ -62,7 +62,7 @@ subtest 'linked plan builder assembles a bounded explicit-link plan with auto sy
     );
 
     is($plan->lane, 'C2', 'builder records the active explicit-link lane');
-    is(scalar(@{$plan->links}), 3, 'builder preserves the declared explicit toplink set');
+    is(scalar(@{$plan->links}), 3, 'builder preserves the declared explicit wiring set');
     is(scalar(@{$plan->nets}), 1, 'builder creates one deterministic internal carrier net');
     is($plan->nets->[0]->name, 'comp_link_producer_payload', 'builder keeps the deterministic net naming rule');
 
@@ -91,14 +91,14 @@ subtest 'linked plan builder fans one child source out to multiple top outputs t
         port('status_b', 'output', 8, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C2',
         composition_spec => composition_spec('linked_plan_builder_multi_top_output_top'),
         top => FSM::Composition::Top->new(name => 'linked_plan_builder_multi_top_output_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'producer.payload', target => 'status_a'),
@@ -158,14 +158,14 @@ subtest 'linked plan builder fans one top input directly to top outputs and chil
         port('tap_b', 'output', 8, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C2',
         composition_spec => composition_spec('linked_plan_builder_top_input_fanout_top'),
         top => FSM::Composition::Top->new(name => 'linked_plan_builder_top_input_fanout_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'start', target => 'tap_a'),
@@ -211,15 +211,15 @@ subtest 'linked plan builder fans one top input directly to top outputs and chil
     is($right_bindings{payload}, 'start', 'right child input reuses the same top input directly');
 };
 
-subtest 'linked plan builder rejects missing explicit toplinks on explicit-link lanes' => sub {
+subtest 'linked plan builder rejects missing explicit wiring_blocks on explicit-link lanes' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C2',
             composition_spec => composition_spec('blocked_top'),
             top => FSM::Composition::Top->new(name => 'blocked_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [],
+            wiring_blocks => [],
             realized_instances => [
                 realized_instance('producer', port('payload', 'output', 8, undef)),
                 realized_instance('consumer', port('payload', 'input', 8, undef)),
@@ -233,7 +233,7 @@ subtest 'linked plan builder rejects missing explicit toplinks on explicit-link 
 
     like(
         $exception,
-        qr/explicit-link lane entry is blocked because the current active C2 lane requires explicit '\?toplink' wiring/s,
+        qr/explicit-link lane entry is blocked because the current active C2 lane requires explicit '\?wiring' wiring/s,
         'builder keeps the bounded explicit-link lane-entry diagnostic',
     );
 };
@@ -246,14 +246,14 @@ subtest 'linked plan builder rejects explicit port-to-port links across incompat
     );
 
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C2',
             composition_spec => composition_spec('typed_linked_plan_builder_top'),
             top => FSM::Composition::Top->new(name => 'typed_linked_plan_builder_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
             ports => \@ports,
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => 'producer.payload', target => 'consumer.payload'),

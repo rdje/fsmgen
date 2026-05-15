@@ -25,7 +25,7 @@ subtest 'shared-datapath candidate contributors now preserve forward child IR su
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )
@@ -168,7 +168,7 @@ subtest 'CLI prints contributor context from shared-datapath forward child IR ex
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )

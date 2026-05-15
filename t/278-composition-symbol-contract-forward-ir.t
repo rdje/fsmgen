@@ -41,7 +41,7 @@ subtest 'composition tops preserve a bounded symbol contract through intent_hir 
   )
   (?dtc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /choose/producer.choose/
     /=BYTES[1]/producer.local_seed/
     /=shared_external.RESET_BYTE/producer.package_seed/

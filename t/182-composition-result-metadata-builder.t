@@ -28,7 +28,7 @@ subtest 'result metadata builder rebuilds composition module_info and statistics
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /trigger/producer.trigger/
     /producer.serial_payload/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/

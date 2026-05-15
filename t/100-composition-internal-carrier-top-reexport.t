@@ -35,7 +35,7 @@ write_file(
   (?fsmc:producer producer_src)
   (?fsmc:consumer_a consumer_a_src)
   (?fsmc:consumer_b consumer_b_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/producer.go/
     /go/consumer_a.go/
     /go/consumer_b.go/
@@ -107,7 +107,7 @@ write_file(
   )
   (?dtc:producer producer_src)
   (?rtl:rtl_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/producer.go/
     /rtl_sink.status_out/result_data/
   )
@@ -146,7 +146,7 @@ write_file(
   (?fsmc:left left_src)
   (?fsmc:right right_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/left.go/
     /go/right.go/
     /go/consumer.go/
@@ -216,7 +216,7 @@ write_file(
   )
   (?dtc:producer producer_src)
   (?rtl:rtl_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/producer.go/
     /rtl_sink.status_out/result_data/
   )
@@ -254,7 +254,7 @@ write_file(
   )
   (?dtc:producer producer_src)
   (?rtl:rtl_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/producer.go/
     /rtl_sink.status_out/result_data/
   )

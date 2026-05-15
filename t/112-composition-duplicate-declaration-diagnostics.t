@@ -55,7 +55,7 @@ write_file(
   )
   (?fsmc:dup producer_src)
   (?fsmc:dup consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /start/dup.go/
     /dup.output_data/result_data/
   )

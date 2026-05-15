@@ -76,15 +76,15 @@ FSM
     ok(-e $output_path, 'CLI writes HDL for single rtl passthrough composition');
 };
 
-subtest 'single ?rtl child supports C3 explicit toplink renaming' => sub {
+subtest 'single ?rtl child supports C3 explicit wiring renaming' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'single_rtl_explicit_toplink_top.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'single_rtl_explicit_toplink_top.sv');
+    my $composition_path = File::Spec->catfile($tempdir, 'single_rtl_explicit_wiring_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'single_rtl_explicit_wiring_top.sv');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:single_rtl_explicit_toplink_top
+(?top:single_rtl_explicit_wiring_top
   (?ports:public_io
     core_clk
     rst_async_n
@@ -92,7 +92,7 @@ subtest 'single ?rtl child supports C3 explicit toplink renaming' => sub {
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -116,20 +116,20 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit toplinks use the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit wiring_blocks use the C3 lane');
 
     my %rtl_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
-    is($rtl_bindings{core_clk}, 'core_clk', 'single rtl explicit toplinks still auto-wire the typed clock port');
-    is($rtl_bindings{rst_async_n}, 'rst_async_n', 'single rtl explicit toplinks still auto-wire the typed reset port');
-    is($rtl_bindings{data_in}, 'payload_in', 'single rtl explicit toplinks allow renamed top inputs');
-    is($rtl_bindings{txd}, 'serial_out', 'single rtl explicit toplinks allow renamed top outputs');
+    is($rtl_bindings{core_clk}, 'core_clk', 'single rtl explicit wiring_blocks still auto-wire the typed clock port');
+    is($rtl_bindings{rst_async_n}, 'rst_async_n', 'single rtl explicit wiring_blocks still auto-wire the typed reset port');
+    is($rtl_bindings{data_in}, 'payload_in', 'single rtl explicit wiring_blocks allow renamed top inputs');
+    is($rtl_bindings{txd}, 'serial_out', 'single rtl explicit wiring_blocks allow renamed top outputs');
 
     my ($success) = run(
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for single rtl explicit-toplink composition');
-    ok(-e $output_path, 'CLI writes HDL for single rtl explicit-toplink composition');
+    ok($success, 'CLI succeeds for single rtl explicit-wiring composition');
+    ok(-e $output_path, 'CLI writes HDL for single rtl explicit-wiring composition');
 };
 
 subtest 'single ?rtl child supports C4 declared connect-by-name' => sub {

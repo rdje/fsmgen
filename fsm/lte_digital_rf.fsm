@@ -557,8 +557,8 @@
  )
 
 
- (?toplink:lte_dif_buffers)
- (?toplink:lte_dif_clkgen)
+ (?wiring:lte_dif_buffers)
+ (?wiring:lte_dif_clkgen)
 
  (?rtl:lte_dif_enables
    global_start
@@ -728,13 +728,13 @@
      /tx_code/local_tx_code/
      /tx_kcode/local_tx_kcode/
 
-     (?toplink:lte_dif_icu
+     (?wiring:lte_dif_icu
        /^clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/icu_enable/
      )
 
-     (?toplink:lte_dif_tasu #1
+     (?wiring:lte_dif_tasu #1
       /clk/dif_104_clk/
       /^rst_n/dif_rst_n/
       /s_rst_n/tasu_1_enable/
@@ -746,7 +746,7 @@
       /tasu_pl_data/tasu_1_pl_data/
      )
 
-     (?toplink:lte_dif_tasu #2
+     (?wiring:lte_dif_tasu #2
       /clk/dif_104_clk/
       /^rst_n/dif_rst_n/
       /s_rst_n/tasu_2_enable/
@@ -758,7 +758,7 @@
       /tasu_pl_data/tasu_2_pl_data/
      )
 
-     (?toplink:lte_dif_tasu #3
+     (?wiring:lte_dif_tasu #3
       /clk/dif_104_clk/
       /^rst_n/dif_rst_n/
       /s_rst_n/tasu_3_enable/
@@ -770,7 +770,7 @@
       /tasu_pl_data/tasu_3_pl_data/
      )
 
-     (?toplink:lte_dif_txdu
+     (?wiring:lte_dif_txdu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
 
@@ -807,7 +807,7 @@
        /txdu_fifo_afull_thres/txdu_1_fifo_afull_thres/
      )
 
-     (?toplink:lte_dif_txdu
+     (?wiring:lte_dif_txdu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
 
@@ -846,7 +846,7 @@
      )
 
 
-     (?toplink:lte_dif_rfcu
+     (?wiring:lte_dif_rfcu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rfcu_1_enable/
@@ -890,7 +890,7 @@
        /rfcu_fifo_afull_thres/rfcu_1_fifo_afull_thres/
      )
 
-     (?toplink:lte_dif_rfcu
+     (?wiring:lte_dif_rfcu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rfcu_2_enable/
@@ -935,7 +935,7 @@
        /rfcu_fifo_afull_thres/rfcu_2_fifo_afull_thres/
      )
 
-     (?toplink:lte_dif_rfcu
+     (?wiring:lte_dif_rfcu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rfcu_3_enable/
@@ -1176,7 +1176,7 @@
      )
 
 
-     (?toplink:lte_dif_txif  /tx_global_start/global_start_tx_sync/)
+     (?wiring:lte_dif_txif  /tx_global_start/global_start_tx_sync/)
 
 
      ; # ; lte_dif_txdu #1 req sync
@@ -1339,7 +1339,7 @@
 
 
 
-     (?toplink:lte_dif_rspu
+     (?wiring:lte_dif_rspu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rspu_enable/
@@ -1365,7 +1365,7 @@
        /rspm_fifo_rdata/rspm_mem_rdata/
      )
 
-     (?toplink:lte_dif_rxdu
+     (?wiring:lte_dif_rxdu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rxdu_1_enable/
@@ -1424,7 +1424,7 @@
        /rxdu_lsb_align/rxdu_1_lsb_align/
      )
 
-     (?toplink:lte_dif_rxdu
+     (?wiring:lte_dif_rxdu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rxdu_2_enable/
@@ -1481,7 +1481,7 @@
        /rxdu_lsb_align/rxdu_2_lsb_align/
      )
 
-     (?toplink:lte_dif_rxdu
+     (?wiring:lte_dif_rxdu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rxdu_3_enable/
@@ -1540,7 +1540,7 @@
        /rxdu_lsb_align/rxdu_3_lsb_align/
      )
 
-     (?toplink:lte_dif_rxdu
+     (?wiring:lte_dif_rxdu
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rxdu_4_enable/
@@ -1599,7 +1599,7 @@
        /rxdu_lsb_align/rxdu_4_lsb_align/
      )
 
-     (?toplink:lte_dif_ppimon ; #1
+     (?wiring:lte_dif_ppimon ; #1
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rx_ppimon_1_enable/
@@ -1633,7 +1633,7 @@
        /ppimon_mem_rdata/rx_ppimon_1_mem_rdata/
      )
 
-     (?toplink:lte_dif_ppimon ; #2
+     (?wiring:lte_dif_ppimon ; #2
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/rx_ppimon_2_enable/
@@ -1667,7 +1667,7 @@
        /ppimon_mem_rdata/rx_ppimon_2_mem_rdata/
      )
 
-     (?toplink:lte_dif_ppimon ; #3
+     (?wiring:lte_dif_ppimon ; #3
        /clk/dif_104_clk/
        /^rst_n/dif_rst_n/
        /s_rst_n/tx_ppimon_enable/
@@ -1701,7 +1701,7 @@
        /ppimon_mem_rdata/tx_ppimon_mem_rdata/
      )
 
-     (?toplink:lte_dif_rxmain
+     (?wiring:lte_dif_rxmain
       /^clk/dif_104_clk/
       /fast_clk/dif_208_clk/
       /^rst_n/dif_rst_n/
@@ -1710,7 +1710,7 @@
       /rxlink_wd_retx_timeout_delay/10'580/   ; # ~ 4us @145.6MHz
      )
 
-     (?toplink:lte_dif_rxmerge
+     (?wiring:lte_dif_rxmerge
       /^clk/dif_104_clk/
       /fast_clk/dif_208_clk/
       /^rst_n/dif_rst_n/
@@ -1730,7 +1730,7 @@
      )
 
 
-     (?toplink:lte_dif_rxif
+     (?wiring:lte_dif_rxif
        /clk/rx_1_clk/
        /^rst_n/rx_1_rst_n/
        /s_rst_n/global_start_rx_1_sync/
@@ -1759,7 +1759,7 @@
        /ber_overflow/ber_1_overflow/                     ; SLOW  # OUT STD_LOGIC                                    -- BER Overflow output
      )
 
-     (?toplink:lte_dif_rxif
+     (?wiring:lte_dif_rxif
        /clk/rx_2_clk/
        /^rst_n/rx_2_rst_n/
        /s_rst_n/global_start_rx_2_sync/
@@ -3976,7 +3976,7 @@
  aempty_thres>7 +endtop=move_port_2signal#^aempty_thres  +declarch=decl_signal_from_port
  +beginarch=assign_add#{ppimon_fifo_aempty_thres:"00" & aempty_thres}
 
- (?toplink:lte_dif_cmi_write
+ (?wiring:lte_dif_cmi_write
    /burst_done/open/              ; # FIXME FIXME FIXME
    /burst_ack/open/
    /burst_aempty/ppimon_fifo_aempty/
@@ -4275,7 +4275,7 @@
 ; # )
 
 ; # (?top:lte_dif_rxmain
-; #   (?toplink:lte_dif_rxdistrib) ; # REMOVED this additional level
+; #   (?wiring:lte_dif_rxdistrib) ; # REMOVED this additional level
 ; # )
 
 
@@ -4451,7 +4451,7 @@
     fcrc_mem_wdata>10  +beginarch=assign_add#{fcrc_mem_wdata:"00" & rx_m_data}
     fcrc_mem_wr_n>     +beginarch=assign_add#{fcrc_mem_wr_n:NOT fcrc_wr}
 
-    (?toplink:lte_dif_fcrc_add_gen  :wr
+    (?wiring:lte_dif_fcrc_add_gen  :wr
        /base_tgl_en/w_base_tgl_en/
        /incen/w_incen/
        /basen/w_basen/
@@ -4459,7 +4459,7 @@
        /cur_addr/fcrc_wmem_addr/
     )
 
-    (?toplink:lte_dif_fcrc_add_gen  :rd
+    (?wiring:lte_dif_fcrc_add_gen  :rd
        /base_tgl_en/r_base_tgl_en/
        /incen/r_incen/
        /basen/r_basen/
@@ -4488,7 +4488,7 @@
   rxdu_1_valid>=0b0
   rxdu_1_iq_last>=0b0
   rxdu_1_iq_data>8
-  ; # (?toplink:lte_dif_rxdlc_be
+  ; # (?wiring:lte_dif_rxdlc_be
   ; #   /dlc_num/rxdu_1_dlc_num/
   ; #   /rord_mem_raddr/rord_1_rmem_addr/
   ; #   /rord_mem_rdata/rord_1_mem_rdata/
@@ -4509,7 +4509,7 @@
   rxdu_2_valid>=0b0
   rxdu_2_iq_last>=0b0
   rxdu_2_iq_data>8
-  ; # (?toplink:lte_dif_rxdlc_be
+  ; # (?wiring:lte_dif_rxdlc_be
   ; #   /dlc_num/rxdu_2_dlc_num/
   ; #   /rord_mem_raddr/rord_2_rmem_addr/
   ; #   /rord_mem_rdata/rord_2_mem_rdata/
@@ -4529,7 +4529,7 @@
   rxdu_3_valid>=0b0
   rxdu_3_iq_last>=0b0
   rxdu_3_iq_data>8
-  ; # (?toplink:lte_dif_rxdlc_be
+  ; # (?wiring:lte_dif_rxdlc_be
   ; #   /dlc_num/rxdu_3_dlc_num/
   ; #   /rord_mem_raddr/rord_3_rmem_addr/
   ; #   /rord_mem_rdata/rord_3_mem_rdata/
@@ -4549,7 +4549,7 @@
   rxdu_4_valid>=0b0
   rxdu_4_iq_last>=0b0
   rxdu_4_iq_data>8
-  ; # (?toplink:lte_dif_rxdlc_be
+  ; # (?wiring:lte_dif_rxdlc_be
   ; #   /dlc_num/rxdu_4_dlc_num/
   ; #   /rord_mem_raddr/rord_4_rmem_addr/
   ; #   /rord_mem_rdata/rord_4_mem_rdata/
@@ -4921,7 +4921,7 @@
 ; #   ; # rord_valid
 ; #   (?fsmc: lte_dif_rxdlc  /dv/rx_m_valid/)
 ; # 
-; #   (?toplink:lte_dif_rord_add_gen  :wr
+; #   (?wiring:lte_dif_rord_add_gen  :wr
 ; #     /bclear/w_bclear/
 ; #     /bincen/w_bincen/
 ; #     /eincen/w_eincen/
@@ -4929,7 +4929,7 @@
 ; #     /cur_addr/rord_mem_waddr/
 ; #   )
 ; # 
-; #   (?toplink:lte_dif_rord_add_gen  :rd
+; #   (?wiring:lte_dif_rord_add_gen  :rd
 ; #     /bclear/r_bclear/
 ; #     /bincen/r_bincen/
 ; #     /eincen/r_eincen/
@@ -5344,7 +5344,7 @@
     +endtop=move_port_2signal#l_rspu_cmi_wr_fifo_wr#rspu_burst_ack#l_rspm_fifo_rd
     +declarch=decl_signal_from_port
 
-    (?toplink:lte_dif_cmi_write
+    (?wiring:lte_dif_cmi_write
       /burst_done/rspu_burst_done/
       /burst_ack/rspu_burst_ack/
       /burst_aempty/flush_req_n/               ; # Was rspm_fifo_aempty
@@ -5791,7 +5791,7 @@
    rxdu_cmi_word_wr_en>4
 
    +endtop=move_port_2signal#rxdu_burst_threshold  +declarch=decl_signal_from_port
-   (?toplink:lte_dif_cmi_write
+   (?wiring:lte_dif_cmi_write
      ; # /write_req/rxdu_write_req/
      ; # /write_ack/rxdu_write_ack/
      /burst_done/rxdu_burst_done/
@@ -6110,7 +6110,7 @@
    +beginarch=assign_add#{txdu_lcm_burst_size_8b:'0' & txdu_lcm_burst_size}
 
 
-   (?toplink:lte_dif_cmi_read
+   (?wiring:lte_dif_cmi_read
      /cmi_rd_ready/cmi_txdu_rd_ready/
      /cmi_burst_rd_req/txdu_cmi_burst_rd_req/
      /cmi_fifo_rd/txdu_cmi_fifo_rd/
@@ -6335,7 +6335,7 @@
   rfcu_cmi_bypass_rd>
   rfcu_cmi_flush_rd>
 
-  (?toplink:lte_dif_cmi_read
+  (?wiring:lte_dif_cmi_read
     /cmi_rd_ready/cmi_rfcu_rd_ready/
     /cmi_burst_rd_req/rfcu_cmi_burst_rd_req/
     /cmi_fifo_rd/rfcu_cmi_fifo_rd/
@@ -6932,7 +6932,7 @@
 
   lcm_burst_size_minus_1>7   +endtop=move_port_2signal#lcm_burst_size_minus_1
   +beginarch=assign_add#{lcm_burst_size_minus_1:lcm_burst_size - '1'}
-  (?toplink:lte_dif_cmi_addgen
+  (?wiring:lte_dif_cmi_addgen
     /start_addr/lcm_start_addr/
     /end_addr/lcm_end_addr/
     /cur_addr/cmi_burst_addr/
@@ -7077,7 +7077,7 @@
 
   lcm_burst_size_minus_1>7   +endtop=move_port_2signal#lcm_burst_size_minus_1
   +beginarch=assign_add#{lcm_burst_size_minus_1:lcm_burst_size - '1'}
-  (?toplink:lte_dif_cmi_addgen
+  (?wiring:lte_dif_cmi_addgen
     /start_addr/lcm_start_addr/
     /end_addr/lcm_end_addr/
     /cur_addr/cmi_burst_addr/
@@ -7444,7 +7444,7 @@
   )
 
 
-  (?toplink:lte_dif_rfcu_afifo_to_8b  :rfcu_1_afifo_to_8b
+  (?wiring:lte_dif_rfcu_afifo_to_8b  :rfcu_1_afifo_to_8b
     /clk/tx_clk/
     /^rst_n/tx_rst_n/
     /s_rst_n/rfcu_1_enable_sync/
@@ -7456,7 +7456,7 @@
     /rfcu_pl_o_valid/rfcu_1_pl_valid/
   )
 
-  (?toplink:lte_dif_rfcu_afifo_to_8b  :rfcu_2_afifo_to_8b
+  (?wiring:lte_dif_rfcu_afifo_to_8b  :rfcu_2_afifo_to_8b
     /clk/tx_clk/
     /^rst_n/tx_rst_n/
     /s_rst_n/rfcu_2_enable_sync/
@@ -7468,7 +7468,7 @@
     /rfcu_pl_o_valid/rfcu_2_pl_valid/
   )
 
-  (?toplink:lte_dif_rfcu_afifo_to_8b  :rfcu_3_afifo_to_8b
+  (?wiring:lte_dif_rfcu_afifo_to_8b  :rfcu_3_afifo_to_8b
     /clk/tx_clk/
     /^rst_n/tx_rst_n/
     /s_rst_n/rfcu_3_enable_sync/
@@ -7480,7 +7480,7 @@
     /rfcu_pl_o_valid/rfcu_3_pl_valid/
   )
 
-  (?toplink:lte_dif_lcmiq_to_8b   :txdu_1_lcmiq_to_8b
+  (?wiring:lte_dif_lcmiq_to_8b   :txdu_1_lcmiq_to_8b
     /clk/tx_clk/
     /^rst_n/tx_rst_n/
     /s_rst_n/txdu_1_delayed_enable_sync/
@@ -7496,7 +7496,7 @@
     /txdu_pl_o_valid/txdu_1_pl_valid/
   )
 
-  (?toplink:lte_dif_lcmiq_to_8b   :txdu_2_lcmiq_to_8b
+  (?wiring:lte_dif_lcmiq_to_8b   :txdu_2_lcmiq_to_8b
     /clk/tx_clk/
     /^rst_n/tx_rst_n/
     /s_rst_n/txdu_2_delayed_enable_sync/
@@ -7512,7 +7512,7 @@
     /txdu_pl_o_valid/txdu_2_pl_valid/
   )
 
-  (?toplink:lte_dif_txif_main
+  (?wiring:lte_dif_txif_main
 
    /txlink_wd_acktimeout_delay/9'230/   ; # ~ 1.6us @145.6MHz
   )
@@ -10002,7 +10002,7 @@
 
 ; ## (?top:lte_dif_submodule_tb  +endtop=move_port_2signal#.  +declarch=decl_signal_from_port
 ; ##   (?fsmc: test_apb_iosocket)
-; ##   (?toplink:lte_dif_tasu)
+; ##   (?wiring:lte_dif_tasu)
 ; ## )
 ; ##
 ; ## (?fsm:test_apb_iosocket

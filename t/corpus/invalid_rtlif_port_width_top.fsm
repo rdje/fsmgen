@@ -6,7 +6,7 @@
     serial_out>
   )
   (?rtl:invalid_width_uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/invalid_width_uart_tx.data_in/
     /invalid_width_uart_tx.txd/serial_out/
   )

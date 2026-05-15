@@ -413,7 +413,7 @@ FSM
     packed_out>5
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_external.BYTES[0]/byte_out/
     /=shared_external.FRAME.flag/flag_out/
     /=shared_local.SETTINGS.enable,=shared_external.NIBBLES[1]/packed_out/
@@ -508,7 +508,7 @@ FSM
     packed_out>7
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_external.HEADER/header_out/
     /=shared_external.TAIL,=shared_external.HEADER/packed_out/
     /=shared_external.TAIL/uart_tx.tail_in/

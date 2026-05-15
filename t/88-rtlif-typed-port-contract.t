@@ -296,7 +296,7 @@ subtest 'mixed composition auto-wires custom typed rtl clock/reset ports' => sub
   )
   (?dtc:router route_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/router.payload_in/
     /router.route_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
@@ -404,7 +404,7 @@ subtest '.rtlif rejects clock and reset outputs' => sub {
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )

@@ -18,7 +18,7 @@ use FSM::Composition::PortsBlock;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 use FSM::Composition::TopSymbols;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
@@ -40,14 +40,14 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
         port('serial_out', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('top_concat_top'),
         top => FSM::Composition::Top->new(name => 'top_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -94,7 +94,7 @@ subtest 'linked plan builder preserves top concat sources as typed bindings' => 
     is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
 };
 
-subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub {
+subtest 'pipeline and CLI emit top concat sources for explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'top_concat_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'top_concat_top.sv');
@@ -112,7 +112,7 @@ subtest 'pipeline and CLI emit top concat sources for explicit toplinks' => sub 
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,status_bus[0],=2'sb1_0,=3'so2,=4'shA,=8'sd-1,payload_bus[2:0]/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
   )
@@ -136,7 +136,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit top-concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit top-concat wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -165,8 +165,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for explicit top-concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for explicit top-concat toplinks');
+    ok($success, 'CLI succeeds for explicit top-concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for explicit top-concat wiring_blocks');
 };
 
 subtest 'linked plan builder preserves named actual concat operands from composition-root symbols' => sub {
@@ -175,7 +175,7 @@ subtest 'linked plan builder preserves named actual concat operands from composi
         port('serial_out', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('named_symbol_concat_top'),
         top => FSM::Composition::Top->new(
@@ -193,8 +193,8 @@ subtest 'linked plan builder preserves named actual concat operands from composi
         ),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -256,7 +256,7 @@ subtest 'pipeline and CLI emit named actual concat operands from composition-roo
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus[6:5],=HEADER_NIBBLE,=mode.BUSY/uart_tx.header_bus/
     /uart_tx.serial_out/serial_out/
   )
@@ -301,8 +301,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for composition-root named actual concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for composition-root named actual concat toplinks');
+    ok($success, 'CLI succeeds for composition-root named actual concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for composition-root named actual concat wiring_blocks');
 };
 
 subtest 'pipeline and CLI emit intent-sized exact-width concat operands' => sub {
@@ -318,7 +318,7 @@ subtest 'pipeline and CLI emit intent-sized exact-width concat operands' => sub 
     packed_out>33
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=5'23,=8'-0xA,=20'x1/packed_out/
     /=5'23,=8'-10,=20'x1/uart_tx.data_in/
   )
@@ -339,8 +339,8 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'intent-sized exact-width concat toplinks stay on the C3 lane');
-    is(scalar(@{$result->{composition_plan}->nets}), 0, 'intent-sized exact-width concat toplinks do not force synthetic carrier nets');
+    is($result->{composition_plan}->lane, 'C3', 'intent-sized exact-width concat wiring_blocks stay on the C3 lane');
+    is(scalar(@{$result->{composition_plan}->nets}), 0, 'intent-sized exact-width concat wiring_blocks do not force synthetic carrier nets');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -370,8 +370,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for intent-sized exact-width concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for intent-sized exact-width concat toplinks');
+    ok($success, 'CLI succeeds for intent-sized exact-width concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for intent-sized exact-width concat wiring_blocks');
 };
 
 subtest 'linked plan builder preserves intrinsic-width SV-style unsized numeric concat operands' => sub {
@@ -380,14 +380,14 @@ subtest 'linked plan builder preserves intrinsic-width SV-style unsized numeric 
         port('payload_bus', 'input', 3, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('unsized_numeric_concat_top'),
         top => FSM::Composition::Top->new(name => 'unsized_numeric_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -441,7 +441,7 @@ subtest 'pipeline and CLI emit intrinsic-width SV-style unsized numeric concat o
     payload_bus<3
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,='b1_0,='o2,='d10,='hA,payload_bus[2:0]/uart_tx.data_in/
   )
 )
@@ -461,7 +461,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width SV-style unsized concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width SV-style unsized concat wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -489,8 +489,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for intrinsic-width SV-style unsized concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for intrinsic-width SV-style unsized concat toplinks');
+    ok($success, 'CLI succeeds for intrinsic-width SV-style unsized concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for intrinsic-width SV-style unsized concat wiring_blocks');
 };
 
 subtest 'linked plan builder preserves intrinsic-width SV-style unsized signed based concat operands' => sub {
@@ -499,14 +499,14 @@ subtest 'linked plan builder preserves intrinsic-width SV-style unsized signed b
         port('payload_bus', 'input', 3, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('signed_unsized_numeric_concat_top'),
         top => FSM::Composition::Top->new(name => 'signed_unsized_numeric_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -559,7 +559,7 @@ subtest 'pipeline and CLI emit intrinsic-width SV-style unsized signed based con
     payload_bus<3
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,='sb1010,='so7,='shA,payload_bus[2:0]/uart_tx.data_in/
   )
 )
@@ -579,7 +579,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width SV-style unsized signed concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width SV-style unsized signed concat wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -606,8 +606,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for intrinsic-width SV-style unsized signed concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for intrinsic-width SV-style unsized signed concat toplinks');
+    ok($success, 'CLI succeeds for intrinsic-width SV-style unsized signed concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for intrinsic-width SV-style unsized signed concat wiring_blocks');
 };
 
 subtest 'linked plan builder preserves intrinsic-width unsized signed decimal concat operands' => sub {
@@ -615,14 +615,14 @@ subtest 'linked plan builder preserves intrinsic-width unsized signed decimal co
         port('payload_bus', 'input', 3, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('signed_decimal_concat_top'),
         top => FSM::Composition::Top->new(name => 'signed_decimal_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -673,7 +673,7 @@ subtest 'pipeline and CLI emit intrinsic-width unsized signed decimal concat ope
     payload_bus<3
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[2:0],=-1,=0d-2,='sd-3/uart_tx.data_in/
   )
 )
@@ -693,7 +693,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width unsized signed decimal concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width unsized signed decimal concat wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -719,8 +719,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for intrinsic-width unsized signed decimal concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for intrinsic-width unsized signed decimal concat toplinks');
+    ok($success, 'CLI succeeds for intrinsic-width unsized signed decimal concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for intrinsic-width unsized signed decimal concat wiring_blocks');
 };
 
 subtest 'linked plan builder preserves nested concat source groups' => sub {
@@ -731,14 +731,14 @@ subtest 'linked plan builder preserves nested concat source groups' => sub {
         port('serial_out', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('nested_concat_top'),
         top => FSM::Composition::Top->new(name => 'nested_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -784,7 +784,7 @@ subtest 'linked plan builder preserves nested concat source groups' => sub {
     is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
 };
 
-subtest 'pipeline and CLI emit nested concat source groups for explicit toplinks' => sub {
+subtest 'pipeline and CLI emit nested concat source groups for explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'nested_concat_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'nested_concat_top.sv');
@@ -800,7 +800,7 @@ subtest 'pipeline and CLI emit nested concat source groups for explicit toplinks
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
   )
@@ -822,7 +822,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'nested explicit top-concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'nested explicit top-concat wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -853,8 +853,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for nested explicit top-concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for nested explicit top-concat toplinks');
+    ok($success, 'CLI succeeds for nested explicit top-concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for nested explicit top-concat wiring_blocks');
 };
 
 subtest 'linked plan builder preserves bounded repeat source groups' => sub {
@@ -864,14 +864,14 @@ subtest 'linked plan builder preserves bounded repeat source groups' => sub {
         port('payload_bus', 'input', 2, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('repeat_concat_top'),
         top => FSM::Composition::Top->new(name => 'repeat_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -908,7 +908,7 @@ subtest 'linked plan builder preserves bounded repeat source groups' => sub {
     );
 };
 
-subtest 'pipeline and CLI emit bounded repeat source groups for explicit toplinks' => sub {
+subtest 'pipeline and CLI emit bounded repeat source groups for explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'repeat_concat_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'repeat_concat_top.sv');
@@ -923,7 +923,7 @@ subtest 'pipeline and CLI emit bounded repeat source groups for explicit toplink
     payload_bus<2
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /header_bus,{3{status_bus[0]}},payload_bus[1:0]/uart_tx.data_in/
   )
 )
@@ -943,7 +943,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'repeat explicit top-concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'repeat explicit top-concat wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -968,8 +968,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for bounded repeat explicit toplinks');
-    ok(-e $output_path, 'CLI writes HDL for bounded repeat explicit toplinks');
+    ok($success, 'CLI succeeds for bounded repeat explicit wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for bounded repeat explicit wiring_blocks');
 };
 
 subtest 'child-output repeat groups share deterministic carriers and direct top-output assignments' => sub {
@@ -977,14 +977,14 @@ subtest 'child-output repeat groups share deterministic carriers and direct top-
         port('packed_out', 'output', 4, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('child_repeat_top'),
         top => FSM::Composition::Top->new(name => 'child_repeat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -1055,7 +1055,7 @@ subtest 'pipeline and CLI emit child-output repeat groups through shared carrier
   )
   (?rtl:producer)
   (?rtl:consumer)
-  (?toplink:wiring
+  (?wiring:wiring
     /{2{producer.serial_lo}}/consumer.data_in/
     /{2{producer.serial_lo}}/packed_out/
   )
@@ -1080,7 +1080,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'child-output repeat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'child-output repeat wiring_blocks stay on the C3 lane');
 
     my %instances = map { $_->instance_name => $_ } @{$result->{composition_plan}->instances};
     my %consumer_bindings = map { $_->{port_name} => $_ } @{$instances{consumer}->port_bindings};
@@ -1100,8 +1100,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for child-output repeat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for child-output repeat toplinks');
+    ok($success, 'CLI succeeds for child-output repeat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for child-output repeat wiring_blocks');
 };
 
 subtest 'child-output concat operands share deterministic carriers and direct top-output assignments' => sub {
@@ -1110,14 +1110,14 @@ subtest 'child-output concat operands share deterministic carriers and direct to
         port('packed_out', 'output', 8, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('child_concat_top'),
         top => FSM::Composition::Top->new(name => 'child_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -1195,7 +1195,7 @@ subtest 'pipeline and CLI emit child-output concat operands through shared carri
   )
   (?rtl:producer)
   (?rtl:consumer)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.serial_hi[3:0],header_bus,producer.serial_lo/consumer.data_in/
     /producer.serial_hi[3:0],header_bus,producer.serial_lo/packed_out/
   )
@@ -1221,7 +1221,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'child-output concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'child-output concat wiring_blocks stay on the C3 lane');
 
     my %instances = map { $_->instance_name => $_ } @{$result->{composition_plan}->instances};
     my %consumer_bindings = map { $_->{port_name} => $_ } @{$instances{consumer}->port_bindings};
@@ -1247,13 +1247,13 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for child-output concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for child-output concat toplinks');
+    ok($success, 'CLI succeeds for child-output concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for child-output concat wiring_blocks');
 };
 
 subtest 'linked plan builder rejects unsupported concat operands' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_top_concat_top'),
             top => FSM::Composition::Top->new(name => 'blocked_top_concat_top'),
@@ -1262,8 +1262,8 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
                 ports => [port('payload_bus', 'input', 4, undef)],
             ),
             ports => [port('payload_bus', 'input', 4, undef)],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(
@@ -1296,7 +1296,7 @@ subtest 'linked plan builder rejects unsupported concat operands' => sub {
 
 subtest 'linked plan builder rejects ambiguous bare bitstring-like concat actuals explicitly' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_ambiguous_concat_actual_top'),
             top => FSM::Composition::Top->new(name => 'blocked_ambiguous_concat_actual_top'),
@@ -1305,8 +1305,8 @@ subtest 'linked plan builder rejects ambiguous bare bitstring-like concat actual
                 ports => [port('payload_bus', 'input', 4, undef)],
             ),
             ports => [port('payload_bus', 'input', 4, undef)],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(
@@ -1339,7 +1339,7 @@ subtest 'linked plan builder rejects ambiguous bare bitstring-like concat actual
 
 subtest 'linked plan builder rejects out-of-range child-output concat operands' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_child_concat_top'),
             top => FSM::Composition::Top->new(name => 'blocked_child_concat_top'),
@@ -1348,8 +1348,8 @@ subtest 'linked plan builder rejects out-of-range child-output concat operands' 
                 ports => [port('header_bus', 'input', 2, undef)],
             ),
             ports => [port('header_bus', 'input', 2, undef)],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(
@@ -1390,14 +1390,14 @@ subtest 'linked plan builder preserves intrinsic-width unsized decimal concat op
         port('payload_bus', 'input', 4, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('unsized_decimal_concat_top'),
         top => FSM::Composition::Top->new(name => 'unsized_decimal_concat_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -1447,7 +1447,7 @@ subtest 'pipeline and CLI emit intrinsic-width unsized decimal concat operands' 
     payload_bus<4
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[3:0],=170,=0d170/uart_tx.data_in/
   )
 )
@@ -1467,7 +1467,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width unsized decimal concat toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'intrinsic-width unsized decimal concat wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -1492,8 +1492,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for intrinsic-width unsized decimal concat toplinks');
-    ok(-e $output_path, 'CLI writes HDL for intrinsic-width unsized decimal concat toplinks');
+    ok($success, 'CLI succeeds for intrinsic-width unsized decimal concat wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for intrinsic-width unsized decimal concat wiring_blocks');
 };
 
 done_testing();

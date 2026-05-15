@@ -28,7 +28,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -74,7 +74,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
   )
 )
@@ -153,7 +153,7 @@ subtest 'unused declared top inputs now say explicit-link top wiring is blocked'
 
     like(
         $exception,
-        qr/declares top input 'start', .*explicit-link top wiring is blocked because the current active C2 lane requires explicit '\?toplink' usage for every non-system top input/s,
+        qr/declares top input 'start', .*explicit-link top wiring is blocked because the current active C2 lane requires explicit '\?wiring' usage for every non-system top input/s,
         'unused declared top input now says explicit-link top wiring is blocked',
     );
 };
@@ -167,7 +167,7 @@ subtest 'unused declared top outputs now say explicit-link top wiring is blocked
 
     like(
         $exception,
-        qr/declares top output 'status', .*explicit-link top wiring is blocked because the current active C2 lane requires explicit '\?toplink' usage for every top output/s,
+        qr/declares top output 'status', .*explicit-link top wiring is blocked because the current active C2 lane requires explicit '\?wiring' usage for every top output/s,
         'unused declared top output now says explicit-link top wiring is blocked',
     );
 };

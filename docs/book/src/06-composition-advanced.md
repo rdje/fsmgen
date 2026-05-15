@@ -1,7 +1,7 @@
 # Composition Advanced
 
 This chapter covers the richer source-side expression and structural-actual
-features of `?toplink`.
+features of `?wiring`.
 
 The guiding rule is simple:
 
@@ -12,7 +12,7 @@ The guiding rule is simple:
 
 ## Source-Side Expressions
 
-The source side of a `?toplink` can now be more than a plain port name.
+The source side of a `?wiring` can now be more than a plain port name.
 
 Current shipped source-side families include:
 
@@ -30,11 +30,11 @@ Current shipped source-side families include:
 Example:
 
 ```lisp
-(?toplink:wiring
-  /payload_bus[15:8]/byte_sink.data_in/
-  /producer.payload[7:4]/consumer.nibble_in/
-  /in_frame.tag/tag_out/
-  /producer.OUT_FRAME.payload[1]/consumer.payload_mid/
+(?wiring:wiring
+  (payload_bus[15:8] byte_sink.data_in)
+  (producer.payload[7:4] consumer.nibble_in)
+  (in_frame.tag tag_out)
+  (producer.OUT_FRAME.payload[1] consumer.payload_mid)
 )
 ```
 
@@ -98,13 +98,13 @@ Concrete example:
     packed_out>33
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
-    /=5'23/decimal_out/
-    /=8'-0xA/negative_out/
-    /=5'23,=8'-10,=20'x1/packed_out/
-    /=5'23/uart_tx.decimal_in/
-    /=8'-0b1010/uart_tx.negative_in/
-    /=5'23,=8'-0xA,=20'x1/uart_tx.packed_in/
+  (?wiring:wiring
+    (=5'23 decimal_out)
+    (=8'-0xA negative_out)
+    ((cat =5'23 =8'-10 =20'x1) packed_out)
+    (=5'23 uart_tx.decimal_in)
+    (=8'-0b1010 uart_tx.negative_in)
+    ((cat =5'23 =8'-0xA =20'x1) uart_tx.packed_in)
   )
 )
 
@@ -133,18 +133,26 @@ Maintained repo examples:
 Bounded source-side concat is a first-class shipped feature.
 
 ```lisp
-(?toplink:wiring
-  /header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/
+(?wiring:wiring
+  ((cat header_bus status_bus[0] =1 payload_bus[3:0]) uart_tx.data_in)
 )
 ```
 
 Nested brace groups are also preserved:
 
 ```lisp
-(?toplink:wiring
-  /header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}/uart_tx.data_in/
+(?wiring:wiring
+  ((cat header_bus
+        (cat status_bus[0] =0b1_0)
+        (cat payload_bus[3:2] payload_bus[1:0]))
+   uart_tx.data_in)
 )
 ```
+
+The compatibility source-token spelling remains accepted too, so older sources
+like `/header_bus,status_bus[0],=1,payload_bus[3:0]/uart_tx.data_in/` still
+parse. In new code, prefer `(source target)` and use `(cat ...)` when the
+source is a concat expression.
 
 Concat operands may currently include:
 
@@ -174,9 +182,18 @@ Repeat groups now ride the same typed structural path as other source
 expressions.
 
 ```lisp
-(?toplink:wiring
-  /{3{status_bus[0]}}/child.data_in/
-  /{2{producer.serial_lo}}/packed_out/
+(?wiring:wiring
+  ((repeat 3 status_bus[0]) child.data_in)
+  ((repeat 2 producer.serial_lo) packed_out)
+)
+```
+
+The verbose directed-link spelling is equivalent:
+
+```lisp
+(?wiring:wiring
+  (connect (repeat 3 status_bus[0]) child.data_in)
+  (connect (repeat 2 producer.serial_lo) packed_out)
 )
 ```
 
@@ -190,9 +207,9 @@ Example:
 ```lisp
 (?top:uart_slice_top
   (?rtl:byte_sink)
-  (?toplink:wiring
-    /payload_bus[15:8]/byte_sink.data_in/
-    /status_bus[0]/byte_sink.enable/
+  (?wiring:wiring
+    (payload_bus[15:8] byte_sink.data_in)
+    (status_bus[0] byte_sink.enable)
   )
 )
 ```
@@ -208,14 +225,14 @@ groups, but it still refuses ambiguous multi-operand guessing.
 Declared aggregate top-port paths can now help that inference too:
 
 ```lisp
-(?toplink:wiring
-  /in_frame.tag,payload/sink.data_in/
+(?wiring:wiring
+  ((cat in_frame.tag payload) sink.data_in)
 )
 ```
 
 If `in_frame` is already declared with an aggregate type, or has been inferred
 as one aggregate contract from another whole-root link to a typed child input
-in the same `?toplink` block, or can be seeded from an unlinked same-name child
+in the same `?wiring` block, or can be seeded from an unlinked same-name child
 input with one uniform record/list declared-type contract, and `in_frame.tag`
 is four bits, FSMGen can use that exact leaf width while sizing the remaining
 omitted whole operand `payload` from the target remainder. If `in_frame` has
@@ -250,7 +267,7 @@ That declared type information now affects:
 - same-name undeclared top-port inference
 - plain explicit top-port convention
 - declared compact `=name` or verbose `:same-name` connect-by-name
-- explicit plain port-to-port `?toplink`
+- explicit plain port-to-port `?wiring`
 - inferred internal carrier nets
 - whole aggregate direct actual binding
 
@@ -314,8 +331,8 @@ Example:
   (?ports:public_io
     packed_out>frame_t
   )
-  (?toplink:wiring
-    /=FRAME/packed_out/
+  (?wiring:wiring
+    (=FRAME packed_out)
   )
 )
 ```
@@ -409,9 +426,9 @@ the specific `?rtl` instance:
       (FRAME ((mode frame_mode.RUN) (flag param_pkg.FLAG_ON)))
     )
   )
-  (?toplink:wiring
-    /payload_in/u_uart.data_in/
-    /u_uart.txd/serial_out/
+  (?wiring:wiring
+    (payload_in u_uart.data_in)
+    (u_uart.txd serial_out)
   )
 )
 
@@ -521,9 +538,9 @@ direct `(+params ...)` block rather than in `.rtlif` metadata:
       (LANES TOP_LANES)
     )
   )
-  (?toplink:wiring
-    /payload_in/u_child.in_data/
-    /u_child.out_data/payload_out/
+  (?wiring:wiring
+    (payload_in u_child.in_data)
+    (u_child.out_data payload_out)
   )
 )
 

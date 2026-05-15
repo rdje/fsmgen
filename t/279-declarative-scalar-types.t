@@ -356,7 +356,7 @@ subtest 'composition-top +types drive local ?ports widths regardless of declarat
     (type byte_t (bits 8))
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.data_out/out_data/
     /uart_tx.flag_out/out_flag/
   )
@@ -432,7 +432,7 @@ FSM
     (type byte_t shared_types.signed_byte)
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_data/uart_tx.data_in/
     /uart_tx.data_out/out_data/
   )
@@ -494,7 +494,7 @@ subtest 'composition ?ports preserve explicit two-state scalar type aliases thro
     (type byte_t (two_state (bits 8)))
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_data/uart_tx.data_in/
     /uart_tx.data_out/out_data/
   )
@@ -571,7 +571,7 @@ FSM
     (OCT_W 0o10)
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.data_out/out_data/
     /uart_tx.flag_out/out_flag/
     /uart_tx.oct_out/out_oct/
@@ -630,7 +630,7 @@ subtest 'composition ?ports reject non-positive scalar symbol widths explicitly'
     (ZERO_W 0)
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.data_out/out_data/
   )
 )
@@ -704,7 +704,7 @@ FSM
     out_flag>shared_types.flag
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.data_out/out_data/
     /uart_tx.flag_out/out_flag/
   )
@@ -778,7 +778,7 @@ FSM
     (type byte_t shared_types.byte)
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.data_out/out_data/
     /uart_tx.flag_out/out_flag/
   )
@@ -852,7 +852,7 @@ FSM
     (type byte_t shared_types.missing)
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.data_out/out_data/
   )
 )
@@ -925,7 +925,7 @@ FSM
     out_data>shared_types.missing
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.data_out/out_data/
   )
 )

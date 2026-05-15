@@ -302,7 +302,7 @@ FSM
     (type lane_t (record (head shared_types.header_t) (tail (list bit bit))))
   )
   (?rtl:bridge)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_frame/bridge.frame_in/
     /bridge.frame_out/out_frame/
     /bridge.lane_out/out_lane/

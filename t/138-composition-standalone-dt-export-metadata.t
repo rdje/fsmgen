@@ -25,7 +25,7 @@ subtest 'composition module_info aggregates reusable standalone-DT child export 
   )
   (?dtc:router_a route_a)
   (?dtc:router_b route_b)
-  (?toplink:wiring
+  (?wiring:wiring
     /sel/router_a.sel/
     /data_a/router_a.a/
     /data_b/router_a.b/
@@ -187,7 +187,7 @@ subtest 'CLI prints reusable standalone-DT child summary for composition tops' =
   )
   (?dtc:router_a route_a)
   (?dtc:router_b route_b)
-  (?toplink:wiring
+  (?wiring:wiring
     /sel/router_a.sel/
     /data_a/router_a.a/
     /data_b/router_a.b/

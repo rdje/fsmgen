@@ -96,7 +96,7 @@ subtest 'composition structural_rtl_ir preserves declared type identity on top p
   )
   (?dtc:typed_byte typed_byte_src)
   (?dtc:typed_frame typed_frame_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_byte/typed_byte.IN_BYTE/
     /typed_byte.OUT_BYTE/out_byte/
     /in_frame/typed_frame.IN_FRAME/
@@ -192,7 +192,7 @@ subtest 'composition structural_rtl_ir preserves declared type identity on infer
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.OUT_FRAME/consumer.IN_FRAME/
     /consumer.OUT_BYTE/out_byte/
   )
@@ -276,7 +276,7 @@ subtest 'composition structural bindings preserve connection type contracts for 
   )
   (?dtc:consumer consumer_src)
   (?dtc:helper helper_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_frame/consumer.IN_FRAME/
     /status_bus[0],payload_bus[3:0]/consumer.STATUS_LIST/
     /=FRAME_CONST/consumer.CONST_FRAME/
@@ -365,7 +365,7 @@ subtest 'composition structural shared-datapath raw nets preserve declared type 
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )

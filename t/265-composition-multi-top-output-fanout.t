@@ -29,7 +29,7 @@ subtest 'pipeline and CLI emit one carrier plus explicit assignments for multi-t
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload/status_a/
     /producer.payload/status_b/
     /producer.payload/consumer.payload/

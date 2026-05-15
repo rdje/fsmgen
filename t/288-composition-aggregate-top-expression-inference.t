@@ -28,7 +28,7 @@ subtest 'declared aggregate top-port paths contribute exact width to concat infe
     in_frame<frame_t
   )
   (?rtl:sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_frame.tag,payload/sink.data_in/
   )
 )
@@ -69,7 +69,7 @@ subtest 'previously inferred aggregate top-port roots contribute exact width to 
     my @cases = (
         {
             name => 'whole_root_link_first',
-            toplinks => <<'FSM',
+            wiring_blocks => <<'FSM',
     /in_frame/consumer.IN_FRAME/
     /in_frame.tag,payload/sink.data_in/
     /consumer.OUT_FLAG/flag_out/
@@ -77,7 +77,7 @@ FSM
         },
         {
             name => 'aggregate_path_link_first',
-            toplinks => <<'FSM',
+            wiring_blocks => <<'FSM',
     /in_frame.tag,payload/sink.data_in/
     /in_frame/consumer.IN_FRAME/
     /consumer.OUT_FLAG/flag_out/
@@ -95,8 +95,8 @@ FSM
 (?top:$case->{name}
   (?dtc:consumer consumer_src)
   (?rtl:sink)
-  (?toplink:wiring
-$case->{toplinks}  )
+  (?wiring:wiring
+$case->{wiring_blocks}  )
 )
 
 (?dt:consumer_src
@@ -148,7 +148,7 @@ subtest 'same-name aggregate child inputs can seed aggregate top-expression infe
 (?top:same_name_aggregate_root_top
   (?dtc:consumer consumer_src)
   (?rtl:sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_frame.tag,payload/sink.data_in/
     /in_frame.tag/sink.nibble/
     /consumer.out_flag/flag_out/
@@ -212,7 +212,7 @@ subtest 'explicitly linked same-name child inputs do not seed aggregate roots' =
 (?top:explicitly_linked_same_name_aggregate_root_top
   (?dtc:consumer consumer_src)
   (?rtl:sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /other_frame/consumer.in_frame/
     /in_frame.tag/sink.nibble/
     /consumer.out_flag/flag_out/
@@ -252,7 +252,7 @@ FSM
 
     like(
         $exception,
-        qr/omits top port 'in_frame', .*explicit top-link port inference is blocked because top expression 'in_frame\.tag' uses aggregate member\/item access before the root top port has a declared aggregate type/s,
+        qr/omits top port 'in_frame', .*explicit wiring port inference is blocked because top expression 'in_frame\.tag' uses aggregate member\/item access before the root top port has a declared aggregate type/s,
         'pipeline does not reuse an explicitly linked same-name child input as aggregate-root inference evidence',
     );
 };
@@ -266,7 +266,7 @@ subtest 'undeclared aggregate roots fail with a user-facing inference diagnostic
         <<'FSM'
 (?top:undeclared_aggregate_root_top
   (?rtl:sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_frame.tag/sink.nibble/
   )
 )
@@ -291,7 +291,7 @@ FSM
 
     like(
         $exception,
-        qr/omits top port 'in_frame', .*explicit top-link port inference is blocked because top expression 'in_frame\.tag' uses aggregate member\/item access before the root top port has a declared aggregate type/s,
+        qr/omits top port 'in_frame', .*explicit wiring port inference is blocked because top expression 'in_frame\.tag' uses aggregate member\/item access before the root top port has a declared aggregate type/s,
         'pipeline explains why aggregate member inference needs a declared aggregate root',
     );
     unlike(

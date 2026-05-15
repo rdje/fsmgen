@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: Lisp-ish ?wiring forms
+- `?wiring` is a Lisp-ish construct, so its preferred link items should be
+  Lisp-ish forms too. `(source target)` is the compact directed-link form and
+  `(connect source target)` is the explicit readable form for dense wiring.
+- The slash-token form remains compatibility input because older composition
+  examples and tests used it, but new examples and generated artifacts should
+  not introduce more slash-token source.
+- Source-side expressions use the same list vocabulary authors already expect
+  elsewhere: `(cat ...)` for bounded concat and `(repeat COUNT operand)` for
+  replication. Those parser forms normalize to the existing typed composition
+  source-expression path rather than creating a second wiring model.
+- Target-side list endpoints remain blocked. Keeping list expressions
+  source-only preserves the current endpoint-resolution contract and avoids
+  pretending composition can assign into arbitrary target expressions.
+- `?wiring` is the canonical public block name. Keeping the block word aligned
+  with the domain concept removes the need for a separate alias layer while
+  leaving the planning and endpoint-resolution model unchanged.
 ## 2026-05-15: ISF storage var-only source surface
 - The public source surface is now deliberately smaller: `(var ...)` is the
   canonical actor-owned scalar storage form and `(variable ...)` is its
@@ -37,7 +54,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-05-15: ISF library system-port remapping
 - The remapping feature is intentionally a composition-boundary name binding.
   A reusable actor may call its clock `lib_clk` and an importing actor may bind
-  that to parent `clk`; the generated top then links `/clk/rx.lib_clk/`.
+  that to parent `clk`; the generated top now links `(clk rx.lib_clk)`.
   The same applies to reset names.
 - The reusable actor remains the owner of reset kind and polarity. A use site
   can rename the reset signal it connects to, but it cannot turn an async
@@ -1092,12 +1109,12 @@ This document captures engineering rationale, design constraints, and working de
   transaction, spawn instance, generated handoff role, named drive, and payload
   parameter are still available as source-local context.
 - This keeps the failure in ISF terms instead of requiring users to reverse
-  map a later `?toplink` or child-port error back to the authored spawn.
+  map a later `?wiring` or child-port error back to the authored spawn.
 ## 2026-05-14: ISF composition report projection
 - The emitted `generated_composition` report field is a bounded discovery
   projection over already-generated composition facts. It intentionally names
   the review artifacts and handoff links consumers need, while keeping raw
-  LoweringIR, `?toplink`, activation context, and port-inference details
+  LoweringIR, `?wiring`, activation context, and port-inference details
   private.
 - The lowerer records named-drive handoffs beside spawn-instance metadata so
   the JSON emitter can project request and payload links without parsing the
@@ -1110,7 +1127,7 @@ This document captures engineering rationale, design constraints, and working de
 - The `generated_composition` report projection is deliberately a discovery
   summary, not an implementation dump. Downstream consumers need to know which
   top, parent, child modules, instances, handoffs, and parameter bindings were
-  generated; they do not need LoweringIR objects or raw `?toplink` syntax.
+  generated; they do not need LoweringIR objects or raw `?wiring` syntax.
 - Using JSON null for actors without generated tops gives consumers one stable
   top-level key while avoiding accidental empty-object semantics.
 - Parameter values are specified as stringified review values for the first
@@ -5583,7 +5600,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-05-05: Inferred top-port type specs are accumulator-owned
 - `_record_inferred_top_port_requirement()` keeps mutable accumulator state
-  while explicit top-link inference converges. Incoming declared type specs can
+  while explicit wiring inference converges. Incoming declared type specs can
   originate from child ports or aggregate-expression analysis and should not
   remain live through that accumulator.
 - Inferred requirement records now clone the incoming declared type spec at
@@ -5964,21 +5981,21 @@ This document captures engineering rationale, design constraints, and working de
 - `FSM::Composition::Top` is the root object for parsed composition specs and
   feeds plan building, type resolution, and metadata generation. Its container
   accessors exposed the parser-owned arrays directly.
-- Top now clones instance, ports-block, toplink, package-import, and raw AST
+- Top now clones instance, ports-block, wiring, package-import, and raw AST
   containers on entry and access. Contained objects retain identity, matching
-  the narrower PortsBlock/TopLink/Plan policy.
+  the narrower PortsBlock/WiringBlock/Plan policy.
 - `top_symbols()` remains a live owned symbol-table object because type and
   payload resolution intentionally operate through that table after parse-time
   symbol loading.
 
-## 2026-05-05: TopLink access should be container-owned
-- `FSM::Composition::TopLink` carries parsed explicit wiring blocks into
+## 2026-05-05: WiringBlock access should be container-owned
+- `FSM::Composition::WiringBlock` carries parsed explicit wiring blocks into
   linked-plan and top-port inference builders. Its `links()` and `raw_ast()`
   accessors exposed parser-owned arrays directly.
-- TopLink now clones mutable containers on entry and access. Contained link
+- WiringBlock now clones mutable containers on entry and access. Contained link
   objects keep identity, while list/hash mutation through inspection cannot
   alter the parsed composition spec.
-- This keeps explicit `?toplink` wiring stable across linked-plan, C2/C3/C4,
+- This keeps explicit `?wiring` wiring stable across linked-plan, C2/C3/C4,
   and top-expression inference passes.
 
 ## 2026-05-05: PortsBlock access should be container-owned
@@ -12206,10 +12223,10 @@ This document captures engineering rationale, design constraints, and working de
     operand `payload`.
 - Landed behavior:
   - declared aggregate top-port paths now contribute exact leaf widths to
-    explicit-toplink concat/repeat inference before the remaining whole
+    explicit-wiring concat/repeat inference before the remaining whole
     top-port operand is sized,
   - expression width annotation now runs after the first pass has collected
-    whole-root inferred top ports from the current `?toplink` block, so an
+    whole-root inferred top ports from the current `?wiring` block, so an
     aggregate root inferred from a typed child input can immediately support
     later or earlier member/item operands such as `in_frame.tag`,
   - aggregate roots needed by explicit top expressions may now also be seeded
@@ -12240,7 +12257,7 @@ This document captures engineering rationale, design constraints, and working de
     IR before generation” rule.
 
 ## 2026-04-11: composition source-expression parsing belongs below the planner too
-- Extracted the bounded explicit-toplink source-expression parser out of
+- Extracted the bounded explicit-wiring source-expression parser out of
   [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm)
   into [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm).
 - Landed behavior:
@@ -12811,7 +12828,7 @@ This document captures engineering rationale, design constraints, and working de
 
 ## 2026-04-08: inferred composition carrier nets should keep declared type identity too
 - Continued the typed composition / structural handoff lane after explicit
-  `?toplink` compatibility became declared-type-aware.
+  `?wiring` compatibility became declared-type-aware.
 - Landed behavior:
   - inferred internal carrier nets now preserve `declared_type_name` plus
     canonical `declared_type_spec` when the driving child-output family came
@@ -12828,11 +12845,11 @@ This document captures engineering rationale, design constraints, and working de
     type identity, leaving internal carriers untyped would have kept one major
     structural blind spot in the forward IR.
 
-## 2026-04-08: explicit port-to-port `?toplink` bindings must not bypass declared types
+## 2026-04-08: explicit port-to-port `?wiring` bindings must not bypass declared types
 - Continued the typed composition hardening immediately after same-name
   convention and undeclared top-port inference became declared-type-aware.
 - Landed behavior:
-  - explicit plain port-to-port `?toplink` bindings now also block when both
+  - explicit plain port-to-port `?wiring` bindings now also block when both
     endpoints preserve incompatible `declared_type_spec` contracts,
   - that applies to child-to-child, top-to-child, and child-to-top plain port
     bindings on the explicit-link path,
@@ -12843,7 +12860,7 @@ This document captures engineering rationale, design constraints, and working de
     or top-port context for those explicit-link declared-type mismatches too.
 - Why this boundary matters:
   - once preserved declared type identity was live and same-name convention
-    consumed it, leaving explicit `?toplink` as a width-only escape hatch would
+    consumed it, leaving explicit `?wiring` as a width-only escape hatch would
     have made the type contract feel optional instead of real,
   - and this keeps the next aggregate-aware lowering/compatibility work on one
   honest declared-type boundary instead of separate convention versus
@@ -13208,7 +13225,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active symbol/aggregate lane by removing an avoidable asymmetry:
   imported packages already supported aggregate leaf access, but local `?top`
   `+constants` still forced authors to move reusable aggregate values into
-  packages just to use them in explicit `?toplink` actuals.
+  packages just to use them in explicit `?wiring` actuals.
 - Landed behavior:
   - composition-top `(+constants ...)` entries may now be scalar literals,
     non-empty lists, or nested hash-like `(member value)` aggregates,
@@ -13385,7 +13402,7 @@ This document captures engineering rationale, design constraints, and working de
   - and it avoids the low-quality failure mode where textual inclusion or implicit globals make symbol ownership, shadowing, and frontend validation much harder to keep honest.
 
 ## 2026-04-06: composition-top symbols should feed literal actuals through the same bounded structural path
-- Kept this in the active `R11` lane and widened explicit-toplink expressiveness without pretending the future full type system is already shipped.
+- Kept this in the active `R11` lane and widened explicit-wiring expressiveness without pretending the future full type system is already shipped.
 - Landed behavior:
   - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now accepts bounded `(+constants ...)` and `(+enums ...)` sections directly under `?top`,
   - [perl/FSM/Composition/TopSymbols.pm](perl/FSM/Composition/TopSymbols.pm) now canonicalizes those composition-top symbols into the existing literal payload family,
@@ -13460,7 +13477,7 @@ This document captures engineering rationale, design constraints, and working de
 - Kept this in the active `R11` lane and shipped the next source-expression widening as a structural-AST feature instead of another ad hoc string case.
 - Landed behavior:
   - [perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm](perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm) now exposes `repeat_expr(...)` as a first-class bounded connection-expression node beside `concat_expr(...)`, with recursive signal discovery and backend rendering rather than treating `{N{...}}` as opaque text,
-  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now parses source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit-toplink source-expression family as top refs, child refs, slices, literals, and concat,
+  - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now parses source-side repeat groups such as `{3{status_bus[0]}}` and `{2{producer.serial_lo}}` through the same explicit-wiring source-expression family as top refs, child refs, slices, literals, and concat,
   - repeated child-output operands now reuse the same deterministic base-carrier family as the already-shipped projected child-output source forms instead of inventing repeat-only helper nets,
   - and repeat groups may now also appear inside bounded concat sources, so replication composes with the existing typed source-expression family instead of opening a separate syntax island.
 - Why this is worth shipping:
@@ -13492,12 +13509,12 @@ This document captures engineering rationale, design constraints, and working de
   - preserves the earlier distinction that direct bindings are target-width-aware while concat operands are intrinsic-width-aware,
   - and removes a user-facing inconsistency where decimal was the only simple unsized numeric family still artificially excluded from concat.
 
-## 2026-04-04: nested toplink concat grouping needed a source-front-end fix, not a lowering workaround
+## 2026-04-04: nested wiring concat grouping needed a source-front-end fix, not a lowering workaround
 - Kept this in the active `R11` lane and fixed the real quality seam instead of adding another local planner special case.
 - Landed behavior:
-  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now preserves literal brace groups inside slash-delimited link tokens while reading `.fsm` files, so the Lispish reader no longer destroys nested `?toplink` concat structure before typed composition parsing starts,
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm) now preserves literal brace groups inside slash-delimited link tokens while reading `.fsm` files, so the Lispish reader no longer destroys nested `?wiring` concat structure before typed composition parsing starts,
   - nested source expressions such as `header_bus,{status_bus[0],=0b1_0},{payload_bus[3:2],payload_bus[1:0]}` now therefore survive from raw AST into typed `concat_expr` lowering, direct top-output assignment, and omitted/empty-`?ports` inference,
-  - and the nested-concat success path is now locked not only at the linked-plan layer but also at the raw source/frontend layer through [t/197-pipeline-source-frontend.t](t/197-pipeline-source-frontend.t), [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t), [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t), and [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t).
+  - and the nested-concat success path is now locked not only at the linked-plan layer but also at the raw source/frontend layer through [t/197-pipeline-source-frontend.t](t/197-pipeline-source-frontend.t), [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t), [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t), and [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t).
 - Why this is worth shipping:
   - the generated HDL is only supposed to reflect the AST, so preserving nested grouping has to happen before lowering rather than being reconstructed later from damaged text,
   - fixing it at the source boundary keeps the planner/emitter honest and simpler,
@@ -13525,7 +13542,7 @@ This document captures engineering rationale, design constraints, and working de
   - and bounded concat operands still stay stricter than direct bindings, so prefixed unsized numerics do not silently leak into concat.
 - Why this is worth shipping:
   - it removes another user-facing parser rough edge without weakening exact-width intent,
-  - aligns the explicit-toplink direct-actual family with already-familiar `0b` / `0x` spelling habits,
+  - aligns the explicit-wiring direct-actual family with already-familiar `0b` / `0x` spelling habits,
   - and still keeps the boundary honest by stopping at direct bindings instead of silently widening concat semantics too.
 
 ## 2026-04-04: a future structured HDL generation mode looks feasible, but it should be a second backend route, not a forked frontend
@@ -13597,7 +13614,7 @@ This document captures engineering rationale, design constraints, and working de
 - Landed behavior:
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now allows source-side top-port bit/slice expressions and bounded concat expressions to drive declared top outputs directly through emitted top-output assignments,
   - sibling child-input consumers still use the same `connection_expr` payloads on realized instance bindings, so direct top-output and direct child-input expression uses now share one structural planner path instead of diverging into text-only special cases,
-  - and [t/263-composition-toplink-top-expressions.t](t/263-composition-toplink-top-expressions.t) plus [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t) now lock both the typed linked-plan shape and the emitted HDL assignment path, including bounded concat rendering.
+  - and [t/263-composition-wiring-top-expressions.t](t/263-composition-wiring-top-expressions.t) plus [t/267-composition-top-expression-top-outputs.t](t/267-composition-top-expression-top-outputs.t) now lock both the typed linked-plan shape and the emitted HDL assignment path, including bounded concat rendering.
 - Why this is worth shipping:
   - it widens a real user-facing gap that was already called out as the next honest seam after plain top-input fanout,
   - it reuses the existing backend-neutral expression AST plus renderer instead of inventing one-off string assembly for top assignments,
@@ -13633,17 +13650,17 @@ This document captures engineering rationale, design constraints, and working de
   - [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) now accepts exact-width decimal literal actuals such as `=8'd165` and normalizes them into the same `bit_vector_literal_expr` shape already used by binary and hex forms,
   - that same decimal literal family now also works inside bounded source-side concat operands, so the direct actual path and the concat-operand path still share one structural literal contract,
   - unsized decimal-like forms remain outside the active boundary, and overflowing decimal payloads now fail explicitly instead of silently truncating to the declared width,
-  - and [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t), [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now lock the widened runtime and concise-summary wording.
+  - and [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t), [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t), and [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now lock the widened runtime and concise-summary wording.
 - Why this is worth shipping:
   - decimal literal actuals are a natural next user-facing widening after binary and hex, but they do not require a new backend-specific escape hatch because the planner still lowers them into the same backend-neutral bit-vector payload,
   - it keeps the literal family honest by requiring explicit declared width and by rejecting overflow instead of silently discarding value bits,
   - and it advances the active composition feature lane without leaning on the still-unsettled aggregate/type design questions elsewhere in `R11`.
 
 ## 2026-04-02: explicit-actual failure summaries should keep the actual token, not just the prose reason
-- Kept this in the active `R11` lane as a small contract-hardening follow-up to the shipped explicit-toplink structural-actual feature rather than treating it as a second runtime widening.
+- Kept this in the active `R11` lane as a small contract-hardening follow-up to the shipped explicit-wiring structural-actual feature rather than treating it as a second runtime widening.
 - Landed behavior:
   - [perl/FSM/Composition/FailureReportBuilder.pm](perl/FSM/Composition/FailureReportBuilder.pm) now treats the new structural-actual diagnostic forms as first-class summary context, mapping `uses actual source '...'` to `Actual source '...'` and `uses actual endpoint '...'` to `Actual endpoint '...'`,
-  - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks both pipeline and CLI coverage for blocked literal-source role failures and blocked actual-endpoint target failures on the live explicit-toplink path.
+  - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) now locks both pipeline and CLI coverage for blocked literal-source role failures and blocked actual-endpoint target failures on the live explicit-wiring path.
 - Why this is worth shipping:
   - the preceding structural-actual slice had already added real runtime support, so failed runs should expose those same `=...` tokens in the bounded summary instead of burying them only in the raw exception text,
   - it keeps the non-quiet composition summary honest and symmetric with the older child-endpoint/top-port summary families,
@@ -15091,7 +15108,7 @@ This document captures engineering rationale, design constraints, and working de
 - Landed behavior:
   - `FSM::IR::StructuralRTLIR` now exports `top_port` and `resolved_links_touching`,
   - composition provenance endpoint resolution now uses `top_port` instead of rebuilding a top-port lookup table locally,
-  - and explicit-toplink override reporting now uses `resolved_links_touching` instead of hand-grepping resolved links for each top port.
+  - and explicit-wiring override reporting now uses `resolved_links_touching` instead of hand-grepping resolved links for each top port.
 - Why this is worth shipping:
   - it removes another pair of small but repeated structural queries from `HDLGenerator`,
   - it keeps more of the explicit composition-query surface with the structural layer that actually owns the ports and links,
@@ -15288,11 +15305,11 @@ This document captures engineering rationale, design constraints, and working de
   - it removes another small but real class of raw bookkeeping fallback from `HDLGenerator`,
   - and it leaves the next seam where it belongs: other helpers that still rebuild bounded composition state instead of consuming `IntentHIR`, `LoweredRTLIR`, or `StructuralRTLIR` first.
 
-## 2026-03-23: structural rtl ir now carries declared toplinks too
+## 2026-03-23: structural rtl ir now carries declared wiring_blocks too
 - Continued the active `R11` forward-IR cleanup lane by widening the structural layer so it owns both declared and resolved connectivity instead of only the post-resolution side.
 - Landed behavior:
-  - composition-top `structural_rtl_ir` now preserves declared explicit-toplink connectivity separately through `declared_links`,
-  - block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared toplinks directly from `composition_plan`,
+  - composition-top `structural_rtl_ir` now preserves declared explicit-wiring connectivity separately through `declared_links`,
+  - block-event reasoning for explicit child links now consumes that structural declared-link surface instead of rereading declared wiring_blocks directly from `composition_plan`,
   - and the existing resolved-link structural surface remains unchanged.
 - Why this is worth shipping:
   - it makes the structural layer a more honest source of truth for explicit top/child wiring intent,
@@ -15557,7 +15574,7 @@ This document captures engineering rationale, design constraints, and working de
   - and blocked multiple-`?ports`, omitted-`?ports`, and empty-`?ports` tops now keep `Construct: ?ports` with the blocked `shape` boundary and the shorter shape-gate reason.
 - Why this is worth shipping:
   - these are early user-facing composition failures, so the short summary matters,
-  - the prior extractor could misclassify the shape-gate family as `?toplink` because the raw diagnostic mentions the explicit-link `C2/C3` inference exception,
+  - the prior extractor could misclassify the shape-gate family as `?wiring` because the raw diagnostic mentions the explicit-link `C2/C3` inference exception,
   - and trimming that exception clause from the short `Reason:` line makes the summary noticeably easier to scan without changing planner or parser behavior.
 
 ## 2026-03-20: named generated-child parser summaries are now symmetric across count and shape failures
@@ -15570,12 +15587,12 @@ This document captures engineering rationale, design constraints, and working de
   - but only half the reachable family was regression-locked,
   - and closing that symmetry gap keeps this generated-child parser-summary path honest without changing parser or planner behavior.
 
-## 2026-03-20: blocked nested `?ports` and `?toplink` items now keep child context in CLI summaries
+## 2026-03-20: blocked nested `?ports` and `?wiring` items now keep child context in CLI summaries
 - Continued the active `R11` failed-run reporting lane with another small shipped extractor improvement at the parser-boundary level instead of widening parser behavior.
 - Landed behavior:
   - failed composition summaries now recognize blocked nested `?ports` items as `Child '?ports'`,
-  - and blocked nested `?toplink` items as `Child '?toplink'`,
-  - while still keeping the existing blocked `port declaration flatness` / `explicit top-link token flatness` boundaries and concise reasons.
+  - and blocked nested `?wiring` items as `Child '?wiring'`,
+  - while still keeping the existing blocked `port declaration flatness` / `explicit wiring token flatness` boundaries and concise reasons.
 - Why this is worth shipping:
   - these nested-item parser failures are reachable and already regression-backed at the diagnostic level,
   - the blocked diagnostics already expose the active child-block identity clearly,
@@ -15617,7 +15634,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` failed-run reporting lane with another small shipped extractor improvement instead of a broader planner change.
 - Landed behavior:
   - failed composition summaries now recognize `assigns explicit link driver '...' to target '...'` blocked diagnostics as target context,
-  - so reachable duplicate-driver conflicts keep `Construct: ?toplink`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise duplicate-driver reason.
+  - so reachable duplicate-driver conflicts keep `Construct: ?wiring`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise duplicate-driver reason.
 - Why this is worth shipping:
   - this is a real user-facing explicit-link conflict family,
   - the diagnostic already exposed the target clearly,
@@ -15627,7 +15644,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
 - Landed behavior:
   - the existing failed-run summary path now has explicit CLI regression coverage for reachable explicit-link failures where a declared top port is used with the wrong role,
-  - so these runs keep `Construct: ?toplink`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise `that top port is declared as output instead of input` reason.
+  - so these runs keep `Construct: ?wiring`, `Context: Top port 'result_data'`, the blocked `explicit link` boundary, and the concise `that top port is declared as output instead of input` reason.
 - Why this is worth shipping:
   - this is a real user-facing explicit-link failure path,
   - the summary behavior already existed,
@@ -15637,7 +15654,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` failed-run reporting lane with a small shipped extractor improvement instead of another pure regression lock.
 - Landed behavior:
   - failed composition summaries now recognize `uses child endpoint '...'` blocked diagnostics as `Child endpoint` context,
-  - so reachable explicit-link direction-mismatch failures keep `Construct: ?toplink`, `Context: Child endpoint 'uart_tx.txd'`, the blocked `explicit link` boundary, and the concise `that child port is output instead of input` reason.
+  - so reachable explicit-link direction-mismatch failures keep `Construct: ?wiring`, `Context: Child endpoint 'uart_tx.txd'`, the blocked `explicit link` boundary, and the concise `that child port is output instead of input` reason.
 - Why this is worth shipping:
   - this is a real user-facing explicit-link failure family,
   - the diagnostic already exposed the endpoint token clearly,
@@ -15647,7 +15664,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
 - Landed behavior:
   - the existing failed-run summary path now has explicit CLI regression coverage for reachable blocked explicit-link endpoint-resolution failures where the child instance exists but the named child port does not,
-  - so these runs keep `Construct: ?toplink`, `Context: Child endpoint 'uart_tx.missing_port'`, the blocked `explicit link endpoint resolution` boundary, and the concise `instance 'uart_tx' has no port named 'missing_port'` reason.
+  - so these runs keep `Construct: ?wiring`, `Context: Child endpoint 'uart_tx.missing_port'`, the blocked `explicit link endpoint resolution` boundary, and the concise `instance 'uart_tx' has no port named 'missing_port'` reason.
 - Why this is worth shipping:
   - this is a real user-facing explicit-link failure path,
   - the summary behavior already existed,
@@ -15657,7 +15674,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
 - Landed behavior:
   - the existing failed-run summary path now has explicit CLI regression coverage for reachable blocked missing top-level explicit-link endpoints,
-  - so these runs keep `Construct: ?toplink`, `Context: Top endpoint 'missing_top'`, the blocked `explicit link endpoint resolution` boundary, and the concise `'?ports' declares no top port with that name` reason.
+  - so these runs keep `Construct: ?wiring`, `Context: Top endpoint 'missing_top'`, the blocked `explicit link endpoint resolution` boundary, and the concise `'?ports' declares no top port with that name` reason.
 - Why this is worth shipping:
   - this is a real user-facing explicit-link failure path,
   - the summary behavior already existed,
@@ -15667,7 +15684,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` failed-run reporting lane by hardening another already-shipped explicit-link summary family instead of widening composition behavior.
 - Landed behavior:
   - the existing failed-run summary path now has explicit CLI regression coverage for blocked unsupported explicit-endpoint syntax,
-  - so these runs keep `Construct: ?toplink`, endpoint context, the blocked `explicit link endpoint resolution` boundary, and the concise “that syntax is unsupported” reason.
+  - so these runs keep `Construct: ?wiring`, endpoint context, the blocked `explicit link endpoint resolution` boundary, and the concise “that syntax is unsupported” reason.
 - Why this is worth shipping:
   - this is a real user-facing explicit-link failure path,
   - the summary behavior already existed,
@@ -15841,12 +15858,12 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` diagnostics/reporting lane by moving one step beyond pure exception text for failed composition runs.
 - Landed behavior:
   - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now derives a small composition failure report from blocked composition diagnostics,
-  - and [bin/fsmgen](bin/fsmgen) now prints a bounded `=== Composition Failure Summary ===` section during non-quiet failed composition runs when that blocked boundary can be classified honestly, including a `Lane:` line when the raised diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when the failure text points clearly at one active syntax construct such as `?ports`, `?toplink`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a generated-child source-file line when a blocked `?fsmc` / `?dtc` realization failure already names the resolved external `.fsm` file, an external RTL metadata-file line when a blocked `.rtlif` structure, token, sizing, typing, flatness, or declaration failure already names the resolved metadata file, a concise context line when the offending child/top-port/explicit-endpoint/metadata/token can be identified cleanly, plus a concise blocked-reason line when the first real reason sentence can be separated cleanly from follow-up details.
+  - and [bin/fsmgen](bin/fsmgen) now prints a bounded `=== Composition Failure Summary ===` section during non-quiet failed composition runs when that blocked boundary can be classified honestly, including a `Lane:` line when the raised diagnostic already names the active `C1` / `C2` / `C3` / `C4` lane, a `Construct:` line when the failure text points clearly at one active syntax construct such as `?ports`, `?wiring`, `?rtl`, `?fsmc`, `?dtc`, or `=port`, a generated-child source-file line when a blocked `?fsmc` / `?dtc` realization failure already names the resolved external `.fsm` file, an external RTL metadata-file line when a blocked `.rtlif` structure, token, sizing, typing, flatness, or declaration failure already names the resolved metadata file, a concise context line when the offending child/top-port/explicit-endpoint/metadata/token can be identified cleanly, plus a concise blocked-reason line when the first real reason sentence can be separated cleanly from follow-up details.
 - Why this is worth shipping:
   - it gives users a cleaner read on blocked composition failures without mutating the underlying exception text,
   - it keeps quiet-mode and test-facing raw failure behavior intact,
   - and it is the first bounded step from successful-run provenance/block summaries into failed-run composition reporting.
-- Added [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side failure-report extraction and the non-quiet CLI summary surface, including concise reason extraction that trims follow-up detail such as search roots, wrong-kind corrective notes, and repeated metadata-file prefixes, concise context extraction for unsupported-child, top-port, explicit-link endpoint, and `.rtlif` token failures, generated-child source-file extraction for wrong-kind `?fsmc` realization failures, external RTL metadata-file extraction for blocked `.rtlif` structure and token failures, lane extraction for `C1`- and `C3`-scoped failures, and construct extraction for `?ports`, `?rtl`, `?fsmc`, and `?toplink` without inventing construct lines for unsupported child headers.
+- Added [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t) to lock both pipeline-side failure-report extraction and the non-quiet CLI summary surface, including concise reason extraction that trims follow-up detail such as search roots, wrong-kind corrective notes, and repeated metadata-file prefixes, concise context extraction for unsupported-child, top-port, explicit-link endpoint, and `.rtlif` token failures, generated-child source-file extraction for wrong-kind `?fsmc` realization failures, external RTL metadata-file extraction for blocked `.rtlif` structure and token failures, lane extraction for `C1`- and `C3`-scoped failures, and construct extraction for `?ports`, `?rtl`, `?fsmc`, and `?wiring` without inventing construct lines for unsupported child headers.
 
 ## 2026-03-18: malformed generated-child source payloads now say source shape/count is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable generated-child payload parser boundary without changing composition planning behavior.
@@ -15862,7 +15879,7 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-18: unsupported composition child kinds now say child-kind support is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition child-kind parser boundary without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says composition child-kind support is blocked when a composition child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?toplink` family.
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says composition child-kind support is blocked when a composition child header falls outside the active `?fsmc` / `?dtc` / `?rtl` / `?ports` / `?wiring` family.
 - Why this is worth shipping:
   - it closes another older-wording pocket on a real composition parser-visible family boundary,
   - it keeps the shipped child-kind contract unchanged while aligning unsupported-child failures with the rest of the blocked diagnostics lane,
@@ -15879,12 +15896,14 @@ This document captures engineering rationale, design constraints, and working de
   - and it also retires the older undef-header warning path instead of leaving that noise to leak through pipeline and CLI runs.
 - Added [t/128-composition-child-structure-diagnostics.t](t/128-composition-child-structure-diagnostics.t) to lock the new wording through both pipeline and CLI entrypoints.
 
-## 2026-03-18: `?toplink` naming cleanup is now tracked as future syntax work
-- Captured the recent naming discussion explicitly instead of leaving it in chat only.
-- Saved future note:
-  - `?toplink` is serviceable but not ideal as composition wiring syntax,
-  - a future syntax-cleanup pass may decide whether it should remain canonical or gain a clearer preferred alias such as `?wiring`,
-  - and any such change should prefer compatibility/aliasing over abrupt source breakage.
+## 2026-03-18: `?wiring` naming cleanup is resolved
+- Captured the composition wiring naming decision explicitly instead of leaving
+  it in chat only.
+- Saved public contract:
+  - `?wiring` is the canonical spelling for explicit composition wiring blocks,
+  - new examples and generated artifacts should use `?wiring` with Lisp-ish
+    list links,
+  - and there is no separate alias backlog for this block name.
 
 ## 2026-03-18: legacy `?ports` mapping directives now say port declaration mode is blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition-parser legacy-`?ports` boundary without changing composition planning behavior.
@@ -15896,13 +15915,13 @@ This document captures engineering rationale, design constraints, and working de
   - and it adds focused regression coverage through pipeline and CLI entrypoints in addition to the existing direct parser check.
 - Added [t/127-composition-ports-mapping-diagnostics.t](t/127-composition-ports-mapping-diagnostics.t) and updated [t/25-composition-legacy-scope-errors.t](t/25-composition-legacy-scope-errors.t) to lock the new wording.
 
-## 2026-03-18: malformed `?ports` and `?toplink` parser items now say parser token boundaries are blocked
+## 2026-03-18: malformed `?ports` and `?wiring` parser items now say parser token boundaries are blocked
 - Continued the active `R11` diagnostics lane by tightening the next reachable composition-parser token-boundary family without changing composition planning behavior.
 - Landed behavior:
-  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says blocked parser token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?toplink` items, and unsupported `?toplink` tokens.
+  - [perl/FSM/Composition/Parser.pm](perl/FSM/Composition/Parser.pm) now says blocked parser token-boundary failures for nested `?ports`, invalid `?ports` tokens, non-positive `?ports` widths, nested `?wiring` items, and unsupported `?wiring` tokens.
 - Why this is worth shipping:
   - it closes another older-wording pocket on real composition parser boundaries that users can hit before planning,
-  - it keeps the shipped parser token contract unchanged while lining malformed `?ports` / `?toplink` failures up with the rest of the blocked diagnostics lane,
+  - it keeps the shipped parser token contract unchanged while lining malformed `?ports` / `?wiring` failures up with the rest of the blocked diagnostics lane,
   - and it adds focused regression coverage through pipeline and CLI entrypoints.
 - Added [t/126-composition-parser-token-diagnostics.t](t/126-composition-parser-token-diagnostics.t) to lock the new wording.
 
@@ -16030,7 +16049,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` diagnostics lane by tightening two remaining public endpoint-shape branches without changing composition behavior.
 - Landed behavior:
   - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says declared connect-by-name is *blocked* when a top author tries to declare shared system ports like `clk` or `rstn` with `=name`,
-  - and it now says explicit link endpoint resolution is *blocked* when a `?toplink` endpoint uses unsupported syntax instead of a top-port name or `instance.port`.
+  - and it now says explicit link endpoint resolution is *blocked* when a `?wiring` endpoint uses unsupported syntax instead of a top-port name or `instance.port`.
 - Why this is worth shipping:
   - it closes another older-wording pocket right on the composition endpoint surface users type directly,
   - it keeps binding behavior unchanged while lining those endpoint-shape failures up with the rest of the blocked-wording lane,
@@ -16066,16 +16085,16 @@ This document captures engineering rationale, design constraints, and working de
   - it reuses already-shipped focused `C4` coverage instead of inventing a larger feature slice,
   - and it keeps `R11` moving on diagnostics clarity rather than hidden planner changes.
 - Updated [t/24-composition-connect-by-name.t](t/24-composition-connect-by-name.t) and [t/95-composition-connect-by-name-input-fanout.t](t/95-composition-connect-by-name-input-fanout.t) to lock the broadened blocked-wording surface for declared connect-by-name.
-## 2026-03-17: explicit-toplink top-port inference failures now say when inference is blocked
-- Continued the active `R11` lane by extending the blocked-wording diagnostics into the explicit-toplink-driven undeclared top-port inference path.
+## 2026-03-17: explicit-wiring top-port inference failures now say when inference is blocked
+- Continued the active `R11` lane by extending the blocked-wording diagnostics into the explicit-wiring-driven undeclared top-port inference path.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit top-link port inference is *blocked* when one undeclared top endpoint is used as both input and output, or when the linked child endpoints disagree on width or type metadata,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit wiring port inference is *blocked* when one undeclared top endpoint is used as both input and output, or when the linked child endpoints disagree on width or type metadata,
   - and it still reports the concrete explicit-link evidence instead of collapsing those failures into generic ambiguity text.
 - Why this is worth shipping:
   - it broadens the failure-path blocked-wording lane into another important convention-over-configuration inference family,
-  - it closes previously untested width/type wording branches in the explicit-toplink path,
+  - it closes previously untested width/type wording branches in the explicit-wiring path,
   - and it keeps the current `R11` step on diagnostics clarity rather than new behavior.
-- Updated [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-toplink-driven undeclared top-port inference.
+- Updated [t/101-composition-explicit-link-implicit-ports.t](t/101-composition-explicit-link-implicit-ports.t) to lock mixed-role, width-mismatch, and type-mismatch blocked diagnostics for explicit-wiring-driven undeclared top-port inference.
 ## 2026-03-17: top-level composition lane/shape gates now say they are blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining top-level composition lane/shape gates without changing planning behavior.
 - Landed behavior:
@@ -16089,13 +16108,13 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-03-17: explicit-link lane-entry and topology failures now say they are blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining explicit-link lane-entry and topology branches without changing composition behavior.
 - Landed behavior:
-  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link lane entry is *blocked* when a `C2`/`C3` lane is entered without any explicit `?toplink`,
+  - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit-link lane entry is *blocked* when a `C2`/`C3` lane is entered without any explicit `?wiring`,
   - and it now says explicit-link topology is *blocked* when a top input tries to drive a top output directly or when one source tries to drive multiple top outputs.
 - Why this is worth shipping:
   - it closes another older-wording pocket in the explicit-link diagnostics family,
   - it keeps the planner behavior unchanged while making the failure surface read consistently,
   - and it adds focused regression coverage instead of relying on indirect behavior.
-- Added [t/109-composition-explicit-link-topology-diagnostics.t](t/109-composition-explicit-link-topology-diagnostics.t) to lock missing-`?toplink`, top-input-to-top-output, and multi-top-output-source diagnostics.
+- Added [t/109-composition-explicit-link-topology-diagnostics.t](t/109-composition-explicit-link-topology-diagnostics.t) to lock missing-`?wiring`, top-input-to-top-output, and multi-top-output-source diagnostics.
 ## 2026-03-17: explicit-link unwired-port failures now say wiring is blocked
 - Continued the active `R11` diagnostics lane by tightening the remaining explicit-link unwired-port branches without changing composition behavior.
 - Landed behavior:
@@ -16106,11 +16125,11 @@ This document captures engineering rationale, design constraints, and working de
   - it lines those unwired-port branches up with the same blocked-language used everywhere else in the active diagnostics lane,
   - and it keeps the planner behavior unchanged.
 - Added [t/108-composition-explicit-link-wiring-diagnostics.t](t/108-composition-explicit-link-wiring-diagnostics.t) to lock unused declared top-input, unused declared top-output, and unconnected realized-child-port diagnostics.
-## 2026-03-17: explicit toplink validation failures now say when the declared link is blocked
-- Continued the active `R11` diagnostics lane by tightening the main explicit `?toplink` validation family without changing composition behavior.
+## 2026-03-17: explicit wiring validation failures now say when the declared link is blocked
+- Continued the active `R11` diagnostics lane by tightening the main explicit `?wiring` validation family without changing composition behavior.
 - Landed behavior:
   - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now says explicit link endpoint resolution is *blocked* when a declared link names a missing endpoint,
-  - and explicit link validation now says the declared link is *blocked* when direction, duplicate-drive, or width evidence prevents that declared `?toplink` from applying.
+  - and explicit link validation now says the declared link is *blocked* when direction, duplicate-drive, or width evidence prevents that declared `?wiring` from applying.
 - Why this is worth shipping:
   - it extends the same blocked-wording style into the core explicit-link validation family instead of leaving that branch in older direct-error wording,
   - it keeps the existing endpoint detail intact,
@@ -16161,13 +16180,13 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` lane by making the first “overridden” cases visible in successful composition runs instead of stopping at declared-versus-inferred counts.
 - Landed behavior:
   - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now derives override events into `composition_report`,
-  - those events currently cover explicit toplinks overriding same-name top-input/top-output convention and explicit top outputs re-exporting inferred internal carriers,
+  - those events currently cover explicit wiring_blocks overriding same-name top-input/top-output convention and explicit top outputs re-exporting inferred internal carriers,
   - and [bin/fsmgen](bin/fsmgen) now prints a dedicated `Convention Overrides` section when such events are present.
 - Why this is worth shipping:
   - it turns the roadmap’s “overridden” concept into real surfaced data instead of leaving it implicit in planner behavior,
   - it keeps the reporting layer additive and bounded,
   - and it makes the next diagnostics step clearer: the remaining gap is now mostly the “blocked” side, not override visibility.
-- [t/105-composition-override-reporting.t](t/105-composition-override-reporting.t) locks both explicit-toplink override reporting and explicit top-output internal-carrier re-export reporting across pipeline and CLI surfaces.
+- [t/105-composition-override-reporting.t](t/105-composition-override-reporting.t) locks both explicit-wiring override reporting and explicit top-output internal-carrier re-export reporting across pipeline and CLI surfaces.
 ## 2026-03-17: composition provenance now reaches the result hash and CLI summary
 - Continued the active `R11` lane by turning the new plan-side provenance metadata into something users and embedding callers can actually see without spelunking typed plan objects manually.
 - Landed behavior:
@@ -16191,7 +16210,7 @@ This document captures engineering rationale, design constraints, and working de
   - it is the first concrete step toward the roadmap rule that diagnostics should explain whether a port or link was inferred, blocked, or overridden,
   - it helps future embedding/reporting work without changing the existing planner contract abruptly,
   - and it keeps the new transparency contract additive by leaving the old `links` field alone while introducing `resolved_links` for the full planned link set.
-- [t/103-composition-provenance-metadata.t](t/103-composition-provenance-metadata.t) locks parser-side declared provenance, `C1` inferred passthrough provenance, explicit-toplink-driven inferred top-port provenance, and resolved-link provenance for plain-explicit-port convention plus internal-carrier re-export.
+- [t/103-composition-provenance-metadata.t](t/103-composition-provenance-metadata.t) locks parser-side declared provenance, `C1` inferred passthrough provenance, explicit-wiring-driven inferred top-port provenance, and resolved-link provenance for plain-explicit-port convention plus internal-carrier re-export.
 ## 2026-03-17: explicit-link `C2` / `C3` plain explicit top ports can now reuse same-name convention
 - Continued the active `R11` lane by removing another layer of top-boundary boilerplate without collapsing `C2` / `C3` into broad hidden auto-wiring.
 - Landed behavior:
@@ -16217,11 +16236,11 @@ This document captures engineering rationale, design constraints, and working de
 - Design note from this audit:
   - the right follow-up is not a broad “refactor everything” pass,
   - it is to keep naming these seams in the roadmap and then retire them in bounded slices while the active `R11` composition/type contracts are still being shaped.
-## 2026-03-17: explicit-link `C2` / `C3` can now infer top ports directly from explicit `?toplink`
+## 2026-03-17: explicit-link `C2` / `C3` can now infer top ports directly from explicit `?wiring`
 - Continued the active `R11` lane by removing another layer of parent-interface boilerplate without reopening broad hidden wiring.
 - Landed behavior:
   - explicit-link `C2` / `C3` tops may now omit `?ports` entirely, or use an empty `(?ports)`,
-  - the planner will now infer missing top ports directly from explicit `?toplink` endpoints when those endpoints imply one consistent direction plus exact width/type agreement,
+  - the planner will now infer missing top ports directly from explicit `?wiring` endpoints when those endpoints imply one consistent direction plus exact width/type agreement,
   - renamed top-boundary signals are therefore now supported without a separate `?ports` declaration,
   - and same-name explicit top-input links still infer the top port without inventing duplicate fanout links on top of the already-declared bindings.
 - Why this is worth shipping:
@@ -16389,7 +16408,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` lane by broadening the already-shipped composition planner in one bounded way instead of inventing a new syntax family.
 - Landed behavior:
   - one external `?rtl` child now works in the single-child passthrough `C1` lane,
-  - one external `?rtl` child now also works in the explicit-toplink `C3` lane,
+  - one external `?rtl` child now also works in the explicit-wiring `C3` lane,
   - and one external `?rtl` child now also works in the declared connect-by-name `C4` lane.
 - Why this is worth shipping:
   - it turns the recently strengthened `.rtlif` interface-source contract into a more immediately useful wrapper/composition capability,
@@ -16425,7 +16444,7 @@ This document captures engineering rationale, design constraints, and working de
 - Continued the active `R11` lane in the next bounded direction instead of widening composition syntax blindly.
 - Landed behavior:
   - one generated child plus one `?rtl` child can now use declared `=name` top exposure with the same exact-match rule as the rest of `C4`,
-  - mixed tops may combine explicit child-to-child `?toplink` wiring with declared by-name top ports,
+  - mixed tops may combine explicit child-to-child `?wiring` wiring with declared by-name top ports,
   - and composition-facing standalone-DT interfaces now trust semantic signal-role analysis before the old name-based output heuristic.
 - That last point fixed a real bug:
   - RHS-only standalone-DT signals such as `payload_in` could be misclassified as outputs only because their names started with `p`,
@@ -17569,7 +17588,7 @@ means:
 ## 2026-03-14: `R6` shipped `C5` width-mismatch diagnostics
 - Continued `R6` by turning the existing width-equality rule into a fully locked diagnostic boundary.
 - Rationale:
-  - explicit `?toplink` width mismatches were already rejected, but `C5` was not truly done until that behavior was covered by tests and the declared connect-by-name path produced an equally direct diagnostic,
+  - explicit `?wiring` width mismatches were already rejected, but `C5` was not truly done until that behavior was covered by tests and the declared connect-by-name path produced an equally direct diagnostic,
   - the right finish for `C5` is not another representation change; it is a clear user-facing failure mode that names the two conflicting endpoints and their widths.
 - Structural outcome:
   - explicit-link width mismatches are now regression-locked,
@@ -17589,7 +17608,7 @@ means:
     - and exposing an external RTL output with `.rtlif` metadata.
   - it also now states the practical rule of thumb:
     - use `=name` only for intentional same-name passthrough,
-    - keep explicit `?toplink` for renaming, remapping, and broader wiring.
+    - keep explicit `?wiring` for renaming, remapping, and broader wiring.
 ## 2026-03-14: `R6` first shipped `C4` declared connect-by-name slice
 - Continued `R6` by adding the first narrow modern connect-by-name contract on top of the shipped explicit-link lanes.
 - Rationale:
@@ -17606,7 +17625,7 @@ means:
   - ambiguity and no-match cases fail explicitly instead of widening hidden inference.
 - Safety/compatibility:
   - existing `C1`/`C2`/`C3` behavior stays intact because `C4` reuses the same planned-binding and emission paths,
-  - explicit `?toplink` remains the mechanism for all other non-system connections,
+  - explicit `?wiring` remains the mechanism for all other non-system connections,
   - the `.rtlif` follow-up is now recorded on the roadmap so we do not lose the next design question: document exact grammar now and later decide whether a stronger interface-source contract should replace or sit above the sidecar form.
 - Verification:
   - syntax checks for the touched composition types, planner, and new parser/test files pass,
@@ -17632,7 +17651,7 @@ means:
   - this is a better modern fit than copying the old environment-specific entity DB hooks because it preserves explicit interface validation without reintroducing `AUTOLOAD`, `.plg`, or hidden loader state.
 - Safety/compatibility:
   - `C1` and `C2` behavior stay intact because the mixed lane reuses the same explicit-link planning rules around endpoint roles, exact width matching, and deterministic net naming,
-  - the shipped `C3` lane is still intentionally bounded: exactly one `?fsmc`, exactly one `?rtl`, explicit `?toplink`, and default RTL instance naming from the module name.
+  - the shipped `C3` lane is still intentionally bounded: exactly one `?fsmc`, exactly one `?rtl`, explicit `?wiring`, and default RTL instance naming from the module name.
 - Verification:
   - syntax checks for the new loader, updated planner, and new tests pass,
   - focused composition regressions `t/20`, `t/21`, `t/22`, and `t/23` pass,
@@ -17644,19 +17663,19 @@ means:
 - Continued `R6` by widening the active composition runtime from one-child passthrough to the first explicit multi-child FSM-linking lane.
 - Rationale:
   - once `C1` was shipped, the next honest move was not to jump straight to `?rtl`, but to prove that the active architecture can plan and emit deterministic wiring across more than one realized child,
-  - explicit `?toplink` resolution is the right next step because it exercises the typed composition objects and forces us to define endpoint roles, internal-net ownership, and duplicate-driver behavior,
+  - explicit `?wiring` resolution is the right next step because it exercises the typed composition objects and forces us to define endpoint roles, internal-net ownership, and duplicate-driver behavior,
   - keeping this slice FSM-only avoids mixing two unsettled concerns at once: multi-child wiring and external-RTL interface loading.
 - Structural outcome:
   - the composition layer now has a typed `Net` plan object for internal child-to-child wiring,
   - `Plan` now carries typed internal nets and `RealizedInstance` now carries port bindings,
-  - `HDLGenerator` now has a real `C2` planning path for multiple embedded `?fsmc` children with explicit `?toplink` wiring,
+  - `HDLGenerator` now has a real `C2` planning path for multiple embedded `?fsmc` children with explicit `?wiring` wiring,
   - explicit link endpoints are now resolved as either top-port names or `instance.port` child endpoints,
   - the planner now validates endpoint roles, width equality, deterministic source-carrier selection, and duplicate targets before emission,
   - top emission is now driven from planned bindings instead of recomputing wiring ad hoc.
 - Safety/compatibility:
   - the single-FSM path remains unchanged,
   - `C1` behavior remains intact because it now just uses the same generic top emitter with a simpler binding plan,
-  - the shipped multi-child lane is still intentionally bounded: embedded `?fsmc` children only, shared `clk` / `rstn` auto-wiring only, and explicit `?toplink` for non-system ports.
+  - the shipped multi-child lane is still intentionally bounded: embedded `?fsmc` children only, shared `clk` / `rstn` auto-wiring only, and explicit `?wiring` for non-system ports.
 - Verification:
   - syntax checks for the new net type, updated planner, and new composition tests pass,
   - focused regressions `t/13`, `t/14`, `t/20`, `t/21`, and `t/23` pass,
@@ -17685,7 +17704,7 @@ means:
   - focused composition regressions `t/13`, `t/14`, and `t/20` pass,
   - the full Perl regression suite passes again after landing the `C1` slice.
 - Next likely slices:
-  - widen from `C1` to `C2` with multi-child planning and typed explicit `?toplink`/net resolution,
+  - widen from `C1` to `C2` with multi-child planning and typed explicit `?wiring`/net resolution,
   - then add the corresponding duplicate-driver and width/endpoint diagnostics.
 ## 2026-03-14: `R6` first typed composition parser/IR slice plus legacy mapping note
 - Continued `R6` by moving from “explicit composition source boundary” to “explicit composition parser boundary.”
@@ -17697,7 +17716,7 @@ means:
   - `docs/COMPOSITION_LEGACY_MAPPING.md` now captures the historical composition call tree and explicitly separates language concepts from obsolete plugin machinery,
   - the active codebase now has a first typed composition parser/IR layer under `perl/FSM/Composition/`,
   - `HDLGenerator` now parses `?top:name` sources into typed composition objects before stopping at the still-unimplemented realization/emission boundary,
-  - the active parser now accepts `?top`, `?fsmc`, `?rtl`, `?ports`, and `?toplink` as typed child-block concepts,
+  - the active parser now accepts `?top`, `?fsmc`, `?rtl`, `?ports`, and `?wiring` as typed child-block concepts,
   - several legacy-only shapes are now rejected deliberately:
     - inline top-port shorthand,
     - multi-source `?fsmc`,
@@ -17711,7 +17730,7 @@ means:
   - syntax checks for the new composition packages and updated pipeline pass,
   - focused regressions `t/13-composition-source-classification.t` and `t/14-composition-parser.t` pass.
 - Next likely slices:
-  - replace raw `?ports` / `?toplink` payload storage with typed port/link planning objects,
+  - replace raw `?ports` / `?wiring` payload storage with typed port/link planning objects,
   - then start `C1` realization: one `?top:name`, one `?fsmc` child, explicit top-port exposure, deterministic top planning, and initial top emission.
 ## 2026-03-14: `R6` explicit composition source boundary before FSM-only parsing
 - Landed the first executable composition-aware behavior in the active toolchain by inserting an explicit source-kind classifier before the existing FSM-only parser boundary.
@@ -17736,7 +17755,7 @@ means:
   - the broad compile regression `t/01-regression.t` passes again once it is limited to active FSM-root samples,
   - the AST-first architecture tests pass again once they are retargeted to an actual FSM-root fixture.
 - Next likely slices:
-  - implement the first typed parser/IR objects for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?toplink`),
+  - implement the first typed parser/IR objects for `?top:name` contents (`?ports`, `?fsmc`, `?rtl`, `?wiring`),
   - start the first acceptance-scenario test from `docs/COMPOSITION_SCOPE.md`, most likely the single-child `C1` lane.
 ## 2026-03-14: `R6` scope defined against the active architecture
 - Started `R6` by defining composition scope concretely against the modern active pipeline instead of continuing to refer to legacy composition capabilities abstractly.
@@ -17746,7 +17765,7 @@ means:
   - the legacy `top_exec` notes remain useful context, but they are too broad and too entangled with obsolete eval/plugin behavior to serve as the implementation contract directly.
 - Structural outcome:
   - `docs/COMPOSITION_SCOPE.md` now defines the first active composition lane,
-  - the scoped source model is `?top:name` plus `?fsmc`, `?rtl`, `?ports`, and `?toplink`,
+  - the scoped source model is `?top:name` plus `?fsmc`, `?rtl`, `?ports`, and `?wiring`,
   - the planned architecture boundary is a typed composition parser/classifier above the existing FSM-only parser,
   - the first acceptance matrix is now explicit (`C1`..`C6`) instead of implied.
 - Safety/compatibility:
@@ -20269,7 +20288,7 @@ This behavior was practical and production-oriented for control/datapath partiti
 - `?fsmc` (compile FSM collections)
 - `?rtl` (bind external RTL entities)
 - `?ports`
-- `?toplink`
+- `?wiring`
 - `?top`
 - macro expansion via `?&...`
 
@@ -20788,7 +20807,7 @@ It is an exact-delay pulse request:
 - Blocked explicit-link topology diagnostics already exposed a good stable sentence for the reachable `one resolved source drives multiple top outputs` family, but the failed-run summary extractor was not yet surfacing the resolved source as structured context.
 - The active contract is now explicit for that family:
   - `Lane: C2`
-  - `Construct: ?toplink`
+  - `Construct: ?wiring`
   - `Context: Child endpoint 'producer.output_data'`
   - `Blocked boundary: explicit-link topology`
   - `Reason: the current active C2 lane supports at most one top-output target per resolved source`
@@ -20800,7 +20819,7 @@ It is an exact-delay pulse request:
 - The sibling blocked explicit-link topology family `links top input '...' directly to top output '...'` also exposed a stable sentence, but the failed-run summary extractor was still leaving the top-input source only in the raw exception text.
 - The active contract is now explicit for that family as well:
   - `Lane: C2`
-  - `Construct: ?toplink`
+  - `Construct: ?wiring`
   - `Context: Top port 'start'`
   - `Blocked boundary: explicit-link topology`
   - `Reason: the current active C2 lane only supports top inputs driving child inputs`
@@ -20809,12 +20828,12 @@ It is an exact-delay pulse request:
   - planner behavior stays unchanged, and the summary now covers both main reachable explicit-link topology families with structured context rather than reason-only text.
 
 ## 2026-03-19: explicit-link lane-entry summaries now have an explicit no-context contract
-- The blocked explicit-link lane-entry family `requires explicit '?toplink' wiring` already exposed a stable lane + construct + boundary + reason shape, but it still relied on implicit behavior that happened not to invent any context line.
+- The blocked explicit-link lane-entry family `requires explicit '?wiring' wiring` already exposed a stable lane + construct + boundary + reason shape, but it still relied on implicit behavior that happened not to invent any context line.
 - The active contract is now explicit for that family too:
   - `Lane: C2`
-  - `Construct: ?toplink`
+  - `Construct: ?wiring`
   - `Blocked boundary: explicit-link lane entry`
-  - `Reason: the current active C2 lane requires explicit '?toplink' wiring`
+  - `Reason: the current active C2 lane requires explicit '?wiring' wiring`
   - and no fabricated `Context:` line
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
@@ -20868,10 +20887,10 @@ It is an exact-delay pulse request:
 
 ## 2026-03-19: parser-boundary summaries now surface mapping/token context more explicitly
 - Continued the active `R11` failed-run reporting lane by extending construct-scoped parser summaries instead of widening composition behavior.
-- The parser failure summary path already classified malformed `?ports` and `?toplink` runs by construct, but the contract had not yet been locked for those families and the `?ports` mapping-directive case was still leaving the specific directive only in the raw exception text.
+- The parser failure summary path already classified malformed `?ports` and `?wiring` runs by construct, but the contract had not yet been locked for those families and the `?ports` mapping-directive case was still leaving the specific directive only in the raw exception text.
 - The active contract is now explicit for two parser-boundary families:
   - blocked `?ports` mapping directives keep `Construct: ?ports` plus `Context: Mapping directive '/foo/bar/'`
-  - blocked malformed `?toplink` tokens keep `Construct: ?toplink` plus `Context: Token 'child.result_data->result_data'`
+  - blocked malformed `?wiring` tokens keep `Construct: ?wiring` plus `Context: Token 'child.result_data->result_data'`
   - both keep their existing blocked-boundary labels and concise parser reasons
 - Design note from this slice:
   - this required only a narrow extractor addition for `mapping directive '...'`,
@@ -20879,7 +20898,7 @@ It is an exact-delay pulse request:
 
 ## 2026-03-19: the remaining ?ports token-family summaries are now explicit too
 - Continued the active `R11` failed-run reporting lane by hardening the sibling `?ports` token families instead of widening composition behavior.
-- The summary extractor was already correctly deriving `Token '...'` context from parser token diagnostics, but the contract had only been locked for `?ports` mapping directives and malformed `?toplink` tokens.
+- The summary extractor was already correctly deriving `Token '...'` context from parser token diagnostics, but the contract had only been locked for `?ports` mapping directives and malformed `?wiring` tokens.
 - The active contract is now explicit for the remaining `?ports` parser-token siblings:
   - invalid explicit top-port tokens keep `Construct: ?ports` plus `Context: Token 'bad-name>8'`
   - non-positive width tokens keep `Construct: ?ports` plus `Context: Token 'data_in<0'`
@@ -20910,16 +20929,16 @@ It is an exact-delay pulse request:
   - this required only a narrow construct-extractor addition for `contains child '?fsmc:...'` and the same known-child-header family,
   - parser behavior stays unchanged, and the summary remains derived from the raised diagnostic rather than a parallel reporting path.
 
-## 2026-03-19: the dotted-pair child-item summary contract now covers ?toplink too
+## 2026-03-19: the dotted-pair child-item summary contract now covers ?wiring too
 - Continued the active `R11` failed-run reporting lane by hardening the sibling child-item family instead of widening composition behavior.
 - The summary extractor already recognized known child headers across constructs, but the dotted-pair child-item contract had only been explicitly locked on the `?fsmc` side.
-- The active contract is now explicit for the `?toplink` sibling too:
-  - blocked `?toplink:wiring` dotted-pair payloads keep `Construct: ?toplink`
-  - they also keep `Context: Child '?toplink:wiring'`
+- The active contract is now explicit for the `?wiring` sibling too:
+  - blocked `?wiring:wiring` dotted-pair payloads keep `Construct: ?wiring`
+  - they also keep `Context: Child '?wiring:wiring'`
   - and they preserve the blocked `child item-list shape` boundary plus the concise dotted-pair-contract reason
 - Design note from this slice:
   - no runtime change was needed here; the existing summary extractor already behaved correctly,
-  - the value is in making the child-item summary contract explicit and symmetric on the `?toplink` side too.
+  - the value is in making the child-item summary contract explicit and symmetric on the `?wiring` side too.
 
 ## 2026-03-19: the dotted-pair child-item summary contract now covers ?ports too
 - Continued the active `R11` failed-run reporting lane by hardening the next sibling child-item family instead of widening composition behavior.
@@ -21183,7 +21202,7 @@ It is an exact-delay pulse request:
   - the active composition-top emitter now walks that typed node when rendering instance actual connections,
   - and shared-datapath candidate discovery now also reads structural binding signal names through that same typed node instead of depending only on a flat binding string.
 - The next structural-consumption step is now also live through override/block resolved-link handling:
-  - composition override events now take their explicit-toplink and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
+  - composition override events now take their explicit-wiring and inferred-reexport connectivity from `structural_rtl_ir->{resolved_links}`,
   - and the kept-internal internal-carrier block path now also derives its family detection from that same structural resolved-link surface instead of rereading resolved links from the plan.
 - The next forward semantic widening step is now also live through one unified composition child export:
   - composition-top `intent_hir` now carries `composition_child_count` plus one ordered `composition_children` export across realized `?fsmc`, `?dtc`, and `?rtl` children,
@@ -21289,7 +21308,7 @@ It is an exact-delay pulse request:
 - Inferred multi-child top-port projection now also lives in
   `FSM::Composition::TopPortInferenceBuilder` instead of in `HDLGenerator`.
 - That builder now owns the bounded top-port inference family end-to-end:
-  explicit-toplink top-port inference plus undeclared same-name top-input and
+  explicit-wiring top-port inference plus undeclared same-name top-input and
   top-output inference.
 - Shared-datapath support now also lives in
   `FSM::Composition::SharedDatapathSupport` instead of in `HDLGenerator`.
@@ -21359,12 +21378,12 @@ It is an exact-delay pulse request:
   AST structures, substituted signal-reference checks, and cached live-usage
   evidence derivation.
 
-## 2026-04-02: explicit-toplink actual bindings now have a first shipped structural slice
+## 2026-04-02: explicit-wiring actual bindings now have a first shipped structural slice
 - Continued the active `R11` lane by turning the already-shipped structural
   actual-expression helpers into a real composition feature instead of leaving
   them as future-facing AST vocabulary only.
-- The first shipped explicit-toplink actual-source slice is now in tree:
-  - `?toplink` sources may now use `=open`, `=0`, `=1`, and exact-width
+- The first shipped explicit-wiring actual-source slice is now in tree:
+  - `?wiring` sources may now use `=open`, `=0`, `=1`, and exact-width
     binary literal forms such as `=8'b10100101`,
   - those actuals currently target realized child input ports only,
   - `=open` is width-agnostic,
@@ -21376,7 +21395,7 @@ It is an exact-delay pulse request:
   - and undeclared top-input inference plus explicit-child-link block
     reporting now treat those child inputs as already explicitly wired instead
     of inventing same-name top ports around them.
-- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t)
   now locks:
   - direct linked-plan preservation of literal and `open` actual bindings,
   - end-to-end pipeline and CLI emission of `.data_in(8'b...)` and `.enable()`,
@@ -21385,12 +21404,12 @@ It is an exact-delay pulse request:
   - and rejection of unsupported actual literal forms outside that first
     bounded slice.
 
-## 2026-04-02: explicit-toplink top-port expressions now have a first shipped source-side slice
+## 2026-04-02: explicit-wiring top-port expressions now have a first shipped source-side slice
 - Continued the active `R11` lane by turning the already-shipped structural
   `bit_select` / `slice` connection-expression nodes into a real composition
   feature instead of leaving them as emitter-only vocabulary.
-- The first shipped explicit-toplink top-expression slice is now in tree:
-  - `?toplink` sources may now use declared top-port `name[index]` and
+- The first shipped explicit-wiring top-expression slice is now in tree:
+  - `?wiring` sources may now use declared top-port `name[index]` and
     `name[msb:lsb]` forms such as `status_bus[0]` and `payload_bus[15:8]`,
   - those top expressions currently appear on the source side only,
   - and they currently target realized child input ports only.
@@ -21403,7 +21422,7 @@ It is an exact-delay pulse request:
   - and blocked range failures now keep `Top expression '...'` context in the
     bounded non-quiet composition-failure summary instead of leaving the
     active expression only in raw exception text.
-- [t/263-composition-toplink-top-expressions.t](t/263-composition-toplink-top-expressions.t)
+- [t/263-composition-wiring-top-expressions.t](t/263-composition-wiring-top-expressions.t)
   now locks:
   - direct linked-plan preservation of bit-select and slice bindings,
   - end-to-end pipeline and CLI emission of `.data_in(payload_bus[15:8])` and
@@ -21413,7 +21432,7 @@ It is an exact-delay pulse request:
 
 ## 2026-04-02: top-expression omitted-?ports inference now has a first shipped slice
 - Continued the active `R11` lane by extending the earlier source-side
-  top-expression binding slice into the existing explicit-toplink top-boundary
+  top-expression binding slice into the existing explicit-wiring top-boundary
   inference path instead of forcing users to redeclare those base top inputs
   manually.
 - The first shipped omitted/empty-`?ports` top-expression inference slice is
@@ -21441,12 +21460,12 @@ It is an exact-delay pulse request:
   - RTL-backed `C3` success with omitted `?ports` and inferred top inputs
     coming from source-side top expressions.
 
-## 2026-04-03: source-side explicit-toplink concat expressions now have a first shipped slice
+## 2026-04-03: source-side explicit-wiring concat expressions now have a first shipped slice
 - Continued the active `R11` lane by turning the already-shipped structural
   `concat` connection-expression node into a real composition feature instead
   of leaving it as helper/emitter-only vocabulary.
-- The first shipped explicit-toplink concat slice is now in tree:
-  - `?toplink` child-input sources may now use one bounded flat
+- The first shipped explicit-wiring concat slice is now in tree:
+  - `?wiring` child-input sources may now use one bounded flat
     comma-separated concat expression inside a `/source/target/` token,
   - concat operands are currently bounded to declared whole top-port refs,
     top-port `name[index]` / `name[msb:lsb]` refs, and fixed-width literal
@@ -21466,7 +21485,7 @@ It is an exact-delay pulse request:
   - and omitted/empty-`?ports` top-boundary inference now also sees inferable
     bit/slice operands inside those concat sources while still refusing to
     guess widths for undeclared whole-port concat operands.
-- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t)
   now locks:
   - direct linked-plan preservation of bounded concat bindings,
   - end-to-end pipeline and CLI emission of those concat child-input
@@ -21496,7 +21515,7 @@ It is an exact-delay pulse request:
     instead of guessing several widths from one child-input target.
 - The planner/reporting contract is now honest for that slice:
   - [perl/FSM/Composition/TopPortInferenceBuilder.pm](perl/FSM/Composition/TopPortInferenceBuilder.pm)
-    now iterates explicit-toplink expression evidence until one exact-width
+    now iterates explicit-wiring expression evidence until one exact-width
     concat remainder can be fixed honestly,
   - that same builder now rejects the sibling several-unknown concat case
     explicitly instead of deferring to a later undeclared-top-port failure,
@@ -21521,7 +21540,7 @@ It is an exact-delay pulse request:
   literal actual family instead of introducing a new connection-expression
   shape.
 - The widened bounded literal slice is now in tree:
-  - explicit `?toplink` actual sources may now use exact-width hex literals
+  - explicit `?wiring` actual sources may now use exact-width hex literals
     such as `=8'hA5` beside the already-shipped binary forms,
   - the same exact-width hex literal family now also works inside bounded
     source-side concat operands,
@@ -21538,13 +21557,13 @@ It is an exact-delay pulse request:
     node family,
   - and the blocked wording now consistently says `binary or hex` where the
     widened literal family is the real contract.
-- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t)
   now also locks:
   - direct linked-plan and end-to-end pipeline/CLI success for exact-width
     hex actual sources,
   - blocked unsupported decimal-like actual rejection,
   - and blocked overflowing hex-literal rejection.
-- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t)
   now also locks:
   - bounded source-side concat success with a normalized hex literal operand.
 - [t/131-composition-failure-summary-reporting.t](t/131-composition-failure-summary-reporting.t)
@@ -21557,7 +21576,7 @@ It is an exact-delay pulse request:
   structural literal family one more step instead of inventing a new
   connection-expression category.
 - The widened bounded literal slice is now in tree:
-  - explicit `?toplink` actual sources may now use unsized octal direct
+  - explicit `?wiring` actual sources may now use unsized octal direct
     forms such as `=0o245` on direct child-input and declared-top-output
     bindings,
   - exact-width octal literal forms such as `=8'o245` now also work beside
@@ -21576,7 +21595,7 @@ It is an exact-delay pulse request:
     operands without widening unsized numerics there,
   - and the concise blocked-reason wording now says binary/decimal/octal/hex
     where that is the real contract.
-- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t)
   now also locks:
   - direct linked-plan and end-to-end pipeline/CLI success for unsized and
     exact-width octal actual sources,
@@ -21584,7 +21603,7 @@ It is an exact-delay pulse request:
     live family,
   - blocked overflowing unsized octal rejection,
   - and blocked overflowing exact-width octal rejection.
-- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t)
   now also locks:
   - bounded source-side concat success with a normalized exact-width octal
     literal operand.
@@ -21612,10 +21631,10 @@ It is an exact-delay pulse request:
   - so separated spellings lower into the same structural
     `bit_vector_literal_expr` payloads instead of introducing a second parsed
     literal path.
-- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t)
   now locks separated direct-actual spellings through linked-plan, pipeline,
   and CLI coverage across the existing bounded radix family.
-- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t)
   now also locks a separated exact-width literal operand through the bounded
   concat path.
 
@@ -21623,7 +21642,7 @@ It is an exact-delay pulse request:
 - Continued the active `R11` feature lane by widening the shipped
   source-expression family instead of adding another raw-string escape hatch.
 - The widened projected-child slice is now in tree:
-  - explicit `?toplink` sources may now use child-output bit/slice forms such
+  - explicit `?wiring` sources may now use child-output bit/slice forms such
     as `producer.payload[7:4]` and `producer.payload[0]`,
   - those projected child-output sources may now drive realized child inputs
     or declared top outputs,

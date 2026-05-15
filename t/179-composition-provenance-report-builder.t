@@ -26,7 +26,7 @@ subtest 'provenance report builder rebuilds the bounded composition report from 
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /trigger/producer.trigger/
     /producer.serial_payload/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
@@ -92,7 +92,7 @@ subtest 'provenance report builder projects endpoint context directly from expli
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.serial_payload/uart_tx.data_in/
   )
 )
@@ -179,7 +179,7 @@ subtest 'provenance report builder projects typed aggregate expression widths' =
   )
   (?dtc:producer producer_src)
   (?rtl:sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_frame.tag/tag_out/
     /in_frame.payload[1]/sink.top_nibble/
     /producer.OUT_FRAME.payload[1]/sink.child_nibble/

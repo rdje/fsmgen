@@ -50,7 +50,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child kind support', 'failure report exposes a CLI-friendly blocked-boundary label');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', '+types', and '+import'",
+        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?wiring', '+constants', '+enums', '+types', and '+import'",
         'failure report preserves the concise blocked reason for parser-scoped failures',
     );
 };
@@ -324,7 +324,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child structure', 'failure report exposes a CLI-friendly blocked-boundary label for empty child entries');
     is(
         $report->{blocked_reason},
-        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'",
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'",
         'failure report preserves the concise empty-child-entry reason',
     );
 };
@@ -366,7 +366,7 @@ FSM
     is($report->{blocked_boundary_label}, 'child header shape', 'failure report exposes a CLI-friendly blocked-boundary label for non-string child headers');
     is(
         $report->{blocked_reason},
-        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?toplink:name', '+constants', '+enums', '+types', or '+import'",
+        "every child must start with a real string header such as '?fsmc:name', '?dtc:name', '?rtl:module', '?ports', '?wiring:name', '+constants', '+enums', '+types', or '+import'",
         'failure report preserves the concise non-string child-header reason',
     );
 };
@@ -604,21 +604,21 @@ FSM
     );
 };
 
-subtest 'pipeline derives token context from blocked ?toplink token-shape failures' => sub {
+subtest 'pipeline derives token context from blocked ?wiring token-shape failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'unsupported_toplink_token_failure_summary_top.fsm');
+    my $composition_path = File::Spec->catfile($tempdir, 'unsupported_wiring_token_failure_summary_top.fsm');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:unsupported_toplink_token_failure_summary_top
+(?top:unsupported_wiring_token_failure_summary_top
   (?ports:public_io
     clk
     rstn
     result_data>8
   )
   (?fsmc:child child_src)
-  (?toplink:wiring
+  (?wiring:wiring
     child.result_data->result_data
   )
 )
@@ -652,35 +652,35 @@ FSM
 
     my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
-    ok($report, 'pipeline derives a composition failure report from blocked ?toplink token-shape failures');
-    is($report->{top_name}, 'unsupported_toplink_token_failure_summary_top', 'failure report preserves the top name for blocked ?toplink token-shape failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the ?toplink construct for blocked ?toplink token-shape failures');
-    is($report->{context_label}, 'Token', 'failure report classifies blocked ?toplink token-shape failures as token context');
-    is($report->{context_value}, "'child.result_data->result_data'", 'failure report preserves the offending ?toplink token');
-    is($report->{context_summary}, "Token 'child.result_data->result_data'", 'failure report exposes a concise ?toplink token summary');
-    is($report->{blocked_boundary}, 'explicit top-link token shape', 'failure report preserves the blocked ?toplink token-shape boundary');
+    ok($report, 'pipeline derives a composition failure report from blocked ?wiring token-shape failures');
+    is($report->{top_name}, 'unsupported_wiring_token_failure_summary_top', 'failure report preserves the top name for blocked ?wiring token-shape failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the ?wiring construct for blocked ?wiring token-shape failures');
+    is($report->{context_label}, 'Token', 'failure report classifies blocked ?wiring token-shape failures as token context');
+    is($report->{context_value}, "'child.result_data->result_data'", 'failure report preserves the offending ?wiring token');
+    is($report->{context_summary}, "Token 'child.result_data->result_data'", 'failure report exposes a concise ?wiring token summary');
+    is($report->{blocked_boundary}, 'explicit wiring token shape', 'failure report preserves the blocked ?wiring token-shape boundary');
     is(
         $report->{blocked_reason},
-        "the current parser only accepts simple '/source/target/' link forms",
-        'failure report preserves the concise ?toplink token-shape reason',
+        "the current parser accepts legacy '/source/target/' tokens, canonical '(source target)' forms, or verbose '(connect source target)' forms",
+        'failure report preserves the concise ?wiring token-shape reason',
     );
 };
 
-subtest 'pipeline derives child context from blocked nested ?toplink items' => sub {
+subtest 'pipeline derives link-form context from malformed ?wiring list forms' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'nested_toplink_item_failure_summary_top.fsm');
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_wiring_item_failure_summary_top.fsm');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:nested_toplink_item_failure_summary_top
+(?top:nested_wiring_item_failure_summary_top
   (?ports:public_io
     clk
     rstn
     result_data>8
   )
   (?fsmc:child child_src)
-  (?toplink:wiring
+  (?wiring:wiring
     (nested)
   )
 )
@@ -714,18 +714,18 @@ FSM
 
     my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
-    ok($report, 'pipeline derives a composition failure report from blocked nested ?toplink items');
-    is($report->{top_name}, 'nested_toplink_item_failure_summary_top', 'failure report preserves the top name for blocked nested ?toplink items');
-    is($report->{construct}, '?toplink', 'failure report preserves the ?toplink construct for blocked nested ?toplink items');
-    is($report->{context_label}, 'Child', 'failure report classifies blocked nested ?toplink items as child context');
-    is($report->{context_value}, "'?toplink'", 'failure report preserves the nested ?toplink block as context');
-    is($report->{context_summary}, "Child '?toplink'", 'failure report exposes a concise nested ?toplink child summary');
-    is($report->{blocked_boundary}, 'explicit top-link token flatness', 'failure report preserves the blocked ?toplink flatness boundary');
-    is($report->{blocked_boundary_label}, 'explicit top-link token flatness', 'failure report exposes a CLI-friendly blocked-boundary label for nested ?toplink items');
+    ok($report, 'pipeline derives a composition failure report from malformed ?wiring list forms');
+    is($report->{top_name}, 'nested_wiring_item_failure_summary_top', 'failure report preserves the top name for malformed ?wiring list forms');
+    is($report->{construct}, '?wiring', 'failure report preserves the ?wiring construct for malformed ?wiring list forms');
+    is($report->{context_label}, 'Link form', 'failure report classifies malformed ?wiring list forms as link-form context');
+    is($report->{context_value}, "'(nested)'", 'failure report preserves the malformed ?wiring link form as context');
+    is($report->{context_summary}, "Link form '(nested)'", 'failure report exposes a concise malformed ?wiring link-form summary');
+    is($report->{blocked_boundary}, 'explicit wiring form shape', 'failure report preserves the blocked ?wiring form-shape boundary');
+    is($report->{blocked_boundary_label}, 'explicit wiring form shape', 'failure report exposes a CLI-friendly blocked-boundary label for malformed ?wiring forms');
     is(
         $report->{blocked_reason},
-        "the active composition parser only supports flat '/source/target/' link tokens",
-        'failure report preserves the concise nested ?toplink flatness reason',
+        "canonical list links must use exactly '(source target)' or '(connect source target)'",
+        'failure report preserves the concise malformed ?wiring form-shape reason',
     );
 };
 
@@ -1031,15 +1031,15 @@ FSM
     );
 };
 
-subtest 'pipeline derives child-header context from blocked ?toplink child item-list shape failures' => sub {
+subtest 'pipeline derives child-header context from blocked ?wiring child item-list shape failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'dotted_pair_toplink_child_failure_summary_top.fsm');
+    my $composition_path = File::Spec->catfile($tempdir, 'dotted_pair_wiring_child_failure_summary_top.fsm');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:dotted_pair_toplink_child_failure_summary_top
-  (?toplink:wiring . foo)
+(?top:dotted_pair_wiring_child_failure_summary_top
+  (?wiring:wiring . foo)
 )
 FSM
     );
@@ -1058,18 +1058,18 @@ FSM
 
     my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
-    ok($report, 'pipeline derives a composition failure report from blocked ?toplink child item-list shape failures');
-    is($report->{top_name}, 'dotted_pair_toplink_child_failure_summary_top', 'failure report preserves the top name for blocked ?toplink child item-list shape failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the ?toplink construct for blocked child item-list shape failures');
-    is($report->{context_label}, 'Child', 'failure report classifies blocked ?toplink child item-list shape failures as child context');
-    is($report->{context_value}, "'?toplink:wiring'", 'failure report preserves the offending ?toplink child header');
-    is($report->{context_summary}, "Child '?toplink:wiring'", 'failure report exposes a concise ?toplink child-header summary');
-    is($report->{blocked_boundary}, 'composition child item-list shape', 'failure report preserves the blocked ?toplink child item-list shape boundary');
-    is($report->{blocked_boundary_label}, 'child item-list shape', 'failure report exposes a CLI-friendly blocked-boundary label for ?toplink child item-list shape failures');
+    ok($report, 'pipeline derives a composition failure report from blocked ?wiring child item-list shape failures');
+    is($report->{top_name}, 'dotted_pair_wiring_child_failure_summary_top', 'failure report preserves the top name for blocked ?wiring child item-list shape failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the ?wiring construct for blocked child item-list shape failures');
+    is($report->{context_label}, 'Child', 'failure report classifies blocked ?wiring child item-list shape failures as child context');
+    is($report->{context_value}, "'?wiring:wiring'", 'failure report preserves the offending ?wiring child header');
+    is($report->{context_summary}, "Child '?wiring:wiring'", 'failure report exposes a concise ?wiring child-header summary');
+    is($report->{blocked_boundary}, 'composition child item-list shape', 'failure report preserves the blocked ?wiring child item-list shape boundary');
+    is($report->{blocked_boundary_label}, 'child item-list shape', 'failure report exposes a CLI-friendly blocked-boundary label for ?wiring child item-list shape failures');
     is(
         $report->{blocked_reason},
         'dotted-pair payloads are outside the current active composition parser contract',
-        'failure report preserves the concise ?toplink child item-list shape reason',
+        'failure report preserves the concise ?wiring child item-list shape reason',
     );
 };
 
@@ -1271,7 +1271,7 @@ subtest 'pipeline derives child context from blocked duplicate child-instance de
   )
   (?fsmc:dup producer_src)
   (?fsmc:dup consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /start/dup.go/
     /dup.output_data/result_data/
   )
@@ -1445,12 +1445,12 @@ FSM
 
 subtest 'pipeline derives explicit-link lane-entry summaries without inventing context' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'missing_toplink_failure_summary_top.fsm');
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_wiring_failure_summary_top.fsm');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:missing_toplink_failure_summary_top
+(?top:missing_wiring_failure_summary_top
   (?ports:public_io
     clk
     rstn
@@ -1503,12 +1503,12 @@ FSM
     my $report = FSM::Composition::FailureReportBuilder->build_report($exception);
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link lane-entry failures');
-    is($report->{top_name}, 'missing_toplink_failure_summary_top', 'failure report preserves the top name for blocked explicit-link lane-entry failures');
+    is($report->{top_name}, 'missing_wiring_failure_summary_top', 'failure report preserves the top name for blocked explicit-link lane-entry failures');
     is($report->{lane}, 'C2', 'failure report preserves the active C2 lane for blocked explicit-link lane-entry failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked lane-entry failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked lane-entry failures');
     ok(!defined($report->{context_label}), 'failure report does not invent context for blocked explicit-link lane-entry failures');
     is($report->{blocked_boundary}, 'explicit-link lane entry', 'failure report preserves the blocked explicit-link lane-entry boundary');
-    is($report->{blocked_reason}, "the current active C2 lane requires explicit '?toplink' wiring", 'failure report preserves the concise explicit-link lane-entry reason');
+    is($report->{blocked_reason}, "the current active C2 lane requires explicit '?wiring' wiring", 'failure report preserves the concise explicit-link lane-entry reason');
 };
 
 subtest 'pipeline derives blocked composition failure summaries from rtl-module failures' => sub {
@@ -1526,7 +1526,7 @@ subtest 'pipeline derives blocked composition failure summaries from rtl-module 
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -1596,7 +1596,7 @@ subtest 'pipeline derives RTL metadata file artifacts from blocked metadata-stru
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -1669,7 +1669,7 @@ subtest 'pipeline keeps rtl root context alongside RTL metadata file artifacts f
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -1738,7 +1738,7 @@ subtest 'pipeline keeps rtl root context alongside RTL metadata file artifacts f
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -1814,7 +1814,7 @@ subtest 'pipeline keeps token context alongside RTL metadata file artifacts for 
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -1888,7 +1888,7 @@ subtest 'pipeline keeps token context alongside RTL metadata file artifacts for 
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -1962,7 +1962,7 @@ subtest 'pipeline keeps token context alongside RTL metadata file artifacts for 
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -2036,7 +2036,7 @@ subtest 'pipeline keeps token context alongside RTL metadata file artifacts for 
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -2097,7 +2097,7 @@ subtest 'pipeline keeps rtl port context alongside RTL metadata file artifacts f
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -2171,7 +2171,7 @@ subtest 'pipeline derives rtl root context from blocked embedded-root uniqueness
   )
   (?dtc:router route_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /router.route_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -2472,7 +2472,7 @@ subtest 'pipeline derives child-endpoint context from blocked explicit-link endp
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /missing.output_data/serial_out/
   )
 )
@@ -2518,7 +2518,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked missing-child-endpoint failures');
     is($report->{top_name}, 'missing_child_endpoint_failure_summary_top', 'failure report preserves the top name for blocked missing-child-endpoint failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked child-endpoint failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked child-endpoint failures');
     is($report->{context_label}, 'Child endpoint', 'failure report classifies missing child endpoints as endpoint context');
     is($report->{context_value}, "'missing.output_data'", 'failure report preserves the missing child endpoint');
     is($report->{context_summary}, "Child endpoint 'missing.output_data'", 'failure report exposes a concise missing child-endpoint summary');
@@ -2542,7 +2542,7 @@ subtest 'pipeline derives child-endpoint context from blocked existing-instance 
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.missing_port/
     /uart_tx.txd/serial_out/
   )
@@ -2591,7 +2591,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked existing-instance missing-port failures');
     is($report->{top_name}, 'missing_child_port_failure_summary_top', 'failure report preserves the top name for blocked existing-instance missing-port failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked existing-instance missing-port failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked existing-instance missing-port failures');
     is($report->{context_label}, 'Child endpoint', 'failure report classifies existing-instance missing-port failures as child-endpoint context');
     is($report->{context_value}, "'uart_tx.missing_port'", 'failure report preserves the missing child endpoint on the existing instance');
     is($report->{context_summary}, "Child endpoint 'uart_tx.missing_port'", 'failure report exposes a concise existing-instance missing-port summary');
@@ -2614,7 +2614,7 @@ subtest 'pipeline derives child-endpoint context from blocked explicit-link dire
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.txd/
   )
 )
@@ -2662,7 +2662,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link direction-mismatch failures');
     is($report->{top_name}, 'direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link direction-mismatch failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked direction-mismatch failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked direction-mismatch failures');
     is($report->{context_label}, 'Child endpoint', 'failure report classifies direction-mismatch failures as child-endpoint context');
     is($report->{context_value}, "'uart_tx.txd'", 'failure report preserves the blocked child endpoint for direction-mismatch failures');
     is($report->{context_summary}, "Child endpoint 'uart_tx.txd'", 'failure report exposes a concise direction-mismatch child-endpoint summary');
@@ -2686,7 +2686,7 @@ subtest 'pipeline derives top-port context from blocked explicit-link top-port r
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /result_data/uart_tx.data_in/
   )
 )
@@ -2734,7 +2734,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-port role mismatches');
     is($report->{top_name}, 'top_port_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-port role mismatches');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked top-port role mismatches');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked top-port role mismatches');
     is($report->{context_label}, 'Top port', 'failure report classifies top-port role mismatches as top-port context');
     is($report->{context_value}, "'result_data'", 'failure report preserves the blocked top port for role mismatches');
     is($report->{context_summary}, "Top port 'result_data'", 'failure report exposes a concise top-port role-mismatch summary');
@@ -2757,7 +2757,7 @@ subtest 'pipeline derives child-endpoint context from blocked explicit-link chil
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /consumer.input_data/result_data/
   )
 )
@@ -2807,7 +2807,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link child-source role mismatches');
     is($report->{top_name}, 'child_source_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link child-source role mismatches');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked child-source role mismatches');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked child-source role mismatches');
     is($report->{context_label}, 'Child endpoint', 'failure report classifies child-source role mismatches as child-endpoint context');
     is($report->{context_value}, "'consumer.input_data'", 'failure report preserves the blocked child endpoint for child-source role mismatches');
     is($report->{context_summary}, "Child endpoint 'consumer.input_data'", 'failure report exposes a concise child-source role-mismatch summary');
@@ -2830,7 +2830,7 @@ subtest 'pipeline derives top-port context from blocked explicit-link top-target
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/start/
   )
 )
@@ -2873,7 +2873,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-target role mismatches');
     is($report->{top_name}, 'top_target_direction_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-target role mismatches');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked top-target role mismatches');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked top-target role mismatches');
     is($report->{context_label}, 'Top port', 'failure report classifies top-target role mismatches as top-port context');
     is($report->{context_value}, "'start'", 'failure report preserves the blocked top port for top-target role mismatches');
     is($report->{context_summary}, "Top port 'start'", 'failure report exposes a concise top-target role-mismatch summary');
@@ -2896,7 +2896,7 @@ subtest 'pipeline derives top-port context from blocked explicit-link duplicate-
   )
   (?fsmc:producer_a producer_a_src)
   (?fsmc:producer_b producer_b_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer_a.output_data/result_data/
     /producer_b.output_data/result_data/
   )
@@ -2946,7 +2946,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link duplicate-driver failures');
     is($report->{top_name}, 'duplicate_driver_failure_summary_top', 'failure report preserves the top name for blocked explicit-link duplicate-driver failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked duplicate-driver failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked duplicate-driver failures');
     is($report->{context_label}, 'Top port', 'failure report classifies duplicate-driver target conflicts as top-port context');
     is($report->{context_value}, "'result_data'", 'failure report preserves the conflicted top-port target for duplicate-driver failures');
     is($report->{context_summary}, "Top port 'result_data'", 'failure report exposes a concise duplicate-driver target summary');
@@ -2970,7 +2970,7 @@ subtest 'pipeline derives child-endpoint context from blocked explicit-link dupl
   (?fsmc:producer_a producer_a_src)
   (?fsmc:producer_b producer_b_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer_a.output_data/consumer.input_data/
     /producer_b.output_data/consumer.input_data/
     /consumer.final_data/result_data/
@@ -3035,7 +3035,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link duplicate-driver child-target failures');
     is($report->{top_name}, 'duplicate_driver_failure_summary_child', 'failure report preserves the top name for blocked explicit-link duplicate-driver child-target failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked duplicate-driver child-target failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked duplicate-driver child-target failures');
     is($report->{context_label}, 'Child endpoint', 'failure report classifies duplicate-driver child-target conflicts as child-endpoint context');
     is($report->{context_value}, "'consumer.input_data'", 'failure report preserves the conflicted child-endpoint target for duplicate-driver failures');
     is($report->{context_summary}, "Child endpoint 'consumer.input_data'", 'failure report exposes a concise duplicate-driver child-target summary');
@@ -3058,7 +3058,7 @@ subtest 'pipeline derives child-endpoint context from blocked explicit-link widt
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -3109,7 +3109,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link width-mismatch failures');
     is($report->{top_name}, 'width_mismatch_failure_summary_child', 'failure report preserves the top name for blocked explicit-link width-mismatch failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked width-mismatch failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked width-mismatch failures');
     is($report->{context_label}, 'Child endpoint', 'failure report classifies explicit-link width mismatches as child-endpoint context');
     is($report->{context_value}, "'consumer.input_data'", 'failure report preserves the blocked child-endpoint target for width mismatches');
     is($report->{context_summary}, "Child endpoint 'consumer.input_data'", 'failure report exposes a concise explicit-link width-mismatch summary');
@@ -3132,7 +3132,7 @@ subtest 'pipeline derives top-port context from blocked explicit-link width-mism
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -3183,7 +3183,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link top-port width-mismatch failures');
     is($report->{top_name}, 'width_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link top-port width-mismatch failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked top-port width-mismatch failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked top-port width-mismatch failures');
     is($report->{context_label}, 'Top port', 'failure report classifies explicit-link top-port width mismatches as top-port context');
     is($report->{context_value}, "'result_data'", 'failure report preserves the blocked top-port target for width mismatches');
     is($report->{context_summary}, "Top port 'result_data'", 'failure report exposes a concise explicit-link top-port width-mismatch summary');
@@ -3206,7 +3206,7 @@ subtest 'pipeline derives child-endpoint context from blocked explicit-link decl
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -3263,7 +3263,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link declared-type child-endpoint failures');
     is($report->{top_name}, 'declared_type_mismatch_failure_summary_child', 'failure report preserves the top name for blocked explicit-link declared-type child-endpoint failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked declared-type child-endpoint failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked declared-type child-endpoint failures');
     is($report->{context_label}, 'Child endpoint', 'failure report classifies explicit-link declared-type child mismatches as child-endpoint context');
     is($report->{context_value}, "'consumer.input_data'", 'failure report preserves the blocked child-endpoint target for declared-type child mismatches');
     is($report->{context_summary}, "Child endpoint 'consumer.input_data'", 'failure report exposes a concise declared-type child-endpoint summary');
@@ -3289,7 +3289,7 @@ subtest 'pipeline derives top-port context from blocked explicit-link declared-t
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -3346,7 +3346,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-link declared-type top-port failures');
     is($report->{top_name}, 'declared_type_mismatch_failure_summary_top', 'failure report preserves the top name for blocked explicit-link declared-type top-port failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked declared-type top-port failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked declared-type top-port failures');
     is($report->{context_label}, 'Top port', 'failure report classifies explicit-link declared-type top mismatches as top-port context');
     is($report->{context_value}, "'result_data'", 'failure report preserves the blocked top-port target for declared-type top mismatches');
     is($report->{context_summary}, "Top port 'result_data'", 'failure report exposes a concise declared-type top-port summary');
@@ -3369,7 +3369,7 @@ subtest 'pipeline derives explicit-endpoint context from blocked endpoint-syntax
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data.extra/serial_out/
   )
 )
@@ -3415,7 +3415,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked unsupported-endpoint failures');
     is($report->{top_name}, 'unsupported_endpoint_failure_summary_top', 'failure report preserves the top name for blocked unsupported-endpoint failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked unsupported-endpoint failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked unsupported-endpoint failures');
     is($report->{context_label}, 'Child expression', 'failure report classifies aggregate-child endpoint syntax as child-expression context');
     is($report->{context_value}, "'producer.output_data.extra'", 'failure report preserves the unsupported explicit endpoint');
     is($report->{context_summary}, "Child expression 'producer.output_data.extra'", 'failure report exposes a concise child-expression summary');
@@ -3438,7 +3438,7 @@ subtest 'pipeline derives top-expression context from blocked top-expression ran
     payload_bus<8
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[8]/uart_tx.enable/
   )
 )
@@ -3473,7 +3473,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked top-expression range failures');
     is($report->{top_name}, 'top_expression_failure_summary_top', 'failure report preserves the top name for blocked top-expression range failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked top-expression range failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked top-expression range failures');
     is($report->{context_label}, 'Top expression', 'failure report classifies blocked top-expression range failures as top-expression context');
     is($report->{context_value}, "'payload_bus[8]'", 'failure report preserves the blocked top-expression token');
     is($report->{context_summary}, "Top expression 'payload_bus[8]'", 'failure report exposes a concise top-expression summary');
@@ -3500,7 +3500,7 @@ subtest 'pipeline keeps concat top-expression context for blocked concat-operand
     payload_bus<4
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[3:0],=open/uart_tx.data_in/
   )
 )
@@ -3535,7 +3535,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked concat-operand top-expression failures');
     is($report->{top_name}, 'top_concat_operand_failure_summary_top', 'failure report preserves the top name for blocked concat-operand top-expression failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked concat-operand top-expression failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked concat-operand top-expression failures');
     is($report->{context_label}, 'Top expression', 'failure report classifies blocked concat-operand failures as top-expression context');
     is($report->{context_value}, "'payload_bus[3:0],=open'", 'failure report preserves the blocked concat top-expression token');
     is($report->{context_summary}, "Top expression 'payload_bus[3:0],=open'", 'failure report exposes a concise concat top-expression summary');
@@ -3562,7 +3562,7 @@ subtest 'pipeline keeps child-expression context for blocked child-expression ra
   )
   (?rtl:producer)
   (?rtl:consumer)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload[8]/consumer.enable/
   )
 )
@@ -3603,7 +3603,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked child-expression range failures');
     is($report->{top_name}, 'child_expression_failure_summary_top', 'failure report preserves the top name for blocked child-expression range failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked child-expression range failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked child-expression range failures');
     is($report->{context_label}, 'Child expression', 'failure report classifies blocked child-expression range failures as child-expression context');
     is($report->{context_value}, "'producer.payload[8]'", 'failure report preserves the blocked child-expression token');
     is($report->{context_summary}, "Child expression 'producer.payload[8]'", 'failure report exposes a concise child-expression summary');
@@ -3630,7 +3630,7 @@ subtest 'pipeline keeps child-expression context for blocked child-expression co
   )
   (?rtl:producer)
   (?rtl:consumer)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload[8],header_bus/consumer.data_in/
   )
 )
@@ -3671,7 +3671,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked child-expression concat range failures');
     is($report->{top_name}, 'child_expression_concat_failure_summary_top', 'failure report preserves the top name for blocked child-expression concat range failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked child-expression concat range failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked child-expression concat range failures');
     is($report->{context_label}, 'Child expression', 'failure report classifies blocked child-expression concat range failures as child-expression context');
     is($report->{context_value}, "'producer.payload[8]'", 'failure report preserves the blocked child-expression concat operand');
     is($report->{context_summary}, "Child expression 'producer.payload[8]'", 'failure report exposes a concise child-expression concat summary');
@@ -3693,7 +3693,7 @@ subtest 'pipeline keeps concat top-expression context for blocked omitted-port c
         <<'FSM'
 (?top:top_concat_inference_failure_summary_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /left_bus,right_bus,status_bus[0]/byte_sink.data_in/
   )
 )
@@ -3725,11 +3725,11 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked omitted-port concat-width inference failures');
     is($report->{top_name}, 'top_concat_inference_failure_summary_top', 'failure report preserves the top name for blocked omitted-port concat-width inference failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked omitted-port concat-width inference failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked omitted-port concat-width inference failures');
     is($report->{context_label}, 'Top expression', 'failure report classifies blocked omitted-port concat-width inference failures as top-expression context');
     is($report->{context_value}, "'left_bus,right_bus,status_bus[0]'", 'failure report preserves the blocked omitted-port concat top-expression token');
     is($report->{context_summary}, "Top expression 'left_bus,right_bus,status_bus[0]'", 'failure report exposes a concise omitted-port concat top-expression summary');
-    is($report->{blocked_boundary}, 'explicit top-link port inference', 'failure report preserves the blocked explicit top-link port inference boundary');
+    is($report->{blocked_boundary}, 'explicit wiring port inference', 'failure report preserves the blocked explicit wiring port inference boundary');
     is(
         $report->{blocked_reason},
         "top expression 'left_bus,right_bus,status_bus[0]' leaves several undeclared whole-port concat operands without exact widths",
@@ -3747,7 +3747,7 @@ subtest 'pipeline keeps repeat top-expression context for blocked omitted-port r
         <<'FSM'
 (?top:top_repeat_inference_failure_summary_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /{2{payload_bus}}/byte_sink.data_in/
   )
 )
@@ -3779,11 +3779,11 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked omitted-port repeat-width inference failures');
     is($report->{top_name}, 'top_repeat_inference_failure_summary_top', 'failure report preserves the top name for blocked omitted-port repeat-width inference failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked omitted-port repeat-width inference failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked omitted-port repeat-width inference failures');
     is($report->{context_label}, 'Top expression', 'failure report classifies blocked omitted-port repeat-width inference failures as top-expression context');
     is($report->{context_value}, "'{2{payload_bus}}'", 'failure report preserves the blocked omitted-port repeat top-expression token');
     is($report->{context_summary}, "Top expression '{2{payload_bus}}'", 'failure report exposes a concise omitted-port repeat top-expression summary');
-    is($report->{blocked_boundary}, 'explicit top-link port inference', 'failure report preserves the blocked explicit top-link port inference boundary for omitted-port repeat-width inference failures');
+    is($report->{blocked_boundary}, 'explicit wiring port inference', 'failure report preserves the blocked explicit wiring port inference boundary for omitted-port repeat-width inference failures');
     is(
         $report->{blocked_reason},
         "top expression '{2{payload_bus}}' leaves remaining width 5 that cannot be divided evenly across 2 repeated uses of undeclared whole-port concat operand 'payload_bus'",
@@ -3806,7 +3806,7 @@ subtest 'pipeline derives actual-source context from blocked explicit-open sourc
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=open/serial_out/
   )
 )
@@ -3841,7 +3841,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-open source-role failures');
     is($report->{top_name}, 'actual_source_failure_summary_top', 'failure report preserves the top name for blocked explicit-open source-role failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked explicit-open source-role failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked explicit-open source-role failures');
     is($report->{context_label}, 'Actual source', 'failure report classifies explicit-open source-role failures as actual-source context');
     is($report->{context_value}, "'=open'", 'failure report preserves the blocked actual source token');
     is($report->{context_summary}, "Actual source '=open'", 'failure report exposes a concise actual-source summary');
@@ -3872,7 +3872,7 @@ subtest 'pipeline derives actual-source context from blocked typed aggregate act
     packed_out>wrong_t
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=FRAME/packed_out/
     /=0/uart_tx.dummy/
   )
@@ -3905,7 +3905,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked typed aggregate actual mismatches');
     is($report->{top_name}, 'typed_aggregate_actual_failure_summary_top', 'failure report preserves the top name for blocked typed aggregate actual mismatches');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked typed aggregate actual mismatches');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked typed aggregate actual mismatches');
     is($report->{context_label}, 'Actual source', 'failure report classifies blocked typed aggregate actual mismatches as actual-source context');
     is($report->{context_value}, "'=FRAME'", 'failure report preserves the blocked aggregate actual source token');
     is($report->{context_summary}, "Actual source '=FRAME'", 'failure report exposes a concise aggregate actual-source summary');
@@ -3935,7 +3935,7 @@ subtest 'pipeline derives top-expression context from blocked typed aggregate-ex
     packed_status>wrong_t
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /status_bus[0],payload_bus[3:0]/packed_status/
     /=0/uart_tx.dummy/
   )
@@ -3968,7 +3968,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked typed aggregate-expression mismatches');
     is($report->{top_name}, 'typed_aggregate_expression_failure_summary_top', 'failure report preserves the top name for blocked typed aggregate-expression mismatches');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked typed aggregate-expression mismatches');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked typed aggregate-expression mismatches');
     is($report->{context_label}, 'Top expression', 'failure report classifies blocked typed aggregate-expression mismatches as top-expression context');
     is($report->{context_value}, "'status_bus[0],payload_bus[3:0]'", 'failure report preserves the blocked top-expression token');
     is($report->{context_summary}, "Top expression 'status_bus[0],payload_bus[3:0]'", 'failure report exposes a concise top-expression summary');
@@ -3994,7 +3994,7 @@ subtest 'pipeline derives actual-endpoint context from blocked explicit-actual t
     rstn
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.txd/=open/
   )
 )
@@ -4029,7 +4029,7 @@ RTLIF
 
     ok($report, 'pipeline derives a composition failure report from blocked explicit-actual target failures');
     is($report->{top_name}, 'actual_target_failure_summary_top', 'failure report preserves the top name for blocked explicit-actual target failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked explicit-actual target failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked explicit-actual target failures');
     is($report->{context_label}, 'Actual endpoint', 'failure report classifies explicit-actual target failures as actual-endpoint context');
     is($report->{context_value}, "'=open'", 'failure report preserves the blocked actual endpoint token');
     is($report->{context_summary}, "Actual endpoint '=open'", 'failure report exposes a concise actual-endpoint summary');
@@ -4056,7 +4056,7 @@ subtest 'pipeline derives top-endpoint context from blocked missing top-endpoint
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /missing_top/result_data/
   )
 )
@@ -4102,7 +4102,7 @@ FSM
 
     ok($report, 'pipeline derives a composition failure report from blocked missing-top-endpoint failures');
     is($report->{top_name}, 'missing_top_endpoint_failure_summary_top', 'failure report preserves the top name for blocked missing-top-endpoint failures');
-    is($report->{construct}, '?toplink', 'failure report preserves the explicit-link construct for blocked missing-top-endpoint failures');
+    is($report->{construct}, '?wiring', 'failure report preserves the explicit-link construct for blocked missing-top-endpoint failures');
     is($report->{context_label}, 'Top endpoint', 'failure report classifies missing top endpoints as endpoint context');
     is($report->{context_value}, "'missing_top'", 'failure report preserves the missing top endpoint');
     is($report->{context_summary}, "Top endpoint 'missing_top'", 'failure report exposes a concise missing top-endpoint summary');
@@ -4446,7 +4446,7 @@ subtest 'CLI prints child context for blocked duplicate child-instance declarati
   )
   (?fsmc:dup producer_src)
   (?fsmc:dup consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /start/dup.go/
     /dup.output_data/result_data/
   )
@@ -4575,7 +4575,7 @@ subtest 'CLI prints composition failure lane when blocked diagnostics expose it'
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -4634,7 +4634,7 @@ subtest 'CLI prints the C2 lane for blocked C2 lane-selection failures' => sub {
     result_data>8
   )
   (?fsmc:producer producer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/result_data/
   )
 )
@@ -4676,13 +4676,13 @@ FSM
 
 subtest 'CLI prints explicit-link lane-entry summaries without inventing context' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'missing_toplink_failure_summary_cli_top.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'missing_toplink_failure_summary_cli_top.sv');
+    my $composition_path = File::Spec->catfile($tempdir, 'missing_wiring_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'missing_wiring_failure_summary_cli_top.sv');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:missing_toplink_failure_summary_cli_top
+(?top:missing_wiring_failure_summary_cli_top
   (?ports:public_io
     clk
     rstn
@@ -4736,10 +4736,10 @@ FSM
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked explicit-link lane-entry failures');
     like($combined_output, qr/Lane:\s+C2/s, 'CLI reports the active C2 lane for blocked explicit-link lane-entry failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked lane-entry failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked lane-entry failures');
     unlike($combined_output, qr/Context:/s, 'CLI does not invent a context line for blocked explicit-link lane-entry failures');
     like($combined_output, qr/Blocked boundary:\s+explicit-link lane entry/s, 'CLI reports the blocked explicit-link lane-entry boundary');
-    like($combined_output, qr/Reason:\s+the current active C2 lane requires explicit '\?toplink' wiring/s, 'CLI reports the concise explicit-link lane-entry reason');
+    like($combined_output, qr/Reason:\s+the current active C2 lane requires explicit '\?wiring' wiring/s, 'CLI reports the concise explicit-link lane-entry reason');
 };
 
 subtest 'CLI prints the C4 lane and =port context for blocked declared connect-by-name failures' => sub {
@@ -4758,7 +4758,7 @@ subtest 'CLI prints the C4 lane and =port context for blocked declared connect-b
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
   )
 )
@@ -4898,7 +4898,7 @@ subtest 'CLI keeps width-mismatch C4 endpoint sets in blocked declared connect-b
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
   )
 )
@@ -5085,7 +5085,7 @@ subtest 'CLI prints RTL metadata file artifacts for blocked metadata-structure f
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5156,7 +5156,7 @@ subtest 'CLI prints rtl root context alongside RTL metadata file artifacts for b
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5224,7 +5224,7 @@ subtest 'CLI prints rtl root context alongside RTL metadata file artifacts for b
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5299,7 +5299,7 @@ subtest 'CLI prints token context alongside RTL metadata file artifacts for bloc
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5372,7 +5372,7 @@ subtest 'CLI prints token context alongside RTL metadata file artifacts for bloc
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5445,7 +5445,7 @@ subtest 'CLI prints token context alongside RTL metadata file artifacts for bloc
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5518,7 +5518,7 @@ subtest 'CLI prints token context alongside RTL metadata file artifacts for bloc
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5578,7 +5578,7 @@ subtest 'CLI prints rtl port context alongside RTL metadata file artifacts for b
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5651,7 +5651,7 @@ subtest 'CLI prints rtl root context for blocked embedded-root uniqueness failur
   )
   (?dtc:router route_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /router.route_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )
@@ -5918,7 +5918,7 @@ subtest 'CLI prints endpoint context for blocked explicit-link endpoint failures
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /missing.output_data/serial_out/
   )
 )
@@ -5963,7 +5963,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for missing child endpoints');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked child-endpoint failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked child-endpoint failures');
     like($combined_output, qr/Context:\s+Child endpoint 'missing\.output_data'/s, 'CLI reports the missing child endpoint as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary');
     like($combined_output, qr/Reason:\s+no realized child instance named 'missing' exists/s, 'CLI reports the concise missing child-instance reason');
@@ -5985,7 +5985,7 @@ subtest 'CLI prints unsupported explicit-endpoint syntax in blocked explicit-lin
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data.extra/result_data/
   )
 )
@@ -6033,7 +6033,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for unsupported explicit endpoints');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked unsupported-endpoint failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked unsupported-endpoint failures');
     like($combined_output, qr/Context:\s+Child expression 'producer\.output_data\.extra'/s, 'CLI reports the child aggregate expression as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for unsupported endpoint syntax');
     like($combined_output, qr/Reason:\s+child endpoint 'producer\.output_data' has no declared aggregate type\. Declare an aggregate '\+types' alias on the endpoint before using member or item access in composition links/s, 'CLI reports the concise missing-aggregate-type reason');
@@ -6055,7 +6055,7 @@ subtest 'CLI prints top-expression context in blocked top-expression range summa
     payload_bus<8
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[8]/uart_tx.enable/
   )
 )
@@ -6089,7 +6089,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for top-expression range failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked top-expression range failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked top-expression range failures');
     like($combined_output, qr/Context:\s+Top expression 'payload_bus\[8\]'/s, 'CLI reports the blocked top expression as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for top-expression range failures');
     like(
@@ -6115,7 +6115,7 @@ subtest 'CLI prints concat top-expression context in blocked concat-operand summ
     payload_bus<4
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[3:0],=open/uart_tx.data_in/
   )
 )
@@ -6149,7 +6149,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for concat-operand top-expression failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked concat-operand top-expression failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked concat-operand top-expression failures');
     like($combined_output, qr/Context:\s+Top expression 'payload_bus\[3:0\],=open'/s, 'CLI reports the blocked concat top expression as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for concat-operand failures');
     like(
@@ -6175,7 +6175,7 @@ subtest 'CLI prints child-expression context in blocked child-expression range s
   )
   (?rtl:producer)
   (?rtl:consumer)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload[8]/consumer.enable/
   )
 )
@@ -6215,7 +6215,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for child-expression range failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked child-expression range failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked child-expression range failures');
     like($combined_output, qr/Context:\s+Child expression 'producer\.payload\[8\]'/s, 'CLI reports the blocked child expression as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for child-expression range failures');
     like(
@@ -6241,7 +6241,7 @@ subtest 'CLI prints child-expression context in blocked child-expression concat 
   )
   (?rtl:producer)
   (?rtl:consumer)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload[8],header_bus/consumer.data_in/
   )
 )
@@ -6281,7 +6281,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for child-expression concat range failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked child-expression concat range failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked child-expression concat range failures');
     like($combined_output, qr/Context:\s+Child expression 'producer\.payload\[8\]'/s, 'CLI reports the blocked child-expression concat operand as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for child-expression concat range failures');
     like(
@@ -6302,7 +6302,7 @@ subtest 'CLI prints concat top-expression context in blocked omitted-port concat
         <<'FSM'
 (?top:top_concat_inference_failure_summary_cli_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /left_bus,right_bus,status_bus[0]/byte_sink.data_in/
   )
 )
@@ -6333,9 +6333,9 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked omitted-port concat-width inference failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked omitted-port concat-width inference failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked omitted-port concat-width inference failures');
     like($combined_output, qr/Context:\s+Top expression 'left_bus,right_bus,status_bus\[0\]'/s, 'CLI reports the blocked omitted-port concat top expression as summary context');
-    like($combined_output, qr/Blocked boundary:\s+explicit top-link port inference/s, 'CLI reports the blocked explicit top-link port inference boundary for omitted-port concat-width inference failures');
+    like($combined_output, qr/Blocked boundary:\s+explicit wiring port inference/s, 'CLI reports the blocked explicit wiring port inference boundary for omitted-port concat-width inference failures');
     like(
         $combined_output,
         qr/Reason:\s+top expression 'left_bus,right_bus,status_bus\[0\]' leaves several undeclared whole-port concat operands without exact widths/s,
@@ -6354,7 +6354,7 @@ subtest 'CLI prints repeat top-expression context in blocked omitted-port repeat
         <<'FSM'
 (?top:top_repeat_inference_failure_summary_cli_top
   (?rtl:byte_sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /{2{payload_bus}}/byte_sink.data_in/
   )
 )
@@ -6385,9 +6385,9 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked omitted-port repeat-width inference failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked omitted-port repeat-width inference failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked omitted-port repeat-width inference failures');
     like($combined_output, qr/Context:\s+Top expression '\{2\{payload_bus\}\}'/s, 'CLI reports the blocked omitted-port repeat top expression as summary context');
-    like($combined_output, qr/Blocked boundary:\s+explicit top-link port inference/s, 'CLI reports the blocked explicit top-link port inference boundary for omitted-port repeat-width inference failures');
+    like($combined_output, qr/Blocked boundary:\s+explicit wiring port inference/s, 'CLI reports the blocked explicit wiring port inference boundary for omitted-port repeat-width inference failures');
     like(
         $combined_output,
         qr/Reason:\s+top expression '\{2\{payload_bus\}\}' leaves remaining width 5 that cannot be divided evenly across 2 repeated uses of undeclared whole-port concat operand 'payload_bus'/s,
@@ -6411,7 +6411,7 @@ subtest 'CLI prints actual-source context in blocked explicit-open source-role s
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=open/serial_out/
   )
 )
@@ -6445,7 +6445,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-open source-role failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked explicit-open source-role failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked explicit-open source-role failures');
     like($combined_output, qr/Context:\s+Actual source '=open'/s, 'CLI reports the blocked actual source as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for source-role failures');
     like(
@@ -6475,7 +6475,7 @@ subtest 'CLI prints actual-source context in blocked typed aggregate actual mism
     packed_out>wrong_t
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=FRAME/packed_out/
     /=0/uart_tx.dummy/
   )
@@ -6507,7 +6507,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for typed aggregate actual mismatches');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked typed aggregate actual mismatches');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked typed aggregate actual mismatches');
     like($combined_output, qr/Context:\s+Actual source '=FRAME'/s, 'CLI reports the blocked aggregate actual source as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for typed aggregate actual mismatches');
     like(
@@ -6536,7 +6536,7 @@ subtest 'CLI prints top-expression context in blocked typed aggregate-expression
     packed_status>wrong_t
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /status_bus[0],payload_bus[3:0]/packed_status/
     /=0/uart_tx.dummy/
   )
@@ -6568,7 +6568,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for typed aggregate-expression mismatches');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked typed aggregate-expression mismatches');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked typed aggregate-expression mismatches');
     like($combined_output, qr/Context:\s+Top expression 'status_bus\[0\],payload_bus\[3:0\]'/s, 'CLI reports the blocked top expression as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit aggregate-expression binding/s, 'CLI reports the blocked aggregate-expression boundary for typed aggregate-expression mismatches');
     like(
@@ -6593,7 +6593,7 @@ subtest 'CLI prints actual-endpoint context in blocked explicit-actual target su
     rstn
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /uart_tx.txd/=open/
   )
 )
@@ -6627,7 +6627,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-actual target failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked explicit-actual target failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked explicit-actual target failures');
     like($combined_output, qr/Context:\s+Actual endpoint '=open'/s, 'CLI reports the blocked actual endpoint as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit actual binding/s, 'CLI reports the blocked explicit-actual boundary for target failures');
     like(
@@ -6654,7 +6654,7 @@ subtest 'CLI prints existing-instance missing-port context in blocked explicit-l
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.missing_port/
     /uart_tx.txd/serial_out/
   )
@@ -6702,7 +6702,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for existing-instance missing-port failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked existing-instance missing-port failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked existing-instance missing-port failures');
     like($combined_output, qr/Context:\s+Child endpoint 'uart_tx\.missing_port'/s, 'CLI reports the missing child endpoint on the existing instance as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for existing-instance missing-port failures');
     like($combined_output, qr/Reason:\s+instance 'uart_tx' has no port named 'missing_port'/s, 'CLI reports the concise existing-instance missing-port reason');
@@ -6724,7 +6724,7 @@ subtest 'CLI prints child-endpoint context for blocked explicit-link direction-m
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.txd/
   )
 )
@@ -6771,7 +6771,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link direction-mismatch failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked direction-mismatch failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked direction-mismatch failures');
     like($combined_output, qr/Context:\s+Child endpoint 'uart_tx\.txd'/s, 'CLI reports the blocked child endpoint as summary context for direction-mismatch failures');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for direction-mismatch failures');
     like($combined_output, qr/Reason:\s+that child port is output instead of input/s, 'CLI reports the concise direction-mismatch reason');
@@ -6794,7 +6794,7 @@ subtest 'CLI prints top-port context for blocked explicit-link top-port role mis
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /result_data/uart_tx.data_in/
   )
 )
@@ -6841,7 +6841,7 @@ RTLIF
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link top-port role mismatches');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked top-port role mismatches');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked top-port role mismatches');
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top port as summary context for top-port role mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-port role mismatches');
     like($combined_output, qr/Reason:\s+that top port is declared as output instead of input/s, 'CLI reports the concise top-port role-mismatch reason');
@@ -6863,7 +6863,7 @@ subtest 'CLI prints child-endpoint context for blocked explicit-link child-sourc
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /consumer.input_data/result_data/
   )
 )
@@ -6912,7 +6912,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link child-source role mismatches');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked child-source role mismatches');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked child-source role mismatches');
     like($combined_output, qr/Context:\s+Child endpoint 'consumer\.input_data'/s, 'CLI reports the blocked child endpoint as summary context for child-source role mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for child-source role mismatches');
     like($combined_output, qr/Reason:\s+that child port is input instead of output/s, 'CLI reports the concise child-source role-mismatch reason');
@@ -6934,7 +6934,7 @@ subtest 'CLI prints top-port context for blocked explicit-link top-target role m
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/start/
   )
 )
@@ -6976,7 +6976,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link top-target role mismatches');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked top-target role mismatches');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked top-target role mismatches');
     like($combined_output, qr/Context:\s+Top port 'start'/s, 'CLI reports the blocked top port as summary context for top-target role mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-target role mismatches');
     like($combined_output, qr/Reason:\s+that top port is declared as input instead of output/s, 'CLI reports the concise top-target role-mismatch reason');
@@ -6998,7 +6998,7 @@ subtest 'CLI prints top-port context for blocked explicit-link duplicate-driver 
   )
   (?fsmc:producer_a producer_a_src)
   (?fsmc:producer_b producer_b_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer_a.output_data/result_data/
     /producer_b.output_data/result_data/
   )
@@ -7047,7 +7047,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link duplicate-driver failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked duplicate-driver failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked duplicate-driver failures');
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the conflicted top-port target as summary context for duplicate-driver failures');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for duplicate-driver failures');
     like($combined_output, qr/Reason:\s+that target is already driven by explicit link 'producer_a\.output_data'/s, 'CLI reports the concise duplicate-driver reason');
@@ -7070,7 +7070,7 @@ subtest 'CLI prints child-endpoint context for blocked explicit-link duplicate-d
   (?fsmc:producer_a producer_a_src)
   (?fsmc:producer_b producer_b_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer_a.output_data/consumer.input_data/
     /producer_b.output_data/consumer.input_data/
     /consumer.final_data/result_data/
@@ -7134,7 +7134,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link duplicate-driver child-target failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked duplicate-driver child-target failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked duplicate-driver child-target failures');
     like($combined_output, qr/Context:\s+Child endpoint 'consumer\.input_data'/s, 'CLI reports the conflicted child-endpoint target as summary context for duplicate-driver failures');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for duplicate-driver child-target failures');
     like($combined_output, qr/Reason:\s+that target is already driven by explicit link 'producer_a\.output_data'/s, 'CLI reports the concise duplicate-driver child-target reason');
@@ -7156,7 +7156,7 @@ subtest 'CLI prints child-endpoint context for blocked explicit-link width-misma
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -7206,7 +7206,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link width-mismatch failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked width-mismatch failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked width-mismatch failures');
     like($combined_output, qr/Context:\s+Child endpoint 'consumer\.input_data'/s, 'CLI reports the blocked child-endpoint target as summary context for width mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for width-mismatch failures');
     like($combined_output, qr/Reason:\s+the current active composition lanes require exact width agreement/s, 'CLI reports the concise explicit-link width-mismatch reason');
@@ -7228,7 +7228,7 @@ subtest 'CLI prints top-port context for blocked explicit-link width-mismatch su
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -7278,7 +7278,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link top-port width-mismatch failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked top-port width-mismatch failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked top-port width-mismatch failures');
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top-port target as summary context for width mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for top-port width-mismatch failures');
     like($combined_output, qr/Reason:\s+the current active composition lanes require exact width agreement/s, 'CLI reports the concise explicit-link top-port width-mismatch reason');
@@ -7300,7 +7300,7 @@ subtest 'CLI prints child-endpoint context for blocked explicit-link declared-ty
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -7356,7 +7356,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link declared-type child-endpoint failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked declared-type child-endpoint failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked declared-type child-endpoint failures');
     like($combined_output, qr/Context:\s+Child endpoint 'consumer\.input_data'/s, 'CLI reports the blocked child-endpoint target as summary context for declared-type child mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for declared-type child-endpoint failures');
     like($combined_output, qr/Reason:\s+those endpoints preserve incompatible declared type contracts \('packet_t' vs 'byte_t'\)/s, 'CLI reports the concise explicit-link declared-type child-endpoint reason');
@@ -7381,7 +7381,7 @@ subtest 'CLI prints top-port context for blocked explicit-link declared-type mis
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -7437,7 +7437,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for explicit-link declared-type top-port failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked declared-type top-port failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked declared-type top-port failures');
     like($combined_output, qr/Context:\s+Top port 'result_data'/s, 'CLI reports the blocked top-port target as summary context for declared-type top mismatches');
     like($combined_output, qr/Blocked boundary:\s+explicit link/s, 'CLI reports the blocked explicit-link boundary for declared-type top-port failures');
     like($combined_output, qr/Reason:\s+those endpoints preserve incompatible declared type contracts \('byte_t' vs 'packet_t'\)/s, 'CLI reports the concise explicit-link declared-type top-port reason');
@@ -7459,7 +7459,7 @@ subtest 'CLI prints missing top-endpoint context in blocked explicit-link summar
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /missing_top/result_data/
   )
 )
@@ -7504,7 +7504,7 @@ FSM
     );
 
     like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for missing top endpoints');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the explicit-link construct for blocked missing-top-endpoint failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the explicit-link construct for blocked missing-top-endpoint failures');
     like($combined_output, qr/Context:\s+Top endpoint 'missing_top'/s, 'CLI reports the missing top endpoint as summary context');
     like($combined_output, qr/Blocked boundary:\s+explicit link endpoint resolution/s, 'CLI reports the blocked explicit-link endpoint boundary for missing top endpoints');
     like($combined_output, qr/Reason:\s+'\?ports' declares no top port with that name/s, 'CLI reports the concise missing top-endpoint reason');
@@ -7545,10 +7545,10 @@ FSM
     like($combined_output, qr/Blocked boundary:\s+child kind support/s, 'CLI reports the blocked composition boundary');
     like(
         $combined_output,
-        qr/Reason:\s+the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', '\+types', and '\+import'/s,
+        qr/Reason:\s+the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?wiring', '\+constants', '\+enums', '\+types', and '\+import'/s,
         'CLI reports the concise blocked reason',
     );
-    like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', '\+types', and '\+import'/s, 'CLI still surfaces the original blocked diagnostic text');
+    like($combined_output, qr/composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?wiring', '\+constants', '\+enums', '\+types', and '\+import'/s, 'CLI still surfaces the original blocked diagnostic text');
 };
 
 subtest 'CLI prints mapping-directive context for blocked ?ports mapping failures' => sub {
@@ -7705,22 +7705,22 @@ FSM
     like($combined_output, qr/Reason:\s+it declares non-positive width '0'/s, 'CLI reports the concise non-positive ?ports width reason');
 };
 
-subtest 'CLI prints token context for blocked ?toplink token-shape failures' => sub {
+subtest 'CLI prints token context for blocked ?wiring token-shape failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'unsupported_toplink_token_failure_summary_cli_top.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'unsupported_toplink_token_failure_summary_cli_top.sv');
+    my $composition_path = File::Spec->catfile($tempdir, 'unsupported_wiring_token_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'unsupported_wiring_token_failure_summary_cli_top.sv');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:unsupported_toplink_token_failure_summary_cli_top
+(?top:unsupported_wiring_token_failure_summary_cli_top
   (?ports:public_io
     clk
     rstn
     result_data>8
   )
   (?fsmc:child child_src)
-  (?toplink:wiring
+  (?wiring:wiring
     child.result_data->result_data
   )
 )
@@ -7744,8 +7744,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
     );
 
-    ok(!$success, 'CLI fails for blocked ?toplink token-shape fixture');
-    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ?toplink token-shape fixture');
+    ok(!$success, 'CLI fails for blocked ?wiring token-shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ?wiring token-shape fixture');
 
     my $combined_output = join(
         '',
@@ -7754,11 +7754,11 @@ FSM
         ($error_message || ''),
     );
 
-    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?toplink token-shape failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the ?toplink construct for blocked ?toplink token-shape failures');
-    like($combined_output, qr/Context:\s+Token 'child\.result_data->result_data'/s, 'CLI reports the blocked ?toplink token as summary context');
-    like($combined_output, qr/Blocked boundary:\s+explicit top-link token shape/s, 'CLI reports the blocked ?toplink token-shape boundary');
-    like($combined_output, qr/Reason:\s+the current parser only accepts simple '\/source\/target\/' link forms/s, 'CLI reports the concise ?toplink token-shape reason');
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?wiring token-shape failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the ?wiring construct for blocked ?wiring token-shape failures');
+    like($combined_output, qr/Context:\s+Token 'child\.result_data->result_data'/s, 'CLI reports the blocked ?wiring token as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit wiring token shape/s, 'CLI reports the blocked ?wiring token-shape boundary');
+    like($combined_output, qr/Reason:\s+the current parser accepts legacy '\/source\/target\/' tokens, canonical '\(source target\)' forms, or verbose '\(connect source target\)' forms/s, 'CLI reports the concise ?wiring token-shape reason');
 };
 
 subtest 'CLI prints declaration context for malformed verbose ?ports declarations' => sub {
@@ -7812,22 +7812,22 @@ FSM
     like($combined_output, qr/Reason:\s+verbose declarations must start with the literal keyword 'input' or 'output'/s, 'CLI reports the concise malformed verbose declaration reason');
 };
 
-subtest 'CLI prints child context for blocked nested ?toplink items' => sub {
+subtest 'CLI prints link-form context for malformed ?wiring list forms' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'nested_toplink_item_failure_summary_cli_top.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'nested_toplink_item_failure_summary_cli_top.sv');
+    my $composition_path = File::Spec->catfile($tempdir, 'nested_wiring_item_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'nested_wiring_item_failure_summary_cli_top.sv');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:nested_toplink_item_failure_summary_cli_top
+(?top:nested_wiring_item_failure_summary_cli_top
   (?ports:public_io
     clk
     rstn
     result_data>8
   )
   (?fsmc:child child_src)
-  (?toplink:wiring
+  (?wiring:wiring
     (nested)
   )
 )
@@ -7851,8 +7851,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
     );
 
-    ok(!$success, 'CLI fails for blocked nested ?toplink-item fixture');
-    ok(!-e $output_path, 'CLI does not emit HDL output for blocked nested ?toplink-item fixture');
+    ok(!$success, 'CLI fails for malformed ?wiring list-form fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for malformed ?wiring list-form fixture');
 
     my $combined_output = join(
         '',
@@ -7861,11 +7861,11 @@ FSM
         ($error_message || ''),
     );
 
-    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked nested ?toplink items');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the ?toplink construct for blocked nested ?toplink items');
-    like($combined_output, qr/Context:\s+Child '\?toplink'/s, 'CLI reports the nested ?toplink block as summary context');
-    like($combined_output, qr/Blocked boundary:\s+explicit top-link token flatness/s, 'CLI reports the blocked ?toplink flatness boundary');
-    like($combined_output, qr/Reason:\s+the active composition parser only supports flat '\/source\/target\/' link tokens/s, 'CLI reports the concise nested ?toplink flatness reason');
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for malformed ?wiring list forms');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the ?wiring construct for malformed ?wiring list forms');
+    like($combined_output, qr/Context:\s+Link form '\(nested\)'/s, 'CLI reports the malformed ?wiring link form as summary context');
+    like($combined_output, qr/Blocked boundary:\s+explicit wiring form shape/s, 'CLI reports the blocked ?wiring form-shape boundary');
+    like($combined_output, qr/Reason:\s+canonical list links must use exactly '\(source target\)' or '\(connect source target\)'/s, 'CLI reports the concise malformed ?wiring form-shape reason');
 };
 
 subtest 'CLI prints child context for blocked ?fsmc source-shape failures' => sub {
@@ -7937,7 +7937,7 @@ FSM
     unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked empty child entries');
     like($combined_output, qr/Context:\s+Child entry 'missing header'/s, 'CLI reports empty child-entry context in the summary');
     like($combined_output, qr/Blocked boundary:\s+child structure/s, 'CLI reports the blocked child-structure boundary');
-    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', '\+types', or '\+import'/s, 'CLI reports the concise empty child-entry reason');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?wiring:name', '\+constants', '\+enums', '\+types', or '\+import'/s, 'CLI reports the concise empty child-entry reason');
 };
 
 subtest 'CLI prints child-entry context for blocked non-string child headers' => sub {
@@ -7972,7 +7972,7 @@ FSM
     unlike($combined_output, qr/Construct:\s+/s, 'CLI does not invent a construct for blocked non-string child headers');
     like($combined_output, qr/Context:\s+Child entry 'non-string header'/s, 'CLI reports non-string child-header context in the summary');
     like($combined_output, qr/Blocked boundary:\s+child header shape/s, 'CLI reports the blocked child-header-shape boundary');
-    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?toplink:name', '\+constants', '\+enums', '\+types', or '\+import'/s, 'CLI reports the concise non-string child-header reason');
+    like($combined_output, qr/Reason:\s+every child must start with a real string header such as '\?fsmc:name', '\?dtc:name', '\?rtl:module', '\?ports', '\?wiring:name', '\+constants', '\+enums', '\+types', or '\+import'/s, 'CLI reports the concise non-string child-header reason');
 };
 
 subtest 'CLI prints child context for blocked unnamed ?fsmc source-count failures' => sub {
@@ -8191,16 +8191,16 @@ FSM
     like($combined_output, qr/Reason:\s+dotted-pair payloads are outside the current active composition parser contract/s, 'CLI reports the concise child item-list shape reason');
 };
 
-subtest 'CLI prints child-header context for blocked ?toplink child item-list shape failures' => sub {
+subtest 'CLI prints child-header context for blocked ?wiring child item-list shape failures' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
-    my $composition_path = File::Spec->catfile($tempdir, 'dotted_pair_toplink_child_failure_summary_cli_top.fsm');
-    my $output_path = File::Spec->catfile($tempdir, 'dotted_pair_toplink_child_failure_summary_cli_top.sv');
+    my $composition_path = File::Spec->catfile($tempdir, 'dotted_pair_wiring_child_failure_summary_cli_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'dotted_pair_wiring_child_failure_summary_cli_top.sv');
 
     write_file(
         $composition_path,
         <<'FSM'
-(?top:dotted_pair_toplink_child_failure_summary_cli_top
-  (?toplink:wiring . foo)
+(?top:dotted_pair_wiring_child_failure_summary_cli_top
+  (?wiring:wiring . foo)
 )
 FSM
     );
@@ -8209,8 +8209,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, $composition_path],
     );
 
-    ok(!$success, 'CLI fails for blocked ?toplink child item-list shape fixture');
-    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ?toplink child item-list shape fixture');
+    ok(!$success, 'CLI fails for blocked ?wiring child item-list shape fixture');
+    ok(!-e $output_path, 'CLI does not emit HDL output for blocked ?wiring child item-list shape fixture');
 
     my $combined_output = join(
         '',
@@ -8219,11 +8219,11 @@ FSM
         ($error_message || ''),
     );
 
-    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?toplink child item-list shape failures');
-    like($combined_output, qr/Construct:\s+\?toplink/s, 'CLI reports the ?toplink construct for blocked child item-list shape failures');
-    like($combined_output, qr/Context:\s+Child '\?toplink:wiring'/s, 'CLI reports the offending ?toplink child header as summary context');
-    like($combined_output, qr/Blocked boundary:\s+child item-list shape/s, 'CLI reports the blocked ?toplink child item-list shape boundary');
-    like($combined_output, qr/Reason:\s+dotted-pair payloads are outside the current active composition parser contract/s, 'CLI reports the concise ?toplink child item-list shape reason');
+    like($combined_output, qr/=== Composition Failure Summary ===/s, 'CLI prints the composition failure summary section for blocked ?wiring child item-list shape failures');
+    like($combined_output, qr/Construct:\s+\?wiring/s, 'CLI reports the ?wiring construct for blocked child item-list shape failures');
+    like($combined_output, qr/Context:\s+Child '\?wiring:wiring'/s, 'CLI reports the offending ?wiring child header as summary context');
+    like($combined_output, qr/Blocked boundary:\s+child item-list shape/s, 'CLI reports the blocked ?wiring child item-list shape boundary');
+    like($combined_output, qr/Reason:\s+dotted-pair payloads are outside the current active composition parser contract/s, 'CLI reports the concise ?wiring child item-list shape reason');
 };
 
 subtest 'CLI prints child-header context for blocked ?ports child item-list shape failures' => sub {

@@ -1,4 +1,4 @@
-package FSM::Composition::TopLink;
+package FSM::Composition::WiringBlock;
 
 use v5.20;
 use strict;

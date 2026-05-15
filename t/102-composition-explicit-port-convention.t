@@ -85,7 +85,7 @@ subtest 'explicit plain top ports can adopt same-name convention in generated-ch
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.mid/consumer.mid/
   )
 )
@@ -123,7 +123,7 @@ FSM
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
     is($result->{composition_plan}->lane, 'C2', 'generated-child convention-first explicit ports stay in C2');
-    is(scalar(@{$result->{composition_plan}->links}), 1, 'plan still records the original explicit toplink set in C2');
+    is(scalar(@{$result->{composition_plan}->links}), 1, 'plan still records the original explicit wiring set in C2');
     is(scalar(@{$result->{composition_plan}->nets}), 1, 'explicit child-to-child link still uses one deterministic carrier net');
     is($result->{composition_plan}->nets->[0]->name, 'comp_link_producer_mid', 'carrier net keeps the deterministic generated name');
 
@@ -165,7 +165,7 @@ subtest 'explicit plain top ports can adopt same-name convention in mixed C3' =>
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.serial_payload/uart_tx.data_in/
   )
 )
@@ -248,7 +248,7 @@ subtest 'plain explicit top inputs reject mixed-direction same-name families' =>
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.bridge/consumer.bridge/
   )
 )
@@ -315,7 +315,7 @@ subtest 'plain explicit top outputs reject ambiguous same-name top-facing produc
   )
   (?dtc:left left_src)
   (?dtc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/left.go/
     /go/right.go/
   )

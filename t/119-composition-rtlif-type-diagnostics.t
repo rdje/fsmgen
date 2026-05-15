@@ -28,7 +28,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )

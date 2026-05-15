@@ -29,7 +29,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /shared_in/producer.shared_in/
     /producer.output_data/consumer.input_data/
   )
@@ -75,7 +75,7 @@ write_file(
     payload_in<8
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/uart_tx.data_in/
   )
 )
@@ -98,7 +98,7 @@ write_file(
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/left.go/
     /go/right.go/
   )

@@ -75,7 +75,7 @@ Imported names stay namespaced:
   (?ports:public_io
     packed_out>shared.frame_t
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared.HEADER/packed_out/
   )
 )

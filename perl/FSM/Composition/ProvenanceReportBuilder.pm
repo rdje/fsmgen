@@ -198,12 +198,12 @@ sub build_override_events ($class, %args) {
         my @same_name_candidates = @{$same_name_endpoints->{$top_port->{name}} || []};
         next unless @same_name_candidates;
 
-        my @touching_explicit_toplinks = @{$structural_rtl_ir->resolved_links_touching(
+        my @touching_explicit_wiring_blocks = @{$structural_rtl_ir->resolved_links_touching(
             $top_port->{name},
-            'declared_explicit_toplink',
+            'declared_explicit_wiring',
         )};
-        next unless @touching_explicit_toplinks;
-        my $example_link = $touching_explicit_toplinks[0];
+        next unless @touching_explicit_wiring_blocks;
+        my $example_link = $touching_explicit_wiring_blocks[0];
         my $source_context = $class->endpoint_context(
             composition_plan => $composition_plan,
             endpoint => $example_link->{source},
@@ -230,7 +230,7 @@ sub build_override_events ($class, %args) {
             next unless @compatible == @same_name_candidates;
 
             push @events, {
-                kind => 'explicit_toplink_overrides_same_name_top_input_convention',
+                kind => 'explicit_wiring_overrides_same_name_top_input_convention',
                 top_port_name => $top_port->{name},
                 lane => $composition_plan->lane,
                 top_port_context => $class->endpoint_context(
@@ -262,7 +262,7 @@ sub build_override_events ($class, %args) {
         next unless @compatible_output_candidates == 1;
 
         push @events, {
-            kind => 'explicit_toplink_overrides_same_name_top_output_convention',
+            kind => 'explicit_wiring_overrides_same_name_top_output_convention',
             top_port_name => $top_port->{name},
             lane => $composition_plan->lane,
             top_port_context => $class->endpoint_context(
@@ -779,12 +779,12 @@ sub provenance_label ($class, $origin_kind) {
     my %labels = (
         declared_explicit_port => 'declared explicit top port',
         declared_connect_by_name_port => 'declared connect-by-name top port',
-        declared_explicit_toplink => 'declared explicit toplink',
+        declared_explicit_wiring => 'declared explicit wiring',
         declared_connect_by_name_link => 'declared connect-by-name link',
         declared_c1_passthrough_link => 'declared single-child passthrough link',
         inferred_c1_passthrough_port => 'inferred single-child passthrough top port',
         inferred_c1_passthrough_link => 'inferred single-child passthrough link',
-        inferred_explicit_toplink_port => 'inferred top port from explicit toplink',
+        inferred_explicit_wiring_port => 'inferred top port from explicit wiring',
         inferred_undeclared_top_input_port => 'inferred undeclared top input',
         inferred_undeclared_top_output_port => 'inferred undeclared top output',
         inferred_plain_explicit_top_input_link => 'inferred plain explicit top-input convention link',
@@ -812,8 +812,8 @@ Returns the human-readable label for one convention-override event kind.
 
 sub override_label ($class, $kind) {
     my %labels = (
-        explicit_toplink_overrides_same_name_top_input_convention => 'explicit toplink overrides same-name top-input convention',
-        explicit_toplink_overrides_same_name_top_output_convention => 'explicit toplink overrides same-name top-output convention',
+        explicit_wiring_overrides_same_name_top_input_convention => 'explicit wiring overrides same-name top-input convention',
+        explicit_wiring_overrides_same_name_top_output_convention => 'explicit wiring overrides same-name top-output convention',
         explicit_top_output_reexports_internal_carrier => 'explicit top output re-exports internal carrier',
     );
 

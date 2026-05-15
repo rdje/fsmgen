@@ -140,7 +140,7 @@ The preferred long-term structure is:
   - `?top`
   - child kinds
   - `?ports`
-  - simple `?toplink`
+  - simple `?wiring`
   - same-name convention
 - `docs/book/src/06-composition-advanced.md`
   - source-side expressions

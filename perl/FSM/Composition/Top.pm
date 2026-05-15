@@ -13,7 +13,7 @@ sub new ($class, %args) {
         name => $args{name},
         instances => _clone($args{instances} || []),
         ports_blocks => _clone($args{ports_blocks} || []),
-        toplinks => _clone($args{toplinks} || []),
+        wiring_blocks => _clone($args{wiring_blocks} || []),
         package_imports => _clone($args{package_imports} || []),
         top_symbols => $args{top_symbols} || FSM::Composition::TopSymbols->new(),
         raw_ast => _clone($args{raw_ast}),
@@ -23,7 +23,7 @@ sub new ($class, %args) {
 sub name ($self) { return $self->{name} }
 sub instances ($self) { return _clone($self->{instances}) }
 sub ports_blocks ($self) { return _clone($self->{ports_blocks}) }
-sub toplinks ($self) { return _clone($self->{toplinks}) }
+sub wiring_blocks ($self) { return _clone($self->{wiring_blocks}) }
 sub package_imports ($self) { return _clone($self->{package_imports}) }
 sub top_symbols ($self) { return $self->{top_symbols} }
 sub raw_ast ($self) { return _clone($self->{raw_ast}) }

@@ -153,8 +153,8 @@ ISF
     like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\)/s, 'generated do child emits transaction parameter defaults');
     like($top_fsm, qr/\(\?fsmc:parent_worker_do_0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
         'generated top applies the do parameter override');
-    like($top_fsm, qr{/parameterized_do_binding\.parent_worker_do_0_start/parent_worker_do_0\.start/}, 'generated top wires do start handoff');
-    like($top_fsm, qr{/parent_worker_do_0\.done/parameterized_do_binding\.parent_worker_do_0_done/}, 'generated top wires do done handoff');
+    like($top_fsm, qr/\(parameterized_do_binding\.parent_worker_do_0_start parent_worker_do_0\.start\)/, 'generated top wires do start handoff');
+    like($top_fsm, qr/\(parent_worker_do_0\.done parameterized_do_binding\.parent_worker_do_0_done\)/, 'generated top wires do done handoff');
 
     my $tempdir = tempdir(CLEANUP => 1);
     my $source_path = File::Spec->catfile($tempdir, 'parameterized_do_binding.isf');

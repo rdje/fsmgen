@@ -18,7 +18,7 @@ use FSM::Composition::PortsBlock;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_select_expr
     slice_expr
@@ -34,14 +34,14 @@ subtest 'linked plan builder preserves top bit-select and slice sources as typed
         port('serial_out', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('top_expr_top'),
         top => FSM::Composition::Top->new(name => 'top_expr_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'uart_tx.data_in'),
@@ -84,7 +84,7 @@ subtest 'linked plan builder preserves top bit-select and slice sources as typed
     is($bindings{serial_out}{signal_name}, 'serial_out', 'child output still rebinds directly to the top output');
 };
 
-subtest 'pipeline and CLI emit top bit-select and slice sources for explicit toplinks' => sub {
+subtest 'pipeline and CLI emit top bit-select and slice sources for explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'top_expr_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'top_expr_top.sv');
@@ -101,7 +101,7 @@ subtest 'pipeline and CLI emit top bit-select and slice sources for explicit top
     serial_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_bus[15:8]/uart_tx.data_in/
     /status_bus[0]/uart_tx.enable/
     /uart_tx.serial_out/serial_out/
@@ -127,7 +127,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit top-expression toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit top-expression wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -150,8 +150,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for explicit top-expression toplinks');
-    ok(-e $output_path, 'CLI writes HDL for explicit top-expression toplinks');
+    ok($success, 'CLI succeeds for explicit top-expression wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for explicit top-expression wiring_blocks');
 };
 
 subtest 'linked plan builder preserves top-expression sources for direct top-output assignments too' => sub {
@@ -166,14 +166,14 @@ subtest 'linked plan builder preserves top-expression sources for direct top-out
         port('serial_out', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('top_expr_top_output_top'),
         top => FSM::Composition::Top->new(name => 'top_expr_top_output_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'serial_hi'),
@@ -229,7 +229,7 @@ subtest 'linked plan builder preserves top-expression sources for direct top-out
 
 subtest 'linked plan builder rejects out-of-range top expressions' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_top_expr_top'),
             top => FSM::Composition::Top->new(name => 'blocked_top_expr_top'),
@@ -238,8 +238,8 @@ subtest 'linked plan builder rejects out-of-range top expressions' => sub {
                 ports => [port('payload_bus', 'input', 8, undef)],
             ),
             ports => [port('payload_bus', 'input', 8, undef)],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => 'payload_bus[8]', target => 'uart_tx.enable'),

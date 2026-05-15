@@ -24,7 +24,7 @@ subtest 'pipeline reports explicit child links blocking undeclared top inference
   (?dtc:producer producer_src)
   (?dtc:consumer0 consumer0_src)
   (?dtc:consumer1 consumer1_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload_bus/consumer0.payload_in/
     /producer.payload_bus/consumer1.payload_in/
   )
@@ -117,8 +117,8 @@ FSM
         ],
         [
             sort { $a cmp $b } (
-                'producer.payload_bus -> consumer0.payload_in -> declared_explicit_toplink',
-                'producer.payload_bus -> consumer1.payload_in -> declared_explicit_toplink',
+                'producer.payload_bus -> consumer0.payload_in -> declared_explicit_wiring',
+                'producer.payload_bus -> consumer1.payload_in -> declared_explicit_wiring',
             )
         ],
         'structural_rtl_ir preserves the explicit child-link family that blocks undeclared top inference',
@@ -146,7 +146,7 @@ subtest 'pipeline reports inferred internal carriers kept internal by default' =
   (?ports)
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/producer.go/
     /go/consumer.go/
   )
@@ -235,7 +235,7 @@ subtest 'CLI prints convention block summary for non-quiet composition runs' => 
   (?dtc:producer producer_src)
   (?dtc:consumer0 consumer0_src)
   (?dtc:consumer1 consumer1_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.payload_bus/consumer0.payload_in/
     /producer.payload_bus/consumer1.payload_in/
   )

@@ -28,7 +28,7 @@ subtest 'shared-datapath candidate builder rebuilds the bounded candidate surfac
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )
@@ -114,7 +114,7 @@ FSM
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )
@@ -200,7 +200,7 @@ FSM
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )

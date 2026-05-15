@@ -17,7 +17,7 @@ use FSM::Composition::Instance;
 use FSM::Composition::Port;
 use FSM::Composition::Link;
 use FSM::Composition::PortsBlock;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 
 my $parser = FSM::Composition::Parser->new;
 
@@ -53,7 +53,7 @@ write_file(
   )
   (?fsmc:child_ctrl child_ctrl_src)
   (?rtl:uart_tx)
-  (?toplink:loopback_bus
+  (?wiring:loopback_bus
     /child_ctrl.output_data/txd/
   )
 )
@@ -93,13 +93,39 @@ is($explicit_spec->top->instances->[0]->source_name, 'child_ctrl_src', 'fsmc chi
 is($explicit_spec->top->instances->[1]->kind, 'rtl', 'second typed child preserves rtl kind');
 ok(!defined($explicit_spec->top->instances->[1]->name), 'rtl shorthand leaves instance alias undefined before realization');
 is($explicit_spec->top->instances->[1]->module_name, 'uart_tx', 'rtl child preserves module name');
-is(scalar(@{$explicit_spec->top->toplinks}), 1, 'parser records one toplink block');
-isa_ok($explicit_spec->top->toplinks->[0], 'FSM::Composition::TopLink');
-is($explicit_spec->top->toplinks->[0]->name, 'loopback_bus', 'toplink block preserves its declared name');
-is(scalar(@{$explicit_spec->top->toplinks->[0]->links}), 1, 'toplink block materializes simple link tokens as typed links');
-isa_ok($explicit_spec->top->toplinks->[0]->links->[0], 'FSM::Composition::Link');
-is($explicit_spec->top->toplinks->[0]->links->[0]->source, 'child_ctrl.output_data', 'typed link preserves dotted child source endpoints');
-is($explicit_spec->top->toplinks->[0]->links->[0]->target, 'txd', 'typed link preserves target endpoint');
+is(scalar(@{$explicit_spec->top->wiring_blocks}), 1, 'parser records one wiring block');
+isa_ok($explicit_spec->top->wiring_blocks->[0], 'FSM::Composition::WiringBlock');
+is($explicit_spec->top->wiring_blocks->[0]->name, 'loopback_bus', 'wiring block preserves its declared name');
+is(scalar(@{$explicit_spec->top->wiring_blocks->[0]->links}), 1, 'wiring block materializes simple link tokens as typed links');
+isa_ok($explicit_spec->top->wiring_blocks->[0]->links->[0], 'FSM::Composition::Link');
+is($explicit_spec->top->wiring_blocks->[0]->links->[0]->source, 'child_ctrl.output_data', 'typed link preserves dotted child source endpoints');
+is($explicit_spec->top->wiring_blocks->[0]->links->[0]->target, 'txd', 'typed link preserves target endpoint');
+
+my $lispish_wiring_spec = $parser->parse_source(
+    scalar Lispish::single(\'(?top:lispish_wiring_top
+  (?rtl:u_uart_a uart_tx)
+  (?rtl:u_uart_b uart_tx)
+  (?wiring:wiring
+    (data_a u_uart_a.data_in)
+    (connect u_uart_a.txd tx_a)
+    ((cat header status[0] =1 payload[3:0]) u_uart_b.frame_in)
+    ((repeat 3 status[0]) packed_out)
+  )
+)'),
+);
+
+my @lispish_links = @{$lispish_wiring_spec->top->wiring_blocks->[0]->links};
+is(scalar(@lispish_links), 4, 'wiring block materializes Lisp-ish link forms as typed links');
+is($lispish_links[0]->source, 'data_a', 'compact Lisp-ish link preserves source endpoint');
+is($lispish_links[0]->target, 'u_uart_a.data_in', 'compact Lisp-ish link preserves target endpoint');
+is($lispish_links[0]->raw_token, '(data_a u_uart_a.data_in)', 'compact Lisp-ish link keeps readable raw token');
+is($lispish_links[1]->source, 'u_uart_a.txd', 'verbose connect link preserves source endpoint');
+is($lispish_links[1]->target, 'tx_a', 'verbose connect link preserves target endpoint');
+is($lispish_links[1]->raw_token, '(connect u_uart_a.txd tx_a)', 'verbose connect link keeps readable raw token');
+is($lispish_links[2]->source, '{header,status[0],=1,payload[3:0]}', 'Lisp-ish cat source lowers to the existing bounded concat endpoint');
+is($lispish_links[2]->target, 'u_uart_b.frame_in', 'Lisp-ish cat link preserves target endpoint');
+is($lispish_links[3]->source, '{3{status[0]}}', 'Lisp-ish repeat source lowers to the existing bounded repeat endpoint');
+is($lispish_links[3]->target, 'packed_out', 'Lisp-ish repeat link preserves target endpoint');
 
 my $verbose_ports_spec = $parser->parse_source(
     scalar Lispish::single(\'(?top:verbose_ports_top
@@ -300,7 +326,7 @@ my $symbol_top_spec = $parser->parse_source(
     status_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=mode.BUSY/status_out/
   )
 )'),
@@ -354,7 +380,7 @@ my $aggregate_symbol_top_spec = $parser->parse_source(
     status_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=FRAME.flag/status_out/
   )
 )'),
@@ -397,7 +423,7 @@ my $package_top_spec = $parser->parse_source(
     status_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_local.mode.BUSY/status_out/
   )
 )

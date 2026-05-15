@@ -237,7 +237,7 @@ and `parameters`; instance entries expose `instance`, `child`,
 stringified `value`; drive handoff entries expose `drive`, `request`, and
 `payloads`, with each payload naming the drive `parameter`, child/parent ports,
 and `width`. This projection must stay a bounded live review/discovery summary,
-not a raw LoweringIR or `?toplink` dump.
+not a raw LoweringIR or `?wiring` dump.
 Reusable library actor uses are reported through a top-level `library_uses`
 array. Each entry exposes the bounded identity of the resolved use
 (`library`, `alias`, `export`, `kind`, `instance`), generated artifact names
@@ -640,6 +640,9 @@ child scheduled `.fsm` `+params` blocks, rejects duplicate instances,
 duplicate parameters, unknown overrides, unsupported symbolic values, and
 aggregate shape mismatches, and rejects parameter declarations on
 non-generated transactions.
+Generated composition-top links use the canonical Lisp-ish `?wiring` list
+spelling, for example `(parent.instance_start instance.start)`, rather than
+the older slash-token compatibility spelling.
 The switch-clause boundary is checked by
 [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 so `(switch signal (value body...)...)` requires one scalar signal, one or more
@@ -705,9 +708,10 @@ resolution requires a real source path, so file-backed library use should call
 lowered for HDL: bound library inputs/outputs link directly between top ports
 and the library child instance. Same-name clock/reset bindings use the existing
 composition system-port auto-wiring path. Differently named clock/reset
-bindings emit explicit generated-top links to the library child system ports;
-the reusable actor still owns reset kind and polarity. ISF still has one actor
-clock domain in this shipped surface.
+bindings emit explicit generated-top `?wiring` list links such as
+`(clk rx.lib_clk)` to the library child system ports; the reusable actor still
+owns reset kind and polarity. ISF still has one actor clock domain in this
+shipped surface.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters

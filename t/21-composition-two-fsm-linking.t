@@ -29,9 +29,9 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
-    /producer.output_data/consumer.input_data/
-    /consumer.final_data/result_data/
+  (?wiring:wiring
+    (producer.output_data consumer.input_data)
+    (connect consumer.final_data result_data)
   )
 )
 
@@ -78,7 +78,7 @@ is($result->{composition_plan}->top_name, 'two_child_top', 'typed plan preserves
 is(scalar(@{$result->{composition_plan}->instances}), 2, 'typed plan realizes two child instances');
 is($result->{composition_plan}->instances->[0]->instance_name, 'producer', 'top plan preserves declared producer instance order');
 is($result->{composition_plan}->instances->[1]->instance_name, 'consumer', 'top plan preserves declared consumer instance order');
-is(scalar(@{$result->{composition_plan}->links}), 2, 'typed plan preserves explicit toplink wiring');
+is(scalar(@{$result->{composition_plan}->links}), 2, 'typed plan preserves explicit wiring wiring');
 is(scalar(@{$result->{composition_plan}->nets}), 1, 'typed plan materializes one deterministic internal net for child-to-child wiring');
 isa_ok($result->{composition_plan}->nets->[0], 'FSM::Composition::Net');
 is($result->{composition_plan}->nets->[0]->name, 'comp_link_producer_output_data', 'internal net name is deterministic from the explicit link source');

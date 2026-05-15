@@ -49,7 +49,7 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
         {
             source => 'child_a.status',
             target => 'status',
-            origin_kind => 'toplink',
+            origin_kind => 'wiring',
         },
     ];
     my $auxiliary_assignments = [
@@ -151,7 +151,7 @@ subtest 'StructuralRTLIR constructor and collection accessors return caller-owne
             {
                 source => 'child_a.status',
                 target => 'status',
-                origin_kind => 'toplink',
+                origin_kind => 'wiring',
             },
         ],
         'resolved_links is isolated from constructor and accessor mutation',

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R11 — Lisp-ish ?wiring forms
+- Active task-tree slice: `COMPOSITION-WIRING-LISPISH.1` ships canonical
+  explicit composition link forms.
+- `?wiring` accepts compact `(source target)` and verbose
+  `(connect source target)` links; `/source/target/` remains compatibility
+  input.
+- Source-side `(cat ...)` and `(repeat COUNT operand)` forms are accepted in
+  those links and normalize to the existing typed composition source-expression
+  path.
+- ISF-generated composition tops now emit the canonical list-link spelling.
+- `?wiring` is now the canonical shipped block name in parser diagnostics,
+  generated composition tops, examples, tests, and user-facing docs.
+
 ## 2026-05-15: R14 — ISF storage var-only source surface
 - Active R14 task-tree slice: `ISF-STORAGE-VAR-SURFACE.1` narrows
   actor-owned scalar storage source vocabulary.

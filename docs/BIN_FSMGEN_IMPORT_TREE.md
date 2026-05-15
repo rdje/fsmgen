@@ -70,7 +70,7 @@ The visible `R11` composition cleanup since the previous snapshot is the new
 [perl/FSM/Composition/ActualLiteralSupport.pm](perl/FSM/Composition/ActualLiteralSupport.pm) owner for open/numeric actual parsing, concat-operand intrinsic-width literal lowering, target-width widening, and actual binding type contracts. That moved roughly one thousand lines of literal-specific policy out of [perl/FSM/Composition/LinkedPlanBuilder.pm](perl/FSM/Composition/LinkedPlanBuilder.pm) while preserving the planner's explicit-link role and diagnostic ownership.
 The follow-on `R11` source-expression cleanup is the new
 [perl/FSM/Composition/SourceExpressionSpecSupport.pm](perl/FSM/Composition/SourceExpressionSpecSupport.pm)
-owner for bounded explicit-toplink source-expression specs: top/child bit and
+owner for bounded explicit-wiring source-expression specs: top/child bit and
 slice forms, aggregate paths, concat groups, repeat groups, literal operands,
 top-symbol payload lookup, and inference/child-base collection now live below
 the planner too.
@@ -655,7 +655,7 @@ infrastructure rather than parser-local syntax sugar.
 - [perl/FSM/Composition/Instance.pm](perl/FSM/Composition/Instance.pm)
 - [perl/FSM/Composition/Port.pm](perl/FSM/Composition/Port.pm)
 - [perl/FSM/Composition/Link.pm](perl/FSM/Composition/Link.pm)
-- [perl/FSM/Composition/TopLink.pm](perl/FSM/Composition/TopLink.pm)
+- [perl/FSM/Composition/WiringBlock.pm](perl/FSM/Composition/WiringBlock.pm)
 - [perl/FSM/Composition/PortsBlock.pm](perl/FSM/Composition/PortsBlock.pm)
 - [perl/FSM/Composition/Net.pm](perl/FSM/Composition/Net.pm)
 - [perl/FSM/Composition/Plan.pm](perl/FSM/Composition/Plan.pm)

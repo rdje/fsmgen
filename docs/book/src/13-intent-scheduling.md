@@ -243,7 +243,7 @@ lower-result `files` map can include specialized library-child scheduled
 the normal composition/HDL path. Same-name clock/reset bindings use system-port
 auto-wiring. Differently named reusable-actor clock/reset bindings emit
 explicit generated-top links to the child system ports, for example
-`/clk/rx.lib_clk/`; the child actor still owns reset kind and polarity. This
+`(clk rx.lib_clk)`; the child actor still owns reset kind and polarity. This
 is signal-name remapping inside the current one-clock-domain ISF model, not
 multi-clock or clock-domain-crossing support. Multi-clock, asynchronous, and
 interacting clock domains need a separate public semantic model before they can

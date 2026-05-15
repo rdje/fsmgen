@@ -114,7 +114,7 @@ sub reason_excerpt ($class, $reason_text) {
     $reason =~ s/,\s+except that the single-child passthrough C1 lane and the explicit-link C2\/C3 lanes may now infer the top interface when '\?ports' is omitted or empty//g;
 
     if (
-        $reason =~ /\A(.+?)\.\s+Seen same-name child endpoints:\s+(.+?)\.\s+(?:The active|The current|Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z/s
+        $reason =~ /\A(.+?)\.\s+Seen same-name child endpoints:\s+(.+?)\.\s+(?:The active|The current|Use '\?wiring'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z/s
     ) {
         my ($headline, $seen) = ($1, $2);
         $headline =~ s/^\s+|\s+$//g;
@@ -122,7 +122,7 @@ sub reason_excerpt ($class, $reason_text) {
         return "$headline. Seen same-name child endpoints: $seen";
     }
 
-    $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?toplink'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z//;
+    $reason =~ s/\.\s+(?:Search roots:|Seen |The active |The current |Use '\?wiring'|Use '\?ports'|Use '\?fsmc'|Use '\?dtc'|Standalone '\?dt:name' roots|FSM child roots are shipped as composition children).*\z//;
     $reason =~ s/\.\z//;
     $reason =~ s/^\s+|\s+$//g;
     return $reason;
@@ -136,8 +136,8 @@ sub construct_excerpt ($class, $summary_text) {
         [ qr/requests declared connect-by-name/s, '=port', '=port' ],
         [ qr/Composition references external RTL module|RTL interface metadata|contains embedded '\?rtlif:/s, '?rtl', '?rtl' ],
         [ qr/explicit '\?ports' block|'\?ports' to declare at least one explicit top port/s, '?ports', '?ports' ],
-        [ qr/explicit link|explicit-link|nested '\?toplink' item|contains '\?toplink' token/s, '?toplink', '?toplink' ],
-        [ qr/contains child '\?toplink(?::[^']+)?'/s, '?toplink', '?toplink' ],
+        [ qr/explicit link|explicit-link|nested '\?wiring' item|contains '\?wiring' token|contains '\?wiring' link form/s, '?wiring', '?wiring' ],
+        [ qr/contains child '\?wiring(?::[^']+)?'/s, '?wiring', '?wiring' ],
         [ qr/omits top port|declares top port|declares duplicate top port|marks top port|uses top port|nested '\?ports' item|contains '\?ports' token|contains '\?ports' mapping directive|contains '\?ports' verbose declaration/s, '?ports', '?ports' ],
         [ qr/contains child '\?ports(?::[^']+)?'/s, '?ports', '?ports' ],
         [ qr/contains child '\?rtl:[^']+'/s, '?rtl', '?rtl' ],
@@ -206,7 +206,7 @@ sub context_excerpt ($class, $summary_text) {
     my @patterns = (
         [ qr/contains a child entry that is empty or missing its header/s, sub { return ('Child entry', "'missing header'"); } ],
         [ qr/contains a child entry that does not begin with a string header/s, sub { return ('Child entry', "'non-string header'"); } ],
-        [ qr/contains a nested '(\?(?:ports|toplink))' item/s, sub { return ('Child', "'$_[0]'"); } ],
+        [ qr/contains a nested '(\?(?:ports|wiring))' item/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains '(\?(?:fsmc|dtc))' child without a name/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/contains '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
@@ -214,6 +214,7 @@ sub context_excerpt ($class, $summary_text) {
         [ qr/declares '\?(?:fsmc|dtc|rtl)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/resolves '\?(?:fsmc|dtc)' child '([^']+)'/s, sub { return ('Child', "'$_[0]'"); } ],
         [ qr/mapping directive '([^']+)'/s, sub { return ('Mapping directive', "'$_[0]'"); } ],
+        [ qr/link form '([^']+)'/s, sub { return ('Link form', "'$_[0]'"); } ],
         [ qr/verbose declaration '([^']+)'/s, sub { return ('Declaration', "'$_[0]'"); } ],
         [ qr/contains multiple embedded '(\?rtlif:[^']+)' roots/s, sub { return ('RTL root', "'$_[0]'"); } ],
         [ qr/does not contain a '(\?rtlif:[^']+)' root/s, sub { return ('RTL root', "'$_[0]'"); } ],

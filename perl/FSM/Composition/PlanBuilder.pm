@@ -51,7 +51,7 @@ sub build_plan ($class, %args) {
     my $top = $composition_spec->top;
     my @instances = @{$top->instances || []};
     my @ports_blocks = @{$top->ports_blocks || []};
-    my @toplinks = @{$top->toplinks || []};
+    my @wiring_blocks = @{$top->wiring_blocks || []};
 
     confess
         "Composition source '$header' in '$fsm_file' is recognized and parsed into typed composition IR, ".
@@ -69,10 +69,10 @@ sub build_plan ($class, %args) {
         rtl_interface_loader => $rtl_interface_loader,
     )};
 
-    my $is_single_child_passthrough = @realized_instances == 1 && !@toplinks;
+    my $is_single_child_passthrough = @realized_instances == 1 && !@wiring_blocks;
     my $allows_implicit_explicit_link_ports =
         !$is_single_child_passthrough
-        && @toplinks
+        && @wiring_blocks
         && (
             @ports_blocks == 0
             || (@ports_blocks == 1 && !(scalar(@{$ports_blocks[0]->ports || []})))
@@ -116,7 +116,7 @@ sub build_plan ($class, %args) {
     if (!$declared_by_name_port_count && !$is_single_child_passthrough) {
         @ports = @{FSM::Composition::TopPortInferenceBuilder->augment_ports(
             ports => \@ports,
-            toplinks => \@toplinks,
+            wiring_blocks => \@wiring_blocks,
             realized_instances => \@realized_instances,
             fsm_file => $fsm_file,
             header => $header,
@@ -137,7 +137,7 @@ sub build_plan ($class, %args) {
             top => $top,
             ports_block => $ports_block,
             ports => \@ports,
-            toplinks => \@toplinks,
+            wiring_blocks => \@wiring_blocks,
             realized_instances => \@realized_instances,
             generated_instance_count => $generated_instance_count,
             rtl_instance_count => $rtl_instance_count,
@@ -147,7 +147,7 @@ sub build_plan ($class, %args) {
         );
     }
 
-    if (@realized_instances == 1 && !@toplinks) {
+    if (@realized_instances == 1 && !@wiring_blocks) {
         return FSM::Composition::C1PlanBuilder->build_plan(
             composition_spec => $composition_spec,
             ports_block => $ports_block,
@@ -164,7 +164,7 @@ sub build_plan ($class, %args) {
             top => $top,
             ports_block => $ports_block,
             ports => \@ports,
-            toplinks => \@toplinks,
+            wiring_blocks => \@wiring_blocks,
             realized_instances => \@realized_instances,
             rtl_instance_count => $rtl_instance_count,
             fsm_file => $fsm_file,
@@ -178,7 +178,7 @@ sub build_plan ($class, %args) {
         top => $top,
         ports_block => $ports_block,
         ports => \@ports,
-        toplinks => \@toplinks,
+        wiring_blocks => \@wiring_blocks,
         realized_instances => \@realized_instances,
         fsm_file => $fsm_file,
         header => $header,
@@ -277,13 +277,13 @@ sub build_c2_plan ($class, %args) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         if grep { !$class->is_generated_child_kind($_->kind) } @$realized_instances;
 
-    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C2',
         composition_spec => $args{composition_spec},
         top => $args{top},
         ports_block => $args{ports_block},
         ports => $args{ports},
-        toplinks => $args{toplinks},
+        wiring_blocks => $args{wiring_blocks},
         realized_instances => $realized_instances,
         fsm_file => $fsm_file,
         header => $header,
@@ -306,13 +306,13 @@ sub build_c3_plan ($class, %args) {
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $rtl_instance_count >= 1;
 
-    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $composition_plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => $args{composition_spec},
         top => $args{top},
         ports_block => $args{ports_block},
         ports => $args{ports},
-        toplinks => $args{toplinks},
+        wiring_blocks => $args{wiring_blocks},
         realized_instances => $realized_instances,
         fsm_file => $fsm_file,
         header => $header,
@@ -352,7 +352,7 @@ sub build_c4_plan ($class, %args) {
         unless ($generated_instance_count >= 1)
             || ($rtl_instance_count >= 1);
 
-    my @links = map { @{$_->links || []} } @{$args{toplinks} || []};
+    my @links = map { @{$_->links || []} } @{$args{wiring_blocks} || []};
     push @links, @{FSM::Composition::DeclaredByNameLinkBuilder->build_links(
         ports => $ports,
         realized_instances => $realized_instances,

@@ -26,7 +26,7 @@ subtest 'pipeline surfaces composition provenance report counts' => sub {
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.serial_payload/uart_tx.data_in/
   )
 )
@@ -74,7 +74,7 @@ FSM
     is($report->{port_category_counts}{declared}, 2, 'report groups declared top ports');
     is($report->{port_category_counts}{inferred}, 2, 'report groups inferred top ports');
 
-    is($report->{resolved_link_origin_counts}{declared_explicit_toplink}, 1, 'report counts declared explicit toplinks');
+    is($report->{resolved_link_origin_counts}{declared_explicit_wiring}, 1, 'report counts declared explicit wiring_blocks');
     is($report->{resolved_link_origin_counts}{inferred_plain_explicit_top_input_link}, 1, 'report counts inferred plain explicit top-input links');
     is($report->{resolved_link_origin_counts}{inferred_plain_explicit_top_output_link}, 1, 'report counts inferred plain explicit top-output links');
     is($report->{resolved_link_origin_counts}{auto_system_port_link}, 2, 'report counts auto system-port links');
@@ -109,7 +109,7 @@ subtest 'CLI prints composition provenance summary for non-quiet composition run
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.serial_payload/uart_tx.data_in/
   )
 )
@@ -159,7 +159,7 @@ FSM
     like($combined_output, qr/declared explicit top port:\s+2/s, 'CLI reports declared explicit top-port provenance');
     like($combined_output, qr/inferred undeclared top input:\s+2/s, 'CLI reports inferred undeclared top-input provenance');
     like($combined_output, qr/Resolved Link Provenance:/s, 'CLI prints resolved-link provenance');
-    like($combined_output, qr/declared explicit toplink:\s+1/s, 'CLI reports declared explicit-toplink provenance');
+    like($combined_output, qr/declared explicit wiring:\s+1/s, 'CLI reports declared explicit-wiring provenance');
     like($combined_output, qr/inferred plain explicit top-input convention link:\s+1/s, 'CLI reports inferred plain explicit top-input provenance');
     like($combined_output, qr/inferred plain explicit top-output convention link:\s+1/s, 'CLI reports inferred plain explicit top-output provenance');
     like($combined_output, qr/auto system-port link:\s+2/s, 'CLI reports auto system-port provenance');

@@ -15,7 +15,7 @@ sub expected_snapshot {
     return {
         instances => [{ name => 'producer', kind => 'fsmc' }],
         ports_blocks => [{ name => 'io', ports => ['clk'] }],
-        toplinks => [{ name => 'wiring', links => ['producer.out/consumer.in'] }],
+        wiring_blocks => [{ name => 'wiring', links => ['producer.out/consumer.in'] }],
         package_imports => ['types_pkg'],
         raw_ast => ['?top:top', ['?fsmc:producer']],
     };
@@ -35,7 +35,7 @@ sub snapshot {
     return {
         instances => $top->instances,
         ports_blocks => $top->ports_blocks,
-        toplinks => $top->toplinks,
+        wiring_blocks => $top->wiring_blocks,
         package_imports => $top->package_imports,
         raw_ast => $top->raw_ast,
     };
@@ -51,7 +51,7 @@ subtest 'Top constructor copies mutable containers' => sub {
 
     $args{instances}[0]{name} = 'mutated';
     $args{ports_blocks}[0]{ports}[0] = 'mutated';
-    $args{toplinks}[0]{links}[0] = 'mutated';
+    $args{wiring_blocks}[0]{links}[0] = 'mutated';
     push @{$args{package_imports}}, 'late_pkg';
     $args{raw_ast}[1][0] = '?mutated';
 
@@ -67,8 +67,8 @@ subtest 'Top accessors return caller-owned containers' => sub {
     my $ports_blocks = $top->ports_blocks;
     $ports_blocks->[0]{ports}[0] = 'mutated';
 
-    my $toplinks = $top->toplinks;
-    $toplinks->[0]{links}[0] = 'mutated';
+    my $wiring_blocks = $top->wiring_blocks;
+    $wiring_blocks->[0]{links}[0] = 'mutated';
 
     my $package_imports = $top->package_imports;
     push @$package_imports, 'late_pkg';

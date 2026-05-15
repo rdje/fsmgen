@@ -56,7 +56,7 @@ sub build_top_input_links ($class, %args) {
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."', ".
                     "but same-name top-input convention is blocked because same-name child endpoints include incompatible directions. ".
                     "Seen same-name child endpoints: $candidates. ".
-                    "Use explicit '?toplink' wiring for that family if the mixed-direction naming is intentional. ".
+                    "Use explicit '?wiring' wiring for that family if the mixed-direction naming is intentional. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
 
@@ -72,7 +72,7 @@ sub build_top_input_links ($class, %args) {
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with width ".$top_port->width.", ".
                     "but same-name top-input convention is blocked because same-name child inputs do not all match that width. ".
                     "Seen same-name child endpoints: $candidates. ".
-                    "Use explicit '?toplink' wiring or align the interface widths. ".
+                    "Use explicit '?wiring' wiring or align the interface widths. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
 
@@ -91,7 +91,7 @@ sub build_top_input_links ($class, %args) {
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."', ".
                     "but same-name top-input convention is blocked because same-name child inputs disagree on declared type contract. ".
                     "Seen typed child inputs: $candidates. ".
-                    "Use explicit '?toplink' wiring or align the declared type contracts. ".
+                    "Use explicit '?wiring' wiring or align the declared type contracts. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
 
@@ -108,7 +108,7 @@ sub build_top_input_links ($class, %args) {
                     "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with interface type '$declared_type', ".
                     "but same-name top-input convention is blocked because same-name child inputs do not all match that type metadata. ".
                     "Seen same-name child endpoints: $candidates. ".
-                    "Use explicit '?toplink' wiring or align the interface types. ".
+                    "Use explicit '?wiring' wiring or align the interface types. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
 
@@ -126,7 +126,7 @@ sub build_top_input_links ($class, %args) {
                         "Composition source '$header' in '$fsm_file' declares top input '".$top_port->name."' with declared type '$top_declared_type_label', ".
                         "but same-name top-input convention is blocked because same-name child inputs do not all match that declared type contract. ".
                         "Seen incompatible typed child inputs: $candidates. ".
-                        "Use explicit '?toplink' wiring or align the declared type contracts. ".
+                        "Use explicit '?wiring' wiring or align the declared type contracts. ".
                         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
                 }
             }
@@ -194,7 +194,7 @@ sub build_top_output_links ($class, %args) {
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."', ".
                     "but same-name top-output convention is blocked because several same-name child outputs remain top-facing. ".
                     "Seen child outputs: $candidates. ".
-                    "Use explicit '?toplink' wiring if that ambiguity is intentional. ".
+                    "Use explicit '?wiring' wiring if that ambiguity is intentional. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
             }
 
@@ -208,21 +208,21 @@ sub build_top_output_links ($class, %args) {
                 confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with width ".$top_port->width.", ".
                     "but same-name top-output convention is blocked because the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has width ".$candidate->{port}->width.". ".
-                    "Use explicit '?toplink' wiring or align the interface widths. ".
+                    "Use explicit '?wiring' wiring or align the interface widths. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     unless $candidate->{port}->width == $top_port->width;
 
                 confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with interface type '$declared_type', ".
                     "but same-name top-output convention is blocked because the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' has interface type '$candidate_type'. ".
-                    "Use explicit '?toplink' wiring or align the interface types. ".
+                    "Use explicit '?wiring' wiring or align the interface types. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     unless $candidate_type eq $declared_type;
 
                 confess
                     "Composition source '$header' in '$fsm_file' declares top output '".$top_port->name."' with declared type '$declared_top_declared_type', ".
                     "but same-name top-output convention is blocked because the remaining top-facing child output '".$candidate->{instance_name}.'.'.$candidate->{port}->name."' preserves incompatible declared type '$candidate_declared_type'. ".
-                    "Use explicit '?toplink' wiring or align the declared type contracts. ".
+                    "Use explicit '?wiring' wiring or align the declared type contracts. ".
                     "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
                     if defined($declared_top_declared_type)
                         && FSM::Composition::InterfacePortBuilder->declared_type_conflicts($top_port, $candidate->{port});

@@ -84,7 +84,7 @@ sub build_language_surface_section {
             top_root => '?top',
             generated_children => [qw(?fsmc ?dtc)],
             external_rtl_children => ['?rtl with ?rtlif sidecar or embedded metadata'],
-            wiring => ['?ports', '?toplink', '=port connect-by-name'],
+            wiring => ['?ports', '?wiring', '=port connect-by-name'],
             lanes => [qw(C1 C2 C3 C4)],
         },
         intentionally_blocked_or_not_yet_public => [

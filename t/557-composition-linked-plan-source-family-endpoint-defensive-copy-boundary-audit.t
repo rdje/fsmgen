@@ -29,7 +29,7 @@ sub source_descriptor {
         ),
         connection_expr => bit_select_expr(signal_ref_expr('producer_status'), 0),
         metadata => {
-            contexts => ['toplink'],
+            contexts => ['wiring'],
         },
     };
 }
@@ -54,7 +54,7 @@ subtest 'source_family_endpoint returns caller-owned non-expression source descr
             raw => 'producer.status[0]',
             connection_expr => bit_select_expr(signal_ref_expr('producer_status'), 0),
             metadata => {
-                contexts => ['toplink'],
+                contexts => ['wiring'],
             },
         },
         'returned source-family endpoint mutation cannot contaminate original source descriptor containers',

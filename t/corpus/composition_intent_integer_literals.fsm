@@ -5,7 +5,7 @@
     packed_out>33
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=5'23/decimal_out/
     /=8'-0xA/negative_out/
     /=5'23,=8'-10,=20'x1/packed_out/

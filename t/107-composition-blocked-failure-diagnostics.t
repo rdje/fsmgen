@@ -22,7 +22,7 @@ subtest 'plain explicit top-input convention failures say the convention is bloc
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.bridge/consumer.bridge/
   )
 )
@@ -89,7 +89,7 @@ subtest 'plain explicit top-output convention failures say the convention is blo
   )
   (?dtc:left left_src)
   (?dtc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/left.go/
     /go/right.go/
   )

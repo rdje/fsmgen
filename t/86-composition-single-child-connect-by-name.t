@@ -13,7 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Pipeline::HDLGenerator;
 use FSM::Composition::Plan;
 
-subtest 'single generated fsm child supports declared connect-by-name without explicit toplinks' => sub {
+subtest 'single generated fsm child supports declared connect-by-name without explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'single_fsm_by_name_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'single_fsm_by_name_top.sv');

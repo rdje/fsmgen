@@ -25,7 +25,7 @@ subtest 'composition module_info surfaces shared-datapath candidates across mult
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )
@@ -280,7 +280,7 @@ subtest 'CLI prints shared-datapath candidate summary for composition tops' => s
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /left.status_bus/left_status/
     /right.status_bus/right_status/
   )

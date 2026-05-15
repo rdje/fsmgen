@@ -29,7 +29,7 @@ subtest 'registered peer-read shared-datapath families now lift across mixed pub
   (?fsmc:right right_src)
   (?fsmc:consumer_left consumer_left_src)
   (?fsmc:consumer_right consumer_right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer_left.select/
@@ -177,7 +177,7 @@ subtest 'CLI reports mixed-boundary lifted shared-register runtime with only the
   (?fsmc:right right_src)
   (?fsmc:consumer_left consumer_left_src)
   (?fsmc:consumer_right consumer_right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer_left.select/

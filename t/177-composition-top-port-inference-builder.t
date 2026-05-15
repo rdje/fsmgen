@@ -11,14 +11,14 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Composition::Link;
 use FSM::Composition::Port;
 use FSM::Composition::RealizedInstance;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 use FSM::Composition::TopPortInferenceBuilder;
 
-subtest 'explicit-toplink builder infers renamed top ports from child endpoints' => sub {
+subtest 'explicit-wiring builder infers renamed top ports from child endpoints' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'start', target => 'producer.go'),
@@ -47,18 +47,18 @@ subtest 'explicit-toplink builder infers renamed top ports from child endpoints'
     is_deeply(
         [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
         [
-            ['start',  'input',  1, 'inferred_explicit_toplink_port'],
-            ['status', 'output', 1, 'inferred_explicit_toplink_port'],
+            ['start',  'input',  1, 'inferred_explicit_wiring_port'],
+            ['status', 'output', 1, 'inferred_explicit_wiring_port'],
         ],
-        'builder keeps the bounded renamed explicit-toplink inference surface',
+        'builder keeps the bounded renamed explicit-wiring inference surface',
     );
 };
 
-subtest 'explicit-toplink builder infers undeclared top inputs from source-side top expressions' => sub {
+subtest 'explicit-wiring builder infers undeclared top inputs from source-side top expressions' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'sink.data_in'),
@@ -79,18 +79,18 @@ subtest 'explicit-toplink builder infers undeclared top inputs from source-side 
     is_deeply(
         [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
         [
-            ['payload_bus', 'input', 16, 'inferred_explicit_toplink_port'],
-            ['status_bus',  'input',  1, 'inferred_explicit_toplink_port'],
+            ['payload_bus', 'input', 16, 'inferred_explicit_wiring_port'],
+            ['status_bus',  'input',  1, 'inferred_explicit_wiring_port'],
         ],
         'builder infers undeclared top-input width from bounded top-expression evidence',
     );
 };
 
-subtest 'explicit-toplink builder infers undeclared top inputs from concat top-expression operands' => sub {
+subtest 'explicit-wiring builder infers undeclared top inputs from concat top-expression operands' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -112,19 +112,19 @@ subtest 'explicit-toplink builder infers undeclared top inputs from concat top-e
     is_deeply(
         [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
         [
-            ['payload_hi', 'input', 4, 'inferred_explicit_toplink_port'],
-            ['payload_lo', 'input', 4, 'inferred_explicit_toplink_port'],
-            ['status_bus', 'input', 1, 'inferred_explicit_toplink_port'],
+            ['payload_hi', 'input', 4, 'inferred_explicit_wiring_port'],
+            ['payload_lo', 'input', 4, 'inferred_explicit_wiring_port'],
+            ['status_bus', 'input', 1, 'inferred_explicit_wiring_port'],
         ],
         'builder infers undeclared top-input widths from bounded concat top-expression operands',
     );
 };
 
-subtest 'explicit-toplink builder infers undeclared top inputs from concat operands even when child-output operands participate too' => sub {
+subtest 'explicit-wiring builder infers undeclared top inputs from concat operands even when child-output operands participate too' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -149,18 +149,18 @@ subtest 'explicit-toplink builder infers undeclared top inputs from concat opera
     is_deeply(
         [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
         [
-            ['payload_lo', 'input', 4, 'inferred_explicit_toplink_port'],
-            ['status_bus', 'input', 1, 'inferred_explicit_toplink_port'],
+            ['payload_lo', 'input', 4, 'inferred_explicit_wiring_port'],
+            ['status_bus', 'input', 1, 'inferred_explicit_wiring_port'],
         ],
         'builder still infers only undeclared top-input operands when concat also includes child-output operands',
     );
 };
 
-subtest 'explicit-toplink builder infers one undeclared repeated whole-port operand from child target width' => sub {
+subtest 'explicit-wiring builder infers one undeclared repeated whole-port operand from child target width' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -182,17 +182,17 @@ subtest 'explicit-toplink builder infers one undeclared repeated whole-port oper
     is_deeply(
         [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
         [
-            ['payload_bus', 'input', 4, 'inferred_explicit_toplink_port'],
+            ['payload_bus', 'input', 4, 'inferred_explicit_wiring_port'],
         ],
         'builder can infer one undeclared repeated whole-port operand when the remaining child-target width divides evenly across the repeat count',
     );
 };
 
-subtest 'explicit-toplink builder infers one undeclared whole-port concat operand from child target width' => sub {
+subtest 'explicit-wiring builder infers one undeclared whole-port concat operand from child target width' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
         ports => [],
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(
@@ -214,20 +214,20 @@ subtest 'explicit-toplink builder infers one undeclared whole-port concat operan
     is_deeply(
         [map { [$_->name, $_->direction, $_->width, $_->origin_kind] } @$ports],
         [
-            ['header_bus', 'input', 3, 'inferred_explicit_toplink_port'],
-            ['payload_bus', 'input', 4, 'inferred_explicit_toplink_port'],
-            ['status_bus',  'input', 1, 'inferred_explicit_toplink_port'],
+            ['header_bus', 'input', 3, 'inferred_explicit_wiring_port'],
+            ['payload_bus', 'input', 4, 'inferred_explicit_wiring_port'],
+            ['status_bus',  'input', 1, 'inferred_explicit_wiring_port'],
         ],
         'builder can size one undeclared whole-port concat operand from the child-input target width',
     );
 };
 
-subtest 'explicit-toplink builder rejects several undeclared whole-port concat operands without exact widths' => sub {
+subtest 'explicit-wiring builder rejects several undeclared whole-port concat operands without exact widths' => sub {
     my $exception = eval {
         FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(
@@ -256,12 +256,12 @@ subtest 'explicit-toplink builder rejects several undeclared whole-port concat o
     );
 };
 
-subtest 'explicit-toplink builder rejects incompatible exact-width and top-expression width evidence' => sub {
+subtest 'explicit-wiring builder rejects incompatible exact-width and top-expression width evidence' => sub {
     my $exception = eval {
         FSM::Composition::TopPortInferenceBuilder->augment_from_explicit_links(
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => 'payload_bus[15:8]', target => 'sink.byte_in'),
@@ -284,7 +284,7 @@ subtest 'explicit-toplink builder rejects incompatible exact-width and top-expre
 
     like(
         $exception,
-        qr/omits top port 'payload_bus', .*top-expression evidence requires declared width at least 16, while another explicit top-link use fixes that same top port at width 8.*payload_bus -> sink\.full_in.*payload_bus\[15:8\] -> sink\.byte_in/s,
+        qr/omits top port 'payload_bus', .*top-expression evidence requires declared width at least 16, while another explicit wiring use fixes that same top port at width 8.*payload_bus -> sink\.full_in.*payload_bus\[15:8\] -> sink\.byte_in/s,
         'builder rejects exact-width evidence that is narrower than required top-expression width',
     );
 };
@@ -294,8 +294,8 @@ subtest 'undeclared top-input builder infers shared same-name input fanout' => s
         ports => [
             FSM::Composition::Port->new(name => 'result_data', direction => 'output', width => 8, binding_mode => 'explicit'),
         ],
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => 'left.output_data', target => 'result_data'),
@@ -335,7 +335,7 @@ subtest 'undeclared top-input builder infers shared same-name input fanout' => s
 subtest 'undeclared top-output builder infers one unique top-facing child output' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_undeclared_top_outputs(
         ports => [],
-        toplinks => [],
+        wiring_blocks => [],
         realized_instances => [
             realized_instance('producer',
                 output_port('status_out', 8),
@@ -361,7 +361,7 @@ subtest 'undeclared top-output builder rejects several top-facing same-name chil
     my $exception = eval {
         FSM::Composition::TopPortInferenceBuilder->augment_undeclared_top_outputs(
             ports => [],
-            toplinks => [],
+            wiring_blocks => [],
             realized_instances => [
                 realized_instance('left', output_port('status_out', 1)),
                 realized_instance('right', output_port('status_out', 1)),
@@ -383,7 +383,7 @@ subtest 'undeclared top-output builder rejects several top-facing same-name chil
 subtest 'undeclared top-input builder preserves one uniform declared type contract' => sub {
     my $ports = FSM::Composition::TopPortInferenceBuilder->augment_undeclared_top_inputs(
         ports => [],
-        toplinks => [],
+        wiring_blocks => [],
         realized_instances => [
             realized_instance('left',
                 input_port('payload', 8, undef,
@@ -411,7 +411,7 @@ subtest 'undeclared top-input builder rejects conflicting declared type contract
     my $exception = eval {
         FSM::Composition::TopPortInferenceBuilder->augment_undeclared_top_inputs(
             ports => [],
-            toplinks => [],
+            wiring_blocks => [],
             realized_instances => [
                 realized_instance('left',
                     input_port('payload', 8, undef,

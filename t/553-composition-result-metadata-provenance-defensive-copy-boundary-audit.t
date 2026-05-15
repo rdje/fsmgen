@@ -92,7 +92,7 @@ sub provenance_report {
         },
         override_events => [
             {
-                kind => 'explicit_toplink_overrides_same_name_top_input_convention',
+                kind => 'explicit_wiring_overrides_same_name_top_input_convention',
                 source_context => {
                     endpoint => 'child.ready',
                 },

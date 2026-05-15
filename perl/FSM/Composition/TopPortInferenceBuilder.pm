@@ -7,7 +7,7 @@ FSM::Composition::TopPortInferenceBuilder - Builder for inferred composition top
 =head1 DESCRIPTION
 
 Builds the bounded inferred top-port families used by the active multi-child
-composition lanes. This package owns explicit-toplink top-port inference plus
+composition lanes. This package owns explicit-wiring top-port inference plus
 same-name undeclared top-input and top-output inference.
 
 =cut
@@ -26,28 +26,28 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(signal_ref_expr);
 
 sub augment_ports ($class, %args) {
     my $ports = $args{ports} || [];
-    my $toplinks = $args{toplinks} || [];
+    my $wiring_blocks = $args{wiring_blocks} || [];
     my $realized_instances = $args{realized_instances} || [];
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
 
     my $augmented_ports = $class->augment_from_explicit_links(
         ports => $ports,
-        toplinks => $toplinks,
+        wiring_blocks => $wiring_blocks,
         realized_instances => $realized_instances,
         fsm_file => $fsm_file,
         header => $header,
     );
     $augmented_ports = $class->augment_undeclared_top_inputs(
         ports => $augmented_ports,
-        toplinks => $toplinks,
+        wiring_blocks => $wiring_blocks,
         realized_instances => $realized_instances,
         fsm_file => $fsm_file,
         header => $header,
     );
     $augmented_ports = $class->augment_undeclared_top_outputs(
         ports => $augmented_ports,
-        toplinks => $toplinks,
+        wiring_blocks => $wiring_blocks,
         realized_instances => $realized_instances,
         fsm_file => $fsm_file,
         header => $header,
@@ -58,7 +58,7 @@ sub augment_ports ($class, %args) {
 
 sub augment_from_explicit_links ($class, %args) {
     my @ports = @{$args{ports} || []};
-    my $toplinks = $args{toplinks} || [];
+    my $wiring_blocks = $args{wiring_blocks} || [];
     my $realized_instances = $args{realized_instances} || [];
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
@@ -77,8 +77,8 @@ sub augment_from_explicit_links ($class, %args) {
             = FSM::Composition::LinkedPlanBuilder->index_ports_by_name($instance->interface_ports);
     }
 
-    for my $toplink (@$toplinks) {
-        for my $link (@{$toplink->links || []}) {
+    for my $wiring (@$wiring_blocks) {
+        for my $link (@{$wiring->links || []}) {
             my $source = $link->source || '';
             my $target = $link->target || '';
 
@@ -224,7 +224,7 @@ sub augment_from_explicit_links ($class, %args) {
             declared_type_spec => $_->{declared_type_spec},
             raw_token => undef,
             binding_mode => 'explicit',
-            origin_kind => 'inferred_explicit_toplink_port',
+            origin_kind => 'inferred_explicit_wiring_port',
         )
     } values %inferred_specs;
 
@@ -234,7 +234,7 @@ sub augment_from_explicit_links ($class, %args) {
 
 sub augment_undeclared_top_inputs ($class, %args) {
     my @ports = @{$args{ports} || []};
-    my $toplinks = $args{toplinks} || [];
+    my $wiring_blocks = $args{wiring_blocks} || [];
     my $realized_instances = $args{realized_instances} || [];
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
@@ -244,8 +244,8 @@ sub augment_undeclared_top_inputs ($class, %args) {
     my %explicitly_linked_child_input_names;
     my %same_name_undeclared_top_input_links;
 
-    for my $toplink (@$toplinks) {
-        for my $link (@{$toplink->links || []}) {
+    for my $wiring (@$wiring_blocks) {
+        for my $link (@{$wiring->links || []}) {
             my $source = $link->source || '';
             my $target = $link->target || '';
             my ($target_port_name) = $target =~ /^\w+\.(\w+)$/;
@@ -311,7 +311,7 @@ sub augment_undeclared_top_inputs ($class, %args) {
 
 sub augment_undeclared_top_outputs ($class, %args) {
     my @ports = @{$args{ports} || []};
-    my $toplinks = $args{toplinks} || [];
+    my $wiring_blocks = $args{wiring_blocks} || [];
     my $realized_instances = $args{realized_instances} || [];
     my $fsm_file = $args{fsm_file};
     my $header = $args{header};
@@ -320,8 +320,8 @@ sub augment_undeclared_top_outputs ($class, %args) {
     my %port_groups = _port_groups_from_instances($realized_instances)->%*;
     my %explicitly_linked_child_output_endpoints;
 
-    for my $toplink (@$toplinks) {
-        for my $link (@{$toplink->links || []}) {
+    for my $wiring (@$wiring_blocks) {
+        for my $link (@{$wiring->links || []}) {
             my $source = $link->source || '';
             if ($source =~ /^(\w+)\.(\w+)$/) {
                 $explicitly_linked_child_output_endpoints{"$1.$2"} = 1;
@@ -495,7 +495,7 @@ sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $in
     if (@operand_names > 1) {
         confess
             "Composition source '$header' in '$fsm_file' omits top ports '".join("', '", @operand_names)."', ".
-            "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' leaves several undeclared whole-port concat operands without exact widths. ".
+            "but explicit wiring port inference is blocked because top expression '".$expression_spec->{raw}."' leaves several undeclared whole-port concat operands without exact widths. ".
             "Seen explicit link evidence: $evidence. ".
             "The current bounded omitted/empty-'?ports' concat inference slice only infers undeclared whole-port operands when one remaining concat operand can be sized exactly from the child-input target width. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -504,7 +504,7 @@ sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $in
     if ($width_multiplier > 1 && $remaining_width >= 1 && $remaining_width % $width_multiplier != 0) {
         confess
             "Composition source '$header' in '$fsm_file' omits top port '".$operand_names[0]."', ".
-            "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' leaves remaining width $remaining_width that cannot be divided evenly across $width_multiplier repeated uses of undeclared whole-port concat operand '".$operand_names[0]."'. ".
+            "but explicit wiring port inference is blocked because top expression '".$expression_spec->{raw}."' leaves remaining width $remaining_width that cannot be divided evenly across $width_multiplier repeated uses of undeclared whole-port concat operand '".$operand_names[0]."'. ".
             "Seen explicit link evidence: $evidence. ".
             "The current bounded omitted/empty-'?ports' concat inference slice only infers undeclared whole-port operands when one remaining concat operand can be sized exactly from the child-input target width. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -512,7 +512,7 @@ sub _assert_top_expression_inference_is_resolved ($class, $declared_by_name, $in
 
     confess
         "Composition source '$header' in '$fsm_file' omits top port '".$operand_names[0]."', ".
-        "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' leaves no remaining width for that undeclared whole-port concat operand after accounting for $known_width of the child-input target width $target_width. ".
+        "but explicit wiring port inference is blocked because top expression '".$expression_spec->{raw}."' leaves no remaining width for that undeclared whole-port concat operand after accounting for $known_width of the child-input target width $target_width. ".
         "Seen explicit link evidence: $evidence. ".
         "The current bounded omitted/empty-'?ports' concat inference slice only infers undeclared whole-port operands when one remaining concat operand can be sized exactly from the child-input target width. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -591,20 +591,20 @@ sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances
 
     confess
         "Composition source '$header' in '$fsm_file' uses $context_label '".$expression_spec->{raw}."', ".
-        "but explicit top-link port inference is blocked because no realized child instance named '$instance_name' exists. ".
+        "but explicit wiring port inference is blocked because no realized child instance named '$instance_name' exists. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $instance;
 
     my $port = $child_ports_by_instance->{$instance_name}{$port_name};
     confess
         "Composition source '$header' in '$fsm_file' uses $context_label '".$expression_spec->{raw}."', ".
-        "but explicit top-link port inference is blocked because instance '$instance_name' has no port named '$port_name'. ".
+        "but explicit wiring port inference is blocked because instance '$instance_name' has no port named '$port_name'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless $port;
 
     confess
         "Composition source '$header' in '$fsm_file' uses $context_label '".$expression_spec->{raw}."', ".
-        "but explicit top-link port inference is blocked because base child port '$instance_name.$port_name' is ".$port->direction." instead of output. ".
+        "but explicit wiring port inference is blocked because base child port '$instance_name.$port_name' is ".$port->direction." instead of output. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless ($port->direction || '') eq 'output';
 
@@ -617,7 +617,7 @@ sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances
     if ($expr_kind eq 'child_bit_select') {
         confess
             "Composition source '$header' in '$fsm_file' uses child expression '".$expression_spec->{raw}."', ".
-            "but explicit top-link port inference is blocked because bit index ".$expression_spec->{index}." falls outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
+            "but explicit wiring port inference is blocked because bit index ".$expression_spec->{index}." falls outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
             unless defined($base_width) && $base_width > 0 && $expression_spec->{index} < $base_width;
 
@@ -642,7 +642,7 @@ sub _annotate_expression_spec_known_widths ($class, $expression_spec, $instances
 
     confess
         "Composition source '$header' in '$fsm_file' uses child expression '".$expression_spec->{raw}."', ".
-        "but explicit top-link port inference is blocked because slice bounds [".$expression_spec->{msb}.':'.$expression_spec->{lsb}."] fall outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
+        "but explicit wiring port inference is blocked because slice bounds [".$expression_spec->{msb}.':'.$expression_spec->{lsb}."] fall outside declared width $base_width of child endpoint '$instance_name.$port_name'. ".
         "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
         unless defined($base_width) && $base_width > 0 && $expression_spec->{msb} < $base_width && $expression_spec->{lsb} < $base_width;
 
@@ -768,7 +768,7 @@ sub _record_inferred_aggregate_roots_from_same_name_inputs ($class, $inferred_sp
             $fsm_file,
             $header,
             subject => "aggregate top port '$root_name'",
-            blocked_reason => 'explicit top-link port inference',
+            blocked_reason => 'explicit wiring port inference',
             context_suffix => $expression_context,
             width_rule => 'The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on width.',
             type_rule => 'The current bounded inference slice only infers aggregate roots from same-name child inputs when all such inputs agree exactly on type metadata too.',
@@ -1000,7 +1000,7 @@ sub _analyze_aggregate_top_expression_for_inference ($class, $declared_by_name, 
     if (!$root_contract) {
         confess
             "Composition source '$header' in '$fsm_file' omits top port '$port_name', ".
-            "but explicit top-link port inference is blocked because top expression '".$expression_spec->{raw}."' uses aggregate member/item access before the root top port has a declared aggregate type. ".
+            "but explicit wiring port inference is blocked because top expression '".$expression_spec->{raw}."' uses aggregate member/item access before the root top port has a declared aggregate type. ".
             "Seen explicit link evidence: $evidence. ".
             "Declare the aggregate root in '?ports' with a '+types' alias, or first bind the whole root to one child endpoint that can infer a compatible declared aggregate contract. ".
             "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
@@ -1034,9 +1034,9 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference is blocked because that same top endpoint is used as both an input and an output across explicit links. ".
+                "but explicit wiring port inference is blocked because that same top endpoint is used as both an input and an output across explicit links. ".
                 "Seen explicit link evidence: $seen. ".
-                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one direction. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit wiring uses of that endpoint agree on one direction. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
@@ -1044,9 +1044,9 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference is blocked because the linked child endpoints disagree on interface type ('".$existing->{type}."' vs '$type'). ".
+                "but explicit wiring port inference is blocked because the linked child endpoints disagree on interface type ('".$existing->{type}."' vs '$type'). ".
                 "Seen explicit link evidence: $seen. ".
-                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on type metadata too. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit wiring uses of that endpoint agree on type metadata too. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
@@ -1071,9 +1071,9 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference is blocked because the linked child endpoints disagree on declared type contract ('".$existing_declared_type_label."' vs '".$incoming_declared_type_label."'). ".
+                "but explicit wiring port inference is blocked because the linked child endpoints disagree on declared type contract ('".$existing_declared_type_label."' vs '".$incoming_declared_type_label."'). ".
                 "Seen explicit link evidence: $seen. ".
-                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one declared type contract too. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit wiring uses of that endpoint agree on one declared type contract too. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
@@ -1081,9 +1081,9 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference is blocked because the linked child endpoints disagree on width (".$existing->{exact_width}." vs $exact_width). ".
+                "but explicit wiring port inference is blocked because the linked child endpoints disagree on width (".$existing->{exact_width}." vs $exact_width). ".
                 "Seen explicit link evidence: $seen. ".
-                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on width. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit wiring uses of that endpoint agree on width. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
@@ -1091,9 +1091,9 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference is blocked because top-expression evidence requires declared width at least ".$existing->{width}.", while another explicit top-link use fixes that same top port at width $exact_width. ".
+                "but explicit wiring port inference is blocked because top-expression evidence requires declared width at least ".$existing->{width}.", while another explicit wiring use fixes that same top port at width $exact_width. ".
                 "Seen explicit link evidence: $seen. ".
-                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one compatible declared width contract. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit wiring uses of that endpoint agree on one compatible declared width contract. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
@@ -1101,9 +1101,9 @@ sub _record_inferred_top_port_requirement ($class, $inferred_specs, $top_name, $
             my $seen = join(', ', @{$existing->{evidence}}, $evidence);
             confess
                 "Composition source '$header' in '$fsm_file' omits top port '$top_name', ".
-                "but explicit top-link port inference is blocked because top-expression evidence requires declared width at least $required_width, while another explicit top-link use fixes that same top port at width ".$existing->{exact_width}.". ".
+                "but explicit wiring port inference is blocked because top-expression evidence requires declared width at least $required_width, while another explicit wiring use fixes that same top port at width ".$existing->{exact_width}.". ".
                 "Seen explicit link evidence: $seen. ".
-                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit top-link uses of that endpoint agree on one compatible declared width contract. ".
+                "The current bounded convention-over-configuration slice only infers a missing top port when all explicit wiring uses of that endpoint agree on one compatible declared width contract. ".
                 "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n";
         }
 
@@ -1264,13 +1264,13 @@ __END__
 
 =head2 augment_ports
 
-Applies the full bounded top-port inference family in order: explicit-toplink
+Applies the full bounded top-port inference family in order: explicit-wiring
 port inference, undeclared same-name top-input inference, and undeclared
 same-name top-output inference.
 
 =head2 augment_from_explicit_links
 
-Infers missing top ports from explicit top-link endpoints when all linked child
+Infers missing top ports from explicit wiring endpoints when all linked child
 endpoints agree on one direction, width, and normalized interface type.
 
 =head2 augment_undeclared_top_inputs
@@ -1285,7 +1285,7 @@ output when the bounded unique-output convention is satisfied.
 
 =head2 _record_inferred_top_port
 
-Tracks one inferred explicit-toplink port candidate and enforces the bounded
+Tracks one inferred explicit-wiring port candidate and enforces the bounded
 agreement rules on direction, width, and normalized interface type.
 
 =head2 _port_groups_from_instances

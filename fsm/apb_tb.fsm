@@ -20,7 +20,7 @@
   )
   (?fsmc:requester apb_requester)
   (?fsmc:completer apb_completer)
-  (?toplink:apb_bus
+  (?wiring:apb_bus
     /requester.PSEL/completer.PSEL/
     /requester.PENABLE/completer.PENABLE/
     /requester.PWRITE/completer.PWRITE/

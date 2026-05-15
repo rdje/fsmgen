@@ -31,7 +31,7 @@ subtest 'multiple rtl children support declared connect-by-name with explicit ch
   )
   (?rtl:uart_rx)
   (?rtl:payload_probe)
-  (?toplink:wiring
+  (?wiring:wiring
     /serial_in/uart_rx.rxd/
     /uart_rx.data_out/payload_probe.sample_in/
   )
@@ -113,7 +113,7 @@ subtest 'one generated child plus multiple rtl children support declared connect
   (?dtc:router route_src)
   (?rtl:uart_tx)
   (?rtl:payload_probe)
-  (?toplink:wiring
+  (?wiring:wiring
     /router.route_data/uart_tx.data_in/
     /router.route_data/payload_probe.sample_in/
   )

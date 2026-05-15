@@ -10,7 +10,7 @@ Typical causes:
 
 - malformed root forms
 - malformed child entries
-- malformed `?ports` or `?toplink` tokens
+- malformed `?ports` or `?wiring` tokens
 - malformed `+system` or `:=` payloads
 - `+size` expressions that reference unknown symbols or whole aggregate values
   where one scalar integer width is required
@@ -34,7 +34,7 @@ Typical causes:
 - blocked omitted-`?ports` inference
 - incompatible declared type contracts
 - unsupported explicit-link topology
-- malformed `?ports`, `?toplink`, `?fsmc`, `?dtc`, `?rtl`, or `.rtlif`
+- malformed `?ports`, `?wiring`, `?fsmc`, `?dtc`, `?rtl`, or `.rtlif`
   structure
 
 Composition failures try to preserve artifact context. Depending on the failing
@@ -209,7 +209,7 @@ contract. Current out-of-support examples include:
 - unsupported expression operators, malformed operator arity, or guard-only
   tokens in ordinary RHS expression position
 - legacy composition/template forms such as `?&...`, nested `?top`, nested
-  `?ports` mapping directives, nested `?toplink`, multi-source `?fsmc`,
+  `?ports` mapping directives, nested `?wiring`, multi-source `?fsmc`,
   placeholder selectors, repeat macros, and placeholder tokens
 - composition requests with no child instances, malformed child payloads,
   duplicate child names, unsupported child kinds, or external RTL metadata that

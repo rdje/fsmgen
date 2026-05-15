@@ -96,7 +96,7 @@ subtest 'realized ?dtc children now emit standalone dt onehot0 guard assertions 
   )
   (?dtc:router_a route_a)
   (?dtc:router_b route_b)
-  (?toplink:wiring
+  (?wiring:wiring
     /sel/router_a.sel/
     /data_a/router_a.a/
     /data_b/router_a.b/

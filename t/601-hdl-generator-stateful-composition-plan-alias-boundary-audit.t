@@ -58,7 +58,7 @@ sub write_composition_fixture {
     OUT>8
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_local.RESET_BYTE/OUT/
     /=shared_local.RESET_BYTE/uart_tx.data_in/
   )

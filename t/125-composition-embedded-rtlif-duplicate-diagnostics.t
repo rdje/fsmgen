@@ -27,7 +27,7 @@ write_file(
   )
   (?dtc:router route_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /router.route_data/uart_tx.data_in/
     /uart_tx.txd/serial_out/
   )

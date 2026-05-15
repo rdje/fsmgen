@@ -80,7 +80,7 @@ sub write_composition_fixture {
     shared_flag>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_local.mode.BUSY/shared_flag/
     /=shared_local.mode.BUSY/uart_tx.enable/
   )

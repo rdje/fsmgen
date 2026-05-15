@@ -92,7 +92,7 @@ subtest 'multi-child composition resolves external child FSM sources through --p
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )

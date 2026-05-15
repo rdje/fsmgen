@@ -514,12 +514,12 @@ manifest output while keeping the exact file lists widenable.
 | `contract.duplicate_embedded_rtlif_root` | [t/corpus/duplicate_embedded_rtlif_top.fsm](t/corpus/duplicate_embedded_rtlif_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
 
 ## Current locking tests
-- [t/262-composition-structural-actual-toplinks.t](t/262-composition-structural-actual-toplinks.t)
+- [t/262-composition-structural-actual-wiring-blocks.t](t/262-composition-structural-actual-wiring-blocks.t)
   executes explicit structural direct-actual composition through linked-plan,
   pipeline, and CLI coverage, including unsized numeric actuals, typed literal
   actuals, named composition-root actuals, and FSMGen intent-sized exact-width
   direct actuals such as `=5'23`, `=8'-10`, `=8'-0xA`, and `=20'x1`.
-- [t/264-composition-toplink-concat-expressions.t](t/264-composition-toplink-concat-expressions.t)
+- [t/264-composition-wiring-concat-expressions.t](t/264-composition-wiring-concat-expressions.t)
   executes explicit structural concat composition through linked-plan,
   pipeline, and CLI coverage, including nested/repeat groups, named literal
   actual operands, intrinsic-width numeric operands, and FSMGen intent-sized

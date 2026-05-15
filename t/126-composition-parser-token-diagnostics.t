@@ -113,18 +113,18 @@ FSM
     );
 };
 
-subtest 'nested ?toplink items now say top-link token flatness is blocked' => sub {
+subtest 'wrapped slash ?wiring list items now say wiring endpoint shape is blocked' => sub {
     expect_failure(
-        name => 'nested_toplink_item_top',
+        name => 'nested_wiring_item_top',
         body => <<'FSM',
-(?top:nested_toplink_item_top
+(?top:nested_wiring_item_top
   (?ports:public_io
     clk
     rstn
     result_data>8
   )
   (?fsmc:child child_src)
-  (?toplink:wiring
+  (?wiring:wiring
     (group
       /child.result_data/result_data/
     )
@@ -144,24 +144,24 @@ subtest 'nested ?toplink items now say top-link token flatness is blocked' => su
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'nested_toplink_item_top' contains a nested '\?toplink' item, .*explicit top-link token flatness is blocked because the active composition parser only supports flat '\/source\/target\/' link tokens/s,
-        cli_regex => qr/explicit top-link token flatness is blocked because the active composition parser only supports flat '\/source\/target\/' link tokens/s,
-        cli_failure_name => 'nested ?toplink items',
+        pipeline_regex => qr/Composition top 'nested_wiring_item_top' contains '\?wiring' link form '\(group \/child\.result_data\/result_data\/\)', .*explicit wiring endpoint shape is blocked because list-form endpoints must not wrap legacy slash-link tokens/s,
+        cli_regex => qr/explicit wiring endpoint shape is blocked because list-form endpoints must not wrap legacy slash-link tokens/s,
+        cli_failure_name => 'wrapped slash ?wiring list items',
     );
 };
 
-subtest 'unsupported ?toplink tokens now say top-link token shape is blocked' => sub {
+subtest 'unsupported ?wiring tokens now say wiring token shape is blocked' => sub {
     expect_failure(
-        name => 'unsupported_toplink_token_top',
+        name => 'unsupported_wiring_token_top',
         body => <<'FSM',
-(?top:unsupported_toplink_token_top
+(?top:unsupported_wiring_token_top
   (?ports:public_io
     clk
     rstn
     result_data>8
   )
   (?fsmc:child child_src)
-  (?toplink:wiring
+  (?wiring:wiring
     child.result_data->result_data
   )
 )
@@ -179,9 +179,9 @@ subtest 'unsupported ?toplink tokens now say top-link token shape is blocked' =>
   )
 )
 FSM
-        pipeline_regex => qr/Composition top 'unsupported_toplink_token_top' contains '\?toplink' token 'child\.result_data->result_data', .*explicit top-link token shape is blocked because the current parser only accepts simple '\/source\/target\/' link forms/s,
-        cli_regex => qr/explicit top-link token shape is blocked because the current parser only accepts simple '\/source\/target\/' link forms/s,
-        cli_failure_name => 'unsupported ?toplink tokens',
+        pipeline_regex => qr/Composition top 'unsupported_wiring_token_top' contains '\?wiring' token 'child\.result_data->result_data', .*explicit wiring token shape is blocked because the current parser accepts legacy '\/source\/target\/' tokens, canonical '\(source target\)' forms, or verbose '\(connect source target\)' forms/s,
+        cli_regex => qr/explicit wiring token shape is blocked because the current parser accepts legacy '\/source\/target\/' tokens, canonical '\(source target\)' forms, or verbose '\(connect source target\)' forms/s,
+        cli_failure_name => 'unsupported ?wiring tokens',
     );
 };
 

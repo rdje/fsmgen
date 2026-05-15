@@ -27,7 +27,7 @@ subtest 'realized generated child interface ports now mirror structural_rtl_ir b
   )
   (?fsmc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/producer.select/
     /producer.output_data/router.IN_A/
     /data_a/router.A/

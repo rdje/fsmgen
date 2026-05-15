@@ -8,7 +8,7 @@ use FindBin;
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 
 sub expected_links {
     return [
@@ -19,15 +19,15 @@ sub expected_links {
 
 sub expected_raw_ast {
     return [
-        '?toplink:wiring',
+        '?wiring:wiring',
         '/producer.out/consumer.in/',
     ];
 }
 
-subtest 'TopLink constructor copies mutable inputs' => sub {
+subtest 'WiringBlock constructor copies mutable inputs' => sub {
     my $links = expected_links();
     my $raw_ast = expected_raw_ast();
-    my $toplink = FSM::Composition::TopLink->new(
+    my $wiring = FSM::Composition::WiringBlock->new(
         name => 'wiring',
         links => $links,
         raw_ast => $raw_ast,
@@ -37,26 +37,26 @@ subtest 'TopLink constructor copies mutable inputs' => sub {
     push @$links, { source => 'late.out', target => 'late.in' };
     $raw_ast->[1] = '/mutated/out/';
 
-    is_deeply($toplink->links, expected_links(), 'toplink stores a snapshot of constructor links');
-    is_deeply($toplink->raw_ast, expected_raw_ast(), 'toplink stores a snapshot of constructor raw AST');
+    is_deeply($wiring->links, expected_links(), 'wiring stores a snapshot of constructor links');
+    is_deeply($wiring->raw_ast, expected_raw_ast(), 'wiring stores a snapshot of constructor raw AST');
 };
 
-subtest 'TopLink accessors return caller-owned containers' => sub {
-    my $toplink = FSM::Composition::TopLink->new(
+subtest 'WiringBlock accessors return caller-owned containers' => sub {
+    my $wiring = FSM::Composition::WiringBlock->new(
         name => 'wiring',
         links => expected_links(),
         raw_ast => expected_raw_ast(),
     );
 
-    my $links = $toplink->links;
+    my $links = $wiring->links;
     $links->[0]{target} = 'mutated.in';
     push @$links, { source => 'late.out', target => 'late.in' };
 
-    my $raw_ast = $toplink->raw_ast;
+    my $raw_ast = $wiring->raw_ast;
     $raw_ast->[1] = '/mutated/out/';
 
-    is_deeply($toplink->links, expected_links(), 'links accessor returns a fresh container');
-    is_deeply($toplink->raw_ast, expected_raw_ast(), 'raw_ast accessor returns a fresh container');
+    is_deeply($wiring->links, expected_links(), 'links accessor returns a fresh container');
+    is_deeply($wiring->raw_ast, expected_raw_ast(), 'raw_ast accessor returns a fresh container');
 };
 
 done_testing;

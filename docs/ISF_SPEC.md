@@ -332,8 +332,8 @@ to the library instance, and bound library outputs drive the corresponding top
 outputs. Same-name clock/reset bindings use the existing generated-composition
 system-port auto-wiring path. When the library actor's authored clock or reset
 name differs from the importing actor's bound parent signal, the generated top
-emits an explicit link such as `/clk/rx.lib_clk/` or
-`/rst_n/rx.lib_rst_n/`. The reusable actor still owns reset kind and polarity;
+emits explicit Lisp-ish composition links such as `(clk rx.lib_clk)` or
+`(rst_n rx.lib_rst_n)`. The reusable actor still owns reset kind and polarity;
 the binding remaps only the signal identity seen at the parent boundary. This
 is not multi-clock-domain support. The current ISF scheduler still models one
 clock domain for an actor/generated top; multi-clock, asynchronous, and
@@ -1335,7 +1335,9 @@ through the normal composition pipeline. The public contract is:
   child exposes `start` as an input and `done` as an output.
 - The generated top wires `parent.instance_start` to `instance.start`,
   `instance.done` to `parent.instance_done`, explicit port-binding handoffs,
-  and child named-drive handoff outputs to parent per-instance handoff inputs.
+  and child named-drive handoff outputs to parent per-instance handoff inputs
+  using canonical `?wiring` list forms such as
+  `(parent.instance_start instance.start)`.
 - A spawned child returns to its `start`-guarded idle state after completion and
   must not re-enter the body until the next start pulse.
 - Spawn instance names are actor-local identities and must be unique. Generated
@@ -1421,7 +1423,7 @@ expose one named drive, its request link, and one payload entry per drive
 parameter with `parameter`, `child_port`, `parent_port`, and `width`.
 
 This projection is deliberately bounded. It does not expose raw LoweringIR
-records, raw composition parser objects, raw `?toplink` arrays, assignment
+records, raw composition parser objects, raw `?wiring` arrays, assignment
 provenance, or private port-inference internals. It is live contract metadata
 that evolves with FSMGen, not a frozen full schedule-report schema.
 

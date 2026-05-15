@@ -26,7 +26,7 @@ subtest 'combinational peer-read shared-datapath families now synthesize one top
   (?fsmc:left left_src)
   (?fsmc:right right_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer.select/
@@ -128,7 +128,7 @@ subtest 'CLI reports the bounded combinational top-facing shared carrier runtime
   (?fsmc:left left_src)
   (?fsmc:right right_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/consumer.select/

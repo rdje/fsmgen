@@ -48,7 +48,7 @@
 ;
 ;  (?fsmc:duo datapath_test newone)
 ;
-;  (?toplink:lte_dif_tasu)
+;  (?wiring:lte_dif_tasu)
 ;  (?fsmc: lte_dif_txif_req_syncnack)
 ;
 ;  (?top:txdu_txif_10to8

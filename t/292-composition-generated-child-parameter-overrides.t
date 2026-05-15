@@ -43,7 +43,7 @@ subtest 'generated child parameter overrides lower through structural IR into SV
     )
   )
   (?dtc:sink sink_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/u_child.in_data/
     /u_child.out_data/sink.sink_in/
     /sink.sink_out/payload_out/
@@ -162,7 +162,7 @@ subtest 'generated child parameter overrides must be declared by the child sourc
       (MODE 1)
     )
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /u_child.payload_out/payload_out/
   )
 )
@@ -228,7 +228,7 @@ subtest 'generated child aggregate parameter overrides must match the child defa
       (LANES (8'hA5))
     )
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /u_child.payload_out/payload_out/
   )
 )

@@ -39,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `COMPOSITION-WIRING-LISPISH` | `done` | `R11` | `closed` | [docs/tasks/COMPOSITION-WIRING-LISPISH.md](docs/tasks/COMPOSITION-WIRING-LISPISH.md) |
 | `ISF-STORAGE-VAR-SURFACE` | `done` | `R14` | `closed` | [docs/tasks/ISF-STORAGE-VAR-SURFACE.md](docs/tasks/ISF-STORAGE-VAR-SURFACE.md) |
 | `ISF-STORAGE-VAR-ALIASES` | `done` | `R14` | `closed` | [docs/tasks/ISF-STORAGE-VAR-ALIASES.md](docs/tasks/ISF-STORAGE-VAR-ALIASES.md) |
 | `ISF-LIBRARY-SYSTEM-BINDINGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md) |

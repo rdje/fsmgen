@@ -29,7 +29,7 @@ subtest 'composition generation separates module_info lowered summaries from emb
   )
   (?fsmc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/producer.select/
     /producer.output_data/router.IN_A/
     /data_a/router.A/

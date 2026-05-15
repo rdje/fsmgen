@@ -69,7 +69,7 @@ sub write_package_import_fixture {
     shared_out>8
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_local.RESET_BYTE/shared_out/
     /=shared_local.RESET_BYTE/uart_tx.data_in/
   )

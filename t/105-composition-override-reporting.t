@@ -12,7 +12,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 use FSM::Pipeline::HDLGenerator;
 
-subtest 'pipeline reports explicit toplink overrides of same-name convention' => sub {
+subtest 'pipeline reports explicit wiring overrides of same-name convention' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'composition_override_reporting_top.fsm');
 
@@ -26,7 +26,7 @@ subtest 'pipeline reports explicit toplink overrides of same-name convention' =>
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /trigger/producer.trigger/
     /producer.serial_payload/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
@@ -67,18 +67,18 @@ FSM
     my $report = $result->{composition_report};
     my $structural_rtl_ir = $result->{structural_rtl_ir};
     my ($input_override) = grep {
-        ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_input_convention'
+        ($_->{kind} || '') eq 'explicit_wiring_overrides_same_name_top_input_convention'
     } @{$report->{override_events} || []};
     my ($output_override) = grep {
-        ($_->{kind} || '') eq 'explicit_toplink_overrides_same_name_top_output_convention'
+        ($_->{kind} || '') eq 'explicit_wiring_overrides_same_name_top_output_convention'
     } @{$report->{override_events} || []};
     my ($input_override_link) = grep {
-        (($_->{origin_kind} || '') eq 'declared_explicit_toplink')
+        (($_->{origin_kind} || '') eq 'declared_explicit_wiring')
             && (($_->{source} || '') eq 'trigger')
             && (($_->{target} || '') eq 'producer.trigger')
     } @{$structural_rtl_ir->{resolved_links} || []};
     my ($output_override_link) = grep {
-        (($_->{origin_kind} || '') eq 'declared_explicit_toplink')
+        (($_->{origin_kind} || '') eq 'declared_explicit_wiring')
             && (($_->{source} || '') eq 'uart_tx.serial_out')
             && (($_->{target} || '') eq 'serial_out')
     } @{$structural_rtl_ir->{resolved_links} || []};
@@ -86,22 +86,22 @@ FSM
     is($report->{lane}, 'C3', 'report records the active mixed explicit-link lane');
     is($report->{override_count}, 2, 'report counts same-name convention overrides');
     is(
-        $report->{override_kind_counts}{explicit_toplink_overrides_same_name_top_input_convention},
+        $report->{override_kind_counts}{explicit_wiring_overrides_same_name_top_input_convention},
         1,
-        'report counts explicit toplink override of same-name top-input convention',
+        'report counts explicit wiring override of same-name top-input convention',
     );
     is(
-        $report->{override_kind_examples}{explicit_toplink_overrides_same_name_top_input_convention},
+        $report->{override_kind_examples}{explicit_wiring_overrides_same_name_top_input_convention},
         'trigger -> producer.trigger (?dt, blocks: 1, output drive families: 1)',
         'report keeps one forward-context example for the same-name top-input override family',
     );
     is(
-        $report->{override_kind_counts}{explicit_toplink_overrides_same_name_top_output_convention},
+        $report->{override_kind_counts}{explicit_wiring_overrides_same_name_top_output_convention},
         1,
-        'report counts explicit toplink override of same-name top-output convention',
+        'report counts explicit wiring override of same-name top-output convention',
     );
     is(
-        $report->{override_kind_examples}{explicit_toplink_overrides_same_name_top_output_convention},
+        $report->{override_kind_examples}{explicit_wiring_overrides_same_name_top_output_convention},
         'uart_tx.serial_out (?rtl) -> serial_out',
         'report keeps one forward-context example for the same-name top-output override family',
     );
@@ -153,7 +153,7 @@ subtest 'pipeline reports explicit top-output re-export of inferred internal car
   )
   (?dtc:producer producer_src)
   (?dtc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /go/producer.go/
     /go/consumer.go/
   )
@@ -212,9 +212,9 @@ FSM
     is($report->{lane}, 'C2', 'report records the active generated explicit-link lane');
     is($report->{override_count}, 2, 'report counts both the explicit input override and the internal-carrier re-export override');
     is(
-        $report->{override_kind_counts}{explicit_toplink_overrides_same_name_top_input_convention},
+        $report->{override_kind_counts}{explicit_wiring_overrides_same_name_top_input_convention},
         1,
-        'report also counts explicit toplink override of same-name top-input convention in the re-export fixture',
+        'report also counts explicit wiring override of same-name top-input convention in the re-export fixture',
     );
     is(
         $report->{override_kind_counts}{explicit_top_output_reexports_internal_carrier},
@@ -255,7 +255,7 @@ subtest 'CLI prints convention override summary for non-quiet composition runs' 
   )
   (?dtc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /trigger/producer.trigger/
     /producer.serial_payload/uart_tx.data_in/
     /uart_tx.serial_out/serial_out/
@@ -304,12 +304,12 @@ FSM
     like($combined_output, qr/Convention Overrides:/s, 'CLI prints the convention override section');
     like(
         $combined_output,
-        qr/explicit toplink overrides same-name top-input convention:\s+1 \(example: trigger -> producer\.trigger \(\?dt, blocks: 1, output drive families: 1\)\)/s,
+        qr/explicit wiring overrides same-name top-input convention:\s+1 \(example: trigger -> producer\.trigger \(\?dt, blocks: 1, output drive families: 1\)\)/s,
         'CLI reports the top-input override kind with one forward-context example',
     );
     like(
         $combined_output,
-        qr/explicit toplink overrides same-name top-output convention:\s+1 \(example: uart_tx\.serial_out \(\?rtl\) -> serial_out\)/s,
+        qr/explicit wiring overrides same-name top-output convention:\s+1 \(example: uart_tx\.serial_out \(\?rtl\) -> serial_out\)/s,
         'CLI reports the top-output override kind with one forward-context example',
     );
 };

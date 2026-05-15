@@ -27,7 +27,7 @@ subtest 'composition provenance now preserves resolved-link endpoint context and
   )
   (?fsmc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/router.IN_A/
     /select/producer.select/
     /data_a/router.A/
@@ -98,9 +98,9 @@ FSM
         'provenance report keeps one stable example top port for declared explicit port provenance',
     );
     is(
-        $report->{resolved_link_origin_examples}{declared_explicit_toplink},
+        $report->{resolved_link_origin_examples}{declared_explicit_wiring},
         'producer.output_data (?fsm, states: 2, output drive families: 1) -> router.IN_A (?dt, blocks: 3, output drive families: 1)',
-        'provenance report keeps one stable forward-context example for declared explicit toplink provenance',
+        'provenance report keeps one stable forward-context example for declared explicit wiring provenance',
     );
     is(
         $report->{resolved_link_origin_examples}{auto_system_port_link},
@@ -201,7 +201,7 @@ subtest 'CLI prints provenance origin examples from the new report surface' => s
   )
   (?fsmc:producer producer_src)
   (?dtc:router route_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/router.IN_A/
     /select/producer.select/
     /data_a/router.A/
@@ -272,7 +272,7 @@ FSM
     );
     like(
         $combined_output,
-        qr/declared explicit toplink:\s+5 \(example: producer\.output_data \(\?fsm, states: 2, output drive families: 1\) -> router\.IN_A \(\?dt, blocks: 3, output drive families: 1\)\)/s,
+        qr/declared explicit wiring:\s+5 \(example: producer\.output_data \(\?fsm, states: 2, output drive families: 1\) -> router\.IN_A \(\?dt, blocks: 3, output drive families: 1\)\)/s,
         'CLI prints resolved-link provenance examples with forward child context',
     );
     like(

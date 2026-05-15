@@ -371,7 +371,7 @@ actors, it is an object with only review-facing composition facts:
 ```
 
 The projection is intentionally not a raw `LoweringIR` dump and not a parsed
-`?toplink` dump. It reports the current bounded names that downstream
+`?wiring` dump. It reports the current bounded names that downstream
 consumers can use to discover the generated top, parent, child modules,
 instance identity, activation kind, start and done handoff, named-drive
 handoff, and per-instance parameter binding. The `kind` value is

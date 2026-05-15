@@ -26,7 +26,7 @@ subtest 'registered shared-datapath families now lift into one shared top-level 
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/
@@ -112,7 +112,7 @@ subtest 'CLI reports the bounded registered public-fanout runtime' => sub {
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/

@@ -33,7 +33,7 @@ subtest 'explicit-link C3 composition supports multiple generated children plus 
   (?dtc:router route_src)
   (?rtl:uart_tx)
   (?rtl:payload_probe)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/router.data_in/
     /router.route_data/uart_tx.data_in/
     /router.route_data/payload_probe.sample_in/

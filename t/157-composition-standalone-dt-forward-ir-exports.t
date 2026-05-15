@@ -24,7 +24,7 @@ subtest 'composition standalone-DT child exports now preserve forward intent and
   )
   (?dtc:router_a route_a)
   (?dtc:router_b route_b)
-  (?toplink:wiring
+  (?wiring:wiring
     /sel/router_a.sel/
     /data_a/router_a.a/
     /data_b/router_a.b/

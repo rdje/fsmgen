@@ -14,7 +14,7 @@ use FSM::Composition::FailureReportBuilder;
 subtest 'failure report builder extracts child-header failures' => sub {
     my $report = FSM::Composition::FailureReportBuilder->build_report(
         "Composition source '?top:unsupported_child_failure_summary_top' contains child '?bogus:child', ".
-        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', and '+import'. ".
+        "but composition child kind support is blocked because the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?wiring', '+constants', '+enums', and '+import'. ".
         "See docs/COMPOSITION_SCOPE.md.\n",
     );
 
@@ -27,7 +27,7 @@ subtest 'failure report builder extracts child-header failures' => sub {
     is($report->{blocked_boundary_label}, 'child kind support', 'builder derives the concise boundary label');
     is(
         $report->{blocked_reason},
-        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?toplink', '+constants', '+enums', and '+import'",
+        "the active composition parser currently accepts only '?fsmc', '?dtc', '?rtl', '?ports', '?wiring', '+constants', '+enums', and '+import'",
         'builder keeps the concise blocked reason',
     );
 };
@@ -64,7 +64,7 @@ subtest 'failure report builder extracts explicit-link endpoint context' => sub 
 
     ok($report, 'builder returns a blocked failure report for explicit-link endpoint failures');
     is($report->{top_name}, 'wiring_top', 'builder keeps the top name');
-    is($report->{construct}, '?toplink', 'builder infers the explicit-link construct');
+    is($report->{construct}, '?wiring', 'builder infers the explicit-link construct');
     is($report->{context_label}, 'Child endpoint', 'builder extracts child endpoint context');
     is($report->{context_value}, "'uart_tx.missing_port'", 'builder formats the child endpoint context');
     is($report->{blocked_boundary}, 'explicit link endpoint resolution', 'builder keeps the explicit-link boundary');

@@ -23,7 +23,7 @@ subtest 'composition generation separates top-level resolved_package_imports fro
     shared_flag>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_local.mode.BUSY/shared_flag/
     /=shared_local.mode.BUSY/uart_tx.enable/
   )

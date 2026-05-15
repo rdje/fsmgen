@@ -168,7 +168,7 @@ sub composition_source {
     shared_out>8
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=shared_external.RESET_BYTE/shared_out/
     /=shared_local.mode.BUSY/uart_tx.enable/
   )

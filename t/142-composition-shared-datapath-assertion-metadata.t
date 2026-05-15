@@ -26,7 +26,7 @@ subtest 'shared-datapath candidates surface source-enable aliases and onehot0 as
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/
@@ -142,7 +142,7 @@ subtest 'CLI prints shared-datapath onehot0 assertion planning' => sub {
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/

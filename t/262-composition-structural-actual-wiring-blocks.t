@@ -18,7 +18,7 @@ use FSM::Composition::PortsBlock;
 use FSM::Composition::RealizedInstance;
 use FSM::Composition::Spec;
 use FSM::Composition::Top;
-use FSM::Composition::TopLink;
+use FSM::Composition::WiringBlock;
 use FSM::Composition::TopSymbols;
 use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
     bit_vector_literal_expr
@@ -26,7 +26,7 @@ use FSM::IR::StructuralRTLIR::ConnectionExpr qw(
 );
 use FSM::Pipeline::HDLGenerator;
 
-subtest 'linked plan builder preserves numeric and open toplinks as typed actual bindings' => sub {
+subtest 'linked plan builder preserves numeric and open wiring_blocks as typed actual bindings' => sub {
     my @ports = (
         port('core_clk', 'input', 1, 'clock'),
         port('rst_async_n', 'input', 1, 'reset'),
@@ -52,14 +52,14 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
         port('serial_out', 'output', 1, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('structural_actual_top'),
         top => FSM::Composition::Top->new(name => 'structural_actual_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => "=8'b1010_0101", target => 'default_data'),
@@ -182,143 +182,143 @@ subtest 'linked plan builder preserves numeric and open toplinks as typed actual
     is_deeply(
         $bindings{data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'literal explicit toplink becomes a typed bit-vector actual binding',
+        'literal explicit wiring becomes a typed bit-vector actual binding',
     );
     is($bindings{zero_data_in}{signal_name} // '', '', 'scalar zero actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{zero_data_in}{connection_expr},
         bit_vector_literal_expr('00000000'),
-        'scalar zero explicit toplink expands to the exact target width for child inputs',
+        'scalar zero explicit wiring expands to the exact target width for child inputs',
     );
     is($bindings{one_data_in}{signal_name} // '', '', 'scalar one actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{one_data_in}{connection_expr},
         bit_vector_literal_expr('00000001'),
-        'scalar one explicit toplink expands to the exact target width for child inputs',
+        'scalar one explicit wiring expands to the exact target width for child inputs',
     );
     is($bindings{unsized_decimal_data_in}{signal_name} // '', '', 'unsized decimal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{unsized_decimal_data_in}{connection_expr},
         bit_vector_literal_expr('10101010'),
-        'unsized decimal explicit toplink widens to the exact target width for child inputs',
+        'unsized decimal explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{signed_decimal_data_in}{signal_name} // '', '', 'unsized signed decimal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{signed_decimal_data_in}{connection_expr},
         bit_vector_literal_expr('11111111'),
-        'unsized signed decimal explicit toplink lowers through exact-width two-complement bits for child inputs',
+        'unsized signed decimal explicit wiring lowers through exact-width two-complement bits for child inputs',
     );
     is($bindings{signed_literal_data_in}{signal_name} // '', '', 'signed decimal literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{signed_literal_data_in}{connection_expr},
         bit_vector_literal_expr('11111111'),
-        'signed decimal literal explicit toplink becomes the same typed bit-vector actual binding',
+        'signed decimal literal explicit wiring becomes the same typed bit-vector actual binding',
     );
     is($bindings{signed_binary_data_in}{signal_name} // '', '', 'signed binary literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{signed_binary_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'signed binary literal explicit toplink becomes the same typed bit-vector actual binding',
+        'signed binary literal explicit wiring becomes the same typed bit-vector actual binding',
     );
     is($bindings{signed_octal_data_in}{signal_name} // '', '', 'signed octal literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{signed_octal_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'signed octal literal explicit toplink becomes the same typed bit-vector actual binding',
+        'signed octal literal explicit wiring becomes the same typed bit-vector actual binding',
     );
     is($bindings{signed_hex_data_in}{signal_name} // '', '', 'signed hex literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{signed_hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'signed hex literal explicit toplink becomes the same typed bit-vector actual binding',
+        'signed hex literal explicit wiring becomes the same typed bit-vector actual binding',
     );
     is($bindings{unsized_octal_data_in}{signal_name} // '', '', 'unsized octal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{unsized_octal_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'unsized octal explicit toplink widens to the exact target width for child inputs',
+        'unsized octal explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{unsized_hex_data_in}{signal_name} // '', '', 'unsized hex actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{unsized_hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'unsized hex explicit toplink widens to the exact target width for child inputs',
+        'unsized hex explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{prefixed_binary_data_in}{signal_name} // '', '', 'prefixed binary actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{prefixed_binary_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'prefixed binary explicit toplink widens to the exact target width for child inputs',
+        'prefixed binary explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{prefixed_decimal_data_in}{signal_name} // '', '', 'prefixed decimal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{prefixed_decimal_data_in}{connection_expr},
         bit_vector_literal_expr('10101010'),
-        'prefixed decimal explicit toplink widens to the exact target width for child inputs',
+        'prefixed decimal explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{prefixed_hex_data_in}{signal_name} // '', '', 'prefixed hex actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{prefixed_hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'prefixed hex explicit toplink widens to the exact target width for child inputs',
+        'prefixed hex explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{sv_unsized_binary_data_in}{signal_name} // '', '', 'SV unsized binary actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{sv_unsized_binary_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'SV unsized binary explicit toplink widens to the exact target width for child inputs',
+        'SV unsized binary explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{sv_unsized_decimal_data_in}{signal_name} // '', '', 'SV unsized decimal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{sv_unsized_decimal_data_in}{connection_expr},
         bit_vector_literal_expr('10101010'),
-        'SV unsized decimal explicit toplink widens to the exact target width for child inputs',
+        'SV unsized decimal explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{sv_unsized_signed_decimal_data_in}{signal_name} // '', '', 'SV unsized signed decimal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{sv_unsized_signed_decimal_data_in}{connection_expr},
         bit_vector_literal_expr('11111111'),
-        'SV unsized signed decimal explicit toplink lowers through exact-width two-complement bits for child inputs',
+        'SV unsized signed decimal explicit wiring lowers through exact-width two-complement bits for child inputs',
     );
     is($bindings{sv_unsized_octal_data_in}{signal_name} // '', '', 'SV unsized octal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{sv_unsized_octal_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'SV unsized octal explicit toplink widens to the exact target width for child inputs',
+        'SV unsized octal explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{sv_unsized_hex_data_in}{signal_name} // '', '', 'SV unsized hex actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{sv_unsized_hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'SV unsized hex explicit toplink widens to the exact target width for child inputs',
+        'SV unsized hex explicit wiring widens to the exact target width for child inputs',
     );
     is($bindings{decimal_data_in}{signal_name} // '', '', 'decimal literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{decimal_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'decimal literal explicit toplink becomes the same typed bit-vector actual binding',
+        'decimal literal explicit wiring becomes the same typed bit-vector actual binding',
     );
     is($bindings{octal_data_in}{signal_name} // '', '', 'octal literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{octal_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'octal literal explicit toplink becomes the same typed bit-vector actual binding',
+        'octal literal explicit wiring becomes the same typed bit-vector actual binding',
     );
     is($bindings{hex_data_in}{signal_name} // '', '', 'hex literal actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{hex_data_in}{connection_expr},
         bit_vector_literal_expr('10100101'),
-        'hex literal explicit toplink becomes the same typed bit-vector actual binding',
+        'hex literal explicit wiring becomes the same typed bit-vector actual binding',
     );
     is($bindings{enable}{signal_name} // '', '', 'open actual binding does not invent a flat signal mirror');
     is_deeply(
         $bindings{enable}{connection_expr},
         open_expr(),
-        'open explicit toplink becomes a typed open actual binding',
+        'open explicit wiring becomes a typed open actual binding',
     );
 };
 
-subtest 'pipeline and CLI emit structural numeric and open actuals for explicit toplinks' => sub {
+subtest 'pipeline and CLI emit structural numeric and open actuals for explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'structural_actual_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'structural_actual_top.sv');
@@ -352,7 +352,7 @@ subtest 'pipeline and CLI emit structural numeric and open actuals for explicit 
         serial_out>
       )
       (?rtl:uart_tx)
-      (?toplink:wiring
+      (?wiring:wiring
         /=8'b1010_0101/default_data/
         /=1/one_data/
         /=1_70/decimal_data/
@@ -439,7 +439,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit actual toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'single rtl explicit actual wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -607,11 +607,11 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for explicit structural-actual toplinks');
-    ok(-e $output_path, 'CLI writes HDL for explicit structural-actual toplinks');
+    ok($success, 'CLI succeeds for explicit structural-actual wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for explicit structural-actual wiring_blocks');
 };
 
-subtest 'pipeline and CLI emit intent-sized exact-width direct actuals for explicit toplinks' => sub {
+subtest 'pipeline and CLI emit intent-sized exact-width direct actuals for explicit wiring_blocks' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $composition_path = File::Spec->catfile($tempdir, 'intent_sized_actual_top.fsm');
     my $output_path = File::Spec->catfile($tempdir, 'intent_sized_actual_top.sv');
@@ -627,7 +627,7 @@ subtest 'pipeline and CLI emit intent-sized exact-width direct actuals for expli
     x_alias_out>20
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=5'23/decimal_out/
     /=8'-10/negative_decimal_out/
     /=8'-0b1010/negative_binary_out/
@@ -655,7 +655,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'single rtl intent-sized direct-actual toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'single rtl intent-sized direct-actual wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -687,8 +687,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for intent-sized direct-actual toplinks');
-    ok(-e $output_path, 'CLI writes HDL for intent-sized direct-actual toplinks');
+    ok($success, 'CLI succeeds for intent-sized direct-actual wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for intent-sized direct-actual wiring_blocks');
 };
 
 subtest 'linked plan builder preserves named actuals from composition-root symbols' => sub {
@@ -697,7 +697,7 @@ subtest 'linked plan builder preserves named actuals from composition-root symbo
         port('symbol_byte', 'output', 8, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('symbol_actual_top'),
         top => FSM::Composition::Top->new(
@@ -715,8 +715,8 @@ subtest 'linked plan builder preserves named actuals from composition-root symbo
         ),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => '=RESET_BYTE', target => 'uart_tx.data_in'),
@@ -778,7 +778,7 @@ subtest 'pipeline and CLI emit named actuals from composition-root symbols' => s
     symbol_byte>8
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=RESET_BYTE/uart_tx.data_in/
     /=mode.BUSY/symbol_flag/
     /=RESET_BYTE/symbol_byte/
@@ -827,8 +827,8 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for composition-root named actual toplinks');
-    ok(-e $output_path, 'CLI writes HDL for composition-root named actual toplinks');
+    ok($success, 'CLI succeeds for composition-root named actual wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for composition-root named actual wiring_blocks');
 };
 
 subtest 'linked plan builder preserves compatible whole aggregate actuals on typed direct targets' => sub {
@@ -858,14 +858,14 @@ subtest 'linked plan builder preserves compatible whole aggregate actuals on typ
         top_symbols => $top_symbols,
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => FSM::Composition::Spec->new(top => $top),
         top => $top,
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => '=FRAME', target => 'typed_status_out'),
@@ -921,7 +921,7 @@ subtest 'linked plan builder rejects whole aggregate actuals across incompatible
     );
 
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => FSM::Composition::Spec->new(top => $top),
             top => $top,
@@ -946,8 +946,8 @@ subtest 'linked plan builder rejects whole aggregate actuals across incompatible
                     ),
                 ),
             ],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=FRAME', target => 'typed_status_out'),
@@ -982,14 +982,14 @@ subtest 'linked plan builder sign-extends SV unsized signed based direct actuals
         port('sv_unsized_signed_hex_data', 'output', 12, undef),
     );
 
-    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+    my $plan = FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
         lane => 'C3',
         composition_spec => composition_spec('sv_unsized_signed_based_actual_top'),
         top => FSM::Composition::Top->new(name => 'sv_unsized_signed_based_actual_top'),
         ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => \@ports),
         ports => \@ports,
-        toplinks => [
-            FSM::Composition::TopLink->new(
+        wiring_blocks => [
+            FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => "='sb1010", target => 'sv_unsized_signed_binary_data'),
@@ -1060,7 +1060,7 @@ subtest 'pipeline and CLI emit sign-extended SV unsized signed based direct actu
     sv_unsized_signed_hex_data>12
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /='sb1010/sv_unsized_signed_binary_data/
     /='so6_45/sv_unsized_signed_octal_data/
     /='shA_5/sv_unsized_signed_hex_data/
@@ -1087,7 +1087,7 @@ FSM
     my $result = $pipeline->generate_hdl_from_file($composition_path);
 
     isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
-    is($result->{composition_plan}->lane, 'C3', 'SV unsized signed based direct-actual toplinks stay on the C3 lane');
+    is($result->{composition_plan}->lane, 'C3', 'SV unsized signed based direct-actual wiring_blocks stay on the C3 lane');
 
     my %bindings = map { $_->{port_name} => $_ } @{$result->{composition_plan}->instances->[0]->port_bindings};
     is_deeply(
@@ -1119,13 +1119,13 @@ FSM
         command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
     );
 
-    ok($success, 'CLI succeeds for SV unsized signed based actual toplinks');
-    ok(-e $output_path, 'CLI writes HDL for SV unsized signed based actual toplinks');
+    ok($success, 'CLI succeeds for SV unsized signed based actual wiring_blocks');
+    ok(-e $output_path, 'CLI writes HDL for SV unsized signed based actual wiring_blocks');
 };
 
 subtest 'linked plan builder rejects open actual sources that do not target realized child inputs' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_actual_source_top'),
             top => FSM::Composition::Top->new(name => 'blocked_actual_source_top'),
@@ -1134,8 +1134,8 @@ subtest 'linked plan builder rejects open actual sources that do not target real
                 ports => [port('serial_out', 'output', 1, undef)],
             ),
             ports => [port('serial_out', 'output', 1, undef)],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=open', target => 'serial_out'),
@@ -1165,14 +1165,14 @@ subtest 'linked plan builder rejects open actual sources that do not target real
 
 subtest 'linked plan builder rejects actual endpoints as explicit link targets' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_actual_target_top'),
             top => FSM::Composition::Top->new(name => 'blocked_actual_target_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => 'uart_tx.serial_out', target => '=open'),
@@ -1202,14 +1202,14 @@ subtest 'linked plan builder rejects actual endpoints as explicit link targets' 
 
 subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_actual_shape_top'),
             top => FSM::Composition::Top->new(name => 'blocked_actual_shape_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                 name => 'wiring',
                 links => [
                     FSM::Composition::Link->new(source => '=0q7', target => 'uart_tx.data_in'),
@@ -1239,14 +1239,14 @@ subtest 'linked plan builder rejects unsupported actual literal forms' => sub {
 
 subtest 'linked plan builder rejects ambiguous bare bitstring-like direct actuals explicitly' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_ambiguous_actual_top'),
             top => FSM::Composition::Top->new(name => 'blocked_ambiguous_actual_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=00001110', target => 'uart_tx.data_in'),
@@ -1276,14 +1276,14 @@ subtest 'linked plan builder rejects ambiguous bare bitstring-like direct actual
 
 subtest 'linked plan builder rejects unsized signed decimal actuals whose value exceeds the signed direct target width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_unsized_signed_decimal_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_unsized_signed_decimal_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=-129', target => 'uart_tx.data_in'),
@@ -1313,14 +1313,14 @@ subtest 'linked plan builder rejects unsized signed decimal actuals whose value 
 
 subtest 'linked plan builder rejects unsized signed hex actuals whose value exceeds the signed direct target width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_unsized_signed_hex_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_unsized_signed_hex_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => "='shA_5", target => 'uart_tx.data_in'),
@@ -1350,14 +1350,14 @@ subtest 'linked plan builder rejects unsized signed hex actuals whose value exce
 
 subtest 'linked plan builder rejects unsized decimal actuals whose value exceeds the direct target width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_unsized_decimal_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_unsized_decimal_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=256', target => 'uart_tx.data_in'),
@@ -1387,14 +1387,14 @@ subtest 'linked plan builder rejects unsized decimal actuals whose value exceeds
 
 subtest 'linked plan builder rejects decimal actuals whose value exceeds the declared width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_decimal_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_decimal_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => "=8'd256", target => 'uart_tx.data_in'),
@@ -1424,14 +1424,14 @@ subtest 'linked plan builder rejects decimal actuals whose value exceeds the dec
 
 subtest 'linked plan builder rejects signed decimal actuals whose value exceeds the declared signed width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_signed_decimal_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_signed_decimal_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => "=8'sd128", target => 'uart_tx.data_in'),
@@ -1461,14 +1461,14 @@ subtest 'linked plan builder rejects signed decimal actuals whose value exceeds 
 
 subtest 'linked plan builder rejects signed hex actuals whose payload exceeds the declared width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_signed_hex_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_signed_hex_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => "=8'sh1FF", target => 'uart_tx.data_in'),
@@ -1498,14 +1498,14 @@ subtest 'linked plan builder rejects signed hex actuals whose payload exceeds th
 
 subtest 'linked plan builder rejects unsized hex actuals whose value exceeds the direct target width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_unsized_hex_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_unsized_hex_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=0x1FF', target => 'uart_tx.data_in'),
@@ -1535,14 +1535,14 @@ subtest 'linked plan builder rejects unsized hex actuals whose value exceeds the
 
 subtest 'linked plan builder rejects unsized octal actuals whose value exceeds the direct target width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_unsized_octal_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_unsized_octal_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=0o400', target => 'uart_tx.data_in'),
@@ -1572,14 +1572,14 @@ subtest 'linked plan builder rejects unsized octal actuals whose value exceeds t
 
 subtest 'linked plan builder rejects unsized binary actuals whose value exceeds the direct target width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_unsized_binary_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_unsized_binary_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => '=0b100000000', target => 'uart_tx.data_in'),
@@ -1609,14 +1609,14 @@ subtest 'linked plan builder rejects unsized binary actuals whose value exceeds 
 
 subtest 'linked plan builder rejects hex actuals whose value exceeds the declared width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_hex_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_hex_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => "=8'h1FF", target => 'uart_tx.data_in'),
@@ -1646,14 +1646,14 @@ subtest 'linked plan builder rejects hex actuals whose value exceeds the declare
 
 subtest 'linked plan builder rejects octal actuals whose value exceeds the declared width' => sub {
     my $exception = eval {
-        FSM::Composition::LinkedPlanBuilder->build_from_toplinks(
+        FSM::Composition::LinkedPlanBuilder->build_from_wiring_blocks(
             lane => 'C3',
             composition_spec => composition_spec('blocked_octal_actual_width_top'),
             top => FSM::Composition::Top->new(name => 'blocked_octal_actual_width_top'),
             ports_block => FSM::Composition::PortsBlock->new(name => 'public_io', ports => []),
             ports => [],
-            toplinks => [
-                FSM::Composition::TopLink->new(
+            wiring_blocks => [
+                FSM::Composition::WiringBlock->new(
                     name => 'wiring',
                     links => [
                         FSM::Composition::Link->new(source => "=8'o400", target => 'uart_tx.data_in'),

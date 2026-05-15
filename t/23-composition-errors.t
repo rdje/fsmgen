@@ -33,7 +33,7 @@ write_file(
   )
   (?fsmc:producer_a producer_a_src)
   (?fsmc:producer_b producer_b_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer_a.output_data/result_data/
     /producer_b.output_data/result_data/
   )
@@ -78,7 +78,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/consumer.input_data/
     /consumer.final_data/result_data/
   )
@@ -124,7 +124,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.missing_port/
     /uart_tx.txd/serial_out/
   )
@@ -156,7 +156,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /missing_top/result_data/
   )
 )
@@ -197,7 +197,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/uart_tx.txd/
   )
 )
@@ -228,7 +228,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /result_data/uart_tx.data_in/
   )
 )
@@ -259,7 +259,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /consumer.input_data/result_data/
   )
 )
@@ -304,7 +304,7 @@ write_file(
   )
   (?fsmc:producer producer_src)
   (?fsmc:consumer consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.output_data/start/
   )
 )

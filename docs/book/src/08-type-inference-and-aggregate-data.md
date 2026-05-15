@@ -93,10 +93,10 @@ The same bounded member/item idea is also shipped on the source side of
 composition links when the base endpoint preserves a declared aggregate type:
 
 ```lisp
-(?toplink:wiring
-  /in_frame.tag/tag_out/
-  /in_frame.payload[1]/sink.payload_mid/
-  /producer.OUT_FRAME.flag/sink.enable/
+(?wiring:wiring
+  (in_frame.tag tag_out)
+  (in_frame.payload[1] sink.payload_mid)
+  (producer.OUT_FRAME.flag sink.enable)
 )
 ```
 
@@ -104,14 +104,14 @@ Declared aggregate top-port paths also participate in bounded top-port
 inference. For example, in a source concat such as:
 
 ```lisp
-(?toplink:wiring
-  /in_frame.tag,payload/sink.data_in/
+(?wiring:wiring
+  ((cat in_frame.tag payload) sink.data_in)
 )
 ```
 
 `in_frame.tag` contributes the declared leaf width when `in_frame` already has
 a declared aggregate type or has been inferred from another whole-root link to
-a typed child input in the same `?toplink` block. It may also use an unlinked
+a typed child input in the same `?wiring` block. It may also use an unlinked
 same-name child input when that child input carries one uniform record/list
 declared-type contract. With that root contract available, `payload` can be
 inferred from the remaining target width. This is still not broad aggregate

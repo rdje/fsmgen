@@ -26,7 +26,7 @@ subtest 'combinational peer-read shared-datapath families now synthesize one top
   (?fsmc:right right_src)
   (?fsmc:left_consumer left_consumer_src)
   (?fsmc:right_consumer right_consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/left_consumer.select/
@@ -163,7 +163,7 @@ subtest 'CLI reports the bounded internal-only combinational shared carrier runt
   (?fsmc:right right_src)
   (?fsmc:left_consumer left_consumer_src)
   (?fsmc:right_consumer right_consumer_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /select/left_consumer.select/

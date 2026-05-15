@@ -33,7 +33,7 @@ subtest 'pipeline and CLI resolve composition-root aggregate leaves for direct a
     tail_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=BYTES[0]/byte_out/
     /=FRAME.flag/flag_out/
     /=NEST.header.nibble/nibble_out/
@@ -107,7 +107,7 @@ subtest 'pipeline and CLI resolve whole composition-root list aggregate roots on
     packed_out>7
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=HEADER/header_out/
     /=TAIL,=HEADER/packed_out/
     /=TAIL/uart_tx.tail_in/
@@ -168,7 +168,7 @@ subtest 'pipeline and CLI resolve same-scope named ingredients inside compositio
     flag_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=PACKET/packet_out/
     /=FLAGS.busy/flag_out/
     /=PACKET/uart_tx.data_in/
@@ -220,7 +220,7 @@ subtest 'pipeline and CLI reject composition-top declarative symbol cycles expli
   (?ports:public_io
     out_bit>
   )
-  (?toplink:wiring
+  (?wiring:wiring
     /=A/out_bit/
   )
 )
@@ -276,7 +276,7 @@ subtest 'pipeline and CLI resolve composition-root aggregate leaves for concat o
     packed_out>5
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=FRAME.enable,=NIBBLES[1]/packed_out/
     /=FRAME.enable,=NIBBLES[0]/uart_tx.header_bus/
   )
@@ -325,7 +325,7 @@ subtest 'pipeline and CLI reject mixed composition-root aggregate value shapes' 
     status_out>
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=0/status_out/
   )
 )
@@ -386,7 +386,7 @@ subtest 'pipeline and CLI resolve whole composition-root map aggregate actuals' 
     packed_out>5
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /=FRAME/status_out/
     /=TAIL,=FRAME/packed_out/
     /=FRAME/uart_tx.status_in/

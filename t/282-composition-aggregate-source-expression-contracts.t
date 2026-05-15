@@ -31,7 +31,7 @@ subtest 'pipeline and CLI accept typed-list top expressions on aggregate targets
     packed_status>status_t
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /status_bus[0],payload_bus[3:0]/packed_status/
     /=0/uart_tx.dummy/
   )
@@ -99,7 +99,7 @@ subtest 'pipeline and CLI accept typed aggregate top-port member sources' => sub
     tag_out>4
   )
   (?rtl:sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /in_frame.tag/tag_out/
     /in_frame.payload[1]/sink.nibble/
     /in_frame.flag/sink.enable/
@@ -170,7 +170,7 @@ subtest 'pipeline and CLI accept typed aggregate child-output member sources' =>
   )
   (?dtc:producer producer_src)
   (?rtl:sink)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.OUT_FRAME.tag/tag_out/
     /producer.OUT_FRAME.payload[1]/sink.nibble/
     /producer.OUT_FRAME.flag/sink.enable/
@@ -262,7 +262,7 @@ subtest 'pipeline rejects width-equal top expressions across incompatible typed 
     packed_status>wrong_t
   )
   (?rtl:uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /status_bus[0],payload_bus[3:0]/packed_status/
     /=0/uart_tx.dummy/
   )
@@ -314,7 +314,7 @@ subtest 'pipeline rejects width-equal child expressions across incompatible type
     packed_status>wrong_t
   )
   (?rtl:producer)
-  (?toplink:wiring
+  (?wiring:wiring
     /producer.OUT_WORD[4:0]/packed_status/
   )
 )

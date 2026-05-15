@@ -219,7 +219,7 @@ fixture before setting new policy.
 ### Existing Composition Entrypoints
 
 - The general composition source parser accepts `?top:name` with `?ports`,
-  `?fsmc`, `?dtc`, `?rtl`, `?toplink`, `+constants`, `+enums`, `+types`, and
+  `?fsmc`, `?dtc`, `?rtl`, `?wiring`, `+constants`, `+enums`, `+types`, and
   `+import` sections.
 - Existing generated-child composition already supports embedded or external
   `?fsm` and `?dt` child sources through `?fsmc` and `?dtc`.
@@ -520,7 +520,7 @@ The accepted top-level field is `generated_composition`.
   `width`.
 
 The projection is a bounded review/discovery summary. It must not expose raw
-LoweringIR records, raw composition parser objects, raw `?toplink` arrays,
+LoweringIR records, raw composition parser objects, raw `?wiring` arrays,
 assignment provenance, activation context, or private port-inference internals.
 
 ## ISF-COMPOSITION.5.2 Generated Composition Report Projection
@@ -541,7 +541,7 @@ assignment provenance, activation context, or private port-inference internals.
   handoff links, default-or-override parameter bindings, and named-drive
   request/payload handoff links.
 - The report object is built from bounded lowerer metadata. It does not expose
-  raw LoweringIR records, raw composition parser objects, raw `?toplink`
+  raw LoweringIR records, raw composition parser objects, raw `?wiring`
   syntax, activation context, assignment provenance, or private port-inference
   internals.
 

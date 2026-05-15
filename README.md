@@ -73,6 +73,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/TASK_TREE_README.md` — setup guide for adopting the task-tree tracking workflow in another project.
 - `docs/TASK_TREE.md` — repo-local task-tree workflow, active tree index, and PNT frontier rules.
 - `docs/tasks/TEMPLATE.md` — reusable template for one top-level task tree.
+- `docs/tasks/COMPOSITION-WIRING-LISPISH.md` — completed `R11` task tree for canonical Lisp-ish `?wiring` list forms.
 - `docs/tasks/ISF-CONFLICT-RESOLUTION.md` — completed `R14` task tree for ISF same-cycle conflict semantics.
 - `docs/tasks/ISF-COMPOSITION-INSTANTIATION.md` — completed `R14` task tree for generated child instantiation and spawn parameter binding.
 - `docs/tasks/ISF-RESOURCE-PRIORITY.md` — completed `R14` task tree for resource arbitration and priority enforcement.

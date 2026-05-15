@@ -25,7 +25,7 @@ subtest 'systemverilog composition tops now emit shared-datapath onehot0 guard a
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/
@@ -110,7 +110,7 @@ subtest 'verilog composition tops keep shared-datapath assertion emission disabl
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/

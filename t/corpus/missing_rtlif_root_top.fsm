@@ -6,7 +6,7 @@
     serial_out>
   )
   (?rtl:missing_root_uart_tx)
-  (?toplink:wiring
+  (?wiring:wiring
     /payload_in/missing_root_uart_tx.data_in/
     /missing_root_uart_tx.txd/serial_out/
   )

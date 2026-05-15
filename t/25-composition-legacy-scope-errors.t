@@ -20,7 +20,7 @@ my $tempdir = tempdir(CLEANUP => 1);
 my $macro_path = File::Spec->catfile($tempdir, 'legacy_macro_top.fsm');
 my $nested_top_path = File::Spec->catfile($tempdir, 'nested_top_top.fsm');
 my $ports_mapping_path = File::Spec->catfile($tempdir, 'ports_mapping_top.fsm');
-my $toplink_nested_path = File::Spec->catfile($tempdir, 'nested_toplink_top.fsm');
+my $wiring_nested_path = File::Spec->catfile($tempdir, 'nested_wiring_top.fsm');
 my $unsupported_child_path = File::Spec->catfile($tempdir, 'unsupported_child_top.fsm');
 my $macro_out_path = File::Spec->catfile($tempdir, 'legacy_macro_top.sv');
 
@@ -64,15 +64,15 @@ FSM
 );
 
 write_file(
-    $toplink_nested_path,
+    $wiring_nested_path,
     <<'FSM'
-(?top:nested_toplink_top
+(?top:nested_wiring_top
   (?ports:public_io
     clk
     rstn
   )
   (?fsmc:child child_src)
-  (?toplink:wiring
+  (?wiring:wiring
     (foo bar)
   )
 )
@@ -147,16 +147,16 @@ like(
     'parser now says legacy ports mapping directives block composition port declaration mode',
 );
 
-my $nested_toplink_error = eval {
-    $parser->parse_source(scalar Lispish::multi($toplink_nested_path));
+my $nested_wiring_error = eval {
+    $parser->parse_source(scalar Lispish::multi($wiring_nested_path));
     undef;
 };
-$nested_toplink_error = $@;
+$nested_wiring_error = $@;
 
 like(
-    $nested_toplink_error,
-    qr/nested '\?toplink' item.*only supports flat '\/source\/target\/' link tokens/s,
-    'parser rejects nested toplink structures explicitly',
+    $nested_wiring_error,
+    qr/nested '\?wiring' item.*only supports flat '\/source\/target\/' link tokens/s,
+    'parser rejects nested wiring structures explicitly',
 );
 
 my $unsupported_child_error = eval {
@@ -167,7 +167,7 @@ $unsupported_child_error = $@;
 
 like(
     $unsupported_child_error,
-    qr/contains child '\?bogus:child', .*composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?toplink', '\+constants', '\+enums', '\+types', and '\+import'/s,
+    qr/contains child '\?bogus:child', .*composition child kind support is blocked because the active composition parser currently accepts only '\?fsmc', '\?dtc', '\?rtl', '\?ports', '\?wiring', '\+constants', '\+enums', '\+types', and '\+import'/s,
     'parser now says unsupported child kinds block composition child-kind support',
 );
 

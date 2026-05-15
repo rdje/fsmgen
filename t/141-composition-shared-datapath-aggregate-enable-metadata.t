@@ -26,7 +26,7 @@ subtest 'shared-datapath candidates aggregate same-value enable families across 
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/
@@ -201,7 +201,7 @@ subtest 'CLI prints shared aggregate enable families for same-value contributors
   )
   (?fsmc:left left_src)
   (?fsmc:right right_src)
-  (?toplink:wiring
+  (?wiring:wiring
     /select/left.select/
     /select/right.select/
     /left.status_bus/left_status/
