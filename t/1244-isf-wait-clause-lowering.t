@@ -566,6 +566,65 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_sync_any');
 };
 
+subtest 'runtime scalar waits lower inside when bodies' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-when');
+(actor wait_dynamic_when
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cond)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (when cond
+      (wait cycles)
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_when.fsm'};
+    my $branch = state_block($fsm, 'main_when_1');
+    like($branch, qr/\(<- \(main_wait_2_cnt cycles\) <\(& cond cycles\)\)/,
+        'when true edge samples the runtime count on the positive path');
+    like($branch, qr/\(-> main_wait_2 <\(& cond cycles\)\)/,
+        'when true edge enters the dynamic wait on a positive count');
+    like($branch, qr/\(-> main_drive_3 <\(& cond \(== cycles 0\)\)\)/,
+        'when true edge bypasses the dynamic wait on zero');
+    like($branch, qr/\(-> main_done_4 <\(! cond\)\)/,
+        'when false edge still skips the whole body');
+
+    my $wait = state_block($fsm, 'main_wait_2');
+    like($wait, qr/\(-- main_wait_2_cnt\)/, 'when-body dynamic wait decrements its sampled counter');
+    like($wait, qr/\?main_wait_2_cnt[\s\S]*\(=1 \(-> main_drive_3\)\)/,
+        'when-body sampled count of one exits to the following body state');
+    like($wait, qr/\?main_wait_2_cnt[\s\S]*\(>1 \(-> main_wait_2\)\)/,
+        'when-body sampled counts greater than one loop in the wait state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_drive_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'when-body dynamic wait report exposes runtime count metadata',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_when');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_missing_count
@@ -611,19 +670,20 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'inline dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in when body/);
-(actor wait_inline_dynamic_count
+    assert_lower_rejected(<<'ISF', 'pending sample before when dynamic wait', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' in when body cannot follow pending samples yet/);
+(actor wait_when_dynamic_after_sample
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input cond) (input cycles (width 4)) (output done))
+  (interface (input start) (input cond) (input cycles (width 4)) (input din (width 8)) (output done))
   (transaction main
     (on start)
     (when cond
+      (sample din as hold)
       (wait cycles))
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in switch body/);
+    assert_lower_rejected(<<'ISF', 'switch dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in switch body in the current dynamic-wait slice/);
 (actor wait_switch_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -635,7 +695,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in repeat body/);
+    assert_lower_rejected(<<'ISF', 'repeat dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in repeat body in the current dynamic-wait slice/);
 (actor wait_repeat_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -647,7 +707,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'while dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in while body/);
+    assert_lower_rejected(<<'ISF', 'while dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in while body in the current dynamic-wait slice/);
 (actor wait_while_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -659,7 +719,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'until dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in until body/);
+    assert_lower_rejected(<<'ISF', 'until dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in until body in the current dynamic-wait slice/);
 (actor wait_until_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))

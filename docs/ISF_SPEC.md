@@ -1102,12 +1102,14 @@ by the stage state. After a top-level `repeat`, the repeat-check exit edge
 signals. After `await_any`, the split is gated by the logical OR of the
 collected done signals.
 
-The current runtime scalar implementation is still deliberately narrow.
-Runtime waits inside `when`, `switch`, `repeat`, `while`, or `until` bodies
-remain rejected with diagnostics that name the rejected body context. Runtime
-waits after pending samples, after predecessor states whose edge split is not
-implemented yet, including loop decision states, and counts expressed as list
-expressions or parameter-backed values also remain rejected.
+Runtime waits inside `when` bodies are supported when no pending sample must
+cross the dynamic wait. The branch true edge is split into positive-count
+counter load and zero-count bypass paths, and the false edge still skips the
+whole `when` body. Runtime waits inside `switch`, `repeat`, `while`, or
+`until` bodies remain rejected with diagnostics that name the rejected body
+context. Runtime waits after pending samples, after predecessor states whose
+edge split is not implemented yet, including loop decision states, and counts
+expressed as list expressions or parameter-backed values also remain rejected.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

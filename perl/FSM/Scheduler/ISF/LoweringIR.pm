@@ -2240,7 +2240,7 @@ sub _wait_count_spec {
 
         my $width = _dynamic_wait_source_width($count, $widths);
         if (defined $width) {
-            confess "Transaction '$tn': runtime dynamic wait count '$count' is supported only as a top-level transaction-body wait in this slice; found in $label\n"
+            confess "Transaction '$tn': runtime dynamic wait count '$count' is not supported in $label in the current dynamic-wait slice\n"
                 unless $allow_dynamic;
             return {
                 kind   => 'runtime_scalar',
@@ -3117,8 +3117,18 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){
-            if (_wait_cycles($bc,$tn,'when body',$actor,$widths) > 0) {
-                push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'when body')};
+            my $wait = _wait_count_spec($bc,$tn,'when body',$actor,$widths,1);
+            if ($wait->{kind} eq 'static') {
+                if ($wait->{cycles} > 0) {
+                    push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'when body',$wait)};
+                }
+            } else {
+                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in when body cannot follow pending samples yet\n"
+                    if @lp;
+                my ($states,$counter,$width)=_ir_dynamic_wait($bc,$tn,$ir,$wait);
+                push @body_states,@$states;
+                _register_counter_width($counters,$counter,$width) if $counters;
+                $storage_roles->{$counter}='dynamic_wait_counter' if ref($storage_roles)eq'HASH';
             }
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
@@ -4740,6 +4750,8 @@ sub _dynamic_wait_predecessor_condition_expr {
         if $kind eq 'sync_all';
     return _sync_any_condition_expr($state->{done_ports})
         if $kind eq 'sync_any';
+    return _branch_condition_expr($state)
+        if $kind eq 'branch';
     return undef;
 }
 
@@ -4757,7 +4769,22 @@ sub _preserve_dynamic_wait_predecessor_alternatives {
             target    => $state->{loop_target},
             condition => { signal => $state->{counter}, op => '!=', value => 0 },
         } if defined($state->{loop_target}) && defined($state->{counter});
+    } elsif ($kind eq 'branch') {
+        my $skip = $state->{branch_exit_target};
+        my $condition = _branch_condition_expr($state);
+        push @{$state->{transitions}}, {
+            target    => $skip,
+            condition => { expr => _negated_condition_expr($condition) },
+        } if defined($skip) && defined($condition);
     }
+}
+
+sub _branch_condition_expr {
+    my ($state) = @_;
+    return undef unless $state && ref($state) eq 'HASH';
+    my $condition = $state->{condition};
+    return undef unless defined $condition;
+    return !ref($condition) ? $condition : _format_isf_expr($condition);
 }
 
 sub _sync_all_condition_expr {

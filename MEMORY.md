@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF when-body dynamic waits
+- Completed `ISF-DYNAMIC-WAIT.3.3.4.2` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Runtime scalar waits in `when` bodies now lower for the no-pending-sample
+  subset.
+- The `when` true edge carries the positive-count counter load/entry and
+  zero-count bypass paths; the false edge remains an explicit skip around the
+  whole body.
+- Pending samples before a `when`-body dynamic wait remain fail-closed until
+  the pending-sample preservation leaf.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.4.3`, dynamic waits in
+  `repeat` bodies.
 ## 2026-05-15: ISF inline dynamic wait split
 - Completed `ISF-DYNAMIC-WAIT.3.3.4.1` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
@@ -8,8 +20,8 @@ This is the live continuity document for fast session recovery after crashes, re
   for each context.
 - Loop-body diagnostics now distinguish `while body` from `until body` instead
   of using the older generic `loop body` wording.
-- The current frontier is `ISF-DYNAMIC-WAIT.3.3.4.2`, dynamic waits in `when`
-  bodies.
+- `when` bodies later shipped under `ISF-DYNAMIC-WAIT.3.3.4.2`; the current
+  frontier is recorded in the latest dynamic-wait entry above.
 ## 2026-05-15: ISF dynamic waits after additional predecessors
 - Completed `ISF-DYNAMIC-WAIT.3.3.3` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

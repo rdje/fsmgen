@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: when-body dynamic waits use branch true-edge splitting
+- A dynamic wait that is the first state in a `when` body cannot be entered by
+  the old branch true-target edge because that would skip the counter load.
+  The branch state must instead become the predecessor that owns the dynamic
+  wait's positive-count and zero-count split.
+- The false branch is preserved as an explicit negated-condition transition to
+  the branch exit target. That keeps the authored `when` skip behavior visible
+  in the scheduled `.fsm` artifact.
+- Pending samples before a `when`-body dynamic wait are still rejected. A
+  future pending-sample leaf must define how the false skip, zero bypass, and
+  positive wait-entry paths materialize or preserve those samples.
 ## 2026-05-15: inline dynamic waits need context-specific leaves
 - Inline dynamic waits combine the runtime count split with branch and loop
   exit semantics. Treating all inline contexts as one implementation slice

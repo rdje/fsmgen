@@ -421,20 +421,21 @@ actor/transaction parameter names, unknown-width dynamic names, or unsupported
 dynamic contexts fail closed today.
 
 Remaining backlog: runtime scalar waits after pending samples, inside
-`when`/`switch`/`repeat`/`while`/`until` bodies, after remaining predecessor
-kinds such as loop decision states whose edge split is not implemented yet,
-and with expression-valued or parameter-backed counts.
+`switch`/`repeat`/`while`/`until` bodies, after remaining predecessor kinds
+such as loop decision states whose edge split is not implemented yet, and with
+expression-valued or parameter-backed counts.
 The inline-body surface is now split into context-specific implementation
-leaves. Until each ships, dynamic waits in those bodies fail closed with
-diagnostics that name the rejected context: `when body`, `switch body`,
-`repeat body`, `while body`, or `until body`.
+leaves. `when` bodies are shipped for the no-pending-sample subset. Until the
+remaining contexts ship, dynamic waits in those bodies fail closed with
+diagnostics that name the rejected context: `switch body`, `repeat body`,
+`while body`, or `until body`.
 
 Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
 top-level dynamic waits and the requested additional top-level predecessor
-kinds are shipped. The inline-body work is split next, starting with `when`
-bodies, then repeat bodies, switch branches, while/until bodies,
-pending-sample preservation, and finally expression-valued runtime counts once
-their width/type/snapshot contract is specified.
+kinds are shipped. The inline-body work is split; `when` bodies are shipped,
+and the next frontier is repeat bodies, then switch branches, while/until
+bodies, pending-sample preservation, and finally expression-valued runtime
+counts once their width/type/snapshot contract is specified.
 
 ### Transaction Dynamic Loops
 

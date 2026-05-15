@@ -10,8 +10,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   context-expansion work, `ISF-DYNAMIC-WAIT.3.3.2` shipped consecutive
   top-level runtime scalar waits, `ISF-DYNAMIC-WAIT.3.3.3` shipped additional
   top-level predecessor kinds, `ISF-DYNAMIC-WAIT.3.3.4.1` split and covered
-  the inline fail-closed matrix, and the current frontier is
-  `ISF-DYNAMIC-WAIT.3.3.4.2`: dynamic waits in `when` bodies.
+  the inline fail-closed matrix, `ISF-DYNAMIC-WAIT.3.3.4.2` shipped dynamic
+  waits in `when` bodies, and the current frontier is
+  `ISF-DYNAMIC-WAIT.3.3.4.3`: dynamic waits in `repeat` bodies.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -52,7 +53,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies remain fail-closed with tests and book coverage
   that name each rejected context. The inline expansion is now split into
-  context-specific leaves; the active leaf is `when` bodies.
+  context-specific leaves; `when` bodies are shipped for the no-pending-sample
+  subset and the active leaf is `repeat` bodies.
 - ISF runtime dynamic wait expansion update: `ISF-DYNAMIC-WAIT.3.3` is now a
   container with executable leaves for consecutive dynamic waits, additional
   top-level predecessor kinds, inline branch/loop bodies, pending-sample
@@ -185,6 +187,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   diagnostics for `when`, `switch`, `repeat`, `while`, and `until` bodies. The
   active frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.2`: dynamic waits in
   `when` bodies.
+- `ISF-DYNAMIC-WAIT.3.3.4.2` is complete. Runtime waits in `when` bodies now
+  lower through true-edge positive-count load, true-edge zero-count bypass, and
+  false-edge skip preservation. The active frontier advances to
+  `ISF-DYNAMIC-WAIT.3.3.4.3`: dynamic waits in `repeat` bodies.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

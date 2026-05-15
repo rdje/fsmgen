@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF when-body dynamic waits
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so runtime scalar waits in `when` bodies lower for the no-pending-sample
+  subset.
+- Added branch-predecessor dynamic wait support: the `when` true edge drives
+  positive-count counter load/entry and zero-count bypass paths, while the
+  false edge remains an explicit skip around the body.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so branch states with expression-guarded dynamic-wait split transitions use
+  the generic transition renderer instead of emitting an unsafe unconditional
+  true-target edge.
+- Extended
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  with HDL-reaching `when`-body dynamic wait coverage and pending-sample
+  rejection.
+- Refreshed the ISF spec, public contract doc, mdBook, feature backlog,
+  roadmap, task tree, and live docs. The active dynamic-wait frontier advances
+  to `ISF-DYNAMIC-WAIT.3.3.4.3`.
 ### R14 — ISF inline dynamic wait split
 - Split `ISF-DYNAMIC-WAIT.3.3.4` into context-specific implementation leaves
   for inline dynamic waits in `when`, `repeat`, `switch`, and `while`/`until`

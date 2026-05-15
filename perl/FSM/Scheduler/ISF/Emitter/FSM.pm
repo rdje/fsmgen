@@ -251,6 +251,9 @@ sub _emit_transitions($self, $state) {
 
     # Branch transition: ?condition (=1 -> body) (=0 -> skip)
     if ($state->{kind} eq 'branch') {
+        return map { $self->_emit_simple_transition($_) } @$txs
+            if grep { $_->{condition} } @$txs;
+
         my $cond = $state->{condition};
         my $cond_str = !ref($cond) ? $cond : _format_expr($cond);
         push @lines, "    (?$cond_str";
