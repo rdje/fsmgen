@@ -1,0 +1,21 @@
+(actor clock_domain_event_crossing
+  (clock-domains
+    (domain bus  (clock bus_clk)  (reset bus_rst_n) :default)
+    (domain core (clock core_clk) (reset core_rst_n)))
+  (crossings
+    (event byte_ready
+      (from bus byte_ready_req)
+      (to core byte_ready_pulse)
+      (ready byte_ready_ready)))
+  (interface
+    (input bus_start (domain bus))
+    (output core_seen (domain core)))
+  (transaction bus_capture
+    (domain bus)
+    (on bus_start)
+    (await byte_ready_ready)
+    (complete byte_ready_req))
+  (transaction core_consume
+    (domain core)
+    (on byte_ready_pulse)
+    (complete core_seen)))

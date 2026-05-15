@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: multi-domain reports describe the generated top
+- `ISF-CLOCK-DOMAINS.6` makes multi-domain schedule reports successful without
+  pretending the original actor has one emitted scheduled parent module.
+- The report top-level scope is the generated `<actor>_top.fsm`, with
+  top-level `state_count` set to zero. Domain-local scheduled-state counts and
+  artifact names live in `clock_domains[]`, and legal event crossings live in
+  `crossings[]`.
+- The fixture proves the supported part of the path: each emitted domain
+  artifact is still ordinary single-clock `.fsm` and can reach SystemVerilog
+  through the existing backend. Concrete CDC child HDL remains a separate
+  `ISF-CLOCK-DOMAINS.7` slice.
 ## 2026-05-15: multi-domain top emits structure before HDL implementation
 - `ISF-CLOCK-DOMAINS.5.4` emits a reviewable generated top for multi-domain
   actors without claiming that the CDC child implementation is synthesizable
@@ -7,7 +18,7 @@ This document captures engineering rationale, design constraints, and working de
 - Event crossings lower to explicit `?rtl`/`?rtlif` child interfaces rather
   than a fake single-clock `.fsm` state chain. That keeps the two-clock
   boundary visible in the generated artifact and leaves concrete synchronizer
-  RTL to the fixture/report leaf.
+  RTL to the generated-HDL leaf.
 - The CLI HDL path stays fail-closed for multi-domain sources because the
   generated top can now be reviewed, but generated HDL for the CDC child path
   is not implemented.

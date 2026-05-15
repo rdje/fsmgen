@@ -47,10 +47,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emission. `ISF-CLOCK-DOMAINS.5.3` now emits one domain-local scheduled
   `.fsm` artifact per declared domain from public `lower(...)`.
   `ISF-CLOCK-DOMAINS.5.4` now emits the generated multi-domain top and
-  explicit CDC child-interface artifacts for accepted event crossings, while
-  `report(...)` and generated HDL for the multi-domain top/CDC path remain
-  blocked. The current frontier is `ISF-CLOCK-DOMAINS.6`, diagnostics,
-  reports, and fixtures for multi-clock behavior.
+  explicit CDC child-interface artifacts for accepted event crossings.
+  `ISF-CLOCK-DOMAINS.6` now projects bounded multi-domain schedule-report
+  metadata through `clock_domains[]` and `crossings[]`, adds a realistic
+  event-crossing fixture, and proves domain-local artifacts still reach HDL
+  where the single-clock path is supported. The current frontier is
+  `ISF-CLOCK-DOMAINS.7`, generated HDL for the multi-domain top/CDC path.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -210,8 +212,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   records the shipped `R11` canonical explicit-link list syntax.
   The active `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics;
   its public source model, reset ownership, first legal crossing primitive, and
-  lowering artifact strategy are selected. Domain-partitioning IR handoff is
-  the next implementation frontier.
+  lowering/report artifact strategy are selected. Generated HDL for the
+  multi-domain top/CDC path is the next implementation frontier.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.

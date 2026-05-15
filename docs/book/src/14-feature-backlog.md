@@ -1003,7 +1003,7 @@ catalog/contract metadata is synchronized through
 
 ### ISF Multi-Clock And CDC Semantics
 
-Status: proposed task tree under
+Status: active task tree under
 [ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md).
 
 Goal: give ISF a deliberate model for designs with multiple clock domains,
@@ -1014,15 +1014,16 @@ clock/reset bindings remain one-clock-domain scheduled artifacts. The parser
 now accepts actor-scoped `(clock-domains ...)` metadata and the scheduler can
 partition accepted actors by domain. Public multi-domain `lower(...)` now
 emits domain-specific scheduled `.fsm` artifacts plus generated top wiring for
-domain modules and explicit CDC child interfaces, while `report(...)` and
-generated HDL for the multi-domain top/CDC path remain future leaves.
+domain modules and explicit CDC child interfaces. Public `report(...)` now
+projects bounded domain and event-crossing metadata, while generated HDL for
+the multi-domain top/CDC path remains a future leaf.
 Different clock signal names, library clock/reset bindings, and generated-top
 system-port links are not CDC semantics by themselves.
 
 The future feature must still define at least:
 
 - concrete generated HDL for the explicit CDC child implementation;
-- what bounded schedule-report metadata and fixtures prove the behavior.
+- richer fixture matrices for generated top/CDC HDL once that path ships.
 
 Until that contract ships, direct same-cycle reads or writes across domains
 must not be inferred from ordinary signal access.
@@ -1061,20 +1062,22 @@ single-bit event channel declared in actor-scoped
 `(crossings ...)` source. It has a source-domain event request, generated
 source-domain `ready`, and generated destination-domain one-cycle pulse.
 Lowering represents it as an explicit CDC child interface in the generated top;
-concrete synchronizer RTL remains future generated-HDL work. It carries no
-payload and promises no same-cycle timing. Direct cross-domain reads, writes,
-triggers, activations, parent/child bindings, and reset assertion/deassertion
-events remain fail-closed unless a shipped primitive or protocol actor owns
-that path. Payload handshakes and dual-clock FIFO-like actors remain future
-backlog.
+schedule reports expose the endpoint domains/signals and generated
+instance/module names. Concrete synchronizer RTL remains future generated-HDL
+work. It carries no payload and promises no same-cycle timing. Direct
+cross-domain reads, writes, triggers, activations, parent/child bindings, and
+reset assertion/deassertion events remain fail-closed unless a shipped
+primitive or protocol actor owns that path. Payload handshakes and dual-clock
+FIFO-like actors remain future backlog.
 
 Lowering decision: current multi-domain lowering validates a domain-local
 partition, rejects unowned crossings, and emits normal single-clock scheduled
 `.fsm` artifacts named `<actor>__domain_<domain>.fsm`. The generated top owns
 only inter-module wiring and now instantiates explicit CDC child interfaces for
 accepted event crossings. Normal scheduled `.fsm` modules are not silently
-widened into multi-clock modules. Bounded schedule-report metadata, concrete
-CDC child HDL, and fixtures remain future work.
+widened into multi-clock modules. Bounded schedule-report metadata and a
+realistic event-crossing fixture are shipped; concrete CDC child HDL remains
+future work.
 
 ## Backends And Validation
 

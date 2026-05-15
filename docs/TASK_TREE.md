@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-CLOCK-DOMAINS` | `active` | `R14` | `ISF-CLOCK-DOMAINS.6` | [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) |
+| `ISF-CLOCK-DOMAINS` | `active` | `R14` | `ISF-CLOCK-DOMAINS.7` | [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) |
 
 ## Proposed Task Trees
 

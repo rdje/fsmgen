@@ -41,8 +41,9 @@ selected actor-scoped named-domain metadata and the scheduler builds an
 internal domain partition. Multi-domain public `lower(...)` now emits one
 domain scheduled `.fsm` artifact per declared domain plus a generated top that
 wires explicit CDC child-interface artifacts for accepted event crossings.
-`report(...)` and generated HDL for the multi-domain top/CDC path remain later
-leaves.
+`report(...)` and `--emit-schedule-json` now expose bounded domain and
+crossing metadata for that generated top. Generated HDL for the multi-domain
+top/CDC path remains a later leaf.
 
 The selected authoring shape is an actor-level `(clock-domains ...)` block:
 
@@ -117,19 +118,20 @@ The source side requests an event only when the generated source-domain
 `ready` signal is true. The destination side receives a generated one-cycle
 pulse after synchronizer and acknowledgement latency; no same-cycle timing is
 promised. The primitive carries no payload. Lowering represents it as an
-explicit CDC child interface in the generated top; concrete synchronizer RTL
-and schedule-report projection remain future work. Direct cross-domain reads,
+explicit CDC child interface in the generated top, and schedule reports expose
+the endpoint domains/signals plus generated CDC instance/module names.
+Concrete synchronizer RTL remains future work. Direct cross-domain reads,
 writes, triggers, activations, child bindings, or reset assertion/deassertion
 events remain illegal unless a shipped crossing primitive owns that path.
 
-The selected lowering strategy keeps each future emitted domain as its own
+The selected lowering strategy keeps each emitted domain as its own
 single-clock scheduled `.fsm` artifact named `<actor>__domain_<domain>.fsm`.
 The current implementation emits those domain artifacts after validated
 partitioning and fail-closed cross-domain checks, then emits
 `<actor>_top.fsm` to wire domain modules and explicit CDC child interfaces.
-Schedule-report projection and generated HDL for the multi-domain top/CDC path
-remain later leaves; ordinary `.fsm` modules are not silently widened into
-multi-clock scheduled modules.
+Schedule-report projection for domain and crossing metadata is shipped;
+generated HDL for the multi-domain top/CDC path remains a later leaf. Ordinary
+`.fsm` modules are not silently widened into multi-clock scheduled modules.
 
 ## Watchdog
 

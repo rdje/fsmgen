@@ -264,6 +264,8 @@ to write scheduled `.fsm` artifacts matching the in-process lower-result
 `files` map for a multi-file fixture.
 The current multi-file schedule-report scope is checked by
 [t/1128-isf-public-multifile-schedule-report-audit.t](../t/1128-isf-public-multifile-schedule-report-audit.t).
+The multi-domain clock-domain report projection and event-crossing fixture are
+checked by [t/1247-isf-clock-domain-partition.t](../t/1247-isf-clock-domain-partition.t).
 The `parse_source(...)` facade method is checked by
 [t/1118-isf-public-parse-source-facade-audit.t](../t/1118-isf-public-parse-source-facade-audit.t)
 to ensure in-memory source text returns a scheduler-consumable actor with the
@@ -746,8 +748,11 @@ Accepted multi-domain actors are partitioned by declared domain inside
 activations, bindings, and drive reuse fail closed before emission. Public
 `lower(...)` now emits domain-specific scheduled `.fsm` artifacts named
 `<actor>__domain_<domain>.fsm` plus a generated multi-domain top that wires
-domain modules and explicit CDC child interfaces; public `report(...)` still
-rejects multi-domain actors until schedule-report domain projection ships.
+domain modules and explicit CDC child interfaces. Public `report(...)` and
+`--emit-schedule-json` now describe the generated top at the top level and
+expose bounded per-domain and event-crossing metadata through
+`clock_domains[]` and `crossings[]`. Plain generated HDL for the
+multi-domain top/CDC path remains blocked.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters
@@ -875,8 +880,8 @@ when `clock_domains` is present, `reset` is null when omitted or a hash with
 scalar `name`, `kind`, and `polarity` for the default domain, and `watchdog` is
 null when omitted or a positive integer. Public multi-domain `lower(...)`
 emits domain-specific scheduled `.fsm` artifacts plus a generated multi-domain
-top; public `report(...)` still fails closed until domain report projection
-ships. The machine-readable contract advertises this through
+top, and public `report(...)` exposes bounded domain and crossing report
+metadata. The machine-readable contract advertises this through
 `actor_shell_timing_shape`.
 Those timing fields, along with `interface`, parser-carried `resources`,
 parser-carried `storage`, and parser-carried `crossings`, are source-level
@@ -975,9 +980,11 @@ The `cli_option_names` list is exact discovery metadata for that option family.
 The CLI success-shape fields are exact discovery metadata for successful public
 CLI runs: `--emit-schedule-json` writes schedule-report JSON to stdout with
 empty stderr, `--outdir DIR` writes lower-result `.fsm` files by basename into
-`DIR`, and plain `file.isf` generation lowers through scheduled `.fsm` and any
-generated composition top before writing the requested HDL output with empty
-stderr.
+`DIR`, and plain single-clock `file.isf` generation lowers through scheduled
+`.fsm` and any generated composition top before writing the requested HDL
+output with empty stderr. Plain multi-domain `file.isf` HDL generation remains
+blocked while generated top/CDC HDL support is incomplete, but
+`--emit-schedule-json` succeeds for accepted multi-domain actors.
 The strict CLI success-shape field advertises that accepted `--strict
 file.isf` generation follows the public HDL-generation success shape and keeps
 stderr empty on success.
@@ -996,7 +1003,8 @@ multi-domain domain scheduled module, specialized library-child module,
 generated multi-domain top, or generated composition-top `.fsm` source text.
 The generated `.fsm` text is a reviewable compiler artifact and then flows
 through the existing `.fsm` pipeline where that path is implemented.
-The plain `file.isf` CLI path lowers through that pipeline into generated HDL.
+The plain single-clock `file.isf` CLI path lowers through that pipeline into
+generated HDL.
 Each public `files` key is a `.fsm` basename with no directory components.
 Scheduled module values, including emitted multi-domain domain artifacts, are
 `.fsm` source text rooted at `(?fsm:<basename-stem> ...)`; generated top
@@ -1106,6 +1114,8 @@ compatible_fanin_groups
 priority_resolutions
 resource_arbitration
 compile_issues
+clock_domains
+crossings
 ```
 
 Current bounded nested and array summary families:
@@ -1133,6 +1143,10 @@ library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
 bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
 transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
+clock_domains entries: name, default, clock, reset, scheduled_fsm, ports, storage, transactions, rules, library_uses, child_instances, crossings, state_count, dt_block_count
+clock_domains child_instances entries: kind, owner, child, instance
+clock_domains crossings entries: event, role, signal, ready
+crossings entries: name, kind, source_domain, source_signal, destination_domain, destination_signal, ready_signal, instance, module, outstanding_policy, payload, top_fsm
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -1238,18 +1252,23 @@ When reset is configured, `reset` is a hash reference with
 `schedule_report_reset_keys`. When reset is omitted, `reset` is null. The
 machine-readable contract advertises this through `schedule_report_reset_shape`.
 
-The top-level `inputs` and `outputs` values are non-negative integer counts of
-interface ports by direction, and `port_count` equals their sum. The top-level
-`state_count` value is a non-negative integer count of scheduled `.fsm` state
-blocks in the current parent report scope. The machine-readable contract
+The top-level `inputs` and `outputs` values are non-negative integer counts.
+Single-clock reports count interface ports by direction. Multi-domain reports
+count generated-top public ports, including domain clocks/resets and actor
+interface ports. `port_count` equals their sum. The top-level `state_count`
+value is a non-negative integer count of scheduled `.fsm` state blocks in the
+current report scope; multi-domain generated-top reports use zero and expose
+domain-local counts in `clock_domains[]`. The machine-readable contract
 advertises this through `schedule_report_interface_count_shape` and
 `schedule_report_state_count_shape`.
 
 The top-level `source` value is an actor-derived `.isf` basename, and
-`scheduled_fsm` is the scheduled `.fsm` basename for the current parent actor
-report scope. `clock` is the scalar clock signal name from the actor
-declaration. `watchdog` is a scalar limit when configured and null when omitted.
-The machine-readable contract advertises these through
+`scheduled_fsm` is the scheduled `.fsm` basename for the current report scope.
+Multi-domain reports use the generated `<actor>_top.fsm` artifact. `clock` is
+the scalar clock signal name from the actor declaration, or the selected
+default-domain clock when `clock_domains` is present. `watchdog` is a scalar
+limit when configured and null when omitted. The machine-readable contract
+advertises these through
 `schedule_report_source_shape`, `schedule_report_scheduled_fsm_shape`,
 `schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.
 
@@ -1263,10 +1282,13 @@ same policy in `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
 Those ordering fields are exact shared-policy metadata for the current
 scheduled `.fsm` review artifact and schedule report.
 
-For multi-file lowerings, the current schedule report describes the parent
-scheduled module only. Child scheduled `.fsm` text remains available through the
-lower-result `files` map. The machine-readable contract advertises this current
-scope in `schedule_report_multi_file_scope`.
+For single-clock multi-file lowerings, the current schedule report describes
+the parent scheduled module only. Child scheduled `.fsm` text remains
+available through the lower-result `files` map. For multi-domain lowerings,
+the current schedule report describes the generated top at the top level and
+projects domain-local artifact metadata through `clock_domains[]` plus
+crossing metadata through `crossings[]`. The machine-readable contract
+advertises this current scope in `schedule_report_multi_file_scope`.
 For successful schedule reports, `compile_issues` is present as an array. It is
 empty when the successful report has no nonfatal compile issues. The
 machine-readable contract advertises that no-issue success shape in
@@ -1316,6 +1338,21 @@ entries describe the lowering decision, not per-cycle runtime grant values.
 Raw `assignment_provenance`, activation context, assignment indexes, and
 priority/resource suppression bookkeeping remain non-public `LoweringIR`
 internals unless a later slice deliberately advertises a narrower field.
+
+Multi-domain schedule reports add two bounded top-level arrays.
+`clock_domains[]` is empty for legacy one-clock actors. For accepted
+`(clock-domains ...)` actors, each entry records the declared domain name,
+default marker, clock/reset summary, scheduled domain artifact basename, local
+port/storage/transaction/rule/library/child-instance names, local crossing
+endpoints, and bounded domain report counts. Multi-domain reports describe the
+generated top as the top-level report scope, so top-level `state_count` is
+zero and domain-local scheduled state counts live in `clock_domains[]`.
+`crossings[]` is empty when no crossing primitive is declared. For accepted
+event crossings, each entry records the source domain/signal, destination
+domain/pulse signal, ready signal, generated CDC instance/module names,
+single-outstanding acknowledgement policy, no-payload policy, and generated
+top basename. Concrete synchronizer RTL is still not generated by the ISF CLI
+path.
 
 The schedule report is not yet a frozen full schema. Downstream consumers should
 use the advertised contract metadata instead of assuming every current field,

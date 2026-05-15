@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF multi-domain reports and fixtures shipped
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.6`.
+- Public multi-domain schedule JSON now projects the generated top scope,
+  domain-local artifact summaries through `clock_domains[]`, and accepted
+  event crossing metadata through `crossings[]`.
+- Added a realistic event-crossing fixture and regression coverage proving CLI
+  `--emit-schedule-json` parity plus supported HDL generation for emitted
+  single-domain artifacts.
+- Plain multi-domain generated HDL remains blocked for
+  `ISF-CLOCK-DOMAINS.7`.
+- The active frontier advances to `ISF-CLOCK-DOMAINS.7`, generated HDL for the
+  multi-domain top/CDC path.
+
 ## 2026-05-15: R14 — ISF multi-domain top artifacts emitted
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.4`.
 - Public multi-domain `lower(...)` now emits `<actor>_top.fsm`, instantiating

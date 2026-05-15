@@ -230,17 +230,23 @@ families.
 Reset summaries advertise `async`/`sync`
 kind values and `active_high`/`active_low` polarity values; omitted resets are
 reported as JSON null. Interface count
-summaries count input and output ports by direction, and `state_count` counts
-scheduled `.fsm` state blocks in the parent report scope. Report `source` and
-`scheduled_fsm` are actor-derived basenames, `clock` is the actor clock signal,
-and `watchdog` is scalar when configured or null when omitted. The ISF
+summaries count input and output ports by direction for single-clock reports;
+multi-domain reports count generated-top public ports including domain
+clocks/resets and actor interface ports. `state_count` counts scheduled `.fsm`
+state blocks in the current report scope; multi-domain generated-top reports
+use zero and put domain-local counts in `clock_domains[]`. Report `source` and
+`scheduled_fsm` are actor-derived basenames, `clock` is the actor clock signal
+or selected default-domain clock, and `watchdog` is scalar when configured or
+null when omitted. The ISF
 live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
 and present. The public `--emit-schedule-json` path is audited to emit the same
 report as the in-process scheduler with clean stderr. The public `--outdir`
 path is audited to write multi-file scheduled `.fsm` artifacts matching the
-in-process lower-result file map. Multi-file schedule reports are currently
-parent-scoped, and that scope is advertised in the manifest. Reusable library
+in-process lower-result file map. Single-clock multi-file schedule reports are
+currently parent-scoped, and multi-domain reports describe the generated top
+while projecting bounded domain/crossing metadata through `clock_domains[]`
+and `crossings[]`. That scope is advertised in the manifest. Reusable library
 actor uses now project through a bounded `library_uses` schedule-report array
 with library/export/instance identity, generated child artifact names,
 parameter source/value summaries, and explicit binding summaries. The
@@ -258,12 +264,13 @@ that metadata and the scheduler validates an internal domain partition, while
 public multi-domain `lower(...)` now emits one normal single-clock scheduled
 `.fsm` artifact per declared domain plus a generated top that wires domain
 modules and explicit CDC child interfaces for accepted event crossings. Public
-`report(...)` and generated HDL for the multi-domain top/CDC path remain later
-leaves. Direct cross-domain reads, writes, triggers, activations, bindings,
-and multi-domain drive reuse remain illegal unless a shipped CDC primitive or
-protocol actor owns the crossing semantics. The plain
-`file.isf` CLI path is audited to reach generated HDL with clean stderr,
-including when the advertised `--strict` flag is present. Transaction summaries
+`report(...)` now exposes those domain artifacts and accepted event crossings
+in schedule JSON, while generated HDL for the multi-domain top/CDC path
+remains blocked. Direct cross-domain reads, writes, triggers, activations,
+bindings, and multi-domain drive reuse remain illegal unless a shipped CDC
+primitive or protocol actor owns the crossing semantics. The plain
+single-clock `file.isf` CLI path is audited to reach generated HDL with clean
+stderr, including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including
 control-flow and data-operation states. Transaction-local `while` and `until`
 loops now project through bounded `transaction_loops` schedule-report entries

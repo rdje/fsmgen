@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF multi-domain reports and fixtures shipped
+- Completed `ISF-CLOCK-DOMAINS.6`.
+- Public multi-domain `report(...)` now emits schedule JSON instead of
+  rejecting after partition validation. The report uses the generated top as
+  its top-level scope and projects bounded `clock_domains[]` and `crossings[]`
+  metadata.
+- Added exact public contract metadata for the new domain and crossing report
+  key families, including manifest/audit coverage.
+- Added [isf/clock_domain_event_crossing.isf](isf/clock_domain_event_crossing.isf)
+  plus regression coverage for in-process report parity, CLI
+  `--emit-schedule-json`, direct unsafe-crossing diagnostics, and supported
+  single-domain HDL generation from emitted domain artifacts.
+- Plain multi-domain ISF HDL remains blocked for the new
+  `ISF-CLOCK-DOMAINS.7` frontier.
 ### R14 — ISF multi-domain top artifacts emitted
 - Completed `ISF-CLOCK-DOMAINS.5.4`.
 - Added parser support for actor-scoped `(crossings ...)` event declarations

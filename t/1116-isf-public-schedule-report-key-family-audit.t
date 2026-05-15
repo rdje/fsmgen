@@ -83,7 +83,11 @@ subtest 'APB schedule report conforms to advertised public key families' => sub 
     is(ref($report->{compile_issues}), 'ARRAY', 'compile_issues is an array in the advertised report shell');
     is(ref($report->{compatible_fanin_groups}), 'ARRAY', 'compatible_fanin_groups is an array in the advertised report shell');
     is(ref($report->{library_uses}), 'ARRAY', 'library_uses is an array in the advertised report shell');
+    is(ref($report->{clock_domains}), 'ARRAY', 'clock_domains is an array in the advertised report shell');
+    is(ref($report->{crossings}), 'ARRAY', 'crossings is an array in the advertised report shell');
     is_deeply($report->{library_uses}, [], 'library_uses is empty when no ISF libraries are used');
+    is_deeply($report->{clock_domains}, [], 'clock_domains is empty when no clock-domains clause is used');
+    is_deeply($report->{crossings}, [], 'crossings is empty when no crossing primitive is used');
     is($report->{generated_composition}, undef, 'generated_composition is null when no generated top exists');
 };
 

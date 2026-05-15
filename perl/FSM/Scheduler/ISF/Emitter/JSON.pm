@@ -16,6 +16,13 @@ sub new($class, %args) { bless {}, $class }
 sub emit($self, $ir) {
     fsm_trace_enter('Emitter::JSON emit', 2);
 
+    my $report = $self->report_hash($ir);
+    my $json = $self->emit_report_hash($report);
+    fsm_trace_exit('Emitter::JSON emit', 2);
+    return $json;
+}
+
+sub report_hash($self, $ir) {
     my $report = {
         source         => $ir->{actor_name} . '.isf',
         scheduled_fsm  => $ir->{actor_name} . '.fsm',
@@ -42,11 +49,46 @@ sub emit($self, $ir) {
         priority_resolutions => $self->_priority_resolution_summary($ir),
         resource_arbitration => $self->_resource_arbitration_summary($ir),
         compile_issues => $self->_compile_issue_summary($ir),
+        clock_domains => $self->_clock_domain_summary($ir),
+        crossings     => $self->_crossing_summary($ir),
     };
 
-    my $json = JSON::PP->new->ascii->canonical->pretty->encode($report);
-    fsm_trace_exit('Emitter::JSON emit', 2);
-    return $json;
+    return $report;
+}
+
+sub multi_domain_report_hash($self, $ir, $domain_report_by_name) {
+    my $partition = $ir->{domain_partition} || {};
+    my $report = $self->report_hash($ir);
+    my ($top_inputs, $top_outputs) = _multi_domain_top_port_counts($partition);
+
+    $report->{scheduled_fsm} = $partition->{top_fsm} // "$ir->{actor_name}_top.fsm";
+    $report->{port_count} = $top_inputs + $top_outputs;
+    $report->{inputs} = $top_inputs;
+    $report->{outputs} = $top_outputs;
+    $report->{state_count} = 0;
+    $report->{inferred_storage} = [];
+    $report->{transactions} = [];
+    $report->{transaction_waits} = [];
+    $report->{transaction_loops} = [];
+    $report->{transaction_stages} = [];
+    $report->{temporal_contracts} = [];
+    $report->{bank_accesses} = [];
+    $report->{transaction_port_bindings} = [];
+    $report->{dt_blocks} = [];
+    $report->{generated_composition} = undef;
+    $report->{library_uses} = [];
+    $report->{compatible_fanin_groups} = [];
+    $report->{priority_resolutions} = [];
+    $report->{resource_arbitration} = [];
+    $report->{compile_issues} = [];
+    $report->{clock_domains} = $self->_clock_domain_summary($ir, $domain_report_by_name);
+    $report->{crossings} = $self->_crossing_summary($ir);
+
+    return $report;
+}
+
+sub emit_report_hash($self, $report) {
+    return JSON::PP->new->ascii->canonical->pretty->encode($report);
 }
 
 sub _reset_summary($self, $reset) {
@@ -56,6 +98,115 @@ sub _reset_summary($self, $reset) {
         kind     => $reset->{kind} // 'sync',
         polarity => $reset->{polarity} // 'active_high',
     };
+}
+
+sub _clock_domain_summary($self, $ir, $domain_report_by_name = undef) {
+    my $partition = $ir->{domain_partition};
+    return [] unless ref($partition) eq 'HASH'
+        && ref($partition->{domains}) eq 'ARRAY'
+        && @{$partition->{domains}};
+
+    my $default_domain = $partition->{default_domain};
+    return [
+        map {
+            $self->_clock_domain_entry_summary($_, $default_domain, $domain_report_by_name)
+        } @{$partition->{domains}}
+    ];
+}
+
+sub _clock_domain_entry_summary($self, $domain, $default_domain, $domain_report_by_name) {
+    my $domain_report = ref($domain_report_by_name) eq 'HASH'
+        ? $domain_report_by_name->{$domain->{name}}
+        : undef;
+
+    return {
+        name          => $domain->{name},
+        default       => ($domain->{name} // '') eq ($default_domain // '') ? JSON::PP::true : JSON::PP::false,
+        clock         => $domain->{clock},
+        reset         => $self->_reset_summary($domain->{reset}),
+        scheduled_fsm => $domain->{scheduled_fsm},
+        ports         => {
+            inputs  => [@{$domain->{ports}{inputs} || []}],
+            outputs => [@{$domain->{ports}{outputs} || []}],
+        },
+        storage       => [@{$domain->{storage} || []}],
+        transactions  => [@{$domain->{transactions} || []}],
+        rules         => [@{$domain->{rules} || []}],
+        library_uses  => [@{$domain->{library_uses} || []}],
+        child_instances => [
+            map { _clock_domain_child_instance_summary($_) }
+            @{$domain->{child_instances} || []}
+        ],
+        crossings     => [
+            map { _clock_domain_crossing_endpoint_summary($_) }
+            @{$domain->{crossings} || []}
+        ],
+        state_count    => ref($domain_report) eq 'HASH' ? $domain_report->{state_count} : undef,
+        dt_block_count => ref($domain_report) eq 'HASH' && ref($domain_report->{dt_blocks}) eq 'ARRAY'
+            ? scalar(@{$domain_report->{dt_blocks}})
+            : undef,
+    };
+}
+
+sub _clock_domain_child_instance_summary($instance) {
+    return {
+        kind     => $instance->{kind},
+        owner    => $instance->{owner},
+        child    => $instance->{child},
+        instance => $instance->{instance},
+    };
+}
+
+sub _clock_domain_crossing_endpoint_summary($endpoint) {
+    return {
+        event  => $endpoint->{event},
+        role   => $endpoint->{role},
+        signal => $endpoint->{signal},
+        ready  => exists($endpoint->{ready}) ? $endpoint->{ready} : undef,
+    };
+}
+
+sub _crossing_summary($self, $ir) {
+    my $partition = $ir->{domain_partition};
+    return [] unless ref($partition) eq 'HASH' && ref($partition->{crossings}) eq 'ARRAY';
+
+    return [
+        map { _crossing_event_summary($_, $partition) }
+        @{$partition->{crossings}}
+    ];
+}
+
+sub _crossing_event_summary($crossing, $partition) {
+    return {
+        name               => $crossing->{name},
+        kind               => $crossing->{kind},
+        source_domain      => $crossing->{source_domain},
+        source_signal      => $crossing->{source_signal},
+        destination_domain => $crossing->{destination_domain},
+        destination_signal => $crossing->{destination_signal},
+        ready_signal       => $crossing->{ready_signal},
+        instance           => $crossing->{instance},
+        module             => $crossing->{module},
+        outstanding_policy => $crossing->{outstanding_policy},
+        payload            => $crossing->{payload},
+        top_fsm            => $partition->{top_fsm},
+    };
+}
+
+sub _multi_domain_top_port_counts($partition) {
+    my (%input, %output);
+
+    for my $domain (@{$partition->{domains} || []}) {
+        $input{$domain->{clock}} = 1 if defined($domain->{clock}) && !ref($domain->{clock}) && length($domain->{clock});
+        if (ref($domain->{reset}) eq 'HASH') {
+            my $reset = $domain->{reset}{name};
+            $input{$reset} = 1 if defined($reset) && !ref($reset) && length($reset);
+        }
+        $input{$_} = 1 for @{$domain->{ports}{inputs} || []};
+        $output{$_} = 1 for @{$domain->{ports}{outputs} || []};
+    }
+
+    return (scalar(keys %input), scalar(keys %output));
 }
 
 sub _actor_constant_summary($self, $ir) {

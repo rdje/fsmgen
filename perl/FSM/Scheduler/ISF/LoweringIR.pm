@@ -458,8 +458,22 @@ sub _build_domain_partition($self, $actor) {
     for my $use (@{$actor->{library_uses} || []}) {
         push @{$groups{_domain_for_entry($use, $default_domain)}{library_uses}}, $use->{instance};
     }
+    my @crossing_summaries;
     for my $crossing (@{$actor->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'event';
+        push @crossing_summaries, {
+            name               => $crossing->{name},
+            kind               => 'event',
+            source_domain      => $crossing->{from}{domain},
+            source_signal      => $crossing->{from}{signal},
+            destination_domain => $crossing->{to}{domain},
+            destination_signal => $crossing->{to}{signal},
+            ready_signal       => $crossing->{ready}{signal},
+            instance           => "$crossing->{name}_cdc",
+            module             => "$actor->{actor_name}__cdc_event_$crossing->{name}",
+            outstanding_policy => 'single_outstanding_acknowledged',
+            payload            => 'none',
+        };
         push @{$groups{$crossing->{from}{domain}}{crossings}}, {
             event  => $crossing->{name},
             role   => 'source',
@@ -527,6 +541,8 @@ sub _build_domain_partition($self, $actor) {
         kind => @domain_order > 1 ? 'multi_domain' : 'single_domain',
         default_domain => $default_domain,
         domains => [ map { $groups{$_} } @domain_order ],
+        top_fsm => "$actor->{actor_name}_top.fsm",
+        crossings => \@crossing_summaries,
     };
 }
 

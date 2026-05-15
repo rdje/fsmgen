@@ -87,8 +87,9 @@ sub report($self, @args) {
     fsm_trace_enter("Scheduler report: $actor->{actor_name}", 2);
 
     my $ir   = $self->{ir}->build_module($actor);
-    _confess_unprojected_multi_domain_report($ir);
-    my $json = $self->{json_emitter}->emit($ir);
+    my $json = _is_multi_domain_ir($ir)
+        ? $self->_emit_multi_domain_schedule_report($actor, $ir)
+        : $self->{json_emitter}->emit($ir);
 
     fsm_trace_exit("Scheduler report completed", 2);
     return $json;
@@ -121,10 +122,20 @@ sub _is_multi_domain_ir($ir) {
     return ref($partition) eq 'HASH' && ($partition->{kind} // '') eq 'multi_domain';
 }
 
-sub _confess_unprojected_multi_domain_report($ir) {
-    return 1 unless _is_multi_domain_ir($ir);
+sub _emit_multi_domain_schedule_report($self, $actor, $ir) {
+    my $partition = $ir->{domain_partition};
+    confess "FSM::Scheduler::ISF->report expected a validated multi-domain partition for actor '$actor->{actor_name}'\n"
+        unless ref($partition) eq 'HASH' && ref($partition->{domains}) eq 'ARRAY';
 
-    confess "FSM::Scheduler::ISF->report validated the multi-domain partition for actor '$ir->{actor_name}', but multi-domain schedule-report projection is not implemented yet\n";
+    my %domain_report_by_name;
+    for my $domain (@{$partition->{domains}}) {
+        my $domain_actor = _domain_actor_for_scheduled_artifact($actor, $domain, $partition->{default_domain});
+        my $domain_ir = $self->{ir}->build_module($domain_actor);
+        $domain_report_by_name{$domain->{name}} = $self->{json_emitter}->report_hash($domain_ir);
+    }
+
+    my $report = $self->{json_emitter}->multi_domain_report_hash($ir, \%domain_report_by_name);
+    return $self->{json_emitter}->emit_report_hash($report);
 }
 
 sub _emit_multi_domain_scheduled_artifacts($self, $actor, $ir) {

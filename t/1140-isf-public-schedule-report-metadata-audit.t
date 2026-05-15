@@ -18,6 +18,10 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_compile_issue_severity_values
     isf_public_interface_schedule_report_compile_issue_source_keys
     isf_public_interface_schedule_report_compile_issues_success_shape
+    isf_public_interface_schedule_report_clock_domain_child_instance_keys
+    isf_public_interface_schedule_report_clock_domain_crossing_endpoint_keys
+    isf_public_interface_schedule_report_clock_domain_keys
+    isf_public_interface_schedule_report_crossing_keys
     isf_public_interface_schedule_report_bank_access_keys
     isf_public_interface_schedule_report_bank_access_kind_values
     isf_public_interface_schedule_report_bank_access_policy_values
@@ -112,6 +116,22 @@ sub assert_schedule_report_metadata {
         [
             schedule_report_actor_constant_keys =>
                 isf_public_interface_schedule_report_actor_constant_keys(),
+        ],
+        [
+            schedule_report_clock_domain_keys =>
+                isf_public_interface_schedule_report_clock_domain_keys(),
+        ],
+        [
+            schedule_report_clock_domain_child_instance_keys =>
+                isf_public_interface_schedule_report_clock_domain_child_instance_keys(),
+        ],
+        [
+            schedule_report_clock_domain_crossing_endpoint_keys =>
+                isf_public_interface_schedule_report_clock_domain_crossing_endpoint_keys(),
+        ],
+        [
+            schedule_report_crossing_keys =>
+                isf_public_interface_schedule_report_crossing_keys(),
         ],
         [
             schedule_report_storage_required_keys =>

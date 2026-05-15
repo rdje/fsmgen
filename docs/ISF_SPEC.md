@@ -82,8 +82,9 @@ Current CLI behavior:
   generation.
 - Without `--emit-schedule-json`, a single generated `.fsm` file is written to a
   temporary file and fed into the normal `.fsm` pipeline.
-- The plain `file.isf` path is expected to reach generated HDL with clean
-  stderr on success.
+- The plain single-clock `file.isf` path is expected to reach generated HDL
+  with clean stderr on success. Accepted multi-domain clock-domain actors
+  currently stop before generated HDL for the generated top/CDC artifact.
 - `--strict` is accepted on the plain `file.isf` path and still routes through
   scheduled `.fsm` generation before HDL output.
 - If lowering produces multiple `.fsm` files, `--outdir DIR` writes every file
@@ -169,9 +170,12 @@ The contract's facade-shape metadata for these receiver, argument, path, and
 actor-shell boundaries is audited as exact across direct and manifest views.
 Public facade boundary failures are advertised as bounded scalar diagnostics
 before object creation, private parsing, or private lowering/reporting begins.
-For multi-file lowering, the current schedule report is parent-scoped. Child
-scheduled `.fsm` text is exposed through the lower-result `files` map rather
-than folded into the report.
+For single-clock multi-file lowering, the current schedule report is
+parent-scoped. Child scheduled `.fsm` text is exposed through the lower-result
+`files` map rather than folded into the report. For multi-domain
+clock-domain lowering, the schedule report describes the generated top at the
+top level and exposes bounded domain/crossing metadata through
+`clock_domains[]` and `crossings[]`.
 
 ## 3. Source Root
 
@@ -468,8 +472,8 @@ Multi-clock boundary:
   scheduler partition. Public `lower(...)` emits one domain scheduled `.fsm`
   artifact per declared domain plus a generated multi-domain top that wires
   explicit CDC child-interface artifacts for accepted event crossings.
-  Schedule-report projection and generated HDL for the multi-domain top/CDC
-  path remain unshipped.
+  Schedule-report projection now exposes bounded domain and crossing metadata.
+  Generated HDL for the multi-domain top/CDC path remains unshipped.
 - Direct reads or writes between domains are not accepted by implication. A
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
@@ -540,9 +544,10 @@ Selected source model and current implementation status:
   domain-specific scheduled `.fsm` artifacts named
   `<actor>__domain_<domain>.fsm` and a generated `<actor>_top.fsm` top
   artifact.
-- Report metadata and generated HDL for the multi-domain top/CDC path remain
-  future leaves of the `ISF-CLOCK-DOMAINS` task tree. Reset ownership and the
-  first legal crossing primitive are selected below.
+- Schedule reports for multi-domain sources describe the generated top at the
+  top level and expose each domain artifact through `clock_domains[]`; legal
+  event crossings appear in `crossings[]`. Generated HDL for the
+  multi-domain top/CDC path remains future work.
 
 Selected reset ownership model and current implementation status:
 - Existing actor-level `(clock clk)` plus optional actor-level `(reset ...)`
@@ -576,7 +581,7 @@ Selected reset ownership model and current implementation status:
   reset names, conflicting reset reuse, DT-generated async reset gating, and
   treating reset assertion/deassertion as an ordinary cross-domain event.
 
-Selected future crossing primitive, not implemented yet:
+Selected crossing primitive and current implementation status:
 - The first legal cross-domain interaction is an acknowledged single-bit event
   channel. It carries no data payload:
 
@@ -604,8 +609,10 @@ Selected future crossing primitive, not implemented yet:
   pulse.
 - The generated top represents the primitive as an explicit CDC child
   interface with source clock/reset, destination clock/reset, request, ready,
-  and pulse ports. Concrete synchronizer RTL remains future generated-HDL
-  work.
+  and pulse ports. Schedule reports expose the generated CDC instance/module
+  names, endpoint domains/signals, single-outstanding acknowledgement policy,
+  and no-payload policy. Concrete synchronizer RTL remains future
+  generated-HDL work.
 - Payload transfer, multi-bit data, level sampling, reset crossing, and
   FIFO-like storage remain outside this first primitive.
 - Direct cross-domain reads, writes, triggers, activations, parent/child
@@ -635,10 +642,12 @@ Selected lowering artifact strategy and current implementation status:
 - The acknowledged event primitive emits an explicit generated CDC child
   interface with source clock/reset, destination clock/reset, request, ready,
   and pulse ports. It is not an ordinary single-domain `.fsm` state chain.
-- Schedule-report metadata for domain artifacts, generated top wiring, and
-  crossing artifacts, plus generated HDL for the CDC child implementation,
-  remains future work. Until that report projection ships, public
-  `report(...)` rejects multi-domain actors after partition validation.
+- Schedule-report metadata for domain artifacts and crossing artifacts is
+  shipped. Multi-domain reports use the generated top as the top-level report
+  scope, keep top-level `state_count` at zero, and put domain-local state
+  counts plus artifact names under `clock_domains[]`. Generated HDL for the
+  CDC child implementation remains future work, so the plain ISF HDL CLI path
+  still fails closed for multi-domain actors.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
@@ -2021,7 +2030,9 @@ fail-closed/deferred.
   "compatible_fanin_groups": [],
   "priority_resolutions": [],
   "resource_arbitration": [],
-  "compile_issues": []
+  "compile_issues": [],
+  "clock_domains": [],
+  "crossings": []
 }
 ```
 
@@ -2120,17 +2131,37 @@ capability-manifest ISF public contract advertises those value families through
 Configured reset summaries are hashes with the advertised reset keys; omitted
 resets are reported as JSON null. The capability-manifest ISF public contract
 advertises this through `schedule_report_reset_shape`.
-The top-level `inputs` and `outputs` values count interface ports by direction,
-and `port_count` equals their sum. `state_count` counts scheduled `.fsm` state
-blocks in the current parent report scope. The capability-manifest ISF public
-contract advertises this through `schedule_report_interface_count_shape` and
+The `clock_domains` array is empty for legacy one-clock actors. For accepted
+`(clock-domains ...)` actors, each entry exposes the domain name, default
+marker, clock/reset summary, scheduled domain artifact basename, local
+port/storage/transaction/rule/library/child-instance names, crossing endpoint
+summaries, and bounded domain state/DT counts. For multi-domain reports, the
+top-level report scope is the generated top, so top-level `state_count` is
+zero and domain-local counts live in `clock_domains[]`. The `crossings` array
+is empty when no crossing primitive is declared. Accepted event crossings
+report source/destination domains and signals, the source ready signal,
+generated CDC instance/module names, `single_outstanding_acknowledged`
+policy, `none` payload policy, and generated top basename. The
+capability-manifest ISF public contract advertises these bounded key families
+through `schedule_report_clock_domain_*` and `schedule_report_crossing_keys`.
+For ordinary single-clock reports, the top-level `inputs` and `outputs`
+values count interface ports by direction, and `port_count` equals their sum.
+For multi-domain reports, these counts describe the generated top's public
+port scope, including domain clocks/resets plus actor interface ports.
+`state_count` counts scheduled `.fsm` state blocks in the current report scope;
+multi-domain generated tops have no hidden scheduled states, so their
+top-level `state_count` is zero. The capability-manifest ISF public contract
+advertises this through `schedule_report_interface_count_shape` and
 `schedule_report_state_count_shape`.
 The top-level `source` and `scheduled_fsm` values are actor-derived `.isf` and
-`.fsm` basenames for the current parent report scope, `clock` is the actor
-clock signal name, and `watchdog` is a scalar limit when configured or null when
-omitted. The capability-manifest ISF public contract advertises this through
-`schedule_report_source_shape`, `schedule_report_scheduled_fsm_shape`,
-`schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.
+`.fsm` basenames for the current report scope; for multi-domain reports,
+`scheduled_fsm` is the generated `<actor>_top.fsm` artifact. `clock` is the
+actor clock signal name, or the selected default-domain clock when
+`clock-domains` is present, and `watchdog` is a scalar limit when configured
+or null when omitted. The capability-manifest ISF public contract advertises
+this through `schedule_report_source_shape`,
+`schedule_report_scheduled_fsm_shape`, `schedule_report_clock_shape`, and
+`schedule_report_watchdog_shape`.
 Successful reports keep `compile_issues` present as an array. Reports with no
 nonfatal compile issues keep it empty; the capability-manifest ISF public
 contract advertises that no-issue success shape through
@@ -2175,8 +2206,9 @@ entries describe the static lowering decision; they are not per-cycle runtime
 grant traces.
 The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
 the in-process scheduler on stdout and keep stderr clean on success.
-For multi-file lowerings, that report currently describes the parent scheduled
-module only.
+For single-clock multi-file lowerings, that report currently describes the
+parent scheduled module only. For multi-domain lowerings, it describes the
+generated top and projects bounded per-domain/crossing summaries.
 
 Schema-freeze readiness is tracked separately from the current bounded public
 contract. The report is contractual today through the exact metadata advertised
@@ -2202,6 +2234,7 @@ Representative shipped fixtures:
 - [isf/full_featured.isf](../isf/full_featured.isf)
 - [isf/i2c_master.isf](../isf/i2c_master.isf)
 - [isf/spawn_parent.isf](../isf/spawn_parent.isf)
+- [isf/clock_domain_event_crossing.isf](../isf/clock_domain_event_crossing.isf)
 - [isf/spi_master.isf](../isf/spi_master.isf)
 - [isf/uart_tx.isf](../isf/uart_tx.isf)
 - [isf/when_test.isf](../isf/when_test.isf)
@@ -2386,6 +2419,7 @@ Focused tests:
 - [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
 - [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 - [t/1246-isf-setter-syntax.t](../t/1246-isf-setter-syntax.t)
+- [t/1247-isf-clock-domain-partition.t](../t/1247-isf-clock-domain-partition.t)
 
 ## 12. Explicitly Deferred
 

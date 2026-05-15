@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF multi-domain reports and fixtures shipped
+- Completed `ISF-CLOCK-DOMAINS.6` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- Public multi-domain `FSM::Scheduler::ISF->report(...)` and
+  `--emit-schedule-json` now succeed for accepted multi-domain actors.
+- Schedule JSON describes the generated top at the top level and exposes
+  bounded per-domain metadata through `clock_domains[]` plus event crossing
+  metadata through `crossings[]`.
+- Added [isf/clock_domain_event_crossing.isf](isf/clock_domain_event_crossing.isf)
+  as a realistic acknowledged-event crossing fixture; focused tests prove the
+  generated domain artifacts still reach supported single-clock HDL generation.
+- Plain multi-domain ISF HDL remains blocked until `ISF-CLOCK-DOMAINS.7`,
+  generated HDL for the multi-domain top/CDC path.
+- The current frontier is `ISF-CLOCK-DOMAINS.7`.
 ## 2026-05-15: ISF multi-domain top artifacts shipped
 - Completed `ISF-CLOCK-DOMAINS.5.4` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

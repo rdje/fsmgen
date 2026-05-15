@@ -6,6 +6,7 @@ use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
+use JSON::PP qw(decode_json);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -110,11 +111,21 @@ ISF
     like($top_fsm, qr{/clk/core\.clk/}, 'generated top wires the core clock');
     like($top_fsm, qr{/bus_clk/bus\.bus_clk/}, 'generated top wires the bus clock');
 
-    assert_report_rejected(
-        $source,
-        'multi-domain report blocks until report projection ships',
-        qr/FSM::Scheduler::ISF->report validated the multi-domain partition .* schedule-report projection is not implemented yet/,
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is($report->{scheduled_fsm}, 'clock_domain_partition_top.fsm', 'multi-domain report describes the generated top artifact');
+    is($report->{state_count}, 0, 'multi-domain top report has no hidden scheduled states');
+    is_deeply(
+        [map { $_->{name} } @{$report->{clock_domains}}],
+        [qw(core bus)],
+        'multi-domain report exposes declared domains in source order',
     );
+    my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
+    is($reported_domain{core}{scheduled_fsm}, 'clock_domain_partition__domain_core.fsm', 'report names the core scheduled artifact');
+    is($reported_domain{bus}{scheduled_fsm}, 'clock_domain_partition__domain_bus.fsm', 'report names the bus scheduled artifact');
+    is_deeply($reported_domain{core}{ports}{inputs}, ['start'], 'report summarizes core input ports');
+    is_deeply($reported_domain{bus}{transactions}, ['bus_tx'], 'report summarizes bus transactions');
+    ok($reported_domain{core}{state_count} > 0, 'report includes core domain scheduled state count');
+    ok($reported_domain{bus}{state_count} > 0, 'report includes bus domain scheduled state count');
 };
 
 subtest 'single-domain clock-domains sources lower through the existing one-clock path' => sub {
@@ -226,6 +237,71 @@ ISF
     like($top_fsm, qr{/rx_done_cdc\.ready/bus\.rx_ready/}, 'top wires source ready back to the source domain');
     like($top_fsm, qr{/rx_done_cdc\.pulse/core\.rx_pulse/}, 'top wires destination pulse into the destination domain');
     like($top_fsm, qr/\(\?rtlif:event_crossing_top__cdc_event_rx_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the CDC child interface artifact');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        $report->{crossings},
+        [
+            {
+                name               => 'rx_done',
+                kind               => 'event',
+                source_domain      => 'bus',
+                source_signal      => 'rx_req',
+                destination_domain => 'core',
+                destination_signal => 'rx_pulse',
+                ready_signal       => 'rx_ready',
+                instance           => 'rx_done_cdc',
+                module             => 'event_crossing_top__cdc_event_rx_done',
+                outstanding_policy => 'single_outstanding_acknowledged',
+                payload            => 'none',
+                top_fsm            => 'event_crossing_top_top.fsm',
+            },
+        ],
+        'schedule report exposes bounded crossing metadata',
+    );
+    my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
+    is_deeply(
+        $reported_domain{bus}{crossings},
+        [{ event => 'rx_done', role => 'source', signal => 'rx_req', ready => 'rx_ready' }],
+        'schedule report exposes the source-domain crossing endpoint',
+    );
+    is_deeply(
+        $reported_domain{core}{crossings},
+        [{ event => 'rx_done', role => 'destination', signal => 'rx_pulse', ready => undef }],
+        'schedule report exposes the destination-domain crossing endpoint',
+    );
+};
+
+subtest 'clock-domain crossing fixture reports metadata and lowers supported domain HDL' => sub {
+    my $path = repo_file('isf/clock_domain_event_crossing.isf');
+    my $actor = FSM::Adapter::ISF->new()->parse_file($path);
+    my $scheduler = FSM::Scheduler::ISF->new();
+
+    my $report = decode_json($scheduler->report($actor));
+    is($report->{source}, 'clock_domain_event_crossing.isf', 'fixture report preserves the source basename');
+    is($report->{scheduled_fsm}, 'clock_domain_event_crossing_top.fsm', 'fixture report names the generated top');
+    is_deeply(
+        [map { $_->{name} } @{$report->{clock_domains}}],
+        [qw(bus core)],
+        'fixture report exposes bus and core domains',
+    );
+    is_deeply(
+        [map { $_->{name} } @{$report->{crossings}}],
+        ['byte_ready'],
+        'fixture report exposes the event crossing',
+    );
+
+    my $cli_report = run_schedule_json($path);
+    is_deeply($cli_report->{clock_domains}, $report->{clock_domains}, 'CLI schedule JSON preserves domain metadata');
+    is_deeply($cli_report->{crossings}, $report->{crossings}, 'CLI schedule JSON preserves crossing metadata');
+
+    my $lowered = $scheduler->lower($actor);
+    my $dir = tempdir(CLEANUP => 1);
+    for my $basename (qw(clock_domain_event_crossing__domain_bus.fsm clock_domain_event_crossing__domain_core.fsm)) {
+        my $fsm_path = File::Spec->catfile($dir, $basename);
+        write_file($fsm_path, $lowered->{files}{$basename});
+        assert_direct_fsm_hdl_generation($fsm_path, "$basename reaches supported single-domain HDL generation");
+    }
 };
 
 subtest 'direct unowned cross-domain references fail closed before emission' => sub {
@@ -344,6 +420,38 @@ sub assert_report_rejected {
     ok(!$ok, "$label is rejected");
     ok(!ref($diagnostic), "$label diagnostic is scalar");
     like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
+}
+
+sub assert_direct_fsm_hdl_generation {
+    my ($fsm_path, $label) = @_;
+    my ($volume, $directories, $file) = File::Spec->splitpath($fsm_path);
+    my $stem = $file;
+    $stem =~ s/\.fsm\z//;
+    my $out_path = File::Spec->catfile($directories, "$stem.sv");
+
+    my ($success, undef, undef, undef, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--quiet', '--output', $out_path, $fsm_path],
+    );
+
+    ok($success, $label);
+    is(join('', @{$stderr_buf || []}), '', "$label keeps stderr empty");
+    ok(-f $out_path, "$label writes SystemVerilog output");
+}
+
+sub run_schedule_json {
+    my ($path) = @_;
+    my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
+        command => ['./bin/fsmgen', '--emit-schedule-json', $path],
+    );
+
+    ok($success, '--emit-schedule-json succeeds for the clock-domain fixture');
+    is(join('', @{$stderr_buf || []}), '', '--emit-schedule-json keeps stderr empty for the clock-domain fixture');
+    return decode_json(join('', @{$stdout_buf || []}));
+}
+
+sub repo_file {
+    my ($relpath) = @_;
+    return File::Spec->catfile($FindBin::Bin, '..', split m{/}, $relpath);
 }
 
 sub sorted {

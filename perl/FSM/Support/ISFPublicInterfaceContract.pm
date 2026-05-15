@@ -53,10 +53,14 @@ our @EXPORT_OK = qw(
     isf_public_interface_resource_kind_values
     isf_public_interface_schedule_report_compile_issues_success_shape
     isf_public_interface_schedule_report_clock_shape
+    isf_public_interface_schedule_report_clock_domain_child_instance_keys
+    isf_public_interface_schedule_report_clock_domain_crossing_endpoint_keys
+    isf_public_interface_schedule_report_clock_domain_keys
     isf_public_interface_schedule_report_compile_issue_keys
     isf_public_interface_schedule_report_compile_issue_proof_status_values
     isf_public_interface_schedule_report_compile_issue_severity_values
     isf_public_interface_schedule_report_compile_issue_source_keys
+    isf_public_interface_schedule_report_crossing_keys
     isf_public_interface_schedule_report_bank_access_keys
     isf_public_interface_schedule_report_bank_access_kind_values
     isf_public_interface_schedule_report_bank_access_policy_values
@@ -202,6 +206,10 @@ sub build_isf_public_interface_contract {
         schedule_report_scheduled_fsm_shape => isf_public_interface_schedule_report_scheduled_fsm_shape(),
         schedule_report_clock_shape => isf_public_interface_schedule_report_clock_shape(),
         schedule_report_watchdog_shape => isf_public_interface_schedule_report_watchdog_shape(),
+        schedule_report_clock_domain_keys => isf_public_interface_schedule_report_clock_domain_keys(),
+        schedule_report_clock_domain_child_instance_keys => isf_public_interface_schedule_report_clock_domain_child_instance_keys(),
+        schedule_report_clock_domain_crossing_endpoint_keys => isf_public_interface_schedule_report_clock_domain_crossing_endpoint_keys(),
+        schedule_report_crossing_keys => isf_public_interface_schedule_report_crossing_keys(),
         schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
         schedule_report_compile_issues_success_shape => isf_public_interface_schedule_report_compile_issues_success_shape(),
         schedule_report_compile_issue_keys => isf_public_interface_schedule_report_compile_issue_keys(),
@@ -477,6 +485,10 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_clock_shape
             schedule_report_watchdog_shape
             schedule_report_actor_constant_keys
+            schedule_report_clock_domain_keys
+            schedule_report_clock_domain_child_instance_keys
+            schedule_report_clock_domain_crossing_endpoint_keys
+            schedule_report_crossing_keys
             schedule_report_compile_issues_success_shape
             schedule_report_compile_issue_keys
             schedule_report_compile_issue_source_keys
@@ -705,7 +717,7 @@ sub isf_public_interface_cli_outdir_success_shape {
 }
 
 sub isf_public_interface_cli_hdl_generation_success_shape {
-    return 'plain file.isf generation lowers through scheduled .fsm and writes requested HDL output with empty stderr on success';
+    return 'plain single-clock file.isf generation lowers through scheduled .fsm and writes requested HDL output with empty stderr on success; multi-domain actors currently expose lower-result artifacts and schedule JSON while plain generated HDL remains blocked';
 }
 
 sub isf_public_interface_cli_strict_hdl_generation_success_shape {
@@ -731,7 +743,7 @@ sub isf_public_interface_actor_shell_actor_name_shape {
 }
 
 sub isf_public_interface_actor_shell_timing_shape {
-    return 'clock is a non-empty scalar when configured and is the default-domain clock when clock_domains is present; reset is null when omitted or a hash with scalar name, kind, and polarity for the default domain; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, storage, clock-domains, and crossings clauses are singleton actor clauses; multi-domain scheduler lower emits domain-specific scheduled .fsm artifacts plus a generated multi-domain top, while report calls fail closed until domain report projection ships';
+    return 'clock is a non-empty scalar when configured and is the default-domain clock when clock_domains is present; reset is null when omitted or a hash with scalar name, kind, and polarity for the default domain; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, storage, clock-domains, and crossings clauses are singleton actor clauses; multi-domain scheduler lower emits domain-specific scheduled .fsm artifacts plus a generated multi-domain top, and report calls expose bounded domain and crossing metadata';
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
@@ -831,6 +843,8 @@ sub isf_public_interface_schedule_report_top_level_keys {
             priority_resolutions
             resource_arbitration
             compile_issues
+            clock_domains
+            crossings
         ),
     ];
 }
@@ -1158,11 +1172,11 @@ sub isf_public_interface_schedule_report_source_shape {
 }
 
 sub isf_public_interface_schedule_report_scheduled_fsm_shape {
-    return 'scheduled .fsm basename for the current parent actor report scope';
+    return 'scheduled .fsm basename for the current report scope; multi-domain reports use the generated <actor>_top.fsm artifact';
 }
 
 sub isf_public_interface_schedule_report_clock_shape {
-    return 'scalar clock signal name from the ISF actor clock declaration';
+    return 'scalar clock signal name from the ISF actor clock declaration, or the default-domain clock when clock_domains is present';
 }
 
 sub isf_public_interface_schedule_report_watchdog_shape {
@@ -1178,16 +1192,78 @@ sub isf_public_interface_schedule_report_actor_constant_keys {
     ];
 }
 
+sub isf_public_interface_schedule_report_clock_domain_keys {
+    return [
+        qw(
+            name
+            default
+            clock
+            reset
+            scheduled_fsm
+            ports
+            storage
+            transactions
+            rules
+            library_uses
+            child_instances
+            crossings
+            state_count
+            dt_block_count
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_clock_domain_child_instance_keys {
+    return [
+        qw(
+            kind
+            owner
+            child
+            instance
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_clock_domain_crossing_endpoint_keys {
+    return [
+        qw(
+            event
+            role
+            signal
+            ready
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_crossing_keys {
+    return [
+        qw(
+            name
+            kind
+            source_domain
+            source_signal
+            destination_domain
+            destination_signal
+            ready_signal
+            instance
+            module
+            outstanding_policy
+            payload
+            top_fsm
+        ),
+    ];
+}
+
 sub isf_public_interface_schedule_report_multi_file_scope {
-    return 'report transaction/state/dt/storage summaries describe the parent module; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; child scheduled .fsm text remains available through lower_result files';
+    return 'single-clock multi-file report transaction/state/dt/storage summaries describe the parent module; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; multi-domain reports describe the generated top at the top level and expose per-domain scheduled artifacts plus crossing metadata through clock_domains and crossings; child and domain scheduled .fsm text remains available through lower_result files';
 }
 
 sub isf_public_interface_schedule_report_interface_count_shape {
-    return 'non-negative integer counts: inputs and outputs count interface ports by direction, and port_count equals inputs plus outputs';
+    return 'non-negative integer counts: single-clock reports count interface ports by direction; multi-domain reports count generated-top public ports including domain clocks/resets and actor interface ports; port_count equals inputs plus outputs';
 }
 
 sub isf_public_interface_schedule_report_state_count_shape {
-    return 'non-negative integer count of scheduled .fsm state blocks in the current parent report scope';
+    return 'non-negative integer count of scheduled .fsm state blocks in the current report scope; multi-domain generated-top reports use zero and expose domain-local counts in clock_domains entries';
 }
 
 sub isf_public_interface_schedule_report_reset_keys {
@@ -1434,6 +1510,10 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_top_level_keys => isf_public_interface_schedule_report_top_level_keys(),
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
         schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
+        schedule_report_clock_domain_keys => isf_public_interface_schedule_report_clock_domain_keys(),
+        schedule_report_clock_domain_child_instance_keys => isf_public_interface_schedule_report_clock_domain_child_instance_keys(),
+        schedule_report_clock_domain_crossing_endpoint_keys => isf_public_interface_schedule_report_clock_domain_crossing_endpoint_keys(),
+        schedule_report_crossing_keys => isf_public_interface_schedule_report_crossing_keys(),
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_bank_access_keys => isf_public_interface_schedule_report_bank_access_keys(),

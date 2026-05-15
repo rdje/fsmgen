@@ -31,8 +31,9 @@ scheduled `.fsm` path using the declared domain clock/reset. Multi-domain
 actors emit validated per-domain scheduled `.fsm` artifacts named
 `<actor>__domain_<domain>.fsm` plus `<actor>_top.fsm` generated top wiring.
 Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
-child interfaces in the generated top. Schedule-report projection and
-generated HDL for the multi-domain top/CDC path remain future leaves.
+child interfaces in the generated top. Schedule reports expose the generated
+top scope, each domain artifact, and accepted event crossing metadata;
+generated HDL for the multi-domain top/CDC path remains a future leaf.
 
 ## Interface → +size
 
