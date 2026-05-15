@@ -1139,10 +1139,13 @@ counter value without repeating the sample. The zero-count path matches
 state-producing clause, so no hidden sample-only cycle is added and the
 original following state does not double-sample after a positive wait.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
-samples without changing timing fail closed.
-Pending samples before runtime waits inside `when`, `switch`, `repeat`,
-`while`, or `until` bodies remain fail-closed until their branch/loop-specific
-sample materialization leaves ship.
+samples without changing timing fail closed. The same path-specific
+materialization is also supported inside `when` bodies and `switch` branches
+when the selected zero-count successor can carry the pending samples. The
+false path of `when`, other explicit switch cases, and implicit switch
+fallthrough remain unchanged. Pending samples before runtime waits inside
+`repeat`, `while`, or `until` bodies remain fail-closed until their
+loop-specific sample materialization leaves ship.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

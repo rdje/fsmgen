@@ -259,8 +259,11 @@ sample-only cycle is inserted and the original following state does not sample
 again after a positive wait. This top-level subset is limited to following
 states that can carry the zero-count sample without changing timing; other
 successor shapes fail closed until their sample materialization is specified.
-Inline runtime waits still reject pending samples before the wait because
-their branch/loop bypass paths need separate materialization support.
+Runtime waits inside `when` bodies and `switch` branches now use the same
+one-shot positive sample plus zero-count clone scheme for sample-compatible
+successors while preserving false, other-case, and fallthrough exits. Pending
+samples before `repeat`, `while`, and `until` runtime waits still reject
+because their loop bypass paths need separate materialization support.
 
 **Generated .fsm** for `(wait 2)` followed by `(drive tick)`:
 
@@ -281,13 +284,15 @@ report the resolved integer in `cycles`; runtime scalar waits report
 waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, unknown-width dynamic
 counts, expression counts, parameter-backed counts, and unsupported runtime
 contexts fail closed. Inline dynamic waits are supported in `when` and
-`repeat` bodies, `switch` branches, and `while`/`until` bodies when no pending
-sample crosses the wait. In a `switch`, only the selected branch's runtime
+`repeat` bodies, `switch` branches, and `while`/`until` bodies for the
+no-pending-sample subset. Pending samples are also supported for `when` bodies
+and `switch` branches when the selected zero-count successor can carry samples
+without changing timing. In a `switch`, only the selected branch's runtime
 wait edge is split; other cases remain selectable and implicit fallthrough is
 guarded by the complement of all explicit case values. In loops, the relevant
 entry, back-edge, or exit decision edge is split while the opposite loop branch
-is preserved. Pending samples before inline dynamic waits remain fail-closed
-with diagnostics that name the rejected body context.
+is preserved. Pending samples before `repeat`, `while`, and `until` runtime
+waits remain fail-closed with diagnostics that name the rejected body context.
 
 ## `(complete port)` — Terminal State
 

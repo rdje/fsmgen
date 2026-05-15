@@ -15,9 +15,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `repeat` bodies, `ISF-DYNAMIC-WAIT.3.3.4.4` shipped dynamic waits in
   `switch` branches, `ISF-DYNAMIC-WAIT.3.3.4.5` shipped dynamic waits in
   `while`/`until` bodies, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped top-level
+  pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.5.3` shipped branch
   pending-sample preservation, and the current frontier is
-  `ISF-DYNAMIC-WAIT.3.3.5.3`: implementing branch pending-sample preservation
-  across runtime dynamic wait paths.
+  `ISF-DYNAMIC-WAIT.3.3.5.4`: implementing repeat/loop pending-sample
+  preservation across runtime dynamic wait paths.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -34,9 +35,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   transparent zero-count behavior and fixed integer `transaction_waits[]`
   metadata. Actor/transaction `params` are not wait-count sources because they
   are overrideable specialization values. The first runtime scalar dynamic
-  count subset is now shipped for top-level transaction-body waits with a
-  known-width scalar count source, no pending samples before the wait, and a
-  predecessor kind whose edge split is implemented.
+  count subset is now shipped for known-width scalar count sources whose
+  predecessor edge split is implemented. Pending samples are supported for
+  top-level waits, `when` bodies, and `switch` branches when the zero-count
+  successor can carry samples without changing timing.
 - ISF runtime dynamic wait lowering update: accepted runtime scalar waits load
   a generated counter on the same predecessor edge that enters the wait,
   bypass directly on `count == 0`, decrement the sampled counter in one
@@ -57,10 +59,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   a separate no-resample wait-loop state when the sampled count is greater than
   one, while zero counts bypass to a sample-preserving clone of the following
   state when that state can carry samples without changing timing. Other
-  top-level zero-count successors, pending samples before inline dynamic waits,
-  count expressions, parameter-backed counts, and any remaining
-  predecessor-edge splits remain fail-closed until their exact bypass and
-  snapshot behavior is implemented.
+  top-level zero-count successors, count expressions, parameter-backed counts,
+  and any remaining predecessor-edge splits remain fail-closed until their
+  exact bypass and snapshot behavior is implemented. Pending samples before
+  `when`-body and `switch`-branch runtime waits are now shipped for
+  sample-compatible selected successors; pending samples before `repeat`,
+  `while`, and `until` dynamic waits remain fail-closed.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -70,7 +74,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   implicit fallthrough with the complement of the explicit case predicates.
   Loop bodies materialize only the decision states that target a runtime wait,
   preserving loop exits, back-edges, and opposite branches. Pending samples
-  before inline dynamic waits remain fail-closed with body-context diagnostics.
+  before `when` and `switch` runtime waits are now supported for
+  sample-compatible selected successors while alternate exits remain unchanged.
+  Pending samples before `repeat`, `while`, and `until` dynamic waits remain
+  fail-closed with body-context diagnostics.
 - ISF runtime dynamic wait expansion update: `ISF-DYNAMIC-WAIT.3.3` is now a
   container with executable leaves for consecutive dynamic waits, additional
   top-level predecessor kinds, inline branch/loop bodies, pending-sample
@@ -80,8 +87,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   no-pending-sample subset. Pending-sample preservation is now split under
   `ISF-DYNAMIC-WAIT.3.3.5`; `ISF-DYNAMIC-WAIT.3.3.5.1` recorded the
   path-specific materialization plan, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped
-  top-level runtime wait preservation, and the next implementation leaf is
-  `ISF-DYNAMIC-WAIT.3.3.5.3` for branch runtime waits.
+  top-level runtime wait preservation, `ISF-DYNAMIC-WAIT.3.3.5.3` shipped
+  branch runtime wait preservation, and the next implementation leaf is
+  `ISF-DYNAMIC-WAIT.3.3.5.4` for repeat and loop runtime waits.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -226,8 +234,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `ISF-DYNAMIC-WAIT.3.3.5` is active and split into executable
   pending-sample leaves. `ISF-DYNAMIC-WAIT.3.3.5.1` recorded the
   path-specific materialization contract, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped
-  top-level runtime waits with pending samples, and the active frontier is
-  `ISF-DYNAMIC-WAIT.3.3.5.3`: branch runtime waits.
+  top-level runtime waits with pending samples, `ISF-DYNAMIC-WAIT.3.3.5.3`
+  shipped branch runtime waits with pending samples, and the active frontier is
+  `ISF-DYNAMIC-WAIT.3.3.5.4`: repeat and loop runtime waits.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

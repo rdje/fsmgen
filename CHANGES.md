@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF branch runtime wait pending samples
+- Completed `ISF-DYNAMIC-WAIT.3.3.5.3`.
+- Runtime waits inside `when` bodies and `switch` branches now accept pending
+  samples when the selected zero-count successor can carry those samples
+  without changing timing.
+- Positive branch paths sample once in the first active wait state and use a
+  generated no-resample wait loop for counts greater than one.
+- Zero branch paths use sample-preserving clones, while `when` false exits,
+  other switch cases, and implicit switch fallthrough remain unchanged.
+- Updated the ISF spec, public contract, mdBook transaction/lowering/backlog
+  chapters, task tree, roadmap status, and live continuity docs. The active
+  frontier advances to `ISF-DYNAMIC-WAIT.3.3.5.4`.
 ### R14 — ISF top-level runtime wait pending samples
 - Completed `ISF-DYNAMIC-WAIT.3.3.5.2`.
 - Top-level runtime waits now accept pending samples before the wait.

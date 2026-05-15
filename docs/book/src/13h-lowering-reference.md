@@ -400,9 +400,9 @@ Runtime scalar wait report entries use `count_kind` `runtime_scalar`, keep
 in `count_source`, and expose the generated counter through `counter_signal`
 and `counter_width`.
 
-Runtime waits in `when` bodies are supported when no pending sample must cross
-the wait. If the wait is the first body state, the branch state carries the
-counter load and split transitions:
+Runtime waits in `when` bodies are supported. With no pending sample, if the
+wait is the first body state, the branch state carries the counter load and
+split transitions:
 
 ```lisp
 (main_when_1
@@ -415,6 +415,13 @@ counter load and split transitions:
 The false edge still skips the entire body. The true/positive edge enters the
 wait with a sampled counter, and the true/zero edge bypasses the wait to the
 following body state.
+
+If pending samples appear before the `when`-body runtime wait, the true
+positive path enters a sample-carrying first wait state and counts greater
+than one continue through a no-resample wait loop. The true zero path bypasses
+to a sample-preserving clone of the following body state when that state can
+carry samples without changing timing. The false path remains an explicit skip
+around the sampled body.
 
 Runtime waits in `repeat` bodies are also supported when no pending sample must
 cross the wait. The generated dynamic wait counter is registered with the
@@ -429,11 +436,11 @@ unchanged after the body:
   (-> main_drive_3 <(== cycles 0)))
 ```
 
-Runtime waits in `switch` branches are supported when no pending sample must
-cross the wait. If one case starts with a runtime wait, the switch state
-materializes only the needed branch-entry split for that case. Other explicit
-cases remain ordinary selectable branches, and implicit fallthrough is guarded
-by the complement of all explicit case predicates:
+Runtime waits in `switch` branches are supported. With no pending sample, if
+one case starts with a runtime wait, the switch state materializes only the
+needed branch-entry split for that case. Other explicit cases remain ordinary
+selectable branches, and implicit fallthrough is guarded by the complement of
+all explicit case predicates:
 
 ```lisp
 (main_switch_4
@@ -449,6 +456,13 @@ by the complement of all explicit case predicates:
 The positive selected-case path samples the runtime count and enters the wait.
 The zero selected-case path bypasses the wait to the next state in that branch
 body. Values not listed by the author take the guarded fallthrough edge.
+
+If pending samples appear before the selected branch's runtime wait, the
+positive selected-case path enters a sample-carrying first wait state and a
+no-resample wait loop handles counts greater than one. The zero selected-case
+path goes to a sample-preserving clone of the following selected-case body
+state when that successor can carry samples without changing timing. Other
+explicit cases and the implicit fallthrough remain unchanged.
 
 Runtime waits in `while` bodies are supported when no pending sample must
 cross the wait. If the first body state is a runtime wait, both the entry

@@ -3163,9 +3163,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
                     push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'when body',$wait)};
                 }
             } else {
-                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in when body cannot follow pending samples yet\n"
-                    if @lp;
-                my ($states,$counter,$width)=_ir_dynamic_wait($bc,$tn,$ir,$wait);
+                my ($states,$counter,$width)=_ir_dynamic_wait($bc,$tn,$ir,$wait,[splice @lp]);
                 push @body_states,@$states;
                 _register_counter_width($counters,$counter,$width) if $counters;
                 $storage_roles->{$counter}='dynamic_wait_counter' if ref($storage_roles)eq'HASH';
@@ -3209,9 +3207,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
                         push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp],$actor,'switch body',$wait)};
                     }
                 } else {
-                    confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in switch body cannot follow pending samples yet\n"
-                        if @lp;
-                    my ($states,$counter,$width)=_ir_dynamic_wait($bc2,$tn,$ir,$wait);
+                    my ($states,$counter,$width)=_ir_dynamic_wait($bc2,$tn,$ir,$wait,[splice @lp]);
                     push @body_states,@$states;
                     _register_counter_width($counters,$counter,$width) if $counters;
                     $storage_roles->{$counter}='dynamic_wait_counter' if ref($storage_roles)eq'HASH';

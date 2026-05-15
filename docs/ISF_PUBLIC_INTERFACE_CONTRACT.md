@@ -364,8 +364,11 @@ positive path materializes samples in the first wait state, counts greater
 than one continue through a no-resample wait-loop state, and the zero path uses
 a sample-preserving clone of the following state when that state can carry the
 sample without changing timing. Top-level zero-count successors that cannot
-yet carry pending samples fail closed. Pending samples before inline dynamic
-waits remain fail-closed with diagnostics that name the body context.
+yet carry pending samples fail closed. Pending samples before `when`-body and
+`switch`-branch runtime waits are now covered by the same one-shot positive
+sample and zero-clone contract when the selected successor can carry samples.
+Pending samples before `repeat`, `while`, and `until` dynamic waits remain
+fail-closed with diagnostics that name the body context.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test

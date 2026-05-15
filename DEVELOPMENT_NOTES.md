@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: branch runtime wait samples reuse path-specific materialization
+- A pending sample before a `when`-body or `switch`-branch runtime wait has the
+  same one-shot positive-count problem as a top-level runtime wait: the sample
+  belongs in the first active wait state, not in the self-looping wait region.
+- The branch predecessor edge owns only the runtime count split. For `when`,
+  that is the true branch; the false branch remains an explicit skip. For
+  `switch`, only the selected case is split; other cases and implicit
+  fallthrough remain separate transitions.
+- The zero-count branch path can reuse the sample-preserving successor clone
+  when the selected successor can carry samples without changing timing.
+  Otherwise the form remains fail-closed instead of changing sample timing.
 ## 2026-05-15: top-level runtime wait samples need a one-shot state
 - A pending sample before a runtime wait must not live on a self-looping wait
   state. For counts greater than one, that would update the sampled LHS on
