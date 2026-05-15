@@ -346,34 +346,37 @@ can ship.
 
 ### Transaction Dynamic Loops
 
-Status: specified next feature; implementation backlog.
+Status: shipped base surface; nested/child loop combinations remain backlog.
 
 Goal: support transaction-local loops such as `(while cond body...)` and
 `(until cond body...)`.
 
-Specified contract: `(while cond body...)` is a pre-test loop. The scheduler
-emits a decision state that samples `cond` once per iteration; true enters the
-body, and false exits to the next transaction clause. Zero iterations are
-therefore possible. `(until cond body...)` is a body-first loop. It executes
-the body once, then samples `cond` in a generated decision state; true exits,
-and false loops back to the body. That spelling means one-or-more iterations.
-A pre-test "run while not done" loop should be authored as
-`(while (! done) body...)` rather than overloading `until`.
+Shipped contract: `(while cond body...)` is a pre-test loop. The scheduler
+emits an entry decision state and a back-edge decision state that each sample
+`cond` once; true enters or repeats the body, and false exits to the next
+transaction clause. Zero iterations are therefore possible. `(until cond
+body...)` is a body-first loop. It executes the body once, then samples `cond`
+in a generated decision state; true exits, and false loops back to the body.
+That spelling means one-or-more iterations. A pre-test "run while not done"
+loop should be authored as `(while (! done) body...)` rather than overloading
+`until`.
 
-Loop bodies must be non-empty and should initially reuse the same body-clause
-surface as `when` and `repeat`, plus shipped `(wait N)` clauses. The first
-implementation should continue rejecting `do`, `spawn`, `await_all`,
-`await_any`, `stage`, `contract`, and nested `while`/`until` until re-entry,
-child lifetime, and reporting semantics are specified. The condition uses the
-same scalar or list-expression condition surface as `when`.
+Loop bodies must be non-empty and currently reuse the shipped inline-body
+surface: named drive calls, `await`, `sample`, `complete`, `repeat`,
+`update`, shift/assemble/extract data operations, actor-owned bank
+`store`/`load`, nested `when`, and shipped `(wait N)` clauses. The first
+implementation continues rejecting `do`, `spawn`, `await_all`, `await_any`,
+`stage`, `contract`, and nested `while`/`until` until re-entry, child
+lifetime, and reporting semantics are specified. The condition uses the same
+scalar or list-expression condition surface as `when`.
 
 These loops are persistent hardware schedule regions, not software processes.
 They may be data-dependent or unbounded at runtime and do not create an
 implicit timeout. Existing watchdog, latency, and temporal-contract mechanisms
 remain explicit and count loop-body cycles according to their own active-cycle
-semantics. When shipped, successful reports should expose bounded
-`transaction_loops[]` entries with transaction name, kind, normalized
-condition text, generated decision/body/exit states, and body clause count.
+semantics. Successful reports expose bounded `transaction_loops[]` entries
+with transaction name, kind, normalized condition text, generated
+decision/body/exit states, and body clause count.
 
 ### Transaction Ports And Actor Pin Access
 

@@ -342,6 +342,13 @@ The positive-literal transaction wait boundary is checked by
 so `(wait N)` accepts positive integer literals in transaction body contexts,
 lowers to reviewable fixed wait-state chains, reaches HDL generation, exposes
 `transaction_waits[]`, and rejects malformed or unsupported counts.
+The transaction loop boundary is checked by
+[t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
+so top-level transaction `(while cond body...)` lowers as a pre-test
+zero-or-more loop, `(until cond body...)` lowers as a body-first one-or-more
+loop, conditions are sampled in generated decision states, successful reports
+expose `transaction_loops[]`, and unsupported loop body combinations fail
+closed.
 The transaction-name boundary is checked by
 [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 so duplicate transaction names fail before actor-shell return and downstream
@@ -1002,6 +1009,7 @@ state_count
 inferred_storage
 transactions
 transaction_waits
+transaction_loops
 transaction_stages
 temporal_contracts
 bank_accesses
@@ -1022,6 +1030,7 @@ reset: name, kind, polarity
 inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, entry_state, exit_state, counter_signal
+transaction_loops entries: transaction, kind, condition, entry_state, decision_states, body_start, body_states, exit_state, body_clause_count
 transaction_stages entries: transaction, name, kind, state, ready, valid
 temporal_contracts entries: transaction, name, kind, trigger, signal, within_cycles, pending_signal, counter_signal, fail_signal, overlap_policy, reset_policy, assertion_projection
 dt_blocks entries: name, kind, assignments
@@ -1088,6 +1097,15 @@ after the wait chain, and `counter_signal` is currently JSON null because the
 shipped lowering emits fixed wait-state chains rather than hidden wait
 counters. The machine-readable contract advertises these through
 `schedule_report_transaction_wait_keys`.
+
+For each `transaction_loops` entry, `transaction` is the authored transaction
+name, `kind` is `while` or `until`, `condition` is the normalized guard text
+used in the scheduled `.fsm`, `entry_state` names the first state associated
+with the loop, `decision_states` lists generated condition-sampling states,
+`body_start` names the first body state, `body_states` lists generated body
+states, `exit_state` names the state reached after the loop, and
+`body_clause_count` is the authored body clause count. The machine-readable
+contract advertises these through `schedule_report_transaction_loop_keys`.
 
 For each `transaction_stages` entry, `kind` is currently
 `ready_valid_barrier`. The entry preserves the authored transaction/stage
@@ -1224,8 +1242,9 @@ Bounded but not fully frozen:
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
   `resource_arbitration[]`, `transaction_waits[]`, `transaction_stages[]`,
-  `temporal_contracts[]`, `transaction_port_bindings[]`, `library_uses[]`, and
-  `generated_composition` are bounded summaries, not raw IR exports.
+  `transaction_loops[]`, `temporal_contracts[]`,
+  `transaction_port_bindings[]`, `library_uses[]`, and `generated_composition`
+  are bounded summaries, not raw IR exports.
 
 Blockers before flipping `schedule_report_full_schema_stable` to true:
 
@@ -1256,10 +1275,11 @@ These are not stable public interfaces yet:
   diagnostics, and richer report fields remain deferred follow-on
   port-binding work.
 - Transaction control-flow behavior beyond shipped positive-literal
-  `(wait N)` remains non-public. Dynamic/symbolic/zero-count waits and
-  `(while cond body...)` / `(until cond body...)` loops need parser, lowering,
-  report, and regression-backed contracts before downstream users can rely on
-  them.
+  `(wait N)` and top-level transaction `(while cond body...)` /
+  `(until cond body...)` remains non-public. Dynamic/symbolic/zero-count
+  waits, nested loops, and loop bodies containing child activation, stages, or
+  contracts need parser, lowering, report, and regression-backed contracts
+  before downstream users can rely on them.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

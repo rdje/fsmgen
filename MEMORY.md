@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF transaction loop lowering
+- Completed `ISF-CONTROL-FLOW.3` in
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md), closing
+  the transaction wait/loop control-flow tree.
+- Top-level transaction `(while cond body...)` now lowers as a pre-test
+  zero-or-more loop. The scheduled `.fsm` has an entry decision and a
+  back-edge decision that each sample the condition once.
+- Top-level transaction `(until cond body...)` now lowers as a body-first
+  one-or-more loop. The body runs before the generated decision samples the
+  condition, exits on true, and loops on false.
+- Loop bodies accept the shipped inline transaction subset: named drives,
+  `await`, `sample`, `complete`, `repeat`, `update`, data operations,
+  actor-owned bank `store`/`load`, nested `when`, and positive-literal
+  `(wait N)`. Child activation, stages/contracts, and nested loops in loop
+  bodies remain deferred.
+- Schedule reports now include bounded `transaction_loops[]` entries with
+  transaction, kind, condition, decision/body states, exit state, and body
+  clause count. Added
+  [t/1245-isf-transaction-loop-lowering.t](t/1245-isf-transaction-loop-lowering.t)
+  for scheduled `.fsm`, report, diagnostics, and HDL reachability.
+- The next R14 task must be attached to a feature tree before implementation;
+  standalone public-contract stabilization remains on hold except when a
+  feature slice changes a public surface.
 ## 2026-05-15: ISF positive-literal wait lowering
 - Completed `ISF-CONTROL-FLOW.2` in
   [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md).

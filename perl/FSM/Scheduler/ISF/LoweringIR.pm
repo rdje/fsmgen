@@ -15,7 +15,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
-            await_any params stage contract store load wait
+            await_any params stage contract store load wait while until
         )
     },
     when => {
@@ -36,6 +36,18 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
             store load wait
         )
     },
+    while => {
+        map { $_ => 1 } qw(
+            drive await sample complete repeat update shift_left shift_right
+            assemble extract when store load wait
+        )
+    },
+    until => {
+        map { $_ => 1 } qw(
+            drive await sample complete repeat update shift_left shift_right
+            assemble extract when store load wait
+        )
+    },
 );
 
 my %TRANSACTION_CONTEXT_LABEL = (
@@ -43,6 +55,8 @@ my %TRANSACTION_CONTEXT_LABEL = (
     when        => 'when body',
     switch      => 'switch branch',
     repeat      => 'repeat body',
+    while       => 'while body',
+    until       => 'until body',
 );
 
 sub build_module($self, $actor) {
@@ -1077,6 +1091,22 @@ sub _build_transaction($self, $tx, $actor, $txi) {
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'wait')     { push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps])}; }
+        elsif ($k eq 'while') {
+            push @st, @{
+                _ir_while(
+                    $cl, $tn, \$si, [splice @ps], $wd, $drives, $widths,
+                    \%ct, \%storage_roles, $actor, \@bank_accesses,
+                )
+            };
+        }
+        elsif ($k eq 'until') {
+            push @st, @{
+                _ir_until(
+                    $cl, $tn, \$si, [splice @ps], $wd, $drives, $widths,
+                    \%ct, \%storage_roles, $actor, \@bank_accesses,
+                )
+            };
+        }
         elsif ($k eq 'update')      { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
         elsif ($k eq 'stage')       { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_stage($cl,$tn,$si++,$actor); }
@@ -1218,6 +1248,9 @@ sub _validate_supported_transaction_clauses {
         } elsif ($keyword eq 'repeat') {
             _validate_repeat_clause($clause, $tn, $label);
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat');
+        } elsif ($keyword eq 'while' || $keyword eq 'until') {
+            _validate_loop_clause($clause, $tn, $label, $keyword);
+            _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, $keyword);
         } elsif ($keyword eq 'await_all' || $keyword eq 'await_any') {
             _validate_sync_clause($clause, $tn, $label);
         } elsif ($keyword eq 'do' || $keyword eq 'spawn') {
@@ -1806,6 +1839,25 @@ sub _validate_repeat_clause {
     return 1;
 }
 
+sub _validate_loop_clause {
+    my ($clause, $tn, $label, $kind) = @_;
+
+    confess "Transaction '$tn': $kind requires '($kind condition body...)' in $label\n"
+        unless @$clause >= 3
+            && defined($clause->[1])
+            && (
+                (ref($clause->[1]) eq 'ARRAY' && @{$clause->[1]})
+                || (!ref($clause->[1]) && length($clause->[1]))
+            );
+
+    for my $body_clause (@{$clause}[2 .. $#$clause]) {
+        confess "Transaction '$tn': $kind body clauses must be non-empty list forms in $label\n"
+            unless ref($body_clause) eq 'ARRAY' && @$body_clause;
+    }
+
+    return 1;
+}
+
 sub _validate_wait_clause {
     my ($clause, $tn, $label) = @_;
 
@@ -2026,6 +2078,82 @@ sub _ir_wait {
 
     return \@states;
 }
+
+sub _ir_while {
+    my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses) = @_;
+    my $condition = $cl->[1];
+    my @body_clauses = @{$cl}[2 .. $#$cl];
+    my @entry_assignments = _sample_assignments($pending_samples || []);
+    my $loop_id = $$ir;
+    my $entry = {
+        name        => "${tn}_while_entry_" . $$ir++,
+        kind        => 'loop_while',
+        condition   => $condition,
+        assignments => \@entry_assignments,
+        transitions => [],
+        loop_entry  => 1,
+        loop_id     => $loop_id,
+        loop_kind   => 'while',
+        loop_condition => _format_isf_expr($condition),
+        loop_body_clause_count => scalar(@body_clauses),
+    };
+
+    my $body_states = _expand_loop_body(
+        \@body_clauses, $tn, $ir, [], $wd, $drives, $widths,
+        $counters, $storage_roles, $actor, $bank_accesses,
+    );
+    my $back = {
+        name        => "${tn}_while_check_" . $$ir++,
+        kind        => 'loop_while',
+        condition   => $condition,
+        assignments => [],
+        transitions => [],
+        loop_id     => $loop_id,
+        loop_kind   => 'while',
+    };
+
+    my @decision_names = ($entry->{name}, $back->{name});
+    my @body_names = map { $_->{name} } @$body_states;
+    for my $state ($entry, $back) {
+        $state->{loop_body_start} = $body_names[0];
+        $state->{loop_decision_state_names} = [@decision_names];
+        $state->{loop_body_state_names} = [@body_names];
+    }
+    $entry->{loop_decision_state_names} = [@decision_names];
+    $entry->{loop_body_state_names} = [@body_names];
+
+    return [$entry, @$body_states, $back];
+}
+
+sub _ir_until {
+    my ($cl, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses) = @_;
+    my $condition = $cl->[1];
+    my @body_clauses = @{$cl}[2 .. $#$cl];
+    my $loop_id = $$ir;
+    my $body_states = _expand_loop_body(
+        \@body_clauses, $tn, $ir, $pending_samples || [], $wd, $drives,
+        $widths, $counters, $storage_roles, $actor, $bank_accesses,
+    );
+    my $check = {
+        name        => "${tn}_until_check_" . $$ir++,
+        kind        => 'loop_until',
+        condition   => $condition,
+        assignments => [],
+        transitions => [],
+        loop_entry  => 1,
+        loop_id     => $loop_id,
+        loop_kind   => 'until',
+        loop_condition => _format_isf_expr($condition),
+        loop_body_clause_count => scalar(@body_clauses),
+        loop_body_start => $body_states->[0]{name},
+        loop_decision_state_names => [],
+        loop_body_state_names => [map { $_->{name} } @$body_states],
+    };
+    $check->{loop_decision_state_names} = [$check->{name}];
+
+    return [@$body_states, $check];
+}
+
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1',source_kind=>'complete_pulse'}],transitions=>[]} }
 sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-',source_kind=>'update'}],transitions=>[]} }
 sub _ir_bank_access {
@@ -2571,6 +2699,53 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
 }
 sub _ir_sync_all { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_all_$i",kind=>'sync_all',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
 sub _ir_sync_any { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_any_$i",kind=>'sync_any',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
+
+sub _expand_loop_body {
+    my ($body_clauses, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses) = @_;
+    my @states;
+    my @lp = @{$pending_samples || []};
+
+    for my $bc (@$body_clauses) {
+        next unless ref($bc) eq 'ARRAY';
+        my $bk = $bc->[0];
+
+        if ($bk eq 'drive') {
+            my $name = $bc->[1];
+            confess qq{drive $name not defined} unless !ref($name) && $drives->{$name};
+            push @states, _ir_named_drive_call($bc, $tn, $$ir++, $drives->{$name}, [splice @lp]);
+        } elsif ($bk eq 'await') {
+            push @states, _ir_await($bc, $tn, $$ir++, $wd, [splice @lp]);
+        } elsif ($bk eq 'sample') {
+            push @lp, $bc;
+        } elsif ($bk eq 'wait') {
+            push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp])};
+        } elsif ($bk eq 'complete') {
+            push @states, _ir_complete($bc, $tn, $$ir++);
+        } elsif ($bk eq 'repeat') {
+            my ($rs, $rc, $rw) = _ir_repeat($bc, $tn, $ir, \@lp, $wd, $drives, $widths, $actor, $bank_accesses);
+            push @states, @$rs;
+            _register_counter_width($counters, $rc, $rw) if $counters;
+            $storage_roles->{$rc} = 'repeat_counter' if ref($storage_roles) eq 'HASH';
+        } elsif ($bk eq 'update' || $bk eq 'shift_left' || $bk eq 'shift_right' || $bk eq 'assemble' || $bk eq 'extract') {
+            _push_sample_state(\@states, $tn, \@lp, $ir);
+            push @states, _ir_data_op($bk, $bc, $tn, $$ir++, $widths);
+        } elsif ($bk eq 'store' || $bk eq 'load') {
+            _push_sample_state(\@states, $tn, \@lp, $ir);
+            my ($state, $accesses) = _ir_bank_access($bc, $tn, $$ir++, $actor, $widths, 'transaction');
+            push @states, $state;
+            push @$bank_accesses, @$accesses if ref($bank_accesses) eq 'ARRAY';
+        } elsif ($bk eq 'when') {
+            my ($ws) = _expand_when($bc, $tn, $ir, \@lp, $drives, $wd, $widths, $counters, $storage_roles, $actor, $bank_accesses);
+            push @states, @$ws;
+        }
+    }
+
+    if (@lp) {
+        push @states, _ir_sample_state($tn, \@lp, $$ir++);
+    }
+
+    return \@states;
+}
 
 sub _ir_repeat {
     my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses)=@_; my $ctr="${tn}_cnt"; my @s; my @lp;
@@ -3428,7 +3603,7 @@ sub _dt_assignment_provenance {
 sub _transaction_owner_from_state_name {
     my ($name) = @_;
     return undef unless defined $name;
-    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait)_/;
+    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/;
     return $1 if $name =~ /^(.+)_timeout$/;
     return undef;
 }
@@ -3906,11 +4081,53 @@ sub _link_states {
         $s->{branch_exit_target} = $exit_target;
     }
 
+    for my $i (0 .. $#$st) {
+        my $s = $st->[$i];
+        next unless ($s->{kind} eq 'loop_while' || $s->{kind} eq 'loop_until') && $s->{loop_entry};
+
+        my $last_loop_idx = $i;
+        for my $name (
+            @{$s->{loop_body_state_names} || []},
+            @{$s->{loop_decision_state_names} || []},
+        ) {
+            next unless defined $idx_by_name{$name};
+            $last_loop_idx = $idx_by_name{$name} if $idx_by_name{$name} > $last_loop_idx;
+        }
+
+        my $exit_target = $last_loop_idx < $#$st ? $st->[$last_loop_idx + 1]{name} : $e;
+        for my $name (@{$s->{loop_decision_state_names} || []}) {
+            next unless defined $idx_by_name{$name};
+            $st->[$idx_by_name{$name}]{loop_exit_target} = $exit_target;
+            $st->[$idx_by_name{$name}]{loop_body_start} = $s->{loop_body_start};
+        }
+        $s->{loop_exit_target} = $exit_target;
+    }
+
     for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;my $next=$branch_exit_target{$s->{name}}||$n;
         if($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
+        elsif($s->{kind}eq'loop_while'){
+            push @{$s->{transitions}}, {
+                target    => $s->{loop_body_start},
+                condition => { loop_branch => 1 },
+            } if $s->{loop_body_start};
+            push @{$s->{transitions}}, {
+                target    => $s->{loop_exit_target},
+                condition => { loop_branch => 0 },
+            } if $s->{loop_exit_target};
+        }
+        elsif($s->{kind}eq'loop_until'){
+            push @{$s->{transitions}}, {
+                target    => $s->{loop_exit_target},
+                condition => { loop_branch => 1 },
+            } if $s->{loop_exit_target};
+            push @{$s->{transitions}}, {
+                target    => $s->{loop_body_start},
+                condition => { loop_branch => 0 },
+            } if $s->{loop_body_start};
+        }
         elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait')&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip} unless $s->{has_default_branch};for my$br(@{$s->{branches}}){next if _is_default_switch_value($br->{value});push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}

@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF transaction loop lowering
+- Completed `ISF-CONTROL-FLOW.3` and closed the transaction wait/loop task
+  tree.
+- Added top-level transaction `(while cond body...)` and
+  `(until cond body...)` lowering in
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm).
+  `while` now emits explicit pre-test entry and back-edge decisions, and
+  `until` emits a body-first loop with a generated post-body decision.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  to emit loop decisions as reviewable `.fsm` `?condition` branches, and
+  [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  to expose bounded `transaction_loops[]` report entries.
+- Updated
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  and public contract tests so downstream consumers can discover the
+  `transaction_loops` top-level report key and nested key family.
+- Added
+  [t/1245-isf-transaction-loop-lowering.t](t/1245-isf-transaction-loop-lowering.t)
+  for scheduled `.fsm` shape, report metadata, malformed-body diagnostics, and
+  SystemVerilog reachability.
+- Refreshed the mdBook, ISF spec, public contract docs, roadmap status,
+  task-tree ledger, and live docs for the shipped loop surface.
 ### R14 — ISF positive-literal wait lowering
 - Completed `ISF-CONTROL-FLOW.2` as the first shipped transaction wait slice.
 - Added positive-literal `(wait N)` support in

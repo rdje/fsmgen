@@ -288,6 +288,37 @@ per iteration. The scheduler must therefore prove the loop waits for the
 instance's fresh completion before a later iteration can start it again, or
 reject the construct with a targeted busy/re-entry diagnostic.
 
+## `(while cond body...)` / `(until cond body...)` — Transaction Loops
+
+`(while cond body...)` is a pre-test loop. The scheduler emits an entry
+decision state that samples `cond` once before the first possible body
+iteration; false exits to the next transaction clause, so zero iterations are
+possible. After each body iteration, a generated back-edge decision samples
+the same condition again before looping or exiting.
+
+`(until cond body...)` is a body-first loop. The body executes once, then a
+generated decision state samples `cond`; true exits and false loops back to
+the body. A pre-test "run while not done" loop should be authored as
+`(while (! done) body...)` rather than by overloading `until`.
+
+The condition uses the same scalar or list-expression guard surface as
+`(when ...)`. It is sampled only in generated decision states. It is not a
+continuous guard over a multi-cycle body; once a loop body starts, its states
+run according to their own scheduled control flow until they reach the loop
+check or an explicit terminal path.
+
+The shipped body surface is the same inline transaction subset used by
+`when`/`switch`/`repeat`, plus `(wait N)`: named drives, `await`, `sample`,
+`complete`, `repeat`, `update`, shift/assemble/extract data operations,
+actor-owned bank `store`/`load`, nested `when`, and waits. `do`, `spawn`,
+`await_all`, `await_any`, `stage`, `contract`, and nested loops remain
+deferred until their re-entry, child-lifetime, and report semantics are
+specified for loop bodies. Body clauses must be non-empty list forms.
+
+Successful schedule reports expose `transaction_loops[]` entries with the
+authored transaction, loop kind, normalized condition, generated decision
+states, body start, body states, exit state, and body clause count.
+
 ## `(when condition body...)` — Decision State
 
 **Timing**: 1 cycle. If true, body cycles follow. If false, skip to next clause.
@@ -385,6 +416,8 @@ bounds use scheduler defaults.
 | `(await port)` | 1 to N | Self-looping + watchdog |
 | `(complete port)` | 1 | Returns to idle |
 | `(repeat N body...)` | N×body+2 | Counter + init + check |
+| `(while cond body...)` | 1 + body×N + checks | Pre-test, zero-or-more |
+| `(until cond body...)` | body×N + checks | Body-first, one-or-more |
 | `(when cond body...)` | 1 + body | Decision + inline body |
 | `(switch sig (v b)... (default b))` | 1 + body | Decision + inline branch |
 | `(update var expr)` | 1 | Flopped assignment |

@@ -320,6 +320,63 @@ policy to be explicit. The current shipped repeat-body subset does not include
 `spawn`; when that is added, a repeated spawn must reactivate the same static
 child instance and must not imply dynamic module-instance creation.
 
+## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
+
+**ISF**:
+```lisp
+(while keep
+  (drive tick)
+  (wait 1))
+
+(until done_seen
+  (drive tick)
+  (wait 1))
+
+(complete done)
+```
+
+**Generated .fsm shape**:
+```lisp
+(main_while_entry_1
+  (?keep
+    (=1 (-> main_drive_2))
+    (=0 (-> main_drive_5))))
+
+(main_drive_2
+  (= (tick_start 1))
+  (-> main_wait_3))
+
+(main_wait_3
+  (-> main_while_check_4))
+
+(main_while_check_4
+  (?keep
+    (=1 (-> main_drive_2))
+    (=0 (-> main_drive_5))))
+
+(main_drive_5
+  (= (tick_start 1))
+  (-> main_wait_6))
+
+(main_wait_6
+  (-> main_until_check_7))
+
+(main_until_check_7
+  (?done_seen
+    (=1 (-> main_done_8))
+    (=0 (-> main_drive_5))))
+```
+
+`while` emits an entry decision plus a back-edge decision so zero iterations
+and repeated condition sampling are both explicit in the scheduled artifact.
+`until` emits the body first and checks only after the first body pass. In
+both forms, the condition is sampled only in the generated decision state; it
+is not a continuous guard over the body.
+
+Schedule reports expose the loop through `transaction_loops[]`, including
+`transaction`, `kind`, `condition`, `entry_state`, `decision_states`,
+`body_start`, `body_states`, `exit_state`, and `body_clause_count`.
+
 ## `(when condition body...)` → Decision State
 
 **ISF**:

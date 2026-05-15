@@ -29,6 +29,7 @@ sub emit($self, $ir) {
         inferred_storage => $self->_storage_summary($ir),
         transactions   => $self->_transaction_summary($ir),
         transaction_waits => $self->_transaction_wait_summary($ir),
+        transaction_loops => $self->_transaction_loop_summary($ir),
         transaction_stages => $self->_transaction_stage_summary($ir),
         temporal_contracts => $self->_temporal_contract_summary($ir),
         bank_accesses  => $self->_bank_access_summary($ir),
@@ -171,7 +172,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }
@@ -214,6 +215,42 @@ sub _transaction_wait_summary($self, $ir) {
     }
 
     return \@waits;
+}
+
+sub _transaction_loop_summary($self, $ir) {
+    my @loops;
+
+    for my $state (@{$ir->{states} || []}) {
+        next unless $state->{loop_entry};
+        my $kind = $state->{kind} // '';
+        next unless $kind eq 'loop_while' || $kind eq 'loop_until';
+
+        my $exit_state = undef;
+        for my $transition (@{$state->{transitions} || []}) {
+            my $branch = ($transition->{condition} || {})->{loop_branch};
+            my $is_exit =
+                (defined($branch) && $branch == 0 && $kind eq 'loop_while')
+                || (defined($branch) && $branch == 1 && $kind eq 'loop_until');
+            next unless $is_exit;
+            $exit_state = $transition->{target};
+            last;
+        }
+
+        my ($transaction) = ($state->{name} =~ /\A(.+)_(?:while|until)_/);
+        push @loops, {
+            transaction       => $transaction,
+            kind              => $state->{loop_kind},
+            condition         => $state->{loop_condition},
+            entry_state       => $kind eq 'loop_until' ? $state->{loop_body_start} : $state->{name},
+            decision_states   => [@{$state->{loop_decision_state_names} || []}],
+            body_start        => $state->{loop_body_start},
+            body_states       => [@{$state->{loop_body_state_names} || []}],
+            exit_state        => $exit_state,
+            body_clause_count => 0 + ($state->{loop_body_clause_count} // 0),
+        };
+    }
+
+    return \@loops;
 }
 
 sub _transaction_stage_summary($self, $ir) {

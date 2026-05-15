@@ -20,12 +20,11 @@ then uses the ordinary `.fsm` pipeline for HDL generation.
 Cycles are not hidden. They are inferred into a generated `.fsm` artifact and a
 schedule JSON report that can be reviewed.
 ISF intentionally borrows familiar programming-language control-flow shape for
-transaction authoring. Existing forms such as `when`, `repeat`, `wait`, `do`,
-and spawned-child activation, plus proposed forms such as `while` and `until`,
-should still read naturally to authors. That source shape does not change the
-hardware contract: every shipped form must lower to explicit RTL intent with
-reviewable scheduled `.fsm` states, decision points, counters, handshakes, or
-DTs.
+transaction authoring. Existing forms such as `when`, `repeat`, `wait`,
+`while`, `until`, `do`, and spawned-child activation should still read
+naturally to authors. That source shape does not change the hardware contract:
+every shipped form must lower to explicit RTL intent with reviewable scheduled
+`.fsm` states, decision points, counters, handshakes, or DTs.
 
 ## 1.1 Intent Abstraction Layers
 
@@ -662,6 +661,8 @@ Current transaction clauses:
 - `(sample port as name)`
 - `(wait N)` for an unconditional exact-cycle delay with positive integer
   literal `N >= 1`
+- `(while cond body...)`
+- `(until cond body...)`
 - `(repeat count body...)`
 - `(switch signal (value body...)...)`, with optional `(default body...)` or
   `(_ body...)` fallback branch
@@ -677,11 +678,6 @@ Current transaction clauses:
 - `(await_any done_port)`
 - `(complete port)`
 - `(latency (min N) (max M))`
-
-Specified next transaction-control surfaces, not yet parser-public until their
-implementation leaves ship:
-- `(while cond body...)` for a pre-test zero-or-more loop.
-- `(until cond body...)` for a body-first one-or-more loop.
 
 Unsupported transaction clause heads now fail closed during lowering instead
 of being silently ignored. The same applies inside currently lowered body
@@ -1026,11 +1022,11 @@ itself, and it avoids the old invalid pattern of duplicating one explicit case
 such as `=0` for fallthrough.
 
 Current branch-body support includes drive, await, sample, wait, repeat,
-update, shift/assemble/extract data operations, and nested `when`. Branch bodies exit
-to the first state after the whole switch, so multi-state branches and repeat
-checks do not fall through into later branch bodies.
+update, shift/assemble/extract data operations, and nested `when`. Branch
+bodies exit to the first state after the whole switch, so multi-state branches
+and repeat checks do not fall through into later branch bodies.
 
-### 7.7.1 Transaction Loops (specified next)
+### 7.7.1 Transaction Loops
 
 ```lisp
 (while (! done)
@@ -1042,14 +1038,16 @@ checks do not fall through into later branch bodies.
   (wait 1))
 ```
 
-`(while cond body...)` is a pre-test transaction loop. The scheduler must emit
-a generated decision state that samples `cond` once before each possible
-iteration. If the sampled condition is true, control enters the body. If it is
-false, control exits to the transaction clause after the whole loop. Zero
-iterations are possible.
+`(while cond body...)` is a shipped pre-test transaction loop. The scheduler
+emits explicit generated decision states that sample `cond` once before each
+possible iteration. The entry decision makes zero iterations possible: if the
+sampled condition is true, control enters the body; if it is false, control
+exits to the transaction clause after the whole loop. After a body iteration,
+a back-edge decision samples the same condition before choosing either another
+iteration or loop exit.
 
-`(until cond body...)` is a body-first transaction loop. Control enters the
-body once before the first condition sample. After the body, the scheduler
+`(until cond body...)` is a shipped body-first transaction loop. Control enters
+the body once before the first condition sample. After the body, the scheduler
 emits a generated decision state that samples `cond` once. If the sampled
 condition is true, control exits. If it is false, control loops back to the
 body. One or more iterations are therefore required. A pre-test "run while not
@@ -1062,12 +1060,14 @@ generated decision state. It is not a continuous guard over every state inside
 a multi-cycle body; once the body starts, body states run according to their
 own scheduled control flow until they reach the loop check or exit path.
 
-The first implementation should accept only non-empty bodies from the current
-inline body subset: named drive calls, `await`, `sample`, `complete`,
-`repeat`, `update`, shift/assemble/extract data operations, nested `when`, and
-shipped `(wait N)` clauses. `do`, `spawn`, `await_all`, `await_any`, `stage`,
-`contract`, and nested `while`/`until` remain deferred until re-entry, child
-lifetime, and report semantics are specified for those combinations.
+The shipped loop source position is top-level inside a transaction body. Loop
+bodies accept the current inline body subset: named drive calls, `await`,
+`sample`, `complete`, `repeat`, `update`, shift/assemble/extract data
+operations, actor-owned bank `store`/`load`, nested `when`, and shipped
+`(wait N)` clauses. `do`, `spawn`, `await_all`, `await_any`, `stage`,
+`contract`, loops nested inside loop bodies, and loops nested under
+`when`/`switch`/`repeat` remain deferred until re-entry, child lifetime, and
+report semantics are specified for those combinations.
 
 Dynamic loops are ordinary persistent hardware schedule regions, not software
 processes that appear or die. They may run for data-dependent or unbounded
@@ -1076,20 +1076,21 @@ transaction latency, and temporal-contract mechanisms must remain explicit and
 must count loop-body cycles according to their own documented active-cycle
 semantics.
 
-Malformed loop diagnostics before public parser support:
-- Missing condition, missing body, non-list body forms, or extra structural
-  wrapper forms must fail before misleading scheduled artifacts are emitted.
+Malformed loop diagnostics:
+- Missing condition, missing body, empty/non-list body forms, or extra
+  structural wrapper forms must fail before misleading scheduled artifacts are
+  emitted.
 - Unsupported body clause heads must name the unsupported construct and the
   loop kind.
 - Conditions must use the same scalar/list-expression condition contract as
   other ISF guards.
 
-When dynamic loops ship, successful schedule reports should expose bounded
-`transaction_loops[]` entries rather than raw loop IR. The planned minimum
-entry shape is `transaction`, `kind` (`while` or `until`), `condition`,
-`decision_state`, `first_body_state`, `exit_state`, and `body_clause_count`.
-The `condition` value should be the same normalized condition text used in the
-scheduled `.fsm` review artifact, not a raw parser node.
+Successful schedule reports expose a bounded `transaction_loops[]` summary
+rather than raw lowering internals. Each entry contains `transaction`, `kind`,
+`condition`, `entry_state`, `decision_states`, `body_start`, `body_states`,
+`exit_state`, and `body_clause_count`.
+The `condition` value is the normalized condition text used in the scheduled
+`.fsm` review artifact, not a raw parser node.
 
 ### 7.8 Data Manipulation
 
@@ -1609,6 +1610,7 @@ fail-closed/deferred.
   "inferred_storage": [],
   "transactions": [],
   "transaction_waits": [],
+  "transaction_loops": [],
   "transaction_stages": [],
   "temporal_contracts": [],
   "bank_accesses": [],
@@ -1675,6 +1677,12 @@ entry wait state, exit state after the wait chain, and optional
 `counter_signal`. The current fixed-state-chain lowering reports
 `counter_signal` as JSON null. The capability-manifest ISF public contract
 advertises the keys through `schedule_report_transaction_wait_keys`.
+The `transaction_loops` array reports the shipped top-level `while`/`until`
+loop subset. Each entry contains the authored transaction name, loop `kind`,
+normalized `condition`, loop entry state, generated decision states, body
+start, generated body states, exit state, and authored body-clause count. The
+capability-manifest ISF public contract advertises the keys through
+`schedule_report_transaction_loop_keys`.
 The `transaction_stages` array reports the shipped ready/valid stage subset.
 Each entry has `transaction`, authored stage `name`, `kind =
 ready_valid_barrier`, generated `state`, `ready` input, and `valid` output.
@@ -1960,6 +1968,7 @@ Focused tests:
 - [t/1242-isf-port-binding-conflict-semantics.t](../t/1242-isf-port-binding-conflict-semantics.t)
 - [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
 - [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
+- [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 
 ## 12. Explicitly Deferred
 
@@ -1980,10 +1989,11 @@ Focused tests:
   input bindings. Expression-valued bindings, rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict
   diagnostics, and richer report metadata remain under `ISF-PORT-BINDING`.
-- Transaction-local dynamic loop implementation for `(while cond body...)`
-  and `(until cond body...)`. The source/runtime contract is specified in
-  Section 7.7.1, but parser/lowering/report support remains deferred until the
-  implementation leaf ships.
+- Transaction-local loop combinations beyond the shipped top-level
+  `while`/`until` subset: nested loops, loops under `when`/`switch`/`repeat`,
+  and loop bodies containing `do`, `spawn`, `await_all`, `await_any`, `stage`,
+  or `contract` remain deferred until re-entry, child lifetime, and report
+  semantics are specified.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

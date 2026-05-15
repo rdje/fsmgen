@@ -2,10 +2,9 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: `ISF-CONTROL-FLOW` is active. Continue `R14` by
-  implementing [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md)
-  one leaf at a time; the current frontier is `ISF-CONTROL-FLOW.3`, dynamic
-  transaction loops.
+- Next decision point: select or activate the next user-visible `R14` feature
+  tree before implementing more ISF behavior. `ISF-CONTROL-FLOW` is complete
+  and closed.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -13,15 +12,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active tree, it should pick the first eligible leaf from that tree's current
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active, proposed, or completed task trees in
-  [docs/TASK_TREE.md](docs/TASK_TREE.md). The active `ISF-CONTROL-FLOW`
-  tree now owns transaction-local waits and loops. The completed
-  `ISF-PORT-BINDING` tree is now listed in the completed table. The
+  [docs/TASK_TREE.md](docs/TASK_TREE.md). The completed
+  `ISF-CONTROL-FLOW` tree now owns the shipped transaction-local wait and
+  loop surface. The completed `ISF-PORT-BINDING` tree is listed in the
+  completed table. The
   public-contract tree remains cross-cutting and should not displace feature
   delivery unless the selected feature changes a public surface. The completed
   `ISF-PORT-BINDING`, `ISF-LIBRARIES`,
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
-  `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`, and
+  `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`,
+  `ISF-CONTROL-FLOW`, and
   `ISF-COMPATIBILITY` trees are listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
@@ -34,10 +35,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   fixed generated wait-state chain and reports through `transaction_waits[]`.
   Dynamic counts remain deferred until zero-count, width, reset, latency, and
   report semantics are specified.
-- Proposed transaction-local `(while cond body...)` and
-  `(until cond body...)` loops are now logged as backlog. `while` is proposed
-  as a pre-test zero-or-more loop, `until` as a body-first one-or-more loop,
-  and both need explicit watchdog/latency/report semantics before shipping.
+- Top-level transaction-local `(while cond body...)` and
+  `(until cond body...)` loops are shipped. `while` lowers as a pre-test
+  zero-or-more loop with entry and back-edge decision states; `until` lowers
+  as a body-first one-or-more loop. Conditions are sampled only in generated
+  decision states, loop bodies use the shipped inline-body subset, and
+  reports expose bounded `transaction_loops[]` entries. Nested loops,
+  child activation inside loop bodies, stages/contracts inside loop bodies,
+  and dynamic/symbolic/zero-count waits remain backlog.
 - `ISF-CONTROL-FLOW.1` is complete. `(wait N)` is now specified as an
   unconditional exact-cycle transaction delay with positive integer literal
   `N >= 1` for the first implementation; `wait 1` occupies one active cycle
@@ -52,6 +57,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   cycle, rejects malformed/dynamic counts, reaches SystemVerilog generation,
   and exposes bounded `transaction_waits[]` report entries. The active
   frontier advances to `ISF-CONTROL-FLOW.3`.
+- `ISF-CONTROL-FLOW.3` is complete and the control-flow tree is closed.
+  Top-level transaction `while`/`until` loops now lower to explicit scheduled
+  decision/body regions, reject malformed empty or unsupported bodies before
+  emission, reach SystemVerilog generation, and expose bounded
+  `transaction_loops[]` report entries.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree
@@ -4881,6 +4891,7 @@ Done:
   [docs/tasks/ISF-SCHEDULE-REPORTS.md](docs/tasks/ISF-SCHEDULE-REPORTS.md),
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md),
   and [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
 - `ISF-CONFLICTS.4.5` now emits verification-only SystemVerilog selector
   assertions from backend assignment analysis after ISF lowers through
@@ -4924,16 +4935,19 @@ Done:
   IR/lowering path: child transaction defaults emit as scheduled child
   `+params`, spawn overrides validate against those declarations, and
   per-instance override metadata is preserved for the generated-top handoff.
+- `ISF-CONTROL-FLOW` is closed after shipping positive-literal `(wait N)` and
+  top-level transaction `while`/`until` loops. Waits report through
+  `transaction_waits[]`; loops report through `transaction_loops[]`; dynamic
+  wait counts and richer loop-body combinations remain backlog.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
-  when selecting the next PNT slice. `ISF-PORT-BINDING` is closed; the next
-  natural feature candidate is the proposed
-  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) tree for
-  waits and transaction-local loops. Keep `ISF-PUBLIC-CONTRACT`
-  cross-cutting and feature-driven.
+  when selecting the next PNT slice. `ISF-CONTROL-FLOW` is now closed, so the
+  next ISF implementation slice must either activate an existing proposed tree
+  or create a new feature tree before changing parser/scheduler/emitter code.
+  Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

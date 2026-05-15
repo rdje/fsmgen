@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF transaction loop lowering
+- The shipped `while` lowering intentionally uses two decision states: an
+  entry decision for zero-iteration behavior and a back-edge decision for
+  condition sampling before later iterations. That makes the scheduled `.fsm`
+  artifact explicit instead of hiding the pre-test behavior in linker magic.
+- The shipped `until` lowering starts with the body and checks afterward. Its
+  `entry_state` in `transaction_loops[]` is therefore the first body state,
+  while `decision_states` contains the generated post-body check.
+- Loop conditions are sampled decision points, not continuous guards over
+  multi-cycle bodies. Once a body starts, authored body states run according
+  to their own scheduled transitions until they reach the loop check or an
+  explicit terminal path.
+- The first loop body surface deliberately stays within the existing inline
+  body subset plus `(wait N)`. Child activation, spawned children,
+  stages/contracts, and nested loops require separate re-entry and lifetime
+  rules before they can be signoff-quality loop-body constructs.
+- Empty list nodes inside loop bodies are rejected during validation. Allowing
+  them would create a loop true branch with no meaningful body target in the
+  generated `.fsm`.
+- `transaction_loops[]` is a bounded public summary. It reports the source
+  transaction/kind/condition and generated decision/body/exit state names
+  needed for review without exposing raw LoweringIR internals.
 ## 2026-05-15: ISF positive-literal wait lowering
 - The first shipped wait implementation deliberately uses an explicit fixed
   state chain instead of a generated counter. For positive integer literals,

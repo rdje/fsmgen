@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CONTROL-FLOW`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-15`
 - Last updated: `2026-05-15`
@@ -11,7 +11,7 @@
 
 ## Goal
 
-Specify and eventually implement transaction-local control-flow constructs for
+Specify and implement transaction-local control-flow constructs for
 unconditional cycle waits and dynamic loops, without blurring their runtime
 semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 
@@ -40,7 +40,7 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 ## Task Tree
 
 - ID: `ISF-CONTROL-FLOW`
-  Status: `active`
+  Status: `done`
   Goal: `Add transaction-local unconditional waits and dynamic loops.`
   Children: `ISF-CONTROL-FLOW.1`, `ISF-CONTROL-FLOW.2`,
   `ISF-CONTROL-FLOW.3`
@@ -63,24 +63,24 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
   storage/states as needed, reject malformed or unsupported counts with
   targeted diagnostics, and reach SystemVerilog generation.
   Verification: `prove -I perl t/1244-isf-wait-clause-lowering.t t/1181-isf-rule-action-boundary.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `ISF-CONTROL-FLOW.2: ship literal wait lowering`
 
 - ID: `ISF-CONTROL-FLOW.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement dynamic transaction loops.`
   Acceptance: `(while cond body...)` lowers as a pre-test zero-or-more loop,
   `(until cond body...)` lowers as a body-first one-or-more loop, conditions
   are sampled once per generated decision state, supported bodies match the
   specified transaction body surface, malformed loops fail closed, and focused
   regressions prove scheduled `.fsm`, report, and HDL generation behavior.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -I perl -c t/1245-isf-transaction-loop-lowering.t`; `prove -I perl t/1245-isf-transaction-loop-lowering.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CONTROL-FLOW.3: ship transaction loops`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONTROL-FLOW.3` | `pending` | Positive-literal `(wait N)` is shipped; dynamic transaction loops are the next specified control-flow surface. |
+| 1 | `closed` | `done` | All leaves in this tree are complete. |
 
 ## Design Notes
 
@@ -89,9 +89,10 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
   the scheduled `.fsm` review artifact is fixed and easy to inspect.
 - Dynamic wait counts are useful but need zero-count, counter-width, reset,
   latency, and schedule-report semantics before they can ship.
-- `(while cond body...)` is proposed as a pre-test loop. The generated decision
-  state samples `cond` before each possible iteration; false exits.
-- `(until cond body...)` is proposed as a body-first loop. The body executes
+- `(while cond body...)` is shipped as a pre-test loop. Generated entry and
+  back-edge decision states sample `cond` before each possible iteration;
+  false exits.
+- `(until cond body...)` is shipped as a body-first loop. The body executes
   once, then a generated decision state samples `cond`; true exits and false
   loops.
 - A pre-test "run while not done" loop should be authored as
@@ -99,12 +100,13 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 - Loop bodies are persistent hardware schedule regions, not software calls.
   The implementation must make re-entry, child spawn/call behavior, and
   unbounded-latency reporting explicit for any body forms it enables.
-- First shipped loop bodies should use the current inline-body subset:
+- First shipped loop bodies use the current inline-body subset:
   named drive calls, `await`, `sample`, `complete`, `repeat`, `update`,
-  shift/assemble/extract data operations, nested `when`, and shipped `wait`
-  clauses. `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, and
-  nested `while`/`until` remain deferred until re-entry, child lifetime, and
-  reporting semantics are specified.
+  shift/assemble/extract data operations, actor-owned bank `store`/`load`,
+  nested `when`, and shipped `wait` clauses. `do`, `spawn`, `await_all`,
+  `await_any`, `stage`, `contract`, and nested `while`/`until` remain
+  deferred until re-entry, child lifetime, and reporting semantics are
+  specified.
 
 ## Decisions
 
@@ -122,24 +124,31 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
   loops.
 - `2026-05-15`: Loop conditions are sampled only in generated decision states.
   They are not continuously active guards over multi-cycle loop bodies.
-- `2026-05-15`: Successful reports should grow bounded `transaction_waits[]`
-  and `transaction_loops[]` summaries when those constructs ship; raw lowering
-  internals and raw parser clauses remain private.
+- `2026-05-15`: Successful reports use bounded `transaction_waits[]` and
+  `transaction_loops[]` summaries for the shipped control-flow surface; raw
+  lowering internals and raw parser clauses remain private.
 - `2026-05-15`: Positive-literal `(wait N)` now lowers as a fixed generated
   wait-state chain with no hidden counter; `transaction_waits[]` reports the
   exact count, entry state, exit state, and a null `counter_signal`.
+- `2026-05-15`: Top-level transaction `(while cond body...)` and
+  `(until cond body...)` now lower to explicit scheduled loop decision/body
+  regions. `transaction_loops[]` reports transaction, kind, condition,
+  generated decision/body states, exit state, and body clause count. Empty
+  loop-body list nodes and unsupported loop-body combinations fail closed.
 
-## Open Questions
+## Deferred Follow-Up
 
-- Should dynamic `(wait count)` ship before or after literal `(wait N)`?
-- Which loop body forms should be accepted in the first implementation if
-  spawned children or child calls can create re-entry hazards?
-- Should loop summaries appear as their own schedule-report family or only as
-  generated transaction states and storage?
+- Dynamic `(wait count)`, symbolic wait counts, and zero-count waits remain
+  deferred until width, reset, latency, and report semantics are specified.
+- Loop bodies containing `do`, `spawn`, `await_all`, `await_any`, `stage`,
+  `contract`, or nested `while`/`until` remain deferred until re-entry,
+  child-lifetime, and report semantics are specified.
+- This tree is closed; reopen a new task-tree leaf if one of those follow-ups
+  becomes the selected R14 feature.
 
 ## Blockers
 
-- None. The tree is active; implementation proceeds one leaf at a time.
+- None. The tree is complete.
 
 ## Verification Log
 
@@ -147,6 +156,7 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-CONTROL-FLOW.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CONTROL-FLOW.2` | `prove -I perl t/1244-isf-wait-clause-lowering.t t/1181-isf-rule-action-boundary.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CONTROL-FLOW.3` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -I perl -c t/1245-isf-transaction-loop-lowering.t`; `prove -I perl t/1245-isf-transaction-loop-lowering.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -154,6 +164,7 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 | --- | --- | --- |
 | `ISF-CONTROL-FLOW.1` | `ISF-CONTROL-FLOW.1: specify wait and loop contracts` | Activates the tree and records exact wait-cycle semantics plus loop sampling/body/report boundaries. |
 | `ISF-CONTROL-FLOW.2` | `ISF-CONTROL-FLOW.2: ship literal wait lowering` | Ships positive-literal `(wait N)` lowering, report metadata, diagnostics, and HDL-reachability coverage. |
+| `ISF-CONTROL-FLOW.3` | `ISF-CONTROL-FLOW.3: ship transaction loops` | Ships top-level transaction `while`/`until` lowering, report metadata, diagnostics, and HDL-reachability coverage. |
 
 ## Changelog
 
@@ -164,3 +175,7 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 - `2026-05-15`: Completed implementation work for `ISF-CONTROL-FLOW.2`;
   positive-literal `(wait N)` now lowers to fixed wait-state chains and the
   current frontier advances to `ISF-CONTROL-FLOW.3`.
+- `2026-05-15`: Completed implementation work for `ISF-CONTROL-FLOW.3`;
+  top-level transaction `while`/`until` loops now lower to explicit scheduled
+  decision/body regions, bounded `transaction_loops[]` report metadata is
+  public, and the tree is closed.

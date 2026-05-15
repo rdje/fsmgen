@@ -225,6 +225,18 @@ sub _emit_transitions($self, $state) {
         return @lines;
     }
 
+    if ($state->{kind} eq 'loop_while' || $state->{kind} eq 'loop_until') {
+        my $cond = $state->{condition};
+        my $cond_str = !ref($cond) ? $cond : _format_expr($cond);
+        push @lines, "    (?$cond_str";
+        for my $t (@$txs) {
+            my $branch = $t->{condition}{loop_branch};
+            push @lines, "      (=$branch (-> $t->{target}))" if defined $branch;
+        }
+        push @lines, '    )';
+        return @lines;
+    }
+
     # Simple transitions
     for my $t (@$txs) {
         if ($t->{condition} && $t->{condition}{port}) {

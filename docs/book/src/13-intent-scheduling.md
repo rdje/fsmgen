@@ -46,10 +46,10 @@ clear lower-layer mapping, and clear runtime behavior.
   coverage for the accepted behavior.
 - **Programming-language shape, RTL meaning**. ISF intentionally borrows
   familiar control-flow shape for transactions, including existing `when`,
-  `repeat`, and `wait` forms plus proposed `while` and `until` forms. That
-  source shape must never hide the hardware contract: every accepted construct
-  still lowers to explicit scheduled `.fsm` states, decision points, counters,
-  handshakes, or DTs.
+  `repeat`, `wait`, `while`, and `until` forms. That source shape must never
+  hide the hardware contract: every accepted construct still lowers to
+  explicit scheduled `.fsm` states, decision points, counters, handshakes, or
+  DTs.
 - **Arity follows intent**. Forms with fixed hardware roles keep exact arity so
   malformed source fails early. Forms whose meaning is naturally list-like or
   associative may be variadic when that improves expressiveness, but only with
@@ -245,7 +245,10 @@ auto-wiring; clock/reset name remapping remains fail-closed. The plain
 `file.isf` CLI path is audited to reach generated HDL with clean stderr,
 including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including
-control-flow and data-operation states.
+control-flow and data-operation states. Transaction-local `while` and `until`
+loops now project through bounded `transaction_loops` schedule-report entries
+with transaction name, loop kind, normalized condition text, generated decision
+states, body start, body states, exit state, and body clause count.
 
 ## Current Limitations
 

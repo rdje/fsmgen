@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF transaction loop lowering
+- Active R14 task-tree slice: `ISF-CONTROL-FLOW.3` is complete, closing
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md).
+- Top-level transaction `(while cond body...)` now lowers as a pre-test
+  zero-or-more loop with explicit entry and back-edge decision states.
+- Top-level transaction `(until cond body...)` now lowers as a body-first
+  one-or-more loop with a generated post-body decision state.
+- Loop conditions are sampled only in generated decision states, supported
+  bodies use the shipped inline transaction subset, and malformed or
+  unsupported loop-body combinations fail closed.
+- Successful schedule reports expose bounded `transaction_loops[]` entries,
+  and [t/1245-isf-transaction-loop-lowering.t](t/1245-isf-transaction-loop-lowering.t)
+  proves scheduled `.fsm`, report, diagnostics, and SystemVerilog reachability.
+- The next R14 action is to select or activate the next user-visible feature
+  tree. Public-contract stabilization remains feature-driven rather than the
+  main lane.
+
 ## 2026-05-15: R14 — ISF positive-literal wait lowering
 - Active R14 task-tree slice: `ISF-CONTROL-FLOW.2` is complete.
 - `(wait N)` now accepts positive integer literal counts in transaction body
