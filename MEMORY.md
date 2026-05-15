@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF storage var-only source surface
+- Created
+  [docs/tasks/ISF-STORAGE-VAR-SURFACE.md](docs/tasks/ISF-STORAGE-VAR-SURFACE.md)
+  to narrow actor-owned scalar storage source vocabulary.
+- `(storage (var name (width N)))` is canonical and
+  `(storage (variable name (width N)))` is the verbose alias.
+- `(storage (state ...))` and `(storage (register ...))` are now rejected as
+  source forms. Schedule reports still use `kind: register` only as generated
+  backend storage-class metadata.
 ## 2026-05-15: ISF clock-domain backlog
 - Created
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md)
@@ -17,14 +26,12 @@ This is the live continuity document for fast session recovery after crashes, re
   [docs/tasks/ISF-STORAGE-VAR-ALIASES.md](docs/tasks/ISF-STORAGE-VAR-ALIASES.md)
   for the actor-owned scalar storage vocabulary cleanup.
 - `(storage (var name (width N)))` and
-  `(storage (variable name (width N)))` are now accepted aliases for scalar
-  actor-owned storage. They normalize to the existing internal `state` storage
-  kind so scheduled `.fsm`, schedule reports, and HDL generation reuse the
-  shipped storage path.
-- `(var ...)` is now the preferred scalar storage spelling for new ISF source.
-  The older `(state ...)` spelling remains accepted; `(register ...)` remains
-  rejected because schedule-report `kind: register` is backend storage class,
-  not source vocabulary.
+  `(storage (variable name (width N)))` were introduced as scalar
+  actor-owned storage spellings. The later `ISF-STORAGE-VAR-SURFACE` slice
+  narrowed the accepted source surface to those two scalar forms.
+- `(var ...)` is now the canonical scalar storage spelling for new ISF source,
+  with `(variable ...)` as the verbose alias. `(state ...)` and
+  `(register ...)` are rejected as source vocabulary.
 - Focused validation passed for parser syntax, public contract syntax,
   actor-owned storage lowering/HDL generation, and singleton actor-clause
   preservation.

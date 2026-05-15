@@ -19,9 +19,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   still single-clock-domain ISF behavior; multi-clock, asynchronous, and
   interacting clock-domain semantics remain future work.
 - ISF actor storage vocabulary update: scalar actor-owned storage now prefers
-  `(var name (width N))`, with `(variable ...)` and older `(state ...)`
-  accepted as aliases that normalize to the same scalar storage kind.
-  `(register ...)` remains rejected as source vocabulary.
+  `(var name (width N))`, with `(variable ...)` accepted as the verbose
+  alias. `(state ...)` and `(register ...)` are rejected as source
+  vocabulary.
 - ISF clock-domain backlog update: current ISF remains one clock domain per
   actor/generated top. Multi-clock, asynchronous, and interacting
   clock-domain semantics are now tracked as the proposed
@@ -61,7 +61,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`,
   `ISF-CONTROL-FLOW`, `ISF-SETTER-SYNTAX`, and
   `ISF-COMPATIBILITY`, plus `ISF-LIBRARY-SYSTEM-BINDINGS` and
-  `ISF-STORAGE-VAR-ALIASES`, are listed in the task-tree completed table.
+  `ISF-STORAGE-VAR-ALIASES` and `ISF-STORAGE-VAR-SURFACE`, are listed in the
+  task-tree completed table.
   The proposed `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics
   and is not an implementation frontier until its public source model is
   selected.

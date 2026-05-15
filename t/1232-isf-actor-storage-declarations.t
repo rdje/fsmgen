@@ -21,8 +21,8 @@ subtest 'actor-owned storage declarations lower to deterministic scalar storage'
     is(scalar(@{$actor->{storage}}), 4, 'parser records three scalar storage entries and one bank');
     is_deeply(
         [map { $_->{kind} } @{$actor->{storage}}],
-        [qw(state state state bank)],
-        'var and variable aliases normalize to the scalar state storage kind',
+        [qw(var var var bank)],
+        'var and variable aliases normalize to the scalar var storage kind',
     );
 
     my ($bank) = grep { $_->{kind} eq 'bank' && $_->{name} eq 'data' } @{$actor->{storage}};
@@ -94,7 +94,7 @@ subtest 'actor-owned storage declarations fail closed for unsupported shapes' =>
     (complete done)))
 ISF
 
-    assert_parse_rejected(<<'ISF', qr/storage entry kind must be 'var', 'variable', 'state', or 'bank'/, 'register spelling is not accepted');
+    assert_parse_rejected(<<'ISF', qr/storage entry kind must be 'var', 'variable', or 'bank'/, 'register spelling is not accepted');
 (actor rejected_register_storage
   (clock clk)
   (interface (input start) (output done))
@@ -105,12 +105,23 @@ ISF
     (complete done)))
 ISF
 
+    assert_parse_rejected(<<'ISF', qr/storage entry kind must be 'var', 'variable', or 'bank'/, 'state spelling is not accepted');
+(actor rejected_state_storage
+  (clock clk)
+  (interface (input start) (output done))
+  (storage
+    (state rd_ptr (width 2)))
+  (transaction main
+    (on start)
+    (complete done)))
+ISF
+
     assert_parse_rejected(<<'ISF', qr/storage signal 'rd_ptr' conflicts with interface input port 'rd_ptr'/, 'storage cannot reuse an interface port name');
 (actor storage_port_conflict
   (clock clk)
   (interface (input start) (input rd_ptr) (output done))
   (storage
-    (state rd_ptr (width 2)))
+    (var rd_ptr (width 2)))
   (transaction main
     (on start)
     (complete done)))
@@ -121,7 +132,7 @@ ISF
   (clock clk)
   (interface (input start) (output done))
   (storage
-    (state data_0 (width 8))
+    (var data_0 (width 8))
     (bank data (width 8) (depth 4)))
   (transaction main
     (on start)
@@ -133,9 +144,9 @@ ISF
   (clock clk)
   (interface (input start) (output done))
   (storage
-    (state rd_ptr (width 2)))
+    (var rd_ptr (width 2)))
   (storage
-    (state wr_ptr (width 2)))
+    (var wr_ptr (width 2)))
   (transaction main
     (on start)
     (complete done)))
@@ -156,7 +167,7 @@ sub storage_fixture_source {
   (storage
     (var rd_ptr (width 2))
     (variable wr_ptr (width 2))
-    (state occupancy (width 3))
+    (var occupancy (width 3))
     (bank data (width 8) (depth 4)))
   (transaction main
     (on start)

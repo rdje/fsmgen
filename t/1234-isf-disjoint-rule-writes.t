@@ -27,9 +27,9 @@ subtest 'provably disjoint rule guards may drive one storage target' => sub {
     (output empty)
     (output data_out (width 8)))
   (storage
-    (state wr_ptr (width 2))
-    (state rd_ptr (width 2))
-    (state occupancy (width 3)))
+    (var wr_ptr (width 2))
+    (var rd_ptr (width 2))
+    (var occupancy (width 3)))
   (rule idle_case (& (! write_req) (! read_req))
     (occupancy occupancy))
   (rule push_only (& write_req (! read_req) (! full))

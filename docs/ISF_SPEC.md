@@ -392,8 +392,8 @@ Transaction `(when condition body...)` remains ordered
 control flow; it must not be used to pretend FIFO ports are concurrent when a
 push and pop request arrive in the same cycle. The storage primitive needed
 for that target is now available as actor-owned fixed storage:
-`(var name (width N))` for pointer/occupancy state, with `(variable ...)` and
-the older `(state ...)` spelling accepted as scalar-storage aliases.
+`(var name (width N))` for pointer/occupancy state, with `(variable ...)` as
+the verbose scalar-storage alias.
 Hardware components modeled by ISF are persistent regions, not software
 processes that die when work is done. Actors, transactions, DTs, and rules can
 be inactive, but while the design is powered, clocked, and released from reset
@@ -489,7 +489,7 @@ clause:
 (storage
   (var rd_ptr (width 2))
   (variable wr_ptr (width 2))
-  (state occupancy (width 3))
+  (var occupancy (width 3))
   (bank data (width 8) (depth 4)))
 ```
 
@@ -497,8 +497,6 @@ The first shipped storage forms are:
 
 - `(var name (width N))`: a fixed-width actor-owned internal scalar variable.
 - `(variable name (width N))`: verbose alias for `(var ...)`.
-- `(state name (width N))`: older accepted alias for scalar actor-owned
-  storage; normalized to the same internal kind as `(var ...)`.
 - `(bank name (width N) (depth N))`: a fixed-depth actor-owned storage bank.
 
 All widths and depths are positive integer literals in the current shipped
@@ -526,8 +524,8 @@ include declared storage entries in `inferred_storage` with kind `register`,
 role `actor_storage`, and positive integer `width`. Used storage signals reach
 SystemVerilog generation through the existing scalar assignment path.
 The report `kind` is the generated storage class; authored scalar storage uses
-the normalized scalar storage kind, and `(register ...)` is rejected as a
-storage entry spelling.
+the normalized scalar storage kind. `(state ...)` and `(register ...)` are not
+accepted storage entry spellings.
 
 ### 5.2 Actor-Owned Bank Access
 

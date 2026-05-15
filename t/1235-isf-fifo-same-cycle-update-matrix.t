@@ -29,7 +29,7 @@ subtest 'depth-4 FIFO controller interface and matrix lower through HDL' => sub 
         [qw(full empty data_out)],
         'FIFO interface exposes actor-maintained full/empty and read data as outputs',
     );
-    is((grep { $_->{kind} eq 'state' } @{$actor->{storage}}), 3, 'FIFO scalar storage is authored as state');
+    is((grep { $_->{kind} eq 'var' } @{$actor->{storage}}), 3, 'FIFO scalar storage is authored as var');
 
     my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
     is_deeply($ir->{conflict_issues}, [], 'same-cycle FIFO matrix has no conflict issues');

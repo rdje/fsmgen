@@ -24,9 +24,9 @@
       (output empty)
       (output data_out (width 8)))
     (storage
-      (state wr_ptr (width 2))
-      (state rd_ptr (width 2))
-      (state occupancy (width 3))
+      (var wr_ptr (width 2))
+      (var rd_ptr (width 2))
+      (var occupancy (width 3))
       (bank data (width 8) (depth 4)))
 
     (rule idle_occ0 (& (! write_req) (! read_req) (== occupancy 0))

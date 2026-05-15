@@ -80,9 +80,9 @@ Internal storage:
 
 | Name | Kind | Width | Depth | Meaning |
 | --- | --- | --- | --- | --- |
-| `wr_ptr` | `state` | `2` | n/a | Entry selected by the next accepted push. |
-| `rd_ptr` | `state` | `2` | n/a | Entry selected by the next accepted pop. |
-| `occupancy` | `state` | `3` | n/a | Number of occupied entries, 0 through 4. |
+| `wr_ptr` | `var` | `2` | n/a | Entry selected by the next accepted push. |
+| `rd_ptr` | `var` | `2` | n/a | Entry selected by the next accepted pop. |
+| `occupancy` | `var` | `3` | n/a | Number of occupied entries, 0 through 4. |
 | `data` | `bank` | `8` | `4` | Scalarized FIFO data entries. |
 
 Runtime semantics:

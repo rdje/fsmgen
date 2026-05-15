@@ -13,9 +13,9 @@
     (input read_req)
     (output data_out (width 8)))
   (storage
-    (state wr_ptr (width 2))
-    (state rd_ptr (width 2))
-    (state occupancy (width 3))
+    (var wr_ptr (width 2))
+    (var rd_ptr (width 2))
+    (var occupancy (width 3))
     (bank data (width 8) (depth 4)))
 
   (rule accepted_push (& write_req (| (! (== occupancy 4)) read_req))

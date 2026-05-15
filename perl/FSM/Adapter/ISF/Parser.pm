@@ -48,7 +48,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     transactions  => [ { name => ..., ports => { inputs => [...], outputs => [...] }, clauses => [...] }, ... ],
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
-#     storage       => [ { kind => "state"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
+#     storage       => [ { kind => "var"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     priorities    => [ ... ],
 #     imports       => [ ... ],
 #     library_uses  => [ ... ],
@@ -895,7 +895,7 @@ sub _parse_storage($self, $clause, $actor_name) {
 
         my ($authored_kind, $name, @options) = @$entry;
         my $kind = _normalize_storage_kind($authored_kind);
-        confess "Error: actor '$actor_name' storage entry kind must be 'var', 'variable', 'state', or 'bank'\n"
+        confess "Error: actor '$actor_name' storage entry kind must be 'var', 'variable', or 'bank'\n"
             unless defined($kind);
         confess "Error: actor '$actor_name' storage '$kind' entry requires a scalar HDL identifier name\n"
             unless _is_hdl_identifier($name);
@@ -935,7 +935,7 @@ sub _parse_storage($self, $clause, $actor_name) {
             unless defined($width);
 
         my @signals;
-        if ($kind eq 'state') {
+        if ($kind eq 'var') {
             confess "Error: actor '$actor_name' storage $kind '$name' does not accept '(depth N)'\n"
                 if defined($parsed_options{depth_value});
             @signals = ({ name => $name, width => $width });
@@ -967,7 +967,7 @@ sub _parse_storage($self, $clause, $actor_name) {
 sub _normalize_storage_kind {
     my ($kind) = @_;
     return undef unless defined($kind) && !ref($kind);
-    return 'state' if $kind eq 'var' || $kind eq 'variable' || $kind eq 'state';
+    return 'var' if $kind eq 'var' || $kind eq 'variable';
     return 'bank' if $kind eq 'bank';
     return undef;
 }

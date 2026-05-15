@@ -347,9 +347,9 @@ reusable ISF design intent, not only scalar constants or types.
   0.
 - The first actor-owned storage surface is shipped as a singleton
   `(storage ...)` actor clause. The current preferred scalar spelling is
-  `(var name (width N))`; `(variable ...)` and the older `(state ...)`
-  spelling declare the same fixed internal scalar storage such as `rd_ptr`,
-  `wr_ptr`, or `occupancy`.
+  `(var name (width N))`; `(variable ...)` is the verbose spelling for the
+  same fixed internal scalar storage such as `rd_ptr`, `wr_ptr`, or
+  `occupancy`.
   `(bank name (width N) (depth N))` declares fixed-depth actor-owned storage
   and currently scalarizes to `<name>_0` through `<name>_<depth-1>` in the
   scheduled `.fsm` review artifact. The first FIFO target uses this to model
@@ -785,9 +785,9 @@ Remaining boundary:
   fixture that only exercises one side, or treats simultaneous requests as an
   artifact of branch order, is not acceptable.
 - `2026-05-15`: Authored actor-owned scalar storage originally shipped with
-  `(state ...)` and rejected `(register ...)`. The later
-  `ISF-STORAGE-VAR-ALIASES` slice keeps `(state ...)` accepted but makes
-  `(var ...)` the preferred scalar source vocabulary.
+  `(state ...)` and rejected `(register ...)`. Later storage-vocabulary work
+  narrowed the current source surface to canonical `(var ...)` and verbose
+  `(variable ...)`.
 - `2026-05-15`: The first executable FIFO matrix is a controller matrix, not
   a full FIFO datapath. It must not invent `data_0` entries or hidden buffer
   transfer semantics. Real pointer-selected buffer write/read syntax is a
@@ -894,13 +894,13 @@ Remaining boundary:
   fire together.
 - `2026-05-15`: Proved the depth-4 FIFO controller matrix through scheduled
   `.fsm`, schedule JSON, and SystemVerilog generation, switched authored
-  scalar storage vocabulary to the first shipped `(state ...)` spelling, and
-  logged that real FIFO
+  scalar storage vocabulary during the original storage slice, and logged
+  that real FIFO
   data-buffer access remains the next required feature before a reusable FIFO
   library fixture.
 - `2026-05-15`: Later `ISF-STORAGE-VAR-ALIASES` work made `(var ...)` and
-  `(variable ...)` accepted scalar storage aliases, with `(var ...)` preferred
-  for new source while `(state ...)` remains accepted.
+  `(variable ...)` accepted scalar storage spellings; the current
+  `ISF-STORAGE-VAR-SURFACE` work keeps only those scalar storage source forms.
 - `2026-05-15`: Specified FIFO data-buffer access as
   `(store <bank-name> <index> <value>)` and
   `(load <bank-name> <index> as <target>)`, with scalarized guarded lowering

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF storage var-only source surface
+- Added
+  [docs/tasks/ISF-STORAGE-VAR-SURFACE.md](docs/tasks/ISF-STORAGE-VAR-SURFACE.md)
+  to track the actor-owned scalar storage source-vocabulary narrowing.
+- Updated
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so only
+  `(var NAME (width N))`, `(variable NAME (width N))`, and fixed-depth
+  `(bank NAME ...)` storage entries are accepted. `(state ...)` and
+  `(register ...)` now fail closed with a diagnostic listing the accepted
+  source words.
+- Updated ISF fixtures, parser/public-contract tests, mdBook, ISF spec,
+  roadmap, task tree, and live docs to remove `(state ...)` from the public
+  actor-owned storage source surface.
 ### R14 — ISF clock-domain backlog
 - Added
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md)
@@ -22,17 +35,18 @@ This is the persistent technical change history for FSMGen.
   [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so
   `(storage (var NAME (width N)))` and
   `(storage (variable NAME (width N)))` parse as aliases for scalar
-  actor-owned storage. The aliases normalize to the existing `state` storage
-  kind for scheduler compatibility.
+  actor-owned storage. This was later narrowed by
+  `ISF-STORAGE-VAR-SURFACE` so `var` is canonical and `variable` is the
+  verbose alias.
 - Refreshed
   [t/1232-isf-actor-storage-declarations.t](t/1232-isf-actor-storage-declarations.t)
   to prove alias normalization, scheduled `.fsm` width emission, schedule
   report `actor_storage` metadata, HDL generation, and continued
   fail-closed `(register ...)` diagnostics.
 - Synchronized the mdBook, ISF spec, public contract docs, public contract
-  shape text, roadmap, task tree, and live docs. `(var ...)` is now the
-  preferred scalar source spelling, `(variable ...)` and `(state ...)` remain
-  accepted aliases, and `(register ...)` remains rejected.
+  shape text, roadmap, task tree, and live docs. `(var ...)` was made the
+  preferred scalar source spelling, with `(variable ...)` as the verbose
+  spelling.
 ### R14 — ISF library system-port remapping
 - Added
   [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md)

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF storage var-only source surface
+- Active R14 task-tree slice: `ISF-STORAGE-VAR-SURFACE.1` narrows
+  actor-owned scalar storage source vocabulary.
+- `(var name (width N))` is canonical; `(variable name (width N))` is the
+  verbose alias.
+- `(state ...)` and `(register ...)` storage entries now fail closed.
+- Schedule-report `kind: register` remains generated backend storage-class
+  metadata, not source vocabulary.
+
 ## 2026-05-15: R14 — ISF clock-domain backlog
 - Captured the current single-clock-domain ISF boundary in the spec, mdBook,
   roadmap, task-tree index, README, and live docs.
@@ -15,11 +24,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 ## 2026-05-15: R14 — ISF storage variable aliases
 - Active R14 task-tree slice: `ISF-STORAGE-VAR-ALIASES.1` adds scalar storage
   aliases for actor-owned storage declarations.
-- `(var name (width N))` and `(variable name (width N))` now parse and lower
-  like the older `(state name (width N))` form.
-- `(var ...)` is the preferred source spelling for new scalar actor-owned
-  storage; `(state ...)` remains accepted and `(register ...)` remains
-  rejected.
+- `(var name (width N))` and `(variable name (width N))` were introduced as
+  scalar storage forms; the later `ISF-STORAGE-VAR-SURFACE` slice made those
+  the only accepted scalar source forms.
+- `(var ...)` is the canonical source spelling for new scalar actor-owned
+  storage; `(variable ...)` is the verbose alias.
 - The aliases reuse the existing scheduled `.fsm`, schedule-report
   `actor_storage`, and HDL generation paths.
 - Focused validation passed for parser syntax, storage lowering/reporting/HDL,

@@ -622,9 +622,9 @@ sub isf_public_interface_shipped_library_definitions {
                 ],
             },
             storage => [
-                { name => 'wr_ptr', kind => 'state', width => 2 },
-                { name => 'rd_ptr', kind => 'state', width => 2 },
-                { name => 'occupancy', kind => 'state', width => 3 },
+                { name => 'wr_ptr', kind => 'var', width => 2 },
+                { name => 'rd_ptr', kind => 'var', width => 2 },
+                { name => 'occupancy', kind => 'var', width => 3 },
                 { name => 'data', kind => 'bank', width => 8, depth => 4 },
             ],
             semantics => [

@@ -62,7 +62,7 @@ subtest 'bank access diagnostics fail closed for malformed and unsupported acces
     assert_schedule_rejected(
         non_bank_storage_source(),
         qr/rule 'bad_store': store references unknown actor-owned bank 'wr_ptr'/,
-        'state storage cannot be used as a bank',
+        'var storage cannot be used as a bank',
     );
     assert_schedule_rejected(
         out_of_range_index_source(),
@@ -159,7 +159,7 @@ sub common_prefix {
     (input too_wide (width 16))
     (output data_out (width 8)))
   (storage
-    (state wr_ptr (width 2))
+    (var wr_ptr (width 2))
     (bank data (width 8) (depth 4)))
 ISF
 }
@@ -208,8 +208,8 @@ sub two_bank_source {
     (input data_in (width 8))
     (output data_out (width 8)))
   (storage
-    (state wr_ptr (width 2))
-    (state rd_ptr (width 2))
+    (var wr_ptr (width 2))
+    (var rd_ptr (width 2))
     (bank even_data (width 8) (depth 4))
     (bank odd_data (width 8) (depth 4)))
   (rule write_even write_req

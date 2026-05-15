@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF storage var-only source surface
+- The public source surface is now deliberately smaller: `(var ...)` is the
+  canonical actor-owned scalar storage form and `(variable ...)` is its
+  verbose alias.
+- `(state ...)` is rejected as a storage entry head to avoid overloading the
+  word `state` between actor-owned scalar storage and `.fsm`/ISF stateful
+  control regions. `(register ...)` remains rejected because backend storage
+  class is not source intent.
+- The parser normalizes scalar source entries to the `var` kind. Schedule
+  reports still expose generated storage class `kind: register` for
+  actor-owned scalar storage, which is intentionally separate from source
+  vocabulary.
 ## 2026-05-15: ISF clock-domain backlog
 - The current ISF clock model is intentionally single-domain: one clock domain
   per actor/generated top. This remains true even when a clock signal is named
@@ -19,13 +31,9 @@ This document captures engineering rationale, design constraints, and working de
   intentionally above raw HDL vocabulary. The scheduler still decides the
   generated storage class; authors should not have to write `register` to get
   persistence.
-- The aliases are normalized at parse time to the existing `state` storage kind
-  so the lowerer, schedule-report storage metadata, bank-access checks, and HDL
-  backend do not need a second scalar-storage representation.
-- Keeping `(state ...)` accepted avoids churn in existing fixtures and docs,
-  but new examples should prefer `(var ...)`. `(register ...)` stays rejected
-  because schedule-report `kind: register` describes backend implementation
-  class, not ISF source intent.
+- The later `ISF-STORAGE-VAR-SURFACE` slice removed `(state ...)` from the
+  accepted source surface. New and current examples should use `(var ...)`,
+  or `(variable ...)` when the verbose spelling is preferred.
 ## 2026-05-15: ISF library system-port remapping
 - The remapping feature is intentionally a composition-boundary name binding.
   A reusable actor may call its clock `lib_clk` and an importing actor may bind
