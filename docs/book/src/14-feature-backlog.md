@@ -142,7 +142,9 @@ ISF symbol surface.
 
 ### General Transaction Activation Parameter Overrides
 
-Status: partially shipped; tracked by `ISF-TRANSACTION-ACTIVATION`.
+Status: partially shipped; the original `ISF-TRANSACTION-ACTIVATION` tree is
+closed for spawn and blocking `do`. Rule-trigger or direct-activation
+parameter work needs a fresh explicit task-tree leaf before implementation.
 
 Goal: extend the task-like transaction activation model so activation sites can
 override declared transaction parameters where that is semantically valid.

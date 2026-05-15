@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF transaction activation tree closure
+- Completed `ISF-TRANSACTION-ACTIVATION.4` and closed
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
+- Moved `ISF-TRANSACTION-ACTIVATION` from active to completed in
+  [docs/TASK_TREE.md](docs/TASK_TREE.md), and updated
+  [ROADMAP_STATUS.md](ROADMAP_STATUS.md) so the next decision point is an
+  explicit new feature tree/leaf rather than silent continuation inside the
+  closed activation tree.
+- Clarified the mdBook backlog boundary: spawn and blocking `do` support
+  static `(params ...)`; rule `trigger`, direct activation, symbolic parameter
+  values, and expression-valued parameter overrides remain backlog.
 ### R14 — ISF blocking do parameter overrides
 - Completed `ISF-TRANSACTION-ACTIVATION.3` for blocking `do` parameter
   overrides.

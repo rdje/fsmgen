@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TRANSACTION-ACTIVATION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-15`
 - Last updated: `2026-05-15`
@@ -45,7 +45,7 @@ signals or parameter values through explicit source syntax.
 ## Task Tree
 
 - ID: `ISF-TRANSACTION-ACTIVATION`
-  Status: `active`
+  Status: `done`
   Goal: `Track task-like transaction activation semantics.`
   Children: `ISF-TRANSACTION-ACTIVATION.1`,
   `ISF-TRANSACTION-ACTIVATION.2`, `ISF-TRANSACTION-ACTIVATION.3`,
@@ -88,19 +88,19 @@ signals or parameter values through explicit source syntax.
   Commit: `ISF-TRANSACTION-ACTIVATION.3: ship do parameter overrides`
 
 - ID: `ISF-TRANSACTION-ACTIVATION.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish report/docs/test closure for the expanded activation surface.`
   Acceptance: The public contract, mdBook, spec, schedule-report metadata,
   regression tiers, and live docs reflect the shipped activation parameter
   surface without freezing raw lowerer internals.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TRANSACTION-ACTIVATION.4: close activation docs`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TRANSACTION-ACTIVATION.4` | `pending` | Blocking `do` parameter overrides are shipped; the remaining tree frontier is to publish closure and decide whether rule-trigger parameter overrides are next. |
+| 1 | `closed` | `done` | All leaves in this task tree are complete; future rule-trigger or direct-activation parameter work must open a new explicit tree or leaf before implementation. |
 
 ## Decisions
 
@@ -131,12 +131,15 @@ signals or parameter values through explicit source syntax.
   as a generated child because another activation site needs generated
   specialization, the plain `do` also uses a generated child activation
   instance so the scheduled parent never references a skipped local child body.
+- `2026-05-15`: Close this tree at the shipped static-specialization surface:
+  spawn and blocking `do` support `(params ...)`; rule `trigger`, direct
+  activation, symbolic parameter values, and expression-valued parameter
+  overrides remain backlog and need a fresh task-tree leaf before code changes.
 
 ## Open Questions
 
-- Whether rule `trigger` parameter overrides should be implemented next, and
-  whether direct transaction activation needs a distinct source form before it
-  can participate in the same static-specialization contract.
+- None for this closed tree. Rule-trigger and direct-activation parameter
+  overrides are deferred, not forgotten.
 
 ## Blockers
 
@@ -149,6 +152,7 @@ signals or parameter values through explicit source syntax.
 | `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.3` | `perl -Iperl -c` for changed ISF modules; `prove t/1204-isf-child-composition-clause-boundary.t t/1215-isf-spawn-parameter-binding.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1158-isf-public-report-dt-kind-metadata-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1241-isf-transaction-port-bindings.t t/1243-isf-port-binding-schedule-report.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-TRANSACTION-ACTIVATION.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -157,6 +161,7 @@ signals or parameter values through explicit source syntax.
 | `ISF-TRANSACTION-ACTIVATION.1` | `ISF-TRANSACTION-ACTIVATION.1: document task-like activation` | Formalized current activation boundary; tree remains active. |
 | `ISF-TRANSACTION-ACTIVATION.2` | `ISF-TRANSACTION-ACTIVATION.2: specify activation params` | Specified planned `(params ...)` activation syntax and static specialization semantics. |
 | `ISF-TRANSACTION-ACTIVATION.3` | `ISF-TRANSACTION-ACTIVATION.3: ship do parameter overrides` | Shipped blocking `do` parameter overrides through generated child activation instances. |
+| `ISF-TRANSACTION-ACTIVATION.4` | `ISF-TRANSACTION-ACTIVATION.4: close activation docs` | Closed the shipped activation-parameter documentation and backlog boundary. |
 
 ## Changelog
 
@@ -168,3 +173,4 @@ signals or parameter values through explicit source syntax.
   advances to `ISF-TRANSACTION-ACTIVATION.3`.
 - `2026-05-15`: Completed `ISF-TRANSACTION-ACTIVATION.3`; active frontier
   advances to `ISF-TRANSACTION-ACTIVATION.4`.
+- `2026-05-15`: Completed `ISF-TRANSACTION-ACTIVATION.4`; task tree closes.

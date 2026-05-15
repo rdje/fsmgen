@@ -2,9 +2,11 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: select or activate the next user-visible `R14` feature
-  tree before implementing more ISF behavior. `ISF-TRANSACTION-ACTIVATION` is
-  now active with `ISF-TRANSACTION-ACTIVATION.4` as the current frontier.
+- Next decision point: select or activate the next user-visible feature tree
+  before implementing more ISF behavior. `ISF-TRANSACTION-ACTIVATION` is now
+  closed after publishing the shipped spawn/blocking-`do` activation-parameter
+  boundary. Rule-trigger and direct-activation parameter overrides remain
+  backlog and need a fresh explicit tree/leaf before implementation.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -94,6 +96,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   unparameterized `do` remains local unless its child transaction is already a
   generated child. The active frontier advances to
   `ISF-TRANSACTION-ACTIVATION.4`.
+- `ISF-TRANSACTION-ACTIVATION.4` is complete and the task-like transaction
+  activation tree is closed. The public contract, mdBook, spec,
+  schedule-report metadata, regression tier notes, roadmap, task tree, and live
+  docs now reflect the shipped activation-parameter surface without freezing raw
+  lowerer internals. Rule `trigger` parameter overrides, direct activation
+  parameters, symbolic parameter values, and expression-valued parameter
+  overrides remain backlog.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree

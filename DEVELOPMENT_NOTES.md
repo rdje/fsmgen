@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF transaction activation tree closure
+- Closing `ISF-TRANSACTION-ACTIVATION` is a boundary decision, not a claim that
+  every imaginable activation-site parameter feature is done. The shipped
+  signoff-quality surface is spawn plus blocking `do` static specialization.
+- Rule-trigger parameter overrides are deliberately deferred because they need
+  their own fan-in, payload, conflict, and report semantics. Treating them as a
+  small extension of generated `do` would hide the harder same-cycle
+  multi-trigger cases.
+- Direct activation parameters also need a source form before implementation.
+  Future work should start from a task-tree leaf that states the activation
+  lifetime and specialization model before touching parser or lowerer code.
 ## 2026-05-15: ISF blocking do parameter overrides
 - Blocking `do` parameter overrides are static elaboration, not runtime signal
   writes. The implementation therefore reuses the generated-child composition

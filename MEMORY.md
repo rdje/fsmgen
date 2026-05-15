@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF transaction activation tree closure
+- Completed `ISF-TRANSACTION-ACTIVATION.4` and closed
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
+- The closed tree now records the shipped static activation-parameter surface:
+  spawned child instances and blocking `do` generated child activations support
+  `(params ...)`; rule `trigger`, direct activation, symbolic parameter values,
+  and expression-valued parameter overrides remain backlog.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) moved `ISF-TRANSACTION-ACTIVATION`
+  from active to completed. The remaining active R14 public-contract tree is
+  cross-cutting and should not displace feature delivery while public
+  stabilization is on hold.
 ## 2026-05-15: ISF blocking do parameter overrides
 - Completed `ISF-TRANSACTION-ACTIVATION.3` in
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).

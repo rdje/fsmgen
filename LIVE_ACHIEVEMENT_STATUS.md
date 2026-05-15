@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF transaction activation tree closure
+- Active R14 task-tree slice: `ISF-TRANSACTION-ACTIVATION.4` is complete, and
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md)
+  is closed.
+- The shipped activation-parameter surface is now explicitly bounded to
+  spawned child instances and blocking `do` generated child activations.
+- Rule `trigger` parameter overrides, direct activation parameters, symbolic
+  parameter values, and expression-valued parameter overrides remain backlog
+  and require a fresh explicit task-tree leaf before implementation.
+- Validation for this closure slice: `mdbook build docs/book` and
+  `git diff --check`.
+
 ## 2026-05-15: R14 — ISF blocking do parameter overrides
 - Active R14 task-tree slice: `ISF-TRANSACTION-ACTIVATION.3` is complete in
   [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
