@@ -3228,8 +3228,19 @@ sub _expand_loop_body {
         } elsif ($bk eq 'sample') {
             push @lp, $bc;
         } elsif ($bk eq 'wait') {
-            if (_wait_cycles($bc, $tn, $body_label, $actor, $widths) > 0) {
-                push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp], $actor, $body_label)};
+            my $wait = _wait_count_spec($bc, $tn, $body_label, $actor, $widths, 1);
+            if ($wait->{kind} eq 'static') {
+                if ($wait->{cycles} > 0) {
+                    push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp], $actor, $body_label, $wait)};
+                }
+            } else {
+                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in $body_label cannot follow pending samples yet\n"
+                    if @lp;
+                my ($dynamic_states, $counter, $counter_width) = _ir_dynamic_wait($bc, $tn, $ir, $wait);
+                push @states, @$dynamic_states;
+                _register_counter_width($counters, $counter, $counter_width) if $counters;
+                $storage_roles->{$counter} = 'dynamic_wait_counter'
+                    if ref($storage_roles) eq 'HASH';
             }
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);
@@ -4688,31 +4699,12 @@ sub _link_states {
         my $next_state = $i < $#$st ? $st->[$i + 1] : undef;
         if($s->{dynamic_wait_entry}){_link_dynamic_wait_state($s)}
         elsif($s->{kind}eq'switch'){_link_switch_state($s,\%idx_by_name,$st,$n,$e)}
+        elsif($s->{kind}eq'loop_while'||$s->{kind}eq'loop_until'){_link_loop_state($s,\%idx_by_name,$st)}
         elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
         elsif($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
-        elsif($s->{kind}eq'loop_while'){
-            push @{$s->{transitions}}, {
-                target    => $s->{loop_body_start},
-                condition => { loop_branch => 1 },
-            } if $s->{loop_body_start};
-            push @{$s->{transitions}}, {
-                target    => $s->{loop_exit_target},
-                condition => { loop_branch => 0 },
-            } if $s->{loop_exit_target};
-        }
-        elsif($s->{kind}eq'loop_until'){
-            push @{$s->{transitions}}, {
-                target    => $s->{loop_exit_target},
-                condition => { loop_branch => 1 },
-            } if $s->{loop_exit_target};
-            push @{$s->{transitions}}, {
-                target    => $s->{loop_body_start},
-                condition => { loop_branch => 0 },
-            } if $s->{loop_body_start};
-        }
         elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait')&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
@@ -4808,6 +4800,80 @@ sub _switch_default_condition_expr {
     return '1' unless @conditions;
     return _negated_condition_expr($conditions[0]) if @conditions == 1;
     return _negated_condition_expr('(| ' . join(' ', @conditions) . ')');
+}
+
+sub _link_loop_state {
+    my ($state, $idx_by_name, $states) = @_;
+    my $condition = _loop_condition_expr($state);
+    my @edges;
+
+    if (($state->{kind} // '') eq 'loop_while') {
+        @edges = (
+            {
+                branch    => 1,
+                target    => $state->{loop_body_start},
+                condition => $condition,
+            },
+            {
+                branch    => 0,
+                target    => $state->{loop_exit_target},
+                condition => _negated_condition_expr($condition),
+            },
+        );
+    } else {
+        @edges = (
+            {
+                branch    => 1,
+                target    => $state->{loop_exit_target},
+                condition => $condition,
+            },
+            {
+                branch    => 0,
+                target    => $state->{loop_body_start},
+                condition => _negated_condition_expr($condition),
+            },
+        );
+    }
+
+    my $materialize = 0;
+    for my $edge (@edges) {
+        my $target_state = _state_by_name($idx_by_name, $states, $edge->{target});
+        if ($target_state && $target_state->{dynamic_wait_entry}) {
+            $materialize = 1;
+            last;
+        }
+    }
+
+    if (!$materialize) {
+        for my $edge (@edges) {
+            next unless $edge->{target};
+            push @{$state->{transitions}}, {
+                target    => $edge->{target},
+                condition => { loop_branch => $edge->{branch} },
+            };
+        }
+        return;
+    }
+
+    $state->{loop_transitions_materialized} = 1;
+    for my $edge (@edges) {
+        next unless $edge->{target};
+        my $target_state = _state_by_name($idx_by_name, $states, $edge->{target});
+        if ($target_state && $target_state->{dynamic_wait_entry}) {
+            _link_dynamic_wait_entry_edge($state, $target_state, $edge->{condition});
+        } else {
+            push @{$state->{transitions}}, {
+                target    => $edge->{target},
+                condition => { expr => $edge->{condition} },
+            };
+        }
+    }
+}
+
+sub _loop_condition_expr {
+    my ($state) = @_;
+    my $condition = $state->{condition};
+    return !ref($condition) ? $condition : _format_isf_expr($condition);
 }
 
 sub _link_dynamic_wait_state {

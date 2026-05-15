@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF loop-body dynamic waits
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.5`.
+- Runtime scalar waits in `while` and `until` bodies now lower for the
+  no-pending-sample subset.
+- `while` entry/back-edge true paths load/enter or bypass the body wait, while
+  false paths still exit.
+- `until` true paths still exit, while false back-edges reload/enter or bypass
+  the body wait for the next iteration.
+- Loop decision exits can now split a following runtime wait while preserving
+  the opposite loop branch.
+- Pending samples before loop-body dynamic waits remain fail-closed.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.5`, pending-sample
+  preservation across runtime dynamic wait paths.
+
 ## 2026-05-15: R14 — ISF switch-branch dynamic waits
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.4`.
 - Runtime scalar waits in `switch` branches now lower for the

@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF loop-body dynamic waits
+- Completed `ISF-DYNAMIC-WAIT.3.3.4.5` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Runtime scalar waits in `while` and `until` bodies now lower for the
+  no-pending-sample subset.
+- `while` entry and back-edge decisions materialize only when they target a
+  dynamic wait; the true path loads/enters or bypasses the wait, and the false
+  path exits the loop.
+- `until` false back-edges now reload/enter or bypass the first body wait,
+  while true paths still exit the loop.
+- Loop decision exits that target a following runtime wait can now split that
+  edge while preserving the opposite loop branch.
+- Pending samples before loop-body dynamic waits remain fail-closed until the
+  pending-sample preservation leaf.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.5`, pending-sample
+  preservation across runtime dynamic wait paths.
 ## 2026-05-15: ISF switch-branch dynamic waits
 - Completed `ISF-DYNAMIC-WAIT.3.3.4.4` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
@@ -12,8 +28,8 @@ This is the live continuity document for fast session recovery after crashes, re
   guarded by the complement of all explicit case predicates.
 - Pending samples before a `switch`-branch dynamic wait remain fail-closed
   until the pending-sample preservation leaf.
-- The current frontier is `ISF-DYNAMIC-WAIT.3.3.4.5`, dynamic waits in
-  `while`/`until` bodies.
+- `while`/`until` bodies later shipped under `ISF-DYNAMIC-WAIT.3.3.4.5`; the
+  current frontier is recorded in the latest dynamic-wait entry above.
 ## 2026-05-15: ISF repeat-body dynamic waits
 - Completed `ISF-DYNAMIC-WAIT.3.3.4.3` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

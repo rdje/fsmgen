@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF loop-body dynamic waits
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so runtime scalar waits in `while` and `until` bodies lower for the
+  no-pending-sample subset.
+- Added loop-decision materialization for decisions that target a runtime wait:
+  `while` entry/back-edge true paths and `until` false back-edges now load or
+  bypass the generated wait counter while preserving opposite loop branches.
+- Loop decision exits can now split a following runtime wait, so a dynamic wait
+  after a loop is no longer blocked only because the predecessor is a loop
+  decision state.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so materialized loop decisions use generic guarded transitions while ordinary
+  loops keep the compact loop-decision rendering.
+- Extended
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  with HDL-reaching `while`/`until` body coverage, loop-exit predecessor
+  coverage, and pending-sample rejection.
+- Refreshed the ISF spec, public contract doc, mdBook, feature backlog,
+  roadmap, task tree, and live docs. The active dynamic-wait frontier advances
+  to `ISF-DYNAMIC-WAIT.3.3.5`.
 ### R14 — ISF switch-branch dynamic waits
 - Updated
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

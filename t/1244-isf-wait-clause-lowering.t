@@ -747,6 +747,159 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_switch');
 };
 
+subtest 'runtime scalar waits lower inside while and until bodies' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-while');
+(actor wait_dynamic_while
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input keep)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (while keep
+      (wait cycles)
+      (drive tick))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_while.fsm'};
+    my $entry = state_block($fsm, 'main_while_entry_1');
+    like($entry, qr/\(<- \(main_wait_2_cnt cycles\) <\(& keep cycles\)\)/,
+        'while entry true path samples the runtime wait count');
+    like($entry, qr/\(-> main_wait_2 <\(& keep cycles\)\)/,
+        'while entry true path enters the dynamic wait');
+    like($entry, qr/\(-> main_drive_3 <\(& keep \(== cycles 0\)\)\)/,
+        'while entry true zero path bypasses to the following body state');
+    like($entry, qr/\(-> main_done_5 <\(! keep\)\)/,
+        'while entry false path exits the loop');
+
+    my $check = state_block($fsm, 'main_while_check_4');
+    like($check, qr/\(<- \(main_wait_2_cnt cycles\) <\(& keep cycles\)\)/,
+        'while back-edge true path reloads the runtime wait count');
+    like($check, qr/\(-> main_wait_2 <\(& keep cycles\)\)/,
+        'while back-edge true path re-enters the dynamic wait');
+    like($check, qr/\(-> main_drive_3 <\(& keep \(== cycles 0\)\)\)/,
+        'while back-edge true zero path bypasses the wait');
+    like($check, qr/\(-> main_done_5 <\(! keep\)\)/,
+        'while back-edge false path exits the loop');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_drive_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'while-body dynamic wait report exposes runtime count metadata',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_while');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-until');
+(actor wait_dynamic_until
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input stop)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (until stop
+      (wait cycles)
+      (drive tick))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_until.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start cycles\)\)/,
+        'until initial entry samples the runtime wait count');
+    like($idle, qr/\(-> main_wait_1 <\(& start cycles\)\)/,
+        'until initial entry enters the dynamic wait on positive count');
+    like($idle, qr/\(-> main_drive_2 <\(& start \(== cycles 0\)\)\)/,
+        'until initial entry bypasses the wait on zero count');
+
+    my $until_check = state_block($fsm, 'main_until_check_3');
+    like($until_check, qr/\(-> main_done_4 <stop\)/,
+        'until true path exits the loop');
+    like($until_check, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(! stop\) cycles\)\)/,
+        'until false path reloads the runtime wait count');
+    like($until_check, qr/\(-> main_wait_1 <\(& \(! stop\) cycles\)\)/,
+        'until false path re-enters the dynamic wait on positive count');
+    like($until_check, qr/\(-> main_drive_2 <\(& \(! stop\) \(== cycles 0\)\)\)/,
+        'until false zero path bypasses the wait');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_drive_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'until-body dynamic wait report exposes runtime count metadata',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_until');
+
+    ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-while');
+(actor wait_dynamic_after_while
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input keep)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (while keep
+      (drive tick))
+    (wait cycles)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_after_while.fsm'};
+    my $loop_exit = state_block($fsm, 'main_while_check_3');
+    like($loop_exit, qr/\(-> main_drive_2 <keep\)/,
+        'while check true path still loops to the body');
+    like($loop_exit, qr/\(<- \(main_wait_4_cnt cycles\) <\(& \(! keep\) cycles\)\)/,
+        'while check false exit path can sample a following dynamic wait count');
+    like($loop_exit, qr/\(-> main_wait_4 <\(& \(! keep\) cycles\)\)/,
+        'while check false exit path can enter the following dynamic wait');
+    like($loop_exit, qr/\(-> main_done_5 <\(& \(! keep\) \(== cycles 0\)\)\)/,
+        'while check false exit path can bypass a following zero-count dynamic wait');
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_while');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_missing_count
@@ -831,26 +984,28 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'while dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in while body in the current dynamic-wait slice/);
-(actor wait_while_dynamic_count
+    assert_lower_rejected(<<'ISF', 'pending sample before while dynamic wait', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' in while body cannot follow pending samples yet/);
+(actor wait_while_dynamic_after_sample
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input cond) (input cycles (width 4)) (output done))
+  (interface (input start) (input cond) (input cycles (width 4)) (input din (width 8)) (output done))
   (transaction main
     (on start)
     (while cond
+      (sample din as hold)
       (wait cycles))
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'until dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in until body in the current dynamic-wait slice/);
-(actor wait_until_dynamic_count
+    assert_lower_rejected(<<'ISF', 'pending sample before until dynamic wait', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' in until body cannot follow pending samples yet/);
+(actor wait_until_dynamic_after_sample
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input cond) (input cycles (width 4)) (output done))
+  (interface (input start) (input cond) (input cycles (width 4)) (input din (width 8)) (output done))
   (transaction main
     (on start)
     (until cond
+      (sample din as hold)
       (wait cycles))
     (complete done)))
 ISF
@@ -863,21 +1018,6 @@ ISF
   (transaction main
     (on start)
     (sample din as hold)
-    (wait cycles)
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'dynamic wait after loop decision', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' cannot follow state 'main_while_check_3' of kind 'loop_while' in the current dynamic-wait slice/);
-(actor wait_dynamic_after_loop
-  (clock clk)
-  (reset (rst_n async active_low))
-  (interface (input start) (input cond) (input cycles (width 4)) (output flag) (output done))
-  (drive tick
-    (flag 1))
-  (transaction main
-    (on start)
-    (while cond
-      (drive tick))
     (wait cycles)
     (complete done)))
 ISF

@@ -1100,7 +1100,10 @@ by the stage state. After a top-level `repeat`, the repeat-check exit edge
 `counter == 0` is split while the loop-back edge is preserved. After
 `await_all`, the split is gated by the logical AND of all collected done
 signals. After `await_any`, the split is gated by the logical OR of the
-collected done signals.
+collected done signals. Loop decision states can also split a runtime wait
+edge: a `while` true body-entry or back-edge, an `until` false back-edge, and
+a loop-exit edge that falls through to a following runtime wait can all load
+or bypass the generated counter while preserving the opposite loop branch.
 
 Runtime waits inside `when` bodies are supported when no pending sample must
 cross the dynamic wait. The branch true edge is split into positive-count
@@ -1113,11 +1116,17 @@ supported for the no-pending-sample subset. If the selected switch case starts
 with a runtime wait, the switch state owns that case's positive-count counter
 load/entry and zero-count bypass; other explicit cases remain selectable, and
 implicit fallthrough lowers as the complement of all explicit case-value
-predicates. Runtime waits inside `while` or `until` bodies remain rejected
-with diagnostics that name the rejected body context. Runtime waits after
+predicates. Runtime waits inside `while` bodies are supported for the
+no-pending-sample subset. If the body starts with a runtime wait, both the
+entry decision true path and the loop-back true path split into positive-count
+counter load/entry and zero-count bypass paths, while the false path exits the
+loop. Runtime waits inside `until` bodies are also supported for the
+no-pending-sample subset. The initial predecessor enters or bypasses the first
+body wait, the `until` true path exits, and the false loop-back path reloads
+or bypasses the runtime wait for the next iteration. Runtime waits after
 pending samples, after predecessor states whose edge split is not implemented
-yet, including loop decision states, and counts expressed as list expressions
-or parameter-backed values also remain rejected.
+yet, and counts expressed as list expressions or parameter-backed values remain
+rejected.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
@@ -1873,10 +1882,10 @@ capability-manifest ISF public contract advertises this through
 The `transaction_waits` array reports the shipped literal `(wait N)` surface,
 actor-constant `(wait NAME)` surface, and bounded runtime scalar
 `(wait count_signal)` surface, including accepted top-level, `when` body,
-`repeat` body, and `switch` branch contexts. Positive static waits report the
-authored
-transaction name, exact resolved cycle count, count kind/source, entry wait
-state, exit state after the wait chain, and null counter metadata. Runtime
+`repeat` body, `switch` branch, `while` body, and `until` body contexts.
+Positive static waits report the authored transaction name, exact resolved
+cycle count, count kind/source, entry wait state, exit state after the wait
+chain, and null counter metadata. Runtime
 scalar waits report the authored transaction name, null `cycles`,
 `runtime_scalar` count kind, source signal, entry/exit states, and generated
 counter name/width. `(wait 0)` and symbolic waits that resolve to zero are
@@ -2191,10 +2200,9 @@ Focused tests:
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,
   actor-constant, and bounded runtime scalar `(wait N)` shapes:
-  pending-sample preservation, remaining inline loop-body dynamic wait
-  contexts, expression-valued counts, parameter-backed counts, and additional
-  predecessor-edge splits remain deferred until their timing and diagnostics
-  are implemented.
+  pending-sample preservation, expression-valued counts, parameter-backed
+  counts, and any remaining predecessor-edge splits remain deferred until
+  their timing and diagnostics are implemented.
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
   `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict

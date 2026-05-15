@@ -273,12 +273,13 @@ report the resolved integer in `cycles`; runtime scalar waits report
 waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, unknown-width dynamic
 counts, expression counts, parameter-backed counts, and unsupported runtime
 contexts fail closed. Inline dynamic waits are supported in `when` and
-`repeat` bodies and `switch` branches when no pending sample crosses the wait.
-In a `switch`, only the selected branch's runtime wait edge is split; other
-cases remain selectable and implicit fallthrough is guarded by the complement
-of all explicit case values. Inline dynamic waits in `while` and `until`
-bodies currently remain fail-closed with diagnostics that name the rejected
-body context.
+`repeat` bodies, `switch` branches, and `while`/`until` bodies when no pending
+sample crosses the wait. In a `switch`, only the selected branch's runtime
+wait edge is split; other cases remain selectable and implicit fallthrough is
+guarded by the complement of all explicit case values. In loops, the relevant
+entry, back-edge, or exit decision edge is split while the opposite loop branch
+is preserved. Pending samples before inline dynamic waits remain fail-closed
+with diagnostics that name the rejected body context.
 
 ## `(complete port)` — Terminal State
 

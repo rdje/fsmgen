@@ -130,7 +130,7 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.3: support dynamic wait predecessors`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.4`
-  Status: `active`
+  Status: `done`
   Goal: `Support inline dynamic waits in branch and loop bodies.`
   Children: `ISF-DYNAMIC-WAIT.3.3.4.1`,
   `ISF-DYNAMIC-WAIT.3.3.4.2`, `ISF-DYNAMIC-WAIT.3.3.4.3`,
@@ -139,8 +139,8 @@ changing the exact timing meaning of the shipped wait construct.
   `while`, and `until` bodies either preserve branch/loop exit semantics with
   exact zero-bypass behavior or remain fail-closed with targeted diagnostics
   and book coverage for each inline context.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.4.5: support loop-body dynamic waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.4.1`
   Status: `done`
@@ -181,13 +181,13 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.4.4: support switch-branch dynamic waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.4.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Support dynamic waits in while/until bodies.`
   Acceptance: Runtime waits in loop bodies either lower while preserving
   loop-entry, loop-back, and loop-exit semantics, or remain fail-closed with
   narrower documented constraints.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.4.5: support loop-body dynamic waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.5`
   Status: `pending`
@@ -212,7 +212,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3.4.5` | `pending` | `while`/`until` bodies are the remaining inline dynamic-wait body contexts before pending-sample preservation. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3.5` | `pending` | Pending samples are the remaining unsupported boundary across shipped runtime dynamic wait contexts. |
 
 ## Decisions
 
@@ -287,6 +287,17 @@ changing the exact timing meaning of the shipped wait construct.
   selected case owns its positive-count counter load/entry and zero-count
   bypass, other explicit cases remain selectable, and implicit fallthrough is
   emitted as the complement of the OR of all explicit case predicates.
+- `2026-05-15`: A dynamic wait in a `while` body lowers by materializing loop
+  decision states only when a body-entry or back-edge targets the generated
+  wait. The true path loads/enters or bypasses the wait, and the false path
+  still exits the loop.
+- `2026-05-15`: A dynamic wait in an `until` body lowers with a normal first
+  body-entry split plus a materialized loop decision: the true path exits, and
+  the false path reloads/enters or bypasses the first body wait for the next
+  iteration.
+- `2026-05-15`: Loop decision states can also split loop-exit edges that target
+  a following runtime wait, preserving the opposite loop branch rather than
+  treating loop decisions as unsupported dynamic-wait predecessors.
 
 ## Open Questions
 
@@ -312,6 +323,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.5` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -328,6 +340,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.3.3.4.2` | `ISF-DYNAMIC-WAIT.3.3.4.2: support when-body dynamic waits` | Supports runtime waits in `when` bodies for the no-pending-sample subset. |
 | `ISF-DYNAMIC-WAIT.3.3.4.3` | `ISF-DYNAMIC-WAIT.3.3.4.3: support repeat-body dynamic waits` | Supports runtime waits in `repeat` bodies for the no-pending-sample subset. |
 | `ISF-DYNAMIC-WAIT.3.3.4.4` | `ISF-DYNAMIC-WAIT.3.3.4.4: support switch-branch dynamic waits` | Supports runtime waits in `switch` branches for the no-pending-sample subset. |
+| `ISF-DYNAMIC-WAIT.3.3.4.5` | `ISF-DYNAMIC-WAIT.3.3.4.5: support loop-body dynamic waits` | Supports runtime waits in `while` and `until` bodies for the no-pending-sample subset. |
 
 ## Changelog
 
@@ -367,3 +380,7 @@ changing the exact timing meaning of the shipped wait construct.
   `switch` branches now lower through selected-case count load/bypass while
   preserving other case and implicit fallthrough behavior. The current
   frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.5`.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.4.5`; runtime waits in
+  `while` and `until` bodies now lower through loop-entry, loop-back, and
+  loop-exit count load/bypass while preserving opposite loop branches. The
+  current frontier advances to `ISF-DYNAMIC-WAIT.3.3.5`.

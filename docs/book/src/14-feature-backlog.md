@@ -407,6 +407,9 @@ Additional top-level predecessor kinds are shipped for `await`, `stage`,
 `repeat` exit checks, `await_all`, and `await_any`; their own advance
 conditions are ANDed or ORed into the runtime count split, and their unrelated
 alternatives such as await timeouts or repeat loop-back edges are preserved.
+Loop decision predecessors are shipped for the no-pending-sample subset: loop
+body entries, loop back-edges, and loop exits that target a runtime wait split
+that edge while preserving the opposite loop branch.
 Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
 state, optional counter signal, and optional counter width. Static waits keep
@@ -419,24 +422,23 @@ non-integer counts, list-expression counts, unknown constant names,
 actor/transaction parameter names, unknown-width dynamic names, or unsupported
 dynamic contexts fail closed today.
 
-Remaining backlog: runtime scalar waits after pending samples, inside
-`while`/`until` bodies, after remaining predecessor kinds such as loop
-decision states whose edge split is not implemented yet, and with
+Remaining backlog: runtime scalar waits after pending samples, after any
+remaining predecessor kinds whose edge split is not implemented yet, and with
 expression-valued or parameter-backed counts.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
-subset, and `switch` branches are shipped for the no-pending-sample subset.
-Until the remaining loop contexts ship, dynamic waits in those bodies fail
-closed with diagnostics that name the rejected context: `while body` or
-`until body`.
+subset, `switch` branches are shipped for the no-pending-sample subset, and
+`while`/`until` bodies are shipped for the no-pending-sample subset. Pending
+samples before an inline dynamic wait still fail closed with diagnostics that
+name the rejected context.
 
 Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
 top-level dynamic waits and the requested additional top-level predecessor
 kinds are shipped. The inline-body work is split; `when` bodies, `repeat`
-bodies, and `switch` branches are shipped for the no-pending-sample subset.
-The next frontier is while/until bodies, then pending-sample preservation, and
-finally expression-valued runtime counts once their width/type/snapshot
-contract is specified.
+bodies, `switch` branches, and `while`/`until` bodies are shipped for the
+no-pending-sample subset. The next frontier is pending-sample preservation,
+then expression-valued runtime counts once their width/type/snapshot contract
+is specified.
 
 ### Transaction Dynamic Loops
 

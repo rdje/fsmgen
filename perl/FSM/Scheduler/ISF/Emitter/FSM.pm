@@ -270,6 +270,9 @@ sub _emit_transitions($self, $state) {
     }
 
     if ($state->{kind} eq 'loop_while' || $state->{kind} eq 'loop_until') {
+        return map { $self->_emit_simple_transition($_) } @$txs
+            if $state->{loop_transitions_materialized};
+
         my $cond = $state->{condition};
         my $cond_str = !ref($cond) ? $cond : _format_expr($cond);
         push @lines, "    (?$cond_str";

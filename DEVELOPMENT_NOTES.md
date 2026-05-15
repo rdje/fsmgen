@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: loop-body dynamic waits materialize loop decisions
+- A loop decision can be a dynamic-wait predecessor only for the branch that
+  actually targets the wait. The opposite branch must remain visible and
+  unchanged: `while` false exits still exit, and `until` true exits still exit.
+- The lowerer therefore materializes loop decisions only when one of their
+  outgoing targets is a runtime dynamic wait. Ordinary loops keep the compact
+  `(?cond (=1 ...) (=0 ...))` scheduled `.fsm` form.
+- For `while`, both the entry decision and the back-edge decision can target
+  the first body state. If that state is a runtime wait, the true branch owns
+  the positive-count counter load/entry and zero-count bypass paths.
+- For `until`, the first body entry is handled by the normal predecessor edge,
+  while the decision state's false back-edge reloads or bypasses the runtime
+  wait for the next iteration.
+- Loop exits that fall through to a following runtime wait can now use the same
+  materialized decision shape, preserving the loop branch while splitting the
+  exit branch into wait load/bypass paths.
 ## 2026-05-15: switch-branch dynamic waits materialize only when needed
 - The compact switch rendering is still the clean review form for ordinary
   switches. A switch state is materialized into explicit guarded transitions

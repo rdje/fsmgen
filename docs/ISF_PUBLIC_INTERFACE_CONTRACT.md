@@ -350,20 +350,17 @@ The transaction wait boundary is checked by
 so `(wait N)` accepts non-negative integer literals and actor constants in
 transaction body contexts, lowers positive resolved counts to reviewable fixed
 wait-state chains, treats resolved zero as a transparent no-op, accepts the
-top-level known-width runtime scalar count subset including consecutive
-top-level runtime waits and waits after shipped `await`, `stage`, `repeat`
-exit, `await_all`, and `await_any` predecessors, reaches HDL generation,
-exposes `actor_constants[]` and `transaction_waits[]` provenance, and rejects
-malformed, unknown, parameter-backed, expression-valued, or unsupported
-dynamic counts. Inline `when` body dynamic waits are covered for the
-no-pending-sample subset, and inline `repeat` body dynamic waits are covered
-for the no-pending-sample subset. Inline `switch` branch dynamic waits are
-covered for the no-pending-sample subset: the selected case's positive-count
-path loads/enters the generated wait, its zero-count path bypasses to the next
-branch body state, other cases remain selectable, and implicit fallthrough is
-guarded by the complement of the explicit switch values. Unsupported inline
-dynamic wait contexts are covered for `while` and `until` bodies with
-diagnostics that name the rejected body context.
+known-width runtime scalar count subset including consecutive top-level
+runtime waits and waits after shipped `await`, `stage`, `repeat`
+exit, `await_all`, `await_any`, and loop-decision predecessors, reaches HDL
+generation, exposes `actor_constants[]` and `transaction_waits[]` provenance,
+and rejects malformed, unknown, parameter-backed, expression-valued, or
+unsupported dynamic counts. Inline `when`, `repeat`, `switch`, `while`, and
+`until` body dynamic waits are covered for the no-pending-sample subset. Branch
+and loop decision states preserve their alternate exits while splitting the
+selected dynamic-wait edge into positive-count load/entry and zero-count
+bypass paths. Pending samples before inline dynamic waits remain fail-closed
+with diagnostics that name the body context.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test
@@ -1335,12 +1332,13 @@ These are not stable public interfaces yet:
   Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
   broader static conflict diagnostics, richer report fields, and full
   expression width inference remain deferred follow-on port-binding work.
-- Transaction control-flow behavior beyond shipped non-negative-literal
+- Transaction control-flow behavior beyond shipped static/symbolic/runtime
   `(wait N)` and top-level transaction `(while cond body...)` /
-  `(until cond body...)` remains non-public. Dynamic/symbolic waits, nested
-  loops, and loop bodies containing child activation, stages, or contracts
-  need parser, lowering, report, and regression-backed contracts before
-  downstream users can rely on them.
+  `(until cond body...)` remains non-public. Pending samples before runtime
+  waits, expression-valued runtime wait counts, nested loops, and loop bodies
+  containing child activation, stages, or contracts need parser, lowering,
+  report, and regression-backed contracts before downstream users can rely on
+  them.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

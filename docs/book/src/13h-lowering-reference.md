@@ -410,10 +410,45 @@ The positive selected-case path samples the runtime count and enters the wait.
 The zero selected-case path bypasses the wait to the next state in that branch
 body. Values not listed by the author take the guarded fallthrough edge.
 
-Runtime waits remain fail-closed in inline `while` and `until` bodies, with
-diagnostics that name the rejected body context. They also remain fail-closed
-after pending samples, after predecessor states whose edge split is not
-implemented yet, including loop decision states, and for expression-valued or
+Runtime waits in `while` bodies are supported when no pending sample must
+cross the wait. If the first body state is a runtime wait, both the entry
+decision and the back-edge decision split the true branch into positive-count
+counter load/entry and zero-count bypass paths. The false branch still exits
+the loop:
+
+```lisp
+(main_while_entry_1
+  (<- (main_wait_2_cnt cycles) <(& keep cycles))
+  (-> main_wait_2 <(& keep cycles))
+  (-> main_drive_3 <(& keep (== cycles 0)))
+  (-> main_done_5 <(! keep)))
+
+(main_while_check_4
+  (<- (main_wait_2_cnt cycles) <(& keep cycles))
+  (-> main_wait_2 <(& keep cycles))
+  (-> main_drive_3 <(& keep (== cycles 0)))
+  (-> main_done_5 <(! keep)))
+```
+
+Runtime waits in `until` bodies are also supported for the no-pending-sample
+subset. The first trip through the body uses the predecessor edge that enters
+the body. The `until` decision's true path still exits, while the false
+back-edge reloads or bypasses the wait for the next iteration:
+
+```lisp
+(main_until_check_3
+  (-> main_done_4 <stop)
+  (<- (main_wait_1_cnt cycles) <(& (! stop) cycles))
+  (-> main_wait_1 <(& (! stop) cycles))
+  (-> main_drive_2 <(& (! stop) (== cycles 0))))
+```
+
+Loop decision states can also split a following runtime wait on loop exit. For
+a `while` followed by `(wait cycles)`, the true branch still loops to the
+body, while the false exit branch samples or bypasses the following wait.
+
+Runtime waits remain fail-closed after pending samples, after predecessor
+states whose edge split is not implemented yet, and for expression-valued or
 parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
