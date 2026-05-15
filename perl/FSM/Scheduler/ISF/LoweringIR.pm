@@ -2200,17 +2200,21 @@ sub _validate_loop_clause {
 sub _validate_wait_clause {
     my ($clause, $tn, $label, $actor) = @_;
 
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n"
+    _confess_wait_requires($tn, $label)
         unless @$clause == 2
-            && defined($clause->[1])
-            && !ref($clause->[1]);
+            && defined($clause->[1]);
 
     if (defined $actor) {
         _wait_cycles($clause, $tn, $label, $actor);
     } else {
         my $count = $clause->[1];
-        confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n"
-            unless defined(_non_negative_integer_from_literal($count)) || _is_hdl_identifier($count);
+        if (ref($count)) {
+            _confess_wait_requires($tn, $label)
+                unless _is_wait_expression_shape($count);
+        } else {
+            _confess_wait_requires($tn, $label)
+                unless defined(_non_negative_integer_from_literal($count)) || _is_hdl_identifier($count);
+        }
     }
 
     return 1;
@@ -2226,47 +2230,111 @@ sub _wait_cycles {
 sub _wait_count_spec {
     my ($clause, $tn, $label, $actor, $widths, $allow_dynamic) = @_;
 
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n"
+    _confess_wait_requires($tn, $label)
         unless @$clause == 2
-            && defined($clause->[1])
-            && !ref($clause->[1]);
+            && defined($clause->[1]);
 
     my $count = $clause->[1];
-    my $literal_value = _non_negative_integer_from_literal($count);
-    return {
-        kind   => 'static',
-        cycles => $literal_value,
-        source => $count,
-    } if defined $literal_value;
+    if (!ref($count)) {
+        my $literal_value = _non_negative_integer_from_literal($count);
+        return {
+            kind   => 'static',
+            cycles => $literal_value,
+            source => $count,
+        } if defined $literal_value;
 
-    if (_is_hdl_identifier($count)) {
-        my $constant = _actor_constant_by_name($actor, $count);
-        if ($constant) {
-            my $constant_value = _non_negative_integer_from_literal($constant->{value});
-            confess "Transaction '$tn': wait constant '$count' must resolve to a non-negative integer literal in $label\n"
-                unless defined $constant_value;
-            return {
-                kind   => 'static',
-                cycles => $constant_value,
-                source => $count,
-            };
+        if (_is_hdl_identifier($count)) {
+            my $constant = _actor_constant_by_name($actor, $count);
+            if ($constant) {
+                my $constant_value = _non_negative_integer_from_literal($constant->{value});
+                confess "Transaction '$tn': wait constant '$count' must resolve to a non-negative integer literal in $label\n"
+                    unless defined $constant_value;
+                return {
+                    kind   => 'static',
+                    cycles => $constant_value,
+                    source => $count,
+                };
+            }
+
+            my $width = _dynamic_wait_source_width($count, $widths);
+            if (defined $width) {
+                confess "Transaction '$tn': runtime dynamic wait count '$count' is not supported in $label in the current dynamic-wait slice\n"
+                    unless $allow_dynamic;
+                return {
+                    kind   => 'runtime_scalar',
+                    source => $count,
+                    width  => $width,
+                };
+            }
+
+            confess "Transaction '$tn': wait count '$count' is neither a declared actor constant nor a known-width runtime scalar in $label\n";
         }
 
-        my $width = _dynamic_wait_source_width($count, $widths);
+        _confess_wait_requires($tn, $label);
+    }
+
+    if (_is_wait_expression_shape($count)) {
+        my $source = _format_isf_expr($count);
+        confess "Transaction '$tn': runtime dynamic wait count expression '$source' must use a supported expression operator shape in $label\n"
+            unless _is_supported_wait_expression_shape($count);
+
+        my $unknown_ref = _first_unknown_wait_expression_ref($count, $widths);
+        confess "Transaction '$tn': runtime dynamic wait count expression '$source' references unknown-width signal '$unknown_ref' in $label\n"
+            if defined $unknown_ref;
+
+        my $width = _wait_expression_width($count, $widths);
         if (defined $width) {
-            confess "Transaction '$tn': runtime dynamic wait count '$count' is not supported in $label in the current dynamic-wait slice\n"
+            confess "Transaction '$tn': runtime dynamic wait count expression '$source' is not supported in $label in the current dynamic-wait slice\n"
                 unless $allow_dynamic;
             return {
-                kind   => 'runtime_scalar',
-                source => $count,
+                kind   => 'runtime_expression',
+                source => $source,
                 width  => $width,
             };
         }
 
-        confess "Transaction '$tn': wait count '$count' is neither a declared actor constant nor a known-width runtime scalar in $label\n";
+        confess "Transaction '$tn': runtime dynamic wait count expression '$source' must have a known positive width in $label\n";
     }
 
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n";
+    _confess_wait_requires($tn, $label);
+}
+
+sub _confess_wait_requires {
+    my ($tn, $label) = @_;
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_known_width_runtime_scalar_or_expression)' in $label\n";
+}
+
+sub _is_wait_expression_shape {
+    my ($count) = @_;
+    return ref($count) eq 'ARRAY' && @$count;
+}
+
+sub _is_supported_wait_expression_shape {
+    my ($expr) = @_;
+    return 1 unless ref($expr);
+    return 0 unless ref($expr) eq 'ARRAY' && @$expr;
+
+    my $op = $expr->[0];
+    return 0 unless defined($op) && !ref($op);
+
+    my @operands = grep { defined($_) } @{$expr}[1 .. $#$expr];
+    return 0 unless @operands == @$expr - 1;
+    return 0 unless _wait_expression_operator_accepts_arity($op, scalar(@operands));
+
+    for my $operand (@operands) {
+        return 0 unless _is_supported_wait_expression_shape($operand);
+    }
+
+    return 1;
+}
+
+sub _wait_expression_operator_accepts_arity {
+    my ($op, $arity) = @_;
+    return $arity >= 1 if $op eq 'concat';
+    return $arity == 1 if $op =~ /\A(?:!|~)\z/;
+    return $arity == 2 if $op =~ /\A(?:<<|>>)\z/;
+    return $arity >= 2 if $op =~ /\A(?:\+|-|\*|\/|%|&|\||\^|==|!=|<|<=|>|>=|&&|\|\|)\z/;
+    return 0;
 }
 
 sub _dynamic_wait_source_width {
@@ -2276,6 +2344,30 @@ sub _dynamic_wait_source_width {
     return undef unless exists($widths->{$source});
 
     my $width = $widths->{$source};
+    return undef unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
+    return 0 + $width;
+}
+
+sub _first_unknown_wait_expression_ref {
+    my ($expr, $widths) = @_;
+    return undef unless ref($widths) eq 'HASH';
+
+    my %seen;
+    for my $ref (_activation_binding_expr_signals($expr)) {
+        next if $seen{$ref}++;
+        return $ref unless exists($widths->{$ref})
+            && defined($widths->{$ref})
+            && !ref($widths->{$ref})
+            && $widths->{$ref} =~ /\A[1-9][0-9]*\z/;
+    }
+
+    return undef;
+}
+
+sub _wait_expression_width {
+    my ($expr, $widths) = @_;
+    return undef unless ref($widths) eq 'HASH';
+    my $width = _activation_binding_expr_width($expr, $widths);
     return undef unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
     return 0 + $width;
 }
@@ -2541,7 +2633,7 @@ sub _ir_dynamic_wait {
         ],
         transitions          => [],
         wait_entry           => 1,
-        wait_count_kind      => 'runtime_scalar',
+        wait_count_kind      => $wait_spec->{kind},
         wait_count_source    => $wait_spec->{source},
         wait_counter         => $counter,
         wait_counter_width   => $wait_spec->{width},
@@ -2752,7 +2844,7 @@ sub _ir_extract {
 sub _format_isf_expr {
     my ($expr) = @_;
     return $expr unless ref($expr) eq 'ARRAY';
-    return '(' . join(' ', map { _format_isf_expr($_) } @$expr) . ')';
+    return '(' . join(' ', map { _format_isf_expr($_) } grep { defined($_) } @$expr) . ')';
 }
 
 sub _parse_bank_access_for_lowering {

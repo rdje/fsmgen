@@ -23,7 +23,6 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-DYNAMIC-WAIT` | `active` | `R14` | `ISF-DYNAMIC-WAIT.3.3.6` | [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
 ## Proposed Task Trees
@@ -40,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md) |
 | `ISF-ACTIVATION-BIND-EXPRESSIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md) |
 | `COMPOSITION-WIRING-LISPISH` | `done` | `R11` | `closed` | [docs/tasks/COMPOSITION-WIRING-LISPISH.md](docs/tasks/COMPOSITION-WIRING-LISPISH.md) |
 | `ISF-WAIT-ZERO` | `done` | `R14` | `closed` | [docs/tasks/ISF-WAIT-ZERO.md](docs/tasks/ISF-WAIT-ZERO.md) |

@@ -738,7 +738,8 @@ Current transaction clauses:
 - `(await port)` and `(await port (watchdog N))`
 - `(sample port as name)`
 - `(wait N)` for an unconditional exact-cycle delay with a non-negative static
-  literal, actor constant, or bounded runtime scalar count
+  literal, actor constant, bounded runtime scalar count, or bounded runtime
+  expression count
 - `(while cond body...)`
 - `(until cond body...)`
 - `(repeat count body...)`
@@ -1040,9 +1041,9 @@ does not create one child instance per iteration.
 `(await cond)` and `(repeat count body...)`. It does not test an external
 condition and it does not repeat a body. The shipped static count surface
 accepts either a non-negative integer literal or an actor constant name that
-resolves before lowering to a non-negative integer literal. The runtime scalar
-surface accepts a known-width scalar count name in contexts whose predecessor
-edge can be split safely.
+resolves before lowering to a non-negative integer literal. The runtime count
+surface accepts a known-width scalar count name or a known-width non-empty
+list expression in contexts whose predecessor edge can be split safely.
 
 Cycle semantics:
 - `wait 0` means no delay. It emits no wait state, consumes no active
@@ -1072,18 +1073,21 @@ materialize on the next state-producing clause. The wait surface is accepted
 at the top level of a transaction body and inside the currently shipped inline
 body contexts: `when`, `switch`, `repeat`, `while`, and `until` bodies.
 
-For the runtime scalar surface, `(wait count_signal)` is accepted when
-`count_signal` has a known unsigned width and no pending sample is waiting to
-be materialized before the wait. The
-predecessor state gets two explicit outgoing edges: `count_signal == 0`
-bypasses directly to the post-wait state, and `count_signal != 0` snapshots the
-current count into a generated wait counter and enters one generated wait
-state. The wait state decrements that sampled counter while active, exits when
-the sampled counter is `1`, and loops while it is greater than `1`. A sampled
-runtime value of `K > 0` therefore consumes exactly `K` active wait cycles, and
-later changes to `count_signal` do not affect that wait occurrence.
+For the runtime surface, `(wait count_signal)` is accepted when `count_signal`
+has a known unsigned width. `(wait (<op> ...))` is accepted when every signal
+referenced by the non-empty list expression has known width and the
+expression-width helper can derive a positive result width. Expression counts
+use the same predecessor-edge snapshot contract as scalar counts. The
+predecessor state gets two explicit outgoing edges: an effective count of zero
+bypasses directly to the post-wait state, and a non-zero effective count
+snapshots the current scalar or expression value into a generated wait counter
+and enters one generated wait state. The wait state decrements that sampled
+counter while active, exits when the sampled counter is `1`, and loops while
+it is greater than `1`. A sampled runtime value of `K > 0` therefore consumes
+exactly `K` active wait cycles, and later changes to the source scalar or
+expression operands do not affect that wait occurrence.
 
-Consecutive top-level runtime scalar waits are supported by carrying the same
+Consecutive top-level runtime waits are supported by carrying the same
 edge split through the wait chain. If the first runtime count is zero, the
 activation edge immediately evaluates the next runtime wait's zero-bypass or
 positive sampled-counter path. If the first wait is active, its final sampled
@@ -1125,7 +1129,7 @@ no-pending-sample subset. The initial predecessor enters or bypasses the first
 body wait, the `until` true path exits, and the false loop-back path reloads
 or bypasses the runtime wait for the next iteration. Runtime waits after
 pending samples, after predecessor states whose edge split is not implemented
-yet, and counts expressed as list expressions or parameter-backed values remain
+yet, and malformed, unknown-width, or parameter-backed count expressions remain
 rejected.
 
 Pending samples before top-level runtime waits are supported for the first
@@ -1151,21 +1155,24 @@ cannot yet carry pending samples without changing timing fail closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
-- Negative literals, non-integer literals, list expressions, unknown constant
-  names, actor/transaction parameter names, unknown-width dynamic names, and
-  unsupported dynamic wait contexts fail closed.
+- Negative literals, non-integer literals, unknown constant names,
+  actor/transaction parameter names, unknown-width dynamic scalar names,
+  malformed or unknown-width dynamic expressions, and unsupported dynamic wait
+  contexts fail closed.
 - Waits outside transaction body contexts are invalid.
 
 Successful schedule reports expose a bounded `transaction_waits[]` summary
 rather than raw lowering internals. Each entry contains `transaction`,
 `cycles`, `count_kind`, `count_source`, `entry_state`, `exit_state`,
 `counter_signal`, and `counter_width`. Only positive static waits and accepted
-runtime scalar waits create entries. Static waits report `count_kind` as
+runtime waits create entries. Static waits report `count_kind` as
 `static`, `cycles` as the resolved positive integer, `count_source` as the
 literal or actor constant name, and `counter_signal`/`counter_width` as JSON
-null. Runtime scalar waits report `count_kind` as `runtime_scalar`, `cycles` as
-JSON null, `count_source` as the scalar count signal, and the generated counter
-name/width through `counter_signal` and `counter_width`.
+null. Runtime scalar waits report `count_kind` as `runtime_scalar`; runtime
+expression waits report `count_kind` as `runtime_expression` and keep the
+normalized expression text in `count_source`. Both runtime forms keep `cycles`
+as JSON null and expose the generated counter name/width through
+`counter_signal` and `counter_width`.
 
 ### 7.7 Inline Control Flow
 
@@ -1901,17 +1908,20 @@ transaction's `states` array keeps scheduled `.fsm` state emission order. The
 capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
 The `transaction_waits` array reports the shipped literal `(wait N)` surface,
-actor-constant `(wait NAME)` surface, and bounded runtime scalar
-`(wait count_signal)` surface, including accepted top-level, `when` body,
+actor-constant `(wait NAME)` surface, bounded runtime scalar
+`(wait count_signal)` surface, and bounded runtime expression
+`(wait (<op> ...))` surface, including accepted top-level, `when` body,
 `repeat` body, `switch` branch, `while` body, and `until` body contexts.
 Positive static waits report the authored transaction name, exact resolved
 cycle count, count kind/source, entry wait state, exit state after the wait
-chain, and null counter metadata. Runtime
-scalar waits report the authored transaction name, null `cycles`,
-`runtime_scalar` count kind, source signal, entry/exit states, and generated
-counter name/width. `(wait 0)` and symbolic waits that resolve to zero are
-transparent no-ops and create no entry. The capability-manifest ISF public
-contract advertises the keys through `schedule_report_transaction_wait_keys`.
+chain, and null counter metadata. Runtime waits report the authored
+transaction name, null `cycles`, `runtime_scalar` or `runtime_expression`
+count kind, source signal or normalized expression text, entry/exit states,
+and generated counter name/width. `(wait 0)` and symbolic waits that resolve
+to zero are transparent no-ops and create no entry. The capability-manifest
+ISF public contract advertises the keys through
+`schedule_report_transaction_wait_keys` and the count-kind values through
+`schedule_report_transaction_wait_count_kind_values`.
 The `transaction_loops` array reports the shipped top-level `while`/`until`
 loop subset. Each entry contains the authored transaction name, loop `kind`,
 normalized `condition`, loop entry state, generated decision states, body
@@ -2220,10 +2230,10 @@ Focused tests:
   parameter-derived storage dimensions, memory-array backend emission, and
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,
-  actor-constant, and bounded runtime scalar `(wait N)` shapes:
-  pending-sample preservation, expression-valued counts, parameter-backed
-  counts, and any remaining predecessor-edge splits remain deferred until
-  their timing and diagnostics are implemented.
+  actor-constant, bounded runtime scalar, and bounded runtime expression
+  `(wait N)` shapes: parameter-backed counts, unknown-width expressions, and
+  any remaining predecessor-edge or sample-incompatible successor splits remain
+  deferred until their timing and diagnostics are implemented.
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
   `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict

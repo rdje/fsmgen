@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF runtime expression wait counts
+- Completed and closed `ISF-DYNAMIC-WAIT.3.3.6` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Runtime `(wait (<op> ...))` now accepts known-width non-empty list
+  expressions. Every referenced signal must have a known positive width and
+  the expression-width helper must derive a positive result width.
+- Expression counts use the same predecessor-edge snapshot contract as scalar
+  runtime waits: positive paths load the generated wait counter from the
+  normalized expression and zero paths compare that same expression against
+  zero.
+- `transaction_waits[]` now reports expression counts with `count_kind`
+  `runtime_expression`, null `cycles`, normalized `count_source`, and the
+  generated counter signal/width.
+- Unknown-width or malformed expression counts and parameter-backed counts
+  remain fail-closed. The next active R14 frontier is
+  `ISF-PUBLIC-CONTRACT.1`.
 ## 2026-05-15: Bootstrap import tree refreshed
 - Re-ran the `README.md` / `SESSION_BOOTSTRAP.md` startup pass before new
   feature work.
@@ -198,9 +214,10 @@ This is the live continuity document for fast session recovery after crashes, re
   `counter_width`; runtime scalar waits keep `cycles` null and name their
   generated `counter_signal`.
 - Pending samples before runtime waits, inline dynamic wait contexts,
-  unsupported predecessor kinds, count expressions, and parameter-backed counts
-  remain fail-closed. Consecutive runtime waits later shipped under
-  `ISF-DYNAMIC-WAIT.3.3.2`; the current frontier is recorded in the latest
+  unsupported predecessor kinds, expression counts, and parameter-backed counts
+  remained fail-closed in this slice. Consecutive runtime waits later shipped
+  under `ISF-DYNAMIC-WAIT.3.3.2`; expression counts later shipped under
+  `ISF-DYNAMIC-WAIT.3.3.6`; the current frontier is recorded in the latest
   dynamic-wait entry above.
 ## 2026-05-15: ISF runtime dynamic wait split
 - Split `ISF-DYNAMIC-WAIT.3` into executable leaves in

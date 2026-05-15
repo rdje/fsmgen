@@ -320,6 +320,62 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic');
 };
 
+subtest 'runtime expression wait snapshots a known-width expression count' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-expression');
+(actor wait_dynamic_expression
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input bias (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (wait (+ cycles bias))
+    (drive tick)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_expression.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(<- \(main_wait_1_cnt \(\+ cycles bias\)\) <\(& start \(\+ cycles bias\)\)\)/,
+        'predecessor edge snapshots the runtime expression only on the positive-count path');
+    like($idle, qr/\(-> main_wait_1 <\(& start \(\+ cycles bias\)\)\)/,
+        'positive runtime expression enters the generated wait state');
+    like($idle, qr/\(-> main_drive_2 <\(& start \(== \(\+ cycles bias\) 0\)\)\)/,
+        'zero runtime expression bypasses the generated wait state');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(-- main_wait_1_cnt\)/, 'dynamic expression wait decrements the sampled counter while active');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_drive_2\)\)/,
+        'sampled expression count of one exits after one active wait cycle');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(>1 \(-> main_wait_1\)\)/,
+        'sampled expression counts greater than one loop in the wait state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_expression',
+                count_source   => '(+ cycles bias)',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_drive_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'dynamic wait report exposes runtime expression count and counter provenance',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_expression');
+};
+
 subtest 'top-level runtime scalar waits preserve pending samples' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample');
 (actor wait_dynamic_sample
@@ -1384,7 +1440,7 @@ ISF
 };
 
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_missing_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -1395,7 +1451,7 @@ subtest 'malformed wait clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_extra_operand
   (clock clk)
   (reset (rst_n async active_low))
@@ -1406,7 +1462,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_negative_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -1425,6 +1481,17 @@ ISF
   (transaction main
     (on start)
     (wait cycles)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'unknown runtime expression wait signal', qr/\ATransaction 'main': runtime dynamic wait count expression '\(\+ cycles missing\)' references unknown-width signal 'missing' in transaction body/);
+(actor wait_unknown_expression_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input cycles (width 4)) (output done))
+  (transaction main
+    (on start)
+    (wait (+ cycles missing))
     (complete done)))
 ISF
 
@@ -1511,7 +1578,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in when body/);
+    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': runtime dynamic wait count expression '\(cycles\)' must use a supported expression operator shape in when body/);
 (actor wait_nested_list_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -1520,6 +1587,17 @@ ISF
     (on start)
     (when cond
       (wait (cycles)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'empty runtime expression wait count', qr/\ATransaction 'main': runtime dynamic wait count expression '\(\+\)' must use a supported expression operator shape in transaction body/);
+(actor wait_empty_expression_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (wait (+))
     (complete done)))
 ISF
 

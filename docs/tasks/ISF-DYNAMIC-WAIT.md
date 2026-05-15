@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-DYNAMIC-WAIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-15`
 - Last updated: `2026-05-15`
@@ -16,8 +16,8 @@ changing the exact timing meaning of the shipped wait construct.
 
 ## Non-Goals
 
-- Do not accept runtime dynamic wait counts as public syntax until the lowerer
-  preserves exact zero-count behavior in every shipped wait context.
+- Do not accept a runtime dynamic wait count or context as public syntax until
+  the lowerer preserves exact zero-count behavior for that shipped surface.
 - Do not treat dynamic waits as `(await ...)`; waits have no external ready
   condition and do not consume watchdogs.
 - Do not let a generated counter silently change pending-sample timing.
@@ -26,8 +26,8 @@ changing the exact timing meaning of the shipped wait construct.
 ## Acceptance Criteria
 
 - Non-literal wait-count classes are specified before implementation:
-  statically resolved symbolic counts, runtime scalar counts, and rejected
-  expression/count shapes.
+  statically resolved symbolic counts, runtime scalar counts, runtime
+  expression counts, and rejected parameter/unknown-width count shapes.
 - The mdBook, ISF spec, roadmap, task tree, and live docs distinguish shipped
   literal waits from the planned non-literal surfaces.
 - Symbolic count implementation, when selected, resolves to the same fixed
@@ -36,12 +36,16 @@ changing the exact timing meaning of the shipped wait construct.
   wait entry, preserves exact `count == 0` fallthrough behavior, has explicit
   counter width/reset/report semantics, and fails closed where those guarantees
   are not possible.
+- Dynamic expression implementation, when selected, proves positive expression
+  width, snapshots the expression on the same predecessor edge as scalar
+  dynamic waits, reports distinct count-kind metadata, and fails closed for
+  unknown-width or malformed expressions.
 - Each completed leaf is validated and committed through `COMMIT.md`.
 
 ## Task Tree
 
 - ID: `ISF-DYNAMIC-WAIT`
-  Status: `active`
+  Status: `done`
   Goal: `Ship non-literal transaction wait counts without changing wait timing.`
   Children: `ISF-DYNAMIC-WAIT.1`, `ISF-DYNAMIC-WAIT.2`,
   `ISF-DYNAMIC-WAIT.3`
@@ -67,8 +71,8 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.2: ship symbolic waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3`
-  Status: `active`
-  Goal: `Implement runtime scalar dynamic wait counts.`
+  Status: `done`
+  Goal: `Implement runtime dynamic wait counts.`
   Children: `ISF-DYNAMIC-WAIT.3.1`, `ISF-DYNAMIC-WAIT.3.2`,
   `ISF-DYNAMIC-WAIT.3.3`
 
@@ -94,7 +98,7 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.2: ship runtime scalar waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3`
-  Status: `active`
+  Status: `done`
   Goal: `Expand runtime dynamic wait contexts after the first lowering works.`
   Children: `ISF-DYNAMIC-WAIT.3.3.1`, `ISF-DYNAMIC-WAIT.3.3.2`,
   `ISF-DYNAMIC-WAIT.3.3.3`, `ISF-DYNAMIC-WAIT.3.3.4`,
@@ -199,8 +203,8 @@ changing the exact timing meaning of the shipped wait construct.
   and zero/positive runtime wait paths either share one exact sample
   materialization contract or remain explicitly fail-closed with diagnostics
   and book coverage.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.5.4: preserve loop wait samples`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.5.1`
   Status: `done`
@@ -243,19 +247,21 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.5.4: preserve loop wait samples`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.6`
-  Status: `pending`
+  Status: `done`
   Goal: `Evaluate expression-valued runtime wait counts.`
-  Acceptance: Expression-valued count expansion has a width/type/snapshot
-  contract and either ships through a generated count temporary or stays
-  fail-closed with diagnostics and book coverage.
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: Expression-valued runtime count expansion accepts known-width
+  non-empty list expressions, validates referenced signal widths, snapshots
+  the normalized expression into the generated wait counter on the predecessor
+  edge, reports `runtime_expression`, and fails closed for unknown-width or
+  malformed expressions.
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.6: ship expression waits`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3.6` | `pending` | Expression-valued runtime counts are the remaining dynamic-wait expansion family after pending-sample preservation. |
+| 1 | `closed` | `done` | `ISF-DYNAMIC-WAIT.3.3.6` completed; next active R14 tree is `ISF-PUBLIC-CONTRACT`. |
 
 ## Decisions
 
@@ -270,9 +276,9 @@ changing the exact timing meaning of the shipped wait construct.
   for the current wait occurrence. Later changes to the source signal do not
   change that occurrence's remaining wait.
 - `2026-05-15`: Dynamic wait counters must use known widths. Unknown-width
-  sources, signed negative values, list-expression counts, and unsupported
-  count expressions fail closed until their type and timing contracts are
-  specified.
+  sources, signed negative values, malformed list-expression counts, and
+  unknown-width expression counts fail closed until their type and timing
+  contracts are specified.
 - `2026-05-15`: Dynamic wait report metadata must not overload the existing
   exact `cycles` integer. Static waits keep `cycles` as an integer. Dynamic
   waits need explicit count-kind/count-source/counter metadata when they ship.
@@ -373,11 +379,24 @@ changing the exact timing meaning of the shipped wait construct.
   positive sample-carrying wait entry and zero sample-preserving clone paths.
   Repeat check loop-back/exit behavior, `while` false exits, and `until` true
   exits remain unchanged.
+- `2026-05-15`: Runtime expression waits use the same predecessor-edge
+  snapshot contract as runtime scalar waits. The lowerer accepts non-empty
+  list expressions only when every referenced signal has a known positive
+  width and the expression-width helper derives a positive result width. The
+  normalized expression text is loaded directly into the generated wait
+  counter on the positive-count path, the zero-count path compares the same
+  expression against zero, and schedule reports distinguish the surface with
+  `count_kind` `runtime_expression`.
+- `2026-05-15`: Unknown-width expression operands and malformed expressions
+  stay fail-closed with diagnostics that name the normalized expression and
+  transaction body context. Parameter-backed wait counts remain deferred
+  because they are overrideable specialization values, not runtime payload
+  signals.
 
 ## Open Questions
 
-- None for the next frontier. Runtime expressions beyond scalar names are a
-  later expansion under `ISF-DYNAMIC-WAIT.3.3`.
+- None for this tree. Parameter-backed wait counts and any future broader
+  expression/typing expansion need a fresh explicit task.
 
 ## Blockers
 
@@ -403,6 +422,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.6` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -424,6 +444,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.3.3.5.2` | `ISF-DYNAMIC-WAIT.3.3.5.2: preserve top-level wait samples` | Supports pending samples before top-level runtime waits with one-shot positive sampling and a zero-count sample-preserving clone for sample-compatible successors. |
 | `ISF-DYNAMIC-WAIT.3.3.5.3` | `ISF-DYNAMIC-WAIT.3.3.5.3: preserve branch wait samples` | Supports pending samples before `when`-body and `switch`-branch runtime waits while preserving alternate branch exits. |
 | `ISF-DYNAMIC-WAIT.3.3.5.4` | `ISF-DYNAMIC-WAIT.3.3.5.4: preserve loop wait samples` | Supports pending samples before `repeat`, `while`, and `until` runtime waits while preserving loop exits and back-edges. |
+| `ISF-DYNAMIC-WAIT.3.3.6` | `ISF-DYNAMIC-WAIT.3.3.6: ship expression waits` | Ships known-width runtime expression waits with `runtime_expression` report metadata and closes the tree. |
 
 ## Changelog
 
@@ -487,3 +508,9 @@ changing the exact timing meaning of the shipped wait construct.
   positive/zero paths for sample-compatible body successors while keeping
   loop-back and loop-exit behavior unchanged. The current frontier advances to
   `ISF-DYNAMIC-WAIT.3.3.6`.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.6`; known-width runtime
+  expression counts now snapshot into generated wait counters on the same
+  predecessor edge as scalar counts, schedule reports distinguish them with
+  `runtime_expression`, unknown-width/malformed expressions fail closed, and
+  the tree is closed. The next active R14 frontier is
+  `ISF-PUBLIC-CONTRACT.1`.

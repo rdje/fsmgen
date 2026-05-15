@@ -103,6 +103,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_temporal_contract_reset_policy_shape
     isf_public_interface_schedule_report_top_level_keys
     isf_public_interface_schedule_report_transaction_loop_keys
+    isf_public_interface_schedule_report_transaction_wait_count_kind_values
     isf_public_interface_schedule_report_transaction_wait_keys
     isf_public_interface_schedule_report_transaction_port_binding_keys
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
@@ -249,6 +250,7 @@ sub build_isf_public_interface_contract {
         schedule_report_transaction_ordering => isf_public_interface_schedule_report_transaction_ordering(),
         schedule_report_transaction_loop_keys => isf_public_interface_schedule_report_transaction_loop_keys(),
         schedule_report_transaction_wait_keys => isf_public_interface_schedule_report_transaction_wait_keys(),
+        schedule_report_transaction_wait_count_kind_values => isf_public_interface_schedule_report_transaction_wait_count_kind_values(),
         schedule_report_transaction_stage_keys => isf_public_interface_schedule_report_transaction_stage_keys(),
         schedule_report_transaction_stage_kind_values => isf_public_interface_schedule_report_transaction_stage_kind_values(),
         schedule_report_temporal_contract_keys => isf_public_interface_schedule_report_temporal_contract_keys(),
@@ -520,6 +522,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_transaction_ordering
             schedule_report_transaction_loop_keys
             schedule_report_transaction_wait_keys
+            schedule_report_transaction_wait_count_kind_values
             schedule_report_transaction_stage_keys
             schedule_report_transaction_stage_kind_values
             schedule_report_temporal_contract_keys
@@ -1298,6 +1301,16 @@ sub isf_public_interface_schedule_report_transaction_wait_keys {
             exit_state
             counter_signal
             counter_width
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_transaction_wait_count_kind_values {
+    return [
+        qw(
+            static
+            runtime_scalar
+            runtime_expression
         ),
     ];
 }

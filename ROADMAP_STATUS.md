@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: continue the active `ISF-DYNAMIC-WAIT` feature tree.
+- Next decision point: continue the active `ISF-PUBLIC-CONTRACT` feature tree.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
@@ -25,8 +25,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `while`/`until` bodies, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped top-level
   pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.5.3` shipped branch
   pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.5.4` shipped repeat/loop
-  pending-sample preservation, and the current frontier is
-  `ISF-DYNAMIC-WAIT.3.3.6`: evaluating expression-valued runtime wait counts.
+  pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.6` shipped
+  expression-valued runtime wait counts, and the `ISF-DYNAMIC-WAIT` tree is
+  now closed. The current frontier is `ISF-PUBLIC-CONTRACT.1`.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -35,7 +36,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   Rule-trigger and direct-activation parameter overrides remain backlog and
   need a fresh explicit tree/leaf before implementation.
   Standalone public interface stabilization/audit work is on hold for now;
-  keep the public contract synchronized only as part of shipping each feature.
+  `ISF-PUBLIC-CONTRACT` is now the active follow-on audit/synchronization tree.
 - ISF dynamic wait contract update: actor-level
   `(constants (NAME value) ...)` is shipped for non-negative integer constants,
   and `(wait NAME)` may now use those constants wherever literal waits are
@@ -44,8 +45,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   metadata. Actor/transaction `params` are not wait-count sources because they
   are overrideable specialization values. The first runtime scalar dynamic
   count subset is now shipped for known-width scalar count sources whose
-  predecessor edge split is implemented. Pending samples are supported for
-  top-level waits, `when`/`switch` branches, and `repeat`/`while`/`until`
+  predecessor edge split is implemented. Runtime expression counts are also
+  shipped when every referenced operand has known width and the expression
+  width helper derives a positive result width. Pending samples are supported
+  for top-level waits, `when`/`switch` branches, and `repeat`/`while`/`until`
   bodies when the selected zero-count successor can carry samples without
   changing timing.
 - ISF runtime dynamic wait lowering update: accepted runtime scalar waits load
@@ -68,9 +71,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   a separate no-resample wait-loop state when the sampled count is greater than
   one, while zero counts bypass to a sample-preserving clone of the following
   state when that state can carry samples without changing timing. Other
-  top-level zero-count successors, count expressions, parameter-backed counts,
-  and any remaining predecessor-edge splits remain fail-closed until their
-  exact bypass and snapshot behavior is implemented. Pending samples before
+  top-level zero-count successors, parameter-backed counts, unknown-width or
+  malformed count expressions, and any remaining predecessor-edge splits
+  remain fail-closed until their exact bypass and snapshot behavior is
+  implemented. Pending samples before
   `when`-body, `switch`-branch, `repeat`, `while`, and `until` runtime waits
   are now shipped for sample-compatible selected successors; incompatible
   selected successors remain fail-closed.
@@ -97,8 +101,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   path-specific materialization plan, `ISF-DYNAMIC-WAIT.3.3.5.2` shipped
   top-level runtime wait preservation, `ISF-DYNAMIC-WAIT.3.3.5.3` shipped
   branch runtime wait preservation, `ISF-DYNAMIC-WAIT.3.3.5.4` shipped repeat
-  and loop runtime wait preservation, and the next implementation leaf is
-  `ISF-DYNAMIC-WAIT.3.3.6` for expression-valued runtime counts.
+  and loop runtime wait preservation, `ISF-DYNAMIC-WAIT.3.3.6` shipped
+  expression-valued runtime counts, and the tree is closed.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -246,8 +250,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   top-level runtime waits with pending samples, `ISF-DYNAMIC-WAIT.3.3.5.3`
   shipped branch runtime waits with pending samples, and
   `ISF-DYNAMIC-WAIT.3.3.5.4` shipped repeat and loop runtime waits with
-  pending samples. The active frontier is `ISF-DYNAMIC-WAIT.3.3.6`:
-  expression-valued runtime counts.
+  pending samples. `ISF-DYNAMIC-WAIT.3.3.6` shipped expression-valued runtime
+  counts and closed the tree. The active frontier is `ISF-PUBLIC-CONTRACT.1`.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

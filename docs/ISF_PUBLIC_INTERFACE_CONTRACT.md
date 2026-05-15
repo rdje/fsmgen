@@ -350,12 +350,13 @@ The transaction wait boundary is checked by
 so `(wait N)` accepts non-negative integer literals and actor constants in
 transaction body contexts, lowers positive resolved counts to reviewable fixed
 wait-state chains, treats resolved zero as a transparent no-op, accepts the
-known-width runtime scalar count subset including consecutive top-level
-runtime waits and waits after shipped `await`, `stage`, `repeat`
-exit, `await_all`, `await_any`, and loop-decision predecessors, reaches HDL
-generation, exposes `actor_constants[]` and `transaction_waits[]` provenance,
-and rejects malformed, unknown, parameter-backed, expression-valued, or
-unsupported dynamic counts. Inline `when`, `repeat`, `switch`, `while`, and
+known-width runtime scalar and runtime expression count subsets including
+consecutive top-level runtime waits and waits after shipped `await`, `stage`,
+`repeat` exit, `await_all`, `await_any`, and loop-decision predecessors,
+reaches HDL generation, exposes `actor_constants[]` and
+`transaction_waits[]` provenance, and rejects malformed, unknown,
+parameter-backed, unknown-width expression, or unsupported dynamic counts.
+Inline `when`, `repeat`, `switch`, `while`, and
 `until` body dynamic waits are covered for the no-pending-sample subset. Branch
 and loop decision states preserve their alternate exits while splitting the
 selected dynamic-wait edge into positive-count load/entry and zero-count
@@ -1084,6 +1085,7 @@ actor_constants entries: name, value
 inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
+transaction_waits count_kind values: static, runtime_scalar, runtime_expression
 transaction_loops entries: transaction, kind, condition, entry_state, decision_states, body_start, body_states, exit_state, body_clause_count
 transaction_stages entries: transaction, name, kind, state, ready, valid
 temporal_contracts entries: transaction, name, kind, trigger, signal, within_cycles, pending_signal, counter_signal, fail_signal, overlap_policy, reset_policy, assertion_projection
@@ -1151,19 +1153,20 @@ runtime ports, not overrideable params, and not inferred storage.
 
 For each `transaction_waits` entry, `transaction` is the authored transaction
 name, `cycles` is the exact positive resolved static wait count or JSON null
-for runtime scalar waits, `count_kind` is `static` or `runtime_scalar`,
-`count_source` is the literal, actor constant name, or runtime scalar source
-signal, `entry_state` is the generated wait state, and `exit_state` is the
-following scheduled state after the wait. For consecutive runtime waits, that
-following scheduled state can be the next generated wait entry; the generated
-edge split may still bypass farther when the next runtime count is zero.
-Static waits report
-`counter_signal` and `counter_width` as JSON null. Runtime scalar waits report
+for runtime waits, `count_kind` is `static`, `runtime_scalar`, or
+`runtime_expression`, `count_source` is the literal, actor constant name,
+runtime scalar source signal, or normalized runtime expression text,
+`entry_state` is the generated wait state, and `exit_state` is the following
+scheduled state after the wait. For consecutive runtime waits, that following
+scheduled state can be the next generated wait entry; the generated edge split
+may still bypass farther when the next runtime count is zero. Static waits
+report `counter_signal` and `counter_width` as JSON null. Runtime waits report
 the generated sampled counter name and width through those fields. `(wait 0)`
 and symbolic waits that resolve to zero are no-ops and do not create report
 entries. Actor-local constants used by symbolic waits are reported separately
 through `actor_constants[]`. The machine-readable contract advertises these
-through `schedule_report_transaction_wait_keys`.
+through `schedule_report_transaction_wait_keys` and the count-kind value list
+through `schedule_report_transaction_wait_count_kind_values`.
 
 For each `transaction_loops` entry, `transaction` is the authored transaction
 name, `kind` is `while` or `until`, `condition` is the normalized guard text
@@ -1344,9 +1347,10 @@ These are not stable public interfaces yet:
   broader static conflict diagnostics, richer report fields, and full
   expression width inference remain deferred follow-on port-binding work.
 - Transaction control-flow behavior beyond shipped static/symbolic/runtime
-  `(wait N)` and top-level transaction `(while cond body...)` /
-  `(until cond body...)` remains non-public. Pending samples before runtime
-  waits, expression-valued runtime wait counts, nested loops, and loop bodies
+  scalar/runtime expression `(wait N)`, sample-compatible runtime wait pending
+  samples, and top-level transaction `(while cond body...)` /
+  `(until cond body...)` remains non-public. Parameter-backed wait counts,
+  sample-incompatible runtime wait successors, nested loops, and loop bodies
   containing child activation, stages, or contracts need parser, lowering,
   report, and regression-backed contracts before downstream users can rely on
   them.

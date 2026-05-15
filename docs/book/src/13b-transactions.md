@@ -244,13 +244,16 @@ iterate any authored actions.
   Runtime waits can also follow top-level `await`, `stage`, `repeat` exit
   checks, `await_all`, and `await_any`, where the predecessor's own advance
   condition is combined with the runtime count split.
+- `wait (<op> ...)`: use the same runtime zero-bypass and predecessor-edge
+  snapshot contract as scalar runtime waits when every referenced signal has
+  known width and the expression-width helper derives a positive result width.
 
 Pending samples immediately before a positive static wait piggyback onto the
 first wait state, using the same sample materialization rule as drive/await
 piggybacking. Pending samples immediately before `(wait 0)` are preserved and
 materialize on the next state-producing clause. Static waits do not introduce
 a hidden wait counter; the scheduled `.fsm` review artifact shows the exact
-fixed state chain for positive waits. Top-level runtime scalar waits preserve
+fixed state chain for positive waits. Top-level runtime waits preserve
 pending samples with path-specific materialization: the positive path samples
 in the first active wait state, then counts greater than one continue in a
 generated wait-loop state that does not repeat the sample. The zero path uses
@@ -280,12 +283,14 @@ cannot yet carry samples fail closed.
 Successful schedule reports include `transaction_waits[]` entries with
 `transaction`, `cycles`, `count_kind`, `count_source`, `entry_state`,
 `exit_state`, `counter_signal`, and `counter_width`. Only positive static
-waits and accepted runtime scalar waits create report entries. Static waits
-report the resolved integer in `cycles`; runtime scalar waits report
-`cycles` as null and expose the source/counter metadata instead. Malformed
-waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, unknown-width dynamic
-counts, expression counts, parameter-backed counts, and unsupported runtime
-contexts fail closed. Inline dynamic waits are supported in `when` and
+waits and accepted runtime waits create report entries. Static waits report
+the resolved integer in `cycles`; runtime scalar and runtime expression waits
+report `cycles` as null and expose the source/counter metadata instead.
+Expression waits use `count_kind` `runtime_expression` and keep the normalized
+expression in `count_source`. Malformed waits such as `(wait)`, `(wait 1 2)`,
+`(wait -1)`, unknown-width dynamic counts, unknown-width or malformed
+expression counts, parameter-backed counts, and unsupported runtime contexts
+fail closed. Inline dynamic waits are supported in `when` and
 `repeat` bodies, `switch` branches, and `while`/`until` bodies for the
 no-pending-sample subset. Pending samples are also supported for `when` bodies
 and `switch` branches when the selected zero-count successor can carry samples

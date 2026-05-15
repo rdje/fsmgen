@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF runtime expression wait counts
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.6`.
+- Runtime wait counts can now be known-width non-empty list expressions, not
+  only scalar count signals.
+- Positive paths snapshot the normalized expression into the generated wait
+  counter on the predecessor edge; zero paths compare the same expression
+  against zero and bypass the wait state.
+- `transaction_waits[]` reports expression counts as `runtime_expression` with
+  null `cycles`, normalized `count_source`, and generated counter metadata.
+- Unknown-width/malformed expressions and parameter-backed counts remain
+  fail-closed. `ISF-DYNAMIC-WAIT` is closed; the active R14 frontier advances
+  to `ISF-PUBLIC-CONTRACT.1`.
+
 ## 2026-05-15: Bootstrap — import tree snapshot refreshed
 - Re-ran the README/session-bootstrap import-tree sanity pass.
 - Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)

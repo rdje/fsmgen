@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF runtime expression wait counts
+- Completed `ISF-DYNAMIC-WAIT.3.3.6` and closed the dynamic-wait task tree.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so runtime wait counts can be known-width non-empty list expressions, not
+  only scalar count signals.
+- Expression counts use the same zero-bypass and positive-count snapshot edge
+  as scalar runtime waits. The generated wait counter is loaded from the
+  normalized expression text on the positive path, and the zero path compares
+  that same expression against zero.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  and
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  so schedule reports expose `runtime_expression` count-kind metadata.
+- Extended
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  with HDL-reaching expression-count coverage and unknown-width/malformed
+  expression diagnostics.
+- Refreshed the ISF spec, public contract, mdBook lowering/backlog chapters,
+  roadmap, task tree, and live continuity docs. The active R14 frontier moves
+  to `ISF-PUBLIC-CONTRACT.1`.
 ### Bootstrap — import tree snapshot refreshed
 - Re-ran the README/session-bootstrap startup analysis for
   [bin/fsmgen](bin/fsmgen) and its project-owned `FSM::...` import tree.

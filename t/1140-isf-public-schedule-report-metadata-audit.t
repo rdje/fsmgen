@@ -56,6 +56,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_transaction_port_binding_keys
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
     isf_public_interface_schedule_report_transaction_loop_keys
+    isf_public_interface_schedule_report_transaction_wait_count_kind_values
     isf_public_interface_schedule_report_transaction_wait_keys
     isf_public_interface_schedule_report_transaction_stage_keys
     isf_public_interface_schedule_report_transaction_stage_kind_values
@@ -159,6 +160,10 @@ sub assert_schedule_report_metadata {
         [
             schedule_report_transaction_wait_keys =>
                 isf_public_interface_schedule_report_transaction_wait_keys(),
+        ],
+        [
+            schedule_report_transaction_wait_count_kind_values =>
+                isf_public_interface_schedule_report_transaction_wait_count_kind_values(),
         ],
         [
             schedule_report_fanin_group_required_keys =>

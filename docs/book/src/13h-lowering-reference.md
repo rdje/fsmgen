@@ -395,10 +395,28 @@ runtime count check into one guard:
   (-> parent_done_5 <(& w0_done w1_done (== cycles 0))))
 ```
 
-Runtime scalar wait report entries use `count_kind` `runtime_scalar`, keep
-`cycles` null because the exact count is runtime data, name the source signal
-in `count_source`, and expose the generated counter through `counter_signal`
-and `counter_width`.
+Runtime wait report entries keep `cycles` null because the exact count is
+runtime data. Scalar counts use `count_kind` `runtime_scalar` and name the
+source signal in `count_source`. Expression counts use `count_kind`
+`runtime_expression` and keep the normalized expression text in
+`count_source`. Both forms expose the generated counter through
+`counter_signal` and `counter_width`.
+
+A known-width expression count uses the same predecessor-edge snapshot and
+zero-bypass contract. For example, `(wait (+ cycles bias))` lowers by loading
+the generated counter with the expression value only on the positive-count
+path:
+
+```lisp
+(main_idle_0
+  (<- (main_wait_1_cnt (+ cycles bias)) <(& start (+ cycles bias)))
+  (-> main_wait_1 <(& start (+ cycles bias)))
+  (-> main_drive_2 <(& start (== (+ cycles bias) 0))))
+```
+
+All signal operands referenced by the expression must have known width, and
+the expression-width helper must derive a positive result width. Unknown-width
+or malformed expressions fail closed before scheduled `.fsm` emission.
 
 Runtime waits in `when` bodies are supported. With no pending sample, if the
 wait is the first body state, the branch state carries the counter load and

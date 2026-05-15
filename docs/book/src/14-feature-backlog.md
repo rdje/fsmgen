@@ -370,9 +370,10 @@ behavior, and richer stage report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 
-Status: shipped base surface, actor-constant symbolic counts, and a bounded
-runtime scalar count subset. Remaining runtime contexts remain in the active
-`ISF-DYNAMIC-WAIT` task tree.
+Status: shipped base surface, actor-constant symbolic counts, bounded runtime
+scalar counts, bounded runtime expression counts, and pending-sample
+preservation for sample-compatible runtime wait successors. Remaining
+parameter-backed or unknown-width count shapes stay fail-closed.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
@@ -389,7 +390,8 @@ for one active cycle and advances on the next state transition; `wait N`
 contributes exactly `N` active cycles wherever it executes, including inside
 `when`, `switch`, `repeat`, `while`, and `until` bodies. The bounded runtime
 surface accepts `(wait count_signal)` when `count_signal` has known unsigned
-width and the predecessor edge can be split safely.
+width and `(wait (<op> ...))` when all referenced operands have known widths
+and the expression-width helper derives a positive result width.
 
 The static lowering is a reviewable fixed scheduled-state chain. No hidden
 wait counter is introduced for the static literal/constant surface. Pending
@@ -413,22 +415,22 @@ that edge while preserving the opposite loop branch.
 Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
 state, optional counter signal, and optional counter width. Static waits keep
-an integer `cycles`; runtime scalar waits keep `cycles` null and expose their
-source/counter metadata. Schedule reports also expose actor constants through
-`actor_constants[]`.
+an integer `cycles`; runtime scalar and runtime expression waits keep `cycles`
+null and expose their source/counter metadata with `count_kind`
+`runtime_scalar` or `runtime_expression`. Schedule reports also expose actor
+constants through `actor_constants[]`.
 
 Malformed waits such as missing counts, extra operands, negative counts,
-non-integer counts, list-expression counts, unknown constant names,
-actor/transaction parameter names, unknown-width dynamic names, or unsupported
-dynamic contexts fail closed today.
+non-integer counts, unknown constant names, actor/transaction parameter names,
+unknown-width dynamic names, malformed or unknown-width dynamic expressions, or
+unsupported dynamic contexts fail closed today.
 
-Remaining backlog: runtime scalar waits after any remaining predecessor kinds
-whose edge split is not implemented yet, top-level pending-sample zero
-bypasses whose successor cannot yet carry samples without changing timing,
-branch pending-sample zero bypasses whose successor cannot yet carry samples
-without changing timing, repeat/loop pending-sample zero bypasses whose
-successor cannot yet carry samples without changing timing, and
-expression-valued or parameter-backed counts.
+Remaining backlog: runtime waits after any remaining predecessor kinds whose
+edge split is not implemented yet, top-level pending-sample zero bypasses
+whose successor cannot yet carry samples without changing timing, branch
+pending-sample zero bypasses whose successor cannot yet carry samples without
+changing timing, repeat/loop pending-sample zero bypasses whose successor
+cannot yet carry samples without changing timing, and parameter-backed counts.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
 subset, `switch` branches are shipped for the no-pending-sample subset, and
@@ -447,9 +449,9 @@ no-pending-sample subset. Pending-sample preservation is now split under
 `ISF-DYNAMIC-WAIT.3.3.5`; top-level runtime waits are shipped under
 `ISF-DYNAMIC-WAIT.3.3.5.2`, branch runtime waits are shipped under
 `ISF-DYNAMIC-WAIT.3.3.5.3`, and repeat/loop runtime waits are shipped under
-`ISF-DYNAMIC-WAIT.3.3.5.4`. The next frontier is expression-valued runtime
-counts under `ISF-DYNAMIC-WAIT.3.3.6`, once their width/type/snapshot contract
-is specified.
+`ISF-DYNAMIC-WAIT.3.3.5.4`. Expression-valued runtime counts shipped under
+`ISF-DYNAMIC-WAIT.3.3.6` with the same predecessor-edge snapshot contract as
+scalar runtime counts.
 
 Pending samples cannot be enabled by simply putting the sample assignment on a
 shared successor state. The positive-count path must behave like a positive

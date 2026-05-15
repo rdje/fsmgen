@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: runtime expression waits share scalar snapshot semantics
+- Runtime expression waits are not a separate wait engine. They reuse the
+  scalar runtime wait split: the predecessor owns the positive-count counter
+  load/entry path and the zero-count bypass path, and the generated wait state
+  consumes only the sampled counter.
+- The lowerer accepts expression counts only when operand widths are known and
+  the existing expression-width helper derives a positive result width. This
+  keeps counter sizing reviewable and avoids pushing unknown names into the
+  scheduled `.fsm` artifact.
+- The expression is not materialized as an extra state. The normalized
+  expression text is loaded directly into the generated wait counter on the
+  edge that enters the wait, so later operand changes cannot alter the active
+  wait occurrence.
+- Schedule reports distinguish this from scalar runtime waits with
+  `count_kind` `runtime_expression`, while preserving null `cycles` and the
+  generated counter metadata contract shared by all runtime waits.
 ## 2026-05-15: import-tree snapshots stay source-derived
 - The startup import-tree refresh remains a guardrail, not a roadmap lane by
   itself. Its job is to keep [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
