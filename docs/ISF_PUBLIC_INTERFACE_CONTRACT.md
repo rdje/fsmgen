@@ -1198,6 +1198,10 @@ These are not stable public interfaces yet:
 - The raw actor hash returned by the parser as a whole.
 - Actor fields beyond the advertised `actor_shell_required_keys`.
 - Raw library resolver state and raw exported library actor hashes.
+- Transaction port declarations, activation-time bindings, and actor output
+  readback policy. These are active design work under `ISF-PORT-BINDING`, but
+  no machine-readable public key family is advertised until the source syntax,
+  lowering, diagnostics, report projection, and regressions ship.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

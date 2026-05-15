@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF port binding contract specification
+- The first contract keeps transaction ports separate from actor interfaces.
+  Actor interfaces describe module pins; transaction ports describe local
+  activation payload and transaction-owned outputs. Reusing the word
+  `interface` here would blur two scopes.
+- Candidate activation `(bind ...)` blocks are deliberately explicit. They
+  make direction and width checks local to the call/trigger/spawn site and
+  avoid hidden name-based capture across transaction boundaries.
+- The same-cycle visibility decision is intentionally deferred to the next
+  implementation slice rather than guessed in parser code. Live binding is
+  simple for static signals, activation snapshots are safer for transient rule
+  payloads, and explicit author-selected timing may be necessary if both
+  patterns are common.
+- Actor output readback remains non-public because a top-level output can be a
+  muxed value assembled from multiple ISF regions. Until a readback contract
+  exists, internal reuse should go through an actor variable that also drives
+  the output.
 ## 2026-05-15: ISF transaction-port and actor-pin access direction
 - Transaction port binding should be an ISF-level feature. Authors should not
   need to write raw `.fsm` handoff signals just to pass data between a parent

@@ -60,14 +60,14 @@ reviewable `.fsm` signals with conflict checks.
   `ISF-PORT-BINDING.5`
 
 - ID: `ISF-PORT-BINDING.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify the public transaction-port and actor-pin access contract.`
   Acceptance: The task tree, mdBook, spec, and live docs define source
   syntax candidates, direction rules, binding sites, same-cycle visibility,
   allowed actor pin reads/writes, conflict policy, report fields, diagnostics,
   and the lowering path into explicit `.fsm`.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PORT-BINDING.1: specify port binding contract`
 
 - ID: `ISF-PORT-BINDING.2`
   Status: `pending`
@@ -113,7 +113,7 @@ reviewable `.fsm` signals with conflict checks.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PORT-BINDING.1` | `pending` | The user-facing need is clear, but the source syntax and runtime contract must be precise before parser or lowering changes. |
+| 1 | `ISF-PORT-BINDING.2` | `pending` | The source contract now exists; the next slice should implement parser support for declared transaction ports and fail-closed diagnostics. |
 
 ## Design Notes
 
@@ -149,6 +149,12 @@ reviewable `.fsm` signals with conflict checks.
 - `2026-05-15`: Do not implement syntax before specifying same-cycle
   visibility, direction checking, width checking, binding lifetime, and
   conflict/report behavior.
+- `2026-05-15`: Candidate syntax uses a transaction-local `(ports ...)`
+  declaration and activation-local `(bind ...)` blocks on `(do ...)`,
+  `(spawn ...)`, and `(trigger ...)`, pending implementation validation.
+- `2026-05-15`: Same-cycle visibility remains the key implementation
+  decision. The first implementation must choose live binding, activation
+  snapshot, or explicit author-selected timing before parser acceptance.
 
 ## Open Questions
 
@@ -176,14 +182,18 @@ reviewable `.fsm` signals with conflict checks.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-PORT-BINDING` | `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PORT-BINDING.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-PORT-BINDING` | `R14: activate ISF port binding tree` | Task tree activation from transaction-port and actor-pin access discussion. |
+| `ISF-PORT-BINDING.1` | `ISF-PORT-BINDING.1: specify port binding contract` | Transaction port declaration/binding candidates, actor pin read/write policy, same-cycle visibility decision point, and conflict/report requirements. |
 
 ## Changelog
 
 - `2026-05-15`: Created the active transaction-port and actor-pin access task
   tree from the ISF feature discussion.
+- `2026-05-15`: Specified the first public contract direction in the spec,
+  mdBook backlog, and public contract notes before implementation.

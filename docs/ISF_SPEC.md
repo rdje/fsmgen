@@ -690,6 +690,70 @@ entry transition.
 `(when condition ...)` may be used as the first transaction clause as an
 activation guard. It may also appear later as inline branching.
 
+### 7.1.1 Proposed Transaction Ports and Actor Pin Access
+
+Transaction ports and actor pin access are active design work, not shipped
+syntax yet. The task tree is
+[docs/tasks/ISF-PORT-BINDING.md](tasks/ISF-PORT-BINDING.md).
+
+The intended public direction is an ISF-level surface, not an author-facing
+escape hatch to low-level `.fsm` handoff wiring. A transaction should be able
+to declare directional data/control ports, and activation sites should bind
+those ports to actor variables, actor-owned storage, or actor top-level pins
+with exact direction and width checks.
+
+Candidate transaction declaration shape:
+
+```lisp
+(transaction read_word
+  (ports
+    (input  addr (width 32))
+    (output data (width 32)))
+  ...)
+```
+
+Candidate activation binding shapes:
+
+```lisp
+(do read_word
+  (bind
+    (input addr req_addr)
+    (output data read_data)))
+
+(spawn read_word as r0
+  (bind
+    (input addr req_addr)
+    (output data read_data)))
+
+(trigger read_word
+  (bind
+    (input addr req_addr)
+    (output data read_data)))
+```
+
+The first specification leaf must decide whether these exact spellings ship or
+whether a different lisp-like form is cleaner. It must also decide whether
+bindings are live wires, activation-time snapshots, or explicitly selectable.
+That same-cycle visibility rule is required before implementation: a caller
+and a transaction must agree whether a value bound in an activation cycle is
+visible in the first active transaction state or in a later state.
+
+Actor top-level input pins are readable observations. ISF should not allow
+transactions or rules to write actor inputs. Actor top-level output pins are
+writable targets, but only through the same assignment, fan-in, priority,
+resource, and runtime-conflict policies used for other driven LHS values.
+Reading an actor output as a source value needs an explicit contract; until
+that ships, authors should keep a variable for internal reuse and bind or
+drive the output from that variable.
+
+Rules that trigger transactions need a payload story as soon as transactions
+have input ports. Multiple rules may trigger the same transaction in different
+cycles, and sometimes in the same cycle. The implementation must not silently
+merge two different payloads for the same transaction input. It must either
+prove compatible fan-in, use explicit priority/resource arbitration, or emit
+verification-only runtime conflict instrumentation according to the existing
+conflict policy.
+
 ### 7.2 Sampling and Variables
 
 ```lisp
@@ -1706,6 +1770,11 @@ Focused tests:
   positive-integer literal delay that advances after exactly `N` clock cycles
   without checking an external condition. Dynamic counts remain deferred until
   zero-count, width, reset, latency, and report semantics are specified.
+- Transaction ports, activation-time bindings, and actor top-level pin access.
+  The intended surface is ISF-level syntax that lowers to explicit `.fsm`;
+  source spelling, same-cycle visibility, direction/width checks, actor output
+  readback policy, conflict behavior, and report metadata are being specified
+  under `ISF-PORT-BINDING` before parser acceptance.
 - Transaction-local dynamic loops `(while cond body...)` and
   `(until cond body...)`. The proposed contract makes `while` a pre-test
   zero-or-more loop and `until` a body-first one-or-more loop. Conditions are

@@ -353,6 +353,50 @@ runtime, so the first implementation must define diagnostics, watchdog or
 latency interaction, and schedule-report visibility before parser acceptance
 becomes a support claim.
 
+### Transaction Ports And Actor Pin Access
+
+Status: active task tree, specification first.
+
+Goal: make it easy to connect actor variables, actor-owned storage, and actor
+top-level pins to transaction ports so rules and transactions can exchange
+data/control intent without manually authoring low-level `.fsm` handoff
+signals.
+
+This should be an ISF-level source feature with explicit `.fsm` lowering, not
+an author-facing escape hatch to raw handoff wiring. Transaction ports need
+direction and width. Activation sites need explicit bindings. Actor input pins
+are readable observations and should not be writable from ISF. Actor output
+pins are writable targets, but they must use the same assignment, fan-in,
+priority/resource, and runtime-conflict rules as any other driven LHS.
+
+Candidate shape:
+
+```lisp
+(transaction read_word
+  (ports
+    (input addr (width 32))
+    (output data (width 32)))
+  ...)
+
+(do read_word
+  (bind
+    (input addr req_addr)
+    (output data read_data)))
+```
+
+`spawn` and rule `trigger` need equivalent binding stories, but they have
+extra runtime constraints. A spawned child is static hardware that persists
+between activations, so bindings are instance-scoped. A rule trigger may be
+one of several same-cycle trigger sources for the same transaction, so
+payload fan-in must be proved compatible, priority/resource-mediated, or
+runtime-instrumented instead of silently merged.
+
+The specification leaf must decide same-cycle visibility before implementation:
+is a bound input a live wire, an activation-time snapshot, or an explicit
+author-selected timing choice? That decision controls whether the first active
+transaction state sees the caller's value immediately or one cycle later, and
+which `.fsm` assignment family is used in the lowering.
+
 ### Temporal Contract Lowering
 
 Status: backlog.

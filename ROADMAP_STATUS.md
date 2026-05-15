@@ -4,8 +4,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue `R14` with
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md),
-  starting at `ISF-PORT-BINDING.1` to specify transaction ports,
-  activation-time bindings, and actor pin access before implementation.
+  continuing at `ISF-PORT-BINDING.2` to implement transaction port
+  declarations and parser diagnostics before binding/lowering changes.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -15,7 +15,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active, proposed, or completed task trees in
   [docs/TASK_TREE.md](docs/TASK_TREE.md). The first active feature tree is now
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
-  current frontier is `ISF-PORT-BINDING.1`. `ISF-LIBRARIES` is closed and
+  current frontier is `ISF-PORT-BINDING.2`. `ISF-LIBRARIES` is closed and
   listed in the completed table. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed `ISF-LIBRARIES`,
@@ -214,6 +214,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   rules, width checks, same-cycle visibility, actor pin read/write policy,
   conflict handling, report fields, diagnostics, and `.fsm` lowering before
   parser or scheduler implementation starts.
+- `ISF-PORT-BINDING.1` is complete. The spec and mdBook backlog now define the
+  public feature direction: transaction-local `(ports ...)` is the candidate
+  declaration shape, activation-local `(bind ...)` blocks are candidates for
+  `(do ...)`, `(spawn ...)`, and rule `(trigger ...)`, actor inputs are
+  readable but not writable, actor outputs are writable only through the normal
+  assignment/conflict model, and implementation must settle same-cycle
+  visibility before parser acceptance. The active frontier advances to
+  `ISF-PORT-BINDING.2`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4878,7 +4886,7 @@ Left:
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. The current first feature tree is
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
-  frontier is `ISF-PORT-BINDING.1`; keep `ISF-PUBLIC-CONTRACT`
+  frontier is `ISF-PORT-BINDING.2`; keep `ISF-PUBLIC-CONTRACT`
   cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather

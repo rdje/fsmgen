@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF port binding contract specification
+- Active R14 task-tree slice: `ISF-PORT-BINDING.1` is complete.
+- [docs/ISF_SPEC.md](docs/ISF_SPEC.md) now records the proposed
+  transaction-port declaration and activation-binding surface, plus actor pin
+  read/write policy and same-cycle visibility requirements.
+- The mdBook backlog has a matching "Transaction Ports And Actor Pin Access"
+  section, and the ISF public contract marks the feature as non-public until
+  implementation and regressions ship.
+- The next active R14 frontier is `ISF-PORT-BINDING.2`, parser support for
+  transaction port declarations and diagnostics.
+
 ## 2026-05-15: R14 — ISF transaction-port binding task tree
 - Active R14 task-tree setup: `ISF-PORT-BINDING` is now active.
 - [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) tracks

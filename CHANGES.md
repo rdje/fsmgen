@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF port binding contract specification
+- Completed `ISF-PORT-BINDING.1` by documenting the public source and runtime
+  direction for transaction ports, activation bindings, and actor pin access.
+- Added candidate `(ports ...)` transaction declarations and `(bind ...)`
+  activation blocks for `(do ...)`, `(spawn ...)`, and rule `(trigger ...)`
+  to [docs/ISF_SPEC.md](docs/ISF_SPEC.md).
+- Added the mdBook backlog entry explaining the ISF-level feature boundary,
+  actor input read-only policy, actor output assignment/conflict policy, and
+  same-cycle visibility decision point.
+- Marked transaction port declarations, activation bindings, and actor output
+  readback as non-public in the ISF public contract until implementation,
+  diagnostics, report projection, and regression evidence ship.
+- The active R14 frontier advances to `ISF-PORT-BINDING.2`.
 ### R14 — ISF transaction-port binding task tree
 - Activated
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) as the

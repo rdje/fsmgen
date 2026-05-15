@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF port binding contract specification
+- Completed `ISF-PORT-BINDING.1` in
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).
+- [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the mdBook feature backlog now
+  record transaction ports, activation-time `(bind ...)` candidates for
+  `(do ...)`, `(spawn ...)`, and `(trigger ...)`, actor input read-only
+  policy, actor output assignment/conflict policy, and the same-cycle
+  visibility decision that must be resolved before parser acceptance.
+- [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
+  now explicitly treats transaction-port declarations, activation bindings,
+  and actor output readback as non-public until syntax, lowering,
+  diagnostics, report projection, and regressions ship.
+- The next active R14 frontier is `ISF-PORT-BINDING.2`, implementing
+  transaction port declarations and parser diagnostics.
 ## 2026-05-15: ISF transaction-port and actor-pin task tree
 - Activated `ISF-PORT-BINDING` in
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) from the
