@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF reusable FIFO library fixture
+- Completed `ISF-LIBRARIES.4.5` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).
+- Added [isf/common/fifo.isf](isf/common/fifo.isf), an importable
+  `common.fifo` library exporting a fixed-shape `fifo` actor with
+  `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3` parameter
+  provenance.
+- Added [isf/fifo_library_use.isf](isf/fifo_library_use.isf), a top-level
+  actor that imports `common.fifo`, binds the public FIFO interface, and
+  instantiates the reusable actor as `u_fifo`.
+- The FIFO actor combines the shipped same-cycle controller matrix with
+  actor-owned bank `store`/`load` data movement. It models push-only,
+  pop-only, simultaneous push+pop, full/empty maintenance, pointer wrap, and
+  read-before-write same-cycle data access for the fixed depth-4 target.
+- The fixture deliberately keeps concrete interface/storage widths because
+  parameter-driven interface/storage elaboration is still deferred.
+- The next active R14 frontier is `ISF-LIBRARIES.4.6`, proving the reusable
+  FIFO fixture through generated top HDL and focused generated-artifact
+  checks.
 ## 2026-05-15: ISF FIFO data-buffer access implementation
 - Completed `ISF-LIBRARIES.4.4.5` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

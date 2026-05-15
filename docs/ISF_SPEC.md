@@ -335,12 +335,12 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.4.5` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.4.5` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
-provenance, records the real FIFO requirements before any FIFO fixture is
-shipped, adds the first actor-owned storage declaration surface, lets rule
+provenance, records the real FIFO requirements, adds the first actor-owned
+storage declaration surface, lets rule
 guards be scalar or list expressions for direct FIFO fire predicates, and
 accepts same-target rule writes when direct contradictory guard facts prove
 that the writes cannot fire in the same cycle. A depth-4 FIFO-controller
@@ -348,20 +348,26 @@ matrix now lowers through scheduled `.fsm`, schedule JSON, and SystemVerilog
 with actor-maintained pointer/occupancy/full/empty state. The first FIFO
 datapath surface now implements `(store <bank-name> <index> <value>)` and
 `(load <bank-name> <index> as <target>)` for actor-owned fixed-depth banks in rules and
-supported transaction contexts.
+supported transaction contexts. The first reusable FIFO library fixture is
+now shipped as [isf/common/fifo.isf](../isf/common/fifo.isf), exported as
+`common.fifo.fifo`, with [isf/fifo_library_use.isf](../isf/fifo_library_use.isf)
+as the file-backed import/use fixture.
 
-No FIFO library fixture is shipped yet. A depth-1 element is not considered a
-FIFO for this library catalog; it is a register/holding element and would hide
-the real storage and concurrency requirements. The first reusable FIFO actor
-target is a 4-entry FIFO. It must have actor-owned storage, read and write
-pointers or equivalent occupancy state, reset behavior for those state
-elements, and first-class handling of the four request cases every cycle: no
-request, push without pop, pop without push, and push with pop. Push-only must
-be accepted when the FIFO is not full, pop-only must be accepted when the FIFO
-is not empty, simultaneous push+pop must derive its read-fire and write-fire
-predicates from the same pre-cycle occupancy/full/empty snapshot, and idle
-must preserve state. Depth 4 gives the first fixture concrete review points:
-2-bit pointer wrap, occupancy values 0 through 4, and full/empty derivation.
+A depth-1 element is not considered a FIFO for this library catalog; it is a
+register/holding element and would hide the real storage and concurrency
+requirements. The shipped reusable FIFO actor target is fixed-shape
+`DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those parameters
+are provenance and binding evidence in this fixture; the current parser still
+requires concrete integer interface widths and storage widths/depths. The
+actor has actor-owned storage, read and write pointers, occupancy state,
+actor-maintained flags, reset ownership, and first-class handling of the four
+request cases every cycle: no request, push without pop, pop without push,
+and push with pop. Push-only is accepted when the FIFO is not full, pop-only
+is accepted when the FIFO is not empty, simultaneous push+pop derives its
+read-fire and write-fire predicates from the same pre-cycle
+occupancy/full/empty snapshot, and idle preserves state. Depth 4 gives the
+fixture concrete review points: 2-bit pointer wrap, occupancy values 0
+through 4, and full/empty derivation.
 `full` is maintained by the actor and is `1` exactly when occupancy is 4;
 `empty` is maintained by the actor and is `1` exactly when occupancy is 0.
 Transaction `(when condition body...)` remains ordered
@@ -377,14 +383,14 @@ modeled as concurrently evaluable actor logic that interacts with shared
 controller state. The write pointer names the entry selected for the next
 accepted push; the read pointer names the entry selected for the next accepted
 pop; for the first depth-4 target both pointers wrap from entry 3 back to
-entry 0. The controller slice does not model an internal data bank: data
-storage and data muxing remain a datapath/library-fixture concern.
+entry 0. The reusable FIFO fixture models the internal data bank through
+`(bank data (width 8) (depth 4))`, `(store data wr_ptr data_in)`, and
+`(load data rd_ptr as data_out)`.
 Parameter-driven interface widths, arbitrary-depth memory-backed FIFO
 generation beyond the first `DEPTH=4` fixture, automatic non-zero reset values
-such as empty=1, reusable FIFO library source including the data-storage
-datapath, standalone transaction/drive exports, symbolic constants, derived
-parameter expressions, clock/reset name remapping, and library actors that
-import other libraries remain deferred.
+such as empty=1, standalone transaction/drive exports, symbolic constants,
+derived parameter expressions, clock/reset name remapping, and library actors
+that import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -1498,6 +1504,8 @@ Representative shipped fixtures:
 - [isf/uart_tx.isf](../isf/uart_tx.isf)
 - [isf/when_test.isf](../isf/when_test.isf)
 - [isf/switch_test.isf](../isf/switch_test.isf)
+- [isf/common/fifo.isf](../isf/common/fifo.isf)
+- [isf/fifo_library_use.isf](../isf/fifo_library_use.isf)
 
 The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
@@ -1666,13 +1674,14 @@ Focused tests:
 - [t/1234-isf-disjoint-rule-writes.t](../t/1234-isf-disjoint-rule-writes.t)
 - [t/1235-isf-fifo-same-cycle-update-matrix.t](../t/1235-isf-fifo-same-cycle-update-matrix.t)
 - [t/1236-isf-bank-access-lowering.t](../t/1236-isf-bank-access-lowering.t)
+- [t/1237-isf-fifo-library-fixture.t](../t/1237-isf-fifo-library-fixture.t)
 
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
   same-name generated-top, actor-owned fixed-storage, and expression-valued
-  rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access slices: the real
-  reusable FIFO actor fixture with data-storage datapath,
+  rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO
+  library fixture slices:
   standalone transaction/drive exports,
   symbolic constants, derived parameter expressions,
   parameter-derived storage dimensions, clock/reset name remapping,

@@ -158,6 +158,12 @@ for `(store <bank-name> <index> <value>)` and
 `(load <bank-name> <index> as <target>)` parsing,
 scalarized guarded lowering, bounded `bank_accesses` report metadata,
 fail-closed diagnostics, and depth-4 FIFO data-path HDL reachability.
+The fixed-shape reusable FIFO library fixture is checked by
+[t/1237-isf-fifo-library-fixture.t](../t/1237-isf-fifo-library-fixture.t)
+for file-backed import of [isf/common/fifo.isf](../isf/common/fifo.isf),
+specialized child scheduled `.fsm` emission, generated top wiring, fixed
+parameter provenance, same-cycle full push/pop case visibility, bank-backed
+accepted push/pop artifacts, and `library_uses` report metadata.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and

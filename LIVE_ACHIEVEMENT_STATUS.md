@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF reusable FIFO library fixture
+- Active R14 task-tree slice: `ISF-LIBRARIES.4.5` is complete.
+- [isf/common/fifo.isf](isf/common/fifo.isf) now exports the first reusable
+  FIFO actor library fixture, `common.fifo.fifo`.
+- [isf/fifo_library_use.isf](isf/fifo_library_use.isf) imports that library,
+  binds the public FIFO interface, and instantiates `u_fifo` through the
+  shipped library-use surface.
+- The FIFO actor combines same-cycle push/pop controller rules with
+  actor-owned bank `store`/`load` data movement for the fixed
+  `DATA_WIDTH=8`, `DEPTH=4` target.
+- The next active R14 frontier is `ISF-LIBRARIES.4.6`, proving the reusable
+  FIFO fixture through generated top HDL and focused generated-artifact
+  checks.
+
 ## 2026-05-15: R14 — ISF FIFO data-buffer access implementation
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.4.5` is complete.
 - `(store <bank-name> <index> <value>)` and

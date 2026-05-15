@@ -522,17 +522,17 @@ constraints when those surfaces are specified.
 
 Current boundary: the first reusable ISF library import, same-name
 generated-top, actor-owned fixed-storage, expression-valued rule-guard,
-disjoint-rule write, and FIFO-controller matrix slices have shipped. Actor roots may
-import library roots, use an exported actor, validate use-site parameters and
-explicit bindings, emit a specialized child scheduled `.fsm` artifact, wire
-the library actor through a generated top, reach SystemVerilog generation for
-the covered generated-top path, project bounded `library_uses`
-schedule-report metadata, declare fixed actor-owned state/banks, author
-rule fire predicates as expressions, accept same-target rule writes when
-direct contradictory guard facts prove disjointness, and prove a depth-4
-FIFO-controller same-cycle update matrix for pointers, occupancy, full, and
-empty. No reusable FIFO library fixture is shipped yet. Clock/reset name
-remapping remains fail-closed.
+disjoint-rule write, FIFO-controller matrix, bank-access, and fixed FIFO
+library fixture slices have shipped. Actor roots may import library roots, use
+an exported actor, validate use-site parameters and explicit bindings, emit a
+specialized child scheduled `.fsm` artifact, wire the library actor through a
+generated top, reach SystemVerilog generation for the covered generated-top
+path, project bounded `library_uses` schedule-report metadata, declare fixed
+actor-owned state/banks, author rule fire predicates as expressions, accept
+same-target rule writes when direct contradictory guard facts prove
+disjointness, prove a depth-4 FIFO-controller same-cycle update matrix, and
+author a reusable fixed-shape FIFO actor source with bank-backed accepted
+push/pop data movement. Clock/reset name remapping remains fail-closed.
 
 Shipped source model for actor exports:
 
@@ -564,6 +564,11 @@ Shipped use model for actor exports:
       (output full full_o)
       (output empty empty_o))))
 ```
+
+The first repo-local reusable FIFO fixture uses that model through
+`isf/common/fifo.isf` and `isf/fifo_library_use.isf`. The library exports
+`common.fifo.fifo`; the top-level fixture imports it as `fifo_lib` and binds
+the public FIFO ports to instance `u_fifo`.
 
 Imports are actor-scoped in the first shipped model. Imported definitions stay
 namespaced by default; `as alias` creates a local namespace alias, not
@@ -686,17 +691,20 @@ depth, scalarized entries, value or target, and the same-cycle policy. The
 shipped index is a scalar signal or literal token; full list-expression indexes
 remain future work.
 
-The first FIFO fixture must be a real FIFO actor, not a depth-1 placeholder.
-A depth-1 element may be useful as a register slice or holding element, but it
+The shipped FIFO fixture is a real FIFO actor, not a depth-1 placeholder. A
+depth-1 element may be useful as a register slice or holding element, but it
 does not exercise FIFO depth, pointers, or occupancy semantics. The first
-fixture uses `DEPTH=4`. It must explicitly model the four request cases: no
-request, push without pop, pop without push, and push with pop. Push-only
-updates occupancy and the write pointer when not full; pop-only updates
-occupancy and the read pointer when not empty; simultaneous push+pop derives
-the write and read effects from the same pre-cycle state and updates both
-sides atomically; idle preserves state. Depth 4 gives the initial
-implementation concrete 2-bit pointer wrap, occupancy values 0 through 4, and
-full/empty flag checks before arbitrary-depth elaboration is generalized.
+fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
+`OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
+evidence; parameter-driven interface/storage elaboration remains future work.
+The fixture explicitly models the four request cases: no request, push without
+pop, pop without push, and push with pop. Push-only updates occupancy and the
+write pointer when not full; pop-only updates occupancy and the read pointer
+when not empty; simultaneous push+pop derives the write and read effects from
+the same pre-cycle state and updates both sides atomically; idle preserves
+state. Depth 4 gives the initial implementation concrete 2-bit pointer wrap,
+occupancy values 0 through 4, and full/empty flag checks before arbitrary-depth
+elaboration is generalized.
 `full` is actor-maintained and is `1` when `occupancy == 4`; `empty` is
 actor-maintained and is `1` when `occupancy == 0`. `wr_ptr` names the next
 entry selected by an accepted push; `rd_ptr` names the next entry selected by
@@ -708,9 +716,8 @@ proof for same-target FIFO-style rule writes is shipped for direct
 contradictory guard facts, such as one case requiring
 `(== occupancy 1)` while another requires `(== occupancy 2)`. Same-cycle
 two-port controller semantics are now proven on actor-owned state. The next
-FIFO slice must implement the specified data-buffer access forms before the
-reusable FIFO library can honestly model pointer-selected writes into storage
-and reads to `data_out`.
+FIFO slice must prove the reusable fixture through generated top HDL and
+broader generated-artifact checks.
 
 ## Backends And Validation
 

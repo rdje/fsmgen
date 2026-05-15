@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF reusable FIFO library fixture
+- Completed `ISF-LIBRARIES.4.5` by adding the first importable FIFO actor
+  library fixture.
+- Added [isf/common/fifo.isf](isf/common/fifo.isf) with exported actor
+  `common.fifo.fifo`. The actor uses fixed `DATA_WIDTH=8`, `DEPTH=4`,
+  `PTR_WIDTH=2`, and `OCC_WIDTH=3` parameter provenance, actor-owned pointer,
+  occupancy, and data bank storage, and concurrent rule-based push/pop
+  behavior.
+- Added [isf/fifo_library_use.isf](isf/fifo_library_use.isf), a file-backed
+  import/use fixture that binds the FIFO public interface through a generated
+  library child instance.
+- Added [t/1237-isf-fifo-library-fixture.t](t/1237-isf-fifo-library-fixture.t)
+  to prove import resolution, specialized scheduled child emission, generated
+  top wiring, schedule-report library provenance, same-cycle full push/pop
+  case visibility, and bank-backed accepted push/pop artifacts.
+- The active R14 PNT frontier advances to `ISF-LIBRARIES.4.6`, proving the
+  reusable FIFO fixture through HDL generation and broader fixture checks.
 ### R14 — ISF FIFO data-buffer access implementation
 - Completed `ISF-LIBRARIES.4.4.5` by adding executable bank access support
   for the FIFO datapath surface.

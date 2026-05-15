@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
   table; the first active tree is now
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.4.5`. The public-contract tree remains
+  frontier is `ISF-LIBRARIES.4.6`. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
@@ -179,6 +179,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   existing `.fsm` type machinery. The active frontier advances to
   `ISF-LIBRARIES.4.5`, authoring the first reusable FIFO actor library
   fixture.
+- `ISF-LIBRARIES.4.5` is complete. The repo now contains the first importable
+  fixed-shape FIFO actor library fixture:
+  [isf/common/fifo.isf](isf/common/fifo.isf) exports `common.fifo.fifo`, and
+  [isf/fifo_library_use.isf](isf/fifo_library_use.isf) imports and binds it
+  through the shipped library-use surface. The reusable actor combines the
+  same-cycle controller matrix with actor-owned bank `store`/`load` data
+  movement for `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`.
+  Those parameters are provenance for this fixed fixture; parameter-driven
+  interface/storage elaboration remains deferred. The active frontier
+  advances to `ISF-LIBRARIES.4.6`, proving the reusable FIFO fixture through
+  generated top HDL and focused generated-artifact checks.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet

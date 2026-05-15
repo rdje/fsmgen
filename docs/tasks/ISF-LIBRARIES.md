@@ -157,7 +157,7 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.3: add actor storage declarations`
 
 - ID: `ISF-LIBRARIES.4.4`
-  Status: `active`
+  Status: `done`
   Goal: `Specify and implement same-cycle FIFO read/write update semantics.`
   Acceptance: `A FIFO actor can evaluate write and read requests in the same
   cycle, derive write_fire/read_fire with full/empty policy, update storage,
@@ -261,14 +261,16 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.4.5: implement bank access`
 
 - ID: `ISF-LIBRARIES.4.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Author the first real reusable FIFO actor library fixture.`
   Acceptance: `The repo contains an importable 4-entry FIFO actor library
   fixture with explicit shipped parameters, bindings, reset
   behavior, concurrent push/pop semantics, and documented limitations that
   match the implemented ISF FIFO surface.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `prove -I perl t/1237-isf-fifo-library-fixture.t`;
+  `prove -I perl t/1144-isf-public-tested-by-metadata-audit.t
+  t/1183-ci-regression-tier-selection.t t/1237-isf-fifo-library-fixture.t`
+  Commit: `ISF-LIBRARIES.4.5: add FIFO library fixture`
 
 - ID: `ISF-LIBRARIES.4.6`
   Status: `pending`
@@ -293,7 +295,7 @@ reusable ISF design intent, not only scalar constants or types.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.4.5` | `pending` | Store/load bank access now lowers through `.fsm` and HDL; the next slice can author the first reusable FIFO actor library fixture against the shipped surface. |
+| 1 | `ISF-LIBRARIES.4.6` | `pending` | The fixed-shape FIFO library fixture now exists and imports through the shipped library surface; the next slice should prove generated top HDL and broaden generated-artifact checks around that reusable fixture. |
 
 ## Design Notes
 
@@ -398,6 +400,18 @@ reusable ISF design intent, not only scalar constants or types.
   reusable ISF actors or transactions.
 - A shipped library catalog should grow cautiously. Each entry needs source
   shape, parameter contract, lowering semantics, tests, and known limitations.
+- The first reusable FIFO fixture is fixed-shape by design:
+  `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those
+  parameters are emitted as provenance and use-site binding evidence, but
+  parser/lowerer support for parameter-driven interface widths and storage
+  depths remains deferred.
+- [isf/common/fifo.isf](../../isf/common/fifo.isf) is the first importable
+  reusable FIFO actor source. It exports `common.fifo.fifo` and combines the
+  same-cycle FIFO controller matrix with actor-owned bank `store`/`load`
+  data movement.
+- [isf/fifo_library_use.isf](../../isf/fifo_library_use.isf) is the top-level
+  import/use fixture. It binds the fixed FIFO interface to `u_fifo` through
+  the shipped actor library-use surface.
 
 ## ISF-LIBRARIES.1 Public Library / Import Model
 
@@ -687,16 +701,20 @@ Remaining boundary:
 - Library actor instances are resolved, emitted as reviewable scheduled child
   `.fsm` artifacts, wired into generated tops, and reachable through
   SystemVerilog generation when system clock/reset names match.
-- No FIFO fixture is shipped yet. The attempted depth-1 placeholder was
-  rejected because it does not meet this project's FIFO definition and because
-  it would hide the real two-port concurrency requirement.
+- The first FIFO fixture is now shipped as fixed source intent:
+  [isf/common/fifo.isf](../../isf/common/fifo.isf) exports
+  `common.fifo.fifo`, and
+  [isf/fifo_library_use.isf](../../isf/fifo_library_use.isf) imports it.
+  The attempted depth-1 placeholder remains rejected because it does not meet
+  this project's FIFO definition and because it would hide the real two-port
+  concurrency requirement.
 - Standalone transaction and drive exports still fail closed.
 - Symbolic parameter values and derived parameter expressions remain deferred.
-- Memory-backed 4-entry FIFO data storage, indexed or pointer-selected data
-  buffer access, parameter-driven interface widths, non-zero reset values, and
-  the reusable FIFO data datapath remain follow-up FIFO language and lowering
-  work. Pointer/occupancy controller state and same-cycle controller updates
-  are now shipped for the depth-4 matrix fixture.
+- Parameter-driven interface widths/depths, non-zero reset values, and
+  memory-array backend emission remain follow-up FIFO language and lowering
+  work. Pointer/occupancy controller state, same-cycle controller updates, and
+  scalarized pointer-selected bank access are now shipped for the fixed
+  depth-4 fixture.
 - Library actor system clock/reset name remapping remains deferred; the
   current generated-top path requires same-name system ports.
 
@@ -749,6 +767,10 @@ Remaining boundary:
   `(load <bank-name> <index> as <target>)` for the first actor-owned bank
   access surface.
   The first same-cycle collision policy is read-before-write.
+- `2026-05-15`: Author the first reusable FIFO library fixture as fixed
+  `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, `OCC_WIDTH=3` source intent.
+  The fixture imports and binds through the shipped library-use surface, but
+  parameter-driven interface/storage elaboration remains deferred.
 
 ## Open Questions
 
@@ -791,6 +813,7 @@ Remaining boundary:
 | `2026-05-15` | `ISF-LIBRARIES.4.4.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1192-isf-singleton-actor-clause-boundary.t t/1232-isf-actor-storage-declarations.t t/1234-isf-disjoint-rule-writes.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1144-isf-public-tested-by-metadata-audit.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/fsmgen --emit-schedule-json isf/fifo_controller.isf`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 7 files, 19 tests; ISF tier 143 files, 481 tests` |
 | `2026-05-15` | `ISF-LIBRARIES.4.4.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-LIBRARIES.4.4.5` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1236-isf-bank-access-lowering.t`; `prove -I perl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1232-isf-actor-storage-declarations.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1236-isf-bank-access-lowering.t` | `passed; focused 7 files, 16 tests` |
+| `2026-05-15` | `ISF-LIBRARIES.4.5` | `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1237-isf-fifo-library-fixture.t`; `prove -I perl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1237-isf-fifo-library-fixture.t`; `./bin/fsmgen --emit-schedule-json isf/fifo_library_use.isf`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 145 files, 485 tests` |
 
 ## Commit Log
 
@@ -808,6 +831,7 @@ Remaining boundary:
 | `ISF-LIBRARIES.4.4.3` | `ISF-LIBRARIES.4.4.3: prove FIFO controller matrix` | Depth-4 FIFO controller matrix with real interface, authored state storage, actor-maintained full/empty flags, pointer/occupancy updates, and HDL reachability. |
 | `ISF-LIBRARIES.4.4.4` | `ISF-LIBRARIES.4.4.4: specify FIFO data-buffer access` | Selected store/load bank access syntax, scalarized lowering model, and read-before-write same-cycle policy. |
 | `ISF-LIBRARIES.4.4.5` | `ISF-LIBRARIES.4.4.5: implement bank access` | Implemented rule/transaction store/load bank access, bounded `bank_accesses` report metadata, fail-closed diagnostics, and depth-4 FIFO data-path HDL reachability. |
+| `ISF-LIBRARIES.4.5` | `ISF-LIBRARIES.4.5: add FIFO library fixture` | Added the fixed-shape importable FIFO actor library source, top-level use fixture, and focused import/lowering/report regression. |
 
 ## Changelog
 
@@ -843,3 +867,6 @@ Remaining boundary:
 - `2026-05-15`: Implemented the first store/load bank access surface for
   rules and supported transaction contexts, with depth-4 FIFO data-path
   coverage through scheduled `.fsm`, schedule reports, and HDL generation.
+- `2026-05-15`: Added the first importable FIFO actor library fixture and
+  top-level library-use source. The fixture is fixed-shape and documents that
+  parameter-driven widths/depths remain a later feature.

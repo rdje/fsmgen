@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF reusable FIFO library fixture
+- The first reusable FIFO library fixture is fixed-shape on purpose:
+  `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Those
+  parameters are still emitted as public provenance, but the current parser
+  requires concrete integer widths/depths for interface and storage clauses.
+- The reusable actor is actor-first, not transaction-first. Persistent rules
+  own the write side, read side, occupancy/full/empty maintenance, pointer
+  wrap, and bank access while the actor is clocked.
+- Combining controller and data-path behavior in one fixture is now honest
+  because `store` and `load` lower into the same reviewable `.fsm` artifact as
+  the controller rules. There is no hidden memory primitive in this slice.
+- The simultaneous full push+pop case intentionally uses read-before-write
+  data semantics: the accepted pop reads the old entry selected by `rd_ptr`,
+  while the accepted push writes the selected entry for the next cycle.
+- Automatic non-zero reset values and parameter-driven storage/interface
+  elaboration remain future features. Until they ship, the fixture documents
+  the fixed reset/shape boundary instead of pretending the parameter values
+  specialize widths or depths.
 ## 2026-05-15: ISF FIFO data-buffer access implementation
 - Store/load bank access is implemented as ordinary lowering into the same IR
   assignment model used by rules and transaction states. There is no special

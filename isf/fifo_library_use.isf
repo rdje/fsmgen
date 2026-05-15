@@ -1,0 +1,28 @@
+;; Top-level fixture that imports the common fixed-shape FIFO actor.
+(actor fifo_library_use
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input write_req)
+    (input data_in (width 8))
+    (input read_req)
+    (output full)
+    (output empty)
+    (output data_out (width 8)))
+  (imports
+    (library common.fifo as fifo_lib))
+  (use fifo_lib.fifo as u_fifo
+    (params
+      (DATA_WIDTH 8)
+      (DEPTH 4)
+      (PTR_WIDTH 2)
+      (OCC_WIDTH 3))
+    (bind
+      (clock clk)
+      (reset rst_n)
+      (input write_req write_req)
+      (input data_in data_in)
+      (input read_req read_req)
+      (output full full)
+      (output empty empty)
+      (output data_out data_out))))
