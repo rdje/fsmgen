@@ -165,6 +165,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
     my @spawn_instances;
     my @temporal_contracts;
     my @bank_accesses;
+    my $transaction_port_bindings = _transaction_port_binding_metadata($actor);
     my %signal_widths = _declared_storage_signal_widths($actor);
     my %storage_roles = _declared_storage_roles($actor);
     my %local_drive_uses;
@@ -341,6 +342,7 @@ sub _build_parent_ir($self, $actor, $spawned) {
         spawn_instances => \@spawn_instances,
         temporal_contracts => \@temporal_contracts,
         bank_accesses => \@bank_accesses,
+        transaction_port_bindings => $transaction_port_bindings,
     };
     $ir->{resource_arbitration} = _apply_rule_slot_resource_arbitration($ir, $actor);
     $ir->{priority_resolution} = _merge_priority_resolution(
@@ -464,6 +466,97 @@ sub _validate_transaction_port_bindings($self, $actor) {
     }
 
     return 1;
+}
+
+sub _transaction_port_binding_metadata {
+    my ($actor) = @_;
+    my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    my @metadata;
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $owner = $tx->{name};
+        for my $clause (@{$tx->{clauses} || []}) {
+            next unless ref($clause) eq 'ARRAY' && @$clause;
+            my $keyword = $clause->[0];
+            next unless defined($keyword) && !ref($keyword) && ($keyword eq 'do' || $keyword eq 'spawn');
+            my $target = $clause->[1];
+            next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+
+            my $bindings = _activation_bindings_from_clause($clause, $owner, 'transaction body');
+            next unless @$bindings;
+            my %target_ports = _transaction_port_map($transaction_by_name{$target});
+            my $instance = $keyword eq 'spawn' ? ($clause->[3] // "${owner}_spawn") : undef;
+            for my $binding (@$bindings) {
+                push @metadata, _transaction_port_binding_entry(
+                    binding            => $binding,
+                    port               => $target_ports{$binding->{port}},
+                    site_kind          => $keyword,
+                    owner              => $owner,
+                    owner_kind         => 'transaction',
+                    target_transaction => $target,
+                    instance           => $instance,
+                );
+            }
+        }
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        my $owner = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action;
+            next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
+            my $target = $action->[1];
+            next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+
+            my $bindings = _activation_bindings_from_clause($action, $owner, 'rule trigger');
+            next unless @$bindings;
+            my %target_ports = _transaction_port_map($transaction_by_name{$target});
+            for my $binding (@$bindings) {
+                push @metadata, _transaction_port_binding_entry(
+                    binding            => $binding,
+                    port               => $target_ports{$binding->{port}},
+                    site_kind          => 'rule_trigger',
+                    owner              => $owner,
+                    owner_kind         => 'rule',
+                    target_transaction => $target,
+                );
+            }
+        }
+    }
+
+    return \@metadata;
+}
+
+sub _transaction_port_binding_entry {
+    my (%args) = @_;
+    my $binding = $args{binding};
+    my $role = $binding->{role};
+    my $port = $binding->{port};
+    my $site_kind = $args{site_kind};
+    my $target = $args{target_transaction};
+    my $instance = $args{instance};
+
+    return {
+        site_kind          => $site_kind,
+        owner              => $args{owner},
+        owner_kind         => $args{owner_kind},
+        target_transaction => $target,
+        role               => $role,
+        port               => $port,
+        actor_signal       => $binding->{actor_signal},
+        width              => ($args{port} || {})->{width} // 1,
+        instance           => $instance,
+        parent_port        => defined($instance) ? "${instance}_$port" : undef,
+        child_port         => defined($instance) ? $port : undef,
+        start_signal       => $site_kind eq 'spawn' ? "${instance}_start" : "${target}_start",
+        done_signal        => $site_kind eq 'rule_trigger'
+            ? undef
+            : ($site_kind eq 'spawn' ? "${instance}_done" : "${target}_done"),
+        trigger_source     => $site_kind eq 'rule_trigger' ? _rule_trigger_source_name($args{owner}, $target) : undef,
+        payload_source     => $site_kind eq 'rule_trigger' && $role eq 'input'
+            ? _rule_trigger_payload_source_name($args{owner}, $target, $port)
+            : undef,
+    };
 }
 
 sub _actor_param_declarations {

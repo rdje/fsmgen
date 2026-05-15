@@ -101,6 +101,8 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_temporal_contract_overlap_policy_values
     isf_public_interface_schedule_report_temporal_contract_reset_policy_shape
     isf_public_interface_schedule_report_top_level_keys
+    isf_public_interface_schedule_report_transaction_port_binding_keys
+    isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
     isf_public_interface_schedule_report_transaction_stage_keys
     isf_public_interface_schedule_report_transaction_stage_kind_values
     isf_public_interface_schedule_report_transaction_count_shape
@@ -202,6 +204,8 @@ sub build_isf_public_interface_contract {
         schedule_report_bank_access_keys => isf_public_interface_schedule_report_bank_access_keys(),
         schedule_report_bank_access_kind_values => isf_public_interface_schedule_report_bank_access_kind_values(),
         schedule_report_bank_access_policy_values => isf_public_interface_schedule_report_bank_access_policy_values(),
+        schedule_report_transaction_port_binding_keys => isf_public_interface_schedule_report_transaction_port_binding_keys(),
+        schedule_report_transaction_port_binding_site_kind_values => isf_public_interface_schedule_report_transaction_port_binding_site_kind_values(),
         schedule_report_compile_issue_severity_values => isf_public_interface_schedule_report_compile_issue_severity_values(),
         schedule_report_compile_issue_proof_status_values => isf_public_interface_schedule_report_compile_issue_proof_status_values(),
         schedule_report_fanin_group_required_keys => isf_public_interface_schedule_report_fanin_group_required_keys(),
@@ -386,6 +390,7 @@ sub build_isf_public_interface_contract {
             't/1240-isf-transaction-port-declarations.t',
             't/1241-isf-transaction-port-bindings.t',
             't/1242-isf-port-binding-conflict-semantics.t',
+            't/1243-isf-port-binding-schedule-report.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -464,6 +469,8 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_bank_access_keys
             schedule_report_bank_access_kind_values
             schedule_report_bank_access_policy_values
+            schedule_report_transaction_port_binding_keys
+            schedule_report_transaction_port_binding_site_kind_values
             schedule_report_compile_issue_severity_values
             schedule_report_compile_issue_proof_status_values
             schedule_report_fanin_group_required_keys
@@ -796,6 +803,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             transaction_stages
             temporal_contracts
             bank_accesses
+            transaction_port_bindings
             dt_blocks
             generated_composition
             library_uses
@@ -872,6 +880,38 @@ sub isf_public_interface_schedule_report_bank_access_policy_values {
     return [
         qw(
             read_before_write
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_transaction_port_binding_keys {
+    return [
+        qw(
+            site_kind
+            owner
+            owner_kind
+            target_transaction
+            role
+            port
+            actor_signal
+            width
+            instance
+            parent_port
+            child_port
+            start_signal
+            done_signal
+            trigger_source
+            payload_source
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_transaction_port_binding_site_kind_values {
+    return [
+        qw(
+            do
+            spawn
+            rule_trigger
         ),
     ];
 }
@@ -1321,6 +1361,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_bank_access_keys => isf_public_interface_schedule_report_bank_access_keys(),
+        schedule_report_transaction_port_binding_keys => isf_public_interface_schedule_report_transaction_port_binding_keys(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
         schedule_report_transaction_stage_keys => isf_public_interface_schedule_report_transaction_stage_keys(),
         schedule_report_temporal_contract_keys => isf_public_interface_schedule_report_temporal_contract_keys(),

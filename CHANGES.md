@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF port binding schedule-report projection
+- Completed `ISF-PORT-BINDING.5` and closed the transaction-port binding task
+  tree.
+- Added top-level `transaction_port_bindings[]` to successful ISF schedule
+  reports, exposing bounded binding provenance for scalar `do`, `spawn`, and
+  rule-trigger input bindings.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  to collect binding provenance and
+  [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  to project the public summary.
+- Updated
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm),
+  the ISF spec, mdBook, task tree, and live docs for the new report key
+  family.
+- Added
+  [t/1243-isf-port-binding-schedule-report.t](t/1243-isf-port-binding-schedule-report.t)
+  and refreshed public schedule-report metadata/tests.
 ### R14 — ISF port binding conflict semantics
 - Completed `ISF-PORT-BINDING.4` by integrating spawned transaction-port
   output bindings with assignment provenance and the existing

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF port binding schedule-report projection
+- The public report field is intentionally a summary named
+  `transaction_port_bindings`, not a dump of parser clauses or LoweringIR
+  assignments. Downstream consumers need stable provenance for what was bound,
+  where, and which generated handoff names matter; they do not need private
+  activation proof state or assignment indexes.
+- The key set is fixed for the first public projection. Non-applicable
+  generated handoff fields are JSON null, which keeps each entry shape stable
+  across `do`, `spawn`, and rule-trigger sites without creating separate
+  nested schemas for every site kind.
+- The projection is source/site provenance, not runtime arbitration evidence.
+  Conflict, fan-in, priority, and runtime selector facts remain in their
+  existing report or backend result surfaces.
+- Closing this tree does not freeze richer binding features. Expression-valued
+  bindings, rule-trigger output bindings, snapshot-vs-live timing selection,
+  and broader static conflict proof still need separate task-tree leaves before
+  they become public.
 ## 2026-05-15: ISF port binding conflict semantics
 - Spawn output bindings should be treated as transaction-owned data writes,
   not anonymous generated wiring. The binding DT is generated, but its

@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF port binding schedule-report projection
+- Active R14 task-tree slice: `ISF-PORT-BINDING.5` is complete, closing
+  `ISF-PORT-BINDING`.
+- Successful schedule reports now expose bounded `transaction_port_bindings`
+  entries for scalar `do`, `spawn`, and rule-trigger input bindings.
+- The public contract, ISF spec, mdBook, task tree, and live docs are updated
+  to describe the shipped binding provenance surface.
+- The next R14 feature candidate is `ISF-CONTROL-FLOW`, currently proposed,
+  for `(wait N)`, `(while ...)`, and `(until ...)`.
+
 ## 2026-05-15: R14 — ISF port binding conflict semantics
 - Active R14 task-tree slice: `ISF-PORT-BINDING.4` is complete.
 - Spawn output bindings now carry parent-transaction provenance and participate

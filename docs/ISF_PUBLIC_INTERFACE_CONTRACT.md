@@ -333,6 +333,10 @@ so spawned output bindings keep parent-transaction ownership in assignment
 provenance, conflicting rule writes fail through the existing
 rule/transaction conflict path, and accepted spawn or rule-trigger binding
 fan-in reaches the backend's verification-only selector instrumentation.
+The transaction-port binding schedule-report projection is checked by
+[t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
+so successful in-process and CLI reports expose bounded binding provenance
+without exporting raw `LoweringIR` assignment internals.
 The transaction-name boundary is checked by
 [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 so duplicate transaction names fail before actor-shell return and downstream
@@ -995,6 +999,7 @@ transactions
 transaction_stages
 temporal_contracts
 bank_accesses
+transaction_port_bindings
 dt_blocks
 generated_composition
 library_uses
@@ -1024,6 +1029,7 @@ library_uses entries: library, alias, export, kind, instance, module, scheduled_
 library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
 bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
+transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -1154,7 +1160,15 @@ optional group keys in `schedule_report_fanin_group_optional_keys`, and current
 group kinds in `schedule_report_fanin_group_kind_values`.
 The public fan-in projection is narrower than internal classification: request
 and pulse fan-in are reported through `request` and `pulse` groups rather than
-duplicated as generic `same_target_value` groups. Raw
+duplicated as generic `same_target_value` groups.
+Transaction port binding provenance uses a top-level
+`transaction_port_bindings` array. Each entry is bounded to the advertised key
+set and records the binding site kind (`do`, `spawn`, or `rule_trigger`),
+owner, target transaction, port role/name, actor signal, width, and generated
+handoff signal names where applicable. JSON null is used for non-applicable
+handoff fields. The machine-readable contract advertises the entry key set in
+`schedule_report_transaction_port_binding_keys` and the current site-kind
+values in `schedule_report_transaction_port_binding_site_kind_values`.
 Successful arbitration metadata uses top-level `priority_resolutions` and
 `resource_arbitration` arrays. `priority_resolutions` records static
 target-local suppressions with bounded winner/loser owner names and owner
@@ -1195,8 +1209,8 @@ Bounded but not fully frozen:
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
   `resource_arbitration[]`, `transaction_stages[]`, `temporal_contracts[]`,
-  `library_uses[]`, and `generated_composition` are bounded summaries, not raw
-  IR exports.
+  `transaction_port_bindings[]`, `library_uses[]`, and
+  `generated_composition` are bounded summaries, not raw IR exports.
 
 Blockers before flipping `schedule_report_full_schema_stable` to true:
 
@@ -1224,7 +1238,7 @@ These are not stable public interfaces yet:
   bindings plus the first conflict/runtime coverage for binding-generated
   assignments. Expression-valued bindings, rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict
-  diagnostics, and report key families remain active design work under
+  diagnostics, and richer report fields remain active design work under
   `ISF-PORT-BINDING`.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.

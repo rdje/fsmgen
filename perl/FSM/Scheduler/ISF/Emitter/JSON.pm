@@ -31,6 +31,7 @@ sub emit($self, $ir) {
         transaction_stages => $self->_transaction_stage_summary($ir),
         temporal_contracts => $self->_temporal_contract_summary($ir),
         bank_accesses  => $self->_bank_access_summary($ir),
+        transaction_port_bindings => $self->_transaction_port_binding_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
         generated_composition => $self->_generated_composition_summary($ir),
         library_uses   => $self->_library_use_summary($ir),
@@ -248,6 +249,30 @@ sub _bank_access_summary($self, $ir) {
             );
             \%entry;
         } @{$ir->{bank_accesses} || []}
+    ];
+}
+
+sub _transaction_port_binding_summary($self, $ir) {
+    return [
+        map {
+            {
+                site_kind          => $_->{site_kind},
+                owner              => $_->{owner},
+                owner_kind         => $_->{owner_kind},
+                target_transaction => $_->{target_transaction},
+                role               => $_->{role},
+                port               => $_->{port},
+                actor_signal       => $_->{actor_signal},
+                width              => $_->{width},
+                instance           => exists($_->{instance}) ? $_->{instance} : undef,
+                parent_port        => exists($_->{parent_port}) ? $_->{parent_port} : undef,
+                child_port         => exists($_->{child_port}) ? $_->{child_port} : undef,
+                start_signal       => $_->{start_signal},
+                done_signal        => exists($_->{done_signal}) ? $_->{done_signal} : undef,
+                trigger_source     => exists($_->{trigger_source}) ? $_->{trigger_source} : undef,
+                payload_source     => exists($_->{payload_source}) ? $_->{payload_source} : undef,
+            }
+        } @{$ir->{transaction_port_bindings} || []}
     ];
 }
 

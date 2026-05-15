@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF port binding schedule-report projection
+- Completed `ISF-PORT-BINDING.5` in
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), closing
+  the transaction-port binding tree.
+- Successful schedule reports now expose `transaction_port_bindings[]`, a
+  bounded summary of shipped scalar `do`, `spawn`, and rule-trigger input
+  bindings. Each entry records site kind, owner, target transaction, role,
+  port, actor signal, width, and generated handoff signal names where
+  applicable.
+- Added
+  [t/1243-isf-port-binding-schedule-report.t](t/1243-isf-port-binding-schedule-report.t)
+  for in-process and CLI report projection, and refreshed public contract
+  metadata/tests.
+- Remaining richer surfaces are backlog: expression-valued bindings,
+  rule-trigger output bindings, explicit snapshot-vs-live timing, broader
+  static conflict proof, and richer report fields.
+- The next R14 feature candidate is the proposed `ISF-CONTROL-FLOW` tree for
+  `(wait N)`, `(while ...)`, and `(until ...)`.
 ## 2026-05-15: ISF port binding conflict semantics
 - Completed `ISF-PORT-BINDING.4` in
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).

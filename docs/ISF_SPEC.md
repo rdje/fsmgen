@@ -1480,6 +1480,8 @@ fail-closed/deferred.
   "transactions": [],
   "transaction_stages": [],
   "temporal_contracts": [],
+  "bank_accesses": [],
+  "transaction_port_bindings": [],
   "dt_blocks": [],
   "generated_composition": null,
   "compatible_fanin_groups": [],
@@ -1594,6 +1596,13 @@ priority-suppression bookkeeping remain private `LoweringIR` internals.
 The public projection reports request and pulse fan-in through their
 domain-specific group kinds instead of duplicating them as generic
 `same_target_value` groups.
+Transaction port binding provenance is emitted as a top-level
+`transaction_port_bindings` array. Each entry records the binding site
+(`do`, `spawn`, or `rule_trigger`), owner, target transaction, direction role,
+transaction port, actor signal, width, and the bounded generated signal names
+that make the scheduled `.fsm` handoff reviewable. Non-applicable generated
+signals are JSON null. This is provenance and review support; it is not raw
+assignment provenance and it does not expose private activation proof state.
 Successful priority/resource decisions are emitted as top-level
 `priority_resolutions` and `resource_arbitration` arrays. A
 `priority_resolutions` entry records the target plus bounded winner/loser owner
@@ -1811,6 +1820,7 @@ Focused tests:
 - [t/1240-isf-transaction-port-declarations.t](../t/1240-isf-transaction-port-declarations.t)
 - [t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
 - [t/1242-isf-port-binding-conflict-semantics.t](../t/1242-isf-port-binding-conflict-semantics.t)
+- [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
 
 ## 12. Explicitly Deferred
 
@@ -1830,7 +1840,7 @@ Focused tests:
 - Transaction binding surfaces beyond scalar `do`, `spawn`, and rule-trigger
   input bindings. Expression-valued bindings, rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict
-  diagnostics, and report metadata remain under `ISF-PORT-BINDING`.
+  diagnostics, and richer report metadata remain under `ISF-PORT-BINDING`.
 - Transaction-local dynamic loops `(while cond body...)` and
   `(until cond body...)`. The proposed contract makes `while` a pre-test
   zero-or-more loop and `until` a body-first one-or-more loop. Conditions are

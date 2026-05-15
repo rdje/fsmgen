@@ -172,7 +172,10 @@ target/domain, `proof_status`, reason text, and capped source summaries.
 Accepted fan-in groups now project as bounded `compatible_fanin_groups`
 entries. Successful priority and resource arbitration decisions now project as
 bounded `priority_resolutions` and `resource_arbitration` entries that describe
-static lowering decisions, not per-cycle runtime traces. Raw assignment
+static lowering decisions, not per-cycle runtime traces. Transaction port
+bindings now project as bounded `transaction_port_bindings` entries with
+binding site, owner, target transaction, port role/name, actor signal, width,
+and generated handoff signal names where applicable. Raw assignment
 provenance and activation proof internals remain private. Shipped transaction
 stages now project into `transaction_stages` with authored names, generated
 state, and ready/valid endpoints. Shipped bounded eventual contracts project

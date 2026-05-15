@@ -2,11 +2,11 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: continue `R14` with
-  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md),
-  continuing at `ISF-PORT-BINDING.5` to publish bounded schedule-report
-  projection and docs/fixture coverage for transaction port bindings after
-  first actor-pin conflict/runtime coverage.
+- Next decision point: `ISF-PORT-BINDING` is closed. Continue `R14` by
+  selecting or activating the next feature tree; the proposed
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) tree is
+  the next natural user-visible feature candidate for `(wait N)`,
+  `(while ...)`, and `(until ...)`.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -14,12 +14,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   active tree, it should pick the first eligible leaf from that tree's current
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
   by active, proposed, or completed task trees in
-  [docs/TASK_TREE.md](docs/TASK_TREE.md). The first active feature tree is now
-  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
-  current frontier is `ISF-PORT-BINDING.5`. `ISF-LIBRARIES` is closed and
-  listed in the completed table. The public-contract tree remains
-  cross-cutting and should not displace feature delivery unless the selected
-  feature changes a public surface. The completed `ISF-LIBRARIES`,
+  [docs/TASK_TREE.md](docs/TASK_TREE.md). The completed
+  `ISF-PORT-BINDING` tree is now listed in the completed table. The
+  public-contract tree remains cross-cutting and should not displace feature
+  delivery unless the selected feature changes a public surface. The completed
+  `ISF-PORT-BINDING`, `ISF-LIBRARIES`,
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`, and
@@ -245,6 +244,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   ordinary guarded `.fsm` assignments and now have focused coverage proving
   they reach backend verification-only selector instrumentation. The active
   frontier advances to `ISF-PORT-BINDING.5`.
+- `ISF-PORT-BINDING.5` is complete and the transaction-port binding tree is
+  closed. Successful schedule reports now expose bounded
+  `transaction_port_bindings` entries for `do`, `spawn`, and rule-trigger
+  scalar input bindings, including owner, target transaction, role, port,
+  actor signal, width, and generated handoff names where applicable.
+  Remaining richer binding surfaces stay deferred: expression-valued
+  bindings, rule-trigger output bindings, explicit snapshot-vs-live timing,
+  broader static conflict proof, and richer report fields.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4907,9 +4914,10 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
-  when selecting the next PNT slice. The current first feature tree is
-  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
-  frontier is `ISF-PORT-BINDING.4`; keep `ISF-PUBLIC-CONTRACT`
+  when selecting the next PNT slice. `ISF-PORT-BINDING` is closed; the next
+  natural feature candidate is the proposed
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) tree for
+  waits and transaction-local loops. Keep `ISF-PUBLIC-CONTRACT`
   cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather

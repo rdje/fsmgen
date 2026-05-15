@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-PORT-BINDING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-15`
 - Last updated: `2026-05-15`
@@ -52,7 +52,7 @@ reviewable `.fsm` signals with conflict checks.
 ## Task Tree
 
 - ID: `ISF-PORT-BINDING`
-  Status: `active`
+  Status: `done`
   Goal: `Specify and implement transaction port binding plus actor pin
   access.`
   Children: `ISF-PORT-BINDING.1`, `ISF-PORT-BINDING.2`,
@@ -115,20 +115,25 @@ reviewable `.fsm` signals with conflict checks.
   Commit: `ISF-PORT-BINDING.4: align port binding conflicts`
 
 - ID: `ISF-PORT-BINDING.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Publish report, docs, and fixture coverage for the shipped surface.`
   Acceptance: Schedule reports expose bounded port/binding provenance, docs
   and mdBook match the implementation, realistic fixtures use the new surface
   without low-level hacks, and the public contract advertises only the
   regression-backed key families.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`;
+  `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `perl -I perl -c t/1243-isf-port-binding-schedule-report.t`; focused
+  schedule-report/public-contract suite; `./bin/ci-regression isf --no-book`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PORT-BINDING.5: report port binding provenance`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PORT-BINDING.5` | `pending` | Binding conflict semantics now have first shipped coverage; the next slice should decide and publish the bounded schedule-report projection for port/binding provenance. |
+| 1 | `ISF-PORT-BINDING` | `done` | Transaction port declarations, scalar bindings, conflict/runtime coverage, and bounded report projection are shipped; select the next active R14 tree or open a follow-on port-binding tree for deferred richer surfaces. |
 
 ## Design Notes
 
@@ -185,6 +190,10 @@ reviewable `.fsm` signals with conflict checks.
   conflict pass. Accepted spawn-output fan-in and rule-trigger input payload
   fan-in reach backend verification-only selector instrumentation through
   ordinary `.fsm` assignments.
+- `2026-05-15`: Successful reports now expose bounded
+  `transaction_port_bindings` entries for `do`, `spawn`, and rule-trigger
+  scalar input bindings, including owner, target transaction, role, port,
+  actor signal, width, and generated handoff signal names.
 
 ## Open Questions
 
@@ -197,9 +206,10 @@ reviewable `.fsm` signals with conflict checks.
 
 ## Blockers
 
-- None for `ISF-PORT-BINDING.5`. Remaining edge cases are rule-trigger output
-  binding, expression-valued binding width contracts, and richer static
-  conflict/report projection.
+- None. Remaining richer surfaces are deferred backlog: rule-trigger output
+  binding, expression-valued binding width contracts, explicit
+  snapshot-vs-live timing, broader static conflict proof, and richer report
+  fields.
 
 ## Verification Log
 
@@ -210,6 +220,7 @@ reviewable `.fsm` signals with conflict checks.
 | `2026-05-15` | `ISF-PORT-BINDING.2` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1240-isf-transaction-port-declarations.t`; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PORT-BINDING.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm`; `prove -I perl t/1241-isf-transaction-port-bindings.t`; adjacent do/spawn/rule regression suite; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PORT-BINDING.4` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -I perl -c t/1242-isf-port-binding-conflict-semantics.t`; focused provenance/conflict/runtime selector suite; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PORT-BINDING.5` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -I perl -c t/1243-isf-port-binding-schedule-report.t`; focused schedule-report/public-contract suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -220,6 +231,7 @@ reviewable `.fsm` signals with conflict checks.
 | `ISF-PORT-BINDING.2` | `ISF-PORT-BINDING.2: parse transaction ports` | Parser-normalized transaction `(ports ...)` declarations with fail-closed diagnostics and public actor-shell contract coverage. |
 | `ISF-PORT-BINDING.3` | `ISF-PORT-BINDING.3: lower transaction port bindings` | Scalar activation bindings for `do`, `spawn`, and rule-trigger input payloads with generated handoff wiring and diagnostics. |
 | `ISF-PORT-BINDING.4` | `ISF-PORT-BINDING.4: align port binding conflicts` | Spawn output bindings now have parent transaction provenance and fail-closed rule/transaction conflict coverage; accepted binding fan-in reaches runtime selector assertions. |
+| `ISF-PORT-BINDING.5` | `ISF-PORT-BINDING.5: report port binding provenance` | Successful schedule reports now expose bounded transaction port binding summaries for the shipped scalar binding surface. |
 
 ## Changelog
 
@@ -236,3 +248,5 @@ reviewable `.fsm` signals with conflict checks.
 - `2026-05-15`: Integrated spawned output binding assignments with parent
   transaction provenance and existing rule/transaction conflict semantics, and
   locked runtime selector instrumentation for accepted binding fan-in.
+- `2026-05-15`: Published bounded `transaction_port_bindings` schedule-report
+  provenance for `do`, `spawn`, and rule-trigger scalar input bindings.

@@ -356,8 +356,9 @@ becomes a support claim.
 ### Transaction Ports And Actor Pin Access
 
 Status: active task tree; transaction `(ports ...)` declarations, first scalar
-activation bindings, and first actor-pin conflict/runtime coverage are
-shipped. Richer binding/report surfaces remain backlog.
+activation bindings, first actor-pin conflict/runtime coverage, and bounded
+schedule-report binding provenance are shipped. Richer binding/report surfaces
+remain backlog.
 
 Goal: make it easy to connect actor variables, actor-owned storage, and actor
 top-level pins to transaction ports so rules and transactions can exchange
@@ -424,6 +425,12 @@ actor output conflicts with a same-target rule writer through the existing
 rule/transaction diagnostics. Accepted spawn-output fan-in and rule-trigger
 input payload fan-in remain visible as normal `.fsm` same-LHS assignments and
 reach the SystemVerilog backend's verification-only selector checks.
+
+Successful schedule reports now expose bounded `transaction_port_bindings`
+entries for the shipped scalar surface. Each entry records the binding site
+kind, owner, target transaction, direction role, port, actor signal, width, and
+generated handoff names where they exist. This is a public summary for
+downstream tooling, not the raw binding or assignment-provenance internals.
 
 ### Temporal Contract Lowering
 
