@@ -71,7 +71,7 @@ ISF
     ok(!$result->{success}, 'CLI schedule JSON rejects removed transaction assign');
     like(
         $result->{stderr},
-        qr/removed '\(assign \.\.\.\)' clause is unsupported in transaction body; use '\(update var expr\)'/,
+        qr/removed '\(assign \.\.\.\)' clause is unsupported in transaction body; use '\(set var expr\)'/,
         'CLI diagnostic carries removed-assign migration guidance',
     );
 };

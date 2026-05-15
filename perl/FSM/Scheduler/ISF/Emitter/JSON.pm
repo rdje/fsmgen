@@ -135,6 +135,7 @@ sub _storage_role_for_assignment {
     return 'extract_field' if $source_kind eq 'extract_capture';
     return 'completion_pulse' if $source_kind eq 'complete_pulse' || $source_kind eq 'timeout_pulse';
     return 'data_register' if $source_kind eq 'update'
+        || $source_kind eq 'set'
         || $source_kind eq 'shift'
         || $source_kind eq 'assemble';
     return undef;
@@ -172,7 +173,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }

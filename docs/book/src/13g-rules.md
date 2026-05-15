@@ -33,6 +33,7 @@ FIFO fire predicates such as `(& push (! pop) (! full))` without creating
 temporary scalar condition signals.
 
 **Actions**:
+- `(set port expr)` — explicit guarded flopped assignment when the condition holds
 - `(port expr)` — guarded flopped assignment when the condition holds
 - `(trigger transaction)` — guarded one-cycle delayed pulse on a per-rule
   trigger source; generated fan-in drives the transaction start signal
@@ -40,9 +41,11 @@ temporary scalar condition signals.
   covered priority and resource-arbitration paths
 
 Rule actions are structurally validated before the actor shell is returned.
-The shipped `(port expr)` action accepts a scalar RHS or one list expression
-using the same `.fsm` RHS expression domain as transaction
-`(update var expr)`, while keeping rule assignments flopped with `<-`.
+The shipped `(set port expr)` action is the canonical explicit rule setter.
+The shorter `(port expr)` action remains supported shorthand. Both accept a
+scalar RHS or one list expression using the same `.fsm` RHS expression domain
+as transaction `(set var expr)` and `(update var expr)`, while keeping rule
+assignments flopped with `<-`.
 `(trigger transaction)` must name a declared transaction in the same actor;
 forward references are accepted because validation happens after the full actor
 body is collected. `(priority over other_rule)` must name a declared rule in
@@ -52,8 +55,9 @@ the same actor.
 DTE. Shorthand scalar or expression guards and long-form `(when ...)` guards
 all become the public parser `when` field. Scheduled `.fsm` emission writes
 that guard once in the DT header instead of repeating it on every assignment
-or wrapping the actions in a nested guard block. Ordinary `(port expr)` actions
-are flopped assignments selected by the guarded DT. `(trigger transaction)`
+or wrapping the actions in a nested guard block. `(set port expr)` and ordinary
+`(port expr)` actions are flopped assignments selected by the guarded DT.
+`(trigger transaction)`
 uses `<1` on a generated
 `rule_transaction` source so the request remains pulse-shaped, and a generated
 combinational fan-in DT drives `transaction_start` without adding another

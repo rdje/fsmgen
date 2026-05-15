@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF scalar setter syntax
+- Completed `ISF-SETTER-SYNTAX.1` and closed the scalar setter syntax task tree.
+- Added `(set lhs expr)` as the canonical explicit scalar setter across rule
+  and transaction contexts in
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) and
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm).
+- Rule `set` lowers as a flopped rule assignment under the rule non-state DT
+  DTE; transaction `set` lowers as an ordered flopped transaction state wherever
+  `(update lhs expr)` is accepted.
+- Kept transaction `(update lhs expr)` and rule `(lhs expr)` as supported older
+  spellings, and updated removed-`assign` migration diagnostics to point to
+  `set` first.
+- Added [t/1246-isf-setter-syntax.t](t/1246-isf-setter-syntax.t) and refreshed
+  compatibility diagnostics, public contract provenance, ISF tier selection,
+  mdBook, ISF spec, public contract docs, roadmap, task tree, and live docs.
 ### R14 — ISF transaction loop lowering
 - Completed `ISF-CONTROL-FLOW.3` and closed the transaction wait/loop task
   tree.

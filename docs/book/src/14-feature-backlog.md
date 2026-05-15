@@ -198,25 +198,23 @@ ambiguous partial updates before HDL generation.
 
 ### ISF Scalar Setter Syntax Unification
 
-Status: backlog.
+Status: shipped for scalar rule and transaction assignments.
 
 Goal: use one explicit scalar setter vocabulary across rules and transactions.
 
-Current boundary: transaction scalar updates use `(update lhs expr)`, while
-rule scalar updates use terse action form `(lhs expr)`. That spelling
-difference is not fundamental; it comes from the two surfaces growing at
-different times. A future unification may choose `(set lhs expr)` as the
-canonical explicit setter because it is short and works naturally in both
-rules and transactions. If `set` is adopted, the book must define it precisely:
-it schedules an assignment in the current ISF region. In a rule it still lowers
-under the rule non-state DT DTE; in a transaction it still lowers as an ordered
-transaction state. The runtime regions stay different, but the setter verb can
-be shared.
+Current boundary: `(set lhs expr)` is the canonical explicit scalar setter in
+rules and transactions. It schedules an assignment in the current ISF region:
+in a rule it lowers under the rule non-state DT DTE, while in a transaction it
+lowers as an ordered flopped transaction state. The runtime regions stay
+different, but the setter verb is shared. Existing rule `(lhs expr)` remains
+supported shorthand, and existing transaction `(update lhs expr)` remains
+supported as the older transaction-local spelling while the ISF API continues
+to evolve.
 
-Compatibility policy remains open. The likely path is to keep `(lhs expr)` as
-rule shorthand and keep existing transaction `(update lhs expr)` as an alias
-while the API is still evolving, then decide later which spellings remain
-permanent syntax.
+Still backlog: aggregate/field setters, bank-entry setters beyond the shipped
+`store`/`load` bank access forms, actor-input write policy beyond the current
+fail-closed boundary, and any non-flopped assignment family need separate
+syntax, lowering, and conflict semantics.
 
 ### Enforced Resource Arbitration
 
@@ -284,18 +282,20 @@ Status: shipped for ordinary flopped rule assignments.
 Goal: allow rule actions to assign expression values, not only scalar
 `(port value)` pairs.
 
-Current boundary: rule actions accept `(port expr)`, `(trigger transaction)`,
-and `(priority over other_rule)`. Rule guards, trigger targets, and priority
-targets remain scalar-only today. `(port expr)` lowers as a flopped `<-` rule
-assignment under the rule DT DTE, where `expr` may be a scalar token or one
-list expression from the transaction `update`/`.fsm` RHS expression domain.
+Current boundary: rule actions accept `(set port expr)`, `(port expr)`,
+`(trigger transaction)`, and `(priority over other_rule)`. Trigger targets and
+priority targets remain scalar-only today. `(set port expr)` is the canonical
+explicit setter; `(port expr)` remains shorthand. Both lower as flopped `<-`
+rule assignments under the rule DT DTE, where `expr` may be a scalar token or
+one list expression from the transaction `set`/`update`/`.fsm` RHS expression
+domain.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as
 compatible fan-in, incompatible expressions fail closed through the same
 rule-write conflict diagnostic, and priority-resolved expression conflicts
-project through `priority_resolutions`. Expression guards and alternate rule
-assignment operators are separate future features.
+project through `priority_resolutions`. Alternate rule assignment operators are
+separate future features.
 
 ### Transaction Stage Lowering
 
@@ -537,10 +537,11 @@ Current boundary: authored uses fail closed as unsupported transaction clauses.
 The parser may carry the raw clause as private scheduler input, but the
 scheduler rejects it in top-level transaction bodies and nested contexts such
 as `when`, `switch`, or `repeat` bodies. The diagnostic is migration-specific:
-do not auto-map the old keyword. Use `(update var expr)` for transaction-local
-flopped updates, `(drive ...)` for protocol/output drives, rule `(port expr)`
-actions for rule-driven assignments, and `(complete port)` for transaction
-completion. A future transaction-local combinational assignment feature would
+do not auto-map the old keyword. Use `(set var expr)` for explicit scalar
+flopped updates, `(update var expr)` for the older transaction-local spelling,
+`(drive ...)` for protocol/output drives, rule `(set port expr)` or
+`(port expr)` actions for rule-driven assignments, and `(complete port)` for
+transaction completion. A future transaction-local combinational assignment feature would
 need a new explicit construct with its own timing semantics.
 
 ### Full Width Inference For Data Operations

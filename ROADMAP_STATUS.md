@@ -3,7 +3,7 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: select or activate the next user-visible `R14` feature
-  tree before implementing more ISF behavior. `ISF-CONTROL-FLOW` is complete
+  tree before implementing more ISF behavior. `ISF-SETTER-SYNTAX` is complete
   and closed.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
@@ -14,7 +14,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active, proposed, or completed task trees in
   [docs/TASK_TREE.md](docs/TASK_TREE.md). The completed
   `ISF-CONTROL-FLOW` tree now owns the shipped transaction-local wait and
-  loop surface. The completed `ISF-PORT-BINDING` tree is listed in the
+  loop surface. The completed `ISF-SETTER-SYNTAX` tree now owns the shipped
+  scalar setter syntax. The completed `ISF-PORT-BINDING` tree is listed in the
   completed table. The
   public-contract tree remains cross-cutting and should not displace feature
   delivery unless the selected feature changes a public surface. The completed
@@ -22,7 +23,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`,
-  `ISF-CONTROL-FLOW`, and
+  `ISF-CONTROL-FLOW`, `ISF-SETTER-SYNTAX`, and
   `ISF-COMPATIBILITY` trees are listed in the task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
@@ -62,6 +63,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   decision/body regions, reject malformed empty or unsupported bodies before
   emission, reach SystemVerilog generation, and expose bounded
   `transaction_loops[]` report entries.
+- `ISF-SETTER-SYNTAX.1` is complete and the setter-syntax tree is closed.
+  `(set lhs expr)` is now the canonical explicit scalar setter in rules and
+  transactions. Rule `set` lowers as the existing flopped rule assignment under
+  the guarded rule non-state DT DTE; transaction `set` lowers as one ordered
+  flopped transaction state wherever `update` is accepted. Existing transaction
+  `(update lhs expr)` and rule `(lhs expr)` shorthand remain supported.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree
@@ -4610,7 +4617,8 @@ Done:
   pipeline.
 - Current shipped constructs include actor headers, interface ports, reset
   forms, watchdogs, transactions, `(on ...)`, `(when ...)`, `(switch ...)`,
-  `(repeat ...)`, `(await ...)`, `(sample ...)`, `(complete ...)`, named and
+  `(repeat ...)`, `(wait ...)`, `(while ...)`, `(until ...)`, `(await ...)`,
+  `(sample ...)`, `(complete ...)`, `(set ...)`, named and
   parameterized drive definitions/calls, `(do ...)`, `(spawn ...)`,
   `(await_all ...)`, `(await_any ...)`, rules, trigger actions, latency checks,
   and data-manipulation constructs such as `shift_left`, `shift_right`,
@@ -4892,6 +4900,7 @@ Done:
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md),
   [docs/tasks/ISF-COMPATIBILITY-SURFACE.md](docs/tasks/ISF-COMPATIBILITY-SURFACE.md),
   [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md),
+  [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md),
   and [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
 - `ISF-CONFLICTS.4.5` now emits verification-only SystemVerilog selector
   assertions from backend assignment analysis after ISF lowers through
@@ -4939,12 +4948,15 @@ Done:
   top-level transaction `while`/`until` loops. Waits report through
   `transaction_waits[]`; loops report through `transaction_loops[]`; dynamic
   wait counts and richer loop-body combinations remain backlog.
+- `ISF-SETTER-SYNTAX` is closed after shipping `(set lhs expr)` in rule and
+  transaction contexts, preserving transaction `(update lhs expr)` as the older
+  transaction-local spelling and rule `(lhs expr)` as shorthand.
 Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
-  when selecting the next PNT slice. `ISF-CONTROL-FLOW` is now closed, so the
+  when selecting the next PNT slice. `ISF-SETTER-SYNTAX` is now closed, so the
   next ISF implementation slice must either activate an existing proposed tree
   or create a new feature tree before changing parser/scheduler/emitter code.
   Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.

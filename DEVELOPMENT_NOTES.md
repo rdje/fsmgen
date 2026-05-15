@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF scalar setter syntax
+- `set` is deliberately a shared source word, not a new timing operator. The
+  owning context still decides timing and region: rule `set` stays actor-level
+  concurrent rule logic, while transaction `set` stays an ordered scheduled
+  state.
+- Keeping transaction `update` and rule `(lhs expr)` avoids churn while the ISF
+  public surface is still evolving. The book now describes `set` as canonical
+  explicit syntax and those older spellings as supported aliases/shorthand.
+- The removed `(assign ...)` diagnostic now points to `set` first because the
+  old keyword was ambiguous; authors need to choose the explicit region and
+  timing construct rather than getting an automatic rewrite.
+- The regression proves the behavioral contract through scheduled `.fsm` and
+  HDL generation instead of only parser acceptance. Malformed setter shapes fail
+  closed in both rule and transaction contexts.
 ## 2026-05-15: ISF transaction loop lowering
 - The shipped `while` lowering intentionally uses two decision states: an
   entry decision for zero-iteration behavior and a back-edge decision for

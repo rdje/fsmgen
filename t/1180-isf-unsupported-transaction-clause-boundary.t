@@ -25,8 +25,11 @@ sub assert_lower_rejected {
     like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
 }
 
+my $removed_assign_guidance_re =
+    qr/use '\(set var expr\)' for explicit scalar flopped updates, '\(update var expr\)' for the older transaction-local spelling, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(set port expr\)' or '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/;
+
 subtest 'unsupported top-level transaction clauses fail closed' => sub {
-    assert_lower_rejected(<<'ISF', 'removed assign keyword', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in transaction body; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
+    assert_lower_rejected(<<'ISF', 'removed assign keyword', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in transaction body; $removed_assign_guidance_re/);
 (actor removed_assign
   (clock clk)
   (interface (input start) (output done))
@@ -48,7 +51,7 @@ ISF
 };
 
 subtest 'unsupported nested transaction clauses fail closed by context' => sub {
-    assert_lower_rejected(<<'ISF', 'unsupported when-body keyword', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in when body; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
+    assert_lower_rejected(<<'ISF', 'unsupported when-body keyword', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in when body; $removed_assign_guidance_re/);
 (actor unknown_when
   (clock clk)
   (interface (input start) (input cond) (output done))
@@ -59,7 +62,7 @@ subtest 'unsupported nested transaction clauses fail closed by context' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'removed assign in switch branch', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in switch branch; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
+    assert_lower_rejected(<<'ISF', 'removed assign in switch branch', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in switch branch; $removed_assign_guidance_re/);
 (actor assign_switch
   (clock clk)
   (interface (input start) (input mode) (output done))
@@ -70,7 +73,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'removed assign in repeat body', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in repeat body; use '\(update var expr\)' for transaction-local flopped updates, '\(drive \.\.\.\)' for protocol\/output drives, rule '\(port expr\)' actions for rule-driven assignments, or '\(complete port\)' for completion pulses/);
+    assert_lower_rejected(<<'ISF', 'removed assign in repeat body', qr/\ATransaction 'main': removed '\(assign \.\.\.\)' clause is unsupported in repeat body; $removed_assign_guidance_re/);
 (actor assign_repeat
   (clock clk)
   (interface (input start) (output done))

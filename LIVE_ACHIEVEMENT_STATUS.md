@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF scalar setter syntax
+- Active R14 task-tree slice: `ISF-SETTER-SYNTAX.1` is complete, closing
+  [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md).
+- `(set lhs expr)` is now the canonical explicit scalar setter in rule and
+  transaction contexts.
+- Rule `set` lowers as a flopped rule assignment under the guarded rule
+  non-state DT DTE; transaction `set` lowers as one ordered flopped transaction
+  state.
+- Existing transaction `(update lhs expr)` and rule `(lhs expr)` shorthand remain
+  supported while the ISF API continues to evolve.
+- [t/1246-isf-setter-syntax.t](t/1246-isf-setter-syntax.t) proves parser,
+  scheduler, scheduled `.fsm`, malformed diagnostics, and HDL reachability.
+- Validation passed: focused affected tests, `./bin/ci-regression isf --no-book`,
+  and `mdbook build docs/book`.
+
 ## 2026-05-15: R14 — ISF transaction loop lowering
 - Active R14 task-tree slice: `ISF-CONTROL-FLOW.3` is complete, closing
   [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md).

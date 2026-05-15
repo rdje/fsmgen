@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF scalar setter syntax
+- Completed `ISF-SETTER-SYNTAX.1` in
+  [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md), closing
+  the scalar setter syntax tree.
+- `(set lhs expr)` is now the canonical explicit scalar setter in both rule
+  action contexts and transaction body contexts.
+- Rule `set` lowers as the existing flopped `<-` rule assignment under the rule
+  non-state DT DTE. Transaction `set` lowers as an ordered flopped transaction
+  state, matching the existing `update` timing.
+- Existing transaction `(update lhs expr)` remains supported as the older
+  transaction-local spelling, and existing rule `(lhs expr)` remains supported
+  shorthand.
+- Added [t/1246-isf-setter-syntax.t](t/1246-isf-setter-syntax.t) and refreshed
+  the affected compatibility diagnostic tests, public contract provenance, ISF
+  tier selection, mdBook, ISF spec, public contract docs, roadmap, task tree, and
+  live docs.
+- Validation passed: focused setter/diagnostic/provenance/tier tests,
+  `./bin/ci-regression isf --no-book`, and `mdbook build docs/book`.
 ## 2026-05-15: ISF transaction loop lowering
 - Completed `ISF-CONTROL-FLOW.3` in
   [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md), closing

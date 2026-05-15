@@ -517,14 +517,13 @@ word `bank` in the grammar is a placeholder for an authored bank name; it is
 not a literal token. An actor may declare multiple banks, and the second item
 in each `store` or `load` selects which bank is accessed.
 `store` is bank-only: it writes a selected entry of a declared bank. Scalar
-actor-owned storage is currently written with ordinary rule assignments such
-as `(wr_ptr 1)` or transaction `(update wr_ptr expr)`, not with `store`. Those
-two scalar setter spellings are current surface syntax, not a fundamental
-runtime split: a rule assignment is actor-level concurrent logic guarded by
-the rule's non-state DT enable, while transaction `update` is an ordered
-transaction step that becomes part of the transaction state sequence. A future
-explicit setter such as `(set lhs expr)` can be shared by both regions if the
-lowering keeps that regional meaning precise.
+actor-owned storage is written with the explicit setter `(set lhs expr)`.
+Existing transaction `(update lhs expr)` remains supported as the older
+transaction-local spelling, and ordinary rule assignments such as `(wr_ptr 1)`
+remain supported shorthand. The setter word is shared, but the runtime region
+is still owned by context: a rule `set` is actor-level concurrent logic guarded
+by the rule's non-state DT enable, while transaction `set` is an ordered
+transaction step that becomes part of the transaction state sequence.
 
 `(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
 entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering emits
@@ -666,6 +665,7 @@ Current transaction clauses:
 - `(repeat count body...)`
 - `(switch signal (value body...)...)`, with optional `(default body...)` or
   `(_ body...)` fallback branch
+- `(set var expr)`
 - `(update var expr)`
 - `(shift_left reg bit)`
 - `(shift_right reg bit)`
@@ -1095,6 +1095,7 @@ The `condition` value is the normalized condition text used in the scheduled
 ### 7.8 Data Manipulation
 
 ```lisp
+(set var expr)
 (update var expr)
 (shift_left reg bit)
 (shift_right reg bit)
@@ -1105,9 +1106,12 @@ The `condition` value is the normalized condition text used in the scheduled
 ```
 
 Current lowering:
-- `update` is structurally validated as `(update var expr)` with one scalar
-  target `var` and one scalar or list expression payload. It emits one flopped
-  assignment to `var`.
+- `set` is the canonical explicit scalar setter. It is structurally validated
+  as `(set var expr)` with one scalar target `var` and one scalar or list
+  expression payload. In a transaction it emits one ordered flopped assignment
+  state to `var`.
+- `update` remains supported as the older transaction-local spelling for the
+  same flopped transaction update behavior.
 - `shift_left` is structurally validated as `(shift_left reg bit)` with scalar
   `reg` and scalar `bit`, then emits a left shift plus inserted bit.
 - `shift_right` is structurally validated as
@@ -1372,10 +1376,11 @@ Current lowering:
   contents remain scheduler input and are not frozen as a public API by the
   actor-shell rule-shape metadata.
 - Rule actions are structurally validated before the actor shell is returned.
-  Supported action shapes are `(port expr)`, `(trigger transaction)`, and
-  `(priority over other_rule)`. The assignment shape keeps `port` scalar and
-  allows `expr` to use the same scalar-or-list `.fsm` RHS expression domain
-  as transaction `(update var expr)`.
+  Supported action shapes are `(set port expr)`, `(port expr)`,
+  `(trigger transaction)`, and `(priority over other_rule)`. The explicit
+  setter and shorthand assignment shapes keep `port` scalar and allow `expr`
+  to use the same scalar-or-list `.fsm` RHS expression domain as transaction
+  `(set var expr)` and `(update var expr)`.
 - `(trigger transaction)` targets must name a declared transaction in the same
   actor. Forward references are accepted because the parser validates trigger
   targets after the full actor body is collected; missing targets fail before
@@ -1393,9 +1398,10 @@ Current lowering:
   written directly, for example
   `(rule push_only (& push (! pop) (! full)) ...)`, and the scheduled `.fsm`
   emits `-push_only <(& push (! pop) (! full))`.
-- `(port expr)` actions lower as flopped assignments inside the guarded
-  non-state DT. They keep the existing `<-` rule data-assignment family and
-  do not introduce combinational or D-input-named rule action operators.
+- `(set port expr)` and `(port expr)` actions lower as flopped assignments
+  inside the guarded non-state DT. They keep the existing `<-` rule
+  data-assignment family and do not introduce combinational or D-input-named
+  rule action operators.
 - Same-target rule data writes now receive a best-effort compile-time conflict
   check before scheduled `.fsm` text is treated as valid. Two rules that drive
   the same target to incompatible values fail closed with
@@ -1969,6 +1975,7 @@ Focused tests:
 - [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
 - [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
 - [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
+- [t/1246-isf-setter-syntax.t](../t/1246-isf-setter-syntax.t)
 
 ## 12. Explicitly Deferred
 
@@ -1998,8 +2005,8 @@ Focused tests:
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail
   closed as unsupported transaction clauses. It is not auto-mapped to
-  `(update ...)`, `(drive ...)`, rule actions, or `(complete ...)` because the
-  old keyword does not carry enough timing intent.
+  `(set ...)`, `(update ...)`, `(drive ...)`, rule actions, or `(complete ...)`
+  because the old keyword does not carry enough timing intent.
 - Broader generated-child top instantiation surfaces beyond the covered ISF
   spawn pattern. The current generated top covers scheduled parent/child
   wiring, start/done handoff, named-drive handoff, and spawn parameter
@@ -2012,7 +2019,8 @@ Focused tests:
 - Priority resolution beyond the currently shipped same-target rule/rule
   data-conflict case, rule-over-transaction data-conflict case, and
   resource-level bound-rule grant case.
-- Expression-valued rule guards and alternate rule assignment operators.
+- Alternate rule assignment operators beyond the shipped flopped rule
+  `set`/shorthand assignment family.
 - Transaction `(stage ...)` forms beyond the shipped top-level ready/valid
   barrier: nested stages, stage-local latency/compute bodies, multiple
   endpoints, registered-valid variants, and skid buffers remain deferred.

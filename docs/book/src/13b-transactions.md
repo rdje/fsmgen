@@ -367,12 +367,15 @@ taken only when neither `opcode == 0` nor `opcode == 1` matched. Authored ISF
 can also provide its own fallback branch with `(default body...)` or `(_ body...)`;
 when it does, the scheduler does not add an extra implicit fallthrough branch.
 
-## `(update var expr)` / `(shift_left ...)` / `(shift_right ...)` — Data Ops
+## `(set var expr)` / `(update var expr)` / `(shift_left ...)` / `(shift_right ...)` — Data Ops
 
 **Timing**: exactly 1 cycle each.
 
-`(update var expr)` is exact: `var` is a scalar target and `expr` is one scalar
-or list expression payload.
+`(set var expr)` is the canonical explicit scalar setter. It is exact: `var` is
+a scalar target and `expr` is one scalar or list expression payload. In a
+transaction it lowers as one ordered flopped assignment state. `(update var
+expr)` remains supported as the older transaction-local spelling for the same
+behavior.
 Shift operations are also exact scalar forms:
 `(shift_left reg bit)` and `(shift_right reg bit [(width N)])`.
 
@@ -420,6 +423,6 @@ bounds use scheduler defaults.
 | `(until cond body...)` | body×N + checks | Body-first, one-or-more |
 | `(when cond body...)` | 1 + body | Decision + inline body |
 | `(switch sig (v b)... (default b))` | 1 + body | Decision + inline branch |
-| `(update var expr)` | 1 | Flopped assignment |
+| `(set/update var expr)` | 1 | Flopped assignment |
 | `(shift_left reg bit)` | 1 | Flopped assignment |
 | `(latency (min N) (max M))` | 0 | Verification logic only |

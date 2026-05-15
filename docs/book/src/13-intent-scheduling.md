@@ -321,10 +321,11 @@ limitations are:
 - Unsupported transaction clause heads now fail closed during lowering instead
   of being silently dropped. This includes the removed `(assign ...)` keyword
   and unsupported nested body forms in `when`, `switch`, and `repeat`.
-- Rule actions are structurally validated as `(port value-or-expression)`,
-  `(trigger transaction)`, or `(priority over other_rule)`. Rule trigger
-  targets must resolve to a declared transaction in the same actor before
-  parser handoff returns.
+- Rule actions are structurally validated as `(set port value-or-expression)`,
+  `(port value-or-expression)`, `(trigger transaction)`, or
+  `(priority over other_rule)`. `set` is the canonical explicit scalar setter;
+  `(port expr)` remains rule shorthand. Rule trigger targets must resolve to a
+  declared transaction in the same actor before parser handoff returns.
 - `(shift_right ...)` accepts an explicit `(width N)` option when the shifted
   register width is not declared elsewhere. The option is an assertion and
   must agree with any known register width. Values with no known or explicit

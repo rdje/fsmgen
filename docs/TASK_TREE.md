@@ -38,6 +38,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-SETTER-SYNTAX` | `done` | `R14` | `closed` | [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md) |
 | `ISF-CONTROL-FLOW` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) |
 | `ISF-PORT-BINDING` | `done` | `R14` | `closed` | [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md) |
 | `ISF-LIBRARIES` | `done` | `R14` | `closed` | [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md) |
@@ -73,6 +74,7 @@ as done work unless a future task reopens them.
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
+| Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW` |
 | ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |

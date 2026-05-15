@@ -372,10 +372,16 @@ so duplicate rule names fail before actor-shell return and generated rule DTs
 plus rule-trigger source prefixes remain unambiguous.
 The rule-action parser boundary is checked by
 [t/1181-isf-rule-action-boundary.t](../t/1181-isf-rule-action-boundary.t)
-so accepted rule actions have explicit `(port expr)`,
+so accepted rule actions have explicit `(set port expr)`, `(port expr)`,
 `(trigger transaction)`, or `(priority over other_rule)` shapes before a rule
 enters the actor shell. Assignment RHS values may be scalar tokens or
 non-empty list expressions with scalar expression heads.
+The scalar setter syntax boundary is checked by
+[t/1246-isf-setter-syntax.t](../t/1246-isf-setter-syntax.t)
+so `(set lhs expr)` is accepted in rule and transaction contexts, malformed
+setter forms fail closed with targeted diagnostics, rule setters lower as
+guarded flopped rule assignments, and transaction setters lower as ordered
+flopped transaction states that reach HDL generation.
 The rule-expression assignment lowering path is checked by
 [t/1221-isf-rule-expression-assignment.t](../t/1221-isf-rule-expression-assignment.t)
 so expression-valued rule assignments preserve through scheduled `.fsm`

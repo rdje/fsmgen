@@ -15,36 +15,36 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
         map { $_ => 1 } qw(
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
-            await_any params stage contract store load wait while until
+            await_any params stage contract store load wait while until set
         )
     },
     when => {
         map { $_ => 1 } qw(
-            drive await sample complete repeat update shift_left shift_right
+            drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait
         )
     },
     switch => {
         map { $_ => 1 } qw(
-            drive await sample repeat update shift_left shift_right assemble
+            drive await sample repeat update set shift_left shift_right assemble
             extract when store load wait
         )
     },
     repeat => {
         map { $_ => 1 } qw(
-            drive await sample update shift_left shift_right assemble extract
+            drive await sample update set shift_left shift_right assemble extract
             store load wait
         )
     },
     while => {
         map { $_ => 1 } qw(
-            drive await sample complete repeat update shift_left shift_right
+            drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait
         )
     },
     until => {
         map { $_ => 1 } qw(
-            drive await sample complete repeat update shift_left shift_right
+            drive await sample complete repeat update set shift_left shift_right
             assemble extract when store load wait
         )
     },
@@ -1107,7 +1107,7 @@ sub _build_transaction($self, $tx, $actor, $txi) {
                 )
             };
         }
-        elsif ($k eq 'update')      { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++); }
+        elsif ($k eq 'update' || $k eq 'set') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_update($cl,$tn,$si++,$k); }
         elsif ($k eq 'phase')       { push @st, _ir_phase($cl,$tn,$si++); }
         elsif ($k eq 'stage')       { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_stage($cl,$tn,$si++,$actor); }
         elsif ($k eq 'contract')    {
@@ -1236,8 +1236,8 @@ sub _validate_supported_transaction_clauses {
             _validate_sample_clause($clause, $tn, $label);
         } elsif ($keyword eq 'wait') {
             _validate_wait_clause($clause, $tn, $label);
-        } elsif ($keyword eq 'update') {
-            _validate_update_clause($clause, $tn, $label);
+        } elsif ($keyword eq 'update' || $keyword eq 'set') {
+            _validate_update_clause($clause, $tn, $label, $keyword);
         } elsif ($keyword eq 'store' || $keyword eq 'load') {
             _validate_bank_access_clause($clause, $tn, $label);
         } elsif ($keyword eq 'shift_left' || $keyword eq 'shift_right') {
@@ -1360,8 +1360,9 @@ sub _validate_switch_clause {
 sub _removed_assign_clause_diagnostic {
     my ($tn, $label) = @_;
     return "Transaction '$tn': removed '(assign ...)' clause is unsupported in $label; "
-        . "use '(update var expr)' for transaction-local flopped updates, "
-        . "'(drive ...)' for protocol/output drives, rule '(port expr)' actions "
+        . "use '(set var expr)' for explicit scalar flopped updates, "
+        . "'(update var expr)' for the older transaction-local spelling, "
+        . "'(drive ...)' for protocol/output drives, rule '(set port expr)' or '(port expr)' actions "
         . "for rule-driven assignments, or '(complete port)' for completion pulses\n";
 }
 
@@ -1871,9 +1872,10 @@ sub _validate_wait_clause {
 }
 
 sub _validate_update_clause {
-    my ($clause, $tn, $label) = @_;
+    my ($clause, $tn, $label, $keyword) = @_;
+    $keyword //= 'update';
 
-    confess "Transaction '$tn': update requires '(update var expr)' in $label\n"
+    confess "Transaction '$tn': $keyword requires '($keyword var expr)' in $label\n"
         unless @$clause == 3
             && defined($clause->[1])
             && !ref($clause->[1])
@@ -2012,7 +2014,7 @@ sub _ir_when_activation {
         transitions => [],
     };
 }
-sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths) : _ir_update($cl,$tn,$i) }
+sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths) : _ir_update($cl,$tn,$i,$op) }
 sub _ir_named_drive_call {
     my ($cl, $tn, $i, $def, $pending_samples) = @_;
     my $name = $cl->[1];
@@ -2155,7 +2157,7 @@ sub _ir_until {
 }
 
 sub _ir_complete{ my ($cl,$tn,$i)=@_; {name=>"${tn}_done_$i",kind=>'terminal',assignments=>[{lhs=>$cl->[1],rhs=>1,op=>'<1',source_kind=>'complete_pulse'}],transitions=>[]} }
-sub _ir_update   { my ($cl,$tn,$i)=@_; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_update_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-',source_kind=>'update'}],transitions=>[]} }
+sub _ir_update   { my ($cl,$tn,$i,$source_kind)=@_; $source_kind //= 'update'; my$rhs=_format_isf_expr($cl->[2]); {name=>"${tn}_${source_kind}_$i",kind=>'sequential',assignments=>[{lhs=>$cl->[1],rhs=>$rhs,op=>'<-',source_kind=>$source_kind}],transitions=>[]} }
 sub _ir_bank_access {
     my ($cl, $tn, $i, $actor, $widths, $owner_kind) = @_;
     my $spec = _parse_bank_access_for_lowering($cl, $actor, $widths, $tn, 'transaction');
@@ -2654,7 +2656,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         elsif($bk eq'wait'){push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp])}}
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
         elsif($bk eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
-        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
+        elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
         elsif($bk eq'when'){my($ws)=_expand_when($bc,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
     if(@lp){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)}
@@ -2685,7 +2687,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'wait'){push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp])}}
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
-            elsif($bk2 eq'update'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
+            elsif($bk2 eq'update'||$bk2 eq'set'||$bk2 eq'shift_left'||$bk2 eq'shift_right'||$bk2 eq'assemble'||$bk2 eq'extract'){_push_sample_state(\@body_states,$tn,\@lp,$ir);push @body_states,_ir_data_op($bk2,$bc2,$tn,$$ir++,$widths)}
             elsif($bk2 eq'store'||$bk2 eq'load'){_push_sample_state(\@body_states,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc2,$tn,$$ir++,$actor,$widths,'transaction');push @body_states,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
             elsif($bk2 eq'when'){my($ws)=_expand_when($bc2,$tn,$ir,\@lp,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses);push @body_states,@$ws}}
         if(@lp||!@body_states){push @body_states,_ir_sample_state($tn,\@lp,$$ir++)if@lp;push @body_states,{name=>"${tn}_switch_${val}_" . $$ir++,kind=>'sequential',assignments=>[],transitions=>[]}unless@body_states}
@@ -2726,7 +2728,7 @@ sub _expand_loop_body {
             push @states, @$rs;
             _register_counter_width($counters, $rc, $rw) if $counters;
             $storage_roles->{$rc} = 'repeat_counter' if ref($storage_roles) eq 'HASH';
-        } elsif ($bk eq 'update' || $bk eq 'shift_left' || $bk eq 'shift_right' || $bk eq 'assemble' || $bk eq 'extract') {
+        } elsif ($bk eq 'update' || $bk eq 'set' || $bk eq 'shift_left' || $bk eq 'shift_right' || $bk eq 'assemble' || $bk eq 'extract') {
             _push_sample_state(\@states, $tn, \@lp, $ir);
             push @states, _ir_data_op($bk, $bc, $tn, $$ir++, $widths);
         } elsif ($bk eq 'store' || $bk eq 'load') {
@@ -2756,7 +2758,7 @@ sub _ir_repeat {
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp])}}
-        elsif($bk eq'update'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
+        elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@s,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @s,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};
@@ -3603,7 +3605,7 @@ sub _dt_assignment_provenance {
 sub _transaction_owner_from_state_name {
     my ($name) = @_;
     return undef unless defined $name;
-    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/;
+    return $1 if $name =~ /^(.+)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/;
     return $1 if $name =~ /^(.+)_timeout$/;
     return undef;
 }
@@ -3632,6 +3634,7 @@ sub _state_assignment_source_kind {
     return 'latency_error' if $target =~ /_lerr\z/;
     return 'repeat_counter' if $name =~ /_repeat_/;
     return 'update' if $name =~ /_update_/;
+    return 'set' if $name =~ /_set_/;
     return 'shift' if $name =~ /_shift_/;
     return 'assemble' if $name =~ /_asm_/;
     return 'inline_drive' if $name =~ /_drive_/;
@@ -4213,6 +4216,13 @@ sub _build_rules {
                     container_kind => 'dt',
                     container_name => $r->{name},
                 ) if ref($bank_accesses) eq 'ARRAY';
+            } elsif ($a0 eq 'set') {
+                push @a, {
+                    lhs         => $ac->[1],
+                    rhs         => _format_isf_expr($ac->[2]),
+                    op          => '<-',
+                    source_kind => 'rule_action',
+                };
             } else {
                 push @a, { lhs => $a0, rhs => _format_isf_expr($ac->[1]), op => '<-', source_kind => 'rule_action' };
             }

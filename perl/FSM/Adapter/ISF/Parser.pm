@@ -26,7 +26,7 @@ my $RESOURCE_KIND_SYNTAX    = join('|', @RESOURCE_KINDS);
 my %RESOURCE_ARBITERS = map { $_ => 1 } @RESOURCE_ARBITERS;
 my %RESOURCE_KINDS    = map { $_ => 1 } @RESOURCE_KINDS;
 my %RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS = map { $_ => 1 } qw(
-    when switch repeat wait do spawn complete store load
+    when switch repeat wait do spawn complete store load set
 );
 my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
     & | ! ~ ^ = == != < > <= >= !| ~|
@@ -1226,6 +1226,14 @@ sub _parse_rule_action($self, $action, $rule_name) {
                 && !ref($action->[3])
                 && $action->[3] eq 'as'
                 && _is_hdl_identifier($action->[4]);
+        return 1;
+    }
+    if ($keyword eq 'set') {
+        confess "Error: rule '$rule_name' set action requires '(set port expr)'\n"
+            unless @$action == 3
+                && _is_hdl_identifier($action->[1])
+                && defined($action->[2]);
+        $self->_validate_rule_assignment_expr($action->[2], $rule_name);
         return 1;
     }
     if ($RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS{$keyword}) {
