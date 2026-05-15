@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ?ports width/type wording
+- The current verbose `?ports` syntax intentionally reuses `(width TOKEN)` for
+  both numeric widths and named type aliases because the resolver consumes one
+  width-token position in both compact and verbose forms.
+- That syntax must not be read as “type equals width”. A named type contributes
+  its packed bit width for sizing, but it also preserves the declared type
+  contract used by composition compatibility checks: signedness, state model,
+  aggregate shape, member layout, and type identity where available.
 ## 2026-05-15: Lisp-ish ?wiring forms
 - `?wiring` is a Lisp-ish construct, so its preferred link items should be
   Lisp-ish forms too. `(source target)` is the compact directed-link form and

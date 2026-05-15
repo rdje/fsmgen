@@ -1,5 +1,12 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: R11 ?ports width/type wording clarified
+- Clarified the mdBook and composition scope wording for verbose `?ports`
+  declarations that use named type aliases.
+- `(output packed_out (width frame_t))` is the verbose form of compact
+  `packed_out>frame_t`. The `width` word is the current attribute syntax:
+  the type's packed bit width is used for sizing, while the declared type
+  contract is still preserved for compatibility checks.
 ## 2026-05-15: R11 Lisp-ish ?wiring forms
 - Created
   [docs/tasks/COMPOSITION-WIRING-LISPISH.md](docs/tasks/COMPOSITION-WIRING-LISPISH.md)

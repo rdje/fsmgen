@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R11 — `?ports` width/type wording clarified
+- Updated the mdBook composition chapter and
+  [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md) to state that
+  compact `packed_out>frame_t` is written verbosely as
+  `(output packed_out (width frame_t))`.
+- Clarified that the `width` attribute accepts named type aliases as sizing
+  tokens while preserving the declared type contract; width is the packed bit
+  count, not the full type semantics.
 ### R11 — canonical Lisp-ish `?wiring` forms
 - Added
   [docs/tasks/COMPOSITION-WIRING-LISPISH.md](docs/tasks/COMPOSITION-WIRING-LISPISH.md)

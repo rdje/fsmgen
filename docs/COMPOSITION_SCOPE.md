@@ -97,7 +97,12 @@ The currently shipped composition behavior is intentionally bounded:
   (`(input clk)`, `(input data_in (width 8))`,
   `(output result_data (width 8))`, `(output status :same-name)`);
   verbose `(width TOKEN)` uses the same width-token resolver as compact
-  suffixes, and nullary verbose attributes may be written either as
+  suffixes, including named type aliases such as
+  `(output packed_out (width frame_t))` for compact `packed_out>frame_t`.
+  In that named-type case, `width` is the attribute syntax: the resolver uses
+  the type's packed width for sizing while preserving the declared type
+  contract, including signedness/state-model intent, aggregate shape, member
+  layout, and type identity. Nullary verbose attributes may be written either as
   `(attribute)` or `:attribute`. The shipped same-name binding flags are
   canonical `:same-name` plus accepted aliases `(same-name)`,
   `:connect-by-name`, and `(connect-by-name)`,

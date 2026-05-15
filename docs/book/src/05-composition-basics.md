@@ -96,6 +96,30 @@ The `(width TOKEN)` attribute accepts the same width tokens as the compact
 suffix: positive integer widths, same-scope scalar width symbols, same-scope
 type aliases, or direct imported type aliases.
 
+When `TOKEN` names a type, the word `width` is syntax, not a claim that width
+and type are the same semantic thing. For example:
+
+```lisp
+(?ports:public_io
+  packed_out>frame_t
+)
+```
+
+is equivalent to:
+
+```lisp
+(?ports:public_io
+  (output packed_out (width frame_t))
+)
+```
+
+Both forms resolve `frame_t`, use its packed bit width for sizing, and preserve
+its declared type contract on the port. The packed width is only the bit count.
+The declared type contract may also carry signedness, two-state/four-state
+intent, aggregate shape, member layout, and type identity. Two ports can
+therefore have the same packed width while still being incompatible because
+their preserved declared type contracts differ.
+
 The compact `=name` forms and verbose `:same-name` forms are declared
 same-name connect-by-name ports:
 
