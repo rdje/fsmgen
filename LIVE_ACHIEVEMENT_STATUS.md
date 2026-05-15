@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF bounded runtime scalar waits
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.2`.
+- Top-level `(wait count_signal)` now accepts known-width runtime scalar count
+  names in bypass-capable transaction-body contexts.
+- Runtime zero counts bypass the generated wait state on the predecessor edge;
+  positive counts load a generated `*_wait_*_cnt` counter on that same edge.
+- The wait state consumes exactly the sampled count by decrementing the counter
+  and looping until the sampled value reaches `1`.
+- Schedule reports distinguish static and runtime waits with `count_kind`,
+  `count_source`, `counter_signal`, and `counter_width`; runtime waits keep
+  `cycles` null.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3`, expanding dynamic
+  wait contexts after this first lowering.
+
 ## 2026-05-15: R14 — ISF actor constants and symbolic waits
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.2`.
 - Actors now accept `(constants (NAME value) ...)` for actor-scoped

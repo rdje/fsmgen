@@ -220,8 +220,8 @@ ask the counter to decrement at zero.
 (wait 3)
 ```
 
-**Timing**: exactly `N` active transaction cycles. The current public surface
-requires `N` to be a non-negative integer literal.
+**Timing**: exactly `N` active transaction cycles for static counts, or exactly
+the sampled runtime scalar count for the shipped dynamic subset.
 
 `(wait N)` is different from `(await port)`: it does not check a signal, does
 not consume an await watchdog, and does not have an early-exit condition. It
@@ -234,14 +234,19 @@ iterate any authored actions.
 - `wait 1`: occupy one generated wait state for one active cycle, then advance
   on that state's transition to the next transaction clause.
 - `wait N`: emit `N` generated wait states and advance through them
-  unconditionally, one per cycle.
+  unconditionally, one per cycle for static counts.
+- `wait count_signal`: at top level only, bypass on a runtime zero count;
+  otherwise snapshot `count_signal` on the predecessor edge and consume exactly
+  that many active wait cycles with a generated counter.
 
-Pending samples immediately before a positive wait piggyback onto the first
-wait state, using the same sample materialization rule as drive/await
+Pending samples immediately before a positive static wait piggyback onto the
+first wait state, using the same sample materialization rule as drive/await
 piggybacking. Pending samples immediately before `(wait 0)` are preserved and
-materialize on the next state-producing clause. The shipped lowering does not
-introduce a hidden wait counter; the scheduled `.fsm` review artifact shows
-the exact fixed state chain for positive waits.
+materialize on the next state-producing clause. Static waits do not introduce
+a hidden wait counter; the scheduled `.fsm` review artifact shows the exact
+fixed state chain for positive waits. Runtime scalar waits currently reject
+pending samples before the wait because the zero-count bypass and positive
+counter path must preserve sample timing exactly.
 
 **Generated .fsm** for `(wait 2)` followed by `(drive tick)`:
 
@@ -254,11 +259,14 @@ the exact fixed state chain for positive waits.
 ```
 
 Successful schedule reports include `transaction_waits[]` entries with
-`transaction`, `cycles`, `entry_state`, `exit_state`, and `counter_signal`.
-Only waits with `N > 0` create report entries. For the current
-fixed-state-chain lowering, `counter_signal` is JSON null. Malformed waits
-such as `(wait)`, `(wait 1 2)`, `(wait -1)`, `(wait count)`, and
-`(wait (expr))` fail closed.
+`transaction`, `cycles`, `count_kind`, `count_source`, `entry_state`,
+`exit_state`, `counter_signal`, and `counter_width`. Only positive static
+waits and accepted runtime scalar waits create report entries. Static waits
+report the resolved integer in `cycles`; runtime scalar waits report
+`cycles` as null and expose the source/counter metadata instead. Malformed
+waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, unknown-width dynamic
+counts, expression counts, parameter-backed counts, and unsupported runtime
+contexts fail closed.
 
 ## `(complete port)` — Terminal State
 

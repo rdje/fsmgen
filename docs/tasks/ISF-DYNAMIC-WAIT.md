@@ -83,15 +83,15 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.1: split runtime waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement first bounded runtime scalar wait lowering.`
   Acceptance: Runtime scalar counts with known unsigned width lower through an
   explicit counter plus predecessor-transition bypass for supported top-level
   contexts, preserve `count == 0` as no active wait cycle, snapshot the count
-  at wait entry for positive counts, report bounded dynamic-wait metadata,
-  reject unsupported contexts, and reach SystemVerilog generation.
-  Verification: `pending`
-  Commit: `pending`
+  on the predecessor edge for positive counts, report bounded dynamic-wait
+  metadata, reject unsupported contexts, and reach SystemVerilog generation.
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.2: ship runtime scalar waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3`
   Status: `pending`
@@ -107,7 +107,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.2` | `pending` | The first runtime scalar implementation can now target a narrow bypass-capable subset. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3` | `pending` | The first runtime scalar implementation is shipped; broader contexts can now be expanded one by one. |
 
 ## Decisions
 
@@ -141,6 +141,14 @@ changing the exact timing meaning of the shipped wait construct.
   names with known unsigned width only. Count expressions, parameter-backed
   counts, pending samples before the wait, and inline branch/loop contexts
   stay fail-closed until their bypass and snapshot semantics are implemented.
+- `2026-05-15`: Runtime scalar wait counts are sampled on the predecessor edge,
+  not inside the generated wait state. The same edge that enters the wait also
+  loads the generated counter; the zero-count sibling edge bypasses the wait
+  state entirely. This prevents source-signal changes between the predecessor
+  cycle and wait state from changing the active wait occurrence.
+- `2026-05-15`: The first shipped runtime wait state is a one-state sampled
+  counter loop: the state decrements the generated counter, exits when the
+  sampled value is `1`, and loops while the sampled value is greater than `1`.
 
 ## Open Questions
 
@@ -158,6 +166,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1244-isf-wait-clause-lowering.t t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -166,6 +175,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.1` | `ISF-DYNAMIC-WAIT.1: specify non-literal waits` | Specifies the non-literal wait-count contract before parser/lowerer changes. |
 | `ISF-DYNAMIC-WAIT.2` | `ISF-DYNAMIC-WAIT.2: ship symbolic waits` | Ships actor constants as the static symbolic source for wait counts. |
 | `ISF-DYNAMIC-WAIT.3.1` | `ISF-DYNAMIC-WAIT.3.1: split runtime waits` | Splits runtime dynamic waits into a bypass-capable first implementation and later context expansion. |
+| `ISF-DYNAMIC-WAIT.3.2` | `ISF-DYNAMIC-WAIT.3.2: ship runtime scalar waits` | Ships the first top-level known-width runtime scalar wait lowering and report metadata. |
 
 ## Changelog
 
@@ -178,3 +188,6 @@ changing the exact timing meaning of the shipped wait construct.
 - `2026-05-15`: Split runtime scalar dynamic wait work under
   `ISF-DYNAMIC-WAIT.3`; the first implementation must use predecessor-edge
   bypass for zero counts and keep unsupported contexts fail-closed.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.2`; top-level known-width
+  runtime scalar waits now lower through predecessor-edge counter load/bypass
+  and the current frontier advances to `ISF-DYNAMIC-WAIT.3.3`.

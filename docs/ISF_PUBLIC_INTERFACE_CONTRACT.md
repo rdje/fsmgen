@@ -345,13 +345,15 @@ The transaction-port binding schedule-report projection is checked by
 [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
 so successful in-process and CLI reports expose bounded binding provenance
 without exporting raw `LoweringIR` assignment internals.
-The static transaction wait boundary is checked by
+The transaction wait boundary is checked by
 [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
 so `(wait N)` accepts non-negative integer literals and actor constants in
 transaction body contexts, lowers positive resolved counts to reviewable fixed
-wait-state chains, treats resolved zero as a transparent no-op, reaches HDL
+wait-state chains, treats resolved zero as a transparent no-op, accepts the
+first top-level known-width runtime scalar count subset, reaches HDL
 generation, exposes `actor_constants[]` and `transaction_waits[]` provenance,
-and rejects malformed, unknown, parameter-backed, or dynamic counts.
+and rejects malformed, unknown, parameter-backed, expression-valued, or
+unsupported dynamic counts.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test
@@ -1063,7 +1065,7 @@ reset: name, kind, polarity
 actor_constants entries: name, value
 inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
-transaction_waits entries: transaction, cycles, entry_state, exit_state, counter_signal
+transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
 transaction_loops entries: transaction, kind, condition, entry_state, decision_states, body_start, body_states, exit_state, body_clause_count
 transaction_stages entries: transaction, name, kind, state, ready, valid
 temporal_contracts entries: transaction, name, kind, trigger, signal, within_cycles, pending_signal, counter_signal, fail_signal, overlap_policy, reset_policy, assertion_projection
@@ -1130,15 +1132,17 @@ For each `actor_constants` entry, `name` is the actor-local constant name and
 runtime ports, not overrideable params, and not inferred storage.
 
 For each `transaction_waits` entry, `transaction` is the authored transaction
-name, `cycles` is the exact positive resolved static wait count, `entry_state`
-is the first generated wait state, `exit_state` is the following scheduled
-state after the wait chain, and `counter_signal` is currently JSON null
-because the shipped lowering emits fixed wait-state chains rather than hidden
-wait counters. `(wait 0)` and symbolic waits that resolve to zero are no-ops
-and do not create report entries. Actor-local constants used by symbolic waits
-are reported separately through `actor_constants[]`. The machine-readable
-contract advertises these through
-`schedule_report_transaction_wait_keys`.
+name, `cycles` is the exact positive resolved static wait count or JSON null
+for runtime scalar waits, `count_kind` is `static` or `runtime_scalar`,
+`count_source` is the literal, actor constant name, or runtime scalar source
+signal, `entry_state` is the generated wait state, and `exit_state` is the
+following scheduled state after the wait. Static waits report
+`counter_signal` and `counter_width` as JSON null. Runtime scalar waits report
+the generated sampled counter name and width through those fields. `(wait 0)`
+and symbolic waits that resolve to zero are no-ops and do not create report
+entries. Actor-local constants used by symbolic waits are reported separately
+through `actor_constants[]`. The machine-readable contract advertises these
+through `schedule_report_transaction_wait_keys`.
 
 For each `transaction_loops` entry, `transaction` is the authored transaction
 name, `kind` is `while` or `until`, `condition` is the normalized guard text

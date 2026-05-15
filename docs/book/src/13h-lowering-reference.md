@@ -212,7 +212,7 @@ Timeout state:
   (-> apb_transfer_idle_0))
 ```
 
-## `(wait N)` -> Fixed Wait-State Chain
+## `(wait N)` -> Static Chain Or Runtime Counter
 
 **ISF**:
 ```lisp
@@ -228,12 +228,13 @@ Timeout state:
   (-> main_drive_3))
 ```
 
-The current shipped surface requires `N` to be a non-negative integer literal.
-For `N > 0`, lowering emits exactly `N` generated `*_wait_*` states, each
-advancing unconditionally to the next wait state or the following transaction
-clause. `(wait 0)` emits no generated state, consumes no active transaction
-cycle, and falls through to the following transaction clause. No hidden wait
-counter is introduced for this literal-count surface.
+The static shipped surface accepts either a non-negative integer literal or an
+actor-level constant name. For a resolved `N > 0`, lowering emits exactly `N`
+generated `*_wait_*` states, each advancing unconditionally to the next wait
+state or the following transaction clause. `(wait 0)` emits no generated state,
+consumes no active transaction cycle, and falls through to the following
+transaction clause. No hidden wait counter is introduced for this static
+literal/constant surface.
 
 If samples are pending before a positive wait, they are emitted in the first
 wait state:
@@ -249,9 +250,11 @@ the next state-producing clause instead.
 
 Schedule reports expose each authored positive static wait through
 `transaction_waits[]` with `transaction`, resolved integer `cycles`,
-`entry_state`, `exit_state`, and `counter_signal`. Only waits whose resolved
-count is greater than zero create report entries. `counter_signal` is null for
-the current fixed-chain lowering.
+`count_kind`, `count_source`, `entry_state`, `exit_state`, `counter_signal`,
+and `counter_width`. Only waits whose resolved count is greater than zero
+create report entries. Static waits report `count_kind` as `static`,
+`count_source` as the literal or actor constant name, and
+`counter_signal`/`counter_width` as null for the fixed-chain lowering.
 
 The shipped symbolic surface is `(wait NAME)`, where `NAME` is an actor-level
 constant declared with `(constants (NAME value) ...)`. The constant must
@@ -261,13 +264,44 @@ state and a resolved positive count emits that many wait states. Actor or
 transaction `params` are not wait-count constants because they are overrideable
 after scheduled state emission.
 
-Runtime scalar counts remain unshipped. They must preserve the same effective
-timing before becoming public: if the sampled value is zero, the lowering must
-bypass the wait without an active wait cycle; if the sampled value is positive,
-the wait must consume exactly that many active cycles using known-width
-generated state or equivalent logic. A dynamic implementation must also report
-explicit count-kind and counter/source metadata instead of pretending the
-`cycles` integer is known.
+The first runtime scalar surface is top-level only:
+
+```lisp
+(wait cycles)
+```
+
+The count source must be a scalar signal with a known unsigned width. The
+predecessor edge is split instead of inserting a decision state:
+
+```lisp
+(main_idle_0
+  (<- (main_wait_1_cnt cycles) <(& start cycles))
+  (-> main_wait_1 <(& start cycles))
+  (-> main_drive_2 <(& start (== cycles 0))))
+
+(main_wait_1
+  (-- main_wait_1_cnt)
+  (?main_wait_1_cnt
+    (=1 (-> main_drive_2)))
+  (?main_wait_1_cnt
+    (>1 (-> main_wait_1))))
+```
+
+The positive edge snapshots the runtime count into `main_wait_1_cnt` and
+enters the generated wait state. The zero edge bypasses that state, so a
+runtime zero still consumes no active wait cycle. Once the wait state is
+entered, it reads only the sampled counter: a sampled value of `1` exits after
+one active cycle, while values greater than `1` decrement and loop until the
+counter reaches `1`.
+
+Runtime scalar wait report entries use `count_kind` `runtime_scalar`, keep
+`cycles` null because the exact count is runtime data, name the source signal
+in `count_source`, and expose the generated counter through `counter_signal`
+and `counter_width`.
+
+Runtime waits remain fail-closed in inline bodies, after pending samples, after
+predecessor states whose edge split is not implemented yet, after another
+dynamic wait, and for expression-valued or parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

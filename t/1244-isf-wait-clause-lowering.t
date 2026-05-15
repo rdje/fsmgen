@@ -74,9 +74,12 @@ ISF
             {
                 transaction    => 'main',
                 cycles         => 2,
+                count_kind     => 'static',
+                count_source   => '2',
                 entry_state    => 'main_wait_1',
                 exit_state     => 'main_drive_3',
                 counter_signal => undef,
+                counter_width  => undef,
             },
         ],
         'schedule report exposes bounded wait provenance',
@@ -137,6 +140,16 @@ ISF
         [map { $_->{cycles} } @{$report->{transaction_waits}}],
         [2, 1],
         'symbolic constants resolve to exact static wait counts',
+    );
+    is_deeply(
+        [map { $_->{count_kind} } @{$report->{transaction_waits}}],
+        [qw(static static)],
+        'symbolic constants remain static waits in report metadata',
+    );
+    is_deeply(
+        [map { $_->{count_source} } @{$report->{transaction_waits}}],
+        [qw(WAIT_TWO WAIT_ONE)],
+        'symbolic wait report entries preserve their source constant names',
     );
     is_deeply(
         $report->{transactions}[0]{states},
@@ -252,8 +265,63 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_zero_inline');
 };
 
+subtest 'runtime scalar wait uses predecessor bypass and sampled counter' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic');
+(actor wait_dynamic
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (wait cycles)
+    (drive tick)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(<- \(main_wait_1_cnt cycles\) <\(& start cycles\)\)/,
+        'predecessor edge snapshots the runtime count only on the positive-count path');
+    like($idle, qr/\(-> main_wait_1 <\(& start cycles\)\)/,
+        'positive runtime count enters the generated wait state');
+    like($idle, qr/\(-> main_drive_2 <\(& start \(== cycles 0\)\)\)/,
+        'zero runtime count bypasses the generated wait state');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(-- main_wait_1_cnt\)/, 'dynamic wait decrements the sampled counter while active');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_drive_2\)\)/,
+        'sampled count of one exits after one active wait cycle');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(>1 \(-> main_wait_1\)\)/,
+        'sampled counts greater than one loop in the wait state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_drive_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'dynamic wait report exposes runtime count and counter provenance',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_missing_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -264,7 +332,7 @@ subtest 'malformed wait clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_extra_operand
   (clock clk)
   (reset (rst_n async active_low))
@@ -275,7 +343,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_negative_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -286,18 +354,54 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'dynamic wait count', qr/\ATransaction 'main': wait count 'cycles' is not a declared actor constant in transaction body; runtime dynamic wait counts are not shipped yet/);
-(actor wait_dynamic_count
+    assert_lower_rejected(<<'ISF', 'unknown dynamic wait count', qr/\ATransaction 'main': wait count 'cycles' is neither a declared actor constant nor a known-width runtime scalar in transaction body/);
+(actor wait_unknown_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input cycles (width 4)) (output done))
+  (interface (input start) (output done))
   (transaction main
     (on start)
     (wait cycles)
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in when body/);
+    assert_lower_rejected(<<'ISF', 'inline dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in when body/);
+(actor wait_inline_dynamic_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input cond) (input cycles (width 4)) (output done))
+  (transaction main
+    (on start)
+    (when cond
+      (wait cycles))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' in transaction body cannot follow pending samples yet/);
+(actor wait_dynamic_after_sample
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input cycles (width 4)) (input din (width 8)) (output done))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'dynamic wait after await', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' cannot follow state 'main_await_1' of kind 'await' in the first dynamic-wait slice/);
+(actor wait_dynamic_after_await
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input ready) (input cycles (width 4)) (output done))
+  (transaction main
+    (on start)
+    (await ready)
+    (wait cycles)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in when body/);
 (actor wait_nested_list_count
   (clock clk)
   (reset (rst_n async active_low))

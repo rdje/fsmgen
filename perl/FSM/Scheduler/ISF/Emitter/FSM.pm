@@ -261,8 +261,10 @@ sub _emit_transitions($self, $state) {
             push @lines, "    (-> $t->{target} <$t->{condition}{expr})";
         } elsif ($t->{condition} && $t->{condition}{signal}) {
             my $c = $t->{condition};
+            my $op = $c->{op} // '=';
+            $op = '=' if $op eq '==';
             push @lines, "    (?$c->{signal}";
-            push @lines, "      (=$c->{value} (-> $t->{target}))";
+            push @lines, "      ($op$c->{value} (-> $t->{target}))";
             push @lines, '    )';
         } else {
             push @lines, "    (-> $t->{target})";

@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF bounded runtime scalar waits
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so top-level `(wait count_signal)` accepts known-width runtime scalar count
+  names in the first bypass-capable subset.
+- Runtime zero counts bypass the generated wait state on the predecessor edge;
+  positive counts are snapshotted into a generated `*_wait_*_cnt` counter on
+  that same edge and then consume exactly the sampled number of active wait
+  cycles.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm),
+  [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm),
+  and
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  so scheduled `.fsm` emits the split edges/counter loop and schedule reports
+  expose `count_kind`, `count_source`, `counter_signal`, and `counter_width`.
+- Refreshed wait lowering tests, the ISF public contract, mdBook, ISF spec,
+  feature backlog, roadmap, task tree, and live docs.
 ### R14 — ISF runtime dynamic wait split
 - Split `ISF-DYNAMIC-WAIT.3` into executable child leaves before attempting
   runtime scalar wait lowering.

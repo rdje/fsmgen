@@ -5,8 +5,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: continue the active `ISF-DYNAMIC-WAIT` feature tree.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
-  zero-count bypass requirement, and the current frontier is
-  `ISF-DYNAMIC-WAIT.3.2`: first bounded runtime scalar wait lowering.
+  zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
+  bounded runtime scalar wait lowering, and the current frontier is
+  `ISF-DYNAMIC-WAIT.3.3`: expand dynamic wait contexts after the first
+  lowering works.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -22,19 +24,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   accepted. Static symbolic counts lower exactly like literals, including
   transparent zero-count behavior and fixed integer `transaction_waits[]`
   metadata. Actor/transaction `params` are not wait-count sources because they
-  are overrideable specialization values. Runtime scalar dynamic counts remain
-  the next leaf: they must snapshot the count at wait entry, preserve
-  `count == 0` as no active wait cycle, use known counter widths and reset
-  semantics, and expose explicit dynamic report metadata before parser
-  acceptance becomes public.
-- ISF runtime dynamic wait split update: dynamic zero-count waits must bypass
-  on the predecessor edge. A generated decision state would itself consume a
-  transaction cycle and violate the wait contract. The next implementation
-  slice is constrained to scalar count names with known unsigned width in
-  contexts where the predecessor edge can be split safely. Pending samples
-  before the dynamic wait, inline branch/switch/repeat/loop contexts, count
-  expressions, and parameter-backed counts remain fail-closed until their
-  bypass and snapshot behavior is implemented.
+  are overrideable specialization values. The first runtime scalar dynamic
+  count subset is now shipped for top-level transaction-body waits with a
+  known-width scalar count source, no pending samples before the wait, and a
+  predecessor kind whose edge split is implemented.
+- ISF runtime dynamic wait lowering update: accepted runtime scalar waits load
+  a generated counter on the same predecessor edge that enters the wait,
+  bypass directly on `count == 0`, decrement the sampled counter in one
+  generated wait state, and report `count_kind`, `count_source`,
+  `counter_signal`, and `counter_width` through `transaction_waits[]`.
+  Inline branch/switch/repeat/loop dynamic waits, pending samples before a
+  dynamic wait, count expressions, parameter-backed counts, consecutive
+  dynamic waits, and additional predecessor-edge splits remain fail-closed
+  until their exact bypass and snapshot behavior is implemented.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -135,6 +137,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   implementation must preserve `count == 0` by splitting the predecessor edge;
   unsupported contexts stay fail-closed. The active frontier advances to
   `ISF-DYNAMIC-WAIT.3.2`.
+- `ISF-DYNAMIC-WAIT.3.2` is complete. Top-level `(wait count_signal)` now
+  accepts known-width runtime scalar count names in bypass-capable contexts.
+  The predecessor edge snapshots the positive count into a generated counter,
+  zero counts bypass the wait state, and reports distinguish runtime scalar
+  waits from exact static counts. The active frontier advances to
+  `ISF-DYNAMIC-WAIT.3.3`.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

@@ -12,7 +12,26 @@ This is the live continuity document for fast session recovery after crashes, re
   chains; resolved zero counts remain transparent no-ops.
 - Actor/transaction `params` are deliberately not wait-count sources because
   they are overrideable after scheduled states are emitted.
-- The current frontier is `ISF-DYNAMIC-WAIT.3`, runtime scalar dynamic waits.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3`, broader runtime dynamic wait
+  contexts after the first scalar lowering.
+## 2026-05-15: ISF bounded runtime scalar waits
+- Completed `ISF-DYNAMIC-WAIT.3.2` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Top-level transaction `(wait count_signal)` now accepts known-width runtime
+  scalar count names in the first bypass-capable subset.
+- The predecessor edge snapshots positive counts into a generated
+  `*_wait_*_cnt` counter and enters the wait state; the zero edge bypasses the
+  generated wait state so runtime zero still consumes no active wait cycle.
+- The generated wait state decrements the sampled counter and loops while the
+  sampled value is greater than `1`, so later changes to the source signal do
+  not affect the active wait occurrence.
+- `transaction_waits[]` entries now include `count_kind`, `count_source`, and
+  `counter_width`; runtime scalar waits keep `cycles` null and name their
+  generated `counter_signal`.
+- Pending samples before runtime waits, inline dynamic wait contexts,
+  consecutive dynamic waits, unsupported predecessor kinds, count expressions,
+  and parameter-backed counts remain fail-closed. The next frontier is
+  `ISF-DYNAMIC-WAIT.3.3`.
 ## 2026-05-15: ISF runtime dynamic wait split
 - Split `ISF-DYNAMIC-WAIT.3` into executable leaves in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

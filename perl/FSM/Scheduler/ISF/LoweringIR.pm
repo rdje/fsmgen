@@ -1195,8 +1195,18 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'wait') {
-            if (_wait_cycles($cl, $tn, 'transaction body', $actor) > 0) {
-                push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps], $actor, 'transaction body')};
+            my $wait = _wait_count_spec($cl, $tn, 'transaction body', $actor, $widths, 1);
+            if ($wait->{kind} eq 'static') {
+                if ($wait->{cycles} > 0) {
+                    push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps], $actor, 'transaction body', $wait)};
+                }
+            } else {
+                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in transaction body cannot follow pending samples yet\n"
+                    if @ps;
+                my ($states, $counter, $width) = _ir_dynamic_wait($cl, $tn, \$si, $wait);
+                push @st, @$states;
+                _register_counter_width(\%ct, $counter, $width);
+                $storage_roles{$counter} = 'dynamic_wait_counter';
             }
         }
         elsif ($k eq 'while') {
@@ -2176,7 +2186,7 @@ sub _validate_loop_clause {
 sub _validate_wait_clause {
     my ($clause, $tn, $label, $actor) = @_;
 
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n"
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n"
         unless @$clause == 2
             && defined($clause->[1])
             && !ref($clause->[1]);
@@ -2185,7 +2195,7 @@ sub _validate_wait_clause {
         _wait_cycles($clause, $tn, $label, $actor);
     } else {
         my $count = $clause->[1];
-        confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n"
+        confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n"
             unless defined(_non_negative_integer_from_literal($count)) || _is_hdl_identifier($count);
     }
 
@@ -2193,16 +2203,27 @@ sub _validate_wait_clause {
 }
 
 sub _wait_cycles {
-    my ($clause, $tn, $label, $actor) = @_;
+    my ($clause, $tn, $label, $actor, $widths) = @_;
 
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n"
+    my $spec = _wait_count_spec($clause, $tn, $label, $actor, $widths, 0);
+    return $spec->{cycles};
+}
+
+sub _wait_count_spec {
+    my ($clause, $tn, $label, $actor, $widths, $allow_dynamic) = @_;
+
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n"
         unless @$clause == 2
             && defined($clause->[1])
             && !ref($clause->[1]);
 
     my $count = $clause->[1];
     my $literal_value = _non_negative_integer_from_literal($count);
-    return $literal_value if defined $literal_value;
+    return {
+        kind   => 'static',
+        cycles => $literal_value,
+        source => $count,
+    } if defined $literal_value;
 
     if (_is_hdl_identifier($count)) {
         my $constant = _actor_constant_by_name($actor, $count);
@@ -2210,13 +2231,39 @@ sub _wait_cycles {
             my $constant_value = _non_negative_integer_from_literal($constant->{value});
             confess "Transaction '$tn': wait constant '$count' must resolve to a non-negative integer literal in $label\n"
                 unless defined $constant_value;
-            return $constant_value;
+            return {
+                kind   => 'static',
+                cycles => $constant_value,
+                source => $count,
+            };
         }
 
-        confess "Transaction '$tn': wait count '$count' is not a declared actor constant in $label; runtime dynamic wait counts are not shipped yet\n";
+        my $width = _dynamic_wait_source_width($count, $widths);
+        if (defined $width) {
+            confess "Transaction '$tn': runtime dynamic wait count '$count' is supported only as a top-level transaction-body wait in this slice; found in $label\n"
+                unless $allow_dynamic;
+            return {
+                kind   => 'runtime_scalar',
+                source => $count,
+                width  => $width,
+            };
+        }
+
+        confess "Transaction '$tn': wait count '$count' is neither a declared actor constant nor a known-width runtime scalar in $label\n";
     }
 
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n";
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_runtime_scalar)' in $label\n";
+}
+
+sub _dynamic_wait_source_width {
+    my ($source, $widths) = @_;
+    return undef unless defined($source) && !ref($source) && _is_hdl_identifier($source);
+    return undef unless ref($widths) eq 'HASH';
+    return undef unless exists($widths->{$source});
+
+    my $width = $widths->{$source};
+    return undef unless defined($width) && !ref($width) && $width =~ /\A[1-9][0-9]*\z/;
+    return 0 + $width;
 }
 
 sub _actor_constant_by_name {
@@ -2428,9 +2475,10 @@ sub _ir_await {
     };
 }
 sub _ir_wait {
-    my ($cl, $tn, $ir, $pending_samples, $actor, $label) = @_;
+    my ($cl, $tn, $ir, $pending_samples, $actor, $label, $wait_spec) = @_;
     $label //= 'transaction body';
-    my $cycles = _wait_cycles($cl, $tn, $label, $actor);
+    $wait_spec //= _wait_count_spec($cl, $tn, $label, $actor, undef, 0);
+    my $cycles = $wait_spec->{cycles};
     my @states;
 
     return \@states if $cycles == 0;
@@ -2448,10 +2496,41 @@ sub _ir_wait {
     if (@states) {
         $states[0]{wait_entry} = 1;
         $states[0]{wait_cycles} = $cycles;
+        $states[0]{wait_count_kind} = 'static';
+        $states[0]{wait_count_source} = $wait_spec->{source};
         $states[0]{wait_state_names} = [map { $_->{name} } @states];
     }
 
     return \@states;
+}
+
+sub _ir_dynamic_wait {
+    my ($cl, $tn, $ir, $wait_spec) = @_;
+    my $state_name = "${tn}_wait_" . $$ir++;
+    my $counter = "${state_name}_cnt";
+
+    my $state = {
+        name                 => $state_name,
+        kind                 => 'wait',
+        assignments          => [
+            {
+                lhs         => $counter,
+                rhs         => undef,
+                op          => '--',
+                source_kind => 'dynamic_wait_counter_decrement',
+            },
+        ],
+        transitions          => [],
+        wait_entry           => 1,
+        wait_count_kind      => 'runtime_scalar',
+        wait_count_source    => $wait_spec->{source},
+        wait_counter         => $counter,
+        wait_counter_width   => $wait_spec->{width},
+        wait_state_names     => [$state_name],
+        dynamic_wait_entry   => 1,
+    };
+
+    return ([$state], $counter, $wait_spec->{width});
 }
 
 sub _ir_while {
@@ -3037,7 +3116,7 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){
-            if (_wait_cycles($bc,$tn,'when body',$actor) > 0) {
+            if (_wait_cycles($bc,$tn,'when body',$actor,$widths) > 0) {
                 push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'when body')};
             }
         }
@@ -3073,7 +3152,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'wait'){
-                if (_wait_cycles($bc2,$tn,'switch body',$actor) > 0) {
+                if (_wait_cycles($bc2,$tn,'switch body',$actor,$widths) > 0) {
                     push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp],$actor,'switch body')};
                 }
             }
@@ -3111,7 +3190,7 @@ sub _expand_loop_body {
         } elsif ($bk eq 'sample') {
             push @lp, $bc;
         } elsif ($bk eq 'wait') {
-            if (_wait_cycles($bc, $tn, 'loop body', $actor) > 0) {
+            if (_wait_cycles($bc, $tn, 'loop body', $actor, $widths) > 0) {
                 push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp], $actor, 'loop body')};
             }
         } elsif ($bk eq 'complete') {
@@ -3151,7 +3230,7 @@ sub _ir_repeat {
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){
-            if (_wait_cycles($bc,$tn,'repeat body',$actor) > 0) {
+            if (_wait_cycles($bc,$tn,'repeat body',$actor,$widths) > 0) {
                 push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'repeat body')};
             }
         }
@@ -4503,8 +4582,21 @@ sub _link_states {
         $s->{loop_exit_target} = $exit_target;
     }
 
+    for my $i (0 .. $#$st) {
+        my $s = $st->[$i];
+        next unless $s->{dynamic_wait_entry};
+
+        my $exit_target = $i < $#$st ? $st->[$i + 1]{name} : $e;
+        confess "Transaction '$tn': consecutive runtime dynamic waits are not supported in the first dynamic-wait slice\n"
+            if $i < $#$st && $st->[$i + 1]{dynamic_wait_entry};
+        $s->{dynamic_wait_exit_target} = $exit_target;
+    }
+
     for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;my $next=$branch_exit_target{$s->{name}}||$n;
-        if($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
+        my $next_state = $i < $#$st ? $st->[$i + 1] : undef;
+        if($s->{dynamic_wait_entry}){_link_dynamic_wait_state($s)}
+        elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
+        elsif($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
@@ -4534,6 +4626,66 @@ sub _link_states {
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
+}
+
+sub _link_dynamic_wait_state {
+    my ($state) = @_;
+    my $counter = $state->{wait_counter};
+    my $exit_target = $state->{dynamic_wait_exit_target};
+    my $width = $state->{wait_counter_width} // 1;
+
+    confess "Runtime dynamic wait state '$state->{name}' has no sampled counter\n"
+        unless defined($counter) && length($counter);
+    confess "Runtime dynamic wait state '$state->{name}' has no exit target\n"
+        unless defined($exit_target) && length($exit_target);
+
+    push @{$state->{transitions}}, {
+        target    => $exit_target,
+        condition => { signal => $counter, op => '=', value => 1 },
+    };
+    push @{$state->{transitions}}, {
+        target    => $state->{name},
+        condition => { signal => $counter, op => '>', value => 1 },
+    } if $width > 1;
+}
+
+sub _link_dynamic_wait_predecessor {
+    my ($tn, $state, $wait_state) = @_;
+    my $kind = $state->{kind} // '';
+    my $source = $wait_state->{wait_count_source};
+    my $counter = $wait_state->{wait_counter};
+    my $exit_target = $wait_state->{dynamic_wait_exit_target};
+
+    my $supported =
+        $kind eq 'entry'
+        || $kind eq 'sequential'
+        || $kind eq 'contract'
+        || ($kind eq 'wait' && !$state->{dynamic_wait_entry});
+
+    confess "Transaction '$tn': runtime dynamic wait count '$source' cannot follow state '$state->{name}' of kind '$kind' in the first dynamic-wait slice\n"
+        unless $supported;
+
+    my $base_condition = $kind eq 'entry'
+        ? (_guard_condition_expr($state->{guard}) // '1')
+        : '1';
+    my $enter_condition = _combine_condition_exprs($base_condition, $source);
+    my $bypass_condition = _combine_condition_exprs($base_condition, "(== $source 0)");
+
+    push @{$state->{assignments}}, {
+        lhs         => $counter,
+        rhs         => $source,
+        op          => '<-',
+        guard       => { expr => $enter_condition },
+        source_kind => 'dynamic_wait_counter_load',
+    };
+    push @{$state->{transitions}}, {
+        target    => $wait_state->{name},
+        condition => { expr => $enter_condition },
+    };
+    push @{$state->{transitions}}, {
+        target    => $exit_target,
+        condition => { expr => $bypass_condition },
+    };
 }
 
 sub _inj_watchdog {

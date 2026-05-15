@@ -1292,9 +1292,12 @@ sub isf_public_interface_schedule_report_transaction_wait_keys {
         qw(
             transaction
             cycles
+            count_kind
+            count_source
             entry_state
             exit_state
             counter_signal
+            counter_width
         ),
     ];
 }

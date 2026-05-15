@@ -218,12 +218,24 @@ sub _transaction_wait_summary($self, $ir) {
         }
 
         my ($transaction) = ($state->{name} =~ /\A(.+)_wait_[0-9]+\z/);
+        my $count_kind = $state->{wait_count_kind} // 'static';
+        my $counter_signal = $count_kind eq 'runtime_scalar'
+            ? $state->{wait_counter}
+            : undef;
+        my $counter_width = $count_kind eq 'runtime_scalar'
+            ? $state->{wait_counter_width}
+            : undef;
         push @waits, {
             transaction    => $transaction,
-            cycles         => 0 + ($state->{wait_cycles} // scalar(@wait_states)),
+            cycles         => $count_kind eq 'runtime_scalar'
+                ? undef
+                : 0 + ($state->{wait_cycles} // scalar(@wait_states)),
+            count_kind     => $count_kind,
+            count_source   => $state->{wait_count_source},
             entry_state    => $state->{name},
             exit_state     => $exit_state,
-            counter_signal => undef,
+            counter_signal => $counter_signal,
+            counter_width  => $counter_width,
         };
     }
 

@@ -370,8 +370,9 @@ behavior, and richer stage report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 
-Status: shipped base surface plus actor-constant symbolic counts; runtime
-dynamic counts remain in the active `ISF-DYNAMIC-WAIT` task tree.
+Status: shipped base surface, actor-constant symbolic counts, and a bounded
+top-level runtime scalar count subset. Broader runtime contexts remain in the
+active `ISF-DYNAMIC-WAIT` task tree.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
@@ -386,46 +387,35 @@ transparent no-ops that emit no wait state, consume no active transaction
 cycle, and create no report entry. `wait 1` occupies one generated wait state
 for one active cycle and advances on the next state transition; `wait N`
 contributes exactly `N` active cycles wherever it executes, including inside
-`when`, `switch`, `repeat`, `while`, and `until` bodies.
+`when`, `switch`, `repeat`, `while`, and `until` bodies. The bounded runtime
+surface accepts `(wait count_signal)` only as a top-level transaction-body wait
+when `count_signal` has known unsigned width and the predecessor edge can be
+split safely.
 
-The current lowering is a reviewable fixed scheduled-state chain. No hidden
+The static lowering is a reviewable fixed scheduled-state chain. No hidden
 wait counter is introduced for the static literal/constant surface. Pending
-samples before a positive wait piggyback onto the first wait state; pending
-samples before a zero wait remain pending for the next state-producing clause.
+samples before a positive static wait piggyback onto the first wait state;
+pending samples before a zero wait remain pending for the next
+state-producing clause. The runtime scalar lowering splits the predecessor
+edge: zero bypasses the generated wait state, and positive counts load a
+generated counter before entering the wait state. The wait state decrements the
+sampled counter and loops until the sampled value reaches `1`.
 Successful reports expose bounded `transaction_waits[]` entries with
-transaction name, resolved cycle count, entry state, exit state, and optional
-counter signal; `counter_signal` is currently JSON null. Schedule reports also
-expose actor constants through `actor_constants[]`.
+transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
+state, optional counter signal, and optional counter width. Static waits keep
+an integer `cycles`; runtime scalar waits keep `cycles` null and expose their
+source/counter metadata. Schedule reports also expose actor constants through
+`actor_constants[]`.
 
 Malformed waits such as missing counts, extra operands, negative counts,
 non-integer counts, list-expression counts, unknown constant names,
-actor/transaction parameter names, or dynamic signal counts fail closed today.
+actor/transaction parameter names, unknown-width dynamic names, or unsupported
+dynamic contexts fail closed today.
 
-Remaining dynamic contract:
-- A runtime scalar dynamic count is a runtime payload. It must be sampled at
-  the wait-entry boundary for the current wait occurrence; later changes to the
-  source signal must not change the already-entered wait.
-- A runtime count of zero must preserve the wait contract: no active wait
-  cycle and pending samples remain pending for the next state-producing clause.
-  If a lowering context cannot preserve that bypass behavior, the source must
-  fail closed rather than introduce a hidden one-cycle wait.
-- Dynamic counts require known unsigned widths, reset behavior for any
-  generated counter, explicit min/max latency accounting, and report metadata
-  that distinguishes dynamic counts from exact integer `cycles`.
-
-Implementation boundary for the next runtime slice: a dynamic zero cannot be
-lowered by inserting a normal generated decision state, because that state
-would itself consume an active transaction cycle. The lowerer must split the
-predecessor edge into a `count == 0` bypass path and a `count != 0` wait-entry
-path, then snapshot the positive count for the generated wait region. The
-first executable slice should therefore accept only scalar count names with
-known unsigned width in contexts where that predecessor-edge split is safe.
-Pending samples before the wait, inline branch/switch/repeat/loop bodies,
-count expressions, and parameter-backed counts remain fail-closed until their
-bypass and snapshot behavior is implemented.
-
-Remaining backlog: runtime scalar dynamic counts once the bypass-capable
-lowering and report shape are proved.
+Remaining backlog: runtime scalar waits after pending samples, inside
+`when`/`switch`/`repeat`/`while`/`until` bodies, after predecessor kinds whose
+edge split is not implemented yet, after another dynamic wait, and with
+expression-valued or parameter-backed counts.
 
 ### Transaction Dynamic Loops
 

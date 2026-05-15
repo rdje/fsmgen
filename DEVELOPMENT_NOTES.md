@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: runtime wait count sampling belongs on the predecessor edge
+- The runtime wait count cannot be snapshotted inside the generated wait state.
+  If the source changes between the predecessor cycle and the first wait state,
+  an inside-wait snapshot would no longer match the count value that decided
+  whether the wait should be bypassed.
+- The shipped bounded lowering therefore samples on the predecessor edge:
+  `count == 0` transitions directly to the post-wait state, while `count != 0`
+  loads the generated wait counter and transitions to the wait state.
+- The wait state reads only the sampled counter. It decrements that counter
+  while active, exits when the sampled value is `1`, and loops while the
+  sampled value is greater than `1`.
+- Pending samples and predecessor kinds with nontrivial existing transitions
+  remain fail-closed because they need explicit edge splitting that preserves
+  both the zero bypass path and the positive sampled-counter path.
 ## 2026-05-15: actor constants are structural, params remain overrideable
 - Static symbolic waits need a symbol source whose value is known before the
   scheduler emits states. Actor-level `(constants ...)` provides that source.
