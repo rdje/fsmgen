@@ -424,10 +424,15 @@ Remaining backlog: runtime scalar waits after pending samples, inside
 `when`/`switch`/`repeat`/`while`/`until` bodies, after remaining predecessor
 kinds such as loop decision states whose edge split is not implemented yet,
 and with expression-valued or parameter-backed counts.
+The inline-body surface is now split into context-specific implementation
+leaves. Until each ships, dynamic waits in those bodies fail closed with
+diagnostics that name the rejected context: `when body`, `switch body`,
+`repeat body`, `while body`, or `until body`.
 
 Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
 top-level dynamic waits and the requested additional top-level predecessor
-kinds are shipped, so the next frontier is inline branch/loop bodies, then
+kinds are shipped. The inline-body work is split next, starting with `when`
+bodies, then repeat bodies, switch branches, while/until bodies,
 pending-sample preservation, and finally expression-valued runtime counts once
 their width/type/snapshot contract is specified.
 

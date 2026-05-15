@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF inline dynamic wait split
+- Split `ISF-DYNAMIC-WAIT.3.3.4` into context-specific implementation leaves
+  for inline dynamic waits in `when`, `repeat`, `switch`, and `while`/`until`
+  bodies.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so loop-body wait diagnostics distinguish `while body` from `until body`.
+- Extended
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  with fail-closed coverage for dynamic waits in `when`, `switch`, `repeat`,
+  `while`, and `until` bodies.
+- Refreshed the mdBook, ISF spec, roadmap, task tree, and live docs. The
+  active dynamic-wait frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.2`.
 ### R14 — ISF dynamic waits after additional predecessors
 - Updated
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

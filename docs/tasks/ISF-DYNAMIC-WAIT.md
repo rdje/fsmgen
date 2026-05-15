@@ -130,12 +130,62 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.3: support dynamic wait predecessors`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Support inline dynamic waits in branch and loop bodies.`
+  Children: `ISF-DYNAMIC-WAIT.3.3.4.1`,
+  `ISF-DYNAMIC-WAIT.3.3.4.2`, `ISF-DYNAMIC-WAIT.3.3.4.3`,
+  `ISF-DYNAMIC-WAIT.3.3.4.4`, `ISF-DYNAMIC-WAIT.3.3.4.5`
   Acceptance: Dynamic waits inside shipped `when`, `switch`, `repeat`,
   `while`, and `until` bodies either preserve branch/loop exit semantics with
   exact zero-bypass behavior or remain fail-closed with targeted diagnostics
   and book coverage for each inline context.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.4.1`
+  Status: `done`
+  Goal: `Split inline dynamic wait expansion and lock the fail-closed matrix.`
+  Acceptance: Tests and docs explicitly cover the current fail-closed behavior
+  for dynamic waits in `when`, `switch`, `repeat`, `while`, and `until`
+  bodies, including context-specific diagnostics, and the task tree identifies
+  the next implementation leaves.
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.4.1: split inline dynamic waits`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.4.2`
+  Status: `pending`
+  Goal: `Support dynamic waits in when bodies.`
+  Acceptance: A runtime wait in a `when` body either lowers through the true
+  branch's zero/positive split while preserving the false-branch skip, or
+  remains fail-closed with narrower documented constraints.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.4.3`
+  Status: `pending`
+  Goal: `Support dynamic waits in repeat bodies.`
+  Acceptance: A runtime wait in a `repeat` body either lowers with exact
+  sampled-counter timing and repeat-check loop/exit preservation, or remains
+  fail-closed with narrower documented constraints.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.4.4`
+  Status: `pending`
+  Goal: `Support dynamic waits in switch branches.`
+  Acceptance: A runtime wait in a `switch` branch either lowers by splitting
+  only that case's branch-entry or predecessor edge while preserving other
+  case/default exits, or remains fail-closed with narrower documented
+  constraints.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.4.5`
+  Status: `pending`
+  Goal: `Support dynamic waits in while/until bodies.`
+  Acceptance: Runtime waits in loop bodies either lower while preserving
+  loop-entry, loop-back, and loop-exit semantics, or remain fail-closed with
+  narrower documented constraints.
   Verification: `pending`
   Commit: `pending`
 
@@ -162,7 +212,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3.4` | `pending` | Inline branch and loop bodies are the next dynamic wait expansion after top-level predecessor edges. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3.4.2` | `pending` | `when` bodies are the smallest branch-context implementation after the fail-closed inline matrix is covered. |
 
 ## Decisions
 
@@ -218,6 +268,11 @@ changing the exact timing meaning of the shipped wait construct.
   must survive. `await` preserves watchdog timeout, `repeat_check` preserves
   loop-back, `stage` preserves valid driving while splitting ready, `sync_all`
   uses the AND of collected done signals, and `sync_any` uses their OR.
+- `2026-05-15`: Inline dynamic waits need their own implementation leaves.
+  The current public behavior remains fail-closed for `when`, `switch`,
+  `repeat`, `while`, and `until` bodies, with diagnostics that name the
+  rejected body context. `when` is the next implementation leaf because it has
+  one true branch and one false skip.
 
 ## Open Questions
 
@@ -239,6 +294,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.1` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -251,6 +307,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.3.3.1` | `ISF-DYNAMIC-WAIT.3.3.1: split dynamic wait expansion` | Splits context expansion into executable leaves. |
 | `ISF-DYNAMIC-WAIT.3.3.2` | `ISF-DYNAMIC-WAIT.3.3.2: support consecutive runtime waits` | Supports back-to-back top-level runtime waits with recursive zero-bypass and sampled-counter final-edge splits. |
 | `ISF-DYNAMIC-WAIT.3.3.3` | `ISF-DYNAMIC-WAIT.3.3.3: support dynamic wait predecessors` | Supports runtime waits after `await`, `stage`, `repeat_check`, `sync_all`, and `sync_any` predecessor states. |
+| `ISF-DYNAMIC-WAIT.3.3.4.1` | `ISF-DYNAMIC-WAIT.3.3.4.1: split inline dynamic waits` | Covers the inline fail-closed diagnostic matrix and splits implementation leaves. |
 
 ## Changelog
 
@@ -275,3 +332,7 @@ changing the exact timing meaning of the shipped wait construct.
 - `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.3`; runtime waits now lower
   after `await`, `stage`, `repeat_check`, `sync_all`, and `sync_any`
   predecessors. The current frontier advances to `ISF-DYNAMIC-WAIT.3.3.4`.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.4.1`; inline dynamic waits
+  are split into context-specific implementation leaves and remain fail-closed
+  with tests/book coverage for each shipped inline context. The current
+  frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.2`.

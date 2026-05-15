@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF inline dynamic wait split
+- Completed `ISF-DYNAMIC-WAIT.3.3.4.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Inline runtime scalar waits in `when`, `switch`, `repeat`, `while`, and
+  `until` bodies remain fail-closed, now with focused tests and book coverage
+  for each context.
+- Loop-body diagnostics now distinguish `while body` from `until body` instead
+  of using the older generic `loop body` wording.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.4.2`, dynamic waits in `when`
+  bodies.
 ## 2026-05-15: ISF dynamic waits after additional predecessors
 - Completed `ISF-DYNAMIC-WAIT.3.3.3` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
@@ -10,8 +20,9 @@ This is the live continuity document for fast session recovery after crashes, re
   done AND, and await-any done OR.
 - Await watchdog timeout and repeat loop-back alternatives are preserved when
   the dynamic wait follows those states.
-- The current frontier is `ISF-DYNAMIC-WAIT.3.3.4`, inline dynamic waits in
-  branch and loop bodies.
+- Inline dynamic wait splitting later started under
+  `ISF-DYNAMIC-WAIT.3.3.4.1`; the current frontier is recorded in the latest
+  dynamic-wait entry above.
 ## 2026-05-15: ISF consecutive runtime scalar waits
 - Completed `ISF-DYNAMIC-WAIT.3.3.2` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

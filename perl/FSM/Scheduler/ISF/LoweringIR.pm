@@ -2554,7 +2554,7 @@ sub _ir_while {
 
     my $body_states = _expand_loop_body(
         \@body_clauses, $tn, $ir, [], $wd, $drives, $widths,
-        $counters, $storage_roles, $actor, $bank_accesses,
+        $counters, $storage_roles, $actor, $bank_accesses, 'while body',
     );
     my $back = {
         name        => "${tn}_while_check_" . $$ir++,
@@ -2587,6 +2587,7 @@ sub _ir_until {
     my $body_states = _expand_loop_body(
         \@body_clauses, $tn, $ir, $pending_samples || [], $wd, $drives,
         $widths, $counters, $storage_roles, $actor, $bank_accesses,
+        'until body',
     );
     my $check = {
         name        => "${tn}_until_check_" . $$ir++,
@@ -3173,9 +3174,10 @@ sub _ir_sync_all { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_all_$i",kind=>'sync_
 sub _ir_sync_any { my ($tn,$i,$dps)=@_; {name=>"${tn}_await_any_$i",kind=>'sync_any',assignments=>[],transitions=>[],done_ports=>[@$dps]} }
 
 sub _expand_loop_body {
-    my ($body_clauses, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses) = @_;
+    my ($body_clauses, $tn, $ir, $pending_samples, $wd, $drives, $widths, $counters, $storage_roles, $actor, $bank_accesses, $body_label) = @_;
     my @states;
     my @lp = @{$pending_samples || []};
+    $body_label //= 'loop body';
 
     for my $bc (@$body_clauses) {
         next unless ref($bc) eq 'ARRAY';
@@ -3190,8 +3192,8 @@ sub _expand_loop_body {
         } elsif ($bk eq 'sample') {
             push @lp, $bc;
         } elsif ($bk eq 'wait') {
-            if (_wait_cycles($bc, $tn, 'loop body', $actor, $widths) > 0) {
-                push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp], $actor, 'loop body')};
+            if (_wait_cycles($bc, $tn, $body_label, $actor, $widths) > 0) {
+                push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp], $actor, $body_label)};
             }
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);

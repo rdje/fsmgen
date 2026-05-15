@@ -1104,10 +1104,10 @@ collected done signals.
 
 The current runtime scalar implementation is still deliberately narrow.
 Runtime waits inside `when`, `switch`, `repeat`, `while`, or `until` bodies
-remain rejected. Runtime waits after pending samples, after predecessor states
-whose edge split is not implemented yet, including loop decision states, and
-counts expressed as list expressions or parameter-backed values also remain
-rejected.
+remain rejected with diagnostics that name the rejected body context. Runtime
+waits after pending samples, after predecessor states whose edge split is not
+implemented yet, including loop decision states, and counts expressed as list
+expressions or parameter-backed values also remain rejected.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

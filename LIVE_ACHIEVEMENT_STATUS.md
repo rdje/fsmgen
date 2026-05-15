@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF inline dynamic wait split
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.1`.
+- Inline runtime scalar waits in `when`, `switch`, `repeat`, `while`, and
+  `until` bodies remain fail-closed, now with focused regression coverage and
+  mdBook/spec text for each context.
+- Loop-body wait diagnostics now distinguish `while body` from `until body`.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.2`, dynamic waits in
+  `when` bodies.
+
 ## 2026-05-15: R14 — ISF dynamic waits after additional predecessors
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.3`.
 - Top-level runtime scalar waits now lower after `await`, `stage`,

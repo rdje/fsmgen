@@ -355,7 +355,9 @@ top-level runtime waits and waits after shipped `await`, `stage`, `repeat`
 exit, `await_all`, and `await_any` predecessors, reaches HDL generation,
 exposes `actor_constants[]` and `transaction_waits[]` provenance, and rejects
 malformed, unknown, parameter-backed, expression-valued, or unsupported
-dynamic counts.
+dynamic counts. Unsupported inline dynamic wait contexts are covered for
+`when`, `switch`, `repeat`, `while`, and `until` bodies with diagnostics that
+name the rejected body context.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: inline dynamic waits need context-specific leaves
+- Inline dynamic waits combine the runtime count split with branch and loop
+  exit semantics. Treating all inline contexts as one implementation slice
+  would mix different proof obligations: branch false skips, switch
+  case/default exits, repeat loop-back, and while/until loop decisions.
+- The current public behavior remains fail-closed for all shipped inline body
+  contexts until each context gets an exact lowering. The diagnostics now name
+  the rejected body context so authors can tell whether they hit `when`,
+  `switch`, `repeat`, `while`, or `until`.
+- `when` is the smallest next implementation leaf because it has one true body
+  edge and one false skip. It should establish the branch-state split pattern
+  before the switch and loop variants add multiple cases or back-edges.
 ## 2026-05-15: dynamic wait predecessor support is base-condition splitting
 - A dynamic wait after a guarded predecessor should not introduce a new
   decision cycle. The predecessor's own advance condition becomes the base

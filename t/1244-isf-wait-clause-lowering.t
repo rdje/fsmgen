@@ -623,6 +623,54 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'switch dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in switch body/);
+(actor wait_switch_dynamic_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input sel) (input cycles (width 4)) (output done))
+  (transaction main
+    (on start)
+    (switch sel
+      (0 (wait cycles)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in repeat body/);
+(actor wait_repeat_dynamic_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input cycles (width 4)) (output done))
+  (transaction main
+    (on start)
+    (repeat 1
+      (wait cycles))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'while dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in while body/);
+(actor wait_while_dynamic_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input cond) (input cycles (width 4)) (output done))
+  (transaction main
+    (on start)
+    (while cond
+      (wait cycles))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'until dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is supported only as a top-level transaction-body wait in this slice; found in until body/);
+(actor wait_until_dynamic_count
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface (input start) (input cond) (input cycles (width 4)) (output done))
+  (transaction main
+    (on start)
+    (until cond
+      (wait cycles))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' in transaction body cannot follow pending samples yet/);
 (actor wait_dynamic_after_sample
   (clock clk)

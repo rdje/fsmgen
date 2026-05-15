@@ -360,9 +360,11 @@ Runtime scalar wait report entries use `count_kind` `runtime_scalar`, keep
 in `count_source`, and expose the generated counter through `counter_signal`
 and `counter_width`.
 
-Runtime waits remain fail-closed in inline bodies, after pending samples, after
-predecessor states whose edge split is not implemented yet, including loop
-decision states, and for expression-valued or parameter-backed counts.
+Runtime waits remain fail-closed in inline `when`, `switch`, `repeat`,
+`while`, and `until` bodies, with diagnostics that name the rejected body
+context. They also remain fail-closed after pending samples, after predecessor
+states whose edge split is not implemented yet, including loop decision
+states, and for expression-valued or parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.
