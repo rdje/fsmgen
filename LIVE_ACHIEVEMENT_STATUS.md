@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF activation parameter override tree opened
+- Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.1`.
+- [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md)
+  is now the active owner for rule-trigger parameter overrides and the direct
+  transaction activation parameter boundary.
+- This slice changes workflow state only. Compiler behavior, public syntax,
+  report shape, and HDL output are unchanged.
+- The active frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.2`,
+  specifying the rule-trigger parameter override lowering contract before
+  scheduler edits.
+
 ## 2026-05-15: R14 — ISF multi-domain event CDC HDL shipped
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.7`.
 - Plain multi-domain `.isf` HDL generation now emits the generated

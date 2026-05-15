@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| _None_ | _n/a_ | _n/a_ | _n/a_ | _n/a_ |
+| `ISF-ACTIVATION-PARAM-OVERRIDES` | `active` | `R14` | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md) |
 
 ## Proposed Task Trees
 
@@ -90,6 +90,7 @@ as done work unless a future task reopens them.
 | Expression-valued activation input bindings | `ISF-ACTIVATION-BIND-EXPRESSIONS` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
+| Remaining rule-trigger and direct-activation parameter overrides | `ISF-ACTIVATION-PARAM-OVERRIDES` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |

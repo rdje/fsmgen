@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF activation parameter override tree opened
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.1` in
+  [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md).
+- The remaining activation-site parameter override backlog now has an active
+  R14 task-tree owner after the closed `ISF-TRANSACTION-ACTIVATION` tree:
+  rule-trigger parameter overrides and the direct transaction activation
+  boundary.
+- This slice changes workflow state only. Compiler behavior, public syntax,
+  report shape, and HDL output are unchanged.
+- The current frontier is `ISF-ACTIVATION-PARAM-OVERRIDES.2`, specifying the
+  rule-trigger parameter override lowering contract before scheduler edits.
 ## 2026-05-15: ISF multi-domain event CDC HDL shipped
 - Completed `ISF-CLOCK-DOMAINS.7` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md),

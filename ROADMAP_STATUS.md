@@ -10,8 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: select the next roadmap-aligned R14 task tree after the
-  `ISF-CLOCK-DOMAINS` tree closed.
+- Next decision point: continue the active
+  `ISF-ACTIVATION-PARAM-OVERRIDES` task tree. The current frontier is
+  `ISF-ACTIVATION-PARAM-OVERRIDES.2`, specifying the rule-trigger parameter
+  override lowering contract before scheduler edits.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
@@ -63,8 +65,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
   system-port remapping, and `ISF-TRANSACTION-ACTIVATION` is closed after
   publishing the shipped spawn/blocking-`do` activation-parameter boundary.
-  Rule-trigger and direct-activation parameter overrides remain backlog and
-  need a fresh explicit tree/leaf before implementation.
+  Rule-trigger and direct-activation parameter overrides now belong to the
+  active `ISF-ACTIVATION-PARAM-OVERRIDES` tree. The tree-opening
+  `ISF-ACTIVATION-PARAM-OVERRIDES.1` slice changed workflow state only; no
+  compiler behavior, public syntax, report shape, or HDL output changed.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

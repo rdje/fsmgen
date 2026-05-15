@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: remaining activation params need their own tree
+- `ISF-ACTIVATION-PARAM-OVERRIDES.1` deliberately makes no scheduler change.
+  The prior `ISF-TRANSACTION-ACTIVATION` tree closed after spawn and blocking
+  `do` parameter overrides; the roadmap required a fresh explicit tree or leaf
+  before touching rule-trigger or direct-activation parameter behavior.
+- The active tree keeps the key invariant from the shipped spawn/`do` work:
+  `(params ...)` values are static specialization values, not runtime payload
+  actuals. Runtime-varying values stay in transaction ports and `(bind ...)`.
+- Rule-trigger overrides are specified before implementation because the
+  current trigger fan-in path shares a target transaction start signal, while
+  per-site parameter values require distinct specialization ownership or an
+  explicit fail-closed diagnostic.
 ## 2026-05-15: generated event CDC HDL is explicitly marked
 - `ISF-CLOCK-DOMAINS.7` keeps normal `?rtl` semantics intact: external RTL
   children still require supplied RTL, and the composition realizer only emits

@@ -1,5 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-16
+### R14 — ISF activation parameter override tree opened
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.1`.
+- Opened [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md)
+  as the active R14 owner for the remaining activation-site parameter override
+  work left after `ISF-TRANSACTION-ACTIVATION`: rule-trigger overrides and the
+  direct transaction activation boundary.
+- Updated the task-tree index, roadmap status, README index, and live recovery
+  docs to make `ISF-ACTIVATION-PARAM-OVERRIDES.2` the next frontier.
+- This is a workflow-state slice only. Compiler behavior, public syntax,
+  schedule-report shape, and HDL output are unchanged.
 ## 2026-05-15
 ### R14 — ISF multi-domain event CDC HDL shipped
 - Completed `ISF-CLOCK-DOMAINS.7` and closed the `ISF-CLOCK-DOMAINS` tree.
