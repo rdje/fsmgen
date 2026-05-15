@@ -327,6 +327,12 @@ so scalar `do`, `spawn`, and rule-trigger input bindings are direction- and
 width-checked, actor inputs remain read-only, actor output readback is
 rejected, spawned bindings produce hidden generated-top handoffs, and rule
 trigger payloads use per-rule source signals before trigger fan-in.
+The actor-pin binding conflict boundary is checked by
+[t/1242-isf-port-binding-conflict-semantics.t](../t/1242-isf-port-binding-conflict-semantics.t)
+so spawned output bindings keep parent-transaction ownership in assignment
+provenance, conflicting rule writes fail through the existing
+rule/transaction conflict path, and accepted spawn or rule-trigger binding
+fan-in reaches the backend's verification-only selector instrumentation.
 The transaction-name boundary is checked by
 [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 so duplicate transaction names fail before actor-shell return and downstream
@@ -832,8 +838,11 @@ scheduled `.fsm` review artifact and does not itself add a compile issue.
 Actor-level rule-over-transaction priority is also enforced for the covered
 same-target data case when both assignments use the same timing operator: the
 transaction-state assignment is guarded with the inverse active rule
-condition. Unordered rule/transaction conflicts, priority cycles, mixed timing
-operators, and transaction-over-rule priority all fail closed.
+condition. Spawned transaction output bindings are also treated as
+transaction-owned data for this conflict pass, so a spawned child output bound
+to an actor output cannot silently coexist with a conflicting rule writer.
+Unordered rule/transaction conflicts, priority cycles, mixed timing operators,
+and transaction-over-rule priority all fail closed.
 Transaction-over-rule is not lowered yet because scheduled `.fsm` review text
 does not expose a state-active predicate that can safely guard a non-state
 rule DT assignment.
@@ -1212,9 +1221,11 @@ These are not stable public interfaces yet:
 - Transaction port behavior beyond parser-shell `ports.inputs[]` /
   `ports.outputs[]` `name`/`width` metadata and the first scalar
   activation-binding lowering for `do`, `spawn`, and rule-trigger input
-  bindings. Expression-valued bindings, rule-trigger output bindings, explicit
-  snapshot-vs-live timing selection, and report key families remain active
-  design work under `ISF-PORT-BINDING`.
+  bindings plus the first conflict/runtime coverage for binding-generated
+  assignments. Expression-valued bindings, rule-trigger output bindings,
+  explicit snapshot-vs-live timing selection, broader static conflict
+  diagnostics, and report key families remain active design work under
+  `ISF-PORT-BINDING`.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

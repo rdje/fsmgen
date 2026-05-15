@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF port binding conflict semantics
+- Completed `ISF-PORT-BINDING.4` by integrating spawned transaction-port
+  output bindings with assignment provenance and the existing
+  rule/transaction conflict pass.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `spawn_port_binding` DTs carry parent transaction ownership and their
+  data assignments are visible to rule/transaction priority-conflict analysis.
+- Added
+  [t/1242-isf-port-binding-conflict-semantics.t](t/1242-isf-port-binding-conflict-semantics.t)
+  to prove parent-transaction provenance, fail-closed rule/spawn-output
+  conflicts, and backend runtime selector instrumentation for accepted
+  spawn-output and rule-trigger payload fan-in.
+- Updated the ISF public contract metadata, mdBook, spec, task tree, and ISF
+  tier-selection audit for the new conflict-semantics coverage.
+- The active R14 frontier advances to `ISF-PORT-BINDING.5`.
 ### R14 — ISF transaction port activation bindings
 - Completed `ISF-PORT-BINDING.3` by adding scalar activation-time port
   bindings for `do`, `spawn`, and rule-trigger input payloads.

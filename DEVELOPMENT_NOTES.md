@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF port binding conflict semantics
+- Spawn output bindings should be treated as transaction-owned data writes,
+  not anonymous generated wiring. The binding DT is generated, but its
+  semantic owner is the parent transaction that authored the `spawn` binding.
+  Recording that owner lets the already-shipped rule/transaction conflict path
+  apply without creating a separate binding-only conflict system.
+- The first shipped conflict behavior deliberately stays bounded. A rule that
+  writes an actor output already written by a spawned output binding now fails
+  through the same mixed-timing rule/transaction diagnostic used for other
+  incompatible timing combinations.
+- Accepted binding fan-in is still useful and should remain reviewable.
+  Multiple spawned outputs bound to one actor output, or multiple rules
+  binding payloads into one transaction input, lower as ordinary same-LHS
+  guarded `.fsm` assignments. The HDL backend then emits the same
+  verification-only selector assertions it uses for other muxes.
+- Broader static conflict proof for transaction/transaction binding fan-in is
+  still future work. Runtime selector instrumentation gives immediate
+  verification coverage without over-claiming compile-time proof.
 ## 2026-05-15: ISF activation-time port binding lowering
 - The first binding implementation is deliberately scalar-only. That keeps
   width checking exact: every binding endpoint names a known actor input,

@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF port binding conflict semantics
+- Active R14 task-tree slice: `ISF-PORT-BINDING.4` is complete.
+- Spawn output bindings now carry parent-transaction provenance and participate
+  in the existing rule/transaction conflict path.
+- Accepted spawn-output fan-in and rule-trigger input payload fan-in lower as
+  ordinary guarded `.fsm` assignments and reach SystemVerilog selector
+  assertions for runtime verification.
+- The next active R14 frontier is `ISF-PORT-BINDING.5`, bounded report/docs
+  coverage for the shipped binding surface.
+
 ## 2026-05-15: R14 — ISF transaction port activation bindings
 - Active R14 task-tree slice: `ISF-PORT-BINDING.3` is complete.
 - Scalar `(bind ...)` blocks now lower for `do`, `spawn`, and rule-trigger

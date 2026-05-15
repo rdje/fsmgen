@@ -252,9 +252,13 @@ sub _build_parent_ir($self, $actor, $spawned) {
             }
             if (@port_binding_assignments) {
                 push @dts, {
-                    name        => "$s->{instance}_port_bindings",
-                    kind        => 'spawn_port_binding',
-                    assignments => \@port_binding_assignments,
+                    name              => "$s->{instance}_port_bindings",
+                    kind              => 'spawn_port_binding',
+                    owner             => $tx->{name},
+                    owner_kind        => 'transaction',
+                    spawn_instance    => $s->{instance},
+                    child_transaction => $s->{child},
+                    assignments       => \@port_binding_assignments,
                 };
             }
             if (@port_binding_metadata) {
@@ -2882,6 +2886,37 @@ sub _transaction_data_assignment_refs {
         }
     }
 
+    for my $dt (@{$ir->{dt_blocks} || []}) {
+        next unless ($dt->{kind} // '') eq 'spawn_port_binding';
+        next unless (_dt_assignment_owner_kind($dt) // '') eq 'transaction';
+
+        my $assignment_index = 0;
+        for my $assignment (@{$dt->{assignments} || []}) {
+            my $current_index = $assignment_index++;
+            my $source_kind = _dt_assignment_source_kind($dt, $assignment);
+            next unless _assignment_domain_hint($assignment, $source_kind) eq 'data';
+            next unless defined $assignment->{lhs};
+
+            push @records, {
+                transaction      => _dt_assignment_owner($dt),
+                owner            => _dt_assignment_owner($dt),
+                owner_kind       => 'transaction',
+                source_kind      => $source_kind,
+                target           => $assignment->{lhs},
+                operator         => $assignment->{op},
+                rhs              => $assignment->{rhs},
+                assignment       => $assignment,
+                state            => $dt->{name},
+                state_kind       => $dt->{kind},
+                owner_condition  => _combine_condition_exprs(
+                    _guard_condition_expr($dt->{dte_guard}) // '1',
+                    _guard_condition_expr($assignment->{guard}) // '1',
+                ),
+                assignment_index => $current_index,
+            };
+        }
+    }
+
     return @records;
 }
 
@@ -3314,12 +3349,14 @@ sub _dt_assignment_source_kind {
 
 sub _dt_assignment_owner {
     my ($dt) = @_;
+    return $dt->{owner} if defined($dt->{owner}) && length($dt->{owner});
     return $1 if ($dt->{kind} // '') eq 'rule_trigger_fanin' && ($dt->{name} // '') =~ /^(.+)_trigger_fanin\z/;
     return $dt->{name};
 }
 
 sub _dt_assignment_owner_kind {
     my ($dt) = @_;
+    return $dt->{owner_kind} if defined($dt->{owner_kind}) && length($dt->{owner_kind});
     my $kind = $dt->{kind} // '';
     return 'rule' if $kind eq 'rule';
     return 'drive' if $kind eq 'drive';

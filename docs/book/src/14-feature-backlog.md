@@ -355,9 +355,9 @@ becomes a support claim.
 
 ### Transaction Ports And Actor Pin Access
 
-Status: active task tree; transaction `(ports ...)` declarations and first
-scalar activation bindings are shipped, richer binding/report surfaces remain
-backlog.
+Status: active task tree; transaction `(ports ...)` declarations, first scalar
+activation bindings, and first actor-pin conflict/runtime coverage are
+shipped. Richer binding/report surfaces remain backlog.
 
 Goal: make it easy to connect actor variables, actor-owned storage, and actor
 top-level pins to transaction ports so rules and transactions can exchange
@@ -414,8 +414,16 @@ handoff ports and reviewable parent binding DTs. Rule `trigger` supports input
 bindings only; each rule owns a distinct payload source and the trigger fan-in
 DT routes payloads under the matching per-rule trigger pulse. Rule-trigger
 output bindings, expression-valued bindings, explicit snapshot-vs-live timing
-selection, schedule-report projection, and richer conflict diagnostics remain
-backlog.
+selection, schedule-report projection, and broader static conflict diagnostics
+remain backlog.
+
+Actor pin binding now uses the same assignment/conflict path as ordinary ISF
+drives where it has shipped coverage. Spawn output bindings carry parent
+transaction ownership in provenance, so a spawned child output bound to an
+actor output conflicts with a same-target rule writer through the existing
+rule/transaction diagnostics. Accepted spawn-output fan-in and rule-trigger
+input payload fan-in remain visible as normal `.fsm` same-LHS assignments and
+reach the SystemVerilog backend's verification-only selector checks.
 
 ### Temporal Contract Lowering
 

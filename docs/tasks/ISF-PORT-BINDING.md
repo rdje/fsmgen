@@ -100,14 +100,19 @@ reviewable `.fsm` signals with conflict checks.
   Commit: `ISF-PORT-BINDING.3: lower transaction port bindings`
 
 - ID: `ISF-PORT-BINDING.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Integrate actor pin access with assignment and conflict semantics.`
   Acceptance: Actor input reads and actor output writes through rules and
   transactions use the same assignment/conflict model as other ISF regions,
   including compatible fan-in, priority/resource handling where already
   shipped, and runtime selector-conflict instrumentation where applicable.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `perl -I perl -c t/1242-isf-port-binding-conflict-semantics.t`;
+  focused provenance/conflict/runtime selector suite; public contract and
+  CI-tier metadata suite; `./bin/ci-regression isf --no-book`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PORT-BINDING.4: align port binding conflicts`
 
 - ID: `ISF-PORT-BINDING.5`
   Status: `pending`
@@ -123,7 +128,7 @@ reviewable `.fsm` signals with conflict checks.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PORT-BINDING.4` | `pending` | Scalar activation bindings now lower; the next slice should integrate the remaining actor pin/conflict edge cases and decide the next conflict/report boundary. |
+| 1 | `ISF-PORT-BINDING.5` | `pending` | Binding conflict semantics now have first shipped coverage; the next slice should decide and publish the bounded schedule-report projection for port/binding provenance. |
 
 ## Design Notes
 
@@ -175,6 +180,11 @@ reviewable `.fsm` signals with conflict checks.
   lower to reviewable `.fsm`. `do` uses the parent await state, `spawn` uses
   hidden generated-top handoff ports plus a parent binding DT, and rule
   triggers use per-rule payload source signals before fan-in.
+- `2026-05-15`: Spawned output bindings now carry parent-transaction
+  ownership in assignment provenance and feed the existing rule/transaction
+  conflict pass. Accepted spawn-output fan-in and rule-trigger input payload
+  fan-in reach backend verification-only selector instrumentation through
+  ordinary `.fsm` assignments.
 
 ## Open Questions
 
@@ -187,8 +197,8 @@ reviewable `.fsm` signals with conflict checks.
 
 ## Blockers
 
-- None for `ISF-PORT-BINDING.4`. Remaining edge cases are rule-trigger output
-  binding, expression-valued binding width contracts, and richer
+- None for `ISF-PORT-BINDING.5`. Remaining edge cases are rule-trigger output
+  binding, expression-valued binding width contracts, and richer static
   conflict/report projection.
 
 ## Verification Log
@@ -199,6 +209,7 @@ reviewable `.fsm` signals with conflict checks.
 | `2026-05-15` | `ISF-PORT-BINDING.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PORT-BINDING.2` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1240-isf-transaction-port-declarations.t`; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PORT-BINDING.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm`; `prove -I perl t/1241-isf-transaction-port-bindings.t`; adjacent do/spawn/rule regression suite; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PORT-BINDING.4` | `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -I perl -c t/1242-isf-port-binding-conflict-semantics.t`; focused provenance/conflict/runtime selector suite; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -208,6 +219,7 @@ reviewable `.fsm` signals with conflict checks.
 | `ISF-PORT-BINDING.1` | `ISF-PORT-BINDING.1: specify port binding contract` | Transaction port declaration/binding candidates, actor pin read/write policy, same-cycle visibility decision point, and conflict/report requirements. |
 | `ISF-PORT-BINDING.2` | `ISF-PORT-BINDING.2: parse transaction ports` | Parser-normalized transaction `(ports ...)` declarations with fail-closed diagnostics and public actor-shell contract coverage. |
 | `ISF-PORT-BINDING.3` | `ISF-PORT-BINDING.3: lower transaction port bindings` | Scalar activation bindings for `do`, `spawn`, and rule-trigger input payloads with generated handoff wiring and diagnostics. |
+| `ISF-PORT-BINDING.4` | `ISF-PORT-BINDING.4: align port binding conflicts` | Spawn output bindings now have parent transaction provenance and fail-closed rule/transaction conflict coverage; accepted binding fan-in reaches runtime selector assertions. |
 
 ## Changelog
 
@@ -221,3 +233,6 @@ reviewable `.fsm` signals with conflict checks.
 - `2026-05-15`: Implemented scalar activation-time port bindings for `do`,
   `spawn`, and rule-trigger input payloads, including generated-top handoffs,
   per-rule payload fan-in, and malformed binding diagnostics.
+- `2026-05-15`: Integrated spawned output binding assignments with parent
+  transaction provenance and existing rule/transaction conflict semantics, and
+  locked runtime selector instrumentation for accepted binding fan-in.

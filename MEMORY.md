@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF port binding conflict semantics
+- Completed `ISF-PORT-BINDING.4` in
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).
+- Spawn output-binding DT assignments now carry parent-transaction ownership
+  in assignment provenance. That lets same-target rule writers take the
+  existing rule/transaction conflict path instead of bypassing conflict checks
+  as anonymous generated wiring.
+- Accepted spawn-output fan-in and rule-trigger input payload fan-in remain
+  ordinary guarded `.fsm` assignments, and the SystemVerilog backend emits
+  verification-only selector assertions for those muxes when they reach HDL.
+- Added
+  [t/1242-isf-port-binding-conflict-semantics.t](t/1242-isf-port-binding-conflict-semantics.t)
+  plus public `tested_by` and ISF-tier metadata updates.
+- The next active R14 frontier is `ISF-PORT-BINDING.5`, publishing bounded
+  schedule-report projection/docs/fixture coverage for the shipped binding
+  surface.
 ## 2026-05-15: ISF transaction port activation bindings
 - Completed `ISF-PORT-BINDING.3` in
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).

@@ -142,6 +142,7 @@ my $expected_tested_by = [
     't/1239-isf-library-catalog-contract.t',
     't/1240-isf-transaction-port-declarations.t',
     't/1241-isf-transaction-port-bindings.t',
+    't/1242-isf-port-binding-conflict-semantics.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

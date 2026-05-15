@@ -768,7 +768,9 @@ bound actor signal under the generated `child_done` guard.
 bindings create a hidden parent output handoff and a visible child input port;
 output bindings create a hidden parent input handoff from the child output
 port and a reviewable parent DT assignment to the bound actor signal. The
-generated top wires those handoffs explicitly.
+generated top wires those handoffs explicitly. Spawn output-binding
+assignments are owned by the parent transaction for assignment provenance and
+rule/transaction conflict analysis.
 
 Rule `(trigger ...)` bindings currently support transaction input ports only.
 Each triggering rule emits a distinct payload source signal per bound input
@@ -799,6 +801,12 @@ merge two different payloads for the same transaction input. It must either
 prove compatible fan-in, use explicit priority/resource arbitration, or emit
 verification-only runtime conflict instrumentation according to the existing
 conflict policy.
+
+The shipped conflict coverage is now concrete for scalar bindings:
+same-target rule/transaction conflicts involving spawned output bindings enter
+the existing fail-closed rule/transaction path, while accepted spawn-output and
+rule-trigger input fan-in reaches the SystemVerilog backend's verification-only
+selector assertions.
 
 ### 7.2 Sampling and Variables
 
@@ -1802,6 +1810,7 @@ Focused tests:
 - [t/1239-isf-library-catalog-contract.t](../t/1239-isf-library-catalog-contract.t)
 - [t/1240-isf-transaction-port-declarations.t](../t/1240-isf-transaction-port-declarations.t)
 - [t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
+- [t/1242-isf-port-binding-conflict-semantics.t](../t/1242-isf-port-binding-conflict-semantics.t)
 
 ## 12. Explicitly Deferred
 
@@ -1820,8 +1829,8 @@ Focused tests:
   zero-count, width, reset, latency, and report semantics are specified.
 - Transaction binding surfaces beyond scalar `do`, `spawn`, and rule-trigger
   input bindings. Expression-valued bindings, rule-trigger output bindings,
-  explicit snapshot-vs-live timing selection, richer conflict diagnostics, and
-  report metadata remain under `ISF-PORT-BINDING`.
+  explicit snapshot-vs-live timing selection, broader static conflict
+  diagnostics, and report metadata remain under `ISF-PORT-BINDING`.
 - Transaction-local dynamic loops `(while cond body...)` and
   `(until cond body...)`. The proposed contract makes `while` a pre-test
   zero-or-more loop and `until` a body-first one-or-more loop. Conditions are

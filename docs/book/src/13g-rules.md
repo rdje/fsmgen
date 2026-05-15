@@ -170,7 +170,11 @@ assert ($onehot0({valid_0_en, valid_1_en}))
 The instrumentation is derived from backend assignment analysis, so it also
 covers generated muxes such as `next_state`. Standalone DT roots keep their
 existing standalone-DT multi-drive assertions instead of receiving a duplicate
-selector block.
+selector block. Binding-generated muxes use the same path: accepted
+rule-trigger input payload fan-in and spawned-output binding fan-in are emitted
+as ordinary guarded `.fsm` assignments, so the HDL backend can add the same
+verification-only selector assertions for their transaction ports or actor
+outputs.
 
 ## Trigger Fan-In
 

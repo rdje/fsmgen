@@ -4,8 +4,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue `R14` with
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md),
-  continuing at `ISF-PORT-BINDING.4` to integrate remaining actor pin/conflict
-  edge cases after scalar activation-time transaction port bindings.
+  continuing at `ISF-PORT-BINDING.5` to publish bounded schedule-report
+  projection and docs/fixture coverage for transaction port bindings after
+  first actor-pin conflict/runtime coverage.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -15,7 +16,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active, proposed, or completed task trees in
   [docs/TASK_TREE.md](docs/TASK_TREE.md). The first active feature tree is now
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
-  current frontier is `ISF-PORT-BINDING.4`. `ISF-LIBRARIES` is closed and
+  current frontier is `ISF-PORT-BINDING.5`. `ISF-LIBRARIES` is closed and
   listed in the completed table. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed `ISF-LIBRARIES`,
@@ -236,6 +237,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   per-rule payload source signals before trigger fan-in. Rule-trigger output
   bindings and expression-valued bindings remain deferred. The active frontier
   advances to `ISF-PORT-BINDING.4`.
+- `ISF-PORT-BINDING.4` is complete. Spawn output-binding DT assignments now
+  carry parent-transaction ownership in assignment provenance and feed the
+  existing rule/transaction conflict pass, so conflicting rule writes fail
+  closed instead of treating the binding as anonymous generated wiring.
+  Accepted spawn-output fan-in and rule-trigger input payload fan-in remain
+  ordinary guarded `.fsm` assignments and now have focused coverage proving
+  they reach backend verification-only selector instrumentation. The active
+  frontier advances to `ISF-PORT-BINDING.5`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
