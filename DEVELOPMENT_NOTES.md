@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: loop runtime wait samples preserve loop exits
+- Pending samples before `repeat`, `while`, or `until` body runtime waits can
+  reuse the same one-shot wait-entry state as top-level and branch waits, but
+  the loop decision edges must stay intact.
+- For `repeat`, the zero-count sample-preserving clone advances to the same
+  repeat-check state as the original body successor, so loop-back and exit
+  behavior remain unchanged.
+- For `while`, both entry and back-edge true paths may split into positive and
+  zero runtime-wait paths, while false paths still exit. For `until`, the
+  first body entry and false back-edge split, while true paths still exit.
+- If the selected zero-count successor cannot carry samples without changing
+  timing, the form remains fail-closed instead of changing loop timing.
 ## 2026-05-15: branch runtime wait samples reuse path-specific materialization
 - A pending sample before a `when`-body or `switch`-branch runtime wait has the
   same one-shot positive-count problem as a top-level runtime wait: the sample

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF repeat and loop runtime wait pending samples
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.5.4`.
+- `repeat`, `while`, and `until` bodies can now preserve pending samples
+  across runtime wait positive and zero paths for sample-compatible body
+  successors.
+- Positive paths sample once in the first active wait state and continue counts
+  greater than one through a no-resample wait loop.
+- Zero paths use sample-preserving clones while repeat check loop-back/exit,
+  `while` false exits, and `until` true exits remain unchanged.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.6`, expression-valued
+  runtime wait counts.
+
 ## 2026-05-15: R14 — ISF branch runtime wait pending samples
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.5.3`.
 - `when` bodies and `switch` branches can now preserve pending samples across

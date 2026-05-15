@@ -423,10 +423,10 @@ to a sample-preserving clone of the following body state when that state can
 carry samples without changing timing. The false path remains an explicit skip
 around the sampled body.
 
-Runtime waits in `repeat` bodies are also supported when no pending sample must
-cross the wait. The generated dynamic wait counter is registered with the
-repeat body's other counters, and the repeat-check loop-back/exit edges remain
-unchanged after the body:
+Runtime waits in `repeat` bodies are also supported. With no pending sample,
+the generated dynamic wait counter is registered with the repeat body's other
+counters, and the repeat-check loop-back/exit edges remain unchanged after the
+body:
 
 ```lisp
 (main_repeat_init_1
@@ -435,6 +435,14 @@ unchanged after the body:
   (-> main_wait_2 <cycles)
   (-> main_drive_3 <(== cycles 0)))
 ```
+
+If pending samples appear before the repeat-body runtime wait, the positive
+iteration path enters a sample-carrying first wait state and a no-resample
+wait loop handles counts greater than one. The zero iteration path bypasses to
+a sample-preserving clone of the following body state when that successor can
+carry samples. The clone advances to the same repeat-check state as the
+original body successor, so repeat loop-back and exit behavior remain
+unchanged.
 
 Runtime waits in `switch` branches are supported. With no pending sample, if
 one case starts with a runtime wait, the switch state materializes only the
@@ -464,11 +472,10 @@ path goes to a sample-preserving clone of the following selected-case body
 state when that successor can carry samples without changing timing. Other
 explicit cases and the implicit fallthrough remain unchanged.
 
-Runtime waits in `while` bodies are supported when no pending sample must
-cross the wait. If the first body state is a runtime wait, both the entry
-decision and the back-edge decision split the true branch into positive-count
-counter load/entry and zero-count bypass paths. The false branch still exits
-the loop:
+Runtime waits in `while` bodies are supported. With no pending sample, if the
+first body state is a runtime wait, both the entry decision and the back-edge
+decision split the true branch into positive-count counter load/entry and
+zero-count bypass paths. The false branch still exits the loop:
 
 ```lisp
 (main_while_entry_1
@@ -497,12 +504,20 @@ back-edge reloads or bypasses the wait for the next iteration:
   (-> main_drive_2 <(& (! stop) (== cycles 0))))
 ```
 
+If pending samples appear before the first `while` or `until` body runtime
+wait, the positive body path uses the same sample-carrying first wait state and
+no-resample wait loop. The zero body path bypasses to a sample-preserving clone
+of the following body state when that successor can carry samples. `while`
+false exits and `until` true exits remain unchanged, and loop-back edges keep
+using the runtime count split on later iterations.
+
 Loop decision states can also split a following runtime wait on loop exit. For
 a `while` followed by `(wait cycles)`, the true branch still loops to the
 body, while the false exit branch samples or bypasses the following wait.
 
-Runtime waits remain fail-closed after pending samples, after predecessor
-states whose edge split is not implemented yet, and for expression-valued or
+Runtime waits remain fail-closed when the selected zero-count successor cannot
+carry pending samples without changing timing, after predecessor states whose
+edge split is not implemented yet, and for expression-valued or
 parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.

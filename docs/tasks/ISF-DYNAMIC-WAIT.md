@@ -190,7 +190,7 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.4.5: support loop-body dynamic waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.5`
-  Status: `active`
+  Status: `done`
   Goal: `Preserve pending samples across runtime dynamic wait bypass paths.`
   Children: `ISF-DYNAMIC-WAIT.3.3.5.1`,
   `ISF-DYNAMIC-WAIT.3.3.5.2`, `ISF-DYNAMIC-WAIT.3.3.5.3`,
@@ -233,14 +233,14 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.5.3: preserve branch wait samples`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.5.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Preserve pending samples for repeat and loop runtime waits.`
   Acceptance: Runtime waits with pending samples inside `repeat`, `while`, and
   `until` bodies preserve loop-back/exit behavior, positive-count sample
   timing, and zero-count bypass sample timing, or remain fail-closed with
   narrower documented constraints.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.5.4: preserve loop wait samples`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.6`
   Status: `pending`
@@ -255,7 +255,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3.5.4` | `pending` | Repeat and loop contexts are the remaining pending-sample materialization family in this node. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3.6` | `pending` | Expression-valued runtime counts are the remaining dynamic-wait expansion family after pending-sample preservation. |
 
 ## Decisions
 
@@ -367,6 +367,12 @@ changing the exact timing meaning of the shipped wait construct.
   sample-preserving clone when the selected successor can carry samples. The
   `when` false path, other switch cases, and implicit switch fallthrough remain
   unchanged.
+- `2026-05-15`: Repeat and loop body runtime waits also reuse the same
+  pending-sample materialization. Repeat iterations, `while` true entry and
+  back-edge paths, and `until` first-entry/false-back-edge paths split into
+  positive sample-carrying wait entry and zero sample-preserving clone paths.
+  Repeat check loop-back/exit behavior, `while` false exits, and `until` true
+  exits remain unchanged.
 
 ## Open Questions
 
@@ -396,6 +402,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -416,6 +423,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.3.3.5.1` | `ISF-DYNAMIC-WAIT.3.3.5.1: split pending-sample preservation` | Splits pending-sample preservation into executable leaves and records the path-specific materialization contract. |
 | `ISF-DYNAMIC-WAIT.3.3.5.2` | `ISF-DYNAMIC-WAIT.3.3.5.2: preserve top-level wait samples` | Supports pending samples before top-level runtime waits with one-shot positive sampling and a zero-count sample-preserving clone for sample-compatible successors. |
 | `ISF-DYNAMIC-WAIT.3.3.5.3` | `ISF-DYNAMIC-WAIT.3.3.5.3: preserve branch wait samples` | Supports pending samples before `when`-body and `switch`-branch runtime waits while preserving alternate branch exits. |
+| `ISF-DYNAMIC-WAIT.3.3.5.4` | `ISF-DYNAMIC-WAIT.3.3.5.4: preserve loop wait samples` | Supports pending samples before `repeat`, `while`, and `until` runtime waits while preserving loop exits and back-edges. |
 
 ## Changelog
 
@@ -474,3 +482,8 @@ changing the exact timing meaning of the shipped wait construct.
   positive/zero paths for sample-compatible selected successors while keeping
   false, other-case, and fallthrough exits unchanged. The current frontier
   advances to `ISF-DYNAMIC-WAIT.3.3.5.4`.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.5.4`; `repeat`, `while`, and
+  `until` bodies now preserve pending samples across runtime wait
+  positive/zero paths for sample-compatible body successors while keeping
+  loop-back and loop-exit behavior unchanged. The current frontier advances to
+  `ISF-DYNAMIC-WAIT.3.3.6`.

@@ -426,7 +426,8 @@ Remaining backlog: runtime scalar waits after any remaining predecessor kinds
 whose edge split is not implemented yet, top-level pending-sample zero
 bypasses whose successor cannot yet carry samples without changing timing,
 branch pending-sample zero bypasses whose successor cannot yet carry samples
-without changing timing, pending samples before repeat/loop dynamic waits, and
+without changing timing, repeat/loop pending-sample zero bypasses whose
+successor cannot yet carry samples without changing timing, and
 expression-valued or parameter-backed counts.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
@@ -434,8 +435,9 @@ subset, `switch` branches are shipped for the no-pending-sample subset, and
 `while`/`until` bodies are shipped for the no-pending-sample subset. Pending
 samples before `when`-body and `switch`-branch dynamic waits are shipped when
 the selected zero-count successor can carry samples without changing timing.
-Pending samples before `repeat`, `while`, and `until` dynamic waits still fail
-closed with diagnostics that name the rejected context.
+Pending samples before `repeat`, `while`, and `until` dynamic waits are also
+shipped when the selected zero-count body successor can carry samples without
+changing timing.
 
 Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
 top-level dynamic waits and the requested additional top-level predecessor
@@ -444,10 +446,10 @@ bodies, `switch` branches, and `while`/`until` bodies are shipped for the
 no-pending-sample subset. Pending-sample preservation is now split under
 `ISF-DYNAMIC-WAIT.3.3.5`; top-level runtime waits are shipped under
 `ISF-DYNAMIC-WAIT.3.3.5.2`, branch runtime waits are shipped under
-`ISF-DYNAMIC-WAIT.3.3.5.3`, and the next frontier is repeat and loop
-pending-sample preservation under `ISF-DYNAMIC-WAIT.3.3.5.4`.
-Expression-valued runtime counts follow once their width/type/snapshot
-contract is specified.
+`ISF-DYNAMIC-WAIT.3.3.5.3`, and repeat/loop runtime waits are shipped under
+`ISF-DYNAMIC-WAIT.3.3.5.4`. The next frontier is expression-valued runtime
+counts under `ISF-DYNAMIC-WAIT.3.3.6`, once their width/type/snapshot contract
+is specified.
 
 Pending samples cannot be enabled by simply putting the sample assignment on a
 shared successor state. The positive-count path must behave like a positive
@@ -458,9 +460,10 @@ Top-level runtime waits now use a first wait state that samples once, a
 separate wait-loop state for counts greater than one, and a zero-bypass clone
 of the following state-producing clause when that successor can carry samples
 without changing timing. `when` and `switch` use the same materialization while
-preserving false, other-case, and fallthrough exits. Other top-level and branch
-successor shapes, plus repeat and loop contexts, still need equivalent
-path-specific materialization before their pending-sample forms can ship.
+preserving false, other-case, and fallthrough exits. `repeat`, `while`, and
+`until` use the same materialization while preserving loop-back and loop-exit
+edges. Other successor shapes that cannot yet carry samples remain
+fail-closed.
 
 ### Transaction Dynamic Loops
 

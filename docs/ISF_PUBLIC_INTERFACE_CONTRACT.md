@@ -367,8 +367,11 @@ sample without changing timing. Top-level zero-count successors that cannot
 yet carry pending samples fail closed. Pending samples before `when`-body and
 `switch`-branch runtime waits are now covered by the same one-shot positive
 sample and zero-clone contract when the selected successor can carry samples.
-Pending samples before `repeat`, `while`, and `until` dynamic waits remain
-fail-closed with diagnostics that name the body context.
+Pending samples before `repeat`, `while`, and `until` dynamic waits are covered
+by the same contract for sample-compatible body successors while preserving
+loop-back and loop-exit edges. Dynamic waits whose selected zero-count
+successor cannot yet carry samples fail closed with diagnostics that name the
+body context.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test

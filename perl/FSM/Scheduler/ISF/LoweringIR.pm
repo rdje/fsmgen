@@ -3254,9 +3254,7 @@ sub _expand_loop_body {
                     push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp], $actor, $body_label, $wait)};
                 }
             } else {
-                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in $body_label cannot follow pending samples yet\n"
-                    if @lp;
-                my ($dynamic_states, $counter, $counter_width) = _ir_dynamic_wait($bc, $tn, $ir, $wait);
+                my ($dynamic_states, $counter, $counter_width) = _ir_dynamic_wait($bc, $tn, $ir, $wait, [splice @lp]);
                 push @states, @$dynamic_states;
                 _register_counter_width($counters, $counter, $counter_width) if $counters;
                 $storage_roles->{$counter} = 'dynamic_wait_counter'
@@ -3304,9 +3302,7 @@ sub _ir_repeat {
                     push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'repeat body',$wait)};
                 }
             } else {
-                confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in repeat body cannot follow pending samples yet\n"
-                    if @lp;
-                my ($states,$counter,$counter_width)=_ir_dynamic_wait($bc,$tn,$ir,$wait);
+                my ($states,$counter,$counter_width)=_ir_dynamic_wait($bc,$tn,$ir,$wait,[splice @lp]);
                 push @s,@$states;
                 push @dynamic_wait_counters,{name=>$counter,width=>$counter_width};
             }

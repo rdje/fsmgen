@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF repeat and loop runtime wait pending samples
+- Completed `ISF-DYNAMIC-WAIT.3.3.5.4` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Runtime waits inside `repeat`, `while`, and `until` bodies can now follow
+  pending samples when the selected zero-count body successor can carry samples
+  without changing timing.
+- Positive loop-body paths sample once in the first active wait state and use
+  a no-resample wait-loop state for counts greater than one.
+- Zero loop-body paths use sample-preserving clones. Repeat check
+  loop-back/exit behavior, `while` false exits, and `until` true exits remain
+  unchanged.
+- The pending-sample preservation node is complete. The current frontier is
+  `ISF-DYNAMIC-WAIT.3.3.6`, expression-valued runtime wait counts.
 ## 2026-05-15: ISF branch runtime wait pending samples
 - Completed `ISF-DYNAMIC-WAIT.3.3.5.3` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

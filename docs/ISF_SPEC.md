@@ -1143,9 +1143,11 @@ samples without changing timing fail closed. The same path-specific
 materialization is also supported inside `when` bodies and `switch` branches
 when the selected zero-count successor can carry the pending samples. The
 false path of `when`, other explicit switch cases, and implicit switch
-fallthrough remain unchanged. Pending samples before runtime waits inside
-`repeat`, `while`, or `until` bodies remain fail-closed until their
-loop-specific sample materialization leaves ship.
+fallthrough remain unchanged. `repeat`, `while`, and `until` bodies use the
+same materialization when the zero-count body successor can carry pending
+samples. Repeat loop-back/exit behavior, `while` false exits, and `until` true
+exits remain unchanged. Runtime waits whose selected zero-count successor
+cannot yet carry pending samples without changing timing fail closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

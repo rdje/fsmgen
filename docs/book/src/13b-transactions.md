@@ -262,8 +262,10 @@ successor shapes fail closed until their sample materialization is specified.
 Runtime waits inside `when` bodies and `switch` branches now use the same
 one-shot positive sample plus zero-count clone scheme for sample-compatible
 successors while preserving false, other-case, and fallthrough exits. Pending
-samples before `repeat`, `while`, and `until` runtime waits still reject
-because their loop bypass paths need separate materialization support.
+samples before `repeat`, `while`, and `until` runtime waits use the same
+scheme when the body successor can carry samples; loop-back and loop-exit
+edges remain unchanged. Runtime waits whose selected zero-count successor
+cannot yet carry samples fail closed.
 
 **Generated .fsm** for `(wait 2)` followed by `(drive tick)`:
 
@@ -287,12 +289,14 @@ contexts fail closed. Inline dynamic waits are supported in `when` and
 `repeat` bodies, `switch` branches, and `while`/`until` bodies for the
 no-pending-sample subset. Pending samples are also supported for `when` bodies
 and `switch` branches when the selected zero-count successor can carry samples
-without changing timing. In a `switch`, only the selected branch's runtime
-wait edge is split; other cases remain selectable and implicit fallthrough is
-guarded by the complement of all explicit case values. In loops, the relevant
-entry, back-edge, or exit decision edge is split while the opposite loop branch
-is preserved. Pending samples before `repeat`, `while`, and `until` runtime
-waits remain fail-closed with diagnostics that name the rejected body context.
+without changing timing. The same pending-sample rule is also supported in
+`repeat`, `while`, and `until` bodies for sample-compatible body successors.
+In a `switch`, only the selected branch's runtime wait edge is split; other
+cases remain selectable and implicit fallthrough is guarded by the complement
+of all explicit case values. In loops, the relevant entry, back-edge, or exit
+decision edge is split while the opposite loop branch is preserved. Dynamic
+waits whose selected zero-count successor cannot yet carry samples fail closed
+with diagnostics that name the rejected body context.
 
 ## `(complete port)` — Terminal State
 
