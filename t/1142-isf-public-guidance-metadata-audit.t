@@ -20,6 +20,7 @@ my $expected_guidance = [
     'The library catalog path list and shipped_library_definitions entries are live discovery metadata for reusable ISF definitions; add or change entries only with source, limitations, and tests updated together.',
     'The schedule report currently advertises only the named top-level and summary key families; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
     'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',
+    'Feature-driven public ISF changes must move the matching public contract and manifest audit tests in the same slice as the implementation.',
 ];
 
 subtest 'direct ISF guidance metadata is exact and unique' => sub {

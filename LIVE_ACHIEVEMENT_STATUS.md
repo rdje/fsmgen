@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF public contract synchronization tree closed
+- Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.4`.
+- `embedding.isf_public_interface.guidance` now says feature-driven public ISF
+  changes must move matching public contract and manifest audit tests in the
+  same implementation slice.
+- [t/1142-isf-public-guidance-metadata-audit.t](t/1142-isf-public-guidance-metadata-audit.t),
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  and [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md)
+  were updated with the same rule.
+- [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
+  is now closed and moved to the completed task-tree table.
+- No active PNT-eligible R14 task tree remains until a proposed tree is
+  activated or a fresh task tree is selected.
+
 ## 2026-05-15: R14 — ISF synchronization checklist applied to active workflow
 - Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.3`.
 - [docs/TASK_TREE.md](docs/TASK_TREE.md) now requires every ISF feature leaf to

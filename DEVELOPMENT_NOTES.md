@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: public sync guidance is manifest-visible
+- `ISF-PUBLIC-CONTRACT.4` closes the public-contract synchronization tree by
+  making the same-slice audit-test rule visible in the public contract
+  guidance, not only in internal workflow docs.
+- The exact guidance audit now covers the new rule across the direct contract
+  and manifest-embedded views, which makes future drift visible whenever a
+  feature changes public ISF syntax, facade behavior, lower-result shape, or
+  schedule-report shape.
+- The project has no active PNT-eligible R14 task tree after this closure.
+  Proposed work such as clock-domain semantics still needs explicit activation
+  or a selected source model before implementation.
 ## 2026-05-15: ISF checklist application stays by reference
 - `ISF-PUBLIC-CONTRACT.3` applies the reusable checklist from
   [docs/TASK_TREE.md](docs/TASK_TREE.md) instead of copying the full checklist

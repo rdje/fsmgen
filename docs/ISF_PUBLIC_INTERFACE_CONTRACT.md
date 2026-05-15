@@ -695,8 +695,10 @@ hint list.
 The schema/status/owner identity fields and stability flags are exact discovery
 metadata for the contract's current bounded-public stance.
 The `guidance` list is exact downstream-consumer advice for interpreting the
-current bounded contract: facade pairs are public, raw internals are not, and
-human contract documents must evolve with public ISF changes.
+current bounded contract: facade pairs are public, raw internals are not, human
+contract documents must evolve with public ISF changes, and feature-driven
+public changes must move the matching public contract and manifest audit tests
+in the same implementation slice.
 The `tested_by` list is exact audit-provenance metadata for this ISF contract
 owner; every path must stay repo-relative and present on disk.
 The `library_catalog_paths`, `library_catalog_entry_keys`, and

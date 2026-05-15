@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF public contract synchronization tree closed
+- Completed `ISF-PUBLIC-CONTRACT.4` and closed the
+  `ISF-PUBLIC-CONTRACT` tree.
+- Added manifest-advertised public guidance in
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  requiring feature-driven public ISF changes to move matching public contract
+  and manifest audit tests in the same implementation slice.
+- Updated
+  [t/1142-isf-public-guidance-metadata-audit.t](t/1142-isf-public-guidance-metadata-audit.t),
+  [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md),
+  and [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md)
+  to keep direct, manifest, public-doc, and book guidance aligned.
+- Moved
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
+  from the active tree table to the completed tree table in
+  [docs/TASK_TREE.md](docs/TASK_TREE.md).
 ### R14 — ISF synchronization checklist applied to active workflow
 - Completed `ISF-PUBLIC-CONTRACT.3`.
 - Updated [docs/TASK_TREE.md](docs/TASK_TREE.md) so every ISF feature leaf

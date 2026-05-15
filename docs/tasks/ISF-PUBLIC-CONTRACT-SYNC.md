@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-PUBLIC-CONTRACT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-15`
@@ -39,7 +39,7 @@ primary R14 focus.
 ## Task Tree
 
 - ID: `ISF-PUBLIC-CONTRACT`
-  Status: `active`
+  Status: `done`
   Goal: `Keep ISF specs, book, public contract, manifest, and tests synchronized.`
   Children: `ISF-PUBLIC-CONTRACT.1`, `ISF-PUBLIC-CONTRACT.2`,
   `ISF-PUBLIC-CONTRACT.3`, `ISF-PUBLIC-CONTRACT.4`,
@@ -72,12 +72,12 @@ primary R14 focus.
   Commit: `ISF-PUBLIC-CONTRACT.3: apply sync checklist references`
 
 - ID: `ISF-PUBLIC-CONTRACT.4`
-  Status: `pending`
+  Status: `done`
   Goal: `Add or adjust tests/docs for feature-driven public contract changes.`
   Acceptance: `When a feature changes public ISF behavior, the matching public
   contract and manifest tests move in the same feature slice.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1142-isf-public-guidance-metadata-audit.t`; `prove -Iperl t/1142-isf-public-guidance-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PUBLIC-CONTRACT.4: align feature contract guidance`
 
 - ID: `ISF-PUBLIC-CONTRACT.5`
   Status: `done`
@@ -114,7 +114,7 @@ primary R14 focus.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PUBLIC-CONTRACT.4` | `pending` | The checklist is now referenced from active ISF task-tree workflow; the remaining leaf audits whether any feature-driven public contract test/doc adjustments are currently required. |
+| - | `closed` | `done` | `ISF-PUBLIC-CONTRACT.4` completed the tree. |
 
 ## Current Inventory
 
@@ -344,6 +344,10 @@ intentionally unchanged.
   carries the mandatory workflow hook, while individual feature trees avoid
   copying the full checklist unless a local acceptance criterion needs a
   narrower checklist item.
+- `2026-05-15`: The manifest-advertised public contract guidance now states
+  that feature-driven public ISF changes must move matching public contract and
+  manifest audit tests in the same implementation slice. The exact guidance
+  audit is the enforcement point for that public metadata.
 
 ## Open Questions
 
@@ -370,6 +374,7 @@ intentionally unchanged.
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.2` | `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.3` | `mdbook build docs/book` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.3` | `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.4` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1142-isf-public-guidance-metadata-audit.t`; `prove -Iperl t/1142-isf-public-guidance-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -382,6 +387,7 @@ intentionally unchanged.
 | `ISF-PUBLIC-CONTRACT.1` | `ISF-PUBLIC-CONTRACT.1: inventory sync owners` | Inventories public ISF docs, contract/manifest owners, test families, and live-doc touchpoints before checklist work. |
 | `ISF-PUBLIC-CONTRACT.2` | `ISF-PUBLIC-CONTRACT.2: define sync checklist` | Defines the reusable per-feature synchronization checklist for public ISF docs, contracts, manifests, tests, live docs, and commit hygiene. |
 | `ISF-PUBLIC-CONTRACT.3` | `ISF-PUBLIC-CONTRACT.3: apply sync checklist references` | Applies the checklist by reference from the active ISF task-tree workflow and the book reference map. |
+| `ISF-PUBLIC-CONTRACT.4` | `ISF-PUBLIC-CONTRACT.4: align feature contract guidance` | Adds manifest-advertised public guidance and exact audit coverage for same-slice public contract/manifest test movement, then closes the tree. |
 
 ## Changelog
 
@@ -402,3 +408,6 @@ intentionally unchanged.
 - `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.3` as a documentation-only
   active-tree checklist reference slice; current frontier advances to
   `ISF-PUBLIC-CONTRACT.4`.
+- `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.4` by adding exact public
+  guidance that feature-driven public ISF changes move matching contract and
+  manifest audit tests in the same implementation slice; tree is closed.

@@ -30,9 +30,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   now closed. `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
-  checklist, and `ISF-PUBLIC-CONTRACT.3` applied that checklist by reference
-  from the active ISF task-tree workflow. The current frontier is
-  `ISF-PUBLIC-CONTRACT.4`.
+  checklist, `ISF-PUBLIC-CONTRACT.3` applied that checklist by reference from
+  the active ISF task-tree workflow, and `ISF-PUBLIC-CONTRACT.4` added
+  exact public guidance that feature-driven public changes move matching
+  contract/manifest audit tests in the same implementation slice. The
+  `ISF-PUBLIC-CONTRACT` tree is now closed; no active PNT-eligible R14 tree
+  remains until a proposed tree is activated or a fresh task tree is selected.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -40,8 +43,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   publishing the shipped spawn/blocking-`do` activation-parameter boundary.
   Rule-trigger and direct-activation parameter overrides remain backlog and
   need a fresh explicit tree/leaf before implementation.
-  Standalone public interface stabilization/audit work is on hold for now;
-  `ISF-PUBLIC-CONTRACT` is now the active follow-on audit/synchronization tree.
+  Standalone public interface stabilization/audit work remains feature-driven;
+  the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
+  checklist for future feature trees.
 - ISF dynamic wait contract update: actor-level
   `(constants (NAME value) ...)` is shipped for non-negative integer constants,
   and `(wait NAME)` may now use those constants wherever literal waits are

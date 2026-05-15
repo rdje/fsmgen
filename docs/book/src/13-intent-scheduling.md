@@ -111,7 +111,9 @@ ISF API contract is advertised through `--capability-manifest` at
 `embedding.isf_public_interface` and described in
 [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md).
 That contract is live documentation: it evolves in the same slice as public ISF
-parser, scheduler, CLI, lower-result, or schedule-report changes. The public
+parser, scheduler, CLI, lower-result, or schedule-report changes, and those
+feature slices must move the matching public contract and manifest audit tests
+with the implementation. The public
 adapter and scheduler constructors reject malformed option lists and unsupported
 option names, require exact class invocants, and currently accept only `debug`.
 The parser facade validates method receivers before private internals are used,

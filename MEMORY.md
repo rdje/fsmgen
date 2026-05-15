@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF public contract sync tree closed
+- Completed and closed `ISF-PUBLIC-CONTRACT.4` in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- `embedding.isf_public_interface.guidance` now states that feature-driven
+  public ISF changes must move matching public contract and manifest audit
+  tests in the same implementation slice.
+- [t/1142-isf-public-guidance-metadata-audit.t](t/1142-isf-public-guidance-metadata-audit.t)
+  was updated with the exact guidance expectation, covering direct and
+  manifest views.
+- The mdBook and public contract docs now describe the same same-slice
+  audit-test rule.
+- No active PNT-eligible R14 task tree remains. Proposed trees such as
+  `ISF-CLOCK-DOMAINS` still need activation or a selected source model before
+  implementation.
 ## 2026-05-15: ISF synchronization checklist applied to active tree workflow
 - Completed `ISF-PUBLIC-CONTRACT.3` in
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
