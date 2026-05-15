@@ -314,6 +314,17 @@ With metadata:
 )
 ```
 
+The same metadata can be written with verbose port declarations:
+
+```lisp
+(?rtlif:uart_tx
+  (input clk :clock)
+  (input rst_n :reset)
+  (input data_in (width 8) :data)
+  (output txd :data)
+)
+```
+
 External RTL metadata can be sidecar `<module>.rtlif` or an embedded
 `(?rtlif:module ...)` companion root. Embedded metadata for the requested
 module takes precedence over sidecar metadata. Metadata roots are flat port
@@ -321,6 +332,16 @@ contracts plus an optional semantic `(params (NAME default_value) ...)` block.
 Port categories are currently `data`, `clock`, and `reset`; typed clock/reset
 ports are system-input roles and output-direction clock/reset tokens are
 rejected.
+
+Those category markers are interface roles, not separate HDL data types.
+`:clock` marks a clock input that participates in composition's system-clock
+auto-wiring, `:reset` marks a reset input that participates in system-reset
+auto-wiring, and `:data` marks an ordinary payload/status/control port. The
+compact `core_clk:clock` spelling is equivalent to `(input core_clk :clock)`;
+`data_in<8:data` is equivalent to `(input data_in (width 8) :data)`; and
+`txd>:data` is equivalent to `(output txd :data)`. As with other nullary
+verbose attributes, `(clock)`, `(reset)`, and `(data)` are accepted aliases for
+`:clock`, `:reset`, and `:data`.
 
 If you need two instances of the same external RTL module, keep one interface
 contract and give each `?rtl` child its own instance name:

@@ -16,6 +16,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   either as `(attribute)` or `:attribute`. The shipped same-name flags are
   canonical `:same-name` plus accepted aliases `(same-name)`,
   `:connect-by-name`, and `(connect-by-name)`.
+- External RTL metadata ergonomics update: `.rtlif` now accepts verbose
+  `(input NAME ...)` and `(output NAME ...)` declarations as aliases for compact
+  interface tokens. Role attributes `:clock`, `:reset`, and `:data` map to the
+  shipped `.rtlif` interface categories, with `(clock)`, `(reset)`, and
+  `(data)` accepted as nullary aliases. `clock` and `reset` remain
+  system-input roles; `data` remains the ordinary payload/status/control role.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
   with per-tree files under `docs/tasks/`. When PNT is working inside an
   active tree, it should pick the first eligible leaf from that tree's current
@@ -3587,12 +3593,13 @@ Done:
   - and [t/187-composition-intent-hir-builder.t](t/187-composition-intent-hir-builder.t) now locks the extracted owner directly against the pipeline result surface.
 - The `.rtlif` follow-up and the bounded shared-datapath extraction direction are now both recorded as future `R11` contract work instead of loose brainstorming only.
 - The first deliberate `.rtlif` contract-improvement slice is now also shipped:
-  - sidecar metadata is now described as one flat `(?rtlif:module_name ...)` root with declaration-ordered port tokens,
+  - sidecar metadata is now described as one `(?rtlif:module_name ...)` root with declaration-ordered compact port tokens or verbose port declarations,
   - compact tokens like `clk`, `data_in<8`, and `txd>` remain active,
   - typed tokens such as `core_clk:clock`, `rst_async_n:reset`, and `data_in<8:data` are now active too,
+  - verbose declarations such as `(input core_clk :clock)`, `(input data_in (width 8) :data)`, and `(output txd :data)` are active aliases for those typed tokens,
   - explicit type annotations are currently limited to `data`, `clock`, and `reset`,
   - typed `clock` / `reset` metadata now lets mixed composition auto-wire custom-named RTL system ports honestly,
-  - and those `clock` / `reset` categories are now locked as system-input roles, so output-direction system-role tokens are rejected while ordinary `data` outputs remain valid.
+  - and those `clock` / `reset` categories are now locked as system-input roles, so output-direction system-role tokens and verbose output-role declarations are rejected while ordinary `data` outputs remain valid.
 - The next bounded `.rtlif` contract-improvement slice is now also shipped:
   - `?top:name` sources may now carry embedded `(?rtlif:module_name ...)` companion roots for external RTL children,
   - embedded same-file `?rtlif` roots take precedence over sidecar `<module>.rtlif` files,
@@ -4018,9 +4025,11 @@ Done:
   - and `C4` now also works for multiple generated children plus one or more `?rtl` children.
 - [t/88-rtlif-typed-port-contract.t](t/88-rtlif-typed-port-contract.t) now locks:
   - direct `.rtlif` token parsing for declaration-ordered typed metadata,
+  - direct `.rtlif` verbose declaration parsing for the same declaration-ordered typed metadata,
+  - embedded verbose `.rtlif` metadata consumption through composition planning and HDL generation,
   - custom-named RTL `clock` / `reset` auto-wiring in mixed `?dtc` plus `?rtl` composition,
   - rejection of unsupported explicit `.rtlif` type names,
-  - and rejection of output-direction `clock` / `reset` metadata because those `.rtlif` categories are system-input roles.
+  - and rejection of compact or verbose output-direction `clock` / `reset` metadata because those `.rtlif` categories are system-input roles.
 - [t/89-composition-embedded-rtlif-roots.t](t/89-composition-embedded-rtlif-roots.t) now locks:
   - embedded `?rtlif` precedence over sidecar metadata,
   - mixed generated-child plus `?rtl` success without a separate sidecar file,

@@ -148,7 +148,11 @@ Active modern direction, started in `R6` and widened in `R11`:
 - allow the modern `(?rtl:instance module)` form when one declared RTL module/interface contract must be instantiated several times under distinct instance names,
 - allow bounded scalar and aggregate `.rtlif` parameter/generic declarations whose defaults may use package-qualified shared symbols, bounded scalar expressions, and matching-shape leafwise aggregate expressions, plus resolved composition-top/package-symbol per-instance `?rtl` `(params (NAME value) ...)` override blocks that are name-validated and aggregate-shape-validated before target lowering,
 - allow bounded generated-child `?fsmc` / `?dtc` `(params (NAME value) ...)` override blocks that target direct child-source `(+params ...)` declarations, resolve the same composition-top/package symbols, and validate aggregate shape before target lowering,
-- treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens are rejected while ordinary `data` outputs remain valid,
+- allow `.rtlif` interface ports to be authored as compact tokens such as
+  `core_clk:clock` / `data_in<8:data` / `txd>:data` or as verbose declarations
+  such as `(input core_clk :clock)`, `(input data_in (width 8) :data)`, and
+  `(output txd :data)`,
+- treat typed `.rtlif` `clock` and `reset` categories as system-input roles rather than HDL data types, so output-direction system-role tokens and verbose output-role declarations are rejected while ordinary `data` outputs remain valid,
 - do not parse or regenerate the external RTL child at this composition layer,
 - and keep VHDL generic-map lowering plus richer expression domains beyond the shipped bounded scalar-expression and leafwise aggregate-expression slices as future semantic follow-ups rather than reviving raw legacy template/plugin parameter passing.
 

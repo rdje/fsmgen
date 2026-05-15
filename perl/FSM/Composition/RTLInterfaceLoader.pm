@@ -180,6 +180,19 @@ sub parse_metadata_ast ($self, $module_name, $raw_ast, $metadata_path, $top_symb
                 next;
             }
 
+            if (defined($nested_header) && ($nested_header eq 'input' || $nested_header eq 'output')) {
+                my $port = $self->parse_verbose_port_form($module_name, $item, $metadata_path);
+                confess
+                    "Composition references external RTL module '$module_name', ".
+                    "but RTL interface metadata port declaration uniqueness is blocked because declared interface metadata '$metadata_path' repeats port '".$port->name."'. ".
+                    "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                    if $ports_by_name{$port->name};
+
+                $ports_by_name{$port->name} = $port;
+                push @ports, $port;
+                next;
+            }
+
             confess
                 "Composition references external RTL module '$module_name', ".
                 "but RTL interface metadata flatness is blocked because declared interface metadata '$metadata_path' contains nested structure under '?rtlif:$module_name'. ".
@@ -288,6 +301,134 @@ sub parse_port_token ($self, $module_name, $token, $metadata_path) {
     );
 }
 
+sub parse_verbose_port_form ($self, $module_name, $form, $metadata_path) {
+    my $rendered = $self->_render_ast_fragment($form);
+
+    confess
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata port declaration shape is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' must start with '(input NAME ...)' or '(output NAME ...)'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless ref($form) eq 'ARRAY' && @$form == 2;
+
+    my ($direction_keyword, $payload) = @$form;
+    confess
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata port declaration shape is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' must start with the literal keyword 'input' or 'output'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless defined($direction_keyword)
+            && !ref($direction_keyword)
+            && ($direction_keyword eq 'input' || $direction_keyword eq 'output');
+
+    confess
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata port declaration shape is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' must carry a proper item list after '$direction_keyword'. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless defined($payload) && ref($payload) eq 'ARRAY' && @$payload;
+
+    my @items = @$payload;
+    my $port = shift @items;
+    confess
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata port declaration shape is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' uses a port name that is not HDL-identifier-compatible. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        unless $self->_is_contract_identifier($port);
+
+    my $size;
+    my $role;
+    for my $attribute (@items) {
+        my $attribute_rendered = $self->_render_ast_fragment($attribute);
+
+        if (defined($attribute) && !ref($attribute) && $attribute =~ /^:(data|clock|reset)$/) {
+            confess
+                "Composition references external RTL module '$module_name', ".
+                "but RTL interface metadata port typing is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' repeats a port-role attribute. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                if defined $role;
+
+            $role = $1;
+            next;
+        }
+
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata port declaration attribute shape is blocked because attribute '$attribute_rendered' in verbose declaration '$rendered' is not a supported '.rtlif' port attribute. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless ref($attribute) eq 'ARRAY' && @$attribute == 2;
+
+        my ($attribute_name, $attribute_payload) = @$attribute;
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata port declaration attribute shape is blocked because attribute '$attribute_rendered' in verbose declaration '$rendered' is not a supported '.rtlif' port attribute. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless defined($attribute_name) && !ref($attribute_name);
+
+        if ($attribute_name eq 'data' || $attribute_name eq 'clock' || $attribute_name eq 'reset') {
+            my $has_payload = defined($attribute_payload)
+                && !(ref($attribute_payload) eq 'ARRAY' && @$attribute_payload == 0);
+            confess
+                "Composition references external RTL module '$module_name', ".
+                "but RTL interface metadata port typing is blocked because '($attribute_name)' in verbose declaration '$rendered' must not carry payload items. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                if $has_payload;
+            confess
+                "Composition references external RTL module '$module_name', ".
+                "but RTL interface metadata port typing is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' repeats a port-role attribute. ".
+                "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+                if defined $role;
+
+            $role = $attribute_name;
+            next;
+        }
+
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata port declaration attribute shape is blocked because attribute '$attribute_rendered' in verbose declaration '$rendered' is not a supported '.rtlif' port attribute. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless $attribute_name eq 'width';
+
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata port sizing is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' repeats the '(width N)' attribute. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            if defined $size;
+
+        my $unwrapped_width = $self->_unwrap_scalar_token($attribute_payload);
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata port sizing is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' must use '(width N)' with exactly one positive integer width. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            unless defined($unwrapped_width) && !ref($unwrapped_width) && $unwrapped_width =~ /\A\d+\z/;
+        confess
+            "Composition references external RTL module '$module_name', ".
+            "but RTL interface metadata port sizing is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' declares non-positive port width '$unwrapped_width'. ".
+            "The active '.rtlif' contract requires positive explicit widths when a width is declared. ".
+            "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+            if $unwrapped_width < 1;
+
+        $size = $unwrapped_width;
+    }
+
+    $role //= 'clock' if $port eq 'clk';
+    $role //= 'reset' if $port eq 'rstn' || $port eq 'rst_n';
+    $role //= 'data';
+
+    confess
+        "Composition references external RTL module '$module_name', ".
+        "but RTL interface metadata system-port direction is blocked because verbose declaration '$rendered' in declared interface metadata '$metadata_path' resolves to '$role' while declaring an output direction. ".
+        "The active '.rtlif' contract treats 'clock' and 'reset' ports as system inputs only. ".
+        "See docs/COMPOSITION_SCOPE.md and docs/COMPOSITION_LEGACY_MAPPING.md.\n"
+        if $role =~ /^(?:clock|reset)$/ && $direction_keyword eq 'output';
+
+    return FSM::Composition::Port->new(
+        name => $port,
+        direction => $direction_keyword,
+        width => $size // 1,
+        type => $role,
+        raw_token => $rendered,
+        origin_kind => 'rtlif_declared_port',
+    );
+}
+
 sub parse_parameter_declarations_block ($self, $module_name, $params_block, $metadata_path, $top_symbols = undef) {
     my $entries = $params_block->[1] // [];
 
@@ -369,6 +510,26 @@ sub _is_contract_identifier ($self, $value) {
 
 sub _describe_contract_name ($self, $value) {
     return defined($value) && !ref($value) ? $value : 'unknown';
+}
+
+sub _render_ast_fragment ($self, $value) {
+    return 'undef' unless defined $value;
+    return $value unless ref($value);
+    return '(' . $value->[0] . ')'
+        if ref($value) eq 'ARRAY'
+            && @$value == 2
+            && defined($value->[0])
+            && !ref($value->[0])
+            && !defined($value->[1]);
+    return '(' . join(' ', $value->[0], map { $self->_render_ast_fragment($_) } @{ $value->[1] }) . ')'
+        if ref($value) eq 'ARRAY'
+            && @$value == 2
+            && defined($value->[0])
+            && !ref($value->[0])
+            && ref($value->[1]) eq 'ARRAY';
+    return '(' . join(' ', map { $self->_render_ast_fragment($_) } @$value) . ')'
+        if ref($value) eq 'ARRAY';
+    return ref($value);
 }
 
 sub _with_rtl_child_context ($self, %args) {

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R6 — verbose external RTL interface metadata ports
+- Added verbose `.rtlif` port declarations as aliases for compact external-RTL
+  metadata tokens. `(input NAME ...)` and `(output NAME ...)` now normalize to
+  the same `FSM::Composition::Port` objects as compact forms like
+  `data_in<8:data` and `txd>:data`.
+- Added verbose `.rtlif` role attributes for the shipped interface categories:
+  canonical `:clock`, `:reset`, and `:data`, with `(clock)`, `(reset)`, and
+  `(data)` accepted as parenthesized nullary aliases. `clock` and `reset`
+  remain system-input roles; verbose output declarations with either role are
+  rejected just like compact `core_clk>:clock`.
+- Added loader and composition coverage in
+  [t/88-rtlif-typed-port-contract.t](t/88-rtlif-typed-port-contract.t),
+  including sidecar parsing, embedded metadata consumption, and system-role
+  direction rejection.
 ### R6 — verbose composition port declarations
 - Added verbose `?ports` declarations as aliases for compact top-port tokens:
   `(input NAME)`, `(input NAME (width TOKEN))`, `(output NAME)`, and

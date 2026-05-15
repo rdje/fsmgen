@@ -55,6 +55,158 @@ RTLIF
     is($ports{txd}->type, 'data', 'typed data output token preserves explicit data type');
 };
 
+subtest '.rtlif verbose port declarations normalize like typed tokens' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  (input core_clk :clock)
+  (input rst_async_n (reset))
+  (input data_in (width 16) :data)
+  (output txd (data))
+)
+RTLIF
+    );
+
+    my $loader = FSM::Composition::RTLInterfaceLoader->new();
+    my $loaded = $loader->load_interface(
+        module_name => 'uart_tx',
+        source_file => File::Spec->catfile($tempdir, 'dummy_top.fsm'),
+    );
+
+    is_deeply(
+        [map { $_->name } @{$loaded->{interface_ports}}],
+        ['core_clk', 'rst_async_n', 'data_in', 'txd'],
+        'verbose metadata preserves declared port order',
+    );
+
+    my %ports = map { $_->name => $_ } @{$loaded->{interface_ports}};
+    is($ports{core_clk}->direction, 'input', 'verbose clock declaration keeps input direction');
+    is($ports{core_clk}->type, 'clock', 'verbose clock declaration preserves clock role');
+    is($ports{rst_async_n}->type, 'reset', 'parenthesized verbose reset role is accepted');
+    is($ports{data_in}->direction, 'input', 'verbose data declaration keeps input direction');
+    is($ports{data_in}->width, 16, 'verbose data declaration preserves explicit width');
+    is($ports{data_in}->type, 'data', 'verbose data declaration preserves data role');
+    is($ports{txd}->direction, 'output', 'verbose data output declaration keeps output direction');
+    is($ports{txd}->type, 'data', 'parenthesized verbose data role is accepted');
+    is($ports{data_in}->raw_token, '(input data_in (width 16) :data)', 'verbose metadata keeps a readable raw token');
+};
+
+subtest '.rtlif verbose port declarations reject malformed attributes' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  (input core_clk :clock :data)
+  (input data_in (width) :data)
+)
+RTLIF
+    );
+
+    my $loader = FSM::Composition::RTLInterfaceLoader->new();
+    my $error = eval {
+        $loader->load_interface(
+            module_name => 'uart_tx',
+            source_file => File::Spec->catfile($tempdir, 'dummy_top.fsm'),
+        );
+        undef;
+    };
+    $error = $@ if !$error;
+
+    like(
+        $error,
+        qr/port typing is blocked because verbose declaration '\(input core_clk :clock :data\)'.*repeats a port-role attribute/s,
+        'loader rejects repeated verbose rtlif role attributes',
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  (input core_clk :clock)
+  (input data_in (width) :data)
+)
+RTLIF
+    );
+
+    my $width_error = eval {
+        $loader->load_interface(
+            module_name => 'uart_tx',
+            source_file => File::Spec->catfile($tempdir, 'dummy_top.fsm'),
+        );
+        undef;
+    };
+    $width_error = $@ if !$width_error;
+
+    like(
+        $width_error,
+        qr/port sizing is blocked because verbose declaration '\(input data_in \(width\) :data\)'.*must use '\(width N\)' with exactly one positive integer width/s,
+        'loader rejects malformed verbose rtlif width attributes',
+    );
+};
+
+subtest 'composition consumes verbose embedded .rtlif port declarations' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $composition_path = File::Spec->catfile($tempdir, 'verbose_embedded_rtlif_top.fsm');
+    my $output_path = File::Spec->catfile($tempdir, 'verbose_embedded_rtlif_top.sv');
+
+    write_file(
+        $composition_path,
+        <<'FSM'
+(?top:verbose_embedded_rtlif_top
+  (?ports:public_io
+    core_clk
+    rst_async_n
+    data_in<8
+    txd>
+  )
+  (?rtl:uart_tx)
+)
+
+(?rtlif:uart_tx
+  (input core_clk :clock)
+  (input rst_async_n :reset)
+  (input data_in (width 8) :data)
+  (output txd :data)
+)
+FSM
+    );
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        debug_level => 0,
+        target_language => 'systemverilog',
+        quiet => 1,
+    );
+
+    my $result = $pipeline->generate_hdl_from_file($composition_path);
+
+    isa_ok($result->{composition_plan}, 'FSM::Composition::Plan');
+    is($result->{composition_plan}->lane, 'C1', 'single rtl with verbose metadata stays on the C1 passthrough lane');
+
+    my %rtl_bindings = map { $_->{port_name} => $_->{signal_name} } @{$result->{composition_plan}->instances->[0]->port_bindings};
+    is($rtl_bindings{core_clk}, 'core_clk', 'verbose rtlif clock port wires directly');
+    is($rtl_bindings{rst_async_n}, 'rst_async_n', 'verbose rtlif reset port wires directly');
+    is($rtl_bindings{data_in}, 'data_in', 'verbose rtlif data input wires directly');
+    is($rtl_bindings{txd}, 'txd', 'verbose rtlif data output wires directly');
+
+    my %rtl_ports = map { $_->name => $_ } @{$result->{composition_plan}->instances->[0]->interface_ports};
+    is($rtl_ports{core_clk}->type, 'clock', 'realized verbose rtlif clock role is preserved');
+    is($rtl_ports{rst_async_n}->type, 'reset', 'realized verbose rtlif reset role is preserved');
+    is($rtl_ports{data_in}->width, 8, 'realized verbose rtlif data width is preserved');
+
+    my ($success) = run(
+        command => ['./bin/fsmgen', '-o', $output_path, '--quiet', $composition_path],
+    );
+    ok($success, 'CLI succeeds for embedded verbose rtlif metadata');
+    ok(-e $output_path, 'CLI writes HDL for embedded verbose rtlif metadata');
+};
+
 subtest '.rtlif parameter declarations preserve canonical defaults' => sub {
     my $tempdir = tempdir(CLEANUP => 1);
     my $metadata_path = File::Spec->catfile($tempdir, 'uart_tx.rtlif');
@@ -315,6 +467,33 @@ RTLIF
         $combined_output,
         qr/system-port direction is blocked because token 'core_clk>:clock'/s,
         'CLI surfaces blocked rtlif system-port direction diagnostics',
+    );
+
+    write_file(
+        $metadata_path,
+        <<'RTLIF'
+(?rtlif:uart_tx
+  (output core_clk :clock)
+  (input rst_async_n :reset)
+  (input data_in (width 8) :data)
+  (output txd :data)
+)
+RTLIF
+    );
+
+    my $verbose_loader_error = eval {
+        $loader->load_interface(
+            module_name => 'uart_tx',
+            source_file => $composition_path,
+        );
+        undef;
+    };
+    $verbose_loader_error = $@ if !$verbose_loader_error;
+
+    like(
+        $verbose_loader_error,
+        qr/system-port direction is blocked because verbose declaration '\(output core_clk :clock\)'.*treats 'clock' and 'reset' ports as system inputs only/s,
+        'loader rejects output-direction verbose clock/reset declarations',
     );
 };
 

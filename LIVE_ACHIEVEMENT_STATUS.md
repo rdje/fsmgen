@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R6 — verbose .rtlif metadata ports
+- `.rtlif` now accepts verbose `(input ...)` and `(output ...)` declarations as
+  aliases for compact external-RTL metadata tokens.
+- Shipped role attributes are `:clock`, `:reset`, and `:data`, with
+  parenthesized `(clock)`, `(reset)`, and `(data)` aliases.
+- `clock` and `reset` remain system-input roles; verbose output declarations
+  with those roles are rejected.
+- The mdBook now states that `.rtlif` roles are composition metadata roles, not
+  HDL data types, and shows compact/verbose equivalences.
+- Focused validation passed in [t/88-rtlif-typed-port-contract.t](t/88-rtlif-typed-port-contract.t).
+
 ## 2026-05-15: R6 — verbose composition port declarations
 - `?ports` now accepts verbose `(input ...)` and `(output ...)` declarations
   as aliases for compact top-port tokens.

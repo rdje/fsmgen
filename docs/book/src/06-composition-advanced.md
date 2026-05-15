@@ -340,6 +340,36 @@ input, but `core_clk>:clock` and `rst_async_n>:reset` are rejected because they
 claim that the external RTL child drives the system lane. Use `data` for
 ordinary payload/status outputs, for example `txd>:data`.
 
+The role suffixes also have verbose nullary-attribute spellings:
+
+```lisp
+(?rtlif:uart_tx
+  (input core_clk :clock)
+  (input rst_async_n :reset)
+  (input data_in (width 16) :data)
+  (output txd :data)
+)
+```
+
+This is equivalent to:
+
+```lisp
+(?rtlif:uart_tx
+  core_clk:clock
+  rst_async_n:reset
+  data_in<16:data
+  txd>:data
+)
+```
+
+The parenthesized forms `(clock)`, `(reset)`, and `(data)` are accepted aliases
+for `:clock`, `:reset`, and `:data`. The direction keyword still owns
+input-versus-output semantics; the role owns composition metadata.
+
+Verbose width stays in the `(width N)` attribute. A spelling such as
+`(input data_in:16 :data)` is intentionally not a width shorthand because
+colon already separates role metadata in compact `.rtlif` tokens.
+
 `?rtl` also has a reusable-instance form. `(?rtl:module)` means the instance
 name equals the module/interface name. `(?rtl:instance module)` means “create
 instance `instance` of external RTL module `module`,” and the corresponding
@@ -407,6 +437,24 @@ the specific `?rtl` instance:
     (RESET_A5 8'hA5)
     (FLAG_ON 1)
   )
+)
+```
+
+The same interface ports may be authored verbosely below the same parameter
+block:
+
+```lisp
+(?rtlif:uart_tx
+  (params
+    (WIDTH param_pkg.DEFAULT_WIDTH)
+    (RESET_VALUE param_pkg.DEFAULT_RESET)
+    (LANES param_pkg.DEFAULT_LANES)
+    (FRAME param_pkg.DEFAULT_FRAME)
+  )
+  (input core_clk :clock)
+  (input rst_async_n :reset)
+  (input data_in (width 16) :data)
+  (output txd :data)
 )
 ```
 

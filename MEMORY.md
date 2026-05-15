@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: verbose .rtlif interface metadata ports
+- Added verbose `.rtlif` port declarations:
+  `(input NAME ...)` and `(output NAME ...)`.
+- Verbose `.rtlif` ports normalize to the same external-RTL interface port IR
+  as compact metadata tokens such as `core_clk:clock`, `data_in<8:data`, and
+  `txd>:data`.
+- Shipped role attributes are canonical `:clock`, `:reset`, and `:data`, with
+  `(clock)`, `(reset)`, and `(data)` accepted as nullary aliases.
+- `clock` and `reset` remain system-input roles, so verbose output declarations
+  such as `(output core_clk :clock)` are rejected.
+- Focused validation passed for RTLIF loader parsing, embedded verbose metadata
+  through composition/HDL generation, and verbose system-role direction
+  rejection.
 ## 2026-05-15: verbose composition ?ports syntax
 - Added verbose composition `?ports` declarations:
   `(input NAME)`, `(input NAME (width TOKEN))`, `(output NAME)`, and

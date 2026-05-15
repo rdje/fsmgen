@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: verbose .rtlif interface metadata ports
+- Verbose `.rtlif` port declarations are a readability layer over the existing
+  external-RTL metadata model. The loader still emits ordinary
+  `FSM::Composition::Port` objects with `origin_kind => rtlif_declared_port`,
+  so composition planning, structural RTL, and HDL emission do not need a
+  second interface representation.
+- The role markers `clock`, `reset`, and `data` remain interface metadata
+  categories, not HDL types. `clock` and `reset` are system-input roles used
+  for honest auto-wiring of custom-named external RTL system ports; `data` is
+  the ordinary payload/status/control role and may be input or output.
+- The verbose spelling keeps direction explicit: `(input core_clk :clock)` and
+  `(output txd :data)`. Role attributes follow the project-wide nullary
+  attribute convention, so `(clock)` / `(reset)` / `(data)` are accepted aliases
+  for `:clock` / `:reset` / `:data`.
+- Nested `.rtlif` forms outside the shipped `(params ...)` and verbose
+  `(input ...)` / `(output ...)` declarations remain blocked as unsupported
+  nested metadata.
 ## 2026-05-15: verbose composition port declarations
 - Verbose `?ports` forms are normalization sugar, not a new composition lane.
   The parser creates the same `FSM::Composition::Port` objects used by compact
