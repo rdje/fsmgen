@@ -47,12 +47,12 @@ primary R14 focus.
   `ISF-PUBLIC-CONTRACT.7`
 
 - ID: `ISF-PUBLIC-CONTRACT.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Inventory current ISF public documentation and contract owners.`
   Acceptance: `The task file lists ISF spec sections, mdBook chapters,
   manifest/contract modules, public tests, and live-doc touchpoints.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PUBLIC-CONTRACT.1: inventory sync owners`
 
 - ID: `ISF-PUBLIC-CONTRACT.2`
   Status: `pending`
@@ -114,7 +114,109 @@ primary R14 focus.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PUBLIC-CONTRACT.1` | `pending` | The current ISF public-doc/contract owner set must be inventoried before a reusable sync checklist is made normative. |
+| 1 | `ISF-PUBLIC-CONTRACT.2` | `pending` | The inventory is recorded; the next leaf turns it into a reusable feature-slice synchronization checklist. |
+
+## Current Inventory
+
+`ISF-PUBLIC-CONTRACT.1` owns this inventory. Keep it current whenever a future
+ISF slice adds or removes public docs, contract owners, manifest fields, or
+public audit families.
+
+### Written Documentation Owners
+
+- `README.md`: startup index for active/completed ISF task trees, public ISF
+  docs, ISF parser/scheduler modules, support-contract owners, and regression
+  gate names.
+- `docs/ISF_SPEC.md`: canonical shipped `.isf` source syntax, lowering
+  semantics, diagnostics boundaries, public-report semantics, and explicit
+  deferrals.
+- `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: downstream public parser/scheduler
+  facade contract and `embedding.isf_public_interface` prose companion.
+- `docs/ISF_LIBRARY_CATALOG.md`: shipped reusable ISF library catalog that the
+  public contract advertises by path.
+- `docs/TASK_TREE.md`: active/proposed/completed ISF task-tree routing and R14
+  objective ownership map.
+- `docs/tasks/*.md`: feature-local status and acceptance records for ISF
+  parser, scheduler, report, contract, and fixture slices.
+
+### mdBook Owners
+
+- `docs/book/src/13-intent-scheduling.md`: ISF overview, public contract
+  discovery, schedule-report shell, resource catalog, and IAL framing.
+- `docs/book/src/13a-actor-interface.md`: actor interface, clock/reset, params,
+  constants, and storage vocabulary.
+- `docs/book/src/13b-transactions.md`: transaction clauses, waits, loops,
+  activation, stages, and completion timing.
+- `docs/book/src/13c-drive-blocks.md`: drive declaration/call semantics.
+- `docs/book/src/13d-control-flow.md`: control-flow authoring references that
+  overlap transaction wait/loop behavior.
+- `docs/book/src/13e-data-manipulation.md`: data-operation width and storage
+  report semantics.
+- `docs/book/src/13f-composition.md`: generated child composition, reusable
+  libraries, and generated-top handoff behavior.
+- `docs/book/src/13g-rules.md`: rule syntax, resource catalog, conflict, and
+  arbitration semantics.
+- `docs/book/src/13h-lowering-reference.md`: reviewable `.fsm` lowering
+  patterns and schedule-report examples.
+- `docs/book/src/14-feature-backlog.md`: explicit ISF deferrals and public
+  schema-stability boundary.
+- `docs/book/src/90-reference-map.md` and `docs/book/src/SUMMARY.md`: public
+  navigation to the ISF spec/contract/book chapters.
+
+### Contract And Manifest Code Owners
+
+- `perl/FSM/Support/ISFPublicInterfaceContract.pm`: source of truth for
+  parser/scheduler facade metadata, schedule-report key/value families,
+  tested-by provenance, live-doc paths, and public stability flags.
+- `perl/FSM/Support/CapabilityManifest.pm`: embeds the ISF public contract at
+  `embedding.isf_public_interface` for CLI and in-process manifest consumers.
+- `perl/FSM/Support/CapabilityManifestContract.pm`: owns manifest shell
+  contract metadata that must keep the ISF embedding discoverable.
+- `perl/FSM/Support/ISFResourceCatalog.pm`: shared resource-kind registry used
+  by the parser and public contract.
+- `perl/FSM/Support/LanguageSurfaceContract.pm` and
+  `perl/FSM/Support/LanguageSurfaceSection.pm`: language-surface metadata
+  referenced by the book/manifest for expression and guard families.
+
+### Parser, Scheduler, And Emitter Owners
+
+- `perl/FSM/Adapter/ISF.pm`,
+  `perl/FSM/Adapter/ISF/LispishAdapter.pm`, and
+  `perl/FSM/Adapter/ISF/Parser.pm`: public parser facade and source-shape
+  normalizer for `.isf` actors.
+- `perl/FSM/Scheduler/ISF.pm`: public lowering/report facade.
+- `perl/FSM/Scheduler/ISF/LoweringIR.pm`: lowering semantics, diagnostics, and
+  schedule-report source metadata.
+- `perl/FSM/Scheduler/ISF/Emitter/FSM.pm`: scheduled `.fsm` review artifact.
+- `perl/FSM/Scheduler/ISF/Emitter/JSON.pm`: schedule JSON report artifact.
+- `perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm` and
+  `perl/FSM/Scheduler/ISF/ModuleEmitter.pm`: generated-top and module output
+  surfaces that affect public lowering artifacts.
+
+### Public Test Families
+
+- `t/1112` through `t/1167`: ISF public contract, manifest embedding, facade,
+  CLI, live-doc, actor-shell, schedule-report, metadata, and provenance audits.
+- `t/1172`, `t/1212`, `t/1213`, `t/1217`, `t/1220`, `t/1225`, `t/1227`,
+  `t/1239`, and `t/1243`: feature-owned schedule-report and contract coverage
+  that widens public report semantics.
+- `t/297`, `t/316`, `t/369`, `t/370`, and the `t/84x`/`t/85x`/`t/99x`/`t/100x`
+  capability-manifest audits: manifest shell and embedding regression coverage
+  that can catch ISF embedding drift.
+- `./bin/ci-regression isf --no-book`: aggregate ISF public/feature regression
+  gate for parser, scheduler, report, and HDL handoff behavior.
+
+### Live-Doc Touchpoints
+
+- `ROADMAP_STATUS.md`: active R14 frontier and shipped/remaining ISF behavior.
+- `docs/TASK_TREE.md`: PNT-eligible active task tree and completed/proposed
+  tree routing.
+- `MEMORY.md`: recovery-oriented latest behavior and frontier notes.
+- `CHANGES.md`: persistent technical change history.
+- `DEVELOPMENT_NOTES.md`: rationale and design constraints.
+- `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+- `docs/BIN_FSMGEN_IMPORT_TREE.md`: session-bootstrap import-tree snapshot
+  when startup analysis detects stale ownership or reachability information.
 
 ## Decisions
 
@@ -150,6 +252,8 @@ primary R14 focus.
 | `2026-05-14` | `ISF-PUBLIC-CONTRACT.6` | `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.7` | `mdbook build docs/book` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.7` | `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.1` | `mdbook build docs/book` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.1` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -159,6 +263,7 @@ primary R14 focus.
 | `ISF-PUBLIC-CONTRACT.5` | `ISF-PUBLIC-CONTRACT.5: document construct semantics invariant` | Records that every shipped ISF construct must have explicit source, lowering, runtime, diagnostic, visibility, and regression semantics. |
 | `ISF-PUBLIC-CONTRACT.6` | `ISF-PUBLIC-CONTRACT.6: document intent abstraction layers` | Records `.fsm` as IAL0, current `.isf` as IAL1, and the criteria/backlog for possible IAL2 exploration. |
 | `ISF-PUBLIC-CONTRACT.7` | `ISF-PUBLIC-CONTRACT.7: clarify port binding authoring boundary` | Records that transaction-port connectivity is authored in ISF and lowered to reviewable `.fsm` handoff wiring. |
+| `ISF-PUBLIC-CONTRACT.1` | `ISF-PUBLIC-CONTRACT.1: inventory sync owners` | Inventories public ISF docs, contract/manifest owners, test families, and live-doc touchpoints before checklist work. |
 
 ## Changelog
 
@@ -170,3 +275,6 @@ primary R14 focus.
 - `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.7` as a documentation-only
   port-binding authoring-boundary clarification; current frontier remains
   `ISF-PUBLIC-CONTRACT.1`.
+- `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.1` as a documentation-only
+  inventory of ISF public docs, contract/manifest owners, public tests, and
+  live-doc touchpoints; current frontier advances to `ISF-PUBLIC-CONTRACT.2`.

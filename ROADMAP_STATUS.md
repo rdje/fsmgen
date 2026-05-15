@@ -27,7 +27,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.5.4` shipped repeat/loop
   pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.6` shipped
   expression-valued runtime wait counts, and the `ISF-DYNAMIC-WAIT` tree is
-  now closed. The current frontier is `ISF-PUBLIC-CONTRACT.1`.
+  now closed. `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
+  contract, manifest, test, and live-doc owners. The current frontier is
+  `ISF-PUBLIC-CONTRACT.2`.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library

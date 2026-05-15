@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF sync work starts with an owner inventory
+- `ISF-PUBLIC-CONTRACT.1` is intentionally documentation-only. Before making a
+  checklist normative, the task tree now names the actual docs, modules, tests,
+  and live files that participate in public ISF synchronization.
+- The inventory separates written docs, mdBook chapters, code/contract owners,
+  public test families, and live docs so future feature slices can decide
+  which sync points are relevant without turning every slice into a full public
+  contract audit.
+- The next leaf should turn this inventory into a reusable checklist with
+  feature-scope rules: behavior/syntax changes, schedule-report changes,
+  manifest/contract changes, diagnostics changes, and doc-only status changes
+  need different test/doc gates.
 ## 2026-05-15: runtime expression waits share scalar snapshot semantics
 - Runtime expression waits are not a separate wait engine. They reuse the
   scalar runtime wait split: the predecessor owns the positive-count counter

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF public contract owner inventory
+- Completed `ISF-PUBLIC-CONTRACT.1`.
+- Inventoried the current ISF written documentation owners, mdBook chapters,
+  parser/scheduler/emitter owners, contract and capability-manifest owners,
+  public test families, and live-doc touchpoints in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- Updated [README.md](README.md), [docs/TASK_TREE.md](docs/TASK_TREE.md), and
+  [ROADMAP_STATUS.md](ROADMAP_STATUS.md) so the active R14 frontier advances
+  to `ISF-PUBLIC-CONTRACT.2`.
+- This slice is documentation-only; shipped compiler behavior and public ISF
+  report shape are unchanged.
 ### R14 — ISF runtime expression wait counts
 - Completed `ISF-DYNAMIC-WAIT.3.3.6` and closed the dynamic-wait task tree.
 - Updated

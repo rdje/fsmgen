@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF public contract owner inventory
+- Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.1`.
+- [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
+  now lists the written docs, mdBook chapters, parser/scheduler/emitter
+  owners, contract/manifest owners, public test families, and live-doc
+  touchpoints that must stay synchronized for ISF feature work.
+- This was documentation-only; compiler behavior is unchanged.
+- The active R14 frontier advances to `ISF-PUBLIC-CONTRACT.2`, the reusable
+  feature-slice synchronization checklist.
+
 ## 2026-05-15: R14 — ISF runtime expression wait counts
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.6`.
 - Runtime wait counts can now be known-width non-empty list expressions, not

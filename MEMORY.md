@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF public contract owner inventory
+- Completed `ISF-PUBLIC-CONTRACT.1` in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- The task tree now inventories the ISF written docs, mdBook chapters,
+  parser/scheduler/emitter owners, contract and capability-manifest owners,
+  public test families, and live-doc touchpoints that must stay synchronized
+  as features ship.
+- This was a documentation-only synchronization slice. It changes no compiler
+  behavior and does not widen public ISF syntax or report shape.
+- The active R14 frontier is now `ISF-PUBLIC-CONTRACT.2`, defining the
+  reusable feature-slice synchronization checklist.
 ## 2026-05-15: ISF runtime expression wait counts
 - Completed and closed `ISF-DYNAMIC-WAIT.3.3.6` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
