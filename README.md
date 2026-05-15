@@ -18,6 +18,16 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 - If a note references an external workspace, describe it without linking to a
   local filesystem path.
 
+## Documentation synchronization invariant
+- The mdBook is a required user-facing artifact for every future slice that
+  changes behavior, syntax, diagnostics, workflow, public contracts, or any
+  other user-visible FSMGen behavior.
+- Keep the mdBook, live specs, roadmap/task-tree status, and public contract
+  docs synchronized in the same slice as the code change.
+- Do not treat a user-visible implementation slice as complete until the book
+  describes the shipped behavior accurately enough for review without reading
+  the codebase.
+
 ## Project objective
 FSMGen compiles Lisp-like `.fsm` state machine specifications into synthesizable HDL, and now accepts `.isf` intent-scheduling sources that lower into explicit scheduled `.fsm` before HDL generation.
 Current primary target is SystemVerilog, with Verilog conversion support and explicit VHDL not-implemented signaling.

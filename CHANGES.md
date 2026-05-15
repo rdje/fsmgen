@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF positive-literal wait lowering
+- Completed `ISF-CONTROL-FLOW.2` as the first shipped transaction wait slice.
+- Added positive-literal `(wait N)` support in
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm):
+  top-level transaction bodies and shipped `when`, `switch`, and `repeat`
+  body contexts now lower waits to fixed generated `*_wait_*` state chains.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  and
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  so successful reports advertise bounded `transaction_waits[]` entries with
+  transaction, cycle count, entry state, exit state, and optional counter
+  signal.
+- Reserved `wait` as rule-context control flow in
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm), so a rule
+  action cannot accidentally treat `(wait 1)` as an assignment to an output
+  named `wait`.
+- Added [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  and refreshed public contract metadata, ISF tier selection, the mdBook, the
+  ISF spec, the public contract docs, roadmap status, and task-tree tracking.
+- Clarified the task-like transaction mental model in the mdBook and ISF spec:
+  transactions consume cycles and can expose formal ports, but lower to static
+  hardware handoffs rather than stack-allocated SV task calls.
 ### R14 — ISF control-flow contract specification
 - Activated [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md)
   and completed `ISF-CONTROL-FLOW.1`.

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF positive-literal wait lowering
+- Active R14 task-tree slice: `ISF-CONTROL-FLOW.2` is complete.
+- `(wait N)` now accepts positive integer literal counts in transaction body
+  contexts and lowers to fixed generated `*_wait_*` state chains with exactly
+  one active transaction cycle per generated wait state.
+- Successful schedule reports expose bounded `transaction_waits[]` entries;
+  malformed, zero, list, and dynamic wait counts fail closed.
+- The mdBook, ISF spec, public contract, task tree, roadmap status, and live
+  docs are synchronized for the shipped wait behavior.
+- The next active R14 frontier is `ISF-CONTROL-FLOW.3`, dynamic transaction
+  loops.
+
 ## 2026-05-15: R14 — ISF control-flow contract specification
 - Active R14 task-tree slice: `ISF-CONTROL-FLOW.1` is complete, and
   `ISF-CONTROL-FLOW` is now active.

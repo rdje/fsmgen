@@ -4,8 +4,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: `ISF-CONTROL-FLOW` is active. Continue `R14` by
   implementing [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md)
-  one leaf at a time; the current frontier is `ISF-CONTROL-FLOW.2`, positive
-  literal `(wait N)` lowering.
+  one leaf at a time; the current frontier is `ISF-CONTROL-FLOW.3`, dynamic
+  transaction loops.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -29,10 +29,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - All `R14` / ISF work is now task-tree-managed by default: every ISF task,
   slice, or PNT-selected activity must be attached to an existing active ISF
   task tree or create a new `docs/tasks/*.md` tree before implementation.
-- Proposed transaction-local `(wait N)` is now logged as backlog: an
-  unconditional exact-cycle delay with a positive integer literal count first,
-  while dynamic counts remain deferred until zero-count, width, reset,
-  latency, and report semantics are specified.
+- Positive-literal transaction-local `(wait N)` is shipped: an unconditional
+  exact-cycle delay with a positive integer literal count that lowers to a
+  fixed generated wait-state chain and reports through `transaction_waits[]`.
+  Dynamic counts remain deferred until zero-count, width, reset, latency, and
+  report semantics are specified.
 - Proposed transaction-local `(while cond body...)` and
   `(until cond body...)` loops are now logged as backlog. `while` is proposed
   as a pre-test zero-or-more loop, `until` as a body-first one-or-more loop,
@@ -45,6 +46,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   zero-or-more loop, and `(until cond body...)` as a body-first one-or-more
   loop; conditions are sampled only in generated decision states. The active
   frontier advances to `ISF-CONTROL-FLOW.2`.
+- `ISF-CONTROL-FLOW.2` is complete. Positive-literal `(wait N)` is accepted
+  in transaction body contexts, including shipped `when`, `switch`, and
+  `repeat` inline bodies. It emits one generated wait state per requested
+  cycle, rejects malformed/dynamic counts, reaches SystemVerilog generation,
+  and exposes bounded `transaction_waits[]` report entries. The active
+  frontier advances to `ISF-CONTROL-FLOW.3`.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree

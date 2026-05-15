@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF positive-literal wait lowering
+- The first shipped wait implementation deliberately uses an explicit fixed
+  state chain instead of a generated counter. For positive integer literals,
+  that makes the scheduled `.fsm` artifact exact, reviewable, and free of
+  hidden reset/width policy.
+- Pending samples before a wait are consumed by the first generated wait state.
+  That keeps wait behavior aligned with existing drive/await piggybacking and
+  prevents samples from floating until an unrelated later clause.
+- `transaction_waits[]` is a bounded report summary, not a raw LoweringIR dump.
+  The public fields are enough for downstream consumers to identify the
+  authored transaction, exact cycle count, entry/exit states, and whether a
+  future counter-backed lowering introduced a named counter signal.
+- `wait` is reserved as transaction control flow in rule contexts. A rule
+  action named `(wait 1)` now fails as control flow rather than being treated
+  as an assignment to an output named `wait`.
 ## 2026-05-15: ISF control-flow contract specification
 - `(wait N)` is intentionally separate from both `(await cond)` and
   `(repeat count body...)`. It has no condition and no body; it simply spends

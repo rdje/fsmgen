@@ -50,10 +50,12 @@ subtest 'APB schedule report conforms to advertised public key families' => sub 
     }
 
     is(ref($report->{transaction_stages}), 'ARRAY', 'transaction_stages is an array in the advertised report shell');
+    is(ref($report->{transaction_waits}), 'ARRAY', 'transaction_waits is an array in the advertised report shell');
     is(ref($report->{temporal_contracts}), 'ARRAY', 'temporal_contracts is an array in the advertised report shell');
     is(ref($report->{bank_accesses}), 'ARRAY', 'bank_accesses is an array in the advertised report shell');
     is(ref($report->{transaction_port_bindings}), 'ARRAY', 'transaction_port_bindings is an array in the advertised report shell');
     is(scalar(@{$report->{transaction_stages}}), 0, 'APB report has no transaction stage summaries');
+    is(scalar(@{$report->{transaction_waits}}), 0, 'APB report has no transaction wait summaries');
     is(scalar(@{$report->{temporal_contracts}}), 0, 'APB report has no temporal contract summaries');
     is(scalar(@{$report->{bank_accesses}}), 0, 'APB report has no bank access summaries');
     is(scalar(@{$report->{transaction_port_bindings}}), 0, 'APB report has no transaction port binding summaries');

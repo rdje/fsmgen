@@ -317,33 +317,32 @@ behavior, and richer stage report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 
-Status: specified next feature; implementation backlog.
+Status: shipped base surface; dynamic counts remain backlog.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
 
-Specified first contract: `(wait N)` advances only after exactly `N` active
+Shipped contract: `(wait N)` advances only after exactly `N` active
 transaction clock cycles, without checking an external condition. It is
 different from `(await cond)`, which waits for a signal condition, and
-different from `(repeat N body...)`, which repeats a body. The first shipped
-surface requires `N` to be a positive integer literal. `wait 1` occupies one
-generated wait region for one active cycle and advances on the next state
-transition; `wait N` contributes exactly `N` active cycles wherever it
-executes, including inside future loops.
+different from `(repeat N body...)`, which repeats a body. The current surface
+requires `N` to be a positive integer literal. `wait 1` occupies one generated
+wait state for one active cycle and advances on the next state transition;
+`wait N` contributes exactly `N` active cycles wherever it executes, including
+inside `when`, `switch`, and `repeat` bodies.
 
-The lowering must remain reviewable scheduled `.fsm`: either an explicit fixed
-state chain or generated wait counter is acceptable if the emitted artifact
-makes the exact delay visible. Any generated wait counter is normal
-scheduler-owned storage with ordinary transaction reset behavior. Dynamic
-counts, symbolic counts, and zero-count behavior remain deferred until width,
-reset, latency, and report semantics are specified.
+The current lowering is a reviewable fixed scheduled-state chain. No hidden
+wait counter is introduced for the positive-literal surface. Pending samples
+before the wait piggyback onto the first wait state. Successful reports expose
+bounded `transaction_waits[]` entries with transaction name, cycle count, entry
+state, exit state, and optional counter signal; `counter_signal` is currently
+JSON null.
 
-When shipped, successful schedule reports should expose bounded
-`transaction_waits[]` entries with at least transaction name, cycle count,
-entry state, exit state, and optional counter signal. Malformed waits such as
-missing counts, extra operands, zero/negative counts, non-integer counts,
-list-expression counts, or dynamic signal counts should fail closed until the
-matching contract exists.
+Malformed waits such as missing counts, extra operands, zero/negative counts,
+non-integer counts, list-expression counts, or dynamic signal counts fail
+closed. Remaining backlog: dynamic counts, symbolic counts, and zero-count
+behavior need explicit width, reset, latency, and report semantics before they
+can ship.
 
 ### Transaction Dynamic Loops
 

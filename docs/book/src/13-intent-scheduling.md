@@ -45,10 +45,10 @@ clear lower-layer mapping, and clear runtime behavior.
   and conflicts, targeted diagnostics for unsupported forms, and regression
   coverage for the accepted behavior.
 - **Programming-language shape, RTL meaning**. ISF intentionally borrows
-  familiar control-flow shape for transactions, including existing `when` and
-  `repeat` forms and proposed `wait`, `while`, and `until` forms. That source
-  shape must never hide the hardware contract: every accepted construct still
-  lowers to explicit scheduled `.fsm` states, decision points, counters,
+  familiar control-flow shape for transactions, including existing `when`,
+  `repeat`, and `wait` forms plus proposed `while` and `until` forms. That
+  source shape must never hide the hardware contract: every accepted construct
+  still lowers to explicit scheduled `.fsm` states, decision points, counters,
   handshakes, or DTs.
 - **Arity follows intent**. Forms with fixed hardware roles keep exact arity so
   malformed source fails early. Forms whose meaning is naturally list-like or

@@ -20,12 +20,12 @@ then uses the ordinary `.fsm` pipeline for HDL generation.
 Cycles are not hidden. They are inferred into a generated `.fsm` artifact and a
 schedule JSON report that can be reviewed.
 ISF intentionally borrows familiar programming-language control-flow shape for
-transaction authoring. Existing forms such as `when`, `repeat`, `do`, and
-spawned-child activation, plus proposed forms such as `wait`, `while`, and
-`until`, should still read naturally to authors. That source shape does not
-change the hardware contract: every shipped form must lower to explicit RTL
-intent with reviewable scheduled `.fsm` states, decision points, counters,
-handshakes, or DTs.
+transaction authoring. Existing forms such as `when`, `repeat`, `wait`, `do`,
+and spawned-child activation, plus proposed forms such as `while` and `until`,
+should still read naturally to authors. That source shape does not change the
+hardware contract: every shipped form must lower to explicit RTL intent with
+reviewable scheduled `.fsm` states, decision points, counters, handshakes, or
+DTs.
 
 ## 1.1 Intent Abstraction Layers
 
@@ -641,12 +641,27 @@ empty, or otherwise non-scalar transaction names are rejected before the parser
 returns an actor shell. Clause payload contents remain scheduler input and are
 not frozen as a public API by the actor-shell transaction-shape metadata.
 
+Author-facing mental model: a transaction is task-like because it consumes
+cycles and can own formal boundaries. Transaction `(ports ...)` declarations
+act as formal data/control ports, and activation sites pass scalar actuals
+through explicit `(bind ...)` blocks. The compiler owns the lower-level
+handoff signals, mux selectors, and generated-top bridge wiring. This is still
+static hardware, not a stack-allocated SV task call: every activation lowers
+to scheduled `.fsm` states, persistent handoff signals, and reviewable
+assignments. Parameter overrides are currently narrower than port bindings:
+spawned child transactions support transaction-local `params` and per-instance
+`(params (NAME value) ...)` overrides through the generated composition path,
+while a fully general parameter-override surface for every activation form
+remains future work.
+
 Current transaction clauses:
 - `(on port body...)`
 - `(when condition body...)`
 - `(drive name args...)`
 - `(await port)` and `(await port (watchdog N))`
 - `(sample port as name)`
+- `(wait N)` for an unconditional exact-cycle delay with positive integer
+  literal `N >= 1`
 - `(repeat count body...)`
 - `(switch signal (value body...)...)`, with optional `(default body...)` or
   `(_ body...)` fallback branch
@@ -665,8 +680,6 @@ Current transaction clauses:
 
 Specified next transaction-control surfaces, not yet parser-public until their
 implementation leaves ship:
-- `(wait N)` for an unconditional exact-cycle delay with positive integer
-  literal `N >= 1`.
 - `(while cond body...)` for a pre-test zero-or-more loop.
 - `(until cond body...)` for a body-first one-or-more loop.
 
@@ -930,19 +943,19 @@ can be treated as fully general. Future spawn-in-repeat support must preserve
 the same rule: the loop reactivates a lexically named static child instance; it
 does not create one child instance per iteration.
 
-### 7.6.1 Transaction Wait (specified next)
+### 7.6.1 Transaction Wait
 
 ```lisp
 (wait 3)
 ```
 
-`(wait N)` is specified as an unconditional transaction-local delay, distinct
-from `(await cond)` and `(repeat count body...)`. It does not test an external
-condition and it does not repeat a body. The first shipped surface is limited
-to positive integer literals: `N` must be a literal integer greater than or
-equal to 1. Dynamic counts, symbolic counts, and zero-count waits remain
-deferred until their width, no-op/diagnostic, reset, latency, and report
-contracts are specified.
+`(wait N)` is the shipped unconditional transaction-local delay, distinct from
+`(await cond)` and `(repeat count body...)`. It does not test an external
+condition and it does not repeat a body. The current surface is limited to
+positive integer literals: `N` must be a literal integer greater than or equal
+to 1. Dynamic counts, symbolic counts, and zero-count waits remain deferred
+until their width, no-op/diagnostic, reset, latency, and report contracts are
+specified.
 
 Cycle semantics:
 - `wait 1` means the transaction occupies one generated wait region for one
@@ -956,24 +969,25 @@ Cycle semantics:
   accounting or transaction-level monitors that count active transaction
   cycles.
 
-Lowering must remain reviewable scheduled `.fsm`. A literal wait may lower to
-an explicit fixed state chain or to a generated counter plus wait states, but
-the emitted artifact must make the exact `N`-cycle delay visible. Any generated
-counter is normal scheduler-owned storage with reset behavior matching other
-transaction-local counters; no asynchronous reset special case is introduced
-for waits.
+The current lowering is a reviewable fixed scheduled-state chain. `(wait N)`
+emits `N` generated `*_wait_*` states; each state advances unconditionally to
+the next wait state or to the following transaction clause. No hidden wait
+counter is introduced for the positive-literal surface. Pending samples
+collected before the wait piggyback onto the first generated wait state using
+the same sample-assignment behavior as drive/await piggybacking. The wait
+surface is accepted at the top level of a transaction body and inside the
+currently shipped inline body contexts: `when`, `switch`, and `repeat` bodies.
 
-Diagnostics before public parser support:
+Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
 - `(wait 0)`, negative literals, non-integer literals, list expressions, and
   named dynamic counts are unsupported for the first shipped surface.
 - Waits outside transaction body contexts are invalid.
 
-When `(wait N)` ships, successful schedule reports should expose a bounded
-`transaction_waits[]` summary rather than raw lowering internals. The planned
-minimum entry shape is `transaction`, `cycles`, `entry_state`, `exit_state`,
-and `counter_signal` where `counter_signal` is JSON null when no counter is
-used.
+Successful schedule reports expose a bounded `transaction_waits[]` summary
+rather than raw lowering internals. Each entry contains `transaction`,
+`cycles`, `entry_state`, `exit_state`, and `counter_signal`. For the current
+fixed-state-chain lowering, `counter_signal` is JSON null.
 
 ### 7.7 Inline Control Flow
 
@@ -981,8 +995,8 @@ used.
 list-form condition and at least one list-form body clause before branch
 expansion. It creates one decision state plus body states. The true path enters
 the body, and the false path skips to the first state after the whole `when`
-body. Current body support includes drive, await, sample, complete, repeat,
-update, shift/assemble/extract data operations, and nested `when`. Nested
+body. Current body support includes drive, await, sample, wait, complete,
+repeat, update, shift/assemble/extract data operations, and nested `when`. Nested
 repeats inside `when` bodies register the shared transaction counter width like
 top-level and switch-nested repeats.
 
@@ -1011,8 +1025,8 @@ else/default branch without asking ISF to synthesize that Boolean expression
 itself, and it avoids the old invalid pattern of duplicating one explicit case
 such as `=0` for fallthrough.
 
-Current branch-body support includes drive, await, sample, repeat, update,
-shift/assemble/extract data operations, and nested `when`. Branch bodies exit
+Current branch-body support includes drive, await, sample, wait, repeat,
+update, shift/assemble/extract data operations, and nested `when`. Branch bodies exit
 to the first state after the whole switch, so multi-state branches and repeat
 checks do not fall through into later branch bodies.
 
@@ -1594,12 +1608,14 @@ fail-closed/deferred.
   "state_count": 0,
   "inferred_storage": [],
   "transactions": [],
+  "transaction_waits": [],
   "transaction_stages": [],
   "temporal_contracts": [],
   "bank_accesses": [],
   "transaction_port_bindings": [],
   "dt_blocks": [],
   "generated_composition": null,
+  "library_uses": [],
   "compatible_fanin_groups": [],
   "priority_resolutions": [],
   "resource_arbitration": [],
@@ -1653,6 +1669,12 @@ The `transactions` array is sorted lexically by transaction name, and each
 transaction's `states` array keeps scheduled `.fsm` state emission order. The
 capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
+The `transaction_waits` array reports the shipped positive-literal `(wait N)`
+surface. Each entry contains the authored transaction name, exact cycle count,
+entry wait state, exit state after the wait chain, and optional
+`counter_signal`. The current fixed-state-chain lowering reports
+`counter_signal` as JSON null. The capability-manifest ISF public contract
+advertises the keys through `schedule_report_transaction_wait_keys`.
 The `transaction_stages` array reports the shipped ready/valid stage subset.
 Each entry has `transaction`, authored stage `name`, `kind =
 ready_valid_barrier`, generated `state`, `ready` input, and `valid` output.
@@ -1937,6 +1959,7 @@ Focused tests:
 - [t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
 - [t/1242-isf-port-binding-conflict-semantics.t](../t/1242-isf-port-binding-conflict-semantics.t)
 - [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
+- [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
 
 ## 12. Explicitly Deferred
 
@@ -1949,7 +1972,8 @@ Focused tests:
   parameter-derived storage dimensions, clock/reset name remapping,
   memory-array backend emission, and library actors that import other
   libraries.
-- Unconditional transaction delay beyond the first specified `(wait N)` shape:
+- Unconditional transaction delay beyond the shipped positive-literal
+  `(wait N)` shape:
   dynamic counts, symbolic counts, and zero-count behavior remain deferred
   until width, reset, latency, and report semantics are specified.
 - Transaction binding surfaces beyond scalar `do`, `spawn`, and rule-trigger

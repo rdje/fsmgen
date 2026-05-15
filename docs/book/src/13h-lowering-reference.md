@@ -212,6 +212,43 @@ Timeout state:
   (-> apb_transfer_idle_0))
 ```
 
+## `(wait N)` -> Fixed Wait-State Chain
+
+**ISF**:
+```lisp
+(wait 2)
+```
+
+**Generated .fsm**:
+```lisp
+(main_wait_1
+  (-> main_wait_2))
+
+(main_wait_2
+  (-> main_drive_3))
+```
+
+The current shipped surface requires `N` to be a positive integer literal.
+Lowering emits exactly `N` generated `*_wait_*` states, each advancing
+unconditionally to the next wait state or the following transaction clause.
+No hidden wait counter is introduced for this positive-literal surface.
+
+If samples are pending before the wait, they are emitted in the first wait
+state:
+
+```lisp
+(main_wait_1
+  (<= (addr req_addr))
+  (-> main_wait_2))
+```
+
+Schedule reports expose each authored wait through `transaction_waits[]` with
+`transaction`, `cycles`, `entry_state`, `exit_state`, and `counter_signal`.
+`counter_signal` is null for the current fixed-chain lowering.
+
+**Timing**: exactly `N` active transaction cycles, no external condition.
+**Cycles**: `N`.
+
 ## `(complete port)` → Terminal State
 
 **ISF**:

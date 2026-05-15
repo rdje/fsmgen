@@ -28,6 +28,7 @@ sub emit($self, $ir) {
         state_count    => scalar(@{$ir->{states}}),
         inferred_storage => $self->_storage_summary($ir),
         transactions   => $self->_transaction_summary($ir),
+        transaction_waits => $self->_transaction_wait_summary($ir),
         transaction_stages => $self->_transaction_stage_summary($ir),
         temporal_contracts => $self->_temporal_contract_summary($ir),
         bank_accesses  => $self->_bank_access_summary($ir),
@@ -170,7 +171,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }
@@ -185,6 +186,34 @@ sub _transaction_summary($self, $ir) {
     }
 
     return \@txs;
+}
+
+sub _transaction_wait_summary($self, $ir) {
+    my @waits;
+    my %state_by_name = map { $_->{name} => $_ } @{$ir->{states} || []};
+
+    for my $state (@{$ir->{states} || []}) {
+        next unless ($state->{kind} // '') eq 'wait';
+        next unless $state->{wait_entry};
+
+        my @wait_states = @{$state->{wait_state_names} || [$state->{name}]};
+        my $last_state = $state_by_name{$wait_states[-1]};
+        my $exit_state = undef;
+        if ($last_state && ref($last_state->{transitions}) eq 'ARRAY' && @{$last_state->{transitions}}) {
+            $exit_state = $last_state->{transitions}[0]{target};
+        }
+
+        my ($transaction) = ($state->{name} =~ /\A(.+)_wait_[0-9]+\z/);
+        push @waits, {
+            transaction    => $transaction,
+            cycles         => 0 + ($state->{wait_cycles} // scalar(@wait_states)),
+            entry_state    => $state->{name},
+            exit_state     => $exit_state,
+            counter_signal => undef,
+        };
+    }
+
+    return \@waits;
 }
 
 sub _transaction_stage_summary($self, $ir) {

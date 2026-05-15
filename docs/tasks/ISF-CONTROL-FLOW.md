@@ -56,13 +56,13 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
   Commit: `ISF-CONTROL-FLOW.1: specify wait and loop contracts`
 
 - ID: `ISF-CONTROL-FLOW.2`
-  Status: `pending`
+  Status: `done`
   Goal: Implement positive-literal `(wait N)`.
   Acceptance: Transaction bodies accept `(wait N)` for positive integer
   literal N, lower to reviewable scheduled `.fsm`, report generated wait
   storage/states as needed, reject malformed or unsupported counts with
   targeted diagnostics, and reach SystemVerilog generation.
-  Verification: `pending`
+  Verification: `prove -I perl t/1244-isf-wait-clause-lowering.t t/1181-isf-rule-action-boundary.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `mdbook build docs/book`; `git diff --check`
   Commit: `pending`
 
 - ID: `ISF-CONTROL-FLOW.3`
@@ -80,7 +80,7 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CONTROL-FLOW.2` | `pending` | The source/runtime contract is specified; positive-literal `(wait N)` is the smallest executable implementation slice before dynamic loops. |
+| 1 | `ISF-CONTROL-FLOW.3` | `pending` | Positive-literal `(wait N)` is shipped; dynamic transaction loops are the next specified control-flow surface. |
 
 ## Design Notes
 
@@ -125,6 +125,9 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 - `2026-05-15`: Successful reports should grow bounded `transaction_waits[]`
   and `transaction_loops[]` summaries when those constructs ship; raw lowering
   internals and raw parser clauses remain private.
+- `2026-05-15`: Positive-literal `(wait N)` now lowers as a fixed generated
+  wait-state chain with no hidden counter; `transaction_waits[]` reports the
+  exact count, entry state, exit state, and a null `counter_signal`.
 
 ## Open Questions
 
@@ -143,12 +146,14 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-CONTROL-FLOW.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CONTROL-FLOW.2` | `prove -I perl t/1244-isf-wait-clause-lowering.t t/1181-isf-rule-action-boundary.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-CONTROL-FLOW.1` | `ISF-CONTROL-FLOW.1: specify wait and loop contracts` | Activates the tree and records exact wait-cycle semantics plus loop sampling/body/report boundaries. |
+| `ISF-CONTROL-FLOW.2` | `ISF-CONTROL-FLOW.2: ship literal wait lowering` | Ships positive-literal `(wait N)` lowering, report metadata, diagnostics, and HDL-reachability coverage. |
 
 ## Changelog
 
@@ -156,3 +161,6 @@ semantics with `(await ...)`, `(repeat ...)`, or rule guards.
   `(wait N)`, `(while ...)`, and `(until ...)` design discussion.
 - `2026-05-15`: Activated the tree and completed `ISF-CONTROL-FLOW.1`; the
   current frontier is `ISF-CONTROL-FLOW.2`.
+- `2026-05-15`: Completed implementation work for `ISF-CONTROL-FLOW.2`;
+  positive-literal `(wait N)` now lowers to fixed wait-state chains and the
+  current frontier advances to `ISF-CONTROL-FLOW.3`.

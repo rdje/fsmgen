@@ -101,6 +101,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_temporal_contract_overlap_policy_values
     isf_public_interface_schedule_report_temporal_contract_reset_policy_shape
     isf_public_interface_schedule_report_top_level_keys
+    isf_public_interface_schedule_report_transaction_wait_keys
     isf_public_interface_schedule_report_transaction_port_binding_keys
     isf_public_interface_schedule_report_transaction_port_binding_site_kind_values
     isf_public_interface_schedule_report_transaction_stage_keys
@@ -243,6 +244,7 @@ sub build_isf_public_interface_contract {
         schedule_report_transaction_states_shape => isf_public_interface_schedule_report_transaction_states_shape(),
         schedule_report_transaction_count_shape => isf_public_interface_schedule_report_transaction_count_shape(),
         schedule_report_transaction_ordering => isf_public_interface_schedule_report_transaction_ordering(),
+        schedule_report_transaction_wait_keys => isf_public_interface_schedule_report_transaction_wait_keys(),
         schedule_report_transaction_stage_keys => isf_public_interface_schedule_report_transaction_stage_keys(),
         schedule_report_transaction_stage_kind_values => isf_public_interface_schedule_report_transaction_stage_kind_values(),
         schedule_report_temporal_contract_keys => isf_public_interface_schedule_report_temporal_contract_keys(),
@@ -391,6 +393,7 @@ sub build_isf_public_interface_contract {
             't/1241-isf-transaction-port-bindings.t',
             't/1242-isf-port-binding-conflict-semantics.t',
             't/1243-isf-port-binding-schedule-report.t',
+            't/1244-isf-wait-clause-lowering.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -508,6 +511,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_transaction_states_shape
             schedule_report_transaction_count_shape
             schedule_report_transaction_ordering
+            schedule_report_transaction_wait_keys
             schedule_report_transaction_stage_keys
             schedule_report_transaction_stage_kind_values
             schedule_report_temporal_contract_keys
@@ -800,6 +804,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             state_count
             inferred_storage
             transactions
+            transaction_waits
             transaction_stages
             temporal_contracts
             bank_accesses
@@ -1260,6 +1265,18 @@ sub isf_public_interface_schedule_report_transaction_ordering {
     return 'transaction summaries are sorted lexically by transaction name; each states array keeps scheduled .fsm state emission order';
 }
 
+sub isf_public_interface_schedule_report_transaction_wait_keys {
+    return [
+        qw(
+            transaction
+            cycles
+            entry_state
+            exit_state
+            counter_signal
+        ),
+    ];
+}
+
 sub isf_public_interface_schedule_report_transaction_stage_keys {
     return [
         qw(
@@ -1363,6 +1380,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_bank_access_keys => isf_public_interface_schedule_report_bank_access_keys(),
         schedule_report_transaction_port_binding_keys => isf_public_interface_schedule_report_transaction_port_binding_keys(),
         schedule_report_transaction_keys => isf_public_interface_schedule_report_transaction_keys(),
+        schedule_report_transaction_wait_keys => isf_public_interface_schedule_report_transaction_wait_keys(),
         schedule_report_transaction_stage_keys => isf_public_interface_schedule_report_transaction_stage_keys(),
         schedule_report_temporal_contract_keys => isf_public_interface_schedule_report_temporal_contract_keys(),
         schedule_report_dt_keys => isf_public_interface_schedule_report_dt_keys(),

@@ -3,6 +3,19 @@
 A transaction is a behavioral sequence. Every clause produces a specific
 `.fsm` state with deterministic timing.
 
+It is useful to think of an ISF transaction as a hardware task: it consumes
+cycles, can declare local ports as formal arguments, and activation sites can
+pass actual signals through explicit bindings. The hardware caveat is that the
+transaction is not a stack-allocated software/SV-task call. It lowers to
+static scheduled `.fsm` states, handoff signals, mux selections, and generated
+top wiring. Today the task-like port model is shipped for scalar `(ports ...)`
+bindings on `do`, `spawn`, and rule `trigger` activation sites. Rule triggers
+bind transaction inputs only; output bindings require a caller that waits for
+completion, such as `do` or the shipped spawn handoff path. Spawned child
+transactions also support per-instance parameter overrides through `(params
+...)`; a fully general parameter-override model for every transaction
+activation form remains narrower than the port-binding model.
+
 ## How Transactions Become Hardware
 
 ```
@@ -166,6 +179,47 @@ describing a zero-to-all-ones next-value underflow for the watchdog. Timeout
 normally exits the await state, so that old side effect does not necessarily
 escape as a system-level failure, but the scheduled artifact should still not
 ask the counter to decrement at zero.
+
+## `(wait N)` — Unconditional Exact-Cycle Delay
+
+```lisp
+(wait 3)
+```
+
+**Timing**: exactly `N` active transaction cycles. The current public surface
+requires `N` to be a positive integer literal.
+
+`(wait N)` is different from `(await port)`: it does not check a signal, does
+not consume an await watchdog, and does not have an early-exit condition. It
+is also different from `(repeat count body...)`: it has no body and does not
+iterate any authored actions.
+
+**Cycle-by-cycle**:
+- `wait 1`: occupy one generated wait state for one active cycle, then advance
+  on that state's transition to the next transaction clause.
+- `wait N`: emit `N` generated wait states and advance through them
+  unconditionally, one per cycle.
+
+Pending samples immediately before the wait piggyback onto the first wait
+state, using the same sample materialization rule as drive/await piggybacking.
+The shipped lowering does not introduce a hidden wait counter; the scheduled
+`.fsm` review artifact shows the exact fixed state chain.
+
+**Generated .fsm** for `(wait 2)` followed by `(drive tick)`:
+
+```lisp
+(main_wait_1
+  (-> main_wait_2))
+
+(main_wait_2
+  (-> main_drive_3))
+```
+
+Successful schedule reports include `transaction_waits[]` entries with
+`transaction`, `cycles`, `entry_state`, `exit_state`, and `counter_signal`.
+For the current fixed-state-chain lowering, `counter_signal` is JSON null.
+Malformed waits such as `(wait)`, `(wait 0)`, `(wait 1 2)`, `(wait count)`,
+and `(wait (expr))` fail closed.
 
 ## `(complete port)` — Terminal State
 

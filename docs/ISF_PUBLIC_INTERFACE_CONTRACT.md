@@ -337,6 +337,11 @@ The transaction-port binding schedule-report projection is checked by
 [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
 so successful in-process and CLI reports expose bounded binding provenance
 without exporting raw `LoweringIR` assignment internals.
+The positive-literal transaction wait boundary is checked by
+[t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
+so `(wait N)` accepts positive integer literals in transaction body contexts,
+lowers to reviewable fixed wait-state chains, reaches HDL generation, exposes
+`transaction_waits[]`, and rejects malformed or unsupported counts.
 The transaction-name boundary is checked by
 [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 so duplicate transaction names fail before actor-shell return and downstream
@@ -996,6 +1001,7 @@ outputs
 state_count
 inferred_storage
 transactions
+transaction_waits
 transaction_stages
 temporal_contracts
 bank_accesses
@@ -1015,6 +1021,7 @@ Current bounded nested and array summary families:
 reset: name, kind, polarity
 inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
+transaction_waits entries: transaction, cycles, entry_state, exit_state, counter_signal
 transaction_stages entries: transaction, name, kind, state, ready, valid
 temporal_contracts entries: transaction, name, kind, trigger, signal, within_cycles, pending_signal, counter_signal, fail_signal, overlap_policy, reset_policy, assertion_projection
 dt_blocks entries: name, kind, assignments
@@ -1073,6 +1080,14 @@ The `transactions` array itself is sorted lexically by transaction name. Each
 entry's `states` array keeps scheduled `.fsm` state emission order for that
 transaction. The machine-readable contract advertises this through
 `schedule_report_transaction_ordering`.
+
+For each `transaction_waits` entry, `transaction` is the authored transaction
+name, `cycles` is the exact positive literal wait count, `entry_state` is the
+first generated wait state, `exit_state` is the following scheduled state
+after the wait chain, and `counter_signal` is currently JSON null because the
+shipped lowering emits fixed wait-state chains rather than hidden wait
+counters. The machine-readable contract advertises these through
+`schedule_report_transaction_wait_keys`.
 
 For each `transaction_stages` entry, `kind` is currently
 `ready_valid_barrier`. The entry preserves the authored transaction/stage
@@ -1208,8 +1223,8 @@ Bounded but not fully frozen:
   updates this contract, the mdBook/spec, and focused regressions.
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
-  `resource_arbitration[]`, `transaction_stages[]`, `temporal_contracts[]`,
-  `transaction_port_bindings[]`, `library_uses[]`, and
+  `resource_arbitration[]`, `transaction_waits[]`, `transaction_stages[]`,
+  `temporal_contracts[]`, `transaction_port_bindings[]`, `library_uses[]`, and
   `generated_composition` are bounded summaries, not raw IR exports.
 
 Blockers before flipping `schedule_report_full_schema_stable` to true:
@@ -1240,11 +1255,11 @@ These are not stable public interfaces yet:
   explicit snapshot-vs-live timing selection, broader static conflict
   diagnostics, and richer report fields remain deferred follow-on
   port-binding work.
-- Transaction control-flow behavior for `(wait N)`, `(while cond body...)`,
-  and `(until cond body...)` is specified as the next R14 feature surface, but
-  parser/lowering/report support and any `transaction_waits[]` or
-  `transaction_loops[]` report metadata remain non-public until their
-  implementation and regression leaves ship.
+- Transaction control-flow behavior beyond shipped positive-literal
+  `(wait N)` remains non-public. Dynamic/symbolic/zero-count waits and
+  `(while cond body...)` / `(until cond body...)` loops need parser, lowering,
+  report, and regression-backed contracts before downstream users can rely on
+  them.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

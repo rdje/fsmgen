@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF positive-literal wait lowering
+- Completed `ISF-CONTROL-FLOW.2` in
+  [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md).
+- `(wait N)` is now a shipped transaction clause for positive integer literal
+  `N >= 1`. It lowers to `N` generated `*_wait_*` states, advances
+  unconditionally one state per cycle, and introduces no hidden wait counter.
+- The shipped wait surface is accepted in top-level transaction bodies and the
+  current `when`, `switch`, and `repeat` inline body contexts. Malformed,
+  zero, list, and dynamic counts fail closed.
+- Schedule reports now include bounded `transaction_waits[]` entries with
+  `transaction`, `cycles`, `entry_state`, `exit_state`, and `counter_signal`;
+  `counter_signal` is JSON null for the current fixed-chain lowering.
+- Added [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  and refreshed public contract/test-tier metadata. The next active frontier
+  is `ISF-CONTROL-FLOW.3`, dynamic transaction loops.
 ## 2026-05-15: ISF control-flow contract specification
 - Activated `ISF-CONTROL-FLOW` in
   [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) and
