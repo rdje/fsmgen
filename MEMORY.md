@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF pending-sample dynamic wait split
+- Completed `ISF-DYNAMIC-WAIT.3.3.5.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md), splitting
+  `ISF-DYNAMIC-WAIT.3.3.5` into executable pending-sample preservation leaves.
+- The key invariant is that runtime `count == 0` must still consume no hidden
+  wait or sample-only cycle.
+- The positive-count path should preserve static positive wait behavior by
+  materializing samples in the first active wait state.
+- The zero-count path should preserve `wait 0` behavior by materializing
+  samples in the next state-producing clause. A shared successor assignment
+  would double-sample after a positive wait, so a specialized zero-bypass
+  successor or equivalent path-specific lowering is required.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.5.2`, top-level runtime wait
+  pending-sample preservation.
 ## 2026-05-15: ISF loop-body dynamic waits
 - Completed `ISF-DYNAMIC-WAIT.3.3.4.5` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

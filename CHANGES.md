@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF pending-sample dynamic wait split
+- Completed `ISF-DYNAMIC-WAIT.3.3.5.1` by splitting
+  `ISF-DYNAMIC-WAIT.3.3.5` into executable leaves for pending-sample
+  preservation across runtime dynamic wait paths.
+- Recorded the materialization invariant in the task tree and mdBook backlog:
+  positive-count runtime waits should materialize pending samples in the first
+  active wait state, while zero-count bypasses should materialize them in the
+  next state-producing clause without adding a hidden cycle.
+- Updated the roadmap, task tree, ISF spec, mdBook backlog, and live docs so
+  the active frontier advances to `ISF-DYNAMIC-WAIT.3.3.5.2`.
 ### R14 — ISF loop-body dynamic waits
 - Updated
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

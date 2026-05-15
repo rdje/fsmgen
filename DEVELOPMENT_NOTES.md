@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: pending samples require path-specific runtime wait materialization
+- Pending samples before a runtime wait cannot be handled by one unconditional
+  sample placement because the positive-count and zero-count paths have
+  different timing contracts.
+- The positive-count path should match positive static waits: samples
+  materialize in the first active wait state, and the generated wait then
+  consumes the sampled runtime count.
+- The zero-count path should match `wait 0`: it bypasses the generated wait
+  without adding a hidden decision or sample-only cycle, and the pending
+  samples materialize on the next state-producing clause.
+- Therefore the implementation should specialize the zero-bypass successor or
+  use an equivalent path-specific lowering. Putting the sample on a shared
+  successor would run again after a positive wait, and inserting a separate
+  sample state would change zero-count timing.
 ## 2026-05-15: loop-body dynamic waits materialize loop decisions
 - A loop decision can be a dynamic-wait predecessor only for the branch that
   actually targets the wait. The opposite branch must remain visible and

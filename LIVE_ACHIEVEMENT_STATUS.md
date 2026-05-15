@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF pending-sample dynamic wait split
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.5.1`.
+- Split active task-tree node `ISF-DYNAMIC-WAIT.3.3.5` into executable
+  pending-sample preservation leaves.
+- Runtime `count == 0` must not introduce a hidden sample-only cycle.
+- Positive-count paths should materialize pending samples in the first active
+  wait state; zero-count paths should materialize them in the next
+  state-producing clause.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.5.2`, top-level
+  runtime wait pending-sample preservation.
+
 ## 2026-05-15: R14 — ISF loop-body dynamic waits
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.5`.
 - Runtime scalar waits in `while` and `until` bodies now lower for the

@@ -437,8 +437,18 @@ top-level dynamic waits and the requested additional top-level predecessor
 kinds are shipped. The inline-body work is split; `when` bodies, `repeat`
 bodies, `switch` branches, and `while`/`until` bodies are shipped for the
 no-pending-sample subset. The next frontier is pending-sample preservation,
-then expression-valued runtime counts once their width/type/snapshot contract
-is specified.
+now split under `ISF-DYNAMIC-WAIT.3.3.5`; the first implementation target is
+top-level runtime waits under `ISF-DYNAMIC-WAIT.3.3.5.2`. Expression-valued
+runtime counts follow once their width/type/snapshot contract is specified.
+
+Pending samples cannot be enabled by simply putting the sample assignment on a
+shared successor state. The positive-count path must behave like a positive
+static wait, where samples materialize in the first active wait state. The
+zero-count path must behave like `wait 0`, where no hidden wait/sample cycle is
+introduced and the samples materialize with the next state-producing clause.
+That requires path-specific materialization, likely by specializing the
+zero-bypass successor state or an equivalent lowering that does not add a
+cycle and does not double-sample after a positive runtime wait.
 
 ### Transaction Dynamic Loops
 

@@ -15,8 +15,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `repeat` bodies, `ISF-DYNAMIC-WAIT.3.3.4.4` shipped dynamic waits in
   `switch` branches, `ISF-DYNAMIC-WAIT.3.3.4.5` shipped dynamic waits in
   `while`/`until` bodies, and the current frontier is
-  `ISF-DYNAMIC-WAIT.3.3.5`: preserving pending samples across runtime dynamic
-  wait paths.
+  `ISF-DYNAMIC-WAIT.3.3.5.2`: implementing top-level pending-sample
+  preservation across runtime dynamic wait paths.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -71,9 +71,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   preservation, and expression-valued counts. Consecutive top-level dynamic
   waits, the requested additional top-level predecessor kinds, and the shipped
   `when`/`repeat`/`switch`/`while`/`until` inline contexts are complete for the
-  no-pending-sample subset. The next implementation leaf is pending-sample
-  preservation because that is now the cross-cutting unsupported boundary
-  across the accepted runtime dynamic wait contexts.
+  no-pending-sample subset. Pending-sample preservation is now split under
+  `ISF-DYNAMIC-WAIT.3.3.5`; `ISF-DYNAMIC-WAIT.3.3.5.1` recorded the
+  path-specific materialization plan, and the next implementation leaf is
+  `ISF-DYNAMIC-WAIT.3.3.5.2` for top-level runtime waits.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -215,6 +216,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   bodies now lower through loop-entry, loop-back, and loop-exit dynamic wait
   count load/bypass while preserving opposite loop branches. The active
   frontier advances to `ISF-DYNAMIC-WAIT.3.3.5`: pending-sample preservation.
+- `ISF-DYNAMIC-WAIT.3.3.5` is active and split into executable
+  pending-sample leaves. `ISF-DYNAMIC-WAIT.3.3.5.1` recorded the
+  path-specific materialization contract, and the active frontier is
+  `ISF-DYNAMIC-WAIT.3.3.5.2`: top-level runtime waits.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

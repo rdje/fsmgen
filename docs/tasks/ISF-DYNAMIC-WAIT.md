@@ -190,12 +190,54 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.3.3.4.5: support loop-body dynamic waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3.3.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Preserve pending samples across runtime dynamic wait bypass paths.`
+  Children: `ISF-DYNAMIC-WAIT.3.3.5.1`,
+  `ISF-DYNAMIC-WAIT.3.3.5.2`, `ISF-DYNAMIC-WAIT.3.3.5.3`,
+  `ISF-DYNAMIC-WAIT.3.3.5.4`
   Acceptance: Pending-sample preservation, branch/switch/repeat/loop contexts,
   and zero/positive runtime wait paths either share one exact sample
   materialization contract or remain explicitly fail-closed with diagnostics
   and book coverage.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.5.1`
+  Status: `done`
+  Goal: `Specify and split pending-sample dynamic wait preservation.`
+  Acceptance: The task tree, mdBook backlog, and live docs explain why
+  preserving runtime-wait pending samples needs path-specific materialization,
+  name the no-hidden-cycle invariant for `count == 0`, and split the
+  implementation into executable leaves.
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.3.3.5.1: split pending-sample preservation`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.5.2`
+  Status: `pending`
+  Goal: `Preserve pending samples for top-level runtime waits.`
+  Acceptance: A top-level runtime wait preceded by pending samples preserves
+  static-wait timing on the positive-count path and zero-wait timing on the
+  zero-count bypass path without adding a hidden decision/sample cycle.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.5.3`
+  Status: `pending`
+  Goal: `Preserve pending samples for branch runtime waits.`
+  Acceptance: Runtime waits with pending samples inside `when` bodies and
+  `switch` branches preserve false/default/other-case exits, positive-count
+  sample timing, and zero-count bypass sample timing, or remain fail-closed
+  with narrower documented constraints.
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-DYNAMIC-WAIT.3.3.5.4`
+  Status: `pending`
+  Goal: `Preserve pending samples for repeat and loop runtime waits.`
+  Acceptance: Runtime waits with pending samples inside `repeat`, `while`, and
+  `until` bodies preserve loop-back/exit behavior, positive-count sample
+  timing, and zero-count bypass sample timing, or remain fail-closed with
+  narrower documented constraints.
   Verification: `pending`
   Commit: `pending`
 
@@ -212,7 +254,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.3.3.5` | `pending` | Pending samples are the remaining unsupported boundary across shipped runtime dynamic wait contexts. |
+| 1 | `ISF-DYNAMIC-WAIT.3.3.5.2` | `pending` | Top-level runtime waits are the smallest context for implementing the path-specific pending-sample materialization contract. |
 
 ## Decisions
 
@@ -298,6 +340,17 @@ changing the exact timing meaning of the shipped wait construct.
 - `2026-05-15`: Loop decision states can also split loop-exit edges that target
   a following runtime wait, preserving the opposite loop branch rather than
   treating loop decisions as unsupported dynamic-wait predecessors.
+- `2026-05-15`: Pending samples before runtime waits need path-specific
+  materialization. The positive-count path should preserve the static positive
+  wait behavior by materializing samples in the first active wait state. The
+  zero-count path should preserve `wait 0` behavior by materializing samples in
+  the next state-producing clause without adding a hidden cycle.
+- `2026-05-15`: The likely implementation needs specialized post-wait
+  zero-bypass handling, such as cloning or otherwise specializing the immediate
+  successor state for the zero path. Placing the sample unconditionally on a
+  shared successor would double-sample after a positive wait, and inserting a
+  separate sample-only state on the zero path would violate the no-hidden-cycle
+  invariant.
 
 ## Open Questions
 
@@ -324,6 +377,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.4.5` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.3.3.5.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -341,6 +395,7 @@ changing the exact timing meaning of the shipped wait construct.
 | `ISF-DYNAMIC-WAIT.3.3.4.3` | `ISF-DYNAMIC-WAIT.3.3.4.3: support repeat-body dynamic waits` | Supports runtime waits in `repeat` bodies for the no-pending-sample subset. |
 | `ISF-DYNAMIC-WAIT.3.3.4.4` | `ISF-DYNAMIC-WAIT.3.3.4.4: support switch-branch dynamic waits` | Supports runtime waits in `switch` branches for the no-pending-sample subset. |
 | `ISF-DYNAMIC-WAIT.3.3.4.5` | `ISF-DYNAMIC-WAIT.3.3.4.5: support loop-body dynamic waits` | Supports runtime waits in `while` and `until` bodies for the no-pending-sample subset. |
+| `ISF-DYNAMIC-WAIT.3.3.5.1` | `ISF-DYNAMIC-WAIT.3.3.5.1: split pending-sample preservation` | Splits pending-sample preservation into executable leaves and records the path-specific materialization contract. |
 
 ## Changelog
 
@@ -384,3 +439,7 @@ changing the exact timing meaning of the shipped wait construct.
   `while` and `until` bodies now lower through loop-entry, loop-back, and
   loop-exit count load/bypass while preserving opposite loop branches. The
   current frontier advances to `ISF-DYNAMIC-WAIT.3.3.5`.
+- `2026-05-15`: Completed `ISF-DYNAMIC-WAIT.3.3.5.1`; pending-sample
+  preservation is split into executable leaves and the path-specific
+  materialization contract is documented. The current frontier advances to
+  `ISF-DYNAMIC-WAIT.3.3.5.2`.
