@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF clock-domain reset ownership selected
+- Completed `ISF-CLOCK-DOMAINS.3` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- Future multi-domain reset ownership lives inside each domain entry. Existing
+  actor-level `(reset ...)` remains the shipped single-domain shorthand and is
+  not mixed with future `(clock-domains ...)` source.
+- Each future domain owns zero or one reset. Synchronous resets are sampled on
+  the owning domain clock. Asynchronous resets are direct external reset pins,
+  not data signals, CDC primitives, or DT-generated reset trees.
+- The current R14 frontier is `ISF-CLOCK-DOMAINS.4`, selecting explicit
+  cross-domain interaction primitives.
 ## 2026-05-15: ISF clock-domain source model selected
 - Completed `ISF-CLOCK-DOMAINS.2` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

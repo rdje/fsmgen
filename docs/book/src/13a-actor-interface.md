@@ -78,6 +78,22 @@ Reset name convention: `*_n` or `*_b` suffix → `active_low`. Otherwise `active
 | `(reset (rst async))` | `(areset rst)` |
 | `(reset rst_n)` | `(sreset rst_n)` |
 
+For the future multi-domain source model, reset ownership lives inside each
+domain entry. This is not accepted syntax yet, but the planned shape is:
+
+```lisp
+(clock-domains
+  (domain core (clock clk)     (reset rst_n) :default)
+  (domain bus  (clock bus_clk) (reset (bus_rst_n async active_low))))
+```
+
+Each domain owns zero or one reset. A synchronous reset is sampled only on the
+owning domain clock edge. An asynchronous reset is a direct external reset pin
+for that domain's clocked state; ISF rules, transactions, drives, and DTs must
+not generate or gate arbitrary asynchronous reset trees. Reusing one reset
+signal across multiple domains is only a shared external reset pin when kind
+and polarity match exactly, not a CDC primitive or data synchronizer.
+
 ## Watchdog
 
 ```lisp

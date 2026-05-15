@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF clock-domain reset ownership selected
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.3`.
+- Future multi-domain reset ownership lives inside `(clock-domains ...)`
+  domain entries. Existing actor-level `(reset ...)` remains the shipped
+  single-domain shorthand.
+- Each future domain owns zero or one reset. Synchronous resets are sampled on
+  the owning domain clock; asynchronous resets are direct external reset pins,
+  not DT-generated reset trees.
+- This was specification-only; parser/lowering behavior is unchanged.
+- The active frontier advances to `ISF-CLOCK-DOMAINS.4`, cross-domain
+  interaction primitives.
+
 ## 2026-05-15: R14 — ISF clock-domain source model selected
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.2`.
 - [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) is now

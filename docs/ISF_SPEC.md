@@ -503,8 +503,41 @@ Selected future source model, not implemented yet:
   duplicate domain names, duplicate or missing default domain markers in a
   multi-domain actor, duplicate clock names that pretend to be distinct
   domains, and any direct unowned crossing are rejected before lowering.
-- Reset ownership, legal CDC primitives, report metadata, and lowering
-  artifacts remain future leaves of the `ISF-CLOCK-DOMAINS` task tree.
+- Legal CDC primitives, report metadata, and lowering artifacts remain future
+  leaves of the `ISF-CLOCK-DOMAINS` task tree. Reset ownership is selected
+  below.
+
+Selected future reset ownership model, not implemented yet:
+- Existing actor-level `(clock clk)` plus optional actor-level `(reset ...)`
+  remains the shipped shorthand for one implicit domain named `default`.
+- A future actor using `(clock-domains ...)` must put reset ownership inside
+  each domain entry and must not also use actor-level `(reset ...)`:
+
+```lisp
+(clock-domains
+  (domain core (clock clk)     (reset rst_n) :default)
+  (domain bus  (clock bus_clk) (reset (bus_rst_n async active_low))))
+```
+
+- Each domain owns zero or one reset. A domain with no reset clause has no
+  generated reset for its clocked state.
+- Domain reset payloads reuse the shipped reset value rules: flat
+  `(reset name)` is synchronous with inferred polarity; list forms may include
+  `async`, `active_low`, or `active_high`; and reset names must be scalar.
+- A synchronous reset is sampled only on the owning domain clock edge.
+- An asynchronous reset is a direct external reset pin for the owning domain's
+  clocked state. It is not a data signal, handshake, or CDC primitive.
+- The same reset signal may be named by multiple domains only when
+  synchronous/asynchronous kind and polarity match exactly. Such fanout
+  describes one external reset pin reaching multiple domains; it does not
+  synchronize data between them.
+- Child reset bindings connect the child local-domain reset pin to a signal in
+  the selected parent domain or to an explicitly shared external reset pin
+  under the same kind/polarity rules.
+- Malformed reset combinations fail closed: duplicate domain reset clauses,
+  actor-level `(reset ...)` mixed with `(clock-domains ...)`, expression-valued
+  reset names, conflicting reset reuse, DT-generated async reset gating, and
+  treating reset assertion/deassertion as an ordinary cross-domain event.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.

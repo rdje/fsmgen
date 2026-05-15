@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF clock-domain reset ownership selected
+- Completed `ISF-CLOCK-DOMAINS.3`.
+- Specified future per-domain reset ownership in
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/book/src/13a-actor-interface.md](docs/book/src/13a-actor-interface.md),
+  and [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md).
+- Domain resets live inside future `(clock-domains ...)` entries. Synchronous
+  resets are sampled on the owning domain clock; asynchronous resets are
+  direct external reset pins and must not be generated or gated by ISF DT
+  logic.
+- This is specification-only. Existing `(clock name)` plus optional actor-level
+  `(reset ...)` remains the only shipped clock/reset source surface.
+- The active R14 frontier advances to `ISF-CLOCK-DOMAINS.4`, cross-domain
+  interaction primitives.
 ### R14 — ISF clock-domain source model selected
 - Completed `ISF-CLOCK-DOMAINS.2` and activated the
   `ISF-CLOCK-DOMAINS` tree.

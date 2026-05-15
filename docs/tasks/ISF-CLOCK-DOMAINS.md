@@ -60,11 +60,11 @@ asynchronous, and interacting clock-domain designs.
   Commit: `ISF-CLOCK-DOMAINS.2: specify domain source model`
 
 - ID: `ISF-CLOCK-DOMAINS.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Specify reset ownership for each clock domain.`
   Acceptance: `The model distinguishes synchronous resets per domain from asynchronous reset pins and forbids arbitrary DT glue on async reset trees.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CLOCK-DOMAINS.3: specify domain reset ownership`
 
 - ID: `ISF-CLOCK-DOMAINS.4`
   Status: `pending`
@@ -91,8 +91,7 @@ asynchronous, and interacting clock-domain designs.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CLOCK-DOMAINS.3` | `pending` | Reset ownership is part of the selected actor-scoped domain model and must be specified before lowering. |
-| 2 | `ISF-CLOCK-DOMAINS.4` | `pending` | Cross-domain behavior needs explicit legal primitives before generated RTL can be considered meaningful. |
+| 1 | `ISF-CLOCK-DOMAINS.4` | `pending` | Cross-domain behavior needs explicit legal primitives before generated RTL can be considered meaningful. |
 
 ## Selected Source Model
 
@@ -147,9 +146,63 @@ Malformed combinations fail closed:
   without a shipped CDC primitive or protocol actor.
 - Any attempt to use DT logic as asynchronous reset gating.
 
-This source model deliberately does not select reset ownership details,
-crossing primitives, report metadata, or lowering artifacts. Those are owned by
-`ISF-CLOCK-DOMAINS.3` through `ISF-CLOCK-DOMAINS.6`.
+This source model deliberately leaves crossing primitives, report metadata, and
+lowering artifacts to `ISF-CLOCK-DOMAINS.4` through `ISF-CLOCK-DOMAINS.6`.
+Reset ownership is selected below.
+
+## Selected Reset Ownership Model
+
+`ISF-CLOCK-DOMAINS.3` selects the planned reset ownership model without
+shipping parser or lowering support yet. Existing `(reset ...)` remains the
+only implemented reset syntax today.
+
+The future multi-domain source surface puts reset ownership inside each domain
+entry:
+
+```lisp
+(clock-domains
+  (domain core (clock clk)     (reset rst_n) :default)
+  (domain bus  (clock bus_clk) (reset (bus_rst_n async active_low))))
+```
+
+Rules for the planned reset syntax:
+
+- Existing actor-level `(clock name)` plus optional actor-level `(reset ...)`
+  remains the shorthand for one implicit domain named `default`.
+- A future actor using `(clock-domains ...)` must not also use actor-level
+  `(clock ...)` or actor-level `(reset ...)`.
+- Each domain owns zero or one reset. A domain with no reset clause has no
+  generated reset for its clocked state.
+- Domain reset payloads reuse the shipped reset value rules: flat
+  `(reset name)` is synchronous with inferred polarity, list forms may include
+  `async`, `active_low`, or `active_high`, and reset names must be scalar.
+- A synchronous domain reset is sampled only on that domain's clock edge.
+- An asynchronous domain reset is a direct external reset pin for that domain's
+  clocked state. It is not a data signal, handshake, or CDC primitive.
+- The same reset signal may be named by multiple domains only when kind and
+  polarity match exactly. Such fanout describes one external reset pin
+  reaching multiple domains; it does not synchronize data between them.
+- Child instances do not create reset ownership. A child reset binding connects
+  the child local-domain reset pin to a signal in the selected parent domain
+  or to an explicitly shared external reset pin under the same kind/polarity
+  rules.
+
+Malformed reset combinations fail closed:
+
+- Duplicate reset clauses in one domain.
+- Actor-level `(reset ...)` mixed with `(clock-domains ...)`.
+- Reset payloads that use expressions, nested domain names, or non-scalar
+  reset names.
+- Reset signal reuse with conflicting synchronous/asynchronous kind or
+  conflicting polarity.
+- Any rule, transaction, drive, DT, or assignment that drives, gates, or
+  computes an asynchronous reset tree.
+- Any attempt to treat reset assertion/deassertion as an ordinary
+  cross-domain data event.
+
+This reset model deliberately does not select legal CDC primitives, report
+metadata, or lowering artifact structure. Those remain owned by
+`ISF-CLOCK-DOMAINS.4` through `ISF-CLOCK-DOMAINS.6`.
 
 ## Decisions
 
@@ -166,6 +219,9 @@ crossing primitives, report metadata, or lowering artifacts. Those are owned by
   domains. Ports, storage, transactions, rules, and child instances may only
   reference domains declared by the actor; drives inherit the activation-site
   domain. This is not parser support yet.
+- `2026-05-15`: Future multi-domain resets are domain-owned. Synchronous
+  resets are sampled on the owning domain clock; asynchronous resets are direct
+  external reset pins and must not be generated or gated through ISF DT logic.
 
 ## Open Questions
 
@@ -179,9 +235,8 @@ crossing primitives, report metadata, or lowering artifacts. Those are owned by
 
 ## Blockers
 
-- No first CDC primitive has been selected. This blocks
-  `ISF-CLOCK-DOMAINS.4` but does not block the reset-ownership specification
-  leaf.
+- None for the current frontier. Selecting the first legal crossing primitive
+  is the purpose of `ISF-CLOCK-DOMAINS.4`.
 
 ## Verification Log
 
@@ -189,6 +244,7 @@ crossing primitives, report metadata, or lowering artifacts. Those are owned by
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.1` | `./bin/ci-regression quick`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CLOCK-DOMAINS.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -196,6 +252,7 @@ crossing primitives, report metadata, or lowering artifacts. Those are owned by
 | --- | --- | --- |
 | `ISF-CLOCK-DOMAINS.1` | `ISF-CLOCK-DOMAINS.1: capture multi-clock backlog` | Documents the shipped single-clock boundary and proposed multi-clock/CDC design tree. |
 | `ISF-CLOCK-DOMAINS.2` | `ISF-CLOCK-DOMAINS.2: specify domain source model` | Selects actor-scoped named domains as the future source model without shipping parser/lowering support. |
+| `ISF-CLOCK-DOMAINS.3` | `ISF-CLOCK-DOMAINS.3: specify domain reset ownership` | Selects per-domain reset ownership and forbids DT-generated asynchronous reset glue without shipping parser/lowering support. |
 
 ## Changelog
 
@@ -204,3 +261,6 @@ crossing primitives, report metadata, or lowering artifacts. Those are owned by
 - `2026-05-15`: Activated the tree and completed
   `ISF-CLOCK-DOMAINS.2`, selecting actor-scoped named domains as the future
   source model; current frontier advances to `ISF-CLOCK-DOMAINS.3`.
+- `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.3`, selecting per-domain reset
+  ownership for the future source model; current frontier advances to
+  `ISF-CLOCK-DOMAINS.4`.

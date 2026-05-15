@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: clock-domain resets are domain-owned
+- `ISF-CLOCK-DOMAINS.3` keeps reset ownership inside the future domain entries
+  instead of treating reset as a global actor afterthought. That gives each
+  domain a direct reset contract before lowering or reports are designed.
+- Synchronous resets are domain-clocked behavior. Asynchronous resets are
+  external reset pins for clocked state, not normal ISF data signals, so DT
+  logic must not synthesize arbitrary reset gating.
+- Shared reset names across domains are reset fanout only when kind and
+  polarity match. They do not create a synchronizer or legalize data crossings.
 ## 2026-05-15: clock domains start actor-scoped
 - `ISF-CLOCK-DOMAINS.2` selects actor-scoped named domains as the future source
   model because it keeps clock ownership explicit at the hardware-agent

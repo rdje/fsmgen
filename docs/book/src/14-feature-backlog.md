@@ -1016,8 +1016,6 @@ semantics.
 
 The future feature must still define at least:
 
-- reset ownership per domain, including synchronous resets and asynchronous
-  reset pins without arbitrary DT glue on async reset trees;
 - which crossings are legal, such as synchronized single-bit events,
   handshakes, request/acknowledge channels, or dual-clock FIFO-style actors;
 - which direct crossings fail closed;
@@ -1045,6 +1043,14 @@ inherit the default. Drives inherit the activation-site domain. Port and child
 domain annotations are ownership metadata, not CDC primitives, so direct
 cross-domain reads, writes, triggers, activations, or bindings still fail
 closed until a legal crossing primitive ships.
+
+Reset-ownership decision: future multi-domain source puts reset ownership
+inside each domain entry. Existing actor-level `(reset ...)` remains the
+single-domain shorthand, but it must not be mixed with `(clock-domains ...)`.
+Each domain owns zero or one reset. Synchronous resets are sampled on the
+owning domain clock; asynchronous resets are direct external reset pins, not
+DT-generated logic. Reusing one reset signal across domains is only legal when
+kind and polarity match exactly, and it is reset fanout rather than data CDC.
 
 ## Backends And Validation
 
