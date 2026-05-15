@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF transaction port activation bindings
+- Completed `ISF-PORT-BINDING.3` by adding scalar activation-time port
+  bindings for `do`, `spawn`, and rule-trigger input payloads.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so bindings are checked against declared transaction ports and known actor
+  signals, actor input writes and actor output readback fail closed, `do`
+  bindings lower in the parent await state, spawned bindings lower through
+  hidden generated-top handoff ports plus parent binding DTs, and rule trigger
+  input payloads use per-rule source signals before trigger fan-in.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm)
+  so spawned input binding handoffs are wired into generated tops.
+- Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so rule triggers accept the new optional `(bind ...)` shape.
+- Added
+  [t/1241-isf-transaction-port-bindings.t](t/1241-isf-transaction-port-bindings.t)
+  and refreshed adjacent rule/spawn diagnostics.
+- The active R14 frontier advances to `ISF-PORT-BINDING.4`.
 ### R14 — ISF transaction port declarations
 - Completed `ISF-PORT-BINDING.2` by adding parser support for
   transaction-local `(ports ...)` declarations.

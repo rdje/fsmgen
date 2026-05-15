@@ -1192,11 +1192,13 @@ sub _parse_rule_action($self, $action, $rule_name) {
         unless defined($keyword) && !ref($keyword) && length($keyword);
 
     if ($keyword eq 'trigger') {
-        confess "Error: rule '$rule_name' trigger requires '(trigger transaction)'\n"
-            unless @$action == 2
+        confess "Error: rule '$rule_name' trigger requires '(trigger transaction [(bind ...)])'\n"
+            unless (@$action == 2 || @$action == 3)
                 && defined($action->[1])
                 && !ref($action->[1])
                 && length($action->[1]);
+        $self->_parse_rule_trigger_bind($action->[2], $rule_name, $action->[1])
+            if @$action == 3;
         return 1;
     }
     if ($keyword eq 'priority') {
@@ -1232,6 +1234,32 @@ sub _parse_rule_action($self, $action, $rule_name) {
             && defined($action->[1]);
 
     $self->_validate_rule_assignment_expr($action->[1], $rule_name);
+
+    return 1;
+}
+
+sub _parse_rule_trigger_bind($self, $clause, $rule_name, $transaction_name) {
+    confess "Error: rule '$rule_name' trigger '$transaction_name' bind requires '(bind (input port signal) ...)'\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause >= 2
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'bind';
+
+    my %seen;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: rule '$rule_name' trigger '$transaction_name' bind entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 3;
+        my ($role, $port, $signal) = @$entry;
+        confess "Error: rule '$rule_name' trigger '$transaction_name' bind role must be input or output\n"
+            unless defined($role) && !ref($role) && ($role eq 'input' || $role eq 'output');
+        confess "Error: rule '$rule_name' trigger '$transaction_name' bind port must be a scalar HDL identifier\n"
+            unless _is_hdl_identifier($port);
+        confess "Error: rule '$rule_name' trigger '$transaction_name' bind signal must be a scalar HDL identifier\n"
+            unless _is_hdl_identifier($signal);
+        confess "Error: rule '$rule_name' trigger '$transaction_name' has duplicate binding for port '$port'\n"
+            if $seen{$port}++;
+    }
 
     return 1;
 }

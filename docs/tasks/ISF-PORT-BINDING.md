@@ -84,14 +84,20 @@ reviewable `.fsm` signals with conflict checks.
   Commit: `ISF-PORT-BINDING.2: parse transaction ports`
 
 - ID: `ISF-PORT-BINDING.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement explicit transaction port bindings at activation sites.`
   Acceptance: Supported transaction activations bind declared ports to actor
   variables, storage, or top-level pins with exact direction and width checks,
   lower to reviewable `.fsm` handoff signals, and fail closed for missing,
   duplicate, direction-mismatched, or width-mismatched bindings.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`;
+  `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm`;
+  `prove -I perl t/1241-isf-transaction-port-bindings.t`; adjacent
+  do/spawn/rule regression suite; focused public contract/CI-tier suite;
+  `./bin/ci-regression isf --no-book`; `mdbook build docs/book`;
+  `git diff --check`
+  Commit: `ISF-PORT-BINDING.3: lower transaction port bindings`
 
 - ID: `ISF-PORT-BINDING.4`
   Status: `pending`
@@ -117,7 +123,7 @@ reviewable `.fsm` signals with conflict checks.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PORT-BINDING.3` | `pending` | Transaction port declarations now parse; the next slice should implement explicit activation-site bindings and their lowering contract. |
+| 1 | `ISF-PORT-BINDING.4` | `pending` | Scalar activation bindings now lower; the next slice should integrate the remaining actor pin/conflict edge cases and decide the next conflict/report boundary. |
 
 ## Design Notes
 
@@ -130,10 +136,10 @@ reviewable `.fsm` signals with conflict checks.
 - Actor top-level input pins are readable observations. Actor top-level output
   pins are writable targets, subject to the same conflict model as other LHS
   signals.
-- Same-cycle visibility must be explicit. If a caller binds a variable to a
-  transaction input in the activation cycle, the specification must say whether
-  the transaction sees that value in the first active state or in a later
-  state, and which assignment operator family implements that behavior.
+- Same-cycle visibility for the first shipped binding surface is explicit:
+  input payloads are emitted in the same activation region as their
+  start/trigger handoff, and spawned child bindings use live generated-top
+  handoff wiring. A future snapshot-vs-live choice needs a separate spelling.
 - Rules that trigger transactions need a port-binding story before the model
   is fully ergonomic. Directly pulsing a transaction start input works for
   control-only transactions, but data-bearing activations need per-trigger
@@ -154,37 +160,36 @@ reviewable `.fsm` signals with conflict checks.
   same-cycle visibility, direction checking, width checking, binding lifetime,
   and conflict/report behavior.
 - `2026-05-15`: Shipped declaration syntax uses a transaction-local
-  `(ports ...)` clause. Candidate binding syntax uses activation-local
-  `(bind ...)` blocks on `(do ...)`, `(spawn ...)`, and `(trigger ...)`,
-  pending implementation validation.
-- `2026-05-15`: Same-cycle visibility remains the key binding implementation
-  decision. The binding implementation must choose live binding, activation
-  snapshot, or explicit author-selected timing before accepting activation
-  `(bind ...)` forms.
+  `(ports ...)` clause. Shipped binding syntax uses activation-local
+  `(bind ...)` blocks on `(do ...)`, `(spawn ...)`, and rule `(trigger ...)`;
+  rule triggers currently accept input bindings only.
+- `2026-05-15`: Same-cycle visibility for the shipped scalar bindings is
+  activation-region visibility for `do` and rule-trigger payloads, and live
+  generated-top handoff wiring for spawned child bindings.
 - `2026-05-15`: Transaction-local `(ports ...)` declarations are accepted by
   the parser as public actor-shell metadata only. Each transaction has one
   normalized `ports` hash with directional `inputs` and `outputs` arrays of
   `name`/`width` entries; the declaration is removed from scheduler body
   clauses until activation bindings and lowering ship.
+- `2026-05-15`: Scalar `do`, `spawn`, and rule-trigger input bindings now
+  lower to reviewable `.fsm`. `do` uses the parent await state, `spawn` uses
+  hidden generated-top handoff ports plus a parent binding DT, and rule
+  triggers use per-rule payload source signals before fan-in.
 
 ## Open Questions
 
-- Should data-bearing `(trigger transaction ...)` use inline bindings, a named
-  binding block, or a rule-local trigger object?
-- Should `(do child)` and `(spawn child as name)` share one binding syntax, or
-  should spawned-instance bindings be instance-scoped because the hardware
-  child persists?
-- What is the first safe same-cycle visibility rule for input bindings:
-  immediate D-side visibility, next-state Q-side visibility, or explicit
-  author selection?
+- Should rule-trigger output bindings remain unsupported, lower as completion
+  callbacks, or require a separate awaited rule/transaction composition form?
+- Should expression-valued input bindings gain an explicit `(width N)` option
+  or be modeled through named variables only?
 - Which report fields are useful enough to publish without freezing raw
   LoweringIR binding internals?
 
 ## Blockers
 
-- None for `ISF-PORT-BINDING.3`. Activation binding implementation still must
-  settle same-cycle visibility, missing/extra binding diagnostics, and
-  direction/width checks before accepting `(bind ...)` forms.
+- None for `ISF-PORT-BINDING.4`. Remaining edge cases are rule-trigger output
+  binding, expression-valued binding width contracts, and richer
+  conflict/report projection.
 
 ## Verification Log
 
@@ -193,6 +198,7 @@ reviewable `.fsm` signals with conflict checks.
 | `2026-05-15` | `ISF-PORT-BINDING` | `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PORT-BINDING.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PORT-BINDING.2` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1240-isf-transaction-port-declarations.t`; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PORT-BINDING.3` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm`; `prove -I perl t/1241-isf-transaction-port-bindings.t`; adjacent do/spawn/rule regression suite; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -201,6 +207,7 @@ reviewable `.fsm` signals with conflict checks.
 | `ISF-PORT-BINDING` | `R14: activate ISF port binding tree` | Task tree activation from transaction-port and actor-pin access discussion. |
 | `ISF-PORT-BINDING.1` | `ISF-PORT-BINDING.1: specify port binding contract` | Transaction port declaration/binding candidates, actor pin read/write policy, same-cycle visibility decision point, and conflict/report requirements. |
 | `ISF-PORT-BINDING.2` | `ISF-PORT-BINDING.2: parse transaction ports` | Parser-normalized transaction `(ports ...)` declarations with fail-closed diagnostics and public actor-shell contract coverage. |
+| `ISF-PORT-BINDING.3` | `ISF-PORT-BINDING.3: lower transaction port bindings` | Scalar activation bindings for `do`, `spawn`, and rule-trigger input payloads with generated handoff wiring and diagnostics. |
 
 ## Changelog
 
@@ -211,3 +218,6 @@ reviewable `.fsm` signals with conflict checks.
 - `2026-05-15`: Implemented parser support for transaction `(ports ...)`
   declarations as public actor-shell metadata, with malformed declaration
   diagnostics and regression coverage.
+- `2026-05-15`: Implemented scalar activation-time port bindings for `do`,
+  `spawn`, and rule-trigger input payloads, including generated-top handoffs,
+  per-rule payload fan-in, and malformed binding diagnostics.

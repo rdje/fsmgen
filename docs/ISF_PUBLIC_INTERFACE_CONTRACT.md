@@ -321,6 +321,12 @@ The transaction-port declaration boundary is checked by
 so parser-accepted `(ports ...)` clauses normalize to directional
 `name`/`width` entries and malformed direction, duplicate, width, or option
 forms fail before scheduler lowering.
+The first activation-binding lowering boundary is checked by
+[t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
+so scalar `do`, `spawn`, and rule-trigger input bindings are direction- and
+width-checked, actor inputs remain read-only, actor output readback is
+rejected, spawned bindings produce hidden generated-top handoffs, and rule
+trigger payloads use per-rule source signals before trigger fan-in.
 The transaction-name boundary is checked by
 [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 so duplicate transaction names fail before actor-shell return and downstream
@@ -1203,12 +1209,12 @@ These are not stable public interfaces yet:
 - The raw actor hash returned by the parser as a whole.
 - Actor fields beyond the advertised `actor_shell_required_keys`.
 - Raw library resolver state and raw exported library actor hashes.
-- Transaction port declarations beyond the parser-shell `ports.inputs[]` /
-  `ports.outputs[]` `name`/`width` metadata. Activation-time bindings and
-  actor output readback policy remain active design work under
-  `ISF-PORT-BINDING`; no machine-readable public binding/report key family is
-  advertised until lowering, diagnostics, report projection, and regressions
-  ship.
+- Transaction port behavior beyond parser-shell `ports.inputs[]` /
+  `ports.outputs[]` `name`/`width` metadata and the first scalar
+  activation-binding lowering for `do`, `spawn`, and rule-trigger input
+  bindings. Expression-valued bindings, rule-trigger output bindings, explicit
+  snapshot-vs-live timing selection, and report key families remain active
+  design work under `ISF-PORT-BINDING`.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

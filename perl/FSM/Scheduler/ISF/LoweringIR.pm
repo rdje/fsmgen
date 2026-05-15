@@ -49,6 +49,7 @@ sub build_module($self, $actor) {
     $self->_validate_child_transaction_refs($actor);
     my %spawned = $self->_collect_spawn_refs($actor);
     $self->_validate_transaction_parameter_clauses($actor, \%spawned);
+    $self->_validate_transaction_port_bindings($actor);
 
     my %child_irs;
     for my $cname (sort keys %spawned) {
@@ -88,7 +89,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     my %used_drives = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
     _register_drive_call_signal_widths($actor, $ctrs, \%used_drives, \%module_storage_roles);
 
-    my $ports = $self->_build_child_ports($actor, $states, $dts, \%used_drives);
+    my $ports = $self->_build_child_ports($actor, $tx, $states, $dts, \%used_drives);
 
     my $ir = {
         actor_name => $cname,
@@ -203,6 +204,64 @@ sub _build_parent_ir($self, $actor, $spawned) {
                 "Transaction '$tx->{name}': spawn instance '$s->{instance}' generated done handoff",
             );
             my $child_tx = $transaction_by_name{$s->{child}};
+            my @port_binding_assignments;
+            my @port_binding_metadata;
+            my %child_transaction_ports = _transaction_port_map($child_tx);
+            for my $binding (@{$s->{port_bindings} || []}) {
+                my $port = $child_transaction_ports{$binding->{port}};
+                next unless $port;
+                my $parent_port = "$s->{instance}_$binding->{port}";
+                if ($binding->{role} eq 'input') {
+                    _ensure_port(
+                        \@ports,
+                        $parent_port,
+                        'output',
+                        $port->{width},
+                        "Transaction '$tx->{name}': spawn instance '$s->{instance}' input binding '$binding->{port}' generated payload handoff",
+                    );
+                    push @port_binding_assignments, {
+                        lhs         => $parent_port,
+                        rhs         => $binding->{actor_signal},
+                        op          => '=',
+                        source_kind => 'spawn_input_binding',
+                    };
+                } else {
+                    _ensure_port(
+                        \@ports,
+                        $parent_port,
+                        'input',
+                        $port->{width},
+                        "Transaction '$tx->{name}': spawn instance '$s->{instance}' output binding '$binding->{port}' generated payload handoff",
+                    );
+                    push @port_binding_assignments, {
+                        lhs         => $binding->{actor_signal},
+                        rhs         => $parent_port,
+                        op          => '=',
+                        source_kind => 'spawn_output_binding',
+                    };
+                }
+                $ctrs{$parent_port} = $port->{width};
+                $storage_roles{$parent_port} = 'transaction_port_binding';
+                push @port_binding_metadata, {
+                    role         => $binding->{role},
+                    child_port   => $binding->{port},
+                    parent_port  => $parent_port,
+                    actor_signal => $binding->{actor_signal},
+                    width        => $port->{width},
+                };
+            }
+            if (@port_binding_assignments) {
+                push @dts, {
+                    name        => "$s->{instance}_port_bindings",
+                    kind        => 'spawn_port_binding',
+                    assignments => \@port_binding_assignments,
+                };
+            }
+            if (@port_binding_metadata) {
+                $s->{port_bindings} = \@port_binding_metadata;
+            } else {
+                delete $s->{port_bindings};
+            }
             my %child_drive_uses = _collect_named_drive_call_names($child_tx->{clauses}, $actor->{drives} || {});
             my @drive_handoffs;
             for my $drive_name (sort keys %child_drive_uses) {
@@ -358,6 +417,51 @@ sub _validate_transaction_parameter_clauses($self, $actor, $spawned) {
     return 1;
 }
 
+sub _validate_transaction_port_bindings($self, $actor) {
+    my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $tx_name = $tx->{name};
+        for my $clause (@{$tx->{clauses} || []}) {
+            next unless ref($clause) eq 'ARRAY' && @$clause;
+            my $keyword = $clause->[0];
+            next unless defined($keyword) && !ref($keyword);
+
+            if ($keyword eq 'do' || $keyword eq 'spawn') {
+                my $target = $clause->[1];
+                next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+                _validate_activation_bindings(
+                    $actor,
+                    $tx,
+                    $transaction_by_name{$target},
+                    _activation_bindings_from_clause($clause, $tx_name, 'transaction body'),
+                    "Transaction '$tx_name': $keyword target '$target'",
+                );
+            }
+        }
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        my $rule_name = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action;
+            next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
+            my $target = $action->[1];
+            next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+            _validate_activation_bindings(
+                $actor,
+                undef,
+                $transaction_by_name{$target},
+                _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
+                "Rule '$rule_name': trigger target '$target'",
+                { allow_outputs => 0 },
+            );
+        }
+    }
+
+    return 1;
+}
+
 sub _actor_param_declarations {
     my ($actor) = @_;
     return [] unless ref($actor) eq 'HASH';
@@ -477,7 +581,7 @@ sub _declared_storage_roles {
 }
 
 sub _build_child_ports {
-    my ($self, $actor, $states, $dts, $used_drives) = @_;
+    my ($self, $actor, $tx, $states, $dts, $used_drives) = @_;
 
     my %actor_output_width = map {
         $_->{name} => ($_->{width} // 1)
@@ -486,6 +590,10 @@ sub _build_child_ports {
     my @ports;
     my %seen;
     for my $input (@{$actor->{interface}{inputs} || []}) {
+        _push_port(\@ports, \%seen, $input->{name}, 'input', $input->{width} // 1);
+    }
+
+    for my $input (@{($tx->{ports} || {})->{inputs} || []}) {
         _push_port(\@ports, \%seen, $input->{name}, 'input', $input->{width} // 1);
     }
 
@@ -500,6 +608,10 @@ sub _build_child_ports {
 
     for my $name (sort keys %assigned_public_outputs) {
         _push_port(\@ports, \%seen, $name, 'output', $actor_output_width{$name});
+    }
+
+    for my $output (@{($tx->{ports} || {})->{outputs} || []}) {
+        _push_port(\@ports, \%seen, $output->{name}, 'output', $output->{width} // 1);
     }
 
     _push_port(\@ports, \%seen, 'start', 'input', 1);
@@ -612,6 +724,11 @@ sub _build_signal_width_map {
     for my $entry (@{$actor->{storage} || []}) {
         for my $signal (@{$entry->{signals} || []}) {
             $widths{$signal->{name}} = $signal->{width};
+        }
+    }
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
+            $widths{$port->{name}} = $port->{width} // 1;
         }
     }
     _collect_sample_widths($tx->{clauses}, \%widths);
@@ -839,6 +956,12 @@ sub _build_transaction($self, $tx, $actor, $txi) {
     my %contract_names;
     my %storage_roles;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
+
+    my %transaction_ports = _transaction_port_map($tx);
+    for my $port (values %transaction_ports) {
+        $ct{$port->{name}} = $port->{width} // 1;
+        $storage_roles{$port->{name}} = 'transaction_port';
+    }
 
     for my $cl (@{$tx->{clauses}}) {
         next unless ref($cl) eq 'ARRAY';
@@ -1206,16 +1329,17 @@ sub _validate_child_action_clause {
     my $keyword = $clause->[0];
 
     if ($keyword eq 'do') {
-        confess "Transaction '$tn': do requires '(do transaction)' in $label\n"
-            unless @$clause == 2
+        confess "Transaction '$tn': do requires '(do transaction [(bind ...)])' in $label\n"
+            unless (@$clause == 2 || @$clause == 3)
                 && defined($clause->[1])
                 && !ref($clause->[1])
                 && length($clause->[1]);
+        _activation_bindings_from_clause($clause, $tn, $label);
         return 1;
     }
 
-    confess "Transaction '$tn': spawn requires '(spawn transaction as instance [(params (NAME value) ...)])' in $label\n"
-        unless (@$clause == 4 || @$clause == 5)
+    confess "Transaction '$tn': spawn requires '(spawn transaction as instance [(params (NAME value) ...)] [(bind ...)])' in $label\n"
+        unless @$clause >= 4
             && defined($clause->[1])
             && !ref($clause->[1])
             && length($clause->[1])
@@ -1226,8 +1350,27 @@ sub _validate_child_action_clause {
             && !ref($clause->[3])
             && length($clause->[3]);
 
-    _parse_spawn_params_clause($clause->[4], $tn, $clause->[3], $label)
-        if @$clause == 5;
+    my %seen_subclause;
+    for my $subclause (@{$clause}[4 .. $#$clause]) {
+        confess "Transaction '$tn': spawn subclauses must be '(params ...)' or '(bind ...)' in $label\n"
+            unless ref($subclause) eq 'ARRAY'
+                && @$subclause
+                && defined($subclause->[0])
+                && !ref($subclause->[0])
+                && length($subclause->[0]);
+        my $head = $subclause->[0];
+        confess "Transaction '$tn': spawn has duplicate '$head' subclause in $label\n"
+            if $seen_subclause{$head}++;
+        if ($head eq 'params') {
+            _parse_spawn_params_clause($subclause, $tn, $clause->[3], $label);
+            next;
+        }
+        if ($head eq 'bind') {
+            _parse_activation_bind_clause($subclause, "Transaction '$tn': spawn instance '$clause->[3]'");
+            next;
+        }
+        confess "Transaction '$tn': spawn has unsupported '$head' subclause in $label\n";
+    }
 
     return 1;
 }
@@ -1288,17 +1431,28 @@ sub _transaction_param_declarations {
 sub _spawn_ref_from_clause {
     my ($clause, $tn) = @_;
     my $instance = $clause->[3] // "${tn}_spawn";
-    return {
+    my $ref = {
         child => $clause->[1],
         instance => $instance,
         parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body'),
     };
+    my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'transaction body');
+    $ref->{port_bindings} = $port_bindings if @$port_bindings;
+    return $ref;
 }
 
 sub _spawn_parameter_overrides {
     my ($clause, $tn, $label) = @_;
     return [] unless ref($clause) eq 'ARRAY' && @$clause >= 5;
-    return _parse_spawn_params_clause($clause->[4], $tn, $clause->[3], $label);
+    for my $subclause (@{$clause}[4 .. $#$clause]) {
+        next unless ref($subclause) eq 'ARRAY'
+            && @$subclause
+            && defined($subclause->[0])
+            && !ref($subclause->[0])
+            && $subclause->[0] eq 'params';
+        return _parse_spawn_params_clause($subclause, $tn, $clause->[3], $label);
+    }
+    return [];
 }
 
 sub _parse_spawn_params_clause {
@@ -1331,6 +1485,165 @@ sub _parse_spawn_params_clause {
     }
 
     return \@overrides;
+}
+
+sub _activation_bindings_from_clause {
+    my ($clause, $owner, $label) = @_;
+    return [] unless ref($clause) eq 'ARRAY' && @$clause;
+
+    my $keyword = $clause->[0];
+    my $start = $keyword eq 'spawn' ? 4 : 2;
+    return [] if $#$clause < $start;
+
+    my @bindings;
+    my $saw_bind;
+    for my $subclause (@{$clause}[$start .. $#$clause]) {
+        confess "Transaction '$owner': activation subclauses must be list forms in $label\n"
+            unless ref($subclause) eq 'ARRAY'
+                && @$subclause
+                && defined($subclause->[0])
+                && !ref($subclause->[0])
+                && length($subclause->[0]);
+        my $head = $subclause->[0];
+        next if $keyword eq 'spawn' && $head eq 'params';
+        confess "Transaction '$owner': activation has duplicate '(bind ...)' subclause in $label\n"
+            if $head eq 'bind' && $saw_bind++;
+        confess "Transaction '$owner': activation supports only '(bind ...)' subclauses in $label\n"
+            unless $head eq 'bind';
+        @bindings = @{_parse_activation_bind_clause($subclause, "Transaction '$owner': activation")};
+    }
+
+    return \@bindings;
+}
+
+sub _parse_activation_bind_clause {
+    my ($clause, $context) = @_;
+    confess "$context bind requires '(bind (input port signal) ...)'\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause >= 2
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'bind';
+
+    my @bindings;
+    my %seen;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "$context bind entries must be '(input port signal)' or '(output port signal)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 3;
+        my ($role, $port, $signal) = @$entry;
+        confess "$context bind role must be input or output\n"
+            unless defined($role) && !ref($role) && ($role eq 'input' || $role eq 'output');
+        confess "$context bind transaction port must be a scalar HDL identifier\n"
+            unless _is_hdl_identifier($port);
+        confess "$context bind actor signal must be a scalar HDL identifier\n"
+            unless _is_hdl_identifier($signal);
+        confess "$context has duplicate binding for transaction port '$port'\n"
+            if $seen{$port}++;
+        push @bindings, {
+            role        => $role,
+            port        => $port,
+            actor_signal => $signal,
+        };
+    }
+
+    return \@bindings;
+}
+
+sub _validate_activation_bindings {
+    my ($actor, $owner_tx, $target_tx, $bindings, $context, $options) = @_;
+    $options ||= {};
+    $bindings ||= [];
+
+    my %ports = _transaction_port_map($target_tx);
+    my @declared_ports = sort keys %ports;
+    confess "$context requires '(bind ...)' because transaction '$target_tx->{name}' declares ports\n"
+        if @declared_ports && !@$bindings;
+    confess "$context has '(bind ...)' but transaction '$target_tx->{name}' declares no ports\n"
+        if !@declared_ports && @$bindings;
+
+    my %seen;
+    for my $binding (@$bindings) {
+        my $port_name = $binding->{port};
+        confess "$context binds unknown transaction port '$port_name' on '$target_tx->{name}'\n"
+            unless exists $ports{$port_name};
+
+        my $port = $ports{$port_name};
+        confess "$context binding for port '$port_name' uses role '$binding->{role}' but the transaction declares '$port->{direction}'\n"
+            unless $binding->{role} eq $port->{direction};
+        confess "$context output binding for port '$port_name' is not supported on rule triggers yet\n"
+            if exists($options->{allow_outputs}) && !$options->{allow_outputs} && $binding->{role} eq 'output';
+        confess "$context has duplicate binding for transaction port '$port_name'\n"
+            if $seen{$port_name}++;
+
+        my $signal = $binding->{actor_signal};
+        my $info = _binding_signal_info($actor, $owner_tx, $signal);
+        confess "$context binding for port '$port_name' references unknown actor signal '$signal'\n"
+            unless $info;
+
+        if ($binding->{role} eq 'input') {
+            confess "$context input binding for port '$port_name' reads actor output '$signal', but actor output readback is not public\n"
+                if $info->{kind} eq 'actor_output';
+        } else {
+            confess "$context output binding for port '$port_name' targets actor input '$signal', but actor inputs are read-only\n"
+                if $info->{kind} eq 'actor_input';
+        }
+
+        my $port_width = $port->{width} // 1;
+        my $signal_width = $info->{width} // 1;
+        confess "$context binding for port '$port_name' width $port_width does not match actor signal '$signal' width $signal_width\n"
+            unless $port_width == $signal_width;
+    }
+
+    for my $port_name (@declared_ports) {
+        confess "$context does not bind transaction port '$port_name'\n"
+            unless $seen{$port_name};
+    }
+
+    return 1;
+}
+
+sub _transaction_port_map {
+    my ($tx) = @_;
+    my %ports;
+    for my $direction (qw(input output)) {
+        my $key = "${direction}s";
+        for my $port (@{($tx->{ports} || {})->{$key} || []}) {
+            $ports{$port->{name}} = {
+                name      => $port->{name},
+                direction => $direction,
+                width     => $port->{width} // 1,
+            };
+        }
+    }
+    return %ports;
+}
+
+sub _binding_signal_info {
+    my ($actor, $tx, $name) = @_;
+    return undef unless _is_hdl_identifier($name);
+
+    for my $input (@{$actor->{interface}{inputs} || []}) {
+        return { kind => 'actor_input', width => $input->{width} // 1 }
+            if $input->{name} eq $name;
+    }
+    for my $output (@{$actor->{interface}{outputs} || []}) {
+        return { kind => 'actor_output', width => $output->{width} // 1 }
+            if $output->{name} eq $name;
+    }
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            return { kind => 'actor_storage', width => $signal->{width} // 1 }
+                if $signal->{name} eq $name;
+        }
+    }
+
+    if ($tx) {
+        my $widths = _build_signal_width_map($actor, $tx);
+        return { kind => 'transaction_variable', width => $widths->{$name} }
+            if exists $widths->{$name};
+    }
+
+    return undef;
 }
 
 sub _is_hdl_identifier {
@@ -2016,8 +2329,59 @@ sub _unsigned_width_for_max {
     return $width;
 }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
-sub _ir_do       { my ($cl,$tn,$i)=@_; my $c=$cl->[1]; {name=>"${tn}_do_$i",kind=>'await',assignments=>[{lhs=>"${c}_start",rhs=>1,op=>'=',source_kind=>'do_start'}],transitions=>[],guard=>{port=>"${c}_done"}} }
-sub _ir_spawn    { my ($cl,$tn,$i)=@_; my $inst=$cl->[3]||"${tn}_$i"; {name=>"${tn}_spawn_$i",kind=>'sequential',assignments=>[{lhs=>"${inst}_start",rhs=>1,op=>'=',source_kind=>'spawn_start'}],transitions=>[]} }
+sub _ir_do {
+    my ($cl, $tn, $i) = @_;
+    my $c = $cl->[1];
+    my @bindings = @{_activation_bindings_from_clause($cl, $tn, 'transaction body')};
+    my @assignments = (
+        _activation_input_assignments(\@bindings, 'do_input_binding'),
+        { lhs => "${c}_start", rhs => 1, op => '=', source_kind => 'do_start' },
+        _activation_output_assignments(\@bindings, "${c}_done", 'do_output_binding'),
+    );
+    return {
+        name        => "${tn}_do_$i",
+        kind        => 'await',
+        assignments => \@assignments,
+        transitions => [],
+        guard       => { port => "${c}_done" },
+    };
+}
+
+sub _ir_spawn {
+    my ($cl, $tn, $i) = @_;
+    my $inst = $cl->[3] || "${tn}_$i";
+    return {
+        name        => "${tn}_spawn_$i",
+        kind        => 'sequential',
+        assignments => [{ lhs => "${inst}_start", rhs => 1, op => '=', source_kind => 'spawn_start' }],
+        transitions => [],
+    };
+}
+
+sub _activation_input_assignments {
+    my ($bindings, $source_kind) = @_;
+    return map {
+        +{
+            lhs         => $_->{port},
+            rhs         => $_->{actor_signal},
+            op          => '=',
+            source_kind => $source_kind,
+        }
+    } grep { $_->{role} eq 'input' } @$bindings;
+}
+
+sub _activation_output_assignments {
+    my ($bindings, $done, $source_kind) = @_;
+    return map {
+        +{
+            lhs         => $_->{actor_signal},
+            rhs         => $_->{port},
+            op          => '=',
+            guard       => { port => $done },
+            source_kind => $source_kind,
+        }
+    } grep { $_->{role} eq 'output' } @$bindings;
+}
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
 sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
@@ -3408,8 +3772,10 @@ sub _build_rules {
     my ($self, $actor, $ctrs, $bank_accesses) = @_;
     my @d;
     my %fanin_by_transaction;
+    my %payload_by_transaction;
     my %seen_fanin_source;
     my $widths = _build_signal_width_map($actor, { clauses => [] });
+    my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
 
     for my $r (@{$actor->{rules} || []}) {
         my $c = $self->_rule_cond($r->{when});
@@ -3426,6 +3792,25 @@ sub _build_rules {
                 push @a, { lhs => $source, rhs => 1, op => '<1', source_kind => 'rule_trigger_source' };
                 $ctrs->{$source} = 1 if $ctrs;
                 $ctrs->{"${target}_start"} = 1 if $ctrs;
+                my %target_ports = _transaction_port_map($transaction_by_name{$target});
+                for my $binding (@{_activation_bindings_from_clause($ac, $r->{name}, 'rule trigger')}) {
+                    next unless $binding->{role} eq 'input';
+                    my $payload = _rule_trigger_payload_source_name($r->{name}, $target, $binding->{port});
+                    my $width = ($target_ports{$binding->{port}} || {})->{width} // 1;
+                    push @a, {
+                        lhs         => $payload,
+                        rhs         => $binding->{actor_signal},
+                        op          => '<-',
+                        source_kind => 'rule_trigger_payload_source',
+                    };
+                    $ctrs->{$payload} = $width if $ctrs;
+                    $ctrs->{$binding->{port}} = $width if $ctrs;
+                    push @{$payload_by_transaction{$target}{$binding->{port}}}, {
+                        trigger_source => $source,
+                        payload_source => $payload,
+                        width          => $width,
+                    };
+                }
                 push @{$fanin_by_transaction{$target}}, $source
                     unless $seen_fanin_source{"$target\0$source"}++;
             } elsif ($a0 eq 'priority') {
@@ -3460,13 +3845,33 @@ sub _build_rules {
         push @d, {
             name        => "${target}_trigger_fanin",
             kind        => 'rule_trigger_fanin',
-            assignments => [{ lhs => "${target}_start", rhs => $rhs, op => '=', source_kind => 'rule_trigger_fanin' }],
+            assignments => [
+                { lhs => "${target}_start", rhs => $rhs, op => '=', source_kind => 'rule_trigger_fanin' },
+                _rule_trigger_payload_fanin_assignments($payload_by_transaction{$target} || {}),
+            ],
         };
     }
 
     return @d;
 }
 sub _rule_trigger_source_name { my ($rule, $target) = @_; "${rule}_${target}" }
+sub _rule_trigger_payload_source_name { my ($rule, $target, $port) = @_; "${rule}_${target}_${port}" }
+sub _rule_trigger_payload_fanin_assignments {
+    my ($by_port) = @_;
+    my @assignments;
+    for my $port (sort keys %$by_port) {
+        for my $source (@{$by_port->{$port} || []}) {
+            push @assignments, {
+                lhs         => $port,
+                rhs         => $source->{payload_source},
+                op          => '=',
+                guard       => { port => $source->{trigger_source} },
+                source_kind => 'rule_trigger_payload_fanin',
+            };
+        }
+    }
+    return @assignments;
+}
 sub _rule_cond {
     my ($self, $w) = @_;
     return { port => '1' } unless $w && ref($w) eq 'ARRAY' && @$w >= 2;

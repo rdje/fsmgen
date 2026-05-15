@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF activation-time port binding lowering
+- The first binding implementation is deliberately scalar-only. That keeps
+  width checking exact: every binding endpoint names a known actor input,
+  actor output, declared storage signal, or known transaction variable. List
+  expressions still need explicit width syntax before they can be signoff
+  quality binding sources.
+- Spawn bindings use hidden parent handoff ports rather than public top ports.
+  This keeps the generated composition top reviewable while preserving the
+  actor's public interface. Input handoffs are parent outputs wired to child
+  inputs; output handoffs are parent inputs wired from child outputs and then
+  copied by a parent DT.
+- Rule trigger payloads follow the existing fan-in model: each rule owns a
+  distinct trigger source and now a distinct payload source per bound input
+  port. The trigger fan-in DT routes payloads under the matching source guard,
+  so same-cycle collisions remain visible to the normal same-LHS conflict
+  machinery instead of being collapsed into an implicit merge.
+- Rule-trigger output binding stays deferred because a rule does not await a
+  transaction completion point. That needs a separate runtime contract rather
+  than pretending a rule action is a blocking call.
 ## 2026-05-15: ISF transaction port declaration parser
 - `(ports ...)` is parsed before scheduler validation so the public actor shell
   can expose transaction boundary intent without pretending binding semantics

@@ -4,9 +4,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue `R14` with
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md),
-  continuing at `ISF-PORT-BINDING.3` to implement explicit activation-site
-  port bindings and their lowering contract after parser-supported
-  transaction port declarations.
+  continuing at `ISF-PORT-BINDING.4` to integrate remaining actor pin/conflict
+  edge cases after scalar activation-time transaction port bindings.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -16,7 +15,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   by active, proposed, or completed task trees in
   [docs/TASK_TREE.md](docs/TASK_TREE.md). The first active feature tree is now
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
-  current frontier is `ISF-PORT-BINDING.3`. `ISF-LIBRARIES` is closed and
+  current frontier is `ISF-PORT-BINDING.4`. `ISF-LIBRARIES` is closed and
   listed in the completed table. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
   feature changes a public surface. The completed `ISF-LIBRARIES`,
@@ -230,6 +229,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ports.outputs[]` `name`/`width` entries, while declared-but-unbound ports
   remain parser metadata only and are removed from scheduler body clauses.
   The active frontier advances to `ISF-PORT-BINDING.3`.
+- `ISF-PORT-BINDING.3` is complete. Scalar activation-time `(bind ...)`
+  blocks now lower for `do`, `spawn`, and rule-trigger input payloads with
+  direction/width checks, actor input read-only enforcement, actor output
+  readback rejection, hidden generated-top handoffs for spawned children, and
+  per-rule payload source signals before trigger fan-in. Rule-trigger output
+  bindings and expression-valued bindings remain deferred. The active frontier
+  advances to `ISF-PORT-BINDING.4`.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4894,7 +4900,7 @@ Left:
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. The current first feature tree is
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md), whose
-  frontier is `ISF-PORT-BINDING.3`; keep `ISF-PUBLIC-CONTRACT`
+  frontier is `ISF-PORT-BINDING.4`; keep `ISF-PUBLIC-CONTRACT`
   cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather

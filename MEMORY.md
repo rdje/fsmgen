@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF transaction port activation bindings
+- Completed `ISF-PORT-BINDING.3` in
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).
+- Scalar activation-time `(bind ...)` blocks now lower for `(do ...)`,
+  `(spawn ...)`, and rule `(trigger ...)` input payloads. Bindings are
+  direction- and width-checked against declared transaction ports and known
+  actor signals.
+- `(do ...)` emits input bindings in the parent await state and output
+  bindings under the generated child-done guard. `(spawn ...)` emits hidden
+  generated-top handoff ports plus a parent binding DT. Rule triggers emit
+  per-rule payload source signals and route them through trigger fan-in.
+- Actor inputs remain read-only and actor output readback is rejected. Rule
+  trigger output bindings and expression-valued bindings remain deferred.
+- Added [t/1241-isf-transaction-port-bindings.t](t/1241-isf-transaction-port-bindings.t).
+- The next active R14 frontier is `ISF-PORT-BINDING.4`, actor pin/conflict
+  edge-case integration.
 ## 2026-05-15: ISF transaction port declarations
 - Completed `ISF-PORT-BINDING.2` in
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).

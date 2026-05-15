@@ -181,6 +181,11 @@ sub _emit_toplink_block {
             push @links, "/$name/$instance.$name/";
         }
 
+        for my $binding (@{$spawn->{port_bindings} || []}) {
+            next unless ($binding->{role} || '') eq 'input';
+            push @links, "/$actor_name.$binding->{parent_port}/$instance.$binding->{child_port}/";
+        }
+
         push @links, "/$actor_name.${instance}_start/$instance.start/";
         push @links, "/$instance.done/$actor_name.${instance}_done/";
 

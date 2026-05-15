@@ -355,8 +355,9 @@ becomes a support claim.
 
 ### Transaction Ports And Actor Pin Access
 
-Status: active task tree; transaction `(ports ...)` declarations are parsed,
-bindings/lowering remain backlog.
+Status: active task tree; transaction `(ports ...)` declarations and first
+scalar activation bindings are shipped, richer binding/report surfaces remain
+backlog.
 
 Goal: make it easy to connect actor variables, actor-owned storage, and actor
 top-level pins to transaction ports so rules and transactions can exchange
@@ -384,32 +385,37 @@ The parser accepts at most one `(ports ...)` clause per transaction. Each port
 has direction `input` or `output`, a scalar HDL identifier name, and optional
 positive integer `(width N)`; omitted width means 1. The normalized public
 transaction shell has `ports.inputs[]` and `ports.outputs[]` entries with
-`name` and `width`. The declaration is parser metadata only until binding
-lowering ships, so declared-but-unbound ports do not change scheduled `.fsm`
-or HDL behavior by themselves.
+`name` and `width`. The declaration is not a scheduler body clause; behavior
+comes from transaction states/rules that use the port and activation sites
+that bind it.
 
-Candidate binding shape:
+Shipped binding shape:
 
 ```lisp
-
 (do read_word
   (bind
     (input addr req_addr)
     (output data read_data)))
+
+(spawn read_word as r0
+  (bind
+    (input addr req_addr)
+    (output data read_data)))
+
+(trigger read_word
+  (bind
+    (input addr req_addr)))
 ```
 
-`spawn` and rule `trigger` need equivalent binding stories, but they have
-extra runtime constraints. A spawned child is static hardware that persists
-between activations, so bindings are instance-scoped. A rule trigger may be
-one of several same-cycle trigger sources for the same transaction, so
-payload fan-in must be proved compatible, priority/resource-mediated, or
-runtime-instrumented instead of silently merged.
-
-The specification leaf must decide same-cycle visibility before implementation:
-is a bound input a live wire, an activation-time snapshot, or an explicit
-author-selected timing choice? That decision controls whether the first active
-transaction state sees the caller's value immediately or one cycle later, and
-which `.fsm` assignment family is used in the lowering.
+The first binding surface is scalar-only and width-checked. `do` lowers input
+bindings in the state that starts the child and copies output bindings under
+the generated child-done guard. `spawn` lowers through hidden generated-top
+handoff ports and reviewable parent binding DTs. Rule `trigger` supports input
+bindings only; each rule owns a distinct payload source and the trigger fan-in
+DT routes payloads under the matching per-rule trigger pulse. Rule-trigger
+output bindings, expression-valued bindings, explicit snapshot-vs-live timing
+selection, schedule-report projection, and richer conflict diagnostics remain
+backlog.
 
 ### Temporal Contract Lowering
 

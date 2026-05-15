@@ -222,7 +222,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'multiple spawn parameter blocks', qr/spawn requires '\(spawn transaction as instance/);
+    assert_lower_rejected(<<'ISF', 'multiple spawn parameter blocks', qr/spawn has duplicate 'params' subclause/);
 (actor multiple_spawn_parameter_blocks
   (clock clk)
   (interface (input start) (output done))
@@ -269,7 +269,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'parameterized do remains unsupported', qr/do requires '\(do transaction\)'/);
+    assert_lower_rejected(<<'ISF', 'parameterized do remains unsupported', qr/activation supports only '\(bind \.\.\.\)' subclauses/);
 (actor parameterized_do
   (clock clk)
   (interface (input start) (output done))

@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF transaction port activation bindings
+- Active R14 task-tree slice: `ISF-PORT-BINDING.3` is complete.
+- Scalar `(bind ...)` blocks now lower for `do`, `spawn`, and rule-trigger
+  input payloads, with direction/width checks and actor input/output policy
+  enforcement.
+- Spawned bindings use hidden generated-top handoffs; rule-trigger input
+  bindings use per-rule payload sources before trigger fan-in.
+- The next active R14 frontier is `ISF-PORT-BINDING.4`, actor pin/conflict
+  edge-case integration.
+
 ## 2026-05-15: R14 — ISF transaction port declarations
 - Active R14 task-tree slice: `ISF-PORT-BINDING.2` is complete.
 - Transactions now parse a single `(ports ...)` declaration into public

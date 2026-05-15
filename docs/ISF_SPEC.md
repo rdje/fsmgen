@@ -692,17 +692,18 @@ activation guard. It may also appear later as inline branching.
 
 ### 7.1.1 Transaction Ports and Actor Pin Access
 
-Transaction port declarations are now accepted by the parser as public
-transaction-shell metadata. Activation-time bindings, actor pin access
-lowering, schedule-report projection, and HDL-visible handoff semantics are
+Transaction port declarations and the first activation-time scalar bindings
+are now accepted. Actor pin access is available through those bindings:
+actor inputs may be read, actor outputs may be written, and actor output
+readback is rejected. Schedule-report projection and broader binding shapes are
 still active design work under
 [docs/tasks/ISF-PORT-BINDING.md](tasks/ISF-PORT-BINDING.md).
 
 The public direction remains an ISF-level surface, not an author-facing escape
 hatch to low-level `.fsm` handoff wiring. A transaction declares directional
-data/control ports locally. Activation sites will later bind those ports to
-actor variables, actor-owned storage, or actor top-level pins with exact
-direction and width checks.
+data/control ports locally. Activation sites bind those ports to scalar actor
+variables, actor-owned storage, or actor top-level pins with exact direction
+and width checks.
 
 Shipped transaction declaration shape:
 
@@ -728,11 +729,12 @@ ports = {
 }
 ```
 
-The `(ports ...)` declaration is not forwarded as a scheduler body clause.
-Until binding/lowering ships, declared but unbound transaction ports have no
-scheduled `.fsm` or HDL behavior by themselves.
+The `(ports ...)` declaration is not forwarded as a scheduler body clause. A
+declaration by itself does not create behavior; behavior comes from transaction
+states/rules that read or write the port and from activation sites that bind
+the port.
 
-Candidate activation binding shapes:
+Shipped activation binding shapes:
 
 ```lisp
 (do read_word
@@ -747,16 +749,40 @@ Candidate activation binding shapes:
 
 (trigger read_word
   (bind
-    (input addr req_addr)
-    (output data read_data)))
+    (input addr req_addr)))
 ```
 
-Activation bindings are not accepted yet. The binding implementation must
-decide whether bindings are live wires, activation-time snapshots, or
-explicitly selectable. That same-cycle visibility rule is required before
-binding acceptance: a caller and a transaction must agree whether a value bound
-in an activation cycle is visible in the first active transaction state or in
-a later state.
+The first shipped binding surface is scalar-only. The right-hand endpoint in a
+transaction input binding and the target endpoint in a transaction output
+binding must be a scalar HDL identifier naming a known actor input, known actor
+output, declared storage signal, or known transaction variable in the caller's
+scope. Expression-valued bindings remain deferred until the syntax has an
+explicit width contract.
+
+`(do ...)` bindings lower into the scheduled parent `.fsm` state that starts
+and awaits the child transaction. Transaction input bindings are emitted before
+the generated `child_start`; output bindings copy the child output port to the
+bound actor signal under the generated `child_done` guard.
+
+`(spawn ...)` bindings lower through hidden generated-top handoff ports. Input
+bindings create a hidden parent output handoff and a visible child input port;
+output bindings create a hidden parent input handoff from the child output
+port and a reviewable parent DT assignment to the bound actor signal. The
+generated top wires those handoffs explicitly.
+
+Rule `(trigger ...)` bindings currently support transaction input ports only.
+Each triggering rule emits a distinct payload source signal per bound input
+port, and the generated trigger fan-in DT routes that payload into the
+transaction port under the matching per-rule trigger source. Multiple rule
+payloads for the same port therefore remain visible as guarded same-LHS
+assignments instead of being silently merged. Rule-trigger output bindings
+remain deferred because a rule does not await transaction completion.
+
+The same-cycle visibility rule for this first shipped surface is: input
+payloads are emitted in the same activation region as their start/trigger
+handoff, and spawned child bindings are live handoff wiring through the
+generated top. If authors need explicit snapshot-vs-live selection later, it
+must be added as a separate source spelling rather than changing this behavior.
 
 Actor top-level input pins are readable observations. ISF should not allow
 transactions or rules to write actor inputs. Actor top-level output pins are
@@ -1775,6 +1801,7 @@ Focused tests:
 - [t/1238-isf-fifo-library-hdl-generation.t](../t/1238-isf-fifo-library-hdl-generation.t)
 - [t/1239-isf-library-catalog-contract.t](../t/1239-isf-library-catalog-contract.t)
 - [t/1240-isf-transaction-port-declarations.t](../t/1240-isf-transaction-port-declarations.t)
+- [t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
 
 ## 12. Explicitly Deferred
 
@@ -1791,10 +1818,10 @@ Focused tests:
   positive-integer literal delay that advances after exactly `N` clock cycles
   without checking an external condition. Dynamic counts remain deferred until
   zero-count, width, reset, latency, and report semantics are specified.
-- Transaction activation-time bindings and actor top-level pin access. The
-  transaction `(ports ...)` declaration shell is parser-supported, but binding
-  lowering, same-cycle visibility, actor output readback policy, conflict
-  behavior, and report metadata remain under `ISF-PORT-BINDING`.
+- Transaction binding surfaces beyond scalar `do`, `spawn`, and rule-trigger
+  input bindings. Expression-valued bindings, rule-trigger output bindings,
+  explicit snapshot-vs-live timing selection, richer conflict diagnostics, and
+  report metadata remain under `ISF-PORT-BINDING`.
 - Transaction-local dynamic loops `(while cond body...)` and
   `(until cond body...)`. The proposed contract makes `while` a pre-test
   zero-or-more loop and `until` a body-first one-or-more loop. Conditions are
