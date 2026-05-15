@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LIBRARIES`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
 - Last updated: `2026-05-15`
@@ -48,7 +48,7 @@ reusable ISF design intent, not only scalar constants or types.
 ## Task Tree
 
 - ID: `ISF-LIBRARIES`
-  Status: `active`
+  Status: `done`
   Goal: `Specify and eventually implement reusable ISF libraries and imports.`
   Children: `ISF-LIBRARIES.1`, `ISF-LIBRARIES.2`, `ISF-LIBRARIES.3`,
   `ISF-LIBRARIES.4`, `ISF-LIBRARIES.5`
@@ -103,8 +103,8 @@ reusable ISF design intent, not only scalar constants or types.
   Children: `ISF-LIBRARIES.4.1`, `ISF-LIBRARIES.4.2`,
   `ISF-LIBRARIES.4.3`, `ISF-LIBRARIES.4.4`, `ISF-LIBRARIES.4.5`,
   `ISF-LIBRARIES.4.6`
-  Verification: `pending; see child leaves`
-  Commit: `pending; see child leaves`
+  Verification: `completed through child leaves`
+  Commit: `completed through child leaves`
 
 - ID: `ISF-LIBRARIES.4.1`
   Status: `done`
@@ -167,8 +167,8 @@ reusable ISF design intent, not only scalar constants or types.
   Children: `ISF-LIBRARIES.4.4.1`, `ISF-LIBRARIES.4.4.2`,
   `ISF-LIBRARIES.4.4.3`, `ISF-LIBRARIES.4.4.4`,
   `ISF-LIBRARIES.4.4.5`
-  Verification: `pending; see child leaves`
-  Commit: `pending; see child leaves`
+  Verification: `completed through child leaves`
+  Commit: `completed through child leaves`
 
 - ID: `ISF-LIBRARIES.4.4.1`
   Status: `done`
@@ -287,19 +287,28 @@ reusable ISF design intent, not only scalar constants or types.
   Commit: `ISF-LIBRARIES.4.6: prove FIFO library HDL`
 
 - ID: `ISF-LIBRARIES.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Synchronize public contract, docs, and library catalog metadata.`
   Acceptance: `The public contract advertises the shipped library/import
   surface and the library catalog lists shipped reusable definitions with
   status, parameters, tests, and limitations.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c
+  perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `prove -I perl t/1239-isf-library-catalog-contract.t`;
+  `prove -I perl t/1112-isf-public-interface-contract.t
+  t/1120-isf-public-live-document-path-audit.t
+  t/1131-isf-public-top-level-discovery-audit.t
+  t/1142-isf-public-guidance-metadata-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1183-ci-regression-tier-selection.t
+  t/1239-isf-library-catalog-contract.t`
+  Commit: `ISF-LIBRARIES.5: sync library catalog contract`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-LIBRARIES.5` | `pending` | The reusable FIFO library fixture now parses, lowers, reports, and reaches generated-top HDL; the next slice should synchronize public library catalog and contract metadata for the shipped reusable definition. |
+| 1 | `closed` | `done` | All ISF-LIBRARIES leaves are complete; select the next R14 feature tree before continuing feature work. |
 
 ## Design Notes
 
@@ -787,6 +796,10 @@ Remaining boundary:
 - `2026-05-15`: Prove the reusable FIFO fixture through generated-top
   SystemVerilog and fix AST factorization structural identity so `CoreAST`
   signal references keep their concrete signal names.
+- `2026-05-15`: Ship the first reusable-library catalog surface as both human
+  catalog and machine-readable public-contract discovery metadata. The bounded
+  contract advertises catalog paths, entry keys, and the shipped
+  `common.fifo.fifo` definition; raw resolver internals remain private.
 
 ## Open Questions
 
@@ -794,9 +807,6 @@ Remaining boundary:
   ship?
 - What is the first bounded public shape for reusable transaction templates
   outside a reusable actor, if any?
-- Which library catalog metadata should be machine-readable at first ship:
-  source path, exported definitions, parameter schemas, tests, limitations, or
-  all of those?
 - Should scalar assignment syntax converge on `(set lhs expr)` across rules
   and transactions, with `(lhs expr)` retained as rule shorthand and existing
   transaction `(update lhs expr)` retained as an alias while the ISF source API
@@ -831,6 +841,7 @@ Remaining boundary:
 | `2026-05-15` | `ISF-LIBRARIES.4.4.5` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -I perl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1236-isf-bank-access-lowering.t`; `prove -I perl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1232-isf-actor-storage-declarations.t t/1235-isf-fifo-same-cycle-update-matrix.t t/1236-isf-bank-access-lowering.t` | `passed; focused 7 files, 16 tests` |
 | `2026-05-15` | `ISF-LIBRARIES.4.5` | `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1237-isf-fifo-library-fixture.t`; `prove -I perl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1237-isf-fifo-library-fixture.t`; `./bin/fsmgen --emit-schedule-json isf/fifo_library_use.isf`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 145 files, 485 tests` |
 | `2026-05-15` | `ISF-LIBRARIES.4.6` | `perl -I perl -c perl/FSM/HDL/ASTFactorization.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1238-isf-fifo-library-hdl-generation.t`; `prove -I perl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1238-isf-fifo-library-hdl-generation.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 3 files, 9 tests; ISF tier 146 files, 487 tests` |
+| `2026-05-15` | `ISF-LIBRARIES.5` | `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1239-isf-library-catalog-contract.t`; `prove -I perl t/1112-isf-public-interface-contract.t t/1120-isf-public-live-document-path-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1239-isf-library-catalog-contract.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed; focused 7 files, 24 tests; ISF tier 147 files, 490 tests` |
 
 ## Commit Log
 
@@ -850,6 +861,7 @@ Remaining boundary:
 | `ISF-LIBRARIES.4.4.5` | `ISF-LIBRARIES.4.4.5: implement bank access` | Implemented rule/transaction store/load bank access, bounded `bank_accesses` report metadata, fail-closed diagnostics, and depth-4 FIFO data-path HDL reachability. |
 | `ISF-LIBRARIES.4.5` | `ISF-LIBRARIES.4.5: add FIFO library fixture` | Added the fixed-shape importable FIFO actor library source, top-level use fixture, and focused import/lowering/report regression. |
 | `ISF-LIBRARIES.4.6` | `ISF-LIBRARIES.4.6: prove FIFO library HDL` | Proved generated-top SystemVerilog for the fixed FIFO library fixture and fixed CoreAST signal identity in AST factorization. |
+| `ISF-LIBRARIES.5` | `ISF-LIBRARIES.5: sync library catalog contract` | Added the human catalog, public contract discovery metadata, and focused catalog-contract regression for shipped reusable definitions. |
 
 ## Changelog
 
@@ -891,3 +903,7 @@ Remaining boundary:
 - `2026-05-15`: Proved the FIFO library fixture through generated-top
   SystemVerilog and fixed AST factorization structural identity so `CoreAST`
   signal references keep distinct concrete names.
+- `2026-05-15`: Completed the ISF library tree by adding
+  [docs/ISF_LIBRARY_CATALOG.md](../ISF_LIBRARY_CATALOG.md), advertising
+  catalog paths, entry keys, and shipped reusable definitions through the ISF
+  public contract, and adding focused catalog-contract coverage.

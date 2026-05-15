@@ -719,9 +719,11 @@ proof for same-target FIFO-style rule writes is shipped for direct
 contradictory guard facts, such as one case requiring
 `(== occupancy 1)` while another requires `(== occupancy 2)`. Same-cycle
 two-port controller semantics are now proven on actor-owned state, and the
-fixed reusable FIFO fixture reaches generated-top SystemVerilog. The remaining
-library work should synchronize public catalog/contract metadata for shipped
-reusable definitions.
+fixed reusable FIFO fixture reaches generated-top SystemVerilog. Public
+catalog/contract metadata is synchronized through
+[docs/ISF_LIBRARY_CATALOG.md](../../ISF_LIBRARY_CATALOG.md),
+`library_catalog_paths`, `library_catalog_entry_keys`, and
+`shipped_library_definitions`.
 
 ## Backends And Validation
 

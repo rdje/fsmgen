@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF library catalog contract synchronization
+- Completed `ISF-LIBRARIES.5` in
+  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), closing the
+  `ISF-LIBRARIES` task tree.
+- Added [docs/ISF_LIBRARY_CATALOG.md](docs/ISF_LIBRARY_CATALOG.md), the live
+  catalog of shipped reusable ISF definitions. The first shipped entry is
+  `common.fifo.fifo`, with source fixture, import fixture, fixed parameters,
+  interface, internal storage, runtime semantics, tests, and limitations.
+- The machine-readable ISF public contract now advertises
+  `library_catalog_paths`, `library_catalog_entry_keys`, and
+  `shipped_library_definitions`, and includes the catalog in
+  `live_document_paths`.
+- Added
+  [t/1239-isf-library-catalog-contract.t](t/1239-isf-library-catalog-contract.t)
+  to keep the human catalog and contract metadata synchronized for shipped
+  reusable definitions.
+- The next R14 step should select or activate the next user-visible feature
+  tree. Standalone public-interface stabilization remains on hold except for
+  feature-driven contract synchronization.
 ## 2026-05-15: ISF FIFO library HDL proof and factorization fix
 - Completed `ISF-LIBRARIES.4.6` in
   [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md).

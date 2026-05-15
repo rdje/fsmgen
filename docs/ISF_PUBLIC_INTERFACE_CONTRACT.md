@@ -169,6 +169,11 @@ Generated-top SystemVerilog for that FIFO fixture is checked by
 for FIFO child parameter bindings, scalarized data entries, pointer-gated
 accepted push/pop selectors, and AST factorization preserving distinct
 `CoreAST` signal identities.
+The reusable-library catalog contract is checked by
+[t/1239-isf-library-catalog-contract.t](../t/1239-isf-library-catalog-contract.t)
+so the machine-readable public contract advertises
+[docs/ISF_LIBRARY_CATALOG.md](ISF_LIBRARY_CATALOG.md), the shipped catalog
+entry key family, and the current shipped reusable definition list.
 The transaction-summary metadata is checked by
 [t/1149-isf-public-transaction-metadata-audit.t](../t/1149-isf-public-transaction-metadata-audit.t)
 to keep transaction `states` and `count` shapes exact across direct and
@@ -618,6 +623,12 @@ current bounded contract: facade pairs are public, raw internals are not, and
 human contract documents must evolve with public ISF changes.
 The `tested_by` list is exact audit-provenance metadata for this ISF contract
 owner; every path must stay repo-relative and present on disk.
+The `library_catalog_paths`, `library_catalog_entry_keys`, and
+`shipped_library_definitions` fields are live discovery metadata for reusable
+ISF libraries. They advertise where downstream consumers can find the human
+catalog, which fields each catalog entry carries, and which reusable
+definitions are shipped in this repository today. They do not expose the raw
+library resolver state or freeze future library kinds.
 
 Supported ISF syntax remains a live surface. For `(switch signal ...)`, explicit
 case values remain unique branch selectors, and one fallback branch may be
@@ -647,6 +658,13 @@ lowered for HDL: bound library inputs/outputs link directly between top ports
 and the library child instance. Same-name clock/reset bindings use the existing
 composition system-port auto-wiring path; clock/reset name remapping is
 currently fail-closed.
+The current shipped reusable library catalog contains `common.fifo.fifo` with
+source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
+[isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters
+`DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`, the public FIFO
+interface, actor-owned storage, runtime semantics, tests, and limitations.
+The same information is mirrored in `shipped_library_definitions` for
+machine-readable discovery.
 
 Supported CLI entrypoints:
 
@@ -956,6 +974,7 @@ inferred_storage
 transactions
 transaction_stages
 temporal_contracts
+bank_accesses
 dt_blocks
 generated_composition
 library_uses

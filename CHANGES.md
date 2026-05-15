@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF library catalog contract synchronization
+- Completed `ISF-LIBRARIES.5` and closed the `ISF-LIBRARIES` task tree.
+- Added [docs/ISF_LIBRARY_CATALOG.md](docs/ISF_LIBRARY_CATALOG.md), the live
+  shipped reusable-definition catalog. The first cataloged definition is
+  `common.fifo.fifo`, with status, source, import fixture, parameters,
+  interface, storage, runtime semantics, tests, and limitations.
+- Extended
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  with `library_catalog_paths`, `library_catalog_entry_keys`, and
+  `shipped_library_definitions` discovery metadata, plus the catalog path in
+  `live_document_paths`.
+- Added
+  [t/1239-isf-library-catalog-contract.t](t/1239-isf-library-catalog-contract.t)
+  and updated the exact ISF public-contract metadata audits and ISF tier
+  selection audit.
+- The active R14 PNT decision returns to selecting the next user-visible ISF
+  feature tree; standalone public-interface stabilization remains on hold
+  except for feature-driven synchronization.
 ### R14 — ISF FIFO library HDL proof
 - Completed `ISF-LIBRARIES.4.6` by proving the fixed FIFO library fixture
   through CLI generated-top SystemVerilog.

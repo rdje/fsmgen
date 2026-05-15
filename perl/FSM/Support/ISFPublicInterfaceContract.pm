@@ -35,6 +35,8 @@ our @EXPORT_OK = qw(
     isf_public_interface_facade_failure_diagnostic_shape
     isf_public_interface_backlog_resource_kind_values
     isf_public_interface_enforced_resource_kind_values
+    isf_public_interface_library_catalog_entry_keys
+    isf_public_interface_library_catalog_paths
     isf_public_interface_live_document_paths
     isf_public_interface_lower_return_shape
     isf_public_interface_lower_result_file_name_shape
@@ -106,6 +108,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_transaction_states_shape
     isf_public_interface_schedule_report_transaction_keys
     isf_public_interface_schedule_report_watchdog_shape
+    isf_public_interface_shipped_library_definitions
     isf_public_interface_report_return_shape
     isf_public_interface_schedule_report_dt_keys
     isf_public_interface_scheduler_method_names
@@ -153,6 +156,9 @@ sub build_isf_public_interface_contract {
         resource_kind_meaning_map => isf_public_interface_resource_kind_meaning_map(),
         enforced_resource_kind_values => isf_public_interface_enforced_resource_kind_values(),
         backlog_resource_kind_values => isf_public_interface_backlog_resource_kind_values(),
+        library_catalog_paths => isf_public_interface_library_catalog_paths(),
+        library_catalog_entry_keys => isf_public_interface_library_catalog_entry_keys(),
+        shipped_library_definitions => isf_public_interface_shipped_library_definitions(),
         cli_schedule_json_success_shape => isf_public_interface_cli_schedule_json_success_shape(),
         cli_outdir_success_shape => isf_public_interface_cli_outdir_success_shape(),
         cli_hdl_generation_success_shape => isf_public_interface_cli_hdl_generation_success_shape(),
@@ -376,12 +382,14 @@ sub build_isf_public_interface_contract {
             't/1236-isf-bank-access-lowering.t',
             't/1237-isf-fifo-library-fixture.t',
             't/1238-isf-fifo-library-hdl-generation.t',
+            't/1239-isf-library-catalog-contract.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
             'Treat the contract as live: exact metadata audits describe the current advertised surface, not a promise that ISF or the schedule-report schema is frozen.',
             'The public in-process seam is the parser/scheduler facade pair, not the raw parser AST or LoweringIR internals.',
             'The lower(...) result currently advertises the files map as scheduled module, specialized library-child module, and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
+            'The library catalog path list and shipped_library_definitions entries are live discovery metadata for reusable ISF definitions; add or change entries only with source, limitations, and tests updated together.',
             'The schedule report currently advertises only the named top-level and summary key families; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
             'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',
         ],
@@ -407,6 +415,9 @@ sub isf_public_interface_public_top_level_keys {
             resource_kind_meaning_map
             enforced_resource_kind_values
             backlog_resource_kind_values
+            library_catalog_paths
+            library_catalog_entry_keys
+            shipped_library_definitions
             cli_schedule_json_success_shape
             cli_outdir_success_shape
             cli_hdl_generation_success_shape
@@ -533,6 +544,91 @@ sub isf_public_interface_enforced_resource_kind_values {
 
 sub isf_public_interface_backlog_resource_kind_values {
     return isf_backlog_resource_kind_values();
+}
+
+sub isf_public_interface_library_catalog_paths {
+    return [
+        qw(
+            docs/ISF_LIBRARY_CATALOG.md
+        ),
+    ];
+}
+
+sub isf_public_interface_library_catalog_entry_keys {
+    return [
+        qw(
+            qualified_name
+            library
+            export
+            kind
+            status
+            source
+            import_fixture
+            parameters
+            interface
+            storage
+            semantics
+            tests
+            limitations
+        ),
+    ];
+}
+
+sub isf_public_interface_shipped_library_definitions {
+    return [
+        {
+            qualified_name => 'common.fifo.fifo',
+            library => 'common.fifo',
+            export => 'fifo',
+            kind => 'actor',
+            status => 'shipped',
+            source => 'isf/common/fifo.isf',
+            import_fixture => 'isf/fifo_library_use.isf',
+            parameters => [
+                { name => 'DATA_WIDTH', value => '8' },
+                { name => 'DEPTH', value => '4' },
+                { name => 'PTR_WIDTH', value => '2' },
+                { name => 'OCC_WIDTH', value => '3' },
+            ],
+            interface => {
+                inputs => [
+                    { name => 'write_req', width => 1 },
+                    { name => 'data_in', width => 8 },
+                    { name => 'read_req', width => 1 },
+                ],
+                outputs => [
+                    { name => 'full', width => 1 },
+                    { name => 'empty', width => 1 },
+                    { name => 'data_out', width => 8 },
+                ],
+            },
+            storage => [
+                { name => 'wr_ptr', kind => 'state', width => 2 },
+                { name => 'rd_ptr', kind => 'state', width => 2 },
+                { name => 'occupancy', kind => 'state', width => 3 },
+                { name => 'data', kind => 'bank', width => 8, depth => 4 },
+            ],
+            semantics => [
+                'actor-maintained full and empty flags',
+                'idle, push-only, pop-only, and push-plus-pop request cases',
+                'depth-4 pointer wrap for wr_ptr and rd_ptr',
+                'read-before-write same-cycle bank access policy',
+            ],
+            tests => [
+                't/1237-isf-fifo-library-fixture.t',
+                't/1238-isf-fifo-library-hdl-generation.t',
+            ],
+            limitations => [
+                'fixed-shape DATA_WIDTH=8 DEPTH=4 fixture',
+                'no parameter-driven interface or storage elaboration yet',
+                'no memory-array backend emission yet',
+                'no automatic non-zero reset values yet',
+                'no standalone transaction or drive library exports yet',
+                'no nested library imports from library actors yet',
+                'no clock/reset name remapping at use sites yet',
+            ],
+        },
+    ];
 }
 
 sub isf_public_interface_parser_method_names {
@@ -1252,6 +1348,7 @@ sub isf_public_interface_live_document_paths {
         qw(
             docs/ISF_PUBLIC_INTERFACE_CONTRACT.md
             docs/ISF_SPEC.md
+            docs/ISF_LIBRARY_CATALOG.md
             docs/book/src/13-intent-scheduling.md
         ),
     ];

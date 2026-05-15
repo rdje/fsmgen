@@ -242,6 +242,11 @@ Deprecated compatibility:
 Reusable ISF libraries are source-intent roots for tested reusable design
 descriptions. They are not textual includes. Imported definitions still lower
 through scheduled `.fsm` review artifacts before any HDL backend sees them.
+The shipped reusable-definition catalog lives in
+[docs/ISF_LIBRARY_CATALOG.md](ISF_LIBRARY_CATALOG.md). The machine-readable
+ISF public contract advertises that path, the catalog entry key family, and
+the current shipped definitions through `library_catalog_paths`,
+`library_catalog_entry_keys`, and `shipped_library_definitions`.
 
 The first shipped library root shape is:
 
@@ -335,7 +340,7 @@ with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `library_name`, `parent_name`, and `width`; clock/reset bindings use JSON null
 for `library_name`, and reset/clock width is `1`.
 
-Current boundary: `ISF-LIBRARIES.4.5` resolves reusable actors, validates
+Current boundary: `ISF-LIBRARIES.5` resolves reusable actors, validates
 parameters and bindings, emits child scheduled `.fsm` artifacts, wires library
 actor instances into generated tops for same-name system ports, reaches
 SystemVerilog generation for the covered generated-top path, reports bounded
@@ -355,6 +360,11 @@ as the file-backed import/use fixture. That fixture reaches generated-top
 SystemVerilog through the CLI and checks the specialized FIFO child parameter
 bindings, scalarized data entries, pointer-gated accepted push/pop selectors,
 and generated top wiring.
+The public catalog/contract synchronization slice is shipped as
+`ISF-LIBRARIES.5`: [docs/ISF_LIBRARY_CATALOG.md](ISF_LIBRARY_CATALOG.md)
+lists the shipped reusable definition with status, parameters, interface,
+storage, semantics, tests, and limitations, and the machine-readable public
+contract mirrors the bounded discovery metadata.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
@@ -1679,13 +1689,14 @@ Focused tests:
 - [t/1236-isf-bank-access-lowering.t](../t/1236-isf-bank-access-lowering.t)
 - [t/1237-isf-fifo-library-fixture.t](../t/1237-isf-fifo-library-fixture.t)
 - [t/1238-isf-fifo-library-hdl-generation.t](../t/1238-isf-fifo-library-hdl-generation.t)
+- [t/1239-isf-library-catalog-contract.t](../t/1239-isf-library-catalog-contract.t)
 
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
   same-name generated-top, actor-owned fixed-storage, and expression-valued
   rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO
-  library fixture slices:
+  library fixture/catalog slices:
   standalone transaction/drive exports,
   symbolic constants, derived parameter expressions,
   parameter-derived storage dimensions, clock/reset name remapping,

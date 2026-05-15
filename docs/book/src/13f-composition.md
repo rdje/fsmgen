@@ -188,6 +188,75 @@ The `--outdir DIR` flag writes all generated `.fsm` files:
 # If --output is also provided, HDL generation uses spawn_parent_top.fsm.
 ```
 
+## Reusable ISF Libraries
+
+ISF libraries are reusable source-intent roots. They are not textual includes:
+an imported definition still lowers to scheduled `.fsm` review artifacts before
+HDL generation.
+
+The first shipped root shape is:
+
+```lisp
+(library common.fifo
+  (exports
+    (actor fifo))
+
+  (actor fifo
+    ... reusable actor body ...))
+```
+
+Actor roots import libraries with `(imports (library name as alias) ...)` and
+instantiate exported actors with `(use alias.actor as instance ...)`. Use-site
+parameter overrides are instance-local, and bindings are explicit:
+
+```lisp
+(actor fifo_library_use
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input write_req)
+    (input data_in (width 8))
+    (input read_req)
+    (output full)
+    (output empty)
+    (output data_out (width 8)))
+  (imports
+    (library common.fifo as fifo_lib))
+  (use fifo_lib.fifo as u_fifo
+    (params
+      (DATA_WIDTH 8)
+      (DEPTH 4)
+      (PTR_WIDTH 2)
+      (OCC_WIDTH 3))
+    (bind
+      (clock clk)
+      (reset rst_n)
+      (input write_req write_req)
+      (input data_in data_in)
+      (input read_req read_req)
+      (output full full)
+      (output empty empty)
+      (output data_out data_out))))
+```
+
+The first shipped reusable definition is
+[isf/common/fifo.isf](../../isf/common/fifo.isf), exported as
+`common.fifo.fifo`, with
+[isf/fifo_library_use.isf](../../isf/fifo_library_use.isf) as the file-backed
+import/use fixture. It is a fixed-shape `DATA_WIDTH=8`, `DEPTH=4`,
+`PTR_WIDTH=2`, `OCC_WIDTH=3` FIFO actor. The actor owns write and read
+pointers, occupancy, full/empty flags, and a four-entry data bank. It models
+idle, push-only, pop-only, and push-plus-pop cases every cycle, with
+read-before-write bank semantics for same-cycle store/load.
+
+The shipped catalog is
+[docs/ISF_LIBRARY_CATALOG.md](../../ISF_LIBRARY_CATALOG.md). The public ISF
+contract advertises the catalog through `library_catalog_paths`, the bounded
+entry fields through `library_catalog_entry_keys`, and the current shipped
+entries through `shipped_library_definitions`. Parameter-driven interface or
+storage elaboration, memory-array backend emission, standalone transaction or
+drive exports, and nested library imports remain future work.
+
 ## Schedule Report Projection
 
 The generated-composition schedule-report projection is a live bounded

@@ -40,16 +40,17 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 14. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
 15. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
 16. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
-17. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
-18. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
-19. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
-20. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-21. `CHANGES.md`: chronological technical changes.
-22. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-23. `MEMORY.md`: continuity/handoff state.
-24. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-25. `WARP.md`: repository-specific agent/development guidance.
-26. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+17. `docs/ISF_LIBRARY_CATALOG.md`: live catalog of shipped reusable ISF library definitions.
+18. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
+19. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
+20. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
+21. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+22. `CHANGES.md`: chronological technical changes.
+23. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+24. `MEMORY.md`: continuity/handoff state.
+25. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+26. `WARP.md`: repository-specific agent/development guidance.
+27. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -83,6 +84,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
 - `docs/ISF_SPEC.md` — active R14 `.isf` Intent Scheduling Format specification.
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` — live downstream-consumer API contract for ISF parser/scheduler surfaces.
+- `docs/ISF_LIBRARY_CATALOG.md` — live catalog of shipped reusable ISF library definitions.
 - `docs/REGRESSION_CORPUS.md` — human-readable companion to the machine-checked support and regression catalog.
 - `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md` — AXI intent-capture case-study notes for future high-level synthesis work.
 - `docs/FEATURE_BACKLOG.md` — repo-level pointer to the canonical mdBook backlog for deferred/not-fully-shipped user-visible features.

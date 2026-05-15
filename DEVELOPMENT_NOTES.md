@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF library catalog contract synchronization
+- The reusable-library catalog is intentionally both human-readable and
+  machine-discoverable. Human readers need source paths, semantics, tests, and
+  limitations in one place; downstream tools need bounded metadata without
+  traversing parser or resolver internals.
+- The public contract exposes a small catalog surface:
+  `library_catalog_paths`, `library_catalog_entry_keys`, and
+  `shipped_library_definitions`. That is enough to discover shipped reusable
+  definitions while keeping raw library root hashes, resolver cache state, and
+  unspecialized actor internals private.
+- `common.fifo.fifo` is marked shipped only because source, import fixture,
+  schedule-report provenance, generated-top SystemVerilog, and public
+  limitations are all regression-backed. Future library entries should meet
+  the same standard before appearing in `shipped_library_definitions`.
+- The catalog records limitations beside parameters and tests because current
+  FIFO parameters are fixed-shape provenance, not generic elaboration knobs.
+  This prevents downstream users from reading `DEPTH=4` as support for
+  arbitrary-depth FIFO specialization.
 ## 2026-05-15: ISF FIFO library HDL proof and AST factorization identity
 - The FIFO library HDL proof intentionally checks generated SystemVerilog, not
   only scheduled `.fsm`, because this is the point where expression

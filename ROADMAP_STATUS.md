@@ -2,20 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Next decision point: continue `R14` by selecting the next user-visible ISF
-  feature from the documented limitation/backlog set. Standalone public
-  interface stabilization/audit work is on hold for now; keep the public
-  contract synchronized only as part of shipping each feature.
+- Next decision point: continue `R14` by selecting or activating the next
+  user-visible ISF feature tree from the documented limitation/backlog set.
+  Standalone public interface stabilization/audit work is on hold for now;
+  keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
   with per-tree files under `docs/tasks/`. When PNT is working inside an
   active tree, it should pick the first eligible leaf from that tree's current
   frontier. The ongoing/unresolved R14 ISF objective families are now covered
-  by active task trees in the [docs/TASK_TREE.md](docs/TASK_TREE.md) active
-  table; the first active tree is now
-  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose current
-  frontier is `ISF-LIBRARIES.5`. The public-contract tree remains
+  by active, proposed, or completed task trees in
+  [docs/TASK_TREE.md](docs/TASK_TREE.md). `ISF-LIBRARIES` is now closed and
+  listed in the completed table. The public-contract tree remains
   cross-cutting and should not displace feature delivery unless the selected
-  feature changes a public surface. The completed
+  feature changes a public surface. The completed `ISF-LIBRARIES`,
   `ISF-SCHEDULE-REPORTS`, `ISF-DATA-WIDTHS`, `ISF-STAGES-CONTRACTS`,
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`, and
@@ -34,16 +33,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(until cond body...)` loops are now logged as backlog. `while` is proposed
   as a pre-test zero-or-more loop, `until` as a body-first one-or-more loop,
   and both need explicit watchdog/latency/report semantics before shipping.
-- `ISF-LIBRARIES` is now the active R14 feature tree for reusable ISF
-  libraries/imports. The public term is "library"; implementation may reuse
-  package/import infrastructure, but the feature target is reusable ISF design
-  intent such as actors and transaction patterns. `ISF-LIBRARIES.1` specifies
-  planned `(library name ...)` roots, actor-scoped imports, namespaced
+- `ISF-LIBRARIES` is complete. The public term is "library"; implementation
+  may reuse package/import infrastructure, but the feature target is reusable
+  ISF design intent such as actors and transaction patterns. The shipped tree
+  supports `(library name ...)` roots, actor-scoped imports, namespaced
   imported actor use, exported actors as the first shipped definition kind,
-  and fail-closed diagnostics. FIFO should be modeled as a reusable actor
-  because it owns persistent storage, pointers, occupancy, flags, reset
-  behavior, and interface timing; transactions can model enqueue, dequeue,
-  flush, or status operations against that actor.
+  fail-closed diagnostics, generated-top wiring for same-name system ports,
+  fixed actor-owned storage, bank store/load access, and the first reusable
+  FIFO actor fixture.
 - `ISF-COMPATIBILITY.1` is complete. The inventory records that deprecated
   `(handshake ...)` is currently parser-validated then ignored, leaving the
   actor-shell `handshakes` hash as an empty compatibility placeholder and
@@ -199,6 +196,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   collapsing unrelated signals. The active frontier advances to
   `ISF-LIBRARIES.5`, synchronizing public library catalog and contract
   metadata for the shipped FIFO fixture.
+- `ISF-LIBRARIES.5` is complete and the library tree is closed. The public
+  contract now advertises `library_catalog_paths`,
+  `library_catalog_entry_keys`, and `shipped_library_definitions`; the human
+  catalog [docs/ISF_LIBRARY_CATALOG.md](docs/ISF_LIBRARY_CATALOG.md) lists
+  `common.fifo.fifo` with status, parameters, interface, storage, runtime
+  semantics, tests, and limitations. The next R14 PNT step should activate or
+  select the next user-visible feature tree rather than standalone public
+  contract stabilization.
 - `ISF-RESOURCE-PRIORITY.1` is complete. The current inventory records that
   `(resources ...)` is validated metadata only, accepted arbiters are
   `priority` and `round_robin`, and successful resource arbitration is not yet
@@ -4860,10 +4865,10 @@ Left:
 - Prioritize public-facing feature additions from the documented current
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
-- Use the first active tree in [docs/TASK_TREE.md](docs/TASK_TREE.md) when
-  selecting the next PNT slice. The current first active tree is
-  [docs/tasks/ISF-LIBRARIES.md](docs/tasks/ISF-LIBRARIES.md), whose frontier
-  is `ISF-LIBRARIES.4.3`.
+- Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
+  when selecting the next PNT slice. `ISF-LIBRARIES` is closed; the next step
+  is to activate or select the next user-visible R14 feature tree while
+  keeping `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

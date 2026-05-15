@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF library catalog contract synchronization
+- Active R14 task-tree slice: `ISF-LIBRARIES.5` is complete, and the
+  `ISF-LIBRARIES` task tree is closed.
+- [docs/ISF_LIBRARY_CATALOG.md](docs/ISF_LIBRARY_CATALOG.md) now records the
+  shipped reusable ISF library definitions. The first entry is
+  `common.fifo.fifo`, with fixed parameters, interface, storage, semantics,
+  tests, and limitations.
+- The ISF public contract now advertises `library_catalog_paths`,
+  `library_catalog_entry_keys`, and `shipped_library_definitions`, and the
+  focused catalog-contract test keeps the human catalog and contract metadata
+  aligned.
+- The next R14 action is to select or activate the next user-visible feature
+  tree. Public contract work remains feature-driven rather than the primary
+  lane.
+
 ## 2026-05-15: R14 — ISF FIFO library HDL proof
 - Active R14 task-tree slice: `ISF-LIBRARIES.4.6` is complete.
 - [isf/fifo_library_use.isf](isf/fifo_library_use.isf) now reaches CLI
