@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### Docs — package import scope stays namespaced
+- Updated the mdBook package chapter to state that `+import` brings the package
+  namespace into scope without flattening package members into unqualified local
+  names.
+- Updated the external-RTL metadata chapter and composition scope to clarify
+  why `.rtlif` defaults keep package-qualified symbols such as
+  `param_pkg.DEFAULT_WIDTH`: reuse, reviewability, ambiguity avoidance, and
+  precise diagnostics.
 ### R11 — `?ports` width/type wording clarified
 - Updated the mdBook composition chapter and
   [docs/COMPOSITION_SCOPE.md](docs/COMPOSITION_SCOPE.md) to state that

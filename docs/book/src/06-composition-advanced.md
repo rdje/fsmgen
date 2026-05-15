@@ -483,8 +483,12 @@ enum members and whole aggregate roots. `.rtlif` declaration defaults may use
 literal values or package-qualified symbols from packages imported by the
 consuming composition source, such as `param_pkg.DEFAULT_WIDTH` or
 `param_pkg.DEFAULT_LANES`; they deliberately do not depend on unqualified
-top-local names so sidecar metadata stays reusable. Overrides must name entries
-in the `.rtlif` `(params ...)` block. Aggregate overrides must also match the
+top-local names so sidecar metadata stays reusable. Importing `param_pkg`
+therefore makes the namespace available; it does not make `DEFAULT_WIDTH` an
+unqualified local name. `.rtlif` metadata should keep the package prefix so the
+default remains reviewable, reusable, and unambiguous when multiple packages
+define similarly named defaults. Overrides must name entries in the `.rtlif`
+`(params ...)` block. Aggregate overrides must also match the
 aggregate shape inferred from the `.rtlif` default value before generation
 continues. Unresolved symbolic declaration defaults or override values fail
 after package import resolution and before planning or HDL emission. Validated

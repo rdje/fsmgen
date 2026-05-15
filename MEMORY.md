@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: package imports remain namespaced
+- Clarified the mdBook package and external-RTL metadata sections: `+import`
+  brings a package namespace into scope, not every member as an unqualified
+  local name.
+- `.rtlif` parameter defaults should keep package-qualified references such as
+  `param_pkg.DEFAULT_WIDTH`; unqualified `DEFAULT_WIDTH` is not the shipped
+  contract even when `param_pkg` is imported by the consuming composition
+  source.
 ## 2026-05-15: R11 ?ports width/type wording clarified
 - Clarified the mdBook and composition scope wording for verbose `?ports`
   declarations that use named type aliases.

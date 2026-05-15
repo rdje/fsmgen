@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: package scoping remains explicit
+- Package imports intentionally expose a namespace, not unqualified package
+  members. This keeps package ownership visible in source and avoids accidental
+  ambiguity when multiple imported packages carry common names such as
+  `DEFAULT_WIDTH`.
+- `.rtlif` metadata defaults use the same rule. A sidecar interface contract
+  that writes `param_pkg.DEFAULT_WIDTH` remains reusable and self-describing;
+  accepting unqualified `DEFAULT_WIDTH` would tie the metadata more tightly to
+  one consuming top's local scope and make failure diagnostics less precise.
 ## 2026-05-15: ?ports width/type wording
 - The current verbose `?ports` syntax intentionally reuses `(width TOKEN)` for
   both numeric widths and named type aliases because the resolver consumes one

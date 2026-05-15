@@ -53,6 +53,14 @@ Imported names stay namespaced:
 - `shared.HEADER`
 - `shared.FRAME.flag`
 
+`+import` brings the package namespace into scope; it does not flatten every
+package member into the local namespace. That means authors write
+`shared.RESET_BYTE`, not `RESET_BYTE`, even when `shared` is already imported.
+This is deliberate. Namespaced access avoids implicit global symbol pollution,
+keeps ownership obvious during review, prevents ambiguity when two imported
+packages define the same member name, and lets diagnostics report the exact
+package/member path that failed to resolve.
+
 ## Direct-Root Example
 
 ```lisp
