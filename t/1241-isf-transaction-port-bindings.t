@@ -3,7 +3,9 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
+use IPC::Cmd qw(run);
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -126,6 +128,79 @@ ISF
         'trigger fan-in routes the per-rule payload into the transaction input port');
 };
 
+subtest 'activation input bindings accept expression-valued runtime payloads' => sub {
+    my $source = <<'ISF';
+(actor expression_port_binding
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input req_hi (width 4))
+    (input req_lo (width 4))
+    (output done))
+  (storage
+    (var local_sink (width 8))
+    (var spawn_sink (width 8))
+    (var work_sink (width 8)))
+  (transaction local_child
+    (ports
+      (input addr (width 8)))
+    (on local_child_start)
+    (update local_sink addr)
+    (complete local_child_done))
+  (transaction spawned_child
+    (ports
+      (input addr (width 8)))
+    (update spawn_sink addr)
+    (complete done))
+  (transaction work
+    (ports
+      (input work_addr (width 8)))
+    (on work_start)
+    (update work_sink work_addr)
+    (complete done))
+  (transaction parent
+    (on start)
+    (do local_child
+      (bind
+        (input addr (concat req_hi req_lo))))
+    (spawn spawned_child as w0
+      (bind
+        (input addr (concat req_hi req_lo))))
+    (await_all done)
+    (complete done))
+  (rule fire start
+    (trigger work
+      (bind
+        (input work_addr (concat req_hi req_lo))))))
+ISF
+
+    my $lowered = lower_source($source, 'expression-port-binding');
+    my $fsm = $lowered->{files}{'expression_port_binding.fsm'};
+    like($fsm, qr/\(= \(addr \(concat req_hi req_lo\)\)\)/,
+        'local do input binding preserves expression RHS in the review fsm');
+    like($fsm, qr/\(-w0_port_bindings\s+\(= \(w0_addr> \(concat req_hi req_lo\)\)\)\s+\)/s,
+        'spawn input binding preserves expression RHS in the parent handoff DT');
+    like($fsm, qr/\(<- \(fire_work_work_addr \(concat req_hi req_lo\)\)\)/,
+        'rule trigger input binding captures expression payload into its per-rule source');
+
+    my $dir = tempdir(CLEANUP => 1);
+    my $path = File::Spec->catfile($dir, 'expression_port_binding.isf');
+    write_file($path, $source);
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => [
+            './bin/fsmgen',
+            '--quiet',
+            '--outdir',
+            $dir,
+            $path,
+        ],
+    );
+
+    ok($success, 'expression-valued activation bindings reach SystemVerilog generation');
+    is(join('', @{$stderr_buf || []}), '', 'expression-valued activation binding HDL generation keeps stderr clean');
+};
+
 subtest 'malformed activation bindings fail closed during lowering' => sub {
     assert_lower_rejected(<<'ISF', 'missing do bind', qr/\ATransaction 'parent': do target 'child' requires '\(bind \.\.\.\)' because transaction 'child' declares ports/);
 (actor missing_do_bind
@@ -183,6 +258,58 @@ ISF
     (trigger work
       (bind (output data data)))))
 ISF
+
+    assert_lower_rejected(<<'ISF', 'unknown expression input', qr/\ATransaction 'parent': do target 'child' input binding expression for port 'addr' references unknown actor signal 'missing_lo'/);
+(actor unknown_expression_input
+  (clock clk)
+  (interface (input start) (input req_hi (width 4)) (output done))
+  (transaction child
+    (ports (input addr (width 8)))
+    (on child_start)
+    (complete done))
+  (transaction parent
+    (on start)
+    (do child
+      (bind (input addr (concat req_hi missing_lo))))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'expression width mismatch', qr/\ATransaction 'parent': do target 'child' input binding expression for port 'addr' width 8 does not match transaction port width 7/);
+(actor expression_width_mismatch
+  (clock clk)
+  (interface (input start) (input req_hi (width 4)) (input req_lo (width 4)) (output done))
+  (transaction child
+    (ports (input addr (width 7)))
+    (on child_start)
+    (complete done))
+  (transaction parent
+    (on start)
+    (do child
+      (bind (input addr (concat req_hi req_lo))))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'output expression target', qr/\ATransaction 'parent': do target 'child' output bind actor target must be a scalar HDL identifier/);
+(actor output_expression_target
+  (clock clk)
+  (interface (input start) (output done) (output resp_hi (width 4)) (output resp_lo (width 4)))
+  (transaction child
+    (ports (output data (width 8)))
+    (on child_start)
+    (complete done))
+  (transaction parent
+    (on start)
+    (do child
+      (bind (output data (concat resp_hi resp_lo))))
+    (complete done)))
+ISF
 };
 
 done_testing();
+
+sub write_file {
+    my ($path, $content) = @_;
+    open my $fh, '>', $path or die "Cannot open $path for write: $!";
+    print {$fh} $content or die "Cannot write $path: $!";
+    close $fh or die "Cannot close $path: $!";
+}

@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF activation input binding expressions
+- Added
+  [docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md)
+  to track expression-valued activation input bindings.
+- Updated
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) and
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so activation input bindings accept scalar signals, numeric/exact-width
+  literals, and non-empty list expressions for shipped `do`, generated
+  `do`/`spawn`, and rule-trigger sites.
+- Kept output bindings scalar-only and preserved actor-output-readback
+  rejection for input expressions.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm)
+  so explicit spawn input-binding source signals are not also same-name wired
+  into the child instance.
+- Added bounded `actor_expression` provenance to `transaction_port_bindings[]`
+  and refreshed the public contract, spec, mdBook, tests, roadmap, task tree,
+  and live docs.
 ### R14 — ISF zero-count wait semantics
 - Added
   [docs/tasks/ISF-WAIT-ZERO.md](docs/tasks/ISF-WAIT-ZERO.md)

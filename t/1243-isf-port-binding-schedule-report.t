@@ -84,6 +84,41 @@ subtest 'CLI report exposes bounded transaction port bindings' => sub {
     assert_binding_projection($report, 'CLI schedule report');
 };
 
+subtest 'expression input bindings report actor_expression separately from actor_signal' => sub {
+    my $source = <<'ISF';
+(actor port_binding_expression_report
+  (clock clk)
+  (interface
+    (input start)
+    (input req_hi (width 4))
+    (input req_lo (width 4))
+    (output done))
+  (transaction child
+    (ports
+      (input addr (width 8)))
+    (on child_start)
+    (complete done))
+  (transaction parent
+    (on start)
+    (do child
+      (bind
+        (input addr (concat req_hi req_lo))))
+    (complete done)))
+ISF
+
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, 'port-binding-expression-report.isf');
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    my $binding = $report->{transaction_port_bindings}[0];
+
+    is_deeply(
+        sorted([keys %$binding]),
+        sorted(isf_public_interface_schedule_report_transaction_port_binding_keys()),
+        'expression binding entry still uses the bounded public key set',
+    );
+    is($binding->{actor_signal}, undef, 'expression input binding has no scalar actor_signal');
+    is($binding->{actor_expression}, '(concat req_hi req_lo)', 'expression input binding reports the formatted actor expression');
+};
+
 done_testing();
 
 sub assert_binding_projection {
@@ -120,6 +155,7 @@ sub expected_bindings {
             role               => 'input',
             port               => 'addr',
             actor_signal       => 'req_addr',
+            actor_expression   => 'req_addr',
             width              => 8,
             instance           => undef,
             parent_port        => undef,
@@ -137,6 +173,7 @@ sub expected_bindings {
             role               => 'output',
             port               => 'data',
             actor_signal       => 'resp',
+            actor_expression   => 'resp',
             width              => 8,
             instance           => undef,
             parent_port        => undef,
@@ -154,6 +191,7 @@ sub expected_bindings {
             role               => 'input',
             port               => 'addr',
             actor_signal       => 'req_addr',
+            actor_expression   => 'req_addr',
             width              => 8,
             instance           => 'w0',
             parent_port        => 'w0_addr',
@@ -171,6 +209,7 @@ sub expected_bindings {
             role               => 'output',
             port               => 'data',
             actor_signal       => 'resp',
+            actor_expression   => 'resp',
             width              => 8,
             instance           => 'w0',
             parent_port        => 'w0_data',
@@ -188,6 +227,7 @@ sub expected_bindings {
             role               => 'input',
             port               => 'addr',
             actor_signal       => 'req_addr',
+            actor_expression   => 'req_addr',
             width              => 8,
             instance           => undef,
             parent_port        => undef,

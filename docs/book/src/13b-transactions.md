@@ -8,10 +8,13 @@ cycles, can declare local ports as formal arguments, and activation sites can
 pass actual signals through explicit bindings. The hardware caveat is that the
 transaction is not a stack-allocated software/SV-task call. It lowers to
 static scheduled `.fsm` states, handoff signals, mux selections, and generated
-top wiring. Today the task-like port model is shipped for scalar `(ports ...)`
-bindings on `do`, `spawn`, and rule `trigger` activation sites. Rule triggers
-bind transaction inputs only; output bindings require a caller that waits for
-completion, such as `do` or the shipped spawn handoff path. Spawned child
+top wiring. Today the task-like port model is shipped for `(ports ...)`
+bindings on `do`, `spawn`, and rule `trigger` activation sites. Input bindings
+may pass scalar actor-side signals, numeric/exact-width literals, or non-empty
+list expressions; output bindings still name scalar writable actor-side
+targets. Rule triggers bind transaction inputs only; output bindings require a
+caller that waits for completion, such as `do` or the shipped spawn handoff
+path. Spawned child
 transactions and generated blocking `do` activations support per-instance
 parameter overrides through `(params ...)`. Those parameter overrides are
 compile-time specialization of a static child instance, not runtime payload
@@ -20,7 +23,7 @@ transaction activation form remains future work and should not be assumed from
 the task analogy.
 
 Parameter overrides and port bindings must stay separate in authored intent.
-Use `(bind (input port signal) ...)` for runtime data/control values that can
+Use `(bind (input port expr) ...)` for runtime data/control values that can
 change from cycle to cycle. Use `(params (NAME value) ...)` only for static
 specialization values on activation forms that explicitly support that surface:
 spawned children and blocking `do` generated child activations today.
@@ -30,7 +33,7 @@ spawned children and blocking `do` generated child activations today.
   (params
     (WIDTH 16))
   (bind
-    (input addr req_addr)))
+    (input addr (+ base_addr offset))))
 
 (spawn read_word as r0
   (params

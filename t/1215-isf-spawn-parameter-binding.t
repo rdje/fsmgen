@@ -125,6 +125,8 @@ ISF
                 child_port   => 'addr',
                 parent_port  => 'parent_worker_do_0_addr',
                 actor_signal => 'req_addr',
+                actor_expr => 'req_addr',
+                actor_expression => 'req_addr',
                 width        => 8,
             },
             {
@@ -132,6 +134,8 @@ ISF
                 child_port   => 'data',
                 parent_port  => 'parent_worker_do_0_data',
                 actor_signal => 'resp',
+                actor_expr => 'resp',
+                actor_expression => 'resp',
                 width        => 8,
             },
         ],

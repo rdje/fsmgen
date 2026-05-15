@@ -174,8 +174,9 @@ entries. Successful priority and resource arbitration decisions now project as
 bounded `priority_resolutions` and `resource_arbitration` entries that describe
 static lowering decisions, not per-cycle runtime traces. Transaction port
 bindings now project as bounded `transaction_port_bindings` entries with
-binding site, owner, target transaction, port role/name, actor signal, width,
-and generated handoff signal names where applicable. Raw assignment
+binding site, owner, target transaction, port role/name, scalar actor signal
+where applicable, formatted actor expression, width, and generated handoff
+signal names where applicable. Raw assignment
 provenance and activation proof internals remain private. Shipped transaction
 stages now project into `transaction_stages` with authored names, generated
 state, and ready/valid endpoints. Shipped bounded eventual contracts project
@@ -297,14 +298,15 @@ limitations are:
   Broader symbolic parameter values, rule-trigger parameter overrides, and
   richer generated-child surfaces remain backlog work.
 - Transaction-local `(ports ...)` declarations are parser-public metadata and
-  can be bound at activation sites with scalar `(bind ...)` blocks. `do`
+  can be bound at activation sites with scalar, literal, or list-expression
+  input `(bind ...)` sources. `do`
   supports input and output bindings in the parent await state. `spawn`
   supports input and output bindings through hidden generated-top handoffs and
   parent binding DTs. Rule `trigger` supports input bindings through per-rule
   payload source signals before trigger fan-in. Bindings are direction- and
-  width-checked, actor input writes are rejected, actor output readback is
-  rejected, and expression-valued bindings plus rule-trigger output bindings
-  remain backlog.
+  known-width-checked, actor input writes are rejected, actor output readback
+  is rejected, and rule-trigger output bindings plus explicit
+  snapshot-vs-live timing selection remain backlog.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

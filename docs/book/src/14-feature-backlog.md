@@ -434,10 +434,12 @@ decision/body/exit states, and body clause count.
 
 ### Transaction Ports And Actor Pin Access
 
-Status: shipped base surface; the `ISF-PORT-BINDING` task tree is complete.
-Transaction `(ports ...)` declarations, first scalar activation bindings,
-first actor-pin conflict/runtime coverage, and bounded schedule-report binding
-provenance are shipped. Richer binding/report surfaces remain backlog.
+Status: shipped base surface; richer output/report surfaces remain backlog.
+Transaction `(ports ...)` declarations, scalar and expression-valued input
+activation bindings, first actor-pin conflict/runtime coverage, and bounded
+schedule-report binding provenance are shipped. The original
+`ISF-PORT-BINDING` task tree is complete; expression-valued input bindings are
+tracked by `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 
 Goal: make it easy to connect actor variables, actor-owned storage, and actor
 top-level pins to transaction ports so rules and transactions can exchange
@@ -474,7 +476,7 @@ variables, actor-owned storage, or actor interface pins:
 (rule launch_read ready
   (trigger apb_read
     (bind
-      (input addr req_addr))))
+      (input addr (+ base_addr offset)))))
 ```
 
 The compiler owns the lower-level materialization: generated `.fsm` handoff
@@ -519,17 +521,21 @@ Shipped binding shape:
     (input addr req_addr)))
 ```
 
-The first binding surface is scalar-only and width-checked. Local `do` lowers
-input bindings in the state that starts the child and copies output bindings
-under the generated child-done guard. Parameterized/generated `do` lowers
-through explicit generated-top handoff ports and a parent-owned
+Input bindings accept scalar signals, numeric/exact-width literals, and
+non-empty list expressions. Scalar and known-width expression sources are
+width-checked against the transaction input port; unknown expression widths
+continue through the downstream `.fsm` expression validation path. Local `do`
+lowers input bindings in the state that starts the child and copies output
+bindings under the generated child-done guard. Parameterized/generated `do`
+lowers through explicit generated-top handoff ports and a parent-owned
 `do_port_binding` DT whose output copy is done-gated. `spawn` lowers through
-hidden generated-top handoff ports and reviewable parent binding DTs. Rule
-`trigger` supports input bindings only; each rule owns a distinct payload
-source and the trigger fan-in DT routes payloads under the matching per-rule
-trigger pulse. Rule-trigger output bindings, expression-valued bindings,
-explicit snapshot-vs-live timing selection, richer report fields, and broader
-static conflict diagnostics remain backlog.
+hidden generated-top handoff ports and reviewable parent binding DTs; actor
+signals consumed by explicit spawn input-binding expressions are not also
+same-name wired into the child instance. Rule `trigger` supports input
+bindings only; each rule owns a distinct payload source and the trigger fan-in
+DT routes payloads under the matching per-rule trigger pulse.
+Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
+richer report fields, and broader static conflict diagnostics remain backlog.
 
 Actor pin binding now uses the same assignment/conflict path as ordinary ISF
 drives where it has shipped coverage. Spawn output bindings carry parent
@@ -540,10 +546,11 @@ input payload fan-in remain visible as normal `.fsm` same-LHS assignments and
 reach the SystemVerilog backend's verification-only selector checks.
 
 Successful schedule reports now expose bounded `transaction_port_bindings`
-entries for the shipped scalar surface. Each entry records the binding site
-kind, owner, target transaction, direction role, port, actor signal, width, and
-generated handoff names where they exist. This is a public summary for
-downstream tooling, not the raw binding or assignment-provenance internals.
+entries for the shipped binding surface. Each entry records the binding site
+kind, owner, target transaction, direction role, port, scalar actor signal
+when applicable, formatted actor expression, width, and generated handoff names
+where they exist. This is a public summary for downstream tooling, not the raw
+binding or assignment-provenance internals.
 
 ### Temporal Contract Lowering
 

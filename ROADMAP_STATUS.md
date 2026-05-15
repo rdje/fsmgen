@@ -3,14 +3,23 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: select or activate the next user-visible feature tree
-  before implementing more ISF behavior. `ISF-LIBRARY-SYSTEM-BINDINGS` is now
-  closed after shipping reusable-library system-port remapping, and
-  `ISF-TRANSACTION-ACTIVATION` is closed after publishing the shipped
-  spawn/blocking-`do` activation-parameter boundary. Rule-trigger and
-  direct-activation parameter overrides remain backlog and need a fresh
-  explicit tree/leaf before implementation.
+  before implementing more ISF behavior. `ISF-ACTIVATION-BIND-EXPRESSIONS` is
+  now closed after shipping expression-valued activation input bindings,
+  `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
+  system-port remapping, and `ISF-TRANSACTION-ACTIVATION` is closed after
+  publishing the shipped spawn/blocking-`do` activation-parameter boundary.
+  Rule-trigger and direct-activation parameter overrides remain backlog and
+  need a fresh explicit tree/leaf before implementation.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
+- ISF activation binding expression update: activation input bindings for
+  shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
+  scalar actor-side signals, numeric/exact-width literals, and non-empty
+  list expressions. Known-width sources are checked against the transaction
+  input port, expression signal references are validated where identifiable,
+  actor output readback remains rejected, and `transaction_port_bindings[]`
+  exposes `actor_expression` with `actor_signal` set to JSON null for
+  expression-valued input bindings. Output bindings remain scalar-only.
 - ISF library system-port remapping update: reusable-library clock/reset
   bindings now support parent/child signal-name remapping in generated tops.
   Same-name bindings still use system-port auto-wiring; differently named
@@ -66,8 +75,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`,
   `ISF-CONTROL-FLOW`, `ISF-SETTER-SYNTAX`, and
-  `ISF-COMPATIBILITY`, plus `ISF-LIBRARY-SYSTEM-BINDINGS` and
-  `ISF-STORAGE-VAR-ALIASES` and `ISF-STORAGE-VAR-SURFACE`, are listed in the
+  `ISF-COMPATIBILITY`, plus `ISF-ACTIVATION-BIND-EXPRESSIONS`,
+  `ISF-LIBRARY-SYSTEM-BINDINGS`, `ISF-STORAGE-VAR-ALIASES`, and
+  `ISF-STORAGE-VAR-SURFACE`, are listed in the
   task-tree completed table. The completed `COMPOSITION-WIRING-LISPISH` tree
   records the shipped `R11` canonical explicit-link list syntax.
   The proposed `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics
@@ -114,6 +124,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   state, consumes no active transaction cycle, preserves pending samples for
   the next state-producing clause, and does not create a
   `transaction_waits[]` entry.
+- `ISF-ACTIVATION-BIND-EXPRESSIONS.1` is complete. Activation input bindings
+  accept scalar signals, numeric/exact-width literals, and non-empty
+  list-expression runtime payloads for local `do`, generated `do`/`spawn`, and
+  rule-trigger sites. Output bindings remain scalar writable endpoints, and
+  reports add bounded `actor_expression` provenance.
 - `ISF-CONTROL-FLOW.3` is complete and the control-flow tree is closed.
   Top-level transaction `while`/`until` loops now lower to explicit scheduled
   decision/body regions, reject malformed empty or unsupported bodies before

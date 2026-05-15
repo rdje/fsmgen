@@ -632,10 +632,12 @@ Representative generated top `.fsm`:
 ```
 
 The generated instance name is `{parent}_{child}_do_{ordinal}`. Input bindings
-are parent-owned handoff assignments. Output bindings are guarded by the
-generated instance's `done` pulse. The generated top applies static parameter
-overrides and wires only the explicit activation handoffs; unlike spawn, it
-does not auto-fanout unrelated public actor inputs into the child instance.
+are parent-owned handoff assignments; the RHS may be a scalar signal,
+numeric/exact-width literal, or non-empty list expression. Output bindings are
+guarded by the generated instance's `done` pulse and keep scalar actor-side
+targets. The generated top applies static parameter overrides and wires only
+the explicit activation handoffs; unlike spawn, it does not auto-fanout
+unrelated public actor inputs into the child instance.
 
 Spawn lowering writes separate child `.fsm` files, a parent `.fsm` with
 per-instance handoff ports, and a generated `<actor>_top.fsm` composition

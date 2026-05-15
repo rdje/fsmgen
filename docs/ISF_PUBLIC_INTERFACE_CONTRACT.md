@@ -329,10 +329,12 @@ so parser-accepted `(ports ...)` clauses normalize to directional
 forms fail before scheduler lowering.
 The first activation-binding lowering boundary is checked by
 [t/1241-isf-transaction-port-bindings.t](../t/1241-isf-transaction-port-bindings.t)
-so scalar `do`, `spawn`, and rule-trigger input bindings are direction- and
-width-checked, actor inputs remain read-only, actor output readback is
-rejected, spawned bindings produce hidden generated-top handoffs, and rule
-trigger payloads use per-rule source signals before trigger fan-in.
+so `do`, `spawn`, and rule-trigger input bindings accept scalar signals,
+numeric/exact-width literals, and non-empty list expressions where shipped,
+are direction- and known-width-checked, keep actor inputs read-only, reject
+actor output readback, produce hidden generated-top handoffs for spawned
+bindings, avoid duplicate same-name child wiring for explicit spawn binding
+sources, and use per-rule source signals before trigger fan-in.
 The actor-pin binding conflict boundary is checked by
 [t/1242-isf-port-binding-conflict-semantics.t](../t/1242-isf-port-binding-conflict-semantics.t)
 so spawned output bindings keep parent-transaction ownership in assignment
@@ -1071,7 +1073,7 @@ library_uses entries: library, alias, export, kind, instance, module, scheduled_
 library_uses parameter entries: name, source, value
 library_uses binding entries: role, library_name, parent_name, width
 bank_accesses entries: kind, owner, owner_kind, container_kind, container_name, bank, index, width, depth, scalar_entries, same_cycle_policy, value, target
-transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
+transaction_port_bindings entries: site_kind, owner, owner_kind, target_transaction, role, port, actor_signal, actor_expression, width, instance, parent_port, child_port, start_signal, done_signal, trigger_source, payload_source
 ```
 
 For each `dt_blocks` entry, `assignments` is a non-negative integer count of
@@ -1224,9 +1226,12 @@ duplicated as generic `same_target_value` groups.
 Transaction port binding provenance uses a top-level
 `transaction_port_bindings` array. Each entry is bounded to the advertised key
 set and records the binding site kind (`do`, `spawn`, or `rule_trigger`),
-owner, target transaction, port role/name, actor signal, width, and generated
-handoff signal names where applicable. JSON null is used for non-applicable
-handoff fields. The machine-readable contract advertises the entry key set in
+owner, target transaction, port role/name, actor signal when the actor side is
+a scalar endpoint, formatted actor expression, width, and generated handoff
+signal names where applicable. For expression-valued input bindings,
+`actor_signal` is JSON null and `actor_expression` carries the formatted
+source expression. JSON null is used for non-applicable handoff fields. The
+machine-readable contract advertises the entry key set in
 `schedule_report_transaction_port_binding_keys` and the current site-kind
 values in `schedule_report_transaction_port_binding_site_kind_values`.
 Successful arbitration metadata uses top-level `priority_resolutions` and
@@ -1294,13 +1299,12 @@ These are not stable public interfaces yet:
 - Actor fields beyond the advertised `actor_shell_required_keys`.
 - Raw library resolver state and raw exported library actor hashes.
 - Transaction port behavior beyond parser-shell `ports.inputs[]` /
-  `ports.outputs[]` `name`/`width` metadata and the first scalar
-  activation-binding lowering for `do`, `spawn`, and rule-trigger input
-  bindings plus the first conflict/runtime coverage for binding-generated
-  assignments. Expression-valued bindings, rule-trigger output bindings,
-  explicit snapshot-vs-live timing selection, broader static conflict
-  diagnostics, and richer report fields remain deferred follow-on
-  port-binding work.
+  `ports.outputs[]` `name`/`width` metadata, scalar/literal/list-expression
+  input-binding lowering for `do`, `spawn`, and rule-trigger activation sites,
+  plus the first conflict/runtime coverage for binding-generated assignments.
+  Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
+  broader static conflict diagnostics, richer report fields, and full
+  expression width inference remain deferred follow-on port-binding work.
 - Transaction control-flow behavior beyond shipped non-negative-literal
   `(wait N)` and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public. Dynamic/symbolic waits, nested

@@ -905,6 +905,7 @@ sub isf_public_interface_schedule_report_transaction_port_binding_keys {
             role
             port
             actor_signal
+            actor_expression
             width
             instance
             parent_port

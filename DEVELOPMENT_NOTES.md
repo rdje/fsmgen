@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: activation input bindings carry expressions, output bindings name destinations
+- Activation input bindings are runtime payload connections. They can safely
+  accept scalar signals, exact literals, and normal list expressions because
+  the compiler still lowers them to reviewable `.fsm` assignments into the
+  transaction input port or generated handoff.
+- Activation output bindings are different: the actor-side endpoint is a
+  destination. Keeping it scalar-only avoids pretending ISF can assign into an
+  arbitrary expression tree.
+- Known expression widths are checked early. Unknown expression widths are
+  allowed to continue into the existing `.fsm` expression validation and HDL
+  generation path instead of introducing a second partial expression type
+  system in ISF.
+- For spawned children, actor signals used by explicit input-binding
+  expressions are consumed by the generated handoff assignment and should not
+  also be same-name wired into the child. The explicit binding is the intended
+  data path.
 ## 2026-05-15: ISF wait zero is transparent
 - `(wait 0)` is a scheduling no-op, not a one-cycle wait and not an error.
   That keeps the literal wait surface mathematically consistent: positive

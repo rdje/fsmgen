@@ -667,11 +667,12 @@ not frozen as a public API by the actor-shell transaction-shape metadata.
 
 Author-facing mental model: a transaction is task-like because it consumes
 cycles and can own formal boundaries. Transaction `(ports ...)` declarations
-act as formal data/control ports, and activation sites pass scalar actuals
-through explicit `(bind ...)` blocks. The compiler owns the lower-level
-handoff signals, mux selectors, and generated-top bridge wiring. This is still
-static hardware, not a stack-allocated SV task call: every activation lowers
-to scheduled `.fsm` states, persistent handoff signals, and reviewable
+act as formal data/control ports, and activation sites pass scalar, literal,
+or list-expression runtime payloads through explicit `(bind ...)` blocks. The
+compiler owns the lower-level handoff signals, mux selectors, and generated-top
+bridge wiring. This is still static hardware, not a stack-allocated SV task
+call: every activation lowers to scheduled `.fsm` states, persistent handoff
+signals, and reviewable
 assignments. Parameter overrides are narrower than port bindings: spawned child
 transactions and blocking `do` generated child activations support
 transaction-local `params` and per-instance `(params (NAME value) ...)`
@@ -763,12 +764,14 @@ activation guard. It may also appear later as inline branching.
 
 ### 7.1.1 Transaction Ports and Actor Pin Access
 
-Transaction port declarations and the first activation-time scalar bindings
-are now accepted. Actor pin access is available through those bindings:
-actor inputs may be read, actor outputs may be written, and actor output
-readback is rejected. Bounded schedule-report binding provenance is shipped;
-broader binding shapes remain deferred follow-on work after
-[docs/tasks/ISF-PORT-BINDING.md](tasks/ISF-PORT-BINDING.md).
+Transaction port declarations and activation-time bindings are now accepted.
+Actor pin access is available through those bindings: actor inputs may be read,
+actor outputs may be written, and actor output readback is rejected. Input
+bindings may now be scalar signals, numeric/exact-width literals, or non-empty
+list expressions. Bounded schedule-report binding provenance is shipped;
+broader output binding shapes remain deferred follow-on work after
+[docs/tasks/ISF-PORT-BINDING.md](tasks/ISF-PORT-BINDING.md) and
+[docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md).
 
 The public direction remains an ISF-level surface, not an author-facing escape
 hatch to low-level `.fsm` handoff wiring. A transaction declares directional
@@ -823,15 +826,19 @@ Shipped activation binding shapes:
 
 (trigger read_word
   (bind
-    (input addr req_addr)))
+    (input addr (+ base_addr offset))))
 ```
 
-The first shipped binding surface is scalar-only. The right-hand endpoint in a
-transaction input binding and the target endpoint in a transaction output
-binding must be a scalar HDL identifier naming a known actor input, known actor
-output, declared storage signal, or known transaction variable in the caller's
-scope. Expression-valued bindings remain deferred until the syntax has an
-explicit width contract.
+Transaction input bindings accept scalar actor-side signals,
+numeric/exact-width literals, and non-empty list expressions. Scalar sources
+and expression sources whose width is known by the lowerer are width-checked
+against the transaction input port. Unknown expression widths continue into
+the downstream `.fsm` expression validation and HDL generation path. Every
+scalar signal reference that the lowerer can identify in an input-binding
+expression must be a known readable actor input, declared actor-owned storage
+signal, or known transaction variable in the caller's scope; actor output
+readback is rejected. Transaction output bindings remain scalar-only because
+the actor-side endpoint is the writable destination.
 
 Local `(do ...)` bindings lower into the scheduled parent `.fsm` state that
 starts and awaits the child transaction. Transaction input bindings are
@@ -846,7 +853,9 @@ generated child output under the generated instance's `done` guard.
 bindings create a hidden parent output handoff and a visible child input port;
 output bindings create a hidden parent input handoff from the child output
 port and a reviewable parent DT assignment to the bound actor signal. The
-generated top wires those handoffs explicitly. Spawn output-binding
+generated top wires those handoffs explicitly. Actor signals consumed by
+explicit spawn input-binding expressions are not also same-name wired into the
+child instance; the explicit handoff is the data path. Spawn output-binding
 assignments are owned by the parent transaction for assignment provenance and
 rule/transaction conflict analysis.
 
@@ -1852,10 +1861,13 @@ domain-specific group kinds instead of duplicating them as generic
 Transaction port binding provenance is emitted as a top-level
 `transaction_port_bindings` array. Each entry records the binding site
 (`do`, `spawn`, or `rule_trigger`), owner, target transaction, direction role,
-transaction port, actor signal, width, and the bounded generated signal names
-that make the scheduled `.fsm` handoff reviewable. Non-applicable generated
-signals are JSON null. This is provenance and review support; it is not raw
-assignment provenance and it does not expose private activation proof state.
+transaction port, actor signal when the actor side is a scalar endpoint,
+formatted actor expression, width, and the bounded generated signal names that
+make the scheduled `.fsm` handoff reviewable. For expression-valued input
+bindings, `actor_signal` is JSON null and `actor_expression` carries the
+formatted source expression. Non-applicable generated signals are JSON null.
+This is provenance and review support; it is not raw assignment provenance and
+it does not expose private activation proof state.
 Successful priority/resource decisions are emitted as top-level
 `priority_resolutions` and `resource_arbitration` arrays. A
 `priority_resolutions` entry records the target plus bounded winner/loser owner
@@ -2092,10 +2104,12 @@ Focused tests:
   `(wait N)` shape:
   dynamic and symbolic counts remain deferred until width, reset, latency, and
   report semantics are specified.
-- Transaction binding surfaces beyond scalar `do`, `spawn`, and rule-trigger
-  input bindings. Expression-valued bindings, rule-trigger output bindings,
+- Transaction binding surfaces beyond scalar and expression-valued `do`,
+  `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict
-  diagnostics, and richer report metadata remain under `ISF-PORT-BINDING`.
+  diagnostics, richer report metadata, and full expression width inference
+  remain under `ISF-PORT-BINDING` and
+  `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset: nested loops, loops under `when`/`switch`/`repeat`,
   and loop bodies containing `do`, `spawn`, `await_all`, `await_any`, `stage`,

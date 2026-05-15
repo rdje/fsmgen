@@ -750,6 +750,16 @@ sub _is_hdl_identifier {
     return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
 }
 
+sub _is_activation_input_binding_expr_shape {
+    my ($expr) = @_;
+    return 1 if ref($expr) eq 'ARRAY' && @$expr;
+    return 0 if ref($expr);
+    return 0 unless defined($expr) && length($expr);
+    return 1 if _is_hdl_identifier($expr);
+    return 1 if _is_numeric_or_exact_width_literal($expr);
+    return 0;
+}
+
 sub _is_library_namespace {
     my ($value) = @_;
     return defined($value)
@@ -1259,7 +1269,7 @@ sub _parse_rule_action($self, $action, $rule_name) {
 }
 
 sub _parse_rule_trigger_bind($self, $clause, $rule_name, $transaction_name) {
-    confess "Error: rule '$rule_name' trigger '$transaction_name' bind requires '(bind (input port signal) ...)'\n"
+    confess "Error: rule '$rule_name' trigger '$transaction_name' bind requires '(bind (input port expr) ...)'\n"
         unless ref($clause) eq 'ARRAY'
             && @$clause >= 2
             && defined($clause->[0])
@@ -1270,13 +1280,18 @@ sub _parse_rule_trigger_bind($self, $clause, $rule_name, $transaction_name) {
     for my $entry (@{$clause}[1 .. $#$clause]) {
         confess "Error: rule '$rule_name' trigger '$transaction_name' bind entries must be list forms\n"
             unless ref($entry) eq 'ARRAY' && @$entry == 3;
-        my ($role, $port, $signal) = @$entry;
+        my ($role, $port, $actor_endpoint) = @$entry;
         confess "Error: rule '$rule_name' trigger '$transaction_name' bind role must be input or output\n"
             unless defined($role) && !ref($role) && ($role eq 'input' || $role eq 'output');
         confess "Error: rule '$rule_name' trigger '$transaction_name' bind port must be a scalar HDL identifier\n"
             unless _is_hdl_identifier($port);
-        confess "Error: rule '$rule_name' trigger '$transaction_name' bind signal must be a scalar HDL identifier\n"
-            unless _is_hdl_identifier($signal);
+        if ($role eq 'output') {
+            confess "Error: rule '$rule_name' trigger '$transaction_name' output bind target must be a scalar HDL identifier\n"
+                unless _is_hdl_identifier($actor_endpoint);
+        } else {
+            confess "Error: rule '$rule_name' trigger '$transaction_name' input bind expression must be a scalar signal, numeric/exact-width literal, or non-empty list expression\n"
+                unless _is_activation_input_binding_expr_shape($actor_endpoint);
+        }
         confess "Error: rule '$rule_name' trigger '$transaction_name' has duplicate binding for port '$port'\n"
             if $seen{$port}++;
     }

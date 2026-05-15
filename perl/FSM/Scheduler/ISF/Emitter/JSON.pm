@@ -330,6 +330,7 @@ sub _transaction_port_binding_summary($self, $ir) {
                 role               => $_->{role},
                 port               => $_->{port},
                 actor_signal       => $_->{actor_signal},
+                actor_expression   => $_->{actor_expression},
                 width              => $_->{width},
                 instance           => exists($_->{instance}) ? $_->{instance} : undef,
                 parent_port        => exists($_->{parent_port}) ? $_->{parent_port} : undef,

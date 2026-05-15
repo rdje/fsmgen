@@ -92,7 +92,7 @@ ISF
     (trigger)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'extra trigger operand', qr/\AError: rule 'bad' trigger 'main' bind requires '\(bind \(input port signal\) \.\.\.\)'/);
+    assert_parse_rejected(<<'ISF', 'extra trigger operand', qr/\AError: rule 'bad' trigger 'main' bind requires '\(bind \(input port expr\) \.\.\.\)'/);
 (actor bad_rule_action
   (clock clk)
   (interface (input start) (input ready) (output done))

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF activation input binding expressions
+- Completed R14 task-tree slice: `ISF-ACTIVATION-BIND-EXPRESSIONS.1`.
+- Activation input bindings now accept scalar signals, numeric/exact-width
+  literals, and non-empty list expressions at shipped `do`, generated
+  `do`/`spawn`, and rule-trigger activation sites.
+- Output bindings remain scalar-only writable endpoints.
+- Generated spawn tops no longer same-name wire actor input signals that are
+  already consumed by explicit input-binding expressions.
+- `transaction_port_bindings[]` now includes bounded `actor_expression`
+  provenance, with `actor_signal` set to JSON null for expression-valued input
+  bindings.
+
 ## 2026-05-15: R14 — ISF zero-count wait semantics
 - Completed R14 task-tree slice: `ISF-WAIT-ZERO.1` defines and implements
   `(wait 0)`.

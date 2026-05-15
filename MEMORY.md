@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF activation input binding expressions
+- Created
+  [docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md)
+  to track expression-valued activation input bindings.
+- `(bind (input port expr))` now accepts scalar signals, numeric/exact-width
+  literals, and non-empty list expressions at shipped `do`, generated
+  `do`/`spawn`, and rule-trigger activation sites.
+- Output bindings remain scalar writable endpoints.
+- Known-width input expressions are checked against the transaction input
+  port; identifiable scalar references in input expressions are validated, and
+  actor output readback remains rejected.
+- Schedule reports now expose `actor_expression`; `actor_signal` is JSON null
+  for expression-valued input bindings.
 ## 2026-05-15: ISF zero-count wait semantics
 - Created
   [docs/tasks/ISF-WAIT-ZERO.md](docs/tasks/ISF-WAIT-ZERO.md)

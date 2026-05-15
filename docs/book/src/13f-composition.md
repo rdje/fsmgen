@@ -86,6 +86,11 @@ Representative scheduled parent artifacts:
   (= (resp> parent_worker_do_0_data) <parent_worker_do_0_done))
 ```
 
+Input bindings may use scalar signals, numeric/exact-width literals, or
+non-empty list expressions as the parent-owned payload source. Spawned child
+input-binding source signals are consumed by the explicit parent handoff and
+are not also same-name wired into the child instance.
+
 Representative generated top instance:
 
 ```lisp

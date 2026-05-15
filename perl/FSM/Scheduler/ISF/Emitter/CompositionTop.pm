@@ -174,10 +174,13 @@ sub _emit_wiring_block {
         my $activation_kind = $spawn->{activation_kind} // 'spawn';
 
         if ($activation_kind eq 'spawn') {
+            my %explicit_binding_sources = _spawn_input_binding_source_signals($spawn);
             for my $port (@{$ir->{ports} || []}) {
                 next if $port->{isf_handoff};
                 next unless $port->{direction} eq 'input';
                 my $name = $port->{name};
+                next if $name eq 'start';
+                next if $explicit_binding_sources{$name};
                 next unless exists $child_ports->{$name};
                 next unless ($child_ports->{$name}{direction} || '') eq 'input';
                 push @links, _link($name, $instance . ".$name");
@@ -260,6 +263,40 @@ sub _emit_wiring_block {
 sub _link {
     my ($source, $target) = @_;
     return "($source $target)";
+}
+
+sub _spawn_input_binding_source_signals {
+    my ($spawn) = @_;
+    my %signals;
+
+    for my $binding (@{$spawn->{port_bindings} || []}) {
+        next unless ($binding->{role} || '') eq 'input';
+        my $expr = exists($binding->{actor_expr}) ? $binding->{actor_expr} : $binding->{actor_signal};
+        $signals{$_} = 1 for _expr_signal_names($expr);
+    }
+
+    return %signals;
+}
+
+sub _expr_signal_names {
+    my ($expr) = @_;
+    return () unless defined $expr;
+    if (!ref($expr)) {
+        return _is_hdl_identifier($expr) ? ($expr) : ();
+    }
+    return () unless ref($expr) eq 'ARRAY';
+
+    my @signals;
+    for my $index (0 .. $#$expr) {
+        next if $index == 0 && !ref($expr->[$index]);
+        push @signals, _expr_signal_names($expr->[$index]);
+    }
+    return @signals;
+}
+
+sub _is_hdl_identifier {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
 }
 
 sub _library_output_parent_port_map {

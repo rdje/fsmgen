@@ -39,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ACTIVATION-BIND-EXPRESSIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md) |
 | `COMPOSITION-WIRING-LISPISH` | `done` | `R11` | `closed` | [docs/tasks/COMPOSITION-WIRING-LISPISH.md](docs/tasks/COMPOSITION-WIRING-LISPISH.md) |
 | `ISF-WAIT-ZERO` | `done` | `R14` | `closed` | [docs/tasks/ISF-WAIT-ZERO.md](docs/tasks/ISF-WAIT-ZERO.md) |
 | `ISF-STORAGE-VAR-SURFACE` | `done` | `R14` | `closed` | [docs/tasks/ISF-STORAGE-VAR-SURFACE.md](docs/tasks/ISF-STORAGE-VAR-SURFACE.md) |
@@ -84,6 +85,7 @@ as done work unless a future task reopens them.
 | Multi-clock, asynchronous, and interacting clock-domain semantics | `ISF-CLOCK-DOMAINS` proposed tree |
 | Actor-owned scalar storage source vocabulary | `ISF-STORAGE-VAR-SURFACE`, `ISF-STORAGE-VAR-ALIASES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
+| Expression-valued activation input bindings | `ISF-ACTIVATION-BIND-EXPRESSIONS` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |

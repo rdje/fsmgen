@@ -243,7 +243,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
                     );
                     push @port_binding_assignments, {
                         lhs         => $parent_port,
-                        rhs         => $binding->{actor_signal},
+                        rhs         => _activation_binding_actor_expr_text($binding),
                         op          => '=',
                         source_kind => "${activation_kind}_input_binding",
                     };
@@ -268,11 +268,13 @@ sub _build_parent_ir($self, $actor, $generated_children) {
                 $ctrs{$parent_port} = $port->{width};
                 $storage_roles{$parent_port} = 'transaction_port_binding';
                 push @port_binding_metadata, {
-                    role         => $binding->{role},
-                    child_port   => $binding->{port},
-                    parent_port  => $parent_port,
-                    actor_signal => $binding->{actor_signal},
-                    width        => $port->{width},
+                    role             => $binding->{role},
+                    child_port       => $binding->{port},
+                    parent_port      => $parent_port,
+                    actor_signal     => $binding->{actor_signal},
+                    actor_expr       => _clone_isf_value($binding->{actor_expr}),
+                    actor_expression => _activation_binding_actor_expr_text($binding),
+                    width            => $port->{width},
                 };
             }
             if (@port_binding_assignments) {
@@ -628,6 +630,7 @@ sub _transaction_port_binding_entry {
         role               => $role,
         port               => $port,
         actor_signal       => $binding->{actor_signal},
+        actor_expression   => _activation_binding_actor_expr_text($binding),
         width              => ($args{port} || {})->{width} // 1,
         instance           => $instance,
         parent_port        => defined($instance) ? "${instance}_$port" : undef,
@@ -1832,19 +1835,29 @@ sub _parse_activation_bind_clause {
     for my $entry (@{$clause}[1 .. $#$clause]) {
         confess "$context bind entries must be '(input port signal)' or '(output port signal)'\n"
             unless ref($entry) eq 'ARRAY' && @$entry == 3;
-        my ($role, $port, $signal) = @$entry;
+        my ($role, $port, $actor_endpoint) = @$entry;
         confess "$context bind role must be input or output\n"
             unless defined($role) && !ref($role) && ($role eq 'input' || $role eq 'output');
         confess "$context bind transaction port must be a scalar HDL identifier\n"
             unless _is_hdl_identifier($port);
-        confess "$context bind actor signal must be a scalar HDL identifier\n"
-            unless _is_hdl_identifier($signal);
+        if ($role eq 'output') {
+            confess "$context output bind actor target must be a scalar HDL identifier\n"
+                unless _is_hdl_identifier($actor_endpoint);
+        } else {
+            confess "$context input bind expression must be a scalar signal, numeric/exact-width literal, or non-empty list expression\n"
+                unless _is_activation_input_binding_expr_shape($actor_endpoint);
+        }
         confess "$context has duplicate binding for transaction port '$port'\n"
             if $seen{$port}++;
+
+        my $actor_expr = _clone_isf_value($actor_endpoint);
+        my $actor_signal = _is_hdl_identifier($actor_endpoint) ? $actor_endpoint : undef;
         push @bindings, {
-            role        => $role,
-            port        => $port,
-            actor_signal => $signal,
+            role             => $role,
+            port             => $port,
+            actor_signal     => $actor_signal,
+            actor_expr       => $actor_expr,
+            actor_expression => _format_isf_expr($actor_expr),
         };
     }
 
@@ -1877,23 +1890,21 @@ sub _validate_activation_bindings {
         confess "$context has duplicate binding for transaction port '$port_name'\n"
             if $seen{$port_name}++;
 
-        my $signal = $binding->{actor_signal};
-        my $info = _binding_signal_info($actor, $owner_tx, $signal);
-        confess "$context binding for port '$port_name' references unknown actor signal '$signal'\n"
-            unless $info;
-
         if ($binding->{role} eq 'input') {
-            confess "$context input binding for port '$port_name' reads actor output '$signal', but actor output readback is not public\n"
-                if $info->{kind} eq 'actor_output';
+            _validate_activation_input_binding_expr($actor, $owner_tx, $binding, $port, $context);
         } else {
+            my $signal = $binding->{actor_signal};
+            my $info = _binding_signal_info($actor, $owner_tx, $signal);
+            confess "$context binding for port '$port_name' references unknown actor signal '$signal'\n"
+                unless $info;
             confess "$context output binding for port '$port_name' targets actor input '$signal', but actor inputs are read-only\n"
                 if $info->{kind} eq 'actor_input';
-        }
 
-        my $port_width = $port->{width} // 1;
-        my $signal_width = $info->{width} // 1;
-        confess "$context binding for port '$port_name' width $port_width does not match actor signal '$signal' width $signal_width\n"
-            unless $port_width == $signal_width;
+            my $port_width = $port->{width} // 1;
+            my $signal_width = $info->{width} // 1;
+            confess "$context binding for port '$port_name' width $port_width does not match actor signal '$signal' width $signal_width\n"
+                unless $port_width == $signal_width;
+        }
     }
 
     for my $port_name (@declared_ports) {
@@ -1951,6 +1962,112 @@ sub _binding_signal_info {
 sub _is_hdl_identifier {
     my ($value) = @_;
     return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
+}
+
+sub _is_activation_input_binding_expr_shape {
+    my ($expr) = @_;
+    return 1 if ref($expr) eq 'ARRAY' && @$expr;
+    return 0 if ref($expr);
+    return 0 unless defined($expr) && length($expr);
+    return 1 if _is_hdl_identifier($expr);
+    return 1 if _is_numeric_or_exact_width_literal($expr);
+    return 0;
+}
+
+sub _activation_binding_actor_expr_text {
+    my ($binding) = @_;
+    return $binding->{actor_expression}
+        if ref($binding) eq 'HASH' && exists($binding->{actor_expression});
+    return _format_isf_expr($binding->{actor_expr})
+        if ref($binding) eq 'HASH' && exists($binding->{actor_expr});
+    return $binding->{actor_signal};
+}
+
+sub _validate_activation_input_binding_expr {
+    my ($actor, $owner_tx, $binding, $port, $context) = @_;
+    my $port_name = $binding->{port};
+    my $expr = exists($binding->{actor_expr}) ? $binding->{actor_expr} : $binding->{actor_signal};
+    my $actor_signal = $binding->{actor_signal};
+
+    if (defined $actor_signal) {
+        my $info = _binding_signal_info($actor, $owner_tx, $actor_signal);
+        confess "$context binding for port '$port_name' references unknown actor signal '$actor_signal'\n"
+            unless $info;
+        confess "$context input binding for port '$port_name' reads actor output '$actor_signal', but actor output readback is not public\n"
+            if $info->{kind} eq 'actor_output';
+
+        my $port_width = $port->{width} // 1;
+        my $signal_width = $info->{width} // 1;
+        confess "$context binding for port '$port_name' width $port_width does not match actor signal '$actor_signal' width $signal_width\n"
+            unless $port_width == $signal_width;
+        return 1;
+    }
+
+    my %seen_refs;
+    for my $ref (_activation_binding_expr_signals($expr)) {
+        next if $seen_refs{$ref}++;
+        my $info = _binding_signal_info($actor, $owner_tx, $ref);
+        confess "$context input binding expression for port '$port_name' references unknown actor signal '$ref'\n"
+            unless $info;
+        confess "$context input binding expression for port '$port_name' reads actor output '$ref', but actor output readback is not public\n"
+            if $info->{kind} eq 'actor_output';
+    }
+
+    my $widths = _build_signal_width_map($actor, $owner_tx || { clauses => [] });
+    my $expr_width = _activation_binding_expr_width($expr, $widths);
+    my $port_width = $port->{width} // 1;
+    confess "$context input binding expression for port '$port_name' width $expr_width does not match transaction port width $port_width\n"
+        if defined($expr_width) && $expr_width > 0 && $expr_width != $port_width;
+
+    return 1;
+}
+
+sub _activation_binding_expr_signals {
+    my ($expr) = @_;
+    return () unless defined $expr;
+    if (!ref($expr)) {
+        return _is_hdl_identifier($expr) ? ($expr) : ();
+    }
+    return () unless ref($expr) eq 'ARRAY';
+
+    my @signals;
+    for my $index (0 .. $#$expr) {
+        next if $index == 0 && !ref($expr->[$index]);
+        push @signals, _activation_binding_expr_signals($expr->[$index]);
+    }
+    return @signals;
+}
+
+sub _activation_binding_expr_width {
+    my ($expr, $widths) = @_;
+    my $known = _known_expr_width($expr, $widths);
+    return $known if defined $known;
+    return undef unless ref($expr) eq 'ARRAY' && @$expr;
+
+    my $op = $expr->[0];
+    return undef if ref($op);
+    my @operand_widths = map { _activation_binding_expr_width($_, $widths) } @{$expr}[1 .. $#$expr];
+
+    if ($op eq 'concat') {
+        return undef if grep { !defined($_) || $_ <= 0 } @operand_widths;
+        my $total = 0;
+        $total += $_ for @operand_widths;
+        return $total;
+    }
+
+    return 1 if $op =~ /\A(?:==|!=|<|<=|>|>=|&&|\|\|)\z/;
+    return 1 if $op eq '!';
+    return $operand_widths[0] if ($op eq '~' || $op eq '<<' || $op eq '>>') && defined($operand_widths[0]);
+    if ($op =~ /\A(?:\+|-|\*|\/|%|&|\||\^)\z/) {
+        return undef if grep { !defined($_) || $_ <= 0 } @operand_widths;
+        my $max = 1;
+        for my $width (@operand_widths) {
+            $max = $width if $width > $max;
+        }
+        return $max;
+    }
+
+    return undef;
 }
 
 sub _validate_isf_param_value {
@@ -2815,7 +2932,7 @@ sub _activation_input_assignments {
     return map {
         +{
             lhs         => $_->{port},
-            rhs         => $_->{actor_signal},
+            rhs         => _activation_binding_actor_expr_text($_),
             op          => '=',
             source_kind => $source_kind,
         }
@@ -4391,7 +4508,7 @@ sub _build_rules {
                     my $width = ($target_ports{$binding->{port}} || {})->{width} // 1;
                     push @a, {
                         lhs         => $payload,
-                        rhs         => $binding->{actor_signal},
+                        rhs         => _activation_binding_actor_expr_text($binding),
                         op          => '<-',
                         source_kind => 'rule_trigger_payload_source',
                     };
