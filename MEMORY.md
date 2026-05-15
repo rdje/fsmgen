@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF activation parameter override tree closed
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.5` in
+  [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md),
+  closing the activation-parameter override tree.
+- Direct `(on start (params ...))` is now explicitly regression-covered as a
+  fail-closed unsupported entry-body form in
+  [t/1195-isf-sample-clause-boundary.t](t/1195-isf-sample-clause-boundary.t).
+- The closure slice keeps the existing scheduler behavior: `(on ...)` accepts
+  only `(sample port as name)` body clauses, and unsupported direct activation
+  parameter syntax is rejected before scheduled artifacts are emitted.
+- No scheduler, schedule-report, public manifest, or HDL shape change was
+  required beyond the focused test and task-tree/status closure.
+- The next R14 work requested by the user is a single self-contained ISF
+  downstream integration specification. It must get a fresh task-tree owner
+  before implementation.
 ## 2026-05-16: ISF direct activation parameter boundary specified
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.4` in
   [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md).

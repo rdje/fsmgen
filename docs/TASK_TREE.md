@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ACTIVATION-PARAM-OVERRIDES` | `active` | `R14` | `ISF-ACTIVATION-PARAM-OVERRIDES.5` | [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md) |
+| `_None_` | `_None_` | `_None_` | `_None_` | `_None_` |
 
 ## Proposed Task Trees
 
@@ -39,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
 | `ISF-CLOCK-DOMAINS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) |
+| `ISF-ACTIVATION-PARAM-OVERRIDES` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md) |
 | `ISF-PUBLIC-CONTRACT` | `done` | `R14` | `closed` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 | `ISF-DYNAMIC-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md) |
 | `ISF-ACTIVATION-BIND-EXPRESSIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md](docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md) |

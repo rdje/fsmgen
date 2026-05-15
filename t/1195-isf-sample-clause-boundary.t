@@ -118,6 +118,17 @@ ISF
     (complete done)))
 ISF
 
+    assert_lower_rejected(<<'ISF', 'direct on params block', qr/\ATransaction 'main': on body supports only '\(sample port as name\)' clauses/);
+(actor direct_on_params
+  (clock clk)
+  (interface (input start) (input req) (output done))
+  (transaction main
+    (on start
+      (params
+        (WIDTH 16)))
+    (complete done)))
+ISF
+
     assert_lower_rejected(<<'ISF', 'malformed on body sample', qr/\ATransaction 'main': sample requires '\(sample port as name\)' in on body/);
 (actor malformed_on_body_sample
   (clock clk)

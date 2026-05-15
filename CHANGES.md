@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF activation parameter override tree closed
+- Completed `ISF-ACTIVATION-PARAM-OVERRIDES.5`, closing the
+  `ISF-ACTIVATION-PARAM-OVERRIDES` task tree.
+- Added focused regression coverage in
+  [t/1195-isf-sample-clause-boundary.t](t/1195-isf-sample-clause-boundary.t)
+  proving direct `(on start (params ...))` fails closed as an unsupported
+  `(on ...)` body form before scheduled artifacts are emitted.
+- Kept scheduler/report/manifest behavior unchanged: direct `(on ...)`
+  activation accepts only `(sample port as name)` body clauses, while static
+  per-activation specialization remains on generated activation forms.
+- Updated task-tree, README, roadmap, and live recovery status to record the
+  closed activation-parameter override tree and the next requested R14 need:
+  one self-contained `.isf` downstream integration specification.
 ### R14 — ISF direct activation parameter boundary specified
 - Completed `ISF-ACTIVATION-PARAM-OVERRIDES.4`.
 - Specified direct `(on ...)` activation as fail-closed for activation-site

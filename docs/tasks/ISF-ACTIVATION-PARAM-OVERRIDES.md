@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-ACTIVATION-PARAM-OVERRIDES`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
 - Last updated: `2026-05-16`
@@ -44,7 +44,7 @@ direct transaction activation boundary.
 ## Task Tree
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES`
-  Status: `active`
+  Status: `done`
   Goal: `Track and ship the remaining activation-site parameter override work.`
   Children: `ISF-ACTIVATION-PARAM-OVERRIDES.1`,
   `ISF-ACTIVATION-PARAM-OVERRIDES.2`,
@@ -81,17 +81,17 @@ direct transaction activation boundary.
   Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.4: specify direct activation params`
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES.5`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement or close the direct transaction activation parameter boundary.`
   Acceptance: `The implemented scheduler behavior, diagnostics, public docs, report contract, and tests match the decision from ISF-ACTIVATION-PARAM-OVERRIDES.4; unsupported direct activation parameter syntax is explicitly rejected rather than ignored.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c t/1195-isf-sample-clause-boundary.t`; `prove -Iperl t/1195-isf-sample-clause-boundary.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.5: close direct activation params`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `pending` | The direct transaction activation parameter boundary is specified; implementation/test closure remains. |
+| 1 | `closed` | `done` | All known leaves in this task tree are complete. The next PNT selection should use the roadmap/task-tree frontier outside this tree. |
 
 ## Decisions
 
@@ -147,6 +147,11 @@ direct transaction activation boundary.
   `(sample ...)`, or supported activation-site `(bind ...)` payloads. Static
   specialization belongs on generated activation forms such as `spawn`,
   parameterized blocking `do`, and parameterized rule `trigger`.
+- `2026-05-16`: The implementation/closure leaf keeps the existing fail-closed
+  lowerer behavior for unsupported `(on ...)` body forms and adds focused
+  coverage for `(on start (params ...))` through
+  [t/1195-isf-sample-clause-boundary.t](../../t/1195-isf-sample-clause-boundary.t).
+  No scheduler, report, or manifest shape change is required.
 
 ## Focused Test Plan
 
@@ -198,6 +203,7 @@ direct transaction activation boundary.
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `perl -Iperl -c` for changed parser/lowering/contract modules and new/updated tests; focused trigger/composition/public-contract `prove` set; broader `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `perl -Iperl -c t/1195-isf-sample-clause-boundary.t`; `prove -Iperl t/1195-isf-sample-clause-boundary.t t/1112-isf-public-interface-contract.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -207,7 +213,7 @@ direct transaction activation boundary.
 | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `ISF-ACTIVATION-PARAM-OVERRIDES.2: specify trigger params` | Selected generated child activation as the rule-trigger parameter override contract; implementation remains pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `ISF-ACTIVATION-PARAM-OVERRIDES.3: ship trigger params` | Shipped generated-child rule-trigger parameter overrides; direct activation remains pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `ISF-ACTIVATION-PARAM-OVERRIDES.4: specify direct activation params` | Selected a fail-closed boundary for direct `(on ...)` activation parameters. |
-| `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `pending` | Pending. |
+| `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `ISF-ACTIVATION-PARAM-OVERRIDES.5: close direct activation params` | Added focused fail-closed coverage and closed the tree. |
 
 ## Changelog
 
@@ -220,3 +226,5 @@ direct transaction activation boundary.
   frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.4`.
 - `2026-05-16`: Completed `ISF-ACTIVATION-PARAM-OVERRIDES.4`; the active
   frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.5`.
+- `2026-05-16`: Completed `ISF-ACTIVATION-PARAM-OVERRIDES.5`; the task tree
+  is closed.

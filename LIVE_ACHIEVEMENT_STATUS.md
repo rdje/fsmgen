@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF activation parameter override tree closed
+- Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.5`.
+- Added focused regression coverage proving direct
+  `(on start (params ...))` fails closed as an unsupported `(on ...)` body
+  form before scheduled artifacts are emitted.
+- The existing scheduler boundary remains unchanged: direct `(on ...)`
+  activation accepts only `(sample port as name)` nested body clauses; static
+  per-activation specialization belongs on generated activation forms.
+- The `ISF-ACTIVATION-PARAM-OVERRIDES` tree is now closed. The next requested
+  R14 work is a single self-contained downstream integration specification for
+  `.isf`, which needs a fresh task-tree owner before implementation.
+
 ## 2026-05-16: R14 — ISF direct activation parameter boundary specified
 - Completed R14 task-tree slice: `ISF-ACTIVATION-PARAM-OVERRIDES.4`.
 - Direct `(on ...)` activation is specified as fail-closed for activation-site

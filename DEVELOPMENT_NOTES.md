@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: activation params closure stays test-only
+- `ISF-ACTIVATION-PARAM-OVERRIDES.5` closes the direct activation parameter
+  boundary without scheduler edits because the existing `(on ...)` validator
+  already rejects every non-sample entry-body clause before scheduled emission.
+- The new regression names `(on start (params ...))` specifically so the
+  fail-closed behavior cannot regress into either silent ignore or accidental
+  runtime parameter semantics.
+- The next downstream-readiness issue is documentation packaging, not this
+  activation behavior: `.isf` has a live spec and tested implementation, but
+  downstream consumers need one self-contained integration contract instead of
+  reconstructing the language surface from several repo artifacts.
 ## 2026-05-16: direct entry params stay fail-closed
 - `ISF-ACTIVATION-PARAM-OVERRIDES.4` deliberately does not create a
   `(on ... (params ...))` surface. Direct entry activation has no caller-owned
