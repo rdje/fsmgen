@@ -140,6 +140,7 @@ my $expected_tested_by = [
     't/1237-isf-fifo-library-fixture.t',
     't/1238-isf-fifo-library-hdl-generation.t',
     't/1239-isf-library-catalog-contract.t',
+    't/1240-isf-transaction-port-declarations.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

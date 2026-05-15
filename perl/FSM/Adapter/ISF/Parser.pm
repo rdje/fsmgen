@@ -45,7 +45,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     interface     => { inputs => [...], outputs => [...] },
 #     handshakes    => {}, # deprecated compatibility placeholder; parsed
 #                          # handshake clauses are validated then ignored
-#     transactions  => [ { name => ..., clauses => [...] }, ... ],
+#     transactions  => [ { name => ..., ports => { inputs => [...], outputs => [...] }, clauses => [...] }, ... ],
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
 #     storage       => [ { kind => "state"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
@@ -1014,13 +1014,83 @@ sub _parse_transaction($self, $clause) {
     confess "Error: (transaction ...) requires a scalar name\n"
         unless defined($name) && !ref($name) && length($name);
     my @clauses;
+    my $ports = { inputs => [], outputs => [] };
+    my $saw_ports;
 
     for my $i (2 .. $#$clause) {
-        push @clauses, $clause->[$i];
+        my $body_clause = $clause->[$i];
+        if (ref($body_clause) eq 'ARRAY'
+            && @$body_clause
+            && defined($body_clause->[0])
+            && !ref($body_clause->[0])
+            && $body_clause->[0] eq 'ports')
+        {
+            confess "Error: transaction '$name' accepts only one '(ports ...)' clause\n"
+                if $saw_ports++;
+            $ports = $self->_parse_transaction_ports($body_clause, $name);
+            next;
+        }
+
+        push @clauses, $body_clause;
     }
     $self->_validate_transaction_phase_stage_clauses(\@clauses);
 
-    return { name => $name, clauses => \@clauses };
+    return { name => $name, ports => $ports, clauses => \@clauses };
+}
+
+sub _parse_transaction_ports($self, $clause, $transaction_name) {
+    confess "Error: transaction '$transaction_name' ports require '(ports (input name [(width N)]) ...)'\n"
+        unless @$clause >= 2;
+
+    my @inputs;
+    my @outputs;
+    my %seen_names;
+
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: transaction '$transaction_name' port entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry >= 2;
+
+        my ($direction, $name, @options) = @$entry;
+        confess "Error: transaction '$transaction_name' port direction must be input or output\n"
+            unless defined($direction) && !ref($direction) && ($direction eq 'input' || $direction eq 'output');
+        confess "Error: transaction '$transaction_name' port requires a scalar HDL identifier name\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: transaction '$transaction_name' has duplicate port '$name'\n"
+            if $seen_names{$name}++;
+
+        my $width = 1;
+        my %seen_options;
+        for my $option (@options) {
+            confess "Error: transaction '$transaction_name' port '$name' options must be list forms\n"
+                unless ref($option) eq 'ARRAY' && @$option;
+            my $option_name = $option->[0];
+            confess "Error: transaction '$transaction_name' port '$name' option name must be scalar\n"
+                unless defined($option_name) && !ref($option_name) && length($option_name);
+            confess "Error: transaction '$transaction_name' port '$name' has duplicate '$option_name' option\n"
+                if $seen_options{$option_name}++;
+
+            if ($option_name eq 'width') {
+                confess "Error: transaction '$transaction_name' port '$name' width requires '(width positive_integer)'\n"
+                    unless @$option == 2
+                        && defined($option->[1])
+                        && !ref($option->[1])
+                        && $option->[1] =~ /\A[1-9][0-9]*\z/;
+                $width = 0 + $option->[1];
+                next;
+            }
+
+            confess "Error: transaction '$transaction_name' port '$name' has unsupported option '$option_name'\n";
+        }
+
+        my $parsed = { name => $name, width => $width };
+        if ($direction eq 'input') {
+            push @inputs, $parsed;
+        } else {
+            push @outputs, $parsed;
+        }
+    }
+
+    return { inputs => \@inputs, outputs => \@outputs };
 }
 
 sub _parse_rule($self, $clause) {

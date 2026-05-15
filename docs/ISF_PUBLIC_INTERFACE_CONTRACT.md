@@ -314,8 +314,13 @@ actor shell is returned.
 The actor-shell transaction subshape is checked by
 [t/1163-isf-public-actor-shell-transaction-shape-audit.t](../t/1163-isf-public-actor-shell-transaction-shape-audit.t)
 to keep parser-returned transaction entries discoverable as unique non-empty
-scalar `name` plus `clauses` array shells while leaving the clause payload
-contents private scheduler input.
+scalar `name`, a `ports` hash with `inputs`/`outputs` arrays, and a `clauses`
+array shell while leaving the clause payload contents private scheduler input.
+The transaction-port declaration boundary is checked by
+[t/1240-isf-transaction-port-declarations.t](../t/1240-isf-transaction-port-declarations.t)
+so parser-accepted `(ports ...)` clauses normalize to directional
+`name`/`width` entries and malformed direction, duplicate, width, or option
+forms fail before scheduler lowering.
 The transaction-name boundary is checked by
 [t/1185-isf-transaction-name-boundary.t](../t/1185-isf-transaction-name-boundary.t)
 so duplicate transaction names fail before actor-shell return and downstream
@@ -1198,10 +1203,12 @@ These are not stable public interfaces yet:
 - The raw actor hash returned by the parser as a whole.
 - Actor fields beyond the advertised `actor_shell_required_keys`.
 - Raw library resolver state and raw exported library actor hashes.
-- Transaction port declarations, activation-time bindings, and actor output
-  readback policy. These are active design work under `ISF-PORT-BINDING`, but
-  no machine-readable public key family is advertised until the source syntax,
-  lowering, diagnostics, report projection, and regressions ship.
+- Transaction port declarations beyond the parser-shell `ports.inputs[]` /
+  `ports.outputs[]` `name`/`width` metadata. Activation-time bindings and
+  actor output readback policy remain active design work under
+  `ISF-PORT-BINDING`; no machine-readable public binding/report key family is
+  advertised until lowering, diagnostics, report projection, and regressions
+  ship.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

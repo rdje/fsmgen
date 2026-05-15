@@ -104,7 +104,36 @@ sub assert_actor_shell_transaction_shape {
             defined($transaction->{name}) && !ref($transaction->{name}) && length($transaction->{name}),
             "$label transaction '$transaction->{name}' has scalar name",
         );
+        ok(ref($transaction->{ports}) eq 'HASH', "$label transaction '$transaction->{name}' has ports hash");
+        ok(ref($transaction->{ports}{inputs}) eq 'ARRAY', "$label transaction '$transaction->{name}' has input ports array");
+        ok(ref($transaction->{ports}{outputs}) eq 'ARRAY', "$label transaction '$transaction->{name}' has output ports array");
+        assert_transaction_ports($transaction->{ports}{inputs}, "$label transaction '$transaction->{name}' input ports");
+        assert_transaction_ports($transaction->{ports}{outputs}, "$label transaction '$transaction->{name}' output ports");
         ok(ref($transaction->{clauses}) eq 'ARRAY', "$label transaction '$transaction->{name}' has clauses array");
+    }
+}
+
+sub assert_transaction_ports {
+    my ($ports, $label) = @_;
+    my %seen;
+
+    for my $port (@{$ports || []}) {
+        ok(ref($port) eq 'HASH', "$label entry is a hash reference");
+        my $name = ref($port) eq 'HASH' && defined($port->{name}) && !ref($port->{name})
+            ? $port->{name}
+            : '<invalid>';
+        ok(
+            ref($port) eq 'HASH' && $name =~ /\A[A-Za-z_][A-Za-z0-9_]*\z/,
+            "$label port '$name' has scalar HDL identifier name",
+        );
+        ok(!$seen{$name}++, "$label port '$name' is unique within its direction");
+        ok(
+            ref($port) eq 'HASH'
+                && defined($port->{width})
+                && !ref($port->{width})
+                && $port->{width} =~ /\A[1-9][0-9]*\z/,
+            "$label port '$name' has positive integer width",
+        );
     }
 }
 

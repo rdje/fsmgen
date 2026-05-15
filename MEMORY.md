@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF transaction port declarations
+- Completed `ISF-PORT-BINDING.2` in
+  [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).
+- Transactions now accept a single `(ports ...)` declaration clause. Each port
+  entry is directional (`input` or `output`), has a scalar HDL identifier name,
+  and may carry a positive integer `(width N)` option; omitted width means 1.
+- The public parser actor shell now exposes each transaction's normalized
+  `ports.inputs[]` and `ports.outputs[]` `name`/`width` entries. The parser
+  removes `(ports ...)` from scheduler body clauses, so declared-but-unbound
+  ports still have no scheduled `.fsm` or HDL behavior.
+- Added [t/1240-isf-transaction-port-declarations.t](t/1240-isf-transaction-port-declarations.t)
+  plus public actor-shell and tested-by metadata coverage.
+- The next active R14 frontier is `ISF-PORT-BINDING.3`, explicit
+  activation-site port bindings and lowering contract.
 ## 2026-05-15: ISF port binding contract specification
 - Completed `ISF-PORT-BINDING.1` in
   [docs/tasks/ISF-PORT-BINDING.md](docs/tasks/ISF-PORT-BINDING.md).
@@ -7,7 +21,8 @@ This is the live continuity document for fast session recovery after crashes, re
   record transaction ports, activation-time `(bind ...)` candidates for
   `(do ...)`, `(spawn ...)`, and `(trigger ...)`, actor input read-only
   policy, actor output assignment/conflict policy, and the same-cycle
-  visibility decision that must be resolved before parser acceptance.
+  visibility decision that must be resolved before activation-binding
+  acceptance.
 - [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
   now explicitly treats transaction-port declarations, activation bindings,
   and actor output readback as non-public until syntax, lowering,

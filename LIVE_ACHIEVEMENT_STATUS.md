@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF transaction port declarations
+- Active R14 task-tree slice: `ISF-PORT-BINDING.2` is complete.
+- Transactions now parse a single `(ports ...)` declaration into public
+  actor-shell metadata: `ports.inputs[]` and `ports.outputs[]` entries with
+  scalar `name` and positive integer `width`.
+- Declared-but-unbound ports remain parser metadata only; they are not lowered
+  into scheduled `.fsm` or HDL behavior until activation bindings ship.
+- The next active R14 frontier is `ISF-PORT-BINDING.3`, explicit transaction
+  port bindings at activation sites.
+
 ## 2026-05-15: R14 — ISF port binding contract specification
 - Active R14 task-tree slice: `ISF-PORT-BINDING.1` is complete.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) now records the proposed

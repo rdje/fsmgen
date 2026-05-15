@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF transaction port declaration parser
+- `(ports ...)` is parsed before scheduler validation so the public actor shell
+  can expose transaction boundary intent without pretending binding semantics
+  already exist. The declaration is removed from transaction body clauses;
+  this keeps the current scheduler from seeing an unsupported action while
+  preserving a stable parser-facing shell for downstream consumers.
+- The parser accepts only a deliberately small entry shape: direction, scalar
+  HDL identifier, and optional positive integer width. That is enough for
+  width/direction-aware binding work next, and it leaves reset/default
+  payload policy out until activation semantics are specified.
+- Duplicate detection is transaction-local and crosses directions. A
+  transaction cannot have both `(input addr)` and `(output addr)` because
+  downstream binding and report surfaces need one unambiguous port namespace.
 ## 2026-05-15: ISF port binding contract specification
 - The first contract keeps transaction ports separate from actor interfaces.
   Actor interfaces describe module pins; transaction ports describe local

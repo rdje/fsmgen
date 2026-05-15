@@ -383,6 +383,7 @@ sub build_isf_public_interface_contract {
             't/1237-isf-fifo-library-fixture.t',
             't/1238-isf-fifo-library-hdl-generation.t',
             't/1239-isf-library-catalog-contract.t',
+            't/1240-isf-transaction-port-declarations.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -712,7 +713,7 @@ sub isf_public_interface_actor_shell_interface_shape {
 }
 
 sub isf_public_interface_actor_shell_transaction_shape {
-    return 'transactions is an array of public transaction shell entries; each entry has unique non-empty scalar name and clauses array, while clause payload contents remain private scheduler input';
+    return 'transactions is an array of public transaction shell entries; each entry has unique non-empty scalar name, ports hash with inputs/outputs arrays, and clauses array, while clause payload contents remain private scheduler input';
 }
 
 sub isf_public_interface_actor_shell_rule_shape {

@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF transaction port declarations
+- Completed `ISF-PORT-BINDING.2` by adding parser support for
+  transaction-local `(ports ...)` declarations.
+- Updated
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so each
+  transaction returns a normalized public `ports` shell with `inputs` and
+  `outputs` arrays of `name`/`width` entries, while the declaration is kept
+  out of scheduler body clauses until binding/lowering ships.
+- Updated
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
+  and public metadata audits so the advertised actor-shell transaction shape
+  includes the `ports` hash.
+- Added
+  [t/1240-isf-transaction-port-declarations.t](t/1240-isf-transaction-port-declarations.t)
+  for accepted declarations, default width, scheduler pass-through behavior
+  for declared-but-unbound ports, and malformed direction/name/width/option
+  diagnostics.
+- The active R14 frontier advances to `ISF-PORT-BINDING.3`.
 ### R14 — ISF port binding contract specification
 - Completed `ISF-PORT-BINDING.1` by documenting the public source and runtime
   direction for transaction ports, activation bindings, and actor pin access.

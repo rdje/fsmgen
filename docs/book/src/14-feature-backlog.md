@@ -355,7 +355,8 @@ becomes a support claim.
 
 ### Transaction Ports And Actor Pin Access
 
-Status: active task tree, specification first.
+Status: active task tree; transaction `(ports ...)` declarations are parsed,
+bindings/lowering remain backlog.
 
 Goal: make it easy to connect actor variables, actor-owned storage, and actor
 top-level pins to transaction ports so rules and transactions can exchange
@@ -369,7 +370,7 @@ are readable observations and should not be writable from ISF. Actor output
 pins are writable targets, but they must use the same assignment, fan-in,
 priority/resource, and runtime-conflict rules as any other driven LHS.
 
-Candidate shape:
+Shipped declaration shape:
 
 ```lisp
 (transaction read_word
@@ -377,6 +378,19 @@ Candidate shape:
     (input addr (width 32))
     (output data (width 32)))
   ...)
+```
+
+The parser accepts at most one `(ports ...)` clause per transaction. Each port
+has direction `input` or `output`, a scalar HDL identifier name, and optional
+positive integer `(width N)`; omitted width means 1. The normalized public
+transaction shell has `ports.inputs[]` and `ports.outputs[]` entries with
+`name` and `width`. The declaration is parser metadata only until binding
+lowering ships, so declared-but-unbound ports do not change scheduled `.fsm`
+or HDL behavior by themselves.
+
+Candidate binding shape:
+
+```lisp
 
 (do read_word
   (bind

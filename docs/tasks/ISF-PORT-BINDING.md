@@ -70,14 +70,18 @@ reviewable `.fsm` signals with conflict checks.
   Commit: `ISF-PORT-BINDING.1: specify port binding contract`
 
 - ID: `ISF-PORT-BINDING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement transaction port declarations and parser diagnostics.`
   Acceptance: Transactions accept the selected port-declaration syntax,
   reject malformed, duplicate, unknown-width, or direction-invalid forms, and
   preserve a scheduler-consumable normalized shell without freezing raw parser
   internals.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`;
+  `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`;
+  `prove -I perl t/1240-isf-transaction-port-declarations.t`; focused public
+  contract/CI-tier suite; `./bin/ci-regression isf --no-book`;
+  `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PORT-BINDING.2: parse transaction ports`
 
 - ID: `ISF-PORT-BINDING.3`
   Status: `pending`
@@ -113,7 +117,7 @@ reviewable `.fsm` signals with conflict checks.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PORT-BINDING.2` | `pending` | The source contract now exists; the next slice should implement parser support for declared transaction ports and fail-closed diagnostics. |
+| 1 | `ISF-PORT-BINDING.3` | `pending` | Transaction port declarations now parse; the next slice should implement explicit activation-site bindings and their lowering contract. |
 
 ## Design Notes
 
@@ -146,21 +150,25 @@ reviewable `.fsm` signals with conflict checks.
   escape hatch.
 - `2026-05-15`: Actor input pins are readable but not writable. Actor output
   pins are writable only through the normal ISF assignment/conflict model.
-- `2026-05-15`: Do not implement syntax before specifying same-cycle
-  visibility, direction checking, width checking, binding lifetime, and
-  conflict/report behavior.
-- `2026-05-15`: Candidate syntax uses a transaction-local `(ports ...)`
-  declaration and activation-local `(bind ...)` blocks on `(do ...)`,
-  `(spawn ...)`, and `(trigger ...)`, pending implementation validation.
-- `2026-05-15`: Same-cycle visibility remains the key implementation
-  decision. The first implementation must choose live binding, activation
-  snapshot, or explicit author-selected timing before parser acceptance.
+- `2026-05-15`: Do not implement activation-binding syntax before specifying
+  same-cycle visibility, direction checking, width checking, binding lifetime,
+  and conflict/report behavior.
+- `2026-05-15`: Shipped declaration syntax uses a transaction-local
+  `(ports ...)` clause. Candidate binding syntax uses activation-local
+  `(bind ...)` blocks on `(do ...)`, `(spawn ...)`, and `(trigger ...)`,
+  pending implementation validation.
+- `2026-05-15`: Same-cycle visibility remains the key binding implementation
+  decision. The binding implementation must choose live binding, activation
+  snapshot, or explicit author-selected timing before accepting activation
+  `(bind ...)` forms.
+- `2026-05-15`: Transaction-local `(ports ...)` declarations are accepted by
+  the parser as public actor-shell metadata only. Each transaction has one
+  normalized `ports` hash with directional `inputs` and `outputs` arrays of
+  `name`/`width` entries; the declaration is removed from scheduler body
+  clauses until activation bindings and lowering ship.
 
 ## Open Questions
 
-- Should transaction ports be declared in a dedicated `(ports ...)` clause,
-  reused from `(interface ...)`, or separated into input/output-specific
-  clauses?
 - Should data-bearing `(trigger transaction ...)` use inline bindings, a named
   binding block, or a rule-local trigger object?
 - Should `(do child)` and `(spawn child as name)` share one binding syntax, or
@@ -174,8 +182,9 @@ reviewable `.fsm` signals with conflict checks.
 
 ## Blockers
 
-- None for the specification leaf. Implementation leaves are blocked until
-  `ISF-PORT-BINDING.1` fixes the source syntax and runtime contract.
+- None for `ISF-PORT-BINDING.3`. Activation binding implementation still must
+  settle same-cycle visibility, missing/extra binding diagnostics, and
+  direction/width checks before accepting `(bind ...)` forms.
 
 ## Verification Log
 
@@ -183,6 +192,7 @@ reviewable `.fsm` signals with conflict checks.
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-PORT-BINDING` | `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PORT-BINDING.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PORT-BINDING.2` | `perl -I perl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -I perl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -I perl t/1240-isf-transaction-port-declarations.t`; focused public contract/CI-tier suite; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -190,6 +200,7 @@ reviewable `.fsm` signals with conflict checks.
 | --- | --- | --- |
 | `ISF-PORT-BINDING` | `R14: activate ISF port binding tree` | Task tree activation from transaction-port and actor-pin access discussion. |
 | `ISF-PORT-BINDING.1` | `ISF-PORT-BINDING.1: specify port binding contract` | Transaction port declaration/binding candidates, actor pin read/write policy, same-cycle visibility decision point, and conflict/report requirements. |
+| `ISF-PORT-BINDING.2` | `ISF-PORT-BINDING.2: parse transaction ports` | Parser-normalized transaction `(ports ...)` declarations with fail-closed diagnostics and public actor-shell contract coverage. |
 
 ## Changelog
 
@@ -197,3 +208,6 @@ reviewable `.fsm` signals with conflict checks.
   tree from the ISF feature discussion.
 - `2026-05-15`: Specified the first public contract direction in the spec,
   mdBook backlog, and public contract notes before implementation.
+- `2026-05-15`: Implemented parser support for transaction `(ports ...)`
+  declarations as public actor-shell metadata, with malformed declaration
+  diagnostics and regression coverage.
