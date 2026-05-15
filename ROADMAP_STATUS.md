@@ -2,6 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
+- Bootstrap/import-tree checkpoint: the session bootstrap reran the
+  [bin/fsmgen](bin/fsmgen) import-tree analysis on `2026-05-15`.
+  [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) now records
+  `195` reachable project files, `194` reachable `.pm` packages, the
+  serializable plan/report support family, the ISF generated composition-top
+  emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
+  the largest active feature-owner hotspot. This changes no shipped compiler
+  behavior and does not move the active R14 frontier.
 - Next decision point: continue the active `ISF-DYNAMIC-WAIT` feature tree.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the

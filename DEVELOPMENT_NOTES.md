@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: import-tree snapshots stay source-derived
+- The startup import-tree refresh remains a guardrail, not a roadmap lane by
+  itself. Its job is to keep [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  honest enough that later architecture work starts from the live runtime
+  spine instead of stale package memory.
+- The current static closure measures `195` reachable project files and `194`
+  reachable `.pm` packages from [bin/fsmgen](bin/fsmgen). The new count reflects
+  the serializable plan/report support family and the scheduler's generated
+  composition-top emitter being visible in the live import spine.
+- The largest reachable file is now
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm),
+  which is active R14 feature growth rather than an old facade problem. Future
+  ISF work should still watch for stable behavior families that can move into
+  bounded helper owners once their semantics stop changing rapidly.
+- No compiler behavior changed in this refresh; the active R14 frontier remains
+  `ISF-DYNAMIC-WAIT.3.3.6`.
 ## 2026-05-15: loop runtime wait samples preserve loop exits
 - Pending samples before `repeat`, `while`, or `until` body runtime waits can
   reuse the same one-shot wait-entry state as top-level and branch waits, but

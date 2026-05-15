@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: Bootstrap — import tree snapshot refreshed
+- Re-ran the README/session-bootstrap import-tree sanity pass.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to the current source-derived snapshot: `195` reachable project files and
+  `194` reachable `.pm` packages from [bin/fsmgen](bin/fsmgen).
+- The refreshed note records the serializable plan/report support family, the
+  ISF generated composition-top emitter, and the R14 `LoweringIR` growth as
+  the largest active feature-owner hotspot.
+- This changes no compiler behavior and leaves the active R14 frontier at
+  `ISF-DYNAMIC-WAIT.3.3.6`, expression-valued runtime wait counts.
+
 ## 2026-05-15: R14 — ISF repeat and loop runtime wait pending samples
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.5.4`.
 - `repeat`, `while`, and `until` bodies can now preserve pending samples

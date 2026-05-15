@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### Bootstrap — import tree snapshot refreshed
+- Re-ran the README/session-bootstrap startup analysis for
+  [bin/fsmgen](bin/fsmgen) and its project-owned `FSM::...` import tree.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  to the current `195` reachable project files / `194` reachable `.pm`
+  packages snapshot.
+- The architecture note now records the serializable plan/report support
+  family, the ISF generated composition-top emitter, and the current R14
+  `FSM::Scheduler::ISF::LoweringIR` growth as the largest active
+  feature-owner hotspot.
+- This is a documentation/bootstrap refresh only; shipped compiler behavior and
+  the active R14 dynamic-wait frontier are unchanged.
 ### R14 — ISF repeat and loop runtime wait pending samples
 - Completed `ISF-DYNAMIC-WAIT.3.3.5.4`.
 - Runtime waits inside `repeat`, `while`, and `until` bodies now accept pending

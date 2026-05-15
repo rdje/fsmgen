@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: Bootstrap import tree refreshed
+- Re-ran the `README.md` / `SESSION_BOOTSTRAP.md` startup pass before new
+  feature work.
+- Refreshed [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md)
+  from source: the live static import closure now measures `195` reachable
+  project files and `194` reachable `.pm` packages.
+- The refreshed snapshot records the serializable plan/report support family,
+  the ISF generated composition-top emitter in the scheduler spine, and the
+  current R14 `FSM::Scheduler::ISF::LoweringIR` growth as the largest active
+  feature-owner hotspot.
+- This was a documentation/bootstrap slice only. It changes no compiler
+  behavior and does not move the active R14 frontier:
+  `ISF-DYNAMIC-WAIT.3.3.6`, expression-valued runtime wait counts.
 ## 2026-05-15: ISF repeat and loop runtime wait pending samples
 - Completed `ISF-DYNAMIC-WAIT.3.3.5.4` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
