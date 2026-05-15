@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF actor constants and symbolic waits
+- Updated
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so actors
+  accept a singleton `(constants (NAME value) ...)` clause with unique
+  HDL-compatible names and non-negative integer literal values.
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so `(wait NAME)` resolves only actor constants and then lowers through the
+  same fixed wait-state chain or transparent zero-wait path as literal waits.
+  Actor/transaction `params` remain rejected as wait-count sources because they
+  are overrideable specialization values.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  and
+  [perl/FSM/Scheduler/ISF/Emitter/JSON.pm](perl/FSM/Scheduler/ISF/Emitter/JSON.pm)
+  so scheduled `.fsm` emits actor constants as `+constants` and schedule
+  reports expose bounded `actor_constants[]` provenance.
+- Refreshed focused wait/report tests, public contract metadata, the mdBook,
+  ISF spec, public contract doc, roadmap, task tree, and live docs.
 ### R14 — ISF non-literal wait-count contract
 - Added
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md)

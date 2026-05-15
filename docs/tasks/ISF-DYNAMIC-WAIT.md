@@ -56,15 +56,15 @@ changing the exact timing meaning of the shipped wait construct.
   Commit: `ISF-DYNAMIC-WAIT.1: specify non-literal waits`
 
 - ID: `ISF-DYNAMIC-WAIT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement statically resolved symbolic wait counts.`
   Acceptance: `(wait NAME)` accepts only names that resolve before lowering to
   non-negative integer constants, lowers exactly like the existing literal
   count surface, preserves transparent zero-count behavior, rejects unknown or
   non-integer symbols with targeted diagnostics, updates reports/docs/tests,
   and reaches SystemVerilog generation.
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1244-isf-wait-clause-lowering.t t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-DYNAMIC-WAIT.2: ship symbolic waits`
 
 - ID: `ISF-DYNAMIC-WAIT.3`
   Status: `pending`
@@ -81,7 +81,7 @@ changing the exact timing meaning of the shipped wait construct.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-DYNAMIC-WAIT.2` | `pending` | Static symbolic counts can reuse the literal wait lowering contract and are the lowest-risk non-literal surface. |
+| 1 | `ISF-DYNAMIC-WAIT.3` | `pending` | Runtime scalar waits are the remaining non-literal wait-count family, but need bypass-capable lowering. |
 
 ## Decisions
 
@@ -90,8 +90,8 @@ changing the exact timing meaning of the shipped wait construct.
   `K` active cycles; `K == 0` remains transparent fallthrough with no generated
   wait cycle.
 - `2026-05-15`: Statically resolved symbolic counts are compile-time counts,
-  not runtime payloads. Once resolved, they inherit the existing literal
-  lowering, report shape, and zero-count behavior.
+  not runtime payloads. Once resolved from actor-level `(constants ...)`, they
+  inherit the existing literal lowering, report shape, and zero-count behavior.
 - `2026-05-15`: Runtime dynamic counts are sampled at the wait-entry boundary
   for the current wait occurrence. Later changes to the source signal do not
   change that occurrence's remaining wait.
@@ -102,16 +102,16 @@ changing the exact timing meaning of the shipped wait construct.
 - `2026-05-15`: Dynamic wait report metadata must not overload the existing
   exact `cycles` integer. Static waits keep `cycles` as an integer. Dynamic
   waits need explicit count-kind/count-source/counter metadata when they ship.
+- `2026-05-15`: Actor-level `(constants (NAME value) ...)` is the first legal
+  symbolic wait source. Actor and transaction `params` are deliberately not
+  wait-count sources because they are overrideable specialization values and
+  cannot honestly choose the number of already-emitted wait states.
 
 ## Open Questions
 
-- Which existing symbol scopes are the first legal source for
-  `ISF-DYNAMIC-WAIT.2`: actor parameters only, package constants, or both?
-  This does not block the current completed specification leaf; it must be
-  answered before implementation.
 - Should runtime dynamic waits initially allow only scalar names, or also
   allow known-width expressions such as `(+ base extra)`? This does not block
-  symbolic count work.
+  the shipped symbolic constant work.
 
 ## Blockers
 
@@ -122,15 +122,20 @@ changing the exact timing meaning of the shipped wait construct.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-15` | `ISF-DYNAMIC-WAIT.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-DYNAMIC-WAIT.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1244-isf-wait-clause-lowering.t`; `prove -Iperl t/1244-isf-wait-clause-lowering.t t/1116-isf-public-schedule-report-key-family-audit.t t/1131-isf-public-top-level-discovery-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-DYNAMIC-WAIT.1` | `ISF-DYNAMIC-WAIT.1: specify non-literal waits` | Specifies the non-literal wait-count contract before parser/lowerer changes. |
+| `ISF-DYNAMIC-WAIT.2` | `ISF-DYNAMIC-WAIT.2: ship symbolic waits` | Ships actor constants as the static symbolic source for wait counts. |
 
 ## Changelog
 
 - `2026-05-15`: Created and activated the dynamic/symbolic wait task tree.
   Completed the specification leaf and made static symbolic counts the next
   PNT frontier.
+- `2026-05-15`: Completed implementation work for `ISF-DYNAMIC-WAIT.2`;
+  actor-level constants now resolve static symbolic wait counts and the current
+  frontier advances to runtime scalar dynamic waits.

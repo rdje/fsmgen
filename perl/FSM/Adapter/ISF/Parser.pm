@@ -14,6 +14,7 @@ use File::Slurp qw(read_file);
 use File::Spec;
 use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Debug;
+use FSM::Package::IntegerLiteralSupport;
 use FSM::Support::ISFResourceCatalog qw(
     isf_resource_arbiter_values
     isf_resource_kind_values
@@ -49,6 +50,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     rules         => [ { name => ..., when => ..., actions => [...] }, ... ],
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
 #     storage       => [ { kind => "var"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
+#     constants     => [ { name => ..., value => ... }, ... ],
 #     priorities    => [ ... ],
 #     imports       => [ ... ],
 #     library_uses  => [ ... ],
@@ -120,6 +122,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         rules        => [],
         resources    => [],
         storage      => [],
+        constants    => [],
         priorities   => [],
         drives       => {},
         phases       => [],
@@ -193,6 +196,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 $self->_claim_singleton_actor_clause($actor_name, 'storage', \%singleton_actor_clauses);
                 $result->{storage} = $self->_parse_storage($clause, $actor_name);
             }
+            when ('constants') {
+                $self->_claim_singleton_actor_clause($actor_name, 'constants', \%singleton_actor_clauses);
+                $result->{constants} = $self->_parse_actor_constants($clause, $actor_name);
+            }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
             when ('phase')     {
@@ -218,6 +225,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_validate_actor_priority_targets($result);
     $self->_validate_resource_user_targets($result);
     $self->_validate_storage_actor_names($result);
+    $self->_validate_actor_constant_names($result);
 
     fsm_trace_exit('Parser _build_actor completed', 3);
     return $result;
@@ -276,6 +284,43 @@ sub _parse_actor_params($self, $clause, $actor_name) {
     }
 
     return \@params;
+}
+
+sub _parse_actor_constants($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' constants require '(constants (NAME non_negative_integer_literal) ...)'\n"
+        unless @$clause >= 2;
+
+    my @constants;
+    my %seen;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' constants entries require '(NAME non_negative_integer_literal)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($name, $value) = @$entry;
+        confess "Error: actor '$actor_name' constant names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: actor '$actor_name' has duplicate constant '$name'\n"
+            if $seen{$name}++;
+        confess "Error: actor '$actor_name' constant '$name' requires a non-negative integer literal value\n"
+            unless _is_non_negative_integer_literal_value($value);
+        push @constants, {
+            name  => $name,
+            value => _clone_isf_value($value),
+        };
+    }
+
+    return \@constants;
+}
+
+sub _validate_actor_constant_names($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my %params = map { $_->{name} => 1 } @{$actor->{params} || []};
+    for my $constant (@{$actor->{constants} || []}) {
+        my $name = $constant->{name};
+        confess "Error: actor '$actor_name' constant '$name' conflicts with actor parameter '$name'\n"
+            if $params{$name};
+    }
+
+    return 1;
 }
 
 sub _parse_imports($self, $clause, $actor_name) {
@@ -790,6 +835,15 @@ sub _is_numeric_or_exact_width_literal {
     return 1 if $value =~ /\A\d+\z/;
     return 1 if $value =~ /\A\d+'[bBoOdDhH][0-9a-fA-F_xXzZ]+\z/;
     return 0;
+}
+
+sub _is_non_negative_integer_literal_value {
+    my ($value) = @_;
+    return 0 unless defined($value) && !ref($value);
+
+    my $integer = FSM::Package::IntegerLiteralSupport->integer_from_literal_like($value);
+    return 0 unless defined $integer;
+    return $integer->bcmp(0) >= 0;
 }
 
 sub _param_values_shape_compatible {

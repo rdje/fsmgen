@@ -247,20 +247,27 @@ wait state:
 If samples are pending before `(wait 0)`, they stay pending and are emitted on
 the next state-producing clause instead.
 
-Schedule reports expose each authored wait through `transaction_waits[]` with
-`transaction`, `cycles`, `entry_state`, `exit_state`, and `counter_signal`.
-Only waits with `N > 0` create report entries. `counter_signal` is null for
+Schedule reports expose each authored positive static wait through
+`transaction_waits[]` with `transaction`, resolved integer `cycles`,
+`entry_state`, `exit_state`, and `counter_signal`. Only waits whose resolved
+count is greater than zero create report entries. `counter_signal` is null for
 the current fixed-chain lowering.
 
-Non-literal counts are not accepted by the shipped lowerer yet. The active
-`ISF-DYNAMIC-WAIT` contract divides them into two future classes. A symbolic
-count that resolves before lowering to a non-negative integer must lower
-exactly like the literal form. A runtime scalar count must preserve the same
-effective timing: if the sampled value is zero, it must bypass the wait without
-an active wait cycle; if the sampled value is positive, the wait must consume
-exactly that many active cycles using known-width generated state or equivalent
-logic. A dynamic implementation must also report explicit count-kind and
-counter/source metadata instead of pretending the `cycles` integer is known.
+The shipped symbolic surface is `(wait NAME)`, where `NAME` is an actor-level
+constant declared with `(constants (NAME value) ...)`. The constant must
+resolve before lowering to a non-negative integer literal. Once resolved, it
+uses the same fixed-chain lowering as a literal: a resolved zero emits no wait
+state and a resolved positive count emits that many wait states. Actor or
+transaction `params` are not wait-count constants because they are overrideable
+after scheduled state emission.
+
+Runtime scalar counts remain unshipped. They must preserve the same effective
+timing before becoming public: if the sampled value is zero, the lowering must
+bypass the wait without an active wait cycle; if the sampled value is positive,
+the wait must consume exactly that many active cycles using known-width
+generated state or equivalent logic. A dynamic implementation must also report
+explicit count-kind and counter/source metadata instead of pretending the
+`cycles` integer is known.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

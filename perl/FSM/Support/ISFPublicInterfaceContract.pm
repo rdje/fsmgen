@@ -90,6 +90,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_scheduled_fsm_shape
     isf_public_interface_schedule_report_source_shape
     isf_public_interface_schedule_report_state_count_shape
+    isf_public_interface_schedule_report_actor_constant_keys
     isf_public_interface_schedule_report_storage_kind_values
     isf_public_interface_schedule_report_storage_optional_keys
     isf_public_interface_schedule_report_storage_required_keys
@@ -200,6 +201,7 @@ sub build_isf_public_interface_contract {
         schedule_report_scheduled_fsm_shape => isf_public_interface_schedule_report_scheduled_fsm_shape(),
         schedule_report_clock_shape => isf_public_interface_schedule_report_clock_shape(),
         schedule_report_watchdog_shape => isf_public_interface_schedule_report_watchdog_shape(),
+        schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
         schedule_report_compile_issues_success_shape => isf_public_interface_schedule_report_compile_issues_success_shape(),
         schedule_report_compile_issue_keys => isf_public_interface_schedule_report_compile_issue_keys(),
         schedule_report_compile_issue_source_keys => isf_public_interface_schedule_report_compile_issue_source_keys(),
@@ -470,6 +472,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_scheduled_fsm_shape
             schedule_report_clock_shape
             schedule_report_watchdog_shape
+            schedule_report_actor_constant_keys
             schedule_report_compile_issues_success_shape
             schedule_report_compile_issue_keys
             schedule_report_compile_issue_source_keys
@@ -715,7 +718,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
@@ -803,6 +806,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             clock
             reset
             watchdog
+            actor_constants
             port_count
             inputs
             outputs
@@ -1160,6 +1164,15 @@ sub isf_public_interface_schedule_report_watchdog_shape {
     return 'scalar watchdog limit when configured; null when omitted';
 }
 
+sub isf_public_interface_schedule_report_actor_constant_keys {
+    return [
+        qw(
+            name
+            value
+        ),
+    ];
+}
+
 sub isf_public_interface_schedule_report_multi_file_scope {
     return 'report transaction/state/dt/storage summaries describe the parent module; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; child scheduled .fsm text remains available through lower_result files';
 }
@@ -1402,6 +1415,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
     return {
         schedule_report_top_level_keys => isf_public_interface_schedule_report_top_level_keys(),
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
+        schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
         schedule_report_storage_required_keys => isf_public_interface_schedule_report_storage_required_keys(),
         schedule_report_storage_optional_keys => isf_public_interface_schedule_report_storage_optional_keys(),
         schedule_report_bank_access_keys => isf_public_interface_schedule_report_bank_access_keys(),

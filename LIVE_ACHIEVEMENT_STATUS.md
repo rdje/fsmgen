@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF actor constants and symbolic waits
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.2`.
+- Actors now accept `(constants (NAME value) ...)` for actor-scoped
+  non-negative integer compile-time constants.
+- Scheduled `.fsm` emits the constants as `+constants`, and schedule reports
+  expose bounded `actor_constants[]` entries.
+- `(wait NAME)` resolves actor constants and then follows the existing static
+  wait lowering: positive counts emit fixed wait-state chains, and zero counts
+  are transparent no-ops.
+- The active frontier is `ISF-DYNAMIC-WAIT.3`, runtime scalar dynamic waits.
+
 ## 2026-05-15: R14 — ISF non-literal wait-count contract
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.1`.
 - Added
@@ -13,7 +24,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Runtime scalar dynamic counts remain implementation backlog until the lowerer
   can preserve zero-count fallthrough, snapshot positive counts, use known
   counter widths/reset behavior, and expose dynamic report metadata.
-- The active frontier is `ISF-DYNAMIC-WAIT.2`.
+- This specification frontier later shipped under `ISF-DYNAMIC-WAIT.2`.
 
 ## 2026-05-15: R14 — ISF activation input binding expressions
 - Completed R14 task-tree slice: `ISF-ACTIVATION-BIND-EXPRESSIONS.1`.

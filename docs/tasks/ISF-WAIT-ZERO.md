@@ -86,7 +86,7 @@ are no longer a deferred edge case.
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-WAIT-ZERO.1` | `ISF-WAIT-ZERO.1: ship zero-count wait semantics` | `pending local commit` |
+| `ISF-WAIT-ZERO.1` | `ISF-WAIT-ZERO.1: ship zero-count wait semantics` | Completed and committed. |
 
 ## Changelog
 

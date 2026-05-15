@@ -22,6 +22,7 @@ sub emit($self, $ir) {
         clock          => $ir->{clock},
         reset          => $self->_reset_summary($ir->{reset}),
         watchdog       => $ir->{watchdog},
+        actor_constants => $self->_actor_constant_summary($ir),
         port_count     => scalar(@{$ir->{ports}}),
         inputs         => scalar(grep { $_->{direction} eq 'input'  } @{$ir->{ports}}),
         outputs        => scalar(grep { $_->{direction} eq 'output' } @{$ir->{ports}}),
@@ -55,6 +56,17 @@ sub _reset_summary($self, $reset) {
         kind     => $reset->{kind} // 'sync',
         polarity => $reset->{polarity} // 'active_high',
     };
+}
+
+sub _actor_constant_summary($self, $ir) {
+    return [
+        map {
+            {
+                name  => $_->{name},
+                value => _format_isf_value($_->{value}),
+            }
+        } @{$ir->{constants} || []}
+    ];
 }
 
 sub _storage_summary($self, $ir) {

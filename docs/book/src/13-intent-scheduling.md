@@ -39,6 +39,9 @@ clear lower-layer mapping, and clear runtime behavior.
   the actor can accept. The ready side (`can_accept`) is implicit.
 - **Variables are first-class**. `(sample ...)`, `(update ...)` — just like
   programming language variables. The scheduler handles persistence.
+- **Constants are structural**. Actor-level `(constants ...)` are compile-time
+  symbols for lowering decisions and emitted `.fsm` `+constants`; they are not
+  runtime ports and not overrideable `params`.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,
@@ -288,8 +291,9 @@ limitations are:
   Parameter-driven
   interface/storage widths, arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
-  transaction/drive exports, symbolic constants, derived parameter
-  expressions, and nested library imports remain backlog work.
+  transaction/drive exports, package/imported constants beyond actor-local
+  constants, derived parameter expressions, and nested library imports remain
+  backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,

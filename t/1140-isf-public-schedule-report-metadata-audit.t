@@ -41,6 +41,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_library_use_keys
     isf_public_interface_schedule_report_library_use_parameter_keys
     isf_public_interface_schedule_report_multi_file_scope
+    isf_public_interface_schedule_report_actor_constant_keys
     isf_public_interface_schedule_report_presence_key_family_map
     isf_public_interface_schedule_report_reset_keys
     isf_public_interface_schedule_report_storage_optional_keys
@@ -106,6 +107,10 @@ sub assert_schedule_report_metadata {
         [
             schedule_report_reset_keys =>
                 isf_public_interface_schedule_report_reset_keys(),
+        ],
+        [
+            schedule_report_actor_constant_keys =>
+                isf_public_interface_schedule_report_actor_constant_keys(),
         ],
         [
             schedule_report_storage_required_keys =>

@@ -345,13 +345,13 @@ The transaction-port binding schedule-report projection is checked by
 [t/1243-isf-port-binding-schedule-report.t](../t/1243-isf-port-binding-schedule-report.t)
 so successful in-process and CLI reports expose bounded binding provenance
 without exporting raw `LoweringIR` assignment internals.
-The literal transaction wait boundary is checked by
+The static transaction wait boundary is checked by
 [t/1244-isf-wait-clause-lowering.t](../t/1244-isf-wait-clause-lowering.t)
-so `(wait N)` accepts non-negative integer literals in transaction body
-contexts, lowers positive counts to reviewable fixed wait-state chains,
-treats `(wait 0)` as a transparent no-op, reaches HDL generation, exposes
-`transaction_waits[]` for positive counts, and rejects malformed or
-unsupported counts.
+so `(wait N)` accepts non-negative integer literals and actor constants in
+transaction body contexts, lowers positive resolved counts to reviewable fixed
+wait-state chains, treats resolved zero as a transparent no-op, reaches HDL
+generation, exposes `actor_constants[]` and `transaction_waits[]` provenance,
+and rejects malformed, unknown, parameter-backed, or dynamic counts.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test
@@ -796,6 +796,10 @@ verbose `(variable ...)`, plus fixed-depth `bank` declarations whose
 scalarized element names are scheduler input.
 Schedule reports still use coarse `kind: register` for generated storage
 class; that report value is not the source vocabulary.
+Actor roots may also carry parser-validated actor-local constants through a
+singleton `(constants ...)` clause. That field is not a required actor shell
+key, but the advertised value-shape string records that `constants` is an
+optional array reference when present.
 The bank access forms `(store <bank-name> <index> <value>)` and
 `(load <bank-name> <index> as <target>)` are now public parser support for
 declared actor-owned banks in rules and supported transaction contexts. The
@@ -1030,6 +1034,7 @@ scheduled_fsm
 clock
 reset
 watchdog
+actor_constants
 port_count
 inputs
 outputs
@@ -1055,6 +1060,7 @@ Current bounded nested and array summary families:
 
 ```text
 reset: name, kind, polarity
+actor_constants entries: name, value
 inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, entry_state, exit_state, counter_signal
@@ -1118,13 +1124,20 @@ entry's `states` array keeps scheduled `.fsm` state emission order for that
 transaction. The machine-readable contract advertises this through
 `schedule_report_transaction_ordering`.
 
+For each `actor_constants` entry, `name` is the actor-local constant name and
+`value` is the stringified compile-time value emitted into scheduled `.fsm`
+`+constants`. These constants are compile-time scheduler/source symbols, not
+runtime ports, not overrideable params, and not inferred storage.
+
 For each `transaction_waits` entry, `transaction` is the authored transaction
-name, `cycles` is the exact positive literal wait count, `entry_state` is the
-first generated wait state, `exit_state` is the following scheduled state
-after the wait chain, and `counter_signal` is currently JSON null because the
-shipped lowering emits fixed wait-state chains rather than hidden wait
-counters. `(wait 0)` is a no-op and does not create a report entry. The
-machine-readable contract advertises these through
+name, `cycles` is the exact positive resolved static wait count, `entry_state`
+is the first generated wait state, `exit_state` is the following scheduled
+state after the wait chain, and `counter_signal` is currently JSON null
+because the shipped lowering emits fixed wait-state chains rather than hidden
+wait counters. `(wait 0)` and symbolic waits that resolve to zero are no-ops
+and do not create report entries. Actor-local constants used by symbolic waits
+are reported separately through `actor_constants[]`. The machine-readable
+contract advertises these through
 `schedule_report_transaction_wait_keys`.
 
 For each `transaction_loops` entry, `transaction` is the authored transaction
@@ -1273,8 +1286,8 @@ Bounded but not fully frozen:
   updates this contract, the mdBook/spec, and focused regressions.
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
-  `resource_arbitration[]`, `transaction_waits[]`, `transaction_stages[]`,
-  `transaction_loops[]`, `temporal_contracts[]`,
+  `resource_arbitration[]`, `actor_constants[]`, `transaction_waits[]`,
+  `transaction_stages[]`, `transaction_loops[]`, `temporal_contracts[]`,
   `transaction_port_bindings[]`, `library_uses[]`, and `generated_composition`
   are bounded summaries, not raw IR exports.
 

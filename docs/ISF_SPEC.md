@@ -196,6 +196,8 @@ Supported actor clauses:
 - `(watchdog N)`
 - `(interface ...)`
 - actor-level `(params ...)` for reusable library actors
+- actor-level `(constants (NAME value) ...)` for non-negative integer
+  compile-time constants
 - actor-level `(imports ...)` and `(use ...)` for the first reusable library
   import-resolution slice
 - actor-level `(drive ...)` definitions
@@ -207,10 +209,30 @@ Supported actor clauses:
 
 Actor-shell singleton clauses are not mergeable. At most one `(clock ...)`,
 `(reset ...)`, `(watchdog ...)`, `(interface ...)`, `(params ...)`,
-`(imports ...)`, `(resources ...)`, and `(storage ...)` clause may appear in
-an actor.
+`(constants ...)`, `(imports ...)`, `(resources ...)`, and `(storage ...)`
+clause may appear in an actor.
 Duplicate singleton clauses are rejected before the parser returns an actor
 shell instead of letting later clauses overwrite earlier public fields.
+
+Actor constants:
+
+```lisp
+(constants
+  (WAIT_ZERO 0)
+  (WAIT_TWO 2)
+  (WAIT_ONE 4'd1))
+```
+
+`(constants ...)` is the first shipped ISF constant/symbol surface. It is
+actor-scoped, compile-time only, and currently accepts unique HDL-identifier
+names with non-negative integer literal values. Decimal literals and
+exact-width integer literals are accepted through the same shared integer
+literal support used elsewhere in FSMGen. Constants are emitted into scheduled
+`.fsm` as `+constants`, appear in schedule reports as `actor_constants[]`, and
+are the first legal symbolic source for static `(wait NAME)` counts. Actor or
+transaction `params` are not wait-count constants because they are overrideable
+specialization values; using them to choose a fixed generated wait-state count
+would make later overrides disagree with the emitted schedule.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -407,9 +429,9 @@ entry 0. The reusable FIFO fixture models the internal data bank through
 `(load data rd_ptr as data_out)`.
 Parameter-driven interface widths, arbitrary-depth memory-backed FIFO
 generation beyond the first `DEPTH=4` fixture, automatic non-zero reset values
-such as empty=1, standalone transaction/drive exports, symbolic constants,
-derived parameter expressions, and library actors that import other libraries
-remain deferred.
+such as empty=1, standalone transaction/drive exports, package/imported
+constants beyond actor-local constants, derived parameter expressions, and
+library actors that import other libraries remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -500,8 +522,9 @@ The first shipped storage forms are:
 - `(bank name (width N) (depth N))`: a fixed-depth actor-owned storage bank.
 
 All widths and depths are positive integer literals in the current shipped
-surface. Parameter-derived widths/depths, symbolic constants, dynamic storage
-depth, and memory-array backend emission remain deferred.
+surface. Parameter-derived widths/depths, actor constants as storage dimension
+symbols, dynamic storage depth, and memory-array backend emission remain
+deferred.
 
 Storage banks lower to deterministic scalar storage element names in the
 scheduled `.fsm` review artifact. For example,
@@ -1015,9 +1038,9 @@ does not create one child instance per iteration.
 
 `(wait N)` is the shipped unconditional transaction-local delay, distinct from
 `(await cond)` and `(repeat count body...)`. It does not test an external
-condition and it does not repeat a body. The current shipped surface is
-limited to non-negative integer literals: `N` must be a literal integer
-greater than or equal to 0.
+condition and it does not repeat a body. The shipped static count surface
+accepts either a non-negative integer literal or an actor constant name that
+resolves before lowering to a non-negative integer literal.
 
 Cycle semantics:
 - `wait 0` means no delay. It emits no wait state, consumes no active
@@ -1034,34 +1057,34 @@ Cycle semantics:
   cycles.
 
 The current lowering is a reviewable fixed scheduled-state chain for positive
-counts. `(wait N)` emits `N` generated `*_wait_*` states when `N > 0`; each
-state advances unconditionally to the next wait state or to the following
+static counts. `(wait N)` emits `N` generated `*_wait_*` states when `N > 0`;
+each state advances unconditionally to the next wait state or to the following
 transaction clause. `(wait 0)` emits no generated state and no
-`transaction_waits[]` entry. No hidden wait counter is introduced for this
-literal-count surface. Pending samples collected before a positive wait
-piggyback onto the first generated wait state using the same sample-assignment
-behavior as drive/await piggybacking. Pending samples collected before a zero
-wait are preserved and materialize on the next state-producing clause. The
-wait surface is accepted at the top level of a transaction body and inside the
-currently shipped inline body contexts: `when`, `switch`, and `repeat` bodies.
+`transaction_waits[]` entry. A symbolic `(wait NAME)` first resolves `NAME`
+through the actor constant table and then follows the same rule. No hidden
+wait counter is introduced for this static literal/constant surface. Pending
+samples collected before a positive wait piggyback onto the first generated
+wait state using the same sample-assignment behavior as drive/await
+piggybacking. Pending samples collected before a zero wait are preserved and
+materialize on the next state-producing clause. The wait surface is accepted
+at the top level of a transaction body and inside the currently shipped inline
+body contexts: `when`, `switch`, `repeat`, `while`, and `until` bodies.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
-- Negative literals, non-integer literals, list expressions, and named dynamic
-  counts are unsupported for the first shipped surface.
+- Negative literals, non-integer literals, list expressions, unknown constant
+  names, actor/transaction parameter names, and named dynamic signal counts
+  fail closed.
 - Waits outside transaction body contexts are invalid.
 
 Successful schedule reports expose a bounded `transaction_waits[]` summary
 rather than raw lowering internals. Each entry contains `transaction`,
 `cycles`, `entry_state`, `exit_state`, and `counter_signal`. Only waits with
 `N > 0` create entries. For the current fixed-state-chain lowering,
-`counter_signal` is JSON null.
+`counter_signal` is JSON null. For symbolic waits, `cycles` is the resolved
+integer count, not the symbol name.
 
-Planned non-literal count contract:
-- A symbolic count must resolve before lowering to a non-negative integer
-  constant. Once resolved, it is not dynamic hardware; it lowers exactly like
-  the existing literal wait surface. A resolved zero remains transparent and
-  creates no wait report entry.
+Remaining dynamic count contract:
 - A runtime scalar dynamic count is evaluated at the wait-entry boundary for
   the current occurrence. For positive counts, the value is snapshotted into a
   generated counter or equivalent schedule so later source changes do not alter
@@ -1412,8 +1435,8 @@ child activations. Child transaction parameter declarations must use unique
 HDL-identifier-compatible names. Overrides must use unique names declared by
 the child transaction; missing overrides use child defaults. Scalar numeric
 and exact-width literal overrides are width-flexible. Aggregate/list defaults
-require compatible aggregate/list override shape. Symbolic top constants are
-not accepted until ISF has an explicit constant/symbol surface. Malformed
+require compatible aggregate/list override shape. Actor-local constants are
+currently a wait-count source, not a parameter-override value source. Malformed
 forms, duplicate generated instance names, duplicate parameters, unknown
 targets, unknown override names, unsupported value shapes, and parameter
 declarations on non-generated transactions fail before misleading scheduled
@@ -1734,6 +1757,7 @@ fail-closed/deferred.
     "polarity": "active_low"
   },
   "watchdog": "65536",
+  "actor_constants": [],
   "port_count": 0,
   "inputs": 0,
   "outputs": 0,
@@ -1773,6 +1797,10 @@ The capability-manifest ISF public contract exposes the same policy through
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
 Those ordering fields are audited as exact paired metadata across direct and
 manifest views.
+The `actor_constants` array reports actor-level ISF constants in source order.
+Each entry contains `name` and stringified `value`. The values are
+compile-time constants; they are not runtime ports, not overrideable params,
+and not hidden scheduler registers.
 Each `dt_blocks` entry's `assignments` value is a non-negative count of
 assignment forms in the matching scheduled `.fsm` DT block, not an assignment
 payload list. The capability-manifest ISF public contract advertises this shape
@@ -1803,11 +1831,13 @@ transaction's `states` array keeps scheduled `.fsm` state emission order. The
 capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
 The `transaction_waits` array reports the shipped literal `(wait N)` surface
-for waits with `N > 0`. Each entry contains the authored transaction name,
-exact cycle count, entry wait state, exit state after the wait chain, and
-optional `counter_signal`. `(wait 0)` is a transparent no-op and creates no
-entry. The current fixed-state-chain lowering reports `counter_signal` as JSON
-null. The capability-manifest ISF public contract advertises the keys through
+and actor-constant `(wait NAME)` surface for waits whose resolved count is
+greater than zero. Each entry contains the authored transaction name, exact
+resolved cycle count, entry wait state, exit state after the wait chain, and
+optional `counter_signal`. `(wait 0)` and symbolic waits that resolve to zero
+are transparent no-ops and create no entry. The current fixed-state-chain
+lowering reports `counter_signal` as JSON null. The capability-manifest ISF
+public contract advertises the keys through
 `schedule_report_transaction_wait_keys`.
 The `transaction_loops` array reports the shipped top-level `while`/`until`
 loop subset. Each entry contains the authored transaction name, loop `kind`,
@@ -2113,13 +2143,13 @@ Focused tests:
   rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO
   library fixture/catalog slices:
   standalone transaction/drive exports,
-  symbolic constants, derived parameter expressions,
+  package/imported constants beyond actor-local constants, derived parameter expressions,
   parameter-derived storage dimensions, memory-array backend emission, and
   library actors that import other libraries.
-- Unconditional transaction delay beyond the shipped non-negative literal
-  `(wait N)` shape:
-  dynamic and symbolic counts remain deferred until width, reset, latency, and
-  report semantics are specified.
+- Unconditional transaction delay beyond the shipped non-negative literal and
+  actor-constant `(wait N)` shape:
+  runtime dynamic counts remain deferred until width, reset, latency, bypass,
+  and report semantics are implemented.
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
   `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict

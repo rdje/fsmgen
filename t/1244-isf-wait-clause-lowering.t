@@ -90,6 +90,63 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_boundary');
 };
 
+subtest 'symbolic actor constants lower through the literal wait contract' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-symbolic');
+(actor wait_symbolic
+  (clock clk)
+  (reset (rst_n async active_low))
+  (constants
+    (WAIT_ZERO 0)
+    (WAIT_TWO 2)
+    (WAIT_ONE 4'd1))
+  (interface
+    (input start)
+    (input din (width 8))
+    (output done)
+    (output out (width 8)))
+  (drive (out val)
+    (out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait WAIT_ZERO)
+    (wait WAIT_TWO)
+    (drive out hold)
+    (wait WAIT_ONE)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_symbolic.fsm'};
+    like($fsm, qr/\(\+constants[\s\S]*\(WAIT_ZERO 0\)[\s\S]*\(WAIT_TWO 2\)[\s\S]*\(WAIT_ONE 4'd1\)/, 'scheduled .fsm preserves actor constant declarations');
+    like(state_block($fsm, 'main_wait_1'), qr/\(<= \(hold din\)\)/, 'pending sample survives symbolic zero wait and piggybacks onto first positive wait');
+    like(state_block($fsm, 'main_wait_1'), qr/\(-> main_wait_2\)/, 'WAIT_TWO first generated wait state advances');
+    like(state_block($fsm, 'main_wait_2'), qr/\(-> main_drive_3\)/, 'WAIT_TWO second generated wait state exits to following clause');
+    like(state_block($fsm, 'main_wait_4'), qr/\(-> main_done_5\)/, 'exact-width WAIT_ONE emits one wait state');
+    unlike($fsm, qr/\bmain_wait_0\b/, 'symbolic zero wait emits no hidden wait state');
+
+    is_deeply(
+        $report->{actor_constants},
+        [
+            { name => 'WAIT_ZERO', value => '0' },
+            { name => 'WAIT_TWO',  value => '2' },
+            { name => 'WAIT_ONE',  value => "4'd1" },
+        ],
+        'schedule report exposes actor constants as bounded provenance',
+    );
+    is_deeply(
+        [map { $_->{cycles} } @{$report->{transaction_waits}}],
+        [2, 1],
+        'symbolic constants resolve to exact static wait counts',
+    );
+    is_deeply(
+        $report->{transactions}[0]{states},
+        [qw(main_idle_0 main_wait_1 main_wait_2 main_drive_3 main_wait_4 main_done_5)],
+        'symbolic zero wait creates no state gap and positive constants keep emitted order',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_symbolic');
+};
+
 subtest 'wait clauses lower in existing inline body contexts' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-nested');
 (actor wait_nested
@@ -196,7 +253,7 @@ ISF
 };
 
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in transaction body/);
 (actor wait_missing_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -207,7 +264,7 @@ subtest 'malformed wait clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'extra wait operand', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in transaction body/);
 (actor wait_extra_operand
   (clock clk)
   (reset (rst_n async active_low))
@@ -218,7 +275,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'negative wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in transaction body/);
 (actor wait_negative_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -229,7 +286,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'dynamic wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'dynamic wait count', qr/\ATransaction 'main': wait count 'cycles' is not a declared actor constant in transaction body; runtime dynamic wait counts are not shipped yet/);
 (actor wait_dynamic_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -240,7 +297,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal\)' in when body/);
+    assert_lower_rejected(<<'ISF', 'nested wait list count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant\)' in when body/);
 (actor wait_nested_list_count
   (clock clk)
   (reset (rst_n async active_low))
@@ -249,6 +306,19 @@ ISF
     (on start)
     (when cond
       (wait (cycles)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'negative actor constant', qr/\AError: actor 'wait_bad_constant' constant 'BAD_WAIT' requires a non-negative integer literal value/);
+(actor wait_bad_constant
+  (clock clk)
+  (reset (rst_n async active_low))
+  (constants
+    (BAD_WAIT -1))
+  (interface (input start) (output done))
+  (transaction main
+    (on start)
+    (wait BAD_WAIT)
     (complete done)))
 ISF
 

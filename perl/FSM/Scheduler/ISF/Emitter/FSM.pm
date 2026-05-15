@@ -21,6 +21,10 @@ sub emit($self, $ir) {
 
     push @lines, $self->_emit_header($ir);
     push @lines, '';
+    if (@{$ir->{constants} || []}) {
+        push @lines, $self->_emit_constants($ir);
+        push @lines, '';
+    }
     if (@{$ir->{params} || []}) {
         push @lines, $self->_emit_params($ir);
         push @lines, '';
@@ -40,6 +44,16 @@ sub emit($self, $ir) {
 
 sub _emit_header($self, $ir) {
     return "(?fsm:$ir->{actor_name}";
+}
+
+sub _emit_constants($self, $ir) {
+    my @l;
+    push @l, '  (+constants';
+    for my $constant (@{$ir->{constants} || []}) {
+        push @l, "    ($constant->{name} " . _format_param_value($constant->{value}) . ")";
+    }
+    push @l, '  )';
+    return join("\n", @l);
 }
 
 sub _emit_params($self, $ir) {

@@ -137,8 +137,9 @@ transaction-local `params` clause, emits child defaults as scheduled child
 parameter declarations on non-generated transactions, preserves per-instance
 override lists in the parent lowerer IR, and applies those overrides through
 the generated top. The first value domain is scalar/exact-width literals plus
-compatible aggregate/list literals; symbolic constants wait for an explicit
-ISF symbol surface.
+compatible aggregate/list literals. Actor-local constants are shipped for
+static wait counts, but symbolic parameter override values still need their
+own specialization contract before becoming valid parameter values.
 
 ### General Transaction Activation Parameter Overrides
 
@@ -369,8 +370,8 @@ behavior, and richer stage report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 
-Status: shipped base surface; symbolic and dynamic counts are tracked by the
-active `ISF-DYNAMIC-WAIT` task tree.
+Status: shipped base surface plus actor-constant symbolic counts; runtime
+dynamic counts remain in the active `ISF-DYNAMIC-WAIT` task tree.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
@@ -378,31 +379,29 @@ transaction body.
 Shipped contract: `(wait N)` advances only after exactly `N` active
 transaction clock cycles, without checking an external condition. It is
 different from `(await cond)`, which waits for a signal condition, and
-different from `(repeat N body...)`, which repeats a body. The current surface
-requires `N` to be a non-negative integer literal. `wait 0` is a transparent
-no-op that emits no wait state, consumes no active transaction cycle, and
-creates no report entry. `wait 1` occupies one generated wait state for one
-active cycle and advances on the next state transition; `wait N` contributes
-exactly `N` active cycles wherever it executes, including inside `when`,
-`switch`, and `repeat` bodies.
+different from `(repeat N body...)`, which repeats a body. The static surface
+accepts non-negative integer literals and actor-level constants declared with
+`(constants (NAME value) ...)`. `wait 0` and constants that resolve to zero are
+transparent no-ops that emit no wait state, consume no active transaction
+cycle, and create no report entry. `wait 1` occupies one generated wait state
+for one active cycle and advances on the next state transition; `wait N`
+contributes exactly `N` active cycles wherever it executes, including inside
+`when`, `switch`, `repeat`, `while`, and `until` bodies.
 
 The current lowering is a reviewable fixed scheduled-state chain. No hidden
-wait counter is introduced for the literal-count surface. Pending samples
-before a positive wait piggyback onto the first wait state; pending samples
-before `(wait 0)` remain pending for the next state-producing clause.
+wait counter is introduced for the static literal/constant surface. Pending
+samples before a positive wait piggyback onto the first wait state; pending
+samples before a zero wait remain pending for the next state-producing clause.
 Successful reports expose bounded `transaction_waits[]` entries with
-transaction name, cycle count, entry state, exit state, and optional counter
-signal; `counter_signal` is currently JSON null.
+transaction name, resolved cycle count, entry state, exit state, and optional
+counter signal; `counter_signal` is currently JSON null. Schedule reports also
+expose actor constants through `actor_constants[]`.
 
 Malformed waits such as missing counts, extra operands, negative counts,
-non-integer counts, list-expression counts, or unresolved/dynamic signal counts
-fail closed today.
+non-integer counts, list-expression counts, unknown constant names,
+actor/transaction parameter names, or dynamic signal counts fail closed today.
 
-Planned non-literal contract:
-- A statically resolved symbolic count is a compile-time count. The symbol must
-  resolve before lowering to a non-negative integer constant. After resolution,
-  it lowers exactly like the shipped literal surface, including transparent
-  `wait 0` fallthrough and integer `cycles` report metadata.
+Remaining dynamic contract:
 - A runtime scalar dynamic count is a runtime payload. It must be sampled at
   the wait-entry boundary for the current wait occurrence; later changes to the
   source signal must not change the already-entered wait.
@@ -414,9 +413,8 @@ Planned non-literal contract:
   generated counter, explicit min/max latency accounting, and report metadata
   that distinguishes dynamic counts from exact integer `cycles`.
 
-Remaining backlog: implement the symbolic count leaf first, then runtime
-scalar dynamic counts once the bypass-capable lowering and report shape are
-proved.
+Remaining backlog: runtime scalar dynamic counts once the bypass-capable
+lowering and report shape are proved.
 
 ### Transaction Dynamic Loops
 

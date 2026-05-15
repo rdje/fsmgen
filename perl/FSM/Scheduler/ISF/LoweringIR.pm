@@ -7,6 +7,7 @@ use feature qw(signatures postderef);
 no warnings 'experimental::signatures';
 use POSIX qw(log);
 use Carp qw(confess);
+use FSM::Package::IntegerLiteralSupport;
 
 sub new($class, %args) { bless { debug => ($args{debug} // 0) }, $class }
 
@@ -110,6 +111,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
+        constants  => _actor_constant_declarations($actor),
         params     => _transaction_param_declarations($tx),
         ports      => $ports,
         states     => $states,
@@ -357,6 +359,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
+        constants  => _actor_constant_declarations($actor),
         params     => _actor_param_declarations($actor),
         ports      => \@ports,
         states     => \@states,
@@ -672,6 +675,32 @@ sub _actor_param_declarations {
     }
 
     return \@params;
+}
+
+sub _actor_constant_declarations {
+    my ($actor) = @_;
+    return [] unless ref($actor) eq 'HASH';
+
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my @constants;
+    my %seen;
+    for my $constant (@{$actor->{constants} || []}) {
+        confess "Actor '$actor_name': constants entries must be hash references\n"
+            unless ref($constant) eq 'HASH';
+        my $name = $constant->{name};
+        confess "Actor '$actor_name': constant names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Actor '$actor_name': duplicate constant '$name'\n"
+            if $seen{$name}++;
+        confess "Actor '$actor_name': constant '$name' requires a non-negative integer literal value\n"
+            unless defined _non_negative_integer_from_literal($constant->{value});
+        push @constants, {
+            name  => $name,
+            value => _clone_isf_value($constant->{value}),
+        };
+    }
+
+    return \@constants;
 }
 
 sub _library_instance_metadata {
@@ -1166,8 +1195,8 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'wait') {
-            if (_wait_cycles($cl, $tn, 'transaction body') > 0) {
-                push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps])};
+            if (_wait_cycles($cl, $tn, 'transaction body', $actor) > 0) {
+                push @st, @{_ir_wait($cl, $tn, \$si, [splice @ps], $actor, 'transaction body')};
             }
         }
         elsif ($k eq 'while') {
@@ -2145,22 +2174,71 @@ sub _validate_loop_clause {
 }
 
 sub _validate_wait_clause {
-    my ($clause, $tn, $label) = @_;
+    my ($clause, $tn, $label, $actor) = @_;
 
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal)' in $label\n"
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n"
         unless @$clause == 2
             && defined($clause->[1])
-            && !ref($clause->[1])
-            && $clause->[1] =~ /\A(?:0|[1-9]\d*)\z/;
+            && !ref($clause->[1]);
+
+    if (defined $actor) {
+        _wait_cycles($clause, $tn, $label, $actor);
+    } else {
+        my $count = $clause->[1];
+        confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n"
+            unless defined(_non_negative_integer_from_literal($count)) || _is_hdl_identifier($count);
+    }
 
     return 1;
 }
 
 sub _wait_cycles {
-    my ($clause, $tn, $label) = @_;
+    my ($clause, $tn, $label, $actor) = @_;
 
-    _validate_wait_clause($clause, $tn, $label);
-    return 0 + $clause->[1];
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n"
+        unless @$clause == 2
+            && defined($clause->[1])
+            && !ref($clause->[1]);
+
+    my $count = $clause->[1];
+    my $literal_value = _non_negative_integer_from_literal($count);
+    return $literal_value if defined $literal_value;
+
+    if (_is_hdl_identifier($count)) {
+        my $constant = _actor_constant_by_name($actor, $count);
+        if ($constant) {
+            my $constant_value = _non_negative_integer_from_literal($constant->{value});
+            confess "Transaction '$tn': wait constant '$count' must resolve to a non-negative integer literal in $label\n"
+                unless defined $constant_value;
+            return $constant_value;
+        }
+
+        confess "Transaction '$tn': wait count '$count' is not a declared actor constant in $label; runtime dynamic wait counts are not shipped yet\n";
+    }
+
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant)' in $label\n";
+}
+
+sub _actor_constant_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $constant (@{$actor->{constants} || []}) {
+        next unless ref($constant) eq 'HASH';
+        return $constant if ($constant->{name} // '') eq $name;
+    }
+
+    return undef;
+}
+
+sub _non_negative_integer_from_literal {
+    my ($literal) = @_;
+    return undef unless defined($literal) && !ref($literal);
+
+    my $integer = FSM::Package::IntegerLiteralSupport->integer_from_literal_like($literal);
+    return undef unless defined $integer;
+    return undef unless $integer->bcmp(0) >= 0;
+    return 0 + $integer->bstr;
 }
 
 sub _validate_update_clause {
@@ -2350,8 +2428,9 @@ sub _ir_await {
     };
 }
 sub _ir_wait {
-    my ($cl, $tn, $ir, $pending_samples) = @_;
-    my $cycles = _wait_cycles($cl, $tn, 'transaction body');
+    my ($cl, $tn, $ir, $pending_samples, $actor, $label) = @_;
+    $label //= 'transaction body';
+    my $cycles = _wait_cycles($cl, $tn, $label, $actor);
     my @states;
 
     return \@states if $cycles == 0;
@@ -2958,8 +3037,8 @@ sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_ro
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){
-            if (_wait_cycles($bc,$tn,'when body') > 0) {
-                push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp])};
+            if (_wait_cycles($bc,$tn,'when body',$actor) > 0) {
+                push @body_states,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'when body')};
             }
         }
         elsif($bk eq'complete'){push @body_states,_ir_complete($bc,$tn,$$ir++)}
@@ -2994,8 +3073,8 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'wait'){
-                if (_wait_cycles($bc2,$tn,'switch body') > 0) {
-                    push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp])};
+                if (_wait_cycles($bc2,$tn,'switch body',$actor) > 0) {
+                    push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp],$actor,'switch body')};
                 }
             }
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_counter_width($counters,$rc,$rw) if $counters;$storage_roles->{$rc}='repeat_counter' if ref($storage_roles)eq'HASH'}
@@ -3032,8 +3111,8 @@ sub _expand_loop_body {
         } elsif ($bk eq 'sample') {
             push @lp, $bc;
         } elsif ($bk eq 'wait') {
-            if (_wait_cycles($bc, $tn, 'loop body') > 0) {
-                push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp])};
+            if (_wait_cycles($bc, $tn, 'loop body', $actor) > 0) {
+                push @states, @{_ir_wait($bc, $tn, $ir, [splice @lp], $actor, 'loop body')};
             }
         } elsif ($bk eq 'complete') {
             push @states, _ir_complete($bc, $tn, $$ir++);
@@ -3072,8 +3151,8 @@ sub _ir_repeat {
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){
-            if (_wait_cycles($bc,$tn,'repeat body') > 0) {
-                push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp])};
+            if (_wait_cycles($bc,$tn,'repeat body',$actor) > 0) {
+                push @s,@{_ir_wait($bc,$tn,$ir,[splice @lp],$actor,'repeat body')};
             }
         }
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}

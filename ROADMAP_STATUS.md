@@ -3,9 +3,10 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue the active `ISF-DYNAMIC-WAIT` feature tree.
-  `ISF-DYNAMIC-WAIT.1` specified the non-literal wait-count contract and the
-  current frontier is `ISF-DYNAMIC-WAIT.2`: statically resolved symbolic wait
-  counts. `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
+  `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
+  actor constants, and the current frontier is `ISF-DYNAMIC-WAIT.3`: runtime
+  scalar dynamic wait counts. `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed
+  after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
   system-port remapping, and `ISF-TRANSACTION-ACTIVATION` is closed after
@@ -14,14 +15,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   need a fresh explicit tree/leaf before implementation.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
-- ISF dynamic wait contract update: non-literal transaction waits are now
-  task-tree managed under `ISF-DYNAMIC-WAIT`. Static symbolic counts must
-  resolve before lowering to non-negative integer constants and then inherit
-  literal wait lowering, including transparent zero-count behavior. Runtime
-  scalar dynamic counts remain a later leaf: they must snapshot the count at
-  wait entry, preserve `count == 0` as no active wait cycle, use known counter
-  widths and reset semantics, and expose explicit dynamic report metadata
-  before parser acceptance becomes public.
+- ISF dynamic wait contract update: actor-level
+  `(constants (NAME value) ...)` is shipped for non-negative integer constants,
+  and `(wait NAME)` may now use those constants wherever literal waits are
+  accepted. Static symbolic counts lower exactly like literals, including
+  transparent zero-count behavior and fixed integer `transaction_waits[]`
+  metadata. Actor/transaction `params` are not wait-count sources because they
+  are overrideable specialization values. Runtime scalar dynamic counts remain
+  the next leaf: they must snapshot the count at wait entry, preserve
+  `count == 0` as no active wait cycle, use known counter widths and reset
+  semantics, and expose explicit dynamic report metadata before parser
+  acceptance becomes public.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -112,6 +116,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   must preserve exact zero-count fallthrough, snapshot positive counts, use
   known widths, and report dynamic metadata before they can ship. The active
   frontier advances to `ISF-DYNAMIC-WAIT.2`.
+- `ISF-DYNAMIC-WAIT.2` is complete. Actor-level `(constants ...)` now provides
+  the first ISF constant/symbol surface, schedule reports expose
+  `actor_constants[]`, scheduled `.fsm` emits matching `+constants`, and
+  `(wait NAME)` resolves actor constants to exact static wait counts. The
+  active frontier advances to `ISF-DYNAMIC-WAIT.3`.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

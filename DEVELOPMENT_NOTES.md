@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: actor constants are structural, params remain overrideable
+- Static symbolic waits need a symbol source whose value is known before the
+  scheduler emits states. Actor-level `(constants ...)` provides that source.
+- ISF `params` are not safe wait-count sources. Spawn, blocking `do`, reusable
+  library use, and composition can override params after the child schedule is
+  emitted; using a param to decide how many wait states exist would make the
+  schedule disagree with an override.
+- Once `(wait NAME)` resolves `NAME` through actor constants, the lowerer
+  intentionally forgets the spelling and uses the existing literal wait path.
+  That keeps positive counts, zero counts, pending samples, HDL generation, and
+  `transaction_waits[]` metadata identical to literal waits.
+- `actor_constants[]` is report provenance, not a runtime storage family. The
+  constants are also emitted in scheduled `.fsm` as `+constants` so review
+  artifacts show the source symbols that were available during lowering.
 ## 2026-05-15: non-literal waits must preserve literal wait timing
 - The important contract of `(wait count)` is the effective count, not the
   spelling of the count. A symbolic count that resolves to `3` and a literal

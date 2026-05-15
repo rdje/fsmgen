@@ -1,11 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF actor constants and symbolic waits
+- Completed `ISF-DYNAMIC-WAIT.2` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- ISF actors now accept one `(constants (NAME value) ...)` clause for
+  actor-scoped non-negative integer compile-time constants. Scheduled `.fsm`
+  emits those constants as `+constants`, and schedule reports expose them
+  through `actor_constants[]`.
+- `(wait NAME)` now resolves `NAME` through actor constants wherever shipped
+  static waits are accepted. Resolved positive counts lower to fixed wait
+  chains; resolved zero counts remain transparent no-ops.
+- Actor/transaction `params` are deliberately not wait-count sources because
+  they are overrideable after scheduled states are emitted.
+- The current frontier is `ISF-DYNAMIC-WAIT.3`, runtime scalar dynamic waits.
 ## 2026-05-15: ISF non-literal wait-count contract
 - Created
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md)
   to track symbolic and dynamic transaction wait counts.
-- Completed `ISF-DYNAMIC-WAIT.1` as a specification slice. The current
-  frontier is `ISF-DYNAMIC-WAIT.2`, statically resolved symbolic wait counts.
+- Completed `ISF-DYNAMIC-WAIT.1` as a specification slice. The immediate
+  frontier was `ISF-DYNAMIC-WAIT.2`, which later shipped actor constants and
+  symbolic wait counts.
 - Static symbolic counts must resolve before lowering to non-negative integer
   constants and then inherit the existing literal wait semantics, including
   transparent `wait 0` behavior.
