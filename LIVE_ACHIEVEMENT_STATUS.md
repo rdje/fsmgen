@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF synchronization checklist applied to active workflow
+- Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.3`.
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now requires every ISF feature leaf to
+  inspect the reusable synchronization checklist and record its selected public
+  sync scope.
+- [docs/book/src/90-reference-map.md](docs/book/src/90-reference-map.md) now
+  points to the task-tree workflow and checklist as focused workflow
+  references.
+- This was documentation-only; compiler behavior is unchanged.
+- The active R14 frontier advances to `ISF-PUBLIC-CONTRACT.4`.
+
 ## 2026-05-15: R14 — ISF public contract synchronization checklist
 - Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.2`.
 - [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)

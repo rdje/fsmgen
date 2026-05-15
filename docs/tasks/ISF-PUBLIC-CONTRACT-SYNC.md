@@ -64,12 +64,12 @@ primary R14 focus.
   Commit: `ISF-PUBLIC-CONTRACT.2: define sync checklist`
 
 - ID: `ISF-PUBLIC-CONTRACT.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Apply checklist to active ISF task trees.`
   Acceptance: `Active ISF trees reference or incorporate the synchronization
   checklist in their acceptance criteria without duplicating it excessively.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PUBLIC-CONTRACT.3: apply sync checklist references`
 
 - ID: `ISF-PUBLIC-CONTRACT.4`
   Status: `pending`
@@ -114,7 +114,7 @@ primary R14 focus.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PUBLIC-CONTRACT.3` | `pending` | The checklist is defined; the next leaf applies it to active ISF task-tree wording without duplicating the full checklist. |
+| 1 | `ISF-PUBLIC-CONTRACT.4` | `pending` | The checklist is now referenced from active ISF task-tree workflow; the remaining leaf audits whether any feature-driven public contract test/doc adjustments are currently required. |
 
 ## Current Inventory
 
@@ -308,6 +308,19 @@ intentionally unchanged.
   clear the file to zero bytes, and verify the post-commit status before
   continuing.
 
+## Checklist Application References
+
+`ISF-PUBLIC-CONTRACT.3` applies the checklist by reference:
+
+- `docs/TASK_TREE.md` requires every ISF leaf to inspect this checklist before
+  implementation and to record any selected public sync scope in the owning
+  task file or recovery docs.
+- `docs/book/src/90-reference-map.md` points maintainers to
+  `docs/TASK_TREE.md` and this task file as focused workflow references.
+- Future active ISF feature trees should reference this checklist from their
+  acceptance criteria or decisions when they ship public behavior, diagnostics,
+  report, contract, or documentation changes.
+
 ## Decisions
 
 - `2026-05-14`: This tree is cross-cutting and feature-driven. It should not
@@ -327,6 +340,10 @@ intentionally unchanged.
   but the selected gates remain scope-sensitive. Documentation-only slices can
   close with book/diff checks; behavior or contract slices must run focused
   tests and the broader ISF gate when warranted.
+- `2026-05-15`: Active-tree application is by reference. `docs/TASK_TREE.md`
+  carries the mandatory workflow hook, while individual feature trees avoid
+  copying the full checklist unless a local acceptance criterion needs a
+  narrower checklist item.
 
 ## Open Questions
 
@@ -351,6 +368,8 @@ intentionally unchanged.
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.1` | `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.2` | `mdbook build docs/book` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.2` | `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.3` | `mdbook build docs/book` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.3` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -362,6 +381,7 @@ intentionally unchanged.
 | `ISF-PUBLIC-CONTRACT.7` | `ISF-PUBLIC-CONTRACT.7: clarify port binding authoring boundary` | Records that transaction-port connectivity is authored in ISF and lowered to reviewable `.fsm` handoff wiring. |
 | `ISF-PUBLIC-CONTRACT.1` | `ISF-PUBLIC-CONTRACT.1: inventory sync owners` | Inventories public ISF docs, contract/manifest owners, test families, and live-doc touchpoints before checklist work. |
 | `ISF-PUBLIC-CONTRACT.2` | `ISF-PUBLIC-CONTRACT.2: define sync checklist` | Defines the reusable per-feature synchronization checklist for public ISF docs, contracts, manifests, tests, live docs, and commit hygiene. |
+| `ISF-PUBLIC-CONTRACT.3` | `ISF-PUBLIC-CONTRACT.3: apply sync checklist references` | Applies the checklist by reference from the active ISF task-tree workflow and the book reference map. |
 
 ## Changelog
 
@@ -379,3 +399,6 @@ intentionally unchanged.
 - `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.2` as a documentation-only
   reusable feature-slice synchronization checklist; current frontier advances
   to `ISF-PUBLIC-CONTRACT.3`.
+- `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.3` as a documentation-only
+  active-tree checklist reference slice; current frontier advances to
+  `ISF-PUBLIC-CONTRACT.4`.

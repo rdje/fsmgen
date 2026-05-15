@@ -29,6 +29,8 @@ Some docs are intentionally still focused references:
 - [../../ISF_SPEC.md](../../ISF_SPEC.md)
 - [../../ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [../../BIN_FSMGEN_IMPORT_TREE.md](../../BIN_FSMGEN_IMPORT_TREE.md)
+- [../../TASK_TREE.md](../../TASK_TREE.md)
+- [../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md](../../tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
 - [../../COMPOSITION_LEGACY_MAPPING.md](../../COMPOSITION_LEGACY_MAPPING.md)
 - [../../../ROADMAP_STATUS.md](../../../ROADMAP_STATUS.md)
 - [../../../ROADMAP_V2.md](../../../ROADMAP_V2.md)
@@ -47,6 +49,12 @@ the current maintainer map rather than duplicate volatile line-count tables.
 or task-scoped activity must close with that workflow before the next work
 starts, so crash recovery and agent handoff can resume from task-scoped
 commits instead of a dirty worktree.
+
+`TASK_TREE.md` is the active-tree and PNT frontier reference. For ISF feature
+work, it points to the reusable synchronization checklist in
+`docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` so public specs, book chapters,
+contracts, manifests, tests, live docs, and commit hygiene stay aligned without
+duplicating the checklist in every feature tree.
 
 ## What The Old User Guide Still Does
 

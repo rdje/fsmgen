@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF checklist application stays by reference
+- `ISF-PUBLIC-CONTRACT.3` applies the reusable checklist from
+  [docs/TASK_TREE.md](docs/TASK_TREE.md) instead of copying the full checklist
+  into every active or future ISF task tree.
+- Feature trees should reference the checklist and then name only the
+  feature-specific public surfaces they actually touch. This keeps the
+  workflow enforceable while avoiding stale duplicated process text.
+- The book reference map now points maintainers to both the task-tree workflow
+  and the ISF synchronization checklist because workflow changes are part of
+  the reviewable project surface.
 ## 2026-05-15: ISF synchronization checklist is scope-sensitive
 - `ISF-PUBLIC-CONTRACT.2` makes checklist inspection mandatory for ISF feature
   slices, but it does not force every slice to edit every public owner or run

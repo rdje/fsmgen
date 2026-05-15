@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.3` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
+| `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.4` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
 ## Proposed Task Trees
 
@@ -106,6 +106,10 @@ Before implementing any ISF task, slice, or PNT-selected activity:
   parser, emitter, contract, fixture, or book content.
 - Put only executable leaf nodes in the tree's current frontier.
 - Implement one frontier leaf at a time.
+- For every ISF feature leaf, inspect the reusable synchronization checklist in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
+  and record the selected public sync scope in the owning task file, live
+  recovery docs, or commit body.
 - Update the owning task file when the leaf status, blocker, decision,
   validation evidence, or completion evidence changes.
 - Run the full [COMMIT.md](COMMIT.md) workflow after each completed leaf before

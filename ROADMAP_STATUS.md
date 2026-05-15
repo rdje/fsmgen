@@ -30,7 +30,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   now closed. `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
-  checklist. The current frontier is `ISF-PUBLIC-CONTRACT.3`.
+  checklist, and `ISF-PUBLIC-CONTRACT.3` applied that checklist by reference
+  from the active ISF task-tree workflow. The current frontier is
+  `ISF-PUBLIC-CONTRACT.4`.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library

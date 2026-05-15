@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF synchronization checklist applied to active workflow
+- Completed `ISF-PUBLIC-CONTRACT.3`.
+- Updated [docs/TASK_TREE.md](docs/TASK_TREE.md) so every ISF feature leaf
+  must inspect the reusable synchronization checklist and record its selected
+  public sync scope.
+- Updated
+  [docs/book/src/90-reference-map.md](docs/book/src/90-reference-map.md) so the
+  book points to the task-tree workflow and ISF public-contract checklist as
+  focused workflow references.
+- Advanced the active R14 frontier to `ISF-PUBLIC-CONTRACT.4`.
+- This slice is documentation-only; shipped compiler behavior and public ISF
+  report shape are unchanged.
 ### R14 — ISF public contract synchronization checklist
 - Completed `ISF-PUBLIC-CONTRACT.2`.
 - Added a reusable feature-slice checklist to

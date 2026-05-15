@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF synchronization checklist applied to active tree workflow
+- Completed `ISF-PUBLIC-CONTRACT.3` in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- [docs/TASK_TREE.md](docs/TASK_TREE.md) now requires every ISF feature leaf to
+  inspect the reusable checklist and record the selected public sync scope in
+  the owning task file, live recovery docs, or commit body.
+- [docs/book/src/90-reference-map.md](docs/book/src/90-reference-map.md) now
+  points to the task-tree workflow and ISF checklist as focused workflow
+  references.
+- This was documentation-only; compiler behavior and public ISF report shape
+  are unchanged.
+- The active R14 frontier is now `ISF-PUBLIC-CONTRACT.4`.
 ## 2026-05-15: ISF public contract synchronization checklist
 - Completed `ISF-PUBLIC-CONTRACT.2` in
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
