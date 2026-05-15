@@ -112,6 +112,12 @@ promised. The primitive carries no payload. Direct cross-domain reads, writes,
 triggers, activations, child bindings, or reset assertion/deassertion events
 remain illegal until a shipped crossing primitive owns that path.
 
+The selected future lowering strategy keeps each domain as its own
+single-clock scheduled `.fsm` artifact named `<actor>__domain_<domain>.fsm`.
+Generated top wiring and CDC primitive logic are separate reviewable artifacts;
+ordinary `.fsm` modules are not silently widened into multi-clock scheduled
+modules.
+
 ## Watchdog
 
 ```lisp

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF clock-domain lowering artifacts selected
+- Completed `ISF-CLOCK-DOMAINS.5.1` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- `ISF-CLOCK-DOMAINS.5` is now an active container with executable lowering
+  leaves. The current frontier is `ISF-CLOCK-DOMAINS.5.2`, domain-partitioning
+  IR handoff.
+- Future multi-domain lowering emits one normal single-clock scheduled `.fsm`
+  artifact per domain, named `<actor>__domain_<domain>.fsm`.
+- Generated top wiring and acknowledged event CDC logic are explicit generated
+  artifacts, not hidden multi-clock behavior inside ordinary scheduled `.fsm`
+  modules.
+- This was specification-only; parser/lowering behavior is unchanged.
 ## 2026-05-15: ISF event crossing primitive selected
 - Completed `ISF-CLOCK-DOMAINS.4` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

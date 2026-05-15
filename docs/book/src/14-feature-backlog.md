@@ -1016,8 +1016,6 @@ semantics.
 
 The future feature must still define at least:
 
-- how the scheduler emits reviewable domain-specific `.fsm` artifacts or a
-  documented multi-domain artifact; and
 - what bounded schedule-report metadata and fixtures prove the behavior.
 
 Until that contract ships, direct same-cycle reads or writes across domains
@@ -1059,6 +1057,16 @@ Direct cross-domain reads, writes, triggers, activations, parent/child
 bindings, and reset assertion/deassertion events remain fail-closed unless a
 shipped primitive or protocol actor owns that path. Payload handshakes and
 dual-clock FIFO-like actors remain future backlog.
+
+Lowering decision: future multi-domain lowering keeps domain behavior in
+normal single-clock scheduled `.fsm` artifacts named
+`<actor>__domain_<domain>.fsm`. The generated top owns only inter-module
+wiring. Acknowledged event crossings emit explicit generated CDC artifacts with
+source and destination clocks/resets, request toggle, destination
+synchronizer, destination pulse, acknowledgement synchronizer, and source
+ready logic. Normal scheduled `.fsm` modules are not silently widened into
+multi-clock modules. Bounded schedule-report metadata and fixtures remain
+future work.
 
 ## Backends And Validation
 

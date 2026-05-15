@@ -573,6 +573,28 @@ Selected future crossing primitive, not implemented yet:
   bindings, and reset assertion/deassertion events remain rejected unless a
   shipped crossing primitive or protocol actor owns that path.
 
+Selected future lowering artifact strategy, not implemented yet:
+- Future multi-domain lowering emits one domain-local scheduled `.fsm` artifact
+  per declared domain, named `<actor>__domain_<domain>.fsm`.
+- Each domain `.fsm` remains a normal single-clock scheduled module. Its
+  `+system` clause uses only the domain clock and that domain's reset policy.
+- A domain `.fsm` contains only domain-owned interface endpoints, storage,
+  transactions, rules, child activations, generated helper signals, and
+  generated event primitive endpoints for that domain.
+- No domain `.fsm` directly references another domain's local state, generated
+  helper, transaction, rule, or port.
+- A generated top artifact named `<actor>_top.fsm`, or a successor top artifact
+  if the existing `.fsm` composition-top form cannot express the required
+  system ports, owns the inter-module wiring. It must not hide clocked
+  behavior in top-level DT logic.
+- The acknowledged event primitive emits an explicit generated CDC artifact
+  with source clock/reset, destination clock/reset, request toggle,
+  destination synchronizer, destination pulse, acknowledgement synchronizer,
+  and source ready logic. It is not an ordinary single-domain `.fsm` state
+  chain.
+- Schedule-report metadata for domain artifacts, generated top wiring, and
+  crossing artifacts remains future work.
+
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
 - `N` must be a positive integer.

@@ -74,9 +74,44 @@ asynchronous, and interacting clock-domain designs.
   Commit: `ISF-CLOCK-DOMAINS.4: specify event crossing primitive`
 
 - ID: `ISF-CLOCK-DOMAINS.5`
-  Status: `pending`
+  Status: `active`
   Goal: `Lower multi-domain ISF into explicit scheduled artifacts.`
-  Acceptance: `Lowering emits reviewable domain-specific scheduled .fsm artifacts or a documented multi-domain .fsm structure with clear clock/reset ownership.`
+  Children: `ISF-CLOCK-DOMAINS.5.1`, `ISF-CLOCK-DOMAINS.5.2`,
+  `ISF-CLOCK-DOMAINS.5.3`, `ISF-CLOCK-DOMAINS.5.4`
+
+- ID: `ISF-CLOCK-DOMAINS.5.1`
+  Status: `done`
+  Goal: `Specify the multi-domain lowering artifact strategy.`
+  Acceptance: `The task tree, spec, and book state how future lowering keeps
+  domain-local scheduled .fsm artifacts reviewable while representing
+  top-level wiring and CDC primitive artifacts explicitly.`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CLOCK-DOMAINS.5.1: specify lowering artifacts`
+
+- ID: `ISF-CLOCK-DOMAINS.5.2`
+  Status: `pending`
+  Goal: `Partition accepted multi-domain actors into domain-local lowering IR.`
+  Acceptance: `Parser/scheduler handoff can group ports, storage,
+  transactions, rules, and child instances by declared domain while rejecting
+  unowned cross-domain references before emission.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CLOCK-DOMAINS.5.3`
+  Status: `pending`
+  Goal: `Emit domain-specific scheduled .fsm artifacts.`
+  Acceptance: `Each domain emits a single-clock scheduled .fsm artifact with
+  the domain clock/reset and only domain-local state, rules, transactions,
+  and generated helper signals.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-CLOCK-DOMAINS.5.4`
+  Status: `pending`
+  Goal: `Emit the multi-domain top and event-crossing artifact.`
+  Acceptance: `The generated top wires domain modules and acknowledged event
+  crossing primitives explicitly without hiding two-clock behavior inside a
+  normal single-clock scheduled .fsm module.`
   Verification: `pending`
   Commit: `pending`
 
@@ -91,7 +126,7 @@ asynchronous, and interacting clock-domain designs.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CLOCK-DOMAINS.5` | `pending` | The source, reset, and first crossing semantics are selected; lowering must next define reviewable domain-specific artifacts. |
+| 1 | `ISF-CLOCK-DOMAINS.5.2` | `pending` | The artifact strategy is selected; the next executable leaf is the domain-partitioning IR handoff. |
 
 ## Selected Source Model
 
@@ -259,6 +294,39 @@ channels, and dual-clock FIFO-like actors, remain backlog until their source
 syntax, runtime semantics, lowering, diagnostics, reports, and fixtures are
 specified.
 
+## Selected Lowering Artifact Strategy
+
+`ISF-CLOCK-DOMAINS.5.1` selects the future lowering artifact strategy without
+shipping parser or lowering support yet.
+
+Rules for future lowering:
+
+- Multi-domain actors are partitioned into domain-local scheduled artifacts.
+- Each declared domain emits one scheduled `.fsm` artifact named
+  `<actor>__domain_<domain>.fsm`.
+- A domain `.fsm` remains a normal single-clock scheduled module. Its `+system`
+  clause uses only the domain clock and that domain's reset policy.
+- Domain artifacts contain only domain-owned interface endpoints, storage,
+  transactions, rules, child activations, generated helper signals, and
+  generated event primitive endpoints for that domain.
+- No domain `.fsm` directly reads, writes, triggers, activates, or binds a
+  signal owned by another domain.
+- Multi-domain structure is represented by a generated top artifact named
+  `<actor>_top.fsm` or by a successor top artifact if the existing `.fsm`
+  composition-top form cannot represent all required system ports. The top
+  owns wiring only; it does not hide clocked behavior in top-level DT logic.
+- The acknowledged event primitive is emitted as an explicit generated CDC
+  artifact with source clock/reset, destination clock/reset, request toggle,
+  destination synchronizer, destination pulse, acknowledgement synchronizer,
+  and source ready logic. It is not lowered as an ordinary single-domain `.fsm`
+  state chain.
+- Schedule-report metadata for domains, generated top wiring, and crossing
+  artifacts is owned by `ISF-CLOCK-DOMAINS.6`.
+
+This strategy keeps the existing `.fsm` scheduled artifact meaning intact:
+`.fsm` remains a reviewable single-clock scheduled module unless a future leaf
+explicitly defines a new multi-clock `.fsm` structure.
+
 ## Decisions
 
 - `2026-05-15`: Current ISF remains single-clock-domain. A different signal
@@ -281,6 +349,10 @@ specified.
   single-bit event channel with source-domain ready, destination-domain pulse,
   and no data payload. Ordinary cross-domain reads/writes/triggers/bindings
   remain fail-closed.
+- `2026-05-15`: Future lowering keeps domain behavior in one single-clock
+  scheduled `.fsm` artifact per domain and represents multi-domain wiring plus
+  CDC primitives as explicit generated artifacts. Normal `.fsm` modules are
+  not silently widened into multi-clock scheduled modules.
 
 ## Open Questions
 
@@ -301,6 +373,7 @@ specified.
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.3` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.4` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CLOCK-DOMAINS.5.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -310,6 +383,7 @@ specified.
 | `ISF-CLOCK-DOMAINS.2` | `ISF-CLOCK-DOMAINS.2: specify domain source model` | Selects actor-scoped named domains as the future source model without shipping parser/lowering support. |
 | `ISF-CLOCK-DOMAINS.3` | `ISF-CLOCK-DOMAINS.3: specify domain reset ownership` | Selects per-domain reset ownership and forbids DT-generated asynchronous reset glue without shipping parser/lowering support. |
 | `ISF-CLOCK-DOMAINS.4` | `ISF-CLOCK-DOMAINS.4: specify event crossing primitive` | Selects an acknowledged single-bit event channel as the first legal future crossing primitive. |
+| `ISF-CLOCK-DOMAINS.5.1` | `ISF-CLOCK-DOMAINS.5.1: specify lowering artifacts` | Selects per-domain scheduled .fsm artifacts plus explicit generated top and CDC artifacts as the future lowering strategy. |
 
 ## Changelog
 
@@ -324,3 +398,6 @@ specified.
 - `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.4`, selecting the acknowledged
   single-bit event channel as the first legal future CDC primitive; current
   frontier advances to `ISF-CLOCK-DOMAINS.5`.
+- `2026-05-15`: Split `ISF-CLOCK-DOMAINS.5` into executable lowering leaves
+  and completed `ISF-CLOCK-DOMAINS.5.1`, selecting the future lowering
+  artifact strategy; current frontier advances to `ISF-CLOCK-DOMAINS.5.2`.

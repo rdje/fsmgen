@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF clock-domain lowering artifacts selected
+- Completed `ISF-CLOCK-DOMAINS.5.1` and split `ISF-CLOCK-DOMAINS.5` into
+  executable lowering leaves.
+- Specified the future lowering artifact strategy in
+  [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/book/src/13-intent-scheduling.md](docs/book/src/13-intent-scheduling.md),
+  [docs/book/src/13a-actor-interface.md](docs/book/src/13a-actor-interface.md),
+  [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
+  and [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- Future multi-domain lowering keeps each domain in a normal single-clock
+  scheduled `.fsm` artifact and represents generated top wiring plus CDC
+  primitive logic as explicit generated artifacts.
+- This is specification-only. Existing shipped parser/lowering behavior is
+  unchanged.
+- The active R14 frontier advances to `ISF-CLOCK-DOMAINS.5.2`,
+  domain-partitioning IR handoff.
 ### R14 — ISF event crossing primitive selected
 - Completed `ISF-CLOCK-DOMAINS.4`.
 - Selected an acknowledged single-bit event channel as the first future legal

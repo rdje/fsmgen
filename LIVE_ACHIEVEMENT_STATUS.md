@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF clock-domain lowering artifacts selected
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.1`.
+- Future multi-domain lowering emits one normal single-clock scheduled `.fsm`
+  artifact per domain, named `<actor>__domain_<domain>.fsm`.
+- Generated top wiring and acknowledged event CDC logic are explicit generated
+  artifacts, not hidden multi-clock behavior inside ordinary scheduled `.fsm`
+  modules.
+- This was specification-only; parser/lowering behavior is unchanged.
+- The active frontier advances to `ISF-CLOCK-DOMAINS.5.2`,
+  domain-partitioning IR handoff.
+
 ## 2026-05-15: R14 — ISF event crossing primitive selected
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.4`.
 - The first future legal CDC primitive is an acknowledged single-bit event

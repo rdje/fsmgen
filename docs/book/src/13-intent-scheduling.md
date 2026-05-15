@@ -254,10 +254,13 @@ is signal-name remapping inside the current one-clock-domain ISF model, not
 multi-clock or clock-domain-crossing support. Multi-clock, asynchronous, and
 interacting clock domains use the future actor-scoped named-domain source
 model tracked in [ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md), but
-that source is not accepted yet. Reset ownership, legal crossings, lowering,
-and report metadata still need later leaves before any multi-clock source can
-ship. Direct cross-domain reads or writes should remain illegal until a
-shipped CDC primitive or protocol actor owns the crossing semantics. The plain
+that source is not accepted yet. The planned lowering strategy keeps each
+domain as a normal single-clock scheduled `.fsm` artifact and moves
+multi-domain wiring plus CDC primitive logic into explicit generated artifacts;
+report metadata and implementation still need later leaves before any
+multi-clock source can ship. Direct cross-domain reads or writes should remain
+illegal until a shipped CDC primitive or protocol actor owns the crossing
+semantics. The plain
 `file.isf` CLI path is audited to reach generated HDL with clean stderr,
 including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including

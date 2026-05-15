@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: multi-domain lowering preserves single-clock .fsm meaning
+- `ISF-CLOCK-DOMAINS.5.1` selects per-domain scheduled `.fsm` artifacts rather
+  than widening ordinary `.fsm` modules into implicit multi-clock modules.
+- Multi-domain behavior is pushed to explicit generated top wiring and explicit
+  CDC primitive artifacts. That keeps review boundaries clear: domain logic is
+  still single-clock scheduled behavior, while two-clock synchronizer logic is
+  visible as a generated CDC artifact.
+- The next implementation leaf needs a domain-partitioning IR handoff before
+  any emitter work can be safe.
 ## 2026-05-15: first CDC primitive is an acknowledged event
 - `ISF-CLOCK-DOMAINS.4` selects an acknowledged single-bit event channel as the
   first future legal crossing because it is small enough to specify precisely
