@@ -371,8 +371,8 @@ behavior, and richer stage report families for future stage kinds.
 ### Transaction Unconditional Wait
 
 Status: shipped base surface, actor-constant symbolic counts, and a bounded
-top-level runtime scalar count subset. Broader runtime contexts remain in the
-active `ISF-DYNAMIC-WAIT` task tree.
+runtime scalar count subset. Remaining runtime contexts remain in the active
+`ISF-DYNAMIC-WAIT` task tree.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
@@ -388,9 +388,8 @@ cycle, and create no report entry. `wait 1` occupies one generated wait state
 for one active cycle and advances on the next state transition; `wait N`
 contributes exactly `N` active cycles wherever it executes, including inside
 `when`, `switch`, `repeat`, `while`, and `until` bodies. The bounded runtime
-surface accepts `(wait count_signal)` only as a top-level transaction-body wait
-when `count_signal` has known unsigned width and the predecessor edge can be
-split safely.
+surface accepts `(wait count_signal)` when `count_signal` has known unsigned
+width and the predecessor edge can be split safely.
 
 The static lowering is a reviewable fixed scheduled-state chain. No hidden
 wait counter is introduced for the static literal/constant surface. Pending
@@ -421,21 +420,23 @@ actor/transaction parameter names, unknown-width dynamic names, or unsupported
 dynamic contexts fail closed today.
 
 Remaining backlog: runtime scalar waits after pending samples, inside
-`switch`/`while`/`until` bodies, after remaining predecessor kinds such as loop
+`while`/`until` bodies, after remaining predecessor kinds such as loop
 decision states whose edge split is not implemented yet, and with
 expression-valued or parameter-backed counts.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
-subset. Until the remaining contexts ship, dynamic waits in those bodies fail
-closed with diagnostics that name the rejected context: `switch body`,
-`while body`, or `until body`.
+subset, and `switch` branches are shipped for the no-pending-sample subset.
+Until the remaining loop contexts ship, dynamic waits in those bodies fail
+closed with diagnostics that name the rejected context: `while body` or
+`until body`.
 
 Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
 top-level dynamic waits and the requested additional top-level predecessor
-kinds are shipped. The inline-body work is split; `when` bodies are shipped,
-repeat bodies are shipped, and the next frontier is switch branches, then
-while/until bodies, pending-sample preservation, and finally expression-valued
-runtime counts once their width/type/snapshot contract is specified.
+kinds are shipped. The inline-body work is split; `when` bodies, `repeat`
+bodies, and `switch` branches are shipped for the no-pending-sample subset.
+The next frontier is while/until bodies, then pending-sample preservation, and
+finally expression-valued runtime counts once their width/type/snapshot
+contract is specified.
 
 ### Transaction Dynamic Loops
 

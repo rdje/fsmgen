@@ -357,9 +357,13 @@ exposes `actor_constants[]` and `transaction_waits[]` provenance, and rejects
 malformed, unknown, parameter-backed, expression-valued, or unsupported
 dynamic counts. Inline `when` body dynamic waits are covered for the
 no-pending-sample subset, and inline `repeat` body dynamic waits are covered
-for the no-pending-sample subset. Unsupported inline dynamic wait contexts are
-covered for `switch`, `while`, and `until` bodies with diagnostics that name
-the rejected body context.
+for the no-pending-sample subset. Inline `switch` branch dynamic waits are
+covered for the no-pending-sample subset: the selected case's positive-count
+path loads/enters the generated wait, its zero-count path bypasses to the next
+branch body state, other cases remain selectable, and implicit fallthrough is
+guarded by the complement of the explicit switch values. Unsupported inline
+dynamic wait contexts are covered for `while` and `until` bodies with
+diagnostics that name the rejected body context.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test

@@ -12,8 +12,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   top-level predecessor kinds, `ISF-DYNAMIC-WAIT.3.3.4.1` split and covered
   the inline fail-closed matrix, `ISF-DYNAMIC-WAIT.3.3.4.2` shipped dynamic
   waits in `when` bodies, `ISF-DYNAMIC-WAIT.3.3.4.3` shipped dynamic waits in
-  `repeat` bodies, and the current frontier is `ISF-DYNAMIC-WAIT.3.3.4.4`:
-  dynamic waits in `switch` branches.
+  `repeat` bodies, `ISF-DYNAMIC-WAIT.3.3.4.4` shipped dynamic waits in
+  `switch` branches, and the current frontier is `ISF-DYNAMIC-WAIT.3.3.4.5`:
+  dynamic waits in `while`/`until` bodies.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -47,24 +48,29 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   conditions are combined with the runtime count split while unrelated
   alternatives such as await timeouts and repeat loop-back edges remain
   intact.
-  Inline branch/switch/repeat/loop dynamic waits, pending samples before a
-  dynamic wait, count expressions, parameter-backed counts, and additional
-  predecessor-edge splits remain fail-closed until their exact bypass and
-  snapshot behavior is implemented.
+  Inline `when`/`repeat`/`switch` dynamic waits are shipped for the
+  no-pending-sample subset. Pending samples before a dynamic wait, `while` and
+  `until` body runtime waits, count expressions, parameter-backed counts, and
+  additional predecessor-edge splits remain fail-closed until their exact
+  bypass and snapshot behavior is implemented.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
-  `while`, and `until` bodies remain fail-closed with tests and book coverage
-  that name each rejected context. The inline expansion is now split into
-  context-specific leaves; `when` bodies are shipped for the no-pending-sample
-  subset, `repeat` bodies are shipped for the no-pending-sample subset, and
-  the active leaf is `switch` branches.
+  `while`, and `until` bodies are split into context-specific leaves. `when`
+  bodies, `repeat` bodies, and `switch` branches are shipped for the
+  no-pending-sample subset. A switch branch that starts with a runtime wait
+  now splits only the selected case's positive-count load/entry and zero-count
+  bypass paths, preserves other explicit cases, and guards implicit fallthrough
+  with the complement of the explicit case predicates. `while` and `until`
+  body runtime waits remain fail-closed with tests and book coverage that name
+  each rejected context.
 - ISF runtime dynamic wait expansion update: `ISF-DYNAMIC-WAIT.3.3` is now a
   container with executable leaves for consecutive dynamic waits, additional
   top-level predecessor kinds, inline branch/loop bodies, pending-sample
   preservation, and expression-valued counts. Consecutive top-level dynamic
-  waits and the requested additional top-level predecessor kinds are shipped;
-  the next implementation leaf is inline branch/loop bodies because it moves
-  the same zero-bypass/sampled-counter contract into nested control-flow
-  regions.
+  waits, the requested additional top-level predecessor kinds, and the shipped
+  `when`/`repeat`/`switch` inline contexts are complete for the
+  no-pending-sample subset. The next implementation leaf is `while`/`until`
+  bodies because it moves the same zero-bypass/sampled-counter contract into
+  loop regions with back-edge and exit semantics.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -197,6 +203,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   lower through body-local dynamic wait count load/bypass while preserving the
   repeat-check loop-back and exit edges. The active frontier advances to
   `ISF-DYNAMIC-WAIT.3.3.4.4`: dynamic waits in `switch` branches.
+- `ISF-DYNAMIC-WAIT.3.3.4.4` is complete. Runtime waits in `switch` branches
+  now lower through selected-case dynamic wait count load/bypass while
+  preserving other explicit cases and implicit fallthrough. The active
+  frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.5`: dynamic waits in
+  `while`/`until` bodies.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF switch-branch dynamic waits
+- Completed `ISF-DYNAMIC-WAIT.3.3.4.4` in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Runtime scalar waits in `switch` branches now lower for the
+  no-pending-sample subset.
+- A selected switch case that starts with a runtime wait now owns its
+  positive-count counter load/entry and zero-count bypass paths in the switch
+  state.
+- Other explicit switch cases remain selectable, and implicit fallthrough is
+  guarded by the complement of all explicit case predicates.
+- Pending samples before a `switch`-branch dynamic wait remain fail-closed
+  until the pending-sample preservation leaf.
+- The current frontier is `ISF-DYNAMIC-WAIT.3.3.4.5`, dynamic waits in
+  `while`/`until` bodies.
 ## 2026-05-15: ISF repeat-body dynamic waits
 - Completed `ISF-DYNAMIC-WAIT.3.3.4.3` in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).

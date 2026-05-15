@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF switch-branch dynamic waits
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.4`.
+- Runtime scalar waits in `switch` branches now lower for the
+  no-pending-sample subset.
+- The selected case carries the positive-count counter load/entry path and
+  zero-count bypass path; other explicit cases remain selectable.
+- Implicit switch fallthrough is guarded by the complement of the explicit
+  case predicates.
+- Pending samples before a `switch`-branch dynamic wait remain fail-closed.
+- The active frontier advances to `ISF-DYNAMIC-WAIT.3.3.4.5`, dynamic waits in
+  `while`/`until` bodies.
+
 ## 2026-05-15: R14 — ISF repeat-body dynamic waits
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.3.4.3`.
 - Runtime scalar waits in `repeat` bodies now lower for the no-pending-sample

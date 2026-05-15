@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF switch-branch dynamic waits
+- Updated
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so runtime scalar waits in `switch` branches lower for the
+  no-pending-sample subset.
+- Added switch-state materialization for branches that start with a runtime
+  wait: the selected case now owns the positive-count counter load/entry and
+  zero-count bypass paths, other explicit cases remain selectable, and
+  implicit fallthrough is guarded by the complement of all explicit case
+  predicates.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](perl/FSM/Scheduler/ISF/Emitter/FSM.pm)
+  so materialized switch states use generic guarded transitions while ordinary
+  switches keep the compact `(?signal ...)` rendering.
+- Extended
+  [t/1244-isf-wait-clause-lowering.t](t/1244-isf-wait-clause-lowering.t)
+  with HDL-reaching switch-branch dynamic wait coverage and pending-sample
+  rejection.
+- Refreshed the ISF spec, public contract doc, mdBook, feature backlog,
+  roadmap, task tree, and live docs. The active dynamic-wait frontier advances
+  to `ISF-DYNAMIC-WAIT.3.3.4.5`.
 ### R14 — ISF repeat-body dynamic waits
 - Updated
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

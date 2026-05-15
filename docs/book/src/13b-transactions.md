@@ -235,15 +235,15 @@ iterate any authored actions.
   on that state's transition to the next transaction clause.
 - `wait N`: emit `N` generated wait states and advance through them
   unconditionally, one per cycle for static counts.
-- `wait count_signal`: at top level only, bypass on a runtime zero count;
-  otherwise snapshot `count_signal` on the predecessor edge and consume exactly
-  that many active wait cycles with a generated counter. Consecutive top-level
-  runtime waits are allowed; a zero bypass from one wait immediately evaluates
-  the next wait's zero/positive split, and the final sampled-counter edge of
-  an active wait does the same for the following wait. Runtime waits can also
-  follow top-level `await`, `stage`, `repeat` exit checks, `await_all`, and
-  `await_any`, where the predecessor's own advance condition is combined with
-  the runtime count split.
+- `wait count_signal`: in shipped runtime contexts, bypass on a runtime zero
+  count; otherwise snapshot `count_signal` on the predecessor edge and consume
+  exactly that many active wait cycles with a generated counter. Consecutive
+  top-level runtime waits are allowed; a zero bypass from one wait immediately
+  evaluates the next wait's zero/positive split, and the final
+  sampled-counter edge of an active wait does the same for the following wait.
+  Runtime waits can also follow top-level `await`, `stage`, `repeat` exit
+  checks, `await_all`, and `await_any`, where the predecessor's own advance
+  condition is combined with the runtime count split.
 
 Pending samples immediately before a positive static wait piggyback onto the
 first wait state, using the same sample materialization rule as drive/await
@@ -273,9 +273,12 @@ report the resolved integer in `cycles`; runtime scalar waits report
 waits such as `(wait)`, `(wait 1 2)`, `(wait -1)`, unknown-width dynamic
 counts, expression counts, parameter-backed counts, and unsupported runtime
 contexts fail closed. Inline dynamic waits are supported in `when` and
-`repeat` bodies when no pending sample crosses the wait. Inline dynamic waits
-in `switch`, `while`, and `until` bodies currently remain fail-closed with
-diagnostics that name the rejected body context.
+`repeat` bodies and `switch` branches when no pending sample crosses the wait.
+In a `switch`, only the selected branch's runtime wait edge is split; other
+cases remain selectable and implicit fallthrough is guarded by the complement
+of all explicit case values. Inline dynamic waits in `while` and `until`
+bodies currently remain fail-closed with diagnostics that name the rejected
+body context.
 
 ## `(complete port)` — Terminal State
 

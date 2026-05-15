@@ -687,6 +687,66 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_repeat');
 };
 
+subtest 'runtime scalar waits lower inside switch branches' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-switch');
+(actor wait_dynamic_switch
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input sel)
+    (input cycles (width 4))
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction main
+    (on start)
+    (switch sel
+      (0 (wait cycles)
+         (drive tick))
+      (1 (drive tick)))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_switch.fsm'};
+    my $switch = state_block($fsm, 'main_switch_4');
+    like($switch, qr/\(<- \(main_wait_1_cnt cycles\) <\(& \(== sel 0\) cycles\)\)/,
+        'switch branch positive path samples the runtime wait count');
+    like($switch, qr/\(-> main_wait_1 <\(& \(== sel 0\) cycles\)\)/,
+        'switch branch positive path enters the dynamic wait');
+    like($switch, qr/\(-> main_drive_2 <\(& \(== sel 0\) \(== cycles 0\)\)\)/,
+        'switch branch zero path bypasses to the following branch body state');
+    like($switch, qr/\?sel[\s\S]*\(=1 \(-> main_drive_3\)\)/,
+        'other explicit switch branches remain selectable');
+    like($switch, qr/\(-> main_done_5 <\(! \(\| \(== sel 0\) \(== sel 1\)\)\)\)/,
+        'implicit switch fallthrough is guarded by the complement of explicit values');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(-- main_wait_1_cnt\)/, 'switch-branch dynamic wait decrements its sampled counter');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_drive_2\)\)/,
+        'switch-branch sampled count of one exits to the following branch body state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_drive_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'switch-branch dynamic wait report exposes runtime count metadata',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_switch');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_runtime_scalar\)' in transaction body/);
 (actor wait_missing_count
@@ -745,15 +805,16 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch dynamic wait count', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' is not supported in switch body in the current dynamic-wait slice/);
-(actor wait_switch_dynamic_count
+    assert_lower_rejected(<<'ISF', 'pending sample before switch dynamic wait', qr/\ATransaction 'main': runtime dynamic wait count 'cycles' in switch body cannot follow pending samples yet/);
+(actor wait_switch_dynamic_after_sample
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input sel) (input cycles (width 4)) (output done))
+  (interface (input start) (input sel) (input cycles (width 4)) (input din (width 8)) (output done))
   (transaction main
     (on start)
     (switch sel
-      (0 (wait cycles)))
+      (0 (sample din as hold)
+         (wait cycles)))
     (complete done)))
 ISF
 

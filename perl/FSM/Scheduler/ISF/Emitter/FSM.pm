@@ -237,6 +237,9 @@ sub _emit_transitions($self, $state) {
 
     # Switch transition: (?signal (=val (-> body)) ...)
     if ($state->{kind} eq 'switch') {
+        return map { $self->_emit_simple_transition($_) } @$txs
+            if $state->{switch_transitions_materialized};
+
         push @lines, "    (?$state->{signal}";
         for my $br (@{$state->{branches}}) {
             my $selector = _is_default_selector($br->{value}) ? 'default' : "=$br->{value}";

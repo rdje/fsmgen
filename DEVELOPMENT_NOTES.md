@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: switch-branch dynamic waits materialize only when needed
+- The compact switch rendering is still the clean review form for ordinary
+  switches. A switch state is materialized into explicit guarded transitions
+  only when at least one selected branch starts with a runtime wait and needs
+  the predecessor-edge counter load/bypass split.
+- The selected case's predicate becomes the base condition for the runtime
+  wait entry helper. Its positive path loads the generated wait counter and
+  enters the wait state; its zero path bypasses directly to the next state in
+  that branch body.
+- Other explicit cases remain normal selectable switch cases. If the author
+  did not provide a default branch, the implicit fallthrough is not
+  unconditional in the materialized form; it is guarded by the complement of
+  the OR of all explicit case predicates.
+- Pending samples before a switch-branch dynamic wait remain rejected until
+  the shared pending-sample preservation leaf defines how samples cross the
+  selected positive path, selected zero path, other cases, and fallthrough.
 ## 2026-05-15: repeat-body dynamic waits share repeat counter registration
 - Dynamic waits in a repeat body are generated inside `_ir_repeat`, so their
   counters must be returned to the caller together with the repeat counter.

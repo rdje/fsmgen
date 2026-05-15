@@ -389,11 +389,32 @@ unchanged after the body:
   (-> main_drive_3 <(== cycles 0)))
 ```
 
-Runtime waits remain fail-closed in inline `switch`, `while`, and `until`
-bodies, with diagnostics that name the rejected body context. They also remain
-fail-closed after pending samples, after predecessor states whose edge split is
-not implemented yet, including loop decision states, and for expression-valued
-or parameter-backed counts.
+Runtime waits in `switch` branches are supported when no pending sample must
+cross the wait. If one case starts with a runtime wait, the switch state
+materializes only the needed branch-entry split for that case. Other explicit
+cases remain ordinary selectable branches, and implicit fallthrough is guarded
+by the complement of all explicit case predicates:
+
+```lisp
+(main_switch_4
+  (<- (main_wait_1_cnt cycles) <(& (== sel 0) cycles))
+  (-> main_wait_1 <(& (== sel 0) cycles))
+  (-> main_drive_2 <(& (== sel 0) (== cycles 0)))
+  (?sel
+    (=1 (-> main_drive_3))
+  )
+  (-> main_done_5 <(! (| (== sel 0) (== sel 1)))))
+```
+
+The positive selected-case path samples the runtime count and enters the wait.
+The zero selected-case path bypasses the wait to the next state in that branch
+body. Values not listed by the author take the guarded fallthrough edge.
+
+Runtime waits remain fail-closed in inline `while` and `until` bodies, with
+diagnostics that name the rejected body context. They also remain fail-closed
+after pending samples, after predecessor states whose edge split is not
+implemented yet, including loop decision states, and for expression-valued or
+parameter-backed counts.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

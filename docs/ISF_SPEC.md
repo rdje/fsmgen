@@ -738,7 +738,7 @@ Current transaction clauses:
 - `(await port)` and `(await port (watchdog N))`
 - `(sample port as name)`
 - `(wait N)` for an unconditional exact-cycle delay with a non-negative static
-  literal, actor constant, or bounded top-level runtime scalar count
+  literal, actor constant, or bounded runtime scalar count
 - `(while cond body...)`
 - `(until cond body...)`
 - `(repeat count body...)`
@@ -1040,9 +1040,9 @@ does not create one child instance per iteration.
 `(await cond)` and `(repeat count body...)`. It does not test an external
 condition and it does not repeat a body. The shipped static count surface
 accepts either a non-negative integer literal or an actor constant name that
-resolves before lowering to a non-negative integer literal. The first runtime
-surface accepts a known-width scalar count name only for top-level transaction
-body waits where the predecessor edge can be split safely.
+resolves before lowering to a non-negative integer literal. The runtime scalar
+surface accepts a known-width scalar count name in contexts whose predecessor
+edge can be split safely.
 
 Cycle semantics:
 - `wait 0` means no delay. It emits no wait state, consumes no active
@@ -1072,9 +1072,9 @@ materialize on the next state-producing clause. The wait surface is accepted
 at the top level of a transaction body and inside the currently shipped inline
 body contexts: `when`, `switch`, `repeat`, `while`, and `until` bodies.
 
-For the first runtime scalar surface, `(wait count_signal)` is accepted only at
-the top level of a transaction body when `count_signal` has a known unsigned
-width and no pending sample is waiting to be materialized before the wait. The
+For the runtime scalar surface, `(wait count_signal)` is accepted when
+`count_signal` has a known unsigned width and no pending sample is waiting to
+be materialized before the wait. The
 predecessor state gets two explicit outgoing edges: `count_signal == 0`
 bypasses directly to the post-wait state, and `count_signal != 0` snapshots the
 current count into a generated wait counter and enters one generated wait
@@ -1108,11 +1108,16 @@ counter load and zero-count bypass paths, and the false edge still skips the
 whole `when` body. Runtime waits inside `repeat` bodies are also supported
 when no pending sample must cross the dynamic wait; generated dynamic wait
 counters are registered alongside the repeat counter, and the repeat-check
-loop-back/exit edges remain intact. Runtime waits inside `switch`, `while`, or
-`until` bodies remain rejected with diagnostics that name the rejected body
-context. Runtime waits after pending samples, after predecessor states whose
-edge split is not implemented yet, including loop decision states, and counts
-expressed as list expressions or parameter-backed values also remain rejected.
+loop-back/exit edges remain intact. Runtime waits inside `switch` branches are
+supported for the no-pending-sample subset. If the selected switch case starts
+with a runtime wait, the switch state owns that case's positive-count counter
+load/entry and zero-count bypass; other explicit cases remain selectable, and
+implicit fallthrough lowers as the complement of all explicit case-value
+predicates. Runtime waits inside `while` or `until` bodies remain rejected
+with diagnostics that name the rejected body context. Runtime waits after
+pending samples, after predecessor states whose edge split is not implemented
+yet, including loop decision states, and counts expressed as list expressions
+or parameter-backed values also remain rejected.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
@@ -1866,8 +1871,10 @@ transaction's `states` array keeps scheduled `.fsm` state emission order. The
 capability-manifest ISF public contract advertises this through
 `schedule_report_transaction_ordering`.
 The `transaction_waits` array reports the shipped literal `(wait N)` surface,
-actor-constant `(wait NAME)` surface, and bounded top-level runtime scalar
-`(wait count_signal)` surface. Positive static waits report the authored
+actor-constant `(wait NAME)` surface, and bounded runtime scalar
+`(wait count_signal)` surface, including accepted top-level, `when` body,
+`repeat` body, and `switch` branch contexts. Positive static waits report the
+authored
 transaction name, exact resolved cycle count, count kind/source, entry wait
 state, exit state after the wait chain, and null counter metadata. Runtime
 scalar waits report the authored transaction name, null `cycles`,
@@ -2183,10 +2190,11 @@ Focused tests:
   parameter-derived storage dimensions, memory-array backend emission, and
   library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped non-negative literal,
-  actor-constant, and bounded top-level runtime scalar `(wait N)` shapes:
-  pending-sample preservation, inline dynamic wait contexts, expression-valued
-  counts, parameter-backed counts, and additional predecessor-edge splits
-  remain deferred until their timing and diagnostics are implemented.
+  actor-constant, and bounded runtime scalar `(wait N)` shapes:
+  pending-sample preservation, remaining inline loop-body dynamic wait
+  contexts, expression-valued counts, parameter-backed counts, and additional
+  predecessor-edge splits remain deferred until their timing and diagnostics
+  are implemented.
 - Transaction binding surfaces beyond scalar and expression-valued `do`,
   `spawn`, and rule-trigger input bindings. Rule-trigger output bindings,
   explicit snapshot-vs-live timing selection, broader static conflict

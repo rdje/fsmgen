@@ -3179,8 +3179,18 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'wait'){
-                if (_wait_cycles($bc2,$tn,'switch body',$actor,$widths) > 0) {
-                    push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp],$actor,'switch body')};
+                my $wait = _wait_count_spec($bc2,$tn,'switch body',$actor,$widths,1);
+                if ($wait->{kind} eq 'static') {
+                    if ($wait->{cycles} > 0) {
+                        push @body_states,@{_ir_wait($bc2,$tn,$ir,[splice @lp],$actor,'switch body',$wait)};
+                    }
+                } else {
+                    confess "Transaction '$tn': runtime dynamic wait count '$wait->{source}' in switch body cannot follow pending samples yet\n"
+                        if @lp;
+                    my ($states,$counter,$width)=_ir_dynamic_wait($bc2,$tn,$ir,$wait);
+                    push @body_states,@$states;
+                    _register_counter_width($counters,$counter,$width) if $counters;
+                    $storage_roles->{$counter}='dynamic_wait_counter' if ref($storage_roles)eq'HASH';
                 }
             }
             elsif($bk2 eq'repeat'){my($rs,$rc,$rw,$rdw)=_ir_repeat($bc2,$tn,$ir,\@lp,$wd,$drives,$widths,$actor,$bank_accesses);push @body_states,@$rs;_register_repeat_counters($counters,$storage_roles,$rc,$rw,$rdw)}
@@ -4677,6 +4687,7 @@ sub _link_states {
     for my $i(0..$#$st){my $s=$st->[$i];my $n=$i<$#$st?$st->[$i+1]{name}:undef;my $next=$branch_exit_target{$s->{name}}||$n;
         my $next_state = $i < $#$st ? $st->[$i + 1] : undef;
         if($s->{dynamic_wait_entry}){_link_dynamic_wait_state($s)}
+        elsif($s->{kind}eq'switch'){_link_switch_state($s,\%idx_by_name,$st,$n,$e)}
         elsif($next_state&&$next_state->{dynamic_wait_entry}){_link_dynamic_wait_predecessor($tn,$s,$next_state)}
         elsif($s->{kind}eq'entry'&&$n){push @{$s->{transitions}},{target=>$n,condition=>$s->{guard}}}
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
@@ -4703,11 +4714,100 @@ sub _link_states {
             } if $s->{loop_body_start};
         }
         elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait')&&$next){push @{$s->{transitions}},{target=>$next}}
-        elsif($s->{kind}eq'switch'){my$skip=$s->{switch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip} unless $s->{has_default_branch};for my$br(@{$s->{branches}}){next if _is_default_switch_value($br->{value});push @{$s->{transitions}},{target=>$br->{body_start},condition=>{signal=>$s->{signal},value=>$br->{value}}}}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'terminal'){push @{$s->{transitions}},{target=>$e}}}
+}
+
+sub _link_switch_state {
+    my ($state, $idx_by_name, $states, $next_target, $entry_target) = @_;
+    my $skip = $state->{switch_exit_target} || $next_target || $entry_target;
+    my @explicit_conditions;
+    my $has_dynamic_branch;
+
+    for my $branch (@{$state->{branches} || []}) {
+        next if _is_default_switch_value($branch->{value});
+        push @explicit_conditions, _switch_value_condition_expr($state->{signal}, $branch->{value});
+    }
+
+    for my $branch (@{$state->{branches} || []}) {
+        my $body = _state_by_name($idx_by_name, $states, $branch->{body_start});
+        if ($body && $body->{dynamic_wait_entry}) {
+            $has_dynamic_branch = 1;
+            last;
+        }
+    }
+
+    if (!$has_dynamic_branch) {
+        push @{$state->{transitions}}, { target => $skip }
+            unless $state->{has_default_branch};
+        for my $branch (@{$state->{branches} || []}) {
+            next if _is_default_switch_value($branch->{value});
+            push @{$state->{transitions}}, {
+                target    => $branch->{body_start},
+                condition => {
+                    signal => $state->{signal},
+                    value  => $branch->{value},
+                },
+            };
+        }
+        return;
+    }
+
+    my $default_condition = _switch_default_condition_expr(\@explicit_conditions);
+    $state->{switch_transitions_materialized} = 1;
+
+    for my $branch (@{$state->{branches} || []}) {
+        my $body = _state_by_name($idx_by_name, $states, $branch->{body_start});
+        my $condition = _is_default_switch_value($branch->{value})
+            ? $default_condition
+            : _switch_value_condition_expr($state->{signal}, $branch->{value});
+
+        if ($body && $body->{dynamic_wait_entry}) {
+            _link_dynamic_wait_entry_edge($state, $body, $condition);
+        } elsif (_is_default_switch_value($branch->{value})) {
+            push @{$state->{transitions}}, {
+                target    => $branch->{body_start},
+                condition => { expr => $condition },
+            };
+        } else {
+            push @{$state->{transitions}}, {
+                target    => $branch->{body_start},
+                condition => {
+                    signal => $state->{signal},
+                    value  => $branch->{value},
+                },
+            };
+        }
+    }
+
+    if (!$state->{has_default_branch}) {
+        push @{$state->{transitions}}, {
+            target    => $skip,
+            condition => { expr => $default_condition },
+        };
+    }
+}
+
+sub _state_by_name {
+    my ($idx_by_name, $states, $name) = @_;
+    return undef unless defined $name;
+    return undef unless ref($idx_by_name) eq 'HASH' && exists $idx_by_name->{$name};
+    return $states->[$idx_by_name->{$name}];
+}
+
+sub _switch_value_condition_expr {
+    my ($signal, $value) = @_;
+    return "(== $signal $value)";
+}
+
+sub _switch_default_condition_expr {
+    my ($explicit_conditions) = @_;
+    my @conditions = grep { defined($_) && length($_) } @{$explicit_conditions || []};
+    return '1' unless @conditions;
+    return _negated_condition_expr($conditions[0]) if @conditions == 1;
+    return _negated_condition_expr('(| ' . join(' ', @conditions) . ')');
 }
 
 sub _link_dynamic_wait_state {
