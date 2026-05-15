@@ -189,9 +189,8 @@ current boundary. Full VHDL support is tracked in
 FSMGen should fail closed when a source uses syntax outside the active
 contract. Current out-of-support examples include:
 
-- non-conventional `+system` sections, including alternate clock names,
-  duplicate clock/reset entries, malformed reset identifiers, and incomplete
-  system declarations
+- malformed `+system` sections, including duplicate clock/reset entries,
+  malformed clock/reset identifiers, and incomplete system declarations
 - unsupported top-level directive sections such as `(+clock clk)`,
   `(+areset rst_n)`, or `(+bogus ...)`
 - unsupported tagged wrappers such as `?define:legacy_template` and other

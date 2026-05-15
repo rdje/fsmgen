@@ -124,4 +124,8 @@ Limitations:
 - Standalone transaction and drive exports are not shipped as reusable
   library definitions yet.
 - Library actors that import other libraries are not shipped yet.
-- Clock/reset name remapping at the use site remains fail-closed.
+- Clock/reset name remapping at the use site is shipped for generated tops:
+  differently named parent/child system signals are linked explicitly while
+  the reusable actor keeps its reset kind and polarity. This is name remapping
+  inside the current single-clock-domain ISF model, not multi-clock-domain
+  behavior.

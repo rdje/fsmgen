@@ -3,12 +3,21 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: select or activate the next user-visible feature tree
-  before implementing more ISF behavior. `ISF-TRANSACTION-ACTIVATION` is now
-  closed after publishing the shipped spawn/blocking-`do` activation-parameter
-  boundary. Rule-trigger and direct-activation parameter overrides remain
-  backlog and need a fresh explicit tree/leaf before implementation.
+  before implementing more ISF behavior. `ISF-LIBRARY-SYSTEM-BINDINGS` is now
+  closed after shipping reusable-library system-port remapping, and
+  `ISF-TRANSACTION-ACTIVATION` is closed after publishing the shipped
+  spawn/blocking-`do` activation-parameter boundary. Rule-trigger and
+  direct-activation parameter overrides remain backlog and need a fresh
+  explicit tree/leaf before implementation.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
+- ISF library system-port remapping update: reusable-library clock/reset
+  bindings now support parent/child signal-name remapping in generated tops.
+  Same-name bindings still use system-port auto-wiring; differently named
+  bindings emit explicit links such as `/clk/rx.lib_clk/`. Direct `.fsm`
+  `+system` now accepts HDL-compatible authored clock identifiers. This is
+  still single-clock-domain ISF behavior; multi-clock, asynchronous, and
+  interacting clock-domain semantics remain future work.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width
@@ -30,8 +39,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/TASK_TREE.md](docs/TASK_TREE.md). The completed
   `ISF-CONTROL-FLOW` tree now owns the shipped transaction-local wait and
   loop surface. The completed `ISF-SETTER-SYNTAX` tree now owns the shipped
-  scalar setter syntax. The active `ISF-TRANSACTION-ACTIVATION` tree now owns
-  the task-like transaction activation and parameter-override follow-up. The
+  scalar setter syntax. The completed `ISF-LIBRARY-SYSTEM-BINDINGS` tree now
+  owns reusable-library system-port remapping. The
   completed `ISF-PORT-BINDING` tree is listed in the
   completed table. The
   public-contract tree remains cross-cutting and should not displace feature
@@ -41,7 +50,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-RULE-ACTIONS`, `ISF-RESOURCE-CATALOG`, `ISF-RESOURCE-PRIORITY`,
   `ISF-CONFLICTS`, `ISF-COMPOSITION`, `ISF-FIXTURES`,
   `ISF-CONTROL-FLOW`, `ISF-SETTER-SYNTAX`, and
-  `ISF-COMPATIBILITY` trees are listed in the task-tree completed table.
+  `ISF-COMPATIBILITY`, plus `ISF-LIBRARY-SYSTEM-BINDINGS`, are listed in the
+  task-tree completed table.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.

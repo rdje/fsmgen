@@ -644,7 +644,7 @@ sub isf_public_interface_shipped_library_definitions {
                 'no automatic non-zero reset values yet',
                 'no standalone transaction or drive library exports yet',
                 'no nested library imports from library actors yet',
-                'no clock/reset name remapping at use sites yet',
+                'no reset-policy override at use sites; clock/reset name remapping keeps actor-owned reset policy',
             ],
         },
     ];

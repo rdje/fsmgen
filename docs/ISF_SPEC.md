@@ -330,8 +330,14 @@ When a library actor use is present, lowering also emits a generated top
 library child actor. Bound library inputs are linked from top inputs directly
 to the library instance, and bound library outputs drive the corresponding top
 outputs. Same-name clock/reset bindings use the existing generated-composition
-system-port auto-wiring path. Clock/reset name remapping remains fail-closed
-until the composition backend supports remapped system ports.
+system-port auto-wiring path. When the library actor's authored clock or reset
+name differs from the importing actor's bound parent signal, the generated top
+emits an explicit link such as `/clk/rx.lib_clk/` or
+`/rst_n/rx.lib_rst_n/`. The reusable actor still owns reset kind and polarity;
+the binding remaps only the signal identity seen at the parent boundary. This
+is not multi-clock-domain support. The current ISF scheduler still models one
+clock domain for an actor/generated top; multi-clock, asynchronous, and
+interacting clock-domain semantics remain unspecified and out of scope here.
 Successful schedule reports expose a bounded top-level `library_uses` array
 with `library`, `alias`, `export`, `kind`, `instance`, `module`,
 `scheduled_fsm`, `parameters`, and `bindings`. Parameter summaries expose
@@ -401,8 +407,8 @@ entry 0. The reusable FIFO fixture models the internal data bank through
 Parameter-driven interface widths, arbitrary-depth memory-backed FIFO
 generation beyond the first `DEPTH=4` fixture, automatic non-zero reset values
 such as empty=1, standalone transaction/drive exports, symbolic constants,
-derived parameter expressions, clock/reset name remapping, and library actors
-that import other libraries remain deferred.
+derived parameter expressions, and library actors that import other libraries
+remain deferred.
 
 ## 4. Clock, Reset, Watchdog
 
@@ -417,6 +423,9 @@ Reset rules:
 - Clock names must be scalar when a `(clock ...)` clause is present.
 - `(clock ...)`, `(reset ...)`, and `(watchdog ...)` are actor-level
   singleton clauses; duplicates are rejected before actor-shell return.
+- ISF currently supports one actor clock domain. A non-`clk` name is just an
+  authored signal name for that single domain, not a second or interacting
+  clock domain.
 - Flat `(reset name)` defaults to synchronous reset.
 - Names ending in `_n` or `_b` infer `active_low`; other names infer
   `active_high`.
@@ -2047,14 +2056,13 @@ Focused tests:
 ## 12. Explicitly Deferred
 
 - Reusable ISF library behavior beyond the shipped resolver/review-artifact,
-  same-name generated-top, actor-owned fixed-storage, and expression-valued
+  generated-top system binding, actor-owned fixed-storage, and expression-valued
   rule-guard/disjoint-rule/FIFO-controller-matrix/bank-access/fixed FIFO
   library fixture/catalog slices:
   standalone transaction/drive exports,
   symbolic constants, derived parameter expressions,
-  parameter-derived storage dimensions, clock/reset name remapping,
-  memory-array backend emission, and library actors that import other
-  libraries.
+  parameter-derived storage dimensions, memory-array backend emission, and
+  library actors that import other libraries.
 - Unconditional transaction delay beyond the shipped positive-literal
   `(wait N)` shape:
   dynamic counts, symbolic counts, and zero-count behavior remain deferred

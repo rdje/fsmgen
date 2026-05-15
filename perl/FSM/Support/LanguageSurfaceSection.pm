@@ -43,7 +43,7 @@ sub build_language_surface_section {
             ],
         },
         system_contracts => {
-            canonical_clock => '(clock clk)',
+            canonical_clock => '(clock NAME), where NAME is an HDL identifier; examples use clk',
             canonical_synchronous_reset => '(sreset reset)',
             canonical_asynchronous_reset => '(areset rst_n)',
             legacy_or_misleading_reset_forms_rejected_in_strict => [

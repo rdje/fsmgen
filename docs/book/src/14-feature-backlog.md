@@ -712,8 +712,9 @@ be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
 Current boundary: the first reusable ISF library import, same-name
-generated-top, actor-owned fixed-storage, expression-valued rule-guard,
-disjoint-rule write, FIFO-controller matrix, bank-access, and fixed FIFO
+and remapped generated-top system binding, actor-owned fixed-storage,
+expression-valued rule-guard, disjoint-rule write, FIFO-controller matrix,
+bank-access, and fixed FIFO
 library fixture slices have shipped. Actor roots may import library roots, use
 an exported actor, validate use-site parameters and explicit bindings, emit a
 specialized child scheduled `.fsm` artifact, wire the library actor through a
@@ -724,7 +725,10 @@ same-target rule writes when direct contradictory guard facts prove
 disjointness, prove a depth-4 FIFO-controller same-cycle update matrix, and
 author a reusable fixed-shape FIFO actor source with bank-backed accepted
 push/pop data movement that reaches generated-top SystemVerilog. Clock/reset
-name remapping remains fail-closed.
+name remapping now works through explicit generated-top links while keeping
+the reusable actor's reset kind and polarity unchanged. This remapping is
+still single-clock-domain ISF behavior; multi-clock, asynchronous, and
+interacting clock domains remain a separate unshipped semantics problem.
 
 Shipped source model for actor exports:
 
@@ -827,8 +831,9 @@ and the current directory. For a dotted namespace such as `common.fifo`, both
 `common.fifo.isf` and `common/fifo.isf` are candidate file names. `parse_source`
 can use same-source library roots but cannot resolve external files without a
 real source path. Standalone transaction/drive exports, symbolic parameter
-values, derived parameter expressions, and clock/reset name remapping are
-still deferred.
+values, derived parameter expressions, parameter-derived storage dimensions,
+memory-array backend emission, nested library imports, and multi-clock-domain
+ISF semantics are still deferred.
 
 FIFO modeling rule: a FIFO should be modeled primarily as an actor because it
 owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,

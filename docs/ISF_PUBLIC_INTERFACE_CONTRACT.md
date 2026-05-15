@@ -109,8 +109,11 @@ provenance.
 Generated top wiring for resolved library actor instances is checked by
 [t/1231-isf-library-generated-top.t](../t/1231-isf-library-generated-top.t)
 so a library actor wrapper reaches CLI `--outdir`, generated top `.fsm`, and
-SystemVerilog output through the normal composition path, while unsupported
-clock/reset name remapping fails closed before backend parsing.
+SystemVerilog output through the normal composition path, including explicit
+generated-top links when a library actor uses different clock/reset names than
+the importing actor. Those links are name remaps inside the current
+single-clock-domain ISF model; they do not advertise CDC or interacting
+clock-domain semantics.
 The current APB schedule report is checked against the advertised key families
 by [t/1116-isf-public-schedule-report-key-family-audit.t](../t/1116-isf-public-schedule-report-key-family-audit.t).
 The shipped stage/contract report projection is checked by
@@ -701,8 +704,10 @@ resolution requires a real source path, so file-backed library use should call
 `parse_file(...)`. Resolved library actor instances emit a generated top when
 lowered for HDL: bound library inputs/outputs link directly between top ports
 and the library child instance. Same-name clock/reset bindings use the existing
-composition system-port auto-wiring path; clock/reset name remapping is
-currently fail-closed.
+composition system-port auto-wiring path. Differently named clock/reset
+bindings emit explicit generated-top links to the library child system ports;
+the reusable actor still owns reset kind and polarity. ISF still has one actor
+clock domain in this shipped surface.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters

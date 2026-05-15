@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF library system-port remapping
+- Active R14 task-tree slice:
+  `ISF-LIBRARY-SYSTEM-BINDINGS.1` supports reusable-library clock/reset
+  parent/child name remapping.
+- Generated ISF composition tops now emit explicit links for remapped library
+  system signals, while same-name bindings continue through system-port
+  auto-wiring.
+- Direct `.fsm +system` accepts HDL-compatible authored clock identifiers, and
+  malformed clock identifiers still fail closed.
+- The shipped behavior is single-clock-domain ISF name binding only; multi-clock
+  and CDC semantics remain unshipped.
+- Focused validation passed for direct system contracts, generated library top
+  HDL, public catalog metadata, and language-surface metadata.
+
 ## 2026-05-15: R6 — verbose .rtlif metadata ports
 - `.rtlif` now accepts verbose `(input ...)` and `(output ...)` declarations as
   aliases for compact external-RTL metadata tokens.

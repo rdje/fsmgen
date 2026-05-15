@@ -38,6 +38,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LIBRARY-SYSTEM-BINDINGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md) |
 | `ISF-TRANSACTION-ACTIVATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md) |
 | `ISF-SETTER-SYNTAX` | `done` | `R14` | `closed` | [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md) |
 | `ISF-CONTROL-FLOW` | `done` | `R14` | `closed` | [docs/tasks/ISF-CONTROL-FLOW.md](docs/tasks/ISF-CONTROL-FLOW.md) |
@@ -74,6 +75,7 @@ as done work unless a future task reopens them.
 | Schedule-report storage classes and schedule JSON stabilization | `ISF-SCHEDULE-REPORTS` |
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
+| Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |

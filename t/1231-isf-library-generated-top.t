@@ -64,40 +64,24 @@ subtest 'CLI compiles library generated top through normal HDL generation' => su
     like($hdl, qr/library_wrapper__rx rx \([\s\S]*?\.fired\(fired\)/, 'library child output is bound to top output');
 };
 
-subtest 'library generated top fails closed for system-name remapping' => sub {
-    assert_lower_rejected(<<'ISF', 'clock remapping', qr/requires same-name system clocks/);
+subtest 'library generated top wires remapped system names explicitly' => sub {
+    my $dir = tempdir(CLEANUP => 1);
+    my $top = File::Spec->catfile($dir, 'remap.isf');
+    my $output = File::Spec->catfile($dir, 'library_system_remap.sv');
+
+    write_file($top, <<'ISF');
 (library common.pulse
   (exports (actor pulse_actor))
   (actor pulse_actor
     (clock lib_clk)
+    (reset (lib_rst_n async active_low))
     (interface (input trigger) (output fired))
     (transaction main
       (on trigger)
       (complete fired))))
-(actor library_clock_remap
+(actor library_system_remap
   (clock clk)
-  (interface (input trigger) (output fired))
-  (imports (library common.pulse as pulse_lib))
-  (use pulse_lib.pulse_actor as rx
-    (bind
-      (clock clk)
-      (input trigger trigger)
-      (output fired fired))))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'reset remapping', qr/requires same-name system resets/);
-(library common.pulse
-  (exports (actor pulse_actor))
-  (actor pulse_actor
-    (clock clk)
-    (reset lib_rst_n)
-    (interface (input trigger) (output fired))
-    (transaction main
-      (on trigger)
-      (complete fired))))
-(actor library_reset_remap
-  (clock clk)
-  (reset rst_n)
+  (reset (rst_n async active_low))
   (interface (input trigger) (output fired))
   (imports (library common.pulse as pulse_lib))
   (use pulse_lib.pulse_actor as rx
@@ -107,6 +91,41 @@ ISF
       (input trigger trigger)
       (output fired fired))))
 ISF
+
+    my $actor = FSM::Adapter::ISF->new()->parse_file($top);
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $top_fsm = $lowered->{files}{'library_system_remap_top.fsm'};
+
+    ok(defined($top_fsm), 'lowering emits generated top for remapped system bindings');
+    like($top_fsm, qr{/clk/rx\.lib_clk/}, 'generated top explicitly links parent clock to library clock');
+    like($top_fsm, qr{/rst_n/rx\.lib_rst_n/}, 'generated top explicitly links parent reset to library reset');
+
+    my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
+        command => [
+            './bin/fsmgen',
+            '--quiet',
+            '--outdir',
+            $dir,
+            '--output',
+            $output,
+            $top,
+        ],
+    );
+
+    my $combined_output = join('', @{$stdout_buf || []}, @{$stderr_buf || []}, ($error_message || ''));
+    ok($success, 'CLI generation succeeds for remapped library system bindings');
+    diag($combined_output) unless $success;
+    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr empty for remapped library system bindings');
+    ok(-f $output, 'CLI writes HDL for remapped library system bindings');
+
+    SKIP: {
+        skip 'HDL was not emitted for remapped library system bindings', 2
+            unless $success && -f $output;
+
+        my $hdl = slurp($output);
+        like($hdl, qr/library_system_remap__rx\s+rx\s*\([\s\S]*?\.lib_clk\(clk\)/, 'HDL binds remapped library clock to top clock');
+        like($hdl, qr/library_system_remap__rx\s+rx\s*\([\s\S]*?\.lib_rst_n\(rst_n\)/, 'HDL binds remapped library reset to top reset');
+    }
 };
 
 done_testing();
@@ -168,18 +187,4 @@ sub slurp {
     my $text = do { local $/; <$fh> };
     close $fh or die "cannot close $path: $!";
     return $text;
-}
-
-sub assert_lower_rejected {
-    my ($source, $label, $diagnostic_re) = @_;
-
-    my $ok = eval {
-        my $actor = FSM::Adapter::ISF->new()->parse_source($source, "$label.isf");
-        FSM::Scheduler::ISF->new()->lower($actor);
-        1;
-    };
-    my $diagnostic = $@;
-
-    ok(!$ok, "$label is rejected");
-    like($diagnostic, $diagnostic_re, "$label diagnostic");
 }

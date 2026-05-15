@@ -112,8 +112,9 @@ reusable ISF design intent, not only scalar constants or types.
   Acceptance: `A library actor use emits a generated composition top, binds
   same-name clock/reset through the existing system-port auto-wiring path,
   links bound inputs/outputs directly to the library child instance, and
-  reaches SystemVerilog generation. Unsupported system-name remapping fails
-  before backend parsing.`
+  reaches SystemVerilog generation. Later
+  ISF-LIBRARY-SYSTEM-BINDINGS work adds explicit system-name remapping on top
+  of this same generated-top path.`
   Verification: `prove -l t/1231-isf-library-generated-top.t
   t/1230-isf-library-import-resolution.t
   t/1216-isf-generated-composition-top.t
@@ -715,14 +716,16 @@ Shipped behavior:
   parameter source/value summaries, and binding summaries.
 - Generated tops now include library actor instances. Same-name library
   clock/reset bindings use the existing system-port auto-wiring path; explicit
-  system-name remapping remains fail-closed until the composition backend
-  supports it.
+  system-name remapping is owned by
+  [ISF-LIBRARY-SYSTEM-BINDINGS](ISF-LIBRARY-SYSTEM-BINDINGS.md) and now emits
+  direct generated-top links when parent and child system names differ.
 
 Remaining boundary:
 
 - Library actor instances are resolved, emitted as reviewable scheduled child
   `.fsm` artifacts, wired into generated tops, and reachable through
-  SystemVerilog generation when system clock/reset names match.
+  SystemVerilog generation for same-name and explicitly remapped system
+  clock/reset bindings.
 - The first FIFO fixture is now shipped as fixed source intent:
   [isf/common/fifo.isf](../../isf/common/fifo.isf) exports
   `common.fifo.fifo`, and
@@ -737,8 +740,10 @@ Remaining boundary:
   work. Pointer/occupancy controller state, same-cycle controller updates, and
   scalarized pointer-selected bank access are now shipped for the fixed
   depth-4 fixture.
-- Library actor system clock/reset name remapping remains deferred; the
-  current generated-top path requires same-name system ports.
+- Library actor system clock/reset name remapping shipped later in
+  [ISF-LIBRARY-SYSTEM-BINDINGS](ISF-LIBRARY-SYSTEM-BINDINGS.md). The library
+  actor still owns reset kind and polarity; use sites remap only signal names
+  inside the current single-clock-domain ISF model.
 
 ## Decisions
 
@@ -851,7 +856,7 @@ Remaining boundary:
 | `ISF-LIBRARIES.1` | `ISF-LIBRARIES.1: specify library import model` | Public library terminology, source roots, import/use shape, namespaces, export kinds, and diagnostics boundary. |
 | `ISF-LIBRARIES.2` | `ISF-LIBRARIES.2: specify library binding model` | Actor parameter declarations, use-site overrides, clock/reset/interface binding, generated names, report provenance, and rejected cases. |
 | `ISF-LIBRARIES.3` | `ISF-LIBRARIES.3: implement library import resolution` | Parser/lowerer resolve exported library actors from source-dir/FSMLIB/cwd roots, emit specialized child scheduled `.fsm`, and project `library_uses` report metadata. |
-| `ISF-LIBRARIES.4.1` | `ISF-LIBRARIES.4.1: wire library generated tops` | Generated top wiring for resolved library actor instances; same-name system ports use auto-wiring and remapping fails closed. |
+| `ISF-LIBRARIES.4.1` | `ISF-LIBRARIES.4.1: wire library generated tops` | Generated top wiring for resolved library actor instances; same-name system ports use auto-wiring. Remapping is a later `ISF-LIBRARY-SYSTEM-BINDINGS` follow-up. |
 | `ISF-LIBRARIES.4.2` | `ISF-LIBRARIES.4.2: specify real FIFO requirements` | Rejected a depth-1 placeholder as a FIFO, captured same-cycle push/pop semantics, and split missing storage/concurrency support into follow-up leaves. |
 | `ISF-LIBRARIES.4.3` | `ISF-LIBRARIES.4.3: add actor storage declarations` | Singleton `(storage ...)` actor clauses with authored fixed-width state values and fixed-depth scalarized banks for the first depth-4 FIFO target. |
 | `ISF-LIBRARIES.4.4.1` | `ISF-LIBRARIES.4.4.1: support rule expression guards` | Scalar or list-expression rule guards lower once as non-state DT DTEs for direct FIFO fire predicates. |

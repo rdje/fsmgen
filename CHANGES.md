@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF library system-port remapping
+- Added
+  [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md)
+  to track the reusable-library clock/reset binding follow-up.
+- Updated
+  [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm)
+  so library actor clock/reset bindings emit explicit generated-top links when
+  parent and child system signal names differ. Same-name bindings keep using
+  existing composition system-port auto-wiring.
+- Updated
+  [perl/FSM/Adapter/FSMGenFull/Parser.pm](perl/FSM/Adapter/FSMGenFull/Parser.pm)
+  so direct `.fsm +system` accepts HDL-compatible authored clock identifiers
+  instead of requiring literal `clk`; malformed clock identifiers remain
+  rejected with targeted diagnostics.
+- Added remapped generated-top and HDL coverage in
+  [t/1231-isf-library-generated-top.t](t/1231-isf-library-generated-top.t),
+  and refreshed direct `.fsm` system-contract coverage in
+  [t/31-language-contract-system-section.t](t/31-language-contract-system-section.t)
+  and
+  [t/72-language-contract-system-section-entrypoints.t](t/72-language-contract-system-section-entrypoints.t).
+- Synchronized the mdBook, ISF spec, public contract docs, library catalog,
+  public contract metadata, roadmap, task tree, and live docs. The documented
+  boundary is still single-clock-domain ISF behavior; name remapping does not
+  ship multi-clock or CDC semantics.
 ### R6 — verbose external RTL interface metadata ports
 - Added verbose `.rtlif` port declarations as aliases for compact external-RTL
   metadata tokens. `(input NAME ...)` and `(output NAME ...)` now normalize to

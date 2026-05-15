@@ -73,8 +73,9 @@ Use `?dt:name` for a standalone decision tree, especially when the logic is:
 
 The current `?dt:name` contract is intentionally narrower than `?fsm:name`.
 
-Accepted top-level content for `?dt:name` currently includes conventional
-`+system`, `+size`, `+constants`, `+enums`, `+define`, `+params`, bounded
+Accepted top-level content for `?dt:name` currently includes explicit
+`+system` with HDL-compatible clock/reset names, `+size`, `+constants`,
+`+enums`, `+define`, `+params`, bounded
 `+types`, bounded `+import`, canonical `(:= (signal value))` directives, and
 non-state DT blocks such as `(-route ...)`. Regular FSM-state blocks such as
 `(idle ...)` are rejected inside standalone-DT roots.

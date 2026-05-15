@@ -215,7 +215,7 @@ sub _emit_toplink_block {
                 my $child_clock = $use->{child_clock};
                 confess "CompositionTop emitter library use '$instance' has a clock binding but no child clock name\n"
                     unless defined($child_clock) && length($child_clock);
-                confess "CompositionTop emitter library use '$instance' binds parent clock '$parent_name' to child clock '$child_clock', but generated composition currently requires same-name system clocks\n"
+                push @links, "/$parent_name/$instance.$child_clock/"
                     unless $child_clock eq $parent_name;
                 next;
             }
@@ -224,7 +224,7 @@ sub _emit_toplink_block {
                 my $child_reset = $use->{child_reset};
                 confess "CompositionTop emitter library use '$instance' has a reset binding but no child reset name\n"
                     unless defined($child_reset) && length($child_reset);
-                confess "CompositionTop emitter library use '$instance' binds parent reset '$parent_name' to child reset '$child_reset', but generated composition currently requires same-name system resets\n"
+                push @links, "/$parent_name/$instance.$child_reset/"
                     unless $child_reset eq $parent_name;
                 next;
             }

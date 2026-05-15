@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF library system-port remapping
+- The remapping feature is intentionally a composition-boundary name binding.
+  A reusable actor may call its clock `lib_clk` and an importing actor may bind
+  that to parent `clk`; the generated top then links `/clk/rx.lib_clk/`.
+  The same applies to reset names.
+- The reusable actor remains the owner of reset kind and polarity. A use site
+  can rename the reset signal it connects to, but it cannot turn an async
+  active-low reusable reset into a different reset policy.
+- Direct `.fsm +system` needed to accept authored clock identifiers for this to
+  work end to end. The SystemVerilog backend already consumes the effective
+  system contract, so the root fix is to validate clock names as identifiers
+  instead of hard-coding `clk`.
+- This does not solve multi-clock ISF. Today ISF still has a single actor clock
+  domain in the scheduler model. Multi-clock, asynchronous, and interacting
+  clock domains need separate semantics, diagnostics, scheduling rules, and
+  verification before they should become public ISF behavior.
 ## 2026-05-15: verbose .rtlif interface metadata ports
 - Verbose `.rtlif` port declarations are a readability layer over the existing
   external-RTL metadata model. The loader still emits ordinary

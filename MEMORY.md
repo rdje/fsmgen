@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF library system-port remapping
+- Created
+  [docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md](docs/tasks/ISF-LIBRARY-SYSTEM-BINDINGS.md)
+  for the R14 reusable-library clock/reset binding follow-up.
+- Library actor use-site clock/reset bindings now support parent/child signal
+  name remapping in generated tops. Same-name bindings continue to use
+  composition system-port auto-wiring; differently named bindings emit explicit
+  links such as `/clk/rx.lib_clk/` and `/rst_n/rx.lib_rst_n/`.
+- Direct `.fsm +system` now accepts any HDL-identifier-compatible clock name,
+  so specialized library child artifacts with authored clock names reach HDL.
+  Malformed clock identifiers still fail closed with a targeted diagnostic.
+- This does not add multi-clock ISF semantics. ISF remains one clock domain per
+  actor/generated top for this shipped surface; remapping is signal-name
+  binding only, and multi-clock/CDC semantics remain future work.
+- Focused validation passed for direct `.fsm` system contracts, reset-policy
+  preservation, generated library tops, library catalog metadata, and language
+  surface contract metadata.
 ## 2026-05-15: verbose .rtlif interface metadata ports
 - Added verbose `.rtlif` port declarations:
   `(input NAME ...)` and `(output NAME ...)`.

@@ -14,15 +14,18 @@ use FSM::Pipeline::HDLGenerator;
 
 my $tempdir = tempdir(CLEANUP => 1);
 
-subtest 'pipeline and CLI do not emit HDL for non-conventional +system clock names' => sub {
-    my $fsm_path = write_fsm('bad_system_clock_name.fsm', <<'FSM');
-(?fsm:bad_clock_name
+subtest 'pipeline and CLI emit HDL for authored +system clock identifiers' => sub {
+    my $fsm_path = write_fsm('custom_system_clock_name.fsm', <<'FSM');
+(?fsm:custom_clock_name
   (+system
     (clock core_clk)
     (sreset rstn)
   )
+  (+size
+    (A 1)
+  )
   (-dt
-    (A = 1)
+    (A <= 1)
   )
 )
 FSM
@@ -31,21 +34,21 @@ FSM
         target_language => 'systemverilog',
         debug => 0,
     );
-    my $pipeline_error = eval {
+    my $pipeline_result = eval {
         $pipeline->generate_hdl_from_file($fsm_path);
-        undef;
     };
-    $pipeline_error = $@ if !$pipeline_error;
-    ok($pipeline_error, 'pipeline rejects non-conventional +system clock name');
-    like($pipeline_error, qr/Unsupported '\+system' clock name 'core_clk'/, 'pipeline surfaces the explicit +system clock-name boundary');
+    my $pipeline_error = $@;
+    is($pipeline_error, '', 'pipeline accepts authored +system clock identifiers');
+    like($pipeline_result->{hdl_code}, qr/\binput\s+wire\s+core_clk\b/s, 'pipeline declares the authored clock port');
+    like($pipeline_result->{hdl_code}, qr/always_ff\s*@\(posedge\s+core_clk\)/s, 'pipeline uses the authored clock in sequential logic');
 
-    my $out_path = File::Spec->catfile($tempdir, 'bad_system_clock_name.sv');
+    my $out_path = File::Spec->catfile($tempdir, 'custom_system_clock_name.sv');
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '-o', $out_path, '--quiet', $fsm_path],
     );
 
-    ok(!$success, 'CLI rejects non-conventional +system clock name');
-    ok(!-e $out_path, 'CLI does not emit output for non-conventional +system clock name');
+    ok($success, 'CLI accepts authored +system clock identifiers');
+    ok(-e $out_path, 'CLI emits output for authored +system clock identifiers');
 
     my $combined_output = join(
         '',
@@ -54,7 +57,9 @@ FSM
         ($error_message || ''),
     );
 
-    like($combined_output, qr/Unsupported '\+system' clock name 'core_clk'/, 'CLI surfaces the explicit +system clock-name boundary');
+    unlike($combined_output, qr/Unsupported '\+system' clock name 'core_clk'|Error parsing FSM/s, 'CLI output does not report rejected authored clock identifiers');
+    like(read_file($out_path), qr/\binput\s+wire\s+core_clk\b/s, 'CLI output declares the authored clock port');
+    like(read_file($out_path), qr/always_ff\s*@\(posedge\s+core_clk\)/s, 'CLI output uses the authored clock in sequential logic');
 };
 
 subtest 'pipeline and CLI emit HDL for canonical areset +system directives' => sub {

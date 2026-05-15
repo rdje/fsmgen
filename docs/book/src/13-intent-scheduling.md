@@ -241,7 +241,13 @@ parameter source/value summaries, and explicit binding summaries. The
 lower-result `files` map can include specialized library-child scheduled
 `.fsm` artifacts and a generated top that wires library actor instances through
 the normal composition/HDL path. Same-name clock/reset bindings use system-port
-auto-wiring; clock/reset name remapping remains fail-closed. The plain
+auto-wiring. Differently named reusable-actor clock/reset bindings emit
+explicit generated-top links to the child system ports, for example
+`/clk/rx.lib_clk/`; the child actor still owns reset kind and polarity. This
+is signal-name remapping inside the current one-clock-domain ISF model, not
+multi-clock or clock-domain-crossing support. Multi-clock, asynchronous, and
+interacting clock domains need a separate public semantic model before they can
+be shipped. The plain
 `file.isf` CLI path is audited to reach generated HDL with clean stderr,
 including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including
@@ -272,11 +278,14 @@ limitations are:
   covers push-only, pop-only, simultaneous push+pop, idle cycles,
   pointer-selected bank access, 2-bit pointer wrap, occupancy values 0
   through 4, and full/empty derivation. It also reaches generated-top
-  SystemVerilog through the CLI. Parameter-driven
+  SystemVerilog through the CLI. Reusable library clock/reset bindings now
+  support parent/child name remapping through explicit generated-top links.
+  That remapping is a single-clock-domain name binding only.
+  Parameter-driven
   interface/storage widths, arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone
   transaction/drive exports, symbolic constants, derived parameter
-  expressions, and clock/reset name remapping remain backlog work.
+  expressions, and nested library imports remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,

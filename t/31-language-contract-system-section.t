@@ -69,9 +69,9 @@ FSM
     ok($adapter->{signal_manager}->get_signal('rstn')->is_reset, 'asreset form still registers rstn as a reset signal');
 };
 
-subtest 'non-conventional +system clock names are rejected explicitly' => sub {
-    my $error = parse_failure(<<'FSM');
-(?fsm:bad_clock_name
+subtest 'non-canonical +system clock names are accepted as identifiers' => sub {
+    my ($adapter, $fsm_module) = parse_fsm_with_adapter(<<'FSM');
+(?fsm:custom_clock_name
   (+system
     (clock core_clk)
     (sreset rstn)
@@ -82,7 +82,25 @@ subtest 'non-conventional +system clock names are rejected explicitly' => sub {
 )
 FSM
 
-    like($error, qr/Unsupported '\+system' clock name 'core_clk'/, 'bad clock name gets a targeted diagnostic');
+    is($fsm_module->attributes->{system_contract}{clock}, 'core_clk', '+system stores the authored clock name');
+    is($fsm_module->clock_domains->{default}, 'core_clk', '+system seeds the default clock domain from the authored clock name');
+    ok($adapter->{signal_manager}->get_signal('core_clk')->is_clock, 'authored clock name is registered as a clock signal');
+};
+
+subtest 'malformed +system clock names are rejected explicitly' => sub {
+    my $error = parse_failure(<<'FSM');
+(?fsm:bad_clock_identifier
+  (+system
+    (clock core-clk)
+    (sreset rstn)
+  )
+  (-dt
+    (A = 1)
+  )
+)
+FSM
+
+    like($error, qr/Unsupported '\+system' clock name 'core-clk'/, 'bad clock identifier gets a targeted diagnostic');
 };
 
 subtest 'conventional +system section also accepts the canonical areset spelling' => sub {
