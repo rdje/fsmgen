@@ -18,20 +18,18 @@ path. Spawned child
 transactions and generated blocking `do` activations support per-instance
 parameter overrides through `(params ...)`. Those parameter overrides are
 compile-time specialization of a static child instance, not runtime payload
-actuals. The rule-trigger parameter override contract is selected but not yet
-implemented: a future parameterized trigger will elaborate a generated child
-activation instance instead of writing mutable parameter signals into a shared
-transaction body. A fully general parameter-override model for every
-transaction activation form remains future work and should not be assumed from
-the task analogy.
+actuals. Parameterized rule triggers now use the same specialization model:
+they elaborate generated child activation instances instead of writing mutable
+parameter signals into a shared transaction body. A fully general
+parameter-override model for every transaction activation form remains future
+work and should not be assumed from the task analogy.
 
 Parameter overrides and port bindings must stay separate in authored intent.
 Use `(bind (input port expr) ...)` for runtime data/control values that can
 change from cycle to cycle. Use `(params (NAME value) ...)` only for static
 specialization values on activation forms that explicitly support that surface:
-spawned children and blocking `do` generated child activations today. The
-selected future rule-trigger spelling reuses the same block, but remains
-unshipped until the rule-trigger implementation leaf lands.
+spawned children, blocking `do` generated child activations, and
+parameterized rule triggers.
 
 ```lisp
 (do read_word
@@ -46,7 +44,6 @@ unshipped until the rule-trigger implementation leaf lands.
   (bind
     (input addr req_addr)))
 
-;; Selected future spelling; not accepted by the shipped lowerer yet.
 (trigger read_word
   (params
     (WIDTH 16))
@@ -62,8 +59,8 @@ parameter values to the same transaction must lower to distinct specialized
 transaction instances or cloned scheduled regions. They must not share one
 mutable parameter signal written at runtime.
 
-For the selected future rule-trigger contract, a parameterized trigger also
-uses distinct generated hardware. The generated instance name is planned as
+For rule triggers, a parameterized trigger also uses distinct generated
+hardware. The generated instance name is
 `{rule}_{transaction}_trigger_{ordinal}` so repeated lexical trigger sites do
 not collide. The rule still emits the existing one-cycle trigger source and
 payload source timing, then a generated trigger handoff DT drives the child

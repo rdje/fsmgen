@@ -411,6 +411,7 @@ sub build_isf_public_interface_contract {
             't/1245-isf-transaction-loop-lowering.t',
             't/1246-isf-setter-syntax.t',
             't/1247-isf-clock-domain-partition.t',
+            't/1248-isf-rule-trigger-parameter-binding.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -1497,6 +1498,7 @@ sub isf_public_interface_schedule_report_dt_kind_values {
             rule_trigger_fanin
             spawn_port_binding
             temporal_contract_monitor
+            trigger_generated_activation
         ),
     ];
 }

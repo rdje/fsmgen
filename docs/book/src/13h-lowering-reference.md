@@ -1105,9 +1105,8 @@ start-gated idle state and waits for a later start. Reaching the same spawn
 site again reuses the same instance. This is the required interpretation for
 future spawn-in-repeat support as well.
 
-Rule-trigger parameter overrides use the same static-specialization principle
-in the selected future contract, but they are not implemented yet. A future
-parameterized trigger:
+Rule-trigger parameter overrides use the same static-specialization principle.
+A parameterized trigger:
 
 ```lisp
 (rule launch fire
@@ -1118,15 +1117,17 @@ parameterized trigger:
       (input addr req_addr))))
 ```
 
-will elaborate a generated child activation instance rather than changing the
-shared local `child` transaction. The planned instance name is
+elaborates a generated child activation instance rather than changing the
+shared local `child` transaction. The instance name is
 `launch_child_trigger_0`. The rule DT keeps the existing `<1` pulse source and
 input payload sampling behavior; a generated handoff DT drives
 `launch_child_trigger_0_start` and any input handoff ports from those sources.
 The generated top applies the static override through the ordinary `?fsmc`
 `(params ...)` block and wires the child `done` output back to the parent for
 composition consistency, while the rule itself does not wait on completion.
-Rule-trigger output bindings stay rejected.
+The parent handoff DT reads that `done` input into an internal observer signal
+only to make the composition endpoint explicit; it does not change rule
+control flow. Rule-trigger output bindings stay rejected.
 
 ## Complete Example — APB Transfer
 

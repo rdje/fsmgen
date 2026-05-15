@@ -229,7 +229,7 @@ Non-generated-top reports use JSON null, while generated-child reports use a
 bounded object with `kind`, `top_module`, `top_fsm`, `parent`, `children`, and
 `instances`. The `kind` value is `spawn_generated_top` for spawn-only generated
 tops and `activation_generated_top` when another activation kind such as
-blocking `do` participates. Parent entries expose `module` and
+blocking `do` or parameterized rule `trigger` participates. Parent entries expose `module` and
 `scheduled_fsm`; child entries expose `transaction`, `module`, `scheduled_fsm`,
 and `parameters`; instance entries expose `instance`, `child`,
 `activation_kind`, `start`, `done`, `parameter_bindings`, and
@@ -659,11 +659,14 @@ require exact scalar child/instance operands before child-target resolution or
 generated-child collection.
 Spawn and blocking `do` parameter binding are checked by
 [t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t).
+Rule-trigger parameter binding is checked by
+[t/1248-isf-rule-trigger-parameter-binding.t](../t/1248-isf-rule-trigger-parameter-binding.t).
 Generated composition-top wiring for generated child activations is checked by
 [t/1216-isf-generated-composition-top.t](../t/1216-isf-generated-composition-top.t).
 The shipped surface preserves validated per-instance spawn and generated `do`
-overrides in lowerer metadata, emits child transaction defaults into generated
-child scheduled `.fsm` `+params` blocks, rejects duplicate instances,
+overrides plus parameterized rule-trigger overrides in lowerer metadata, emits
+child transaction defaults into generated child scheduled `.fsm` `+params`
+blocks, rejects duplicate instances,
 duplicate parameters, unknown overrides, unsupported symbolic values, and
 aggregate shape mismatches, and rejects parameter declarations on
 non-generated transactions.
@@ -1162,8 +1165,9 @@ assignment payload list. The machine-readable contract advertises this through
 `schedule_report_dt_assignments_shape`.
 For each `dt_blocks` entry, `kind` is currently one of `drive`,
 `do_port_binding`, `latency_counter`, `rule`, `rule_trigger_fanin`,
-`spawn_port_binding`, or `temporal_contract_monitor`. The machine-readable
-contract advertises this through `schedule_report_dt_kind_values`.
+`spawn_port_binding`, `temporal_contract_monitor`, or
+`trigger_generated_activation`. The machine-readable contract advertises this
+through `schedule_report_dt_kind_values`.
 
 For each `inferred_storage` entry, `kind` is currently one of `counter` or
 `register`. Optional `role` values describe the stable scheduler purpose when
@@ -1329,7 +1333,9 @@ Transaction port binding provenance uses a top-level
 set and records the binding site kind (`do`, `spawn`, or `rule_trigger`),
 owner, target transaction, port role/name, actor signal when the actor side is
 a scalar endpoint, formatted actor expression, width, and generated handoff
-signal names where applicable. For expression-valued input bindings,
+signal names where applicable. Parameterized rule-trigger entries use the
+generated trigger instance handoff names and preserve the per-rule trigger and
+payload source names. For expression-valued input bindings,
 `actor_signal` is JSON null and `actor_expression` carries the formatted
 source expression. JSON null is used for non-applicable handoff fields. The
 machine-readable contract advertises the entry key set in

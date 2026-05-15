@@ -83,7 +83,7 @@ ISF
     ((valid) 1)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'missing trigger target', qr/\AError: rule 'bad' trigger requires '\(trigger transaction \[\(bind \.\.\.\)\]\)'/);
+    assert_parse_rejected(<<'ISF', 'missing trigger target', qr/\AError: rule 'bad' trigger requires '\(trigger transaction \[\(params \(NAME value\) \.\.\.\)\] \[\(bind \.\.\.\)\]\)'/);
 (actor bad_rule_action
   (clock clk)
   (interface (input start) (input ready) (output done))
@@ -92,7 +92,7 @@ ISF
     (trigger)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'extra trigger operand', qr/\AError: rule 'bad' trigger 'main' bind requires '\(bind \(input port expr\) \.\.\.\)'/);
+    assert_parse_rejected(<<'ISF', 'extra trigger operand', qr/\AError: rule 'bad' trigger 'main' subclauses must be '\(params \.\.\.\)' or '\(bind \.\.\.\)'/);
 (actor bad_rule_action
   (clock clk)
   (interface (input start) (input ready) (output done))

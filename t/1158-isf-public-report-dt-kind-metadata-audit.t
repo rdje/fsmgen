@@ -82,6 +82,24 @@ ISF
         $observed{$kind} = 1;
     }
 
+    my $plain_trigger_report = report_for_source(<<'ISF');
+(actor plain_rule_trigger_kind
+  (clock clk)
+  (interface
+    (input fire)
+    (output done))
+  (transaction work
+    (on work_start)
+    (complete done))
+  (rule launch fire
+    (trigger work)))
+ISF
+    for my $dt (@{$plain_trigger_report->{dt_blocks} || []}) {
+        my $kind = $dt->{kind};
+        ok($advertised{$kind}, "plain trigger report DT '$dt->{name}' kind '$kind' is advertised");
+        $observed{$kind} = 1;
+    }
+
     my $spawn_binding_report = report_for_source(<<'ISF');
 (actor spawn_port_binding_kind
   (clock clk)

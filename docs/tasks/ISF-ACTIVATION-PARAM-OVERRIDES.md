@@ -67,11 +67,11 @@ direct transaction activation boundary.
   Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.2: specify trigger params`
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES.3`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement rule-trigger parameter overrides.`
   Acceptance: `Rule actions may use the documented `(trigger transaction (params ...))` subset; accepted overrides specialize generated hardware rather than mutable runtime parameters; malformed overrides fail closed; existing rule-trigger input bindings still work; focused report and HDL-reaching tests pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for changed parser/lowering/contract modules and new/updated tests; `prove -Iperl t/1248-isf-rule-trigger-parameter-binding.t t/1171-isf-rule-trigger-fanin.t t/1172-isf-rule-trigger-fanin-schedule-report.t t/1215-isf-spawn-parameter-binding.t t/1217-isf-generated-composition-schedule-report.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-ACTIVATION-PARAM-OVERRIDES.3: ship trigger params`
 
 - ID: `ISF-ACTIVATION-PARAM-OVERRIDES.4`
   Status: `pending`
@@ -91,7 +91,7 @@ direct transaction activation boundary.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `pending` | The rule-trigger source shape, specialization strategy, diagnostics, report impact, and focused test plan are now specified; implementation is the next executable leaf. |
+| 1 | `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `pending` | Rule-trigger parameter overrides are shipped; the direct transaction activation parameter boundary is the remaining tree decision. |
 
 ## Decisions
 
@@ -126,6 +126,19 @@ direct transaction activation boundary.
   mdBook, task tree, roadmap, and live docs. Public contract code and manifest
   metadata remain unchanged until implementation introduces or changes bounded
   report keys or tested guidance.
+- `2026-05-16`: `ISF-ACTIVATION-PARAM-OVERRIDES.3` ships rule-trigger
+  parameter overrides through generated child activation instances. Accepted
+  parameterized rule triggers preserve existing per-rule trigger and input
+  payload source timing, then route those sources through generated handoff DTs
+  to the generated child instance.
+- `2026-05-16`: Once a transaction target is generated, unparameterized rule
+  triggers to that target lower through default-valued generated trigger
+  instances rather than emitting a local fan-in to a skipped parent body.
+- `2026-05-16`: The implementation leaf widens public syntax, generated
+  composition reports, transaction port-binding report provenance, and tested
+  public contract metadata. The public contract advertised
+  [t/1248-isf-rule-trigger-parameter-binding.t](../../t/1248-isf-rule-trigger-parameter-binding.t)
+  in `tested_by`.
 
 ## Focused Test Plan
 
@@ -166,6 +179,7 @@ direct transaction activation boundary.
 | --- | --- | --- | --- |
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.1` | `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `perl -Iperl -c` for changed parser/lowering/contract modules and new/updated tests; focused trigger/composition/public-contract `prove` set; broader `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -173,7 +187,7 @@ direct transaction activation boundary.
 | --- | --- | --- |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.1` | `ISF-ACTIVATION-PARAM-OVERRIDES.1: open activation params tree` | Tree-opening slice; no compiler behavior change. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.2` | `ISF-ACTIVATION-PARAM-OVERRIDES.2: specify trigger params` | Selected generated child activation as the rule-trigger parameter override contract; implementation remains pending. |
-| `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `pending` | Pending. |
+| `ISF-ACTIVATION-PARAM-OVERRIDES.3` | `ISF-ACTIVATION-PARAM-OVERRIDES.3: ship trigger params` | Shipped generated-child rule-trigger parameter overrides; direct activation remains pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.4` | `pending` | Pending. |
 | `ISF-ACTIVATION-PARAM-OVERRIDES.5` | `pending` | Pending. |
 
@@ -184,3 +198,5 @@ direct transaction activation boundary.
   frontier is now `ISF-ACTIVATION-PARAM-OVERRIDES.2`.
 - `2026-05-16`: Completed `ISF-ACTIVATION-PARAM-OVERRIDES.2`; the active
   frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.3`.
+- `2026-05-16`: Completed `ISF-ACTIVATION-PARAM-OVERRIDES.3`; the active
+  frontier advances to `ISF-ACTIVATION-PARAM-OVERRIDES.4`.

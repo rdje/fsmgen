@@ -146,8 +146,8 @@ own specialization contract before becoming valid parameter values.
 Status: partially shipped. The original `ISF-TRANSACTION-ACTIVATION` tree is
 closed for spawn and blocking `do`; the active
 `ISF-ACTIVATION-PARAM-OVERRIDES` tree owns the remaining rule-trigger and
-direct-activation work. `ISF-ACTIVATION-PARAM-OVERRIDES.2` selects the
-rule-trigger lowering contract; implementation remains pending.
+direct-activation work. Rule-trigger parameter overrides are now shipped;
+direct transaction activation parameter behavior remains backlog in this tree.
 
 Goal: extend the task-like transaction activation model so activation sites can
 override declared transaction parameters where that is semantically valid.
@@ -156,18 +156,17 @@ Current boundary: transaction ports already provide formal data/control ports,
 and shipped activation-site `(bind ...)` blocks pass scalar actual signals for
 the supported `do`, `spawn`, and rule `trigger` subset. Spawned child
 transactions and blocking `do` child activations support per-instance
-`(params (NAME value) ...)` overrides through generated composition. The
-selected future rule-trigger contract also uses generated composition, but it
-is not public syntax until implementation and tests land. Parameter overrides
-on direct transaction activation or other future activation forms still need
+`(params (NAME value) ...)` overrides through generated composition.
+Parameterized rule triggers now use the same generated-composition
+specialization model. Parameter overrides on direct transaction activation or
+other future activation forms still need
 explicit source shape, compile-time versus runtime interpretation, diagnostics,
 lowering, report metadata, and HDL proof before they are public syntax.
 
 Source shape: reuse the existing explicit spawn-style
 `(params (NAME value) ...)` block on activation sites that support static
 specialization, while keeping runtime payloads in `(bind ...)`. This is
-shipped for spawn and blocking `do`; the trigger example is the selected
-future spelling and remains unimplemented:
+shipped for spawn, blocking `do`, and rule `trigger`:
 
 ```lisp
 (do child

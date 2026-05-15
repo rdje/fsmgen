@@ -1690,13 +1690,33 @@ sub _parse_rule_action($self, $action, $rule_name) {
         unless defined($keyword) && !ref($keyword) && length($keyword);
 
     if ($keyword eq 'trigger') {
-        confess "Error: rule '$rule_name' trigger requires '(trigger transaction [(bind ...)])'\n"
-            unless (@$action == 2 || @$action == 3)
+        confess "Error: rule '$rule_name' trigger requires '(trigger transaction [(params (NAME value) ...)] [(bind ...)])'\n"
+            unless @$action >= 2
                 && defined($action->[1])
                 && !ref($action->[1])
                 && length($action->[1]);
-        $self->_parse_rule_trigger_bind($action->[2], $rule_name, $action->[1])
-            if @$action == 3;
+
+        my %seen_subclause;
+        for my $subclause (@{$action}[2 .. $#$action]) {
+            confess "Error: rule '$rule_name' trigger '$action->[1]' subclauses must be '(params ...)' or '(bind ...)'\n"
+                unless ref($subclause) eq 'ARRAY'
+                    && @$subclause
+                    && defined($subclause->[0])
+                    && !ref($subclause->[0])
+                    && length($subclause->[0]);
+            my $head = $subclause->[0];
+            confess "Error: rule '$rule_name' trigger '$action->[1]' has duplicate '$head' subclause\n"
+                if $seen_subclause{$head}++;
+            if ($head eq 'params') {
+                $self->_parse_rule_trigger_params($subclause, $rule_name, $action->[1]);
+                next;
+            }
+            if ($head eq 'bind') {
+                $self->_parse_rule_trigger_bind($subclause, $rule_name, $action->[1]);
+                next;
+            }
+            confess "Error: rule '$rule_name' trigger '$action->[1]' has unsupported '$head' subclause\n";
+        }
         return 1;
     }
     if ($keyword eq 'priority') {
@@ -1743,6 +1763,30 @@ sub _parse_rule_action($self, $action, $rule_name) {
             && defined($action->[1]);
 
     $self->_validate_rule_assignment_expr($action->[1], $rule_name);
+
+    return 1;
+}
+
+sub _parse_rule_trigger_params($self, $clause, $rule_name, $transaction_name) {
+    confess "Error: rule '$rule_name' trigger '$transaction_name' params require '(params (NAME value) ...)'\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause >= 2
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'params';
+
+    my %seen;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: rule '$rule_name' trigger '$transaction_name' params entries require '(NAME value)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+        my ($name, $value) = @$entry;
+        confess "Error: rule '$rule_name' trigger '$transaction_name' parameter override names must be scalar HDL identifiers\n"
+            unless _is_hdl_identifier($name);
+        confess "Error: rule '$rule_name' trigger '$transaction_name' has duplicate parameter override '$name'\n"
+            if $seen{$name}++;
+        confess "Error: rule '$rule_name' trigger '$transaction_name' parameter '$name' value must be defined\n"
+            unless defined $value;
+    }
 
     return 1;
 }

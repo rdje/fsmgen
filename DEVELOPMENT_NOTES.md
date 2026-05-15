@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: parameterized rule triggers use explicit handoffs
+- `ISF-ACTIVATION-PARAM-OVERRIDES.3` implements rule-trigger parameter
+  overrides by reusing the generated-child activation path rather than cloning
+  local scheduled regions. That keeps parameter specialization visible in the
+  generated top and lets existing generated-composition report projection
+  carry the instance and parameter provenance.
+- The rule DT still owns the timing-sensitive source signals: a delayed
+  per-rule trigger pulse and flopped input payload sources. A separate
+  generated handoff DT drives the generated child `start` and input handoff
+  ports from those sources, so parameterization does not change the shipped
+  rule-trigger payload timing.
+- The generated child `done` input is read into an internal observer signal in
+  the parent. This is intentionally not a wait; it exists so the parent `.fsm`
+  exposes the done endpoint that the generated top wires back from the child.
+- Once a target transaction is generated, plain rule triggers to that target
+  also use default-valued generated trigger instances. This avoids emitting a
+  local `transaction_start` fan-in for a transaction body that was skipped from
+  the parent scheduled module.
 ## 2026-05-16: parameterized rule triggers specialize generated children
 - `ISF-ACTIVATION-PARAM-OVERRIDES.2` selects generated child activation for
   future rule-trigger parameter overrides. That avoids the unsafe alternative

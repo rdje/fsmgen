@@ -212,146 +212,43 @@ sub _build_parent_ir($self, $actor, $generated_children) {
             $ctrs{"${c}_done"} = 1;
         }
         for my $s (@$sp)  {
-            my $activation_kind = $s->{activation_kind} // 'spawn';
-            $ctrs{"$s->{instance}_start"} = 1;
-            $ctrs{"$s->{instance}_done"} = 1;
-            _ensure_port(
+            _register_generated_activation_instance(
+                $s,
+                $tx->{name},
+                'transaction',
+                $actor,
                 \@ports,
-                "$s->{instance}_start",
-                'output',
-                1,
-                "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' generated start handoff",
+                \%ctrs,
+                \%storage_roles,
+                \@dts,
+                \%transaction_by_name,
+                \%spawn_drive_sources,
             );
-            _ensure_port(
-                \@ports,
-                "$s->{instance}_done",
-                'input',
-                1,
-                "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' generated done handoff",
-            );
-            my $child_tx = $transaction_by_name{$s->{child}};
-            my @port_binding_assignments;
-            my @port_binding_metadata;
-            my %child_transaction_ports = _transaction_port_map($child_tx);
-            for my $binding (@{$s->{port_bindings} || []}) {
-                my $port = $child_transaction_ports{$binding->{port}};
-                next unless $port;
-                my $parent_port = "$s->{instance}_$binding->{port}";
-                if ($binding->{role} eq 'input') {
-                    _ensure_port(
-                        \@ports,
-                        $parent_port,
-                        'output',
-                        $port->{width},
-                        "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' input binding '$binding->{port}' generated payload handoff",
-                    );
-                    push @port_binding_assignments, {
-                        lhs         => $parent_port,
-                        rhs         => _activation_binding_actor_expr_text($binding),
-                        op          => '=',
-                        source_kind => "${activation_kind}_input_binding",
-                    };
-                } else {
-                    _ensure_port(
-                        \@ports,
-                        $parent_port,
-                        'input',
-                        $port->{width},
-                        "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' output binding '$binding->{port}' generated payload handoff",
-                    );
-                    my %assignment = (
-                        lhs         => $binding->{actor_signal},
-                        rhs         => $parent_port,
-                        op          => '=',
-                        source_kind => "${activation_kind}_output_binding",
-                    );
-                    $assignment{guard} = { port => "$s->{instance}_done" }
-                        if $activation_kind eq 'do';
-                    push @port_binding_assignments, \%assignment;
-                }
-                $ctrs{$parent_port} = $port->{width};
-                $storage_roles{$parent_port} = 'transaction_port_binding';
-                push @port_binding_metadata, {
-                    role             => $binding->{role},
-                    child_port       => $binding->{port},
-                    parent_port      => $parent_port,
-                    actor_signal     => $binding->{actor_signal},
-                    actor_expr       => _clone_isf_value($binding->{actor_expr}),
-                    actor_expression => _activation_binding_actor_expr_text($binding),
-                    width            => $port->{width},
-                };
-            }
-            if (@port_binding_assignments) {
-                push @dts, {
-                    name              => "$s->{instance}_port_bindings",
-                    kind              => "${activation_kind}_port_binding",
-                    owner             => $tx->{name},
-                    owner_kind        => 'transaction',
-                    activation_kind   => $activation_kind,
-                    spawn_instance    => $s->{instance},
-                    child_transaction => $s->{child},
-                    assignments       => \@port_binding_assignments,
-                };
-            }
-            if (@port_binding_metadata) {
-                $s->{port_bindings} = \@port_binding_metadata;
-            } else {
-                delete $s->{port_bindings};
-            }
-            my %child_drive_uses = _collect_named_drive_call_names($child_tx->{clauses}, $actor->{drives} || {});
-            my @drive_handoffs;
-            for my $drive_name (sort keys %child_drive_uses) {
-                my $prefix = "$s->{instance}_${drive_name}";
-                my @payloads;
-                push @{$spawn_drive_sources{$drive_name}}, {
-                    instance    => $s->{instance},
-                    drive       => $drive_name,
-                    prefix      => $prefix,
-                    source_kind => 'spawn_drive_body',
-                };
-                _ensure_port(
-                    \@ports,
-                    "${prefix}_start",
-                    'input',
-                    1,
-                    "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' named drive '$drive_name' generated request handoff",
-                );
-                $ctrs{"${prefix}_start"} = 1;
-                $storage_roles{"${prefix}_start"} = 'drive_request';
-                for my $param (@{($actor->{drives} || {})->{$drive_name}{params} || []}) {
-                    my $width = _drive_param_width($actor, $drive_name, $param);
-                    _ensure_port(
-                        \@ports,
-                        "${prefix}_$param",
-                        'input',
-                        $width,
-                        "Transaction '$tx->{name}': $activation_kind instance '$s->{instance}' named drive '$drive_name' parameter '$param' generated payload handoff",
-                    );
-                    $ctrs{"${prefix}_$param"} = $width;
-                    $storage_roles{"${prefix}_$param"} = 'drive_payload';
-                    push @payloads, {
-                        parameter   => $param,
-                        child_port  => "${drive_name}_$param",
-                        parent_port => "${prefix}_$param",
-                        width       => $width,
-                    };
-                }
-                push @drive_handoffs, {
-                    drive   => $drive_name,
-                    request => {
-                        child_port  => "${drive_name}_start",
-                        parent_port => "${prefix}_start",
-                    },
-                    payloads => \@payloads,
-                };
-            }
-            $s->{drive_handoffs} = \@drive_handoffs;
         }
         push @spawn_instances, map { _clone_isf_value($_) } @$sp;
         push @bank_accesses, @$accesses;
     }
 
-    push @dts, $self->_build_rules($actor, \%ctrs, \@bank_accesses);
+    my @rule_trigger_dts;
+    my @rule_trigger_instances = _rule_trigger_generated_refs($actor, $generated_children);
+    for my $s (@rule_trigger_instances) {
+        _register_generated_activation_instance(
+            $s,
+            $s->{owner},
+            'rule',
+            $actor,
+            \@ports,
+            \%ctrs,
+            \%storage_roles,
+            \@rule_trigger_dts,
+            \%transaction_by_name,
+            \%spawn_drive_sources,
+        );
+    }
+    push @spawn_instances, map { _clone_isf_value($_) } @rule_trigger_instances;
+
+    push @dts, $self->_build_rules($actor, \%ctrs, \@bank_accesses, $generated_children);
+    push @dts, @rule_trigger_dts;
     $self->_wire_do_children(\@states, \%ctrs, $actor, $generated_children);
     my $local_drive_filter = keys(%$generated_children) ? \%local_drive_uses : undef;
     $self->_build_drive_dts($actor, \@dts, \%ctrs, $local_drive_filter, \%spawn_drive_sources, \%storage_roles);
@@ -385,6 +282,183 @@ sub _build_parent_ir($self, $actor, $generated_children) {
     return $ir;
 }
 
+sub _register_generated_activation_instance {
+    my ($s, $owner, $owner_kind, $actor, $ports, $ctrs, $storage_roles, $dts, $transaction_by_name, $spawn_drive_sources) = @_;
+
+    my $activation_kind = $s->{activation_kind} // 'spawn';
+    my $context = $owner_kind eq 'rule'
+        ? "Rule '$owner'"
+        : "Transaction '$owner'";
+    my $instance = $s->{instance};
+    my $child = $s->{child};
+
+    $ctrs->{"${instance}_start"} = 1;
+    $ctrs->{"${instance}_done"} = 1;
+    _ensure_port(
+        $ports,
+        "${instance}_start",
+        'output',
+        1,
+        "$context: $activation_kind instance '$instance' generated start handoff",
+    );
+    _ensure_port(
+        $ports,
+        "${instance}_done",
+        'input',
+        1,
+        "$context: $activation_kind instance '$instance' generated done handoff",
+    );
+
+    my $child_tx = $transaction_by_name->{$child};
+    my @port_binding_assignments;
+    my @port_binding_metadata;
+    my %child_transaction_ports = _transaction_port_map($child_tx);
+
+    if ($activation_kind eq 'trigger') {
+        $ctrs->{"${instance}_done_seen"} = 1;
+        $storage_roles->{"${instance}_done_seen"} = 'trigger_done_observe';
+        push @port_binding_assignments, {
+            lhs         => "${instance}_start",
+            rhs         => $s->{trigger_source},
+            op          => '=',
+            source_kind => 'trigger_generated_start',
+        };
+        push @port_binding_assignments, {
+            lhs         => "${instance}_done_seen",
+            rhs         => "${instance}_done",
+            op          => '=',
+            source_kind => 'trigger_done_observe',
+        };
+    }
+
+    for my $binding (@{$s->{port_bindings} || []}) {
+        my $port = $child_transaction_ports{$binding->{port}};
+        next unless $port;
+        my $parent_port = "${instance}_$binding->{port}";
+        if ($binding->{role} eq 'input') {
+            _ensure_port(
+                $ports,
+                $parent_port,
+                'output',
+                $port->{width},
+                "$context: $activation_kind instance '$instance' input binding '$binding->{port}' generated payload handoff",
+            );
+            my %assignment = (
+                lhs         => $parent_port,
+                rhs         => $activation_kind eq 'trigger'
+                    ? _rule_trigger_payload_source_name($owner, $child, $binding->{port}, $s->{trigger_ordinal})
+                    : _activation_binding_actor_expr_text($binding),
+                op          => '=',
+                source_kind => "${activation_kind}_input_binding",
+            );
+            $assignment{guard} = { port => $s->{trigger_source} }
+                if $activation_kind eq 'trigger';
+            push @port_binding_assignments, \%assignment;
+        } else {
+            _ensure_port(
+                $ports,
+                $parent_port,
+                'input',
+                $port->{width},
+                "$context: $activation_kind instance '$instance' output binding '$binding->{port}' generated payload handoff",
+            );
+            my %assignment = (
+                lhs         => $binding->{actor_signal},
+                rhs         => $parent_port,
+                op          => '=',
+                source_kind => "${activation_kind}_output_binding",
+            );
+            $assignment{guard} = { port => "${instance}_done" }
+                if $activation_kind eq 'do';
+            push @port_binding_assignments, \%assignment;
+        }
+        $ctrs->{$parent_port} = $port->{width};
+        $storage_roles->{$parent_port} = 'transaction_port_binding';
+        push @port_binding_metadata, {
+            role             => $binding->{role},
+            child_port       => $binding->{port},
+            parent_port      => $parent_port,
+            actor_signal     => $binding->{actor_signal},
+            actor_expr       => _clone_isf_value($binding->{actor_expr}),
+            actor_expression => _activation_binding_actor_expr_text($binding),
+            width            => $port->{width},
+        };
+    }
+
+    if (@port_binding_assignments) {
+        push @$dts, {
+            name              => $activation_kind eq 'trigger'
+                ? "${instance}_trigger_handoff"
+                : "${instance}_port_bindings",
+            kind              => $activation_kind eq 'trigger'
+                ? 'trigger_generated_activation'
+                : "${activation_kind}_port_binding",
+            owner             => $owner,
+            owner_kind        => $owner_kind,
+            activation_kind   => $activation_kind,
+            spawn_instance    => $instance,
+            child_transaction => $child,
+            assignments       => \@port_binding_assignments,
+        };
+    }
+    if (@port_binding_metadata) {
+        $s->{port_bindings} = \@port_binding_metadata;
+    } else {
+        delete $s->{port_bindings};
+    }
+
+    my %child_drive_uses = _collect_named_drive_call_names($child_tx->{clauses}, $actor->{drives} || {});
+    my @drive_handoffs;
+    for my $drive_name (sort keys %child_drive_uses) {
+        my $prefix = "${instance}_${drive_name}";
+        my @payloads;
+        push @{$spawn_drive_sources->{$drive_name}}, {
+            instance    => $instance,
+            drive       => $drive_name,
+            prefix      => $prefix,
+            source_kind => 'spawn_drive_body',
+        };
+        _ensure_port(
+            $ports,
+            "${prefix}_start",
+            'input',
+            1,
+            "$context: $activation_kind instance '$instance' named drive '$drive_name' generated request handoff",
+        );
+        $ctrs->{"${prefix}_start"} = 1;
+        $storage_roles->{"${prefix}_start"} = 'drive_request';
+        for my $param (@{($actor->{drives} || {})->{$drive_name}{params} || []}) {
+            my $width = _drive_param_width($actor, $drive_name, $param);
+            _ensure_port(
+                $ports,
+                "${prefix}_$param",
+                'input',
+                $width,
+                "$context: $activation_kind instance '$instance' named drive '$drive_name' parameter '$param' generated payload handoff",
+            );
+            $ctrs->{"${prefix}_$param"} = $width;
+            $storage_roles->{"${prefix}_$param"} = 'drive_payload';
+            push @payloads, {
+                parameter   => $param,
+                child_port  => "${drive_name}_$param",
+                parent_port => "${prefix}_$param",
+                width       => $width,
+            };
+        }
+        push @drive_handoffs, {
+            drive   => $drive_name,
+            request => {
+                child_port  => "${drive_name}_start",
+                parent_port => "${prefix}_start",
+            },
+            payloads => \@payloads,
+        };
+    }
+    $s->{drive_handoffs} = \@drive_handoffs;
+
+    return 1;
+}
+
 sub _collect_generated_child_transaction_refs($self, $actor) {
     return _generated_child_transaction_refs($actor);
 }
@@ -405,7 +479,49 @@ sub _generated_child_transaction_refs {
             }
         }
     }
+    for my $rule (@{$actor->{rules} || []}) {
+        my $rule_name = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action;
+            next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
+            $s{$action->[1]} = 1
+                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action')};
+        }
+    }
     return %s;
+}
+
+sub _rule_trigger_generated_refs {
+    my ($actor, $generated_children) = @_;
+    my @refs;
+    my %ordinals;
+
+    for my $rule (@{$actor->{rules} || []}) {
+        my $rule_name = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action;
+            next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
+            my $target = $action->[1];
+            next unless defined($target) && !ref($target) && $generated_children->{$target};
+
+            my $key = "$rule_name\0$target";
+            my $ordinal = $ordinals{$key}++;
+            my $instance = _generated_rule_trigger_instance_name($rule_name, $target, $ordinal);
+            push @refs, {
+                child               => $target,
+                instance            => $instance,
+                activation_kind     => 'trigger',
+                owner               => $rule_name,
+                owner_kind          => 'rule',
+                trigger_ordinal     => $ordinal,
+                trigger_source      => _rule_trigger_source_name($rule_name, $target, $ordinal),
+                parameter_overrides => _trigger_parameter_overrides($action, $rule_name, 'rule action'),
+                port_bindings       => _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
+            };
+        }
+    }
+
+    return @refs;
 }
 
 sub _build_domain_partition($self, $actor) {
@@ -517,6 +633,16 @@ sub _build_domain_partition($self, $actor) {
                 $do_ordinals{$tx->{name}}++;
             }
         }
+    }
+    for my $ref (_rule_trigger_generated_refs($actor, \%generated_children)) {
+        my ($rule) = grep { $_->{name} eq $ref->{owner} } @{$actor->{rules} || []};
+        my $activation_domain = _domain_for_entry($rule, $default_domain);
+        push @{$groups{$activation_domain}{child_instances}}, {
+            kind     => 'trigger',
+            owner    => $ref->{owner},
+            child    => $ref->{child},
+            instance => $ref->{instance},
+        };
     }
 
     $self->_validate_transaction_domain_refs(
@@ -1072,6 +1198,23 @@ sub _validate_child_transaction_refs($self, $actor) {
             };
         }
     }
+    for my $rule (@{$actor->{rules} || []}) {
+        my $rule_name = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action;
+            next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
+
+            _validate_rule_trigger_action_clause($action, $rule_name, 'rule action');
+
+            my $target = $action->[1];
+            confess "Rule '$rule_name': trigger target must be a scalar transaction name\n"
+                unless defined($target) && !ref($target) && length($target);
+            confess "Rule '$rule_name': trigger target '$target' is not a declared transaction\n"
+                unless $transactions{$target};
+            $generated_children{$target} = 1
+                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action')};
+        }
+    }
 
     for my $ref (@child_refs) {
         my $tx       = $ref->{tx};
@@ -1111,6 +1254,36 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
                 unless exists $declared_params{$name};
             confess "Transaction '$tx_name': $keyword instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
+                unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
+        }
+    }
+
+    for my $ref (_rule_trigger_generated_refs($actor, \%generated_children)) {
+        my $rule_name = $ref->{owner};
+        my $target = $ref->{child};
+        my $instance = $ref->{instance};
+
+        confess "Rule '$rule_name': trigger target '$target' conflicts with parent actor module name '$actor->{actor_name}'\n"
+            if $target eq $actor->{actor_name};
+        confess "Rule '$rule_name': trigger instance '$instance' conflicts with parent actor instance name '$actor->{actor_name}'\n"
+            if $instance eq $actor->{actor_name};
+        if (my $previous = $generated_instances{$instance}) {
+            confess "Rule '$rule_name': duplicate generated child instance '$instance' in actor '$actor->{actor_name}'\n";
+        }
+        $generated_instances{$instance} = {
+            keyword => 'trigger',
+            owner   => $rule_name,
+            target  => $target,
+        };
+
+        my %declared_params = map {
+            $_->{name} => $_
+        } @{_transaction_param_declarations($transaction_by_name{$target})};
+        for my $override (@{$ref->{parameter_overrides} || []}) {
+            my $name = $override->{name};
+            confess "Rule '$rule_name': trigger instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
+                unless exists $declared_params{$name};
+            confess "Rule '$rule_name': trigger instance '$instance' parameter '$name' shape does not match child '$target' declaration\n"
                 unless _param_values_shape_compatible($declared_params{$name}{value}, $override->{value});
         }
     }
@@ -1217,11 +1390,21 @@ sub _transaction_port_binding_metadata {
 
     for my $rule (@{$actor->{rules} || []}) {
         my $owner = $rule->{name};
+        my %trigger_ordinals;
         for my $action (@{$rule->{actions} || []}) {
             next unless ref($action) eq 'ARRAY' && @$action;
             next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
             my $target = $action->[1];
             next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+
+            my $generated_trigger = $generated_children{$target} ? 1 : 0;
+            my $trigger_ordinal;
+            my $instance;
+            if ($generated_trigger) {
+                my $key = "$owner\0$target";
+                $trigger_ordinal = $trigger_ordinals{$key}++;
+                $instance = _generated_rule_trigger_instance_name($owner, $target, $trigger_ordinal);
+            }
 
             my $bindings = _activation_bindings_from_clause($action, $owner, 'rule trigger');
             next unless @$bindings;
@@ -1234,6 +1417,11 @@ sub _transaction_port_binding_metadata {
                     owner              => $owner,
                     owner_kind         => 'rule',
                     target_transaction => $target,
+                    instance           => $instance,
+                    trigger_source     => _rule_trigger_source_name($owner, $target, $trigger_ordinal),
+                    payload_source     => $binding->{role} eq 'input'
+                        ? _rule_trigger_payload_source_name($owner, $target, $binding->{port}, $trigger_ordinal)
+                        : undef,
                 );
             }
         }
@@ -1268,9 +1456,11 @@ sub _transaction_port_binding_entry {
         done_signal        => $site_kind eq 'rule_trigger'
             ? undef
             : (defined($instance) ? "${instance}_done" : "${target}_done"),
-        trigger_source     => $site_kind eq 'rule_trigger' ? _rule_trigger_source_name($args{owner}, $target) : undef,
+        trigger_source     => $site_kind eq 'rule_trigger'
+            ? ($args{trigger_source} // _rule_trigger_source_name($args{owner}, $target))
+            : undef,
         payload_source     => $site_kind eq 'rule_trigger' && $role eq 'input'
-            ? _rule_trigger_payload_source_name($args{owner}, $target, $port)
+            ? ($args{payload_source} // _rule_trigger_payload_source_name($args{owner}, $target, $port))
             : undef,
     };
 }
@@ -2302,6 +2492,45 @@ sub _validate_child_action_clause {
     return 1;
 }
 
+sub _validate_rule_trigger_action_clause {
+    my ($clause, $rule_name, $label) = @_;
+
+    confess "Rule '$rule_name': trigger requires '(trigger transaction [(params (NAME value) ...)] [(bind ...)])' in $label\n"
+        unless ref($clause) eq 'ARRAY'
+            && @$clause >= 2
+            && defined($clause->[0])
+            && !ref($clause->[0])
+            && $clause->[0] eq 'trigger'
+            && defined($clause->[1])
+            && !ref($clause->[1])
+            && length($clause->[1]);
+
+    my $target = $clause->[1];
+    my %seen_subclause;
+    for my $subclause (@{$clause}[2 .. $#$clause]) {
+        confess "Rule '$rule_name': trigger subclauses must be '(params ...)' or '(bind ...)' in $label\n"
+            unless ref($subclause) eq 'ARRAY'
+                && @$subclause
+                && defined($subclause->[0])
+                && !ref($subclause->[0])
+                && length($subclause->[0]);
+        my $head = $subclause->[0];
+        confess "Rule '$rule_name': trigger has duplicate '$head' subclause in $label\n"
+            if $seen_subclause{$head}++;
+        if ($head eq 'params') {
+            _parse_activation_params_clause($subclause, $rule_name, 'trigger', $target, $label);
+            next;
+        }
+        if ($head eq 'bind') {
+            _parse_activation_bind_clause($subclause, "Rule '$rule_name': trigger target '$target'");
+            next;
+        }
+        confess "Rule '$rule_name': trigger has unsupported '$head' subclause in $label\n";
+    }
+
+    return 1;
+}
+
 sub _validate_sync_clause {
     my ($clause, $tn, $label) = @_;
     my $keyword = $clause->[0];
@@ -2404,11 +2633,16 @@ sub _do_parameter_overrides {
     return _activation_parameter_overrides($clause, $tn, $label);
 }
 
+sub _trigger_parameter_overrides {
+    my ($clause, $rule_name, $label) = @_;
+    return _activation_parameter_overrides($clause, $rule_name, $label);
+}
+
 sub _activation_parameter_overrides {
     my ($clause, $tn, $label) = @_;
     return [] unless ref($clause) eq 'ARRAY' && @$clause;
     my $keyword = $clause->[0];
-    return [] unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do');
+    return [] unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do' || $keyword eq 'trigger');
     my $start = $keyword eq 'spawn' ? 4 : 2;
     return [] if $#$clause < $start;
 
@@ -2493,6 +2727,11 @@ sub _generated_do_instance_name {
     return "${owner}_${child}_do_$ordinal";
 }
 
+sub _generated_rule_trigger_instance_name {
+    my ($rule, $target, $ordinal) = @_;
+    return "${rule}_${target}_trigger_$ordinal";
+}
+
 sub _do_clause_ordinal {
     my ($tx, $target_clause) = @_;
     my $ordinal = 0;
@@ -2526,7 +2765,7 @@ sub _activation_bindings_from_clause {
                 && !ref($subclause->[0])
                 && length($subclause->[0]);
         my $head = $subclause->[0];
-        next if ($keyword eq 'spawn' || $keyword eq 'do') && $head eq 'params';
+        next if ($keyword eq 'spawn' || $keyword eq 'do' || $keyword eq 'trigger') && $head eq 'params';
         next if ($keyword eq 'spawn' || $keyword eq 'do') && $head eq 'domain';
         confess "Transaction '$owner': activation has duplicate '(bind ...)' subclause in $label\n"
             if $head eq 'bind' && $saw_bind++;
@@ -5993,13 +6232,15 @@ sub _inj_latency {
 }
 
 sub _build_rules {
-    my ($self, $actor, $ctrs, $bank_accesses) = @_;
+    my ($self, $actor, $ctrs, $bank_accesses, $generated_children) = @_;
     my @d;
     my %fanin_by_transaction;
     my %payload_by_transaction;
     my %seen_fanin_source;
+    my %generated_trigger_ordinals;
     my $widths = _build_signal_width_map($actor, { clauses => [] });
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
+    $generated_children ||= {};
 
     for my $r (@{$actor->{rules} || []}) {
         my $c = $self->_rule_cond($r->{when});
@@ -6012,14 +6253,20 @@ sub _build_rules {
 
             if ($a0 eq 'trigger') {
                 my $target = $ac->[1];
-                my $source = _rule_trigger_source_name($r->{name}, $target);
+                my $generated_trigger = $generated_children->{$target} ? 1 : 0;
+                my $trigger_ordinal;
+                if ($generated_trigger) {
+                    my $key = "$r->{name}\0$target";
+                    $trigger_ordinal = $generated_trigger_ordinals{$key}++;
+                }
+                my $source = _rule_trigger_source_name($r->{name}, $target, $trigger_ordinal);
                 push @a, { lhs => $source, rhs => 1, op => '<1', source_kind => 'rule_trigger_source' };
                 $ctrs->{$source} = 1 if $ctrs;
-                $ctrs->{"${target}_start"} = 1 if $ctrs;
+                $ctrs->{"${target}_start"} = 1 if $ctrs && !$generated_trigger;
                 my %target_ports = _transaction_port_map($transaction_by_name{$target});
                 for my $binding (@{_activation_bindings_from_clause($ac, $r->{name}, 'rule trigger')}) {
                     next unless $binding->{role} eq 'input';
-                    my $payload = _rule_trigger_payload_source_name($r->{name}, $target, $binding->{port});
+                    my $payload = _rule_trigger_payload_source_name($r->{name}, $target, $binding->{port}, $trigger_ordinal);
                     my $width = ($target_ports{$binding->{port}} || {})->{width} // 1;
                     push @a, {
                         lhs         => $payload,
@@ -6035,8 +6282,10 @@ sub _build_rules {
                         width          => $width,
                     };
                 }
-                push @{$fanin_by_transaction{$target}}, $source
-                    unless $seen_fanin_source{"$target\0$source"}++;
+                if (!$generated_trigger) {
+                    push @{$fanin_by_transaction{$target}}, $source
+                        unless $seen_fanin_source{"$target\0$source"}++;
+                }
             } elsif ($a0 eq 'priority') {
                 # Parsed metadata; arbitration enforcement is a later slice.
             } elsif ($a0 eq 'store' || $a0 eq 'load') {
@@ -6085,8 +6334,18 @@ sub _build_rules {
 
     return @d;
 }
-sub _rule_trigger_source_name { my ($rule, $target) = @_; "${rule}_${target}" }
-sub _rule_trigger_payload_source_name { my ($rule, $target, $port) = @_; "${rule}_${target}_${port}" }
+sub _rule_trigger_source_name {
+    my ($rule, $target, $ordinal) = @_;
+    return defined($ordinal)
+        ? "${rule}_${target}_trigger_$ordinal"
+        : "${rule}_${target}";
+}
+sub _rule_trigger_payload_source_name {
+    my ($rule, $target, $port, $ordinal) = @_;
+    return defined($ordinal)
+        ? "${rule}_${target}_trigger_${ordinal}_${port}_payload"
+        : "${rule}_${target}_$port";
+}
 sub _rule_trigger_payload_fanin_assignments {
     my ($by_port) = @_;
     my @assignments;
