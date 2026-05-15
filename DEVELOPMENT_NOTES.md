@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF synchronization checklist is scope-sensitive
+- `ISF-PUBLIC-CONTRACT.2` makes checklist inspection mandatory for ISF feature
+  slices, but it does not force every slice to edit every public owner or run
+  every public audit.
+- The checklist starts with public-surface classification so feature slices can
+  select proportionate docs and tests: source syntax, lowering/runtime timing,
+  schedule JSON, manifest/contract metadata, diagnostics, generated artifacts,
+  and docs-only status changes each have different sync needs.
+- The canonical workflow wording stays in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+  Downstream-facing docs should describe behavior and public guarantees rather
+  than internal commit process unless that process itself becomes part of a
+  public interface promise.
 ## 2026-05-15: ISF sync work starts with an owner inventory
 - `ISF-PUBLIC-CONTRACT.1` is intentionally documentation-only. Before making a
   checklist normative, the task tree now names the actual docs, modules, tests,

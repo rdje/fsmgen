@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF public contract synchronization checklist
+- Completed `ISF-PUBLIC-CONTRACT.2` in
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).
+- The task tree now defines the reusable checklist every ISF feature slice
+  must inspect for public surface classification, spec/book synchronization,
+  code-contract alignment, verification gates, live-doc updates, and commit
+  recovery hygiene.
+- This was a documentation-only workflow slice. It changes no compiler
+  behavior, public ISF syntax, or schedule-report shape.
+- The active R14 frontier is now `ISF-PUBLIC-CONTRACT.3`, applying the
+  checklist to active ISF task-tree wording.
 ## 2026-05-15: ISF public contract owner inventory
 - Completed `ISF-PUBLIC-CONTRACT.1` in
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).

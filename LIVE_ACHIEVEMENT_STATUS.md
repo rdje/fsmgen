@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF public contract synchronization checklist
+- Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.2`.
+- [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
+  now defines the reusable feature-slice checklist for public ISF surface
+  classification, spec/book sync, contract/manifest alignment, test gate
+  selection, live-doc updates, and commit recovery hygiene.
+- This was documentation-only; compiler behavior is unchanged.
+- The active R14 frontier advances to `ISF-PUBLIC-CONTRACT.3`, applying the
+  checklist to active ISF task trees.
+
 ## 2026-05-15: R14 — ISF public contract owner inventory
 - Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.1`.
 - [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)

@@ -55,13 +55,13 @@ primary R14 focus.
   Commit: `ISF-PUBLIC-CONTRACT.1: inventory sync owners`
 
 - ID: `ISF-PUBLIC-CONTRACT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Define reusable ISF feature-slice synchronization checklist.`
   Acceptance: `The tree records what every ISF feature slice must inspect and
   update across spec, book, contract module, manifest, tests, roadmap, and live
   docs.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PUBLIC-CONTRACT.2: define sync checklist`
 
 - ID: `ISF-PUBLIC-CONTRACT.3`
   Status: `pending`
@@ -114,7 +114,7 @@ primary R14 focus.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PUBLIC-CONTRACT.2` | `pending` | The inventory is recorded; the next leaf turns it into a reusable feature-slice synchronization checklist. |
+| 1 | `ISF-PUBLIC-CONTRACT.3` | `pending` | The checklist is defined; the next leaf applies it to active ISF task-tree wording without duplicating the full checklist. |
 
 ## Current Inventory
 
@@ -218,6 +218,96 @@ public audit families.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md`: session-bootstrap import-tree snapshot
   when startup analysis detects stale ownership or reachability information.
 
+## Reusable Feature-Slice Synchronization Checklist
+
+`ISF-PUBLIC-CONTRACT.2` owns this checklist. Every ISF feature slice must
+inspect it before commit. A slice does not need to edit every owner, but the
+owning task file, live-doc update, or commit body must make the selected scope
+clear enough that a later recovery pass can see which public surfaces were
+intentionally unchanged.
+
+### 1. Classify The Public Surface
+
+- Name the owning task-tree leaf and the shipped behavior, diagnostic, report,
+  contract, or documentation-only change.
+- Identify whether the slice changes any of these public surfaces: `.isf`
+  source syntax, accepted aliases, lowering/runtime timing, generated `.fsm`,
+  generated HDL/top handoff, schedule JSON, capability-manifest metadata,
+  reusable-library catalog entries, diagnostics, or public docs.
+- Record any deliberate deferral in the feature backlog or owning task tree
+  with consequence and unblock condition.
+
+### 2. Synchronize Written Docs And Book
+
+- Update `docs/ISF_SPEC.md` when source syntax, accepted values, lowering
+  semantics, diagnostics, report shape, or explicit deferrals change.
+- Update the relevant `docs/book/src/13*.md` chapter when a user-visible ISF
+  behavior, generated artifact, or review workflow changes.
+- Update `docs/book/src/13h-lowering-reference.md` when emitted `.fsm` or
+  schedule-report examples need to show the new behavior.
+- Update `docs/book/src/14-feature-backlog.md` when behavior remains
+  intentionally unsupported after the slice.
+- Update `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` when parser/scheduler facade,
+  manifest embedding, schedule-report metadata, public stability flags, or
+  tested-by provenance changes.
+- Update `docs/ISF_LIBRARY_CATALOG.md` when reusable library names, source
+  paths, ports, bindings, or advertised library semantics change.
+
+### 3. Synchronize Code Contracts
+
+- Keep parser/adaptor changes aligned with `perl/FSM/Adapter/ISF.pm`,
+  `perl/FSM/Adapter/ISF/LispishAdapter.pm`, and
+  `perl/FSM/Adapter/ISF/Parser.pm` when source grammar or normalization
+  changes.
+- Keep lowering and artifact semantics aligned across
+  `perl/FSM/Scheduler/ISF.pm`, `perl/FSM/Scheduler/ISF/LoweringIR.pm`, and
+  the relevant emitter modules when behavior, timing, generated `.fsm`, JSON,
+  generated-top, or HDL handoff changes.
+- Keep `perl/FSM/Support/ISFPublicInterfaceContract.pm` and
+  `perl/FSM/Support/CapabilityManifest.pm` aligned when downstream-visible
+  key families, value families, live-doc paths, stability flags, or tested-by
+  metadata change.
+- Update `ISFResourceCatalog`, `LanguageSurfaceContract`, or
+  `LanguageSurfaceSection` only when a slice changes resource-kind or language
+  surface registries that the public contract advertises.
+
+### 4. Select Verification Gates
+
+- Run focused parser, scheduler, emitter, report, or diagnostic tests for the
+  code path changed by the slice.
+- Run public contract and capability-manifest audit tests when the public
+  contract module, manifest embedding, key/value families, stability flags, or
+  tested-by metadata changes.
+- Run schedule-report tests when JSON fields, value families, provenance, or
+  nullability semantics change.
+- Run `./bin/ci-regression isf --no-book` for non-trivial parser, scheduler,
+  lowering, report, or HDL-handoff behavior changes.
+- Run `mdbook build docs/book` for any book change and for documentation-only
+  ISF synchronization slices.
+- Always run `git diff --check` before the commit workflow.
+
+### 5. Update Live Docs
+
+- Update the owning `docs/tasks/*.md` leaf status, verification, commit
+  subject, decisions, blockers, and changelog.
+- Update `docs/TASK_TREE.md` when the active frontier, proposed tree set, or
+  completed tree set changes.
+- Update `ROADMAP_STATUS.md`, `MEMORY.md`, `CHANGES.md`,
+  `DEVELOPMENT_NOTES.md`, and `LIVE_ACHIEVEMENT_STATUS.md` after every
+  completed slice.
+- Update `README.md` when the startup document index, active/completed tree
+  list, public owner list, or mandatory workflow entry points change.
+- Refresh `docs/BIN_FSMGEN_IMPORT_TREE.md` only when startup import-tree
+  analysis detects changed reachability or ownership worth recording.
+
+### 6. Commit And Recovery Hygiene
+
+- Commit exactly one completed leaf before selecting another PNT leaf.
+- Use a commit subject that names the completed leaf ID.
+- Write the commit message through `git_message_brief.txt`, run the commit,
+  clear the file to zero bytes, and verify the post-commit status before
+  continuing.
+
 ## Decisions
 
 - `2026-05-14`: This tree is cross-cutting and feature-driven. It should not
@@ -229,13 +319,18 @@ public audit families.
 - `2026-05-14`: FSMGen uses IAL terminology for intent levels: `.fsm` is
   IAL0, current `.isf` is IAL1, and IAL2 remains an exploration topic only for
   real protocol/platform semantics above transactions.
+- `2026-05-15`: The reusable synchronization checklist is canonical in this
+  task tree. The public contract document should describe downstream-visible
+  guarantees, not internal workflow, unless a future public surface needs that
+  wording.
+- `2026-05-15`: Checklist inspection is required for every ISF feature slice,
+  but the selected gates remain scope-sensitive. Documentation-only slices can
+  close with book/diff checks; behavior or contract slices must run focused
+  tests and the broader ISF gate when warranted.
 
 ## Open Questions
 
-- Should the synchronization checklist live only in this task tree, or also in
-  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` once it is mature?
-- Which public contract tests should be required for every feature slice versus
-  only for schedule-report or facade changes?
+- None.
 
 ## Blockers
 
@@ -254,6 +349,8 @@ public audit families.
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.7` | `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.1` | `mdbook build docs/book` | `passed` |
 | `2026-05-15` | `ISF-PUBLIC-CONTRACT.1` | `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.2` | `mdbook build docs/book` | `passed` |
+| `2026-05-15` | `ISF-PUBLIC-CONTRACT.2` | `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -264,6 +361,7 @@ public audit families.
 | `ISF-PUBLIC-CONTRACT.6` | `ISF-PUBLIC-CONTRACT.6: document intent abstraction layers` | Records `.fsm` as IAL0, current `.isf` as IAL1, and the criteria/backlog for possible IAL2 exploration. |
 | `ISF-PUBLIC-CONTRACT.7` | `ISF-PUBLIC-CONTRACT.7: clarify port binding authoring boundary` | Records that transaction-port connectivity is authored in ISF and lowered to reviewable `.fsm` handoff wiring. |
 | `ISF-PUBLIC-CONTRACT.1` | `ISF-PUBLIC-CONTRACT.1: inventory sync owners` | Inventories public ISF docs, contract/manifest owners, test families, and live-doc touchpoints before checklist work. |
+| `ISF-PUBLIC-CONTRACT.2` | `ISF-PUBLIC-CONTRACT.2: define sync checklist` | Defines the reusable per-feature synchronization checklist for public ISF docs, contracts, manifests, tests, live docs, and commit hygiene. |
 
 ## Changelog
 
@@ -278,3 +376,6 @@ public audit families.
 - `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.1` as a documentation-only
   inventory of ISF public docs, contract/manifest owners, public tests, and
   live-doc touchpoints; current frontier advances to `ISF-PUBLIC-CONTRACT.2`.
+- `2026-05-15`: Completed `ISF-PUBLIC-CONTRACT.2` as a documentation-only
+  reusable feature-slice synchronization checklist; current frontier advances
+  to `ISF-PUBLIC-CONTRACT.3`.

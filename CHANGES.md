@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF public contract synchronization checklist
+- Completed `ISF-PUBLIC-CONTRACT.2`.
+- Added a reusable feature-slice checklist to
+  [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md)
+  covering public surface classification, spec/book synchronization,
+  parser/scheduler/emitter and manifest-contract alignment, focused and broad
+  verification gates, live-doc updates, and commit recovery hygiene.
+- Advanced the active R14 frontier to `ISF-PUBLIC-CONTRACT.3`, which will
+  apply the checklist to active ISF task-tree wording without duplicating the
+  full checklist.
+- This slice is documentation-only; shipped compiler behavior and public ISF
+  report shape are unchanged.
 ### R14 — ISF public contract owner inventory
 - Completed `ISF-PUBLIC-CONTRACT.1`.
 - Inventoried the current ISF written documentation owners, mdBook chapters,
