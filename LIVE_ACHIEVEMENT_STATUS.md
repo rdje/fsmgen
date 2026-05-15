@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF clock-domain source model selected
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.2`.
+- [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) is now
+  active with current frontier `ISF-CLOCK-DOMAINS.3`.
+- The future source model is actor-scoped named domains through an
+  unimplemented `(clock-domains ...)` block. Existing `(clock name)` remains
+  the only accepted clock syntax.
+- Ports, storage, transactions, rules, and child instances may reference only
+  actor-declared domains or inherit the default; drives inherit their
+  activation-site domain.
+- Direct unowned cross-domain reads, writes, triggers, activations, and
+  bindings remain fail-closed until a legal CDC primitive ships.
+
 ## 2026-05-15: R14 — ISF public contract synchronization tree closed
 - Completed R14 task-tree slice: `ISF-PUBLIC-CONTRACT.4`.
 - `embedding.isf_public_interface.guidance` now says feature-driven public ISF

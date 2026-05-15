@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: continue the active `ISF-PUBLIC-CONTRACT` feature tree.
+- Next decision point: continue the active `ISF-CLOCK-DOMAINS` feature tree.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
@@ -33,9 +33,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   checklist, `ISF-PUBLIC-CONTRACT.3` applied that checklist by reference from
   the active ISF task-tree workflow, and `ISF-PUBLIC-CONTRACT.4` added
   exact public guidance that feature-driven public changes move matching
-  contract/manifest audit tests in the same implementation slice. The
-  `ISF-PUBLIC-CONTRACT` tree is now closed; no active PNT-eligible R14 tree
-  remains until a proposed tree is activated or a fresh task tree is selected.
+  contract/manifest audit tests in the same implementation slice.
+  `ISF-CLOCK-DOMAINS.2` selected actor-scoped named domains as the future
+  source model without shipping parser/lowering support. Existing `(clock
+  name)` remains the only accepted clock syntax today. The current frontier is
+  `ISF-CLOCK-DOMAINS.3`, reset ownership for each clock domain.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -139,10 +141,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   vocabulary.
 - ISF clock-domain backlog update: current ISF remains one clock domain per
   actor/generated top. Multi-clock, asynchronous, and interacting
-  clock-domain semantics are now tracked as the proposed
+  clock-domain semantics are now tracked as the active
   `ISF-CLOCK-DOMAINS` task tree. Different clock signal names and
   generated-top system-port links are signal-name binding only; they do not
-  imply CDC behavior.
+  imply CDC behavior. The selected future source model is actor-scoped named
+  domains through an unimplemented `(clock-domains ...)` block. Ports,
+  storage, transactions, rules, and child instances may reference only domains
+  declared by the actor, drives inherit their activation-site domain, and
+  direct unowned crossings remain fail-closed.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width
@@ -180,9 +186,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-STORAGE-VAR-SURFACE`, are listed in the
   task-tree completed table. The completed `COMPOSITION-WIRING-LISPISH` tree
   records the shipped `R11` canonical explicit-link list syntax.
-  The proposed `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics
-  and is not an implementation frontier until its public source model is
-  selected.
+  The active `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics;
+  its public source model is selected, and reset ownership is the next
+  implementation frontier.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.

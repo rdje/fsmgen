@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF clock-domain source model selected
+- Completed `ISF-CLOCK-DOMAINS.2` and activated the
+  `ISF-CLOCK-DOMAINS` tree.
+- Specified actor-scoped named domains as the future multi-clock source model
+  in [docs/ISF_SPEC.md](docs/ISF_SPEC.md),
+  [docs/book/src/13a-actor-interface.md](docs/book/src/13a-actor-interface.md),
+  and [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md).
+- The planned source form is an unimplemented actor-level
+  `(clock-domains ...)` block. Existing `(clock name)` remains the only
+  accepted clock syntax today.
+- Updated [docs/TASK_TREE.md](docs/TASK_TREE.md), [README.md](README.md), and
+  [ROADMAP_STATUS.md](ROADMAP_STATUS.md) so the active R14 frontier is
+  `ISF-CLOCK-DOMAINS.3`, reset ownership for each domain.
 ### R14 — ISF public contract synchronization tree closed
 - Completed `ISF-PUBLIC-CONTRACT.4` and closed the
   `ISF-PUBLIC-CONTRACT` tree.

@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF clock-domain source model selected
+- Completed `ISF-CLOCK-DOMAINS.2` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
+- The `ISF-CLOCK-DOMAINS` tree is now active. The current frontier is
+  `ISF-CLOCK-DOMAINS.3`, reset ownership for each domain.
+- The selected future source model is actor-scoped named domains through an
+  unimplemented `(clock-domains ...)` actor clause. Existing `(clock name)`
+  remains the only shipped clock syntax.
+- Future domain references are limited to actor-declared names: ports,
+  storage, transactions, rules, and child instances may reference those names
+  or inherit the default domain. Drives inherit the activation-site domain.
+- Direct unowned cross-domain reads, writes, triggers, activations, and
+  bindings remain fail-closed until a later CDC primitive ships.
 ## 2026-05-15: ISF public contract sync tree closed
 - Completed and closed `ISF-PUBLIC-CONTRACT.4` in
   [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md).

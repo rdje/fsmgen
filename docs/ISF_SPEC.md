@@ -462,15 +462,49 @@ Multi-clock boundary:
 - Library clock/reset bindings and generated-top system-port links are
   signal-name binding inside that one-domain model. They do not create a
   second clock domain and they do not model clock-domain crossing behavior.
-- ISF has no source syntax yet for declaring multiple domains, assigning
-  interface ports or child instances to domains, or marking a transaction/rule
-  as belonging to a different clock domain.
+- ISF has no shipped source syntax yet for declaring multiple domains,
+  assigning interface ports or child instances to domains, or marking a
+  transaction/rule as belonging to a different clock domain.
 - Direct reads or writes between future domains must not be accepted by
   implication. A future feature must provide explicit CDC primitives or
   protocol actors with specified runtime behavior, lowering, diagnostics, and
   report metadata before such crossings are legal.
 - Asynchronous reset trees are not DTs. FSMGen does not use ISF DT logic to
   build arbitrary asynchronous reset gating.
+
+Selected future source model, not implemented yet:
+- Named domains are actor-scoped. The planned multi-domain spelling is an
+  actor-level `(clock-domains ...)` block:
+
+```lisp
+(clock-domains
+  (domain core (clock clk) :default)
+  (domain bus  (clock bus_clk)))
+```
+
+- Existing `(clock clk)` remains the shipped shorthand for one implicit actor
+  domain named `default`.
+- A future actor source must not mix `(clock ...)` with `(clock-domains ...)`.
+- A multi-domain actor must declare unique domain names, scalar clock names,
+  and exactly one default domain. A single-domain block has an implicit
+  default.
+- Interface ports, actor-owned storage entries, transactions, rules, and
+  child instances may only reference actor-declared domain names. Omitted
+  domain references inherit the actor default domain.
+- Drives do not own domains; they inherit the domain of their activation site.
+  Reusing one drive body from multiple domains remains rejected until a later
+  feature defines safe cross-domain drive reuse.
+- Transactions and rules are indivisible domain-owned regions. One
+  transaction or rule may not be split across multiple domains.
+- Interface-port or child-instance domain annotations are ownership metadata,
+  not CDC primitives. They do not legalize direct cross-domain reads, writes,
+  triggers, activations, or bindings.
+- Malformed domain combinations fail closed: unknown domain references,
+  duplicate domain names, duplicate or missing default domain markers in a
+  multi-domain actor, duplicate clock names that pretend to be distinct
+  domains, and any direct unowned crossing are rejected before lowering.
+- Reset ownership, legal CDC primitives, report metadata, and lowering
+  artifacts remain future leaves of the `ISF-CLOCK-DOMAINS` task tree.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.

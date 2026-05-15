@@ -95,7 +95,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-STORAGE-VAR-ALIASES.md` — completed `R14` task tree for actor-owned scalar storage variable aliases.
 - `docs/tasks/ISF-STORAGE-VAR-SURFACE.md` — completed `R14` task tree for the narrowed actor-owned scalar storage source vocabulary.
 - `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` — completed `R14` task tree for ISF spec, book, manifest, and contract synchronization.
-- `docs/tasks/ISF-CLOCK-DOMAINS.md` — proposed `R14` task tree for multi-clock and CDC semantics.
+- `docs/tasks/ISF-CLOCK-DOMAINS.md` — active `R14` task tree for multi-clock and CDC semantics.
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — proposed architecture task tree for current IR inventory and consolidation policy.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.

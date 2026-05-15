@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: clock domains start actor-scoped
+- `ISF-CLOCK-DOMAINS.2` selects actor-scoped named domains as the future source
+  model because it keeps clock ownership explicit at the hardware-agent
+  boundary and avoids pretending ordinary signal access is a CDC mechanism.
+- The planned `(clock-domains ...)` block is not parser support yet. This
+  slice only fixes the source-model contract so reset ownership, legal
+  crossings, report metadata, and lowering can be specified in later leaves.
+- Drives deliberately do not own domains; they inherit the activation-site
+  domain. That prevents a reusable drive body from silently becoming a
+  cross-domain shared region before there is a safe reuse rule.
 ## 2026-05-15: public sync guidance is manifest-visible
 - `ISF-PUBLIC-CONTRACT.4` closes the public-contract synchronization tree by
   making the same-slice audit-test rule visible in the public contract

@@ -1014,11 +1014,8 @@ Different clock signal names, library clock/reset bindings, and generated-top
 system-port links are signal-name binding within that model. They are not CDC
 semantics.
 
-The future feature must define at least:
+The future feature must still define at least:
 
-- how clock domains are declared and named;
-- whether domains are actor-scoped, port-scoped, child-instance-scoped,
-  transaction-scoped, rule-scoped, or some constrained combination;
 - reset ownership per domain, including synchronous resets and asynchronous
   reset pins without arbitrary DT glue on async reset trees;
 - which crossings are legal, such as synchronized single-bit events,
@@ -1030,6 +1027,24 @@ The future feature must define at least:
 
 Until that contract ships, direct same-cycle reads or writes across domains
 must not be inferred from ordinary signal access.
+
+Source-model decision: the selected future source model is actor-scoped named
+domains. Existing `(clock name)` remains the shipped shorthand for one implicit
+actor domain named `default`. Future multi-domain source will use an
+actor-level `(clock-domains ...)` block such as:
+
+```lisp
+(clock-domains
+  (domain core (clock clk) :default)
+  (domain bus  (clock bus_clk)))
+```
+
+Interface ports, actor-owned storage entries, transactions, rules, and child
+instances may reference only domains declared by the actor and otherwise
+inherit the default. Drives inherit the activation-site domain. Port and child
+domain annotations are ownership metadata, not CDC primitives, so direct
+cross-domain reads, writes, triggers, activations, or bindings still fail
+closed until a legal crossing primitive ships.
 
 ## Backends And Validation
 

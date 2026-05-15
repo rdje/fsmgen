@@ -39,6 +39,26 @@ language must define how domains are declared, how ports/children/rules or
 transactions belong to domains, which crossings are legal, what lowers to
 scheduled `.fsm`, and what diagnostics/report metadata prove the behavior.
 
+The selected future source model is actor-scoped named domains, but it is not
+implemented yet. The planned authoring shape is an actor-level
+`(clock-domains ...)` block:
+
+```lisp
+(clock-domains
+  (domain core (clock clk) :default)
+  (domain bus  (clock bus_clk)))
+```
+
+Existing `(clock clk)` stays the shipped shorthand for one implicit actor
+domain named `default`. A future multi-domain actor will not be allowed to mix
+`(clock ...)` and `(clock-domains ...)`; it will need unique domain names,
+scalar clock names, and exactly one default domain. Interface ports, storage,
+transactions, rules, and child instances will reference actor-declared domain
+names or inherit the default. Drives inherit the domain of their activation
+site. None of those annotations are CDC primitives: direct cross-domain reads,
+writes, triggers, activations, or bindings still fail closed until a later leaf
+ships an explicit legal crossing construct.
+
 ## Reset
 
 ```lisp
