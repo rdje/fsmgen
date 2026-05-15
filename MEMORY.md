@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF clock-domain backlog
+- Created
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md)
+  as the proposed task tree for multi-clock, asynchronous, and interacting
+  clock-domain semantics.
+- Current ISF remains one clock domain per actor/generated top. A non-`clk`
+  clock name, library clock/reset binding, or generated-top system-port link
+  is only signal-name binding inside that one-domain model.
+- Future multi-clock work must define source domains, reset ownership,
+  allowed CDC primitives/protocol actors, fail-closed direct crossings,
+  scheduled `.fsm` lowering, report metadata, and fixtures before accepting
+  multi-clock ISF input.
 ## 2026-05-15: ISF storage var aliases
 - Created
   [docs/tasks/ISF-STORAGE-VAR-ALIASES.md](docs/tasks/ISF-STORAGE-VAR-ALIASES.md)

@@ -22,6 +22,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(var name (width N))`, with `(variable ...)` and older `(state ...)`
   accepted as aliases that normalize to the same scalar storage kind.
   `(register ...)` remains rejected as source vocabulary.
+- ISF clock-domain backlog update: current ISF remains one clock domain per
+  actor/generated top. Multi-clock, asynchronous, and interacting
+  clock-domain semantics are now tracked as the proposed
+  `ISF-CLOCK-DOMAINS` task tree. Different clock signal names and
+  generated-top system-port links are signal-name binding only; they do not
+  imply CDC behavior.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width
@@ -56,6 +62,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-CONTROL-FLOW`, `ISF-SETTER-SYNTAX`, and
   `ISF-COMPATIBILITY`, plus `ISF-LIBRARY-SYSTEM-BINDINGS` and
   `ISF-STORAGE-VAR-ALIASES`, are listed in the task-tree completed table.
+  The proposed `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics
+  and is not an implementation frontier until its public source model is
+  selected.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF clock-domain backlog
+- The current ISF clock model is intentionally single-domain: one clock domain
+  per actor/generated top. This remains true even when a clock signal is named
+  something other than `clk`, and even when a generated top links a parent
+  clock/reset signal to a reusable child actor with different local system
+  signal names.
+- Multi-clock support should not be inferred from composition. Clock-domain
+  crossing is a runtime semantic feature: it needs explicit source syntax,
+  legal crossing primitives or protocol actors, diagnostics for unsafe direct
+  crossings, lowering, report metadata, and fixtures.
+- Treat reset ownership as part of the future domain model. Synchronous reset
+  per domain is normal; arbitrary DT-computed glue on asynchronous reset trees
+  remains outside the ISF DT model because it is glitch-prone and requires
+  specialized reset-tree design techniques.
 ## 2026-05-15: ISF storage var aliases
 - `var` is the better source word for actor-owned scalar storage because ISF is
   intentionally above raw HDL vocabulary. The scheduler still decides the

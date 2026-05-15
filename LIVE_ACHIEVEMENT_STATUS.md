@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF clock-domain backlog
+- Captured the current single-clock-domain ISF boundary in the spec, mdBook,
+  roadmap, task-tree index, README, and live docs.
+- Added
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md)
+  as a proposed task tree for future multi-clock, asynchronous, and
+  interacting clock-domain semantics.
+- Different clock names and reusable-library generated-top links remain
+  signal-name bindings only; they do not imply CDC behavior.
+
 ## 2026-05-15: R14 — ISF storage variable aliases
 - Active R14 task-tree slice: `ISF-STORAGE-VAR-ALIASES.1` adds scalar storage
   aliases for actor-owned storage declarations.

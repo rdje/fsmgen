@@ -24,7 +24,20 @@ public actor shell is returned rather than merged or overwritten.
 (clock clk)
 ```
 
-Single clock per actor. No multi-clock support yet.
+The shipped ISF model has one clock domain per actor/generated top. The clock
+name is an authored signal name for that domain; using a name other than `clk`
+does not create a second domain.
+
+Generated-top clock/reset links for reusable libraries are still
+single-domain signal-name bindings. They are not clock-domain-crossing
+constructs, and they do not specify synchronizers, handshakes, dual-clock
+storage, or any other CDC behavior.
+
+Multi-clock, asynchronous, and interacting clock-domain semantics are a
+separate proposed feature tree. Before ISF can accept that source, the
+language must define how domains are declared, how ports/children/rules or
+transactions belong to domains, which crossings are legal, what lowers to
+scheduled `.fsm`, and what diagnostics/report metadata prove the behavior.
 
 ## Reset
 

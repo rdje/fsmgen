@@ -32,6 +32,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `ISF-CLOCK-DOMAINS` | `proposed` | `R14` | `ISF-CLOCK-DOMAINS.2` | [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) |
 | `FSMGEN-IR-AUDIT` | `proposed` | `architecture backlog` | `FSMGEN-IR-AUDIT.1` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
 
 ## Completed Task Trees
@@ -77,6 +78,7 @@ as done work unless a future task reopens them.
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |
+| Multi-clock, asynchronous, and interacting clock-domain semantics | `ISF-CLOCK-DOMAINS` proposed tree |
 | Actor-owned scalar storage source vocabulary | `ISF-STORAGE-VAR-ALIASES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |

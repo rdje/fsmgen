@@ -924,6 +924,36 @@ catalog/contract metadata is synchronized through
 `library_catalog_paths`, `library_catalog_entry_keys`, and
 `shipped_library_definitions`.
 
+### ISF Multi-Clock And CDC Semantics
+
+Status: proposed task tree under
+[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md).
+
+Goal: give ISF a deliberate model for designs with multiple clock domains,
+asynchronous boundaries, and interacting domains.
+
+Current boundary: ISF currently has one clock domain per actor/generated top.
+Different clock signal names, library clock/reset bindings, and generated-top
+system-port links are signal-name binding within that model. They are not CDC
+semantics.
+
+The future feature must define at least:
+
+- how clock domains are declared and named;
+- whether domains are actor-scoped, port-scoped, child-instance-scoped,
+  transaction-scoped, rule-scoped, or some constrained combination;
+- reset ownership per domain, including synchronous resets and asynchronous
+  reset pins without arbitrary DT glue on async reset trees;
+- which crossings are legal, such as synchronized single-bit events,
+  handshakes, request/acknowledge channels, or dual-clock FIFO-style actors;
+- which direct crossings fail closed;
+- how the scheduler emits reviewable domain-specific `.fsm` artifacts or a
+  documented multi-domain artifact; and
+- what bounded schedule-report metadata and fixtures prove the behavior.
+
+Until that contract ships, direct same-cycle reads or writes across domains
+must not be inferred from ordinary signal access.
+
 ## Backends And Validation
 
 ### Full VHDL Backend

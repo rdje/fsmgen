@@ -435,6 +435,21 @@ Reset rules:
 - Async resets lower to `.fsm` `(areset name)`.
 - Sync resets lower to `.fsm` `(sreset name)`.
 
+Multi-clock boundary:
+- The shipped ISF model has one clock domain per actor/generated top.
+- Library clock/reset bindings and generated-top system-port links are
+  signal-name binding inside that one-domain model. They do not create a
+  second clock domain and they do not model clock-domain crossing behavior.
+- ISF has no source syntax yet for declaring multiple domains, assigning
+  interface ports or child instances to domains, or marking a transaction/rule
+  as belonging to a different clock domain.
+- Direct reads or writes between future domains must not be accepted by
+  implication. A future feature must provide explicit CDC primitives or
+  protocol actors with specified runtime behavior, lowering, diagnostics, and
+  report metadata before such crossings are legal.
+- Asynchronous reset trees are not DTs. FSMGen does not use ISF DT logic to
+  build arbitrary asynchronous reset gating.
+
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.
 - `N` must be a positive integer.

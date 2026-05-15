@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF clock-domain backlog
+- Added
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md)
+  as the proposed task tree for multi-clock, asynchronous, and interacting
+  clock-domain semantics.
+- Synchronized the mdBook, ISF spec, roadmap, task-tree index, README, and
+  live docs so the current contract is explicit: ISF has one clock domain per
+  actor/generated top. Different clock signal names and reusable-library
+  system-port links are signal-name bindings only, not CDC support.
+- Captured the future feature obligations: public source domain model, reset
+  ownership, legal CDC primitives/protocol actors, fail-closed direct
+  crossings, scheduled `.fsm` lowering, schedule-report projection, and
+  realistic fixtures.
 ### R14 — ISF storage variable aliases
 - Added
   [docs/tasks/ISF-STORAGE-VAR-ALIASES.md](docs/tasks/ISF-STORAGE-VAR-ALIASES.md)

@@ -247,7 +247,10 @@ explicit generated-top links to the child system ports, for example
 is signal-name remapping inside the current one-clock-domain ISF model, not
 multi-clock or clock-domain-crossing support. Multi-clock, asynchronous, and
 interacting clock domains need a separate public semantic model before they can
-be shipped. The plain
+be shipped. That future model is tracked as
+[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md); direct cross-domain
+reads or writes should remain illegal until a shipped CDC primitive or protocol
+actor owns the crossing semantics. The plain
 `file.isf` CLI path is audited to reach generated HDL with clean stderr,
 including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including
