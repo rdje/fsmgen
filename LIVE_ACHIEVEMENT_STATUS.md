@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF multi-domain event CDC HDL shipped
+- Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.7`.
+- Plain multi-domain `.isf` HDL generation now emits the generated
+  multi-domain top and a concrete acknowledged-event CDC child for accepted
+  event-crossing actors on SystemVerilog/Verilog-family targets when each
+  emitted domain artifact satisfies the current scheduled `.fsm` clock/reset
+  HDL contract.
+- The generated CDC child is selected by explicit ISF-generated `.rtlif`
+  metadata; ordinary external `?rtl` modules remain externally supplied.
+- The generated top now relies on composition system-port auto-wiring for
+  same-name domain clock/reset connections and keeps explicit links for the
+  differently named CDC child clock/reset ports.
+- `ISF-CLOCK-DOMAINS` is now closed; the next PNT selection should choose the
+  next roadmap-aligned R14 task outside this tree.
+
 ## 2026-05-15: R14 — ISF multi-domain reports and fixtures shipped
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.6`.
 - Public multi-domain schedule JSON now projects the generated top scope,
@@ -10,10 +25,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Added a realistic event-crossing fixture and regression coverage proving CLI
   `--emit-schedule-json` parity plus supported HDL generation for emitted
   single-domain artifacts.
-- Plain multi-domain generated HDL remains blocked for
-  `ISF-CLOCK-DOMAINS.7`.
-- The active frontier advances to `ISF-CLOCK-DOMAINS.7`, generated HDL for the
-  multi-domain top/CDC path.
+- At that point, plain multi-domain generated HDL remained blocked for
+  `ISF-CLOCK-DOMAINS.7`; it is now shipped by the newer entry above.
+- At that point, the active frontier advanced to `ISF-CLOCK-DOMAINS.7`; that
+  path is now shipped by the newer entry above.
 
 ## 2026-05-15: R14 — ISF multi-domain top artifacts emitted
 - Completed R14 task-tree slice: `ISF-CLOCK-DOMAINS.5.4`.

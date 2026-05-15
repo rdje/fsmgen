@@ -751,8 +751,10 @@ activations, bindings, and drive reuse fail closed before emission. Public
 domain modules and explicit CDC child interfaces. Public `report(...)` and
 `--emit-schedule-json` now describe the generated top at the top level and
 expose bounded per-domain and event-crossing metadata through
-`clock_domains[]` and `crossings[]`. Plain generated HDL for the
-multi-domain top/CDC path remains blocked.
+`clock_domains[]` and `crossings[]`. Plain generated HDL for accepted
+SystemVerilog/Verilog-family event-crossing actors now emits the generated top
+and a concrete generated acknowledged-event CDC child when each emitted domain
+artifact satisfies the current scheduled `.fsm` clock/reset HDL contract.
 The current shipped reusable library catalog contains `common.fifo.fifo` with
 source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 [isf/fifo_library_use.isf](../isf/fifo_library_use.isf), fixed parameters
@@ -982,8 +984,12 @@ CLI runs: `--emit-schedule-json` writes schedule-report JSON to stdout with
 empty stderr, `--outdir DIR` writes lower-result `.fsm` files by basename into
 `DIR`, and plain single-clock `file.isf` generation lowers through scheduled
 `.fsm` and any generated composition top before writing the requested HDL
-output with empty stderr. Plain multi-domain `file.isf` HDL generation remains
-blocked while generated top/CDC HDL support is incomplete, but
+output with empty stderr. Plain multi-domain `file.isf` HDL generation for
+accepted event-crossing actors writes the generated domain/top `.fsm`
+artifacts, then emits SystemVerilog/Verilog-family HDL containing the
+generated multi-domain top and the concrete acknowledged-event CDC child when
+each emitted domain artifact satisfies the current scheduled `.fsm`
+clock/reset HDL contract.
 `--emit-schedule-json` succeeds for accepted multi-domain actors.
 The strict CLI success-shape field advertises that accepted `--strict
 file.isf` generation follows the public HDL-generation success shape and keeps
@@ -1012,9 +1018,10 @@ values are `.fsm` source text rooted at `(?top:<basename-stem> ...)` and may
 append embedded `(?rtlif:...)` declarations for explicit CDC child interfaces.
 
 The `--outdir` CLI path materializes the same lower-result `.fsm`
-basename/text map on disk for HDL-ready multi-file lowerings. Multi-domain
-CLI HDL generation still waits for generated HDL support for multi-domain
-top/CDC artifacts and fails with a targeted diagnostic.
+basename/text map on disk for HDL-ready multi-file lowerings. Accepted
+multi-domain event-crossing actors now use that materialized generated top as
+the HDL entry and emit the concrete generated CDC child beside the domain
+modules.
 
 The full lower-result hash is not yet a broad public API beyond the advertised
 keys.

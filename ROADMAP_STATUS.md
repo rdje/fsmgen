@@ -10,7 +10,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: continue the active `ISF-CLOCK-DOMAINS` feature tree.
+- Next decision point: select the next roadmap-aligned R14 task tree after the
+  `ISF-CLOCK-DOMAINS` tree closed.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
   actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
   zero-count bypass requirement, `ISF-DYNAMIC-WAIT.3.2` shipped the first
@@ -51,8 +52,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-CLOCK-DOMAINS.6` now projects bounded multi-domain schedule-report
   metadata through `clock_domains[]` and `crossings[]`, adds a realistic
   event-crossing fixture, and proves domain-local artifacts still reach HDL
-  where the single-clock path is supported. The current frontier is
-  `ISF-CLOCK-DOMAINS.7`, generated HDL for the multi-domain top/CDC path.
+  where the single-clock path is supported. `ISF-CLOCK-DOMAINS.7` now emits
+  plain multi-domain HDL for accepted event-crossing actors, including the
+  generated top and concrete acknowledged-event CDC child for
+  SystemVerilog/Verilog-family targets when each emitted domain artifact
+  satisfies the current scheduled `.fsm` clock/reset HDL contract. The
+  `ISF-CLOCK-DOMAINS` tree is closed.
   `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
@@ -143,7 +148,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   bindings emit explicit links such as `(clk rx.lib_clk)`. Direct `.fsm`
   `+system` now accepts HDL-compatible authored clock identifiers. This is
   still single-clock-domain ISF behavior; multi-clock, asynchronous, and
-  interacting clock-domain semantics remain future work.
+  interacting clock-domain semantics are owned by the now-completed
+  `ISF-CLOCK-DOMAINS` tree.
 - Composition `?wiring` ergonomics update: explicit composition wiring now
   accepts canonical Lisp-ish list links `(source target)` plus verbose
   `(connect source target)` links, including source-side `(cat ...)` concat
@@ -154,10 +160,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(var name (width N))`, with `(variable ...)` accepted as the verbose
   alias. `(state ...)` and `(register ...)` are rejected as source
   vocabulary.
-- ISF clock-domain backlog update: legacy `(clock name)` actors and reusable
+- ISF clock-domain update: legacy `(clock name)` actors and reusable
   library clock/reset bindings remain one-clock-domain behavior. Multi-clock,
-  asynchronous, and interacting clock-domain semantics are tracked as the
-  active `ISF-CLOCK-DOMAINS` task tree. Different clock signal names and
+  asynchronous, and interacting clock-domain semantics were shipped through the
+  completed `ISF-CLOCK-DOMAINS` task tree. Different clock signal names and
   generated-top system-port links are signal-name binding only; they do not
   imply CDC behavior. The selected source model is actor-scoped named domains
   through `(clock-domains ...)` metadata. Ports, storage, transactions, rules,
@@ -171,8 +177,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   destination-domain pulse, one outstanding event, and no payload. Current
   lowering validates the domain partition, rejects unowned crossings, and
   emits one normal single-clock `.fsm` artifact per domain plus generated
-  top wiring with explicit CDC child interfaces. Future leaves add concrete
-  CDC child HDL, bounded report projection, and fixtures.
+  top wiring with explicit CDC child interfaces. Bounded report projection,
+  realistic event-crossing fixture coverage, and concrete acknowledged-event
+  CDC child HDL for reset-declared SystemVerilog/Verilog-family event-crossing
+  actors are now shipped.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width
@@ -210,10 +218,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-STORAGE-VAR-SURFACE`, are listed in the
   task-tree completed table. The completed `COMPOSITION-WIRING-LISPISH` tree
   records the shipped `R11` canonical explicit-link list syntax.
-  The active `ISF-CLOCK-DOMAINS` tree owns future multi-clock/CDC semantics;
-  its public source model, reset ownership, first legal crossing primitive, and
-  lowering/report artifact strategy are selected. Generated HDL for the
-  multi-domain top/CDC path is the next implementation frontier.
+  The completed `ISF-CLOCK-DOMAINS` tree owns the shipped multi-clock/CDC
+  semantics: public source model, reset ownership, first legal event crossing
+  primitive, lowering/report artifact strategy, and generated HDL for the
+  generated top plus concrete CDC child.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.

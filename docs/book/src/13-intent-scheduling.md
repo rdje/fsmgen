@@ -265,10 +265,13 @@ public multi-domain `lower(...)` now emits one normal single-clock scheduled
 `.fsm` artifact per declared domain plus a generated top that wires domain
 modules and explicit CDC child interfaces for accepted event crossings. Public
 `report(...)` now exposes those domain artifacts and accepted event crossings
-in schedule JSON, while generated HDL for the multi-domain top/CDC path
-remains blocked. Direct cross-domain reads, writes, triggers, activations,
-bindings, and multi-domain drive reuse remain illegal unless a shipped CDC
-primitive or protocol actor owns the crossing semantics. The plain
+in schedule JSON, and plain HDL generation for accepted event-crossing actors
+now emits the generated top plus a concrete acknowledged-event CDC child for
+SystemVerilog/Verilog-family targets when each emitted domain artifact
+satisfies the current scheduled `.fsm` clock/reset HDL contract. Direct
+cross-domain reads, writes, triggers, activations, bindings, and multi-domain
+drive reuse remain illegal unless a shipped CDC primitive or protocol actor
+owns the crossing semantics. The plain
 single-clock `file.isf` CLI path is audited to reach generated HDL with clean
 stderr, including when the advertised `--strict` flag is present. Transaction summaries
 include the generated state families used by the current scheduler, including

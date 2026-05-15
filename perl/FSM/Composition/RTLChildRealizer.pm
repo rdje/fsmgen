@@ -20,6 +20,7 @@ use Carp qw(confess);
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
+use FSM::Composition::ISFEventCDCModuleEmitter;
 use FSM::Composition::RealizedInstance;
 use FSM::Package::PayloadTypeSupport;
 
@@ -31,6 +32,7 @@ sub realize_rtl_child_instance ($class, %args) {
     my $fsm_file = $args{fsm_file}
         or confess "RTLChildRealizer requires an fsm_file";
     my $composition_spec = $args{composition_spec};
+    my $target_language = $args{target_language} // 'systemverilog';
 
     my $module_name = $instance->module_name;
     my $top_symbols = $composition_spec && $composition_spec->top
@@ -46,6 +48,13 @@ sub realize_rtl_child_instance ($class, %args) {
         instance => $instance,
         loaded_metadata => $loaded,
     );
+    my $generated_hdl_code = FSM::Composition::ISFEventCDCModuleEmitter->hdl_code_for_loaded_metadata(
+        module_name => $module_name,
+        metadata_path => $loaded->{metadata_path},
+        interface_ports => $loaded->{interface_ports},
+        parameter_declarations => $loaded->{parameter_declarations},
+        target_language => $target_language,
+    );
 
     return FSM::Composition::RealizedInstance->new(
         kind => 'rtl',
@@ -60,7 +69,7 @@ sub realize_rtl_child_instance ($class, %args) {
             interface_kind => 'rtl_external',
             parameter_declarations => _clone($loaded->{parameter_declarations} || []),
         },
-        hdl_code => undef,
+        hdl_code => $generated_hdl_code,
     );
 }
 

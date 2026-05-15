@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-CLOCK-DOMAINS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-15`
 - Last updated: `2026-05-15`
@@ -39,7 +39,7 @@ asynchronous, and interacting clock-domain designs.
 ## Task Tree
 
 - ID: `ISF-CLOCK-DOMAINS`
-  Status: `active`
+  Status: `done`
   Goal: `Design and ship explicit ISF multi-clock and CDC semantics.`
   Children: `ISF-CLOCK-DOMAINS.1`, `ISF-CLOCK-DOMAINS.2`,
   `ISF-CLOCK-DOMAINS.3`, `ISF-CLOCK-DOMAINS.4`,
@@ -124,17 +124,17 @@ asynchronous, and interacting clock-domain designs.
   Commit: `ISF-CLOCK-DOMAINS.6: project domain reports and fixtures`
 
 - ID: `ISF-CLOCK-DOMAINS.7`
-  Status: `pending`
+  Status: `done`
   Goal: `Generate HDL for the multi-domain top and event-crossing CDC child path.`
-  Acceptance: `Plain multi-domain ISF HDL generation emits the generated top and a concrete acknowledged-event CDC implementation, or fails closed only for documented unsupported target-language cases.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `Plain multi-domain ISF HDL generation for accepted reset-declared event-crossing actors emits the generated top and a concrete acknowledged-event CDC implementation; documented unsupported target-language cases fail closed.`
+  Verification: `perl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Composition/ISFEventCDCModuleEmitter.pm`; `perl -Iperl -c perl/FSM/Composition/RTLChildRealizer.pm`; `perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/185-composition-rtl-child-realizer.t t/22-composition-fsm-plus-rtl.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/1115-isf-public-interface-cli-manifest-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1153-isf-public-cli-success-metadata-audit.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-CLOCK-DOMAINS.7: generate event CDC HDL`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-CLOCK-DOMAINS.7` | `pending` | Domain reports and fixtures now ship; the remaining executable leaf is generated HDL for the multi-domain top/CDC path. |
+| 1 | `closed` | `done` | All executable leaves in this task tree are complete; the next PNT selection should use the roadmap/task-tree frontier outside this tree. |
 
 ## Selected Source Model
 
@@ -187,8 +187,10 @@ Rules for the implemented parser metadata:
   Public `lower(...)` also emits a generated multi-domain top with explicit
   CDC child-interface artifacts for accepted event crossings. Public
   `report(...)` and `--emit-schedule-json` now expose bounded domain and
-  crossing metadata. Generated HDL for the multi-domain top/CDC path remains
-  blocked until `ISF-CLOCK-DOMAINS.7` ships that leaf.
+  crossing metadata. Plain HDL generation for accepted event-crossing actors
+  now emits the generated top and concrete acknowledged-event CDC child on
+  SystemVerilog/Verilog-family targets when each emitted domain artifact
+  satisfies the current scheduled `.fsm` clock/reset HDL contract.
 
 Malformed combinations fail closed:
 
@@ -203,9 +205,9 @@ Malformed combinations fail closed:
 - Reusing one drive body from multiple domains without a safe reuse rule.
 - Any attempt to use DT logic as asynchronous reset gating.
 
-This source model deliberately leaves generated HDL for the multi-domain
-top/CDC path to `ISF-CLOCK-DOMAINS.7`. Reset ownership and the first legal
-crossing primitive are selected below.
+`ISF-CLOCK-DOMAINS.7` ships generated HDL for the multi-domain top and accepted
+event-crossing CDC child path. Reset ownership and the first legal crossing
+primitive are selected below.
 
 ## Selected Reset Ownership Model
 
@@ -257,8 +259,7 @@ Malformed reset combinations fail closed:
 - Any attempt to treat reset assertion/deassertion as an ordinary
   cross-domain data event.
 
-This reset model deliberately leaves concrete multi-domain generated HDL to
-`ISF-CLOCK-DOMAINS.7`. The first legal CDC primitive is selected below.
+The first legal CDC primitive is selected below.
 
 ## Selected Crossing Primitive
 
@@ -266,6 +267,10 @@ This reset model deliberately leaves concrete multi-domain generated HDL to
 primitive. `ISF-CLOCK-DOMAINS.5.4` ships parser support plus generated top
 and CDC child-interface artifacts for that primitive. `ISF-CLOCK-DOMAINS.6`
 ships bounded schedule-report projection for the accepted event primitive.
+`ISF-CLOCK-DOMAINS.7` ships generated SystemVerilog/Verilog-family HDL for the
+generated top plus concrete acknowledged-event CDC child when each emitted
+domain artifact satisfies the current scheduled `.fsm` clock/reset HDL
+contract.
 
 The first accepted crossing is an acknowledged single-bit event channel:
 
@@ -298,8 +303,9 @@ Rules for the accepted event primitive:
 - The generated top represents the primitive as an explicit CDC child
   interface with source clock/reset, destination clock/reset, request, ready,
   and pulse ports. Schedule reports expose the endpoint domains/signals and
-  generated CDC instance/module names. The concrete synchronizer RTL remains a
-  generated-HDL follow-up owned by `ISF-CLOCK-DOMAINS.7`.
+  generated CDC instance/module names. Generated HDL recognizes the
+  ISF-marked CDC metadata and emits a concrete acknowledged-event synchronizer
+  child; normal external `?rtl` modules remain externally supplied.
 - Payload transfer, multi-bit data, level sampling, reset crossing, and
   FIFO-like storage are not part of this first primitive.
 
@@ -398,12 +404,18 @@ explicitly defines a new multi-clock `.fsm` structure.
   artifacts remain later leaves.
 - `2026-05-15`: Public multi-domain `lower(...)` now emits a generated
   `<actor>_top.fsm` that instantiates the domain modules and explicit CDC
-  child-interface artifacts for accepted event crossings. Public `report(...)`
-  and generated HDL for the multi-domain top/CDC path remain future work.
+  child-interface artifacts for accepted event crossings. At that point,
+  public `report(...)` and generated HDL for the multi-domain top/CDC path
+  remained future work.
 - `2026-05-15`: Public multi-domain `report(...)` now succeeds and projects
   the generated top scope, bounded per-domain artifact metadata, and accepted
-  event-crossing metadata. The concrete generated HDL path remains split into
-  `ISF-CLOCK-DOMAINS.7`.
+  event-crossing metadata. At that point, the concrete generated HDL path was
+  split into `ISF-CLOCK-DOMAINS.7`.
+- `2026-05-15`: Public multi-domain plain HDL generation now reaches the
+  generated top for accepted event-crossing actors and includes a concrete
+  acknowledged-event CDC child for SystemVerilog/Verilog-family targets when
+  each emitted domain artifact satisfies the current scheduled `.fsm`
+  clock/reset HDL contract. The `ISF-CLOCK-DOMAINS` tree is complete.
 
 ## Open Questions
 
@@ -412,7 +424,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 
 ## Blockers
 
-- None for the current frontier.
+- None; this task tree is complete.
 
 ## Verification Log
 
@@ -427,6 +439,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.5.3` | `perl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1117-isf-public-lower-result-files-audit.t t/1139-isf-public-lower-result-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1153-isf-public-cli-success-metadata-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.5.4` | `perl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1139-isf-public-lower-result-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1156-isf-public-lower-result-file-shape-audit.t t/1160-isf-public-actor-shell-value-shape-audit.t t/1165-isf-public-actor-shell-timing-shape-audit.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-15` | `ISF-CLOCK-DOMAINS.6` | `perl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1121-isf-public-cli-schedule-report-audit.t t/1128-isf-public-multifile-schedule-report-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-15` | `ISF-CLOCK-DOMAINS.7` | `perl -c bin/fsmgen`; `perl -Iperl -c perl/FSM/Composition/ISFEventCDCModuleEmitter.pm`; `perl -Iperl -c perl/FSM/Composition/RTLChildRealizer.pm`; `perl -Iperl -c perl/FSM/Composition/PlanBuilder.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/185-composition-rtl-child-realizer.t t/22-composition-fsm-plus-rtl.t t/88-rtlif-typed-port-contract.t t/91-composition-multi-rtl-children.t t/1115-isf-public-interface-cli-manifest-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1153-isf-public-cli-success-metadata-audit.t t/1247-isf-clock-domain-partition.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -441,6 +454,7 @@ explicitly defines a new multi-clock `.fsm` structure.
 | `ISF-CLOCK-DOMAINS.5.3` | `ISF-CLOCK-DOMAINS.5.3: emit domain scheduled artifacts` | Emits per-domain scheduled .fsm artifacts while keeping report projection and generated multi-domain top/CDC artifacts blocked. |
 | `ISF-CLOCK-DOMAINS.5.4` | `ISF-CLOCK-DOMAINS.5.4: emit multi-domain top artifact` | Emits generated multi-domain top wiring plus explicit CDC child-interface artifacts while keeping report projection and HDL implementation blocked. |
 | `ISF-CLOCK-DOMAINS.6` | `ISF-CLOCK-DOMAINS.6: project domain reports and fixtures` | Projects bounded multi-domain schedule reports, adds a realistic event-crossing fixture, and proves supported domain artifacts still reach HDL. |
+| `ISF-CLOCK-DOMAINS.7` | `ISF-CLOCK-DOMAINS.7: generate event CDC HDL` | Emits plain multi-domain HDL for accepted reset-declared event-crossing actors, including the generated top and concrete acknowledged-event CDC child. |
 
 ## Changelog
 
@@ -471,3 +485,6 @@ explicitly defines a new multi-clock `.fsm` structure.
 - `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.6`, projecting bounded
   multi-domain schedule-report metadata and adding event-crossing fixture
   coverage; current frontier advances to `ISF-CLOCK-DOMAINS.7`.
+- `2026-05-15`: Completed `ISF-CLOCK-DOMAINS.7`, generating the multi-domain
+  top and concrete acknowledged-event CDC child in plain HDL for accepted
+  reset-declared event-crossing actors; the tree is closed.

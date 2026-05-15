@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF multi-domain event CDC HDL shipped
+- Completed `ISF-CLOCK-DOMAINS.7` in
+  [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md),
+  closing the `ISF-CLOCK-DOMAINS` tree.
+- Plain multi-domain `.isf` HDL generation now reaches the generated
+  `<actor>_top.fsm` for accepted event-crossing actors and emits a concrete
+  acknowledged-event CDC child for SystemVerilog/Verilog-family targets when
+  each emitted domain artifact satisfies the current scheduled `.fsm`
+  clock/reset HDL contract.
+- The generated top omits redundant same-name domain clock/reset links and
+  leaves those system ports to the existing composition auto-wiring contract;
+  differently named CDC child clock/reset ports remain explicit links.
+- Normal external `?rtl` children still remain externally supplied; generated
+  CDC HDL is selected only by the ISF-marked `.rtlif` metadata emitted for the
+  acknowledged event primitive.
+- The current frontier is outside this completed task tree; select the next
+  roadmap-aligned R14 task before further ISF implementation.
 ## 2026-05-15: ISF multi-domain reports and fixtures shipped
 - Completed `ISF-CLOCK-DOMAINS.6` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).
@@ -11,9 +28,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Added [isf/clock_domain_event_crossing.isf](isf/clock_domain_event_crossing.isf)
   as a realistic acknowledged-event crossing fixture; focused tests prove the
   generated domain artifacts still reach supported single-clock HDL generation.
-- Plain multi-domain ISF HDL remains blocked until `ISF-CLOCK-DOMAINS.7`,
-  generated HDL for the multi-domain top/CDC path.
-- The current frontier is `ISF-CLOCK-DOMAINS.7`.
+- At that point, plain multi-domain ISF HDL remained blocked until
+  `ISF-CLOCK-DOMAINS.7`; that path is now shipped by the newer entry above.
 ## 2026-05-15: ISF multi-domain top artifacts shipped
 - Completed `ISF-CLOCK-DOMAINS.5.4` in
   [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md).

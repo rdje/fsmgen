@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: generated event CDC HDL is explicitly marked
+- `ISF-CLOCK-DOMAINS.7` keeps normal `?rtl` semantics intact: external RTL
+  children still require supplied RTL, and the composition realizer only emits
+  HDL when the embedded `.rtlif` metadata carries the generated ISF event-CDC
+  marker.
+- The CDC implementation is an acknowledged toggle event channel with one
+  outstanding event. Source-side `ready` is true only after the destination
+  acknowledgement has returned, and the destination emits a one-cycle `pulse`
+  when it observes a new synchronized toggle.
+- The generated top no longer emits explicit links for same-name domain
+  clock/reset ports. Those are system ports, so the composition system-port
+  auto-wiring path owns them; CDC child ports such as `source_clk` and
+  `dest_clk` stay explicit because their names deliberately differ from the
+  actor's domain clock pins.
 ## 2026-05-15: multi-domain reports describe the generated top
 - `ISF-CLOCK-DOMAINS.6` makes multi-domain schedule reports successful without
   pretending the original actor has one emitted scheduled parent module.
@@ -7,10 +21,10 @@ This document captures engineering rationale, design constraints, and working de
   top-level `state_count` set to zero. Domain-local scheduled-state counts and
   artifact names live in `clock_domains[]`, and legal event crossings live in
   `crossings[]`.
-- The fixture proves the supported part of the path: each emitted domain
-  artifact is still ordinary single-clock `.fsm` and can reach SystemVerilog
-  through the existing backend. Concrete CDC child HDL remains a separate
-  `ISF-CLOCK-DOMAINS.7` slice.
+- The fixture proved the supported part of the path at that point: each
+  emitted domain artifact was still ordinary single-clock `.fsm` and could
+  reach SystemVerilog through the existing backend. Concrete CDC child HDL was
+  then left to the now-shipped `ISF-CLOCK-DOMAINS.7` slice.
 ## 2026-05-15: multi-domain top emits structure before HDL implementation
 - `ISF-CLOCK-DOMAINS.5.4` emits a reviewable generated top for multi-domain
   actors without claiming that the CDC child implementation is synthesizable

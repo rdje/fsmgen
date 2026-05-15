@@ -717,7 +717,7 @@ sub isf_public_interface_cli_outdir_success_shape {
 }
 
 sub isf_public_interface_cli_hdl_generation_success_shape {
-    return 'plain single-clock file.isf generation lowers through scheduled .fsm and writes requested HDL output with empty stderr on success; multi-domain actors currently expose lower-result artifacts and schedule JSON while plain generated HDL remains blocked';
+    return 'plain single-clock file.isf generation lowers through scheduled .fsm and writes requested HDL output with empty stderr on success; accepted multi-domain event-crossing actors lower through generated domain/top artifacts and emit SystemVerilog/Verilog-family HDL with a concrete generated acknowledged-event CDC child when each emitted domain artifact satisfies the current scheduled .fsm clock/reset HDL contract';
 }
 
 sub isf_public_interface_cli_strict_hdl_generation_success_shape {

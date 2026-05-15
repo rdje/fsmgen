@@ -294,7 +294,7 @@ sub _emit_multi_domain_top($actor, $partition) {
     for my $crossing (@{$actor->{crossings} || []}) {
         next unless ($crossing->{kind} // '') eq 'event';
         push @lines, '';
-        push @lines, _emit_crossing_rtlif($actor, $crossing);
+        push @lines, _emit_crossing_rtlif($actor, $crossing, $partition);
     }
 
     return join("\n", @lines) . "\n";
@@ -335,12 +335,6 @@ sub _emit_multi_domain_wiring($actor, $partition) {
     my @links;
     my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
 
-    for my $domain (@{$partition->{domains} || []}) {
-        my $instance = $domain->{name};
-        push @links, _link($domain->{clock}, "$instance.$domain->{clock}");
-        push @links, _link($domain->{reset}{name}, "$instance.$domain->{reset}{name}")
-            if ref($domain->{reset}) eq 'HASH';
-    }
     for my $input (@{$actor->{interface}{inputs} || []}) {
         my $domain = _entry_domain($input, $partition->{default_domain});
         push @links, _link($input->{name}, "$domain.$input->{name}");
@@ -371,9 +365,18 @@ sub _emit_multi_domain_wiring($actor, $partition) {
     return join("\n", @lines);
 }
 
-sub _emit_crossing_rtlif($actor, $crossing) {
+sub _emit_crossing_rtlif($actor, $crossing, $partition) {
+    my %domain_by_name = map { $_->{name} => $_ } @{$partition->{domains} || []};
+    my $source_domain = $domain_by_name{$crossing->{from}{domain}};
+    my $dest_domain = $domain_by_name{$crossing->{to}{domain}};
+
     my @lines;
     push @lines, '(?rtlif:' . _crossing_module_name($actor, $crossing);
+    push @lines, '  (params';
+    push @lines, '    (FSMGEN_ISF_CDC_EVENT 0d1)';
+    push @lines, _emit_crossing_reset_param_lines('SOURCE', $source_domain->{reset});
+    push @lines, _emit_crossing_reset_param_lines('DEST', $dest_domain->{reset});
+    push @lines, '  )';
     push @lines, '  source_clk:clock';
     push @lines, '  dest_clk:clock';
     push @lines, '  source_reset:reset';
@@ -383,6 +386,22 @@ sub _emit_crossing_rtlif($actor, $crossing) {
     push @lines, '  pulse>:data';
     push @lines, ')';
     return join("\n", @lines);
+}
+
+sub _emit_crossing_reset_param_lines($prefix, $reset) {
+    my $present = ref($reset) eq 'HASH' ? 1 : 0;
+    my $async = $present && (($reset->{kind} // 'sync') eq 'async') ? 1 : 0;
+    my $active_high = $present && (($reset->{polarity} // 'active_high') ne 'active_low') ? 1 : 0;
+
+    return (
+        "    (${prefix}_RESET_PRESENT " . _bool_param_literal($present) . ")",
+        "    (${prefix}_RESET_ASYNC " . _bool_param_literal($async) . ")",
+        "    (${prefix}_RESET_ACTIVE_HIGH " . _bool_param_literal($active_high) . ")",
+    );
+}
+
+sub _bool_param_literal($value) {
+    return $value ? '0d1' : '0d0';
 }
 
 sub _push_top_port_token($tokens, $seen, $name, $direction, $width) {

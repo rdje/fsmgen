@@ -1015,18 +1015,19 @@ now accepts actor-scoped `(clock-domains ...)` metadata and the scheduler can
 partition accepted actors by domain. Public multi-domain `lower(...)` now
 emits domain-specific scheduled `.fsm` artifacts plus generated top wiring for
 domain modules and explicit CDC child interfaces. Public `report(...)` now
-projects bounded domain and event-crossing metadata, while generated HDL for
-the multi-domain top/CDC path remains a future leaf.
+projects bounded domain and event-crossing metadata, and accepted
+event-crossing actors now reach generated SystemVerilog/Verilog-family HDL for
+the generated top plus concrete acknowledged-event CDC child when each emitted
+domain artifact satisfies the current scheduled `.fsm` clock/reset HDL
+contract.
 Different clock signal names, library clock/reset bindings, and generated-top
 system-port links are not CDC semantics by themselves.
 
-The future feature must still define at least:
+The future feature still needs richer fixture matrices for generated
+top/CDC HDL beyond the first event-crossing fixture.
 
-- concrete generated HDL for the explicit CDC child implementation;
-- richer fixture matrices for generated top/CDC HDL once that path ships.
-
-Until that contract ships, direct same-cycle reads or writes across domains
-must not be inferred from ordinary signal access.
+Outside that shipped event primitive, direct same-cycle reads or writes across
+domains must not be inferred from ordinary signal access.
 
 Source-model decision: the selected source model is actor-scoped named
 domains. Existing `(clock name)` remains the shorthand for one implicit actor
@@ -1063,8 +1064,10 @@ single-bit event channel declared in actor-scoped
 source-domain `ready`, and generated destination-domain one-cycle pulse.
 Lowering represents it as an explicit CDC child interface in the generated top;
 schedule reports expose the endpoint domains/signals and generated
-instance/module names. Concrete synchronizer RTL remains future generated-HDL
-work. It carries no payload and promises no same-cycle timing. Direct
+instance/module names. The first concrete generated-HDL path emits an
+acknowledged event synchronizer child for reset-declared
+SystemVerilog/Verilog-family actors. It carries no payload and promises no
+same-cycle timing. Direct
 cross-domain reads, writes, triggers, activations, parent/child bindings, and
 reset assertion/deassertion events remain fail-closed unless a shipped
 primitive or protocol actor owns that path. Payload handshakes and dual-clock
@@ -1076,8 +1079,8 @@ partition, rejects unowned crossings, and emits normal single-clock scheduled
 only inter-module wiring and now instantiates explicit CDC child interfaces for
 accepted event crossings. Normal scheduled `.fsm` modules are not silently
 widened into multi-clock modules. Bounded schedule-report metadata and a
-realistic event-crossing fixture are shipped; concrete CDC child HDL remains
-future work.
+realistic event-crossing fixture are shipped, and that fixture now reaches
+plain generated HDL with a concrete CDC child.
 
 ## Backends And Validation
 

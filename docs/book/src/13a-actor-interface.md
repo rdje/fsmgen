@@ -42,8 +42,12 @@ internal domain partition. Multi-domain public `lower(...)` now emits one
 domain scheduled `.fsm` artifact per declared domain plus a generated top that
 wires explicit CDC child-interface artifacts for accepted event crossings.
 `report(...)` and `--emit-schedule-json` now expose bounded domain and
-crossing metadata for that generated top. Generated HDL for the multi-domain
-top/CDC path remains a later leaf.
+crossing metadata for that generated top. Accepted event-crossing actors now
+reach generated SystemVerilog/Verilog-family HDL with the generated top and a
+concrete acknowledged-event CDC child when each emitted domain artifact also
+satisfies the current scheduled `.fsm` clock/reset HDL contract.
+
+## Multi-Clock Domains
 
 The selected authoring shape is an actor-level `(clock-domains ...)` block:
 
@@ -67,6 +71,114 @@ Drives inherit the domain of their activation site. None of those annotations
 are CDC primitives: direct cross-domain reads, writes, triggers, activations,
 bindings, or multi-domain drive reuse fail closed before emission unless a
 shipped crossing primitive owns that path.
+
+The implementation is intentionally artifact-first. `lower(...)` does not turn
+one `.fsm` module into a hidden multi-clock state machine. It partitions the
+actor into one ordinary scheduled `.fsm` per declared domain, using
+`<actor>__domain_<domain>.fsm` names, then emits `<actor>_top.fsm` as a
+composition source. The top instantiates each domain module with `?fsmc` and
+owns only wiring plus explicit CDC child interfaces.
+
+For example, an actor named `clock_domain_event_crossing` with domains `bus`
+and `core` emits these review artifacts:
+
+```text
+clock_domain_event_crossing__domain_bus.fsm
+clock_domain_event_crossing__domain_core.fsm
+clock_domain_event_crossing_top.fsm
+```
+
+The generated top keeps same-name domain clock/reset connections on the
+existing composition system-port auto-wiring path. That means a domain module
+whose clock port is also named `bus_clk` is not redundantly wired by an
+explicit top link. CDC child ports have deliberately different names such as
+`source_clk` and `dest_clk`, so the generated top wires those ports explicitly.
+
+### Event Crossing
+
+The first shipped crossing primitive is an acknowledged single-bit event
+channel:
+
+```lisp
+(crossings
+  (event rx_done
+    (from bus  rx_done_bus)
+    (to   core rx_done_core)
+    (ready rx_done_ready)))
+```
+
+The source-domain artifact sees `rx_done_ready` as an input and drives
+`rx_done_bus` as a one-cycle request event. The destination-domain artifact
+sees `rx_done_core` as an input pulse. The generated top wires the source
+request into a CDC child, wires the CDC `ready` output back to the source
+domain, and wires the CDC `pulse` output into the destination domain.
+
+Runtime semantics are single-outstanding and acknowledged. The source side may
+request a new event only while `ready` is true. After an accepted request, the
+CDC child toggles a source-domain event bit, synchronizes that toggle into the
+destination domain, emits one destination-clock pulse when the destination
+observes a new toggle, then returns an acknowledgement toggle to the source
+domain. No same-cycle relationship is promised between request and pulse, and
+the primitive carries no data payload.
+
+### Generated CDC HDL
+
+The generated top represents the event crossing as a `?rtl` child with an
+embedded `?rtlif` contract. FSMGen marks only its own event-CDC contract with
+metadata parameters, for example:
+
+```lisp
+(?rtlif:clock_domain_event_crossing__cdc_event_byte_ready
+  (params
+    (FSMGEN_ISF_CDC_EVENT 0d1)
+    (SOURCE_RESET_PRESENT 0d1)
+    (SOURCE_RESET_ASYNC 0d0)
+    (SOURCE_RESET_ACTIVE_HIGH 0d0)
+    (DEST_RESET_PRESENT 0d1)
+    (DEST_RESET_ASYNC 0d0)
+    (DEST_RESET_ACTIVE_HIGH 0d0))
+  source_clk:clock
+  dest_clk:clock
+  source_reset:reset
+  dest_reset:reset
+  request<:data
+  ready>:data
+  pulse>:data)
+```
+
+That marker is the boundary between generated CDC and ordinary external RTL.
+Normal `?rtl` children still need externally supplied RTL; FSMGen does not
+invent module internals from a matching port list. When the marker is present,
+the composition realizer emits a concrete Verilog-family child module beside
+the generated domain modules and top.
+
+The generated CDC module contains:
+
+- a source-domain event toggle;
+- two acknowledgement synchronizer registers in the source clock domain;
+- two request synchronizer registers in the destination clock domain;
+- a destination-side seen-toggle register and acknowledgement toggle; and
+- a one-cycle `pulse` register in the destination clock domain.
+
+When domain resets are present, their kind and polarity are copied into the
+generated `?rtlif` metadata. The CDC child uses that metadata to choose
+synchronous versus asynchronous event controls and active-high versus
+active-low reset conditions. It also synchronizes the opposite side's
+reset-active condition before allowing new source requests or destination
+pulses, so a reset on one side does not create a spurious event on the other.
+
+Plain `.isf` HDL generation now writes the generated `.fsm` artifacts and then
+feeds the generated top through the normal composition HDL path. For accepted
+event-crossing actors on SystemVerilog/Verilog-family targets, with
+reset-declared domains that satisfy the scheduled `.fsm` backend contract, the
+final HDL contains the domain modules, the concrete generated CDC module, and
+the generated top that instantiates all of them.
+
+The remaining fail-closed boundaries are deliberate: direct cross-domain data
+reads or writes are still illegal, multi-bit payload transfer is not part of
+the event primitive, FIFO-like CDC is not inferred, reset assertion or
+deassertion is not treated as a data event, and non-Verilog-family generated
+top/CDC HDL targets remain outside the shipped backend scope.
 
 ## Reset
 
@@ -102,36 +214,6 @@ for that domain's clocked state; ISF rules, transactions, drives, and DTs must
 not generate or gate arbitrary asynchronous reset trees. Reusing one reset
 signal across multiple domains is only a shared external reset pin when kind
 and polarity match exactly, not a CDC primitive or data synchronizer.
-
-The first selected crossing primitive is an acknowledged single-bit event
-channel:
-
-```lisp
-(crossings
-  (event rx_done
-    (from bus  rx_done_bus)
-    (to   core rx_done_core)
-    (ready rx_done_ready)))
-```
-
-The source side requests an event only when the generated source-domain
-`ready` signal is true. The destination side receives a generated one-cycle
-pulse after synchronizer and acknowledgement latency; no same-cycle timing is
-promised. The primitive carries no payload. Lowering represents it as an
-explicit CDC child interface in the generated top, and schedule reports expose
-the endpoint domains/signals plus generated CDC instance/module names.
-Concrete synchronizer RTL remains future work. Direct cross-domain reads,
-writes, triggers, activations, child bindings, or reset assertion/deassertion
-events remain illegal unless a shipped crossing primitive owns that path.
-
-The selected lowering strategy keeps each emitted domain as its own
-single-clock scheduled `.fsm` artifact named `<actor>__domain_<domain>.fsm`.
-The current implementation emits those domain artifacts after validated
-partitioning and fail-closed cross-domain checks, then emits
-`<actor>_top.fsm` to wire domain modules and explicit CDC child interfaces.
-Schedule-report projection for domain and crossing metadata is shipped;
-generated HDL for the multi-domain top/CDC path remains a later leaf. Ordinary
-`.fsm` modules are not silently widened into multi-clock scheduled modules.
 
 ## Watchdog
 

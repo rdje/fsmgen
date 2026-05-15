@@ -83,8 +83,11 @@ Current CLI behavior:
 - Without `--emit-schedule-json`, a single generated `.fsm` file is written to a
   temporary file and fed into the normal `.fsm` pipeline.
 - The plain single-clock `file.isf` path is expected to reach generated HDL
-  with clean stderr on success. Accepted multi-domain clock-domain actors
-  currently stop before generated HDL for the generated top/CDC artifact.
+  with clean stderr on success. Accepted multi-domain event-crossing actors
+  lower through generated domain/top artifacts and now reach generated
+  SystemVerilog/Verilog-family HDL containing the generated top plus concrete
+  acknowledged-event CDC child when each emitted domain artifact satisfies the
+  current scheduled `.fsm` clock/reset HDL contract.
 - `--strict` is accepted on the plain `file.isf` path and still routes through
   scheduled `.fsm` generation before HDL output.
 - If lowering produces multiple `.fsm` files, `--outdir DIR` writes every file
@@ -473,7 +476,10 @@ Multi-clock boundary:
   artifact per declared domain plus a generated multi-domain top that wires
   explicit CDC child-interface artifacts for accepted event crossings.
   Schedule-report projection now exposes bounded domain and crossing metadata.
-  Generated HDL for the multi-domain top/CDC path remains unshipped.
+  Generated HDL for accepted event-crossing actors now emits the generated top
+  and concrete acknowledged-event CDC child for SystemVerilog/Verilog-family
+  targets when each emitted domain artifact satisfies the current scheduled
+  `.fsm` clock/reset HDL contract.
 - Direct reads or writes between domains are not accepted by implication. A
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
@@ -546,8 +552,10 @@ Selected source model and current implementation status:
   artifact.
 - Schedule reports for multi-domain sources describe the generated top at the
   top level and expose each domain artifact through `clock_domains[]`; legal
-  event crossings appear in `crossings[]`. Generated HDL for the
-  multi-domain top/CDC path remains future work.
+  event crossings appear in `crossings[]`. The plain HDL path for accepted
+  event-crossing actors emits the generated top and concrete acknowledged-event
+  CDC child for SystemVerilog/Verilog-family targets when each emitted domain
+  artifact satisfies the current scheduled `.fsm` clock/reset HDL contract.
 
 Selected reset ownership model and current implementation status:
 - Existing actor-level `(clock clk)` plus optional actor-level `(reset ...)`
@@ -611,8 +619,9 @@ Selected crossing primitive and current implementation status:
   interface with source clock/reset, destination clock/reset, request, ready,
   and pulse ports. Schedule reports expose the generated CDC instance/module
   names, endpoint domains/signals, single-outstanding acknowledgement policy,
-  and no-payload policy. Concrete synchronizer RTL remains future
-  generated-HDL work.
+  and no-payload policy. The generated HDL path recognizes the ISF-generated
+  CDC metadata and emits a concrete acknowledged-event synchronizer child; it
+  does not infer HDL for arbitrary external `?rtl` children.
 - Payload transfer, multi-bit data, level sampling, reset crossing, and
   FIFO-like storage remain outside this first primitive.
 - Direct cross-domain reads, writes, triggers, activations, parent/child
@@ -645,9 +654,11 @@ Selected lowering artifact strategy and current implementation status:
 - Schedule-report metadata for domain artifacts and crossing artifacts is
   shipped. Multi-domain reports use the generated top as the top-level report
   scope, keep top-level `state_count` at zero, and put domain-local state
-  counts plus artifact names under `clock_domains[]`. Generated HDL for the
-  CDC child implementation remains future work, so the plain ISF HDL CLI path
-  still fails closed for multi-domain actors.
+  counts plus artifact names under `clock_domains[]`. Plain HDL generation for
+  accepted event-crossing actors emits the generated top and concrete
+  acknowledged-event CDC child on SystemVerilog/Verilog-family targets when
+  each emitted domain artifact satisfies the current scheduled `.fsm`
+  clock/reset HDL contract.
 
 Watchdog rules:
 - `(watchdog N)` is the actor default for every `(await ...)`.

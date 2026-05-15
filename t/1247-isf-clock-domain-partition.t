@@ -108,8 +108,8 @@ ISF
     like($top_fsm, qr/\A\(\?top:clock_domain_partition_top\b/, 'multi-domain lower emits a generated top artifact');
     like($top_fsm, qr/\(\?fsmc:core clock_domain_partition__domain_core\)/, 'generated top instantiates the core domain module');
     like($top_fsm, qr/\(\?fsmc:bus clock_domain_partition__domain_bus\)/, 'generated top instantiates the bus domain module');
-    like($top_fsm, qr{/clk/core\.clk/}, 'generated top wires the core clock');
-    like($top_fsm, qr{/bus_clk/bus\.bus_clk/}, 'generated top wires the bus clock');
+    unlike($top_fsm, qr{/clk/core\.clk/}, 'generated top leaves same-name core system ports to composition auto-wiring');
+    unlike($top_fsm, qr{/bus_clk/bus\.bus_clk/}, 'generated top leaves same-name bus system ports to composition auto-wiring');
 
     my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
     is($report->{scheduled_fsm}, 'clock_domain_partition_top.fsm', 'multi-domain report describes the generated top artifact');
@@ -152,39 +152,34 @@ ISF
     like($fsm, qr/\(sreset rst_n\)/, 'scheduled .fsm uses the domain reset');
 };
 
-subtest 'multi-domain CLI HDL generation waits for generated top emission' => sub {
+subtest 'multi-domain CLI HDL generation emits the generated top and CDC child' => sub {
     my $dir = tempdir(CLEANUP => 1);
-    my $path = File::Spec->catfile($dir, 'multi_domain_cli_boundary.isf');
-    write_file($path, <<'ISF');
-(actor multi_domain_cli_boundary
-  (clock-domains
-    (domain core (clock clk) :default)
-    (domain bus (clock bus_clk)))
-  (interface
-    (input start (domain core))
-    (input bus_evt (domain bus))
-    (output done (domain core))
-    (output bus_done (domain bus)))
-  (transaction core_tx
-    (domain core)
-    (on start)
-    (complete done))
-  (transaction bus_tx
-    (domain bus)
-    (on bus_evt)
-    (complete bus_done)))
-ISF
+    my $outdir = File::Spec->catdir($dir, 'generated');
+    mkdir $outdir or die "Cannot create $outdir: $!";
+    my $out_path = File::Spec->catfile($outdir, 'clock_domain_event_crossing.sv');
 
     my ($success, undef, undef, $stdout_buf, $stderr_buf) = run(
-        command => ['./bin/fsmgen', $path],
+        command => [
+            './bin/fsmgen',
+            '--quiet',
+            '--outdir', $outdir,
+            '--output', $out_path,
+            repo_file('isf/clock_domain_event_crossing.isf'),
+        ],
     );
-    ok(!$success, 'multi-domain CLI HDL generation fails until HDL support for generated top artifacts ships');
-    is(join('', @{$stdout_buf || []}), '', 'multi-domain CLI boundary keeps stdout empty');
-    like(
-        join('', @{$stderr_buf || []}),
-        qr/generated HDL for multi-domain top\/CDC artifacts is not implemented yet/,
-        'multi-domain CLI diagnostic points at the unshipped generated HDL path',
-    );
+    ok($success, 'multi-domain CLI HDL generation succeeds for the event-crossing fixture');
+    is(join('', @{$stderr_buf || []}), '', 'multi-domain CLI HDL generation keeps stderr empty');
+    ok(-f $out_path, 'multi-domain CLI HDL generation writes the requested HDL output');
+    ok(-f File::Spec->catfile($outdir, 'clock_domain_event_crossing_top.fsm'), 'multi-domain CLI writes the generated top artifact');
+    ok(-f File::Spec->catfile($outdir, 'clock_domain_event_crossing__domain_bus.fsm'), 'multi-domain CLI writes the bus domain artifact');
+    ok(-f File::Spec->catfile($outdir, 'clock_domain_event_crossing__domain_core.fsm'), 'multi-domain CLI writes the core domain artifact');
+
+    my $hdl = read_file($out_path);
+    like($hdl, qr/module\s+clock_domain_event_crossing_top\b/, 'HDL contains the generated multi-domain top module');
+    like($hdl, qr/module\s+clock_domain_event_crossing__cdc_event_byte_ready\b/, 'HDL contains the concrete generated CDC child module');
+    like($hdl, qr/clock_domain_event_crossing__cdc_event_byte_ready\s+byte_ready_cdc\s*\(/, 'top instantiates the generated CDC child');
+    like($hdl, qr/assign\s+ready\s*=\s*\(source_ack_sync_2\s*==\s*source_toggle\)/, 'CDC child implements acknowledged single-outstanding ready');
+    like($hdl, qr/pulse\s*<=\s*1'b1;/, 'CDC child emits a destination-domain pulse on accepted toggle changes');
 };
 
 subtest 'acknowledged event crossings add domain endpoints and explicit top artifact wiring' => sub {
@@ -237,6 +232,9 @@ ISF
     like($top_fsm, qr{/rx_done_cdc\.ready/bus\.rx_ready/}, 'top wires source ready back to the source domain');
     like($top_fsm, qr{/rx_done_cdc\.pulse/core\.rx_pulse/}, 'top wires destination pulse into the destination domain');
     like($top_fsm, qr/\(\?rtlif:event_crossing_top__cdc_event_rx_done[\s\S]*request<:data[\s\S]*ready>:data[\s\S]*pulse>:data/, 'top embeds the CDC child interface artifact');
+    like($top_fsm, qr/\(FSMGEN_ISF_CDC_EVENT 0d1\)/, 'CDC interface metadata marks the generated ISF event primitive');
+    like($top_fsm, qr/\(SOURCE_RESET_ACTIVE_HIGH 0d0\)/, 'CDC interface metadata carries source reset polarity');
+    like($top_fsm, qr/\(DEST_RESET_ACTIVE_HIGH 0d0\)/, 'CDC interface metadata carries destination reset polarity');
 
     my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
     is_deeply(
@@ -464,4 +462,13 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot write $path: $!\n";
     print {$fh} $content;
     close $fh or die "Cannot close $path: $!\n";
+}
+
+sub read_file {
+    my ($path) = @_;
+    open my $fh, '<', $path or die "Cannot read $path: $!\n";
+    local $/;
+    my $content = <$fh>;
+    close $fh or die "Cannot close $path: $!\n";
+    return $content;
 }

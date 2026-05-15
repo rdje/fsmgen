@@ -67,6 +67,7 @@ sub build_plan ($class, %args) {
         header => $header,
         source_path_resolver => $source_path_resolver,
         rtl_interface_loader => $rtl_interface_loader,
+        target_language => $target_language,
     )};
 
     my $is_single_child_passthrough = @realized_instances == 1 && !@wiring_blocks;
@@ -244,6 +245,7 @@ sub realize_instances ($class, %args) {
                 instance => $instance,
                 composition_spec => $composition_spec,
                 fsm_file => $fsm_file,
+                target_language => $args{target_language},
             );
             next;
         }

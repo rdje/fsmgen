@@ -346,7 +346,7 @@ Current shipped runtime subset:
 - and the sibling bounded registered peer-read internal-only case now also realizes that same lifted shared-target runtime without inventing public top re-export assignments when no such outputs exist,
 - and the sibling bounded registered public-only fanout case now also realizes that lifted shared-target runtime through one shared top-level register plus preserved public top-output fanout assignments even when no peer-read child inputs exist,
 - `?rtl` is now realized in the shipped single-child `C1`, explicit-link `C3`, and declared-by-name `C4` slices,
-- the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time.
+- the current explicit-link `C3` slice expects either one embedded `(?rtlif:module_name ...)` companion root or one `<module>.rtlif` sidecar metadata file per external RTL module and does not parse/regenerate SV/VHDL module internals at composition time. The narrow exception is generated ISF event-CDC metadata: when FSMGen itself emits the explicit marker for the acknowledged event primitive, the composition realizer emits that generated CDC child HDL while ordinary external `?rtl` modules remain externally supplied.
 
 ### 3. Interface model
 Composition will use explicit typed interface data, not implicit global hashes.

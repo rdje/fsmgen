@@ -33,7 +33,162 @@ actors emit validated per-domain scheduled `.fsm` artifacts named
 Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
 child interfaces in the generated top. Schedule reports expose the generated
 top scope, each domain artifact, and accepted event crossing metadata;
-generated HDL for the multi-domain top/CDC path remains a future leaf.
+accepted event-crossing actors now emit SystemVerilog/Verilog-family HDL with
+the generated top and a concrete acknowledged-event CDC child when each emitted
+domain artifact satisfies the current scheduled `.fsm` clock/reset HDL
+contract.
+
+## Multi-Domain Actor -> Domain FSMs + CDC Top
+
+For a reset-declared two-domain actor with one event crossing:
+
+```lisp
+(actor clock_domain_event_crossing
+  (clock-domains
+    (domain bus  (clock bus_clk)  (reset bus_rst_n) :default)
+    (domain core (clock core_clk) (reset core_rst_n)))
+  (crossings
+    (event byte_ready
+      (from bus byte_ready_req)
+      (to core byte_ready_pulse)
+      (ready byte_ready_ready)))
+  ...)
+```
+
+`lower(...)` emits ordinary scheduled `.fsm` files for each domain plus one
+composition top:
+
+```text
+clock_domain_event_crossing__domain_bus.fsm
+clock_domain_event_crossing__domain_core.fsm
+clock_domain_event_crossing_top.fsm
+```
+
+The bus artifact is still a normal single-clock `.fsm`:
+
+```lisp
+(?fsm:clock_domain_event_crossing__domain_bus
+  (+system
+    (clock bus_clk)
+    (sreset bus_rst_n))
+  (+size
+    (bus_start 1)
+    (byte_ready_ready 1)
+    (byte_ready_req 1)
+    ...)
+  ...)
+```
+
+The core artifact is the same shape with `core_clk`, `core_rst_n`, and the
+destination pulse input. No domain artifact directly reads or writes another
+domain's local signal.
+
+The generated top owns the inter-domain wiring:
+
+```lisp
+(?top:clock_domain_event_crossing_top
+  (?ports:public_io
+    bus_clk
+    bus_rst_n
+    core_clk
+    core_rst_n
+    bus_start
+    core_seen>
+  )
+  (?fsmc:bus clock_domain_event_crossing__domain_bus)
+  (?fsmc:core clock_domain_event_crossing__domain_core)
+  (?rtl:byte_ready_cdc clock_domain_event_crossing__cdc_event_byte_ready)
+  (?wiring:domain_wiring
+    /bus_start/bus.bus_start/
+    /core.core_seen/core_seen/
+    /bus_clk/byte_ready_cdc.source_clk/
+    /core_clk/byte_ready_cdc.dest_clk/
+    /bus_rst_n/byte_ready_cdc.source_reset/
+    /core_rst_n/byte_ready_cdc.dest_reset/
+    /bus.byte_ready_req/byte_ready_cdc.request/
+    /byte_ready_cdc.ready/bus.byte_ready_ready/
+    /byte_ready_cdc.pulse/core.byte_ready_pulse/
+  )
+)
+```
+
+Same-name domain clock/reset ports are intentionally left to the composition
+system-port auto-wiring rule when the top and child use the same port name. The
+CDC child uses role-specific names such as `source_clk`, `dest_clk`,
+`source_reset`, and `dest_reset`, so those links are explicit.
+
+The top embeds the generated CDC interface metadata immediately after the top
+root:
+
+```lisp
+(?rtlif:clock_domain_event_crossing__cdc_event_byte_ready
+  (params
+    (FSMGEN_ISF_CDC_EVENT 0d1)
+    (SOURCE_RESET_PRESENT 0d1)
+    (SOURCE_RESET_ASYNC 0d0)
+    (SOURCE_RESET_ACTIVE_HIGH 0d0)
+    (DEST_RESET_PRESENT 0d1)
+    (DEST_RESET_ASYNC 0d0)
+    (DEST_RESET_ACTIVE_HIGH 0d0))
+  source_clk:clock
+  dest_clk:clock
+  source_reset:reset
+  dest_reset:reset
+  request<:data
+  ready>:data
+  pulse>:data)
+```
+
+`FSMGEN_ISF_CDC_EVENT` is the implementation marker. The normal external
+`?rtl` path does not infer HDL from port shape. Only this marked metadata asks
+the composition realizer to emit FSMGen's generated event-CDC module.
+
+The generated CDC HDL is a toggle/acknowledge synchronizer. In outline, it
+contains:
+
+```verilog
+assign ready = (source_ack_sync_2 == source_toggle) && !source_dest_reset_sync_2;
+
+always @(posedge source_clk) begin
+    ...
+    source_ack_sync_1 <= dest_ack_toggle;
+    source_ack_sync_2 <= source_ack_sync_1;
+    if (request && ready) begin
+        source_toggle <= ~source_toggle;
+    end
+end
+
+always @(posedge dest_clk) begin
+    dest_req_sync_1 <= source_toggle;
+    dest_req_sync_2 <= dest_req_sync_1;
+    pulse <= 1'b0;
+    ...
+    if (dest_req_sync_2 != dest_seen_toggle) begin
+        dest_seen_toggle <= dest_req_sync_2;
+        dest_ack_toggle <= dest_req_sync_2;
+        pulse <= 1'b1;
+    end
+end
+```
+
+Reset metadata controls whether each generated `always` block has only a clock
+edge or has clock plus asynchronous reset edge, and whether the condition is
+active high or active low. When the opposite domain has a reset, the CDC child
+synchronizes that reset-active condition before asserting source `ready` or
+destination `pulse`. This avoids reporting an event while the other side is
+still being reset.
+
+The full plain `.isf` HDL path writes those generated `.fsm` artifacts to
+`--outdir` or the current directory, selects `<actor>_top.fsm` as the entry
+artifact, and feeds that top through the existing composition HDL pipeline.
+The final SystemVerilog/Verilog-family output contains the two generated
+domain modules, the generated CDC module, and the generated top module.
+
+The source model can record domains without resets for `lower(...)` and
+`report(...)`. The fully generated HDL path shown here is exercised through
+reset-declared domains because the existing scheduled `.fsm` HDL backend still
+expects a complete `+system` clock/reset contract for each emitted domain
+artifact.
 
 ## Interface → +size
 

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF multi-domain event CDC HDL shipped
+- Completed `ISF-CLOCK-DOMAINS.7` and closed the `ISF-CLOCK-DOMAINS` tree.
+- Plain multi-domain `.isf` HDL generation now uses the generated
+  `<actor>_top.fsm` entry for accepted event-crossing actors and emits a
+  concrete acknowledged-event CDC child module for SystemVerilog/Verilog-family
+  targets when each emitted domain artifact satisfies the current scheduled
+  `.fsm` clock/reset HDL contract.
+- Added an explicit ISF event-CDC HDL emitter keyed by generated `.rtlif`
+  metadata, keeping ordinary external `?rtl` children externally supplied.
+- Removed redundant generated-top same-name domain clock/reset links so the
+  existing composition system-port auto-wiring owns those connections without
+  duplicate-driver failures.
+- Updated the clock-domain fixture regression to prove CLI plain HDL generation
+  contains the generated top, the concrete CDC module, and the CDC instance.
 ### R14 — ISF multi-domain reports and fixtures shipped
 - Completed `ISF-CLOCK-DOMAINS.6`.
 - Public multi-domain `report(...)` now emits schedule JSON instead of
@@ -13,8 +27,9 @@ This is the persistent technical change history for FSMGen.
   plus regression coverage for in-process report parity, CLI
   `--emit-schedule-json`, direct unsafe-crossing diagnostics, and supported
   single-domain HDL generation from emitted domain artifacts.
-- Plain multi-domain ISF HDL remains blocked for the new
-  `ISF-CLOCK-DOMAINS.7` frontier.
+- At that point, plain multi-domain ISF HDL remained blocked for the new
+  `ISF-CLOCK-DOMAINS.7` frontier; that path is now shipped by the newer entry
+  above.
 ### R14 — ISF multi-domain top artifacts emitted
 - Completed `ISF-CLOCK-DOMAINS.5.4`.
 - Added parser support for actor-scoped `(crossings ...)` event declarations
