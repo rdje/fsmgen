@@ -4,9 +4,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: continue the active `ISF-DYNAMIC-WAIT` feature tree.
   `ISF-DYNAMIC-WAIT.2` shipped statically resolved symbolic wait counts from
-  actor constants, and the current frontier is `ISF-DYNAMIC-WAIT.3`: runtime
-  scalar dynamic wait counts. `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed
-  after shipping
+  actor constants, `ISF-DYNAMIC-WAIT.3.1` split the runtime work around the
+  zero-count bypass requirement, and the current frontier is
+  `ISF-DYNAMIC-WAIT.3.2`: first bounded runtime scalar wait lowering.
+  `ISF-ACTIVATION-BIND-EXPRESSIONS` is now closed after shipping
   expression-valued activation input bindings,
   `ISF-LIBRARY-SYSTEM-BINDINGS` is closed after shipping reusable-library
   system-port remapping, and `ISF-TRANSACTION-ACTIVATION` is closed after
@@ -26,6 +27,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `count == 0` as no active wait cycle, use known counter widths and reset
   semantics, and expose explicit dynamic report metadata before parser
   acceptance becomes public.
+- ISF runtime dynamic wait split update: dynamic zero-count waits must bypass
+  on the predecessor edge. A generated decision state would itself consume a
+  transaction cycle and violate the wait contract. The next implementation
+  slice is constrained to scalar count names with known unsigned width in
+  contexts where the predecessor edge can be split safely. Pending samples
+  before the dynamic wait, inline branch/switch/repeat/loop contexts, count
+  expressions, and parameter-backed counts remain fail-closed until their
+  bypass and snapshot behavior is implemented.
 - ISF activation binding expression update: activation input bindings for
   shipped `do`, generated `do`/`spawn`, and rule-trigger sites now accept
   scalar actor-side signals, numeric/exact-width literals, and non-empty
@@ -121,6 +130,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `actor_constants[]`, scheduled `.fsm` emits matching `+constants`, and
   `(wait NAME)` resolves actor constants to exact static wait counts. The
   active frontier advances to `ISF-DYNAMIC-WAIT.3`.
+- `ISF-DYNAMIC-WAIT.3.1` is complete. Runtime dynamic waits are split into a
+  first bounded implementation leaf and later context expansion. The first
+  implementation must preserve `count == 0` by splitting the predecessor edge;
+  unsupported contexts stay fail-closed. The active frontier advances to
+  `ISF-DYNAMIC-WAIT.3.2`.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

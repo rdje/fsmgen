@@ -11,7 +11,19 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - `(wait NAME)` resolves actor constants and then follows the existing static
   wait lowering: positive counts emit fixed wait-state chains, and zero counts
   are transparent no-ops.
-- The active frontier is `ISF-DYNAMIC-WAIT.3`, runtime scalar dynamic waits.
+- The active frontier moved into `ISF-DYNAMIC-WAIT.3` runtime scalar dynamic
+  waits.
+
+## 2026-05-15: R14 — ISF runtime dynamic wait split
+- Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.3.1`.
+- Runtime dynamic waits now have an executable implementation boundary:
+  `count == 0` must bypass on the predecessor edge, not through a generated
+  decision state.
+- The next frontier is `ISF-DYNAMIC-WAIT.3.2`, first bounded runtime scalar
+  wait lowering for scalar count names with known unsigned width.
+- Pending samples, inline branch/switch/repeat/loop dynamic waits, count
+  expressions, and parameter-backed counts remain fail-closed until their
+  exact bypass/snapshot behavior is implemented.
 
 ## 2026-05-15: R14 — ISF non-literal wait-count contract
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.1`.

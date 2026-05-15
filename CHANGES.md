@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF runtime dynamic wait split
+- Split `ISF-DYNAMIC-WAIT.3` into executable child leaves before attempting
+  runtime scalar wait lowering.
+- Documented the key implementation constraint: preserving `count == 0` as no
+  active wait cycle requires a predecessor-transition bypass; inserting a
+  generated decision state would violate the wait contract.
+- Updated the mdBook backlog, ISF spec, roadmap, task tree, and live docs so
+  the next implementation leaf targets scalar count names with known unsigned
+  width and keeps unsupported contexts fail-closed.
 ### R14 — ISF actor constants and symbolic waits
 - Updated
   [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so actors

@@ -413,6 +413,17 @@ Remaining dynamic contract:
   generated counter, explicit min/max latency accounting, and report metadata
   that distinguishes dynamic counts from exact integer `cycles`.
 
+Implementation boundary for the next runtime slice: a dynamic zero cannot be
+lowered by inserting a normal generated decision state, because that state
+would itself consume an active transaction cycle. The lowerer must split the
+predecessor edge into a `count == 0` bypass path and a `count != 0` wait-entry
+path, then snapshot the positive count for the generated wait region. The
+first executable slice should therefore accept only scalar count names with
+known unsigned width in contexts where that predecessor-edge split is safe.
+Pending samples before the wait, inline branch/switch/repeat/loop bodies,
+count expressions, and parameter-backed counts remain fail-closed until their
+bypass and snapshot behavior is implemented.
+
 Remaining backlog: runtime scalar dynamic counts once the bypass-capable
 lowering and report shape are proved.
 

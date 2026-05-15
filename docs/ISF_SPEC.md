@@ -1097,6 +1097,16 @@ Remaining dynamic count contract:
   counts. Static waits keep integer `cycles`; dynamic waits need explicit
   count-kind, count-source, and counter metadata when they ship.
 
+The next runtime implementation is deliberately narrower than the full dynamic
+contract. It must not insert a normal decision state for `count == 0`, because
+that would consume an active transaction cycle. Instead, supported contexts
+must split the predecessor transition into a zero-count bypass edge and a
+positive-count wait-entry edge. Until that is implemented for a context, the
+context remains fail-closed. The first executable subset is scalar count names
+with known unsigned width in top-level contexts where no pending sample must be
+preserved across the bypass. Count expressions, parameter-backed counts, and
+inline branch/switch/repeat/loop dynamic waits remain deferred.
+
 ### 7.7 Inline Control Flow
 
 `(when condition body...)` is structurally validated with one scalar or

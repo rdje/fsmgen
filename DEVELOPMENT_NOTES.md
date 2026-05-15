@@ -14,6 +14,18 @@ This document captures engineering rationale, design constraints, and working de
 - `actor_constants[]` is report provenance, not a runtime storage family. The
   constants are also emitted in scheduled `.fsm` as `+constants` so review
   artifacts show the source symbols that were available during lowering.
+## 2026-05-15: dynamic wait zero requires predecessor-edge bypass
+- Runtime dynamic waits cannot preserve the shipped wait contract by inserting
+  a normal generated decision state. If the runtime count is zero, that state
+  would still be one active transaction cycle.
+- The first viable lowering shape is to split the predecessor edge: `count == 0`
+  transitions directly to the post-wait state, while `count != 0` enters a wait
+  region that snapshots the count and consumes exactly that many active wait
+  cycles.
+- Pending samples make this harder because a zero-count bypass must leave them
+  pending for the following state while a positive count must materialize them
+  in the first wait region. That is why pending-sample contexts should remain
+  fail-closed until the lowerer has explicit support for both paths.
 ## 2026-05-15: non-literal waits must preserve literal wait timing
 - The important contract of `(wait count)` is the effective count, not the
   spelling of the count. A symbolic count that resolves to `3` and a literal

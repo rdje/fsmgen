@@ -13,6 +13,18 @@ This is the live continuity document for fast session recovery after crashes, re
 - Actor/transaction `params` are deliberately not wait-count sources because
   they are overrideable after scheduled states are emitted.
 - The current frontier is `ISF-DYNAMIC-WAIT.3`, runtime scalar dynamic waits.
+## 2026-05-15: ISF runtime dynamic wait split
+- Split `ISF-DYNAMIC-WAIT.3` into executable leaves in
+  [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
+- Runtime dynamic zero counts cannot be implemented by inserting an ordinary
+  decision state; that would consume an active transaction cycle. The lowerer
+  must split the predecessor edge into zero-count bypass and positive-count
+  wait-entry paths.
+- The next frontier is `ISF-DYNAMIC-WAIT.3.2`: first bounded runtime scalar
+  wait lowering for scalar count names with known unsigned width in contexts
+  where the predecessor-edge split is safe.
+  Pending samples, inline branch/switch/repeat/loop contexts, count
+  expressions, and parameter-backed counts remain fail-closed.
 ## 2026-05-15: ISF non-literal wait-count contract
 - Created
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md)
