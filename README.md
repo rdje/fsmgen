@@ -86,6 +86,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-PORT-BINDING.md` — completed `R14` task tree for transaction ports and actor pin access.
 - `docs/tasks/ISF-CONTROL-FLOW.md` — completed `R14` task tree for transaction-local waits and dynamic loops.
 - `docs/tasks/ISF-SETTER-SYNTAX.md` — completed `R14` task tree for scalar setter syntax shared by rules and transactions.
+- `docs/tasks/ISF-TRANSACTION-ACTIVATION.md` — active `R14` task tree for task-like transaction activation and parameter overrides.
 - `docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md` — active `R14` task tree for ISF spec, book, manifest, and contract synchronization.
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — proposed architecture task tree for current IR inventory and consolidation policy.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.

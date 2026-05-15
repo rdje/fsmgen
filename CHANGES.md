@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-15
+### R14 — ISF task-like transaction activation boundary
+- Activated
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md)
+  and completed `ISF-TRANSACTION-ACTIVATION.1` to track the task-like
+  transaction activation model and future activation-site parameter overrides.
+- Clarified in the mdBook and ISF spec that transaction ports plus explicit
+  `(bind ...)` actuals are shipped for the documented scalar activation subset,
+  while general parameter overrides at `do`, rule `trigger`, and other
+  activation sites remain future work beyond spawned-child specialization.
 ### R14 — ISF scalar setter syntax
 - Completed `ISF-SETTER-SYNTAX.1` and closed the scalar setter syntax task tree.
 - Added `(set lhs expr)` as the canonical explicit scalar setter across rule

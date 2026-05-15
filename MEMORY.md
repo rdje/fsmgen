@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-15: ISF task-like transaction activation boundary
+- Activated `ISF-TRANSACTION-ACTIVATION` in
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
+- Completed `ISF-TRANSACTION-ACTIVATION.1`, a documentation-boundary slice that
+  formalizes the answer to whether transactions behave like tasks.
+- Current contract: transactions are task-like in the hardware sense that they
+  consume cycles, may declare `(ports ...)` formal data/control ports, and can
+  receive scalar actual signals through explicit `(bind ...)` blocks at the
+  shipped activation sites.
+- Parameter boundary: spawned child transactions support per-instance
+  `(params ...)` overrides for static generated-child specialization. General
+  parameter overrides for `do`, rule `trigger`, and other activation sites
+  remain backlog and must not be assumed from the task analogy.
+- The active frontier is `ISF-TRANSACTION-ACTIVATION.2`, specifying the general
+  activation-site parameter override syntax before implementation.
 ## 2026-05-15: ISF scalar setter syntax
 - Completed `ISF-SETTER-SYNTAX.1` in
   [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md), closing

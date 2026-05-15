@@ -3,8 +3,8 @@ This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
 - Next decision point: select or activate the next user-visible `R14` feature
-  tree before implementing more ISF behavior. `ISF-SETTER-SYNTAX` is complete
-  and closed.
+  tree before implementing more ISF behavior. `ISF-TRANSACTION-ACTIVATION` is
+  now active with `ISF-TRANSACTION-ACTIVATION.2` as the current frontier.
   Standalone public interface stabilization/audit work is on hold for now;
   keep the public contract synchronized only as part of shipping each feature.
 - Repo-local task trees now live at [docs/TASK_TREE.md](docs/TASK_TREE.md),
@@ -15,7 +15,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/TASK_TREE.md](docs/TASK_TREE.md). The completed
   `ISF-CONTROL-FLOW` tree now owns the shipped transaction-local wait and
   loop surface. The completed `ISF-SETTER-SYNTAX` tree now owns the shipped
-  scalar setter syntax. The completed `ISF-PORT-BINDING` tree is listed in the
+  scalar setter syntax. The active `ISF-TRANSACTION-ACTIVATION` tree now owns
+  the task-like transaction activation and parameter-override follow-up. The
+  completed `ISF-PORT-BINDING` tree is listed in the
   completed table. The
   public-contract tree remains cross-cutting and should not displace feature
   delivery unless the selected feature changes a public surface. The completed
@@ -69,6 +71,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the guarded rule non-state DT DTE; transaction `set` lowers as one ordered
   flopped transaction state wherever `update` is accepted. Existing transaction
   `(update lhs expr)` and rule `(lhs expr)` shorthand remain supported.
+- `ISF-TRANSACTION-ACTIVATION.1` is complete. Transactions are documented as
+  hardware-task-like only in the bounded sense: they consume cycles, may declare
+  `(ports ...)` formal data/control ports, and can receive scalar actual
+  signals through explicit `(bind ...)` blocks at shipped activation sites.
+  General activation-site parameter overrides remain backlog beyond spawned
+  child specialization. The active frontier advances to
+  `ISF-TRANSACTION-ACTIVATION.2`.
 - `ISF-LIBRARIES` is complete. The public term is "library"; implementation
   may reuse package/import infrastructure, but the feature target is reusable
   ISF design intent such as actors and transaction patterns. The shipped tree

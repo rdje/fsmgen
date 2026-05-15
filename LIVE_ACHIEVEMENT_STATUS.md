@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-15: R14 — ISF task-like transaction activation boundary
+- Active R14 task-tree slice: `ISF-TRANSACTION-ACTIVATION.1` is complete in
+  [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md).
+- The mdBook/spec wording now states the current transaction-as-task boundary:
+  ports are formal data/control ports, `(bind ...)` entries pass scalar actual
+  signals at shipped activation sites, and generated hardware remains static.
+- General activation-site parameter overrides are not shipped except for the
+  existing spawned-child specialization path. They remain backlog under the new
+  task tree.
+- The active frontier advances to `ISF-TRANSACTION-ACTIVATION.2`, specifying
+  general activation-site parameter override syntax.
+
 ## 2026-05-15: R14 — ISF scalar setter syntax
 - Active R14 task-tree slice: `ISF-SETTER-SYNTAX.1` is complete, closing
   [docs/tasks/ISF-SETTER-SYNTAX.md](docs/tasks/ISF-SETTER-SYNTAX.md).

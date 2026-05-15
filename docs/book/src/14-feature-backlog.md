@@ -137,6 +137,29 @@ the generated top. The first value domain is scalar/exact-width literals plus
 compatible aggregate/list literals; symbolic constants wait for an explicit
 ISF symbol surface.
 
+### General Transaction Activation Parameter Overrides
+
+Status: backlog; tracked by `ISF-TRANSACTION-ACTIVATION`.
+
+Goal: extend the task-like transaction activation model so activation sites can
+override declared transaction parameters where that is semantically valid.
+
+Current boundary: transaction ports already provide formal data/control ports,
+and shipped activation-site `(bind ...)` blocks pass scalar actual signals for
+the supported `do`, `spawn`, and rule `trigger` subset. Spawned child
+transactions also support per-instance `(params (NAME value) ...)` overrides
+through generated composition. That is not yet a general trigger-site
+parameter-override contract. Parameter overrides on blocking `do`, rule
+`trigger`, direct transaction activation, or other future activation forms need
+an explicit source shape, compile-time versus runtime interpretation, value
+domain, diagnostics, lowering, report metadata, and HDL proof before they are
+public syntax.
+
+Likely first design question: whether general activation-site parameter
+overrides reuse the existing spawn `(params (NAME value) ...)` shape exactly, or
+whether ISF should visually distinguish static specialization parameters from
+runtime payload bindings carried by `(bind ...)`.
+
 ### Spawn Inside Repeat Bodies
 
 Status: backlog.

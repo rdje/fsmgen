@@ -23,6 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TRANSACTION-ACTIVATION` | `active` | `R14` | `ISF-TRANSACTION-ACTIVATION.2` | [docs/tasks/ISF-TRANSACTION-ACTIVATION.md](docs/tasks/ISF-TRANSACTION-ACTIVATION.md) |
 | `ISF-PUBLIC-CONTRACT` | `active` | `R14` | `ISF-PUBLIC-CONTRACT.1` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 
 ## Proposed Task Trees
@@ -75,6 +76,7 @@ as done work unless a future task reopens them.
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
+| Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW` |
 | ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |

@@ -649,8 +649,9 @@ to scheduled `.fsm` states, persistent handoff signals, and reviewable
 assignments. Parameter overrides are currently narrower than port bindings:
 spawned child transactions support transaction-local `params` and per-instance
 `(params (NAME value) ...)` overrides through the generated composition path,
-while a fully general parameter-override surface for every activation form
-remains future work.
+and those overrides specialize the static spawned child instance. General
+parameter overrides at `do`, rule `trigger`, or every transaction activation
+site remain future work and must not be inferred from the task-like analogy.
 
 Current transaction clauses:
 - `(on port body...)`

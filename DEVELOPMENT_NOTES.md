@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-15: ISF task-like transaction activation boundary
+- The "transaction as hardware task" analogy is useful only if the boundary is
+  explicit. Ports map well to formal arguments, and `(bind ...)` maps to actual
+  signal binding, but the implementation still elaborates static hardware with
+  persistent handoff signals and scheduled states.
+- Parameter overrides are not the same thing as runtime payload actuals. The
+  shipped spawn parameter surface specializes a static generated child instance;
+  it does not imply that every activation site can override transaction
+  parameters.
+- The next implementation decision is whether broader activation-site
+  parameters should reuse spawn's `(params (NAME value) ...)` syntax exactly or
+  use a different shape to make static specialization distinct from runtime
+  port binding.
 ## 2026-05-15: ISF scalar setter syntax
 - `set` is deliberately a shared source word, not a new timing operator. The
   owning context still decides timing and region: rule `set` stays actor-level

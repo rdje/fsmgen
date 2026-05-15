@@ -13,8 +13,10 @@ bindings on `do`, `spawn`, and rule `trigger` activation sites. Rule triggers
 bind transaction inputs only; output bindings require a caller that waits for
 completion, such as `do` or the shipped spawn handoff path. Spawned child
 transactions also support per-instance parameter overrides through `(params
-...)`; a fully general parameter-override model for every transaction
-activation form remains narrower than the port-binding model.
+...)`. Those parameter overrides are compile-time specialization of the static
+child instance, not runtime payload actuals. A fully general parameter-override
+model for `do`, rule `trigger`, or every transaction activation form remains
+future work and should not be assumed from the task analogy.
 
 ## How Transactions Become Hardware
 
