@@ -7,6 +7,14 @@ This document is FSMGen's tracked response to SPECFORGE's feedback in:
 It exists so SPECFORGE can align its `.fsm` adapter planning with FSMGen's
 accepted direction without relying on transient chat context.
 
+For bugs found while calling FSMGen, SPECFORGE should use the strict,
+format-agnostic reproduction bundle protocol in
+[docs/DOWNSTREAM_ISSUE_REPORTING.md](DOWNSTREAM_ISSUE_REPORTING.md). The
+protocol does not require SPECFORGE to classify the root cause as `.fsm`,
+`.isf`, lowering, reporting, HDL, or API behavior before filing; it requires
+the exact FSMGen-facing artifacts, invocation, outputs, and expected/observed
+behavior so FSMGen maintainers can reproduce locally.
+
 ## High-Level Response
 
 FSMGen agrees with the core SPECFORGE framing:

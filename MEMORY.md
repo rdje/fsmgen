@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: downstream issue-bundle reporting flow published
+- Completed `DOWNSTREAM-ISSUE-REPRO-FLOW.1` in
+  [docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md](docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md),
+  closing the downstream issue reproduction flow tree.
+- Added [docs/DOWNSTREAM_ISSUE_REPORTING.md](docs/DOWNSTREAM_ISSUE_REPORTING.md)
+  as the strict, format-agnostic protocol SPECFORGE can follow when FSMGen
+  behavior looks wrong. The protocol treats FSMGen-facing artifacts as opaque;
+  SPECFORGE does not need to classify the root cause as `.fsm`, `.isf`,
+  lowering, reporting, HDL, or API behavior before filing.
+- Added [bin/fsmgen-issue-bundle](bin/fsmgen-issue-bundle), which creates a
+  runnable issue bundle with copied inputs, environment capture, exact command
+  transcript, stdout/stderr, exit codes, JSON probes, generated artifacts, and
+  a rerunnable `commands.sh`.
+- Added [t/1251-fsmgen-issue-bundle-helper.t](t/1251-fsmgen-issue-bundle-helper.t)
+  to prove the helper creates a bundle and that the generated `commands.sh`
+  reruns from the repository root.
+- Synchronized the mdBook, SPECFORGE response, ISF downstream handoff, public
+  contract live-document paths, README, and live docs. Compiler behavior is
+  unchanged.
 ## 2026-05-16: ISF spec focused-test index audited
 - Completed `ISF-SPEC-TEST-INDEX-SYNC.1` in
   [docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md),

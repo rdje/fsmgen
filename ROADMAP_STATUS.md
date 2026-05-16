@@ -19,9 +19,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   backlog wording so it matches the already-shipped targeted migration
   diagnostic and `t/1180` evidence. `ISF-SPEC-TEST-INDEX-SYNC.1` then
   synchronized the ISF spec focused-test index through the current
-  `t/*-isf-*.t` files and added an audit to prevent future drift. The next PNT
-  selection should choose a fresh roadmap-aligned R14 task tree before
-  implementation.
+  `t/*-isf-*.t` files and added an audit to prevent future drift.
+  `DOWNSTREAM-ISSUE-REPRO-FLOW.1` then published a strict, format-agnostic
+  downstream bug-reporting protocol plus `bin/fsmgen-issue-bundle`, so
+  SPECFORGE can send runnable issue bundles without classifying the root cause
+  first. The next PNT selection should choose a fresh roadmap-aligned R14 task
+  tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -126,6 +129,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   with the current `t/*-isf-*.t` regression files and added
   `t/1250-isf-spec-focused-test-index-audit.t` so future ISF test additions
   must keep the live spec index synchronized.
+  `DOWNSTREAM-ISSUE-REPRO-FLOW.1` published
+  `docs/DOWNSTREAM_ISSUE_REPORTING.md`, `bin/fsmgen-issue-bundle`, and
+  `t/1251-fsmgen-issue-bundle-helper.t`, making downstream bug reports
+  executable local reproduction bundles instead of prose-only reports.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

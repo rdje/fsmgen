@@ -1,0 +1,250 @@
+#!/usr/bin/env bash
+set -u
+
+usage() {
+  cat <<'USAGE'
+Usage:
+  ./bin/fsmgen-issue-bundle --case PATH --issue-id ID [OPTIONS] -- [FSMGEN_OPTIONS...]
+
+Creates a locally reproducible issue bundle for a downstream FSMGen failure.
+The helper treats PATH as an opaque FSMGen-facing artifact. It does not require
+the caller to classify the issue as .fsm, .isf, lowering, HDL, or API behavior.
+
+Required:
+  --case PATH              Primary artifact passed to FSMGen.
+  --issue-id ID            Short stable issue id used in the bundle directory.
+
+Optional:
+  --bundle-dir DIR         Output bundle directory. Defaults to fsmgen-issue-ID.
+  --extra-source PATH      Additional file or directory needed by the invocation.
+                           May be repeated.
+  --speforge-version TEXT  Downstream producer version or commit.
+  --failure-class TEXT     unknown, rejected-input, wrong-output, crash, etc.
+  --expected TEXT          Concrete expected behavior.
+  --observed TEXT          Concrete observed behavior.
+  --no-probes              Capture only environment and the original command.
+  -h, --help               Show this help.
+
+Everything after -- is passed to ./bin/fsmgen before the copied case path.
+When omitted, the original command is ./bin/fsmgen CASE.
+USAGE
+}
+
+die() {
+  printf 'fsmgen-issue-bundle: %s\n' "$*" >&2
+  exit 2
+}
+
+quote_words() {
+  local word
+  for word in "$@"; do
+    printf ' %q' "$word"
+  done
+}
+
+run_and_capture() {
+  local name="$1"
+  shift
+
+  printf '%s' "$*" > "$bundle_dir/observed/command-logs/$name.command"
+  "$@" \
+    > "$bundle_dir/observed/stdout/$name.stdout" \
+    2> "$bundle_dir/observed/stderr/$name.stderr"
+  printf '%s\n' "$?" > "$bundle_dir/observed/command-logs/$name.exit"
+}
+
+issue_id=''
+case_path=''
+bundle_dir=''
+speforge_version='unknown'
+failure_class='unknown'
+expected='unspecified'
+observed='unspecified'
+run_probes=1
+extra_sources=()
+
+while (($#)); do
+  case "$1" in
+    --case)
+      (($# >= 2)) || die '--case requires a path'
+      case_path="$2"
+      shift 2
+      ;;
+    --issue-id)
+      (($# >= 2)) || die '--issue-id requires a value'
+      issue_id="$2"
+      shift 2
+      ;;
+    --bundle-dir)
+      (($# >= 2)) || die '--bundle-dir requires a directory'
+      bundle_dir="$2"
+      shift 2
+      ;;
+    --extra-source)
+      (($# >= 2)) || die '--extra-source requires a path'
+      extra_sources+=("$2")
+      shift 2
+      ;;
+    --speforge-version)
+      (($# >= 2)) || die '--speforge-version requires a value'
+      speforge_version="$2"
+      shift 2
+      ;;
+    --failure-class)
+      (($# >= 2)) || die '--failure-class requires a value'
+      failure_class="$2"
+      shift 2
+      ;;
+    --expected)
+      (($# >= 2)) || die '--expected requires text'
+      expected="$2"
+      shift 2
+      ;;
+    --observed)
+      (($# >= 2)) || die '--observed requires text'
+      observed="$2"
+      shift 2
+      ;;
+    --no-probes)
+      run_probes=0
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      die "unknown option '$1' before --"
+      ;;
+  esac
+done
+
+fsmgen_args=("$@")
+
+[[ -n "$case_path" ]] || die 'missing --case PATH'
+[[ -n "$issue_id" ]] || die 'missing --issue-id ID'
+[[ -e "$case_path" ]] || die "--case path does not exist: $case_path"
+[[ -x ./bin/fsmgen ]] || die 'run this helper from the FSMGen repository root'
+
+if [[ -z "$bundle_dir" ]]; then
+  bundle_dir="fsmgen-issue-$issue_id"
+fi
+
+mkdir -p \
+  "$bundle_dir/sources/fsmgen-input" \
+  "$bundle_dir/sources/specforge-context" \
+  "$bundle_dir/observed/command-logs" \
+  "$bundle_dir/observed/stdout" \
+  "$bundle_dir/observed/stderr" \
+  "$bundle_dir/observed/json" \
+  "$bundle_dir/observed/generated" \
+  "$bundle_dir/expected"
+
+case_base=$(basename "$case_path")
+case_copy="$bundle_dir/sources/fsmgen-input/$case_base"
+cp -R "$case_path" "$case_copy"
+
+for extra in "${extra_sources[@]}"; do
+  [[ -e "$extra" ]] || die "--extra-source path does not exist: $extra"
+  cp -R "$extra" "$bundle_dir/sources/fsmgen-input/"
+done
+
+cat > "$bundle_dir/README.md" <<EOF_README
+# FSMGen Issue Bundle: $issue_id
+
+Title: $issue_id
+FSMGen command or public API entrypoint: ./bin/fsmgen$(quote_words "${fsmgen_args[@]}") sources/fsmgen-input/$case_base
+FSMGen-facing primary artifact path: sources/fsmgen-input/$case_base
+Failure class: $failure_class
+FSMGen commit or capability-manifest producer commit: see observed/command-logs/fsmgen-git-head.txt and observed/json/fsmgen-capability-manifest.json
+SPECFORGE version/commit: $speforge_version
+Expected behavior: $expected
+Observed behavior: $observed
+First failing command or API call: original
+Exit status or exception: see observed/command-logs/original.exit
+Is the attached artifact bundle minimized: unknown
+Does the minimized/redacted bundle still reproduce: unknown
+EOF_README
+
+{
+  printf 'Created UTC: '
+  date -u '+%Y-%m-%dT%H:%M:%SZ'
+  printf 'Working directory: %s\n' "$(pwd)"
+  printf 'FSMGen git HEAD: '
+  git rev-parse HEAD 2>/dev/null || true
+  printf 'SPECFORGE version/commit: %s\n' "$speforge_version"
+  printf 'Case source path: %s\n' "$case_path"
+  printf 'Copied case path: %s\n' "$case_copy"
+  printf 'Original FSMGen args:'
+  quote_words "${fsmgen_args[@]}"
+  printf '\n'
+  printf 'Relevant FSMLIB: %s\n' "${FSMLIB:-}"
+  printf '\n'
+  uname -a 2>&1 || true
+  printf '\n'
+  perl -v 2>&1 || true
+} > "$bundle_dir/env.txt"
+
+git rev-parse HEAD > "$bundle_dir/observed/command-logs/fsmgen-git-head.txt" 2>&1
+perl -v > "$bundle_dir/observed/command-logs/perl-version.txt" 2>&1
+
+./bin/fsmgen --capability-manifest \
+  > "$bundle_dir/observed/json/fsmgen-capability-manifest.json" \
+  2> "$bundle_dir/observed/stderr/fsmgen-capability-manifest.stderr"
+printf '%s\n' "$?" > "$bundle_dir/observed/command-logs/fsmgen-capability-manifest.exit"
+
+verilator --version > "$bundle_dir/observed/command-logs/verilator-version.txt" 2>&1
+printf '%s\n' "$?" > "$bundle_dir/observed/command-logs/verilator-version.exit"
+yosys -V > "$bundle_dir/observed/command-logs/yosys-version.txt" 2>&1
+printf '%s\n' "$?" > "$bundle_dir/observed/command-logs/yosys-version.exit"
+
+run_and_capture original ./bin/fsmgen "${fsmgen_args[@]}" "$case_copy"
+
+if ((run_probes)); then
+  run_and_capture check-default ./bin/fsmgen --check --json "$case_copy"
+  cp "$bundle_dir/observed/stdout/check-default.stdout" "$bundle_dir/observed/json/check-default.json" 2>/dev/null || true
+
+  run_and_capture check-strict ./bin/fsmgen --strict --check --json "$case_copy"
+  cp "$bundle_dir/observed/stdout/check-strict.stdout" "$bundle_dir/observed/json/check-strict.json" 2>/dev/null || true
+
+  run_and_capture semantic-default ./bin/fsmgen --emit-semantic-json "$case_copy"
+  cp "$bundle_dir/observed/stdout/semantic-default.stdout" "$bundle_dir/observed/json/semantic-default.json" 2>/dev/null || true
+
+  run_and_capture schedule ./bin/fsmgen --emit-schedule-json "$case_copy"
+  cp "$bundle_dir/observed/stdout/schedule.stdout" "$bundle_dir/observed/json/schedule.json" 2>/dev/null || true
+
+  mkdir -p "$bundle_dir/observed/generated/lowered"
+  run_and_capture generate-sv ./bin/fsmgen --outdir "$bundle_dir/observed/generated/lowered" -l sv -o "$bundle_dir/observed/generated/output.sv" "$case_copy"
+fi
+
+cat > "$bundle_dir/commands.sh" <<EOF_COMMANDS
+#!/usr/bin/env bash
+set -u
+
+BUNDLE_DIR=\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)
+CASE="\$BUNDLE_DIR/sources/fsmgen-input/$case_base"
+mkdir -p "\$BUNDLE_DIR/observed/stdout" "\$BUNDLE_DIR/observed/stderr" "\$BUNDLE_DIR/observed/command-logs" "\$BUNDLE_DIR/observed/json" "\$BUNDLE_DIR/observed/generated"
+
+run_and_capture() {
+  local name="\$1"
+  shift
+  printf '%s' "\$*" > "\$BUNDLE_DIR/observed/command-logs/\$name.command"
+  "\$@" > "\$BUNDLE_DIR/observed/stdout/\$name.stdout" 2> "\$BUNDLE_DIR/observed/stderr/\$name.stderr"
+  printf '%s\n' "\$?" > "\$BUNDLE_DIR/observed/command-logs/\$name.exit"
+}
+
+run_and_capture original ./bin/fsmgen$(quote_words "${fsmgen_args[@]}") "\$CASE"
+run_and_capture check-default ./bin/fsmgen --check --json "\$CASE"
+run_and_capture check-strict ./bin/fsmgen --strict --check --json "\$CASE"
+run_and_capture semantic-default ./bin/fsmgen --emit-semantic-json "\$CASE"
+run_and_capture schedule ./bin/fsmgen --emit-schedule-json "\$CASE"
+mkdir -p "\$BUNDLE_DIR/observed/generated/lowered"
+run_and_capture generate-sv ./bin/fsmgen --outdir "\$BUNDLE_DIR/observed/generated/lowered" -l sv -o "\$BUNDLE_DIR/observed/generated/output.sv" "\$CASE"
+EOF_COMMANDS
+chmod +x "$bundle_dir/commands.sh"
+
+printf 'Created FSMGen issue bundle: %s\n' "$bundle_dir"

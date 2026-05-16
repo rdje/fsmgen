@@ -1199,6 +1199,12 @@ The following are not public shipped integration surfaces today:
 For a SPECFORGE-style producer:
 
 - Emit only the source forms listed in this document.
+- If FSMGen behavior looks wrong, follow the strict, format-agnostic
+  reproduction bundle flow in
+  [docs/DOWNSTREAM_ISSUE_REPORTING.md](DOWNSTREAM_ISSUE_REPORTING.md). Do not
+  guess whether the root cause is source syntax, lowering, reporting, HDL, or
+  public API behavior; provide the exact FSMGen-facing artifacts and command
+  transcript.
 - Prefer explicit scalar names and explicit widths.
 - Use transaction ports and `(bind ...)` for runtime-varying data.
 - Use `(params ...)` only for static specialization on generated activation
@@ -1229,6 +1235,8 @@ machine-readable public contract, and the shipped implementation.
 Supporting artifacts:
 
 - `docs/ISF_SPEC.md`: detailed live language and lowering specification.
+- `docs/DOWNSTREAM_ISSUE_REPORTING.md`: strict issue-reporting protocol for
+  locally reproducible downstream bug reports.
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live public facade/report contract.
 - `perl/FSM/Support/ISFPublicInterfaceContract.pm`: machine-readable contract
   owner advertised through the capability manifest.

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — downstream issue-bundle reporting flow published
+- Completed R14 task-tree slice: `DOWNSTREAM-ISSUE-REPRO-FLOW.1`, closing
+  [docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md](docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md).
+- Added [docs/DOWNSTREAM_ISSUE_REPORTING.md](docs/DOWNSTREAM_ISSUE_REPORTING.md)
+  as the strict, format-agnostic protocol for downstream FSMGen bug reports.
+- Added [bin/fsmgen-issue-bundle](bin/fsmgen-issue-bundle), which creates a
+  runnable local reproduction bundle and a rerunnable `commands.sh`.
+- Added [t/1251-fsmgen-issue-bundle-helper.t](t/1251-fsmgen-issue-bundle-helper.t)
+  to prove the helper and generated script work.
+- Parser, scheduler, report payload, generated `.fsm`, and HDL behavior are
+  unchanged.
+
 ## 2026-05-16: R14 — ISF spec focused-test index audited
 - Completed R14 task-tree slice: `ISF-SPEC-TEST-INDEX-SYNC.1`, closing
   [docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md).

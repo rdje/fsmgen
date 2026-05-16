@@ -53,19 +53,20 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 13. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
 14. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
 15. `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`: single self-contained downstream `.isf` integration handoff.
-16. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
-17. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
-18. `docs/ISF_LIBRARY_CATALOG.md`: live catalog of shipped reusable ISF library definitions.
-19. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
-20. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
-21. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
-22. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-23. `CHANGES.md`: chronological technical changes.
-24. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-25. `MEMORY.md`: continuity/handoff state.
-26. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-27. `WARP.md`: repository-specific agent/development guidance.
-28. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+16. `docs/DOWNSTREAM_ISSUE_REPORTING.md`: strict downstream issue-reporting protocol for local FSMGen reproduction.
+17. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
+18. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
+19. `docs/ISF_LIBRARY_CATALOG.md`: live catalog of shipped reusable ISF library definitions.
+20. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
+21. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
+22. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
+23. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+24. `CHANGES.md`: chronological technical changes.
+25. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+26. `MEMORY.md`: continuity/handoff state.
+27. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+28. `WARP.md`: repository-specific agent/development guidance.
+29. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -107,12 +108,14 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md` — completed `R14` task tree for actor constants in activation parameter overrides.
 - `docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing removed `(assign ...)` diagnostic truth.
 - `docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md` — completed `R14` task tree for keeping the ISF spec focused-test index synchronized.
+- `docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md` — completed `R14` task tree for downstream reproducible issue-reporting flow.
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — proposed architecture task tree for current IR inventory and consolidation policy.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.
 - `docs/COMPOSITION_LEGACY_MAPPING.md` — historical legacy-composition behavior mapped onto the active architecture.
 - `docs/EXTENSION_MODEL.md` — typed extension boundary for the active `R7` replacement path.
 - `docs/SPECFORGE_FEEDBACK_RESPONSE.md` — tracked FSMGen response to SPECFORGE adapter/tool-integration feedback.
+- `docs/DOWNSTREAM_ISSUE_REPORTING.md` — strict downstream issue-reporting protocol for locally reproducible FSMGen bug reports.
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
 - `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` — single self-contained downstream `.isf` integration handoff that must stay synchronized with the live spec, book, public contract, manifest metadata, tests, and code.
 - `docs/ISF_SPEC.md` — active R14 `.isf` Intent Scheduling Format specification.
@@ -134,6 +137,8 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 ## Project file and directory map
 ### Core entrypoints and pipeline
 - `bin/fsmgen` — main CLI entrypoint.
+- `bin/fsmgen-issue-bundle` — downstream issue-bundle helper that captures
+  reproducible FSMGen command artifacts for local triage.
 - `perl/FSM/Adapter/ISF.pm` — `.isf` parser facade for intent-scheduling sources.
 - `perl/FSM/Scheduler/ISF.pm` — `.isf` lowering facade that emits scheduled `.fsm` and schedule JSON reports.
 - `perl/FSM/Scheduler/ISF/LoweringIR.pm` — typed lowering IR builder for `.isf` actors, transactions, drives, control flow, and spawned children.

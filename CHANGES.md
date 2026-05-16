@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — downstream issue-bundle reporting flow published
+- Completed `DOWNSTREAM-ISSUE-REPRO-FLOW.1`, closing the
+  `DOWNSTREAM-ISSUE-REPRO-FLOW` task tree.
+- Added [docs/DOWNSTREAM_ISSUE_REPORTING.md](docs/DOWNSTREAM_ISSUE_REPORTING.md)
+  as the strict, format-agnostic issue-reporting protocol for downstream
+  tools. SPECFORGE can provide exact FSMGen-facing artifacts and command
+  outputs without first classifying the root cause.
+- Added [bin/fsmgen-issue-bundle](bin/fsmgen-issue-bundle), a helper that
+  generates a reproducible bundle with environment capture, command logs,
+  stdout/stderr, exit codes, JSON probes, generated artifacts, and a rerunnable
+  `commands.sh`.
+- Added [t/1251-fsmgen-issue-bundle-helper.t](t/1251-fsmgen-issue-bundle-helper.t)
+  to prove the helper and generated script work.
+- Synchronized the mdBook, SPECFORGE response, ISF downstream handoff, public
+  contract live-document paths, README, and live docs. Compiler behavior is
+  unchanged.
 ### R14 — ISF spec focused-test index audited
 - Completed `ISF-SPEC-TEST-INDEX-SYNC.1`, closing the
   `ISF-SPEC-TEST-INDEX-SYNC` task tree.

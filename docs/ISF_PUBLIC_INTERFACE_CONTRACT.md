@@ -290,7 +290,9 @@ direct and manifest views.
 The `live_document_paths` list is checked by
 [t/1120-isf-public-live-document-path-audit.t](../t/1120-isf-public-live-document-path-audit.t)
 to keep the direct owner, in-process manifest, and both CLI manifest spellings
-aligned on repo-relative Markdown paths that exist on disk.
+aligned on repo-relative Markdown paths that exist on disk, including the
+format-agnostic downstream issue-reporting protocol used for local
+reproduction bundles.
 The public constructor option boundary is checked by
 [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
 for both adapter and scheduler facades.
@@ -1456,6 +1458,8 @@ When an ISF slice changes a downstream-visible behavior, update together:
 
 - [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](ISF_PUBLIC_INTERFACE_CONTRACT.md)
 - [docs/ISF_SPEC.md](ISF_SPEC.md)
+- [docs/DOWNSTREAM_ISSUE_REPORTING.md](DOWNSTREAM_ISSUE_REPORTING.md) when the
+  change affects downstream issue reproduction guidance
 - [docs/book/src/13-intent-scheduling.md](book/src/13-intent-scheduling.md)
 - [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
 - focused regression tests for the changed public surface

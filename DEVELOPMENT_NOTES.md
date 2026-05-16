@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: downstream bug reports are executable bundles
+- `DOWNSTREAM-ISSUE-REPRO-FLOW.1` deliberately makes the reporting protocol
+  format-agnostic. SPECFORGE should not need to know whether a failure is
+  rooted in `.fsm`, `.isf`, lowering, report projection, HDL emission, or an
+  API boundary before filing.
+- The required unit is now an executable bundle. `bin/fsmgen-issue-bundle`
+  copies the FSMGen-facing artifact, captures the exact command, records
+  stdout/stderr/exit status, captures environment and capability metadata, runs
+  generic probes, and writes a `commands.sh` maintainer can rerun locally.
+- The helper is regression-covered because a bug-report protocol that is only
+  prose is too easy to drift. `t/1251` creates a bundle and reruns the generated
+  script from the repository root.
 ## 2026-05-16: ISF spec test list is audited
 - `ISF-SPEC-TEST-INDEX-SYNC.1` turns a manual spec-maintenance obligation into
   a focused regression. The new audit reads the `Focused tests:` section in

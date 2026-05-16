@@ -11,6 +11,7 @@
 - [Type Inference and Aggregate Data](08-type-inference-and-aggregate-data.md)
 - [Generated HDL, Debugging, and Inspection](09-generated-hdl-debugging-and-inspection.md)
 - [Errors, Strict Mode, and Troubleshooting](10-errors-strict-mode-and-troubleshooting.md)
+  - [Downstream Issue Reporting](10a-downstream-issue-reporting.md)
 - [Extensions and Embedding](11-extensions-and-embedding.md)
 - [Cookbook](12-cookbook.md)
 - [Intent Scheduling (ISF)](13-intent-scheduling.md)

@@ -1552,6 +1552,7 @@ sub isf_public_interface_live_document_paths {
     return [
         qw(
             docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md
+            docs/DOWNSTREAM_ISSUE_REPORTING.md
             docs/ISF_PUBLIC_INTERFACE_CONTRACT.md
             docs/ISF_SPEC.md
             docs/ISF_LIBRARY_CATALOG.md
