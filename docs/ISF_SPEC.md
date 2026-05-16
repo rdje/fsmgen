@@ -2151,6 +2151,14 @@ storage `role`, and generated-composition summaries. Before the whole schedule
 JSON schema is frozen, generated spelling may change in a future
 feature-scoped slice, but any such downstream-visible change must update the
 public docs, contract metadata where applicable, and tests in the same slice.
+Schedule-report evolution is additive by default only for new top-level keys,
+new nested optional keys, or new value-family members that are advertised in
+the public contract metadata and covered by focused tests and docs in the same
+slice. Removing an advertised key, renaming a key, changing a required key to
+optional or vice versa, changing a value type, or changing an advertised value's
+meaning is breaking and requires a `schema_version` bump plus migration or
+deprecation documentation in the same slice. Deprecated fields must remain
+documented until the schema version that removes them.
 The `actor_constants` array reports actor-level ISF constants in source order.
 Each entry contains `name` and stringified `value`. The values are
 compile-time constants; they are not runtime ports, not overrideable params,
@@ -2353,9 +2361,8 @@ metadata, focused tests, and documentation in the same slice.
 
 The remaining blockers before a whole-schema freeze are explicit: decide
 whether assignment provenance and multi-file child summaries stay private or
-become bounded public summaries, define additive/deprecation policy, and
-maintain a golden fixture matrix for every advertised branch through both
-in-process and CLI report paths.
+become bounded public summaries, and maintain a golden fixture matrix for every
+advertised branch through both in-process and CLI report paths.
 
 ## 11. Current Regression Fixtures
 

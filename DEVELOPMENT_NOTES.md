@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: schedule-report evolution policy is explicit
+- `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` closes the additive/deprecation
+  freeze-readiness blocker without changing payloads. Additive report growth
+  is allowed only when public contract metadata, focused tests, and docs move
+  in the same slice.
+- Breaking changes are intentionally tied to `schema_version` bumps. Removing
+  or renaming advertised fields, changing required/optional status, changing a
+  value type, or changing advertised meaning must include migration or
+  deprecation documentation.
+- This keeps the current bounded public contract evolvable while making
+  downstream expectations explicit before full schema freeze.
 ## 2026-05-16: schedule reports carry their own payload version
 - `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` adds top-level `schema_version: 1`
   to the schedule JSON payload. This is intentionally separate from

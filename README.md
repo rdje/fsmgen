@@ -108,6 +108,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing resource arbitration and storage-role backlog status text.
 - `docs/tasks/ISF-GENERATED-NAME-POLICY.md` — completed `R14` task tree for generated-name stability policy in schedule reports and generated artifacts.
 - `docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md` — completed `R14` task tree for report-level schedule JSON schema-version metadata.
+- `docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md` — completed `R14` task tree for schedule-report additive/deprecation evolution policy.
 - `docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md` — completed `R14` task tree for actor constants in activation parameter overrides.
 - `docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing removed `(assign ...)` diagnostic truth.
 - `docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md` — completed `R14` task tree for keeping the ISF spec focused-test index synchronized.

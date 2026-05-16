@@ -985,6 +985,18 @@ generated-composition summaries. Before the whole schedule JSON schema is
 frozen, generated spelling may change only in a feature-scoped slice that also
 updates docs, contract metadata where applicable, and tests.
 
+Schedule-report evolution rules:
+
+- New top-level keys, new nested optional keys, and new advertised value-family
+  members are additive only when the same slice updates public contract
+  metadata, focused tests, this handoff, and the book/spec.
+- Removing an advertised key, renaming a key, changing required/optional
+  status, changing a value type, or changing an advertised value's meaning is
+  breaking.
+- Breaking schedule-report changes require a `schema_version` bump and
+  migration or deprecation documentation in the same slice.
+- Deprecated fields stay documented until the schema version that removes them.
+
 Scalar summaries:
 
 - `schema_version`: integer `1` for the current schedule-report payload

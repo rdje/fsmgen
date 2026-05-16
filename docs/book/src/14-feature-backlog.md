@@ -774,11 +774,17 @@ the same source and FSMGen version and may be used for report-local or
 artifact-local joins when public fields explicitly reference them, but
 downstream consumers should use bounded metadata fields instead of parsing
 generated-name spelling as a semantic contract.
+Additive/deprecation policy is also explicit: new report keys, nested optional
+keys, and value-family members are additive only when public contract metadata,
+focused tests, and user-facing docs move in the same slice. Removing,
+renaming, changing required/optional status, changing value type, or changing
+advertised value meaning is breaking and requires a `schema_version` bump plus
+migration or deprecation documentation.
 
 Blockers before flipping `schedule_report_full_schema_stable` are: decide
 whether assignment provenance and multi-file child summaries stay private or
-gain bounded public summaries, document additive/deprecation rules, and keep a
-golden fixture matrix for every advertised branch.
+gain bounded public summaries and keep a golden fixture matrix for every
+advertised branch.
 
 ### ISF Realistic Fixture Matrix
 

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF schedule-report evolution policy documented
+- Completed R14 task-tree slice:
+  `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1`, closing
+  [docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md](docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md).
+- ISF spec, downstream handoff, public contract doc, and mdBook now define
+  additive and breaking schedule-report change rules.
+- Additive changes require same-slice public contract metadata, focused tests,
+  and docs; breaking changes require a `schema_version` bump plus migration or
+  deprecation documentation.
+- Additive/deprecation policy is no longer an open whole-schema freeze blocker.
+- Schedule JSON payloads, parser, scheduler, generated `.fsm`, and HDL output
+  are unchanged.
+
 ## 2026-05-16: R14 — ISF schedule-report schema version shipped
 - Completed R14 task-tree slice:
   `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1`, closing

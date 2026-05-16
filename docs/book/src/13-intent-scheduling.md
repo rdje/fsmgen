@@ -181,8 +181,12 @@ payload. The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty
 `compile_issues` array when no nonfatal issues exist. Schedule reports carry
 `schema_version: 1` as a payload version separate from the
-`embedding.isf_public_interface` contract metadata version. Nonfatal conflict
-issues now project into `compile_issues` as bounded objects with stable code/severity,
+`embedding.isf_public_interface` contract metadata version. Report evolution
+is additive only when new keys or value-family members are advertised in the
+public contract metadata and covered by focused tests and docs in the same
+slice; removing, renaming, changing type, or changing semantics requires a
+`schema_version` bump plus migration or deprecation documentation. Nonfatal
+conflict issues now project into `compile_issues` as bounded objects with stable code/severity,
 target/domain, `proof_status`, reason text, and capped source summaries.
 Accepted fan-in groups now project as bounded `compatible_fanin_groups`
 entries. Successful priority and resource arbitration decisions now project as

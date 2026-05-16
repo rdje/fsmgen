@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF schedule-report evolution policy documented
+- Completed `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` in
+  [docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md](docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md),
+  closing the schedule-report evolution policy tree.
+- ISF spec, downstream handoff, public contract doc, and mdBook now define
+  additive schedule-report changes as new keys or value-family members that
+  move with same-slice contract metadata, focused tests, and docs.
+- The docs now define removals, renames, required/optional changes, value type
+  changes, and advertised meaning changes as breaking changes requiring a
+  `schema_version` bump plus migration or deprecation documentation.
+- Removed additive/deprecation policy from the open whole-schema freeze
+  blockers while leaving assignment provenance, multi-file child summaries,
+  and golden fixture matrix blockers intact.
+- This is documentation-policy synchronization only. Schedule JSON payloads,
+  parser, scheduler, generated `.fsm`, and HDL output are unchanged.
 ## 2026-05-16: ISF schedule-report schema version shipped
 - Completed `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` in
   [docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md](docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md),

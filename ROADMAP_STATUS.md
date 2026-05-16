@@ -73,8 +73,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `schema_version: 1` to in-process and CLI schedule JSON reports and
   advertised that key through `schedule_report_top_level_keys`, closing the
   schema/version freeze-readiness blocker without freezing the whole schedule
-  JSON tree. The next PNT selection should choose a fresh roadmap-aligned R14
-  task tree before implementation.
+  JSON tree.
+  `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` then documented additive and
+  breaking schedule-report change rules across the ISF spec, downstream
+  handoff, public contract doc, and mdBook, tying breaking changes to
+  `schema_version` bumps plus migration/deprecation documentation. The next
+  PNT selection should choose a fresh roadmap-aligned R14 task tree before
+  implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -231,6 +236,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` added report-level
   `schema_version: 1`, updated the public top-level key family, and removed
   schema/version selection from the remaining whole-schema freeze blockers.
+  `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` documented additive/deprecation
+  policy and removed that policy item from the remaining whole-schema freeze
+  blockers without changing schedule JSON payloads.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF schedule-report evolution policy documented
+- Completed `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1`, closing the
+  `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY` task tree.
+- Documented schedule-report additive rules: new top-level keys, nested
+  optional keys, and value-family members are additive only when the same slice
+  updates public contract metadata, focused tests, and docs.
+- Documented breaking-change rules: removals, renames, required/optional
+  changes, value type changes, and advertised meaning changes require a
+  `schema_version` bump plus migration or deprecation documentation.
+- Removed additive/deprecation policy from the remaining whole-schema freeze
+  blockers.
+- Schedule JSON payloads, parser, scheduler, generated `.fsm`, and HDL output
+  are unchanged.
 ### R14 — ISF schedule-report schema version shipped
 - Completed `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1`, closing the
   `ISF-SCHEDULE-REPORT-SCHEMA-VERSION` task tree.
