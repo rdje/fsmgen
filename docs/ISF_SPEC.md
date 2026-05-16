@@ -290,12 +290,12 @@ inside transaction `set` RHS expressions, by scalar operands inside transaction
 selectors or branch values, by standalone scalar transaction
 `when`/`while`/`until` conditions, by scalar rule assignment RHS values or
 scalar operands inside rule assignment RHS expressions, by scalar operands
-inside rule guard expressions, by scalar drive body RHS values or scalar operands inside drive body RHS
+inside rule guard expressions, by standalone scalar rule guards, by scalar drive body RHS values or scalar operands inside drive body RHS
 expressions, by inline drive assignment RHS scalar values or scalar operands
 inside inline drive RHS expressions, and by named drive-call scalar actual
 values or scalar operands inside drive-call actual expressions in the current
 ISF surface. Enum members in expression operator position,
-standalone rule guards, transaction condition expression operator position, rule targets, rule
+transaction condition expression operator position, rule targets, rule
 guard or rule assignment expression operator position, rule actions outside
 trigger parameter overrides, drive targets, inline drive assignment RHS
 expression operator position, drive body RHS expression operator position,
@@ -370,7 +370,7 @@ transaction `when`/`while`/`until` condition expression operands, transaction
 `when`/`while`/`until` direct scalar conditions, transaction `set` RHS scalar
 values or expression operands, transaction `switch` branch
 values, rule assignment RHS scalar values or expression operands, rule guard
-expression operands, drive body RHS scalar values or expression operands,
+scalar values or expression operands, drive body RHS scalar values or expression operands,
 inline drive assignment RHS scalar values or expression operands, and
 drive-call actual scalar values or expression operands, additional aggregate
 carriers, aggregate field/slice/update lowering, incompatible enum values,
@@ -2181,11 +2181,16 @@ Current lowering:
 Direct scalar rule assignment RHS values and scalar operands inside rule
 assignment RHS expressions may use local or package enum members, and strict
 HDL generation accepts the guarded rule DT header plus canonical assignment-pair
-body form. Rule guard expression operands may use local or package enum
-members, scalar aggregate storage leaves may appear as rule guard expression
-operands, and rule assignment targets may write scalar aggregate storage
-leaves. Rule guard and assignment expression operator-position enum members
-or aggregate paths remain deferred.
+body form. Rule guards may use local or package enum members directly as
+standalone scalar guards, for example `(rule r mode.BUSY ...)` or
+`(rule r (when shared.mode.BUSY) ...)`; scheduled `.fsm` preserves those guards
+as non-state DT header suffixes such as `<mode.BUSY` or
+`<shared.mode.BUSY`. Rule guard expression operands may also use local or
+package enum members, scalar aggregate storage leaves may appear as rule guard
+expression operands, and rule assignment targets may write scalar aggregate
+storage leaves. Rule guard and assignment expression operator-position enum
+members or aggregate paths, and standalone aggregate rule guards, remain
+deferred.
 
 Multi-rule fan-in example:
 
@@ -2896,6 +2901,7 @@ Focused tests:
 - [t/1298-isf-aggregate-inline-drive-target-values.t](../t/1298-isf-aggregate-inline-drive-target-values.t)
 - [t/1299-isf-aggregate-standalone-condition-values.t](../t/1299-isf-aggregate-standalone-condition-values.t)
 - [t/1300-isf-enum-member-standalone-condition-values.t](../t/1300-isf-enum-member-standalone-condition-values.t)
+- [t/1301-isf-enum-member-rule-standalone-guard-values.t](../t/1301-isf-enum-member-rule-standalone-guard-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2986,8 +2992,8 @@ Focused tests:
   override values or leaves, transaction
   `when`/`while`/`until` condition scalar values or expression operands,
   transaction `set` RHS scalar values/expression operands,
-  transaction `switch` selector or branch values, rule guard expression
-  operands, rule assignment RHS scalar values or expression operands, drive
+  transaction `switch` selector or branch values, rule guard scalar values or
+  expression operands, rule assignment RHS scalar values or expression operands, drive
   body RHS scalar values or expression operands, inline drive assignment RHS
   scalar values or expression operands, or drive-call actual scalar
   values/expression operands remain deferred.

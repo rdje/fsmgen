@@ -369,8 +369,8 @@ scalar values or aggregate/list override leaves, reusable-library use-site
 parameter override values or leaves, transaction `set` RHS scalar
 values/expression operands, transaction `when`/`while`/`until` condition
 scalar values/expression operands, transaction `switch` selector/branch values,
-rule guard expression operands, scalar rule assignment RHS values or expression
-operands, or drive body RHS scalar values/expression operands, inline drive
+rule guard scalar values/expression operands, scalar rule assignment RHS values
+or expression operands, or drive body RHS scalar values/expression operands, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands, aggregate field/slice/update lowering, and broader
 aggregate shape inference are separate follow-on leaves.

@@ -436,6 +436,12 @@ limitations are:
   `?(shared.mode.BUSY)`. Enum members also remain valid as scalar operands
   inside condition expressions, for example
   `(when (== mode_in mode.BUSY) (set fire 1))`.
+  Rule guards may also use local or package enum members directly, either in
+  shorthand form `(rule fire_when_busy mode.BUSY ...)` or long-form
+  `(rule fire_when_busy (when shared.mode.BUSY) ...)`. These standalone enum
+  rule guards lower to the non-state DT header guard, such as
+  `<mode.BUSY` or `<shared.mode.BUSY`, and strict HDL generation accepts that
+  review artifact.
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
@@ -462,7 +468,7 @@ limitations are:
   members in
   expression operator
   position,
-  standalone rule guards, set targets, rules outside scalar trigger parameter
+  set targets, rules outside scalar trigger parameter
   overrides, rule guard or transaction condition expression operator position,
   rule assignment expression operator position, drive targets, drive body RHS
   expression operator position, inline drive assignment RHS expression

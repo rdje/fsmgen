@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum standalone rule guards reuse DT header guards
+- `ISF-TYPE-AGGREGATE-PARITY.47` widens enum support from rule guard
+  expression operands to direct scalar rule guards.
+- The rule lowerer already emits scalar guards as non-state DT header suffixes,
+  so local/package enum guards reuse the existing `.fsm` condition-suffix
+  parser and review artifact form rather than introducing a separate computed
+  selector path.
+- Expression operator-position enum members and enum targets remain rejected;
+  they need separate contracts for operator semantics and lvalue ownership.
 ## 2026-05-16: enum standalone conditions reuse computed selectors
 - `ISF-TYPE-AGGREGATE-PARITY.46` widens enum support from condition expression
   operands to direct `when`/`while`/`until` scalar conditions.

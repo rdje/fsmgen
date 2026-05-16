@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum standalone rule guards shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.47` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.48`.
+- Rule guard scalar values now accept local and package enum members such as
+  `mode.BUSY` and `shared.mode.BUSY` in both shorthand and long-form
+  `(when ...)` rule syntax.
+- Scheduled `.fsm` review artifacts preserve standalone enum rule guards as
+  guarded non-state DT header suffixes such as `<mode.BUSY`.
+- Unknown enum members fail closed; expression operator-position enum members
+  and enum targets remain deferred.
 ## 2026-05-16: ISF enum standalone conditions shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.46` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

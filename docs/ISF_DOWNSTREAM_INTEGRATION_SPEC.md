@@ -550,10 +550,15 @@ Rules:
   direct scalar RHS values and scalar operands inside RHS expressions in
   explicit `(set port value)` and shorthand `(port value)` rule assignments.
   Rule assignment expression operator-position enum members remain deferred.
-- Rule guard expressions may use local or package enum members as scalar
+- Rule guards may use local or package enum members directly as standalone
+  scalar guards, for example `(rule r mode.BUSY ...)` or
+  `(rule r (when shared.mode.BUSY) ...)`. Scheduled `.fsm` preserves those
+  guards as non-state DT header suffixes such as `<mode.BUSY` or
+  `<shared.mode.BUSY`, and strict HDL generation accepts that review artifact.
+- Rule guard expressions may also use local or package enum members as scalar
   operands, for example `(rule r (== mode_in mode.BUSY) ...)` or
-  `(rule r (when (& ready (== mode_in shared.mode.BUSY))) ...)`. Standalone enum
-  member guards and expression operator-position enum members remain deferred.
+  `(rule r (when (& ready (== mode_in shared.mode.BUSY))) ...)`. Expression
+  operator-position enum members remain deferred.
 - Scalar drive-call actuals may also use local or package enum members.
   Drive-call actual expressions may use enum members as scalar operands.
   Enum members in drive-call expression operator position remain deferred.
@@ -982,11 +987,11 @@ Rules:
   members, reusable-library use-site parameter override values or leaves may
   consume local or package enum members, and scalar rule assignment RHS values
   or expression operands may consume local or package enum members. Rule guard
-  expressions may use enum members as scalar operands, and inline drive
-  assignment RHS scalar values or operands inside inline drive RHS expressions
-  may consume local or package enum members. Enum members in
-  expression operator position, standalone rule guards, targets, rules
-  outside scalar trigger parameter overrides, rule guard or transaction
+  scalar values or expression operands may consume local or package enum
+  members, and inline drive assignment RHS scalar values or operands inside
+  inline drive RHS expressions may consume local or package enum members. Enum
+  members in expression operator position, targets, rules outside scalar
+  trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
   position, drive targets, drive body RHS expression operator position, inline
   drive assignment RHS expression operator position, drive-call expression
@@ -1419,7 +1424,7 @@ Required fail-closed examples:
   activation aggregate/list override leaf, reusable-library use-site parameter
   override value or leaf, transaction condition scalar value or expression
   operand, transaction `set` RHS scalar/expression operand, transaction
-  `switch` selector/branch-value, rule guard expression operand, rule
+  `switch` selector/branch-value, rule guard scalar/expression operand, rule
   assignment RHS scalar/expression operand, drive body RHS scalar/expression
   operand, inline drive RHS scalar/expression operand, and drive-call actual
   scalar/expression-operand contexts.
@@ -1510,7 +1515,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1297-isf-aggregate-drive-target-values.t \
   t/1298-isf-aggregate-inline-drive-target-values.t \
   t/1299-isf-aggregate-standalone-condition-values.t \
-  t/1300-isf-enum-member-standalone-condition-values.t
+  t/1300-isf-enum-member-standalone-condition-values.t \
+  t/1301-isf-enum-member-rule-standalone-guard-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

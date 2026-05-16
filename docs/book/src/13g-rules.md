@@ -30,7 +30,21 @@ body-bearing `(when condition body...)` form is only described in
 Rule guards may be scalar conditions or list expressions using the normal
 `.fsm` expression spelling. Expression guards are the intended way to author
 FIFO fire predicates such as `(& push (! pop) (! full))` without creating
-temporary scalar condition signals.
+temporary scalar condition signals. Local and package enum members are valid
+standalone scalar rule guards too. A local guard such as `mode.BUSY` lowers to
+the non-state DT header guard `<mode.BUSY`, while a package guard such as
+`shared.mode.BUSY` lowers to `<shared.mode.BUSY`. The guard is evaluated by the
+existing `.fsm` condition-suffix machinery, so a nonzero enum value selects the
+rule and a zero-valued enum member does not.
+
+```lisp
+(rule fire_when_busy mode.BUSY
+  (set fire 1))
+
+(rule fire_when_shared_busy
+  (when shared.mode.BUSY)
+  (set fire 1))
+```
 
 **Actions**:
 - `(set port expr)` — explicit guarded flopped assignment when the condition holds
@@ -71,6 +85,10 @@ cycle.
 
 (-push_only <(& push (! pop) (! full))
   (<- (write_fire> 1))
+)
+
+(-fire_when_busy <mode.BUSY
+  (<- (fire> 1))
 )
 
 (-main_transfer_trigger_fanin

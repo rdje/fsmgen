@@ -749,13 +749,13 @@ RHS values, named drive-call scalar actual values or scalar operands inside
 drive-call actual expressions, scalar activation parameter overrides, and
 scalar leaves inside activation aggregate/list parameter overrides, scalar rule
 assignment RHS values or scalar operands inside rule assignment RHS expressions,
-scalar operands inside rule guard expressions, inline drive assignment RHS
-scalar values, and scalar operands inside inline drive RHS expressions in this
-slice, using local `mode.BUSY` or package-qualified
+standalone scalar rule guard values or scalar operands inside rule guard
+expressions, inline drive assignment RHS scalar values, and scalar operands
+inside inline drive RHS expressions in this slice, using local `mode.BUSY` or package-qualified
 `shared.mode.BUSY` spelling and resolving to non-negative integer literal
 values before lowering.
-Enum member references in expression operator position, standalone rule
-guards, targets, rules outside scalar trigger parameter overrides, transaction
+Enum member references in expression operator position, targets, rules outside
+scalar trigger parameter overrides, transaction
 condition, rule guard, or rule assignment expression operator position, drive
 targets, inline drive assignment RHS expression
 operator position, drive-call expression operator position, and other ISF
@@ -873,7 +873,7 @@ Scalar rule assignment RHS enum member values are checked by
 covering local and package enum member explicit `(set port value)` and shorthand
 `(port value)` rule assignments, scheduled `.fsm` review artifacts, assignment
 provenance, strict CLI HDL generation, strict guarded-DT parsing, and
-fail-closed diagnostics for unknown members, rule guards, and rule targets.
+fail-closed diagnostics for unknown members and rule targets.
 Rule assignment RHS expression enum member operands are checked by
 [t/1273-isf-enum-member-rule-expression-values.t](../t/1273-isf-enum-member-rule-expression-values.t),
 covering local and package enum member operands inside explicit and shorthand
@@ -885,7 +885,7 @@ Rule guard expression enum member operands are checked by
 covering local and package enum member operands inside shorthand and long-form
 rule guard expressions, scheduled `.fsm` review artifacts, strict CLI HDL
 generation, public `when` normalization, and fail-closed diagnostics for
-unknown members, standalone enum guards, and expression operator position.
+unknown members and expression operator position.
 Transaction condition expression enum member operands are checked by
 [t/1275-isf-enum-member-condition-values.t](../t/1275-isf-enum-member-condition-values.t),
 covering local and package enum member operands inside transaction
@@ -897,6 +897,11 @@ Standalone transaction condition enum member values are checked by
 covering local and package enum member values used directly as
 `when`/`while`/`until` conditions, computed `.fsm` selector review artifacts,
 strict CLI HDL generation, and unknown-member diagnostics.
+Standalone rule guard enum member values are checked by
+[t/1301-isf-enum-member-rule-standalone-guard-values.t](../t/1301-isf-enum-member-rule-standalone-guard-values.t),
+covering local and package enum member values used directly as shorthand and
+long-form rule guards, non-state DT header guard review artifacts, strict CLI
+HDL generation, public `when` normalization, and unknown-member diagnostics.
 Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,
