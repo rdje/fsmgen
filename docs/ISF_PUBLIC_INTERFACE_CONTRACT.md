@@ -714,9 +714,10 @@ expressions may also read scalar member/item leaves from those same declared
 storage variables. Named drive body targets may also write scalar member/item
 leaves on those same declared storage variables. Inline drive assignment
 scalar RHS values and scalar operands inside RHS expressions may also read
-scalar member/item leaves from those same declared storage variables. Named
-drive-call scalar actual values may also read scalar member/item leaves from
-those same declared storage
+scalar member/item leaves from those same declared storage variables. Inline
+drive targets may also write scalar member/item leaves on those same declared
+storage variables. Named drive-call scalar actual values may also read scalar
+member/item leaves from those same declared storage
 variables, and drive-call actual expressions may use them as scalar operands. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
@@ -727,9 +728,9 @@ transaction `set` target tokens, transaction condition expression operands,
 transaction `switch` selectors or branch values, rule assignment RHS
 values/expression operands, rule assignment target tokens, or rule guard
 expression operands, drive target tokens, drive body RHS scalar
-values/expression operands, inline drive assignment RHS scalar
-values/expression operands, or drive-call actual scalar values/expression
-operands, aggregate paths in expression
+values/expression operands, inline drive target tokens, inline drive
+assignment RHS scalar values/expression operands, or drive-call actual scalar
+values/expression operands, aggregate paths in expression
 operator position, and subaggregate operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
@@ -970,14 +971,20 @@ Inline drive assignment RHS aggregate leaf values are checked by
 [t/1291-isf-aggregate-inline-drive-values.t](../t/1291-isf-aggregate-inline-drive-values.t),
 covering local and package aggregate leaf reads as inline drive assignment
 scalar RHS values, scheduled `.fsm` state-assignment review artifacts, CLI HDL
-generation, and fail-closed diagnostics for unknown members, inline drive
-targets, and subaggregate RHS values.
+generation, and fail-closed diagnostics for unknown members and subaggregate
+RHS values.
 Inline drive RHS expression aggregate leaf operands are checked by
 [t/1292-isf-aggregate-inline-drive-expression-values.t](../t/1292-isf-aggregate-inline-drive-expression-values.t),
 covering local and package aggregate leaf operands inside inline drive RHS
 expressions, scheduled `.fsm` state-assignment review artifacts, CLI HDL
 generation, and fail-closed diagnostics for unknown members, operator-position
 paths, and subaggregate operands.
+Inline drive target aggregate leaf writes are checked by
+[t/1298-isf-aggregate-inline-drive-target-values.t](../t/1298-isf-aggregate-inline-drive-target-values.t),
+covering local and package aggregate leaf writes as inline drive targets,
+scheduled `.fsm` state-assignment review artifacts, assignment provenance, CLI
+HDL generation, and fail-closed diagnostics for unknown members and
+subaggregate targets.
 Transaction switch branch aggregate leaf values are checked by
 [t/1293-isf-aggregate-switch-branch-values.t](../t/1293-isf-aggregate-switch-branch-values.t),
 covering local and package aggregate leaf reads as transaction `switch` branch

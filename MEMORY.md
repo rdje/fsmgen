@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate inline drive targets shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.44` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.45`.
+- Inline transaction drive assignment targets now accept scalar aggregate
+  storage leaves such as `frame.mode` and `lanes[1]`.
+- Scheduled `.fsm` state assignments preserve the authored aggregate leaf
+  targets, and assignment provenance records them as `inline_drive`.
+- Subaggregate inline drive targets remain deferred.
 ## 2026-05-16: ISF aggregate named drive targets shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.43` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

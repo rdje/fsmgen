@@ -339,14 +339,17 @@ aggregate leaves, such as `(drive publish frame.mode)` or
 `(drive publish (+ frame.mode mode_in))`. Inline drive assignment scalar RHS
 values and scalar operands inside RHS expressions may read scalar aggregate
 leaves, such as `(drive inline_publish (mode_out frame.mode))` or
-`(drive inline_publish (mode_out (+ frame.mode mode_in)))`. Aggregate member
+`(drive inline_publish (mode_out (+ frame.mode mode_in)))`. Inline drive
+targets may write scalar aggregate leaves, such as
+`(drive inline_capture (frame.mode mode_in))` or
+`(drive inline_capture (lanes[1] pair_in))`. Aggregate member
 paths outside transaction `set` RHS values, direct transaction `set` targets,
 transaction condition expression operands, transaction `switch`
 selectors/branch values, rule assignment target tokens, rule assignment RHS
 values/expression operands, rule guard expression operands, drive target
-tokens, drive body RHS scalar values/expression operands, inline drive
-assignment RHS scalar values/expression operands, or drive-call actual scalar
-values/expression operands, subaggregate
+tokens, drive body RHS scalar values/expression operands, inline drive target
+tokens, inline drive assignment RHS scalar values/expression operands, or
+drive-call actual scalar values/expression operands, subaggregate
 operands/updates, aggregate
 interface or transaction ports, aggregate storage banks, enum member
 references outside actor constants, actor parameter scalar
@@ -484,7 +487,7 @@ read them as scalar operands; aggregate paths in drive-call actual expression
 operator position remain backlog. Inline drive assignment scalar RHS values
 and scalar operands inside RHS expressions may read scalar aggregate storage
 leaves; aggregate paths in inline drive RHS expression operator position and
-inline drive targets remain backlog.
+subaggregate inline drive targets remain backlog.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as

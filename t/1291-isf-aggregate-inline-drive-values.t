@@ -105,7 +105,7 @@ ISF
     ok(-s $hdl_path, 'CLI writes HDL for package aggregate inline drive RHS values');
 };
 
-subtest 'inline drive aggregate diagnostics stay scalar-value-only' => sub {
+subtest 'inline drive aggregate value diagnostics stay scalar-RHS-only' => sub {
     assert_parse_rejected(
         <<'ISF',
 (actor aggregate_inline_drive_unknown_member
@@ -125,27 +125,6 @@ subtest 'inline drive aggregate diagnostics stay scalar-value-only' => sub {
 ISF
         qr/invalid aggregate storage path 'frame\.missing': record member 'missing' is not declared; known members: mode, flag/,
         'unknown record member inline drive RHS fails before lowering',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor aggregate_inline_drive_target_still_deferred
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (input mode_in (width 2)))
-  (storage
-    (var frame (type frame_t)))
-  (transaction main
-    (on start)
-    (drive inline_publish
-      (frame.mode mode_in))))
-ISF
-        qr/transaction 'main' inline drive target references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch selector or branch scalar values, rule assignment target scalar leaf writes, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive target scalar leaf writes, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands/,
-        'aggregate inline drive targets remain deferred',
     );
 
     assert_parse_rejected(

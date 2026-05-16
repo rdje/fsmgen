@@ -328,25 +328,29 @@ example `(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
 Named drive body scalar RHS values and scalar operands inside RHS expressions
 may read scalar aggregate
 member/item leaves, for example `(drive publish (mode_out frame.mode))` or
-`(drive publish (mode_out (+ frame.mode mode_in)))`. Inline transaction drive
-assignment scalar RHS values and scalar operands inside RHS expressions may
-also read scalar aggregate member/item leaves, for example
+`(drive publish (mode_out (+ frame.mode mode_in)))`. Named drive body targets
+may write scalar aggregate member/item leaves on declared actor-owned aggregate
+storage, for example `(drive capture (frame.mode mode_in))` or
+`(drive capture (lanes[1] pair_in))`. Inline transaction drive assignment
+scalar RHS values and scalar operands inside RHS expressions may also read
+scalar aggregate member/item leaves, for example
 `(drive inline_publish (mode_out frame.mode))` or
-`(drive inline_publish (mode_out (+ frame.mode mode_in)))`. These forms
-resolve against the declared aggregate storage shape before lowering. Named
-drive-call scalar actual values and scalar operands inside actual expressions may also
-read scalar aggregate member/item leaves, for example
-`(drive publish frame.mode)` or `(drive publish (+ frame.mode mode_in))`.
-Named drive body targets may write scalar aggregate member/item leaves on
-declared actor-owned aggregate storage, for example
-`(drive capture (frame.mode mode_in))` or `(drive capture (lanes[1] pair_in))`.
+`(drive inline_publish (mode_out (+ frame.mode mode_in)))`. Inline transaction
+drive assignment targets may write scalar aggregate member/item leaves, for
+example `(drive inline_capture (frame.mode mode_in))` or
+`(drive inline_capture (lanes[1] pair_in))`. These forms resolve against the
+declared aggregate storage shape before lowering. Named drive-call scalar
+actual values and scalar operands inside actual expressions may also read
+scalar aggregate member/item leaves, for example `(drive publish frame.mode)`
+or `(drive publish (+ frame.mode mode_in))`.
 Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
 condition expression operands, transaction `switch` selectors or branch
 values, rule assignment targets, rule assignment RHS values or expression
 operands, rule guard expression operands, drive target tokens, drive body RHS
-scalar values or expression operands, inline drive assignment RHS scalar values
-or operands, or drive-call actual scalar values/expression operands,
+scalar values or expression operands, inline drive target tokens, inline drive
+assignment RHS scalar values or operands, or drive-call actual scalar
+values/expression operands,
 aggregate paths in
 expression operator position, subaggregate writes/operands, aggregate interface or
 transaction ports, and aggregate storage banks remain deferred.
@@ -1048,9 +1052,13 @@ Current lowering:
   aggregate storage leaves such as `frame.mode` or `lanes[1]`; those paths
   resolve against declared actor-owned aggregate storage before lowering and
   preserve the authored token or expression payload in the generated state
-  assignment. Inline drive targets, inline drive RHS expression
-  operator-position enum members, and aggregate paths in inline drive RHS
-  expression operator position remain deferred.
+  assignment. Inline drive targets may also write scalar aggregate storage
+  leaves such as `frame.mode` or `lanes[1]`; those targets resolve against
+  declared actor-owned aggregate storage before lowering and preserve the
+  authored token in the generated state assignment. Subaggregate inline drive
+  targets, inline drive RHS expression operator-position enum members, and
+  aggregate paths in inline drive RHS expression operator position remain
+  deferred.
 - Hash-backed drive DT emission is deterministic: drive definitions are emitted
   lexically by drive name after transaction/rule-created DTs and any generated
   rule-trigger fan-in DTs.
@@ -2876,6 +2884,7 @@ Focused tests:
 - [t/1295-isf-enum-member-switch-selector-values.t](../t/1295-isf-enum-member-switch-selector-values.t)
 - [t/1296-isf-aggregate-rule-target-values.t](../t/1296-isf-aggregate-rule-target-values.t)
 - [t/1297-isf-aggregate-drive-target-values.t](../t/1297-isf-aggregate-drive-target-values.t)
+- [t/1298-isf-aggregate-inline-drive-target-values.t](../t/1298-isf-aggregate-inline-drive-target-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2954,7 +2963,7 @@ Focused tests:
   leaf values and expression operands, rule guard expression aggregate leaf
   operands, drive target aggregate leaf writes, drive body RHS aggregate leaf
   values and expression operands, inline drive assignment RHS aggregate leaf
-  values and expression operands,
+  values and expression operands, inline drive target aggregate leaf writes,
   drive-call actual aggregate leaf values and expression operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
@@ -2975,8 +2984,8 @@ Focused tests:
   branch values, rule assignment target tokens, rule assignment RHS
   values/expression operands, rule guard expression operands, drive target
   tokens, drive body RHS scalar values/expression operands, inline drive
-  assignment RHS scalar values/expression operands, or drive-call actual scalar
-  values/expression operands,
+  target tokens, inline drive assignment RHS scalar values/expression operands,
+  or drive-call actual scalar values/expression operands,
   aggregate paths in transaction condition, rule assignment RHS, rule guard,
   drive body RHS expression, inline drive RHS expression, or drive-call actual
   expression operator position,

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate inline drive targets reuse state assignments
+- `ISF-TYPE-AGGREGATE-PARITY.44` widens aggregate support into inline
+  transaction drive assignment targets.
+- The parser validates inline drive LHS tokens with the shared scalar
+  aggregate leaf write validator used by transaction, rule, and named drive
+  targets.
+- The slice keeps subaggregate inline drive targets rejected because
+  whole-aggregate update semantics need a separate contract.
 ## 2026-05-16: aggregate named drive targets reuse drive DT assignments
 - `ISF-TYPE-AGGREGATE-PARITY.43` widens aggregate support into named drive
   body targets.

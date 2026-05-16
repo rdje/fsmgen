@@ -445,7 +445,8 @@ limitations are:
   actual values and operands inside actual expressions may also read scalar
   aggregate leaves from those carriers. Inline drive assignment scalar RHS
   values and operands inside RHS expressions may read scalar aggregate leaves
-  too. Enum
+  too, and inline drive targets may write scalar aggregate leaves on those
+  carriers. Enum
   members in
   expression operator
   position,
@@ -460,9 +461,9 @@ limitations are:
   condition expression operands, transaction `switch` selectors/branch values,
   rule assignment target tokens, rule assignment RHS values/expression operands,
   rule guard expression operands, drive target tokens, or drive body RHS scalar
-  values/expression operands, inline drive assignment RHS scalar
-  values/expression operands, or drive-call actual scalar values/expression
-  operands, subaggregate operands/updates, and
+  values/expression operands, inline drive target tokens, inline drive
+  assignment RHS scalar values/expression operands, or drive-call actual scalar
+  values/expression operands, subaggregate operands/updates, and
   aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
