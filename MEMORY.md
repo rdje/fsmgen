@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF book shipped feature matrix added
+- Completed `ISF-MDBOOK-FEATURE-MATRIX.1` and closed
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md).
+- Added
+  [docs/book/src/13k-isf-feature-support-matrix.md](docs/book/src/13k-isf-feature-support-matrix.md)
+  as the single book-facing matrix for shipped ISF feature families, examples,
+  generated/reported behavior, and explicit non-claims.
+- `docs/book/src/SUMMARY.md` now links the matrix, and
+  `embedding.isf_public_interface.live_document_paths` advertises it through
+  [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm).
+- Added
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  so the matrix cannot silently lose required shipped-family markers.
+- No parser, scheduler, emitter, schedule-report payload, generated `.fsm`, or
+  HDL behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF repeat-body documentation truth synchronized
 - Completed `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` and closed
   [docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md).

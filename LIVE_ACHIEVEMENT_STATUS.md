@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF book shipped feature matrix added
+- Completed R14 task-tree slice:
+  `ISF-MDBOOK-FEATURE-MATRIX.1` in
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md).
+- The `ISF-MDBOOK-FEATURE-MATRIX` tree is now closed. No active ISF task tree
+  remains open; the next R14 implementation slice must select or create a new
+  task tree first.
+- Added
+  [docs/book/src/13k-isf-feature-support-matrix.md](docs/book/src/13k-isf-feature-support-matrix.md)
+  as the book-facing support matrix for shipped ISF feature families,
+  examples, generated/reported behavior, and explicit non-claims.
+- The matrix is reachable from [docs/book/src/SUMMARY.md](docs/book/src/SUMMARY.md)
+  and advertised through the public ISF `live_document_paths` manifest surface.
+- Added
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  to prevent support-matrix drift.
+- No parser, scheduler, report payload, generated `.fsm`, or HDL behavior
+  changed.
+
 ## 2026-05-16: R14 — ISF repeat-body documentation truth synchronized
 - Completed R14 task-tree slice:
   `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` in

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF book shipped feature matrix added
+- Completed `ISF-MDBOOK-FEATURE-MATRIX.1` and closed the task tree.
+- Added `docs/book/src/13k-isf-feature-support-matrix.md` as a single
+  book-facing review matrix for shipped ISF feature families, representative
+  examples, generated/reported behavior, and explicit non-claims.
+- Wired the matrix into `docs/book/src/SUMMARY.md` and
+  `embedding.isf_public_interface.live_document_paths`.
+- Added `t/1305-isf-book-feature-matrix-audit.t` and updated the ISF spec
+  focused-test index.
+- Parser, scheduler, emitter, schedule-report payload, generated `.fsm`, and
+  HDL behavior are unchanged.
 ### R14 — ISF repeat-body documentation truth synchronized
 - Completed `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` and closed the task tree.
 - Updated the mdBook, ISF spec, downstream handoff, and public contract doc so

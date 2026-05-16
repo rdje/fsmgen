@@ -106,6 +106,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md` — completed `R14` task tree for the self-contained `.isf` downstream integration handoff.
 - `docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md` — completed `R14` task tree for advertising complete ISF mdBook live-document paths through the public contract.
 - `docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md` — completed `R14` task tree for repeat-body shipped-subset documentation truth synchronization.
+- `docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md` — completed `R14` task tree for the book-facing ISF shipped feature matrix.
 - `docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing stale ISF feature-backlog status text.
 - `docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing resource arbitration and storage-role backlog status text.
 - `docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md` — completed `R14` task tree for synchronizing stale ISF feature-backlog status labels after closed task trees.

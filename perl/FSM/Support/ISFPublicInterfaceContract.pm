@@ -1672,6 +1672,7 @@ sub isf_public_interface_live_document_paths {
             docs/book/src/13h-lowering-reference.md
             docs/book/src/13i-downstream-integration.md
             docs/book/src/13j-type-enum-aggregate.md
+            docs/book/src/13k-isf-feature-support-matrix.md
             docs/book/src/14-feature-backlog.md
             docs/book/src/90-reference-map.md
         ),

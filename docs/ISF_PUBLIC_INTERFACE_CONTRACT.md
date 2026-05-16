@@ -302,6 +302,10 @@ to keep every Intent Scheduling chapter from
 [docs/book/src/SUMMARY.md](book/src/SUMMARY.md), plus the canonical feature
 backlog and reference map, advertised through the same public contract and
 manifest views.
+The book-facing shipped feature matrix is checked by
+[t/1305-isf-book-feature-matrix-audit.t](../t/1305-isf-book-feature-matrix-audit.t)
+so the user-facing book keeps an explicit review surface for the shipped ISF
+feature families.
 The public constructor option boundary is checked by
 [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
 for both adapter and scheduler facades.
@@ -1895,6 +1899,7 @@ When an ISF slice changes a downstream-visible behavior, update together:
 - [docs/DOWNSTREAM_ISSUE_REPORTING.md](DOWNSTREAM_ISSUE_REPORTING.md) when the
   change affects downstream issue reproduction guidance
 - [docs/book/src/13-intent-scheduling.md](book/src/13-intent-scheduling.md)
+- [docs/book/src/13k-isf-feature-support-matrix.md](book/src/13k-isf-feature-support-matrix.md)
 - [perl/FSM/Support/ISFPublicInterfaceContract.pm](../perl/FSM/Support/ISFPublicInterfaceContract.pm)
 - focused regression tests for the changed public surface
 

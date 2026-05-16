@@ -25,5 +25,6 @@
   - [Lowering Reference](13h-lowering-reference.md)
   - [Downstream Integration](13i-downstream-integration.md)
   - [Types, Enums, and Aggregates](13j-type-enum-aggregate.md)
+  - [Feature Support Matrix](13k-isf-feature-support-matrix.md)
 - [Feature Backlog](14-feature-backlog.md)
 - [Reference Map](90-reference-map.md)

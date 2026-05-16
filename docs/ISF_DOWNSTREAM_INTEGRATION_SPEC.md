@@ -1644,10 +1644,12 @@ Supporting artifacts:
   owner advertised through the capability manifest.
 - `docs/ISF_LIBRARY_CATALOG.md`: shipped reusable library catalog.
 - `docs/book/src/13-intent-scheduling.md` and child chapters, especially
-  `docs/book/src/13j-type-enum-aggregate.md`: tutorial and explanatory user
-  documentation. The machine-readable ISF public contract advertises every
-  Intent Scheduling chapter listed in `docs/book/src/SUMMARY.md`, plus the
-  canonical feature backlog and reference map, through `live_document_paths`.
+  `docs/book/src/13j-type-enum-aggregate.md` and
+  `docs/book/src/13k-isf-feature-support-matrix.md`: tutorial, explanatory,
+  and book-facing shipped-feature support documentation. The machine-readable
+  ISF public contract advertises every Intent Scheduling chapter listed in
+  `docs/book/src/SUMMARY.md`, plus the canonical feature backlog and reference
+  map, through `live_document_paths`.
 - `t/`: regression and audit evidence.
 
 Evolution rule:

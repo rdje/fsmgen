@@ -1,0 +1,279 @@
+# ISF Shipped Feature Matrix
+
+This chapter is the book-facing checklist for the `.isf` surface that is
+currently shipped. It does not replace the detailed chapters, the live spec,
+or the downstream handoff. It gives reviewers one place to confirm which
+feature families are supported, where to find examples, and where the explicit
+backlog boundary starts.
+
+A feature is "shipped" here only when the source shape, scheduled `.fsm`
+lowering, runtime meaning, diagnostics, reports or review artifacts, and
+focused regression evidence exist. Parser acceptance alone is not a support
+claim.
+
+## Status Vocabulary
+
+| Status | Meaning |
+| --- | --- |
+| `shipped` | The listed source shape has documented lowering, runtime behavior, and regression coverage. |
+| `shipped bounded surface` | The named subset is shipped; nearby wider forms fail closed or remain backlog. |
+| `fail-closed boundary` | FSMGen recognizes the family enough to reject unsupported forms deliberately. It is not a runtime support claim. |
+
+Anything outside the shipped rows below should be treated as backlog unless a
+detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
+[ISF Types, Enums, And Aggregates](13j-type-enum-aggregate.md), or
+[Feature Backlog](14-feature-backlog.md) says otherwise.
+
+## Matrix
+
+| Feature family | Status | Accepted authoring surface | Generated and reported behavior |
+| --- | --- | --- | --- |
+| `.isf` CLI input | shipped | `./bin/fsmgen file.isf`, `--strict file.isf`, `--emit-schedule-json`, and `--outdir DIR` for multi-file lower results. | Single-file actors lower to scheduled `.fsm` before HDL. Multi-file generated-child and accepted multi-domain actors write every scheduled `.fsm` artifact, then use the generated top for HDL generation. |
+| Public parser and scheduler facades | shipped bounded surface | `FSM::Adapter::ISF->new(debug => ...)`, `parse_file`, `parse_source`, `FSM::Scheduler::ISF->new(...)`, `lower`, and `report`. | Public methods validate receivers and argument shapes before private parsing/lowering. The capability manifest advertises the live public contract under `embedding.isf_public_interface`. |
+| Actor envelope | shipped | `(actor NAME ...)` with singleton `(clock ...)`, `(clock-domains ...)`, `(reset ...)`, `(watchdog ...)`, `(interface ...)`, `(storage ...)`, `(types ...)`, `(enums ...)`, `(imports ...)`, `(constants ...)`, `(params ...)`, `(resources ...)`, and reusable-library `(use ...)` where documented. | The scheduled `.fsm` preserves reviewable system, size, constants, params, type, enum, import, storage, rule, drive, and transaction artifacts. Duplicate singleton clauses fail closed. |
+| Single-clock timing | shipped | `(clock clk)` plus optional `(reset ...)` and `(watchdog N)`. | The actor has one clock domain. Resets lower to the matching `.fsm` system reset form. Watchdogs create inferred counters for accepted awaits. |
+| Multi-clock domains | shipped bounded surface | Actor-level `(clock-domains ...)` with named domains, one default domain, optional per-domain resets, and `(domain NAME)` ownership annotations. | Lowering partitions the actor into one scheduled `.fsm` per domain plus a generated top. Direct cross-domain reads, writes, activations, and bindings fail closed unless a shipped crossing primitive owns the path. |
+| Acknowledged event CDC | shipped bounded surface | `(crossings (event NAME (from SRC SRC_REQ) (to DST DST_PULSE) (ready SRC_READY)))`. | The generated top wires a concrete acknowledged-event CDC child. The source side sees `ready`; the destination side receives a one-cycle pulse. No data payload or same-cycle delivery is promised. |
+| Interface ports | shipped | `(interface (input NAME [(width N)|(type T)] [(domain D)]) (output NAME ...))`. | Ports become scheduled `.fsm` `+size` entries and module ports. Names are unique across input and output directions. |
+| Actor-owned scalar storage | shipped | `(storage (var NAME (width N)) ...)` and `(variable NAME (width N))`. | Storage lowers to internal scalar registers, contributes width evidence, and appears in reports with role `actor_storage`. |
+| Actor-owned banks | shipped bounded surface | `(storage (bank NAME (width N) (depth N)))` with pointer-selected `(store BANK IDX VALUE)` and `(load BANK IDX as TARGET)`. | Banks lower to deterministic scalarized entries such as `data_0`, `data_1`, and so on. Same-cycle read/write behavior follows the documented scalarized FIFO path. |
+| Type aliases and package imports | shipped bounded surface | Actor-local `(types ...)`, actor-local `(enums ...)`, `.fsm` package imports, scalar `(type NAME)` declarations, and actor-owned aggregate storage aliases. | Scheduled `.fsm` preserves `+types`, `+enums`, and `+import` review artifacts. Imported package roots are embedded for CLI HDL generation. |
+| Enum member values | shipped bounded surface | Local and package enum members in constants, scalar and aggregate/list parameter leaves, activation overrides, reusable-library use-site overrides, transaction/rule/drive scalar values, scalar expression operands, switch values/selectors, and standalone conditions/guards. | Authored enum tokens are preserved where scheduled `.fsm` can carry them; static specialization contexts resolve to literals before generated-top emission. Enum targets and operator-position enum members fail closed. |
+| Aggregate scalar leaves | shipped bounded surface | Scalar member/item paths from declared actor-owned aggregate storage in documented RHS, target, guard, condition, switch, drive, and drive-call contexts. | Scalar leaves preserve authored paths in scheduled `.fsm` or lower through computed selector syntax when needed. Whole-record/list values, subaggregate writes, aggregate ports, and aggregate banks remain backlog. |
+| Transaction entry | shipped | `(transaction NAME (on START ...) body...)`, direct entry samples, transaction ports, and parameter declarations where generated-child behavior owns them. | Entry logic generates start/idle behavior, captures accepted samples, and records transaction order in schedule reports. Unsupported entry-body forms fail closed. |
+| Transaction assignments | shipped | `(set TARGET EXPR)` and `(update VAR EXPR)` with scalar targets and expression payloads in the documented value domain. | Assignments lower to scheduled `.fsm` state assignments with correct flopped/combinational semantics for the form. Scalar aggregate leaves and enum members are accepted only in shipped contexts. |
+| Named and inline drives | shipped | Actor-level `(drive NAME [(PARAM ...)] body...)`; transaction body `(drive NAME actual...)`; inline drive assignments where documented. | A named drive emits a non-state DT. A drive call consumes one state and transfers actuals through generated drive parameter signals. Inline drive assignments become state assignments. |
+| Await and latency | shipped | `(await PORT)`, actor watchdogs, and `(latency (min N) (max N))` on transactions. | Awaits lower to wait/test states and watchdog counters when configured. Latency counters and schedule-report storage metadata are emitted for the supported shapes. |
+| Static and dynamic waits | shipped bounded surface | `(wait N)`, `(wait 0)`, and accepted non-literal wait count expressions in documented contexts. | Static waits create explicit wait states unless zero-count bypass semantics apply. Runtime waits use generated counters and fail closed when a selected zero-count successor cannot carry pending samples safely. |
+| Transaction control flow | shipped bounded surface | Body-bearing `(when COND body...)`, `(switch SELECTOR branches...)`, `(while COND body...)`, `(until COND body...)`, and `(repeat COUNT body...)`. | Control flow lowers to explicit decision states, branch states, loop counters, and exits. The shipped repeat-body clause surface is limited to documented drive, await, sample, update, set, shift, assemble, extract, store/load, and wait clauses. |
+| Data manipulation | shipped bounded surface | `(shift_left REG BIT)`, `(shift_right REG BIT [(width N)])`, `(assemble PART... as TARGET)`, and `(extract WORD as FIELD... [(widths N...)])`. | Width evidence comes from declarations, samples, operation-local options, and structural derivation. Accepted forms avoid placeholder widths; unknown or contradictory widths fail closed. |
+| Rules and trigger fan-in | shipped | Shorthand and long-form `(rule NAME GUARD actions...)`, `(set TARGET EXPR)`, shorthand assignments, and `(trigger TRANSACTION ...)`. | Rules lower to non-state DTs with guarded assignment semantics. Trigger sources feed a generated transaction fan-in or generated-child trigger handoff for parameterized triggers. |
+| Rule conflicts and priorities | shipped bounded surface | Same-target/same-value rule writes, conservative mutual-exclusion proofs, and rule-local or top-level rule priority edges. | Compatible writes are accepted, priority can suppress lower-priority conflicting rule assignments, and unresolvable conflicts fail closed. SystemVerilog gets verification-only selector assertions for analyzed muxes. |
+| Resources | shipped bounded surface | `(resources (resource NAME (kind rule_slot) (arbiter priority) (users RULE...)))`. Parser-recognized backlog kinds are documented. | `rule_slot` plus `priority` arbitration gates the whole bound rule DT for one cycle. Backlog resource kinds or unsupported arbiter/kind combinations fail closed. |
+| Blocking child activation | shipped bounded surface | `(do child)` locally, and `(do child (params ...) (bind ...))` through generated-child activation. | Plain local `do` asserts child start and awaits a fresh child done pulse. Parameterized/bound `do` emits a generated child instance and generated top handoff wiring. |
+| Spawned generated children | shipped bounded surface | `(spawn child as instance [(params ...)])`, `(await_all done)`, and `(await_any done)`. | Lowering emits parent, child, and generated top scheduled `.fsm` artifacts. Instance start/done handoffs, named-drive handoffs, parameter overrides, and schedule-report generated-composition metadata are bounded public review surfaces. |
+| Reusable ISF libraries | shipped bounded surface | `(library NAME (exports (actor A)) (actor A ...))`, actor `(imports (library NAME as ALIAS))`, and `(use ALIAS.actor as INSTANCE (params ...) (bind ...))`. | Library use lowers to generated composition artifacts and report `library_uses[]` metadata. The shipped catalog includes `common.fifo.fifo`; parameter-driven shape elaboration and nested library imports remain backlog. |
+| Schedule reports | shipped bounded surface | `--emit-schedule-json` and in-process `report(...)`. | Reports expose actor, transaction, storage, rule, drive, generated-composition, library-use, clock-domain, crossing, issue, schema-version, and public-contract metadata only through bounded documented keys. |
+| Diagnostics and downstream issue reporting | shipped | Fail-closed parser/lowering diagnostics, strict-mode compatibility cuts, and `bin/fsmgen-issue-bundle`. | Unsupported public forms reject before misleading artifacts are emitted. Downstream consumers can provide a reproducible issue bundle without understanding `.fsm` or `.isf` internals. |
+
+## Examples By Family
+
+### Actor, Interface, Storage, And Timing
+
+```lisp
+(actor apb_requester
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+  (interface
+    (input start)
+    (input req_addr (width 32))
+    (output done)
+    (output PADDR (width 32)))
+  (storage
+    (var captured_addr (width 32))))
+```
+
+This is the ordinary single-clock shape. For multi-clock actors, use
+`(clock-domains ...)` instead of mixing it with `(clock ...)`:
+
+```lisp
+(clock-domains
+  (domain bus  (clock bus_clk) (reset bus_rst_n))
+  (domain core (clock clk)     (reset rst_n) :default))
+```
+
+### Acknowledged Event CDC
+
+```lisp
+(crossings
+  (event rx_done
+    (from bus  rx_done_req)
+    (to   core rx_done_pulse)
+    (ready rx_done_ready)))
+```
+
+The source domain may request only while `rx_done_ready` is true. The
+destination domain receives a pulse later, after the generated CDC child moves
+the event safely across the domain boundary.
+
+### Transaction Body
+
+```lisp
+(transaction apb_transfer
+  (on start
+    (sample req_addr as addr))
+  (set PADDR addr)
+  (drive setup)
+  (await PREADY)
+  (complete done)
+  (latency (min 2) (max 16)))
+```
+
+The scheduled `.fsm` review artifact owns the exact cycle placement: samples
+materialize at the accepted entry boundary, drive calls consume states, awaits
+test the selected port, and completion pulses the authored done output.
+
+### Waits And Repeat Bodies
+
+```lisp
+(transaction pulse_train
+  (on start)
+  (repeat count
+    (drive pulse 1)
+    (wait 1)
+    (drive pulse 0)
+    (update count_seen (+ count_seen 1)))
+  (complete done))
+```
+
+The repeat body may use the shipped inline body clauses documented in
+[Transactions](13b-transactions.md) and [Control Flow](13d-control-flow.md).
+Nested child activation and nested `stage` or `contract` clauses remain
+outside the shipped repeat-body subset.
+
+### Types, Enums, And Aggregate Leaves
+
+```lisp
+(types
+  (type mode_bits (bits 2))
+  (type frame_t (record (mode (bits 2)) (valid bit))))
+(enums
+  (mode (IDLE 0) (BUSY 1)))
+(storage
+  (var frame (type frame_t)))
+
+(transaction publish
+  (on start)
+  (set frame.mode mode.BUSY)
+  (when frame.valid
+    (set out_mode frame.mode)))
+```
+
+The shipped aggregate path is scalar-leaf based. `frame.mode` and
+`frame.valid` are accepted because `frame` is declared actor-owned aggregate
+storage and the paths resolve to scalar leaves.
+
+### Bank Store And Load
+
+```lisp
+(storage
+  (bank data (width 8) (depth 4))
+  (var wr_ptr (width 2))
+  (var rd_ptr (width 2)))
+
+(transaction fifo_step
+  (on push)
+  (store data wr_ptr data_in)
+  (load data rd_ptr as data_out)
+  (complete done))
+```
+
+The bank is scalarized in scheduled `.fsm` review text. Pointer-selected
+access remains explicit through `store` and `load`; memory-array backend
+emission is not a current support claim.
+
+### Rules, Priority, And Resources
+
+```lisp
+(rule high write_req
+  (set valid 1))
+
+(rule low read_req
+  (priority over high)
+  (set valid 0))
+
+(resources
+  (resource rule_exec
+    (kind rule_slot)
+    (arbiter priority)
+    (users high low)))
+```
+
+The shipped `rule_slot`/`priority` subset can gate a whole bound rule DT for
+one active cycle. Other resource kinds are documented names, not supported
+runtime arbitration behavior yet.
+
+### Generated Children
+
+```lisp
+(transaction worker
+  (params
+    (WIDTH 8))
+  ...)
+
+(transaction parent
+  (on start)
+  (spawn worker as w0
+    (params
+      (WIDTH 16)))
+  (await_all done)
+  (complete done))
+```
+
+The lowerer emits a scheduled parent `.fsm`, scheduled child `.fsm`, and a
+generated top `.fsm`. The generated top applies static parameter overrides and
+wires start/done handoffs.
+
+### Reusable Library Use
+
+```lisp
+(imports
+  (library common.fifo as fifo_lib))
+
+(use fifo_lib.fifo as u_fifo
+  (params
+    (DATA_WIDTH 8)
+    (DEPTH 4)
+    (PTR_WIDTH 2)
+    (OCC_WIDTH 3))
+  (bind
+    (clock clk)
+    (reset rst_n)
+    (input write_req write_req)
+    (input data_in data_in)
+    (output full full)
+    (output data_out data_out)))
+```
+
+The cataloged `common.fifo.fifo` actor is a shipped reusable ISF library
+definition. Library imports are semantic roots that still lower to scheduled
+`.fsm`; they are not textual includes.
+
+### Schedule JSON And Manifest Discovery
+
+```bash
+./bin/fsmgen --emit-schedule-json isf/apb_requester.isf
+./bin/fsmgen --capability-manifest
+./bin/fsmgen --emit-capability-manifest
+```
+
+The schedule report is the machine-readable companion to the scheduled `.fsm`
+review artifact. The capability manifest advertises the live ISF public
+contract, including this book chapter through `live_document_paths`.
+
+## Explicit Non-Claims
+
+These are important because they prevent the matrix from implying support that
+does not exist:
+
+- Multi-bit CDC payloads, FIFO CDC, reset-as-event semantics, and direct
+  cross-domain data access are not shipped.
+- Spawn, blocking `do`, `await_all`, `await_any`, nested `while`, nested
+  `until`, `stage`, and `contract` inside repeat bodies remain outside the
+  shipped repeat-body subset.
+- Enum members are not writable targets, and enum members in expression
+  operator position fail closed.
+- Aggregate interface ports, transaction-local aggregate ports, aggregate
+  banks, subaggregate updates, and whole-record/list truthiness remain backlog.
+- Backlog resource kinds are registry names, not runtime arbitration support.
+- Direct `(on ...)` activation-site `(params ...)` is unsupported; static
+  specialization belongs to spawn, generated blocking `do`, and rule-trigger
+  generated activation sites.
+- VHDL is recognized as a target family, but the full VHDL backend is not
+  shipped.
+
+When a future slice widens any row above, update the detailed chapter, this
+matrix, the live spec, the downstream handoff, the public contract or manifest
+metadata when applicable, focused tests, and the feature backlog in the same
+task-scoped commit.

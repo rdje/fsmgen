@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: shipped ISF features need one book-facing review matrix
+- `ISF-MDBOOK-FEATURE-MATRIX.1` adds a support matrix because dispersed
+  chapters are not enough for a reviewer who uses the book as the primary
+  truth surface.
+- The matrix is intentionally a feature-family index with examples and
+  non-claims, not a second implementation spec. Detailed semantics stay in the
+  dedicated ISF chapters, the live spec, downstream handoff, and public
+  contract.
+- The focused audit checks the chapter's required shipped-family rows,
+  representative examples, explicit non-claims, mdBook summary link, and
+  public `live_document_paths` advertisement.
 ## 2026-05-16: repeat-body docs must track the shipped inline subset
 - `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` fixes stale repeat-body prose that still
   described the older drive/await/sample/update/data-op subset.
