@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum inline drive RHS expression operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.26` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.27`, selecting the
+  next enum or aggregate value/update context after inline drive RHS expression
+  enum operands.
+- Inline transaction drive assignment RHS expressions now accept local and
+  package-qualified enum members as scalar operands and preserve authored
+  expression payloads in scheduled `.fsm` state assignments.
+- Inline drive RHS expression operator-position enum members, inline drive
+  targets, reusable-library use-site enum overrides, and broader non-shipped
+  contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum inline drive RHS values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.25` in

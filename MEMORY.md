@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum inline drive RHS expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.26` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.27`.
+- Inline transaction drive assignment RHS expressions now accept local enum
+  members such as `mode.BUSY` and package-qualified enum members such as
+  `shared.mode.BUSY` as scalar operands.
+- Scheduled `.fsm` state assignments preserve authored enum expression tokens,
+  and strict CLI HDL generation accepts the generated inline drive expression.
+- Inline drive RHS expression operator-position enum members, inline drive
+  targets, reusable-library use-site enum overrides, and broader non-shipped
+  contexts remain deferred.
 ## 2026-05-16: ISF enum inline drive RHS values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.25` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

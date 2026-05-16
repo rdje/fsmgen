@@ -12,11 +12,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-subtest 'actor-local enum members are valid inline drive assignment RHS values' => sub {
+subtest 'actor-local enum members are valid inline drive RHS expression operands' => sub {
     my $dir = tempdir(CLEANUP => 1);
-    my $isf_path = File::Spec->catfile($dir, 'local_enum_inline_drive_value.isf');
+    my $isf_path = File::Spec->catfile($dir, 'local_enum_inline_drive_expression_value.isf');
     write_file($isf_path, <<'ISF');
-(actor local_enum_inline_drive_value
+(actor local_enum_inline_drive_expression_value
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -27,26 +27,26 @@ subtest 'actor-local enum members are valid inline drive assignment RHS values' 
   (transaction main
     (on start)
     (drive inline_mode
-      (mode_out mode.BUSY))))
+      (mode_out (+ mode.BUSY 1)))))
 ISF
 
     my $actor = FSM::Adapter::ISF->new()->parse_file($isf_path);
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'local_enum_inline_drive_value.fsm'};
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'local_enum_inline_drive_expression_value.fsm'};
     like($fsm, qr/\(\+enums\s+\(mode \(IDLE 0\) \(BUSY 1\)\)\s+\)/s,
         'scheduled .fsm preserves local enum declaration');
-    like($fsm, qr/\(= \(mode_out> mode\.BUSY\)\)/,
-        'scheduled .fsm preserves local enum member inline drive RHS value');
+    like($fsm, qr/\(= \(mode_out> \(\+ mode\.BUSY 1\)\)\)/,
+        'scheduled .fsm preserves local enum member inline drive RHS expression operand');
 
-    my $hdl_path = File::Spec->catfile($dir, 'local_enum_inline_drive_value.sv');
+    my $hdl_path = File::Spec->catfile($dir, 'local_enum_inline_drive_expression_value.sv');
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--output', $hdl_path, $isf_path],
     );
-    ok($success, 'CLI HDL generation succeeds for local enum member inline drive RHS values');
-    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for local enum member inline drive RHS values');
-    ok(-s $hdl_path, 'CLI writes HDL for local enum member inline drive RHS values');
+    ok($success, 'CLI HDL generation succeeds for local enum member inline drive RHS expression operands');
+    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for local enum member inline drive RHS expression operands');
+    ok(-s $hdl_path, 'CLI writes HDL for local enum member inline drive RHS expression operands');
 };
 
-subtest 'package enum members are valid inline drive assignment RHS values' => sub {
+subtest 'package enum members are valid inline drive RHS expression operands' => sub {
     my $dir = tempdir(CLEANUP => 1);
     write_file(File::Spec->catfile($dir, 'shared.fsm'), <<'FSM');
 (?pkg:shared
@@ -54,43 +54,44 @@ subtest 'package enum members are valid inline drive assignment RHS values' => s
     (mode (IDLE 0) (BUSY 1)))
 )
 FSM
-    my $isf_path = File::Spec->catfile($dir, 'package_enum_inline_drive_value.isf');
+    my $isf_path = File::Spec->catfile($dir, 'package_enum_inline_drive_expression_value.isf');
     write_file($isf_path, <<'ISF');
-(actor package_enum_inline_drive_value
+(actor package_enum_inline_drive_expression_value
   (imports
     (package shared))
   (clock clk)
   (reset rst)
   (interface
     (input start)
+    (input mode_in (width 2))
     (output mode_out (width 2)))
   (transaction main
     (on start)
     (drive inline_mode
-      (mode_out shared.mode.BUSY))))
+      (mode_out (+ shared.mode.BUSY mode_in)))))
 ISF
 
     my $actor = FSM::Adapter::ISF->new()->parse_file($isf_path);
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'package_enum_inline_drive_value.fsm'};
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'package_enum_inline_drive_expression_value.fsm'};
     like($fsm, qr/\(\+import\s+shared\s+\)/s, 'scheduled .fsm emits package import');
-    like($fsm, qr/\(= \(mode_out> shared\.mode\.BUSY\)\)/,
-        'scheduled .fsm preserves package enum member inline drive RHS value');
+    like($fsm, qr/\(= \(mode_out> \(\+ shared\.mode\.BUSY mode_in\)\)\)/,
+        'scheduled .fsm preserves package enum member inline drive RHS expression operand');
     like($fsm, qr/\(\?pkg:shared[\s\S]*\(\+enums[\s\S]*\(mode \(IDLE 0\) \(BUSY 1\)\)/,
         'scheduled .fsm embeds imported enum package root');
 
-    my $hdl_path = File::Spec->catfile($dir, 'package_enum_inline_drive_value.sv');
+    my $hdl_path = File::Spec->catfile($dir, 'package_enum_inline_drive_expression_value.sv');
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--output', $hdl_path, $isf_path],
     );
-    ok($success, 'CLI HDL generation succeeds for package enum member inline drive RHS values');
-    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for package enum member inline drive RHS values');
-    ok(-s $hdl_path, 'CLI writes HDL for package enum member inline drive RHS values');
+    ok($success, 'CLI HDL generation succeeds for package enum member inline drive RHS expression operands');
+    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for package enum member inline drive RHS expression operands');
+    ok(-s $hdl_path, 'CLI writes HDL for package enum member inline drive RHS expression operands');
 };
 
-subtest 'inline drive enum diagnostics reject targets and operators' => sub {
+subtest 'inline drive enum expression diagnostics stay operand-only' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor unknown_enum_inline_drive_value
+(actor unknown_enum_inline_drive_expression_value
   (enums
     (mode (IDLE 0)))
   (clock clk)
@@ -101,29 +102,10 @@ subtest 'inline drive enum diagnostics reject targets and operators' => sub {
   (transaction main
     (on start)
     (drive inline_mode
-      (mode_out mode.BUSY))))
+      (mode_out (+ mode.BUSY 1)))))
 ISF
         qr/transaction 'main' inline drive RHS references unknown enum member 'mode\.BUSY'/,
-        'unknown inline drive enum RHS fails before lowering',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_inline_drive_target_still_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output mode_out (width 2)))
-  (transaction main
-    (on start)
-    (drive inline_mode
-      (mode.BUSY 1))))
-ISF
-        qr/transaction 'main' inline drive target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate\/list parameter default leaves, transaction scalar parameter defaults or aggregate\/list parameter default leaves, activation scalar parameter overrides or aggregate\/list override leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, inline drive assignment RHS scalar values or operands, and drive-call actual scalar values or operands/,
-        'enum members in inline drive targets remain deferred',
+        'unknown inline drive enum expression operand fails before lowering',
     );
 
     assert_parse_rejected(

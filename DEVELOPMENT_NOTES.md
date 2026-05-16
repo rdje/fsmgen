@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum inline drive expressions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.26` widens inline drive enum support from direct
+  scalar RHS values to scalar operands inside inline drive RHS expressions,
+  matching the transaction set, rule assignment, and drive-call expression
+  operand policy.
+- The parser walks inline drive RHS expression trees and resolves enum members
+  before lowering, but rejects enum members in expression operator position so
+  expression heads remain ordinary operators.
+- Inline drive targets remain closed because target ownership and partial
+  assignment semantics are separate contracts from RHS expression values.
 ## 2026-05-16: enum inline drive values are direct-RHS-only
 - `ISF-TYPE-AGGREGATE-PARITY.25` selects inline transaction drive assignment
   RHS scalar values because labeled inline drive clauses already lower to
@@ -9,9 +19,8 @@ This document captures engineering rationale, design constraints, and working de
   whose label is not a declared named drive as an inline drive clause, matching
   the nested control-flow lowering path while still rejecting empty or
   malformed unknown named-drive calls.
-- Inline drive targets and inline drive RHS expressions remain closed. Targets
-  need an assignment-ownership contract, and expression operands need a
-  separate expression-specific slice.
+- At this point, inline drive targets and inline drive RHS expressions stayed
+  closed; `ISF-TYPE-AGGREGATE-PARITY.26` later widened RHS expression operands.
 ## 2026-05-16: enum transaction aggregate params preserve generated defaults
 - `ISF-TYPE-AGGREGATE-PARITY.24` widens generated child transaction parameter
   enum support from scalar defaults to scalar enum leaves inside aggregate/list

@@ -414,11 +414,11 @@ limitations are:
   expressions, scalar drive body RHS values, and named drive-call scalar actual
   values may also use local and package-qualified enum members. Drive-call
   actual expressions may use enum members as scalar operands too, inline drive
-  assignment RHS scalar values may use enum members, and scalar activation
-  parameter overrides for spawn, generated blocking `do`, and rule `trigger`
-  may use enum members as static specialization values. Scalar leaves inside
-  those activation aggregate/list parameter override values may use enum
-  members too.
+  assignment RHS scalar values and scalar operands inside inline drive RHS
+  expressions may use enum members, and scalar activation parameter overrides
+  for spawn, generated blocking `do`, and rule `trigger` may use enum members
+  as static specialization values. Scalar leaves inside those activation
+  aggregate/list parameter override values may use enum members too.
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
@@ -427,9 +427,9 @@ limitations are:
   standalone transaction conditions, switch selectors, set targets, rules
   outside scalar trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
-  position, drive targets, inline drive assignment RHS expressions,
-  drive-call expression operator position, reusable-library use-site parameter
-  overrides, and other non-shipped contexts
+  position, drive targets, inline drive assignment RHS expression operator
+  position, drive-call expression operator position, reusable-library use-site
+  parameter overrides, and other non-shipped contexts
   remain backlog, as do aggregate paths outside
   transaction `set` RHS values or direct targets, subaggregate
   operands/updates, and aggregate interface/transaction/bank carriers.

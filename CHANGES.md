@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum inline drive RHS expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.26`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.27`.
+- Inline transaction drive assignment RHS expressions now accept local and
+  package-qualified enum members as scalar operands.
+- Scheduled `.fsm` state assignments preserve authored enum expression tokens,
+  and strict CLI HDL generation accepts the resulting inline drive expression.
+- Parser diagnostics reject unknown inline-drive enum operands and enum members
+  in inline drive RHS expression operator position, while inline drive targets
+  and broader non-shipped contexts remain closed for later slices.
 ### R14 — ISF enum inline drive RHS values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.25`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.26`.

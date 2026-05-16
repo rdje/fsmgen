@@ -305,8 +305,8 @@ values may consume local and
 package-qualified enum members. Named drive-call scalar actual values may also
 consume local and package-qualified enum members, and drive-call actual
 expressions may use enum members as scalar operands. Inline drive assignment
-RHS scalar values may now also consume local and package-qualified enum
-members.
+RHS scalar values and scalar operands inside inline drive RHS expressions may
+now also consume local and package-qualified enum members.
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as
 `frame.mode` or `lanes[0]`, either directly or as scalar operands inside
@@ -322,8 +322,8 @@ scalar values or aggregate/list override leaves, transaction `set` RHS scalar
 values/expression operands, transaction `when`/`while`/`until` condition
 expression operands, transaction `switch` branch values, rule guard expression
 operands, scalar rule assignment RHS values or expression operands, or drive
-body RHS scalar values, inline drive assignment RHS scalar values, or
-drive-call actual scalar values/expression operands,
+body RHS scalar values, inline drive assignment RHS scalar values/expression
+operands, or drive-call actual scalar values/expression operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 
