@@ -429,9 +429,11 @@ limitations are:
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
-  expressions, transaction `when`/`while`/`until` condition expressions may
-  read scalar aggregate leaves as operands, and direct transaction `set` targets
-  may write scalar aggregate leaves on those same carriers. Transaction
+  expressions, transaction `when`/`while`/`until` conditions may read scalar
+  aggregate leaves directly or as operands inside condition expressions, and
+  direct transaction `set` targets may write scalar aggregate leaves on those
+  same carriers. Direct aggregate condition leaves lower through computed
+  `.fsm` selector syntax. Transaction
   `switch` selectors and branch values may also read scalar aggregate leaves;
   aggregate selectors lower through computed `.fsm` selector syntax such as
   `?(frame.mode)` or `?(lanes[1])`. Rule assignment
@@ -458,12 +460,13 @@ limitations are:
   operator position, and other non-shipped contexts
   remain backlog, as do aggregate paths outside
   transaction `set` RHS values, direct transaction `set` targets, transaction
-  condition expression operands, transaction `switch` selectors/branch values,
-  rule assignment target tokens, rule assignment RHS values/expression operands,
-  rule guard expression operands, drive target tokens, or drive body RHS scalar
-  values/expression operands, inline drive target tokens, inline drive
-  assignment RHS scalar values/expression operands, or drive-call actual scalar
-  values/expression operands, subaggregate operands/updates, and
+  condition scalar values/expression operands, transaction `switch`
+  selectors/branch values, rule assignment target tokens, rule assignment RHS
+  values/expression operands, rule guard expression operands, drive target
+  tokens, or drive body RHS scalar values/expression operands, inline drive
+  target tokens, inline drive assignment RHS scalar values/expression operands,
+  or drive-call actual scalar values/expression operands, subaggregate
+  operands/updates, and
   aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for

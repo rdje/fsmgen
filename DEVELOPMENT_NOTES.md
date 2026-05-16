@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate standalone conditions use computed selectors
+- `ISF-TYPE-AGGREGATE-PARITY.45` widens aggregate support from condition
+  expression operands to direct `when`/`while`/`until` scalar conditions.
+- Scalar aggregate condition leaves reuse the shared scalar leaf read validator
+  and lower to computed `.fsm` selectors because paths such as `frame.flag` are
+  not HDL identifiers.
+- Subaggregate conditions remain rejected; whole aggregate truthiness needs a
+  separate contract.
 ## 2026-05-16: aggregate inline drive targets reuse state assignments
 - `ISF-TYPE-AGGREGATE-PARITY.44` widens aggregate support into inline
   transaction drive assignment targets.

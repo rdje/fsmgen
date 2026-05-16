@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate standalone conditions shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.45` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.46`, selecting the
+  next enum or aggregate value/update context after aggregate standalone
+  transaction conditions.
+- Transaction `when`/`while`/`until` scalar conditions now accept scalar
+  aggregate storage leaves and emit computed `.fsm` selector review artifacts.
+- Subaggregate standalone conditions fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate inline drive targets shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.44` in

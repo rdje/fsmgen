@@ -888,11 +888,12 @@ Rules:
 - Transaction `set` RHS expressions may use scalar aggregate leaves as
   operands, for example `(set mode_out (+ frame.mode mode_in))`. Aggregate
   paths are not accepted in expression operator position.
-- Transaction `when`/`while`/`until` condition expressions may use scalar
-  aggregate leaves as operands, for example
-  `(when (& ready frame.flag) (set fire 1))`. Standalone aggregate conditions
-  and aggregate paths in condition expression operator position remain
-  deferred.
+- Transaction `when`/`while`/`until` conditions may use scalar aggregate
+  leaves directly or as operands inside condition expressions, for example
+  `(when frame.flag (set fire 1))` or
+  `(when (& ready frame.flag) (set fire 1))`. Direct aggregate condition leaves
+  lower through computed `.fsm` selector syntax such as `?(frame.flag)`.
+  Aggregate paths in condition expression operator position remain deferred.
 - Transaction `switch` selectors and branch scalar values may read scalar
   aggregate leaves on declared actor-owned aggregate storage, for example
   `(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
@@ -987,10 +988,10 @@ Rules:
   other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values,
-direct transaction `set` target tokens, transaction condition expression
-operands, transaction `switch` selectors or branch values, rule assignment
-target tokens, rule assignment RHS values or expression operands, rule guard
-expression operands, drive target tokens, drive body RHS scalar
+direct transaction `set` target tokens, transaction condition scalar values or
+expression operands, transaction `switch` selectors or branch values, rule
+assignment target tokens, rule assignment RHS values or expression operands,
+rule guard expression operands, drive target tokens, drive body RHS scalar
 values/expression operands, inline drive target tokens, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands; aggregate paths in drive body RHS, inline drive RHS, or drive-call
@@ -1396,8 +1397,8 @@ Required fail-closed examples:
   actor-owned storage variables, unknown aggregate members, out-of-range list
   indexes, aggregate storage member/item paths outside direct transaction
   `set` RHS values, direct transaction `set` target tokens, transaction
-  condition expression operands, transaction `switch` selectors or branch
-  values, rule assignment target tokens, rule assignment RHS
+  condition scalar values or expression operands, transaction `switch`
+  selectors or branch values, rule assignment target tokens, rule assignment RHS
   values/expression operands, rule guard expression operands, drive target
   tokens, drive body RHS scalar values/expression operands, inline drive
   target tokens, inline drive assignment RHS scalar values/expression operands,
@@ -1499,7 +1500,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1295-isf-enum-member-switch-selector-values.t \
   t/1296-isf-aggregate-rule-target-values.t \
   t/1297-isf-aggregate-drive-target-values.t \
-  t/1298-isf-aggregate-inline-drive-target-values.t
+  t/1298-isf-aggregate-inline-drive-target-values.t \
+  t/1299-isf-aggregate-standalone-condition-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

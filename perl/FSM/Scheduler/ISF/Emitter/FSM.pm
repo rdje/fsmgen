@@ -308,8 +308,7 @@ sub _emit_transitions($self, $state) {
             if grep { $_->{condition} } @$txs;
 
         my $cond = $state->{condition};
-        my $cond_str = !ref($cond) ? $cond : _format_expr($cond);
-        push @lines, "    (?$cond_str";
+        push @lines, "    (" . _format_condition_selector($cond);
         push @lines, "      (=1 (-> $state->{true_target}))" if $state->{true_target};
         # =0: skip to next top-level state
         for my $t (@$txs) {
@@ -324,8 +323,7 @@ sub _emit_transitions($self, $state) {
             if $state->{loop_transitions_materialized};
 
         my $cond = $state->{condition};
-        my $cond_str = !ref($cond) ? $cond : _format_expr($cond);
-        push @lines, "    (?$cond_str";
+        push @lines, "    (" . _format_condition_selector($cond);
         for my $t (@$txs) {
             my $branch = $t->{condition}{loop_branch};
             push @lines, "      (=$branch (-> $t->{target}))" if defined $branch;
@@ -479,6 +477,12 @@ sub _format_switch_test_selector {
     my ($signal) = @_;
     return "?$signal" if defined($signal) && $signal =~ /\A[A-Za-z_]\w*\z/;
     return "?($signal)";
+}
+
+sub _format_condition_selector {
+    my ($condition) = @_;
+    return '?' . _format_expr($condition) if ref($condition);
+    return _format_switch_test_selector($condition);
 }
 
 1;

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate standalone conditions shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.45`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.46`.
+- Transaction `when`/`while`/`until` scalar conditions now accept scalar
+  aggregate storage member/item leaves.
+- Scheduled `.fsm` branch and loop selectors now format non-identifier scalar
+  aggregate conditions through computed selector syntax.
+- Parser diagnostics reject unknown aggregate members and subaggregate
+  standalone conditions.
 ### R14 — ISF aggregate inline drive targets shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.44`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.45`.

@@ -319,11 +319,14 @@ expressions, for example
 `(rule expose ready (mode_out (^ lanes[1] pair_in)))`. Rule guard expressions
 may read scalar aggregate member/item leaves as scalar operands, for example
 `(rule expose (& ready frame.flag) (set fire 1))`. Transaction
-`when`/`while`/`until` condition expressions may read scalar aggregate
-member/item leaves as scalar operands too, for example
-`(when (& ready frame.flag) (set fire 1))`. Transaction `switch` selectors
-and branch scalar values may read scalar aggregate member/item leaves, for
-example `(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
+`when`/`while`/`until` conditions may read scalar aggregate member/item leaves
+directly or as scalar operands inside condition expressions, for example
+`(when frame.flag (set fire 1))` or
+`(when (& ready frame.flag) (set fire 1))`. Direct aggregate condition leaves
+lower through computed `.fsm` selector syntax such as `?(frame.flag)`.
+Transaction `switch` selectors and branch scalar values may read scalar
+aggregate member/item leaves, for example
+`(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
 `(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`.
 Named drive body scalar RHS values and scalar operands inside RHS expressions
 may read scalar aggregate
@@ -345,12 +348,12 @@ scalar aggregate member/item leaves, for example `(drive publish frame.mode)`
 or `(drive publish (+ frame.mode mode_in))`.
 Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
-condition expression operands, transaction `switch` selectors or branch
-values, rule assignment targets, rule assignment RHS values or expression
-operands, rule guard expression operands, drive target tokens, drive body RHS
-scalar values or expression operands, inline drive target tokens, inline drive
-assignment RHS scalar values or operands, or drive-call actual scalar
-values/expression operands,
+condition scalar values or expression operands, transaction `switch` selectors
+or branch values, rule assignment targets, rule assignment RHS values or
+expression operands, rule guard expression operands, drive target tokens, drive
+body RHS scalar values or expression operands, inline drive target tokens,
+inline drive assignment RHS scalar values or operands, or drive-call actual
+scalar values/expression operands,
 aggregate paths in
 expression operator position, subaggregate writes/operands, aggregate interface or
 transaction ports, and aggregate storage banks remain deferred.
@@ -1238,11 +1241,12 @@ activation guard. It may also appear later as inline branching.
 Transaction `when`, `while`, and `until` condition expressions may use local
 enum members such as `mode.BUSY`, package enum members such as
 `shared.mode.BUSY`, or scalar aggregate storage leaves such as `frame.flag` as
-scalar operands. The parser resolves those operands before lowering and
-preserves the authored condition expression in the scheduled `.fsm`
-computed-test selector. Standalone enum member or aggregate transaction
-conditions and enum members or aggregate paths in transaction condition
-expression operator position remain deferred.
+scalar operands. Scalar aggregate storage leaves may also be used directly as
+standalone transaction conditions. The parser resolves those operands before
+lowering and preserves the authored condition expression or scalar aggregate
+condition in the scheduled `.fsm` computed-test selector. Standalone enum
+member transaction conditions and enum members or aggregate paths in
+transaction condition expression operator position remain deferred.
 
 ### 7.1.1 Transaction Ports and Actor Pin Access
 
@@ -2885,6 +2889,7 @@ Focused tests:
 - [t/1296-isf-aggregate-rule-target-values.t](../t/1296-isf-aggregate-rule-target-values.t)
 - [t/1297-isf-aggregate-drive-target-values.t](../t/1297-isf-aggregate-drive-target-values.t)
 - [t/1298-isf-aggregate-inline-drive-target-values.t](../t/1298-isf-aggregate-inline-drive-target-values.t)
+- [t/1299-isf-aggregate-standalone-condition-values.t](../t/1299-isf-aggregate-standalone-condition-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2956,8 +2961,8 @@ Focused tests:
   enum member values and leaves, inline drive assignment RHS enum member
   values and expression operands, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
-  aggregate leaf operands, transaction condition expression aggregate leaf
-  operands, transaction `switch` branch aggregate leaf values, transaction
+  aggregate leaf operands, transaction condition aggregate leaf values and
+  expression operands, transaction `switch` branch aggregate leaf values, transaction
   `set` target aggregate leaf writes,
   rule assignment target aggregate leaf writes, rule assignment RHS aggregate
   leaf values and expression operands, rule guard expression aggregate leaf
@@ -2980,15 +2985,15 @@ Focused tests:
   values/expression operands remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values, direct transaction `set` target tokens,
-  transaction condition expression operands, transaction `switch` selectors or
-  branch values, rule assignment target tokens, rule assignment RHS
+  transaction condition scalar values or expression operands, transaction
+  `switch` selectors or branch values, rule assignment target tokens, rule assignment RHS
   values/expression operands, rule guard expression operands, drive target
   tokens, drive body RHS scalar values/expression operands, inline drive
   target tokens, inline drive assignment RHS scalar values/expression operands,
   or drive-call actual scalar values/expression operands,
-  aggregate paths in transaction condition, rule assignment RHS, rule guard,
-  drive body RHS expression, inline drive RHS expression, or drive-call actual
-  expression operator position,
+  aggregate paths in transaction condition expression operator position, rule
+  assignment RHS, rule guard, drive body RHS expression, inline drive RHS
+  expression, or drive-call actual expression operator position,
   subaggregate updates/operands, aggregate field/slice/update lowering, and broad
   aggregate/record width inference remain deferred to the active
   `ISF-TYPE-AGGREGATE-PARITY` task tree.

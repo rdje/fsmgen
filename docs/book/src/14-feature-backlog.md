@@ -322,8 +322,11 @@ read scalar aggregate leaves directly or as scalar operands inside RHS
 expressions, such as `(set mode_out (+ frame.mode mode_in))` inside a rule
 body. Rule guard expressions may read scalar aggregate leaves as operands, such
 as `(rule fire (& ready frame.flag) (set seen 1))`. Transaction
-`when`/`while`/`until` condition expressions may read scalar aggregate leaves as
-operands, such as `(when (& ready frame.flag) (set seen 1))`. Transaction
+`when`/`while`/`until` conditions may read scalar aggregate leaves directly or
+as operands inside condition expressions, such as
+`(when frame.flag (set seen 1))` or
+`(when (& ready frame.flag) (set seen 1))`. Direct aggregate condition leaves
+lower through computed `.fsm` selector syntax. Transaction
 `switch` selectors and branch values may read scalar aggregate leaves, such as
 `(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
 `(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`; selector
@@ -344,7 +347,7 @@ targets may write scalar aggregate leaves, such as
 `(drive inline_capture (frame.mode mode_in))` or
 `(drive inline_capture (lanes[1] pair_in))`. Aggregate member
 paths outside transaction `set` RHS values, direct transaction `set` targets,
-transaction condition expression operands, transaction `switch`
+transaction condition scalar values/expression operands, transaction `switch`
 selectors/branch values, rule assignment target tokens, rule assignment RHS
 values/expression operands, rule guard expression operands, drive target
 tokens, drive body RHS scalar values/expression operands, inline drive target

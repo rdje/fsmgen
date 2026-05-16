@@ -706,7 +706,10 @@ expressions may use scalar member/item leaves as operands, and transaction
 those same declared storage variables. Rule assignment RHS values and RHS
 expressions may read scalar member/item leaves from those same declared storage
 variables. Rule guard expressions may also read scalar member/item leaves as
-operands. Transaction `switch` selectors and branch values may read scalar
+operands. Transaction `when`/`while`/`until` conditions may read scalar
+member/item leaves directly or as operands inside condition expressions;
+direct aggregate conditions use computed `.fsm` selector syntax in review
+artifacts. Transaction `switch` selectors and branch values may read scalar
 member/item leaves from those same declared storage variables; aggregate
 selectors use computed `.fsm` selector syntax in review artifacts. Named drive
 body scalar RHS values and scalar operands inside RHS
@@ -724,10 +727,10 @@ package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
 aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
 actor-owned storage variables, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
-transaction `set` target tokens, transaction condition expression operands,
-transaction `switch` selectors or branch values, rule assignment RHS
-values/expression operands, rule assignment target tokens, or rule guard
-expression operands, drive target tokens, drive body RHS scalar
+transaction `set` target tokens, transaction condition scalar values or
+expression operands, transaction `switch` selectors or branch values, rule
+assignment RHS values/expression operands, rule assignment target tokens, or
+rule guard expression operands, drive target tokens, drive body RHS scalar
 values/expression operands, inline drive target tokens, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands, aggregate paths in expression
@@ -914,8 +917,13 @@ Transaction condition expression aggregate leaf operands are checked by
 covering local and package aggregate leaf operands inside transaction
 `when`/`while`/`until` condition expressions, scheduled `.fsm` computed-test
 review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
-members, standalone aggregate conditions, operator-position paths, and
-subaggregate operands.
+members, operator-position paths, and subaggregate operands.
+Standalone transaction condition aggregate leaf values are checked by
+[t/1299-isf-aggregate-standalone-condition-values.t](../t/1299-isf-aggregate-standalone-condition-values.t),
+covering local and package aggregate leaf reads as standalone
+`when`/`while`/`until` conditions, computed `.fsm` selector review artifacts,
+CLI HDL generation, and fail-closed diagnostics for unknown members and
+subaggregate conditions.
 Rule assignment RHS aggregate leaf values are checked by
 [t/1283-isf-aggregate-rule-values.t](../t/1283-isf-aggregate-rule-values.t),
 covering explicit and shorthand rule assignment RHS aggregate leaf reads,

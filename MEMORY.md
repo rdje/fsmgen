@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate standalone conditions shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.45` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.46`.
+- Transaction `when`/`while`/`until` scalar conditions now accept scalar
+  aggregate storage leaves such as `frame.flag` and `lanes[0]`.
+- Scheduled `.fsm` branch/loop review artifacts emit non-identifier aggregate
+  conditions through computed selectors such as `?(frame.flag)`.
+- Subaggregate standalone conditions remain deferred.
 ## 2026-05-16: ISF aggregate inline drive targets shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.44` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
