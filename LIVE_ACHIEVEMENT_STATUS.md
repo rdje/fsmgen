@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum transaction condition operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.21` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.22`, selecting the
+  next enum or aggregate value/update context after transaction condition enum
+  expression operands.
+- Transaction `when`/`while`/`until` condition expressions now accept local and
+  package-qualified enum members as scalar operands, preserve authored
+  computed-test condition expressions in scheduled `.fsm`, and pass strict CLI
+  HDL generation.
+- Standalone enum transaction conditions, expression operator-position enum
+  members, switch selectors, set targets, and other non-shipped condition/value
+  contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum rule guard expression operands shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.20` in

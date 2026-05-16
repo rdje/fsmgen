@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum transaction condition operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.21`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.22`.
+- Transaction `when`/`while`/`until` condition expressions now accept local and
+  package-qualified enum members as scalar operands.
+- Scheduled `.fsm` preserves authored computed-test condition expressions, and
+  strict CLI HDL generation accepts local and package enum condition operands.
+- The direct `.fsm` computed-test parser now accepts comparison expression
+  heads such as `==` while still rejecting malformed branch-list-only computed
+  tests.
+- Parser diagnostics reject unknown condition enum operands and keep standalone
+  enum conditions, expression operator-position enum members, switch selectors,
+  set targets, and other non-shipped contexts closed for later slices.
 ### R14 — ISF enum rule guard expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.20`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.21`.

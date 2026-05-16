@@ -280,18 +280,20 @@ banks, and other width-bearing declarations fail closed. Actor-local
 `+enums`. Enum members are consumed by actor constants, by actor scalar
 parameter defaults, by generated child transaction scalar parameter defaults,
 by scalar activation parameter overrides, by direct transaction `set` RHS scalar
-values or scalar operands inside transaction `set` RHS expressions, by
+values or scalar operands inside transaction `set` RHS expressions, by scalar
+operands inside transaction `when`/`while`/`until` condition expressions, by
 transaction `switch` branch values, by scalar rule assignment RHS values or
 scalar operands inside rule assignment RHS expressions, by scalar operands
 inside rule guard expressions, by scalar drive body RHS values, and by named
 drive-call scalar actual values or scalar operands inside drive-call actual
 expressions in the current ISF surface. Enum members in expression operator
-position, standalone guards, switch selectors, rule targets, rule guard or rule
-assignment expression operator position, rule actions outside scalar trigger
-parameter overrides, scalar assignment RHS values/operands, and rule guard
-expression operands, drive targets, drive-call expression operator position, aggregate/list
-parameter leaves, aggregate/list activation override leaves, and typed
-aggregate carriers do not consume enum member references yet.
+position, standalone guards or standalone transaction conditions, transaction
+condition expression operator position, switch selectors, rule targets, rule
+guard or rule assignment expression operator position, rule actions outside
+scalar trigger parameter overrides, drive targets, drive-call expression
+operator position, aggregate/list parameter leaves, aggregate/list activation
+override leaves, and typed aggregate carriers do not consume enum member
+references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -313,10 +315,11 @@ context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
 outside actor constants, actor scalar parameter defaults, generated child
 transaction scalar parameter defaults, scalar activation parameter overrides,
-transaction `set` RHS scalar values or expression operands, transaction
-`switch` branch values, rule assignment RHS scalar values or expression
-operands, drive body RHS scalar values, and drive-call actual scalar values or
-expression operands, additional aggregate carriers, aggregate
+transaction `when`/`while`/`until` condition expression operands, transaction
+`set` RHS scalar values or expression operands, transaction `switch` branch
+values, rule assignment RHS scalar values or expression operands, rule guard
+expression operands, drive body RHS scalar values, and drive-call actual scalar
+values or expression operands, additional aggregate carriers, aggregate
 field/slice/update lowering, incompatible enum values, aggregate shape
 mismatches, and ambiguous subaggregate updates remain owned by later
 `ISF-TYPE-AGGREGATE-PARITY` leaves.
@@ -1131,6 +1134,13 @@ entry transition.
 
 `(when condition ...)` may be used as the first transaction clause as an
 activation guard. It may also appear later as inline branching.
+Transaction `when`, `while`, and `until` condition expressions may use local
+enum members such as `mode.BUSY` or package enum members such as
+`shared.mode.BUSY` as scalar operands. The parser resolves those operands
+before lowering and preserves the authored condition expression in the
+scheduled `.fsm` computed-test selector. Standalone enum member transaction
+conditions and enum members in transaction condition expression operator
+position remain deferred.
 
 ### 7.1.1 Transaction Ports and Actor Pin Access
 
@@ -2736,6 +2746,7 @@ Focused tests:
 - [t/1272-isf-enum-member-rule-values.t](../t/1272-isf-enum-member-rule-values.t)
 - [t/1273-isf-enum-member-rule-expression-values.t](../t/1273-isf-enum-member-rule-expression-values.t)
 - [t/1274-isf-enum-member-rule-guard-values.t](../t/1274-isf-enum-member-rule-guard-values.t)
+- [t/1275-isf-enum-member-condition-values.t](../t/1275-isf-enum-member-condition-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2793,9 +2804,10 @@ Focused tests:
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum
   member values and expression operands, transaction `switch` branch enum
-  values, rule guard expression enum member operands, scalar rule assignment RHS
-  enum member values and expression operands, scalar drive body RHS enum member
-  values, scalar drive-call actual enum member values, drive-call actual
+  values, transaction `when`/`while`/`until` condition expression enum member
+  operands, rule guard expression enum member operands, scalar rule assignment
+  RHS enum member values and expression operands, scalar drive body RHS enum
+  member values, scalar drive-call actual enum member values, drive-call actual
   expression enum member operands, actor scalar parameter default enum member
   values, generated child transaction scalar parameter default enum member
   values, scalar activation parameter override enum member values, actor-owned
@@ -2805,7 +2817,8 @@ Focused tests:
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor scalar parameter defaults,
   generated child transaction scalar parameter defaults, scalar activation
-  parameter overrides, transaction `set` RHS scalar values/expression operands,
+  parameter overrides, transaction `when`/`while`/`until` condition expression
+  operands, transaction `set` RHS scalar values/expression operands,
   transaction `switch` branch values, rule guard expression operands, rule
   assignment RHS scalar values or expression operands, drive body RHS scalar
   values, or drive-call actual scalar values/expression operands remain

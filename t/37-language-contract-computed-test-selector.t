@@ -95,6 +95,48 @@ like($hdl, qr/\bassign\s+s0_x_1_en\s*=\s*s0_en\s*&\s*!\Q$condition_signal\E\s*;/
 like($hdl, qr/\bassign\s+s0_y_1_en\s*=\s*s0_en\s*&\s*\Q$condition_signal\E\s*;/, 'generated HDL reuses the intermediate signal directly in the =1 branch');
 like($hdl, qr/\bassign\s+s0_z_1_en\s*=/, 'generated HDL emits an enable for the computed selector default branch');
 
+my $comparison_fsm_path = File::Spec->catfile($tempdir, 'computed_test_selector_comparison.fsm');
+write_file($comparison_fsm_path, <<'FSM');
+(?fsm:computed_test_selector_comparison
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (A 1)
+    (B 1)
+    (X 1)
+    (Y 1)
+  )
+  (s0
+    (?(== A B)
+      (=1
+        (X = 1)
+      )
+      (=0
+        (Y = 1)
+      )
+    )
+  )
+)
+FSM
+
+my $comparison_raw_ast = Lispish::multi($comparison_fsm_path);
+my $comparison_module = FSM::Adapter::FSMGenFull->new(debug => 0)->parse_fsm($comparison_raw_ast);
+
+my @comparison_test_signals = sort grep {
+    ($comparison_module->signals->{$_}->get_attribute('is_intermediate') // 0)
+} keys %{$comparison_module->signals || {}};
+
+is(scalar(@comparison_test_signals), 1, 'computed comparison selector produces one intermediate test signal');
+my $comparison_signal = $comparison_test_signals[0];
+ok($comparison_signal, 'computed comparison selector intermediate signal name was captured');
+
+my $comparison_hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($comparison_module);
+
+like($comparison_hdl, qr/\bassign\s+\Q$comparison_signal\E\s*=\s*A\s*==\s*B\s*;/,
+    'computed comparison selector treats == as an expression operator, not a branch marker');
+
 done_testing();
 
 sub write_file {

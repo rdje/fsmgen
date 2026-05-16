@@ -287,6 +287,8 @@ compatible aggregate/list literal parameter values. Scalar activation parameter
 overrides may now also consume local and package-qualified enum members. Direct
 transaction `set` RHS scalar values and scalar operands inside transaction
 `set` RHS expressions may consume local and package-qualified enum members,
+transaction `when`/`while`/`until` condition expressions may consume local and
+package-qualified enum members as scalar operands,
 transaction `switch` branch values may consume local and package-qualified enum
 members, scalar rule assignment RHS values and scalar operands inside rule
 assignment RHS expressions and scalar operands inside rule guard expressions may
@@ -306,9 +308,10 @@ operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, actor scalar parameter
 defaults, generated child transaction scalar parameter defaults, scalar
 activation parameter overrides, transaction `set` RHS scalar values/expression
-operands, transaction `switch` branch values, rule guard expression operands,
-scalar rule assignment RHS values or expression operands, or drive body RHS
-scalar values or drive-call actual scalar values/expression operands,
+operands, transaction `when`/`while`/`until` condition expression operands,
+transaction `switch` branch values, rule guard expression operands, scalar rule
+assignment RHS values or expression operands, or drive body RHS scalar values
+or drive-call actual scalar values/expression operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 

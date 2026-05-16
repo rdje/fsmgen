@@ -749,6 +749,10 @@ Rules:
 
 - `when`, `repeat`, `switch`, `while`, and `until` bodies accept the supported
   transaction-body subset implemented for those contexts.
+- Transaction `when`/`while`/`until` condition expressions may use local enum
+  members such as `mode.BUSY` or package enum members such as
+  `shared.mode.BUSY` as scalar operands. Standalone enum member conditions and
+  enum members in condition expression operator position fail closed.
 - Unsupported nested clauses fail closed.
 - Runtime waits inside supported inline contexts are shipped for the covered
   predecessor and pending-sample cases.
@@ -894,23 +898,25 @@ Rules:
   members fail closed before generated artifacts are emitted.
 - Direct transaction `(set target enum_member)` RHS scalar values may also
   consume local or package enum members, transaction `set` RHS expressions may
-  use enum members as scalar operands, transaction `switch` branch values may
-  consume local or package enum members, and scalar drive body RHS values may
-  consume local or package enum members. Named drive-call scalar actual values
-  may also consume local or package enum members, drive-call actual
-  expressions may use enum members as scalar operands, scalar actor parameter
-  defaults may consume local or package enum members, generated child
-  transaction scalar parameter defaults may consume local or package enum
-  members, scalar activation parameter overrides may consume local or package
-  enum members, and scalar rule assignment RHS values or expression operands
-  may consume local or package enum members. Rule guard expressions may use enum
-  members as scalar operands. Enum members in expression operator position,
-  conditions outside rule guard expressions, switch selectors, targets, rules
-  outside scalar trigger parameter overrides, scalar assignment RHS
-  values/operands, and rule guard expression operands, rule guard or rule
-  assignment expression operator position, drive targets, drive-call expression
-  operator position, inline drive assignments, aggregate/list parameter leaves,
-  aggregate/list activation override leaves, and other contexts remain deferred.
+  use enum members as scalar operands, transaction `when`/`while`/`until`
+  condition expressions may use enum members as scalar operands, transaction
+  `switch` branch values may consume local or package enum members, and scalar
+  drive body RHS values may consume local or package enum members. Named
+  drive-call scalar actual values may also consume local or package enum
+  members, drive-call actual expressions may use enum members as scalar
+  operands, scalar actor parameter defaults may consume local or package enum
+  members, generated child transaction scalar parameter defaults may consume
+  local or package enum members, scalar activation parameter overrides may
+  consume local or package enum members, and scalar rule assignment RHS values
+  or expression operands may consume local or package enum members. Rule guard
+  expressions may use enum members as scalar operands. Enum members in
+  expression operator position, standalone transaction conditions, switch
+  selectors, targets, rules outside scalar trigger parameter overrides, rule
+  guard or transaction condition expression operator position, rule assignment
+  expression operator position, drive targets, drive-call expression operator
+  position, inline drive assignments, aggregate/list parameter leaves,
+  aggregate/list activation override leaves, and other contexts remain
+  deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1314,10 +1320,12 @@ Required fail-closed examples:
   indexes, aggregate storage member/item paths outside direct transaction
   `set` RHS values or target tokens, aggregate paths in expression operator
   position, subaggregate operands/updates, and enum member references outside
-  the shipped actor-constant, actor scalar parameter default, transaction
-  `set` RHS scalar/expression-operand, transaction `switch` branch-value,
-  drive body RHS scalar, and drive-call actual scalar/expression-operand
-  contexts.
+  the shipped actor-constant, actor scalar parameter default, generated child
+  transaction scalar parameter default, scalar activation parameter override,
+  transaction condition expression operand, transaction `set` RHS
+  scalar/expression operand, transaction `switch` branch-value, rule guard
+  expression operand, rule assignment RHS scalar/expression operand, drive body
+  RHS scalar, and drive-call actual scalar/expression-operand contexts.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1379,7 +1387,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1271-isf-enum-member-activation-params.t \
   t/1272-isf-enum-member-rule-values.t \
   t/1273-isf-enum-member-rule-expression-values.t \
-  t/1274-isf-enum-member-rule-guard-values.t
+  t/1274-isf-enum-member-rule-guard-values.t \
+  t/1275-isf-enum-member-condition-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

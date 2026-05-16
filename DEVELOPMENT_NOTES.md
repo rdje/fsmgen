@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum transaction conditions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.21` widens enum support from rule guard operands
+  to scalar operands inside transaction `when`/`while`/`until` condition
+  expressions because those constructs already lower to `.fsm` computed-test
+  selectors and strict HDL generation can preserve the authored expression.
+- The parser walks transaction condition expression trees and resolves enum
+  members before lowering, but rejects enum members in expression operator
+  position so condition heads remain ordinary operators.
+- Standalone enum member conditions stay closed because treating an enum
+  literal as a boolean transaction condition would be ambiguous. Authors should
+  use explicit comparisons such as `(== mode_in mode.BUSY)`.
+- The direct `.fsm` computed-test parser now uses a narrower branch-marker
+  check, so comparison heads such as `==` are not rejected as malformed branch
+  selectors while missing-selector branch lists such as `(? (=0 ...) ...)`
+  still fail with the targeted computed-selector diagnostic.
 ## 2026-05-16: enum rule guards are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.20` widens rule enum support from assignment RHS
   values to scalar operands inside rule guard expressions because rule guards

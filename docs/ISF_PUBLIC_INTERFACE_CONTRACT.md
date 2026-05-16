@@ -719,14 +719,15 @@ scalar rule assignment RHS values or scalar operands inside rule assignment RHS
 expressions, and scalar operands inside rule guard expressions in this slice,
 using local `mode.BUSY` or package-qualified `shared.mode.BUSY` spelling and
 resolving to non-negative integer literal values before lowering.
-Enum member references in expression operator position, conditions, switch
-selectors, targets, rules outside scalar trigger parameter overrides, scalar
-assignment RHS values/operands, and rule guard expression operands, rule guard
-or rule assignment expression operator position, drive targets, drive-call
-expression operator position, inline drive assignments, aggregate/list parameter
-leaves, aggregate/list activation override leaves, and other ISF value contexts,
-additional aggregate carriers, and aggregate field/slice/update semantics remain
-outside the parser/scheduler contract.
+Enum member references in expression operator position, standalone transaction
+conditions, switch selectors, targets, rules outside scalar trigger parameter
+overrides, scalar assignment RHS values/operands, and rule guard expression
+operands, transaction condition, rule guard, or rule assignment expression
+operator position, drive targets, drive-call expression operator position,
+inline drive assignments, aggregate/list parameter leaves, aggregate/list
+activation override leaves, and other ISF value contexts, additional aggregate
+carriers, and aggregate field/slice/update semantics remain outside the
+parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -805,6 +806,12 @@ covering local and package enum member operands inside shorthand and long-form
 rule guard expressions, scheduled `.fsm` review artifacts, strict CLI HDL
 generation, public `when` normalization, and fail-closed diagnostics for
 unknown members, standalone enum guards, and expression operator position.
+Transaction condition expression enum member operands are checked by
+[t/1275-isf-enum-member-condition-values.t](../t/1275-isf-enum-member-condition-values.t),
+covering local and package enum member operands inside transaction
+`when`/`while`/`until` condition expressions, scheduled `.fsm` computed-test
+review artifacts, strict CLI HDL generation, and fail-closed diagnostics for
+unknown members, standalone enum conditions, and expression operator position.
 Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,

@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum transaction condition operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.21` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.22`.
+- Transaction `when`, `while`, and `until` condition expressions now accept
+  local enum members such as `mode.BUSY` and package-qualified enum members
+  such as `shared.mode.BUSY` as scalar operands.
+- The parser resolves those condition enum operands before lowering, preserves
+  authored computed-test condition expressions in scheduled `.fsm`, and strict
+  CLI HDL generation accepts the result.
+- The `.fsm` computed-test parser now distinguishes comparison expression heads
+  such as `==` from selector branch markers such as `=1`, preserving malformed
+  missing-selector diagnostics while accepting scheduler-emitted comparisons.
+- Standalone enum member transaction conditions, expression operator-position
+  enum members, switch selectors, set targets, and other non-shipped value
+  contexts remain deferred.
 ## 2026-05-16: ISF enum rule guard expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.20` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

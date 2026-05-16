@@ -121,7 +121,7 @@ ISF
   (rule mark_busy mode.BUSY
     (set mode_out 1)))
 ISF
-        qr/rule 'mark_busy' guard references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        qr/rule 'mark_busy' guard references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in rule guards remain deferred',
     );
 

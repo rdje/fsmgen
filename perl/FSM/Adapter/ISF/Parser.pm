@@ -749,7 +749,12 @@ sub _validate_transaction_enum_member_value_clause {
     }
 
     if ($head eq 'when' || $head eq 'while' || $head eq 'until') {
-        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context $head condition");
+        _validate_transaction_condition_enum_member_values(
+            $clause->[1],
+            $actor,
+            $aggregate_roots,
+            "$context $head condition",
+        );
         _validate_transaction_enum_member_value_contexts(
             [ @{$clause}[2 .. $#$clause] ],
             $actor,
@@ -816,6 +821,41 @@ sub _validate_transaction_enum_member_value_clause {
     }
 
     return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context);
+}
+
+sub _validate_transaction_condition_enum_member_values {
+    my ($condition, $actor, $aggregate_roots, $context) = @_;
+
+    return _reject_enum_member_value_contexts($condition, $actor, $aggregate_roots, $context)
+        unless ref($condition);
+
+    return _validate_transaction_condition_enum_member_expr($condition, $actor, $aggregate_roots, $context);
+}
+
+sub _validate_transaction_condition_enum_member_expr {
+    my ($expr, $actor, $aggregate_roots, $context) = @_;
+
+    if (!ref($expr)) {
+        my $member = _enum_member_value_token($expr, $aggregate_roots);
+        _validate_enum_member_value($member, $actor, $context)
+            if defined $member;
+        return 1;
+    }
+
+    return 1 unless ref($expr) eq 'ARRAY';
+
+    for my $index (0 .. $#$expr) {
+        my $item = $expr->[$index];
+        if ($index == 0 && defined($item) && !ref($item)) {
+            my $member = _enum_member_value_token($item, $aggregate_roots);
+            confess "Error: $context expression operator references enum member '$member'; this ISF slice accepts enum member references inside transaction condition expressions only as scalar operands\n"
+                if defined $member;
+            next;
+        }
+        _validate_transaction_condition_enum_member_expr($item, $actor, $aggregate_roots, $context);
+    }
+
+    return 1;
 }
 
 sub _validate_transaction_set_enum_member_rhs {
@@ -1271,7 +1311,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }

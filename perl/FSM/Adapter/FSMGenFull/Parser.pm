@@ -2870,19 +2870,25 @@ sub parse_test_node_new_format($self, $action) {
     
     my $signal;
     if ($test_signal eq '?') {
+        my @payload = @$action > 2
+            ? @$action[1 .. $#$action]
+            : (ref($branches) eq 'ARRAY' ? @$branches : ());
+
         Carp::confess
             "Malformed computed test selector '?'. ".
             "Computed test nodes must use '?(expr)' with a valid selector expression followed by at least one selector branch such as '(?(| A B) (=0 ...) (=1 ...))'. ".
             supported_boundary_hint()
-            unless ref($branches) eq 'ARRAY' && @$branches >= 2;
+            unless @payload >= 2;
 
         # Format: (?(| a b) (=0 x))
-        # The condition expression is the first element of branches
-        my $cond_ast = shift @$branches;
+        # The condition expression is the first payload element; the remaining
+        # payload elements are selector branches.
+        my $cond_ast = shift @payload;
+        $branches = \@payload;
 
         if (ref($cond_ast) eq 'ARRAY' && @$cond_ast) {
             my $selector_head = $cond_ast->[0];
-            if (defined($selector_head) && !ref($selector_head) && $selector_head =~ /^(?:==|!=|<=|>=|=|<|>).+/) {
+            if ($self->is_computed_test_branch_marker($selector_head)) {
                 Carp::confess
                     "Malformed computed test selector '?'. ".
                     "Computed test nodes must start with a real selector expression before the branch list, for example '(?(| A B) (=0 ...) (=1 ...))'. ".
@@ -2975,6 +2981,13 @@ sub parse_test_node_new_format($self, $action) {
     }
     
 	    return $test_node;
+}
+
+sub is_computed_test_branch_marker($self, $value) {
+    return 0 unless defined($value) && !ref($value);
+    return 1 if $self->is_default_test_branch_selector($value);
+    return $value =~ /\A(?:==|!=|<=|>=|=|<|>).+\z/
+        && $value !~ /\A(?:==|!=|<=|>=|=|<|>)\z/;
 }
 
 sub validate_test_branch_selector($self, $test_value) {
