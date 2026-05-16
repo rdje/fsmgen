@@ -712,7 +712,8 @@ and subaggregate operands/updates fail closed. Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
 references are public as actor constant values, scalar actor parameter
 defaults or scalar leaves inside actor aggregate/list parameter defaults,
-generated child transaction scalar parameter defaults, direct
+generated child transaction scalar parameter defaults or scalar leaves inside
+generated child transaction aggregate/list parameter defaults, direct
 transaction `set` RHS scalar values or scalar operands inside transaction
 `set` RHS expressions, transaction `switch` branch values, scalar drive body
 RHS values, named drive-call scalar actual values or scalar operands inside
@@ -726,8 +727,7 @@ Enum member references in expression operator position, standalone transaction
 conditions, switch selectors, targets, rules outside scalar trigger parameter
 overrides, transaction condition, rule guard, or rule assignment expression
 operator position, drive targets, drive-call expression operator position,
-inline drive assignments, generated child transaction aggregate/list
-parameter-default leaves, reusable-library use-site parameter overrides, and
+inline drive assignments, reusable-library use-site parameter overrides, and
 other ISF value contexts, additional aggregate carriers, and aggregate
 field/slice/update semantics remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
@@ -789,8 +789,15 @@ covering local and package enum member transaction parameter defaults,
 generated child `.fsm` `+params` review artifacts, generated-composition
 schedule-report value preservation, CLI HDL generation, and fail-closed
 diagnostics for unknown members, aggregate/list parameter leaves, and
-generated child aggregate/list parameter leaves plus reusable-library use-site
-override contexts.
+reusable-library use-site override contexts.
+Generated child transaction aggregate/list parameter default enum member leaves
+are checked by
+[t/1278-isf-enum-member-transaction-aggregate-params.t](../t/1278-isf-enum-member-transaction-aggregate-params.t),
+covering local and package enum member leaves in generated child transaction
+aggregate/list parameter defaults, generated child `.fsm` `+params` review
+artifacts, generated-composition child parameter summaries and default
+instance bindings, strict CLI HDL generation, and fail-closed diagnostics for
+unknown leaves.
 Scalar activation parameter override enum member values are checked by
 [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t),
 covering local and package enum member overrides on spawn, generated blocking
@@ -1441,9 +1448,10 @@ machine-readable contract advertises these through
 
 Generated-composition child `parameters[]` and instance
 `parameter_bindings[]` entries also preserve authored scalar enum member
-tokens for generated child transaction parameter defaults. Scalar activation
-override enum values and enum leaves inside activation aggregate/list override
-values are resolved to literal values before generated-top emission, so
+tokens and aggregate/list enum leaves for generated child transaction parameter
+defaults. Scalar activation override enum values and enum leaves inside
+activation aggregate/list override values are resolved to literal values before
+generated-top emission, so
 generated-composition instance `parameter_bindings[]` entries carry the emitted
 literal override value for those use sites.
 

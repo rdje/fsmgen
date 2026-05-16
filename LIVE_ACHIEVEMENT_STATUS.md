@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum transaction aggregate parameter defaults shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.24` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.25`, selecting the
+  next enum or aggregate value/update context after generated child transaction
+  aggregate/list enum parameter defaults.
+- Generated child transaction aggregate/list `(params ...)` defaults now accept
+  local and package-qualified enum members as scalar leaves, preserve authored
+  tokens in child `.fsm` `+params`, generated-composition child parameter
+  summaries, and default instance bindings, and record resolved literal leaves
+  internally for validation.
+- Reusable-library use-site enum overrides, runtime signals, arbitrary
+  expressions, and broader non-parameter value contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum actor aggregate parameter defaults shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.23` in

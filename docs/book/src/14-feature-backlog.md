@@ -140,10 +140,10 @@ the generated top. The shipped value domain is scalar/exact-width literals,
 actor-local constants, scalar local or package-qualified enum members, and
 compatible aggregate/list literals whose scalar leaves are literals,
 actor-local constants for activation overrides, or enum members for actor
-parameter defaults and activation overrides. Constant names and scalar enum
-members are resolved to literal values before generated-top emission.
-Transaction aggregate/list parameter enum leaves, reusable-library use-site
-enum overrides, runtime signals, and arbitrary expressions remain outside the
+parameter defaults, generated child transaction parameter defaults, and
+activation overrides. Constant names and scalar enum members are resolved to
+literal values before generated-top emission. Reusable-library use-site enum
+overrides, runtime signals, and arbitrary expressions remain outside the
 shipped value domain.
 
 ### General Transaction Activation Parameter Overrides
@@ -287,6 +287,8 @@ actor aggregate/list parameter default leaves backed by local or
 package-qualified enum members,
 generated child transaction scalar parameter defaults backed by local or
 package-qualified enum members,
+generated child transaction aggregate/list parameter default leaves backed by
+local or package-qualified enum members,
 actor-local constants for selected static specialization values, and
 compatible aggregate/list literal parameter values. Scalar activation parameter
 overrides and scalar leaves inside activation aggregate/list parameter override
@@ -313,12 +315,12 @@ transaction `set` RHS values or direct targets, subaggregate
 operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, actor parameter scalar
 values or aggregate/list default leaves, generated child transaction scalar
-parameter defaults, activation parameter scalar values or aggregate/list
-override leaves, transaction `set` RHS scalar values/expression operands,
-transaction `when`/`while`/`until` condition expression operands, transaction
-`switch` branch values, rule guard expression operands, scalar rule assignment
-RHS values or expression operands, or drive body RHS scalar values or
-drive-call actual scalar values/expression operands,
+parameter defaults or aggregate/list default leaves, activation parameter
+scalar values or aggregate/list override leaves, transaction `set` RHS scalar
+values/expression operands, transaction `when`/`while`/`until` condition
+expression operands, transaction `switch` branch values, rule guard expression
+operands, scalar rule assignment RHS values or expression operands, or drive
+body RHS scalar values or drive-call actual scalar values/expression operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 

@@ -2767,6 +2767,15 @@ sub _transaction_param_declarations {
         );
         $param{resolved_value} = _clone_isf_value(_resolve_actor_enum_member_value($actor, $value))
             if _is_enum_member_reference($value);
+        if (ref($value)) {
+            my ($resolved_value, $has_enum_leaf) = _resolve_transaction_param_default_value(
+                $value,
+                "Transaction '$tx_name': parameter '$name'",
+                $actor,
+            );
+            $param{resolved_value} = _clone_isf_value($resolved_value)
+                if $has_enum_leaf;
+        }
         push @params, \%param;
     }
 
@@ -3274,35 +3283,44 @@ sub _validate_transaction_param_value {
         confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, and scalar enum member literals only\n";
     }
 
-    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
-    for my $item (@$value) {
-        _validate_transaction_param_aggregate_leaf_value($item, $context);
-    }
+    _resolve_transaction_param_default_value($value, $context, $actor);
 
     return 1;
 }
 
-sub _validate_transaction_param_aggregate_leaf_value {
-    my ($value, $context) = @_;
+sub _resolve_transaction_param_default_value {
+    my ($value, $context, $actor) = @_;
 
     if (!ref($value)) {
-        confess "$context uses unsupported aggregate/list parameter leaf '$value'; transaction parameter aggregate/list defaults accept numeric and exact-width literal leaves only, while enum member leaves remain deferred\n"
-            if _is_enum_member_reference($value);
-        confess "$context uses unsupported parameter value '$value'; transaction parameter aggregate/list defaults accept numeric and exact-width literal leaves only\n"
-            unless defined($value) && _is_numeric_or_exact_width_literal($value);
-        return 1;
+        return (_clone_isf_value($value), 0)
+            if defined($value) && _is_numeric_or_exact_width_literal($value);
+        if (_is_enum_member_reference($value)) {
+            my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
+            confess "$context references unknown enum member '$value'\n"
+                unless defined($resolved_value) && !ref($resolved_value);
+            confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless defined _non_negative_integer_from_literal($resolved_value);
+            return (_clone_isf_value($resolved_value), 1);
+        }
+
+        confess "$context uses unsupported parameter value '$value'; transaction parameter aggregate/list defaults accept numeric, exact-width, and enum member literal leaves only\n";
     }
 
-    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
+    my @resolved;
+    my $has_enum_leaf = 0;
     for my $item (@$value) {
-        _validate_transaction_param_aggregate_leaf_value($item, $context);
+        my ($resolved_item, $item_has_enum_leaf) = _resolve_transaction_param_default_value($item, $context, $actor);
+        push @resolved, $resolved_item;
+        $has_enum_leaf ||= $item_has_enum_leaf;
     }
 
-    return 1;
+    return (\@resolved, $has_enum_leaf);
 }
 
 sub _resolve_activation_param_value {

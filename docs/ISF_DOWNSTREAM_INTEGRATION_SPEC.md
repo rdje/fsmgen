@@ -457,14 +457,14 @@ Rules:
   defaults.
 - Actor parameter scalar defaults and scalar leaves inside actor aggregate/list
   parameter defaults may use local or package-qualified enum member references.
-  Generated child transaction scalar parameter defaults may also use local or
-  package-qualified enum member references. Scalar activation parameter
-  overrides and scalar leaves inside activation aggregate/list parameter
-  override values may also use local or package-qualified enum member
-  references on generated activation sites. Generated child transaction
-  aggregate/list parameter-default enum member leaves, reusable-library
-  use-site enum overrides, duplicate overrides, unknown overrides, and shape
-  mismatches fail closed.
+  Generated child transaction scalar parameter defaults and scalar leaves
+  inside generated child transaction aggregate/list parameter defaults may also
+  use local or package-qualified enum member references. Scalar activation
+  parameter overrides and scalar leaves inside activation aggregate/list
+  parameter override values may also use local or package-qualified enum member
+  references on generated activation sites. Reusable-library use-site enum
+  overrides, duplicate overrides, unknown overrides, and shape mismatches fail
+  closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored enum
   tokens. These are static specialization defaults, not runtime payloads.
@@ -908,19 +908,19 @@ Rules:
   members, drive-call actual expressions may use enum members as scalar
   operands, scalar actor parameter defaults and scalar leaves inside actor
   aggregate/list parameter defaults may consume local or package enum members,
-  generated child transaction scalar parameter defaults may consume local or
-  package enum members, scalar activation parameter overrides may consume local
-  or package enum members, scalar leaves inside activation aggregate/list
-  parameter override values may consume local or package enum members, and
-  scalar rule assignment RHS values or expression operands may consume local or
-  package enum members. Rule guard expressions may use enum members as scalar
-  operands. Enum members in
+  generated child transaction scalar parameter defaults and scalar leaves
+  inside generated child transaction aggregate/list parameter defaults may
+  consume local or package enum members, scalar activation parameter overrides
+  may consume local or package enum members, scalar leaves inside activation
+  aggregate/list parameter override values may consume local or package enum
+  members, and scalar rule assignment RHS values or expression operands may
+  consume local or package enum members. Rule guard expressions may use enum
+  members as scalar operands. Enum members in
   expression operator position, standalone transaction conditions, switch
   selectors, targets, rules outside scalar trigger parameter overrides, rule
   guard or transaction condition expression operator position, rule assignment
   expression operator position, drive targets, drive-call expression operator
-  position, inline drive assignments, generated child transaction
-  aggregate/list parameter-default leaves, reusable-library use-site parameter
+  position, inline drive assignments, reusable-library use-site parameter
   overrides, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
@@ -1326,8 +1326,8 @@ Required fail-closed examples:
   `set` RHS values or target tokens, aggregate paths in expression operator
   position, subaggregate operands/updates, and enum member references outside
   the shipped actor-constant, actor parameter scalar default or aggregate/list
-  default leaf, generated child transaction scalar parameter default, scalar
-  activation parameter override,
+  default leaf, generated child transaction scalar parameter default or
+  aggregate/list default leaf, scalar activation parameter override,
   transaction condition expression operand, transaction `set` RHS
   scalar/expression operand, transaction `switch` branch-value, rule guard
   expression operand, rule assignment RHS scalar/expression operand, drive body
@@ -1396,7 +1396,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1274-isf-enum-member-rule-guard-values.t \
   t/1275-isf-enum-member-condition-values.t \
   t/1276-isf-enum-member-activation-aggregate-params.t \
-  t/1277-isf-enum-member-actor-aggregate-params.t
+  t/1277-isf-enum-member-actor-aggregate-params.t \
+  t/1278-isf-enum-member-transaction-aggregate-params.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

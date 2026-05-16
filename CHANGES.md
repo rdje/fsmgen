@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum transaction aggregate parameter defaults shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.24`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.25`.
+- Generated child transaction aggregate/list `(params ...)` defaults now accept
+  local and package-qualified enum members as scalar leaves.
+- Generated child `.fsm` `+params`, generated-composition child parameter
+  summaries, and default instance bindings preserve authored enum tokens, while
+  lowerer metadata records resolved literal leaves for validation.
+- Parser/lowerer diagnostics reject unknown enum-backed transaction
+  aggregate/list parameter leaves and keep reusable-library use-site enum
+  overrides, runtime signals, arbitrary expressions, and broader non-parameter
+  contexts closed for later slices.
 ### R14 — ISF enum actor aggregate parameter defaults shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.23`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.24`.

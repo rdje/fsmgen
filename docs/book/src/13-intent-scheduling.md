@@ -405,7 +405,8 @@ limitations are:
   integer values for static waits and existing static activation-parameter
   overrides. Scalar actor parameter defaults, scalar leaves inside actor
   aggregate/list parameter defaults, generated child transaction scalar
-  parameter defaults, direct transaction `set` RHS scalar values,
+  parameter defaults, scalar leaves inside generated child transaction
+  aggregate/list parameter defaults, direct transaction `set` RHS scalar values,
   scalar operands inside transaction `set` RHS expressions, transaction
   `when`/`while`/`until` condition expression operands, transaction `switch`
   branch values, scalar rule assignment RHS values and scalar operands inside
@@ -426,8 +427,8 @@ limitations are:
   outside scalar trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
   position, drive targets, drive-call expression operator position, inline drive assignments,
-  generated child transaction aggregate/list parameter
-  leaves, and other non-shipped contexts remain backlog, as do aggregate paths outside
+  reusable-library use-site parameter overrides, and other non-shipped contexts
+  remain backlog, as do aggregate paths outside
   transaction `set` RHS values or direct targets, subaggregate
   operands/updates, and aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one

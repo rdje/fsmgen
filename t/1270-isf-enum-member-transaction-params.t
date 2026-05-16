@@ -151,28 +151,6 @@ ISF
         'unknown local enum member transaction parameter default fails before lowering',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_transaction_param_list_leaf_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output done))
-  (transaction main
-    (on start)
-    (spawn worker as w0))
-  (transaction worker
-    (params
-      (DEFAULT_MODES (mode.BUSY 1)))
-    (complete done)))
-ISF
-        qr/transaction 'worker' parameter 'DEFAULT_MODES' uses unsupported aggregate\/list parameter leaf 'mode\.BUSY'; transaction parameter aggregate\/list defaults accept numeric and exact-width literal leaves only, while enum member leaves remain deferred/,
-        'enum leaves inside aggregate/list transaction parameters remain deferred',
-    );
-
 };
 
 done_testing();

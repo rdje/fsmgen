@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -213,8 +213,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.23: support enum actor aggregate params`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.24`
+  Status: `done`
+  Goal: `support enum member leaves inside generated child transaction aggregate/list parameter defaults`
+  Acceptance: `generated child transaction aggregate/list parameter defaults accept local/package enum members as scalar leaves, preserve authored tokens in child .fsm +params, generated-composition child parameter summaries, and default instance bindings, record resolved literal leaves internally, pass strict CLI HDL generation, reject unknown leaves, and keep reusable-library use-site enum overrides deferred`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1278-isf-enum-member-transaction-aggregate-params.t t/1270-isf-enum-member-transaction-params.t t/1277-isf-enum-member-actor-aggregate-params.t t/1269-isf-enum-member-actor-params.t t/1276-isf-enum-member-activation-aggregate-params.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.24: support enum transaction aggregate params`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.25`
   Status: `pending`
-  Goal: `choose and implement the next enum or aggregate value/update context after actor aggregate/list enum parameter defaults`
+  Goal: `choose and implement the next enum or aggregate value/update context after generated child transaction aggregate/list enum parameter defaults`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -223,7 +230,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.24` | `pending` | The next enum or aggregate value/update context can be selected after actor aggregate/list enum parameter defaults are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.25` | `pending` | The next enum or aggregate value/update context can be selected after generated child transaction aggregate/list enum parameter defaults are stable. |
 
 ## Decisions
 
@@ -426,6 +433,13 @@ ISF-only type system.
   resolved literal leaves for validation. Generated child transaction
   aggregate/list parameter defaults and reusable-library use-site enum
   overrides remain separate contracts.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.24` widens generated child
+  transaction parameter defaults from scalar enum values to enum member leaves
+  inside aggregate/list defaults. Generated child `.fsm` `+params`,
+  generated-composition child parameter summaries, and default instance
+  bindings preserve authored enum tokens, while lowerer metadata records
+  resolved literal leaves for validation. Reusable-library use-site enum
+  overrides remain a separate library-instantiation contract.
 
 ## Open Questions
 
@@ -436,17 +450,18 @@ ISF-only type system.
   JSON expansion.
 - Which enum member expression/value contexts beyond actor constants, actor
   parameter scalar values or aggregate/list default leaves, generated child
-  transaction scalar parameter defaults, activation parameter scalar values and
-  aggregate/list override leaves, transaction `set` RHS scalar
+  transaction parameter scalar values or aggregate/list default leaves,
+  activation parameter scalar values and aggregate/list override leaves,
+  transaction `set` RHS scalar
   values/expression operands, transaction `when`/`while`/`until` condition
   expression operands, transaction `switch` branch values, rule guard
   expression operands, rule assignment RHS scalar values/expression operands,
   drive body RHS scalar values, and drive-call scalar actual values/expression
   operands should ship next? This remains deferred beyond
-  `ISF-TYPE-AGGREGATE-PARITY.23`.
-- Which enum or aggregate value/update context should ship after actor
-  aggregate/list enum parameter defaults? The current frontier selects this for
   `ISF-TYPE-AGGREGATE-PARITY.24`.
+- Which enum or aggregate value/update context should ship after generated
+  child transaction aggregate/list enum parameter defaults? The current
+  frontier selects this for `ISF-TYPE-AGGREGATE-PARITY.25`.
 
 ## Blockers
 
@@ -479,6 +494,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.21` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/37-language-contract-computed-test-selector.t t/55-language-contract-computed-test-selector-boundary.t`; `prove -Iperl t/1275-isf-enum-member-condition-values.t t/1274-isf-enum-member-rule-guard-values.t t/1273-isf-enum-member-rule-expression-values.t t/1272-isf-enum-member-rule-values.t t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1269-isf-enum-member-actor-params.t t/1270-isf-enum-member-transaction-params.t t/1271-isf-enum-member-activation-params.t t/1206-isf-when-clause-boundary.t t/1245-isf-transaction-loop-lowering.t t/1233-isf-rule-expression-guards.t t/1221-isf-rule-expression-assignment.t t/1246-isf-setter-syntax.t t/295-strict-mode-infix-assignment-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.22` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1276-isf-enum-member-activation-aggregate-params.t t/1271-isf-enum-member-activation-params.t t/1270-isf-enum-member-transaction-params.t t/1269-isf-enum-member-actor-params.t t/1249-isf-activation-parameter-constants.t t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1263-isf-enum-member-set-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1272-isf-enum-member-rule-values.t t/1274-isf-enum-member-rule-guard-values.t t/1275-isf-enum-member-condition-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.23` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1277-isf-enum-member-actor-aggregate-params.t t/1269-isf-enum-member-actor-params.t t/1270-isf-enum-member-transaction-params.t t/1276-isf-enum-member-activation-aggregate-params.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.24` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1278-isf-enum-member-transaction-aggregate-params.t t/1270-isf-enum-member-transaction-params.t t/1277-isf-enum-member-actor-aggregate-params.t t/1269-isf-enum-member-actor-params.t t/1276-isf-enum-member-activation-aggregate-params.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -507,6 +523,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.21` | `ISF-TYPE-AGGREGATE-PARITY.21: support enum conditions` | `Transaction condition expression enum member operand parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.22` | `ISF-TYPE-AGGREGATE-PARITY.22: support enum activation aggregate leaves` | `Activation aggregate/list override enum member leaf parser/lowering/report slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.23` | `ISF-TYPE-AGGREGATE-PARITY.23: support enum actor aggregate params` | `Actor aggregate/list parameter default enum member leaf parser/lowering/report slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.24` | `ISF-TYPE-AGGREGATE-PARITY.24: support enum transaction aggregate params` | `Generated child transaction aggregate/list parameter default enum member leaf parser/lowering/report slice.` |
 
 ## Changelog
 
@@ -578,3 +595,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped actor aggregate/list parameter default enum member
   leaves for `ISF-TYPE-AGGREGATE-PARITY.23` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.24`.
+- `2026-05-16`: Shipped generated child transaction aggregate/list parameter
+  default enum member leaves for `ISF-TYPE-AGGREGATE-PARITY.24` and advanced
+  the frontier to `ISF-TYPE-AGGREGATE-PARITY.25`.
