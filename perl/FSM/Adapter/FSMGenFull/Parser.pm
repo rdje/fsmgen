@@ -2896,6 +2896,15 @@ sub parse_test_node_new_format($self, $action) {
             }
         }
 
+        if (
+            ref($cond_ast) eq 'ARRAY'
+            && @$cond_ast >= 1
+            && !ref($cond_ast->[0])
+            && (@$cond_ast == 1 || (@$cond_ast == 2 && !defined($cond_ast->[1])))
+        ) {
+            $cond_ast = $cond_ast->[0];
+        }
+
         my $condition_expr = $self->{expression_builder}->parse_condition($cond_ast);
         
         if ($condition_expr && $condition_expr->isa('FSM::CoreAST::SignalRef')) {
@@ -2903,10 +2912,15 @@ sub parse_test_node_new_format($self, $action) {
         } else {
             # Need to create an intermediate signal for this complex condition
             my $intermediate_name = $self->{expression_builder}->generate_intermediate_signal('cond', [$condition_expr || FSM::CoreAST::Literal->new('0')]);
-            $signal = $self->{signal_manager}->register_signal($intermediate_name, 
+            my $selector_width = eval { $self->{expression_builder}->infer_exact_expression_width($condition_expr) };
+            my %signal_attributes = (
                 type => 'wire',
-                is_intermediate => 1
+                is_intermediate => 1,
             );
+            $signal_attributes{width} = $selector_width
+                if defined($selector_width) && $selector_width > 0;
+
+            $signal = $self->{signal_manager}->register_signal($intermediate_name, %signal_attributes);
             $signal->set_driving_ast($condition_expr) if $condition_expr;
         }
     } else {

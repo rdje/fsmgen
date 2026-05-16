@@ -323,7 +323,11 @@ expressions, such as `(set mode_out (+ frame.mode mode_in))` inside a rule
 body. Rule guard expressions may read scalar aggregate leaves as operands, such
 as `(rule fire (& ready frame.flag) (set seen 1))`. Transaction
 `when`/`while`/`until` condition expressions may read scalar aggregate leaves as
-operands, such as `(when (& ready frame.flag) (set seen 1))`. Named drive body
+operands, such as `(when (& ready frame.flag) (set seen 1))`. Transaction
+`switch` selectors and branch values may read scalar aggregate leaves, such as
+`(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
+`(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`; selector
+leaves lower through computed `.fsm` selector syntax. Named drive body
 scalar RHS values and scalar operands inside RHS expressions may read scalar
 aggregate leaves, such as `(drive publish (mode_out frame.mode))` or
 `(drive publish (mode_out (+ frame.mode mode_in)))`. Named drive-call scalar
@@ -334,8 +338,9 @@ values and scalar operands inside RHS expressions may read scalar aggregate
 leaves, such as `(drive inline_publish (mode_out frame.mode))` or
 `(drive inline_publish (mode_out (+ frame.mode mode_in)))`. Aggregate member
 paths outside transaction `set` RHS values, direct transaction `set` targets,
-transaction condition expression operands, rule assignment RHS values/expression
-operands, rule guard expression operands, drive body RHS scalar
+transaction condition expression operands, transaction `switch`
+selectors/branch values, rule assignment RHS values/expression operands, rule
+guard expression operands, drive body RHS scalar
 values/expression operands, inline drive assignment RHS scalar
 values/expression operands, or drive-call actual scalar values/expression
 operands, subaggregate
@@ -459,9 +464,10 @@ expressions may use enum members as scalar operands and may read scalar
 aggregate storage leaves such as `frame.flag`; aggregate paths in rule
 assignment RHS or rule guard expression operator position, expression
 operator-position enum members, standalone enum/aggregate guards, and rule
-targets remain backlog. Transaction `switch` branch values may read scalar
-aggregate storage leaves such as `frame.mode`; switch selectors and
-subaggregate branch values remain backlog. Named drive body scalar RHS values
+targets remain backlog. Transaction `switch` selectors and branch values may
+read scalar aggregate storage leaves such as `frame.mode`; enum switch
+selectors and subaggregate selectors/branch values remain backlog. Named drive
+body scalar RHS values
 and scalar operands inside RHS expressions may read scalar aggregate storage
 leaves such as `frame.mode`; aggregate paths in drive body RHS expression
 operator position and drive targets remain backlog. Named drive-call scalar

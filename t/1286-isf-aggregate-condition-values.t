@@ -167,7 +167,7 @@ ISF
     (when frame.flag
       (complete done))))
 ISF
-        qr/transaction 'main' when condition references aggregate storage path 'frame\.flag'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch branch scalar values, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands/,
+        qr/transaction 'main' when condition references aggregate storage path 'frame\.flag'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch selector or branch scalar values, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands/,
         'standalone aggregate transaction conditions remain deferred',
     );
 

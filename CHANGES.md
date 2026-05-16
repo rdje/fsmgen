@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate switch selectors shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.40`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.41`.
+- Transaction `switch` selectors now accept scalar aggregate storage
+  member/item leaves from declared actor-owned aggregate storage.
+- Scheduled `.fsm` switch review artifacts emit aggregate selectors through
+  computed selector syntax, and strict CLI HDL generation accepts them.
+- Parser diagnostics reject unknown aggregate members and subaggregate
+  selectors; enum switch selectors remain deferred.
 ### R14 — ISF aggregate switch branch values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.39`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.40`.

@@ -1516,10 +1516,14 @@ sub _validate_transaction_aggregate_storage_clause {
     }
 
     if ($head eq 'switch') {
-        _reject_aggregate_storage_paths($clause->[1], $aggregate_roots, "$context switch selector");
+        _validate_transaction_switch_aggregate_storage_value(
+            $clause->[1],
+            $aggregate_roots,
+            "$context switch selector",
+        );
         for my $branch (@{$clause}[2 .. $#$clause]) {
             next unless ref($branch) eq 'ARRAY' && @$branch;
-            _validate_transaction_switch_branch_aggregate_storage_value(
+            _validate_transaction_switch_aggregate_storage_value(
                 $branch->[0],
                 $aggregate_roots,
                 "$context switch branch value",
@@ -1656,7 +1660,7 @@ sub _validate_transaction_set_aggregate_storage_rhs {
     return _validate_transaction_set_rhs_aggregate_storage_reads($rhs, $aggregate_roots, $context);
 }
 
-sub _validate_transaction_switch_branch_aggregate_storage_value {
+sub _validate_transaction_switch_aggregate_storage_value {
     my ($value, $aggregate_roots, $context) = @_;
 
     if (!ref($value)) {
@@ -1964,7 +1968,7 @@ sub _reject_aggregate_storage_paths {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $path = _aggregate_storage_path_token($value, $aggregate_roots);
-        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch branch scalar values, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands\n"
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch selector or branch scalar values, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands\n"
             if defined $path;
         return 1;
     }

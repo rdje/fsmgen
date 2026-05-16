@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate switch selectors shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.40` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.41`, selecting the
+  next enum or aggregate value/update context after aggregate switch selectors.
+- Transaction `switch` selectors now accept scalar aggregate storage leaves and
+  emit computed `.fsm` selector review artifacts such as `?(frame.mode)`.
+- Enum switch selectors and subaggregate selectors or branch values fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate switch branch values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.39` in

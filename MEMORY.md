@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate switch selectors shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.40` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.41`.
+- Transaction `switch` selectors now accept scalar aggregate storage leaves
+  such as `frame.mode` and `lanes[1]`.
+- Scheduled `.fsm` switch review artifacts emit those selectors through
+  computed selector syntax, for example `?(frame.mode)`, so direct `.fsm`
+  plain-test selectors remain HDL identifiers.
+- Enum switch selectors and subaggregate selectors or branch values remain
+  deferred.
 ## 2026-05-16: ISF aggregate switch branch values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.39` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

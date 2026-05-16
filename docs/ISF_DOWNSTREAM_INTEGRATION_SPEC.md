@@ -893,10 +893,13 @@ Rules:
   `(when (& ready frame.flag) (set fire 1))`. Standalone aggregate conditions
   and aggregate paths in condition expression operator position remain
   deferred.
-- Transaction `switch` branch scalar values may read scalar aggregate leaves
-  on declared actor-owned aggregate storage, for example
+- Transaction `switch` selectors and branch scalar values may read scalar
+  aggregate leaves on declared actor-owned aggregate storage, for example
+  `(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
   `(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`.
-  Switch selectors and subaggregate branch values remain deferred.
+  Aggregate switch selectors lower through computed `.fsm` selector syntax
+  such as `?(frame.mode)` or `?(lanes[1])`. Enum switch selectors and
+  subaggregate selectors or branch values remain deferred.
 - Transaction `(set aggregate_leaf value)` clauses may write scalar aggregate
   leaves on declared actor-owned aggregate storage, for example
   `(set frame.mode mode_in)` or `(set lanes[0] bit_in)`. Subaggregate targets
@@ -975,9 +978,9 @@ Rules:
 
 Aggregate member/item access outside direct transaction `set` RHS values,
 direct transaction `set` target tokens, transaction condition expression
-operands, transaction `switch` branch values, rule assignment RHS values or
-expression operands, rule guard expression operands, drive body RHS scalar
-values/expression operands, inline drive assignment RHS scalar
+operands, transaction `switch` selectors or branch values, rule assignment RHS
+values or expression operands, rule guard expression operands, drive body RHS
+scalar values/expression operands, inline drive assignment RHS scalar
 values/expression operands, or drive-call actual scalar values/expression
 operands; aggregate paths in drive body RHS, inline drive RHS, or drive-call
 actual expression operator position; subaggregate
@@ -1382,10 +1385,10 @@ Required fail-closed examples:
   actor-owned storage variables, unknown aggregate members, out-of-range list
   indexes, aggregate storage member/item paths outside direct transaction
   `set` RHS values, direct transaction `set` target tokens, transaction
-  condition expression operands, transaction `switch` branch values, rule
-  assignment RHS values/expression operands, rule guard expression operands,
-  drive body RHS scalar values/expression operands, inline drive assignment
-  RHS scalar values/expression operands, or drive-call actual scalar
+  condition expression operands, transaction `switch` selectors or branch
+  values, rule assignment RHS values/expression operands, rule guard expression
+  operands, drive body RHS scalar values/expression operands, inline drive
+  assignment RHS scalar values/expression operands, or drive-call actual scalar
   values/expression operands, aggregate paths in expression operator position,
   subaggregate
   operands/updates, and
@@ -1477,7 +1480,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1290-isf-aggregate-drive-call-expression-values.t \
   t/1291-isf-aggregate-inline-drive-values.t \
   t/1292-isf-aggregate-inline-drive-expression-values.t \
-  t/1293-isf-aggregate-switch-branch-values.t
+  t/1293-isf-aggregate-switch-branch-values.t \
+  t/1294-isf-aggregate-switch-selector-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

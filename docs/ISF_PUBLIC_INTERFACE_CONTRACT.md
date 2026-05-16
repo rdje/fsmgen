@@ -706,7 +706,10 @@ expressions may use scalar member/item leaves as operands, and transaction
 those same declared storage variables. Rule assignment RHS values and RHS
 expressions may read scalar member/item leaves from those same declared storage
 variables. Rule guard expressions may also read scalar member/item leaves as
-operands. Named drive body scalar RHS values and scalar operands inside RHS
+operands. Transaction `switch` selectors and branch values may read scalar
+member/item leaves from those same declared storage variables; aggregate
+selectors use computed `.fsm` selector syntax in review artifacts. Named drive
+body scalar RHS values and scalar operands inside RHS
 expressions may also read scalar member/item leaves from those same declared
 storage variables. Inline drive assignment scalar RHS values and scalar
 operands inside RHS expressions may also read scalar member/item leaves from
@@ -719,8 +722,8 @@ aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
 actor-owned storage variables, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition expression operands,
-transaction `switch` branch values, rule assignment RHS values/expression
-operands, or rule guard expression operands, drive body RHS scalar
+transaction `switch` selectors or branch values, rule assignment RHS
+values/expression operands, or rule guard expression operands, drive body RHS scalar
 values/expression operands, inline drive assignment RHS scalar
 values/expression operands, or drive-call actual scalar
 values/expression operands, aggregate paths in expression
@@ -962,8 +965,13 @@ Transaction switch branch aggregate leaf values are checked by
 [t/1293-isf-aggregate-switch-branch-values.t](../t/1293-isf-aggregate-switch-branch-values.t),
 covering local and package aggregate leaf reads as transaction `switch` branch
 values, scheduled `.fsm` switch review artifacts, CLI HDL generation, and
-fail-closed diagnostics for unknown members, switch selectors, and
+fail-closed diagnostics for unknown members and
 subaggregate branch values.
+Transaction switch selector aggregate leaf values are checked by
+[t/1294-isf-aggregate-switch-selector-values.t](../t/1294-isf-aggregate-switch-selector-values.t),
+covering local and package aggregate leaf reads as transaction `switch`
+selectors, computed `.fsm` selector review artifacts, CLI HDL generation, and
+fail-closed diagnostics for unknown members and subaggregate selectors.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

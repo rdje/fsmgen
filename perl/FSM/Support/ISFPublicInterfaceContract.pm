@@ -460,6 +460,7 @@ sub build_isf_public_interface_contract {
             't/1291-isf-aggregate-inline-drive-values.t',
             't/1292-isf-aggregate-inline-drive-expression-values.t',
             't/1293-isf-aggregate-switch-branch-values.t',
+            't/1294-isf-aggregate-switch-selector-values.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

@@ -430,7 +430,9 @@ limitations are:
   expressions, transaction `when`/`while`/`until` condition expressions may
   read scalar aggregate leaves as operands, and direct transaction `set` targets
   may write scalar aggregate leaves on those same carriers. Transaction
-  `switch` branch values may also read scalar aggregate leaves. Rule assignment
+  `switch` selectors and branch values may also read scalar aggregate leaves;
+  aggregate selectors lower through computed `.fsm` selector syntax such as
+  `?(frame.mode)` or `?(lanes[1])`. Rule assignment
   scalar RHS values and scalar operands inside rule assignment RHS expressions
   may also read scalar aggregate leaves from those carriers. Rule guard
   expressions may read scalar aggregate leaves as operands too. Named drive
@@ -450,10 +452,10 @@ limitations are:
   operator position, and other non-shipped contexts
   remain backlog, as do aggregate paths outside
   transaction `set` RHS values, direct transaction `set` targets, transaction
-  condition expression operands, transaction `switch` branch values, rule
-  assignment RHS values/expression operands, rule guard expression operands, or
-  drive body RHS scalar values/expression operands, inline drive assignment RHS
-  scalar values/expression operands, or drive-call actual scalar
+  condition expression operands, transaction `switch` selectors/branch values,
+  rule assignment RHS values/expression operands, rule guard expression
+  operands, or drive body RHS scalar values/expression operands, inline drive
+  assignment RHS scalar values/expression operands, or drive-call actual scalar
   values/expression operands, subaggregate operands/updates, and
   aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one

@@ -290,7 +290,7 @@ sub _emit_transitions($self, $state) {
         return map { $self->_emit_simple_transition($_) } @$txs
             if $state->{switch_transitions_materialized};
 
-        push @lines, "    (?$state->{signal}";
+        push @lines, "    (" . _format_switch_test_selector($state->{signal});
         for my $br (@{$state->{branches}}) {
             my $selector = _is_default_selector($br->{value}) ? 'default' : "=$br->{value}";
             push @lines, "      ($selector (-> $br->{body_start}))";
@@ -473,6 +473,12 @@ sub _is_default_selector {
     return defined($value)
         && !ref($value)
         && ($value eq 'default' || $value eq '_');
+}
+
+sub _format_switch_test_selector {
+    my ($signal) = @_;
+    return "?$signal" if defined($signal) && $signal =~ /\A[A-Za-z_]\w*\z/;
+    return "?($signal)";
 }
 
 1;

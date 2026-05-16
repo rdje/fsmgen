@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate switch selectors use computed .fsm selectors
+- `ISF-TYPE-AGGREGATE-PARITY.40` widens aggregate storage leaf reads into
+  transaction `switch` selectors.
+- Direct `.fsm` plain test selectors still require HDL-identifier-compatible
+  signal names, so the ISF emitter writes aggregate selector paths with
+  computed selector syntax such as `?(frame.mode)` or `?(lanes[1])`.
+- The computed-selector parser now treats a single scalar payload as the
+  selector expression and preserves the inferred selector width for generated
+  intermediate signals. Enum switch selectors and subaggregate selectors remain
+  closed.
 ## 2026-05-16: aggregate switch branch values stay scalar-only
 - `ISF-TYPE-AGGREGATE-PARITY.39` widens aggregate storage leaf reads into
   transaction `switch` branch scalar values.
