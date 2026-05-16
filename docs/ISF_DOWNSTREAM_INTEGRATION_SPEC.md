@@ -1068,7 +1068,7 @@ inferred_storage.kind: counter, register
 inferred_storage.role: actor_storage, completion_pulse, data_register,
   dynamic_wait_counter, drive_payload, drive_request, extract_field,
   latency_counter, repeat_counter, sample_alias, temporal_contract_monitor,
-  watchdog_counter
+  transaction_port_binding, trigger_done_observe, watchdog_counter
 dt_blocks.kind: drive, do_port_binding, latency_counter, rule,
   rule_trigger_fanin, spawn_port_binding, temporal_contract_monitor,
   trigger_generated_activation

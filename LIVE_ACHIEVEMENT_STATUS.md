@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF activation handoff storage roles synchronized
+- Completed R14 task-tree slice:
+  `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1`, closing
+  [docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md).
+- Public contract metadata now advertises `transaction_port_binding` and
+  `trigger_done_observe` through `schedule_report_storage_role_values`,
+  matching already-emitted generated activation handoff storage roles.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with spawn and generated rule-trigger report probes.
+- Generated activation lowering, generated-top wiring, rule-trigger timing,
+  generated `.fsm`, and HDL output are unchanged.
+
 ## 2026-05-16: R14 — ISF dynamic-wait storage role contract synchronized
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1`, closing

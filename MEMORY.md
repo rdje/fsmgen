@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF activation handoff storage roles synchronized
+- Completed `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1` in
+  [docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md),
+  closing the generated activation handoff storage report-role tree.
+- Schedule reports already emitted `transaction_port_binding` for generated
+  activation port-binding handoff storage and `trigger_done_observe` for
+  generated rule-trigger completion observation. The public ISF contract and
+  capability manifest now advertise both roles through
+  `schedule_report_storage_role_values`.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with spawn and generated rule-trigger report probes for those roles.
+- This is contract/documentation synchronization for shipped report behavior.
+  Generated activation lowering, generated-top wiring, rule-trigger timing,
+  generated `.fsm`, and HDL output are unchanged.
 ## 2026-05-16: ISF dynamic-wait storage role contract synchronized
 - Completed `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` in
   [docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md](docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md),

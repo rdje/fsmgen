@@ -38,7 +38,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` then synchronized the public storage
   role family with the already-emitted runtime dynamic wait
   `dynamic_wait_counter` role, without changing dynamic wait lowering or
-  generated artifacts. The next PNT selection should choose a fresh
+  generated artifacts.
+  `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1` then synchronized the public
+  storage role family with the already-emitted generated activation
+  `transaction_port_binding` and `trigger_done_observe` roles, without
+  changing generated activation lowering, generated-top wiring, rule-trigger
+  timing, or generated artifacts. The next PNT selection should choose a fresh
   roadmap-aligned R14 task tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
@@ -167,6 +172,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `dynamic_wait_counter` storage role through the public contract/manifest
   metadata and extended `t/1148-isf-public-storage-metadata-audit.t` with a
   runtime dynamic wait report fixture.
+  `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1` published the already-emitted
+  `transaction_port_binding` and `trigger_done_observe` storage roles through
+  public contract/manifest metadata and extended
+  `t/1148-isf-public-storage-metadata-audit.t` with spawn and generated
+  rule-trigger report probes.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

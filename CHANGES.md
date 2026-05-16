@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF activation handoff storage roles synchronized
+- Completed `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1`, closing the
+  `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS` task tree.
+- Added the already-emitted `transaction_port_binding` and
+  `trigger_done_observe` roles to `schedule_report_storage_role_values` in the
+  public ISF contract and capability manifest.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with spawn and generated rule-trigger report probes for generated activation
+  handoff storage roles.
+- Synchronized the ISF spec, downstream handoff, mdBook, README, task tree,
+  roadmap status, and live docs.
+- Generated activation lowering, generated-top wiring, rule-trigger timing,
+  generated `.fsm`, and HDL output are unchanged.
 ### R14 — ISF dynamic-wait storage role contract synchronized
 - Completed `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1`, closing the
   `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` task tree.

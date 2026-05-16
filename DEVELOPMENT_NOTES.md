@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: activation handoff roles are advertised only where emitted
+- `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1` synchronizes the public role
+  family with two roles already emitted by schedule reports:
+  `transaction_port_binding` for generated activation port handoff storage and
+  `trigger_done_observe` for generated rule-trigger completion observation.
+- The slice deliberately does not invent roles for every generated
+  start/done/payload signal. Unassigned generated start/done handoffs and
+  rule-trigger payload-source storage remain unpromised until a separate slice
+  assigns semantics and coverage.
+- As with the dynamic-wait role sync, this keeps manifest metadata truthful
+  without changing lowering or generated artifacts.
 ## 2026-05-16: dynamic wait storage role is public contract sync
 - `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` does not introduce a new lowering
   behavior. `LoweringIR` already marked runtime dynamic wait sampled-count

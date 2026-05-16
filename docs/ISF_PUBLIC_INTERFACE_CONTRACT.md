@@ -1198,8 +1198,11 @@ the lowerer has direct evidence. The current role family is
 `actor_storage`, `completion_pulse`, `data_register`, `dynamic_wait_counter`,
 `drive_payload`, `drive_request`, `extract_field`, `latency_counter`,
 `repeat_counter`, `sample_alias`, `temporal_contract_monitor`, and
-`watchdog_counter`. Runtime scalar and runtime expression waits use
-`dynamic_wait_counter` for their generated sampled-count storage.
+`transaction_port_binding`, `trigger_done_observe`, and `watchdog_counter`.
+Runtime scalar and runtime expression waits use `dynamic_wait_counter` for
+their generated sampled-count storage. Generated activation port-binding
+handoff storage uses `transaction_port_binding`, and generated rule-trigger
+completion observation uses `trigger_done_observe`.
 Temporal-contract pending/fail registers and age counters use
 `temporal_contract_monitor`; use `temporal_contracts[]` to map those signal
 names back to the specific bounded-eventual contract. Optional `width` values

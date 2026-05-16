@@ -226,9 +226,12 @@ Inferred-storage `kind` values are `counter` or `register`, and optional
 current role family is `actor_storage`, `completion_pulse`, `data_register`,
 `dynamic_wait_counter`, `drive_payload`, `drive_request`, `extract_field`,
 `latency_counter`, `repeat_counter`, `sample_alias`,
-`temporal_contract_monitor`, and `watchdog_counter`. Runtime dynamic waits use
-`dynamic_wait_counter` for generated sampled-count storage. Temporal-contract
-pending/fail registers and age counters share the
+`temporal_contract_monitor`, `transaction_port_binding`,
+`trigger_done_observe`, and `watchdog_counter`. Runtime dynamic waits use
+`dynamic_wait_counter` for generated sampled-count storage. Generated
+activation port-binding handoffs use `transaction_port_binding`, and generated
+rule-trigger completion observation uses `trigger_done_observe`.
+Temporal-contract pending/fail registers and age counters share the
 `temporal_contract_monitor` role; `temporal_contracts[]` names the specific
 pending, counter, and fail signals for each contract. Optional positive
 integer `width` values belong to declared actor-owned storage, inferred

@@ -2162,10 +2162,14 @@ Each `inferred_storage` entry's `kind` value is currently `counter` or
 lowerer has direct evidence: `actor_storage`, `completion_pulse`,
 `data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
 `extract_field`, `latency_counter`, `repeat_counter`, `sample_alias`,
-`temporal_contract_monitor`, and `watchdog_counter`.
+`temporal_contract_monitor`, `transaction_port_binding`,
+`trigger_done_observe`, and `watchdog_counter`.
 Runtime scalar and runtime expression waits use `dynamic_wait_counter` for the
 generated sampled-count storage that backs zero-bypass and decrement-loop
 lowering.
+Generated activation port-binding handoff storage uses
+`transaction_port_binding`; generated rule-trigger completion observation uses
+`trigger_done_observe`.
 Temporal-contract monitor storage uses that one role for the generated
 pending and sticky-fail registers plus the generated age counter; the
 `temporal_contracts[]` entry remains the public summary that names each signal

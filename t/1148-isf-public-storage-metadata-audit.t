@@ -105,6 +105,50 @@ subtest 'runtime dynamic wait storage role follows advertised metadata' => sub {
         if $counter;
 };
 
+subtest 'generated activation handoff storage roles follow advertised metadata' => sub {
+    my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
+
+    ok($role{transaction_port_binding}, 'transaction_port_binding is an advertised storage role');
+    ok($role{trigger_done_observe}, 'trigger_done_observe is an advertised storage role');
+
+    my $spawn_report = report_source(spawn_binding_source(), 'spawn-binding-storage-role.isf');
+    for my $case (
+        ['w0_addr', 'counter', 8],
+        ['w0_data', 'counter', 8],
+    ) {
+        my ($name, $kind, $width) = @$case;
+        my ($entry) = grep { ($_->{name} // '') eq $name } @{$spawn_report->{inferred_storage} || []};
+        ok($entry, "spawn binding report exposes '$name' storage");
+        is($entry->{kind}, $kind, "'$name' storage kind is stable")
+            if $entry;
+        is($entry->{role}, 'transaction_port_binding', "'$name' storage reports its role")
+            if $entry;
+        is($entry->{width}, $width, "'$name' storage reports its handoff width")
+            if $entry;
+    }
+
+    my $trigger_report = report_source(trigger_binding_source(), 'trigger-binding-storage-role.isf');
+    my ($done_seen) = grep {
+        ($_->{name} // '') eq 'launch_worker_trigger_0_done_seen'
+    } @{$trigger_report->{inferred_storage} || []};
+    ok($done_seen, 'generated rule-trigger report exposes done-observe storage');
+    is($done_seen->{kind}, 'counter', 'done-observe storage uses the generated counter class')
+        if $done_seen;
+    is($done_seen->{role}, 'trigger_done_observe', 'done-observe storage reports its role')
+        if $done_seen;
+    is($done_seen->{width}, 1, 'done-observe storage is one bit')
+        if $done_seen;
+
+    my ($trigger_payload) = grep {
+        ($_->{name} // '') eq 'launch_worker_trigger_0_addr'
+    } @{$trigger_report->{inferred_storage} || []};
+    ok($trigger_payload, 'generated rule-trigger report exposes input handoff storage');
+    is($trigger_payload->{role}, 'transaction_port_binding', 'trigger input handoff uses the transaction_port_binding role')
+        if $trigger_payload;
+    is($trigger_payload->{width}, 8, 'trigger input handoff preserves port width')
+        if $trigger_payload;
+};
+
 done_testing();
 
 sub assert_storage_metadata {
@@ -178,5 +222,56 @@ sub dynamic_wait_source {
     (on start)
     (wait cycles)
     (complete done)))
+ISF
+}
+
+sub spawn_binding_source {
+    return <<'ISF';
+(actor spawn_binding_storage_role
+  (clock clk)
+  (interface
+    (input start)
+    (input req (width 8))
+    (output resp (width 8))
+    (output done))
+  (transaction child
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done))
+  (transaction main
+    (on start)
+    (spawn child as w0
+      (bind
+        (input addr req)
+        (output data resp)))
+    (complete done)))
+ISF
+}
+
+sub trigger_binding_source {
+    return <<'ISF';
+(actor trigger_binding_storage_role
+  (clock clk)
+  (interface
+    (input fire)
+    (input req (width 8))
+    (output done))
+  (transaction parent
+    (on fire)
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8)))
+    (complete done))
+  (rule launch fire
+    (trigger worker
+      (params
+        (WIDTH 16))
+      (bind
+        (input addr req)))))
 ISF
 }
