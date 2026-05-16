@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum set expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.10` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.11`.
+- Transaction `set` RHS expressions now accept local enum members such as
+  `mode.BUSY` and package-qualified enum members such as `shared.mode.BUSY`
+  as scalar operands.
+- The parser resolves enum member operands before lowering, preserves the
+  authored expression in scheduled `.fsm`, and rejects unknown enum members or
+  enum members in expression operator position.
+- Enum members in conditions, set targets, rules, drives, parameters, and
+  other non-transaction-set RHS contexts remain deferred.
 ## 2026-05-16: ISF direct enum set values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.9` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

@@ -764,14 +764,32 @@ sub _validate_transaction_enum_member_value_clause {
 
 sub _validate_transaction_set_enum_member_rhs {
     my ($rhs, $actor, $aggregate_roots, $context) = @_;
-    if (!ref($rhs)) {
-        my $member = _enum_member_value_token($rhs, $aggregate_roots);
+    return _validate_transaction_set_rhs_enum_member_values($rhs, $actor, $aggregate_roots, $context);
+}
+
+sub _validate_transaction_set_rhs_enum_member_values {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    if (!ref($value)) {
+        my $member = _enum_member_value_token($value, $aggregate_roots);
         _validate_enum_member_value($member, $actor, $context)
             if defined $member;
         return 1;
     }
 
-    return _reject_enum_member_value_contexts($rhs, $actor, $aggregate_roots, "$context expression");
+    if (ref($value) eq 'ARRAY') {
+        for my $index (0 .. $#$value) {
+            my $item = $value->[$index];
+            if ($index == 0 && defined($item) && !ref($item)) {
+                my $member = _enum_member_value_token($item, $aggregate_roots);
+                confess "Error: $context expression operator references enum member '$member'; this ISF slice accepts enum member references inside set RHS expressions only as scalar operands\n"
+                    if defined $member;
+                next;
+            }
+            _validate_transaction_set_rhs_enum_member_values($item, $actor, $aggregate_roots, $context);
+        }
+    }
+
+    return 1;
 }
 
 sub _validate_enum_member_value {

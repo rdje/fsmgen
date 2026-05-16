@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum set expressions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.10` widens the enum member path from direct
+  transaction `set` RHS scalar values to scalar operands inside transaction
+  `set` RHS expressions.
+- The parser walks expression trees and resolves enum members before lowering,
+  but rejects enum members in operator position so the expression head remains
+  an ordinary operator rather than a value token with callable semantics.
+- Conditions, set targets, rules, drives, parameters, and other contexts stay
+  closed because each needs its own timing, target, or public value contract.
 ## 2026-05-16: direct enum set values stay scalar-only
 - `ISF-TYPE-AGGREGATE-PARITY.9` selects direct transaction `set` RHS scalar
   values as the next enum-member context because the review artifact can

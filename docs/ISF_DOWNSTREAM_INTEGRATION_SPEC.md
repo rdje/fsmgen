@@ -864,9 +864,10 @@ Rules:
   package enum members such as `shared.mode.BUSY`. Unknown enum families or
   members fail closed before generated artifacts are emitted.
 - Direct transaction `(set target enum_member)` RHS scalar values may also
-  consume local or package enum members. Enum members inside expressions,
-  conditions, switch branches, targets, rules, drives, parameters, and other
-  contexts remain deferred.
+  consume local or package enum members, and transaction `set` RHS
+  expressions may use enum members as scalar operands. Enum members in
+  expression operator position, conditions, switch branches, targets, rules,
+  drives, parameters, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1270,7 +1271,7 @@ Required fail-closed examples:
   indexes, aggregate storage member/item paths outside direct transaction
   `set` RHS values or target tokens, aggregate paths in expression operator
   position, subaggregate operands/updates, and enum member references outside
-  actor constants or direct transaction `set` RHS scalar values.
+  actor constants or transaction `set` RHS scalar values/expression operands.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1321,7 +1322,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1260-isf-aggregate-storage-leaf-reads.t \
   t/1261-isf-aggregate-storage-leaf-writes.t \
   t/1262-isf-aggregate-storage-leaf-expression-reads.t \
-  t/1263-isf-enum-member-set-values.t
+  t/1263-isf-enum-member-set-values.t \
+  t/1264-isf-enum-member-set-expression-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

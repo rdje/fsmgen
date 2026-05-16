@@ -106,7 +106,7 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor enum_expr_still_deferred
+(actor enum_operator_still_deferred
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -116,10 +116,10 @@ ISF
     (output mode_out (width 2)))
   (transaction main
     (on start)
-    (set mode_out (+ mode.BUSY 1))))
+    (set mode_out (mode.BUSY 1))))
 ISF
-        qr/set RHS expression references enum member 'mode\.BUSY'; this ISF slice accepts enum member references only as direct transaction set RHS scalar values/,
-        'enum members inside expressions remain deferred',
+        qr/set RHS expression operator references enum member 'mode\.BUSY'; this ISF slice accepts enum member references inside set RHS expressions only as scalar operands/,
+        'enum members in expression operator position remain deferred',
     );
 
     assert_parse_rejected(

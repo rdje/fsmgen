@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum set expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.10`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.11`.
+- Transaction `set` RHS expressions now accept local and package-qualified
+  enum members as scalar operands, preserving authored expressions in
+  scheduled `.fsm`.
+- Parser diagnostics reject unknown enum member operands and enum members in
+  expression operator position while keeping enum members in conditions, set
+  targets, rules, drives, parameters, and other contexts closed.
+- Added focused local/package coverage with scheduled `.fsm` review artifacts
+  and strict CLI HDL generation.
 ### R14 — ISF direct enum set values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.9`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.10`.

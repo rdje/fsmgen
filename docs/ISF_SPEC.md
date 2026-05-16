@@ -278,9 +278,10 @@ Aggregate aliases on actor interface ports, transaction-local ports, storage
 banks, and other width-bearing declarations fail closed. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
 `+enums`. Enum members are consumed by actor constants and by direct
-transaction `set` RHS scalar values in the current ISF surface; expressions,
-guards, switch branches, parameter defaults, and typed aggregate carriers do
-not consume enum member references yet.
+transaction `set` RHS scalar values or scalar operands inside transaction
+`set` RHS expressions in the current ISF surface. Enum members in expression
+operator position, guards, switch branches, parameter defaults, and typed
+aggregate carriers do not consume enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -300,9 +301,9 @@ transaction ports, and aggregate storage banks remain deferred. Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
-outside actor constants and direct transaction `set` RHS scalar values,
-additional aggregate carriers, aggregate field/slice/update lowering,
-incompatible enum values, aggregate shape mismatches, and ambiguous
+outside actor constants and transaction `set` RHS scalar values or expression
+operands, additional aggregate carriers, aggregate field/slice/update
+lowering, incompatible enum values, aggregate shape mismatches, and ambiguous
 subaggregate updates remain owned by later `ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
@@ -2670,6 +2671,7 @@ Focused tests:
 - [t/1261-isf-aggregate-storage-leaf-writes.t](../t/1261-isf-aggregate-storage-leaf-writes.t)
 - [t/1262-isf-aggregate-storage-leaf-expression-reads.t](../t/1262-isf-aggregate-storage-leaf-expression-reads.t)
 - [t/1263-isf-enum-member-set-values.t](../t/1263-isf-enum-member-set-values.t)
+- [t/1264-isf-enum-member-set-expression-values.t](../t/1264-isf-enum-member-set-expression-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2726,15 +2728,16 @@ Focused tests:
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum
-  member values, actor-owned aggregate storage variable carriers, transaction
-  `set` RHS aggregate leaf reads, transaction `set` RHS expression aggregate
-  leaf operands, transaction `set` target aggregate leaf writes,
-  aggregate/list parameter-literal, and data-operation evidence model. Enum
-  member references outside actor constants or direct transaction `set` RHS
-  scalar values, aggregate interface/transaction/bank carriers, aggregate
-  member paths outside direct transaction `set` RHS values or target tokens,
-  subaggregate updates/operands, aggregate field/slice/update lowering, and
-  broad aggregate/record width inference remain deferred to the active
+  member values and expression operands, actor-owned aggregate storage
+  variable carriers, transaction `set` RHS aggregate leaf reads, transaction
+  `set` RHS expression aggregate leaf operands, transaction `set` target
+  aggregate leaf writes, aggregate/list parameter-literal, and data-operation
+  evidence model. Enum member references outside actor constants or
+  transaction `set` RHS scalar values/expression operands, aggregate
+  interface/transaction/bank carriers, aggregate member paths outside direct
+  transaction `set` RHS values or target tokens, subaggregate updates/operands,
+  aggregate field/slice/update lowering, and broad aggregate/record width
+  inference remain deferred to the active
   `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.
