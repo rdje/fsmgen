@@ -60,6 +60,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     constants     => [ { name => ..., value => ... }, ... ],
 #     type_declarations => [ ... ],
 #     enum_declarations => [ ... ],
+#     enum_symbols => { local => ..., packages => ... },
 #     crossings     => [ { kind => "event", name => ..., from => ..., to => ..., ready => ... }, ... ],
 #     priorities    => [ ... ],
 #     imports       => [ ... ], # ISF library imports
@@ -148,6 +149,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         type_declarations => [],
         enum_declarations => [],
         type_symbols => { local => {}, packages => {} },
+        enum_symbols => { local => {}, packages => {} },
         package_roots => [],
         uses         => [],
         library_uses => [],
@@ -258,7 +260,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
-    $self->_finalize_actor_type_symbols($result, $source_label);
+    $self->_finalize_actor_symbol_tables($result, $source_label);
+    $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_type_references($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
     $self->_validate_rule_trigger_targets($result);
@@ -328,21 +331,22 @@ sub _parse_actor_params($self, $clause, $actor_name) {
 }
 
 sub _parse_actor_constants($self, $clause, $actor_name) {
-    confess "Error: actor '$actor_name' constants require '(constants (NAME non_negative_integer_literal) ...)'\n"
+    confess "Error: actor '$actor_name' constants require '(constants (NAME non_negative_integer_literal_or_enum_member) ...)'\n"
         unless @$clause >= 2;
 
     my @constants;
     my %seen;
     for my $entry (@{$clause}[1 .. $#$clause]) {
-        confess "Error: actor '$actor_name' constants entries require '(NAME non_negative_integer_literal)'\n"
+        confess "Error: actor '$actor_name' constants entries require '(NAME non_negative_integer_literal_or_enum_member)'\n"
             unless ref($entry) eq 'ARRAY' && @$entry == 2;
         my ($name, $value) = @$entry;
         confess "Error: actor '$actor_name' constant names must be scalar HDL identifiers\n"
             unless _is_hdl_identifier($name);
         confess "Error: actor '$actor_name' has duplicate constant '$name'\n"
             if $seen{$name}++;
-        confess "Error: actor '$actor_name' constant '$name' requires a non-negative integer literal value\n"
-            unless _is_non_negative_integer_literal_value($value);
+        confess "Error: actor '$actor_name' constant '$name' requires a non-negative integer literal value or enum member reference\n"
+            unless _is_non_negative_integer_literal_value($value)
+                || _is_enum_member_reference($value);
         push @constants, {
             name  => $name,
             value => _clone_isf_value($value),
@@ -380,7 +384,7 @@ sub _parse_actor_enums($self, $clause, $actor_name) {
     return \@enums;
 }
 
-sub _finalize_actor_type_symbols($self, $actor, $source_label) {
+sub _finalize_actor_symbol_tables($self, $actor, $source_label) {
     my $actor_name = $actor->{actor_name} // 'unknown';
     my $local_symbols = $self->_resolve_actor_local_symbols($actor);
     my $package_info = $self->_resolve_actor_package_symbols($actor, $source_label);
@@ -388,6 +392,10 @@ sub _finalize_actor_type_symbols($self, $actor, $source_label) {
     $actor->{type_symbols} = {
         local => $local_symbols->{types} || {},
         packages => $package_info->{types},
+    };
+    $actor->{enum_symbols} = {
+        local => $local_symbols->{enums} || {},
+        packages => $package_info->{enums},
     };
     $actor->{package_roots} = $package_info->{roots};
 
@@ -452,7 +460,10 @@ sub _package_enum_declarations_for_parser {
     for my $entry (@{$enum_declarations || []}) {
         next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
         my ($enum_name, @members) = @$entry;
-        if (@members == 1 && ref($members[0]) eq 'ARRAY') {
+        if (@members == 1
+            && ref($members[0]) eq 'ARRAY'
+            && ref($members[0][0]) eq 'ARRAY')
+        {
             push @entries, [ $enum_name, _clone_isf_value($members[0]) ];
             next;
         }
@@ -464,7 +475,7 @@ sub _package_enum_declarations_for_parser {
 
 sub _resolve_actor_package_symbols($self, $actor, $source_label) {
     my @package_imports = @{$actor->{package_imports} || []};
-    return { types => {}, roots => [] } unless @package_imports;
+    return { types => {}, enums => {}, roots => [] } unless @package_imports;
 
     my $resolved = FSM::Package::ImportResolver->resolve_imports(
         package_imports => \@package_imports,
@@ -475,20 +486,61 @@ sub _resolve_actor_package_symbols($self, $actor, $source_label) {
         debug_level => ($self->{debug} ? 1 : 0),
     );
 
-    my %package_symbols;
+    my %package_types;
+    my %package_enums;
     my @package_roots;
     for my $package_name (@package_imports) {
         my $spec = $resolved->{$package_name};
         my $symbols = $spec ? $spec->symbols : undef;
-        $package_symbols{$package_name} = $symbols ? ($symbols->as_hashref->{types} || {}) : {};
+        my $symbols_hash = $symbols ? $symbols->as_hashref : {};
+        $package_types{$package_name} = $symbols_hash->{types} || {};
+        $package_enums{$package_name} = $symbols_hash->{enums} || {};
         push @package_roots, $self->{adapter}->normalize_form($spec->raw_ast)
             if $spec;
     }
 
     return {
-        types => \%package_symbols,
+        types => \%package_types,
+        enums => \%package_enums,
         roots => \@package_roots,
     };
+}
+
+sub _finalize_actor_constant_values($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $constant (@{$actor->{constants} || []}) {
+        my $name = $constant->{name};
+        my $value = $constant->{value};
+        next if _is_non_negative_integer_literal_value($value);
+        next unless _is_enum_member_reference($value);
+
+        my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
+        confess "Error: actor '$actor_name' constant '$name' references unknown enum member '$value'\n"
+            unless defined($resolved_value) && !ref($resolved_value);
+        confess "Error: actor '$actor_name' constant '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
+            unless _is_non_negative_integer_literal_value($resolved_value);
+        $constant->{resolved_value} = _clone_isf_value($resolved_value);
+    }
+
+    return 1;
+}
+
+sub _resolve_actor_enum_member_value($self, $actor, $member_ref) {
+    return undef unless _is_enum_member_reference($member_ref);
+
+    my $symbols = $actor->{enum_symbols} || {};
+    if ($member_ref =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
+        my ($package_name, $enum_name, $member_name) = ($1, $2, $3);
+        return _clone_isf_value(((($symbols->{packages} || {})->{$package_name} || {})->{$enum_name} || {})->{$member_name});
+    }
+
+    if ($member_ref =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
+        my ($enum_name, $member_name) = ($1, $2);
+        return _clone_isf_value((($symbols->{local} || {})->{$enum_name} || {})->{$member_name});
+    }
+
+    return undef;
 }
 
 sub _finalize_actor_type_references($self, $actor) {
@@ -1199,6 +1251,11 @@ sub _is_hdl_identifier {
 sub _is_type_reference {
     my ($value) = @_;
     return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?\z/;
+}
+
+sub _is_enum_member_reference {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\.[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?\z/;
 }
 
 sub _is_activation_input_binding_expr_shape {

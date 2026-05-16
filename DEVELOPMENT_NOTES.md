@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: actor constants are the first ISF enum value context
+- `ISF-TYPE-AGGREGATE-PARITY.4` deliberately chooses actor constants as the
+  first enum-member value context because they are static, actor-scoped,
+  already lower to reviewable `.fsm` `+constants`, and already feed static
+  waits and generated activation parameter overrides.
+- The parser keeps the authored enum token for review artifacts and schedule
+  reports, while recording a resolved non-negative integer value for lowering
+  decisions. That avoids widening dynamic rule/transaction expression
+  semantics before enum resolution has stable static coverage.
+- Package enum members reuse the same imported package roots embedded for
+  scalar type aliases, so CLI HDL generation remains self-contained from
+  lowered temporary `.fsm` artifacts.
 ## 2026-05-16: task-tree leaves must close their own metadata
 - After `ISF-TYPE-AGGREGATE-PARITY.3` was pushed, the task tree still carried
   stale per-leaf `pending` fields even though the frontier and live docs were

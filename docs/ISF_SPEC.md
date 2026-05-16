@@ -211,8 +211,8 @@ Supported actor clauses:
 - `(watchdog N)`
 - `(interface ...)`
 - actor-level `(params ...)` for reusable library actors
-- actor-level `(constants (NAME value) ...)` for non-negative integer
-  compile-time constants
+- actor-level `(constants (NAME value) ...)` for non-negative integer or
+  enum-member compile-time constants
 - actor-level `(imports ...)` and `(use ...)` for the first reusable library
   import-resolution slice
 - actor-level `(drive ...)` definitions
@@ -235,19 +235,26 @@ Actor constants:
 (constants
   (WAIT_ZERO 0)
   (WAIT_TWO 2)
-  (WAIT_ONE 4'd1))
+  (WAIT_ONE 4'd1)
+  (BUSY_WAIT mode.BUSY)
+  (REMOTE_WAIT shared.mode.BUSY))
 ```
 
 `(constants ...)` is the first shipped ISF constant/symbol surface. It is
 actor-scoped, compile-time only, and currently accepts unique HDL-identifier
-names with non-negative integer literal values. Decimal literals and
-exact-width integer literals are accepted through the same shared integer
-literal support used elsewhere in FSMGen. Constants are emitted into scheduled
-`.fsm` as `+constants`, appear in schedule reports as `actor_constants[]`, and
-are the first legal symbolic source for static `(wait NAME)` counts. Actor or
-transaction `params` are not wait-count constants because they are overrideable
-specialization values; using them to choose a fixed generated wait-state count
-would make later overrides disagree with the emitted schedule.
+names with non-negative integer literal values or enum member references.
+Decimal literals and exact-width integer literals are accepted through the
+same shared integer literal support used elsewhere in FSMGen. Enum member
+references use the existing `.fsm` spelling: local `mode.BUSY` or
+package-qualified `shared.mode.BUSY` after `(imports (package shared))`.
+The referenced member must resolve before lowering to a non-negative integer
+literal. Constants are emitted into scheduled `.fsm` as `+constants`, appear
+in schedule reports as `actor_constants[]` with the authored value token, and
+are legal symbolic sources for static `(wait NAME)` counts and the existing
+static activation-parameter override path. Actor or transaction `params` are
+not wait-count constants because they are overrideable specialization values;
+using them to choose a fixed generated wait-state count would make later
+overrides disagree with the emitted schedule.
 
 ISF scalar type-alias references are shipped for width-bearing declarations.
 Actor bodies may declare local `(types ...)` clauses whose payloads map
@@ -265,16 +272,18 @@ for raw positive integer widths; those options are mutually exclusive. `NAME`
 may be local, such as `byte`, or package-qualified, such as `shared.byte`.
 Unknown aliases fail closed. Aliases whose resolved type is `list` or `record`
 also fail closed in this scalar-only slice. Actor-local `(enums ...)`
-declarations are accepted and preserved into scheduled `.fsm` as `+enums`,
-but no ISF expression or value context consumes enum members yet.
+declarations are accepted and preserved into scheduled `.fsm` as `+enums`.
+Enum members are consumed only by actor constants in the current ISF surface;
+rule/transaction expressions, guards, switch branches, parameter defaults, and
+typed aggregate carriers do not consume enum member references yet.
 
 Typed aggregate carrier/update semantics are not shipped yet. Existing ISF
 aggregate support beyond declaration artifacts remains limited to compatible
 aggregate/list literal parameter values and scalarized storage/bank lowering.
-Future enum member value references, aggregate carriers, aggregate
-field/slice/update lowering, incompatible enum values, aggregate shape
-mismatches, and ambiguous partial updates remain owned by later
-`ISF-TYPE-AGGREGATE-PARITY` leaves.
+Future enum member value references outside actor constants, aggregate
+carriers, aggregate field/slice/update lowering, incompatible enum values,
+aggregate shape mismatches, and ambiguous partial updates remain owned by
+later `ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -2630,6 +2639,7 @@ Focused tests:
 - [t/1254-isf-temporal-contract-storage-report.t](../t/1254-isf-temporal-contract-storage-report.t)
 - [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t)
 - [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t)
+- [t/1258-isf-enum-member-constants.t](../t/1258-isf-enum-member-constants.t)
 
 ## 12. Explicitly Deferred
 
@@ -2685,9 +2695,10 @@ Focused tests:
   eventual subset.
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
-  actor-constant, aggregate/list parameter-literal, and data-operation evidence
-  model. Enum member value references, typed aggregate carriers, aggregate
-  field/slice/update lowering, and broad aggregate/record width inference
-  remain deferred to the active `ISF-TYPE-AGGREGATE-PARITY` task tree.
+  actor-constant enum member references, aggregate/list parameter-literal, and
+  data-operation evidence model. Enum member references outside actor
+  constants, typed aggregate carriers, aggregate field/slice/update lowering,
+  and broad aggregate/record width inference remain deferred to the active
+  `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

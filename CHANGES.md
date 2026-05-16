@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF actor-constant enum members shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.4`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.5`.
+- Actor constants now accept local enum members such as `mode.BUSY` and
+  package-qualified enum members such as `shared.mode.BUSY`.
+- The scheduled `.fsm` review artifact preserves `+enums`, `+import`, embedded
+  package roots, and authored enum-backed `+constants`; schedule reports keep
+  the authored actor-constant value.
+- Added focused coverage for local and package enum-backed actor constants,
+  static wait resolution, CLI HDL generation, and fail-closed diagnostics for
+  unknown enum members and unsupported scalar constant symbols.
 ### R14 — ISF task-tree metadata corrected
 - Corrected `docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md` so completed leaves
   `.1`, `.2`, and `.3` record their actual commit IDs and `.3` records the

@@ -698,14 +698,22 @@ Lowering preserves `+types`, `+import`, typed `+size` entries, and embedded
 imported package roots in scheduled `.fsm` review artifacts. Unknown aliases,
 package aliases, `(width ...)` plus `(type ...)` conflicts, and aggregate
 aliases used in this scalar-only subset fail closed. Actor-local `(enums ...)`
-declarations are preserved as scheduled `.fsm` `+enums`, but enum member value
-references and typed aggregate carrier/update semantics remain outside the
-parser/scheduler contract.
+declarations are preserved as scheduled `.fsm` `+enums`. Enum member
+references are public only as actor constant values in this slice, using local
+`mode.BUSY` or package-qualified `shared.mode.BUSY` spelling and resolving to
+non-negative integer literal values before lowering. Enum member references in
+other ISF expression/value contexts and typed aggregate carrier/update
+semantics remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
 embedded package roots, CLI HDL generation, declaration-only enum preservation,
 and fail-closed diagnostics.
+Actor-constant enum member references are checked by
+[t/1258-isf-enum-member-constants.t](../t/1258-isf-enum-member-constants.t),
+covering local and package enum members, authored `+constants` review
+artifacts, schedule-report value preservation, CLI HDL generation, and
+fail-closed diagnostics.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

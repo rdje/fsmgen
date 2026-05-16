@@ -1564,10 +1564,11 @@ sub _actor_constant_declarations {
         confess "Actor '$actor_name': duplicate constant '$name'\n"
             if $seen{$name}++;
         confess "Actor '$actor_name': constant '$name' requires a non-negative integer literal value\n"
-            unless defined _non_negative_integer_from_literal($constant->{value});
+            unless defined _non_negative_integer_from_literal(_constant_resolved_value($constant));
         push @constants, {
-            name  => $name,
-            value => _clone_isf_value($constant->{value}),
+            name           => $name,
+            value          => _clone_isf_value($constant->{value}),
+            resolved_value => _clone_isf_value(_constant_resolved_value($constant)),
         };
     }
 
@@ -3249,10 +3250,18 @@ sub _actor_constant_value_map {
         next unless ref($constant) eq 'HASH';
         my $name = $constant->{name};
         next unless _is_hdl_identifier($name);
-        $values{$name} = _clone_isf_value($constant->{value});
+        $values{$name} = _clone_isf_value(_constant_resolved_value($constant));
     }
 
     return \%values;
+}
+
+sub _constant_resolved_value {
+    my ($constant) = @_;
+    return undef unless ref($constant) eq 'HASH';
+    return exists($constant->{resolved_value})
+        ? $constant->{resolved_value}
+        : $constant->{value};
 }
 
 sub _validate_repeat_clause {
@@ -3335,7 +3344,7 @@ sub _wait_count_spec {
         if (_is_hdl_identifier($count)) {
             my $constant = _actor_constant_by_name($actor, $count);
             if ($constant) {
-                my $constant_value = _non_negative_integer_from_literal($constant->{value});
+                my $constant_value = _non_negative_integer_from_literal(_constant_resolved_value($constant));
                 confess "Transaction '$tn': wait constant '$count' must resolve to a non-negative integer literal in $label\n"
                     unless defined $constant_value;
                 return {

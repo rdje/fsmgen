@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF actor-constant enum members shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.4` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.5`, implementing
+  one declared aggregate carrier after scalar alias and enum constant
+  resolution.
+- Actor constants now accept local enum members and package-qualified enum
+  members. Authored tokens are preserved in scheduled `.fsm` `+constants` and
+  schedule reports, while resolved non-negative integer values feed static
+  waits and existing static activation-parameter overrides.
+- Enum member references outside actor constants and typed aggregate carriers
+  remain deferred.
+
 ## 2026-05-16: R14 — ISF scalar type aliases shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.3` in

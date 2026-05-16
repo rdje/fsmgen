@@ -391,8 +391,12 @@ limitations are:
   `.fsm` packages imported with `(imports (package NAME) ...)`. Lowered
   scheduled `.fsm` preserves `+types`, `+import`, typed `+size` entries, and
   embedded package roots. Actor-local `(enums ...)` are preserved as `+enums`
-  declaration artifacts, but enum member value references and typed aggregate
-  carriers remain backlog.
+  declaration artifacts. Actor constants may use local enum members such as
+  `mode.BUSY` or package enum members such as `shared.mode.BUSY`; those
+  constants preserve the authored token in `+constants` and schedule reports
+  while resolving to non-negative integer values for static waits and existing
+  static activation-parameter overrides. Other enum member expression/value
+  contexts and typed aggregate carriers remain backlog.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

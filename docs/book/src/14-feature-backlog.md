@@ -266,17 +266,20 @@ instead of `(width N)`, where `NAME` is local (`byte`) or package-qualified
 typed `+size` entries, and embedded imported package roots so the review
 artifact and CLI HDL generation stay self-contained. Actor-local `(enums ...)`
 declarations are accepted as declaration artifacts and preserved as scheduled
-`.fsm` `+enums`, but no ISF value/expression context consumes enum members
-yet.
+`.fsm` `+enums`. Actor constants may now consume enum members with local
+`mode.BUSY` or package-qualified `shared.mode.BUSY` spelling; the authored
+token is preserved in scheduled `.fsm` `+constants` and schedule reports,
+while the resolved non-negative integer value feeds static wait lowering and
+existing static activation-parameter overrides.
 
 The implementation path remains task-tree-managed. The current shipped subset
 also continues to accept numeric/exact-width parameter values, actor-local
 constants for selected static specialization values, and compatible
 aggregate/list literal parameter values. Typed aggregate carrier/update
 semantics are not shipped; aggregate aliases used as scalar `(type NAME)`
-references fail closed. Enum member value references, typed aggregate
-carriers, aggregate field/slice/update lowering, and broader aggregate shape
-inference are separate follow-on leaves.
+references fail closed. Enum member references outside actor constants, typed
+aggregate carriers, aggregate field/slice/update lowering, and broader
+aggregate shape inference are separate follow-on leaves.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate

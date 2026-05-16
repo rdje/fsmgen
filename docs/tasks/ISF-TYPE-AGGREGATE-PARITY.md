@@ -73,11 +73,11 @@ ISF-only type system.
   Commit: `6dce0d9a ISF-TYPE-AGGREGATE-PARITY.3: ship scalar type aliases`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.4`
-  Status: `pending`
+  Status: `done`
   Goal: `implement enum member references in one static scalar ISF value context`
   Acceptance: `one documented enum member reference context resolves through the selected symbol source, lowers to reviewable .fsm using established enum semantics, and rejects unknown enum families or members before generated artifacts are emitted`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1244-isf-wait-clause-lowering.t t/1249-isf-activation-parameter-constants.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.4: support enum constants`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.5`
   Status: `pending`
@@ -90,7 +90,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.4` | `pending` | Enum member references are the next scalar parity step after type aliases are lowerable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.5` | `pending` | One declared aggregate carrier can start after scalar aliases and actor-constant enum references are stable. |
 
 ## Decisions
 
@@ -142,6 +142,13 @@ ISF-only type system.
   `(enums ...)` are accepted and preserved only as declaration artifacts.
   Enum member value references and typed aggregate carriers remain follow-on
   leaves.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.4` selects actor constants as the
+  first static scalar enum-member value context. Actor constants now accept
+  local `mode.MEMBER` and package-qualified `package.mode.MEMBER` values,
+  preserve those authored tokens in scheduled `.fsm` `+constants` and
+  schedule reports, and resolve them to non-negative integer values for
+  existing static wait lowering and static activation-parameter override use.
+  Other enum member expression/value contexts remain deferred.
 
 ## Open Questions
 
@@ -150,8 +157,8 @@ ISF-only type system.
   `ISF-TYPE-AGGREGATE-PARITY.3` deliberately shipped with generated `.fsm`
   review artifacts and focused parser/lowering tests rather than schedule
   JSON expansion.
-- Which static scalar value context should receive enum member support first?
-  This is owned by `ISF-TYPE-AGGREGATE-PARITY.4`.
+- Which non-constant enum member expression/value context should ship next?
+  This remains deferred beyond `ISF-TYPE-AGGREGATE-PARITY.4`.
 
 ## Blockers
 
@@ -164,6 +171,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.4` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1244-isf-wait-clause-lowering.t t/1249-isf-activation-parameter-constants.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -172,6 +180,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.1` | `ISF-TYPE-AGGREGATE-PARITY.1: inventory parity boundary` | `Inventory and first-boundary documentation slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.2` | `ISF-TYPE-AGGREGATE-PARITY.2: specify type source contract` | `Symbol-source and first type-reference contract slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.3` | `ISF-TYPE-AGGREGATE-PARITY.3: ship scalar type aliases` | `Scalar type-alias parser/lowering implementation slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.4` | `ISF-TYPE-AGGREGATE-PARITY.4: support enum constants` | `Actor-constant enum member parser/lowering implementation slice.` |
 
 ## Changelog
 
@@ -183,3 +192,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped scalar type-alias parser/lowering support for
   `ISF-TYPE-AGGREGATE-PARITY.3` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.4`.
+- `2026-05-16`: Shipped actor-constant enum member references for
+  `ISF-TYPE-AGGREGATE-PARITY.4` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.5`.

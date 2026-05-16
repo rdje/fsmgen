@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF actor-constant enum members shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.4` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.5`.
+- Actor constants now accept local enum members such as `mode.BUSY` and
+  package-qualified enum members such as `shared.mode.BUSY`, using the
+  existing `.fsm` enum/package symbol machinery.
+- Lowered scheduled `.fsm` preserves authored enum member tokens in
+  `+constants`; schedule reports preserve the authored actor-constant value;
+  the parser/lowerer stores the resolved non-negative integer value for static
+  waits and existing static activation-parameter overrides.
+- Enum member references outside actor constants and typed aggregate carriers
+  remain deferred.
 ## 2026-05-16: ISF task-tree leaf metadata corrected
 - Corrected [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md)
   so leaves `.1`, `.2`, and `.3` now record their actual commit IDs and

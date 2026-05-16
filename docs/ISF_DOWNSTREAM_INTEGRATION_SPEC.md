@@ -186,7 +186,9 @@ General source rules:
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
   otherwise.
-- Actor constants and static wait counts use non-negative integer literals.
+- Actor constants use non-negative integer literals or enum member references
+  that resolve to non-negative integers; static wait counts use non-negative
+  integer literals or actor constants.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -359,16 +361,23 @@ Constants:
 (constants
   (WAIT_ZERO 0)
   (WAIT_TWO 2)
-  (WAIT_ONE 4'd1))
+  (WAIT_ONE 4'd1)
+  (BUSY_WAIT mode.BUSY)
+  (REMOTE_WAIT shared.mode.BUSY))
 ```
 
 Rules:
 
 - Constants are actor-scoped and compile-time only.
 - Names are unique HDL identifiers.
-- Values are non-negative integer literals.
+- Values are non-negative integer literals or enum member references.
+- Enum member references use local `mode.BUSY` or package-qualified
+  `shared.mode.BUSY` spelling and must resolve to non-negative integer
+  literal values before lowering.
 - Constants are emitted into scheduled `.fsm` `+constants`.
-- Constants may be used as static `(wait NAME)` counts.
+- Schedule reports preserve the authored value token in `actor_constants[]`.
+- Constants may be used as static `(wait NAME)` counts and existing static
+  activation parameter override values.
 - Actor or transaction `params` are not wait constants.
 
 Actor-owned storage:
@@ -831,8 +840,11 @@ Rules:
 - Unknown aliases and aliases that resolve to aggregate `list` or `record`
   types fail closed in this scalar-only slice.
 - Actor-local `(enums ...)` declarations are preserved into scheduled `.fsm`
-  as `+enums`, but no ISF expression or value context consumes enum members
-  yet.
+  as `+enums`.
+- Actor constants may consume local enum members such as `mode.BUSY` and
+  package enum members such as `shared.mode.BUSY`. Unknown enum families or
+  members fail closed before generated artifacts are emitted.
+- No other ISF expression or value context consumes enum members yet.
 
 Typed aggregate carrier/update semantics are not shipped yet. Existing
 aggregate support beyond declaration artifacts is limited to compatible
@@ -1273,7 +1285,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1120-isf-public-live-document-path-audit.t \
   t/1144-isf-public-tested-by-metadata-audit.t \
   t/1255-isf-schedule-report-golden-matrix.t \
-  t/1257-isf-scalar-type-aliases.t
+  t/1257-isf-scalar-type-aliases.t \
+  t/1258-isf-enum-member-constants.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
