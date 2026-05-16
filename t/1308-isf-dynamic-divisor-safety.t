@@ -105,6 +105,41 @@ subtest 'literal zero divisor in activation input binding expression fails close
 ISF
 };
 
+subtest 'actor zero constant division divisor in transaction RHS fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'transaction_constant_division_by_zero', qr/\AError: transaction 'main' set RHS expression '\(\/ numerator ZERO\)' uses actor constant zero divisor 'ZERO' in division/);
+(actor transaction_constant_division_by_zero
+  (clock clk)
+  (reset rst)
+  (constants
+    (ZERO 0))
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (set out (/ numerator ZERO))))
+ISF
+};
+
+subtest 'actor enum-resolved zero constant modulo divisor fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'rule_enum_constant_modulo_by_zero', qr/\AError: rule 'capture' set RHS expression '\(% numerator DEN\)' uses actor constant zero divisor 'DEN' in modulo/);
+(actor rule_enum_constant_modulo_by_zero
+  (clock clk)
+  (reset rst)
+  (enums
+    (denom (ZERO 0) (TWO 2)))
+  (constants
+    (DEN denom.ZERO))
+  (interface
+    (input ready)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (rule capture ready
+    (set out (% numerator DEN))))
+ISF
+};
+
 subtest 'dynamic divisor lowers unchanged' => sub {
     my $result = lower_source(<<'ISF', 'dynamic_divisor_ok');
 (actor dynamic_divisor_ok
@@ -123,6 +158,29 @@ ISF
     my $fsm = $result->{files}{'dynamic_divisor_ok.fsm'};
     like($fsm, qr{\(<- \(out>? \(/ numerator divisor\)\)\)},
         'scheduled .fsm preserves runtime dynamic divisor expression');
+};
+
+subtest 'nonzero actor constant divisor lowers unchanged' => sub {
+    my $result = lower_source(<<'ISF', 'nonzero_constant_divisor_ok');
+(actor nonzero_constant_divisor_ok
+  (clock clk)
+  (reset rst)
+  (constants
+    (DEN 2))
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (set out (/ numerator DEN))))
+ISF
+
+    my $fsm = $result->{files}{'nonzero_constant_divisor_ok.fsm'};
+    like($fsm, qr{\(\+constants\s+\(DEN 2\)\s+\)}s,
+        'scheduled .fsm preserves nonzero actor constant declaration');
+    like($fsm, qr{\(<- \(out>? \(/ numerator DEN\)\)\)},
+        'scheduled .fsm preserves nonzero actor constant divisor expression');
 };
 
 subtest 'nonzero exact-width literal divisor lowers unchanged' => sub {

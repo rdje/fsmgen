@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF actor-constant zero divisor safety shipped
+- Completed `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` and closed the task tree.
+- Extended parser-side runtime divisor validation so actor-level constants
+  that resolve to zero fail closed as division/modulo divisors before
+  scheduled `.fsm` emission.
+- Covered direct zero constants and enum-member constants that resolve to
+  zero while preserving nonzero actor constants, nonzero literal divisors, and
+  dynamic scalar divisors unchanged.
+- Kept actor and transaction parameters outside this slice because they are
+  overrideable specialization values.
+- Widened `t/1308-isf-dynamic-divisor-safety.t` and the mdBook
+  feature-matrix audit.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook data manipulation,
+  feature matrix, and backlog chapters.
+- Validation: focused divisor/matrix tests passed with `Files=2, Tests=87`;
+  `git diff --check` passed; broad `./bin/ci-regression isf --no-book` passed
+  with `Files=214, Tests=939`.
 ### R14 — ISF extract single-field width inference shipped
 - Completed `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` and closed the task
   tree.

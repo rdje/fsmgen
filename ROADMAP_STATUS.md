@@ -10,12 +10,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` is closed
-  after shipping exactly-one-missing-field `extract` width inference,
-  synchronizing the spec, downstream handoff, public contract, mdBook, and
-  tests, and preserving fail-closed ambiguity for wider layout inference. The
-  next R14 PNT implementation slice must select or create a new task tree
-  before code changes.
+- Next decision point: `ISF-DYNAMIC-DIVISOR-CONSTANTS` is closed after
+  shipping actor-constant zero divisor rejection across shipped ISF runtime
+  expression contexts and synchronizing the spec, downstream handoff, public
+  contract, mdBook, and tests. The next R14 PNT implementation slice must
+  select or create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -5487,6 +5486,10 @@ Done:
   `bin/fsmgen-issue-bundle` example for format-agnostic bug reports.
 - The ISF shipped feature matrix now includes copyable CLI examples for
   `--strict`, `--emit-schedule-json`, multi-file `--outdir`, and HDL handoff.
+- ISF runtime divisor safety now rejects numeric/exact-width literal-zero
+  divisors and actor-level constants that resolve to zero before scheduled
+  `.fsm` emission, while preserving nonzero literal/constant divisors and
+  dynamic scalar divisors unchanged.
 - The bootstrap import-tree snapshot now records the reachable ISF adapter and
   scheduler path.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped

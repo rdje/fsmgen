@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF actor-constant zero divisor safety shipped
+- Completed `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` and closed
+  [docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md).
+- ISF parser semantic validation now treats actor-level constants that resolve
+  to zero as known zero divisors across the shipped runtime division/modulo
+  expression contexts.
+- The guard covers direct zero constants and enum-member constants that resolve
+  to zero. Nonzero actor constants, nonzero literal divisors, and dynamic
+  scalar divisors still lower unchanged.
+- Actor parameters and transaction parameters remain outside this proof
+  because they are overrideable specialization values.
+- Widened
+  [t/1308-isf-dynamic-divisor-safety.t](t/1308-isf-dynamic-divisor-safety.t)
+  and the mdBook feature-matrix audit, and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, roadmap board, README task
+  index, and task tree.
+- Validation: `prove -l t/1308-isf-dynamic-divisor-safety.t t/1305-isf-book-feature-matrix-audit.t`
+  passed with `Files=2, Tests=87`; `git diff --check` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=214, Tests=939`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF extract single-field width inference shipped
 - Completed `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` and closed
   [docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md](docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md).

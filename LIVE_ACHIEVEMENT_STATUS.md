@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF actor-constant zero divisor safety shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` in
+  [docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md).
+- The `ISF-DYNAMIC-DIVISOR-CONSTANTS` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create
+  a new task tree first.
+- ISF runtime division/modulo safety now rejects actor-level constants that
+  resolve to zero, including enum-backed zero constants, before scheduled
+  `.fsm` emission.
+- Nonzero actor constants, nonzero literal divisors, and dynamic scalar
+  divisors remain accepted and lower unchanged. Actor/transaction parameters
+  remain outside this proof because they are overrideable specialization
+  values.
+- Widened
+  [t/1308-isf-dynamic-divisor-safety.t](t/1308-isf-dynamic-divisor-safety.t)
+  and
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t),
+  and synchronized the spec, downstream handoff, public contract, mdBook, and
+  live docs.
+- Validation: focused divisor/matrix tests passed with `Files=2, Tests=87`;
+  `git diff --check` passed; broad `./bin/ci-regression isf --no-book` passed
+  with `Files=214, Tests=939`.
+
 ## 2026-05-16: R14 — ISF extract single-field width inference shipped
 - Completed R14 task-tree slice:
   `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` in

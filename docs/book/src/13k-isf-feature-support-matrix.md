@@ -44,7 +44,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Transaction entry | shipped | `(transaction NAME (on START ...) body...)`, direct entry samples, transaction ports, and parameter declarations where generated-child behavior owns them. | Entry logic generates start/idle behavior, captures accepted samples, and records transaction order in schedule reports. Unsupported entry-body forms fail closed. |
 | Transaction ports and activation bindings | shipped bounded surface | Transaction `(ports ...)` declarations plus activation-site `(bind ...)` blocks on `do`, `spawn`, and rule `trigger` where documented. | Ports materialize as transaction-local data/control boundaries and generated handoff assignments. Reports expose bounded `transaction_port_bindings[]` provenance. Rule-trigger output bindings and snapshot-vs-live binding timing remain backlog. |
 | Transaction assignments | shipped | `(set TARGET EXPR)` and `(update VAR EXPR)` with scalar targets and expression payloads in the documented value domain. | Assignments lower to scheduled `.fsm` state assignments with correct flopped/combinational semantics for the form. Scalar aggregate leaves and enum members are accepted only in shipped contexts. |
-| Runtime expression divisor safety | shipped bounded surface | Division and modulo in shipped runtime expression contexts such as transaction RHS, wait counts, activation input bindings, rule guards/actions, drive bodies/calls, inline drives, and bank access index/value expressions. | Numeric and exact-width literal-zero divisors fail closed before scheduled `.fsm` emission. Nonzero literal divisors and dynamic scalar divisors lower unchanged; full dynamic nonzero proof remains backlog. |
+| Runtime expression divisor safety | shipped bounded surface | Division and modulo in shipped runtime expression contexts such as transaction RHS, wait counts, activation input bindings, rule guards/actions, drive bodies/calls, inline drives, and bank access index/value expressions. | Numeric/exact-width literal-zero divisors and actor-constant-zero divisors fail closed before scheduled `.fsm` emission. Nonzero literal/actor-constant divisors and dynamic scalar divisors lower unchanged; full dynamic nonzero proof remains backlog. |
 | Named and inline drives | shipped | Actor-level `(drive NAME [(PARAM ...)] body...)`; transaction body `(drive NAME actual...)`; inline drive assignments where documented. | A named drive emits a non-state DT. A drive call consumes one state and transfers actuals through generated drive parameter signals. Inline drive assignments become state assignments. |
 | Await and latency | shipped | `(await PORT)`, actor watchdogs, and `(latency (min N) (max N))` on transactions. | Awaits lower to wait/test states and watchdog counters when configured. Latency counters and schedule-report storage metadata are emitted for the supported shapes. |
 | Static and dynamic waits | shipped bounded surface | `(wait N)`, `(wait 0)`, and accepted non-literal wait count expressions in documented contexts. | Static waits create explicit wait states unless zero-count bypass semantics apply. Runtime waits use generated counters and fail closed when a selected zero-count successor cannot carry pending samples safely. |
@@ -220,12 +220,16 @@ The shipped aggregate path is scalar-leaf based. `frame.mode` and
 `frame.valid` are accepted because `frame` is declared actor-owned aggregate
 storage and the paths resolve to scalar leaves.
 
-Runtime expression divisor safety is fail-closed for literal zero:
+Runtime expression divisor safety is fail-closed for literal zero and fixed
+actor constants that resolve to zero:
 
 ```lisp
+(constants (ZERO 0) (DEN 2))
 (set out (/ numerator divisor))  ;; accepted: dynamic divisor, no proof yet
 (set out (/ numerator 8'd2))     ;; accepted: nonzero literal divisor
+(set out (/ numerator DEN))      ;; accepted: nonzero actor constant divisor
 (set out (/ numerator 0))        ;; rejected before scheduled .fsm emission
+(set out (/ numerator ZERO))     ;; rejected before scheduled .fsm emission
 ```
 
 ### Bank Store And Load
@@ -386,8 +390,9 @@ does not exist:
 - Spawn, blocking `do`, `await_all`, `await_any`, nested `while`, nested
   `until`, `stage`, and `contract` inside repeat bodies remain outside the
   shipped repeat-body subset.
-- Dynamic division/modulo nonzero proof is not shipped. Literal-zero divisors
-  are rejected, but arbitrary runtime scalar divisors are emitted unchanged.
+- Dynamic division/modulo nonzero proof is not shipped. Literal-zero and
+  actor-constant-zero divisors are rejected, but arbitrary runtime scalar
+  divisors are emitted unchanged.
 - Enum members are not writable targets, and enum members in expression
   operator position fail closed.
 - Aggregate interface ports, transaction-local aggregate ports, aggregate

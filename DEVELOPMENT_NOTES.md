@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: actor constants are fixed facts for divisor safety
+- `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` extends the existing parser semantic
+  divisor pass instead of adding a scheduler check. Actor constants are already
+  finalized, including enum-member resolution, before that pass runs.
+- The zero-constant map is deliberately actor-local and compile-time only:
+  constants such as `(ZERO 0)` and `(DEN denom.ZERO)` are known facts, while
+  actor and transaction parameters are overrideable and need a separate
+  specialization-time policy before they can be treated as safe or unsafe
+  divisors.
+- Diagnostics keep the authored divisor token, for example `ZERO`, so
+  downstream reports and users can fix the source without knowing whether the
+  constant was literal-backed or enum-backed.
 ## 2026-05-16: extract can infer one missing field width but not guess layouts
 - `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` keeps the data-width policy
   conservative: only one missing `extract` destination field can be inferred,
@@ -23,10 +35,12 @@ This document captures engineering rationale, design constraints, and working de
   bindings, rule guards/actions, named and inline drives, drive-call actuals,
   and bank access index/value expressions. It deliberately does not inspect
   parameter aggregate/list values as expression trees.
-- The slice rejects only statically known literal-zero divisors. Nonzero
-  literals and dynamic scalar divisors still lower to scheduled `.fsm`
-  unchanged because proving arbitrary runtime nonzero values requires a
-  separate range/dataflow contract.
+- That slice initially rejected only statically known literal-zero divisors;
+  the actor-constant follow-up above extends the same parser pass to fixed
+  zero constants. Nonzero literals, nonzero actor constants, and dynamic
+  scalar divisors still lower to scheduled `.fsm` unchanged because proving
+  arbitrary runtime nonzero values requires a separate range/dataflow
+  contract.
 ## 2026-05-16: the ISF feature matrix should show the shipped CLI shapes
 - `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` adds copyable CLI examples
   for the shipped `.isf` paths so users can see strict mode, schedule JSON,
