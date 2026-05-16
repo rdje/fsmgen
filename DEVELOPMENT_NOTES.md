@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: dynamic wait storage role is public contract sync
+- `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` does not introduce a new lowering
+  behavior. `LoweringIR` already marked runtime dynamic wait sampled-count
+  storage as `dynamic_wait_counter`; the gap was that the advertised public
+  role family omitted it.
+- Advertising the role is appropriate because downstream consumers already see
+  the role in `inferred_storage[]` for runtime scalar and expression waits.
+  Keeping the role list truthful is part of the bounded schedule-report
+  contract.
+- Focused coverage was added to the storage metadata audit rather than a new
+  syntax test because the source feature already belongs to the closed dynamic
+  wait tree; this slice synchronizes report metadata and documentation.
 ## 2026-05-16: temporal contract storage roles stay coarse
 - `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` uses one public
   `temporal_contract_monitor` storage role for the generated pending register,

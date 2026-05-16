@@ -2160,9 +2160,12 @@ advertises this value family through `schedule_report_dt_kind_values`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
 lowerer has direct evidence: `actor_storage`, `completion_pulse`,
-`data_register`, `drive_payload`, `drive_request`, `extract_field`,
-`latency_counter`, `repeat_counter`, `sample_alias`,
+`data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
+`extract_field`, `latency_counter`, `repeat_counter`, `sample_alias`,
 `temporal_contract_monitor`, and `watchdog_counter`.
+Runtime scalar and runtime expression waits use `dynamic_wait_counter` for the
+generated sampled-count storage that backs zero-bypass and decrement-loop
+lowering.
 Temporal-contract monitor storage uses that one role for the generated
 pending and sticky-fail registers plus the generated age counter; the
 `temporal_contracts[]` entry remains the public summary that names each signal

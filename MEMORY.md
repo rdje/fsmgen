@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF dynamic-wait storage role contract synchronized
+- Completed `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md](docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md),
+  closing the runtime dynamic-wait storage report-role tree.
+- Runtime scalar and runtime expression wait reports already emitted generated
+  sampled-count storage with `role = dynamic_wait_counter`; the public ISF
+  contract and capability manifest now advertise that role through
+  `schedule_report_storage_role_values`.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  so a runtime dynamic wait report proves the role is advertised and keeps its
+  known counter width.
+- This is contract/documentation synchronization for shipped report behavior.
+  Dynamic wait lowering, zero-bypass behavior, pending-sample behavior,
+  generated `.fsm`, and HDL output are unchanged.
 ## 2026-05-16: ISF temporal-contract storage roles shipped
 - Completed `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` in
   [docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md),

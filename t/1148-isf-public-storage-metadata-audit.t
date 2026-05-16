@@ -86,6 +86,25 @@ subtest 'APB schedule report inferred storage follows advertised metadata' => su
     ok($role_entries > 0, 'APB report includes role-bearing inferred storage entries');
 };
 
+subtest 'runtime dynamic wait storage role follows advertised metadata' => sub {
+    my $report = report_source(dynamic_wait_source(), 'dynamic-wait-storage-role.isf');
+    my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
+
+    ok($role{dynamic_wait_counter}, 'dynamic_wait_counter is an advertised storage role');
+
+    my ($counter) = grep {
+        ($_->{name} // '') eq 'main_wait_1_cnt'
+    } @{$report->{inferred_storage} || []};
+
+    ok($counter, 'runtime dynamic wait report exposes generated counter storage');
+    is($counter->{kind}, 'counter', 'runtime dynamic wait storage is a counter')
+        if $counter;
+    is($counter->{role}, 'dynamic_wait_counter', 'runtime dynamic wait storage reports its role')
+        if $counter;
+    is($counter->{width}, 4, 'runtime dynamic wait storage reports the count-source width')
+        if $counter;
+};
+
 done_testing();
 
 sub assert_storage_metadata {
@@ -139,4 +158,25 @@ sub run_capability_manifest {
     is(join('', @{$stderr_buf || []}), '', "$mode keeps stderr clean");
 
     return decode_json(join('', @{$stdout_buf || []}));
+}
+
+sub report_source {
+    my ($source, $label) = @_;
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, $label);
+    return decode_json(FSM::Scheduler::ISF->new()->report($actor));
+}
+
+sub dynamic_wait_source {
+    return <<'ISF';
+(actor dynamic_wait_storage_role
+  (clock clk)
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (output done))
+  (transaction main
+    (on start)
+    (wait cycles)
+    (complete done)))
+ISF
 }

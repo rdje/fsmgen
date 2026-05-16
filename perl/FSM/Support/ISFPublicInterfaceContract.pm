@@ -1374,6 +1374,7 @@ sub isf_public_interface_schedule_report_storage_role_values {
         qw(
             completion_pulse
             data_register
+            dynamic_wait_counter
             drive_payload
             drive_request
             extract_field

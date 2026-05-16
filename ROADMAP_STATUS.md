@@ -34,8 +34,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   temporal-contract monitor pending/fail registers and the age counter with
   advertised `inferred_storage[].role = temporal_contract_monitor`, without
   changing contract syntax, monitor DT behavior, reset behavior, generated
-  `.fsm`/HDL, or assertion projection. The next PNT selection should choose a
-  fresh roadmap-aligned R14 task tree before implementation.
+  `.fsm`/HDL, or assertion projection.
+  `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` then synchronized the public storage
+  role family with the already-emitted runtime dynamic wait
+  `dynamic_wait_counter` role, without changing dynamic wait lowering or
+  generated artifacts. The next PNT selection should choose a fresh
+  roadmap-aligned R14 task tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -159,6 +163,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   temporal-contract pending/fail registers and age counters, advertised the new
   storage role through public contract/manifest metadata, and added
   `t/1254-isf-temporal-contract-storage-report.t`.
+  `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1` published the already-emitted
+  `dynamic_wait_counter` storage role through the public contract/manifest
+  metadata and extended `t/1148-isf-public-storage-metadata-audit.t` with a
+  runtime dynamic wait report fixture.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

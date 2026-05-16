@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF dynamic-wait storage role contract synchronized
+- Completed `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1`, closing the
+  `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` task tree.
+- Added the already-emitted `dynamic_wait_counter` role to
+  `schedule_report_storage_role_values` in the public ISF contract and
+  capability manifest.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with a runtime dynamic wait report fixture to prove the role is advertised
+  and width-bearing.
+- Synchronized the ISF spec, downstream handoff, mdBook, README, task tree,
+  roadmap status, and live docs.
+- Dynamic wait lowering, zero-bypass behavior, pending-sample behavior,
+  generated `.fsm`, and HDL output are unchanged.
 ### R14 — ISF temporal-contract storage roles shipped
 - Completed `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1`, closing the
   `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` task tree.

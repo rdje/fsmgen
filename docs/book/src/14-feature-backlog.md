@@ -730,9 +730,9 @@ optional positive integer widths when width evidence is known.
 `inferred_storage[].kind` remains the coarse storage category (`counter` or
 `register`). The first optional `inferred_storage[].role` slice is shipped for
 storage families with stable lowering evidence: `watchdog_counter`,
-`latency_counter`, `repeat_counter`, `drive_request`, `drive_payload`,
-`sample_alias`, `extract_field`, `data_register`, `completion_pulse`, and
-`temporal_contract_monitor`.
+`latency_counter`, `repeat_counter`, `dynamic_wait_counter`, `drive_request`,
+`drive_payload`, `sample_alias`, `extract_field`, `data_register`,
+`completion_pulse`, and `temporal_contract_monitor`.
 
 Remaining direction: keep `role` additive and omit it when evidence is
 ambiguous. Additional roles, including child `do`/`spawn` handoff storage,

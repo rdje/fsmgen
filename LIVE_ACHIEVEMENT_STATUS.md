@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF dynamic-wait storage role contract synchronized
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-STORAGE-REPORTS.1`, closing
+  [docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md](docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md).
+- Public contract metadata now advertises `dynamic_wait_counter` through
+  `schedule_report_storage_role_values`, matching the already-emitted runtime
+  dynamic wait counter role in schedule JSON.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with a runtime dynamic wait report fixture.
+- Dynamic wait lowering, zero-bypass behavior, pending-sample behavior,
+  generated `.fsm`, and HDL output are unchanged.
+
 ## 2026-05-16: R14 — ISF temporal-contract storage roles shipped
 - Completed R14 task-tree slice:
   `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1`, closing

@@ -425,6 +425,9 @@ and `counter_width`. Only waits whose resolved count is greater than zero
 create report entries. Static waits report `count_kind` as `static`,
 `count_source` as the literal or actor constant name, and
 `counter_signal`/`counter_width` as null for the fixed-chain lowering.
+Runtime scalar and runtime expression waits additionally expose their
+generated sampled-count storage through `inferred_storage[]` with role
+`dynamic_wait_counter` and the known counter width.
 
 The shipped symbolic surface is `(wait NAME)`, where `NAME` is an actor-level
 constant declared with `(constants (NAME value) ...)`. The constant must
