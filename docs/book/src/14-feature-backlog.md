@@ -37,7 +37,7 @@ as expressions; FSMGen does not yet prove every dynamic divisor nonzero.
 
 ### Automatic Aggregate Growth From Usage
 
-Status: shipped for schedule JSON `schema_version: 1`.
+Status: backlog.
 
 Goal: infer aggregate record/list shapes from member/index usage when no
 explicit aggregate type anchor is present.
@@ -49,7 +49,7 @@ aggregate type growth from arbitrary usage is not fully shipped.
 
 ### Backend-Owned Struct/Record Default Lowering
 
-Status: shipped for schedule JSON `schema_version: 1`.
+Status: backlog.
 
 Goal: make backend-owned structured `struct`/record emission the default
 lowering where it is portable and synthesizable.
@@ -648,7 +648,7 @@ binding or assignment-provenance internals.
 
 ### Temporal Contract Lowering
 
-Status: backlog.
+Status: partially shipped; broader contract forms remain backlog.
 
 Goal: lower transaction `(contract ...)` temporal assertions into generated
 checks or equivalent scheduled artifacts.
@@ -747,7 +747,7 @@ metadata, and regression coverage.
 
 ### Fully Frozen Schedule JSON Schema
 
-Status: backlog.
+Status: shipped for schedule JSON `schema_version: 1`.
 
 Goal: freeze the whole schedule JSON schema as a public contract.
 
@@ -833,8 +833,7 @@ slice.
 
 ### ISF Reusable Libraries
 
-Status: active feature tree under
-[ISF-LIBRARIES](../../tasks/ISF-LIBRARIES.md).
+Status: shipped bounded actor-library surface; broader surfaces remain backlog.
 
 Goal: let users import tested reusable ISF descriptions instead of rewriting
 common actors and transaction patterns in every design. The user-facing term is
@@ -847,7 +846,8 @@ Current boundary: the first reusable ISF library import, same-name
 and remapped generated-top system binding, actor-owned fixed-storage,
 expression-valued rule-guard, disjoint-rule write, FIFO-controller matrix,
 bank-access, and fixed FIFO
-library fixture slices have shipped. Actor roots may import library roots, use
+library fixture slices have shipped under
+[ISF-LIBRARIES](../../tasks/ISF-LIBRARIES.md). Actor roots may import library roots, use
 an exported actor, validate use-site parameters and explicit bindings, emit a
 specialized child scheduled `.fsm` artifact, wire the library actor through a
 generated top, reach SystemVerilog generation for the covered generated-top
@@ -859,8 +859,11 @@ author a reusable fixed-shape FIFO actor source with bank-backed accepted
 push/pop data movement that reaches generated-top SystemVerilog. Clock/reset
 name remapping now works through explicit generated-top links while keeping
 the reusable actor's reset kind and polarity unchanged. This remapping is
-still single-clock-domain ISF behavior; multi-clock, asynchronous, and
-interacting clock domains remain a separate unshipped semantics problem.
+still system-signal binding behavior; it does not imply CDC. Multi-clock,
+asynchronous, and interacting clock-domain semantics are owned by the
+separate shipped
+[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md) event-crossing surface
+and its remaining backlog.
 
 Shipped source model for actor exports:
 
@@ -1057,8 +1060,7 @@ catalog/contract metadata is synchronized through
 
 ### ISF Multi-Clock And CDC Semantics
 
-Status: active task tree under
-[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md).
+Status: shipped first acknowledged-event CDC primitive; richer CDC remains backlog.
 
 Goal: give ISF a deliberate model for designs with multiple clock domains,
 asynchronous boundaries, and interacting domains.
@@ -1077,8 +1079,10 @@ contract.
 Different clock signal names, library clock/reset bindings, and generated-top
 system-port links are not CDC semantics by themselves.
 
-The future feature still needs richer fixture matrices for generated
-top/CDC HDL beyond the first event-crossing fixture.
+The shipped boundary is tracked by
+[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md). The remaining backlog
+still needs richer fixture matrices for generated top/CDC HDL beyond the
+first event-crossing fixture.
 
 Outside that shipped event primitive, direct same-cycle reads or writes across
 domains must not be inferred from ordinary signal access.

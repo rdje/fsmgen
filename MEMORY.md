@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF feature-backlog status labels synchronized
+- Completed `ISF-FEATURE-BACKLOG-STATUS-SYNC.1` in
+  [docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md](docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md),
+  closing the focused backlog status truth-sync tree.
+- Corrected the mdBook feature backlog so aggregate backlog entries no longer
+  carry schedule-report freeze wording, the fully frozen schedule JSON entry
+  says `schema_version: 1` is shipped, and closed R14 library/clock-domain
+  trees no longer appear as active.
+- Added [t/1256-feature-backlog-status-audit.t](t/1256-feature-backlog-status-audit.t)
+  to lock those status labels.
+- This is documentation-truth synchronization only. Parser, scheduler,
+  schedule JSON, generated `.fsm`, public contract, and HDL behavior are
+  unchanged.
 ## 2026-05-16: ISF schedule-report full schema frozen
 - Completed `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1` in
   [docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md](docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md),

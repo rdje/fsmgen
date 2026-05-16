@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF feature-backlog status labels synchronized
+- Completed R14 task-tree slice:
+  `ISF-FEATURE-BACKLOG-STATUS-SYNC.1`, closing
+  [docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md](docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md).
+- Corrected mdBook feature-backlog status labels for aggregate backlog items,
+  temporal contracts, schedule JSON schema freeze, reusable libraries, and
+  multi-clock/CDC semantics.
+- Added [t/1256-feature-backlog-status-audit.t](t/1256-feature-backlog-status-audit.t)
+  to lock the corrected labels and reject stale active-tree status wording.
+- Parser, scheduler, schedule JSON, generated `.fsm`, public contract, and HDL
+  behavior are unchanged.
+
 ## 2026-05-16: R14 — ISF schedule-report full schema frozen
 - Completed R14 task-tree slice:
   `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1`, closing

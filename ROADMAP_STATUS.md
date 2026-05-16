@@ -94,6 +94,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `schedule_report_full_schema_stable` to true for schedule JSON
   `schema_version: 1` while keeping raw parser actor hashes and `LoweringIR`
   non-public and preserving the documented schema-version/evolution policy.
+  `ISF-FEATURE-BACKLOG-STATUS-SYNC.1` then corrected stale mdBook feature
+  backlog status labels for aggregate backlog items, temporal contracts,
+  schedule JSON schema freeze, reusable libraries, and multi-clock/CDC
+  semantics, adding `t/1256-feature-backlog-status-audit.t` to prevent the
+  same truth drift from returning.
   The next PNT selection should choose a fresh roadmap-aligned R14 task tree
   before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
@@ -266,6 +271,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `schedule_report_full_schema_stable` flag to true for schedule JSON
   `schema_version: 1` without changing parser, lowering, generated `.fsm`, or
   HDL behavior.
+  `ISF-FEATURE-BACKLOG-STATUS-SYNC.1` corrected stale mdBook feature-backlog
+  status labels and added a focused audit without changing parser, scheduler,
+  report, public contract, generated `.fsm`, or HDL behavior.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

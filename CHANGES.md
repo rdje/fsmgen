@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF feature-backlog status labels synchronized
+- Completed `ISF-FEATURE-BACKLOG-STATUS-SYNC.1`, closing the
+  `ISF-FEATURE-BACKLOG-STATUS-SYNC` task tree.
+- Corrected mdBook feature-backlog status labels for aggregate backlog items,
+  temporal contracts, schedule JSON schema freeze, reusable libraries, and
+  multi-clock/CDC semantics.
+- Added `t/1256-feature-backlog-status-audit.t` so stale active-tree labels or
+  accidental schedule-report freeze wording cannot silently reappear.
+- Parser, scheduler, schedule JSON, generated `.fsm`, public contract, and HDL
+  behavior are unchanged.
 ### R14 — ISF schedule-report full schema frozen
 - Completed `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1`, closing the
   `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE` task tree.

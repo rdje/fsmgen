@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: feature-backlog status is regression-audited
+- `ISF-FEATURE-BACKLOG-STATUS-SYNC.1` fixes book status drift from recently
+  closed R14 trees without changing compiler behavior. The book now separates
+  aggregate backlog status from schedule-report schema freeze status, and it
+  describes closed library and clock-domain trees as shipped bounded surfaces
+  with remaining backlog instead of active work.
+- The new audit intentionally checks specific status labels rather than broad
+  prose snapshots. That makes it cheap to maintain while still catching the
+  class of stale or misplaced status text that downstream readers rely on.
 ## 2026-05-16: schedule-report schema version 1 is stable
 - `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1` flips
   `schedule_report_full_schema_stable` to true after the prerequisite
