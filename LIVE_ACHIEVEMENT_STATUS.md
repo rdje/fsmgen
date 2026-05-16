@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF feature matrix stage/contract coverage synchronized
+- Completed R14 task-tree slice:
+  `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` in
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md).
+- The `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC` tree is now closed. No active
+  ISF task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- The ISF shipped feature matrix now explicitly lists transaction stage
+  lowering and temporal contract SystemVerilog assertion projection, with
+  example syntax and broader non-claims.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  to keep those shipped feature-family markers present.
+- No parser, scheduler, report payload, generated `.fsm`, or HDL behavior
+  changed.
+
 ## 2026-05-16: R14 — ISF loop-body documentation truth synchronized
 - Completed R14 task-tree slice:
   `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` in

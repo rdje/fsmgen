@@ -42,6 +42,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md) |
 | `ISF-LOOP-BODY-DOC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md) |
 | `ISF-RULE-GUARD-DOC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md](docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md) |
 | `ISF-MDBOOK-FEATURE-MATRIX` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md) |
@@ -159,6 +160,7 @@ as done work unless a future task reopens them.
 | Book-facing ISF shipped feature matrix | `ISF-MDBOOK-FEATURE-MATRIX` |
 | Standalone enum/aggregate rule-guard backlog truth synchronization | `ISF-RULE-GUARD-DOC-TRUTH-SYNC` |
 | Loop-body shipped-clause documentation truth synchronization | `ISF-LOOP-BODY-DOC-TRUTH-SYNC` |
+| ISF shipped feature matrix coverage synchronization | `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC` |
 
 ## ISF Task-Tree Rule
 

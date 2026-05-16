@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF feature matrix stage/contract coverage synchronized
+- Completed `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` and closed the task
+  tree.
+- Added explicit transaction stage and temporal contract rows plus an example
+  to the ISF shipped feature matrix.
+- Widened `t/1305-isf-book-feature-matrix-audit.t` so shipped stage and
+  contract feature-family markers remain present.
+- Parser, scheduler, emitter, schedule-report payload, generated `.fsm`, and
+  HDL behavior are unchanged.
 ### R14 — ISF loop-body documentation truth synchronized
 - Completed `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` and closed the task tree.
 - Corrected the ISF spec and mdBook feature-backlog dynamic-loop body surface

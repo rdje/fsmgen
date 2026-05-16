@@ -109,6 +109,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md` — completed `R14` task tree for the book-facing ISF shipped feature matrix.
 - `docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md` — completed `R14` task tree for standalone enum/aggregate rule-guard backlog truth synchronization.
 - `docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md` — completed `R14` task tree for loop-body shipped-clause documentation truth synchronization.
+- `docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md` — completed `R14` task tree for shipped stage/contract coverage in the ISF book feature matrix.
 - `docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing stale ISF feature-backlog status text.
 - `docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing resource arbitration and storage-role backlog status text.
 - `docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md` — completed `R14` task tree for synchronizing stale ISF feature-backlog status labels after closed task trees.

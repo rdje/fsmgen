@@ -10,10 +10,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-LOOP-BODY-DOC-TRUTH-SYNC` is closed after adding
-  the shipped transaction `set` clause to loop-body shipped-subset docs and a
-  focused audit. The next R14 PNT implementation slice must select or create a
-  new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
+- Next decision point: `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC` is closed
+  after adding explicit transaction stage and temporal contract rows to the
+  ISF shipped feature matrix and widening the matrix audit. The next R14 PNT
+  implementation slice must select or create a new task tree before code
+  changes. `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -257,6 +258,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   transaction `set`, added `t/1307-isf-loop-body-doc-truth-audit.t`, and
   changed no parser, scheduler, report payload, generated `.fsm`, or HDL
   behavior.
+  `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` then added explicit transaction
+  stage and temporal contract rows/examples to the ISF shipped feature matrix,
+  widened `t/1305-isf-book-feature-matrix-audit.t`, and changed no parser,
+  scheduler, report payload, generated `.fsm`, or HDL behavior.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated
@@ -5443,6 +5448,9 @@ Done:
   shipped dynamic-loop body inline subset, matching the transaction chapter
   while keeping child activation, await-sync, stage, contract, and nested loop
   forms deferred.
+- The ISF shipped feature matrix now explicitly lists transaction stage
+  lowering and temporal contract SystemVerilog assertion projection with
+  example syntax and broader non-claims.
 - The bootstrap import-tree snapshot now records the reachable ISF adapter and
   scheduler path.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
@@ -5777,10 +5785,11 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-LOOP-BODY-DOC-TRUTH-SYNC`, so the next ISF implementation slice
-  must either activate an existing proposed tree or create a new feature tree
-  before changing parser/scheduler/emitter/contract/fixture/book behavior.
-  Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+  after `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC`, so the next ISF
+  implementation slice must either activate an existing proposed tree or create
+  a new feature tree before changing parser, scheduler, emitter, contract,
+  fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and
+  feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

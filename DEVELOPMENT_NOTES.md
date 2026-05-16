@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: the ISF feature matrix must call out stage and contract features
+- `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` expands the book matrix because
+  shipped stage lowering and temporal contract assertion projection are
+  user-visible features, not just schedule-report details.
+- The added rows deliberately use `shipped bounded surface`: only the
+  top-level ready/valid stage and top-level bounded eventual contract are
+  shipped today.
+- The wider backlog remains explicit for nested stages, stage-local compute,
+  registered-valid/skid-buffer variants, global implication contracts,
+  expression operands, dynamic bounds, and multiple outstanding obligations.
 ## 2026-05-16: loop-body docs must include shipped transaction set
 - `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` fixes a stale dynamic-loop body list that
   still omitted transaction `set` after the shipped inline-body subset grew.

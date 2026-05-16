@@ -47,6 +47,8 @@ my @required_rows = (
     ['Await and latency', 'shipped'],
     ['Static and dynamic waits', 'shipped bounded surface'],
     ['Transaction control flow', 'shipped bounded surface'],
+    ['Transaction stages', 'shipped bounded surface'],
+    ['Temporal contracts', 'shipped bounded surface'],
     ['Data manipulation', 'shipped bounded surface'],
     ['Rules and trigger fan-in', 'shipped'],
     ['Rule conflicts and priorities', 'shipped bounded surface'],
@@ -70,6 +72,8 @@ for my $row (@required_rows) {
 my @required_examples = (
     '(clock-domains',
     '(crossings',
+    '(stage wait_ready',
+    '(contract finish_seen',
     '(repeat count',
     '(types',
     '(storage',
@@ -94,6 +98,8 @@ my @required_non_claims = (
     'Aggregate interface ports',
     'Backlog resource kinds',
     'Direct `(on ...)` activation-site `(params ...)`',
+    'Nested stages',
+    'Temporal contracts beyond the top-level bounded eventual subset',
     'VHDL is recognized as a target family',
 );
 

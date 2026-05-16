@@ -46,6 +46,8 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Await and latency | shipped | `(await PORT)`, actor watchdogs, and `(latency (min N) (max N))` on transactions. | Awaits lower to wait/test states and watchdog counters when configured. Latency counters and schedule-report storage metadata are emitted for the supported shapes. |
 | Static and dynamic waits | shipped bounded surface | `(wait N)`, `(wait 0)`, and accepted non-literal wait count expressions in documented contexts. | Static waits create explicit wait states unless zero-count bypass semantics apply. Runtime waits use generated counters and fail closed when a selected zero-count successor cannot carry pending samples safely. |
 | Transaction control flow | shipped bounded surface | Body-bearing `(when COND body...)`, `(switch SELECTOR branches...)`, `(while COND body...)`, `(until COND body...)`, and `(repeat COUNT body...)`. | Control flow lowers to explicit decision states, branch states, loop counters, and exits. The shipped repeat-body clause surface is limited to documented drive, await, sample, update, set, shift, assemble, extract, store/load, and wait clauses. |
+| Transaction stages | shipped bounded surface | Top-level `(stage NAME (input READY) (output VALID))` transaction clauses. | A stage lowers to one ready/valid barrier state that drives `VALID` while active and advances only when `READY` is true. Actor-level phase/stage metadata is report-visible but has no runtime scheduling semantics yet. |
+| Temporal contracts | shipped bounded surface | Top-level `(contract NAME (eventually SIGNAL (within CYCLES)))`. | Lowering emits monitor state/storage in scheduled `.fsm`; SystemVerilog projects the sticky fail bit into a verification-only assertion under `` `ifndef SYNTHESIS``. Verilog output remains assertion-free. |
 | Data manipulation | shipped bounded surface | `(shift_left REG BIT)`, `(shift_right REG BIT [(width N)])`, `(assemble PART... as TARGET)`, and `(extract WORD as FIELD... [(widths N...)])`. | Width evidence comes from declarations, samples, operation-local options, and structural derivation. Accepted forms avoid placeholder widths; unknown or contradictory widths fail closed. |
 | Rules and trigger fan-in | shipped | Shorthand and long-form `(rule NAME GUARD actions...)`, `(set TARGET EXPR)`, shorthand assignments, and `(trigger TRANSACTION ...)`. | Rules lower to non-state DTs with guarded assignment semantics. Trigger sources feed a generated transaction fan-in or generated-child trigger handoff for parameterized triggers. |
 | Rule conflicts and priorities | shipped bounded surface | Same-target/same-value rule writes, conservative mutual-exclusion proofs, and rule-local or top-level rule priority edges. | Compatible writes are accepted, priority can suppress lower-priority conflicting rule assignments, and unresolvable conflicts fail closed. SystemVerilog gets verification-only selector assertions for analyzed muxes. |
@@ -113,6 +115,25 @@ the event safely across the domain boundary.
 The scheduled `.fsm` review artifact owns the exact cycle placement: samples
 materialize at the accepted entry boundary, drive calls consume states, awaits
 test the selected port, and completion pulses the authored done output.
+
+### Stage And Contract
+
+```lisp
+(transaction stream_word
+  (on start)
+  (stage wait_ready
+    (input ready)
+    (output valid))
+  (contract finish_seen
+    (eventually done (within 8)))
+  (complete done))
+```
+
+The shipped stage surface is a top-level ready/valid barrier. The shipped
+contract surface is a top-level bounded eventual check. Broader stage-local
+compute, nested stages, registered-valid/skid-buffer variants, expression
+contract operands, min/max windows, and global implication contracts remain
+backlog.
 
 ### Waits And Repeat Bodies
 
@@ -270,6 +291,11 @@ does not exist:
 - Direct `(on ...)` activation-site `(params ...)` is unsupported; static
   specialization belongs to spawn, generated blocking `do`, and rule-trigger
   generated activation sites.
+- Nested stages, stage-local compute/action bodies, multiple ready/valid
+  endpoints, registered-valid variants, and skid buffers are not shipped.
+- Temporal contracts beyond the top-level bounded eventual subset, including
+  global implication forms, dynamic bounds, expression operands, and multiple
+  outstanding obligations, are not shipped.
 - VHDL is recognized as a target family, but the full VHDL backend is not
   shipped.
 
