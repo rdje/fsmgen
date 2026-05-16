@@ -124,26 +124,6 @@ ISF
         'unknown local enum member parameter default fails before lowering',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_actor_param_list_leaf_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (params
-    (DEFAULT_MODES (mode.BUSY 1)))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output done))
-  (transaction main
-    (on start)
-    (complete done)))
-ISF
-        qr/parameter 'DEFAULT_MODES' uses unsupported aggregate\/list parameter leaf 'mode\.BUSY'; actor parameter aggregate\/list defaults accept numeric and exact-width literal leaves only, while enum member leaves remain deferred/,
-        'enum leaves inside aggregate/list actor parameters remain deferred',
-    );
-
 };
 
 done_testing();

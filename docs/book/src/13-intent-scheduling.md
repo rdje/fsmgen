@@ -44,10 +44,10 @@ clear lower-layer mapping, and clear runtime behavior.
   runtime ports and not overrideable `params`.
 - **Parameters are specialization defaults**. Actor-level `(params ...)`
   values emit as scheduled `.fsm` `+params` and schedule-report
-  `actor_params[]`; scalar defaults may use enum members, and they are not
-  runtime payload wires. Generated activation-site scalar parameter overrides
-  and aggregate/list override leaves may also use enum members, which resolve
-  to literal generated-top bindings.
+  `actor_params[]`; scalar defaults and aggregate/list default leaves may use
+  enum members, and they are not runtime payload wires. Generated
+  activation-site scalar parameter overrides and aggregate/list override leaves
+  may also use enum members, which resolve to literal generated-top bindings.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,
@@ -403,8 +403,9 @@ limitations are:
   members such as `shared.mode.BUSY`; those constants preserve the authored
   token in `+constants` and schedule reports while resolving to non-negative
   integer values for static waits and existing static activation-parameter
-  overrides. Scalar actor parameter defaults, generated child transaction
-  scalar parameter defaults, direct transaction `set` RHS scalar values,
+  overrides. Scalar actor parameter defaults, scalar leaves inside actor
+  aggregate/list parameter defaults, generated child transaction scalar
+  parameter defaults, direct transaction `set` RHS scalar values,
   scalar operands inside transaction `set` RHS expressions, transaction
   `when`/`while`/`until` condition expression operands, transaction `switch`
   branch values, scalar rule assignment RHS values and scalar operands inside
@@ -425,7 +426,7 @@ limitations are:
   outside scalar trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
   position, drive targets, drive-call expression operator position, inline drive assignments,
-  aggregate/list parameter
+  generated child transaction aggregate/list parameter
   leaves, and other non-shipped contexts remain backlog, as do aggregate paths outside
   transaction `set` RHS values or direct targets, subaggregate
   operands/updates, and aggregate interface/transaction/bank carriers.

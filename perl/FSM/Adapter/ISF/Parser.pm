@@ -536,19 +536,57 @@ sub _finalize_actor_param_values($self, $actor) {
     for my $param (@{$actor->{params} || []}) {
         my $name = $param->{name};
         my $value = $param->{value};
-        next if ref($value);
+        if (ref($value)) {
+            my ($resolved_value, $has_enum_leaf) = $self->_resolve_actor_param_enum_leaf_values(
+                $actor,
+                $value,
+                "actor '$actor_name' parameter '$name'",
+            );
+            $param->{resolved_value} = _clone_isf_value($resolved_value)
+                if $has_enum_leaf;
+            next;
+        }
+
         next if _is_numeric_or_exact_width_literal($value);
         next unless _is_enum_member_reference($value);
 
-        my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
-        confess "Error: actor '$actor_name' parameter '$name' references unknown enum member '$value'\n"
-            unless defined($resolved_value) && !ref($resolved_value);
-        confess "Error: actor '$actor_name' parameter '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
-            unless _is_non_negative_integer_literal_value($resolved_value);
+        my ($resolved_value) = $self->_resolve_actor_param_enum_leaf_values(
+            $actor,
+            $value,
+            "actor '$actor_name' parameter '$name'",
+        );
         $param->{resolved_value} = _clone_isf_value($resolved_value);
     }
 
     return 1;
+}
+
+sub _resolve_actor_param_enum_leaf_values($self, $actor, $value, $context) {
+    if (!ref($value)) {
+        return (_clone_isf_value($value), 0)
+            unless _is_enum_member_reference($value);
+
+        my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
+        confess "Error: $context references unknown enum member '$value'\n"
+            unless defined($resolved_value) && !ref($resolved_value);
+        confess "Error: $context enum member '$value' must resolve to a non-negative integer literal value\n"
+            unless _is_non_negative_integer_literal_value($resolved_value);
+        return (_clone_isf_value($resolved_value), 1);
+    }
+
+    my @resolved;
+    my $has_enum_leaf = 0;
+    for my $item (@$value) {
+        my ($resolved_item, $item_has_enum_leaf) = $self->_resolve_actor_param_enum_leaf_values(
+            $actor,
+            $item,
+            $context,
+        );
+        push @resolved, $resolved_item;
+        $has_enum_leaf ||= $item_has_enum_leaf;
+    }
+
+    return (\@resolved, $has_enum_leaf);
 }
 
 sub _resolve_actor_enum_member_value($self, $actor, $member_ref) {
@@ -1311,7 +1349,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides or aggregate/list override leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults, activation scalar parameter overrides or aggregate/list override leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }
@@ -2247,7 +2285,7 @@ sub _validate_actor_param_value {
         return 1;
     }
 
-    confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+    confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
     for my $item (@$value) {
@@ -2259,12 +2297,13 @@ sub _validate_actor_param_value {
 sub _validate_actor_param_aggregate_leaf_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported aggregate/list parameter leaf '$value'; actor parameter aggregate/list defaults accept numeric and exact-width literal leaves only, while enum member leaves remain deferred\n"
-            unless defined($value) && _is_numeric_or_exact_width_literal($value);
+        confess "$context uses unsupported aggregate/list parameter leaf '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, and enum member literal leaves only\n"
+            unless defined($value)
+                && (_is_numeric_or_exact_width_literal($value) || _is_enum_member_reference($value));
         return 1;
     }
 
-    confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+    confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
     for my $item (@$value) {

@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum actor aggregate parameter defaults shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.23`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.24`.
+- Actor-level aggregate/list `(params ...)` defaults now accept local and
+  package-qualified enum members as scalar leaves.
+- Scheduled `.fsm` `+params` review artifacts and `actor_params[]` schedule
+  reports preserve authored enum tokens, while parser/lowerer metadata records
+  resolved literal aggregate/list leaves for validation.
+- Parser/lowerer diagnostics reject unknown enum-backed actor aggregate/list
+  parameter leaves and keep generated child transaction aggregate/list enum
+  leaves, reusable-library use-site enum overrides, transaction parameters,
+  runtime signals, and arbitrary expressions closed for later slices.
 ### R14 — ISF enum activation aggregate leaves shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.22`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.23`.

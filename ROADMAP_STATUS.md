@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.23` is the active PNT
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.24` is the active PNT
   frontier. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -111,9 +111,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `do`, and rule-trigger generated activation sites, resolving local and
   package enum members to literal generated-top and generated-composition
   report bindings while keeping reusable-library use-site enum overrides and
-  broader aggregate/list parameter enum leaves deferred. The next slice selects
-  the next enum or aggregate value/update context after activation
-  aggregate/list enum leaves.
+  broader aggregate/list parameter enum leaves deferred.
+  `ISF-TYPE-AGGREGATE-PARITY.23` then shipped enum member leaves inside
+  actor-level aggregate/list parameter defaults, preserving authored tokens in
+  scheduled `.fsm` `+params` and `actor_params[]` while recording resolved
+  literal leaves internally and keeping generated child transaction
+  aggregate/list parameter enum leaves plus reusable-library use-site enum
+  overrides deferred. The next slice selects the next enum or aggregate
+  value/update context after actor aggregate/list enum parameter defaults.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated

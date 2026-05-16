@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum actor aggregate params preserve authored defaults
+- `ISF-TYPE-AGGREGATE-PARITY.23` widens actor parameter enum support from
+  scalar defaults to scalar enum leaves inside actor aggregate/list defaults
+  because actor-level `+params` already preserve authored static
+  specialization defaults in the scheduled `.fsm` review artifact.
+- The parser validates aggregate/list enum leaves after actor enum/package
+  symbol tables are finalized, records resolved literal leaves for internal
+  validation, and still emits/reports the authored enum tokens.
+- Generated child transaction aggregate/list parameter defaults remain closed
+  for a separate generated-composition default-binding slice, and
+  reusable-library use-site enum overrides remain closed for a separate
+  library-instantiation contract.
 ## 2026-05-16: enum activation aggregate leaves reuse static specialization
 - `ISF-TYPE-AGGREGATE-PARITY.22` widens activation parameter enum support from
   scalar override values to scalar leaves inside aggregate/list override values

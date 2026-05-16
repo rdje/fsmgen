@@ -711,7 +711,8 @@ RHS values or target tokens, aggregate paths in expression operator position,
 and subaggregate operands/updates fail closed. Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
 references are public as actor constant values, scalar actor parameter
-defaults, generated child transaction scalar parameter defaults, direct
+defaults or scalar leaves inside actor aggregate/list parameter defaults,
+generated child transaction scalar parameter defaults, direct
 transaction `set` RHS scalar values or scalar operands inside transaction
 `set` RHS expressions, transaction `switch` branch values, scalar drive body
 RHS values, named drive-call scalar actual values or scalar operands inside
@@ -725,10 +726,10 @@ Enum member references in expression operator position, standalone transaction
 conditions, switch selectors, targets, rules outside scalar trigger parameter
 overrides, transaction condition, rule guard, or rule assignment expression
 operator position, drive targets, drive-call expression operator position,
-inline drive assignments, aggregate/list parameter-default leaves,
-reusable-library use-site parameter overrides, and other ISF value contexts,
-additional aggregate carriers, and aggregate field/slice/update semantics
-remain outside the parser/scheduler contract.
+inline drive assignments, generated child transaction aggregate/list
+parameter-default leaves, reusable-library use-site parameter overrides, and
+other ISF value contexts, additional aggregate carriers, and aggregate
+field/slice/update semantics remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -773,8 +774,14 @@ Actor scalar parameter default enum member values are checked by
 [t/1269-isf-enum-member-actor-params.t](../t/1269-isf-enum-member-actor-params.t),
 covering local and package enum member actor parameter defaults, scheduled
 `.fsm` `+params` review artifacts, schedule-report value preservation, CLI HDL
-generation, and fail-closed diagnostics for unknown members, aggregate/list
-parameter leaves, and other non-shipped contexts.
+generation, and fail-closed diagnostics for unknown members and other
+non-shipped contexts.
+Actor aggregate/list parameter default enum member leaves are checked by
+[t/1277-isf-enum-member-actor-aggregate-params.t](../t/1277-isf-enum-member-actor-aggregate-params.t),
+covering local and package enum member leaves in actor aggregate/list parameter
+defaults, scheduled `.fsm` `+params` review artifacts, `actor_params[]`
+schedule-report preservation, strict CLI HDL generation, and fail-closed
+diagnostics for unknown leaves.
 Generated child transaction scalar parameter default enum member values are
 checked by
 [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t),
@@ -782,7 +789,8 @@ covering local and package enum member transaction parameter defaults,
 generated child `.fsm` `+params` review artifacts, generated-composition
 schedule-report value preservation, CLI HDL generation, and fail-closed
 diagnostics for unknown members, aggregate/list parameter leaves, and
-reusable-library use-site override contexts.
+generated child aggregate/list parameter leaves plus reusable-library use-site
+override contexts.
 Scalar activation parameter override enum member values are checked by
 [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t),
 covering local and package enum member overrides on spawn, generated blocking
@@ -1424,10 +1432,11 @@ runtime ports, not overrideable params, and not inferred storage.
 
 For each `actor_params` entry, `name` is the actor-level parameter name and
 `value` is the JSON-safe default value emitted into scheduled `.fsm`
-`+params`; scalar enum member defaults preserve the authored token. These are
-static specialization defaults, not runtime ports, and do not replace the
-generated-composition or reusable-library parameter binding reports for use
-sites. The machine-readable contract advertises these through
+`+params`; scalar enum member defaults and enum leaves inside aggregate/list
+defaults preserve the authored tokens. These are static specialization
+defaults, not runtime ports, and do not replace the generated-composition or
+reusable-library parameter binding reports for use sites. The
+machine-readable contract advertises these through
 `schedule_report_actor_param_keys`.
 
 Generated-composition child `parameters[]` and instance

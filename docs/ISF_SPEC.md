@@ -278,7 +278,8 @@ Aggregate aliases on actor interface ports, transaction-local ports, storage
 banks, and other width-bearing declarations fail closed. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
 `+enums`. Enum members are consumed by actor constants, by actor scalar
-parameter defaults, by generated child transaction scalar parameter defaults,
+parameter defaults or scalar leaves inside actor aggregate/list parameter
+defaults, by generated child transaction scalar parameter defaults,
 by scalar activation parameter overrides or scalar leaves inside activation
 aggregate/list parameter overrides, by direct transaction `set` RHS scalar
 values or scalar operands inside transaction `set` RHS expressions, by scalar
@@ -292,9 +293,9 @@ position, standalone guards or standalone transaction conditions, transaction
 condition expression operator position, switch selectors, rule targets, rule
 guard or rule assignment expression operator position, rule actions outside
 trigger parameter overrides, drive targets, drive-call expression operator
-position, aggregate/list parameter leaves, reusable-library use-site parameter
-overrides, and typed aggregate carriers do not consume enum member references
-yet.
+position, generated child transaction aggregate/list parameter leaves,
+reusable-library use-site parameter overrides, and typed aggregate carriers do
+not consume enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -314,9 +315,10 @@ transaction ports, and aggregate storage banks remain deferred. Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
-outside actor constants, actor scalar parameter defaults, generated child
-transaction scalar parameter defaults, scalar activation parameter overrides,
-activation aggregate/list parameter override leaves,
+outside actor constants, actor scalar parameter defaults or aggregate/list
+parameter default leaves, generated child transaction scalar parameter
+defaults, scalar activation parameter overrides, activation aggregate/list
+parameter override leaves,
 transaction `when`/`while`/`until` condition expression operands, transaction
 `set` RHS scalar values or expression operands, transaction `switch` branch
 values, rule assignment RHS scalar values or expression operands, rule guard
@@ -416,10 +418,11 @@ values, and override shapes that do not match aggregate/list defaults fail
 closed. The first value domain is scalar decimal literals, exact-width numeric
 literals in the shipped ISF parameter syntax, scalar local or
 package-qualified enum members, and compatible aggregate/list literals whose
-leaves are numeric or exact-width literals. Scalar activation parameter
-overrides and scalar leaves inside activation aggregate/list parameter
-override values may also use local or package-qualified enum members.
-Aggregate/list parameter-default enum member leaves and library use-site enum
+leaves are numeric, exact-width, or local/package enum member literals for
+actor parameter defaults. Scalar activation parameter overrides and scalar
+leaves inside activation aggregate/list parameter override values may also use
+local or package-qualified enum members. Generated child transaction
+aggregate/list parameter-default enum member leaves and library use-site enum
 overrides remain deferred. Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and
@@ -2300,8 +2303,9 @@ compile-time constants; they are not runtime ports, not overrideable params,
 and not hidden scheduler registers.
 The `actor_params` array reports actor-level parameter defaults in source
 order. Each entry contains `name` and JSON-safe default `value`; scalar enum
-member defaults preserve the authored token. Parameter defaults are static
-specialization values, not runtime ports; activation-site, generated-child,
+member defaults and enum leaves inside aggregate/list defaults preserve the
+authored tokens. Parameter defaults are static specialization values, not
+runtime ports; activation-site, generated-child,
 and reusable-library override bindings remain reported by their existing
 generated-composition and library-use summary families. The capability-manifest
 ISF public contract advertises this shape through
@@ -2753,6 +2757,7 @@ Focused tests:
 - [t/1274-isf-enum-member-rule-guard-values.t](../t/1274-isf-enum-member-rule-guard-values.t)
 - [t/1275-isf-enum-member-condition-values.t](../t/1275-isf-enum-member-condition-values.t)
 - [t/1276-isf-enum-member-activation-aggregate-params.t](../t/1276-isf-enum-member-activation-aggregate-params.t)
+- [t/1277-isf-enum-member-actor-aggregate-params.t](../t/1277-isf-enum-member-actor-aggregate-params.t)
 
 ## 12. Explicitly Deferred
 
@@ -2815,16 +2820,17 @@ Focused tests:
   RHS enum member values and expression operands, scalar drive body RHS enum
   member values, scalar drive-call actual enum member values, drive-call actual
   expression enum member operands, actor scalar parameter default enum member
-  values, generated child transaction scalar parameter default enum member
-  values, scalar activation parameter override enum member values, activation
-  aggregate/list override enum member leaves, actor-owned aggregate storage
-  variable carriers,
+  values, actor aggregate/list parameter default enum member leaves, generated
+  child transaction scalar parameter default enum member values, scalar
+  activation parameter override enum member values, activation aggregate/list
+  override enum member leaves, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction `set` target aggregate leaf writes,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
-  member references outside actor constants, actor scalar parameter defaults,
-  generated child transaction scalar parameter defaults, activation parameter
-  scalar values or aggregate/list override leaves, transaction
+  member references outside actor constants, actor parameter scalar values or
+  aggregate/list default leaves, generated child transaction scalar parameter
+  defaults, activation parameter scalar values or aggregate/list override
+  leaves, transaction
   `when`/`while`/`until` condition expression operands, transaction `set` RHS
   scalar values/expression operands,
   transaction `switch` branch values, rule guard expression operands, rule

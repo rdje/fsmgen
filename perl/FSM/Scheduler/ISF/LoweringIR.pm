@@ -1512,9 +1512,19 @@ sub _actor_param_declarations {
         confess "Actor '$actor_name': duplicate parameter '$name'\n"
             if $seen{$name}++;
         my $value = $param->{value};
+        my %resolved_value;
         if (!ref($value) && _is_enum_member_reference($value)) {
             confess "Actor '$actor_name': parameter '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
                 unless defined _non_negative_integer_from_literal(_param_resolved_value($param));
+            %resolved_value = (resolved_value => _clone_isf_value(_param_resolved_value($param)));
+        } elsif (ref($value)) {
+            my ($resolved, $has_enum_leaf) = _resolve_actor_param_default_value(
+                $value,
+                "Actor '$actor_name': parameter '$name'",
+                $actor,
+            );
+            %resolved_value = (resolved_value => _clone_isf_value($resolved))
+                if $has_enum_leaf;
         } else {
             _validate_isf_param_value(
                 $value,
@@ -1524,11 +1534,42 @@ sub _actor_param_declarations {
         push @params, {
             name  => $name,
             value => _clone_isf_value($value),
-            (exists($param->{resolved_value}) ? (resolved_value => _clone_isf_value($param->{resolved_value})) : ()),
+            (exists($param->{resolved_value}) ? (resolved_value => _clone_isf_value($param->{resolved_value})) : %resolved_value),
         };
     }
 
     return \@params;
+}
+
+sub _resolve_actor_param_default_value {
+    my ($value, $context, $actor) = @_;
+
+    if (!ref($value)) {
+        return (_clone_isf_value($value), 0)
+            if defined($value) && _is_numeric_or_exact_width_literal($value);
+        if (_is_enum_member_reference($value)) {
+            my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
+            confess "$context references unknown enum member '$value'\n"
+                unless defined($resolved_value) && !ref($resolved_value);
+            confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless defined _non_negative_integer_from_literal($resolved_value);
+            return (_clone_isf_value($resolved_value), 1);
+        }
+        confess "$context uses unsupported parameter value '$value'; actor parameter aggregate/list defaults accept numeric, exact-width, and enum member literal leaves only\n";
+    }
+
+    confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    my @resolved;
+    my $has_enum_leaf = 0;
+    for my $item (@$value) {
+        my ($resolved_item, $item_has_enum_leaf) = _resolve_actor_param_default_value($item, $context, $actor);
+        push @resolved, $resolved_item;
+        $has_enum_leaf ||= $item_has_enum_leaf;
+    }
+
+    return (\@resolved, $has_enum_leaf);
 }
 
 sub _actor_package_imports {
