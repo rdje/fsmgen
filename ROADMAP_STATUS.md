@@ -10,11 +10,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-DIVISOR-SAFETY` is closed after shipping
-  parser-side literal-zero divisor rejection across shipped ISF runtime
-  expression contexts and synchronizing the spec, downstream handoff, public
-  contract, mdBook, and tests. The next R14 PNT implementation slice must
-  select or create a new task tree before code changes.
+- Next decision point: `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` is closed
+  after shipping exactly-one-missing-field `extract` width inference,
+  synchronizing the spec, downstream handoff, public contract, mdBook, and
+  tests, and preserving fail-closed ambiguity for wider layout inference. The
+  next R14 PNT implementation slice must select or create a new task tree
+  before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -1234,10 +1235,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   implementation target is `extract`, and the active frontier advances to
   `ISF-DATA-WIDTHS.3`.
 - `ISF-DATA-WIDTHS.3` is complete. `extract` now emits exact descending slices
-  only for accepted source, rejects unknown field widths, rejects known
-  source/field width-total disagreement, and keeps existing explicit width
-  conflict checks. The active frontier advances to `ISF-DATA-WIDTHS.4` to
-  align the remaining covered data-operation families.
+  only for accepted source, requires provable field positions instead of
+  placeholders, rejects known source/field width-total disagreement, and keeps
+  existing explicit width conflict checks. Later
+  `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` added the bounded
+  one-missing-field inference case. The active frontier advances to
+  `ISF-DATA-WIDTHS.4`
+  to align the remaining covered data-operation families.
 - `ISF-DATA-WIDTHS.4` is complete. `shift_right` now uses known or explicit
   width evidence as an assertion, fails closed when width evidence is missing
   or contradictory, and no longer emits placeholder `WIDTH` terms for accepted
@@ -5488,8 +5492,8 @@ Done:
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
   parser/scheduler behavior and explicitly records the current limitations:
   deferred composition-top instantiation, unenforced resources/priorities,
-  schedule JSON as a bounded-but-not-fully-frozen public shape, and
-  unknown-width data operation fallback behavior.
+  schedule JSON as a bounded-but-not-fully-frozen public shape, and remaining
+  data-operation width-inference boundaries.
 - [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](docs/ISF_PUBLIC_INTERFACE_CONTRACT.md)
   and [perl/FSM/Support/ISFPublicInterfaceContract.pm](perl/FSM/Support/ISFPublicInterfaceContract.pm)
   start the live downstream-consumer contract for ISF CLI entrypoints,
@@ -5528,7 +5532,10 @@ Done:
   driven.
 - [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) locks
   `assemble ... as target` parsing and known-width `extract` lowering to exact
-  descending slices, including assemble-inferred word widths.
+  descending slices, including assemble-inferred word widths. It also locks
+  exactly-one-missing-field `extract` width inference, reuse of that inferred
+  width by later data operations, and fail-closed diagnostics for multiple
+  unknown fields or non-positive inferred remainders.
 - [t/1102-isf-repeat-counter-widths.t](t/1102-isf-repeat-counter-widths.t)
   locks repeat counter width inference for decimal literals, sampled named
   counts, and switch-nested repeats.

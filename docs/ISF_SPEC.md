@@ -1821,10 +1821,15 @@ Current lowering:
   one or more scalar destination fields. It emits one extraction state. When
   the source word and destination fields have known widths, or when the clause
   supplies an ordered `(widths N...)` list matching the field count, fields are
-  assigned exact descending slices. Unknown field widths fail closed instead
-  of producing placeholder slice bounds. Explicit widths must be positive
-  integers and must not conflict with already known field widths. When the
-  source word width is known, the sum of field widths must match it.
+  assigned exact descending slices. If exactly one destination field width is
+  missing and the source word width plus every sibling field width is known,
+  the missing field width is inferred as the positive remainder. The inferred
+  width becomes transaction-local evidence for later data operations in the
+  same transaction. Two or more unknown field widths remain ambiguous and fail
+  closed instead of producing placeholder slice bounds. Explicit widths must
+  be positive integers and must not conflict with already known field widths.
+  When the source word width is known, the sum of field widths must match it;
+  a zero or negative inferred remainder fails closed.
 
 The emitted shift expressions use the normal `.fsm` expression surface. Raw
 `<<` and `>>`, plus `shl` and `shr` aliases, are accepted as binary operators
@@ -1855,13 +1860,15 @@ the data-width tree, that family must fail closed instead of emitting
 `WIDTH`, `HIGH`, or `LOW` placeholders for accepted source.
 
 The migrated data-operation families now follow that rule. `extract` accepts
-only exact descending slices and fails when field widths are unknown, explicit
-field widths conflict with known facts, or the sum of field widths disagrees
-with a known source word width. `shift_right` uses a concrete insert position
-from known or explicit width evidence and fails when width evidence is missing
-or contradictory. `assemble` derives a target width only from fully known part
-widths and rejects known target-width mismatches. `shift_left` does not need
-separate width evidence for its insertion position.
+only exact descending slices, including the single-missing-field case where a
+known source width and known sibling widths prove one positive remainder. It
+fails when field widths are still ambiguous, explicit field widths conflict
+with known facts, the inferred remainder is not positive, or the sum of field
+widths disagrees with a known source word width. `shift_right` uses a concrete
+insert position from known or explicit width evidence and fails when width
+evidence is missing or contradictory. `assemble` derives a target width only
+from fully known part widths and rejects known target-width mismatches.
+`shift_left` does not need separate width evidence for its insertion position.
 
 ## 8. Composition Between Transactions
 

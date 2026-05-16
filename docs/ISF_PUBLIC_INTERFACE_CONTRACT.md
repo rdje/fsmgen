@@ -502,6 +502,10 @@ The explicit-width `extract` data-operation path is checked by
 [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 so authors can avoid placeholder slice bounds when extract field widths are
 not declared elsewhere.
+The single-missing-field `extract` inference path is checked by
+[t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t), so one
+unknown destination field can derive its width from a known source word and
+known sibling fields before later data operations consume that width evidence.
 The temporal-contract lowering boundary is checked by
 [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 and [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t).
@@ -668,9 +672,10 @@ word, one or more scalar fields, and at most one ordered positive-integer
 `(widths N...)` option before scheduled `.fsm` emission.
 The exact-slice extraction behavior is checked by
 [t/1101-isf-extract-slices.t](../t/1101-isf-extract-slices.t), so accepted
-`extract` source emits concrete descending slices and fails closed for unknown
-field widths or known source/field width disagreement instead of emitting
-placeholder slice bounds.
+`extract` source emits concrete descending slices, infers exactly one missing
+field width from known source and sibling widths, and fails closed for multiple
+unknown field widths, non-positive inferred remainders, or known source/field
+width disagreement instead of emitting placeholder slice bounds.
 The repeat-clause boundary is checked by
 [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 so `(repeat count body...)` requires one scalar non-empty count and at least

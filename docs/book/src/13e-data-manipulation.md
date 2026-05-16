@@ -120,11 +120,16 @@ must contain one positive integer width per field.
 **Current lowering**: one extraction state is emitted. When the source word and
 destination fields have known widths, or when the extract clause supplies an
 ordered `(widths N...)` list matching the field count, each field is assigned
-from an exact descending slice. If a width is unknown, the scheduler preserves
-targeted fail-closed diagnostics instead of placeholder slice bounds. Explicit
-widths must be positive integers and must not conflict with already known
-field widths. When the source word width is known, the sum of field widths
-must match it.
+from an exact descending slice. If exactly one destination field width is
+missing and the source word plus every sibling field has known positive width,
+FSMGen infers the missing field width as the positive remainder. That inferred
+width remains available as transaction-local evidence for later data
+operations, such as a following `shift_right` on the extracted field. Two or
+more unknown field widths remain ambiguous and fail closed instead of
+placeholder slice bounds. Explicit widths must be positive integers and must
+not conflict with already known field widths. When the source word width is
+known, the sum of field widths must match it; a zero or negative inferred
+remainder fails closed.
 
 ```lisp
 (state
@@ -162,7 +167,8 @@ silent casts: they may fill an unknown width, but they must agree with any
 existing width fact for the same name.
 
 Accepted migrated operation families do not emit `WIDTH`, `HIGH`, or `LOW`
-placeholders. `extract` fails when field positions cannot be proven.
+placeholders. `extract` fails when field positions cannot be proven after the
+single-missing-field inference rule.
 `shift_right` fails when the shifted register width is missing or
 contradictory. `assemble` rejects known target-width mismatches. `shift_left`
 does not need separate insertion-position width evidence.

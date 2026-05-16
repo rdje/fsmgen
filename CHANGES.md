@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF extract single-field width inference shipped
+- Completed `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` and closed the task
+  tree.
+- Added lowering-time inference for exactly one missing `extract` destination
+  field width when a known source word width and known sibling field widths
+  leave one positive remainder.
+- Preserved fail-closed behavior for multiple unknown fields, non-positive
+  inferred remainders, explicit-width conflicts, and known source/field total
+  mismatches.
+- Kept inferred field width as transaction-local evidence so later data
+  operations can consume it, including after an assemble-derived source width.
+- Widened `t/1101-isf-extract-slices.t` and the mdBook feature-matrix audit.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook data manipulation,
+  lowering reference, overview, feature matrix, and backlog chapters.
+- Validation: focused extract/matrix tests passed with `Files=2, Tests=85`;
+  `git diff --check` passed; broad `./bin/ci-regression isf --no-book` passed
+  with `Files=214, Tests=935`.
 ### R14 — ISF dynamic divisor literal-zero safety shipped
 - Completed `ISF-DYNAMIC-DIVISOR-SAFETY.1` and closed the task tree.
 - Added parser validation that rejects numeric/exact-width literal-zero

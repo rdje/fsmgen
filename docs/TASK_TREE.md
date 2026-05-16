@@ -39,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` | `done` | `R14` | `closed` | [docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md](docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md) |
 | `ISF-DYNAMIC-DIVISOR-SAFETY` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md](docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md) |
 | `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md) |
 | `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md) |
@@ -122,6 +123,7 @@ as done work unless a future task reopens them.
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |
 | Actor-level parameter default schedule-report metadata | `ISF-ACTOR-PARAM-REPORTS` |
 | Data-operation width inference for shift/extract/assemble families | `ISF-DATA-WIDTHS` |
+| Single-missing-field `extract` width inference | `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` |
 | Schedule-report storage classes and schedule JSON stabilization | `ISF-SCHEDULE-REPORTS` |
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |

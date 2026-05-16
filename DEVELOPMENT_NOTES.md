@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: extract can infer one missing field width but not guess layouts
+- `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` keeps the data-width policy
+  conservative: only one missing `extract` destination field can be inferred,
+  and only when known source and sibling widths leave one positive remainder.
+- The collection pass records inferred widths opportunistically without
+  treating still-incomplete evidence as a final error. The strict emission
+  path remains the owner of fail-closed diagnostics, which preserves
+  source-order-independent structural evidence such as an `assemble`-derived
+  source word width.
+- The inferred width is normal transaction-local evidence after collection,
+  so later `shift_right` or other width-sensitive data operations can use
+  concrete positions. Two or more unknown fields remain ambiguous because the
+  layout would require author intent rather than deterministic inference.
 ## 2026-05-16: literal-zero divisor safety belongs in parser semantic validation
 - `ISF-DYNAMIC-DIVISOR-SAFETY.1` adds the first dynamic-divisor safety slice
   as parser-side semantic validation instead of attaching it to the

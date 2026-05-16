@@ -96,6 +96,7 @@ my @required_examples = (
     '"actor_phases"',
     'dynamic_wait_counter',
     '(/ numerator 0)',
+    'exactly one missing destination field width',
     'schedule_report_full_schema_stable',
     './bin/fsmgen-issue-bundle',
     '--issue-id sf-0001',

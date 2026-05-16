@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF extract single-field width inference shipped
+- Completed `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` and closed
+  [docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md](docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md).
+- ISF `extract` lowering now infers exactly one missing destination field
+  width when the source word width and every sibling field width prove one
+  positive remainder.
+- The inferred field width becomes transaction-local width evidence, so later
+  data operations in the same transaction, such as `shift_right` on the
+  extracted field, use concrete positions instead of placeholders.
+- The inference path covers source widths derived from declarations and from
+  structural `assemble` evidence. Multiple unknown fields, non-positive
+  remainders, explicit-width conflicts, and known source/field total
+  mismatches still fail closed.
+- Widened
+  [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t) for
+  interface-known and assemble-inferred source widths, and widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  so the book support matrix keeps the new feature marker.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook data
+  manipulation/lowering/backlog/matrix chapters, README task index, roadmap
+  board, and task tree.
+- Validation: `prove -l t/1101-isf-extract-slices.t t/1305-isf-book-feature-matrix-audit.t`
+  passed with `Files=2, Tests=85`; `git diff --check` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=214, Tests=935`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF dynamic divisor literal-zero safety shipped
 - Completed `ISF-DYNAMIC-DIVISOR-SAFETY.1` and closed
   [docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md](docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md).

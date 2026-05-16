@@ -92,6 +92,120 @@ ISF
     unlike($fsm, qr/HIGH|LOW/, 'assemble-inferred extract does not emit placeholder slice bounds');
 };
 
+subtest 'extract infers one missing field width from known source and siblings' => sub {
+    my $source = <<'ISF';
+(actor extract_single_unknown
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input packet (width 16))
+    (input bit_in)
+    (output done)
+    (output header (width 4))
+    (output crc (width 4)))
+  (transaction main
+    (on start)
+    (extract packet as header payload crc)
+    (shift_right payload bit_in)
+    (complete done)))
+ISF
+
+    my $fsm = lower_source($source, 'extract_single_unknown.fsm');
+
+    like($fsm, qr/\(<= \(header> \(slice packet 15 12\)\)\)/, 'known leading field slice remains exact');
+    like($fsm, qr/\(<= \(payload \(slice packet 11 4\)\)\)/, 'single unknown middle field width is inferred');
+    like($fsm, qr/\(<= \(crc> \(slice packet 3 0\)\)\)/, 'known trailing field slice remains exact');
+    like($fsm, qr/\(<- \(payload \(\| \(>> payload 1\) \(<< bit_in 7\)\)\)\)/,
+        'later shift_right uses the inferred payload width');
+    unlike($fsm, qr/HIGH|LOW|WIDTH/, 'single unknown field inference emits no placeholders');
+};
+
+subtest 'extract inference can use assemble-inferred source width' => sub {
+    my $source = <<'ISF';
+(actor extract_single_unknown_from_assembled
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input header (width 4))
+    (input payload_in (width 8))
+    (input crc (width 4))
+    (input bit_in)
+    (output done)
+    (output out_header (width 4))
+    (output out_crc (width 4)))
+  (transaction main
+    (on start)
+    (assemble header payload_in crc as packet)
+    (extract packet as out_header out_payload out_crc)
+    (shift_right out_payload bit_in)
+    (complete done)))
+ISF
+
+    my $fsm = lower_source($source, 'extract_single_unknown_from_assembled.fsm');
+
+    like($fsm, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/, 'assembled source drives known leading slice');
+    like($fsm, qr/\(<= \(out_payload \(slice packet 11 4\)\)\)/, 'single unknown field is inferred from assembled source');
+    like($fsm, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/, 'assembled source drives known trailing slice');
+    like($fsm, qr/\(<- \(out_payload \(\| \(>> out_payload 1\) \(<< bit_in 7\)\)\)\)/,
+        'inferred width remains available after assembled-source extraction');
+    unlike($fsm, qr/HIGH|LOW|WIDTH/, 'assembled-source inference emits no placeholders');
+};
+
+subtest 'extract keeps multiple unknown fields ambiguous' => sub {
+    my $source = <<'ISF';
+(actor extract_multiple_unknowns
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input packet (width 16))
+    (output done)
+    (output header (width 4)))
+  (transaction main
+    (on start)
+    (extract packet as header payload crc)
+    (complete done)))
+ISF
+
+    my ($ok, $diagnostic) = lower_rejected($source, 'extract_multiple_unknowns.fsm');
+
+    ok(!$ok, 'multiple unknown extract fields remain rejected');
+    like(
+        $diagnostic,
+        qr/\Aextract width for 'payload' is unknown; add an interface width or '\(widths \.\.\.\)' option/,
+        'multiple unknown fields keep the existing targeted diagnostic',
+    );
+};
+
+subtest 'extract rejects non-positive inferred field width' => sub {
+    my $source = <<'ISF';
+(actor extract_no_remaining_width
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input packet (width 8))
+    (output done)
+    (output header (width 4))
+    (output crc (width 4)))
+  (transaction main
+    (on start)
+    (extract packet as header payload crc)
+    (complete done)))
+ISF
+
+    my ($ok, $diagnostic) = lower_rejected($source, 'extract_no_remaining_width.fsm');
+
+    ok(!$ok, 'single unknown extract field with no remaining width is rejected');
+    like(
+        $diagnostic,
+        qr/\Aextract known field widths sum 8 leaves no positive width for 'payload' in known width 8 source 'packet'/,
+        'non-positive inferred field width diagnostic is targeted',
+    );
+};
+
 subtest 'unknown extract widths fail closed instead of preserving placeholders' => sub {
     my $source = <<'ISF';
 (actor extract_unknown

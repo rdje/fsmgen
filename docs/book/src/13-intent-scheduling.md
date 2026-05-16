@@ -537,9 +537,12 @@ current limitations are:
   widths may still lower as a reviewable concat expression, but they are not
   used as target-width evidence.
 - `(extract ...)` accepts an ordered `(widths N...)` option when field widths
-  are not declared elsewhere. Accepted `extract` source now emits exact
-  descending slices only; unknown field widths or source/field width
-  disagreement fail closed before scheduled `.fsm` emission.
+  are not declared elsewhere. It also infers exactly one missing destination
+  field width when the source word width and every sibling field width prove a
+  positive remainder. Accepted `extract` source now emits exact descending
+  slices only; multiple unknown field widths, non-positive inferred
+  remainders, or source/field width disagreement fail closed before scheduled
+  `.fsm` emission.
 - The first `(contract ...)` temporal assertion subset is implemented for
   top-level `(contract name (eventually signal (within cycles)))`. It lowers
   to an arm state plus an always-on monitor DT with pending, age, and

@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF extract single-field width inference shipped
+- Completed R14 task-tree slice:
+  `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.1` in
+  [docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md](docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md).
+- The `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` tree is now closed. No active
+  ISF task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- ISF `extract` now infers exactly one missing destination field width from a
+  known source word width plus known sibling field widths, including
+  assemble-derived source widths.
+- The inferred field width remains transaction-local width evidence for later
+  data operations in the same transaction. Multiple unknown fields,
+  non-positive remainders, explicit-width conflicts, and source/field total
+  mismatches still fail closed.
+- Widened
+  [t/1101-isf-extract-slices.t](t/1101-isf-extract-slices.t)
+  and
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t),
+  and synchronized the spec, downstream handoff, public contract, mdBook, and
+  live docs.
+- Validation: focused extract/matrix tests passed with `Files=2, Tests=85`;
+  `git diff --check` passed; broad `./bin/ci-regression isf --no-book` passed
+  with `Files=214, Tests=935`.
+
 ## 2026-05-16: R14 — ISF dynamic divisor literal-zero safety shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-DIVISOR-SAFETY.1` in

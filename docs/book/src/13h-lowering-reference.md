@@ -952,10 +952,13 @@ they do not become target-width evidence.
 Current `extract` lowering emits exact descending slices when the source word
 and destination field widths are known. An ordered `(widths N...)` option can
 provide field widths for the extract clause when those fields are not declared
-elsewhere; the option count must match the field count. Unknown field widths
-or source/field width disagreement fail closed before scheduled `.fsm`
-emission, so accepted `extract` source no longer emits placeholder slice
-bounds.
+elsewhere; the option count must match the field count. If exactly one
+destination field width is missing and the source word width plus every sibling
+field width is known, the missing width is inferred as the positive remainder
+and can be reused by later data operations in the same transaction. Two or
+more unknown field widths, a non-positive inferred remainder, or source/field
+width disagreement fail closed before scheduled `.fsm` emission, so accepted
+`extract` source no longer emits placeholder slice bounds.
 
 ## `(store <bank-name> <index> <value>)` / `(load <bank-name> <index> as <target>)` → Scalarized Bank Access
 

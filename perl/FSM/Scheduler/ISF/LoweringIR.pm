@@ -1935,6 +1935,7 @@ sub _build_signal_width_map {
     }
     _collect_sample_widths($tx->{clauses}, \%widths);
     _collect_shift_widths($tx->{clauses}, \%widths);
+    _collect_data_widths($tx->{clauses}, \%widths);
     _collect_extract_widths($tx->{clauses}, \%widths);
     _collect_data_widths($tx->{clauses}, \%widths);
     return \%widths;
@@ -2002,10 +2003,18 @@ sub _collect_extract_widths {
 
     if (@$node >= 5 && $node->[0] eq 'extract') {
         my ($word, $fields, $explicit_widths) = _parse_extract_clause($node);
+        my @field_widths = _resolve_extract_field_widths(
+            $word,
+            $fields,
+            $explicit_widths,
+            $widths,
+            { strict => 0 },
+        );
         for my $idx (0 .. $#$fields) {
-            next unless defined $explicit_widths->[$idx];
+            next unless defined($field_widths[$idx]) && $field_widths[$idx] > 0;
             my $field = $fields->[$idx];
-            $widths->{$field} = $explicit_widths->[$idx] unless exists $widths->{$field};
+            $widths->{$field} = $field_widths[$idx]
+                unless exists($widths->{$field}) && defined($widths->{$field}) && $widths->{$field} > 0;
         }
     }
 
@@ -2086,6 +2095,68 @@ sub _parse_extract_clause {
         if @explicit_widths && @explicit_widths != @fields;
 
     return ($word, \@fields, \@explicit_widths);
+}
+
+sub _resolve_extract_field_widths {
+    my ($word, $fields, $explicit_widths, $widths, $options) = @_;
+    $options ||= {};
+    my $strict = exists($options->{strict}) ? $options->{strict} : 1;
+    my @field_widths;
+    my @unknown_indices;
+    my $known_total = 0;
+
+    for my $idx (0 .. $#$fields) {
+        my $field = $fields->[$idx];
+        my $explicit_width = $explicit_widths->[$idx];
+        my $known_width = $widths->{$field};
+
+        confess "extract explicit width for '$field' conflicts with known width\n"
+            if defined($explicit_width)
+                && defined($known_width)
+                && $known_width > 0
+                && $explicit_width != $known_width;
+
+        my $field_width = defined($explicit_width) ? $explicit_width : $known_width;
+        if (defined($field_width) && $field_width > 0) {
+            $field_widths[$idx] = $field_width;
+            $known_total += $field_width;
+            next;
+        }
+
+        push @unknown_indices, $idx;
+    }
+
+    my $word_width = $widths->{$word};
+    if (@unknown_indices == 1 && defined($word_width) && $word_width > 0) {
+        my $idx = $unknown_indices[0];
+        my $field = $fields->[$idx];
+        my $inferred_width = $word_width - $known_total;
+        confess "extract known field widths sum $known_total leaves no positive width for '$field' in known width $word_width source '$word'\n"
+            unless $inferred_width > 0;
+        $field_widths[$idx] = $inferred_width;
+        @unknown_indices = ();
+    }
+
+    for my $idx (@unknown_indices) {
+        my $field = $fields->[$idx];
+        confess "extract width for '$field' is unknown; add an interface width or '(widths ...)' option\n"
+            if $strict;
+    }
+
+    my $total_field_width = 0;
+    my $all_fields_known = 1;
+    for my $idx (0 .. $#$fields) {
+        my $field_width = $field_widths[$idx];
+        if (defined($field_width) && $field_width > 0) {
+            $total_field_width += $field_width;
+            next;
+        }
+        $all_fields_known = 0;
+    }
+    confess "extract field widths sum $total_field_width conflicts with known width $word_width for '$word'\n"
+        if $all_fields_known && defined($word_width) && $word_width > 0 && $word_width != $total_field_width;
+
+    return @field_widths;
 }
 
 sub _parse_shift_right_width {
@@ -4080,29 +4151,10 @@ sub _ir_extract {
     my ($cl, $tn, $i, $widths) = @_;
     my ($word, $fields, $explicit_widths) = _parse_extract_clause($cl);
     my @assignments;
-    my @field_widths;
-    my $total_field_width = 0;
-
-    for my $idx (0 .. $#$fields) {
-        my $field = $fields->[$idx];
-        my $explicit_width = $explicit_widths->[$idx];
-        my $known_width = $widths->{$field};
-
-        confess "extract explicit width for '$field' conflicts with known width\n"
-            if defined($explicit_width)
-                && defined($known_width)
-                && $known_width > 0
-                && $explicit_width != $known_width;
-
-        $field_widths[$idx] = defined($explicit_width) ? $explicit_width : $known_width;
-        confess "extract width for '$field' is unknown; add an interface width or '(widths ...)' option\n"
-            unless defined($field_widths[$idx]) && $field_widths[$idx] > 0;
-        $total_field_width += $field_widths[$idx];
-    }
-
+    my @field_widths = _resolve_extract_field_widths($word, $fields, $explicit_widths, $widths);
     my $word_width = $widths->{$word};
-    confess "extract field widths sum $total_field_width conflicts with known width $word_width for '$word'\n"
-        if defined($word_width) && $word_width > 0 && $word_width != $total_field_width;
+    my $total_field_width = 0;
+    $total_field_width += $_ for @field_widths;
 
     my $high = (defined($word_width) && $word_width > 0)
         ? $word_width - 1
