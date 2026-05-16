@@ -532,10 +532,12 @@ current limitations are:
   register width is not declared elsewhere. The option is an assertion and
   must agree with any known register width. Values with no known or explicit
   width now fail closed instead of emitting a placeholder `WIDTH` expression.
-- `(assemble ...)` derives target width only when every part width is known
-  and rejects disagreement with an already-known target width. Unknown part
+- `(assemble ...)` derives target width when every part width is known. It
+  also infers exactly one missing part width when the target width and every
+  sibling part width prove a positive remainder. Two or more unknown part
   widths may still lower as a reviewable concat expression, but they are not
-  used as target-width evidence.
+  used as width evidence. Known target-width disagreements or non-positive
+  inferred remainders fail closed.
 - `(extract ...)` accepts an ordered `(widths N...)` option when field widths
   are not declared elsewhere. It also infers exactly one missing destination
   field width when the source word width and every sibling field width prove a

@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF assemble single-part width inference shipped
+- Completed R14 task-tree slice:
+  `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` in
+  [docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md](docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md).
+- The `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE` tree is now closed. No active
+  ISF task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- ISF `assemble` now infers exactly one missing source part width from a known
+  destination width plus known sibling part widths.
+- The inferred part width remains transaction-local width evidence for later
+  data operations in the same transaction. Two or more unknown source parts
+  remain accepted as concat operands, but do not provide width evidence.
+- A single unknown part whose inferred remainder is not positive now fails
+  closed with a targeted diagnostic.
+- Widened
+  [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t)
+  and
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t),
+  and synchronized the spec, downstream handoff, public contract, mdBook, and
+  live docs.
+- Validation: focused assemble/matrix tests passed with `Files=2, Tests=85`;
+  `git diff --check` passed; broad `./bin/ci-regression isf --no-book` passed
+  with `Files=214, Tests=943`.
+
 ## 2026-05-16: R14 — ISF actor-constant zero divisor safety shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` in

@@ -97,6 +97,7 @@ my @required_examples = (
     'dynamic_wait_counter',
     '(/ numerator 0)',
     '(/ numerator ZERO)',
+    'exactly one missing part width',
     'exactly one missing destination field width',
     'schedule_report_full_schema_stable',
     './bin/fsmgen-issue-bundle',

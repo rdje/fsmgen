@@ -114,6 +114,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.md` — completed `R14` task tree for report metadata coverage in the ISF book feature matrix.
 - `docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md` — completed `R14` task tree for downstream issue-bundle coverage in the ISF book feature matrix.
 - `docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md` — completed `R14` task tree for `.isf` CLI example coverage in the ISF book feature matrix.
+- `docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md` — completed `R14` task tree for exactly-one-missing-part `assemble` width inference.
 - `docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md` — completed `R14` task tree for actor-constant zero divisor rejection in shipped ISF runtime expression contexts.
 - `docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md` — completed `R14` task tree for literal-zero divisor rejection in shipped ISF runtime expression contexts.
 - `docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing stale ISF feature-backlog status text.

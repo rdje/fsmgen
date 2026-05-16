@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: assemble can infer one missing part width without guessing layouts
+- `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` mirrors the conservative
+  extract inference policy: exactly one missing `assemble` part width can be
+  inferred when the target width and every sibling part width leave one
+  positive remainder.
+- The helper lives in the lowering width-collection pass so the inferred part
+  width is available to later operations in the same transaction while keeping
+  the emitted concat expression shape unchanged.
+- Two or more unknown parts remain accepted as reviewable concat operands
+  because one target width cannot prove their split. They deliberately do not
+  create transaction-local width evidence until the author provides more
+  intent.
+- A single unknown part with no positive remainder is treated as a real width
+  contradiction instead of silently producing a zero-width or negative-width
+  fact.
 ## 2026-05-16: actor constants are fixed facts for divisor safety
 - `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` extends the existing parser semantic
   divisor pass instead of adding a scheduler check. Actor constants are already

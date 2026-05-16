@@ -1815,10 +1815,14 @@ Current lowering:
 - `assemble` is structurally validated as `(assemble part... as target)` with
   one or more scalar parts and one scalar target, then emits a concat
   expression into the target variable. The private width map infers the target
-  width as the sum of known part widths. When every part width is known and
-  the target already has a known width, the sum must match the target width or
-  lowering fails closed. Unknown part widths may still be accepted for the
-  reviewable concat expression, but they are not used as width evidence.
+  width as the sum of known part widths. If exactly one part width is missing
+  and the target width plus every sibling part width is known, the missing part
+  width is inferred as the positive remainder. The inferred part width becomes
+  transaction-local evidence for later data operations in the same
+  transaction. When every part width is known and the target already has a
+  known width, the sum must match the target width or lowering fails closed.
+  Two or more unknown part widths may still be accepted for the reviewable
+  concat expression, but they are not used as width evidence.
 - `extract` is structurally validated as
   `(extract word as field... [(widths N...)])` with one scalar source word and
   one or more scalar destination fields. It emits one extraction state. When
@@ -1870,8 +1874,10 @@ with known facts, the inferred remainder is not positive, or the sum of field
 widths disagrees with a known source word width. `shift_right` uses a concrete
 insert position from known or explicit width evidence and fails when width
 evidence is missing or contradictory. `assemble` derives a target width only
-from fully known part widths and rejects known target-width mismatches.
-`shift_left` does not need separate width evidence for its insertion position.
+from fully known part widths, can infer exactly one missing part width from a
+known target and known siblings, and rejects known target-width mismatches or
+non-positive inferred remainders. `shift_left` does not need separate width
+evidence for its insertion position.
 
 ## 8. Composition Between Transactions
 

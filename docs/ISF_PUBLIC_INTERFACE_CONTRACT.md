@@ -665,7 +665,10 @@ The assemble-clause boundary is checked by
 so `(assemble part... as target)` requires one or more scalar parts and one
 scalar target before scheduled `.fsm` emission. The same regression covers the
 width-evidence boundary: when all part widths are known, the derived sum must
-match any already-known target width.
+match any already-known target width; when exactly one part width is missing,
+a known target width and known sibling part widths infer that missing width as
+a positive remainder for later data-operation evidence. Multiple unknown parts
+remain non-evidence concat operands.
 The extract-clause boundary is checked by
 [t/1201-isf-extract-clause-boundary.t](../t/1201-isf-extract-clause-boundary.t)
 so `(extract word as field... [(widths N...)])` requires one scalar source

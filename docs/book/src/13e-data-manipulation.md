@@ -103,9 +103,14 @@ and scalar target `var`.
 ```
 
 When every part width is known, `assemble` derives the target width from the
-part-width sum. If the target already has a known width, the sum must match it.
-Unknown part widths may still lower to the reviewable concat expression, but
-they are not used as target-width evidence.
+part-width sum. If exactly one part width is missing and the target width plus
+all sibling part widths are known, FSMGen infers the missing part width as the
+positive remainder. That inferred part width remains available as
+transaction-local evidence for later data operations, such as a following
+`shift_right` on the assembled part. If the target already has a known width,
+the final part-width sum must match it. A zero or negative inferred remainder
+fails closed. Two or more unknown part widths may still lower to the
+reviewable concat expression, but they are not used as width evidence.
 
 ## `(extract word as field1 field2 ... [(widths N...)])` — Field Extraction
 
@@ -147,7 +152,8 @@ Before lowering a transaction, ISF builds one private width map from the whole
 actor and transaction shape. Interface declarations and actor-owned
 `(storage ...)` declarations seed that map, samples inherit known source
 widths, explicit `shift_right` and `extract` width options add local evidence,
-and `assemble` can infer its target width when all parts are known. This is
+and `assemble` can infer its target width when all parts are known or infer
+one missing part width from a known target and known siblings. This is
 type/shape evidence, not cycle-value evidence, so it is not
 source-order-sensitive inside the transaction.
 
@@ -172,8 +178,9 @@ Accepted migrated operation families do not emit `WIDTH`, `HIGH`, or `LOW`
 placeholders. `extract` fails when field positions cannot be proven after the
 single-missing-field inference rule.
 `shift_right` fails when the shifted register width is missing or
-contradictory. `assemble` rejects known target-width mismatches. `shift_left`
-does not need separate insertion-position width evidence.
+contradictory. `assemble` rejects known target-width mismatches and
+non-positive single-part inferred remainders. `shift_left` does not need
+separate insertion-position width evidence.
 
 ## I2C Shift Register — Complete Example
 

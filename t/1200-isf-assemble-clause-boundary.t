@@ -67,6 +67,69 @@ subtest 'assemble rejects target width mismatch when part widths are known' => s
 ISF
 };
 
+subtest 'assemble infers one missing part width from known target and siblings' => sub {
+    my $result = lower_source(<<'ISF');
+(actor assemble_single_unknown_part
+  (clock clk)
+  (interface
+    (input start)
+    (input bit_in)
+    (input header (width 4))
+    (input crc (width 4))
+    (output packet (width 16))
+    (output done))
+  (transaction main
+    (on start)
+    (assemble header payload crc as packet)
+    (shift_right payload bit_in)
+    (complete done)))
+ISF
+
+    my $fsm = $result->{files}{'assemble_single_unknown_part.fsm'};
+    like($fsm, qr/\(<- \(packet> \(concat header payload crc\)\)\)/,
+        'assemble keeps the reviewable concat expression');
+    like($fsm, qr/\(<- \(payload \(\| \(>> payload 1\) \(<< bit_in 7\)\)\)\)/,
+        'later shift_right uses the inferred payload width');
+    unlike($fsm, qr/WIDTH/, 'single unknown assemble part inference emits no width placeholder');
+};
+
+subtest 'assemble keeps multiple unknown parts as non-evidence concat operands' => sub {
+    my $result = lower_source(<<'ISF');
+(actor assemble_multiple_unknown_parts
+  (clock clk)
+  (interface
+    (input start)
+    (input header (width 4))
+    (output packet (width 16))
+    (output done))
+  (transaction main
+    (on start)
+    (assemble header payload crc as packet)
+    (complete done)))
+ISF
+
+    my $fsm = $result->{files}{'assemble_multiple_unknown_parts.fsm'};
+    like($fsm, qr/\(<- \(packet> \(concat header payload crc\)\)\)/,
+        'multiple unknown assemble parts still lower as reviewable concat operands');
+};
+
+subtest 'assemble rejects non-positive inferred part width' => sub {
+    assert_lower_rejected(<<'ISF', 'assemble single unknown part with no remaining width', qr/assemble known part widths sum 8 leaves no positive width for 'payload' in known width 8 target 'packet'/);
+(actor assemble_no_remaining_width
+  (clock clk)
+  (interface
+    (input start)
+    (input header (width 4))
+    (input crc (width 4))
+    (output packet (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (assemble header payload crc as packet)
+    (complete done)))
+ISF
+};
+
 subtest 'malformed assemble clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'assemble without parts', qr/\Aassemble requires '\(assemble part\.\.\. as target\)'/);
 (actor assemble_without_parts

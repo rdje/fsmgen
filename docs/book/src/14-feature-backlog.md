@@ -869,8 +869,11 @@ backlog. `extract` fails closed instead of emitting placeholder slice bounds
 when field positions cannot be proven, the inferred remainder is not positive,
 or field totals conflict with known source width. `shift_right` now fails
 closed when width evidence is missing or conflicts with an explicit option.
-`assemble` now rejects known target-width mismatches, while unknown part
-widths remain accepted only as non-evidence concat operands.
+`assemble` infers exactly one missing part width when the target width and all
+sibling part widths prove one positive remainder; two or more unknown parts
+remain backlog for inference and are accepted only as non-evidence concat
+operands. `assemble` also rejects known target-width mismatches and
+non-positive single-part inferred remainders.
 Schedule reports now expose positive integer `width` metadata for inferred
 scheduler counters and register storage with known ISF width evidence.
 

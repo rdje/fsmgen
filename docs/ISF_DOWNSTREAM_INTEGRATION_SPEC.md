@@ -816,6 +816,10 @@ Rules:
 - `update` is the older transaction-local assignment spelling.
 - Shift/extract/assemble forms use known width evidence and fail closed on
   contradictory or missing width evidence where exact lowering requires it.
+- `assemble` can infer exactly one missing part width from a known target
+  width and known sibling part widths. Two or more unknown parts still lower
+  only as non-evidence concat operands; non-positive inferred remainders fail
+  closed.
 - `extract` emits concrete slices, not placeholder bounds. It can infer
   exactly one missing destination field width from a known source word width
   and known sibling field widths; two or more unknown fields, non-positive

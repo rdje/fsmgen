@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF assemble single-part width inference shipped
+- Completed `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` and closed
+  [docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md](docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md).
+- ISF `assemble` lowering now infers exactly one missing source part width
+  when the destination width and every sibling part width prove one positive
+  remainder.
+- The inferred part width becomes transaction-local width evidence, so later
+  data operations in the same transaction can use concrete positions instead
+  of placeholders.
+- Two or more unknown `assemble` part widths remain accepted as concat
+  operands, but they do not create width evidence. A single unknown part with a
+  non-positive remainder fails closed with a targeted diagnostic.
+- Widened
+  [t/1200-isf-assemble-clause-boundary.t](t/1200-isf-assemble-clause-boundary.t)
+  and the mdBook feature-matrix audit, and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, roadmap board, README task
+  index, and task tree.
+- Validation: `prove -l t/1200-isf-assemble-clause-boundary.t t/1305-isf-book-feature-matrix-audit.t`
+  passed with `Files=2, Tests=85`; `git diff --check` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=214, Tests=943`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF actor-constant zero divisor safety shipped
 - Completed `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` and closed
   [docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md).

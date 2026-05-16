@@ -21,10 +21,8 @@ evidence for one top-level task.
 
 ## Active Task Trees
 
-No active task tree is currently open. The next R14 PNT implementation slice
-must activate an existing proposed tree or create a new `docs/tasks/*.md` tree
-before changing ISF parser, scheduler, emitter, contract, fixture, or book
-behavior.
+| Tree | Status | Roadmap lane | Current frontier | File |
+| --- | --- | --- | --- | --- |
 
 ## Proposed Task Trees
 
@@ -39,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE` | `done` | `R14` | `closed` | [docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md](docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md) |
 | `ISF-DYNAMIC-DIVISOR-CONSTANTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md) |
 | `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` | `done` | `R14` | `closed` | [docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md](docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md) |
 | `ISF-DYNAMIC-DIVISOR-SAFETY` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md](docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md) |
@@ -125,6 +124,7 @@ as done work unless a future task reopens them.
 | Actor-level parameter default schedule-report metadata | `ISF-ACTOR-PARAM-REPORTS` |
 | Data-operation width inference for shift/extract/assemble families | `ISF-DATA-WIDTHS` |
 | Single-missing-field `extract` width inference | `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` |
+| Single-missing-part `assemble` width inference | `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE` |
 | Schedule-report storage classes and schedule JSON stabilization | `ISF-SCHEDULE-REPORTS` |
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |

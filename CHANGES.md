@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF assemble single-part width inference shipped
+- Completed `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` and closed the task
+  tree.
+- Added lowering-time inference for exactly one missing `assemble` source part
+  width when a known target width and known sibling part widths leave one
+  positive remainder.
+- Preserved accepted concat lowering for two or more unknown parts while
+  keeping those operands out of width evidence.
+- Added a fail-closed diagnostic when the one unknown part would receive a
+  non-positive remainder, and preserved the existing all-known mismatch
+  diagnostic.
+- Widened `t/1200-isf-assemble-clause-boundary.t` and the mdBook
+  feature-matrix audit.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook data manipulation,
+  lowering reference, overview, feature matrix, and backlog chapters.
+- Validation: focused assemble/matrix tests passed with `Files=2, Tests=85`;
+  `git diff --check` passed; broad `./bin/ci-regression isf --no-book` passed
+  with `Files=214, Tests=943`.
 ### R14 — ISF actor-constant zero divisor safety shipped
 - Completed `ISF-DYNAMIC-DIVISOR-CONSTANTS.1` and closed the task tree.
 - Extended parser-side runtime divisor validation so actor-level constants

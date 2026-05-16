@@ -1961,15 +1961,17 @@ sub _collect_data_widths {
 
     if (@$node >= 4 && $node->[0] eq 'assemble') {
         my ($target, @parts) = _parse_assemble_clause($node);
-        my $total = 0;
-        for my $part (@parts) {
-            return unless exists($widths->{$part}) && $widths->{$part} > 0;
-            $total += $widths->{$part};
+        my ($part_widths, $total) = _resolve_assemble_widths($target, \@parts, $widths);
+        for my $idx (0 .. $#parts) {
+            next unless defined($part_widths->[$idx]) && $part_widths->[$idx] > 0;
+            my $part = $parts[$idx];
+            $widths->{$part} = $part_widths->[$idx]
+                unless exists($widths->{$part}) && defined($widths->{$part}) && $widths->{$part} > 0;
         }
-        my $known_width = $widths->{$target};
-        confess "assemble part widths sum $total conflicts with known width $known_width for '$target'\n"
-            if defined($known_width) && $known_width > 0 && $known_width != $total;
-        $widths->{$target} = $total if $total > 0;
+        $widths->{$target} = $total
+            if defined($total)
+                && $total > 0
+                && !(defined($widths->{$target}) && $widths->{$target} > 0);
     }
 
     for my $child (@$node) {
@@ -2046,6 +2048,45 @@ sub _parse_assemble_clause {
     confess "assemble target must be a scalar name\n"
         if !defined($target) || ref($target) || !length($target);
     return ($target, @parts);
+}
+
+sub _resolve_assemble_widths {
+    my ($target, $parts, $widths) = @_;
+    my @part_widths;
+    my @unknown_indices;
+    my $known_total = 0;
+
+    for my $idx (0 .. $#$parts) {
+        my $part = $parts->[$idx];
+        my $part_width = $widths->{$part};
+        if (defined($part_width) && $part_width > 0) {
+            $part_widths[$idx] = $part_width;
+            $known_total += $part_width;
+            next;
+        }
+
+        push @unknown_indices, $idx;
+    }
+
+    my $target_width = $widths->{$target};
+    if (@unknown_indices == 1 && defined($target_width) && $target_width > 0) {
+        my $idx = $unknown_indices[0];
+        my $part = $parts->[$idx];
+        my $inferred_width = $target_width - $known_total;
+        confess "assemble known part widths sum $known_total leaves no positive width for '$part' in known width $target_width target '$target'\n"
+            unless $inferred_width > 0;
+        $part_widths[$idx] = $inferred_width;
+        @unknown_indices = ();
+    }
+
+    return (\@part_widths, undef) if @unknown_indices;
+
+    my $total = 0;
+    $total += $_ for @part_widths;
+    confess "assemble part widths sum $total conflicts with known width $target_width for '$target'\n"
+        if defined($target_width) && $target_width > 0 && $target_width != $total;
+
+    return (\@part_widths, $total);
 }
 
 sub _parse_extract_clause {

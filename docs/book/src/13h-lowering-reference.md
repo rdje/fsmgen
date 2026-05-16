@@ -945,9 +945,13 @@ register width. Unknown widths fail closed instead of emitting the placeholder
 **Implicit signals**: None.
 
 When all `assemble` part widths are known, the target width is derived from
-their sum. If the target already has a known width, the sum must match it.
-Unknown part widths may still lower as a reviewable concat expression, but
-they do not become target-width evidence.
+their sum. If exactly one part width is missing and the target width plus every
+sibling part width is known, the missing part width is inferred as the positive
+remainder and can be reused by later data operations in the same transaction.
+If the target already has a known width, the final sum must match it.
+Non-positive inferred remainders fail closed. Two or more unknown part widths
+may still lower as a reviewable concat expression, but they do not become
+width evidence.
 
 Current `extract` lowering emits exact descending slices when the source word
 and destination field widths are known. An ordered `(widths N...)` option can
