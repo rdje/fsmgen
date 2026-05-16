@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum drive-call expression values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.14` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.15`.
+- Named drive-call actual expressions now accept local enum members such as
+  `mode.BUSY` and package-qualified enum members such as `shared.mode.BUSY`
+  as scalar operands.
+- The parser resolves drive-call expression enum operands before lowering,
+  preserves authored expressions in generated drive-parameter assignments,
+  and rejects unknown enum operands or enum members in expression operator
+  position.
+- Enum members in inline drive assignments, rules, conditions, switch
+  selectors, set targets, parameters, and other non-shipped contexts remain
+  deferred.
 ## 2026-05-16: ISF enum drive-call values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.13` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

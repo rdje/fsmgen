@@ -280,11 +280,11 @@ banks, and other width-bearing declarations fail closed. Actor-local
 `+enums`. Enum members are consumed by actor constants, by direct transaction
 `set` RHS scalar values or scalar operands inside transaction `set` RHS
 expressions, by transaction `switch` branch values, by scalar drive body RHS
-values, and by named drive-call scalar actual values in the current ISF
-surface. Enum members in expression operator position, guards, switch
-selectors, rule actions, drive targets, drive-call expression actuals,
-parameter defaults, and typed aggregate carriers do not consume enum member
-references yet.
+values, and by named drive-call scalar actual values or scalar operands inside
+drive-call actual expressions in the current ISF surface. Enum members in
+expression operator position, guards, switch selectors, rule actions, drive
+targets, drive-call expression operator position, parameter defaults, and
+typed aggregate carriers do not consume enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -306,10 +306,10 @@ context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
 outside actor constants, transaction `set` RHS scalar values or expression
 operands, transaction `switch` branch values, drive body RHS scalar values,
-and drive-call scalar actual values, additional aggregate carriers, aggregate
-field/slice/update lowering, incompatible enum values, aggregate shape
-mismatches, and ambiguous subaggregate updates remain owned by later
-`ISF-TYPE-AGGREGATE-PARITY` leaves.
+and drive-call actual scalar values or expression operands, additional
+aggregate carriers, aggregate field/slice/update lowering, incompatible enum
+values, aggregate shape mismatches, and ambiguous subaggregate updates remain
+owned by later `ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -932,8 +932,9 @@ Current lowering:
   Scalar drive-call actuals may use local enum members such as `mode.BUSY` or
   package enum members such as `shared.mode.BUSY`; the parser resolves those
   values before lowering and preserves the authored token in the generated
-  parameter assignment. Enum members inside drive-call expression actuals
-  remain deferred.
+  parameter assignment. Drive-call actual expressions may also use local or
+  package enum members as scalar operands. Enum members in drive-call
+  expression operator position remain deferred.
 - Hash-backed drive DT emission is deterministic: drive definitions are emitted
   lexically by drive name after transaction/rule-created DTs and any generated
   rule-trigger fan-in DTs.
@@ -2688,6 +2689,7 @@ Focused tests:
 - [t/1265-isf-enum-member-switch-branch-values.t](../t/1265-isf-enum-member-switch-branch-values.t)
 - [t/1266-isf-enum-member-drive-values.t](../t/1266-isf-enum-member-drive-values.t)
 - [t/1267-isf-enum-member-drive-call-values.t](../t/1267-isf-enum-member-drive-call-values.t)
+- [t/1268-isf-enum-member-drive-call-expression-values.t](../t/1268-isf-enum-member-drive-call-expression-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2746,13 +2748,14 @@ Focused tests:
   actor-constant enum member references, direct transaction `set` RHS enum
   member values and expression operands, transaction `switch` branch enum
   values, scalar drive body RHS enum member values, scalar drive-call actual
-  enum member values, actor-owned aggregate storage variable carriers,
-  transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
-  aggregate leaf operands, transaction `set` target aggregate leaf writes,
-  aggregate/list parameter-literal, and data-operation evidence model. Enum
-  member references outside actor constants, transaction `set` RHS scalar
-  values/expression operands, transaction `switch` branch values, drive body
-  RHS scalar values, or drive-call scalar actual values remain deferred.
+  enum member values, drive-call actual expression enum member operands,
+  actor-owned aggregate storage variable carriers, transaction `set` RHS
+  aggregate leaf reads, transaction `set` RHS expression aggregate leaf
+  operands, transaction `set` target aggregate leaf writes, aggregate/list
+  parameter-literal, and data-operation evidence model. Enum member references
+  outside actor constants, transaction `set` RHS scalar values/expression
+  operands, transaction `switch` branch values, drive body RHS scalar values,
+  or drive-call actual scalar values/expression operands remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values or target tokens, subaggregate
   updates/operands, aggregate field/slice/update lowering, and broad

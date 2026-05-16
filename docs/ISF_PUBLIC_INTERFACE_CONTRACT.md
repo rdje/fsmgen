@@ -711,11 +711,12 @@ declarations are preserved as scheduled `.fsm` `+enums`. Enum member
 references are public as actor constant values and direct transaction `set`
 RHS scalar values or scalar operands inside transaction `set` RHS expressions
 as transaction `switch` branch values, as scalar drive body RHS values, and as
-named drive-call scalar actual values in this slice, using local `mode.BUSY`
-or package-qualified `shared.mode.BUSY` spelling and resolving to
-non-negative integer literal values before lowering. Enum member references in
-expression operator position, conditions, switch selectors, targets, rules,
-drive targets, drive-call expression actuals, inline drive assignments,
+named drive-call scalar actual values or scalar operands inside drive-call
+actual expressions in this slice, using local `mode.BUSY` or
+package-qualified `shared.mode.BUSY` spelling and resolving to non-negative
+integer literal values before lowering. Enum member references in expression
+operator position, conditions, switch selectors, targets, rules, drive
+targets, drive-call expression operator position, inline drive assignments,
 parameters, and other ISF value contexts, additional aggregate carriers, and
 aggregate field/slice/update semantics remain outside the parser/scheduler
 contract.
@@ -753,7 +754,12 @@ Named drive-call scalar actual enum member values are checked by
 [t/1267-isf-enum-member-drive-call-values.t](../t/1267-isf-enum-member-drive-call-values.t),
 covering local and package enum member drive-call actuals, scheduled `.fsm`
 review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
-members and deferred drive-call expression actual/inline-drive contexts.
+members and deferred inline-drive contexts.
+Drive-call actual expression enum member operands are checked by
+[t/1268-isf-enum-member-drive-call-expression-values.t](../t/1268-isf-enum-member-drive-call-expression-values.t),
+covering local and package enum member drive-call expression operands,
+scheduled `.fsm` review artifacts, CLI HDL generation, and fail-closed
+diagnostics for unknown members and expression operator position.
 Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,

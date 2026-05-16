@@ -12,11 +12,11 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 
-subtest 'actor-local enum members are valid scalar drive call actual values' => sub {
+subtest 'actor-local enum members are valid drive call actual expression operands' => sub {
     my $dir = tempdir(CLEANUP => 1);
-    my $isf_path = File::Spec->catfile($dir, 'local_enum_drive_call_value.isf');
+    my $isf_path = File::Spec->catfile($dir, 'local_enum_drive_call_expression_value.isf');
     write_file($isf_path, <<'ISF');
-(actor local_enum_drive_call_value
+(actor local_enum_drive_call_expression_value
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -28,28 +28,28 @@ subtest 'actor-local enum members are valid scalar drive call actual values' => 
     (mode_out value))
   (transaction main
     (on start)
-    (drive mark_mode mode.BUSY)))
+    (drive mark_mode (+ mode.BUSY 1))))
 ISF
 
     my $actor = FSM::Adapter::ISF->new()->parse_file($isf_path);
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'local_enum_drive_call_value.fsm'};
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'local_enum_drive_call_expression_value.fsm'};
     like($fsm, qr/\(\+enums\s+\(mode \(IDLE 0\) \(BUSY 1\)\)\s+\)/s,
         'scheduled .fsm preserves local enum declaration');
-    like($fsm, qr/\(= \(mark_mode_value mode\.BUSY\)\)/,
-        'scheduled .fsm preserves local enum member drive call actual value');
+    like($fsm, qr/\(= \(mark_mode_value \(\+ mode\.BUSY 1\)\)\)/,
+        'scheduled .fsm preserves local enum member drive call expression operand');
     like($fsm, qr/\(-mark_mode\s+\(<- \(mode_out> mark_mode_value\) <mark_mode_start\)\s+\)/s,
         'scheduled .fsm routes the drive parameter through the drive body');
 
-    my $hdl_path = File::Spec->catfile($dir, 'local_enum_drive_call_value.sv');
+    my $hdl_path = File::Spec->catfile($dir, 'local_enum_drive_call_expression_value.sv');
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--output', $hdl_path, $isf_path],
     );
-    ok($success, 'CLI HDL generation succeeds for local enum member drive call actual values');
-    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for local enum member drive call actual values');
-    ok(-s $hdl_path, 'CLI writes HDL for local enum member drive call actual values');
+    ok($success, 'CLI HDL generation succeeds for local enum member drive call expression operands');
+    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for local enum member drive call expression operands');
+    ok(-s $hdl_path, 'CLI writes HDL for local enum member drive call expression operands');
 };
 
-subtest 'package enum members are valid scalar drive call actual values' => sub {
+subtest 'package enum members are valid drive call actual expression operands' => sub {
     my $dir = tempdir(CLEANUP => 1);
     write_file(File::Spec->catfile($dir, 'shared.fsm'), <<'FSM');
 (?pkg:shared
@@ -57,44 +57,45 @@ subtest 'package enum members are valid scalar drive call actual values' => sub 
     (mode (IDLE 0) (BUSY 1)))
 )
 FSM
-    my $isf_path = File::Spec->catfile($dir, 'package_enum_drive_call_value.isf');
+    my $isf_path = File::Spec->catfile($dir, 'package_enum_drive_call_expression_value.isf');
     write_file($isf_path, <<'ISF');
-(actor package_enum_drive_call_value
+(actor package_enum_drive_call_expression_value
   (imports
     (package shared))
   (clock clk)
   (reset rst)
   (interface
     (input start)
+    (input mode_in (width 2))
     (output mode_out (width 2)))
   (drive (mark_mode value)
     (mode_out value))
   (transaction main
     (on start)
-    (drive mark_mode shared.mode.BUSY)))
+    (drive mark_mode (+ shared.mode.BUSY mode_in))))
 ISF
 
     my $actor = FSM::Adapter::ISF->new()->parse_file($isf_path);
-    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'package_enum_drive_call_value.fsm'};
+    my $fsm = FSM::Scheduler::ISF->new()->lower($actor)->{files}{'package_enum_drive_call_expression_value.fsm'};
     like($fsm, qr/\(\+import\s+shared\s+\)/s, 'scheduled .fsm emits package import');
-    like($fsm, qr/\(= \(mark_mode_value shared\.mode\.BUSY\)\)/,
-        'scheduled .fsm preserves package enum member drive call actual value');
+    like($fsm, qr/\(= \(mark_mode_value \(\+ shared\.mode\.BUSY mode_in\)\)\)/,
+        'scheduled .fsm preserves package enum member drive call expression operand');
     like($fsm, qr/\(\?pkg:shared[\s\S]*\(\+enums[\s\S]*\(mode \(IDLE 0\) \(BUSY 1\)\)/,
         'scheduled .fsm embeds imported enum package root');
 
-    my $hdl_path = File::Spec->catfile($dir, 'package_enum_drive_call_value.sv');
+    my $hdl_path = File::Spec->catfile($dir, 'package_enum_drive_call_expression_value.sv');
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) = run(
         command => ['./bin/fsmgen', '--strict', '--output', $hdl_path, $isf_path],
     );
-    ok($success, 'CLI HDL generation succeeds for package enum member drive call actual values');
-    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for package enum member drive call actual values');
-    ok(-s $hdl_path, 'CLI writes HDL for package enum member drive call actual values');
+    ok($success, 'CLI HDL generation succeeds for package enum member drive call expression operands');
+    is(join('', @{$stderr_buf || []}), '', 'CLI keeps stderr clean for package enum member drive call expression operands');
+    ok(-s $hdl_path, 'CLI writes HDL for package enum member drive call expression operands');
 };
 
-subtest 'drive call enum diagnostics stay scalar-actual only' => sub {
+subtest 'drive call enum expression diagnostics stay operand-only' => sub {
     assert_parse_rejected(
         <<'ISF',
-(actor unknown_enum_drive_call_value
+(actor unknown_enum_drive_call_expression_value
   (enums
     (mode (IDLE 0)))
   (clock clk)
@@ -106,15 +107,15 @@ subtest 'drive call enum diagnostics stay scalar-actual only' => sub {
     (mode_out value))
   (transaction main
     (on start)
-    (drive mark_mode mode.BUSY)))
+    (drive mark_mode (+ mode.BUSY 1))))
 ISF
         qr/transaction 'main' drive 'mark_mode' actual references unknown enum member 'mode\.BUSY'/,
-        'unknown drive call enum actual fails before lowering',
+        'unknown drive call enum expression operand fails before lowering',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor enum_inline_drive_still_deferred
+(actor enum_drive_call_operator_still_deferred
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -122,13 +123,14 @@ ISF
   (interface
     (input start)
     (output mode_out (width 2)))
+  (drive (mark_mode value)
+    (mode_out value))
   (transaction main
     (on start)
-    (drive inline_mode
-      (mode_out mode.BUSY))))
+    (drive mark_mode (mode.BUSY 1))))
 ISF
-        qr/transaction 'main' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
-        'enum members in inline drive assignments remain deferred',
+        qr/transaction 'main' drive 'mark_mode' actual expression operator references enum member 'mode\.BUSY'; this ISF slice accepts enum member references inside drive-call actual expressions only as scalar operands/,
+        'enum members in drive call expression operator position remain deferred',
     );
 };
 

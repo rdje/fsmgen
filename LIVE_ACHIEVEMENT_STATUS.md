@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum drive-call expression values shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.14` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.15`, selecting the
+  next enum or aggregate value/update context after drive-call actual
+  expression enum operands.
+- Named drive-call actual expressions now accept local and package-qualified
+  enum members as scalar operands while preserving authored expression
+  payloads in generated drive-parameter assignments.
+- Enum members in expression operator position, inline drive assignments,
+  rules, conditions, switch selectors, set targets, parameters, and other
+  non-shipped contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum drive-call values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.13` in

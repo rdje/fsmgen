@@ -282,7 +282,8 @@ consume local and package-qualified enum members, transaction `switch` branch
 values may consume local and package-qualified enum members, and scalar drive
 body RHS values may consume local and package-qualified enum members. Named
 drive-call scalar actual values may also consume local and package-qualified
-enum members.
+enum members, and drive-call actual expressions may use enum members as
+scalar operands.
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as
 `frame.mode` or `lanes[0]`, either directly or as scalar operands inside
@@ -293,7 +294,8 @@ transaction `set` RHS values or direct targets, subaggregate
 operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, transaction `set` RHS
 scalar values/expression operands, transaction `switch` branch values, or
-drive body RHS scalar values or drive-call scalar actual values,
+drive body RHS scalar values or drive-call actual scalar values/expression
+operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 

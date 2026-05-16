@@ -137,7 +137,7 @@ ISF
       (1
         (set seen 1)))))
 ISF
-        qr/switch selector references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call scalar actual values/,
+        qr/switch selector references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in switch selectors remain deferred',
     );
 
@@ -156,7 +156,7 @@ ISF
     (when mode.BUSY
       (set seen 1))))
 ISF
-        qr/when condition references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call scalar actual values/,
+        qr/when condition references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in conditions remain deferred',
     );
 };

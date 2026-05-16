@@ -859,12 +859,31 @@ sub _validate_drive_enum_member_rhs {
 
 sub _validate_drive_call_enum_member_actual {
     my ($actual, $actor, $aggregate_roots, $context) = @_;
-    return _reject_enum_member_value_contexts($actual, $actor, $aggregate_roots, "$context expression")
-        if ref($actual);
+    return _validate_drive_call_actual_enum_member_values($actual, $actor, $aggregate_roots, $context);
+}
 
-    my $member = _enum_member_value_token($actual, $aggregate_roots);
-    _validate_enum_member_value($member, $actor, $context)
-        if defined $member;
+sub _validate_drive_call_actual_enum_member_values {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    if (!ref($value)) {
+        my $member = _enum_member_value_token($value, $aggregate_roots);
+        _validate_enum_member_value($member, $actor, $context)
+            if defined $member;
+        return 1;
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        for my $index (0 .. $#$value) {
+            my $item = $value->[$index];
+            if ($index == 0 && defined($item) && !ref($item)) {
+                my $member = _enum_member_value_token($item, $aggregate_roots);
+                confess "Error: $context expression operator references enum member '$member'; this ISF slice accepts enum member references inside drive-call actual expressions only as scalar operands\n"
+                    if defined $member;
+                next;
+            }
+            _validate_drive_call_actual_enum_member_values($item, $actor, $aggregate_roots, $context);
+        }
+    }
+
     return 1;
 }
 
@@ -882,7 +901,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call scalar actual values\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }

@@ -532,7 +532,8 @@ Rules:
   members before lowering and preserves the authored token in the generated
   drive DT.
 - Scalar drive-call actuals may also use local or package enum members.
-  Enum members inside drive-call expression actuals remain deferred.
+  Drive-call actual expressions may use enum members as scalar operands.
+  Enum members in drive-call expression operator position remain deferred.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and driven output changes on the following
   clock.
@@ -874,10 +875,11 @@ Rules:
   use enum members as scalar operands, transaction `switch` branch values may
   consume local or package enum members, and scalar drive body RHS values may
   consume local or package enum members. Named drive-call scalar actual values
-  may also consume local or package enum members. Enum members in expression
-  operator position, conditions, switch selectors, targets, rules, drive
-  targets, drive-call expression actuals, inline drive assignments,
-  parameters, and other contexts remain deferred.
+  may also consume local or package enum members, and drive-call actual
+  expressions may use enum members as scalar operands. Enum members in
+  expression operator position, conditions, switch selectors, targets, rules,
+  drive targets, drive-call expression operator position, inline drive
+  assignments, parameters, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1283,7 +1285,7 @@ Required fail-closed examples:
   position, subaggregate operands/updates, and enum member references outside
   the shipped actor-constant, transaction `set` RHS scalar/expression-operand,
   transaction `switch` branch-value, drive body RHS scalar, and drive-call
-  scalar actual contexts.
+  actual scalar/expression-operand contexts.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1338,7 +1340,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1264-isf-enum-member-set-expression-values.t \
   t/1265-isf-enum-member-switch-branch-values.t \
   t/1266-isf-enum-member-drive-values.t \
-  t/1267-isf-enum-member-drive-call-values.t
+  t/1267-isf-enum-member-drive-call-values.t \
+  t/1268-isf-enum-member-drive-call-expression-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

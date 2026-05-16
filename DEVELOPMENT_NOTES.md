@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum drive-call expressions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.14` widens named drive-call enum actual support
+  from scalar actual values to scalar operands inside drive-call actual
+  expressions, because the existing drive-parameter handoff already preserves
+  authored expression payloads in scheduled `.fsm`.
+- The parser walks drive-call actual expression trees and resolves enum
+  members before lowering, but rejects enum members in expression operator
+  position so expression heads remain ordinary operators rather than callable
+  enum tokens.
+- Inline drive assignments, rules, conditions, switch selectors, set targets,
+  parameters, and other enum contexts stay closed because each needs its own
+  timing, assignment, or public value contract before it should be advertised.
 ## 2026-05-16: enum drive-call values stay scalar-actual-only
 - `ISF-TYPE-AGGREGATE-PARITY.13` selects named drive-call scalar actuals as
   the next enum context because the existing drive-parameter handoff state
