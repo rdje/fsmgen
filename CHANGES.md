@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF dynamic divisor literal-zero safety shipped
+- Completed `ISF-DYNAMIC-DIVISOR-SAFETY.1` and closed the task tree.
+- Added parser validation that rejects numeric/exact-width literal-zero
+  divisors in shipped ISF division/modulo expression contexts before scheduled
+  `.fsm` emission.
+- Preserved nonzero literal divisors and dynamic scalar divisors unchanged,
+  with broader dynamic nonzero proof explicitly left as backlog.
+- Added `t/1308-isf-dynamic-divisor-safety.t`, updated the ISF focused-test
+  index, public tested-by metadata, and mdBook feature-matrix audit.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook chapters covering
+  transactions, data manipulation, rules, the feature matrix, and backlog.
+- Validation: focused audit set passed with `Files=4, Tests=86`; broad
+  `./bin/ci-regression isf --no-book` passed with `Files=214, Tests=930`.
 ### R14 — ISF feature matrix CLI examples synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` and closed the
   task tree.

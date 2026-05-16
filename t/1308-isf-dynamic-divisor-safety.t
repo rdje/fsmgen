@@ -1,0 +1,147 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use Test::More;
+use File::Spec;
+use FindBin;
+
+use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
+
+use FSM::Adapter::ISF;
+use FSM::Scheduler::ISF;
+
+sub parse_source {
+    my ($source, $label) = @_;
+    return FSM::Adapter::ISF->new()->parse_source($source, "$label.isf");
+}
+
+sub lower_source {
+    my ($source, $label) = @_;
+    my $actor = parse_source($source, $label);
+    return FSM::Scheduler::ISF->new()->lower($actor);
+}
+
+sub assert_parse_rejected {
+    my ($source, $label, $diagnostic_re) = @_;
+
+    my $ok = eval {
+        parse_source($source, $label);
+        1;
+    };
+    my $diagnostic = $@;
+
+    ok(!$ok, "$label is rejected during parsing");
+    ok(!ref($diagnostic), "$label diagnostic is scalar");
+    like($diagnostic, $diagnostic_re, "$label diagnostic is targeted");
+}
+
+subtest 'literal zero division divisor in transaction RHS fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'transaction_division_by_zero', qr/\AError: transaction 'main' set RHS expression '\(\/ numerator 0\)' uses literal zero divisor '0' in division/);
+(actor transaction_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (set out (/ numerator 0))))
+ISF
+};
+
+subtest 'literal zero modulo divisor in nested rule RHS fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'rule_nested_modulo_by_zero', qr/\AError: rule 'capture' set RHS expression '\(% numerator 8'd0\)' uses literal zero divisor '8'd0' in modulo/);
+(actor rule_nested_modulo_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input ready)
+    (input numerator (width 8))
+    (input mask (width 8))
+    (output out (width 8)))
+  (rule capture ready
+    (set out (+ mask (% numerator 8'd0)))))
+ISF
+};
+
+subtest 'literal zero divisor in runtime wait expression fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'wait_expression_division_by_zero', qr/\AError: transaction 'main' wait count expression '\(\/ delay_count 0\)' uses literal zero divisor '0' in division/);
+(actor wait_expression_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input delay_count (width 4))
+    (output done))
+  (transaction main
+    (on start)
+    (wait (/ delay_count 0))
+    (complete done)))
+ISF
+};
+
+subtest 'literal zero divisor in activation input binding expression fails closed' => sub {
+    assert_parse_rejected(<<'ISF', 'activation_binding_division_by_zero', qr/\AError: transaction 'main' do input binding 'value' expression '\(\/ numerator 0\)' uses literal zero divisor '0' in division/);
+(actor activation_binding_division_by_zero
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction child
+    (ports
+      (input value (width 8))
+      (output result (width 8)))
+    (on start)
+    (set result value))
+  (transaction main
+    (on start)
+    (do child
+      (bind
+        (input value (/ numerator 0))
+        (output result out)))))
+ISF
+};
+
+subtest 'dynamic divisor lowers unchanged' => sub {
+    my $result = lower_source(<<'ISF', 'dynamic_divisor_ok');
+(actor dynamic_divisor_ok
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (input divisor (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (set out (/ numerator divisor))))
+ISF
+
+    my $fsm = $result->{files}{'dynamic_divisor_ok.fsm'};
+    like($fsm, qr{\(<- \(out>? \(/ numerator divisor\)\)\)},
+        'scheduled .fsm preserves runtime dynamic divisor expression');
+};
+
+subtest 'nonzero exact-width literal divisor lowers unchanged' => sub {
+    my $result = lower_source(<<'ISF', 'nonzero_literal_divisor_ok');
+(actor nonzero_literal_divisor_ok
+  (clock clk)
+  (reset rst)
+  (interface
+    (input start)
+    (input numerator (width 8))
+    (output out (width 8)))
+  (transaction main
+    (on start)
+    (set out (/ numerator 8'd2))))
+ISF
+
+    my $fsm = $result->{files}{'nonzero_literal_divisor_ok.fsm'};
+    like($fsm, qr{\(<- \(out>? \(/ numerator 8'd2\)\)\)},
+        'scheduled .fsm preserves nonzero exact-width literal divisor expression');
+};
+
+done_testing();

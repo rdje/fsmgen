@@ -395,6 +395,11 @@ by the same contract for sample-compatible body successors while preserving
 loop-back and loop-exit edges. Dynamic waits whose selected zero-count
 successor cannot yet carry samples fail closed with diagnostics that name the
 body context.
+The runtime divisor safety boundary is checked by
+[t/1308-isf-dynamic-divisor-safety.t](../t/1308-isf-dynamic-divisor-safety.t)
+so shipped runtime expression contexts reject numeric/exact-width literal-zero
+division and modulo divisors before scheduled `.fsm` emission while preserving
+nonzero literal divisors and dynamic scalar divisors unchanged.
 The transaction loop boundary is checked by
 [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 so top-level transaction `(while cond body...)` lowers as a pre-test

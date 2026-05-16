@@ -267,6 +267,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_type_references($result);
     $self->_validate_actor_aggregate_storage_paths($result);
     $self->_validate_actor_enum_member_value_contexts($result);
+    $self->_validate_actor_literal_zero_divisors($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
@@ -744,6 +745,306 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
     }
 
     return 1;
+}
+
+sub _validate_actor_literal_zero_divisors($self, $actor) {
+    for my $tx (@{$actor->{transactions} || []}) {
+        _validate_transaction_literal_zero_divisors(
+            $tx->{clauses},
+            $actor,
+            "transaction '$tx->{name}'",
+        );
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        _validate_rule_literal_zero_divisors($rule);
+    }
+
+    for my $drive_name (sort keys %{$actor->{drives} || {}}) {
+        _validate_drive_literal_zero_divisors(
+            $drive_name,
+            $actor->{drives}{$drive_name},
+        );
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_literal_zero_divisors {
+    my ($clauses, $actor, $context) = @_;
+    return 1 unless ref($clauses) eq 'ARRAY';
+
+    for my $clause (@$clauses) {
+        _validate_transaction_literal_zero_divisor_clause($clause, $actor, $context);
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_literal_zero_divisor_clause {
+    my ($clause, $actor, $context) = @_;
+    return 1 unless ref($clause) eq 'ARRAY' && @$clause;
+
+    my $head = $clause->[0];
+    return 1 unless defined($head) && !ref($head);
+
+    if ($head eq 'wait') {
+        _validate_no_literal_zero_divisors($clause->[1], "$context wait count")
+            if @$clause >= 2;
+        return 1;
+    }
+
+    if ($head eq 'set' || $head eq 'update') {
+        _validate_no_literal_zero_divisors($clause->[2], "$context $head RHS")
+            if @$clause >= 3;
+        return 1;
+    }
+
+    if ($head eq 'assemble') {
+        if (my $as_index = _isf_as_index($clause)) {
+            for my $part (@{$clause}[1 .. $as_index - 1]) {
+                _validate_no_literal_zero_divisors($part, "$context assemble part");
+            }
+        }
+        return 1;
+    }
+
+    if ($head eq 'store') {
+        _validate_no_literal_zero_divisors($clause->[2], "$context store index")
+            if @$clause >= 3;
+        _validate_no_literal_zero_divisors($clause->[3], "$context store value")
+            if @$clause >= 4;
+        return 1;
+    }
+
+    if ($head eq 'load') {
+        _validate_no_literal_zero_divisors($clause->[2], "$context load index")
+            if @$clause >= 3;
+        return 1;
+    }
+
+    if ($head eq 'drive') {
+        my $drive_name = $clause->[1];
+        if (defined($drive_name)
+            && !ref($drive_name)
+            && exists((($actor || {})->{drives} || {})->{$drive_name}))
+        {
+            for my $actual (@{$clause}[2 .. $#$clause]) {
+                _validate_no_literal_zero_divisors(
+                    $actual,
+                    "$context drive '$drive_name' actual",
+                );
+            }
+            return 1;
+        }
+
+        _validate_inline_drive_literal_zero_divisors($clause, "$context inline drive");
+        return 1;
+    }
+
+    if ($head eq 'do' || $head eq 'spawn') {
+        _validate_activation_bind_literal_zero_divisors($clause, "$context $head");
+        return 1;
+    }
+
+    if ($head eq 'when' || $head eq 'while' || $head eq 'until') {
+        _validate_no_literal_zero_divisors($clause->[1], "$context $head condition")
+            if @$clause >= 2;
+        _validate_transaction_literal_zero_divisors(
+            [ @{$clause}[2 .. $#$clause] ],
+            $actor,
+            "$context $head body",
+        );
+        return 1;
+    }
+
+    if ($head eq 'repeat') {
+        _validate_transaction_literal_zero_divisors(
+            [ @{$clause}[2 .. $#$clause] ],
+            $actor,
+            "$context repeat body",
+        );
+        return 1;
+    }
+
+    if ($head eq 'switch') {
+        for my $branch (@{$clause}[2 .. $#$clause]) {
+            next unless ref($branch) eq 'ARRAY' && @$branch;
+            _validate_transaction_literal_zero_divisors(
+                [ @{$branch}[1 .. $#$branch] ],
+                $actor,
+                "$context switch branch",
+            );
+        }
+        return 1;
+    }
+
+    return 1;
+}
+
+sub _validate_rule_literal_zero_divisors {
+    my ($rule) = @_;
+    my $rule_name = $rule->{name};
+
+    if (my $when = $rule->{when}) {
+        _validate_no_literal_zero_divisors(
+            $when->[1],
+            "rule '$rule_name' guard",
+        ) if ref($when) eq 'ARRAY' && @$when >= 2;
+    }
+
+    for my $action (@{$rule->{actions} || []}) {
+        next unless ref($action) eq 'ARRAY' && @$action;
+        my $head = $action->[0];
+        next unless defined($head) && !ref($head);
+
+        if ($head eq 'trigger') {
+            _validate_activation_bind_literal_zero_divisors(
+                $action,
+                "rule '$rule_name' trigger",
+            );
+            next;
+        }
+        next if $head eq 'priority';
+
+        if ($head eq 'set') {
+            _validate_no_literal_zero_divisors(
+                $action->[2],
+                "rule '$rule_name' set RHS",
+            ) if @$action >= 3;
+            next;
+        }
+
+        if ($head eq 'store') {
+            _validate_no_literal_zero_divisors(
+                $action->[2],
+                "rule '$rule_name' store index",
+            ) if @$action >= 3;
+            _validate_no_literal_zero_divisors(
+                $action->[3],
+                "rule '$rule_name' store value",
+            ) if @$action >= 4;
+            next;
+        }
+
+        if ($head eq 'load') {
+            _validate_no_literal_zero_divisors(
+                $action->[2],
+                "rule '$rule_name' load index",
+            ) if @$action >= 3;
+            next;
+        }
+
+        _validate_no_literal_zero_divisors(
+            $action->[1],
+            "rule '$rule_name' assignment RHS",
+        ) if @$action >= 2;
+    }
+
+    return 1;
+}
+
+sub _validate_drive_literal_zero_divisors {
+    my ($drive_name, $drive) = @_;
+    for my $entry (@{$drive->{body} || []}) {
+        next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
+        _validate_no_literal_zero_divisors(
+            $entry->[1],
+            "drive '$drive_name' RHS",
+        );
+    }
+    return 1;
+}
+
+sub _validate_inline_drive_literal_zero_divisors {
+    my ($clause, $context) = @_;
+
+    my $first_assignment = (ref($clause->[1]) eq 'ARRAY') ? 1 : 2;
+    return 1 if $first_assignment > $#$clause;
+
+    for my $entry (@{$clause}[$first_assignment .. $#$clause]) {
+        next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
+        _validate_no_literal_zero_divisors($entry->[1], "$context RHS");
+    }
+
+    return 1;
+}
+
+sub _validate_activation_bind_literal_zero_divisors {
+    my ($clause, $context) = @_;
+
+    for my $subclause (@{$clause}[2 .. $#$clause]) {
+        next unless ref($subclause) eq 'ARRAY'
+            && @$subclause
+            && defined($subclause->[0])
+            && !ref($subclause->[0])
+            && $subclause->[0] eq 'bind';
+
+        for my $entry (@{$subclause}[1 .. $#$subclause]) {
+            next unless ref($entry) eq 'ARRAY' && @$entry >= 3;
+            my ($role, $port, $expr) = @$entry;
+            next unless defined($role) && !ref($role) && $role eq 'input';
+            my $port_name = defined($port) && !ref($port) ? $port : '<unknown>';
+            _validate_no_literal_zero_divisors(
+                $expr,
+                "$context input binding '$port_name'",
+            );
+        }
+    }
+
+    return 1;
+}
+
+sub _validate_no_literal_zero_divisors {
+    my ($expr, $context) = @_;
+    return 1 unless ref($expr) eq 'ARRAY' && @$expr;
+
+    my $head = $expr->[0];
+    if (defined($head) && !ref($head) && ($head eq '/' || $head eq '%')) {
+        my $operation = $head eq '/' ? 'division' : 'modulo';
+        for my $index (2 .. $#$expr) {
+            my $operand = $expr->[$index];
+            next unless _is_literal_zero_value($operand);
+            confess "Error: $context expression '" . _format_isf_expr($expr)
+                . "' uses literal zero divisor '" . _format_isf_expr($operand)
+                . "' in $operation\n";
+        }
+    }
+
+    for my $index (1 .. $#$expr) {
+        _validate_no_literal_zero_divisors($expr->[$index], $context);
+    }
+
+    return 1;
+}
+
+sub _is_literal_zero_value {
+    my ($value) = @_;
+    return 0 unless defined($value) && !ref($value);
+
+    my $integer = FSM::Package::IntegerLiteralSupport->integer_from_literal_like($value);
+    return defined($integer) && $integer->bcmp(0) == 0 ? 1 : 0;
+}
+
+sub _format_isf_expr {
+    my ($expr) = @_;
+    return '<undef>' unless defined $expr;
+    return $expr unless ref($expr) eq 'ARRAY';
+    return '(' . join(' ', map { _format_isf_expr($_) } grep { defined($_) } @$expr) . ')';
+}
+
+sub _isf_as_index {
+    my ($clause) = @_;
+    return undef unless ref($clause) eq 'ARRAY';
+
+    for my $index (1 .. $#$clause) {
+        return $index
+            if defined($clause->[$index])
+                && !ref($clause->[$index])
+                && $clause->[$index] eq 'as';
+    }
+
+    return undef;
 }
 
 sub _validate_transaction_enum_member_value_contexts {

@@ -45,6 +45,7 @@ my @required_rows = (
     ['Transaction entry', 'shipped'],
     ['Transaction ports and activation bindings', 'shipped bounded surface'],
     ['Transaction assignments', 'shipped'],
+    ['Runtime expression divisor safety', 'shipped bounded surface'],
     ['Named and inline drives', 'shipped'],
     ['Await and latency', 'shipped'],
     ['Static and dynamic waits', 'shipped bounded surface'],
@@ -94,6 +95,7 @@ my @required_examples = (
     '"actor_params"',
     '"actor_phases"',
     'dynamic_wait_counter',
+    '(/ numerator 0)',
     'schedule_report_full_schema_stable',
     './bin/fsmgen-issue-bundle',
     '--issue-id sf-0001',
@@ -112,6 +114,7 @@ for my $example (@required_examples) {
 my @required_non_claims = (
     'Multi-bit CDC payloads',
     'Spawn, blocking `do`, `await_all`, `await_any`',
+    'Dynamic division/modulo nonzero proof is not shipped',
     'Enum members are not writable targets',
     'Aggregate interface ports',
     'Backlog resource kinds',

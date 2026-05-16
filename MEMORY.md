@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF dynamic divisor literal-zero safety shipped
+- Completed `ISF-DYNAMIC-DIVISOR-SAFETY.1` and closed
+  [docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md](docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md).
+- The ISF parser now rejects division and modulo expressions whose divisor
+  operand is a numeric or exact-width literal zero across shipped runtime
+  expression contexts before scheduled `.fsm` emission.
+- Nonzero literal divisors and dynamic scalar divisors still lower unchanged;
+  full dynamic nonzero proof remains backlog and is stated in the spec,
+  downstream handoff, public contract, and mdBook.
+- Added
+  [t/1308-isf-dynamic-divisor-safety.t](t/1308-isf-dynamic-divisor-safety.t)
+  and synchronized the ISF spec focused-test index, public tested-by metadata,
+  and book feature-matrix audit.
+- Validation: `prove -l t/1308-isf-dynamic-divisor-safety.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`
+  passed with `Files=4, Tests=86`; `./bin/ci-regression isf --no-book`
+  passed with `Files=214, Tests=930`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF feature matrix CLI examples synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` and closed
   [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md).

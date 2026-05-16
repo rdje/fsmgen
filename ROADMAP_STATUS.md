@@ -10,10 +10,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC` is closed
-  after adding copyable CLI examples to the ISF shipped feature matrix and
-  widening the matrix audit. The next R14 PNT implementation slice must select
-  or create a new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
+- Next decision point: `ISF-DYNAMIC-DIVISOR-SAFETY` is closed after shipping
+  parser-side literal-zero divisor rejection across shipped ISF runtime
+  expression contexts and synchronizing the spec, downstream handoff, public
+  contract, mdBook, and tests. The next R14 PNT implementation slice must
+  select or create a new task tree before code changes.
+  `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the

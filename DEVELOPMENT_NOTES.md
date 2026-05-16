@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: literal-zero divisor safety belongs in parser semantic validation
+- `ISF-DYNAMIC-DIVISOR-SAFETY.1` adds the first dynamic-divisor safety slice
+  as parser-side semantic validation instead of attaching it to the
+  multi-clock domain reference walk. That keeps the diagnostic active for
+  ordinary single-clock actors too.
+- The pass is context-specific: it walks shipped runtime expression positions
+  such as transaction RHS/wait/count/condition expressions, activation input
+  bindings, rule guards/actions, named and inline drives, drive-call actuals,
+  and bank access index/value expressions. It deliberately does not inspect
+  parameter aggregate/list values as expression trees.
+- The slice rejects only statically known literal-zero divisors. Nonzero
+  literals and dynamic scalar divisors still lower to scheduled `.fsm`
+  unchanged because proving arbitrary runtime nonzero values requires a
+  separate range/dataflow contract.
 ## 2026-05-16: the ISF feature matrix should show the shipped CLI shapes
 - `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` adds copyable CLI examples
   for the shipped `.isf` paths so users can see strict mode, schedule JSON,

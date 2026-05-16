@@ -196,6 +196,11 @@ General source rules:
   literals, or non-empty list expressions. List expressions use the same
   Lisp-like operator-first shape consumed by the scheduled `.fsm` expression
   formatter.
+- Runtime division and modulo expressions fail closed before scheduled `.fsm`
+  emission when any divisor operand is a numeric or exact-width literal zero,
+  including nested expression operands. Nonzero literal divisors and dynamic
+  scalar divisors remain accepted; FSMGen does not yet prove arbitrary dynamic
+  divisors nonzero.
 - Singleton actor clauses are not mergeable. Repeating one fails closed rather
   than letting later clauses overwrite earlier fields.
 
@@ -717,6 +722,9 @@ Rules:
   width and the predecessor-edge split is implemented.
 - Runtime expression waits are accepted when every operand has known width and
   the expression width helper derives a positive result width.
+- Wait-count division and modulo expressions reject literal-zero divisors
+  before scheduled `.fsm` emission. Dynamic divisor nonzero proof remains
+  outside the shipped wait contract.
 - Transaction `params` are not wait-count constants.
 - Reports expose `transaction_waits[]`.
 
@@ -1414,6 +1422,8 @@ Required fail-closed examples:
 - Unsupported `(on ...)` body forms such as `(params ...)`.
 - Rule triggers targeting unknown transactions.
 - Rule-trigger output bindings.
+- Literal-zero divisor operands in shipped runtime division/modulo expression
+  contexts.
 - Direct cross-domain access without a shipped crossing primitive.
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
@@ -1592,6 +1602,9 @@ The following are not public shipped integration surfaces today:
 - Rule-trigger output bindings.
 - Direct `(on ...)` activation parameter overrides.
 - Snapshot-vs-live binding timing selection beyond the shipped binding timing.
+- Proof that every dynamic division/modulo divisor is nonzero. Literal-zero
+  divisors are rejected, but arbitrary runtime scalar nonzero proof is not a
+  public shipped surface yet.
 - A formal frozen EBNF grammar artifact or JSON Schema artifact. This document
   and the manifest are the current integration contract; a machine grammar or
   schema should be produced by a future task if required.

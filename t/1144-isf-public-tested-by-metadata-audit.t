@@ -201,6 +201,7 @@ my $expected_tested_by = [
     't/1301-isf-enum-member-rule-standalone-guard-values.t',
     't/1302-isf-aggregate-rule-standalone-guard-values.t',
     't/1303-isf-public-live-book-paths-audit.t',
+    't/1308-isf-dynamic-divisor-safety.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

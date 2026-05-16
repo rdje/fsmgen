@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF dynamic divisor literal-zero safety shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-DIVISOR-SAFETY.1` in
+  [docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md](docs/tasks/ISF-DYNAMIC-DIVISOR-SAFETY.md).
+- The `ISF-DYNAMIC-DIVISOR-SAFETY` tree is now closed. No active ISF task tree
+  remains open; the next R14 implementation slice must select or create a new
+  task tree first.
+- ISF parser semantic validation now rejects division/modulo expressions with
+  literal-zero divisor operands across shipped runtime expression surfaces
+  before scheduled `.fsm` emission.
+- Nonzero literal divisors and dynamic scalar divisors remain accepted and
+  lower unchanged; broader dynamic nonzero proof remains documented backlog.
+- Added
+  [t/1308-isf-dynamic-divisor-safety.t](t/1308-isf-dynamic-divisor-safety.t)
+  and synchronized the spec index, public contract metadata, downstream
+  handoff, and mdBook feature matrix.
+- Validation: focused audit set passed with `Files=4, Tests=86`; broad
+  `./bin/ci-regression isf --no-book` passed with `Files=214, Tests=930`.
+
 ## 2026-05-16: R14 — ISF feature matrix CLI examples synchronized
 - Completed R14 task-tree slice:
   `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` in

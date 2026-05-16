@@ -30,8 +30,10 @@ Goal: reject or prove safe runtime division/modulo expressions whose divisors
 could be zero.
 
 Current boundary: constant-expression domains reject divide/modulo-by-zero
-before HDL emission. Runtime RHS expressions with dynamic divisors are emitted
-as expressions; FSMGen does not yet prove every dynamic divisor nonzero.
+before HDL emission. ISF runtime expression contexts now reject
+numeric/exact-width literal-zero divisors before scheduled `.fsm` emission.
+Nonzero literal divisors and dynamic scalar divisors are emitted unchanged;
+FSMGen does not yet prove every dynamic divisor nonzero.
 
 ## Aggregate Types And Data
 
