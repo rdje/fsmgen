@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF CDC fixture matrix hardened
+- Completed R14 task-tree slice:
+  `ISF-CDC-FIXTURE-MATRIX.1`, closing
+  [docs/tasks/ISF-CDC-FIXTURE-MATRIX.md](docs/tasks/ISF-CDC-FIXTURE-MATRIX.md).
+- Added [isf/clock_domain_dual_event_crossing.isf](isf/clock_domain_dual_event_crossing.isf),
+  covering two opposite-direction acknowledged event crossings in one
+  generated top.
+- Extended [t/1247-isf-clock-domain-partition.t](t/1247-isf-clock-domain-partition.t)
+  to prove both CDC children, bounded report metadata, CLI schedule JSON
+  parity, and generated HDL.
+- Synchronized the ISF spec, downstream handoff, public contract doc, mdBook,
+  feature backlog, roadmap, and task-tree index. The slice adds fixture
+  coverage only; no payload CDC, ordering semantics, or new crossing primitive
+  shipped.
+
 ## 2026-05-16: R14 — ISF temporal contract assertions projected
 - Completed R14 task-tree slice:
   `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1`, closing

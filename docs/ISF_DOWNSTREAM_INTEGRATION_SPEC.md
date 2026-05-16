@@ -33,8 +33,9 @@ The current integration status is `bounded_public`:
 - Single-clock accepted sources reach SystemVerilog/Verilog-family HDL through
   the normal `.fsm` backend.
 - Accepted multi-domain event-crossing sources lower to generated domain/top
-  artifacts and can reach SystemVerilog/Verilog-family HDL when the emitted
-  domain artifacts satisfy the scheduled `.fsm` clock/reset HDL contract.
+  artifacts and can reach SystemVerilog/Verilog-family HDL with concrete CDC
+  child modules when the emitted domain artifacts satisfy the scheduled `.fsm`
+  clock/reset HDL contract.
 - Public syntax, public lower-result shape, and public schedule-report key
   families are regression-backed.
 
@@ -316,13 +317,17 @@ Rules:
 - The first shipped crossing kind is a no-payload acknowledged single-bit
   event channel.
 - Source and destination domains must be different declared domains.
+- Multiple independent event crossings may appear in one actor. Each one emits
+  a distinct generated CDC instance/module, top wiring, schedule-report entry,
+  and concrete generated HDL child. This does not add payload transfer or
+  ordering semantics between event channels.
 - The source request may be accepted only when generated source-domain `ready`
   is true.
 - At most one event is outstanding.
 - The destination receives a generated one-cycle pulse after synchronizer and
   acknowledgement latency. No same-cycle relationship is promised.
-- Generated HDL for accepted event crossings emits the generated top and a
-  concrete acknowledged-event CDC child for SystemVerilog/Verilog-family
+- Generated HDL for accepted event crossings emits the generated top and
+  concrete acknowledged-event CDC child modules for SystemVerilog/Verilog-family
   targets when each domain artifact satisfies the scheduled `.fsm` clock/reset
   HDL contract.
 
@@ -931,6 +936,8 @@ Important `.fsm` lowering conventions:
 - Generated top files use canonical Lisp-ish `?wiring` links.
 - Multi-domain accepted event-crossing actors emit domain `.fsm` artifacts, a
   generated top `.fsm`, and generated CDC child interface metadata.
+- Multiple accepted event crossings in one actor emit one generated CDC child
+  interface and one report entry per crossing.
 
 Deterministic DT ordering:
 
@@ -1191,6 +1198,7 @@ isf/spi_master.isf
 isf/spawn_parent.isf
 isf/full_featured.isf
 isf/clock_domain_event_crossing.isf
+isf/clock_domain_dual_event_crossing.isf
 isf/common/fifo.isf
 isf/fifo_library_use.isf
 ```
@@ -1202,6 +1210,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
+./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest
 ```
 

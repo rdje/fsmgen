@@ -93,8 +93,9 @@ Current CLI behavior:
   with clean stderr on success. Accepted multi-domain event-crossing actors
   lower through generated domain/top artifacts and now reach generated
   SystemVerilog/Verilog-family HDL containing the generated top plus concrete
-  acknowledged-event CDC child when each emitted domain artifact satisfies the
-  current scheduled `.fsm` clock/reset HDL contract.
+  acknowledged-event CDC child modules for accepted crossings when each
+  emitted domain artifact satisfies the current scheduled `.fsm` clock/reset
+  HDL contract.
 - `--strict` is accepted on the plain `file.isf` path and still routes through
   scheduled `.fsm` generation before HDL output.
 - If lowering produces multiple `.fsm` files, `--outdir DIR` writes every file
@@ -489,9 +490,9 @@ Multi-clock boundary:
   explicit CDC child-interface artifacts for accepted event crossings.
   Schedule-report projection now exposes bounded domain and crossing metadata.
   Generated HDL for accepted event-crossing actors now emits the generated top
-  and concrete acknowledged-event CDC child for SystemVerilog/Verilog-family
-  targets when each emitted domain artifact satisfies the current scheduled
-  `.fsm` clock/reset HDL contract.
+  and concrete acknowledged-event CDC child modules for accepted crossings on
+  SystemVerilog/Verilog-family targets when each emitted domain artifact
+  satisfies the current scheduled `.fsm` clock/reset HDL contract.
 - Direct reads or writes between domains are not accepted by implication. A
   shipped CDC primitive or protocol actor must provide specified runtime
   behavior, lowering, diagnostics, and report metadata before such crossings
@@ -634,6 +635,10 @@ Selected crossing primitive and current implementation status:
   and no-payload policy. The generated HDL path recognizes the ISF-generated
   CDC metadata and emits a concrete acknowledged-event synchronizer child; it
   does not infer HDL for arbitrary external `?rtl` children.
+- An actor may declare multiple independent event crossings. Each crossing
+  gets its own deterministic CDC instance/module, top wiring, report entry,
+  and generated child HDL. This does not add ordering, payload, or multi-event
+  transaction semantics between crossings.
 - Payload transfer, multi-bit data, level sampling, reset crossing, and
   FIFO-like storage remain outside this first primitive.
 - Direct cross-domain reads, writes, triggers, activations, parent/child
@@ -2398,6 +2403,7 @@ Representative shipped fixtures:
 - [isf/i2c_master.isf](../isf/i2c_master.isf)
 - [isf/spawn_parent.isf](../isf/spawn_parent.isf)
 - [isf/clock_domain_event_crossing.isf](../isf/clock_domain_event_crossing.isf)
+- [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 - [isf/spi_master.isf](../isf/spi_master.isf)
 - [isf/uart_tx.isf](../isf/uart_tx.isf)
 - [isf/when_test.isf](../isf/when_test.isf)
@@ -2413,6 +2419,10 @@ coverage and records which feature families each fixture owns. The
 schedule/HDL/strict coverage as a compact SPI-like mode-0 serial-transfer
 example, not as a complete SPI protocol compliance suite. It stays in the
 `isf` regression tier rather than the curated quick/smoke tier.
+[isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
+hardens the CDC fixture surface by covering two opposite-direction acknowledged
+event crossings in one generated top with two concrete CDC child modules and
+bounded schedule-report metadata.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

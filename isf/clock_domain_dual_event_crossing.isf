@@ -1,0 +1,36 @@
+(actor clock_domain_dual_event_crossing
+  (clock-domains
+    (domain bus  (clock bus_clk)  (reset (bus_rst_n async active_low)) :default)
+    (domain core (clock core_clk) (reset core_rst)))
+  (crossings
+    (event req_seen
+      (from bus req_seen_req)
+      (to core req_seen_pulse)
+      (ready req_seen_ready))
+    (event core_ack
+      (from core core_ack_req)
+      (to bus core_ack_pulse)
+      (ready core_ack_ready)))
+  (interface
+    (input bus_start (domain bus))
+    (input core_start (domain core))
+    (output bus_ack_seen (domain bus))
+    (output core_req_seen (domain core)))
+  (transaction bus_launch
+    (domain bus)
+    (on bus_start)
+    (await req_seen_ready)
+    (complete req_seen_req))
+  (transaction core_consume
+    (domain core)
+    (on req_seen_pulse)
+    (complete core_req_seen))
+  (transaction core_launch
+    (domain core)
+    (on core_start)
+    (await core_ack_ready)
+    (complete core_ack_req))
+  (transaction bus_consume
+    (domain bus)
+    (on core_ack_pulse)
+    (complete bus_ack_seen)))

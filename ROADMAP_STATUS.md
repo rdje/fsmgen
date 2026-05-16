@@ -104,6 +104,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   assertions under `` `ifndef SYNTHESIS`` and advertised
   `temporal_contracts[].assertion_projection = systemverilog_sticky_fail`
   while keeping Verilog output assertion-free.
+  `ISF-CDC-FIXTURE-MATRIX.1` then added the file-backed
+  `isf/clock_domain_dual_event_crossing.isf` fixture and extended
+  `t/1247-isf-clock-domain-partition.t` to prove two opposite-direction
+  acknowledged event crossings in one generated top, including both CDC child
+  modules, source/destination report roles, CLI schedule JSON parity, and HDL
+  output.
   The next PNT selection should choose a fresh roadmap-aligned R14 task tree
   before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
@@ -396,9 +402,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   lowering validates the domain partition, rejects unowned crossings, and
   emits one normal single-clock `.fsm` artifact per domain plus generated
   top wiring with explicit CDC child interfaces. Bounded report projection,
-  realistic event-crossing fixture coverage, and concrete acknowledged-event
+  single-event and dual-event fixture coverage, and concrete acknowledged-event
   CDC child HDL for reset-declared SystemVerilog/Verilog-family event-crossing
-  actors are now shipped.
+  actors are now shipped. The dual fixture proves repeated generated CDC
+  children and mixed endpoint roles without adding payload or ordering
+  semantics.
 - Composition ergonomics update: `?ports` now accepts verbose
   `(input NAME ...)` and `(output NAME ...)` declarations as aliases for the
   compact port-token syntax. Verbose `(width TOKEN)` uses the same width
@@ -439,7 +447,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   The completed `ISF-CLOCK-DOMAINS` tree owns the shipped multi-clock/CDC
   semantics: public source model, reset ownership, first legal event crossing
   primitive, lowering/report artifact strategy, and generated HDL for the
-  generated top plus concrete CDC child.
+  generated top plus concrete CDC child. The completed
+  `ISF-CDC-FIXTURE-MATRIX` tree owns the dual acknowledged-event fixture
+  hardening slice.
 - [docs/TASK_TREE_README.md](docs/TASK_TREE_README.md) is the reusable setup
   guide for installing the same task-tree tracking workflow in another
   project.

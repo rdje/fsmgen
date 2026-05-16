@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF CDC fixture matrix hardened
+- Completed `ISF-CDC-FIXTURE-MATRIX.1` in
+  [docs/tasks/ISF-CDC-FIXTURE-MATRIX.md](docs/tasks/ISF-CDC-FIXTURE-MATRIX.md),
+  closing the focused CDC fixture hardening tree.
+- Added [isf/clock_domain_dual_event_crossing.isf](isf/clock_domain_dual_event_crossing.isf),
+  a file-backed two-domain fixture with two acknowledged event crossings in
+  opposite directions.
+- Extended [t/1247-isf-clock-domain-partition.t](t/1247-isf-clock-domain-partition.t)
+  to prove both generated CDC children, source/destination endpoint report
+  roles, CLI schedule JSON parity, and generated HDL output.
+- Synchronized the ISF spec, downstream handoff, public contract doc, mdBook
+  lowering/reference chapters, feature backlog, task tree, roadmap, and live
+  docs. No new CDC primitive, payload transfer, or ordering semantics were
+  added.
 ## 2026-05-16: ISF temporal contract assertions projected to SystemVerilog
 - Completed `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1` in
   [docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md),

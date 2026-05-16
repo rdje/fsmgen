@@ -36,7 +36,7 @@ constructs, and they do not specify synchronizers, handshakes, dual-clock
 storage, or any other CDC behavior.
 
 Multi-clock, asynchronous, and interacting clock-domain semantics are owned by
-the active `ISF-CLOCK-DOMAINS` feature tree. The parser now accepts the
+the completed `ISF-CLOCK-DOMAINS` feature tree. The parser now accepts the
 selected actor-scoped named-domain metadata and the scheduler builds an
 internal domain partition. Multi-domain public `lower(...)` now emits one
 domain scheduled `.fsm` artifact per declared domain plus a generated top that
@@ -44,8 +44,9 @@ wires explicit CDC child-interface artifacts for accepted event crossings.
 `report(...)` and `--emit-schedule-json` now expose bounded domain and
 crossing metadata for that generated top. Accepted event-crossing actors now
 reach generated SystemVerilog/Verilog-family HDL with the generated top and a
-concrete acknowledged-event CDC child when each emitted domain artifact also
-satisfies the current scheduled `.fsm` clock/reset HDL contract.
+concrete acknowledged-event CDC child per accepted crossing when each emitted
+domain artifact also satisfies the current scheduled `.fsm` clock/reset HDL
+contract.
 
 ## Multi-Clock Domains
 

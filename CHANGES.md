@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF CDC fixture matrix hardened
+- Completed `ISF-CDC-FIXTURE-MATRIX.1`, closing the
+  `ISF-CDC-FIXTURE-MATRIX` task tree.
+- Added `isf/clock_domain_dual_event_crossing.isf`, covering two independent
+  acknowledged event crossings in opposite directions between the same two
+  domains.
+- Extended `t/1247-isf-clock-domain-partition.t` to verify scheduled artifacts,
+  generated top wiring, bounded report metadata, CLI schedule JSON parity, and
+  generated HDL with both concrete CDC child modules.
+- Synchronized the ISF spec, downstream handoff, public contract doc, mdBook,
+  feature backlog, roadmap, task-tree index, and live docs. The slice hardens
+  fixture coverage; it does not add payload CDC, ordering semantics, or a new
+  crossing primitive.
 ### R14 — ISF temporal contract assertions projected
 - Completed `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1`, closing the
   `ISF-TEMPORAL-CONTRACT-ASSERTIONS` task tree.

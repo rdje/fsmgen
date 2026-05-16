@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: CDC fixture hardening stays semantic-neutral
+- `ISF-CDC-FIXTURE-MATRIX.1` adds a dual acknowledged-event fixture instead
+  of widening the CDC source language. Multiple event entries already lower as
+  independent generated CDC children; the new fixture makes that behavior
+  executable evidence across scheduled artifacts, schedule JSON, and HDL.
+- The fixture deliberately uses opposite directions and mixed reset policies
+  so the generated top proves role-specific source/destination metadata for
+  more than one CDC child without introducing payload, ordering, or
+  multi-event transaction semantics.
+- The downstream contract now states the distinction explicitly: multiple
+  event crossings are independent channels, not a bundled protocol.
 ## 2026-05-16: temporal contract assertions observe the monitor
 - `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1` deliberately projects the generated
   sticky fail bit instead of re-expressing temporal semantics directly as SVA.

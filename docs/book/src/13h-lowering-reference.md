@@ -34,9 +34,9 @@ Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
 child interfaces in the generated top. Schedule reports expose the generated
 top scope, each domain artifact, and accepted event crossing metadata;
 accepted event-crossing actors now emit SystemVerilog/Verilog-family HDL with
-the generated top and a concrete acknowledged-event CDC child when each emitted
-domain artifact satisfies the current scheduled `.fsm` clock/reset HDL
-contract.
+the generated top and concrete acknowledged-event CDC child modules for
+accepted crossings when each emitted domain artifact satisfies the current
+scheduled `.fsm` clock/reset HDL contract.
 
 ## Multi-Domain Actor -> Domain FSMs + CDC Top
 
@@ -142,6 +142,14 @@ root:
 `FSMGEN_ISF_CDC_EVENT` is the implementation marker. The normal external
 `?rtl` path does not infer HDL from port shape. Only this marked metadata asks
 the composition realizer to emit FSMGen's generated event-CDC module.
+
+An actor may declare multiple independent event crossings. Each crossing emits
+its own `?rtl` child, its own embedded `?rtlif` metadata root, its own bounded
+`crossings[]` report entry, and its own concrete generated CDC HDL module.
+The file-backed
+`isf/clock_domain_dual_event_crossing.isf` fixture covers two opposite-direction
+events in one generated top. This still carries no payload and creates no
+ordering relationship between the event channels.
 
 The generated CDC HDL is a toggle/acknowledge synchronizer. In outline, it
 contains:

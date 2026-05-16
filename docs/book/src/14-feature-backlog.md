@@ -1074,16 +1074,21 @@ emits domain-specific scheduled `.fsm` artifacts plus generated top wiring for
 domain modules and explicit CDC child interfaces. Public `report(...)` now
 projects bounded domain and event-crossing metadata, and accepted
 event-crossing actors now reach generated SystemVerilog/Verilog-family HDL for
-the generated top plus concrete acknowledged-event CDC child when each emitted
-domain artifact satisfies the current scheduled `.fsm` clock/reset HDL
-contract.
+the generated top plus concrete acknowledged-event CDC child modules for
+accepted crossings when each emitted domain artifact satisfies the current
+scheduled `.fsm` clock/reset HDL contract.
 Different clock signal names, library clock/reset bindings, and generated-top
 system-port links are not CDC semantics by themselves.
 
 The shipped boundary is tracked by
-[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md). The remaining backlog
-still needs richer fixture matrices for generated top/CDC HDL beyond the
-first event-crossing fixture.
+[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md). The first fixture
+hardening slice now adds
+[isf/clock_domain_dual_event_crossing.isf](../../isf/clock_domain_dual_event_crossing.isf),
+which covers two opposite-direction acknowledged event crossings in one
+generated top with two CDC children, report metadata, and generated HDL.
+Remaining backlog still needs richer CDC fixture matrices for payload-like
+protocol actors, dual-clock FIFO-like actors, and broader reset/no-reset
+combinations.
 
 Outside that shipped event primitive, direct same-cycle reads or writes across
 domains must not be inferred from ordinary signal access.
@@ -1137,9 +1142,10 @@ partition, rejects unowned crossings, and emits normal single-clock scheduled
 `.fsm` artifacts named `<actor>__domain_<domain>.fsm`. The generated top owns
 only inter-module wiring and now instantiates explicit CDC child interfaces for
 accepted event crossings. Normal scheduled `.fsm` modules are not silently
-widened into multi-clock modules. Bounded schedule-report metadata and a
-realistic event-crossing fixture are shipped, and that fixture now reaches
-plain generated HDL with a concrete CDC child.
+widened into multi-clock modules. Bounded schedule-report metadata, a first
+single-event fixture, and a dual opposite-direction event fixture are shipped;
+both fixture families now reach plain generated HDL with concrete CDC
+children.
 
 ## Backends And Validation
 
