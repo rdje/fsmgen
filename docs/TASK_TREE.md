@@ -42,6 +42,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LIVE-BOOK-DOCUMENT-PATHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md](docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md) |
 | `ISF-TYPE-AGGREGATE-PARITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md) |
 | `ISF-CDC-FIXTURE-MATRIX` | `done` | `R14` | `closed` | [docs/tasks/ISF-CDC-FIXTURE-MATRIX.md](docs/tasks/ISF-CDC-FIXTURE-MATRIX.md) |
 | `ISF-CLOCK-DOMAINS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) |
@@ -149,6 +150,7 @@ as done work unless a future task reopens them.
 | Transaction-local port storage schedule-report roles | `ISF-TRANSACTION-PORT-STORAGE-REPORTS` |
 | Rule-trigger source and payload-source storage schedule-report roles | `ISF-RULE-TRIGGER-STORAGE-REPORTS` |
 | ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |
+| Public ISF live-document manifest discovery for mdBook chapters | `ISF-LIVE-BOOK-DOCUMENT-PATHS` |
 
 ## ISF Task-Tree Rule
 

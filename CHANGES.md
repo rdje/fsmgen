@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF public live book paths advertised
+- Completed `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` and closed the task tree.
+- `embedding.isf_public_interface.live_document_paths` now includes every
+  Intent Scheduling mdBook chapter listed in `docs/book/src/SUMMARY.md`, plus
+  `docs/book/src/14-feature-backlog.md` and
+  `docs/book/src/90-reference-map.md`.
+- Added `t/1303-isf-public-live-book-paths-audit.t` to compare the advertised
+  ISF mdBook path subset against the book summary across the direct contract,
+  in-process manifest, and both CLI manifest spellings.
+- Synchronized the ISF spec, downstream handoff, public contract doc, mdBook,
+  README, task index, roadmap status, and live docs. Syntax, lowering,
+  generated `.fsm`, schedule JSON payloads, and HDL output are unchanged.
 ### R14 — ISF type/enum/aggregate parity tree closed
 - Completed `ISF-TYPE-AGGREGATE-PARITY.49` and closed the
   enum/type/aggregate parity task tree.

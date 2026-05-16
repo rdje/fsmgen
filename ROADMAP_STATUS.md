@@ -10,9 +10,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY` is closed. The next R14
-  PNT implementation slice must select or create a new task tree before code
-  changes. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
+- Next decision point: `ISF-LIVE-BOOK-DOCUMENT-PATHS` is closed after
+  advertising the complete ISF mdBook chapter set through public
+  `live_document_paths`. The next R14 PNT implementation slice must select or
+  create a new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
+  inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
   source contract for actor-local `(types ...)` / `(enums ...)`, `(imports
@@ -225,7 +227,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-TYPE-AGGREGATE-PARITY.49` then closed the task tree with a dedicated
   mdBook shipped-surface matrix for types, enums, and aggregates, and recorded
   the remaining enum target/operator and aggregate carrier/subaggregate work as
-  future task-tree-owned deferrals.
+  future task-tree-owned deferrals. `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` then
+  widened the public ISF `live_document_paths` contract so the manifest
+  advertises every Intent Scheduling mdBook chapter listed in
+  `docs/book/src/SUMMARY.md`, plus the canonical book backlog and reference
+  map, and added `t/1303-isf-public-live-book-paths-audit.t` to prevent
+  future summary/manifest drift without changing syntax, lowering, generated
+  `.fsm`, schedule JSON payloads, or HDL output.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated

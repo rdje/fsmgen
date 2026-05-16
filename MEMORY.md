@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF public live book paths advertised
+- Completed `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` and closed
+  [docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md](docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md).
+- `embedding.isf_public_interface.live_document_paths` now advertises every
+  Intent Scheduling mdBook chapter listed in
+  [docs/book/src/SUMMARY.md](docs/book/src/SUMMARY.md), plus the canonical
+  book feature backlog and reference map.
+- Added
+  [t/1303-isf-public-live-book-paths-audit.t](t/1303-isf-public-live-book-paths-audit.t)
+  so future ISF mdBook chapter additions cannot drift from the public
+  contract and manifest discovery surface.
+- No ISF syntax, lowering, scheduled `.fsm`, schedule JSON payload, or HDL
+  behavior changed. No active ISF task tree remains open; the next R14 PNT
+  implementation slice must select or create one first.
 ## 2026-05-16: ISF type/enum/aggregate parity tree closed
 - Completed `ISF-TYPE-AGGREGATE-PARITY.49` and closed
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).

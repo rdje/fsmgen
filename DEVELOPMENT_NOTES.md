@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: ISF book discovery is public contract metadata
+- `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` treats the ISF mdBook chapter set as a
+  discoverable live-document surface in `embedding.isf_public_interface`,
+  because the book is the user-facing review surface for shipped ISF behavior.
+- The audit derives the expected Intent Scheduling chapter list from
+  `docs/book/src/SUMMARY.md`; this avoids a second hand-maintained chapter list
+  that could drift when a new ISF book page is added.
+- The widened path list is documentation discovery metadata only. It does not
+  freeze prose as schema, and it does not change parser, scheduler, report, or
+  HDL behavior.
 ## 2026-05-16: type/enum/aggregate parity closes at scalar leaves
 - `ISF-TYPE-AGGREGATE-PARITY.49` closes the parity tree after the scalar type
   alias, enum member, aggregate storage carrier, and scalar aggregate leaf

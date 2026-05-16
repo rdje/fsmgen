@@ -123,6 +123,12 @@ guidance list are audited as exact across the same views. Its `tested_by`
 provenance metadata is also audited as an exact repo-local test list.
 Its lower-result file sub-shape metadata is audited as exact for scheduled
 `.fsm` basenames and scheduled text roots.
+Its `live_document_paths` metadata advertises the live spec, downstream
+handoff, public contract, issue-reporting protocol, library catalog, every
+Intent Scheduling mdBook chapter listed in `docs/book/src/SUMMARY.md`, the
+canonical feature backlog, and the book reference map. The ISF mdBook subset is
+audited against the summary so newly added shipped-surface book chapters remain
+discoverable through the manifest.
 Its shareable-resource catalog metadata is audited as exact for current
 arbiter names, resource kinds, shipped/backlog status, and meaning text.
 Its schedule-report transaction-ordering metadata is audited as exact for the
@@ -2899,6 +2905,7 @@ Focused tests:
 - [t/1300-isf-enum-member-standalone-condition-values.t](../t/1300-isf-enum-member-standalone-condition-values.t)
 - [t/1301-isf-enum-member-rule-standalone-guard-values.t](../t/1301-isf-enum-member-rule-standalone-guard-values.t)
 - [t/1302-isf-aggregate-rule-standalone-guard-values.t](../t/1302-isf-aggregate-rule-standalone-guard-values.t)
+- [t/1303-isf-public-live-book-paths-audit.t](../t/1303-isf-public-live-book-paths-audit.t)
 
 ## 12. Explicitly Deferred
 

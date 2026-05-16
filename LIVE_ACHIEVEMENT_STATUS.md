@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF public live book paths advertised
+- Completed R14 task-tree slice:
+  `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` in
+  [docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md](docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md).
+- The `ISF-LIVE-BOOK-DOCUMENT-PATHS` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create a
+  new task tree first.
+- The public ISF contract and manifest now advertise every Intent Scheduling
+  mdBook chapter from [docs/book/src/SUMMARY.md](docs/book/src/SUMMARY.md),
+  plus the canonical feature backlog and reference map, through
+  `live_document_paths`.
+- Added
+  [t/1303-isf-public-live-book-paths-audit.t](t/1303-isf-public-live-book-paths-audit.t)
+  to prevent summary/manifest drift.
+- No syntax, lowering, scheduled `.fsm`, schedule JSON payload, or HDL output
+  changed.
+
 ## 2026-05-16: R14 — ISF type/enum/aggregate parity tree closed
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.49` in

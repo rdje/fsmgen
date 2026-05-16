@@ -296,6 +296,12 @@ to keep the direct owner, in-process manifest, and both CLI manifest spellings
 aligned on repo-relative Markdown paths that exist on disk, including the
 format-agnostic downstream issue-reporting protocol used for local
 reproduction bundles.
+The ISF mdBook path subset is checked by
+[t/1303-isf-public-live-book-paths-audit.t](../t/1303-isf-public-live-book-paths-audit.t)
+to keep every Intent Scheduling chapter from
+[docs/book/src/SUMMARY.md](book/src/SUMMARY.md), plus the canonical feature
+backlog and reference map, advertised through the same public contract and
+manifest views.
 The public constructor option boundary is checked by
 [t/1125-isf-public-constructor-boundary-audit.t](../t/1125-isf-public-constructor-boundary-audit.t)
 for both adapter and scheduler facades.
