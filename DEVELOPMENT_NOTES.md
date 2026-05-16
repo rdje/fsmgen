@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate drive-call actual expressions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.36` widens aggregate storage leaf reads from
+  direct named drive-call actual values to scalar operands inside drive-call
+  actual expressions.
+- The parser walks known named drive-call actual expression trees, validates
+  aggregate member/item paths against declared actor-owned aggregate storage,
+  and rejects aggregate paths in expression operator position.
+- Subaggregate operands and inline drive assignment aggregates remain closed
+  because packed aggregate expression semantics and inline drive ownership are
+  still separate contracts.
 ## 2026-05-16: aggregate drive-call actuals stay direct-scalar-only
 - `ISF-TYPE-AGGREGATE-PARITY.35` widens aggregate storage leaf reads into named
   drive-call scalar actual values.

@@ -449,8 +449,8 @@ limitations are:
   transaction `set` RHS values, direct transaction `set` targets, transaction
   condition expression operands, rule assignment RHS values/expression
   operands, rule guard expression operands, or drive body RHS scalar
-  values/expression operands, drive-call actual scalar values, subaggregate
-  operands/updates, and
+  values/expression operands, or drive-call actual scalar values/expression
+  operands, subaggregate operands/updates, and
   aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for

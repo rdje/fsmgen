@@ -187,6 +187,7 @@ my $expected_tested_by = [
     't/1287-isf-aggregate-drive-values.t',
     't/1288-isf-aggregate-drive-expression-values.t',
     't/1289-isf-aggregate-drive-call-values.t',
+    't/1290-isf-aggregate-drive-call-expression-values.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

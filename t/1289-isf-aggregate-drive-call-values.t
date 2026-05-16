@@ -109,7 +109,7 @@ ISF
     ok(-s $hdl_path, 'CLI writes HDL for package aggregate drive-call actual values');
 };
 
-subtest 'drive-call aggregate actual diagnostics stay scalar-value-only' => sub {
+subtest 'drive-call aggregate actual value diagnostics stay fail-closed' => sub {
     assert_parse_rejected(
         <<'ISF',
 (actor aggregate_drive_call_unknown_member
@@ -134,29 +134,6 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_drive_call_expression_still_deferred
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (input mode_in (width 2))
-    (output mode_out (width 2)))
-  (storage
-    (var frame (type frame_t)))
-  (drive (publish mode)
-    (mode_out mode))
-  (transaction main
-    (on start)
-    (drive publish (+ frame.mode mode_in))))
-ISF
-        qr/transaction 'main' drive 'publish' actual expression references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values/,
-        'aggregate drive-call actual expression operands remain deferred',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
 (actor aggregate_inline_drive_still_deferred
   (types
     (type frame_t (record (mode (bits 2)) (flag bit))))
@@ -172,7 +149,7 @@ ISF
     (drive inline_publish
       (mode_out frame.mode))))
 ISF
-        qr/transaction 'main' drive references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values/,
+        qr/transaction 'main' drive references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values or operands/,
         'inline drive aggregate RHS values remain deferred',
     );
 

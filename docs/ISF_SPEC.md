@@ -326,12 +326,15 @@ and scalar operands inside RHS expressions may read scalar aggregate
 member/item leaves, for example `(drive publish (mode_out frame.mode))` or
 `(drive publish (mode_out (+ frame.mode mode_in)))`. These forms resolve
 against the declared aggregate storage shape before lowering. Named drive-call
-scalar actual values may also read scalar aggregate member/item leaves, for
-example `(drive publish frame.mode)`. Aggregate paths outside
+scalar actual values and scalar operands inside actual expressions may also
+read scalar aggregate member/item leaves, for example
+`(drive publish frame.mode)` or `(drive publish (+ frame.mode mode_in))`.
+Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
 condition expression operands, rule assignment RHS values or expression
 operands, rule guard expression operands, or drive body RHS scalar values or
-expression operands, or drive-call actual scalar values, aggregate paths in
+expression operands, or drive-call actual scalar values/expression operands,
+aggregate paths in
 expression operator position, subaggregate writes/operands, aggregate interface or
 transaction ports, and aggregate storage banks remain deferred.
 Existing ISF
@@ -1013,8 +1016,9 @@ Current lowering:
   resolve against declared actor-owned aggregate storage before lowering and
   preserve the authored token in the generated parameter assignment.
   Drive-call actual expressions may also use local or package enum members as
-  scalar operands. Aggregate paths inside drive-call actual expressions and enum
-  members in drive-call expression operator position remain deferred.
+  scalar operands, and scalar aggregate storage leaves as scalar operands.
+  Aggregate paths and enum members in drive-call expression operator position
+  remain deferred.
 - Inline transaction drive assignments such as `(drive inline_mode (mode_out
   mode.BUSY))` may use local or package enum members as scalar RHS values. The
   parser resolves those values before lowering, and scheduled `.fsm` preserves
@@ -2829,6 +2833,7 @@ Focused tests:
 - [t/1287-isf-aggregate-drive-values.t](../t/1287-isf-aggregate-drive-values.t)
 - [t/1288-isf-aggregate-drive-expression-values.t](../t/1288-isf-aggregate-drive-expression-values.t)
 - [t/1289-isf-aggregate-drive-call-values.t](../t/1289-isf-aggregate-drive-call-values.t)
+- [t/1290-isf-aggregate-drive-call-expression-values.t](../t/1290-isf-aggregate-drive-call-expression-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2904,7 +2909,8 @@ Focused tests:
   operands, transaction `set` target aggregate leaf writes,
   rule assignment RHS aggregate leaf values and expression operands, rule
   guard expression aggregate leaf operands, drive body RHS aggregate leaf values
-  and expression operands, drive-call actual aggregate leaf values,
+  and expression operands, drive-call actual aggregate leaf values and
+  expression operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
   aggregate/list default leaves, generated child transaction parameter scalar
@@ -2922,7 +2928,8 @@ Focused tests:
   direct transaction `set` RHS values, direct transaction `set` target tokens,
   transaction condition expression operands, rule assignment RHS
   values/expression operands, rule guard expression operands, or drive body RHS
-  scalar values/expression operands, or drive-call actual scalar values,
+  scalar values/expression operands, or drive-call actual scalar
+  values/expression operands,
   aggregate paths in transaction condition, rule assignment RHS, rule guard,
   drive body RHS expression, or drive-call actual expression operator position,
   subaggregate updates/operands, aggregate field/slice/update lowering, and broad

@@ -1688,7 +1688,21 @@ sub _validate_drive_call_actual_aggregate_storage_value {
         return 1;
     }
 
-    return _reject_aggregate_storage_paths($actual, $aggregate_roots, "$context expression");
+    return _reject_aggregate_storage_paths($actual, $aggregate_roots, "$context expression")
+        unless ref($actual) eq 'ARRAY';
+
+    for my $index (0 .. $#$actual) {
+        my $item = $actual->[$index];
+        if ($index == 0 && defined($item) && !ref($item)) {
+            my $path = _aggregate_storage_path_token($item, $aggregate_roots);
+            confess "Error: $context expression operator references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths inside drive-call actual expressions only as scalar operands\n"
+                if defined $path;
+            next;
+        }
+        _validate_drive_call_actual_aggregate_storage_value($item, $aggregate_roots, $context);
+    }
+
+    return 1;
 }
 
 sub _validate_rule_assignment_aggregate_storage_rhs {
@@ -1870,7 +1884,7 @@ sub _reject_aggregate_storage_paths {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $path = _aggregate_storage_path_token($value, $aggregate_roots);
-        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values\n"
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values or operands\n"
             if defined $path;
         return 1;
     }

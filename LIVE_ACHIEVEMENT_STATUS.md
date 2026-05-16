@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate named drive-call actual expression operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.36` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.37`, selecting the
+  next enum or aggregate value/update context after named drive-call aggregate
+  actual expression operands.
+- Named drive-call actual expressions now accept scalar aggregate storage
+  leaves as operands and preserve authored expression payloads in scheduled
+  `.fsm` drive-parameter assignments.
+- Operator-position aggregate paths, subaggregate operands, and inline drive
+  assignment aggregates fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate named drive-call actual values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.35` in
