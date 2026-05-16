@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`, `ISF-TYPE-AGGREGATE-PARITY.34`, `ISF-TYPE-AGGREGATE-PARITY.35`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`, `ISF-TYPE-AGGREGATE-PARITY.34`, `ISF-TYPE-AGGREGATE-PARITY.35`, `ISF-TYPE-AGGREGATE-PARITY.36`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -290,8 +290,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.34: support aggregate drive expressions`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.35`
+  Status: `done`
+  Goal: `support scalar aggregate storage leaf reads as named drive-call actual values`
+  Acceptance: `named drive-call scalar actual values accept local/package aggregate storage member/item leaves with shape diagnostics, reviewable .fsm drive-parameter projection, strict CLI HDL generation, and fail-closed diagnostics for actual expressions, inline drive assignment aggregates, and subaggregate actual values`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1289-isf-aggregate-drive-call-values.t t/1288-isf-aggregate-drive-expression-values.t t/1287-isf-aggregate-drive-values.t t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1193-isf-drive-call-arity-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.35: support aggregate drive-call values`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.36`
   Status: `pending`
-  Goal: `choose the next remaining enum or aggregate value/update context after named drive body aggregate RHS expression operands`
+  Goal: `choose the next remaining enum or aggregate value/update context after named drive-call aggregate actual values`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -300,7 +307,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.35` | `pending` | The next enum or aggregate value/update context can be selected after named drive body aggregate RHS expression operands are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.36` | `pending` | The next enum or aggregate value/update context can be selected after named drive-call aggregate actual values are stable. |
 
 ## Decisions
 
@@ -563,6 +570,11 @@ ISF-only type system.
   body RHS expressions. This mirrors the rule assignment and transaction set
   expression-operand policy while keeping aggregate paths in expression
   operator position rejected.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.35` selects named drive-call scalar
+  actual aggregate values because the drive-parameter handoff path already
+  preserves authored actual tokens in scheduled `.fsm` assignments. This slice
+  deliberately stays direct-scalar-only: aggregate drive-call actual
+  expressions and inline drive assignment aggregates remain separate contracts.
 
 ## Open Questions
 
@@ -584,9 +596,9 @@ ISF-only type system.
   RHS scalar values/expression operands, and drive-call scalar actual
   values/expression operands should ship next? This remains deferred beyond
   `ISF-TYPE-AGGREGATE-PARITY.32`.
-- Which enum or aggregate value/update context should ship after named drive
-  body aggregate RHS expression operands? The current frontier selects this for
-  `ISF-TYPE-AGGREGATE-PARITY.35`.
+- Which enum or aggregate value/update context should ship after named
+  drive-call aggregate actual values? The current frontier selects this for
+  `ISF-TYPE-AGGREGATE-PARITY.36`.
 
 ## Blockers
 
@@ -630,6 +642,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.32` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1275-isf-enum-member-condition-values.t t/1233-isf-rule-expression-guards.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.33` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1287-isf-aggregate-drive-values.t t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1266-isf-enum-member-drive-values.t t/1282-isf-enum-member-drive-expression-values.t t/1194-isf-drive-body-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.34` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1288-isf-aggregate-drive-expression-values.t t/1287-isf-aggregate-drive-values.t t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1282-isf-enum-member-drive-expression-values.t t/1266-isf-enum-member-drive-values.t t/1194-isf-drive-body-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.35` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1289-isf-aggregate-drive-call-values.t t/1288-isf-aggregate-drive-expression-values.t t/1287-isf-aggregate-drive-values.t t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1193-isf-drive-call-arity-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -669,6 +682,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.32` | `ISF-TYPE-AGGREGATE-PARITY.32: support aggregate conditions` | `Transaction condition expression aggregate leaf operand parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.33` | `ISF-TYPE-AGGREGATE-PARITY.33: support aggregate drive values` | `Named drive body RHS aggregate leaf parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.34` | `ISF-TYPE-AGGREGATE-PARITY.34: support aggregate drive expressions` | `Named drive body RHS expression aggregate leaf operand parser/lowering slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.35` | `ISF-TYPE-AGGREGATE-PARITY.35: support aggregate drive-call values` | `Named drive-call actual aggregate leaf parser/lowering slice.` |
 
 ## Changelog
 
@@ -773,3 +787,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped named drive body RHS expression aggregate leaf operands
   for `ISF-TYPE-AGGREGATE-PARITY.34` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.35`.
+- `2026-05-16`: Shipped named drive-call actual aggregate leaf values for
+  `ISF-TYPE-AGGREGATE-PARITY.35` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.36`.

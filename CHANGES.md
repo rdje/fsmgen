@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate named drive-call actual values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.35`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.36`.
+- Named drive-call scalar actual values now accept scalar aggregate storage
+  member/item leaves from declared actor-owned aggregate storage variables.
+- Scheduled `.fsm` drive-parameter assignments preserve authored aggregate
+  actual tokens, and strict CLI HDL generation accepts the generated handoff.
+- Parser diagnostics reject unknown aggregate members, drive-call actual
+  expressions, inline drive assignment aggregates, and subaggregate actual
+  values.
 ### R14 — ISF aggregate named drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.34`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.35`.

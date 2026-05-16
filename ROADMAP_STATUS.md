@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.35` is the active PNT
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.36` is the active PNT
   frontier. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -166,9 +166,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-TYPE-AGGREGATE-PARITY.34` then shipped scalar aggregate storage leaf
   operands inside named drive body RHS expressions, preserving authored drive
   expression payloads while keeping operator-position aggregate paths and
-  subaggregate operands deferred. The next slice selects the next enum or
-  aggregate value/update context after named drive body aggregate RHS
-  expression operands.
+  subaggregate operands deferred. `ISF-TYPE-AGGREGATE-PARITY.35` then shipped
+  scalar aggregate storage leaf reads as named drive-call actual values,
+  preserving authored drive-parameter assignments while keeping drive-call
+  actual expressions, inline drive assignment aggregates, and subaggregate
+  actual values deferred. The next slice selects the next enum or aggregate
+  value/update context after named drive-call aggregate actual values.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated

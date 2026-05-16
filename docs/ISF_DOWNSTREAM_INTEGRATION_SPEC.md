@@ -915,6 +915,10 @@ Rules:
   `(drive publish (mode_out (+ frame.mode mode_in)))`. Drive targets and
   aggregate paths in drive body RHS expression operator position remain
   deferred.
+- Named drive-call scalar actual values may read scalar aggregate leaves on
+  declared actor-owned aggregate storage, for example
+  `(drive publish frame.mode)`. Aggregate paths in drive-call actual
+  expressions remain deferred.
 - `(type NAME)` and `(width N)` are mutually exclusive.
 - `NAME` may be local (`byte`) or package-qualified (`shared.byte`).
 - Lowered scheduled `.fsm` preserves review artifacts with `+types`,
@@ -962,9 +966,10 @@ Aggregate member/item access outside direct transaction `set` RHS values,
 direct transaction `set` target tokens, transaction condition expression
 operands, rule assignment RHS values or expression operands, rule guard
 expression operands, or drive body RHS scalar values/expression operands;
-aggregate paths in drive body RHS expression operator position; subaggregate
-operands/updates; aggregate interface or transaction ports; and aggregate
-storage banks are not shipped yet. Existing
+drive-call actual scalar values; aggregate paths in drive body RHS or
+drive-call actual expression operator position; subaggregate operands/updates;
+aggregate interface or transaction ports; and aggregate storage banks are not
+shipped yet. Existing
 aggregate support beyond the actor-owned storage-variable carrier and direct
 scalar leaf read/write context is limited to compatible aggregate/list literal
 parameter values and scalarized actor-owned bank/storage lowering.
@@ -1365,7 +1370,8 @@ Required fail-closed examples:
   `set` RHS values, direct transaction `set` target tokens, transaction
   condition expression operands, rule assignment RHS values/expression operands,
   rule guard expression operands, or drive body RHS scalar values/expression
-  operands, aggregate paths in expression operator position, subaggregate
+  operands, or drive-call actual scalar values, aggregate paths in expression
+  operator position, subaggregate
   operands/updates, and
   enum member references outside
   the shipped actor-constant, actor parameter scalar default or aggregate/list
@@ -1450,7 +1456,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1285-isf-aggregate-rule-guard-values.t \
   t/1286-isf-aggregate-condition-values.t \
   t/1287-isf-aggregate-drive-values.t \
-  t/1288-isf-aggregate-drive-expression-values.t
+  t/1288-isf-aggregate-drive-expression-values.t \
+  t/1289-isf-aggregate-drive-call-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

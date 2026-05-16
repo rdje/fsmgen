@@ -695,6 +695,7 @@ sub _validate_actor_aggregate_storage_paths($self, $actor) {
             $tx->{clauses},
             \%aggregate_roots,
             "transaction '$tx->{name}'",
+            $actor,
         );
     }
 
@@ -1450,18 +1451,18 @@ sub _enum_member_value_token {
 }
 
 sub _validate_transaction_aggregate_storage_paths {
-    my ($clauses, $aggregate_roots, $context) = @_;
+    my ($clauses, $aggregate_roots, $context, $actor) = @_;
     return 1 unless ref($clauses) eq 'ARRAY';
 
     for my $clause (@$clauses) {
-        _validate_transaction_aggregate_storage_clause($clause, $aggregate_roots, $context);
+        _validate_transaction_aggregate_storage_clause($clause, $aggregate_roots, $context, $actor);
     }
 
     return 1;
 }
 
 sub _validate_transaction_aggregate_storage_clause {
-    my ($clause, $aggregate_roots, $context) = @_;
+    my ($clause, $aggregate_roots, $context, $actor) = @_;
     return _reject_aggregate_storage_paths($clause, $aggregate_roots, $context)
         unless ref($clause) eq 'ARRAY' && @$clause;
 
@@ -1498,6 +1499,7 @@ sub _validate_transaction_aggregate_storage_clause {
             [ @{$clause}[2 .. $#$clause] ],
             $aggregate_roots,
             "$context $head body",
+            $actor,
         );
         return 1;
     }
@@ -1508,6 +1510,7 @@ sub _validate_transaction_aggregate_storage_clause {
             [ @{$clause}[2 .. $#$clause] ],
             $aggregate_roots,
             "$context repeat body",
+            $actor,
         );
         return 1;
     }
@@ -1521,9 +1524,29 @@ sub _validate_transaction_aggregate_storage_clause {
                 [ @{$branch}[1 .. $#$branch] ],
                 $aggregate_roots,
                 "$context switch branch",
+                $actor,
             );
         }
         return 1;
+    }
+
+    if ($head eq 'drive') {
+        my $drive_name = $clause->[1];
+        if (defined($drive_name)
+            && !ref($drive_name)
+            && exists((($actor || {})->{drives} || {})->{$drive_name}))
+        {
+            for my $actual (@{$clause}[2 .. $#$clause]) {
+                _validate_drive_call_actual_aggregate_storage_value(
+                    $actual,
+                    $aggregate_roots,
+                    "$context drive '$drive_name' actual",
+                );
+            }
+            return 1;
+        }
+
+        return _reject_aggregate_storage_paths($clause, $aggregate_roots, "$context drive");
     }
 
     return _reject_aggregate_storage_paths($clause, $aggregate_roots, $context);
@@ -1653,6 +1676,19 @@ sub _validate_drive_body_aggregate_storage_rhs {
     }
 
     return 1;
+}
+
+sub _validate_drive_call_actual_aggregate_storage_value {
+    my ($actual, $aggregate_roots, $context) = @_;
+
+    if (!ref($actual)) {
+        my $path = _aggregate_storage_path_token($actual, $aggregate_roots);
+        _validate_aggregate_storage_leaf_read_path($path, $aggregate_roots, $context)
+            if defined $path;
+        return 1;
+    }
+
+    return _reject_aggregate_storage_paths($actual, $aggregate_roots, "$context expression");
 }
 
 sub _validate_rule_assignment_aggregate_storage_rhs {
@@ -1834,7 +1870,7 @@ sub _reject_aggregate_storage_paths {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $path = _aggregate_storage_path_token($value, $aggregate_roots);
-        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, or drive body RHS scalar values or operands\n"
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values\n"
             if defined $path;
         return 1;
     }

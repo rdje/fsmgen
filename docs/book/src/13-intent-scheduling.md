@@ -434,7 +434,9 @@ limitations are:
   may also read scalar aggregate leaves from those carriers. Rule guard
   expressions may read scalar aggregate leaves as operands too. Named drive
   body scalar RHS values and scalar operands inside RHS expressions may read
-  scalar aggregate leaves from those carriers. Enum members in
+  scalar aggregate leaves from those carriers. Named drive-call scalar actual
+  values may also read scalar aggregate leaves from those carriers. Enum
+  members in
   expression operator
   position,
   standalone transaction conditions, switch selectors, set targets, rules
@@ -447,7 +449,8 @@ limitations are:
   transaction `set` RHS values, direct transaction `set` targets, transaction
   condition expression operands, rule assignment RHS values/expression
   operands, rule guard expression operands, or drive body RHS scalar
-  values/expression operands, subaggregate operands/updates, and
+  values/expression operands, drive-call actual scalar values, subaggregate
+  operands/updates, and
   aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate named drive-call actual values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.35` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.36`.
+- Named drive-call scalar actual values now accept scalar aggregate storage
+  leaves such as `frame.mode` and `lanes[1]`.
+- Scheduled `.fsm` drive-parameter assignments and strict CLI HDL generation
+  preserve and consume the authored aggregate actual tokens.
+- Drive-call actual expressions, inline drive assignment aggregates, and
+  subaggregate actual values remain deferred.
 ## 2026-05-16: ISF aggregate named drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.34` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
