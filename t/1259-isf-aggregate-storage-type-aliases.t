@@ -152,24 +152,6 @@ ISF
         'aggregate aliases are still rejected on storage banks',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor aggregate_partial_update
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start))
-  (storage
-    (var frame (type frame_t)))
-  (transaction main
-    (on start)
-    (set frame.flag 1)))
-ISF
-        qr/references aggregate storage path 'frame\.flag'; this ISF slice accepts only whole actor-owned aggregate storage carriers, not member\/item access or partial aggregate updates/,
-        'partial aggregate updates are deferred',
-    );
 };
 
 done_testing();

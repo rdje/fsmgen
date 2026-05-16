@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate leaf writes reuse the partial-LHS path
+- `ISF-TYPE-AGGREGATE-PARITY.7` selects direct transaction `set` targets as
+  the first aggregate update context because `.fsm` already supports typed
+  aggregate partial LHS paths and the previous leaf established declared
+  aggregate storage shape validation.
+- The parser accepts only scalar member/item targets on actor-owned aggregate
+  storage variables. It rejects subaggregate targets so the first write slice
+  does not have to define whole-subtree update merge semantics.
+- Aggregate paths in conditions, broader expressions, rules, drives, and
+  non-`set` transaction positions remain deferred. That keeps this slice tied
+  to one reviewable `.fsm` projection and one backend path.
 ## 2026-05-16: aggregate leaf reads stay read-only and direct
 - `ISF-TYPE-AGGREGATE-PARITY.6` selects direct transaction `set` RHS tokens as
   the first aggregate leaf read context because the generated `.fsm` already

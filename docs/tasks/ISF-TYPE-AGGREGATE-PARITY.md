@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -94,9 +94,16 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.6: support aggregate leaf reads`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.7`
-  Status: `pending`
+  Status: `done`
   Goal: `choose and implement the next aggregate update or value context after read-only leaf access`
-  Acceptance: `one documented aggregate update/value context either ships with shape diagnostics and reviewable .fsm projection or is explicitly rejected with a narrower next leaf; existing supported aggregate carrier/read behavior remains stable`
+  Acceptance: `direct transaction set target scalar aggregate leaf writes resolve against declared actor-owned aggregate storage carrier shape, lower through reviewable .fsm, reach CLI HDL generation, and keep subaggregate writes plus broader aggregate expression paths deferred`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.7: support aggregate leaf writes`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.8`
+  Status: `pending`
+  Goal: `choose and implement the next enum or aggregate value/update context after scalar leaf writes`
+  Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
 
@@ -104,7 +111,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.7` | `pending` | The next aggregate update or value context can be selected after read-only leaf access is stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.8` | `pending` | The next enum or aggregate value/update context can be selected after scalar leaf writes are stable. |
 
 ## Decisions
 
@@ -178,6 +185,14 @@ ISF-only type system.
   `.fsm`, and reach CLI HDL generation through the existing typed aggregate
   `.fsm` path machinery. Partial aggregate writes, aggregate paths inside
   broader expressions, and other value contexts remain deferred.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.7` selects direct transaction
+  `set` targets as the first aggregate update context. Scalar record members
+  and list items on actor-owned aggregate storage now resolve before lowering,
+  preserve the authored LHS path in scheduled `.fsm`, and reach CLI HDL
+  generation through the existing typed aggregate `.fsm` partial-LHS path
+  machinery. Subaggregate writes, aggregate paths inside broader expressions,
+  aggregate carriers outside actor-owned storage variables, and enum member
+  value contexts outside actor constants remain deferred.
 
 ## Open Questions
 
@@ -188,8 +203,9 @@ ISF-only type system.
   JSON expansion.
 - Which non-constant enum member expression/value context should ship next?
   This remains deferred beyond `ISF-TYPE-AGGREGATE-PARITY.4`.
-- Which aggregate update or value context should ship after read-only leaf
-  access? The current frontier selects this for `ISF-TYPE-AGGREGATE-PARITY.7`.
+- Which enum or aggregate value/update context should ship after scalar leaf
+  writes? The current frontier selects this for
+  `ISF-TYPE-AGGREGATE-PARITY.8`.
 
 ## Blockers
 
@@ -205,6 +221,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.4` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1244-isf-wait-clause-lowering.t t/1249-isf-activation-parameter-constants.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.5` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1226-isf-data-width-storage-report.t t/1232-isf-actor-storage-declarations.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.6` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.7` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -216,6 +233,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.4` | `ISF-TYPE-AGGREGATE-PARITY.4: support enum constants` | `Actor-constant enum member parser/lowering implementation slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.5` | `ISF-TYPE-AGGREGATE-PARITY.5: ship aggregate storage carriers` | `Actor-owned aggregate storage carrier parser/lowering/report slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.6` | `ISF-TYPE-AGGREGATE-PARITY.6: support aggregate leaf reads` | `Transaction set RHS aggregate leaf read parser/lowering slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.7` | `ISF-TYPE-AGGREGATE-PARITY.7: support aggregate leaf writes` | `Transaction set target aggregate leaf write parser/lowering slice.` |
 
 ## Changelog
 
@@ -236,3 +254,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped transaction `set` RHS aggregate leaf reads for
   `ISF-TYPE-AGGREGATE-PARITY.6` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.7`.
+- `2026-05-16`: Shipped transaction `set` target aggregate leaf writes for
+  `ISF-TYPE-AGGREGATE-PARITY.7` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.8`.

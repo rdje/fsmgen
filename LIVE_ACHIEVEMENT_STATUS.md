@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate storage leaf writes shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.7` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.8`, selecting the
+  next enum or aggregate value/update context after scalar leaf writes.
+- Direct transaction `set` targets now accept scalar record member and list
+  item writes to declared actor-owned aggregate storage carriers.
+- Subaggregate writes, aggregate paths inside broader expressions, aggregate
+  interface/transaction/bank carriers, and enum member references outside
+  actor constants remain deferred.
+
 ## 2026-05-16: R14 — ISF aggregate storage leaf reads shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.6` in

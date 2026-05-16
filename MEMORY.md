@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate storage leaf writes shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.7` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.8`.
+- Direct transaction `(set aggregate_leaf value)` targets now accept scalar
+  member/item writes to declared actor-owned aggregate storage carriers, such
+  as `(set frame.flag flag_in)` and `(set lanes[0] bit_in)`.
+- The parser validates write paths against the carrier type shape before
+  lowering; unknown members, out-of-range indexes, and subaggregate targets
+  fail in ISF space.
+- Aggregate paths inside broader expressions, subaggregate updates, aggregate
+  interface/transaction/bank carriers, and enum member references outside
+  actor constants remain deferred.
 ## 2026-05-16: ISF aggregate storage leaf reads shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.6` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

@@ -697,15 +697,17 @@ NAME)` scalar aliases on width-bearing actor interface ports,
 transaction-local ports, and actor-owned storage entries, and packed `list` or
 `record` aliases only on actor-owned storage variables. Transaction `(set
 target aggregate_leaf)` clauses may read scalar member/item leaves from those
-declared storage variables. Lowering preserves `+types`, `+import`, typed
-`+size` entries, and embedded imported package roots in scheduled `.fsm`
-review artifacts. Unknown aliases, package aliases, `(width ...)` plus `(type
-...)` conflicts, aggregate aliases outside actor-owned storage variables,
-unknown aggregate members, out-of-range list indexes, aggregate paths outside
-direct transaction `set` RHS tokens, and partial aggregate updates fail
-closed. Actor-local `(enums ...)` declarations are preserved as scheduled
-`.fsm` `+enums`. Enum member references are public only as actor constant
-values in this slice, using local `mode.BUSY` or package-qualified
+declared storage variables, and transaction `(set aggregate_leaf value)`
+clauses may write scalar member/item leaves on those same declared storage
+variables. Lowering preserves `+types`, `+import`, typed `+size` entries, and
+embedded imported package roots in scheduled `.fsm` review artifacts. Unknown
+aliases, package aliases, `(width ...)` plus `(type ...)` conflicts, aggregate
+aliases outside actor-owned storage variables, unknown aggregate members,
+out-of-range list indexes, aggregate paths outside direct transaction `set`
+RHS or target tokens, and subaggregate updates fail closed. Actor-local
+`(enums ...)` declarations are preserved as scheduled `.fsm` `+enums`. Enum
+member references are public only as actor constant values in this slice, using
+local `mode.BUSY` or package-qualified
 `shared.mode.BUSY` spelling and resolving to non-negative integer literal
 values before lowering. Enum member references in other ISF expression/value
 contexts, additional aggregate carriers, and aggregate field/slice/update
@@ -724,13 +726,18 @@ Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,
 bounded `inferred_storage[].type` / `type_kind` report metadata, CLI HDL
-generation, and fail-closed diagnostics for non-carrier aggregate aliases and
-partial aggregate updates.
+generation, and fail-closed diagnostics for non-carrier aggregate aliases.
 Transaction `set` RHS aggregate leaf reads are checked by
 [t/1260-isf-aggregate-storage-leaf-reads.t](../t/1260-isf-aggregate-storage-leaf-reads.t),
 covering record member reads, package list item reads, scheduled `.fsm`
 review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
-members, partial writes, and aggregate paths inside broader expressions.
+members and aggregate paths inside broader expressions.
+Transaction `set` target aggregate leaf writes are checked by
+[t/1261-isf-aggregate-storage-leaf-writes.t](../t/1261-isf-aggregate-storage-leaf-writes.t),
+covering record member writes, package list item writes, scheduled `.fsm`
+review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
+members, subaggregate writes, and aggregate paths outside direct transaction
+`set` positions.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

@@ -126,25 +126,6 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_lhs_still_deferred
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start))
-  (storage
-    (var frame (type frame_t)))
-  (transaction main
-    (on start)
-    (set frame.flag 1)))
-ISF
-        qr/set target references aggregate storage path 'frame\.flag'; this ISF slice accepts only whole actor-owned aggregate storage carriers, not member\/item access or partial aggregate updates/,
-        'partial aggregate writes remain deferred',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
 (actor aggregate_expr_still_deferred
   (types
     (type frame_t (record (mode (bits 2)) (flag bit))))
@@ -159,7 +140,7 @@ ISF
     (on start)
     (set mode_out (+ frame.mode 1))))
 ISF
-        qr/set RHS references aggregate storage path 'frame\.mode'; this ISF slice accepts only whole actor-owned aggregate storage carriers, not member\/item access or partial aggregate updates/,
+        qr/set RHS references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads or direct transaction set target scalar leaf writes/,
         'aggregate paths inside expressions remain deferred',
     );
 };

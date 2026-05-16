@@ -401,9 +401,11 @@ limitations are:
   token in `+constants` and schedule reports while resolving to non-negative
   integer values for static waits and existing static activation-parameter
   overrides. Transaction `set` RHS clauses may read scalar aggregate leaves
-  from declared aggregate storage carriers. Other enum member expression/value
-  contexts, aggregate paths inside broader expressions, partial aggregate
-  updates, and aggregate interface/transaction/bank carriers remain backlog.
+  from declared aggregate storage carriers, and direct transaction `set`
+  targets may write scalar aggregate leaves on those same carriers. Other enum
+  member expression/value contexts, aggregate paths inside broader
+  expressions, subaggregate updates, and aggregate interface/transaction/bank
+  carriers remain backlog.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

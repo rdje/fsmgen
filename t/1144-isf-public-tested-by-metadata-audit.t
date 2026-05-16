@@ -158,6 +158,7 @@ my $expected_tested_by = [
     't/1258-isf-enum-member-constants.t',
     't/1259-isf-aggregate-storage-type-aliases.t',
     't/1260-isf-aggregate-storage-leaf-reads.t',
+    't/1261-isf-aggregate-storage-leaf-writes.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {
