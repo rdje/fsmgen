@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: schedule-report freeze evidence is executable
+- `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1` converts the remaining golden-matrix
+  freeze-readiness item into one focused audit. The matrix is deliberately an
+  ownership/parity audit over advertised `schedule_report_*` contract branches,
+  not a promise that every byte of the still-unfrozen JSON tree is immutable.
+- Every matrix case runs through both the in-process scheduler report facade
+  and the CLI `--emit-schedule-json` path. That keeps path parity tied to the
+  same fixture/source cases that own the advertised report branches.
+- The public `schedule_report_full_schema_stable` flag is unchanged. Flipping
+  it should be a separate final freeze slice so the semantic meaning of that
+  flag is easy to review.
 ## 2026-05-16: schedule reports expose summaries, not raw provenance
 - `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` closes the assignment-provenance
   and multi-file child-summary freeze-readiness decision without changing

@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF schedule-report golden matrix shipped
+- Completed `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1` in
+  [docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md](docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md),
+  closing the schedule-report golden-matrix tree.
+- Added [t/1255-isf-schedule-report-golden-matrix.t](t/1255-isf-schedule-report-golden-matrix.t),
+  which runs each matrix case through both `FSM::Scheduler::ISF->report(...)`
+  and `./bin/fsmgen --emit-schedule-json`, then requires equal payloads.
+- The matrix assigns every advertised `schedule_report_*` public contract
+  branch except the explicit `schedule_report_full_schema_stable` flag to at
+  least one in-process/CLI parity case.
+- The ISF spec, downstream handoff, public contract doc, mdBook, task trees,
+  tested-by metadata, and fixture inventory now describe the matrix as current
+  evidence rather than a missing blocker.
+- `schedule_report_full_schema_stable` remains false until a later dedicated
+  freeze slice intentionally flips that public flag.
 ## 2026-05-16: ISF schedule-report summary boundary documented
 - Completed `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` in
   [docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md](docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md),
@@ -1521,7 +1536,7 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-05-14: ISF fixture coverage inventory
 - Completed `ISF-FIXTURES.1` in
   [docs/tasks/ISF-FIXTURE-COVERAGE.md](docs/tasks/ISF-FIXTURE-COVERAGE.md).
-- Current inventory: 10 checked-in `.isf` fixtures, 136 ISF-tier tests, APB
+- Current inventory: 10 checked-in `.isf` fixtures, 137 ISF-tier tests, APB
   coverage in quick/smoke, and APB-only strict accepted-source coverage.
 - The next active R14 frontier is `ISF-FIXTURES.2`.
 ## 2026-05-14: ISF schedule-report tree closure

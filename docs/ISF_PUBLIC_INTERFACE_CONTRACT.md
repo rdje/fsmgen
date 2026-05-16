@@ -1487,10 +1487,13 @@ Bounded but not fully frozen:
   `library_uses[]`, `clock_domains[]` / `crossings[]`, and the public
   `lower(...)` files map.
 
-Blockers before flipping `schedule_report_full_schema_stable` to true:
+Final freeze step before flipping `schedule_report_full_schema_stable` to true:
 
-- Keep a golden fixture matrix covering every advertised branch through both
-  in-process and CLI report paths.
+- Review and intentionally flip the flag in a dedicated freeze slice. The
+  executable golden matrix in
+  [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t)
+  now assigns every advertised `schedule_report_*` branch to at least one
+  in-process/CLI parity case.
 
 ## Non-Public Internals
 

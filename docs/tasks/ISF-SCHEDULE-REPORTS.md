@@ -308,25 +308,19 @@ Raw/internal and non-public:
 - Raw generated-composition plans and any unadvertised lower-result or
   schedule-report keys.
 
-Full-freeze blockers:
+Full-freeze readiness status:
 
-- Decide whether the schedule report needs its own explicit schema/version
-  field or whether `embedding.isf_public_interface` remains the only schema
-  discovery surface.
-- Close or deliberately defer the remaining storage-role families: temporal
-  contract monitor storage, child `do`/`spawn` handoffs, rule trigger sources,
-  and resource/debug storage.
-- Define a long-term generated-name policy for state names, DT names, child
-  names, and generated handoff names before promising more than the current
-  order/count summaries.
-- Decide whether assignment provenance should gain a bounded public summary or
-  stay private.
-- Decide whether multi-file reports should continue to be parent-scoped or
-  grow child report summaries.
-- Add a compatibility/deprecation policy for future top-level keys, optional
-  nested keys, and new value-family members.
-- Maintain a golden fixture matrix for every advertised branch through both
+- The report now has explicit top-level `schema_version: 1`.
+- The storage-role family has been synchronized for current emitted roles;
+  resource-grant/debug storage remains explicitly deferred until future
+  lowering materializes such storage.
+- Generated-name stability, assignment-provenance privacy, multi-file
+  child-summary scope, and additive/breaking evolution policy are documented.
+- `t/1255-isf-schedule-report-golden-matrix.t` now maintains the executable
+  golden matrix for every advertised `schedule_report_*` branch through both
   in-process and CLI report paths.
+- `schedule_report_full_schema_stable` remains false until a later dedicated
+  freeze slice intentionally flips the public flag.
 
 Readiness checklist for freezing any branch:
 
@@ -357,11 +351,12 @@ Readiness checklist for freezing any branch:
   extract-field, data-register, and completion-pulse storage. Additional role
   families remain backlog until they have direct lowerer evidence and their
   own contract tests.
-- `2026-05-14`: Full schedule JSON schema freeze remains blocked by explicit
+- `2026-05-14`: Full schedule JSON schema freeze remained blocked by explicit
   schema/version policy, remaining role families, generated-name policy,
   assignment-provenance policy, multi-file report scope, compatibility rules,
-  and a golden fixture matrix. Until those are closed, the report is bounded
-  public metadata, not a frozen whole-tree schema.
+  and a golden fixture matrix. Later slices closed those blockers; the report
+  remains bounded public metadata until a dedicated freeze slice flips
+  `schedule_report_full_schema_stable`.
 - `2026-05-14`: The schedule-report tree is closed after adding an explicit
   freeze-boundary regression. Future schedule-report feature additions should
   reopen this tree or create a feature-owned tree before changing report shape.

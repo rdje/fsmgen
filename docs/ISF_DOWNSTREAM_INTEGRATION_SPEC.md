@@ -997,6 +997,17 @@ Schedule-report evolution rules:
   migration or deprecation documentation in the same slice.
 - Deprecated fields stay documented until the schema version that removes them.
 
+Golden fixture matrix:
+
+- `t/1255-isf-schedule-report-golden-matrix.t` is the executable matrix for
+  the advertised schedule-report branches.
+- Each matrix case runs through both `FSM::Scheduler::ISF->report(...)` and
+  `./bin/fsmgen --emit-schedule-json`, and the test requires equal payloads.
+- Every advertised `schedule_report_*` contract field except the explicit
+  `schedule_report_full_schema_stable` flag has a matrix owner.
+- `schedule_report_full_schema_stable` remains false until a later dedicated
+  freeze slice intentionally changes that public flag.
+
 Assignment and child-summary boundary:
 
 - Raw assignment provenance, private assignment indexes, and activation proof
@@ -1195,7 +1206,8 @@ Recommended FSMGen regression commands for integration contract changes:
 prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1115-isf-public-interface-cli-manifest-audit.t \
   t/1120-isf-public-live-document-path-audit.t \
-  t/1144-isf-public-tested-by-metadata-audit.t
+  t/1144-isf-public-tested-by-metadata-audit.t \
+  t/1255-isf-schedule-report-golden-matrix.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

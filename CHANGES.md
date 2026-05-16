@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF schedule-report golden matrix shipped
+- Completed `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1`, closing the
+  `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX` task tree.
+- Added `t/1255-isf-schedule-report-golden-matrix.t`, an executable matrix
+  that compares in-process and CLI schedule reports for every matrix case.
+- The matrix assigns every advertised `schedule_report_*` public contract
+  branch except `schedule_report_full_schema_stable` to at least one parity
+  case.
+- Updated the public contract `tested_by` metadata, ISF spec, downstream
+  handoff, mdBook, fixture inventory, roadmap, task tree, and live docs.
+- `schedule_report_full_schema_stable` remains false until a later dedicated
+  freeze slice intentionally flips that public flag.
 ### R14 — ISF schedule-report summary boundary documented
 - Completed `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1`, closing the
   `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY` task tree.

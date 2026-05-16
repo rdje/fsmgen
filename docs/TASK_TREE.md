@@ -46,6 +46,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `ISF-SCHEDULE-REPORT-SCHEMA-VERSION` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md](docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md) |
 | `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md](docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md) |
 | `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md](docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md) |
+| `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX` | `done` | `R14` | `closed` | [docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md](docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md) |
 | `ISF-PARAM-OVERRIDE-CONSTANTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md) |
 | `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
@@ -124,6 +125,7 @@ as done work unless a future task reopens them.
 | Schedule-report schema version metadata | `ISF-SCHEDULE-REPORT-SCHEMA-VERSION` |
 | Schedule-report additive/deprecation evolution policy | `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY` |
 | Schedule-report assignment provenance and multi-file child summary boundary | `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY` |
+| Schedule-report golden fixture matrix | `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |

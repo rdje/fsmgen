@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF schedule-report golden matrix shipped
+- Completed R14 task-tree slice:
+  `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1`, closing
+  [docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md](docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md).
+- Added [t/1255-isf-schedule-report-golden-matrix.t](t/1255-isf-schedule-report-golden-matrix.t)
+  as the executable matrix for advertised schedule-report branches.
+- Each matrix case runs through both in-process and CLI schedule-report paths
+  and must emit equal payloads.
+- Every advertised `schedule_report_*` contract branch except
+  `schedule_report_full_schema_stable` now has a matrix owner.
+- `schedule_report_full_schema_stable` remains false until a later dedicated
+  freeze slice intentionally flips that public flag.
+
 ## 2026-05-16: R14 — ISF schedule-report summary boundary documented
 - Completed R14 task-tree slice:
   `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1`, closing

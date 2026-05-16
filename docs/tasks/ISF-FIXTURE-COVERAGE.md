@@ -111,8 +111,8 @@ Current ISF regression tier:
   `t/109[1-9]-isf*.t`, `t/11[0-9][0-9]-isf*.t`, and
   `t/12[0-9][0-9]-isf*.t`, sorted with unmatched future bands ignored by
   `nullglob`.
-- Current count: `136` ISF-tier tests: `9` in the `109x` band, `98` in the
-  `11xx` band, and `29` in the `12xx` band.
+- Current count: `137` ISF-tier tests: `9` in the `109x` band, `98` in the
+  `11xx` band, and `30` in the `12xx` band.
 - The tier covers parser/lowering smoke, public interface contract audits,
   malformed-boundary tests, feature-specific lowering/report tests, generated
   composition, arbitration, data widths, storage roles, and the explicit

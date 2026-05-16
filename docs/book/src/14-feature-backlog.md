@@ -790,9 +790,13 @@ summary arrays such as `compile_issues[]`, `compatible_fanin_groups[]`,
 artifacts, `generated_composition`, `library_uses[]`, and `clock_domains[]` /
 `crossings[]`.
 
-The blocker before flipping `schedule_report_full_schema_stable` is keeping a
-golden fixture matrix for every advertised branch through both in-process and
-CLI report paths.
+The executable golden fixture matrix now exists in
+`t/1255-isf-schedule-report-golden-matrix.t`. It assigns every advertised
+`schedule_report_*` branch to at least one matrix case, runs each case through
+both `FSM::Scheduler::ISF->report(...)` and `./bin/fsmgen
+--emit-schedule-json`, and requires equal payloads. The
+`schedule_report_full_schema_stable` flag remains false until a separate final
+freeze slice intentionally flips that public contract flag.
 
 ### ISF Realistic Fixture Matrix
 

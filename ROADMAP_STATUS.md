@@ -83,10 +83,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   internals, and recursive child report dumps stay private while bounded
   summary arrays, counts, the public `lower(...)` files map, named generated
   artifacts, `generated_composition`, `library_uses[]`, and
-  `clock_domains[]` / `crossings[]` remain the public review surface. The
-  next PNT selection should choose the remaining golden-fixture-matrix
-  schedule-report freeze blocker or another roadmap-aligned R14 task tree
-  before implementation.
+  `clock_domains[]` / `crossings[]` remain the public review surface.
+  `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1` then added
+  `t/1255-isf-schedule-report-golden-matrix.t`, which assigns every
+  advertised `schedule_report_*` contract branch except the explicit
+  `schedule_report_full_schema_stable` flag to at least one matrix case and
+  proves each case emits equal payloads through in-process and CLI report
+  paths. The next PNT selection should choose the final schedule-report freeze
+  flag decision or another roadmap-aligned R14 task tree before
+  implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -250,6 +255,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   assignment-provenance and recursive child-report boundary and removed that
   decision from the remaining whole-schema freeze blockers without changing
   schedule JSON payloads.
+  `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1` added the executable golden matrix
+  for advertised schedule-report branches and removed the matrix as a missing
+  freeze-readiness artifact without changing schedule JSON payloads.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

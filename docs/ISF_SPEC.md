@@ -2375,9 +2375,12 @@ CLI/in-process parity. It is not yet a frozen whole-tree schema. New optional
 keys or new value-family members may be added only with public-contract
 metadata, focused tests, and documentation in the same slice.
 
-The remaining blocker before a whole-schema freeze is maintaining a golden
-fixture matrix for every advertised branch through both in-process and CLI
-report paths.
+The executable golden fixture matrix is maintained by
+[t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t).
+It assigns every advertised `schedule_report_*` branch to at least one matrix
+case and proves that each case emits the same report through the in-process and
+CLI paths. `schedule_report_full_schema_stable` remains false until a separate
+final freeze slice intentionally flips that public contract flag.
 
 ## 11. Current Regression Fixtures
 
@@ -2581,6 +2584,7 @@ Focused tests:
 - [t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t)
 - [t/1253-isf-actor-param-report.t](../t/1253-isf-actor-param-report.t)
 - [t/1254-isf-temporal-contract-storage-report.t](../t/1254-isf-temporal-contract-storage-report.t)
+- [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t)
 
 ## 12. Explicitly Deferred
 
