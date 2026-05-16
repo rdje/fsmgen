@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate named drive RHS expression operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.34` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.35`, selecting the
+  next enum or aggregate value/update context after named drive body aggregate
+  RHS expression operands.
+- Named drive body RHS expressions now accept scalar aggregate storage leaves
+  as operands and preserve authored expression payloads in scheduled `.fsm`
+  drive DTs.
+- Operator-position aggregate paths, subaggregate operands, and aggregate drive
+  targets fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate named drive RHS values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.33` in

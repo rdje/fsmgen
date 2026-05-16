@@ -909,10 +909,12 @@ Rules:
   `(rule expose (& ready frame.flag) (set fire 1))`. Standalone aggregate
   guards and aggregate paths in rule guard expression operator position remain
   deferred.
-- Named drive body scalar RHS values may read scalar aggregate leaves on
-  declared actor-owned aggregate storage, for example
-  `(drive publish (mode_out frame.mode))`. Drive targets and aggregate paths in
-  drive body RHS expressions remain deferred.
+- Named drive body scalar RHS values and scalar operands inside RHS expressions
+  may read scalar aggregate leaves on declared actor-owned aggregate storage,
+  for example `(drive publish (mode_out frame.mode))` or
+  `(drive publish (mode_out (+ frame.mode mode_in)))`. Drive targets and
+  aggregate paths in drive body RHS expression operator position remain
+  deferred.
 - `(type NAME)` and `(width N)` are mutually exclusive.
 - `NAME` may be local (`byte`) or package-qualified (`shared.byte`).
 - Lowered scheduled `.fsm` preserves review artifacts with `+types`,
@@ -959,9 +961,10 @@ Rules:
 Aggregate member/item access outside direct transaction `set` RHS values,
 direct transaction `set` target tokens, transaction condition expression
 operands, rule assignment RHS values or expression operands, rule guard
-expression operands, or drive body RHS scalar values; aggregate paths inside
-drive body RHS expressions; subaggregate operands/updates; aggregate interface
-or transaction ports; and aggregate storage banks are not shipped yet. Existing
+expression operands, or drive body RHS scalar values/expression operands;
+aggregate paths in drive body RHS expression operator position; subaggregate
+operands/updates; aggregate interface or transaction ports; and aggregate
+storage banks are not shipped yet. Existing
 aggregate support beyond the actor-owned storage-variable carrier and direct
 scalar leaf read/write context is limited to compatible aggregate/list literal
 parameter values and scalarized actor-owned bank/storage lowering.
@@ -1361,8 +1364,9 @@ Required fail-closed examples:
   indexes, aggregate storage member/item paths outside direct transaction
   `set` RHS values, direct transaction `set` target tokens, transaction
   condition expression operands, rule assignment RHS values/expression operands,
-  rule guard expression operands, or drive body RHS scalar values, aggregate
-  paths in expression operator position, subaggregate operands/updates, and
+  rule guard expression operands, or drive body RHS scalar values/expression
+  operands, aggregate paths in expression operator position, subaggregate
+  operands/updates, and
   enum member references outside
   the shipped actor-constant, actor parameter scalar default or aggregate/list
   default leaf, generated child transaction scalar parameter default or
@@ -1445,7 +1449,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1284-isf-aggregate-rule-expression-values.t \
   t/1285-isf-aggregate-rule-guard-values.t \
   t/1286-isf-aggregate-condition-values.t \
-  t/1287-isf-aggregate-drive-values.t
+  t/1287-isf-aggregate-drive-values.t \
+  t/1288-isf-aggregate-drive-expression-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

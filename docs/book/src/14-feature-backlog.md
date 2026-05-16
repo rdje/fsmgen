@@ -324,12 +324,13 @@ body. Rule guard expressions may read scalar aggregate leaves as operands, such
 as `(rule fire (& ready frame.flag) (set seen 1))`. Transaction
 `when`/`while`/`until` condition expressions may read scalar aggregate leaves as
 operands, such as `(when (& ready frame.flag) (set seen 1))`. Named drive body
-scalar RHS values may read scalar aggregate leaves, such as
-`(drive publish (mode_out frame.mode))`. Aggregate member
+scalar RHS values and scalar operands inside RHS expressions may read scalar
+aggregate leaves, such as `(drive publish (mode_out frame.mode))` or
+`(drive publish (mode_out (+ frame.mode mode_in)))`. Aggregate member
 paths outside transaction `set` RHS values, direct transaction `set` targets,
 transaction condition expression operands, rule assignment RHS values/expression
-operands, rule guard expression operands, or drive body RHS scalar values,
-drive body RHS expression operands, subaggregate operands/updates, aggregate
+operands, rule guard expression operands, or drive body RHS scalar
+values/expression operands, subaggregate operands/updates, aggregate
 interface or transaction ports, aggregate storage banks, enum member
 references outside actor constants, actor parameter scalar
 values or aggregate/list default leaves, generated child transaction scalar
@@ -449,9 +450,10 @@ expressions may use enum members as scalar operands and may read scalar
 aggregate storage leaves such as `frame.flag`; aggregate paths in rule
 assignment RHS or rule guard expression operator position, expression
 operator-position enum members, standalone enum/aggregate guards, and rule
-targets remain backlog. Named drive body scalar RHS values may read scalar
-aggregate storage leaves such as `frame.mode`; aggregate paths in drive body
-RHS expressions and drive targets remain backlog.
+targets remain backlog. Named drive body scalar RHS values and scalar operands
+inside RHS expressions may read scalar aggregate storage leaves such as
+`frame.mode`; aggregate paths in drive body RHS expression operator position
+and drive targets remain backlog.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as

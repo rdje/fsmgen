@@ -322,14 +322,15 @@ may read scalar aggregate member/item leaves as scalar operands, for example
 `when`/`while`/`until` condition expressions may read scalar aggregate
 member/item leaves as scalar operands too, for example
 `(when (& ready frame.flag) (set fire 1))`. Named drive body scalar RHS values
-may read scalar aggregate member/item leaves, for example
-`(drive publish (mode_out frame.mode))`. These forms resolve against the
-declared aggregate storage shape before lowering. Aggregate paths outside
+and scalar operands inside RHS expressions may read scalar aggregate
+member/item leaves, for example `(drive publish (mode_out frame.mode))` or
+`(drive publish (mode_out (+ frame.mode mode_in)))`. These forms resolve
+against the declared aggregate storage shape before lowering. Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
 condition expression operands, rule assignment RHS values or expression
-operands, rule guard expression operands, or drive body RHS scalar values,
-aggregate paths in expression operator position, subaggregate writes/operands,
-aggregate interface or
+operands, rule guard expression operands, or drive body RHS scalar values or
+expression operands, aggregate paths in expression operator position,
+subaggregate writes/operands, aggregate interface or
 transaction ports, and aggregate storage banks remain deferred.
 Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
@@ -981,14 +982,14 @@ Current lowering:
   scalar operands inside body RHS expressions may use local enum members such
   as `mode.BUSY` or package enum members such as `shared.mode.BUSY`; the
   parser resolves those values before lowering and preserves the authored token
-  in the generated drive DT. Direct scalar body RHS values may also read scalar
-  aggregate storage leaves such as `frame.mode` or `lanes[1]`; those paths
-  resolve against declared actor-owned aggregate storage before lowering and
-  preserve the authored token in the generated drive DT. Body RHS expressions
-  recursively substitute drive formals with the generated drive payload signals
-  before DT emission. Drive body RHS expression aggregate operands, drive body
-  RHS expression operator-position enum members, and enum members or aggregate
-  paths as drive targets remain deferred.
+  in the generated drive DT. Scalar body RHS values and scalar operands inside
+  body RHS expressions may also read scalar aggregate storage leaves such as
+  `frame.mode` or `lanes[1]`; those paths resolve against declared actor-owned
+  aggregate storage before lowering and preserve the authored token in the
+  generated drive DT. Body RHS expressions recursively substitute drive formals
+  with the generated drive payload signals before DT emission. Drive body RHS
+  expression operator-position enum members or aggregate paths, and enum
+  members or aggregate paths as drive targets remain deferred.
 - Each drive definition becomes a non-state DT block named `-drive_name`.
 - Each drive call becomes one scheduled state.
 - The call asserts `drive_name_start`.
@@ -2820,6 +2821,7 @@ Focused tests:
 - [t/1285-isf-aggregate-rule-guard-values.t](../t/1285-isf-aggregate-rule-guard-values.t)
 - [t/1286-isf-aggregate-condition-values.t](../t/1286-isf-aggregate-condition-values.t)
 - [t/1287-isf-aggregate-drive-values.t](../t/1287-isf-aggregate-drive-values.t)
+- [t/1288-isf-aggregate-drive-expression-values.t](../t/1288-isf-aggregate-drive-expression-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2894,7 +2896,8 @@ Focused tests:
   aggregate leaf operands, transaction condition expression aggregate leaf
   operands, transaction `set` target aggregate leaf writes,
   rule assignment RHS aggregate leaf values and expression operands, rule
-  guard expression aggregate leaf operands, drive body RHS aggregate leaf values,
+  guard expression aggregate leaf operands, drive body RHS aggregate leaf values
+  and expression operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
   aggregate/list default leaves, generated child transaction parameter scalar
@@ -2912,9 +2915,10 @@ Focused tests:
   direct transaction `set` RHS values, direct transaction `set` target tokens,
   transaction condition expression operands, rule assignment RHS
   values/expression operands, rule guard expression operands, or drive body RHS
-  scalar values, aggregate paths in transaction condition, rule assignment RHS,
-  rule guard, or drive body RHS expression operator position, subaggregate
-  updates/operands, aggregate field/slice/update lowering, and broad
+  scalar values/expression operands, aggregate paths in transaction condition,
+  rule assignment RHS, rule guard, or drive body RHS expression operator
+  position, subaggregate updates/operands, aggregate field/slice/update
+  lowering, and broad
   aggregate/record width inference remain deferred to the active
   `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
