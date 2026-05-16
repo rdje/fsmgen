@@ -137,7 +137,7 @@ ISF
     (when mode.BUSY
       (set done 1))))
 ISF
-        qr/when condition references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        qr/when condition references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in conditions remain deferred',
     );
 
@@ -155,7 +155,7 @@ ISF
     (on start)
     (set mode.BUSY 1)))
 ISF
-        qr/set target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        qr/set target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in set targets remain deferred',
     );
 
@@ -172,13 +172,13 @@ ISF
   (rule mark_busy ready
     (set mode_out mode.BUSY)))
 ISF
-        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in rule actions remain deferred',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor enum_activation_param_still_deferred
+(actor enum_activation_param_aggregate_leaf_still_deferred
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -187,17 +187,17 @@ ISF
     (input start)
     (output mode_out))
   (transaction main
-    (on start)
-    (spawn child as c0
-      (params
-        (DEFAULT_MODE mode.BUSY))))
-  (transaction child
-    (params
-      (DEFAULT_MODE 0))
-    (set mode_out 0)))
+	    (on start)
+	    (spawn child as c0
+	      (params
+	        (DEFAULT_MODES (mode.BUSY 1)))))
+	  (transaction child
+	    (params
+	      (DEFAULT_MODES (0 1)))
+	    (set mode_out 0)))
 ISF
-        qr/transaction 'main' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
-        'enum members in activation parameters remain deferred',
+        qr/transaction 'main' spawn instance 'c0' parameter 'DEFAULT_MODES' uses unsupported aggregate\/list override leaf 'mode\.BUSY'; activation parameter aggregate\/list overrides accept numeric, exact-width, and actor-constant leaves only, while enum member leaves remain deferred/,
+        'enum members in aggregate/list activation parameters remain deferred',
     );
 };
 

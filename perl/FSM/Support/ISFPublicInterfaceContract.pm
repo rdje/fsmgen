@@ -437,6 +437,7 @@ sub build_isf_public_interface_contract {
             't/1268-isf-enum-member-drive-call-expression-values.t',
             't/1269-isf-enum-member-actor-params.t',
             't/1270-isf-enum-member-transaction-params.t',
+            't/1271-isf-enum-member-activation-params.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

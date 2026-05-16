@@ -279,14 +279,15 @@ banks, and other width-bearing declarations fail closed. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
 `+enums`. Enum members are consumed by actor constants, by actor scalar
 parameter defaults, by generated child transaction scalar parameter defaults,
-by direct transaction `set` RHS scalar values or scalar operands inside
-transaction `set` RHS expressions, by transaction `switch` branch values, by
-scalar drive body RHS values, and by named drive-call scalar actual values or
-scalar operands inside drive-call actual expressions in the current ISF
-surface. Enum members in expression operator position, guards, switch
-selectors, rule actions, drive targets, drive-call expression operator
-position, activation parameter overrides, aggregate/list parameter leaves, and
-typed aggregate carriers do not consume enum member references yet.
+by scalar activation parameter overrides, by direct transaction `set` RHS scalar
+values or scalar operands inside transaction `set` RHS expressions, by
+transaction `switch` branch values, by scalar drive body RHS values, and by
+named drive-call scalar actual values or scalar operands inside drive-call
+actual expressions in the current ISF surface. Enum members in expression
+operator position, guards, switch selectors, rule actions outside scalar
+trigger parameter overrides, drive targets, drive-call expression operator
+position, aggregate/list parameter leaves, aggregate/list activation override
+leaves, and typed aggregate carriers do not consume enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -307,10 +308,10 @@ aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
 outside actor constants, actor scalar parameter defaults, generated child
-transaction scalar parameter defaults, transaction `set` RHS scalar values or
-expression operands, transaction `switch` branch values, drive body RHS scalar
-values, and drive-call actual scalar values or expression operands, additional
-aggregate carriers, aggregate
+transaction scalar parameter defaults, scalar activation parameter overrides,
+transaction `set` RHS scalar values or expression operands, transaction
+`switch` branch values, drive body RHS scalar values, and drive-call actual
+scalar values or expression operands, additional aggregate carriers, aggregate
 field/slice/update lowering, incompatible enum values, aggregate shape
 mismatches, and ambiguous subaggregate updates remain owned by later
 `ISF-TYPE-AGGREGATE-PARITY` leaves.
@@ -405,8 +406,10 @@ values, and override shapes that do not match aggregate/list defaults fail
 closed. The first value domain is scalar decimal literals, exact-width numeric
 literals in the shipped ISF parameter syntax, scalar local or
 package-qualified enum members, and compatible aggregate/list literals whose
-leaves are numeric or exact-width literals. Aggregate/list enum member leaves
-and activation or library use-site enum overrides remain deferred. Schedule
+leaves are numeric or exact-width literals. Scalar activation parameter
+overrides may also use local or package-qualified enum members. Aggregate/list
+enum member leaves, aggregate/list activation enum override leaves, and library
+use-site enum overrides remain deferred. Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and
 JSON-safe default `value`, preserving authored enum tokens such as `mode.BUSY`
@@ -1028,15 +1031,18 @@ values, the implementation must specialize distinct logical child instances or
 cloned scheduled regions. It must not lower the parameter as a mutable runtime
 signal shared by every activation of the transaction.
 
-Actor-local constants are accepted as static activation parameter override
-values. A constant name may appear as a scalar override value, or as a scalar
-leaf inside an aggregate/list override value, for generated activation forms
-that already support `(params ...)`: spawn, parameterized blocking `do`, and
-parameterized rule `trigger`. The lowerer resolves constants to literal values
-before generated-top emission, so generated `?fsmc` parameter overrides remain
-self-contained. Unknown names, actor parameters, transaction parameters,
-runtime signals, and arbitrary expressions remain fail-closed until a later
-task explicitly ships a wider value source.
+Actor-local constants and scalar enum members are accepted as static activation
+parameter override values. A constant name may appear as a scalar override
+value, or as a scalar leaf inside an aggregate/list override value, for
+generated activation forms that already support `(params ...)`: spawn,
+parameterized blocking `do`, and parameterized rule `trigger`. A local enum
+member such as `mode.BUSY` or package enum member such as `shared.mode.BUSY`
+may appear only as a scalar override value. The lowerer resolves constants and
+scalar enum members to literal values before generated-top emission, so
+generated `?fsmc` parameter overrides remain self-contained. Unknown names,
+unknown enum members, enum leaves inside aggregate/list override values, actor
+parameters, transaction parameters, runtime signals, and arbitrary expressions
+remain fail-closed until a later task explicitly ships a wider value source.
 
 The parameterized rule-trigger contract follows the same specialization rule.
 It elaborates a generated child activation instance named
@@ -2707,6 +2713,7 @@ Focused tests:
 - [t/1268-isf-enum-member-drive-call-expression-values.t](../t/1268-isf-enum-member-drive-call-expression-values.t)
 - [t/1269-isf-enum-member-actor-params.t](../t/1269-isf-enum-member-actor-params.t)
 - [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t)
+- [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t)
 
 ## 12. Explicitly Deferred
 
@@ -2767,15 +2774,16 @@ Focused tests:
   values, scalar drive body RHS enum member values, scalar drive-call actual
   enum member values, drive-call actual expression enum member operands, actor
   scalar parameter default enum member values, generated child transaction
-  scalar parameter default enum member values, actor-owned aggregate storage
-  variable carriers, transaction `set` RHS aggregate leaf reads, transaction
-  `set` RHS expression aggregate leaf operands, transaction `set` target
-  aggregate leaf writes, aggregate/list parameter-literal, and data-operation
-  evidence model. Enum member references outside actor constants, actor scalar
-  parameter defaults, generated child transaction scalar parameter defaults,
-  transaction `set` RHS scalar values/expression operands, transaction
-  `switch` branch values, drive body RHS scalar values, or drive-call actual
-  scalar values/expression operands remain deferred.
+  scalar parameter default enum member values, scalar activation parameter
+  override enum member values, actor-owned aggregate storage variable carriers,
+  transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
+  aggregate leaf operands, transaction `set` target aggregate leaf writes,
+  aggregate/list parameter-literal, and data-operation evidence model. Enum
+  member references outside actor constants, actor scalar parameter defaults,
+  generated child transaction scalar parameter defaults, scalar activation
+  parameter overrides, transaction `set` RHS scalar values/expression operands,
+  transaction `switch` branch values, drive body RHS scalar values, or
+  drive-call actual scalar values/expression operands remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values or target tokens, subaggregate
   updates/operands, aggregate field/slice/update lowering, and broad

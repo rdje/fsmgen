@@ -126,7 +126,7 @@ ISF
     (on start)
     (drive mark_busy)))
 ISF
-        qr/drive 'mark_busy' target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        qr/drive 'mark_busy' target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in drive targets remain deferred',
     );
 
@@ -143,7 +143,7 @@ ISF
   (rule mark_busy ready
     (set mode_out mode.BUSY)))
 ISF
-        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in rule actions remain deferred',
     );
 };

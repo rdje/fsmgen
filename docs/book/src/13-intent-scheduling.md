@@ -45,7 +45,8 @@ clear lower-layer mapping, and clear runtime behavior.
 - **Parameters are specialization defaults**. Actor-level `(params ...)`
   values emit as scheduled `.fsm` `+params` and schedule-report
   `actor_params[]`; scalar defaults may use enum members, and they are not
-  runtime payload wires.
+  runtime payload wires. Generated activation-site scalar parameter overrides
+  may also use enum members, which resolve to literal generated-top bindings.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,
@@ -406,15 +407,18 @@ limitations are:
   scalar operands inside transaction `set` RHS expressions, transaction
   `switch` branch values, scalar drive body RHS values, and named drive-call
   scalar actual values may also use local and package-qualified enum members.
-  Drive-call actual expressions may use enum members as scalar operands too.
+  Drive-call actual expressions may use enum members as scalar operands too, and
+  scalar activation parameter overrides for spawn, generated blocking `do`, and
+  rule `trigger` may use enum members as static specialization values.
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
   expressions, and direct transaction `set` targets may write scalar aggregate
   leaves on those same carriers. Enum members in expression operator position,
-  conditions, switch selectors, set targets, rules, drive targets, drive-call
-  expression operator position, inline drive assignments, activation
-  parameter overrides, aggregate/list parameter
+  conditions, switch selectors, set targets, rules outside scalar trigger
+  parameter overrides, drive targets, drive-call expression operator position,
+  inline drive assignments, aggregate/list activation override leaves,
+  aggregate/list parameter
   leaves, and other non-shipped contexts remain backlog, as do aggregate paths outside
   transaction `set` RHS values or direct targets, subaggregate
   operands/updates, and aggregate interface/transaction/bank carriers.

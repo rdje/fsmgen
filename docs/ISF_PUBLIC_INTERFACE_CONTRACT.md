@@ -686,10 +686,11 @@ Generated composition-top wiring for generated child activations is checked by
 The shipped surface preserves validated per-instance spawn and generated `do`
 overrides plus parameterized rule-trigger overrides in lowerer metadata, emits
 child transaction defaults into generated child scheduled `.fsm` `+params`
-blocks, resolves actor-local constants in activation parameter override values,
-rejects duplicate instances, duplicate parameters, unknown overrides,
-unsupported non-constant symbolic or expression values, and aggregate shape
-mismatches, and rejects parameter declarations on non-generated transactions.
+blocks, resolves actor-local constants and scalar enum members in activation
+parameter override values, rejects duplicate instances, duplicate parameters,
+unknown overrides, unsupported non-constant symbolic or expression values,
+aggregate/list enum override leaves, and aggregate shape mismatches, and rejects
+parameter declarations on non-generated transactions.
 The public ISF surface now accepts the scalar type-alias subset plus one
 aggregate storage-carrier subset: actor-local `(types ...)` declarations,
 `(imports (package NAME) ...)` for existing `.fsm` package roots, `(type
@@ -712,14 +713,15 @@ references are public as actor constant values, scalar actor parameter
 defaults, generated child transaction scalar parameter defaults, direct
 transaction `set` RHS scalar values or scalar operands inside transaction
 `set` RHS expressions, transaction `switch` branch values, scalar drive body
-RHS values, and named drive-call scalar actual values or scalar operands
-inside drive-call actual expressions in this slice, using local
-`mode.BUSY` or package-qualified `shared.mode.BUSY` spelling and resolving to
-non-negative integer literal values before lowering. Enum member references in
-expression operator position, conditions, switch selectors, targets, rules,
-drive targets, drive-call expression operator position, inline drive
-assignments, activation parameter overrides, aggregate/list parameter leaves,
-and other ISF value contexts, additional aggregate carriers, and aggregate
+RHS values, named drive-call scalar actual values or scalar operands inside
+drive-call actual expressions, and scalar activation parameter overrides in
+this slice, using local `mode.BUSY` or package-qualified `shared.mode.BUSY`
+spelling and resolving to non-negative integer literal values before lowering.
+Enum member references in expression operator position, conditions, switch
+selectors, targets, rules outside scalar trigger parameter overrides, drive
+targets, drive-call expression operator position, inline drive assignments,
+aggregate/list parameter leaves, aggregate/list activation override leaves, and
+other ISF value contexts, additional aggregate carriers, and aggregate
 field/slice/update semantics remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
@@ -766,7 +768,7 @@ Actor scalar parameter default enum member values are checked by
 covering local and package enum member actor parameter defaults, scheduled
 `.fsm` `+params` review artifacts, schedule-report value preservation, CLI HDL
 generation, and fail-closed diagnostics for unknown members, aggregate/list
-parameter leaves, and activation parameter overrides.
+parameter leaves, and aggregate/list activation override leaves.
 Generated child transaction scalar parameter default enum member values are
 checked by
 [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t),
@@ -774,7 +776,13 @@ covering local and package enum member transaction parameter defaults,
 generated child `.fsm` `+params` review artifacts, generated-composition
 schedule-report value preservation, CLI HDL generation, and fail-closed
 diagnostics for unknown members, aggregate/list parameter leaves, and
-activation parameter overrides.
+aggregate/list activation override leaves.
+Scalar activation parameter override enum member values are checked by
+[t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t),
+covering local and package enum member overrides on spawn, generated blocking
+`do`, and rule-trigger activation sites, generated-top literal parameter
+bindings, generated-composition schedule-report bindings, and fail-closed
+diagnostics for unknown members and aggregate/list activation override leaves.
 Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,
@@ -1388,8 +1396,10 @@ sites. The machine-readable contract advertises these through
 
 Generated-composition child `parameters[]` and instance
 `parameter_bindings[]` entries also preserve authored scalar enum member
-tokens for generated child transaction parameter defaults. Override enum
-values remain outside the activation-parameter contract.
+tokens for generated child transaction parameter defaults. Scalar activation
+override enum values are resolved to literal values before generated-top
+emission, so generated-composition instance `parameter_bindings[]` entries
+carry the emitted literal override value for those use sites.
 
 For each `actor_phases` or `actor_stages` entry, `name` is the authored
 actor-level metadata name and `body` is the JSON-safe copy of the

@@ -457,10 +457,12 @@ Rules:
   defaults.
 - Actor parameter scalar defaults may use local or package-qualified enum
   member references. Generated child transaction scalar parameter defaults may
-  also use local or package-qualified enum member references. Aggregate/list
-  enum member leaves, activation parameter overrides, reusable-library
-  use-site enum overrides, duplicate overrides, unknown overrides, and shape
-  mismatches fail closed.
+  also use local or package-qualified enum member references. Scalar activation
+  parameter overrides may also use local or package-qualified enum member
+  references on generated activation sites. Aggregate/list enum member leaves,
+  aggregate/list activation enum override leaves, reusable-library use-site
+  enum overrides, duplicate overrides, unknown overrides, and shape mismatches
+  fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored enum
   tokens. These are static specialization defaults, not runtime payloads.
@@ -798,12 +800,15 @@ Rules:
 - Parameter overrides are static specialization values, not runtime payloads.
 - Runtime-varying values must use transaction ports and `(bind ...)`.
 - Activation parameter override values may be scalar/exact-width literals,
-  actor-local constants, or compatible aggregate/list literals whose scalar
-  leaves are literals or actor-local constants.
+  actor-local constants, scalar local or package-qualified enum members, or
+  compatible aggregate/list literals whose scalar leaves are literals or
+  actor-local constants.
 - Transaction-local scalar parameter defaults may use local or
   package-qualified enum members; generated child `.fsm` `+params` and
   generated-composition schedule reports preserve the authored enum token.
-- Actor constants resolve to literal values before generated-top emission.
+- Actor constants and scalar enum members resolve to literal values before
+  generated-top emission. Enum leaves inside aggregate/list activation override
+  values remain fail-closed.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
 - Parameterized rule triggers lower through generated child activation
@@ -885,12 +890,14 @@ Rules:
   consume local or package enum members. Named drive-call scalar actual values
   may also consume local or package enum members, drive-call actual
   expressions may use enum members as scalar operands, scalar actor parameter
-  defaults may consume local or package enum members, and generated child
+  defaults may consume local or package enum members, generated child
   transaction scalar parameter defaults may consume local or package enum
-  members. Enum members in expression operator position, conditions, switch
-  selectors, targets, rules, drive targets, drive-call expression operator
-  position, inline drive assignments, activation parameter overrides,
-  aggregate/list parameter leaves, and other contexts remain deferred.
+  members, and scalar activation parameter overrides may consume local or
+  package enum members. Enum members in expression operator position,
+  conditions, switch selectors, targets, rules outside scalar trigger parameter
+  overrides, drive targets, drive-call expression operator position, inline
+  drive assignments, aggregate/list parameter leaves, aggregate/list activation
+  override leaves, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1355,7 +1362,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1267-isf-enum-member-drive-call-values.t \
   t/1268-isf-enum-member-drive-call-expression-values.t \
   t/1269-isf-enum-member-actor-params.t \
-  t/1270-isf-enum-member-transaction-params.t
+  t/1270-isf-enum-member-transaction-params.t \
+  t/1271-isf-enum-member-activation-params.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

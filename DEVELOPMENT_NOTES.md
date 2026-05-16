@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum activation params are scalar-specialization values
+- `ISF-TYPE-AGGREGATE-PARITY.17` selects scalar activation parameter overrides
+  after transaction parameter defaults because generated activation sites already
+  specialize concrete child instances and generated tops require literal
+  `?fsmc` parameter values.
+- The parser validates enum override values for `spawn`, generated blocking
+  `do`, and rule `trigger` against the parent actor enum tables. The lowerer
+  resolves those enum values to non-negative literals before composition-top
+  emission so generated artifacts do not depend on scoped enum tokens.
+- Aggregate/list activation enum leaves stay closed. Constants are still allowed
+  there because they already resolve to scalar literals leaf-by-leaf, while enum
+  leaves need a separate aggregate/list value contract.
 ## 2026-05-16: enum transaction params stay scalar-default-only
 - `ISF-TYPE-AGGREGATE-PARITY.16` selects generated child transaction scalar
   parameter defaults after actor parameters because generated child `.fsm`

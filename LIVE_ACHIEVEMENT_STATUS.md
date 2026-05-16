@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum activation parameter overrides shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.17` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.18`, selecting the
+  next enum or aggregate value/update context after scalar activation override
+  enum values.
+- Scalar activation parameter overrides on `spawn`, generated blocking `do`, and
+  rule `trigger` now accept local and package-qualified enum members while
+  resolving them to literal generated-top `?fsmc` parameter bindings.
+- Enum leaves inside aggregate/list activation overrides, reusable-library
+  use-site overrides, direct `(on ...)` activation overrides, rules, conditions,
+  selectors, and other non-shipped contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum transaction parameter defaults shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.16` in

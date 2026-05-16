@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum activation parameter overrides shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.17`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.18`.
+- Scalar activation parameter overrides on `spawn`, generated blocking `do`, and
+  rule `trigger` now accept local and package-qualified enum members.
+- Activation enum override values resolve to literal generated-top `?fsmc`
+  parameter bindings and generated-composition report bindings, keeping emitted
+  composition artifacts self-contained.
+- Parser/lowerer diagnostics reject unknown enum-backed activation overrides and
+  keep enum leaves inside aggregate/list activation overrides, reusable-library
+  use-site overrides, direct `(on ...)` activation overrides, rules, conditions,
+  selectors, and other contexts closed for later slices.
 ### R14 — ISF enum transaction parameter defaults shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.16`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.17`.

@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -164,8 +164,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.16: support enum transaction params`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.17`
+  Status: `done`
+  Goal: `support scalar enum member values in activation parameter overrides`
+  Acceptance: `spawn, generated blocking do, and rule-trigger scalar parameter overrides accept local/package enum members, resolve to literal generated-top bindings, expose generated-composition binding values, and keep aggregate/list activation enum leaves plus other contexts fail-closed`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1269-isf-enum-member-actor-params.t t/1270-isf-enum-member-transaction-params.t t/1271-isf-enum-member-activation-params.t t/1249-isf-activation-parameter-constants.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.17: support enum activation params`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.18`
   Status: `pending`
-  Goal: `choose and implement the next enum or aggregate value/update context after transaction parameter enum defaults`
+  Goal: `choose and implement the next enum or aggregate value/update context after scalar activation override enum values`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -174,7 +181,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.17` | `pending` | The next enum or aggregate value/update context can be selected after transaction parameter enum defaults are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.18` | `pending` | The next enum or aggregate value/update context can be selected after scalar activation override enum values are stable. |
 
 ## Decisions
 
@@ -324,6 +331,14 @@ ISF-only type system.
   enum leaves, activation parameter overrides, reusable-library use-site
   overrides, and parameter-derived wait/storage semantics remain separate
   contracts.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.17` selects scalar activation
+  parameter overrides as the next enum member value context because generated
+  activation sites already statically specialize child instances and the
+  generated top must receive literal `?fsmc` parameter bindings. This slice
+  deliberately stays scalar-only: aggregate/list activation override enum
+  leaves, reusable-library use-site overrides, direct `(on ...)` activation
+  overrides, and parameter-derived wait/storage semantics remain separate
+  contracts.
 
 ## Open Questions
 
@@ -334,13 +349,14 @@ ISF-only type system.
   JSON expansion.
 - Which enum member expression/value contexts beyond actor constants,
   actor scalar parameter defaults, generated child transaction scalar
-  parameter defaults, transaction `set` RHS scalar values/expression operands,
-  transaction `switch` branch values, drive body RHS scalar values, and
-  drive-call scalar actual values/expression operands should ship next? This
-  remains deferred beyond `ISF-TYPE-AGGREGATE-PARITY.16`.
-- Which enum or aggregate value/update context should ship after transaction
-  parameter enum defaults? The current frontier selects this for
+  parameter defaults, scalar activation parameter overrides, transaction `set`
+  RHS scalar values/expression operands, transaction `switch` branch values,
+  drive body RHS scalar values, and drive-call scalar actual values/expression
+  operands should ship next? This remains deferred beyond
   `ISF-TYPE-AGGREGATE-PARITY.17`.
+- Which enum or aggregate value/update context should ship after scalar
+  activation override enum values? The current frontier selects this for
+  `ISF-TYPE-AGGREGATE-PARITY.18`.
 
 ## Blockers
 
@@ -366,6 +382,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.14` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.15` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1269-isf-enum-member-actor-params.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1269-isf-enum-member-actor-params.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1253-isf-actor-param-report.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.16` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1269-isf-enum-member-actor-params.t t/1270-isf-enum-member-transaction-params.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1269-isf-enum-member-actor-params.t t/1270-isf-enum-member-transaction-params.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1215-isf-spawn-parameter-binding.t t/1248-isf-rule-trigger-parameter-binding.t t/1249-isf-activation-parameter-constants.t t/1253-isf-actor-param-report.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.17` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1263-isf-enum-member-set-values.t t/1264-isf-enum-member-set-expression-values.t t/1265-isf-enum-member-switch-branch-values.t t/1266-isf-enum-member-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1269-isf-enum-member-actor-params.t t/1270-isf-enum-member-transaction-params.t t/1271-isf-enum-member-activation-params.t t/1249-isf-activation-parameter-constants.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -387,6 +404,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.14` | `ISF-TYPE-AGGREGATE-PARITY.14: support enum drive call expression values` | `Named drive-call actual expression enum member operand parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.15` | `ISF-TYPE-AGGREGATE-PARITY.15: support enum actor params` | `Actor scalar parameter default enum member parser/lowering/report slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.16` | `ISF-TYPE-AGGREGATE-PARITY.16: support enum transaction params` | `Generated child transaction scalar parameter default enum member parser/lowering/report slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.17` | `ISF-TYPE-AGGREGATE-PARITY.17: support enum activation params` | `Scalar activation parameter override enum member parser/lowering/report slice.` |
 
 ## Changelog
 
@@ -437,3 +455,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped generated child transaction scalar parameter default
   enum member values for `ISF-TYPE-AGGREGATE-PARITY.16` and advanced the
   frontier to `ISF-TYPE-AGGREGATE-PARITY.17`.
+- `2026-05-16`: Shipped scalar activation parameter override enum member values
+  for `ISF-TYPE-AGGREGATE-PARITY.17` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.18`.

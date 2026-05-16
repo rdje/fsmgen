@@ -694,11 +694,10 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
     }
 
     for my $rule (@{$actor->{rules} || []}) {
-        _reject_enum_member_value_contexts(
-            $rule->{actions},
+        _validate_rule_enum_member_value_contexts(
+            $rule,
             $actor,
             \%aggregate_roots,
-            "rule '$rule->{name}'",
         );
     }
 
@@ -804,6 +803,16 @@ sub _validate_transaction_enum_member_value_clause {
             }
             return 1;
         }
+    }
+
+    if ($head eq 'spawn' || $head eq 'do') {
+        _validate_activation_param_enum_member_values(
+            $clause,
+            $actor,
+            $aggregate_roots,
+            "$context $head",
+        );
+        return 1;
     }
 
     return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context);
@@ -918,6 +927,150 @@ sub _validate_transaction_param_enum_member_aggregate_leaf {
     return 1;
 }
 
+sub _validate_rule_enum_member_value_contexts {
+    my ($rule, $actor, $aggregate_roots) = @_;
+    my $rule_name = $rule->{name};
+
+    for my $action (@{$rule->{actions} || []}) {
+        if (ref($action) eq 'ARRAY'
+            && @$action
+            && defined($action->[0])
+            && !ref($action->[0])
+            && $action->[0] eq 'trigger')
+        {
+            _validate_activation_param_enum_member_values(
+                $action,
+                $actor,
+                $aggregate_roots,
+                "rule '$rule_name' trigger",
+            );
+            next;
+        }
+
+        _reject_enum_member_value_contexts(
+            $action,
+            $actor,
+            $aggregate_roots,
+            "rule '$rule_name'",
+        );
+    }
+
+    return 1;
+}
+
+sub _validate_activation_param_enum_member_values {
+    my ($clause, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context)
+        unless ref($clause) eq 'ARRAY' && @$clause;
+
+    my $head = $clause->[0];
+    return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context)
+        unless defined($head) && !ref($head);
+
+    my $start = $head eq 'spawn' ? 4 : 2;
+    return 1 if $#$clause < $start;
+
+    my $instance = $head eq 'spawn' ? $clause->[3] : $clause->[1];
+    for my $structural_value ($clause->[1], ($head eq 'spawn' ? $clause->[3] : ())) {
+        _reject_enum_member_value_contexts(
+            $structural_value,
+            $actor,
+            $aggregate_roots,
+            $context,
+        );
+    }
+    $instance = 'unknown' if !defined($instance) || ref($instance) || !length($instance);
+
+    for my $subclause (@{$clause}[$start .. $#$clause]) {
+        if (ref($subclause) eq 'ARRAY'
+            && @$subclause
+            && defined($subclause->[0])
+            && !ref($subclause->[0])
+            && $subclause->[0] eq 'params')
+        {
+            _validate_activation_params_clause_enum_member_values(
+                $subclause,
+                $actor,
+                $aggregate_roots,
+                "$context instance '$instance'",
+            );
+            next;
+        }
+
+        _reject_enum_member_value_contexts($subclause, $actor, $aggregate_roots, $context);
+    }
+
+    return 1;
+}
+
+sub _validate_activation_params_clause_enum_member_values {
+    my ($params_clause, $actor, $aggregate_roots, $context) = @_;
+
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        return _reject_enum_member_value_contexts($entry, $actor, $aggregate_roots, $context)
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+
+        my ($name, $value) = @$entry;
+        return _reject_enum_member_value_contexts($entry, $actor, $aggregate_roots, $context)
+            unless defined($name) && !ref($name) && length($name);
+
+        _validate_activation_param_enum_member_value(
+            $value,
+            $actor,
+            $aggregate_roots,
+            "$context parameter '$name'",
+        );
+    }
+
+    return 1;
+}
+
+sub _validate_activation_param_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+
+    if (!ref($value)) {
+        my $member = _enum_member_value_token($value, $aggregate_roots);
+        _validate_enum_member_value($member, $actor, $context)
+            if defined $member;
+        return 1;
+    }
+
+    return 1 unless ref($value) eq 'ARRAY';
+
+    for my $item (@$value) {
+        _validate_activation_param_enum_member_aggregate_leaf(
+            $item,
+            $actor,
+            $aggregate_roots,
+            $context,
+        );
+    }
+
+    return 1;
+}
+
+sub _validate_activation_param_enum_member_aggregate_leaf {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+
+    if (!ref($value)) {
+        my $member = _enum_member_value_token($value, $aggregate_roots);
+        confess "Error: $context uses unsupported aggregate/list override leaf '$member'; activation parameter aggregate/list overrides accept numeric, exact-width, and actor-constant leaves only, while enum member leaves remain deferred\n"
+            if defined $member;
+        return 1;
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        _validate_activation_param_enum_member_aggregate_leaf(
+            $_,
+            $actor,
+            $aggregate_roots,
+            $context,
+        ) for @$value;
+    }
+
+    return 1;
+}
+
 sub _validate_drive_enum_member_value_contexts {
     my ($drive_name, $drive, $actor, $aggregate_roots) = @_;
     for my $entry (@{$drive->{body} || []}) {
@@ -996,7 +1149,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }

@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.17` is the active PNT
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.18` is the active PNT
   frontier. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -77,9 +77,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   child scheduled `.fsm` `+params`, generated-composition child parameter
   summaries, and default instance bindings while keeping aggregate/list
   parameter enum leaves, activation parameter overrides, reusable-library
-  use-site overrides, and other contexts deferred. The next slice selects the
-  next enum or aggregate value/update context after transaction parameter enum
-  defaults.
+  use-site overrides, and other contexts deferred.
+  `ISF-TYPE-AGGREGATE-PARITY.17` then shipped scalar activation parameter
+  override enum values for local and package enums on spawn, generated blocking
+  `do`, and rule-trigger generated activation sites, resolving them to literal
+  generated-top parameter bindings while keeping aggregate/list activation enum
+  leaves, reusable-library use-site overrides, direct `(on ...)` activation
+  overrides, and other contexts deferred. The next slice selects the next enum
+  or aggregate value/update context after scalar activation override enum
+  values.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated

@@ -503,7 +503,7 @@ sub _generated_child_transaction_refs {
                 $s{$c->[1]} = 1;
                 next;
             }
-            if ($c->[0] eq 'do' && @{_do_parameter_overrides($c, $tx->{name}, 'transaction body', $constant_values)}) {
+            if ($c->[0] eq 'do' && @{_do_parameter_overrides($c, $tx->{name}, 'transaction body', $constant_values, $actor)}) {
                 $s{$c->[1]} = 1;
             }
         }
@@ -514,7 +514,7 @@ sub _generated_child_transaction_refs {
             next unless ref($action) eq 'ARRAY' && @$action;
             next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
             $s{$action->[1]} = 1
-                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values)};
+                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values, $actor)};
         }
     }
     return %s;
@@ -545,7 +545,7 @@ sub _rule_trigger_generated_refs {
                 owner_kind          => 'rule',
                 trigger_ordinal     => $ordinal,
                 trigger_source      => _rule_trigger_source_name($rule_name, $target, $ordinal),
-                parameter_overrides => _trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values),
+                parameter_overrides => _trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values, $actor),
                 port_bindings       => _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
             };
         }
@@ -1218,7 +1218,7 @@ sub _validate_child_transaction_refs($self, $actor) {
                 $generated_children{$target} = 1;
             }
             $generated_children{$target} = 1
-                if $keyword eq 'do' && @{_do_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values)};
+                if $keyword eq 'do' && @{_do_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values, $actor)};
 
             push @child_refs, {
                 tx      => $tx,
@@ -1243,7 +1243,7 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Rule '$rule_name': trigger target '$target' is not a declared transaction\n"
                 unless $transactions{$target};
             $generated_children{$target} = 1
-                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values)};
+                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values, $actor)};
         }
     }
 
@@ -1280,7 +1280,7 @@ sub _validate_child_transaction_refs($self, $actor) {
         my %declared_params = map {
             $_->{name} => $_
         } @{_transaction_param_declarations($transaction_by_name{$target}, $actor)};
-        for my $override (@{_activation_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values)}) {
+        for my $override (@{_activation_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values, $actor)}) {
             my $name = $override->{name};
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
                 unless exists $declared_params{$name};
@@ -2224,12 +2224,12 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       {
-            my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children, $constant_values);
+            my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children, $constant_values, $actor);
             push @doc, $do_ref;
             push @spc, _clone_isf_value($do_ref) if $do_ref->{generated_child};
             push @st, _ir_do($cl, $tn, $si++, $do_ref);
         }
-        elsif ($k eq 'spawn')    { push @spc, _spawn_ref_from_clause($cl,$tn,$constant_values); push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
+        elsif ($k eq 'spawn')    { push @spc, _spawn_ref_from_clause($cl,$tn,$constant_values,$actor); push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
         elsif ($k eq 'await_all') { push @st, _ir_sync_all($tn,$si++,\@dps); @dps = (); }
         elsif ($k eq 'await_any') { push @st, _ir_sync_any($tn,$si++,\@dps); @dps = (); }
     }
@@ -2733,12 +2733,12 @@ sub _transaction_param_declarations {
 }
 
 sub _spawn_ref_from_clause {
-    my ($clause, $tn, $constant_values) = @_;
+    my ($clause, $tn, $constant_values, $actor) = @_;
     my $instance = $clause->[3] // "${tn}_spawn";
     my $ref = {
         child => $clause->[1],
         instance => $instance,
-        parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body', $constant_values),
+        parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body', $constant_values, $actor),
     };
     my $domain = _activation_domain_from_clause($clause, $tn, 'transaction body');
     $ref->{domain} = $domain if defined $domain;
@@ -2748,7 +2748,7 @@ sub _spawn_ref_from_clause {
 }
 
 sub _do_ref_from_clause {
-    my ($clause, $tn, $ordinal, $generated_children, $constant_values) = @_;
+    my ($clause, $tn, $ordinal, $generated_children, $constant_values, $actor) = @_;
     my $child = $clause->[1];
     my $generated_child = $generated_children && $generated_children->{$child} ? 1 : 0;
     my $ref = {
@@ -2757,7 +2757,7 @@ sub _do_ref_from_clause {
         generated_child => $generated_child,
     };
 
-    my $overrides = _do_parameter_overrides($clause, $tn, 'transaction body', $constant_values);
+    my $overrides = _do_parameter_overrides($clause, $tn, 'transaction body', $constant_values, $actor);
     if ($generated_child) {
         my $instance = _generated_do_instance_name($tn, $child, $ordinal);
         $ref->{instance} = $instance;
@@ -2772,22 +2772,22 @@ sub _do_ref_from_clause {
 }
 
 sub _spawn_parameter_overrides {
-    my ($clause, $tn, $label, $constant_values) = @_;
-    return _activation_parameter_overrides($clause, $tn, $label, $constant_values);
+    my ($clause, $tn, $label, $constant_values, $actor) = @_;
+    return _activation_parameter_overrides($clause, $tn, $label, $constant_values, $actor);
 }
 
 sub _do_parameter_overrides {
-    my ($clause, $tn, $label, $constant_values) = @_;
-    return _activation_parameter_overrides($clause, $tn, $label, $constant_values);
+    my ($clause, $tn, $label, $constant_values, $actor) = @_;
+    return _activation_parameter_overrides($clause, $tn, $label, $constant_values, $actor);
 }
 
 sub _trigger_parameter_overrides {
-    my ($clause, $rule_name, $label, $constant_values) = @_;
-    return _activation_parameter_overrides($clause, $rule_name, $label, $constant_values);
+    my ($clause, $rule_name, $label, $constant_values, $actor) = @_;
+    return _activation_parameter_overrides($clause, $rule_name, $label, $constant_values, $actor);
 }
 
 sub _activation_parameter_overrides {
-    my ($clause, $tn, $label, $constant_values) = @_;
+    my ($clause, $tn, $label, $constant_values, $actor) = @_;
     return [] unless ref($clause) eq 'ARRAY' && @$clause;
     my $keyword = $clause->[0];
     return [] unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do' || $keyword eq 'trigger');
@@ -2803,7 +2803,7 @@ sub _activation_parameter_overrides {
             && defined($subclause->[0])
             && !ref($subclause->[0])
             && $subclause->[0] eq 'params';
-        return _parse_activation_params_clause($subclause, $tn, $keyword, $instance, $label, $constant_values);
+        return _parse_activation_params_clause($subclause, $tn, $keyword, $instance, $label, $constant_values, $actor);
     }
     return [];
 }
@@ -2834,12 +2834,12 @@ sub _activation_domain_from_clause {
 }
 
 sub _parse_spawn_params_clause {
-    my ($params_clause, $tn, $instance, $label) = @_;
-    return _parse_activation_params_clause($params_clause, $tn, 'spawn', $instance, $label);
+    my ($params_clause, $tn, $instance, $label, $constant_values, $actor) = @_;
+    return _parse_activation_params_clause($params_clause, $tn, 'spawn', $instance, $label, $constant_values, $actor);
 }
 
 sub _parse_activation_params_clause {
-    my ($params_clause, $tn, $activation_kind, $instance, $label, $constant_values) = @_;
+    my ($params_clause, $tn, $activation_kind, $instance, $label, $constant_values, $actor) = @_;
     _validate_activation_params_clause_shape($params_clause, $tn, $activation_kind, $instance, $label);
 
     my @overrides;
@@ -2849,6 +2849,8 @@ sub _parse_activation_params_clause {
             $value,
             "Transaction '$tn': $activation_kind instance '$instance' parameter '$name'",
             $constant_values,
+            $actor,
+            1,
         );
         push @overrides, {
             name  => $name,
@@ -3263,26 +3265,37 @@ sub _validate_transaction_param_aggregate_leaf_value {
 }
 
 sub _resolve_activation_param_value {
-    my ($value, $context, $constant_values) = @_;
+    my ($value, $context, $constant_values, $actor, $allow_enum_member) = @_;
     $constant_values ||= {};
+    $allow_enum_member //= 0;
 
     if (!ref($value)) {
-        confess "$context uses undefined parameter value; activation parameter values accept numeric, exact-width, actor-constant, and aggregate/list literal values only\n"
+        confess "$context uses undefined parameter value; activation parameter values accept numeric, exact-width, actor-constant, scalar enum member, and aggregate/list literal values only\n"
             unless defined($value);
         return _clone_isf_value($value)
             if _is_numeric_or_exact_width_literal($value);
         return _clone_isf_value($constant_values->{$value})
             if _is_hdl_identifier($value) && exists $constant_values->{$value};
+        if (_is_enum_member_reference($value)) {
+            confess "$context uses unsupported aggregate/list override leaf '$value'; activation parameter aggregate/list overrides accept numeric, exact-width, and actor-constant leaves only, while enum member leaves remain deferred\n"
+                unless $allow_enum_member;
+            my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
+            confess "$context references unknown enum member '$value'\n"
+                unless defined($resolved_value) && !ref($resolved_value);
+            confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless defined _non_negative_integer_from_literal($resolved_value);
+            return _clone_isf_value($resolved_value);
+        }
 
-        confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, and aggregate/list literal values only\n";
+        confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, scalar enum member, and aggregate/list literal values only\n";
     }
 
-    confess "$context uses unsupported parameter value shape; activation parameter values accept non-empty aggregate/list literal values only\n"
+    confess "$context uses unsupported parameter value shape; activation parameter values accept non-empty aggregate/list literal values only, with enum member leaves deferred\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
     return [
         map {
-            _resolve_activation_param_value($_, $context, $constant_values)
+            _resolve_activation_param_value($_, $context, $constant_values, $actor, 0)
         } @$value
     ];
 }

@@ -137,11 +137,12 @@ transaction-local `params` clause, emits child defaults as scheduled child
 parameter declarations on non-generated transactions, preserves per-instance
 override lists in the parent lowerer IR, and applies those overrides through
 the generated top. The shipped value domain is scalar/exact-width literals,
-actor-local constants, and compatible aggregate/list literals whose scalar
-leaves are literals or actor-local constants. Constant names are resolved to
-literal values before generated-top emission. Actor parameters, transaction
-parameters, runtime signals, and arbitrary expressions remain outside the
-shipped value domain.
+actor-local constants, scalar local or package-qualified enum members, and
+compatible aggregate/list literals whose scalar leaves are literals or
+actor-local constants. Constant names and scalar enum members are resolved to
+literal values before generated-top emission. Enum leaves inside aggregate/list
+activation override values, actor parameters, transaction parameters, runtime
+signals, and arbitrary expressions remain outside the shipped value domain.
 
 ### General Transaction Activation Parameter Overrides
 
@@ -198,7 +199,10 @@ one-cycle trigger source and input payload sources, then a generated handoff DT
 drives the instance start and input handoff ports under that source. The
 generated top applies the static `(params ...)` overrides on the child
 `?fsmc` instance. The rule wires but does not await the generated child `done`
-handoff, and output bindings remain unsupported.
+handoff, and output bindings remain unsupported. Scalar enum member override
+values are resolved to literal generated-top parameter bindings for the shipped
+spawn, generated blocking `do`, and rule-trigger subset; enum leaves inside
+aggregate/list override values still fail closed.
 
 Direct `(on port body...)` remains the entry/idle-state guard and accepts only
 `(sample port as name)` nested body clauses. `(on start (params (WIDTH 16)))`
@@ -279,14 +283,15 @@ parameter defaults backed by local or package-qualified enum members,
 generated child transaction scalar parameter defaults backed by local or
 package-qualified enum members,
 actor-local constants for selected static specialization values, and
-compatible aggregate/list literal parameter values. Direct transaction `set`
-RHS scalar values and scalar operands inside transaction `set` RHS expressions
-may consume local and package-qualified enum members, transaction `switch`
-branch values may consume local and package-qualified enum members, and scalar
-drive body RHS values may consume local and package-qualified enum members.
-Named drive-call scalar actual values may also consume local and
-package-qualified enum members, and drive-call actual expressions may use enum
-members as scalar operands.
+compatible aggregate/list literal parameter values. Scalar activation parameter
+overrides may now also consume local and package-qualified enum members. Direct
+transaction `set` RHS scalar values and scalar operands inside transaction
+`set` RHS expressions may consume local and package-qualified enum members,
+transaction `switch` branch values may consume local and package-qualified enum
+members, and scalar drive body RHS values may consume local and
+package-qualified enum members. Named drive-call scalar actual values may also
+consume local and package-qualified enum members, and drive-call actual
+expressions may use enum members as scalar operands.
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as
 `frame.mode` or `lanes[0]`, either directly or as scalar operands inside
@@ -296,10 +301,10 @@ flag_in)` or `(set lanes[0] bit_in)`. Aggregate member paths outside
 transaction `set` RHS values or direct targets, subaggregate
 operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, actor scalar parameter
-defaults, generated child transaction scalar parameter defaults, transaction
-`set` RHS scalar values/expression operands, transaction `switch` branch
-values, or drive body RHS scalar values or drive-call actual scalar
-values/expression operands,
+defaults, generated child transaction scalar parameter defaults, scalar
+activation parameter overrides, transaction `set` RHS scalar values/expression
+operands, transaction `switch` branch values, or drive body RHS scalar values
+or drive-call actual scalar values/expression operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 

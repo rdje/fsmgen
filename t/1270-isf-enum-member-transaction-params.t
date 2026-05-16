@@ -175,7 +175,7 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor enum_activation_param_still_deferred
+(actor enum_activation_param_aggregate_leaf_still_deferred
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -184,17 +184,17 @@ ISF
     (input start)
     (output done))
   (transaction main
-    (on start)
-    (spawn worker as w0
-      (params
-        (DEFAULT_MODE mode.BUSY))))
-  (transaction worker
-    (params
-      (DEFAULT_MODE 0))
-    (complete done)))
+	    (on start)
+	    (spawn worker as w0
+	      (params
+	        (DEFAULT_MODES (mode.BUSY 1)))))
+	  (transaction worker
+	    (params
+	      (DEFAULT_MODES (0 1)))
+	    (complete done)))
 ISF
-        qr/transaction 'main' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
-        'activation parameter enum overrides remain deferred',
+        qr/transaction 'main' spawn instance 'w0' parameter 'DEFAULT_MODES' uses unsupported aggregate\/list override leaf 'mode\.BUSY'; activation parameter aggregate\/list overrides accept numeric, exact-width, and actor-constant leaves only, while enum member leaves remain deferred/,
+        'aggregate/list activation parameter enum override leaves remain deferred',
     );
 };
 
