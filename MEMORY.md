@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum switch branch values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.11` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.12`.
+- Transaction `switch` branch values now accept local enum members such as
+  `mode.BUSY` and package-qualified enum members such as `shared.mode.BUSY`.
+- The parser resolves switch branch enum values before lowering, preserves
+  authored branch values in scheduled `.fsm`, and rejects unknown enum members
+  in branch values.
+- Enum members in switch selectors, conditions, set targets, rules, drives,
+  parameters, and other non-shipped contexts remain deferred.
 ## 2026-05-16: ISF enum set expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.10` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

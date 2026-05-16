@@ -431,6 +431,7 @@ sub build_isf_public_interface_contract {
             't/1262-isf-aggregate-storage-leaf-expression-reads.t',
             't/1263-isf-enum-member-set-values.t',
             't/1264-isf-enum-member-set-expression-values.t',
+            't/1265-isf-enum-member-switch-branch-values.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum switch branch values shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.11` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.12`, selecting the
+  next enum or aggregate value/update context after enum switch branch values.
+- Transaction `switch` branch values now accept local and package-qualified
+  enum members while preserving authored branch values in scheduled `.fsm`.
+- Enum members in switch selectors, conditions, set targets, rules, drives,
+  parameters, and other non-shipped contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum set expression operands shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.10` in

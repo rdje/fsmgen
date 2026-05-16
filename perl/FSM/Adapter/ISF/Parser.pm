@@ -748,7 +748,12 @@ sub _validate_transaction_enum_member_value_clause {
         _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context switch selector");
         for my $branch (@{$clause}[2 .. $#$clause]) {
             next unless ref($branch) eq 'ARRAY' && @$branch;
-            _reject_enum_member_value_contexts($branch->[0], $actor, $aggregate_roots, "$context switch branch value");
+            _validate_transaction_switch_branch_enum_member_value(
+                $branch->[0],
+                $actor,
+                $aggregate_roots,
+                "$context switch branch value",
+            );
             _validate_transaction_enum_member_value_contexts(
                 [ @{$branch}[1 .. $#$branch] ],
                 $actor,
@@ -789,6 +794,17 @@ sub _validate_transaction_set_rhs_enum_member_values {
         }
     }
 
+    return 1;
+}
+
+sub _validate_transaction_switch_branch_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($value, $actor, $aggregate_roots, $context)
+        if ref($value);
+
+    my $member = _enum_member_value_token($value, $aggregate_roots);
+    _validate_enum_member_value($member, $actor, $context)
+        if defined $member;
     return 1;
 }
 

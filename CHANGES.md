@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum switch branch values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.11`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.12`.
+- Transaction `switch` branch values now accept local and package-qualified
+  enum members while preserving authored branch values in scheduled `.fsm`.
+- Parser diagnostics reject unknown enum branch values and keep enum members
+  in switch selectors, conditions, set targets, rules, drives, parameters, and
+  other contexts closed for later slices.
+- Added focused local/package coverage with scheduled `.fsm` review artifacts
+  and strict CLI HDL generation.
 ### R14 — ISF enum set expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.10`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.11`.

@@ -400,17 +400,17 @@ limitations are:
   members such as `shared.mode.BUSY`; those constants preserve the authored
   token in `+constants` and schedule reports while resolving to non-negative
   integer values for static waits and existing static activation-parameter
-  overrides. Direct transaction `set` RHS scalar values and scalar operands
-  inside transaction `set` RHS expressions may also use local and
-  package-qualified enum members. Transaction `set` RHS clauses may read
-  scalar aggregate leaves from declared aggregate storage carriers directly
-  or as operands inside transaction `set` RHS expressions, and direct
-  transaction `set` targets may write scalar aggregate leaves on those same
-  carriers. Enum members in expression operator position, conditions, set
-  targets, rules, drives, parameters, and other non-transaction-set RHS
-  contexts remain backlog, as do aggregate paths outside transaction `set` RHS
-  values or direct targets, subaggregate operands/updates, and aggregate
-  interface/transaction/bank carriers.
+  overrides. Direct transaction `set` RHS scalar values, scalar operands
+  inside transaction `set` RHS expressions, and transaction `switch` branch
+  values may also use local and package-qualified enum members. Transaction
+  `set` RHS clauses may read scalar aggregate leaves from declared aggregate
+  storage carriers directly or as operands inside transaction `set` RHS
+  expressions, and direct transaction `set` targets may write scalar aggregate
+  leaves on those same carriers. Enum members in expression operator position,
+  conditions, switch selectors, set targets, rules, drives, parameters, and
+  other non-shipped contexts remain backlog, as do aggregate paths outside
+  transaction `set` RHS values or direct targets, subaggregate
+  operands/updates, and aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

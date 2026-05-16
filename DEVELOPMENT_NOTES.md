@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum switch branch values reuse selector lowering
+- `ISF-TYPE-AGGREGATE-PARITY.11` selects transaction `switch` branch values
+  as the next enum context because the scheduled `.fsm` selector path already
+  supports enum-valued selector branches and reaches HDL cleanly.
+- The parser validates branch enum members before lowering, preserving the
+  authored branch token in the scheduled `.fsm` review artifact.
+- Switch selectors and transaction condition expressions remain deferred. A
+  condition-expression probe exposed a separate computed-test equality
+  boundary, so that context needs its own later slice instead of being bundled
+  into branch-value support.
 ## 2026-05-16: enum set expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.10` widens the enum member path from direct
   transaction `set` RHS scalar values to scalar operands inside transaction

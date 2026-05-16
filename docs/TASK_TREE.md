@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-TYPE-AGGREGATE-PARITY` | `active` | `R14` | `ISF-TYPE-AGGREGATE-PARITY.11` | [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md) |
+| `ISF-TYPE-AGGREGATE-PARITY` | `active` | `R14` | `ISF-TYPE-AGGREGATE-PARITY.12` | [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md) |
 
 ## Proposed Task Trees
 

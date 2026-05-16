@@ -279,9 +279,10 @@ banks, and other width-bearing declarations fail closed. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
 `+enums`. Enum members are consumed by actor constants and by direct
 transaction `set` RHS scalar values or scalar operands inside transaction
-`set` RHS expressions in the current ISF surface. Enum members in expression
-operator position, guards, switch branches, parameter defaults, and typed
-aggregate carriers do not consume enum member references yet.
+`set` RHS expressions, and by transaction `switch` branch values in the
+current ISF surface. Enum members in expression operator position, guards,
+switch selectors, parameter defaults, and typed aggregate carriers do not
+consume enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -301,10 +302,11 @@ transaction ports, and aggregate storage banks remain deferred. Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
-outside actor constants and transaction `set` RHS scalar values or expression
-operands, additional aggregate carriers, aggregate field/slice/update
-lowering, incompatible enum values, aggregate shape mismatches, and ambiguous
-subaggregate updates remain owned by later `ISF-TYPE-AGGREGATE-PARITY` leaves.
+outside actor constants, transaction `set` RHS scalar values or expression
+operands, and transaction `switch` branch values, additional aggregate
+carriers, aggregate field/slice/update lowering, incompatible enum values,
+aggregate shape mismatches, and ambiguous subaggregate updates remain owned by
+later `ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -2672,6 +2674,7 @@ Focused tests:
 - [t/1262-isf-aggregate-storage-leaf-expression-reads.t](../t/1262-isf-aggregate-storage-leaf-expression-reads.t)
 - [t/1263-isf-enum-member-set-values.t](../t/1263-isf-enum-member-set-values.t)
 - [t/1264-isf-enum-member-set-expression-values.t](../t/1264-isf-enum-member-set-expression-values.t)
+- [t/1265-isf-enum-member-switch-branch-values.t](../t/1265-isf-enum-member-switch-branch-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2728,12 +2731,13 @@ Focused tests:
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum
-  member values and expression operands, actor-owned aggregate storage
-  variable carriers, transaction `set` RHS aggregate leaf reads, transaction
-  `set` RHS expression aggregate leaf operands, transaction `set` target
-  aggregate leaf writes, aggregate/list parameter-literal, and data-operation
-  evidence model. Enum member references outside actor constants or
-  transaction `set` RHS scalar values/expression operands, aggregate
+  member values and expression operands, transaction `switch` branch enum
+  values, actor-owned aggregate storage variable carriers, transaction `set`
+  RHS aggregate leaf reads, transaction `set` RHS expression aggregate leaf
+  operands, transaction `set` target aggregate leaf writes, aggregate/list
+  parameter-literal, and data-operation evidence model. Enum member references
+  outside actor constants, transaction `set` RHS scalar values/expression
+  operands, or transaction `switch` branch values, aggregate
   interface/transaction/bank carriers, aggregate member paths outside direct
   transaction `set` RHS values or target tokens, subaggregate updates/operands,
   aggregate field/slice/update lowering, and broad aggregate/record width
