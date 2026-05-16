@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate inline drive RHS values stay direct-scalar-only
+- `ISF-TYPE-AGGREGATE-PARITY.37` widens aggregate storage leaf reads into
+  inline drive assignment scalar RHS values.
+- The parser validates RHS scalar values in labeled and unlabeled inline drive
+  assignment entries while keeping aggregate inline drive targets closed.
+- Inline drive RHS expressions stay closed until the expression-operand walk is
+  explicitly documented and covered.
 ## 2026-05-16: aggregate drive-call actual expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.36` widens aggregate storage leaf reads from
   direct named drive-call actual values to scalar operands inside drive-call
@@ -7,9 +14,9 @@ This document captures engineering rationale, design constraints, and working de
 - The parser walks known named drive-call actual expression trees, validates
   aggregate member/item paths against declared actor-owned aggregate storage,
   and rejects aggregate paths in expression operator position.
-- Subaggregate operands and inline drive assignment aggregates remain closed
-  because packed aggregate expression semantics and inline drive ownership are
-  still separate contracts.
+- Subaggregate operands remain closed because packed aggregate expression
+  semantics are still a separate contract; `.37` covers only direct inline
+  drive RHS values.
 ## 2026-05-16: aggregate drive-call actuals stay direct-scalar-only
 - `ISF-TYPE-AGGREGATE-PARITY.35` widens aggregate storage leaf reads into named
   drive-call scalar actual values.

@@ -1546,7 +1546,8 @@ sub _validate_transaction_aggregate_storage_clause {
             return 1;
         }
 
-        return _reject_aggregate_storage_paths($clause, $aggregate_roots, "$context drive");
+        _validate_inline_drive_aggregate_storage_values($clause, $aggregate_roots, $context);
+        return 1;
     }
 
     return _reject_aggregate_storage_paths($clause, $aggregate_roots, $context);
@@ -1703,6 +1704,54 @@ sub _validate_drive_call_actual_aggregate_storage_value {
     }
 
     return 1;
+}
+
+sub _validate_inline_drive_aggregate_storage_values {
+    my ($clause, $aggregate_roots, $context) = @_;
+
+    my $first_assignment = (ref($clause->[1]) eq 'ARRAY') ? 1 : 2;
+    return 1 if $first_assignment > $#$clause;
+
+    for my $entry (@{$clause}[$first_assignment .. $#$clause]) {
+        return _reject_aggregate_storage_paths(
+            $entry,
+            $aggregate_roots,
+            "$context inline drive",
+        ) unless ref($entry) eq 'ARRAY' && @$entry;
+
+        _reject_aggregate_storage_paths(
+            $entry->[0],
+            $aggregate_roots,
+            "$context inline drive target",
+        );
+        _validate_inline_drive_aggregate_storage_rhs(
+            $entry->[1],
+            $aggregate_roots,
+            "$context inline drive RHS",
+        ) if @$entry >= 2;
+        for my $extra (@{$entry}[2 .. $#$entry]) {
+            _reject_aggregate_storage_paths(
+                $extra,
+                $aggregate_roots,
+                "$context inline drive assignment",
+            );
+        }
+    }
+
+    return 1;
+}
+
+sub _validate_inline_drive_aggregate_storage_rhs {
+    my ($rhs, $aggregate_roots, $context) = @_;
+
+    if (!ref($rhs)) {
+        my $path = _aggregate_storage_path_token($rhs, $aggregate_roots);
+        _validate_aggregate_storage_leaf_read_path($path, $aggregate_roots, $context)
+            if defined $path;
+        return 1;
+    }
+
+    return _reject_aggregate_storage_paths($rhs, $aggregate_roots, "$context expression");
 }
 
 sub _validate_rule_assignment_aggregate_storage_rhs {
@@ -1884,7 +1933,7 @@ sub _reject_aggregate_storage_paths {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $path = _aggregate_storage_path_token($value, $aggregate_roots);
-        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values or operands\n"
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values, or drive-call actual scalar values or operands\n"
             if defined $path;
         return 1;
     }

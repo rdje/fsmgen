@@ -157,7 +157,7 @@ ISF
   (rule expose_mode ready
     (frame.mode mode_in)))
 ISF
-        qr/rule 'expose_mode' assignment target references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values or operands/,
+        qr/rule 'expose_mode' assignment target references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values, or drive-call actual scalar values or operands/,
         'aggregate rule targets remain deferred',
     );
 };

@@ -134,27 +134,6 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_inline_drive_still_deferred
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output mode_out (width 2)))
-  (storage
-    (var frame (type frame_t)))
-  (transaction main
-    (on start)
-    (drive inline_publish
-      (mode_out frame.mode))))
-ISF
-        qr/transaction 'main' drive references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, or drive-call actual scalar values or operands/,
-        'inline drive aggregate RHS values remain deferred',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
 (actor aggregate_drive_call_subaggregate_actual
   (types
     (type payload_t (list bit (bits 2)))

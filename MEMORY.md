@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate inline drive RHS values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.37` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.38`.
+- Inline drive assignment scalar RHS values now accept scalar aggregate
+  storage leaves such as `frame.mode` and `lanes[1]`.
+- Scheduled `.fsm` state assignments and strict CLI HDL generation preserve
+  and consume the authored aggregate RHS tokens.
+- Inline drive targets, aggregate operands inside inline drive RHS
+  expressions, and subaggregate RHS values remain deferred.
 ## 2026-05-16: ISF aggregate named drive-call actual expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.36` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
@@ -18,8 +28,9 @@ This is the live continuity document for fast session recovery after crashes, re
   leaves such as `frame.mode` and `lanes[1]`.
 - Scheduled `.fsm` drive-parameter assignments and strict CLI HDL generation
   preserve and consume the authored aggregate actual tokens.
-- Drive-call actual expressions, inline drive assignment aggregates, and
-  subaggregate actual values remain deferred.
+- This direct-value slice left drive-call actual expressions, inline drive
+  assignment aggregate contexts, and subaggregate actual values to follow-on
+  leaves; `.36` and `.37` now ship the bounded expression/value contexts.
 ## 2026-05-16: ISF aggregate named drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.34` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

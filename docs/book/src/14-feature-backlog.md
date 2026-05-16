@@ -329,12 +329,14 @@ aggregate leaves, such as `(drive publish (mode_out frame.mode))` or
 `(drive publish (mode_out (+ frame.mode mode_in)))`. Named drive-call scalar
 actual values and scalar operands inside actual expressions may read scalar
 aggregate leaves, such as `(drive publish frame.mode)` or
-`(drive publish (+ frame.mode mode_in))`. Aggregate member
+`(drive publish (+ frame.mode mode_in))`. Inline drive assignment scalar RHS
+values may read scalar aggregate leaves, such as
+`(drive inline_publish (mode_out frame.mode))`. Aggregate member
 paths outside transaction `set` RHS values, direct transaction `set` targets,
 transaction condition expression operands, rule assignment RHS values/expression
 operands, rule guard expression operands, or drive body RHS scalar
-values/expression operands, or drive-call actual scalar values/expression
-operands, subaggregate
+values/expression operands, inline drive assignment RHS scalar values, or
+drive-call actual scalar values/expression operands, subaggregate
 operands/updates, aggregate
 interface or transaction ports, aggregate storage banks, enum member
 references outside actor constants, actor parameter scalar
@@ -461,7 +463,9 @@ inside RHS expressions may read scalar aggregate storage leaves such as
 and drive targets remain backlog. Named drive-call scalar actual values may
 read scalar aggregate storage leaves, and drive-call actual expressions may
 read them as scalar operands; aggregate paths in drive-call actual expression
-operator position remain backlog.
+operator position remain backlog. Inline drive assignment scalar RHS values
+may read scalar aggregate storage leaves; aggregate paths in inline drive RHS
+expressions and inline drive targets remain backlog.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as
