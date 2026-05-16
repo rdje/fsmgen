@@ -56,21 +56,21 @@ ISF-only type system.
   Goal: `inventory current .fsm enum/type/aggregate support and the shipped ISF gap, then pin the first safe boundary`
   Acceptance: `task tree, spec, downstream handoff, mdBook backlog, public contract notes, and live docs state the current gap and first boundary without implying parser support that does not exist`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `087971d6 ISF-TYPE-AGGREGATE-PARITY.1: inventory parity boundary`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.2`
   Status: `done`
   Goal: `specify the ISF symbol-source contract for enum/type declarations and imports before parser widening`
   Acceptance: `source forms, import/source resolution, reuse of existing package/type machinery, diagnostics, lowered .fsm projection, schedule-report scope, and downstream impact are documented with focused acceptance tests identified`
   Verification: `mdbook build docs/book`; `git diff --check`
-  Commit: `pending`
+  Commit: `325bb9c9 ISF-TYPE-AGGREGATE-PARITY.2: specify type source contract`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.3`
-  Status: `pending`
+  Status: `done`
   Goal: `implement the first scalar type-alias reference path for ISF width-bearing declarations`
   Acceptance: `the parser/lowerer can resolve a documented scalar type alias through the selected symbol source and emit reviewable .fsm that preserves the established .fsm type semantics; unknown or aggregate aliases fail closed in this scalar-only slice`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `6dce0d9a ISF-TYPE-AGGREGATE-PARITY.3: ship scalar type aliases`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.4`
   Status: `pending`
@@ -146,9 +146,10 @@ ISF-only type system.
 ## Open Questions
 
 - Which bounded schedule-report summary keys should advertise accepted
-  enum/type declarations once parser support ships? This does not block
-  `ISF-TYPE-AGGREGATE-PARITY.3` because that leaf can start with generated
-  `.fsm` review artifacts and focused parser/lowering tests.
+  enum/type declarations? This remains deferred because
+  `ISF-TYPE-AGGREGATE-PARITY.3` deliberately shipped with generated `.fsm`
+  review artifacts and focused parser/lowering tests rather than schedule
+  JSON expansion.
 - Which static scalar value context should receive enum member support first?
   This is owned by `ISF-TYPE-AGGREGATE-PARITY.4`.
 

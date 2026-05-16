@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF task-tree metadata corrected
+- Corrected `docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md` so completed leaves
+  `.1`, `.2`, and `.3` record their actual commit IDs and `.3` records the
+  validation gate that shipped scalar type aliases.
+- This is crash-recovery metadata synchronization only. The active frontier
+  remains `ISF-TYPE-AGGREGATE-PARITY.4`, with no compiler, public contract,
+  generated artifact, schedule-report, or HDL behavior change.
 ### R14 — ISF scalar type aliases shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.3`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.4`.

@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF task-tree leaf metadata corrected
+- Corrected [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md)
+  so leaves `.1`, `.2`, and `.3` now record their actual commit IDs and
+  `.3` records its completed verification instead of stale `pending` fields.
+- This is task-tree crash-recovery metadata synchronization only. The active
+  frontier remains `ISF-TYPE-AGGREGATE-PARITY.4`, and compiler behavior,
+  public syntax, generated `.fsm`, schedule reports, and HDL output are
+  unchanged.
 ## 2026-05-16: ISF scalar type aliases shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.3` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

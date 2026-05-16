@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: task-tree leaves must close their own metadata
+- After `ISF-TYPE-AGGREGATE-PARITY.3` was pushed, the task tree still carried
+  stale per-leaf `pending` fields even though the frontier and live docs were
+  correct. The recovery is intentionally metadata-only: record the actual
+  commit IDs and verification evidence before starting `.4`.
+- This preserves the project invariant that task-tree files are usable as
+  crash-recovery state, not just high-level roadmap prose.
 ## 2026-05-16: ISF scalar aliases reuse .fsm symbols
 - `ISF-TYPE-AGGREGATE-PARITY.3` implements the first executable parity slice
   by adapting ISF source declarations into the existing `.fsm`
