@@ -254,9 +254,10 @@ Additional actor clauses with mixed parser/scheduler behavior:
   names are rejected.
 - actor-level `(stage name property...)`, structurally validated as a
   non-empty scalar name plus list-form body entries; duplicate actor stage
-  names are rejected. This metadata is parser-carried for downstream
-  inspection only today; it is not copied into `LoweringIR`, schedule JSON,
-  generated `.fsm`, generated composition tops, or HDL.
+  names are rejected. Actor phase/stage metadata is parser-carried and
+  schedule-report visible through `actor_phases[]` and `actor_stages[]`, but
+  it still does not add generated `.fsm`, generated composition-top, or HDL
+  behavior.
 - `(resources ...)`, structurally validated as resource entries with
   `(arbiter priority|round_robin)` plus optional `(kind ...)` and
   `(users ...)`; `rule_slot` + `priority` resources are scheduler-enforced.
@@ -2028,8 +2029,11 @@ semantics remain deferred.
 Actor-level `(phase name property...)` and `(stage name property...)` metadata
 is structurally validated by the parser and carried in the actor shell for
 downstream consumers, but the scheduler does not enforce actor-level phase or
-stage semantics yet. That actor-level metadata is not copied into `LoweringIR`,
-schedule JSON, generated `.fsm`, generated composition tops, or HDL today.
+stage semantics yet. That actor-level metadata is copied into `LoweringIR`
+only for bounded public report projection: schedule JSON exposes
+`actor_phases[]` and `actor_stages[]` entries with each authored metadata
+`name` and parser-validated list-form `body`. Generated `.fsm`, generated
+composition tops, and HDL do not consume that actor-level metadata today.
 Transaction-level `(phase name property...)` remains the
 current pass-through state marker lowering. Transaction-level
 `(stage name (input ready_signal) (output valid_signal))` is the first shipped
@@ -2085,6 +2089,8 @@ fail-closed/deferred.
     "polarity": "active_low"
   },
   "watchdog": "65536",
+  "actor_phases": [],
+  "actor_stages": [],
   "actor_constants": [],
   "port_count": 0,
   "inputs": 0,
@@ -2181,6 +2187,12 @@ normalized `condition`, loop entry state, generated decision states, body
 start, generated body states, exit state, and authored body-clause count. The
 capability-manifest ISF public contract advertises the keys through
 `schedule_report_transaction_loop_keys`.
+The `actor_phases` and `actor_stages` arrays report parser-validated
+actor-level metadata without assigning runtime semantics to it. Each entry has
+the authored metadata `name` and a JSON-safe copy of the list-form `body`. The
+capability-manifest ISF public contract advertises those keys through
+`schedule_report_actor_phase_keys` and
+`schedule_report_actor_stage_keys`.
 The `transaction_stages` array reports the shipped ready/valid stage subset.
 Each entry has `transaction`, authored stage `name`, `kind =
 ready_valid_barrier`, generated `state`, `ready` input, and `valid` output.
@@ -2499,6 +2511,7 @@ Focused tests:
 - [t/1248-isf-rule-trigger-parameter-binding.t](../t/1248-isf-rule-trigger-parameter-binding.t)
 - [t/1249-isf-activation-parameter-constants.t](../t/1249-isf-activation-parameter-constants.t)
 - [t/1250-isf-spec-focused-test-index-audit.t](../t/1250-isf-spec-focused-test-index-audit.t)
+- [t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t)
 
 ## 12. Explicitly Deferred
 

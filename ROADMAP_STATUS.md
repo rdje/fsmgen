@@ -23,8 +23,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `DOWNSTREAM-ISSUE-REPRO-FLOW.1` then published a strict, format-agnostic
   downstream bug-reporting protocol plus `bin/fsmgen-issue-bundle`, so
   SPECFORGE can send runnable issue bundles without classifying the root cause
-  first. The next PNT selection should choose a fresh roadmap-aligned R14 task
-  tree before implementation.
+  first. `ISF-ACTOR-PHASE-STAGE-REPORTS.1` then exposed parser-validated
+  actor-level phase/stage metadata through bounded `actor_phases[]` and
+  `actor_stages[]` schedule-report arrays without assigning runtime semantics
+  or changing generated `.fsm`/HDL. The next PNT selection should choose a
+  fresh roadmap-aligned R14 task tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -133,6 +136,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `docs/DOWNSTREAM_ISSUE_REPORTING.md`, `bin/fsmgen-issue-bundle`, and
   `t/1251-fsmgen-issue-bundle-helper.t`, making downstream bug reports
   executable local reproduction bundles instead of prose-only reports.
+  `ISF-ACTOR-PHASE-STAGE-REPORTS.1` published bounded report-only
+  `actor_phases[]` and `actor_stages[]` metadata, advertised the new key
+  families through the public contract/manifest, and added
+  `t/1252-isf-actor-phase-stage-report.t`. Actor-level phase/stage runtime
+  semantics remain deferred.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

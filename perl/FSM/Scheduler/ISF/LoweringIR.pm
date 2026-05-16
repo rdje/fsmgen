@@ -113,6 +113,8 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
+        actor_phases => _actor_metadata_declarations($actor, 'phases'),
+        actor_stages => _actor_metadata_declarations($actor, 'stages'),
         constants  => _actor_constant_declarations($actor),
         params     => _transaction_param_declarations($tx),
         ports      => $ports,
@@ -258,6 +260,8 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         clock      => $actor->{clock},
         reset      => $actor->{reset},
         watchdog   => $actor->{watchdog},
+        actor_phases => _actor_metadata_declarations($actor, 'phases'),
+        actor_stages => _actor_metadata_declarations($actor, 'stages'),
         constants  => _actor_constant_declarations($actor),
         params     => _actor_param_declarations($actor),
         ports      => \@ports,
@@ -1520,6 +1524,19 @@ sub _actor_constant_declarations {
     }
 
     return \@constants;
+}
+
+sub _actor_metadata_declarations {
+    my ($actor, $key) = @_;
+    return [] unless ref($actor) eq 'HASH';
+    return [
+        map {
+            {
+                name => $_->{name},
+                body => _clone_isf_value($_->{body} || []),
+            }
+        } @{$actor->{$key} || []}
+    ];
 }
 
 sub _library_instance_metadata {

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: actor phase/stage metadata is report-only
+- `ISF-ACTOR-PHASE-STAGE-REPORTS.1` deliberately projects actor-level
+  `(phase ...)` and `(stage ...)` metadata into schedule JSON without making it
+  executable. The metadata was already parser-validated; the gap was that
+  downstream consumers had to depend on the raw parser actor hash to see it.
+- The public report entries preserve the authored metadata `name` and
+  JSON-safe list-form `body`. They do not create scheduled states, generated
+  composition-top behavior, HDL, assertions, or ready/valid semantics.
+- The public contract advertises only the bounded entry key families. Future
+  runtime semantics for actor-level phases or richer stage kinds still need
+  their own lowering, diagnostics, report, and HDL evidence.
 ## 2026-05-16: downstream bug reports are executable bundles
 - `DOWNSTREAM-ISSUE-REPRO-FLOW.1` deliberately makes the reporting protocol
   format-agnostic. SPECFORGE should not need to know whether a failure is

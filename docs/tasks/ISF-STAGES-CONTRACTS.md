@@ -145,8 +145,9 @@ Preservation points:
 - Actor stages are preserved as `$actor->{stages}` entries with `{ name, body }`.
 - Transaction phases, stages, and contracts remain in each transaction's
   `clauses` array until the scheduler validates supported transaction clauses.
-- Actor-level phase/stage metadata is not copied into `LoweringIR`, schedule
-  JSON, generated `.fsm`, generated composition tops, or HDL today.
+- Actor-level phase/stage metadata now has a bounded report-only bridge through
+  `actor_phases[]` and `actor_stages[]`; it still does not drive generated
+  `.fsm`, generated composition tops, or HDL behavior.
 - Transaction contract clauses are not copied into `LoweringIR`, schedule JSON,
   generated `.fsm`, generated checks, or HDL today.
 - Transaction stage clauses are not copied into `LoweringIR`, schedule JSON,
@@ -187,9 +188,9 @@ Missing lowering hooks:
 - There is no contract parser payload model, no temporal-check IR node, no
   generated assertion/check emitter, no reset/disable policy for checks, and
   no contract summary in `Emitter::JSON`.
-- Actor-level phase/stage metadata is parser-carried only. Any future semantic
-  use needs an explicit bridge from actor-shell metadata into LoweringIR and
-  schedule-report metadata before generated artifacts depend on it.
+- Actor-level phase/stage metadata is parser-carried and report-visible only.
+  Any future semantic use still needs an explicit bridge from actor-shell
+  metadata into executable LoweringIR before generated artifacts depend on it.
 
 ## ISF-STAGES-CONTRACTS.2 Stage Semantics
 
@@ -253,7 +254,8 @@ Ordering and interaction guarantees:
 
 Deferred stage features:
 
-- Actor-level stage metadata remains parser-carried only.
+- Actor-level stage metadata remains non-executable; it is parser-carried and
+  report-visible only.
 - Nested stages inside `when`, `switch`, and `repeat` remain fail-closed.
 - Stage-local `(latency ...)`, `(compute ...)`, and arbitrary body actions are
   deferred until their generated-state and check/report semantics are

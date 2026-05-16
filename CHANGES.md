@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF actor phase/stage metadata reports shipped
+- Completed `ISF-ACTOR-PHASE-STAGE-REPORTS.1`, closing the
+  `ISF-ACTOR-PHASE-STAGE-REPORTS` task tree.
+- Public ISF schedule reports now include `actor_phases[]` and
+  `actor_stages[]` arrays for parser-validated actor-level metadata.
+- Added bounded public contract and capability-manifest key families for those
+  entries: `schedule_report_actor_phase_keys` and
+  `schedule_report_actor_stage_keys`.
+- Added [t/1252-isf-actor-phase-stage-report.t](t/1252-isf-actor-phase-stage-report.t)
+  to prove in-process and CLI schedule JSON projection and to confirm the
+  metadata does not create scheduled states.
+- Runtime semantics for actor-level phases/stages remain deferred; generated
+  `.fsm`, generated composition tops, and HDL output are unchanged.
 ### R14 — downstream issue-bundle reporting flow published
 - Completed `DOWNSTREAM-ISSUE-REPRO-FLOW.1`, closing the
   `DOWNSTREAM-ISSUE-REPRO-FLOW` task tree.

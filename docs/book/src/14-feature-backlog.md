@@ -381,13 +381,16 @@ logic.
 Shipped subset: a top-level transaction stage of the form
 `(stage name (input ready_signal) (output valid_signal))`. It lowers to one
 state that drives `valid_signal = 1` while active and advances only when
-`ready_signal` is true. Actor-level stage metadata remains parser-carried only;
-it does not reach `LoweringIR`, schedule JSON, scheduled `.fsm`, generated
-composition tops, or HDL.
+`ready_signal` is true. Actor-level phase/stage metadata is now
+parser-carried and schedule-report visible through `actor_phases[]` and
+`actor_stages[]`, preserving each authored metadata name and list-form body.
+It still has no runtime scheduler semantics and does not reach scheduled
+`.fsm`, generated composition tops, or HDL.
 
 Remaining backlog: nested stages, stage-local latency, compute/action bodies,
 multiple ready/valid endpoints, registered-valid variants, skid-buffer
-behavior, and richer stage report families for future stage kinds.
+behavior, executable actor-level phase/stage semantics, and richer stage
+report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 

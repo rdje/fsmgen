@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF actor phase/stage metadata reports shipped
+- Completed `ISF-ACTOR-PHASE-STAGE-REPORTS.1` in
+  [docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md](docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md),
+  closing the actor phase/stage schedule-report metadata tree.
+- Parser-validated actor-level `(phase ...)` and `(stage ...)` metadata now
+  survives into `LoweringIR` for bounded report projection and appears in
+  public schedule JSON as `actor_phases[]` and `actor_stages[]`.
+- Each metadata report entry exposes the authored `name` plus the JSON-safe
+  parser-validated list-form `body`; generated `.fsm`, generated composition
+  tops, and HDL behavior remain unchanged.
+- Added [t/1252-isf-actor-phase-stage-report.t](t/1252-isf-actor-phase-stage-report.t)
+  and advertised the new report key families through the ISF public contract
+  and capability manifest.
 ## 2026-05-16: downstream issue-bundle reporting flow published
 - Completed `DOWNSTREAM-ISSUE-REPRO-FLOW.1` in
   [docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md](docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md),

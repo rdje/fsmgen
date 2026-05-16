@@ -353,9 +353,10 @@ limitations are:
   structurally validated and then ignored; direct `(on port ...)` activation
   plus generated `can_accept` is the current model.
 - Actor-level `(phase ...)` and `(stage ...)` metadata is structurally
-  validated and parser-carried only. Transaction `(phase ...)` lowers as a
-  pass-through marker state. The first transaction `(stage ...)` subset now
-  lowers as a top-level ready/valid barrier:
+  validated, parser-carried, and report-visible through `actor_phases[]` and
+  `actor_stages[]`, but it is not executable scheduler behavior. Transaction
+  `(phase ...)` lowers as a pass-through marker state. The first transaction
+  `(stage ...)` subset now lowers as a top-level ready/valid barrier:
   `(stage name (input ready_signal) (output valid_signal))`.
   Broader stage forms still fail closed until their runtime semantics are
   specified.

@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF actor phase/stage metadata reports shipped
+- Completed R14 task-tree slice:
+  `ISF-ACTOR-PHASE-STAGE-REPORTS.1`, closing
+  [docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md](docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md).
+- Public schedule JSON now exposes parser-validated actor-level `(phase ...)`
+  and `(stage ...)` metadata through `actor_phases[]` and `actor_stages[]`.
+- Each entry exposes the authored `name` and JSON-safe list-form `body`, with
+  key families advertised through the ISF public contract and capability
+  manifest.
+- Added [t/1252-isf-actor-phase-stage-report.t](t/1252-isf-actor-phase-stage-report.t)
+  for in-process and CLI report projection.
+- Actor-level phase/stage runtime semantics remain deferred; generated `.fsm`,
+  generated composition tops, and HDL output are unchanged.
+
 ## 2026-05-16: R14 — downstream issue-bundle reporting flow published
 - Completed R14 task-tree slice: `DOWNSTREAM-ISSUE-REPRO-FLOW.1`, closing
   [docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md](docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md).

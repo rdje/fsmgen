@@ -240,6 +240,11 @@ Parser-carried but not generally lowered today:
 - Actor-level `(phase name property...)`
 - Actor-level `(stage name property...)`
 
+Those actor-level metadata clauses are report-visible through
+`actor_phases[]` and `actor_stages[]`, where each entry preserves the authored
+metadata `name` and parser-validated list-form `body`. They still do not add
+runtime scheduler, generated `.fsm`, generated-top, or HDL semantics.
+
 Deprecated compatibility input:
 
 - `(handshake name (valid signal) (ready signal))` is validated for shape and
@@ -938,6 +943,8 @@ scheduled_fsm
 clock
 reset
 watchdog
+actor_phases
+actor_stages
 actor_constants
 port_count
 inputs
@@ -980,6 +987,8 @@ Important entry key families:
 
 ```text
 actor_constants[]: name, value
+actor_phases[]: name, body
+actor_stages[]: name, body
 inferred_storage[] required: name, kind
 inferred_storage[] optional: role, width
 transactions[]: name, states, count

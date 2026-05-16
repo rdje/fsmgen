@@ -1205,8 +1205,11 @@ input and one valid output.
 Actor-level `(phase ...)` and `(stage ...)` metadata uses the same scalar-name
 and list-body structural boundary, is carried in the parser actor shell for
 downstream consumers, and is not semantically enforced by the scheduler yet.
-That actor-level metadata is not copied into the scheduling IR, schedule JSON,
-generated `.fsm`, generated composition top, or HDL today.
+That actor-level metadata is copied into the scheduling IR only for bounded
+public report projection: schedule JSON exposes `actor_phases[]` and
+`actor_stages[]` entries with the authored metadata name and parser-validated
+list-form body. Generated `.fsm`, generated composition top, and HDL do not
+consume actor-level phase/stage metadata today.
 
 ```lisp
 (stage accept

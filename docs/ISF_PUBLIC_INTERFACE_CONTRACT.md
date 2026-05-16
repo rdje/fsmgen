@@ -573,9 +573,11 @@ bounded lowering path checked by
 [t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t): it emits one
 ready-gated state that drives `valid_signal = 1` while active, parses through
 the normal `.fsm` frontend, and reaches SystemVerilog generation. Actor-level
-phase/stage metadata is parser-carried only today and is not copied into
-`LoweringIR`, schedule JSON, generated `.fsm`, generated composition tops, or
-HDL.
+phase/stage metadata is also checked by
+[t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t):
+it is copied into `LoweringIR` only for bounded `actor_phases[]` and
+`actor_stages[]` schedule-report projection, and it still does not create
+generated `.fsm`, generated composition-top, or HDL runtime behavior.
 The unsupported transaction-clause boundary is checked by
 [t/1180-isf-unsupported-transaction-clause-boundary.t](../t/1180-isf-unsupported-transaction-clause-boundary.t)
 so removed or future transaction clause heads, including `(assign ...)`, fail
@@ -1115,6 +1117,8 @@ scheduled_fsm
 clock
 reset
 watchdog
+actor_phases
+actor_stages
 actor_constants
 port_count
 inputs
@@ -1143,6 +1147,8 @@ Current bounded nested and array summary families:
 
 ```text
 reset: name, kind, polarity
+actor_phases entries: name, body
+actor_stages entries: name, body
 actor_constants entries: name, value
 inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
@@ -1217,6 +1223,15 @@ For each `actor_constants` entry, `name` is the actor-local constant name and
 `value` is the stringified compile-time value emitted into scheduled `.fsm`
 `+constants`. These constants are compile-time scheduler/source symbols, not
 runtime ports, not overrideable params, and not inferred storage.
+
+For each `actor_phases` or `actor_stages` entry, `name` is the authored
+actor-level metadata name and `body` is the JSON-safe copy of the
+parser-validated list-form body. These arrays are informational report
+metadata only; actor-level phases and stages still do not add scheduler,
+generated `.fsm`, generated-top, or HDL runtime behavior. The
+machine-readable contract advertises these through
+`schedule_report_actor_phase_keys` and
+`schedule_report_actor_stage_keys`.
 
 For each `transaction_waits` entry, `transaction` is the authored transaction
 name, `cycles` is the exact positive resolved static wait count or JSON null
@@ -1406,10 +1421,11 @@ Bounded but not fully frozen:
   updates this contract, the mdBook/spec, and focused regressions.
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
-  `resource_arbitration[]`, `actor_constants[]`, `transaction_waits[]`,
-  `transaction_stages[]`, `transaction_loops[]`, `temporal_contracts[]`,
-  `transaction_port_bindings[]`, `library_uses[]`, and `generated_composition`
-  are bounded summaries, not raw IR exports.
+  `resource_arbitration[]`, `actor_constants[]`, `actor_phases[]`,
+  `actor_stages[]`, `transaction_waits[]`, `transaction_stages[]`,
+  `transaction_loops[]`, `temporal_contracts[]`,
+  `transaction_port_bindings[]`, `library_uses[]`, and
+  `generated_composition` are bounded summaries, not raw IR exports.
 
 Blockers before flipping `schedule_report_full_schema_stable` to true:
 
