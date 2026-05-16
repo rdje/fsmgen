@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -59,10 +59,10 @@ ISF-only type system.
   Commit: `pending`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.2`
-  Status: `pending`
+  Status: `done`
   Goal: `specify the ISF symbol-source contract for enum/type declarations and imports before parser widening`
   Acceptance: `source forms, import/source resolution, reuse of existing package/type machinery, diagnostics, lowered .fsm projection, schedule-report scope, and downstream impact are documented with focused acceptance tests identified`
-  Verification: `pending`
+  Verification: `mdbook build docs/book`; `git diff --check`
   Commit: `pending`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.3`
@@ -74,7 +74,14 @@ ISF-only type system.
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.4`
   Status: `pending`
-  Goal: `extend the implemented path to one declared aggregate carrier only after scalar alias resolution is stable`
+  Goal: `implement enum member references in one static scalar ISF value context`
+  Acceptance: `one documented enum member reference context resolves through the selected symbol source, lowers to reviewable .fsm using established enum semantics, and rejects unknown enum families or members before generated artifacts are emitted`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.5`
+  Status: `pending`
+  Goal: `extend the implemented path to one declared aggregate carrier only after scalar alias and enum resolution are stable`
   Acceptance: `one declared aggregate actor/interface or storage carrier lowers through reviewable .fsm with shape checks, focused tests, and bounded schedule-report visibility; partial aggregate updates remain deferred unless explicitly specified`
   Verification: `pending`
   Commit: `pending`
@@ -83,7 +90,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.2` | `pending` | Source syntax and symbol resolution must be fixed before accepting any new parser forms. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.3` | `pending` | Scalar type aliases are the first implementation step after the source contract is fixed. |
 
 ## Decisions
 
@@ -103,15 +110,37 @@ ISF-only type system.
 - `2026-05-16`: Lowered scheduled `.fsm` remains the review artifact and
   contract. Any accepted enum/type/aggregate ISF source must be visible there
   rather than only in private lowerer data.
+- `2026-05-16`: The selected, not-yet-implemented source contract uses
+  actor-local `(types ...)` and `(enums ...)` clauses whose payload shape maps
+  directly to `.fsm` `+types` and `+enums`, plus `(imports (package name) ...)`
+  entries for existing `.fsm` package roots. Package entries use one
+  HDL-identifier-compatible package name, no alias, and no dotted namespace in
+  the first contract so lowered scheduled `.fsm` can preserve the same
+  `(+import name)` review artifact. ISF library imports keep their existing
+  `(library name [as alias])` shape.
+- `2026-05-16`: Type references in ISF width-bearing declarations will use an
+  explicit `(type NAME)` option, mutually exclusive with `(width N)`. `NAME`
+  may be a local type alias such as `byte` or a package-qualified alias such
+  as `shared.byte`. The first implementation leaf accepts only scalar aliases;
+  aggregate aliases fail closed until the aggregate-carrier leaf.
+- `2026-05-16`: Local enum members keep the established `.fsm`
+  `enum_name.MEMBER` spelling, and package members use
+  `package_name.enum_name.MEMBER`. Enum value-use contexts are deliberately
+  separate from scalar type-alias width references so the first implementation
+  slice stays small.
+- `2026-05-16`: Accepted declarations must be emitted into scheduled `.fsm`
+  as `+types`, `+enums`, and `+import` blocks before HDL generation. Schedule
+  reports may expose bounded name/count summaries later, but raw type-spec
+  hashes and raw symbol tables remain private.
 
 ## Open Questions
 
-- Which exact source form should carry ISF enum/type declarations or package
-  references? This blocks parser widening and is owned by
-  `ISF-TYPE-AGGREGATE-PARITY.2`.
-- Should the first implemented path reference only scalar aliases, or also
-  enum values in guards/assignments? This does not block the inventory slice
-  but must be answered before implementation.
+- Which bounded schedule-report summary keys should advertise accepted
+  enum/type declarations once parser support ships? This does not block
+  `ISF-TYPE-AGGREGATE-PARITY.3` because that leaf can start with generated
+  `.fsm` review artifacts and focused parser/lowering tests.
+- Which static scalar value context should receive enum member support first?
+  This is owned by `ISF-TYPE-AGGREGATE-PARITY.4`.
 
 ## Blockers
 
@@ -122,14 +151,19 @@ ISF-only type system.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-TYPE-AGGREGATE-PARITY.1` | `ISF-TYPE-AGGREGATE-PARITY.1: inventory parity boundary` | `Inventory and first-boundary documentation slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.2` | `ISF-TYPE-AGGREGATE-PARITY.2: specify type source contract` | `Symbol-source and first type-reference contract slice.` |
 
 ## Changelog
 
 - `2026-05-16`: Created the active task tree and completed the inventory
   content for `ISF-TYPE-AGGREGATE-PARITY.1`.
+- `2026-05-16`: Selected the source contract for
+  `ISF-TYPE-AGGREGATE-PARITY.2` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.3`.

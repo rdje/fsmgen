@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum/type source contract selected
+- Completed `ISF-TYPE-AGGREGATE-PARITY.2`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.3`.
+- Selected future ISF source forms for parity work: actor-local `(types ...)`
+  / `(enums ...)`, package imports as `(imports (package NAME) ...)`, and
+  `(type NAME)` on width-bearing declarations.
+- Kept the downstream handoff truthful: those forms are not supported syntax
+  until parser/lowering implementation and focused regression evidence land.
+- Parser, scheduler, schedule JSON, generated `.fsm`, and HDL behavior are
+  unchanged.
 ### R14 — ISF enum/type/aggregate parity tree opened
 - Completed `ISF-TYPE-AGGREGATE-PARITY.1`, opening the active
   `ISF-TYPE-AGGREGATE-PARITY` tree with frontier

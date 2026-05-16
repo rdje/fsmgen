@@ -806,6 +806,9 @@ specifying how ISF will reference the existing `.fsm` package/type/symbol
 machinery without a second type system. When that surface ships, this handoff,
 the ISF spec, mdBook, public contract notes, manifest metadata, tests, and
 generated artifact examples must change in the same slice.
+That task tree has selected a future source-contract direction for planning,
+but this handoff intentionally does not list those future forms as supported
+syntax until implementation and regression evidence land.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 

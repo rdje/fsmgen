@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum/type source contract selected
+- Completed `ISF-TYPE-AGGREGATE-PARITY.2` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.3`.
+- Selected the not-yet-implemented source contract: actor-local `(types ...)`
+  and `(enums ...)` map to `.fsm` `+types` and `+enums`; `(imports (package
+  NAME) ...)` references existing `.fsm` package roots without aliases in the
+  first contract; `(type NAME)` is the future named-type option for
+  width-bearing declarations and is mutually exclusive with `(width N)`.
+- The first implementation target is scalar type aliases only. Enum member
+  values and aggregate carriers stay separate follow-on leaves.
+- Synchronized the ISF spec, downstream handoff, public contract notes, mdBook
+  backlog, task tree, roadmap, and live docs. Current parser/scheduler
+  behavior remains unchanged; downstream consumers still must not emit these
+  future forms.
 ## 2026-05-16: ISF enum/type/aggregate parity tree opened
 - Completed `ISF-TYPE-AGGREGATE-PARITY.1` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

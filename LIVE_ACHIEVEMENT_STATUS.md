@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum/type source contract selected
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.2` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.3`, implementing
+  the first scalar type-alias reference path for ISF width-bearing
+  declarations.
+- Selected future source forms: actor-local `(types ...)` / `(enums ...)`,
+  `(imports (package NAME) ...)` for existing `.fsm` packages, and `(type
+  NAME)` as the named-type option that is mutually exclusive with `(width N)`.
+- Current compiler behavior is unchanged. The downstream handoff remains clear
+  that those forms are not supported syntax until implementation and focused
+  tests land.
+
 ## 2026-05-16: R14 — ISF enum/type/aggregate parity tree opened
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.1`, opening

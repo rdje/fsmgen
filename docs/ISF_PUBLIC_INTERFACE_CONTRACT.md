@@ -695,7 +695,9 @@ declarations, named type tokens in `(width ...)` slots, or typed aggregate
 carrier/update semantics. Those forms remain outside the parser/scheduler
 contract until the active `ISF-TYPE-AGGREGATE-PARITY` task tree ships a
 documented source contract, focused tests, and synchronized manifest/public
-contract metadata.
+contract metadata. A future source-contract direction is now selected in that
+task tree for implementation planning, but it is not part of the public ISF
+facade yet.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

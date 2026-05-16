@@ -262,6 +262,20 @@ closed for unknown types, unresolved enum members, incompatible enum values,
 aggregate shape mismatches, and ambiguous partial updates before HDL
 generation.
 
+The selected future source contract is documented here only as an active task
+boundary; authors must not use these forms until a later implementation slice
+ships parser/lowering support and focused tests. Actor-local declarations will
+use `(types ...)` and `(enums ...)` clauses whose payloads map directly to
+`.fsm` `+types` and `+enums`. Existing `.fsm` package roots will be referenced
+with `(imports (package NAME) ...)`; the first contract allows one
+HDL-identifier-compatible package name, no alias, and no dotted package
+namespace so lowered scheduled `.fsm` can preserve a matching `(+import NAME)`
+review artifact. Width-bearing declarations will use `(type NAME)` for named
+type aliases and keep `(width N)` for raw positive integer widths; those
+options are mutually exclusive. The first implementation target is scalar
+type aliases only. Enum member values and typed aggregate carriers are
+separate follow-on leaves.
+
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
   non-empty scalar name plus list-form body entries; duplicate actor phase

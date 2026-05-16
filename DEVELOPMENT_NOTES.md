@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: ISF type source contract preserves review artifacts
+- `ISF-TYPE-AGGREGATE-PARITY.2` selects source forms that can lower back to
+  ordinary `.fsm` declaration artifacts. Actor-local `(types ...)` and
+  `(enums ...)` are adapters for existing `+types` and `+enums`; package
+  imports deliberately use `(package NAME)` with no alias in the first
+  contract so the lowered `.fsm` can emit the same `(+import NAME)` spelling.
+- Named type use is explicit with `(type NAME)` rather than overloading
+  `(width ...)`. That leaves `(width N)` as raw positive integer evidence and
+  gives the parser a clean mutual-exclusion diagnostic when both are present.
+- The first implementation leaf is scalar aliases only. Enum member values and
+  aggregate carriers are split out because they touch expression/value
+  semantics and aggregate shape checking, respectively.
 ## 2026-05-16: ISF type parity starts with source ownership
 - `ISF-TYPE-AGGREGATE-PARITY.1` deliberately opens with an inventory and
   boundary slice because the feature crosses the `.fsm` package/type engine,

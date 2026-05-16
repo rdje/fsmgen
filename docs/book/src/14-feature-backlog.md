@@ -273,6 +273,18 @@ actor-owned variables to carry those types second, then add aggregate
 field/slice/update lowering with explicit cycle semantics and schedule-report
 visibility.
 
+The selected source contract is not implemented yet, but the intended spelling
+is now fixed for the active tree. ISF actor bodies will use `(types ...)` and
+`(enums ...)` clauses whose payloads map directly to `.fsm` `+types` and
+`+enums`. Existing `.fsm` package roots will be referenced from ISF with
+`(imports (package shared_pkg) ...)`; package imports have no alias in the
+first contract so lowered scheduled `.fsm` can preserve the same
+`(+import shared_pkg)` review artifact. Type references in width-bearing ISF
+declarations will use an explicit `(type NAME)` option, mutually exclusive
+with `(width N)`, where `NAME` is local (`byte`) or package-qualified
+(`shared_pkg.byte`). The first implementation target is scalar aliases only;
+enum member values and aggregate carriers are separate follow-on leaves.
+
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate
 semantics, not to hidden backend-only structure. Diagnostics must reject
