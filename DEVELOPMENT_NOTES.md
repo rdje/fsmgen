@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate rule targets reuse guarded rule DT assignments
+- `ISF-TYPE-AGGREGATE-PARITY.42` widens aggregate support into rule assignment
+  targets.
+- Explicit `(set frame.mode value)` and shorthand `(frame.mode value)` rule
+  actions now share the same scalar aggregate leaf write validator used by
+  transaction `set` targets.
+- The slice keeps subaggregate targets rejected because packed aggregate
+  update semantics need a separate contract, and enum rule targets remain
+  value-context errors rather than lvalues.
 ## 2026-05-16: enum switch selectors reuse computed .fsm selectors
 - `ISF-TYPE-AGGREGATE-PARITY.41` widens enum member support into transaction
   `switch` selectors.

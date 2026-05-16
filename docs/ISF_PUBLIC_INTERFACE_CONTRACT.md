@@ -723,10 +723,10 @@ actor-owned storage variables, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition expression operands,
 transaction `switch` selectors or branch values, rule assignment RHS
-values/expression operands, or rule guard expression operands, drive body RHS scalar
-values/expression operands, inline drive assignment RHS scalar
-values/expression operands, or drive-call actual scalar
-values/expression operands, aggregate paths in expression
+values/expression operands, rule assignment target tokens, or rule guard
+expression operands, drive body RHS scalar values/expression operands, inline
+drive assignment RHS scalar values/expression operands, or drive-call actual
+scalar values/expression operands, aggregate paths in expression
 operator position, and subaggregate operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
@@ -916,8 +916,12 @@ Rule assignment RHS aggregate leaf values are checked by
 [t/1283-isf-aggregate-rule-values.t](../t/1283-isf-aggregate-rule-values.t),
 covering explicit and shorthand rule assignment RHS aggregate leaf reads,
 scheduled `.fsm` review artifacts, assignment provenance, CLI HDL generation,
-and fail-closed diagnostics for unknown members, subaggregate RHS values, and
-rule targets.
+and fail-closed diagnostics for unknown members and subaggregate RHS values.
+Rule assignment target aggregate leaf writes are checked by
+[t/1296-isf-aggregate-rule-target-values.t](../t/1296-isf-aggregate-rule-target-values.t),
+covering explicit and shorthand rule assignment target aggregate leaf writes,
+scheduled `.fsm` review artifacts, assignment provenance, CLI HDL generation,
+and fail-closed diagnostics for unknown members and subaggregate targets.
 Rule assignment RHS expression aggregate leaf operands are checked by
 [t/1284-isf-aggregate-rule-expression-values.t](../t/1284-isf-aggregate-rule-expression-values.t),
 covering explicit and shorthand rule assignment RHS expression aggregate leaf

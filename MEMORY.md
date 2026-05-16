@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate rule targets shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.42` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.43`.
+- Rule assignment targets now accept scalar aggregate storage leaves such as
+  `frame.mode` and `lanes[1]` in explicit `(set target value)` and shorthand
+  `(target value)` rule actions.
+- Scheduled `.fsm` guarded rule DTs preserve the authored aggregate leaf
+  targets, and assignment provenance records those targets for schedule-report
+  conflict/provenance paths.
+- Subaggregate rule targets, enum rule targets, and aggregate drive/inline
+  drive targets remain deferred.
 ## 2026-05-16: ISF enum switch selectors shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.41` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

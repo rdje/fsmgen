@@ -340,10 +340,10 @@ read scalar aggregate member/item leaves, for example
 Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
 condition expression operands, transaction `switch` selectors or branch
-values, rule assignment RHS values or expression operands, rule guard
-expression operands, drive body RHS scalar values or expression operands,
-inline drive assignment RHS scalar values or operands, or drive-call
-actual scalar values/expression operands,
+values, rule assignment targets, rule assignment RHS values or expression
+operands, rule guard expression operands, drive body RHS scalar values or
+expression operands, inline drive assignment RHS scalar values or operands, or
+drive-call actual scalar values/expression operands,
 aggregate paths in
 expression operator position, subaggregate writes/operands, aggregate interface or
 transaction ports, and aggregate storage banks remain deferred.
@@ -913,17 +913,20 @@ assignment direct scalar RHS values and scalar operands inside RHS expressions
 may read scalar aggregate member/item leaves such as `frame.mode` or
 `lanes[1]`; the parser resolves those paths against declared actor-owned
 aggregate storage before lowering and preserves the authored path in the
-guarded rule DT. Rule assignment direct scalar RHS values and scalar operands
-inside RHS expressions may also use local enum members such as `mode.BUSY` or
-package enum members such as `shared.mode.BUSY`; the parser resolves those
-values before lowering and preserves the authored token in the guarded rule
-DT. Scalar operands inside rule guard expressions may use enum members or read
-scalar aggregate storage leaves such as `frame.flag`; aggregate rule guard
-paths resolve against declared actor-owned aggregate storage before lowering
-and preserve the authored path in the guarded rule DT header. Aggregate paths
-in rule assignment RHS or rule guard expression operator position, standalone
-enum member or aggregate guards, rule target enum members, and enum members in
-rule guard or rule assignment expression operator position remain deferred.
+guarded rule DT. Rule assignment targets may also write scalar aggregate
+member/item leaves such as `frame.mode` or `lanes[1]`; subaggregate rule
+targets remain deferred. Rule assignment direct scalar RHS values and scalar
+operands inside RHS expressions may also use local enum members such as
+`mode.BUSY` or package enum members such as `shared.mode.BUSY`; the parser
+resolves those values before lowering and preserves the authored token in the
+guarded rule DT. Scalar operands inside rule guard expressions may use enum
+members or read scalar aggregate storage leaves such as `frame.flag`;
+aggregate rule guard paths resolve against declared actor-owned aggregate
+storage before lowering and preserve the authored path in the guarded rule DT
+header. Aggregate paths in rule assignment RHS or rule guard expression
+operator position, standalone enum member or aggregate guards, rule target
+enum members, and enum members in rule guard or rule assignment expression
+operator position remain deferred.
 
 `(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
 entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering emits
@@ -2155,9 +2158,10 @@ Direct scalar rule assignment RHS values and scalar operands inside rule
 assignment RHS expressions may use local or package enum members, and strict
 HDL generation accepts the guarded rule DT header plus canonical assignment-pair
 body form. Rule guard expression operands may use local or package enum
-members, and scalar aggregate storage leaves may appear as rule guard
-expression operands. Rule guard and assignment expression operator-position
-enum members or aggregate paths remain deferred.
+members, scalar aggregate storage leaves may appear as rule guard expression
+operands, and rule assignment targets may write scalar aggregate storage
+leaves. Rule guard and assignment expression operator-position enum members
+or aggregate paths remain deferred.
 
 Multi-rule fan-in example:
 
@@ -2863,6 +2867,7 @@ Focused tests:
 - [t/1293-isf-aggregate-switch-branch-values.t](../t/1293-isf-aggregate-switch-branch-values.t)
 - [t/1294-isf-aggregate-switch-selector-values.t](../t/1294-isf-aggregate-switch-selector-values.t)
 - [t/1295-isf-enum-member-switch-selector-values.t](../t/1295-isf-enum-member-switch-selector-values.t)
+- [t/1296-isf-aggregate-rule-target-values.t](../t/1296-isf-aggregate-rule-target-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2937,11 +2942,11 @@ Focused tests:
   aggregate leaf operands, transaction condition expression aggregate leaf
   operands, transaction `switch` branch aggregate leaf values, transaction
   `set` target aggregate leaf writes,
-  rule assignment RHS aggregate leaf values and expression operands, rule
-  guard expression aggregate leaf operands, drive body RHS aggregate leaf values
-  and expression operands, inline drive assignment RHS aggregate leaf values and
-  expression operands, drive-call actual aggregate leaf values and expression
-  operands,
+  rule assignment target aggregate leaf writes, rule assignment RHS aggregate
+  leaf values and expression operands, rule guard expression aggregate leaf
+  operands, drive body RHS aggregate leaf values and expression operands,
+  inline drive assignment RHS aggregate leaf values and expression operands,
+  drive-call actual aggregate leaf values and expression operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
   aggregate/list default leaves, generated child transaction parameter scalar
@@ -2958,7 +2963,7 @@ Focused tests:
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values, direct transaction `set` target tokens,
   transaction condition expression operands, transaction `switch` selectors or
-  branch values, rule assignment RHS
+  branch values, rule assignment target tokens, rule assignment RHS
   values/expression operands, rule guard expression operands, drive body RHS
   scalar values/expression operands, inline drive assignment RHS scalar
   values/expression operands, or drive-call actual scalar

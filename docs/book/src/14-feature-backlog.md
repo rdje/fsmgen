@@ -339,8 +339,8 @@ leaves, such as `(drive inline_publish (mode_out frame.mode))` or
 `(drive inline_publish (mode_out (+ frame.mode mode_in)))`. Aggregate member
 paths outside transaction `set` RHS values, direct transaction `set` targets,
 transaction condition expression operands, transaction `switch`
-selectors/branch values, rule assignment RHS values/expression operands, rule
-guard expression operands, drive body RHS scalar
+selectors/branch values, rule assignment target tokens, rule assignment RHS
+values/expression operands, rule guard expression operands, drive body RHS scalar
 values/expression operands, inline drive assignment RHS scalar
 values/expression operands, or drive-call actual scalar values/expression
 operands, subaggregate
@@ -459,12 +459,14 @@ one list expression from the transaction `set`/`update`/`.fsm` RHS expression
 domain. Direct scalar rule assignment RHS values and scalar operands inside RHS
 expressions may use local or package-qualified enum members. Direct scalar rule
 assignment RHS values and scalar operands inside RHS expressions may also read
-scalar aggregate storage leaves such as `frame.mode` or `lanes[1]`. Rule guard
-expressions may use enum members as scalar operands and may read scalar
-aggregate storage leaves such as `frame.flag`; aggregate paths in rule
-assignment RHS or rule guard expression operator position, expression
-operator-position enum members, standalone enum/aggregate guards, and rule
-targets remain backlog. Transaction `switch` selectors and branch values may
+scalar aggregate storage leaves such as `frame.mode` or `lanes[1]`. Rule
+assignment targets may write scalar aggregate storage leaves such as
+`frame.mode` or `lanes[1]`. Rule guard expressions may use enum members as
+scalar operands and may read scalar aggregate storage leaves such as
+`frame.flag`; aggregate paths in rule assignment RHS or rule guard expression
+operator position, expression operator-position enum members, standalone
+enum/aggregate guards, enum rule targets, and subaggregate rule targets remain
+backlog. Transaction `switch` selectors and branch values may
 read scalar aggregate storage leaves such as `frame.mode`, and selectors or
 branch values may use enum members; subaggregate selectors/branch values remain
 backlog. Named drive body scalar RHS values

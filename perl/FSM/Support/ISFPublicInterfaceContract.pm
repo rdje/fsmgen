@@ -462,6 +462,7 @@ sub build_isf_public_interface_contract {
             't/1293-isf-aggregate-switch-branch-values.t',
             't/1294-isf-aggregate-switch-selector-values.t',
             't/1295-isf-enum-member-switch-selector-values.t',
+            't/1296-isf-aggregate-rule-target-values.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

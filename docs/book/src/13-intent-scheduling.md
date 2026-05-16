@@ -436,9 +436,10 @@ limitations are:
   aggregate selectors lower through computed `.fsm` selector syntax such as
   `?(frame.mode)` or `?(lanes[1])`. Rule assignment
   scalar RHS values and scalar operands inside rule assignment RHS expressions
-  may also read scalar aggregate leaves from those carriers. Rule guard
-  expressions may read scalar aggregate leaves as operands too. Named drive
-  body scalar RHS values and scalar operands inside RHS expressions may read
+  may also read scalar aggregate leaves from those carriers, and rule
+  assignment targets may write scalar aggregate leaves from those carriers.
+  Rule guard expressions may read scalar aggregate leaves as operands too.
+  Named drive body scalar RHS values and scalar operands inside RHS expressions may read
   scalar aggregate leaves from those carriers. Named drive-call scalar actual
   values and operands inside actual expressions may also read scalar aggregate
   leaves from those carriers. Inline drive assignment scalar RHS values and
@@ -455,8 +456,8 @@ limitations are:
   remain backlog, as do aggregate paths outside
   transaction `set` RHS values, direct transaction `set` targets, transaction
   condition expression operands, transaction `switch` selectors/branch values,
-  rule assignment RHS values/expression operands, rule guard expression
-  operands, or drive body RHS scalar values/expression operands, inline drive
+  rule assignment target tokens, rule assignment RHS values/expression operands,
+  rule guard expression operands, or drive body RHS scalar values/expression operands, inline drive
   assignment RHS scalar values/expression operands, or drive-call actual scalar
   values/expression operands, subaggregate operands/updates, and
   aggregate interface/transaction/bank carriers.

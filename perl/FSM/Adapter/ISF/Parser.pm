@@ -688,8 +688,6 @@ sub _validate_actor_aggregate_storage_paths($self, $actor) {
     my %aggregate_roots = map { $_->{name} => _clone_isf_value($_->{type_spec}) }
         grep { _is_aggregate_type_spec($_->{type_spec}) }
         @{$actor->{storage} || []};
-    return 1 unless keys %aggregate_roots;
-
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_aggregate_storage_paths(
             $tx->{clauses},
@@ -1476,7 +1474,7 @@ sub _validate_transaction_aggregate_storage_clause {
         unless defined($head) && !ref($head);
 
     if ($head eq 'set') {
-        _validate_transaction_set_aggregate_storage_target(
+        _validate_aggregate_storage_leaf_write_target(
             $clause->[1],
             $aggregate_roots,
             "$context set target",
@@ -1583,7 +1581,7 @@ sub _validate_rule_aggregate_storage_paths {
             && !ref($action->[0])
             && $action->[0] eq 'set')
         {
-            _reject_aggregate_storage_paths(
+            _validate_aggregate_storage_leaf_write_target(
                 $action->[1],
                 $aggregate_roots,
                 "rule '$rule_name' set target",
@@ -1605,7 +1603,7 @@ sub _validate_rule_aggregate_storage_paths {
             && $action->[0] ne 'store'
             && $action->[0] ne 'load')
         {
-            _reject_aggregate_storage_paths(
+            _validate_aggregate_storage_leaf_write_target(
                 $action->[0],
                 $aggregate_roots,
                 "rule '$rule_name' assignment target",
@@ -1926,12 +1924,16 @@ sub _validate_transaction_set_rhs_aggregate_storage_reads {
     return 1;
 }
 
-sub _validate_transaction_set_aggregate_storage_target {
+sub _validate_aggregate_storage_leaf_write_target {
     my ($target, $aggregate_roots, $context) = @_;
     if (!ref($target)) {
         my $path = _aggregate_storage_path_token($target, $aggregate_roots);
         _validate_aggregate_storage_leaf_write_path($path, $aggregate_roots, $context)
             if defined $path;
+        confess "Error: $context must be a scalar HDL identifier or declared aggregate storage path\n"
+            if !defined($path)
+                && !_is_hdl_identifier($target)
+                && !defined(_enum_member_value_token($target, $aggregate_roots));
         return 1;
     }
 
@@ -1973,7 +1975,7 @@ sub _reject_aggregate_storage_paths {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $path = _aggregate_storage_path_token($value, $aggregate_roots);
-        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch selector or branch scalar values, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands\n"
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch selector or branch scalar values, rule assignment target scalar leaf writes, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands\n"
             if defined $path;
         return 1;
     }
@@ -3601,7 +3603,9 @@ sub _parse_rule_action($self, $action, $rule_name) {
     if ($keyword eq 'set') {
         confess "Error: rule '$rule_name' set action requires '(set port expr)'\n"
             unless @$action == 3
-                && _is_hdl_identifier($action->[1])
+                && defined($action->[1])
+                && !ref($action->[1])
+                && length($action->[1])
                 && defined($action->[2]);
         $self->_validate_rule_assignment_expr($action->[2], $rule_name);
         return 1;

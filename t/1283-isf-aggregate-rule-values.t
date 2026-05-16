@@ -142,24 +142,6 @@ ISF
         'subaggregate rule RHS values remain deferred',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor aggregate_rule_target_deferred
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input ready)
-    (input mode_in (width 2)))
-  (storage
-    (var frame (type frame_t)))
-  (rule expose_mode ready
-    (frame.mode mode_in)))
-ISF
-        qr/rule 'expose_mode' assignment target references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch selector or branch scalar values, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands/,
-        'aggregate rule targets remain deferred',
-    );
 };
 
 done_testing();

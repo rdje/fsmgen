@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`, `ISF-TYPE-AGGREGATE-PARITY.34`, `ISF-TYPE-AGGREGATE-PARITY.35`, `ISF-TYPE-AGGREGATE-PARITY.36`, `ISF-TYPE-AGGREGATE-PARITY.37`, `ISF-TYPE-AGGREGATE-PARITY.38`, `ISF-TYPE-AGGREGATE-PARITY.39`, `ISF-TYPE-AGGREGATE-PARITY.40`, `ISF-TYPE-AGGREGATE-PARITY.41`, `ISF-TYPE-AGGREGATE-PARITY.42`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`, `ISF-TYPE-AGGREGATE-PARITY.34`, `ISF-TYPE-AGGREGATE-PARITY.35`, `ISF-TYPE-AGGREGATE-PARITY.36`, `ISF-TYPE-AGGREGATE-PARITY.37`, `ISF-TYPE-AGGREGATE-PARITY.38`, `ISF-TYPE-AGGREGATE-PARITY.39`, `ISF-TYPE-AGGREGATE-PARITY.40`, `ISF-TYPE-AGGREGATE-PARITY.41`, `ISF-TYPE-AGGREGATE-PARITY.42`, `ISF-TYPE-AGGREGATE-PARITY.43`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -339,8 +339,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.41: support enum switch selectors`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.42`
+  Status: `done`
+  Goal: `support scalar aggregate storage leaf writes as rule assignment targets`
+  Acceptance: `explicit and shorthand rule assignment targets accept local/package aggregate storage member/item leaves with shape diagnostics, guarded rule-DT review artifacts, assignment provenance, strict CLI HDL generation, and fail-closed diagnostics for unknown members and subaggregate targets`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1296-isf-aggregate-rule-target-values.t t/1283-isf-aggregate-rule-values.t t/1284-isf-aggregate-rule-expression-values.t t/1285-isf-aggregate-rule-guard-values.t t/1261-isf-aggregate-storage-leaf-writes.t t/1272-isf-enum-member-rule-values.t t/1287-isf-aggregate-drive-values.t t/1291-isf-aggregate-inline-drive-values.t t/1246-isf-setter-syntax.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.42: support aggregate rule targets`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.43`
   Status: `pending`
-  Goal: `choose the next remaining enum or aggregate value/update context after enum switch selectors`
+  Goal: `choose the next remaining enum or aggregate value/update context after aggregate rule targets`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -349,7 +356,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.42` | `pending` | The next enum or aggregate value/update context can be selected after enum switch selectors are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.43` | `pending` | The next enum or aggregate value/update context can be selected after aggregate rule targets are stable. |
 
 ## Decisions
 
@@ -651,6 +658,12 @@ ISF-only type system.
   stable on the same switch lowering path. Dotted enum selectors lower through
   computed `.fsm` selector syntax, while standalone enum conditions and other
   enum target/operator contexts remain closed.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.42` selects rule assignment
+  aggregate targets because transaction aggregate leaf writes and rule
+  aggregate RHS reads are already stable on the guarded rule-DT path. Explicit
+  `(set frame.mode value)` and shorthand `(frame.mode value)` targets now
+  resolve against declared actor-owned aggregate storage, while subaggregate
+  rule targets and enum rule targets remain closed.
 
 ## Open Questions
 
@@ -676,8 +689,11 @@ ISF-only type system.
   switch selectors? `ISF-TYPE-AGGREGATE-PARITY.41` shipped enum switch
   selectors.
 - Which enum or aggregate value/update context should ship after enum switch
-  selectors? The current frontier selects this for
-  `ISF-TYPE-AGGREGATE-PARITY.42`.
+  selectors? `ISF-TYPE-AGGREGATE-PARITY.42` shipped aggregate rule assignment
+  targets.
+- Which enum or aggregate value/update context should ship after aggregate
+  rule targets? The current frontier selects this for
+  `ISF-TYPE-AGGREGATE-PARITY.43`.
 
 ## Blockers
 
@@ -728,6 +744,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.39` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1293-isf-aggregate-switch-branch-values.t t/1292-isf-aggregate-inline-drive-expression-values.t t/1291-isf-aggregate-inline-drive-values.t t/1290-isf-aggregate-drive-call-expression-values.t t/1289-isf-aggregate-drive-call-values.t t/1288-isf-aggregate-drive-expression-values.t t/1287-isf-aggregate-drive-values.t t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1265-isf-enum-member-switch-branch-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.40` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1294-isf-aggregate-switch-selector-values.t t/1293-isf-aggregate-switch-branch-values.t t/1292-isf-aggregate-inline-drive-expression-values.t t/1291-isf-aggregate-inline-drive-values.t t/1290-isf-aggregate-drive-call-expression-values.t t/1289-isf-aggregate-drive-call-values.t t/1288-isf-aggregate-drive-expression-values.t t/1287-isf-aggregate-drive-values.t t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1265-isf-enum-member-switch-branch-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/37-language-contract-computed-test-selector.t t/55-language-contract-computed-test-selector-boundary.t t/1205-isf-switch-clause-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.41` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1295-isf-enum-member-switch-selector-values.t t/1265-isf-enum-member-switch-branch-values.t t/1294-isf-aggregate-switch-selector-values.t t/1293-isf-aggregate-switch-branch-values.t t/1275-isf-enum-member-condition-values.t t/1263-isf-enum-member-set-values.t t/1266-isf-enum-member-drive-values.t t/1272-isf-enum-member-rule-values.t t/1274-isf-enum-member-rule-guard-values.t t/1279-isf-enum-member-inline-drive-values.t t/37-language-contract-computed-test-selector.t t/55-language-contract-computed-test-selector-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.42` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1296-isf-aggregate-rule-target-values.t t/1283-isf-aggregate-rule-values.t t/1284-isf-aggregate-rule-expression-values.t t/1285-isf-aggregate-rule-guard-values.t t/1261-isf-aggregate-storage-leaf-writes.t t/1272-isf-enum-member-rule-values.t t/1287-isf-aggregate-drive-values.t t/1291-isf-aggregate-inline-drive-values.t t/1246-isf-setter-syntax.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -774,6 +791,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.39` | `ISF-TYPE-AGGREGATE-PARITY.39: support aggregate switch values` | `Transaction switch branch aggregate leaf parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.40` | `ISF-TYPE-AGGREGATE-PARITY.40: support aggregate switch selectors` | `Transaction switch selector aggregate leaf parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.41` | `ISF-TYPE-AGGREGATE-PARITY.41: support enum switch selectors` | `Transaction switch selector enum member parser/lowering slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.42` | `ISF-TYPE-AGGREGATE-PARITY.42: support aggregate rule targets` | `Rule assignment target aggregate leaf parser/lowering/provenance slice.` |
 
 ## Changelog
 
@@ -899,3 +917,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped transaction `switch` selector enum member values for
   `ISF-TYPE-AGGREGATE-PARITY.41` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.42`.
+- `2026-05-16`: Shipped rule assignment target aggregate leaf writes for
+  `ISF-TYPE-AGGREGATE-PARITY.42` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.43`.
