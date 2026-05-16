@@ -91,7 +91,7 @@ ISF
     ok(-s $hdl_path, 'CLI writes HDL for package enum member drive call actual values');
 };
 
-subtest 'drive call enum diagnostics stay scalar-actual only' => sub {
+subtest 'drive call enum diagnostics reject unknown scalar actuals' => sub {
     assert_parse_rejected(
         <<'ISF',
 (actor unknown_enum_drive_call_value
@@ -112,24 +112,6 @@ ISF
         'unknown drive call enum actual fails before lowering',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_inline_drive_still_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output mode_out (width 2)))
-  (transaction main
-    (on start)
-    (drive inline_mode
-      (mode_out mode.BUSY))))
-ISF
-        qr/transaction 'main' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate\/list parameter default leaves, transaction scalar parameter defaults or aggregate\/list parameter default leaves, activation scalar parameter overrides or aggregate\/list override leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands/,
-        'enum members in inline drive assignments remain deferred',
-    );
 };
 
 done_testing();

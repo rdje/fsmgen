@@ -220,8 +220,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.24: support enum transaction aggregate params`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.25`
+  Status: `done`
+  Goal: `support enum member values in inline drive assignment RHS positions`
+  Acceptance: `inline transaction drive assignment RHS scalar values accept local/package enum members with reviewable .fsm state-assignment projection, strict CLI HDL generation, diagnostics for unknown enum members, and fail-closed boundaries for inline drive targets and inline drive RHS expressions`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1279-isf-enum-member-inline-drive-values.t t/1267-isf-enum-member-drive-call-values.t t/1266-isf-enum-member-drive-values.t t/1268-isf-enum-member-drive-call-expression-values.t t/1263-isf-enum-member-set-values.t t/1265-isf-enum-member-switch-branch-values.t t/1272-isf-enum-member-rule-values.t t/1274-isf-enum-member-rule-guard-values.t t/1275-isf-enum-member-condition-values.t t/1193-isf-drive-call-arity-boundary.t t/1244-isf-wait-clause-lowering.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.25: support enum inline drive values`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.26`
   Status: `pending`
-  Goal: `choose and implement the next enum or aggregate value/update context after generated child transaction aggregate/list enum parameter defaults`
+  Goal: `choose and implement the next enum or aggregate value/update context after inline drive assignment RHS enum values`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -230,7 +237,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.25` | `pending` | The next enum or aggregate value/update context can be selected after generated child transaction aggregate/list enum parameter defaults are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.26` | `pending` | The next enum or aggregate value/update context can be selected after inline drive assignment RHS enum values are stable. |
 
 ## Decisions
 
@@ -440,6 +447,13 @@ ISF-only type system.
   bindings preserve authored enum tokens, while lowerer metadata records
   resolved literal leaves for validation. Reusable-library use-site enum
   overrides remain a separate library-instantiation contract.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.25` selects inline transaction
+  drive assignment RHS scalar values as the next enum member value context
+  because labeled inline drive clauses already lower to reviewable scheduled
+  `.fsm` state assignments and strict HDL generation can preserve authored enum
+  RHS tokens. This slice keeps inline drive targets and inline drive RHS
+  expressions closed so assignment ownership and expression-operand behavior
+  can remain separate contracts.
 
 ## Open Questions
 
@@ -456,12 +470,12 @@ ISF-only type system.
   values/expression operands, transaction `when`/`while`/`until` condition
   expression operands, transaction `switch` branch values, rule guard
   expression operands, rule assignment RHS scalar values/expression operands,
-  drive body RHS scalar values, and drive-call scalar actual values/expression
-  operands should ship next? This remains deferred beyond
-  `ISF-TYPE-AGGREGATE-PARITY.24`.
-- Which enum or aggregate value/update context should ship after generated
-  child transaction aggregate/list enum parameter defaults? The current
-  frontier selects this for `ISF-TYPE-AGGREGATE-PARITY.25`.
+  drive body RHS scalar values, inline drive assignment RHS scalar values, and
+  drive-call scalar actual values/expression operands should ship next? This
+  remains deferred beyond `ISF-TYPE-AGGREGATE-PARITY.25`.
+- Which enum or aggregate value/update context should ship after inline drive
+  assignment RHS enum values? The current frontier selects this for
+  `ISF-TYPE-AGGREGATE-PARITY.26`.
 
 ## Blockers
 

@@ -2189,14 +2189,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         my $k = $cl->[0];
         if    ($k eq 'on')       { push @st, _ir_on($cl, $tn, $si++); }
         elsif ($k eq 'drive')    {
-            if (!ref($cl->[1]) && @$cl >= 2) {
-                # Call: (drive name arg1 arg2 ...)
-                my $name = $cl->[1];
-                confess "Transaction '$tn': drive '$name' not defined\n" unless $drives->{$name};
-                push @st, _ir_named_drive_call($cl, $tn, $si++, $drives->{$name}, [splice @ps]);
-            } else {
-                push @st, _ir_drive($cl, $tn, [splice @ps], $si++);
-            }
+            push @st, _ir_transaction_drive_clause($cl, $tn, $si++, $drives, [splice @ps]);
         }
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
@@ -3833,8 +3826,30 @@ sub _ir_named_drive_call {
         transitions => [],
     };
 }
-sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<=',source_kind=>'sample_capture'}} for my $j(2..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'=',source_kind=>'inline_drive'}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
+sub _ir_drive   { my ($cl,$tn,$ps,$i)=@_; my @a; for(@$ps){push @a,{lhs=>$_->[3],rhs=>$_->[1],op=>'<=',source_kind=>'sample_capture'}} my$first=(ref($cl->[1])eq'ARRAY')?1:2; for my $j($first..$#$cl){my$x=$cl->[$j];next unless ref($x)eq'ARRAY'&&@$x>=2;push @a,{lhs=>$x->[0],rhs=>$x->[1],op=>'=',source_kind=>'inline_drive'}} {name=>"${tn}_drive_$i",kind=>'sequential',assignments=>\@a,transitions=>[]} }
 sub _ir_drive_call { my ($body,$tn,$ps,$i)=@_; return undef; }
+
+sub _is_inline_drive_clause {
+    my ($cl) = @_;
+    return 0 unless ref($cl) eq 'ARRAY' && @$cl >= 2;
+    my $first = (ref($cl->[1]) eq 'ARRAY') ? 1 : 2;
+    return 0 if $first > $#$cl;
+    for my $entry (@{$cl}[$first .. $#$cl]) {
+        return 1 if ref($entry) eq 'ARRAY' && @$entry >= 2;
+    }
+    return 0;
+}
+
+sub _ir_transaction_drive_clause {
+    my ($cl, $tn, $state_index, $drives, $pending_samples) = @_;
+    my $name = $cl->[1];
+    if (!ref($name) && ($drives || {})->{$name}) {
+        return _ir_named_drive_call($cl, $tn, $state_index, $drives->{$name}, $pending_samples);
+    }
+    confess "Transaction '$tn': drive '$name' not defined\n"
+        if !ref($name) && !_is_inline_drive_clause($cl);
+    return _ir_drive($cl, $tn, $pending_samples, $state_index);
+}
 sub _ir_await {
     my ($cl, $tn, $i, $wd, $pending_samples) = @_;
     my @assignments = _sample_assignments($pending_samples || []);
@@ -4518,7 +4533,7 @@ sub _activation_output_assignments {
 sub _ir_when     { my ($cl,$tn,$i)=@_; {name=>"${tn}_when_$i",kind=>'branch',condition=>$cl->[1],body_clauses=>[@{$cl}[2..$#$cl]],assignments=>[],transitions=>[]} }
 sub _expand_when { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_roles,$actor,$bank_accesses)=@_; my @s; my $bstate=_ir_when($cl,$tn,$$ir++); push @s,$bstate; my @body_states; my @lp;
     for my $bc(@{$bstate->{body_clauses}}){next unless ref($bc)eq'ARRAY';my$bk=$bc->[0];
-        if($bk eq'drive'){my$n=$bc->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}
+        if($bk eq'drive'){push @body_states,_ir_transaction_drive_clause($bc,$tn,$$ir++,$drives,[splice @lp])}
         elsif($bk eq'await'){push @body_states,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){
@@ -4562,7 +4577,7 @@ sub _expand_switch { my ($cl,$tn,$ir,$ps,$drives,$wd,$widths,$counters,$storage_
         my $seen_key = _canonical_switch_value_key($val);
         confess "Switch '$tn': duplicate value '$val'\n" if$seen_val{$seen_key}++;my@body_states;my@lp;
         for my $bc2(@bc){next unless ref($bc2)eq'ARRAY';my$bk2=$bc2->[0];
-            if($bk2 eq'drive'){my$n=$bc2->[1];confess qq{drive $n not defined} unless !ref($n)&&$drives->{$n};push @body_states,_ir_named_drive_call($bc2,$tn,$$ir++,$drives->{$n},[splice @lp])}
+            if($bk2 eq'drive'){push @body_states,_ir_transaction_drive_clause($bc2,$tn,$$ir++,$drives,[splice @lp])}
             elsif($bk2 eq'await'){push @body_states,_ir_await($bc2,$tn,$$ir++,$wd,[splice @lp])}
             elsif($bk2 eq'sample'){push @lp,$bc2}
             elsif($bk2 eq'wait'){
@@ -4605,9 +4620,7 @@ sub _expand_loop_body {
         my $bk = $bc->[0];
 
         if ($bk eq 'drive') {
-            my $name = $bc->[1];
-            confess qq{drive $name not defined} unless !ref($name) && $drives->{$name};
-            push @states, _ir_named_drive_call($bc, $tn, $$ir++, $drives->{$name}, [splice @lp]);
+            push @states, _ir_transaction_drive_clause($bc, $tn, $$ir++, $drives, [splice @lp]);
         } elsif ($bk eq 'await') {
             push @states, _ir_await($bc, $tn, $$ir++, $wd, [splice @lp]);
         } elsif ($bk eq 'sample') {
@@ -4657,7 +4670,7 @@ sub _ir_repeat {
     my $width = _repeat_count_width($cl->[1], $widths);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
-        if($bk eq'drive'){my$n=$bc->[1];if(!ref($n)&&$drives->{$n}){push @s,_ir_named_drive_call($bc,$tn,$$ir++,$drives->{$n},[splice @lp])}else{push @s,_ir_drive($bc,$tn,[splice @lp],$$ir++)}}
+        if($bk eq'drive'){push @s,_ir_transaction_drive_clause($bc,$tn,$$ir++,$drives,[splice @lp])}
         elsif($bk eq'await'){push @s,_ir_await($bc,$tn,$$ir++,$wd,[splice @lp])}
         elsif($bk eq'sample'){push @lp,$bc}
         elsif($bk eq'wait'){

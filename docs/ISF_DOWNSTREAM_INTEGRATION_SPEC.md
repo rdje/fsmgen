@@ -915,13 +915,14 @@ Rules:
   aggregate/list parameter override values may consume local or package enum
   members, and scalar rule assignment RHS values or expression operands may
   consume local or package enum members. Rule guard expressions may use enum
-  members as scalar operands. Enum members in
+  members as scalar operands, and inline drive assignment RHS scalar values may
+  consume local or package enum members. Enum members in
   expression operator position, standalone transaction conditions, switch
   selectors, targets, rules outside scalar trigger parameter overrides, rule
   guard or transaction condition expression operator position, rule assignment
-  expression operator position, drive targets, drive-call expression operator
-  position, inline drive assignments, reusable-library use-site parameter
-  overrides, and other contexts remain deferred.
+  expression operator position, drive targets, inline drive assignment RHS
+  expressions, drive-call expression operator position, reusable-library
+  use-site parameter overrides, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1397,7 +1398,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1275-isf-enum-member-condition-values.t \
   t/1276-isf-enum-member-activation-aggregate-params.t \
   t/1277-isf-enum-member-actor-aggregate-params.t \
-  t/1278-isf-enum-member-transaction-aggregate-params.t
+  t/1278-isf-enum-member-transaction-aggregate-params.t \
+  t/1279-isf-enum-member-inline-drive-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

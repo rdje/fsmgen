@@ -287,15 +287,17 @@ values or scalar operands inside transaction `set` RHS expressions, by scalar
 operands inside transaction `when`/`while`/`until` condition expressions, by
 transaction `switch` branch values, by scalar rule assignment RHS values or
 scalar operands inside rule assignment RHS expressions, by scalar operands
-inside rule guard expressions, by scalar drive body RHS values, and by named
-drive-call scalar actual values or scalar operands inside drive-call actual
-expressions in the current ISF surface. Enum members in expression operator
+inside rule guard expressions, by scalar drive body RHS values, by inline
+drive assignment RHS scalar values, and by named drive-call scalar actual
+values or scalar operands inside drive-call actual expressions in the current
+ISF surface. Enum members in expression operator
 position, standalone guards or standalone transaction conditions, transaction
 condition expression operator position, switch selectors, rule targets, rule
 guard or rule assignment expression operator position, rule actions outside
-trigger parameter overrides, drive targets, drive-call expression operator
-position, reusable-library use-site parameter overrides, and typed aggregate
-carriers do not consume enum member references yet.
+trigger parameter overrides, drive targets, inline drive assignment RHS
+expressions, drive-call expression operator position, reusable-library use-site
+parameter overrides, and typed aggregate carriers do not consume enum member
+references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -966,6 +968,12 @@ Current lowering:
   parameter assignment. Drive-call actual expressions may also use local or
   package enum members as scalar operands. Enum members in drive-call
   expression operator position remain deferred.
+- Inline transaction drive assignments such as `(drive inline_mode (mode_out
+  mode.BUSY))` may use local or package enum members as scalar RHS values. The
+  parser resolves those values before lowering, and scheduled `.fsm` preserves
+  the authored enum token in the generated state assignment. Inline drive
+  targets and inline drive RHS expressions with enum member operands remain
+  deferred.
 - Hash-backed drive DT emission is deterministic: drive definitions are emitted
   lexically by drive name after transaction/rule-created DTs and any generated
   rule-trigger fan-in DTs.
@@ -2758,6 +2766,7 @@ Focused tests:
 - [t/1276-isf-enum-member-activation-aggregate-params.t](../t/1276-isf-enum-member-activation-aggregate-params.t)
 - [t/1277-isf-enum-member-actor-aggregate-params.t](../t/1277-isf-enum-member-actor-aggregate-params.t)
 - [t/1278-isf-enum-member-transaction-aggregate-params.t](../t/1278-isf-enum-member-transaction-aggregate-params.t)
+- [t/1279-isf-enum-member-inline-drive-values.t](../t/1279-isf-enum-member-inline-drive-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2824,9 +2833,10 @@ Focused tests:
   child transaction scalar parameter default enum member values, generated
   child transaction aggregate/list parameter default enum member leaves, scalar
   activation parameter override enum member values, activation aggregate/list
-  override enum member leaves, actor-owned aggregate storage variable carriers,
-  transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
-  aggregate leaf operands, transaction `set` target aggregate leaf writes,
+  override enum member leaves, inline drive assignment RHS enum member values,
+  actor-owned aggregate storage variable carriers, transaction `set` RHS
+  aggregate leaf reads, transaction `set` RHS expression aggregate leaf
+  operands, transaction `set` target aggregate leaf writes,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
   aggregate/list default leaves, generated child transaction parameter scalar
@@ -2836,8 +2846,8 @@ Focused tests:
   scalar values/expression operands,
   transaction `switch` branch values, rule guard expression operands, rule
   assignment RHS scalar values or expression operands, drive body RHS scalar
-  values, or drive-call actual scalar values/expression operands remain
-  deferred.
+  values, inline drive assignment RHS scalar values, or drive-call actual
+  scalar values/expression operands remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values or target tokens, subaggregate
   updates/operands, aggregate field/slice/update lowering, and broad

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum inline drive values are direct-RHS-only
+- `ISF-TYPE-AGGREGATE-PARITY.25` selects inline transaction drive assignment
+  RHS scalar values because labeled inline drive clauses already lower to
+  reviewable scheduled `.fsm` state assignments and reach strict HDL
+  generation without private backend-only state.
+- The lowerer now treats a labeled transaction `(drive label (target value))`
+  whose label is not a declared named drive as an inline drive clause, matching
+  the nested control-flow lowering path while still rejecting empty or
+  malformed unknown named-drive calls.
+- Inline drive targets and inline drive RHS expressions remain closed. Targets
+  need an assignment-ownership contract, and expression operands need a
+  separate expression-specific slice.
 ## 2026-05-16: enum transaction aggregate params preserve generated defaults
 - `ISF-TYPE-AGGREGATE-PARITY.24` widens generated child transaction parameter
   enum support from scalar defaults to scalar enum leaves inside aggregate/list

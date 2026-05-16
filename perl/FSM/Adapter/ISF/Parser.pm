@@ -846,6 +846,9 @@ sub _validate_transaction_enum_member_value_clause {
             }
             return 1;
         }
+
+        _validate_inline_drive_enum_member_values($clause, $actor, $aggregate_roots, $context);
+        return 1;
     }
 
     if ($head eq 'spawn' || $head eq 'do') {
@@ -1294,6 +1297,45 @@ sub _validate_drive_enum_member_value_contexts {
     return 1;
 }
 
+sub _validate_inline_drive_enum_member_values {
+    my ($clause, $actor, $aggregate_roots, $context) = @_;
+
+    my $first_assignment = (ref($clause->[1]) eq 'ARRAY') ? 1 : 2;
+    return 1 if $first_assignment > $#$clause;
+
+    for my $entry (@{$clause}[$first_assignment .. $#$clause]) {
+        return _reject_enum_member_value_contexts(
+            $entry,
+            $actor,
+            $aggregate_roots,
+            "$context inline drive",
+        ) unless ref($entry) eq 'ARRAY' && @$entry;
+
+        _reject_enum_member_value_contexts(
+            $entry->[0],
+            $actor,
+            $aggregate_roots,
+            "$context inline drive target",
+        );
+        _validate_drive_enum_member_rhs(
+            $entry->[1],
+            $actor,
+            $aggregate_roots,
+            "$context inline drive RHS",
+        ) if @$entry >= 2;
+        for my $extra (@{$entry}[2 .. $#$entry]) {
+            _reject_enum_member_value_contexts(
+                $extra,
+                $actor,
+                $aggregate_roots,
+                "$context inline drive assignment",
+            );
+        }
+    }
+
+    return 1;
+}
+
 sub _validate_drive_enum_member_rhs {
     my ($rhs, $actor, $aggregate_roots, $context) = @_;
     return _reject_enum_member_value_contexts($rhs, $actor, $aggregate_roots, "$context expression")
@@ -1349,7 +1391,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults or aggregate/list parameter default leaves, activation scalar parameter overrides or aggregate/list override leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults or aggregate/list parameter default leaves, activation scalar parameter overrides or aggregate/list override leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, inline drive assignment RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }

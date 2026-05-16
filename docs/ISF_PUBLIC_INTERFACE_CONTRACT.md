@@ -720,16 +720,18 @@ RHS values, named drive-call scalar actual values or scalar operands inside
 drive-call actual expressions, scalar activation parameter overrides, and
 scalar leaves inside activation aggregate/list parameter overrides, scalar rule
 assignment RHS values or scalar operands inside rule assignment RHS
-expressions, and scalar operands inside rule guard expressions in this slice,
-using local `mode.BUSY` or package-qualified `shared.mode.BUSY` spelling and
-resolving to non-negative integer literal values before lowering.
+expressions, scalar operands inside rule guard expressions, and inline drive
+assignment RHS scalar values in this slice, using local `mode.BUSY` or
+package-qualified `shared.mode.BUSY` spelling and resolving to non-negative
+integer literal values before lowering.
 Enum member references in expression operator position, standalone transaction
 conditions, switch selectors, targets, rules outside scalar trigger parameter
 overrides, transaction condition, rule guard, or rule assignment expression
-operator position, drive targets, drive-call expression operator position,
-inline drive assignments, reusable-library use-site parameter overrides, and
-other ISF value contexts, additional aggregate carriers, and aggregate
-field/slice/update semantics remain outside the parser/scheduler contract.
+operator position, drive targets, inline drive assignment RHS expressions,
+drive-call expression operator position, reusable-library use-site parameter
+overrides, and other ISF value contexts, additional aggregate carriers, and
+aggregate field/slice/update semantics remain outside the parser/scheduler
+contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -764,12 +766,17 @@ Named drive-call scalar actual enum member values are checked by
 [t/1267-isf-enum-member-drive-call-values.t](../t/1267-isf-enum-member-drive-call-values.t),
 covering local and package enum member drive-call actuals, scheduled `.fsm`
 review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
-members and deferred inline-drive contexts.
+members.
 Drive-call actual expression enum member operands are checked by
 [t/1268-isf-enum-member-drive-call-expression-values.t](../t/1268-isf-enum-member-drive-call-expression-values.t),
 covering local and package enum member drive-call expression operands,
 scheduled `.fsm` review artifacts, CLI HDL generation, and fail-closed
 diagnostics for unknown members and expression operator position.
+Inline drive assignment RHS enum member values are checked by
+[t/1279-isf-enum-member-inline-drive-values.t](../t/1279-isf-enum-member-inline-drive-values.t),
+covering local and package enum member inline-drive RHS values, scheduled
+`.fsm` review artifacts, CLI HDL generation, and fail-closed diagnostics for
+unknown members, inline drive targets, and inline drive RHS expressions.
 Actor scalar parameter default enum member values are checked by
 [t/1269-isf-enum-member-actor-params.t](../t/1269-isf-enum-member-actor-params.t),
 covering local and package enum member actor parameter defaults, scheduled

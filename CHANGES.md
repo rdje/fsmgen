@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum inline drive RHS values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.25`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.26`.
+- Inline transaction drive assignment RHS scalar values now accept local and
+  package-qualified enum members.
+- Scheduled `.fsm` state assignments preserve authored enum RHS tokens, and
+  strict CLI HDL generation accepts the resulting inline drive state.
+- Parser/lowerer diagnostics reject unknown inline-drive enum RHS values and
+  keep inline drive targets, inline drive RHS expressions, reusable-library
+  use-site enum overrides, and broader non-shipped contexts closed for later
+  slices.
 ### R14 — ISF enum transaction aggregate parameter defaults shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.24`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.25`.
