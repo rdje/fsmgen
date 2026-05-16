@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate inline drive RHS expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.38`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.39`.
+- Inline drive assignment RHS expressions now accept scalar aggregate storage
+  member/item leaves as operands.
+- Scheduled `.fsm` state assignments preserve authored aggregate expression
+  payloads, and strict CLI HDL generation accepts them.
+- Parser diagnostics reject unknown aggregate members, operator-position
+  aggregate paths, aggregate inline drive targets, and subaggregate operands.
 ### R14 — ISF aggregate inline drive RHS values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.37`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.38`.
@@ -9,7 +18,8 @@ This is the persistent technical change history for FSMGen.
 - Scheduled `.fsm` state assignments preserve authored aggregate RHS tokens,
   and strict CLI HDL generation accepts them.
 - Parser diagnostics reject unknown aggregate members, aggregate inline drive
-  targets, inline drive RHS expressions, and subaggregate RHS values.
+  targets, and subaggregate RHS values; `.38` now covers the bounded inline
+  drive RHS expression-operand context.
 ### R14 — ISF aggregate named drive-call actual expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.36`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.37`.

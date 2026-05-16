@@ -708,11 +708,11 @@ expressions may read scalar member/item leaves from those same declared storage
 variables. Rule guard expressions may also read scalar member/item leaves as
 operands. Named drive body scalar RHS values and scalar operands inside RHS
 expressions may also read scalar member/item leaves from those same declared
-storage variables. Inline drive assignment scalar RHS values may also read
-scalar member/item leaves from those same declared storage variables. Named
-drive-call scalar actual values may also read scalar member/item leaves from
-those same declared storage variables, and drive-call actual expressions may
-use them as scalar operands. Lowering
+storage variables. Inline drive assignment scalar RHS values and scalar
+operands inside RHS expressions may also read scalar member/item leaves from
+those same declared storage variables. Named drive-call scalar actual values
+may also read scalar member/item leaves from those same declared storage
+variables, and drive-call actual expressions may use them as scalar operands. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
 aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
@@ -721,7 +721,7 @@ indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition expression operands,
 rule assignment RHS values/expression operands, or rule guard expression
 operands, drive body RHS scalar values/expression operands, inline drive
-assignment RHS scalar values, or drive-call actual scalar values/expression
+assignment RHS scalar values/expression operands, or drive-call actual scalar values/expression
 operands, aggregate paths in expression
 operator position, and subaggregate operands/updates fail closed.
 Actor-local `(enums ...)`
@@ -950,7 +950,13 @@ Inline drive assignment RHS aggregate leaf values are checked by
 covering local and package aggregate leaf reads as inline drive assignment
 scalar RHS values, scheduled `.fsm` state-assignment review artifacts, CLI HDL
 generation, and fail-closed diagnostics for unknown members, inline drive
-targets, RHS expressions, and subaggregate RHS values.
+targets, and subaggregate RHS values.
+Inline drive RHS expression aggregate leaf operands are checked by
+[t/1292-isf-aggregate-inline-drive-expression-values.t](../t/1292-isf-aggregate-inline-drive-expression-values.t),
+covering local and package aggregate leaf operands inside inline drive RHS
+expressions, scheduled `.fsm` state-assignment review artifacts, CLI HDL
+generation, and fail-closed diagnostics for unknown members, operator-position
+paths, and subaggregate operands.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

@@ -915,10 +915,12 @@ Rules:
   `(drive publish (mode_out (+ frame.mode mode_in)))`. Drive targets and
   aggregate paths in drive body RHS expression operator position remain
   deferred.
-- Inline drive assignment scalar RHS values may read scalar aggregate leaves on
-  declared actor-owned aggregate storage, for example
-  `(drive inline_publish (mode_out frame.mode))`. Inline drive targets and
-  aggregate paths in inline drive RHS expressions remain deferred.
+- Inline drive assignment scalar RHS values and scalar operands inside RHS
+  expressions may read scalar aggregate leaves on declared actor-owned
+  aggregate storage, for example `(drive inline_publish (mode_out frame.mode))`
+  or `(drive inline_publish (mode_out (+ frame.mode mode_in)))`. Inline drive
+  targets and aggregate paths in inline drive RHS expression operator position
+  remain deferred.
 - Named drive-call scalar actual values and scalar operands inside actual
   expressions may read scalar aggregate leaves on declared actor-owned
   aggregate storage, for example `(drive publish frame.mode)` or
@@ -971,7 +973,7 @@ Aggregate member/item access outside direct transaction `set` RHS values,
 direct transaction `set` target tokens, transaction condition expression
 operands, rule assignment RHS values or expression operands, rule guard
 expression operands, drive body RHS scalar values/expression operands, inline
-drive assignment RHS scalar values, or drive-call actual scalar
+drive assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands; aggregate paths in drive body RHS, inline drive
 RHS, or drive-call actual expression operator position; subaggregate
 operands/updates;
@@ -1377,8 +1379,8 @@ Required fail-closed examples:
   `set` RHS values, direct transaction `set` target tokens, transaction
   condition expression operands, rule assignment RHS values/expression operands,
   rule guard expression operands, drive body RHS scalar values/expression
-  operands, inline drive assignment RHS scalar values, or drive-call actual
-  scalar values/expression operands, aggregate paths in expression
+  operands, inline drive assignment RHS scalar values/expression operands, or
+  drive-call actual scalar values/expression operands, aggregate paths in expression
   operator position, subaggregate
   operands/updates, and
   enum member references outside
@@ -1467,7 +1469,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1288-isf-aggregate-drive-expression-values.t \
   t/1289-isf-aggregate-drive-call-values.t \
   t/1290-isf-aggregate-drive-call-expression-values.t \
-  t/1291-isf-aggregate-inline-drive-values.t
+  t/1291-isf-aggregate-inline-drive-values.t \
+  t/1292-isf-aggregate-inline-drive-expression-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

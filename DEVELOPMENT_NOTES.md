@@ -1,12 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate inline drive RHS expressions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.38` widens aggregate inline drive support from
+  direct scalar RHS values to scalar operands inside inline drive RHS
+  expressions.
+- The parser walks inline drive RHS expression trees, validates aggregate
+  member/item paths against declared actor-owned aggregate storage, and rejects
+  aggregate paths in expression operator position.
+- Inline drive targets and subaggregate operands remain closed because target
+  aggregate update semantics and packed aggregate expression semantics are
+  separate contracts.
 ## 2026-05-16: aggregate inline drive RHS values stay direct-scalar-only
 - `ISF-TYPE-AGGREGATE-PARITY.37` widens aggregate storage leaf reads into
   inline drive assignment scalar RHS values.
 - The parser validates RHS scalar values in labeled and unlabeled inline drive
   assignment entries while keeping aggregate inline drive targets closed.
-- Inline drive RHS expressions stay closed until the expression-operand walk is
-  explicitly documented and covered.
+- This direct-value slice left inline drive RHS expressions closed; `.38` now
+  documents and covers the expression-operand walk.
 ## 2026-05-16: aggregate drive-call actual expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.36` widens aggregate storage leaf reads from
   direct named drive-call actual values to scalar operands inside drive-call
