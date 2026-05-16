@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: when fixture promotion locks branch body shape
+- `ISF-WHEN-FIXTURE-PROMOTION.1` promotes `isf/when_test.isf` without changing
+  `when` semantics. The fixture already exercises the shipped transaction-local
+  conditional body model.
+- The new regression captures both true and false paths: an initial drive,
+  the first `when` true body with two sequential drives, false fallthrough to
+  the second `when`, and final completion when the second condition is false.
+- The compatible fan-in assertion is intentional because four drive calls
+  share `result_start`. That makes the fixture useful for checking conditional
+  body lowering and compatible request grouping together.
+- Nested child activation and await-sync inside `when` bodies remain deferred;
+  they need child lifetime/re-entry policy rather than fixture-only coverage.
 ## 2026-05-16: switch fixture promotion is structural coverage
 - `ISF-SWITCH-FIXTURE-PROMOTION.1` promotes `isf/switch_test.isf` without
   changing switch semantics. The fixture already expressed the shipped surface

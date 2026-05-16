@@ -93,6 +93,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-UART-FIXTURE-PROMOTION.md` — completed `R14` task tree for UART-like fixture schedule/strict/HDL promotion.
 - `docs/tasks/ISF-PHASE-FIXTURE-PROMOTION.md` — completed `R14` task tree for phase fixture schedule/strict/HDL promotion.
 - `docs/tasks/ISF-SWITCH-FIXTURE-PROMOTION.md` — completed `R14` task tree for switch fixture schedule/strict/HDL promotion.
+- `docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md` — completed `R14` task tree for `when` fixture schedule/strict/HDL promotion.
 - `docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md` — completed `R14` task tree for I2C-like fixture schedule/strict/HDL promotion.
 - `docs/tasks/ISF-COMPATIBILITY-SURFACE.md` — completed `R14` task tree for legacy handshake and removed assign compatibility policy.
 - `docs/tasks/ISF-PORT-BINDING.md` — completed `R14` task tree for transaction ports and actor pin access.

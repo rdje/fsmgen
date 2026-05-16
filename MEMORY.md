@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF when fixture promotion shipped
+- Completed `ISF-WHEN-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md](docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md).
+- Added
+  [t/1314-isf-when-fixture-coverage.t](t/1314-isf-when-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, entry drive setup, two conditional decision
+  states, multi-step true-body drives, false-path fallthrough, compatible
+  named-drive start fan-in, and delayed completion pulse behavior for
+  [isf/when_test.isf](isf/when_test.isf).
+- Updated public `tested_by` metadata and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: `prove -l t/1314-isf-when-fixture-coverage.t t/1104-isf-when-branch-exits.t t/1107-isf-when-body-ops.t t/1206-isf-when-clause-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`
+  passed with `Files=8, Tests=102`; `git diff --check` passed; `mdbook build docs/book`
+  passed; `./bin/ci-regression isf --no-book` passed with `Files=220,
+  Tests=967`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF switch fixture promotion shipped
 - Completed `ISF-SWITCH-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-SWITCH-FIXTURE-PROMOTION.md](docs/tasks/ISF-SWITCH-FIXTURE-PROMOTION.md).

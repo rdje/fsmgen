@@ -2739,6 +2739,11 @@ The [isf/switch_test.isf](../isf/switch_test.isf) fixture now has file-backed
 schedule/HDL/strict coverage for sampled selector capture, explicit branch
 dispatch, default fallthrough to completion, named-drive branch starts,
 delayed completion pulse behavior, and strict generated HDL reachability.
+The [isf/when_test.isf](../isf/when_test.isf) fixture now has file-backed
+schedule/HDL/strict coverage for entry drive setup, two conditional decision
+states, multi-step true-body drives, false-path fallthrough, compatible
+named-drive start fan-in, delayed completion pulse behavior, and strict
+generated HDL reachability.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -2979,6 +2984,7 @@ Focused tests:
 - [t/1311-isf-uart-fixture-coverage.t](../t/1311-isf-uart-fixture-coverage.t)
 - [t/1312-isf-phase-fixture-coverage.t](../t/1312-isf-phase-fixture-coverage.t)
 - [t/1313-isf-switch-fixture-coverage.t](../t/1313-isf-switch-fixture-coverage.t)
+- [t/1314-isf-when-fixture-coverage.t](../t/1314-isf-when-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

@@ -998,6 +998,11 @@ schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, sampled selector capture, explicit branch dispatch, default
 fallthrough to completion, named-drive branch starts, and delayed completion
 pulse behavior.
+The when fixture is now promoted in the `isf` tier for file-backed strict
+schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, entry drive setup, two conditional decision states, multi-step
+true-body drives, false-path fallthrough, compatible named-drive start fan-in,
+and delayed completion pulse behavior.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

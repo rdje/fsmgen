@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF when fixture promotion shipped
+- Completed `ISF-WHEN-FIXTURE-PROMOTION.1` and closed the task tree.
+- Added `t/1314-isf-when-fixture-coverage.t` for file-backed scheduled `.fsm`
+  structure, strict schedule JSON parity, plain and strict HDL generation,
+  entry drive setup, two conditional decision states, multi-step true-body
+  drives, false-path fallthrough, compatible named-drive start fan-in, and
+  delayed completion pulse behavior.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook feature matrix and
+  backlog chapters.
+- Validation: focused when/public/book/spec audit tests passed with
+  `Files=8, Tests=102`; `git diff --check` passed; `mdbook build docs/book`
+  passed; broad `./bin/ci-regression isf --no-book` passed with `Files=220,
+  Tests=967`.
 ### R14 — ISF switch fixture promotion shipped
 - Completed `ISF-SWITCH-FIXTURE-PROMOTION.1` and closed the task tree.
 - Added `t/1313-isf-switch-fixture-coverage.t` for file-backed scheduled

@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF when fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-WHEN-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md](docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md).
+- The `ISF-WHEN-FIXTURE-PROMOTION` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create
+  a new task tree first.
+- Added
+  [t/1314-isf-when-fixture-coverage.t](t/1314-isf-when-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, entry drive setup, two conditional decision
+  states, multi-step true-body drives, false-path fallthrough, compatible
+  named-drive start fan-in, and delayed completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused when/public/book/spec audit tests passed with
+  `Files=8, Tests=102`; `git diff --check` passed; `mdbook build docs/book`
+  passed; broad `./bin/ci-regression isf --no-book` passed with `Files=220,
+  Tests=967`.
+
 ## 2026-05-16: R14 — ISF switch fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-SWITCH-FIXTURE-PROMOTION.1` in

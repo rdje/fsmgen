@@ -130,6 +130,12 @@ to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
 strict HDL generation, sampled selector capture, explicit branch dispatch,
 default fallthrough, named-drive branch starts, and delayed completion pulse
 behavior covered.
+The when fixture is checked by
+[t/1314-isf-when-fixture-coverage.t](../t/1314-isf-when-fixture-coverage.t)
+to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
+strict HDL generation, entry drive setup, conditional decision states,
+multi-step true-body drives, false-path fallthrough, compatible named-drive
+start fan-in, and delayed completion pulse behavior covered.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

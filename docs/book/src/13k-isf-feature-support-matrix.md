@@ -111,6 +111,14 @@ completion, named-drive branch starts, strict schedule JSON parity, scheduled
 pulse behavior. It does not widen the deferred nested child/await-sync branch
 body surface.
 
+The when fixture is file-backed in the `isf` regression tier for
+transaction-local conditional body coverage: entry drive setup, two conditional
+decision states, multi-step true-body drives, false-path fallthrough,
+compatible named-drive start fan-in, strict schedule JSON parity, scheduled
+`.fsm` structure, plain and strict HDL generation, and delayed completion
+pulse behavior. It does not widen the deferred nested child/await-sync body
+surface.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

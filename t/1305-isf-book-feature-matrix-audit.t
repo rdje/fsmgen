@@ -95,6 +95,7 @@ my @required_examples = (
     'UART-like fixture',
     'phase fixture',
     'switch fixture',
+    'when fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

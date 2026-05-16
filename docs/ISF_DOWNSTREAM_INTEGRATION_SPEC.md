@@ -1514,6 +1514,11 @@ which proves strict schedule JSON parity, scheduled `.fsm` structure, plain
 and strict HDL generation, sampled selector capture, explicit branch
 dispatch, default fallthrough to completion, named-drive branch starts, and
 delayed completion pulse behavior.
+The when fixture is covered by `t/1314-isf-when-fixture-coverage.t`, which
+proves strict schedule JSON parity, scheduled `.fsm` structure, plain and
+strict HDL generation, entry drive setup, two conditional decision states,
+multi-step true-body drives, false-path fallthrough, compatible named-drive
+start fan-in, and delayed completion pulse behavior.
 
 Recommended downstream smoke commands:
 
@@ -1524,6 +1529,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/uart_tx.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/phase_test.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/switch_test.isf
+./bin/fsmgen --strict --emit-schedule-json isf/when_test.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
