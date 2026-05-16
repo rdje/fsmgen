@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum named drive body expressions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.28` widens named drive body RHS support from
+  direct scalar enum values to scalar operands inside named drive body RHS
+  expressions.
+- The parser now accepts list expressions as named drive body RHS values, walks
+  those expression trees for enum validation, rejects enum members in operator
+  position, and keeps drive targets closed.
+- The lowerer formats drive body RHS expressions into drive DT assignments and
+  recursively substitutes drive formals with the generated payload signals so
+  parameterized drive expressions stay consistent with scalar drive parameters.
 ## 2026-05-16: enum library use params resolve at use site
 - `ISF-TYPE-AGGREGATE-PARITY.27` widens reusable-library use-site parameter
   overrides from numeric/exact-width literals to local or package enum members

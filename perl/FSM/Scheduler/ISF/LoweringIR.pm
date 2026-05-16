@@ -6762,6 +6762,16 @@ sub _rule_cond_terms {
     return _condition_literal_terms($w->[1]);
 }
 
+sub _substitute_named_drive_body_expr {
+    my ($value, $param_signal) = @_;
+    if (ref($value) eq 'ARRAY') {
+        return [ map { _substitute_named_drive_body_expr($_, $param_signal) } @$value ];
+    }
+    return $param_signal->{$value}
+        if defined($value) && !ref($value) && exists $param_signal->{$value};
+    return $value;
+}
+
 sub _build_drive_dts {
     my ($self, $actor, $dts, $ctrs, $local_drive_uses, $extra_drive_sources, $storage_roles) = @_;
     my $drives = $actor->{drives} || {};
@@ -6793,11 +6803,10 @@ sub _build_drive_dts {
             for my $pair (@$body) {
                 next unless ref($pair) eq 'ARRAY' && @$pair >= 2;
                 my $lhs = $pair->[0];
-                my $rhs = $pair->[1];
-                $rhs = $param_signal{$rhs} if exists $param_signal{$rhs};
+                my $rhs = _substitute_named_drive_body_expr($pair->[1], \%param_signal);
                 push @assignments, {
                     lhs         => $lhs,
-                    rhs         => $rhs,
+                    rhs         => _format_isf_expr($rhs),
                     op          => '<-',
                     guard       => { port => "${prefix}_start" },
                     source_kind => $source->{source_kind} || 'drive_body',

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum named drive RHS expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.28`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.29`.
+- Named drive body RHS expressions now accept local and package-qualified enum
+  members as scalar operands.
+- Drive body expressions lower to reviewable drive DTs, recursively
+  substituting drive formals with the generated drive payload signals before
+  scheduled `.fsm` emission.
+- Parser diagnostics reject unknown drive-body enum expression operands and
+  enum members in drive body RHS expression operator position, while drive
+  targets remain closed for later slices.
 ### R14 — ISF enum reusable-library use-site overrides shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.27`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.28`.

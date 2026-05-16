@@ -763,6 +763,12 @@ Scalar drive body RHS enum member values are checked by
 covering local and package enum member drive RHS values, scheduled `.fsm`
 review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
 members and deferred drive target and rule contexts.
+Drive body RHS expression enum member operands are checked by
+[t/1282-isf-enum-member-drive-expression-values.t](../t/1282-isf-enum-member-drive-expression-values.t),
+covering local and package enum member operands inside named drive body RHS
+expressions, scheduled `.fsm` drive-DT review artifacts, CLI HDL generation,
+recursive drive-parameter substitution in body expressions, and fail-closed
+diagnostics for unknown members and expression operator position.
 Named drive-call scalar actual enum member values are checked by
 [t/1267-isf-enum-member-drive-call-values.t](../t/1267-isf-enum-member-drive-call-values.t),
 covering local and package enum member drive-call actuals, scheduled `.fsm`

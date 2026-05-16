@@ -303,8 +303,8 @@ transaction `switch` branch values may consume local and package-qualified enum
 members, scalar rule assignment RHS values and scalar operands inside rule
 assignment RHS expressions and scalar operands inside rule guard expressions may
 consume local and package-qualified enum members, and scalar drive body RHS
-values may consume local and
-package-qualified enum members. Named drive-call scalar actual values may also
+values or scalar operands inside drive body RHS expressions may consume local
+and package-qualified enum members. Named drive-call scalar actual values may also
 consume local and package-qualified enum members, and drive-call actual
 expressions may use enum members as scalar operands. Inline drive assignment
 RHS scalar values and scalar operands inside inline drive RHS expressions may
@@ -327,7 +327,7 @@ scalar values or aggregate/list override leaves, transaction `set` RHS scalar
 values/expression operands, transaction `when`/`while`/`until` condition
 expression operands, transaction `switch` branch values, rule guard expression
 operands, scalar rule assignment RHS values or expression operands, or drive
-body RHS scalar values, inline drive assignment RHS scalar values/expression
+body RHS scalar values/expression operands, inline drive assignment RHS scalar values/expression
 operands, or drive-call actual scalar values/expression operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.

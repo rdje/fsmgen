@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum named drive RHS expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.28` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.29`.
+- Named drive body RHS expressions now accept local enum members such as
+  `mode.BUSY` and package-qualified enum members such as `shared.mode.BUSY` as
+  scalar operands.
+- The parser rejects unknown enum operands and enum members in drive body RHS
+  expression operator position before lowering.
+- The lowerer emits reviewable drive DT expressions and recursively substitutes
+  drive formals with generated payload signals inside drive body expressions.
 ## 2026-05-16: ISF enum reusable-library use-site overrides shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.27` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

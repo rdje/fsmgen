@@ -41,9 +41,11 @@ subtest 'valid drive body entries preserve parser shell and lower to a drive DT'
   (interface
     (input start)
     (output out)
+    (output expr_out)
     (output done))
   (drive (set_out val)
-    (out val))
+    (out val)
+    (expr_out (+ val 1)))
   (transaction main
     (on start)
     (drive set_out 1)
@@ -53,12 +55,14 @@ ISF
     my $actor = parse_source($source);
     is_deeply(
         $actor->{drives}{set_out}{body},
-        [['out', 'val']],
-        'drive body pair is preserved in the actor shell',
+        [['out', 'val'], ['expr_out', ['+', 'val', '1']]],
+        'drive body assignments are preserved in the actor shell',
     );
 
     my $fsm = lower_source($source)->{files}{'drive_body.fsm'};
     like($fsm, qr/\(<- \(out> set_out_val\) <set_out_start\)/, 'drive body lowers through the parameter signal');
+    like($fsm, qr/\(<- \(expr_out> \(\+ set_out_val 1\)\) <set_out_start\)/,
+        'drive body expression lowers through recursive parameter substitution');
 };
 
 subtest 'malformed drive body entries fail before actor-shell return' => sub {
@@ -94,13 +98,6 @@ ISF
     (out 1 now)))
 ISF
 
-    assert_parse_rejected(<<'ISF', 'expression drive body value', qr/\AError: drive 'pulse' body assignments require '\(port value\)'/);
-(actor expression_drive_body_value
-  (clock clk)
-  (interface (output out))
-  (drive pulse
-    (out (+ a b))))
-ISF
 };
 
 done_testing();

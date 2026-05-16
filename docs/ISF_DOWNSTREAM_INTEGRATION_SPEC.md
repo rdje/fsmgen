@@ -537,10 +537,14 @@ Rules:
 - Call arity must exactly match the drive's formal count.
 - Actuals may be scalar tokens, numeric/exact-width literals, or non-empty
   list expressions.
-- Scalar drive body RHS values may use local enum members such as `mode.BUSY`
-  or package enum members such as `shared.mode.BUSY`. FSMGen resolves those
-  members before lowering and preserves the authored token in the generated
-  drive DT.
+- Drive body RHS values may be scalar tokens or non-empty list expressions.
+  Expressions recursively substitute drive formals with the generated payload
+  signals before drive-DT emission.
+- Scalar drive body RHS values and scalar operands inside drive body RHS
+  expressions may use local enum members such as `mode.BUSY` or package enum
+  members such as `shared.mode.BUSY`. FSMGen resolves those members before
+  lowering and preserves the authored token in the generated drive DT. Enum
+  members in drive body RHS expression operator position remain deferred.
 - Scalar rule assignment RHS values may use local enum members such as
   `mode.BUSY` or package enum members such as `shared.mode.BUSY`. This includes
   direct scalar RHS values and scalar operands inside RHS expressions in
@@ -907,9 +911,10 @@ Rules:
   use enum members as scalar operands, transaction `when`/`while`/`until`
   condition expressions may use enum members as scalar operands, transaction
   `switch` branch values may consume local or package enum members, and scalar
-  drive body RHS values may consume local or package enum members. Named
-  drive-call scalar actual values may also consume local or package enum
-  members, drive-call actual expressions may use enum members as scalar
+  drive body RHS values or operands inside drive body RHS expressions may
+  consume local or package enum members. Named drive-call scalar actual values
+  may also consume local or package enum members, drive-call actual expressions
+  may use enum members as scalar
   operands, scalar actor parameter defaults and scalar leaves inside actor
   aggregate/list parameter defaults may consume local or package enum members,
   generated child transaction scalar parameter defaults and scalar leaves
@@ -926,8 +931,9 @@ Rules:
   expression operator position, standalone transaction conditions, switch
   selectors, targets, rules outside scalar trigger parameter overrides, rule
   guard or transaction condition expression operator position, rule assignment
-  expression operator position, drive targets, inline drive assignment RHS
-  expression operator position, drive-call expression operator position, and
+  expression operator position, drive targets, drive body RHS expression
+  operator position, inline drive assignment RHS expression operator position,
+  drive-call expression operator position, and
   other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or

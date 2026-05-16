@@ -1284,7 +1284,7 @@ sub _validate_drive_enum_member_value_contexts {
             $aggregate_roots,
             "drive '$drive_name' target",
         );
-        _validate_inline_drive_enum_member_rhs(
+        _validate_drive_body_enum_member_rhs(
             $entry->[1],
             $actor,
             $aggregate_roots,
@@ -1338,6 +1338,28 @@ sub _validate_inline_drive_enum_member_values {
 
 sub _validate_inline_drive_enum_member_rhs {
     my ($rhs, $actor, $aggregate_roots, $context) = @_;
+    return _validate_drive_assignment_rhs_enum_member_operands(
+        $rhs,
+        $actor,
+        $aggregate_roots,
+        $context,
+        'inline drive RHS expressions',
+    );
+}
+
+sub _validate_drive_body_enum_member_rhs {
+    my ($rhs, $actor, $aggregate_roots, $context) = @_;
+    return _validate_drive_assignment_rhs_enum_member_operands(
+        $rhs,
+        $actor,
+        $aggregate_roots,
+        $context,
+        'drive body RHS expressions',
+    );
+}
+
+sub _validate_drive_assignment_rhs_enum_member_operands {
+    my ($rhs, $actor, $aggregate_roots, $context, $accepted_context) = @_;
 
     if (!ref($rhs)) {
         my $member = _enum_member_value_token($rhs, $aggregate_roots);
@@ -1352,24 +1374,19 @@ sub _validate_inline_drive_enum_member_rhs {
         my $item = $rhs->[$index];
         if ($index == 0 && defined($item) && !ref($item)) {
             my $member = _enum_member_value_token($item, $aggregate_roots);
-            confess "Error: $context expression operator references enum member '$member'; this ISF slice accepts enum member references inside inline drive RHS expressions only as scalar operands\n"
+            confess "Error: $context expression operator references enum member '$member'; this ISF slice accepts enum member references inside $accepted_context only as scalar operands\n"
                 if defined $member;
             next;
         }
-        _validate_inline_drive_enum_member_rhs($item, $actor, $aggregate_roots, $context);
+        _validate_drive_assignment_rhs_enum_member_operands(
+            $item,
+            $actor,
+            $aggregate_roots,
+            $context,
+            $accepted_context,
+        );
     }
 
-    return 1;
-}
-
-sub _validate_drive_enum_member_rhs {
-    my ($rhs, $actor, $aggregate_roots, $context) = @_;
-    return _reject_enum_member_value_contexts($rhs, $actor, $aggregate_roots, "$context expression")
-        if ref($rhs);
-
-    my $member = _enum_member_value_token($rhs, $aggregate_roots);
-    _validate_enum_member_value($member, $actor, $context)
-        if defined $member;
     return 1;
 }
 
@@ -1417,7 +1434,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults or aggregate/list parameter default leaves, activation scalar parameter overrides or aggregate/list override leaves, reusable-library use-site parameter override values or leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, inline drive assignment RHS scalar values or operands, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults or aggregate/list parameter default leaves, activation scalar parameter overrides or aggregate/list override leaves, reusable-library use-site parameter override values or leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }
@@ -3573,7 +3590,7 @@ sub _parse_drive_def($self, $clause, $drives) {
         confess "Error: drive '$name' body assignments require '(port value)'\n"
             unless @$entry == 2
                 && defined($entry->[1])
-                && !ref($entry->[1]);
+                && (!ref($entry->[1]) || ref($entry->[1]) eq 'ARRAY');
     }
     $drives->{$name} = { body => \@body, params => \@params };
 }
