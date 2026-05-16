@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF resource backlog truth synchronized
+- Completed R14 task-tree slice:
+  `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1`, closing
+  [docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md).
+- Corrected the canonical mdBook feature backlog so scalar authoring no longer
+  carries resource-arbitration status text.
+- Corrected the enforced-resource-arbitration item to say the
+  `rule_slot`/`priority` subset is partially shipped while broader resource
+  kinds and arbiters remain backlog.
+- Clarified that resource-grant/debug storage is still deferred because
+  shipped arbitration reports static `resource_arbitration[]` summaries and
+  guard lowering rather than materialized grant storage.
+- Parser, scheduler, report payload, public manifest, generated `.fsm`, and
+  HDL behavior are unchanged.
+
 ## 2026-05-16: R14 — ISF activation handshake storage roles shipped
 - Completed R14 task-tree slice:
   `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1`, closing

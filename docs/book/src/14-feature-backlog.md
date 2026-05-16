@@ -12,7 +12,7 @@ is the consolidated review list.
 
 ### Inference-First Scalar Authoring
 
-Status: partially shipped; broader resource kinds and arbiters remain backlog.
+Status: partially shipped; broader inference surfaces remain backlog.
 
 Goal: make scalar declarations optional across the whole language whenever a
 safe type and width can be recovered from authored usage.
@@ -292,7 +292,7 @@ syntax, lowering, and conflict semantics.
 
 ### Enforced Resource Arbitration
 
-Status: backlog.
+Status: partially shipped; broader resource kinds and arbiters remain backlog.
 
 Goal: lower `(resources ...)` metadata into scheduler-enforced mutual
 exclusion and arbiter behavior.
@@ -738,8 +738,11 @@ storage families with stable lowering evidence: `activation_done_handoff`,
 `transaction_port_binding`, and `trigger_done_observe`.
 
 Remaining direction: keep `role` additive and omit it when evidence is
-ambiguous. Additional roles, including resource-grant/debug storage, remain
-backlog until each family has its own compatibility rules, public contract
+ambiguous. Per-cycle resource-grant/debug storage remains deferred because
+the shipped `rule_slot`/`priority` implementation exposes static grant
+shaping through `resource_arbitration[]` and guard lowering rather than
+materialized grant storage. Add a storage role only if future resource
+lowering materializes such signals with compatibility rules, public contract
 metadata, and regression coverage.
 
 ### Fully Frozen Schedule JSON Schema

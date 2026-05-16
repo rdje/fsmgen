@@ -56,9 +56,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `activation_start_handoff` and `activation_done_handoff` roles for
   generated activation start/done handoff storage that appears in
   `inferred_storage[]`, without changing activation syntax, generated child
-  instantiation, start/done timing, generated `.fsm`, or HDL output. The next
-  PNT selection should choose a fresh roadmap-aligned R14 task tree before
-  implementation.
+  instantiation, start/done timing, generated `.fsm`, or HDL output.
+  `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` then corrected the canonical book
+  backlog so scalar authoring no longer carries resource status text,
+  resource arbitration is marked partially shipped for the `rule_slot` /
+  `priority` subset, and per-cycle resource-grant/debug storage is explicitly
+  deferred until future lowering materializes such signals. This was
+  documentation-truth synchronization only. The next PNT selection should
+  choose a fresh roadmap-aligned R14 task tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -205,6 +210,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   through public contract/manifest metadata and extended
   `t/1148-isf-public-storage-metadata-audit.t` with generated spawn and
   generated rule-trigger handoff probes.
+  `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` corrected the canonical book backlog's
+  resource arbitration status and explicitly deferred per-cycle
+  resource-grant/debug storage until a future implementation materializes
+  grant/debug signals with public contract metadata and regression coverage.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: resource grant storage remains an explicit deferral
+- `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` corrects book status text only. The
+  shipped resource-arbitration implementation already enforces
+  priority-arbitrated `rule_slot` resources by shaping rule DT guards and
+  reporting static decisions through `resource_arbitration[]`.
+- There is no per-cycle resource grant storage signal in the shipped lowering
+  contract today, so `inferred_storage[].role` should not invent a
+  resource-grant role. A future implementation that materializes grant/debug
+  storage must add the role, public contract metadata, and regression evidence
+  in the same slice.
+- The misplaced resource status on the scalar-authoring backlog item was
+  documentation drift, not a compiler behavior change.
 ## 2026-05-16: activation handshake roles follow generated-instance evidence
 - `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` records
   `activation_start_handoff` and `activation_done_handoff` where the lowerer

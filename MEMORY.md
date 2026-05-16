@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF resource backlog truth synchronized
+- Completed `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` in
+  [docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md),
+  closing the resource backlog truth-sync tree.
+- Corrected the canonical mdBook feature backlog so scalar authoring no
+  longer inherits resource-arbitration status text.
+- Corrected the enforced resource-arbitration backlog status to say the
+  shipped `rule_slot`/`priority` subset is partially shipped while broader
+  resource kinds and arbiters remain backlog.
+- Clarified that per-cycle resource-grant/debug storage remains deferred
+  because shipped resource arbitration exposes static grant shaping through
+  `resource_arbitration[]` and guard lowering rather than materialized grant
+  storage.
+- This is documentation-truth synchronization only. Parser, scheduler, report
+  payload, public manifest, generated `.fsm`, and HDL behavior are unchanged.
 ## 2026-05-16: ISF activation handshake storage roles shipped
 - Completed `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` in
   [docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md),

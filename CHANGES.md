@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF resource backlog truth synchronized
+- Completed `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1`, closing the
+  `ISF-RESOURCE-BACKLOG-TRUTH-SYNC` task tree.
+- Corrected the canonical mdBook feature backlog so the scalar-authoring item
+  no longer carries resource-arbitration status text.
+- Corrected the enforced-resource-arbitration item to describe the shipped
+  `rule_slot`/`priority` subset as partially shipped, with broader resource
+  kinds and arbiters still backlog.
+- Clarified that per-cycle resource-grant/debug storage remains deferred:
+  shipped resource arbitration currently projects static grant shaping through
+  `resource_arbitration[]` and guard lowering, not materialized grant storage.
+- Parser, scheduler, report payload, public manifest, generated `.fsm`, and
+  HDL behavior are unchanged.
 ### R14 — ISF activation handshake storage roles shipped
 - Completed `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1`, closing the
   `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` task tree.
