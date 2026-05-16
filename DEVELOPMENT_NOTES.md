@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: direct enum set values stay scalar-only
+- `ISF-TYPE-AGGREGATE-PARITY.9` selects direct transaction `set` RHS scalar
+  values as the next enum-member context because the review artifact can
+  preserve the authored enum token directly in scheduled `.fsm`.
+- The parser resolves local and package enum members before lowering so
+  unknown enum families or members fail in ISF space instead of surfacing
+  during HDL generation.
+- Enum members inside expressions, conditions, set targets, rules, drives,
+  parameters, and other contexts remain deferred. Those contexts need separate
+  width, timing, and assignment semantics before they should become public.
 ## 2026-05-16: aggregate leaf expression reads are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.8` widens the read side from direct transaction
   `set` RHS tokens to scalar operands inside transaction `set` RHS

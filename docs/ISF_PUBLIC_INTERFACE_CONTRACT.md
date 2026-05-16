@@ -707,13 +707,14 @@ aliases outside actor-owned storage variables, unknown aggregate members,
 out-of-range list indexes, aggregate paths outside direct transaction `set`
 RHS values or target tokens, aggregate paths in expression operator position,
 and subaggregate operands/updates fail closed. Actor-local `(enums ...)`
-declarations are preserved as scheduled `.fsm` `+enums`. Enum
-member references are public only as actor constant values in this slice, using
-local `mode.BUSY` or package-qualified
-`shared.mode.BUSY` spelling and resolving to non-negative integer literal
-values before lowering. Enum member references in other ISF expression/value
-contexts, additional aggregate carriers, and aggregate field/slice/update
-semantics remain outside the parser/scheduler contract.
+declarations are preserved as scheduled `.fsm` `+enums`. Enum member
+references are public as actor constant values and direct transaction `set`
+RHS scalar values in this slice, using local `mode.BUSY` or
+package-qualified `shared.mode.BUSY` spelling and resolving to non-negative
+integer literal values before lowering. Enum member references in expressions,
+conditions, targets, rules, drives, parameters, and other ISF value contexts,
+additional aggregate carriers, and aggregate field/slice/update semantics
+remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -724,6 +725,11 @@ Actor-constant enum member references are checked by
 covering local and package enum members, authored `+constants` review
 artifacts, schedule-report value preservation, CLI HDL generation, and
 fail-closed diagnostics.
+Direct transaction `set` RHS enum member values are checked by
+[t/1263-isf-enum-member-set-values.t](../t/1263-isf-enum-member-set-values.t),
+covering local and package enum members, scheduled `.fsm` review artifacts,
+CLI HDL generation, and fail-closed diagnostics for unknown members and
+deferred expression/condition contexts.
 Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,

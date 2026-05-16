@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -108,8 +108,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.8: support aggregate expression reads`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.9`
-  Status: `pending`
+  Status: `done`
   Goal: `choose and implement the next enum or aggregate value/update context after aggregate expression operands`
+  Acceptance: `direct transaction set RHS scalar enum member values resolve through local and package enum sources, preserve authored tokens in reviewable .fsm, reach strict CLI HDL generation, and keep enum members in expressions, conditions, set targets, rules, drives, parameters, and other contexts deferred`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1263-isf-enum-member-set-values.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.9: support enum set values`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.10`
+  Status: `pending`
+  Goal: `choose and implement the next enum or aggregate value/update context after direct enum set values`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -118,7 +125,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.9` | `pending` | The next enum or aggregate value/update context can be selected after aggregate expression operands are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.10` | `pending` | The next enum or aggregate value/update context can be selected after direct enum set values are stable. |
 
 ## Decisions
 
@@ -206,6 +213,12 @@ ISF-only type system.
   storage shape resolver used by direct reads. Aggregate paths in expression
   operator position, subaggregate operands, non-`set` expression contexts, and
   enum member value contexts outside actor constants remain deferred.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.9` selects direct transaction
+  `set` RHS scalar values as the next enum member context. Local and
+  package-qualified enum member tokens now resolve before lowering and are
+  preserved in the scheduled `.fsm` review artifact. Enum members inside
+  expressions, conditions, set targets, rules, drives, parameters, and other
+  non-direct-set RHS scalar contexts remain deferred.
 
 ## Open Questions
 
@@ -214,11 +227,12 @@ ISF-only type system.
   `ISF-TYPE-AGGREGATE-PARITY.3` deliberately shipped with generated `.fsm`
   review artifacts and focused parser/lowering tests rather than schedule
   JSON expansion.
-- Which non-constant enum member expression/value context should ship next?
-  This remains deferred beyond `ISF-TYPE-AGGREGATE-PARITY.4`.
-- Which enum or aggregate value/update context should ship after aggregate
-  expression operands? The current frontier selects this for
-  `ISF-TYPE-AGGREGATE-PARITY.9`.
+- Which enum member expression/value contexts beyond actor constants and
+  direct transaction `set` RHS scalar values should ship next? This remains
+  deferred beyond `ISF-TYPE-AGGREGATE-PARITY.9`.
+- Which enum or aggregate value/update context should ship after direct enum
+  set values? The current frontier selects this for
+  `ISF-TYPE-AGGREGATE-PARITY.10`.
 
 ## Blockers
 
@@ -236,6 +250,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.6` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.7` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.8` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.9` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1263-isf-enum-member-set-values.t t/1259-isf-aggregate-storage-type-aliases.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -249,6 +264,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.6` | `ISF-TYPE-AGGREGATE-PARITY.6: support aggregate leaf reads` | `Transaction set RHS aggregate leaf read parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.7` | `ISF-TYPE-AGGREGATE-PARITY.7: support aggregate leaf writes` | `Transaction set target aggregate leaf write parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.8` | `ISF-TYPE-AGGREGATE-PARITY.8: support aggregate expression reads` | `Transaction set RHS aggregate leaf expression operand parser/lowering slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.9` | `ISF-TYPE-AGGREGATE-PARITY.9: support enum set values` | `Transaction set RHS scalar enum member parser/lowering slice.` |
 
 ## Changelog
 
@@ -275,3 +291,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped transaction `set` RHS aggregate leaf expression
   operands for `ISF-TYPE-AGGREGATE-PARITY.8` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.9`.
+- `2026-05-16`: Shipped direct transaction `set` RHS scalar enum member
+  values for `ISF-TYPE-AGGREGATE-PARITY.9` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.10`.

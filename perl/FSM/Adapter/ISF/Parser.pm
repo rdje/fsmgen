@@ -265,6 +265,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_type_references($result);
     $self->_validate_actor_aggregate_storage_paths($result);
+    $self->_validate_actor_enum_member_value_contexts($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
@@ -654,6 +655,156 @@ sub _validate_actor_aggregate_storage_paths($self, $actor) {
     }
 
     return 1;
+}
+
+sub _validate_actor_enum_member_value_contexts($self, $actor) {
+    my %aggregate_roots = map { $_->{name} => 1 }
+        grep { _is_aggregate_type_spec($_->{type_spec}) }
+        @{$actor->{storage} || []};
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        _validate_transaction_enum_member_value_contexts(
+            $tx->{clauses},
+            $actor,
+            \%aggregate_roots,
+            "transaction '$tx->{name}'",
+        );
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        _reject_enum_member_value_contexts(
+            $rule->{actions},
+            $actor,
+            \%aggregate_roots,
+            "rule '$rule->{name}'",
+        );
+    }
+
+    for my $drive_name (sort keys %{$actor->{drives} || {}}) {
+        _reject_enum_member_value_contexts(
+            $actor->{drives}{$drive_name}{body},
+            $actor,
+            \%aggregate_roots,
+            "drive '$drive_name'",
+        );
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_enum_member_value_contexts {
+    my ($clauses, $actor, $aggregate_roots, $context) = @_;
+    return 1 unless ref($clauses) eq 'ARRAY';
+
+    for my $clause (@$clauses) {
+        _validate_transaction_enum_member_value_clause($clause, $actor, $aggregate_roots, $context);
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_enum_member_value_clause {
+    my ($clause, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context)
+        unless ref($clause) eq 'ARRAY' && @$clause;
+
+    my $head = $clause->[0];
+    return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context)
+        unless defined($head) && !ref($head);
+
+    if ($head eq 'set') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context set target");
+        _validate_transaction_set_enum_member_rhs($clause->[2], $actor, $aggregate_roots, "$context set RHS")
+            if @$clause >= 3;
+        for my $extra (@{$clause}[3 .. $#$clause]) {
+            _reject_enum_member_value_contexts($extra, $actor, $aggregate_roots, "$context set clause");
+        }
+        return 1;
+    }
+
+    if ($head eq 'when' || $head eq 'while' || $head eq 'until') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context $head condition");
+        _validate_transaction_enum_member_value_contexts(
+            [ @{$clause}[2 .. $#$clause] ],
+            $actor,
+            $aggregate_roots,
+            "$context $head body",
+        );
+        return 1;
+    }
+
+    if ($head eq 'repeat') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context repeat count");
+        _validate_transaction_enum_member_value_contexts(
+            [ @{$clause}[2 .. $#$clause] ],
+            $actor,
+            $aggregate_roots,
+            "$context repeat body",
+        );
+        return 1;
+    }
+
+    if ($head eq 'switch') {
+        _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context switch selector");
+        for my $branch (@{$clause}[2 .. $#$clause]) {
+            next unless ref($branch) eq 'ARRAY' && @$branch;
+            _reject_enum_member_value_contexts($branch->[0], $actor, $aggregate_roots, "$context switch branch value");
+            _validate_transaction_enum_member_value_contexts(
+                [ @{$branch}[1 .. $#$branch] ],
+                $actor,
+                $aggregate_roots,
+                "$context switch branch",
+            );
+        }
+        return 1;
+    }
+
+    return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context);
+}
+
+sub _validate_transaction_set_enum_member_rhs {
+    my ($rhs, $actor, $aggregate_roots, $context) = @_;
+    if (!ref($rhs)) {
+        my $member = _enum_member_value_token($rhs, $aggregate_roots);
+        _validate_enum_member_value($member, $actor, $context)
+            if defined $member;
+        return 1;
+    }
+
+    return _reject_enum_member_value_contexts($rhs, $actor, $aggregate_roots, "$context expression");
+}
+
+sub _validate_enum_member_value {
+    my ($member, $actor, $context) = @_;
+    my $resolved_value = FSM::Adapter::ISF::Parser->_resolve_actor_enum_member_value($actor, $member);
+    confess "Error: $context references unknown enum member '$member'\n"
+        unless defined($resolved_value) && !ref($resolved_value);
+    confess "Error: $context enum member '$member' must resolve to a non-negative integer literal value\n"
+        unless _is_non_negative_integer_literal_value($resolved_value);
+    return 1;
+}
+
+sub _reject_enum_member_value_contexts {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+    if (!ref($value)) {
+        my $member = _enum_member_value_token($value, $aggregate_roots);
+        confess "Error: $context references enum member '$member'; this ISF slice accepts enum member references only as direct transaction set RHS scalar values\n"
+            if defined $member;
+        return 1;
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        _reject_enum_member_value_contexts($_, $actor, $aggregate_roots, $context) for @$value;
+    }
+
+    return 1;
+}
+
+sub _enum_member_value_token {
+    my ($value, $aggregate_roots) = @_;
+    return undef unless _is_enum_member_reference($value);
+    return undef if defined _aggregate_storage_path_token($value, $aggregate_roots);
+    return $value;
 }
 
 sub _validate_transaction_aggregate_storage_paths {

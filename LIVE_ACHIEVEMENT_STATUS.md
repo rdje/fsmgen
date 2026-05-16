@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF direct enum set values shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.9` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.10`, selecting the
+  next enum or aggregate value/update context after direct enum set values.
+- Direct transaction `set` RHS scalar values now accept local and
+  package-qualified enum member tokens while preserving the authored token in
+  scheduled `.fsm`.
+- Enum members inside expressions, conditions, set targets, rules, drives,
+  parameters, and other non-direct-set RHS scalar contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF aggregate storage leaf expression reads shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.8` in

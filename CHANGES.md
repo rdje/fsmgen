@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF direct enum set values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.9`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.10`.
+- Direct transaction `set` RHS scalar values now accept local enum members
+  such as `mode.BUSY` and package-qualified enum members such as
+  `shared.mode.BUSY`.
+- Parser diagnostics resolve direct set RHS enum tokens before lowering,
+  reject unknown enum members, and keep enum members inside expressions,
+  conditions, set targets, rules, drives, parameters, and other contexts
+  closed for later slices.
+- Added focused local/package coverage with scheduled `.fsm` review artifacts
+  and strict CLI HDL generation.
 ### R14 — ISF aggregate storage leaf expression reads shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.8`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.9`.
