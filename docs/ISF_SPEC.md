@@ -337,13 +337,16 @@ resolve against the declared aggregate storage shape before lowering. Named
 drive-call scalar actual values and scalar operands inside actual expressions may also
 read scalar aggregate member/item leaves, for example
 `(drive publish frame.mode)` or `(drive publish (+ frame.mode mode_in))`.
+Named drive body targets may write scalar aggregate member/item leaves on
+declared actor-owned aggregate storage, for example
+`(drive capture (frame.mode mode_in))` or `(drive capture (lanes[1] pair_in))`.
 Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
 condition expression operands, transaction `switch` selectors or branch
 values, rule assignment targets, rule assignment RHS values or expression
-operands, rule guard expression operands, drive body RHS scalar values or
-expression operands, inline drive assignment RHS scalar values or operands, or
-drive-call actual scalar values/expression operands,
+operands, rule guard expression operands, drive target tokens, drive body RHS
+scalar values or expression operands, inline drive assignment RHS scalar values
+or operands, or drive-call actual scalar values/expression operands,
 aggregate paths in
 expression operator position, subaggregate writes/operands, aggregate interface or
 transaction ports, and aggregate storage banks remain deferred.
@@ -1006,8 +1009,12 @@ Current lowering:
   aggregate storage before lowering and preserve the authored token in the
   generated drive DT. Body RHS expressions recursively substitute drive formals
   with the generated drive payload signals before DT emission. Drive body RHS
-  expression operator-position enum members or aggregate paths, and enum
-  members or aggregate paths as drive targets remain deferred.
+  expression operator-position enum members or aggregate paths remain
+  deferred. Body targets may also write scalar aggregate storage leaves such as
+  `frame.mode` or `lanes[1]`; those targets resolve against declared
+  actor-owned aggregate storage before lowering and preserve the authored
+  token in the generated drive DT. Enum members as drive targets and
+  subaggregate drive targets remain deferred.
 - Each drive definition becomes a non-state DT block named `-drive_name`.
 - Each drive call becomes one scheduled state.
 - The call asserts `drive_name_start`.
@@ -2868,6 +2875,7 @@ Focused tests:
 - [t/1294-isf-aggregate-switch-selector-values.t](../t/1294-isf-aggregate-switch-selector-values.t)
 - [t/1295-isf-enum-member-switch-selector-values.t](../t/1295-isf-enum-member-switch-selector-values.t)
 - [t/1296-isf-aggregate-rule-target-values.t](../t/1296-isf-aggregate-rule-target-values.t)
+- [t/1297-isf-aggregate-drive-target-values.t](../t/1297-isf-aggregate-drive-target-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2944,8 +2952,9 @@ Focused tests:
   `set` target aggregate leaf writes,
   rule assignment target aggregate leaf writes, rule assignment RHS aggregate
   leaf values and expression operands, rule guard expression aggregate leaf
-  operands, drive body RHS aggregate leaf values and expression operands,
-  inline drive assignment RHS aggregate leaf values and expression operands,
+  operands, drive target aggregate leaf writes, drive body RHS aggregate leaf
+  values and expression operands, inline drive assignment RHS aggregate leaf
+  values and expression operands,
   drive-call actual aggregate leaf values and expression operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
@@ -2964,9 +2973,9 @@ Focused tests:
   direct transaction `set` RHS values, direct transaction `set` target tokens,
   transaction condition expression operands, transaction `switch` selectors or
   branch values, rule assignment target tokens, rule assignment RHS
-  values/expression operands, rule guard expression operands, drive body RHS
-  scalar values/expression operands, inline drive assignment RHS scalar
-  values/expression operands, or drive-call actual scalar
+  values/expression operands, rule guard expression operands, drive target
+  tokens, drive body RHS scalar values/expression operands, inline drive
+  assignment RHS scalar values/expression operands, or drive-call actual scalar
   values/expression operands,
   aggregate paths in transaction condition, rule assignment RHS, rule guard,
   drive body RHS expression, inline drive RHS expression, or drive-call actual

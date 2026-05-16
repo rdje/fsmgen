@@ -330,7 +330,10 @@ operands, such as `(when (& ready frame.flag) (set seen 1))`. Transaction
 leaves lower through computed `.fsm` selector syntax. Named drive body
 scalar RHS values and scalar operands inside RHS expressions may read scalar
 aggregate leaves, such as `(drive publish (mode_out frame.mode))` or
-`(drive publish (mode_out (+ frame.mode mode_in)))`. Named drive-call scalar
+`(drive publish (mode_out (+ frame.mode mode_in)))`. Named drive body targets
+may write scalar aggregate leaves, such as
+`(drive capture (frame.mode mode_in))` or
+`(drive capture (lanes[1] pair_in))`. Named drive-call scalar
 actual values and scalar operands inside actual expressions may read scalar
 aggregate leaves, such as `(drive publish frame.mode)` or
 `(drive publish (+ frame.mode mode_in))`. Inline drive assignment scalar RHS
@@ -340,10 +343,10 @@ leaves, such as `(drive inline_publish (mode_out frame.mode))` or
 paths outside transaction `set` RHS values, direct transaction `set` targets,
 transaction condition expression operands, transaction `switch`
 selectors/branch values, rule assignment target tokens, rule assignment RHS
-values/expression operands, rule guard expression operands, drive body RHS scalar
-values/expression operands, inline drive assignment RHS scalar
-values/expression operands, or drive-call actual scalar values/expression
-operands, subaggregate
+values/expression operands, rule guard expression operands, drive target
+tokens, drive body RHS scalar values/expression operands, inline drive
+assignment RHS scalar values/expression operands, or drive-call actual scalar
+values/expression operands, subaggregate
 operands/updates, aggregate
 interface or transaction ports, aggregate storage banks, enum member
 references outside actor constants, actor parameter scalar
@@ -471,8 +474,10 @@ read scalar aggregate storage leaves such as `frame.mode`, and selectors or
 branch values may use enum members; subaggregate selectors/branch values remain
 backlog. Named drive body scalar RHS values
 and scalar operands inside RHS expressions may read scalar aggregate storage
-leaves such as `frame.mode`; aggregate paths in drive body RHS expression
-operator position and drive targets remain backlog. Named drive-call scalar
+leaves such as `frame.mode`, and named drive body targets may write scalar
+aggregate storage leaves such as `frame.mode`; aggregate paths in drive body
+RHS expression operator position and subaggregate drive targets remain backlog.
+Named drive-call scalar
 actual values may
 read scalar aggregate storage leaves, and drive-call actual expressions may
 read them as scalar operands; aggregate paths in drive-call actual expression

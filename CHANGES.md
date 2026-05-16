@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate named drive targets shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.43`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.44`.
+- Named drive body targets now accept scalar aggregate storage member/item
+  leaves.
+- Scheduled `.fsm` drive DTs preserve aggregate leaf targets, strict CLI HDL
+  generation accepts them, and assignment provenance records the aggregate
+  targets.
+- Parser diagnostics reject unknown aggregate members and subaggregate drive
+  targets while keeping inline drive aggregate targets deferred.
 ### R14 — ISF aggregate rule targets shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.42`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.43`.

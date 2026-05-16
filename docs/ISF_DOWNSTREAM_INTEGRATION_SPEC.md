@@ -923,7 +923,10 @@ Rules:
 - Named drive body scalar RHS values and scalar operands inside RHS expressions
   may read scalar aggregate leaves on declared actor-owned aggregate storage,
   for example `(drive publish (mode_out frame.mode))` or
-  `(drive publish (mode_out (+ frame.mode mode_in)))`. Drive targets and
+  `(drive publish (mode_out (+ frame.mode mode_in)))`. Named drive body
+  targets may write scalar aggregate leaves on declared actor-owned aggregate
+  storage, for example `(drive capture (frame.mode mode_in))` or
+  `(drive capture (lanes[1] pair_in))`. Subaggregate drive targets and
   aggregate paths in drive body RHS expression operator position remain
   deferred.
 - Inline drive assignment scalar RHS values and scalar operands inside RHS
@@ -984,10 +987,10 @@ Aggregate member/item access outside direct transaction `set` RHS values,
 direct transaction `set` target tokens, transaction condition expression
 operands, transaction `switch` selectors or branch values, rule assignment
 target tokens, rule assignment RHS values or expression operands, rule guard
-expression operands, drive body RHS scalar values/expression operands, inline
-drive assignment RHS scalar values/expression operands, or drive-call actual
-scalar values/expression operands; aggregate paths in drive body RHS, inline
-drive RHS, or drive-call
+expression operands, drive target tokens, drive body RHS scalar
+values/expression operands, inline drive assignment RHS scalar
+values/expression operands, or drive-call actual scalar values/expression
+operands; aggregate paths in drive body RHS, inline drive RHS, or drive-call
 actual expression operator position; subaggregate
 operands/updates;
 aggregate interface or transaction ports; and aggregate storage banks are not
@@ -1392,8 +1395,8 @@ Required fail-closed examples:
   `set` RHS values, direct transaction `set` target tokens, transaction
   condition expression operands, transaction `switch` selectors or branch
   values, rule assignment target tokens, rule assignment RHS
-  values/expression operands, rule guard expression operands, drive body RHS
-  scalar values/expression operands, inline drive
+  values/expression operands, rule guard expression operands, drive target
+  tokens, drive body RHS scalar values/expression operands, inline drive
   assignment RHS scalar values/expression operands, or drive-call actual scalar
   values/expression operands, aggregate paths in expression operator position,
   subaggregate
@@ -1490,7 +1493,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1293-isf-aggregate-switch-branch-values.t \
   t/1294-isf-aggregate-switch-selector-values.t \
   t/1295-isf-enum-member-switch-selector-values.t \
-  t/1296-isf-aggregate-rule-target-values.t
+  t/1296-isf-aggregate-rule-target-values.t \
+  t/1297-isf-aggregate-drive-target-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

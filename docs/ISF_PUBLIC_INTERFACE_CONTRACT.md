@@ -711,10 +711,12 @@ member/item leaves from those same declared storage variables; aggregate
 selectors use computed `.fsm` selector syntax in review artifacts. Named drive
 body scalar RHS values and scalar operands inside RHS
 expressions may also read scalar member/item leaves from those same declared
-storage variables. Inline drive assignment scalar RHS values and scalar
-operands inside RHS expressions may also read scalar member/item leaves from
-those same declared storage variables. Named drive-call scalar actual values
-may also read scalar member/item leaves from those same declared storage
+storage variables. Named drive body targets may also write scalar member/item
+leaves on those same declared storage variables. Inline drive assignment
+scalar RHS values and scalar operands inside RHS expressions may also read
+scalar member/item leaves from those same declared storage variables. Named
+drive-call scalar actual values may also read scalar member/item leaves from
+those same declared storage
 variables, and drive-call actual expressions may use them as scalar operands. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
@@ -724,9 +726,10 @@ indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition expression operands,
 transaction `switch` selectors or branch values, rule assignment RHS
 values/expression operands, rule assignment target tokens, or rule guard
-expression operands, drive body RHS scalar values/expression operands, inline
-drive assignment RHS scalar values/expression operands, or drive-call actual
-scalar values/expression operands, aggregate paths in expression
+expression operands, drive target tokens, drive body RHS scalar
+values/expression operands, inline drive assignment RHS scalar
+values/expression operands, or drive-call actual scalar values/expression
+operands, aggregate paths in expression
 operator position, and subaggregate operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
@@ -938,8 +941,13 @@ Drive body RHS aggregate leaf values are checked by
 [t/1287-isf-aggregate-drive-values.t](../t/1287-isf-aggregate-drive-values.t),
 covering local and package aggregate leaf reads in named drive body scalar RHS
 values, scheduled `.fsm` drive-DT review artifacts, CLI HDL generation, and
-fail-closed diagnostics for unknown members, drive targets, and subaggregate
-RHS values.
+fail-closed diagnostics for unknown members and subaggregate RHS values.
+Drive target aggregate leaf writes are checked by
+[t/1297-isf-aggregate-drive-target-values.t](../t/1297-isf-aggregate-drive-target-values.t),
+covering local and package aggregate leaf writes as named drive body targets,
+scheduled `.fsm` drive-DT review artifacts, assignment provenance, CLI HDL
+generation, and fail-closed diagnostics for unknown members and subaggregate
+targets.
 Drive body RHS expression aggregate leaf operands are checked by
 [t/1288-isf-aggregate-drive-expression-values.t](../t/1288-isf-aggregate-drive-expression-values.t),
 covering local and package aggregate leaf operands inside named drive body RHS
