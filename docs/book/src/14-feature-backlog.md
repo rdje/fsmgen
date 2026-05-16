@@ -256,34 +256,27 @@ Status: active task tree in
 Goal: let ISF use the same enum, type, and aggregate variable capability that
 `.fsm` already exposes, without inventing a second type system.
 
-Current boundary: ISF still uses scalar width evidence for actor interface
-ports, transaction ports, and scalarized actor-owned storage in the shipped
-parser/lowering path. It also accepts numeric/exact-width parameter values,
-actor-local constants for selected static specialization values, and
-compatible aggregate/list literal parameter values. ISF does not yet accept
-enum declarations, type declarations, named type tokens in width-bearing
-declarations, or typed aggregate carrier/update semantics.
+Current boundary: ISF now ships the first scalar type-alias subset for
+width-bearing actor interface ports, transaction ports, and actor-owned
+storage. Actor bodies may carry `(types ...)` declarations whose payloads map
+directly to `.fsm` `+types`; existing `.fsm` packages may be referenced with
+`(imports (package shared_pkg) ...)`; and declarations may use `(type NAME)`
+instead of `(width N)`, where `NAME` is local (`byte`) or package-qualified
+(`shared_pkg.byte`). Lowered scheduled `.fsm` preserves `+types`, `+import`,
+typed `+size` entries, and embedded imported package roots so the review
+artifact and CLI HDL generation stay self-contained. Actor-local `(enums ...)`
+declarations are accepted as declaration artifacts and preserved as scheduled
+`.fsm` `+enums`, but no ISF value/expression context consumes enum members
+yet.
 
-The implementation path is task-tree-managed. The next boundary to settle is
-the ISF symbol-source contract: how ISF references declarations while reusing
-the existing `.fsm` package/type/symbol machinery instead of creating a second
-type system. After that, the staged path should be: reference existing
-enum/aggregate type declarations first, allow actor ports, parameters, and
-actor-owned variables to carry those types second, then add aggregate
-field/slice/update lowering with explicit cycle semantics and schedule-report
-visibility.
-
-The selected source contract is not implemented yet, but the intended spelling
-is now fixed for the active tree. ISF actor bodies will use `(types ...)` and
-`(enums ...)` clauses whose payloads map directly to `.fsm` `+types` and
-`+enums`. Existing `.fsm` package roots will be referenced from ISF with
-`(imports (package shared_pkg) ...)`; package imports have no alias in the
-first contract so lowered scheduled `.fsm` can preserve the same
-`(+import shared_pkg)` review artifact. Type references in width-bearing ISF
-declarations will use an explicit `(type NAME)` option, mutually exclusive
-with `(width N)`, where `NAME` is local (`byte`) or package-qualified
-(`shared_pkg.byte`). The first implementation target is scalar aliases only;
-enum member values and aggregate carriers are separate follow-on leaves.
+The implementation path remains task-tree-managed. The current shipped subset
+also continues to accept numeric/exact-width parameter values, actor-local
+constants for selected static specialization values, and compatible
+aggregate/list literal parameter values. Typed aggregate carrier/update
+semantics are not shipped; aggregate aliases used as scalar `(type NAME)`
+references fail closed. Enum member value references, typed aggregate
+carriers, aggregate field/slice/update lowering, and broader aggregate shape
+inference are separate follow-on leaves.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate

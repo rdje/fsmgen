@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: ISF scalar aliases reuse .fsm symbols
+- `ISF-TYPE-AGGREGATE-PARITY.3` implements the first executable parity slice
+  by adapting ISF source declarations into the existing `.fsm`
+  package/type-symbol pipeline instead of building a second ISF-only type
+  resolver.
+- Lowered scheduled `.fsm` stays the review artifact: actor-local declarations
+  become `+types` / `+enums`, package imports become `+import`, and typed
+  declarations keep their alias spelling in `+size` while also carrying the
+  resolved positive numeric width internally for scheduler checks.
+- Imported package roots are embedded after the generated `?fsm` root so CLI
+  HDL generation remains self-contained even when the ISF scheduler hands
+  `bin/fsmgen` a temporary lowered `.fsm` path.
+- The slice deliberately rejects aggregate aliases in `(type NAME)` contexts.
+  Aggregates need carrier/update shape checks and schedule-report visibility,
+  so they remain owned by the later aggregate leaf.
 ## 2026-05-16: ISF type source contract preserves review artifacts
 - `ISF-TYPE-AGGREGATE-PARITY.2` selects source forms that can lower back to
   ordinary `.fsm` declaration artifacts. Actor-local `(types ...)` and

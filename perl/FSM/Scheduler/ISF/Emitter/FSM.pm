@@ -21,6 +21,18 @@ sub emit($self, $ir) {
 
     push @lines, $self->_emit_header($ir);
     push @lines, '';
+    if (@{$ir->{package_imports} || []}) {
+        push @lines, $self->_emit_imports($ir);
+        push @lines, '';
+    }
+    if (@{$ir->{enum_declarations} || []}) {
+        push @lines, $self->_emit_enums($ir);
+        push @lines, '';
+    }
+    if (@{$ir->{type_declarations} || []}) {
+        push @lines, $self->_emit_types($ir);
+        push @lines, '';
+    }
     if (@{$ir->{constants} || []}) {
         push @lines, $self->_emit_constants($ir);
         push @lines, '';
@@ -36,6 +48,10 @@ sub emit($self, $ir) {
     push @lines, $self->_emit_states($ir, $self->{outputs});
     push @lines, $self->_emit_dt_blocks($ir, $self->{outputs});
     push @lines, ')';
+    if (@{$ir->{package_roots} || []}) {
+        push @lines, '';
+        push @lines, map { _format_param_value($_) } @{$ir->{package_roots}};
+    }
 
     my $out = join("\n", @lines) . "\n";
     fsm_trace_exit('Emitter::FSM emit', 2);
@@ -44,6 +60,36 @@ sub emit($self, $ir) {
 
 sub _emit_header($self, $ir) {
     return "(?fsm:$ir->{actor_name}";
+}
+
+sub _emit_imports($self, $ir) {
+    my @l;
+    push @l, '  (+import';
+    for my $package_name (@{$ir->{package_imports} || []}) {
+        push @l, "    $package_name";
+    }
+    push @l, '  )';
+    return join("\n", @l);
+}
+
+sub _emit_enums($self, $ir) {
+    my @l;
+    push @l, '  (+enums';
+    for my $entry (@{$ir->{enum_declarations} || []}) {
+        push @l, '    ' . _format_param_value($entry);
+    }
+    push @l, '  )';
+    return join("\n", @l);
+}
+
+sub _emit_types($self, $ir) {
+    my @l;
+    push @l, '  (+types';
+    for my $entry (@{$ir->{type_declarations} || []}) {
+        push @l, '    ' . _format_param_value($entry);
+    }
+    push @l, '  )';
+    return join("\n", @l);
 }
 
 sub _emit_constants($self, $ir) {
@@ -86,22 +132,26 @@ sub _emit_size($self, $ir) {
     my @l;
     push @l, '  (+size';
     my %declared;
+    my $type_refs = $ir->{signal_type_refs} || {};
     for my $p (@{$ir->{ports}}) {
         $declared{$p->{name}} = 1;
-        push @l, "    ($p->{name} $p->{width})";
+        my $width_token = $p->{type} // $type_refs->{$p->{name}} // $p->{width};
+        push @l, "    ($p->{name} $width_token)";
     }
     for my $storage (@{$ir->{declared_storage} || []}) {
         for my $signal (@{$storage->{signals} || []}) {
             my $name = $signal->{name};
             next if $declared{$name};
             $declared{$name} = 1;
-            push @l, "    ($name $signal->{width})";
+            my $width_token = $signal->{type} // $type_refs->{$name} // $signal->{width};
+            push @l, "    ($name $width_token)";
         }
     }
     my $ctrs = $ir->{counters} || {};
     for my $name (sort keys %$ctrs) {
         next if $declared{$name};
-        push @l, "    ($name $ctrs->{$name})";
+        my $width_token = $type_refs->{$name} // $ctrs->{$name};
+        push @l, "    ($name $width_token)";
     }
     push @l, '  )';
     return join("\n", @l);

@@ -423,6 +423,7 @@ sub build_isf_public_interface_contract {
             't/1253-isf-actor-param-report.t',
             't/1254-isf-temporal-contract-storage-report.t',
             't/1255-isf-schedule-report-golden-matrix.t',
+            't/1257-isf-scalar-type-aliases.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

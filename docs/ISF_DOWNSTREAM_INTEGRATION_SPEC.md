@@ -793,22 +793,51 @@ Rules:
 
 ### 11.6.1 Enum, Type, And Aggregate Boundary
 
-Current shipped ISF does not accept enum declarations, type declarations,
-named type tokens in `(width ...)` slots, or typed aggregate carrier/update
-semantics. Width-bearing interface, transaction-port, and storage declarations
-still use explicit positive integer width evidence. Existing aggregate support
-is limited to compatible aggregate/list literal parameter values and
-scalarized actor-owned bank/storage lowering.
+Current shipped ISF accepts the first scalar type-alias subset:
 
-Downstream consumers must not generate or depend on ISF enum/type/aggregate
-forms yet. The active `ISF-TYPE-AGGREGATE-PARITY` task tree is first
-specifying how ISF will reference the existing `.fsm` package/type/symbol
-machinery without a second type system. When that surface ships, this handoff,
-the ISF spec, mdBook, public contract notes, manifest metadata, tests, and
-generated artifact examples must change in the same slice.
-That task tree has selected a future source-contract direction for planning,
-but this handoff intentionally does not list those future forms as supported
-syntax until implementation and regression evidence land.
+```lisp
+(types
+  (type byte (bits 8))
+  (type flag bit))
+
+(imports
+  (package shared))
+
+(interface
+  (input data_in (type byte))
+  (output data_out (type shared.byte)))
+
+(storage
+  (var accum (type byte)))
+
+(transaction main
+  (ports
+    (input payload (type byte))))
+```
+
+Rules:
+
+- `(types ...)` payloads map directly to `.fsm` `+types`.
+- `(imports (package NAME) ...)` references existing `.fsm` `?pkg:NAME`
+  package roots. Package aliases and dotted package names are not accepted in
+  this first contract.
+- Width-bearing actor interface ports, transaction-local ports, and
+  actor-owned storage entries may use `(type NAME)` for scalar aliases.
+- `(type NAME)` and `(width N)` are mutually exclusive.
+- `NAME` may be local (`byte`) or package-qualified (`shared.byte`).
+- Lowered scheduled `.fsm` preserves review artifacts with `+types`,
+  `+import`, typed `+size` entries, and embedded imported package roots so CLI
+  HDL generation remains self-contained.
+- Unknown aliases and aliases that resolve to aggregate `list` or `record`
+  types fail closed in this scalar-only slice.
+- Actor-local `(enums ...)` declarations are preserved into scheduled `.fsm`
+  as `+enums`, but no ISF expression or value context consumes enum members
+  yet.
+
+Typed aggregate carrier/update semantics are not shipped yet. Existing
+aggregate support beyond declaration artifacts is limited to compatible
+aggregate/list literal parameter values and scalarized actor-owned bank/storage
+lowering.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 
@@ -1197,8 +1226,9 @@ Required fail-closed examples:
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
   incompatible aggregate/list shapes.
-- Authored enum/type/typed aggregate forms in ISF sources, until the active
-  parity task tree ships and documents a public source contract for them.
+- Unknown scalar type aliases, `(width ...)` plus `(type ...)` on the same
+  declaration, package import aliases, and aggregate type aliases used in the
+  scalar-only type subset.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1242,7 +1272,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1115-isf-public-interface-cli-manifest-audit.t \
   t/1120-isf-public-live-document-path-audit.t \
   t/1144-isf-public-tested-by-metadata-audit.t \
-  t/1255-isf-schedule-report-golden-matrix.t
+  t/1255-isf-schedule-report-golden-matrix.t \
+  t/1257-isf-scalar-type-aliases.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

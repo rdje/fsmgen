@@ -384,6 +384,15 @@ limitations are:
   known-width-checked, actor input writes are rejected, actor output readback
   is rejected, and rule-trigger output bindings plus explicit
   snapshot-vs-live timing selection remain backlog.
+- Width-bearing actor interface ports, transaction-local ports, and
+  actor-owned storage entries may use scalar type aliases through `(type
+  NAME)`, mutually exclusive with `(width N)`. Local aliases come from
+  actor-local `(types ...)`; package-qualified aliases come from existing
+  `.fsm` packages imported with `(imports (package NAME) ...)`. Lowered
+  scheduled `.fsm` preserves `+types`, `+import`, typed `+size` entries, and
+  embedded package roots. Actor-local `(enums ...)` are preserved as `+enums`
+  declaration artifacts, but enum member value references and typed aggregate
+  carriers remain backlog.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

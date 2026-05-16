@@ -249,32 +249,32 @@ transaction `params` are not wait-count constants because they are overrideable
 specialization values; using them to choose a fixed generated wait-state count
 would make later overrides disagree with the emitted schedule.
 
-ISF enum/type/aggregate parity is not shipped yet. The current parser does not
-accept actor-level enum declarations, actor-level type declarations, named
-type tokens in `(width ...)` slots, or typed aggregate carrier/update
-semantics. Existing ISF aggregate support is limited to compatible
-aggregate/list literal parameter values and scalarized storage/bank lowering.
-The active `ISF-TYPE-AGGREGATE-PARITY` task tree will first specify how ISF
-references existing `.fsm` package/type/symbol machinery before any parser
-surface is widened. Any future accepted enum/type/aggregate source must lower
-to reviewable scheduled `.fsm` declarations or aggregate forms and must fail
-closed for unknown types, unresolved enum members, incompatible enum values,
-aggregate shape mismatches, and ambiguous partial updates before HDL
-generation.
-
-The selected future source contract is documented here only as an active task
-boundary; authors must not use these forms until a later implementation slice
-ships parser/lowering support and focused tests. Actor-local declarations will
-use `(types ...)` and `(enums ...)` clauses whose payloads map directly to
-`.fsm` `+types` and `+enums`. Existing `.fsm` package roots will be referenced
-with `(imports (package NAME) ...)`; the first contract allows one
+ISF scalar type-alias references are shipped for width-bearing declarations.
+Actor bodies may declare local `(types ...)` clauses whose payloads map
+directly to `.fsm` `+types`, and may import existing `.fsm` package roots with
+`(imports (package NAME) ...)`. A package import uses one
 HDL-identifier-compatible package name, no alias, and no dotted package
 namespace so lowered scheduled `.fsm` can preserve a matching `(+import NAME)`
-review artifact. Width-bearing declarations will use `(type NAME)` for named
-type aliases and keep `(width N)` for raw positive integer widths; those
-options are mutually exclusive. The first implementation target is scalar
-type aliases only. Enum member values and typed aggregate carriers are
-separate follow-on leaves.
+review artifact. Imported package roots are embedded into the emitted
+scheduled `.fsm` artifact so CLI HDL generation remains self-contained even
+when `bin/fsmgen` uses a temporary lowered `.fsm` path.
+
+Width-bearing actor interface ports, transaction-local ports, and actor-owned
+storage entries may use `(type NAME)` for a scalar alias and keep `(width N)`
+for raw positive integer widths; those options are mutually exclusive. `NAME`
+may be local, such as `byte`, or package-qualified, such as `shared.byte`.
+Unknown aliases fail closed. Aliases whose resolved type is `list` or `record`
+also fail closed in this scalar-only slice. Actor-local `(enums ...)`
+declarations are accepted and preserved into scheduled `.fsm` as `+enums`,
+but no ISF expression or value context consumes enum members yet.
+
+Typed aggregate carrier/update semantics are not shipped yet. Existing ISF
+aggregate support beyond declaration artifacts remains limited to compatible
+aggregate/list literal parameter values and scalarized storage/bank lowering.
+Future enum member value references, aggregate carriers, aggregate
+field/slice/update lowering, incompatible enum values, aggregate shape
+mismatches, and ambiguous partial updates remain owned by later
+`ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -2629,6 +2629,7 @@ Focused tests:
 - [t/1253-isf-actor-param-report.t](../t/1253-isf-actor-param-report.t)
 - [t/1254-isf-temporal-contract-storage-report.t](../t/1254-isf-temporal-contract-storage-report.t)
 - [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t)
+- [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t)
 
 ## 12. Explicitly Deferred
 
@@ -2683,11 +2684,10 @@ Focused tests:
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
   eventual subset.
 - Rich storage-class optimization in schedule reports.
-- ISF enum/type/aggregate parity beyond the explicitly documented scalar width,
+- ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant, aggregate/list parameter-literal, and data-operation evidence
-  model. Actor-level enum/type declarations, named type tokens in width slots,
-  typed aggregate carriers, aggregate field/slice/update lowering, and broad
-  aggregate/record width inference remain deferred to the active
-  `ISF-TYPE-AGGREGATE-PARITY` task tree.
+  model. Enum member value references, typed aggregate carriers, aggregate
+  field/slice/update lowering, and broad aggregate/record width inference
+  remain deferred to the active `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

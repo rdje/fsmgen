@@ -100,6 +100,11 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
     $states = [@$states]; $ctrs = { %$ctrs }; $dts = [@$dts];
     my %module_signal_widths = _declared_storage_signal_widths($actor);
     my %module_storage_roles = _declared_storage_roles($actor);
+    my %module_signal_type_refs = (
+        _actor_interface_signal_type_refs($actor),
+        _declared_storage_signal_type_refs($actor),
+        _transaction_port_signal_type_refs($tx),
+    );
     _merge_signal_widths(\%module_signal_widths, $signal_widths, $tx->{name});
     _merge_storage_roles(\%module_storage_roles, $storage_roles, $tx->{name});
 
@@ -115,6 +120,10 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
+        package_imports => _actor_package_imports($actor),
+        package_roots => _actor_package_roots($actor),
+        type_declarations => _actor_type_declarations($actor),
+        enum_declarations => _actor_enum_declarations($actor),
         constants  => _actor_constant_declarations($actor),
         params     => _transaction_param_declarations($tx),
         ports      => $ports,
@@ -123,6 +132,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         counters   => $ctrs,
         declared_storage => _declared_storage_for_ir($actor),
         signal_widths => \%module_signal_widths,
+        signal_type_refs => \%module_signal_type_refs,
         storage_roles => \%module_storage_roles,
         children   => {},
         temporal_contracts => $contracts,
@@ -188,6 +198,10 @@ sub _build_parent_ir($self, $actor, $generated_children) {
     my $transaction_port_bindings = _transaction_port_binding_metadata($actor);
     my %signal_widths = _declared_storage_signal_widths($actor);
     my %storage_roles = _declared_storage_roles($actor);
+    my %signal_type_refs = (
+        _actor_interface_signal_type_refs($actor),
+        _declared_storage_signal_type_refs($actor),
+    );
     my %local_drive_uses;
     my %spawn_drive_sources;
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
@@ -198,6 +212,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses) =
             $self->_build_transaction($tx, $actor, $ti++, $generated_children);
         _merge_signal_widths(\%signal_widths, $widths, $tx->{name});
+        _merge_signal_type_refs(\%signal_type_refs, { _transaction_port_signal_type_refs($tx) });
         _merge_storage_roles(\%storage_roles, $roles, $tx->{name});
         my %tx_drive_uses = _collect_named_drive_call_names($tx->{clauses}, $actor->{drives} || {});
         $local_drive_uses{$_} = 1 for keys %tx_drive_uses;
@@ -262,6 +277,10 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         watchdog   => $actor->{watchdog},
         actor_phases => _actor_metadata_declarations($actor, 'phases'),
         actor_stages => _actor_metadata_declarations($actor, 'stages'),
+        package_imports => _actor_package_imports($actor),
+        package_roots => _actor_package_roots($actor),
+        type_declarations => _actor_type_declarations($actor),
+        enum_declarations => _actor_enum_declarations($actor),
         constants  => _actor_constant_declarations($actor),
         params     => _actor_param_declarations($actor),
         ports      => \@ports,
@@ -270,6 +289,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         counters   => \%ctrs,
         declared_storage => _declared_storage_for_ir($actor),
         signal_widths => \%signal_widths,
+        signal_type_refs => \%signal_type_refs,
         storage_roles => \%storage_roles,
         children   => {},
         spawn_instances => \@spawn_instances,
@@ -1504,6 +1524,30 @@ sub _actor_param_declarations {
     return \@params;
 }
 
+sub _actor_package_imports {
+    my ($actor) = @_;
+    return [] unless ref($actor) eq 'HASH';
+    return [ map { _clone_isf_value($_) } @{$actor->{package_imports} || []} ];
+}
+
+sub _actor_package_roots {
+    my ($actor) = @_;
+    return [] unless ref($actor) eq 'HASH';
+    return [ map { _clone_isf_value($_) } @{$actor->{package_roots} || []} ];
+}
+
+sub _actor_type_declarations {
+    my ($actor) = @_;
+    return [] unless ref($actor) eq 'HASH';
+    return [ map { _clone_isf_value($_) } @{$actor->{type_declarations} || []} ];
+}
+
+sub _actor_enum_declarations {
+    my ($actor) = @_;
+    return [] unless ref($actor) eq 'HASH';
+    return [ map { _clone_isf_value($_) } @{$actor->{enum_declarations} || []} ];
+}
+
 sub _actor_constant_declarations {
     my ($actor) = @_;
     return [] unless ref($actor) eq 'HASH';
@@ -1575,8 +1619,16 @@ sub _library_instance_metadata {
 
 sub _build_ports($self, $actor) {
     my @p;
-    for my $i (@{$actor->{interface}{inputs}})  { push @p, { name => $i->{name}, direction => 'input',  width => $i->{width} // 1 }; }
-    for my $o (@{$actor->{interface}{outputs}}) { push @p, { name => $o->{name}, direction => 'output', width => $o->{width} // 1 }; }
+    for my $i (@{$actor->{interface}{inputs}})  {
+        my %port = ( name => $i->{name}, direction => 'input',  width => $i->{width} // 1 );
+        $port{type} = $i->{type} if exists $i->{type};
+        push @p, \%port;
+    }
+    for my $o (@{$actor->{interface}{outputs}}) {
+        my %port = ( name => $o->{name}, direction => 'output', width => $o->{width} // 1 );
+        $port{type} = $o->{type} if exists $o->{type};
+        push @p, \%port;
+    }
     return \@p;
 }
 
@@ -1590,6 +1642,7 @@ sub _declared_storage_for_ir {
                 name  => $_->{name},
                 width => $_->{width},
             );
+            $signal{type} = $_->{type} if exists $_->{type};
             $signal{index} = $_->{index} if exists $_->{index};
             \%signal;
         } @{$entry->{signals} || []};
@@ -1600,6 +1653,7 @@ sub _declared_storage_for_ir {
             width   => $entry->{width},
             signals => \@signals,
         );
+        $copy{type} = $entry->{type} if exists $entry->{type};
         $copy{depth} = $entry->{depth} if exists $entry->{depth};
         push @storage, \%copy;
     }
@@ -1618,6 +1672,48 @@ sub _declared_storage_signal_widths {
     }
 
     return %widths;
+}
+
+sub _actor_interface_signal_type_refs {
+    my ($actor) = @_;
+    my %types;
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{$actor->{interface}{$direction} || []}) {
+            $types{$port->{name}} = $port->{type}
+                if defined($port->{type}) && !ref($port->{type}) && length($port->{type});
+        }
+    }
+
+    return %types;
+}
+
+sub _declared_storage_signal_type_refs {
+    my ($actor) = @_;
+    my %types;
+
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $types{$signal->{name}} = $signal->{type}
+                if defined($signal->{type}) && !ref($signal->{type}) && length($signal->{type});
+        }
+    }
+
+    return %types;
+}
+
+sub _transaction_port_signal_type_refs {
+    my ($tx) = @_;
+    my %types;
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
+            $types{$port->{name}} = $port->{type}
+                if defined($port->{type}) && !ref($port->{type}) && length($port->{type});
+        }
+    }
+
+    return %types;
 }
 
 sub _declared_storage_roles {
@@ -2162,6 +2258,17 @@ sub _merge_signal_widths {
         confess "signal width for '$name' conflicts across transactions while merging '$transaction'\n"
             if defined($merged->{$name}) && $merged->{$name} > 0 && $merged->{$name} != $width;
         $merged->{$name} = $width;
+    }
+}
+
+sub _merge_signal_type_refs {
+    my ($merged, $types) = @_;
+    return unless ref($types) eq 'HASH';
+
+    for my $name (sort keys %$types) {
+        my $type = $types->{$name};
+        next unless defined($type) && !ref($type) && length($type);
+        $merged->{$name} = $type;
     }
 }
 

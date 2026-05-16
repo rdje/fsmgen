@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF scalar type aliases shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.3` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.4`, implementing
+  enum member references in one static scalar ISF value context.
+- ISF now accepts actor-local `(types ...)`, package imports as `(imports
+  (package NAME) ...)`, and explicit `(type NAME)` scalar aliases on
+  width-bearing actor interface ports, transaction-local ports, and
+  actor-owned storage entries.
+- Lowered scheduled `.fsm` preserves `+types`, declaration-only `+enums`,
+  `+import`, typed `+size`, and embedded imported package roots. Enum member
+  value references and typed aggregate carriers remain backlog leaves.
+
 ## 2026-05-16: R14 — ISF enum/type source contract selected
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.2` in

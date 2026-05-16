@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF scalar type aliases shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.3`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.4`.
+- Added parser support for actor-local `(types ...)`, declaration-only
+  `(enums ...)`, package imports as `(imports (package NAME) ...)`, and
+  explicit `(type NAME)` scalar aliases on width-bearing ISF interface ports,
+  transaction-local ports, and actor-owned storage entries.
+- Lowering now preserves `+types`, `+enums`, `+import`, typed `+size` review
+  artifacts, and embedded imported package roots in scheduled `.fsm` output.
+- Added focused coverage for local aliases, package-qualified aliases, CLI HDL
+  generation from an embedded package root, enum declaration preservation, and
+  fail-closed diagnostics for unknown, aggregate, conflicting, and aliased
+  package forms.
 ### R14 — ISF enum/type source contract selected
 - Completed `ISF-TYPE-AGGREGATE-PARITY.2`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.3`.

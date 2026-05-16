@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF scalar type aliases shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.3` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.4`.
+- ISF now accepts actor-local `(types ...)`, package imports as `(imports
+  (package NAME) ...)`, and explicit `(type NAME)` scalar aliases on
+  width-bearing actor interface ports, transaction-local ports, and
+  actor-owned storage entries.
+- Lowered scheduled `.fsm` preserves `+types`, `+import`, typed `+size`
+  entries, and embedded imported package roots so package-backed aliases can
+  reach CLI HDL generation from the lowered temporary `.fsm`.
+- Actor-local `(enums ...)` declarations are preserved as `+enums` review
+  artifacts only. Enum member value references and typed aggregate carriers
+  remain the next task-tree leaves.
 ## 2026-05-16: ISF enum/type source contract selected
 - Completed `ISF-TYPE-AGGREGATE-PARITY.2` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

@@ -690,14 +690,22 @@ blocks, resolves actor-local constants in activation parameter override values,
 rejects duplicate instances, duplicate parameters, unknown overrides,
 unsupported non-constant symbolic or expression values, and aggregate shape
 mismatches, and rejects parameter declarations on non-generated transactions.
-The public ISF surface does not yet accept enum declarations, type
-declarations, named type tokens in `(width ...)` slots, or typed aggregate
-carrier/update semantics. Those forms remain outside the parser/scheduler
-contract until the active `ISF-TYPE-AGGREGATE-PARITY` task tree ships a
-documented source contract, focused tests, and synchronized manifest/public
-contract metadata. A future source-contract direction is now selected in that
-task tree for implementation planning, but it is not part of the public ISF
-facade yet.
+The public ISF surface now accepts the first scalar type-alias subset:
+actor-local `(types ...)` declarations, `(imports (package NAME) ...)` for
+existing `.fsm` package roots, and `(type NAME)` on width-bearing actor
+interface ports, transaction-local ports, and actor-owned storage entries.
+Lowering preserves `+types`, `+import`, typed `+size` entries, and embedded
+imported package roots in scheduled `.fsm` review artifacts. Unknown aliases,
+package aliases, `(width ...)` plus `(type ...)` conflicts, and aggregate
+aliases used in this scalar-only subset fail closed. Actor-local `(enums ...)`
+declarations are preserved as scheduled `.fsm` `+enums`, but enum member value
+references and typed aggregate carrier/update semantics remain outside the
+parser/scheduler contract.
+The scalar type-alias subset is checked by
+[t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
+covering actor-local aliases, package aliases, typed `+size` review artifacts,
+embedded package roots, CLI HDL generation, declaration-only enum preservation,
+and fail-closed diagnostics.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

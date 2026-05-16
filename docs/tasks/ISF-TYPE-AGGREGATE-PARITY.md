@@ -90,7 +90,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.3` | `pending` | Scalar type aliases are the first implementation step after the source contract is fixed. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.4` | `pending` | Enum member references are the next scalar parity step after type aliases are lowerable. |
 
 ## Decisions
 
@@ -132,6 +132,16 @@ ISF-only type system.
   as `+types`, `+enums`, and `+import` blocks before HDL generation. Schedule
   reports may expose bounded name/count summaries later, but raw type-spec
   hashes and raw symbol tables remain private.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.3` ships the first scalar
+  type-alias subset. ISF actor-local `(types ...)` declarations and
+  `(imports (package NAME) ...)` now feed the existing `.fsm`
+  package/type-symbol machinery; width-bearing interface ports,
+  transaction-local ports, and actor-owned storage entries accept explicit
+  `(type NAME)` scalar aliases; lowered scheduled `.fsm` preserves `+types`,
+  `+import`, typed `+size`, and embedded imported package roots. Actor-local
+  `(enums ...)` are accepted and preserved only as declaration artifacts.
+  Enum member value references and typed aggregate carriers remain follow-on
+  leaves.
 
 ## Open Questions
 
@@ -152,6 +162,7 @@ ISF-only type system.
 | --- | --- | --- | --- |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -159,6 +170,7 @@ ISF-only type system.
 | --- | --- | --- |
 | `ISF-TYPE-AGGREGATE-PARITY.1` | `ISF-TYPE-AGGREGATE-PARITY.1: inventory parity boundary` | `Inventory and first-boundary documentation slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.2` | `ISF-TYPE-AGGREGATE-PARITY.2: specify type source contract` | `Symbol-source and first type-reference contract slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.3` | `ISF-TYPE-AGGREGATE-PARITY.3: ship scalar type aliases` | `Scalar type-alias parser/lowering implementation slice.` |
 
 ## Changelog
 
@@ -167,3 +179,6 @@ ISF-only type system.
 - `2026-05-16`: Selected the source contract for
   `ISF-TYPE-AGGREGATE-PARITY.2` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.3`.
+- `2026-05-16`: Shipped scalar type-alias parser/lowering support for
+  `ISF-TYPE-AGGREGATE-PARITY.3` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.4`.

@@ -13,8 +13,14 @@ use File::Basename qw(dirname);
 use File::Slurp qw(read_file);
 use File::Spec;
 use FSM::Adapter::ISF::LispishAdapter;
+use FSM::Adapter::FSMGenFull::ExpressionBuilder;
+use FSM::Adapter::FSMGenFull::SignalManager;
 use FSM::Debug;
+use FSM::Package::ImportResolver;
 use FSM::Package::IntegerLiteralSupport;
+use FSM::Package::Parser;
+use FSM::Package::Symbols;
+use FSM::SourcePathResolver;
 use FSM::Support::ISFResourceCatalog qw(
     isf_resource_arbiter_values
     isf_resource_kind_values
@@ -52,9 +58,12 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     resources     => [ { name => ..., arbiter => ..., kind => ..., users => [...] }, ... ],
 #     storage       => [ { kind => "var"|"bank", name => ..., width => ..., depth => ..., signals => [...] }, ... ],
 #     constants     => [ { name => ..., value => ... }, ... ],
+#     type_declarations => [ ... ],
+#     enum_declarations => [ ... ],
 #     crossings     => [ { kind => "event", name => ..., from => ..., to => ..., ready => ... }, ... ],
 #     priorities    => [ ... ],
-#     imports       => [ ... ],
+#     imports       => [ ... ], # ISF library imports
+#     package_imports => [ ... ], # .fsm package imports used by typed declarations
 #     library_uses  => [ ... ],
 #   }
 
@@ -135,6 +144,11 @@ sub _build_actor($self, $actor_ast, $source_label) {
         stages       => [],
         params       => [],
         imports      => [],
+        package_imports => [],
+        type_declarations => [],
+        enum_declarations => [],
+        type_symbols => { local => {}, packages => {} },
+        package_roots => [],
         uses         => [],
         library_uses => [],
     };
@@ -177,7 +191,17 @@ sub _build_actor($self, $actor_ast, $source_label) {
             }
             when ('imports') {
                 $self->_claim_singleton_actor_clause($actor_name, 'imports', \%singleton_actor_clauses);
-                $result->{imports} = $self->_parse_imports($clause, $actor_name);
+                my $imports = $self->_parse_imports($clause, $actor_name);
+                $result->{imports} = $imports->{libraries};
+                $result->{package_imports} = $imports->{packages};
+            }
+            when ('types') {
+                $self->_claim_singleton_actor_clause($actor_name, 'types', \%singleton_actor_clauses);
+                $result->{type_declarations} = $self->_parse_actor_types($clause, $actor_name);
+            }
+            when ('enums') {
+                $self->_claim_singleton_actor_clause($actor_name, 'enums', \%singleton_actor_clauses);
+                $result->{enum_declarations} = $self->_parse_actor_enums($clause, $actor_name);
             }
             when ('use')       { push @{$result->{uses}}, $self->_parse_use($clause, $actor_name); }
             when ('handshake') {
@@ -234,6 +258,8 @@ sub _build_actor($self, $actor_ast, $source_label) {
         }
     }
 
+    $self->_finalize_actor_type_symbols($result, $source_label);
+    $self->_finalize_actor_type_references($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
@@ -324,6 +350,216 @@ sub _parse_actor_constants($self, $clause, $actor_name) {
     }
 
     return \@constants;
+}
+
+sub _parse_actor_types($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' types require '(types (type NAME spec) ...)'\n"
+        unless @$clause >= 2;
+
+    my @types;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' types entries must use '(type NAME spec)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry >= 3;
+        push @types, _clone_isf_value($entry);
+    }
+
+    return \@types;
+}
+
+sub _parse_actor_enums($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' enums require '(enums (enum_name (MEMBER value) ...) ...)'\n"
+        unless @$clause >= 2;
+
+    my @enums;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' enums entries must use '(enum_name (MEMBER value) ...)'\n"
+            unless ref($entry) eq 'ARRAY' && @$entry >= 2;
+        push @enums, _clone_isf_value($entry);
+    }
+
+    return \@enums;
+}
+
+sub _finalize_actor_type_symbols($self, $actor, $source_label) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my $local_symbols = $self->_resolve_actor_local_symbols($actor);
+    my $package_info = $self->_resolve_actor_package_symbols($actor, $source_label);
+
+    $actor->{type_symbols} = {
+        local => $local_symbols->{types} || {},
+        packages => $package_info->{types},
+    };
+    $actor->{package_roots} = $package_info->{roots};
+
+    return 1;
+}
+
+sub _resolve_actor_local_symbols($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my $parser = FSM::Package::Parser->new(debug => ($self->{debug} ? 1 : 0));
+    my $symbols = FSM::Package::Symbols->new();
+    my $signal_manager = FSM::Adapter::FSMGenFull::SignalManager->new(
+        debug => ($self->{debug} ? 1 : 0),
+    );
+    my $expression_builder = FSM::Adapter::FSMGenFull::ExpressionBuilder->new(
+        debug => ($self->{debug} ? 1 : 0),
+        signal_manager => $signal_manager,
+    );
+
+    my @type_entries;
+    if (@{$actor->{type_declarations} || []}) {
+        push @type_entries, @{ $parser->parse_package_types_block(
+            "ISF actor '$actor_name'",
+            ['+types', _clone_isf_value($actor->{type_declarations})],
+            $symbols,
+        ) };
+    }
+
+    my @enum_entries;
+    if (@{$actor->{enum_declarations} || []}) {
+        my $package_enum_declarations = _package_enum_declarations_for_parser(
+            $actor->{enum_declarations},
+        );
+        push @enum_entries, @{ $parser->parse_package_enums_block(
+            "ISF actor '$actor_name'",
+            ['+enums', $package_enum_declarations],
+            $symbols,
+        ) };
+    }
+
+    $parser->resolve_pending_package_types(
+        "ISF actor '$actor_name'",
+        $symbols,
+        $signal_manager,
+        \@type_entries,
+    );
+    $parser->resolve_pending_package_symbols(
+        "ISF actor '$actor_name'",
+        $symbols,
+        $signal_manager,
+        $expression_builder,
+        [],
+        \@enum_entries,
+    );
+
+    return $symbols->as_hashref;
+}
+
+sub _package_enum_declarations_for_parser {
+    my ($enum_declarations) = @_;
+    my @entries;
+
+    for my $entry (@{$enum_declarations || []}) {
+        next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
+        my ($enum_name, @members) = @$entry;
+        if (@members == 1 && ref($members[0]) eq 'ARRAY') {
+            push @entries, [ $enum_name, _clone_isf_value($members[0]) ];
+            next;
+        }
+        push @entries, [ $enum_name, _clone_isf_value(\@members) ];
+    }
+
+    return \@entries;
+}
+
+sub _resolve_actor_package_symbols($self, $actor, $source_label) {
+    my @package_imports = @{$actor->{package_imports} || []};
+    return { types => {}, roots => [] } unless @package_imports;
+
+    my $resolved = FSM::Package::ImportResolver->resolve_imports(
+        package_imports => \@package_imports,
+        source_path_resolver => FSM::SourcePathResolver->new(),
+        fsm_file => $source_label,
+        owner_label => "ISF actor '$actor->{actor_name}'",
+        docs_hint => "Use '(imports (package NAME))' only for existing '.fsm' '?pkg:NAME' package roots.",
+        debug_level => ($self->{debug} ? 1 : 0),
+    );
+
+    my %package_symbols;
+    my @package_roots;
+    for my $package_name (@package_imports) {
+        my $spec = $resolved->{$package_name};
+        my $symbols = $spec ? $spec->symbols : undef;
+        $package_symbols{$package_name} = $symbols ? ($symbols->as_hashref->{types} || {}) : {};
+        push @package_roots, $self->{adapter}->normalize_form($spec->raw_ast)
+            if $spec;
+    }
+
+    return {
+        types => \%package_symbols,
+        roots => \@package_roots,
+    };
+}
+
+sub _finalize_actor_type_references($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{$actor->{interface}{$direction} || []}) {
+            $self->_resolve_typed_width_entry(
+                $actor,
+                $port,
+                "actor '$actor_name' interface port '$port->{name}'",
+            );
+        }
+    }
+
+    for my $entry (@{$actor->{storage} || []}) {
+        $self->_resolve_typed_width_entry(
+            $actor,
+            $entry,
+            "actor '$actor_name' storage '$entry->{name}'",
+        );
+        for my $signal (@{$entry->{signals} || []}) {
+            $signal->{width} = $entry->{width};
+            $signal->{type} = $entry->{type} if exists $entry->{type};
+        }
+    }
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        for my $direction (qw(inputs outputs)) {
+            for my $port (@{($tx->{ports} || {})->{$direction} || []}) {
+                $self->_resolve_typed_width_entry(
+                    $actor,
+                    $port,
+                    "transaction '$tx->{name}' port '$port->{name}'",
+                );
+            }
+        }
+    }
+
+    return 1;
+}
+
+sub _resolve_typed_width_entry($self, $actor, $entry, $context) {
+    return 1 unless exists $entry->{type};
+
+    my $type_name = $entry->{type};
+    my $type_spec = $self->_resolve_actor_type_spec($actor, $type_name);
+    confess "Error: $context references unknown type '$type_name'\n"
+        unless ref($type_spec) eq 'HASH';
+
+    my $kind = $type_spec->{kind} || '';
+    confess "Error: $context references aggregate type '$type_name'; this ISF slice accepts only scalar type aliases in width-bearing declarations\n"
+        unless $kind eq 'bit' || $kind eq 'bits';
+    confess "Error: $context type '$type_name' does not resolve to a positive width\n"
+        unless defined($type_spec->{width}) && !ref($type_spec->{width}) && $type_spec->{width} > 0;
+
+    $entry->{width} = 0 + $type_spec->{width};
+    $entry->{type_spec} = _clone_isf_value($type_spec);
+    return 1;
+}
+
+sub _resolve_actor_type_spec($self, $actor, $type_name) {
+    return undef unless _is_type_reference($type_name);
+
+    my $symbols = $actor->{type_symbols} || {};
+    if ($type_name =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
+        my ($package_name, $local_type_name) = ($1, $2);
+        return _clone_isf_value((($symbols->{packages} || {})->{$package_name} || {})->{$local_type_name});
+    }
+
+    return _clone_isf_value(($symbols->{local} || {})->{$type_name});
 }
 
 sub _validate_actor_constant_names($self, $actor) {
@@ -460,20 +696,35 @@ sub _finalize_domain_annotation($self, $entry, $default_domain, $declared_domain
 }
 
 sub _parse_imports($self, $clause, $actor_name) {
-    my @imports;
-    my %seen_alias;
+    my @library_imports;
+    my @package_imports;
+    my %seen_namespace;
 
-    confess "Error: actor '$actor_name' imports require '(imports (library name [as alias]) ...)'\n"
+    confess "Error: actor '$actor_name' imports require '(imports (library name [as alias]) ... (package NAME) ...)'\n"
         unless @$clause >= 2;
 
     for my $entry (@{$clause}[1 .. $#$clause]) {
         confess "Error: actor '$actor_name' import entries must be list forms\n"
             unless ref($entry) eq 'ARRAY' && @$entry;
+        my $kind = $entry->[0];
+        confess "Error: actor '$actor_name' import entry kind must be 'library' or 'package'\n"
+            unless defined($kind) && !ref($kind) && ($kind eq 'library' || $kind eq 'package');
+
+        if ($kind eq 'package') {
+            confess "Error: actor '$actor_name' package imports require '(package NAME)'\n"
+                unless @$entry == 2
+                    && defined($entry->[1])
+                    && !ref($entry->[1])
+                    && _is_hdl_identifier($entry->[1]);
+            my $package = $entry->[1];
+            confess "Error: actor '$actor_name' has duplicate import namespace '$package'\n"
+                if $seen_namespace{$package}++;
+            push @package_imports, $package;
+            next;
+        }
+
         confess "Error: actor '$actor_name' import entries require '(library name [as alias])'\n"
             unless (@$entry == 2 || @$entry == 4)
-                && defined($entry->[0])
-                && !ref($entry->[0])
-                && $entry->[0] eq 'library'
                 && defined($entry->[1])
                 && !ref($entry->[1])
                 && _is_library_namespace($entry->[1]);
@@ -491,16 +742,20 @@ sub _parse_imports($self, $clause, $actor_name) {
             $alias = $entry->[3];
         }
 
-        confess "Error: actor '$actor_name' has duplicate library import alias '$alias'\n"
-            if $seen_alias{$alias}++;
+        confess "Error: actor '$actor_name' has duplicate import namespace '$alias'\n"
+            if $seen_namespace{$alias}++;
 
-        push @imports, {
+        push @library_imports, {
+            kind    => 'library',
             library => $library,
             alias   => $alias,
         };
     }
 
-    return \@imports;
+    return {
+        libraries => \@library_imports,
+        packages  => \@package_imports,
+    };
 }
 
 sub _parse_use($self, $clause, $actor_name) {
@@ -941,6 +1196,11 @@ sub _is_hdl_identifier {
     return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
 }
 
+sub _is_type_reference {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?\z/;
+}
+
 sub _is_activation_input_binding_expr_shape {
     my ($expr) = @_;
     return 1 if ref($expr) eq 'ARRAY' && @$expr;
@@ -1263,6 +1523,7 @@ sub _parse_interface($self, $clause) {
         my $dir = $port->[0];
         my $name = $port->[1];
         my $width = 1;
+        my $type;
         my $domain;
 
         confess "Error: interface port direction must be input or output\n"
@@ -1289,6 +1550,12 @@ sub _parse_interface($self, $clause) {
                 $width = $prop->[1];
                 next;
             }
+            if ($prop->[0] eq 'type') {
+                confess "Error: interface port '$name' type requires '(type NAME)'\n"
+                    unless @$prop == 2 && _is_type_reference($prop->[1]);
+                $type = $prop->[1];
+                next;
+            }
             if ($prop->[0] eq 'domain') {
                 $domain = _parse_domain_option(
                     $prop,
@@ -1297,8 +1564,11 @@ sub _parse_interface($self, $clause) {
                 next;
             }
         }
+        confess "Error: interface port '$name' cannot specify both '(width ...)' and '(type ...)'\n"
+            if defined($type) && exists($seen_options{width});
 
         my $entry = { name => $name, width => $width };
+        $entry->{type} = $type if defined $type;
         $entry->{domain} = $domain if defined $domain;
         if ($dir eq 'input')  { push @inputs,  $entry; }
         if ($dir eq 'output') { push @outputs, $entry; }
@@ -1345,6 +1615,12 @@ sub _parse_storage($self, $clause, $actor_name) {
                 );
                 next;
             }
+            if ($option_name eq 'type') {
+                confess "Error: actor '$actor_name' storage '$name' type requires '(type NAME)'\n"
+                    unless @$option == 2 && _is_type_reference($option->[1]);
+                $parsed_options{type_value} = $option->[1];
+                next;
+            }
             if ($option_name eq 'depth') {
                 $parsed_options{depth_value} = _parse_storage_positive_integer_option(
                     $option,
@@ -1364,8 +1640,11 @@ sub _parse_storage($self, $clause, $actor_name) {
         }
 
         my $width = $parsed_options{width_value};
-        confess "Error: actor '$actor_name' storage '$name' requires '(width N)'\n"
-            unless defined($width);
+        my $type = $parsed_options{type_value};
+        confess "Error: actor '$actor_name' storage '$name' cannot specify both '(width ...)' and '(type ...)'\n"
+            if defined($width) && defined($type);
+        confess "Error: actor '$actor_name' storage '$name' requires '(width N)' or '(type NAME)'\n"
+            unless defined($width) || defined($type);
 
         my @signals;
         if ($kind eq 'var') {
@@ -1392,6 +1671,7 @@ sub _parse_storage($self, $clause, $actor_name) {
             signals => \@signals,
             ($kind eq 'bank' ? (depth => $parsed_options{depth_value}) : ()),
         };
+        $entries[-1]{type} = $type if defined $type;
         $entries[-1]{domain} = $parsed_options{domain_value}
             if defined($parsed_options{domain_value});
     }
@@ -1534,6 +1814,7 @@ sub _parse_transaction_ports($self, $clause, $transaction_name) {
             if $seen_names{$name}++;
 
         my $width = 1;
+        my $type;
         my %seen_options;
         for my $option (@options) {
             confess "Error: transaction '$transaction_name' port '$name' options must be list forms\n"
@@ -1553,11 +1834,20 @@ sub _parse_transaction_ports($self, $clause, $transaction_name) {
                 $width = 0 + $option->[1];
                 next;
             }
+            if ($option_name eq 'type') {
+                confess "Error: transaction '$transaction_name' port '$name' type requires '(type NAME)'\n"
+                    unless @$option == 2 && _is_type_reference($option->[1]);
+                $type = $option->[1];
+                next;
+            }
 
             confess "Error: transaction '$transaction_name' port '$name' has unsupported option '$option_name'\n";
         }
+        confess "Error: transaction '$transaction_name' port '$name' cannot specify both '(width ...)' and '(type ...)'\n"
+            if defined($type) && exists($seen_options{width});
 
         my $parsed = { name => $name, width => $width };
+        $parsed->{type} = $type if defined $type;
         if ($direction eq 'input') {
             push @inputs, $parsed;
         } else {
