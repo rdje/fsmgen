@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: temporal contract storage roles stay coarse
+- `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` uses one public
+  `temporal_contract_monitor` storage role for the generated pending register,
+  age counter, and sticky-fail register. The more specific meaning of each
+  signal is already exposed by the matching `temporal_contracts[]` entry.
+- Keeping the role coarse avoids creating a second subrole taxonomy inside
+  `inferred_storage[]` while still giving downstream tooling a stable way to
+  filter contract-owned monitor storage.
+- The implementation annotates the existing lowerer storage-role map only.
+  Temporal-contract source syntax, monitor DT equations, reset behavior,
+  generated `.fsm`, HDL, and assertion projection remain unchanged.
 ## 2026-05-16: actor params are report-visible defaults
 - `ISF-ACTOR-PARAM-REPORTS.1` exposes actor-level `(params ...)` defaults in
   schedule JSON because downstream consumers should not need to parse

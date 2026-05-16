@@ -152,6 +152,7 @@ my $expected_tested_by = [
     't/1249-isf-activation-parameter-constants.t',
     't/1252-isf-actor-phase-stage-report.t',
     't/1253-isf-actor-param-report.t',
+    't/1254-isf-temporal-contract-storage-report.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

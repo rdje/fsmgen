@@ -2082,7 +2082,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'contract')    {
             _push_sample_state(\@st, $tn, \@ps, \$si);
             my ($cs, $cdt, $cm) = _ir_contract(
-                $cl, $tn, $si++, $actor, $widths, \%ct, \%contract_names,
+                $cl, $tn, $si++, $actor, $widths, \%ct, \%storage_roles, \%contract_names,
             );
             push @st, $cs;
             push @dt, $cdt;
@@ -4013,7 +4013,7 @@ sub _ir_stage {
 }
 
 sub _ir_contract {
-    my ($cl, $tn, $i, $actor, $widths, $counters, $seen_contracts) = @_;
+    my ($cl, $tn, $i, $actor, $widths, $counters, $storage_roles, $seen_contracts) = @_;
     my $contract = _parse_bounded_eventual_contract_clause($cl, $tn, 'transaction body');
     my %interface_signals = map {
         $_->{name} => 1
@@ -4035,6 +4035,11 @@ sub _ir_contract {
     $counters->{$pending} = 1;
     $counters->{$age} = $age_width;
     $counters->{$fail} = 1;
+    if (ref($storage_roles) eq 'HASH') {
+        $storage_roles->{$pending} = 'temporal_contract_monitor';
+        $storage_roles->{$age}     = 'temporal_contract_monitor';
+        $storage_roles->{$fail}    = 'temporal_contract_monitor';
+    }
 
     my $arm_start_guard = "(& $arm (! $pending))";
     my $expiry_guard = "(& $pending (! $observed) (== $age $last_cycle))";

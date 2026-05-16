@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF temporal-contract storage roles shipped
+- Completed `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` in
+  [docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md),
+  closing the temporal-contract storage report-role tree.
+- Public schedule JSON now tags bounded temporal-contract monitor pending,
+  age, and sticky-fail storage with `inferred_storage[].role =
+  temporal_contract_monitor`.
+- The role is advertised through the ISF public contract and capability
+  manifest. `temporal_contracts[]` remains the public summary that maps each
+  contract to its generated pending, counter, and fail signal names.
+- Added [t/1254-isf-temporal-contract-storage-report.t](t/1254-isf-temporal-contract-storage-report.t)
+  for in-process and CLI schedule-report coverage. Temporal-contract runtime
+  semantics, monitor DT equations, reset behavior, and assertion projection are
+  unchanged.
 ## 2026-05-16: ISF actor parameter reports shipped
 - Completed `ISF-ACTOR-PARAM-REPORTS.1` in
   [docs/tasks/ISF-ACTOR-PARAM-REPORTS.md](docs/tasks/ISF-ACTOR-PARAM-REPORTS.md),

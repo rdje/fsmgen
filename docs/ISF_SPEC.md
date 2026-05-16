@@ -2161,7 +2161,12 @@ Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
 lowerer has direct evidence: `actor_storage`, `completion_pulse`,
 `data_register`, `drive_payload`, `drive_request`, `extract_field`,
-`latency_counter`, `repeat_counter`, `sample_alias`, and `watchdog_counter`.
+`latency_counter`, `repeat_counter`, `sample_alias`,
+`temporal_contract_monitor`, and `watchdog_counter`.
+Temporal-contract monitor storage uses that one role for the generated
+pending and sticky-fail registers plus the generated age counter; the
+`temporal_contracts[]` entry remains the public summary that names each signal
+and its specific contract purpose.
 Optional `width` values are positive integer bit widths when present and
 currently appear on declared actor-owned storage, inferred scheduler counters,
 and register storage with known ISF width evidence.
@@ -2525,6 +2530,7 @@ Focused tests:
 - [t/1250-isf-spec-focused-test-index-audit.t](../t/1250-isf-spec-focused-test-index-audit.t)
 - [t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t)
 - [t/1253-isf-actor-param-report.t](../t/1253-isf-actor-param-report.t)
+- [t/1254-isf-temporal-contract-storage-report.t](../t/1254-isf-temporal-contract-storage-report.t)
 
 ## 12. Explicitly Deferred
 

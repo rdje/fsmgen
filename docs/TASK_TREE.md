@@ -47,6 +47,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `DOWNSTREAM-ISSUE-REPRO-FLOW` | `done` | `R14` | `closed` | [docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md](docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md) |
 | `ISF-ACTOR-PHASE-STAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md](docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md) |
 | `ISF-ACTOR-PARAM-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-PARAM-REPORTS.md](docs/tasks/ISF-ACTOR-PARAM-REPORTS.md) |
+| `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md) |
 | `ISF-ACTIVATION-PARAM-OVERRIDES` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md) |
 | `ISF-PUBLIC-CONTRACT` | `done` | `R14` | `closed` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 | `ISF-DYNAMIC-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md) |
@@ -88,6 +89,7 @@ as done work unless a future task reopens them.
 | Shareable resource kind catalog and public resource registry | `ISF-RESOURCE-CATALOG` |
 | Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
+| Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |
 | Actor-level parameter default schedule-report metadata | `ISF-ACTOR-PARAM-REPORTS` |
 | Data-operation width inference for shift/extract/assemble families | `ISF-DATA-WIDTHS` |

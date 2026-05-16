@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF temporal-contract storage roles shipped
+- Completed R14 task-tree slice:
+  `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1`, closing
+  [docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md).
+- Public schedule JSON now tags temporal-contract monitor pending/fail
+  registers and the age counter with `inferred_storage[].role =
+  temporal_contract_monitor`.
+- The ISF public contract and capability manifest advertise the role through
+  `schedule_report_storage_role_values`.
+- Added [t/1254-isf-temporal-contract-storage-report.t](t/1254-isf-temporal-contract-storage-report.t)
+  for in-process and CLI report projection.
+- Temporal-contract runtime behavior, monitor DT equations, reset behavior,
+  generated `.fsm`, HDL output, and assertion projection are unchanged.
+
 ## 2026-05-16: R14 — ISF actor parameter reports shipped
 - Completed R14 task-tree slice: `ISF-ACTOR-PARAM-REPORTS.1`, closing
   [docs/tasks/ISF-ACTOR-PARAM-REPORTS.md](docs/tasks/ISF-ACTOR-PARAM-REPORTS.md).

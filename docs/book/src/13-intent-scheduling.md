@@ -225,9 +225,12 @@ Inferred-storage `kind` values are `counter` or `register`, and optional
 `role` values describe stable scheduler purpose when evidence is known. The
 current role family is `actor_storage`, `completion_pulse`, `data_register`,
 `drive_payload`, `drive_request`, `extract_field`, `latency_counter`,
-`repeat_counter`, `sample_alias`, and `watchdog_counter`. Optional positive
-integer `width` values belong to declared actor-owned storage, inferred
-counters, and register storage with known ISF width evidence.
+`repeat_counter`, `sample_alias`, `temporal_contract_monitor`, and
+`watchdog_counter`. Temporal-contract pending/fail registers and age counters
+share the `temporal_contract_monitor` role; `temporal_contracts[]` names the
+specific pending, counter, and fail signals for each contract. Optional
+positive integer `width` values belong to declared actor-owned storage,
+inferred counters, and register storage with known ISF width evidence.
 Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by
 name while each `states` array keeps scheduled `.fsm` state emission order.

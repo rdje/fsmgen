@@ -492,6 +492,10 @@ The shipped subset is the top-level transaction form
 state plus an always-on monitor DT with pending, age, and sticky-fail storage.
 Schedule reports classify that DT as `temporal_contract_monitor` and classify
 the generated pending/fail storage as registers and age storage as a counter.
+Those three monitor storage entries also carry the advertised
+`temporal_contract_monitor` `inferred_storage[].role`; the bounded
+`temporal_contracts[]` summary remains the public place to distinguish the
+pending, counter, and fail signal names.
 The bounded `temporal_contracts` summary projection reports the public trigger,
 observed signal, cycle bound, generated storage names, reset policy, overlap
 policy, and assertion projection status for downstream consumers.
@@ -1193,11 +1197,14 @@ For each `inferred_storage` entry, `kind` is currently one of `counter` or
 the lowerer has direct evidence. The current role family is
 `actor_storage`, `completion_pulse`, `data_register`, `drive_payload`,
 `drive_request`, `extract_field`, `latency_counter`, `repeat_counter`,
-`sample_alias`, and `watchdog_counter`. Optional `width` values are positive
-integer bit widths when present, and are currently present for declared
-actor-owned storage, inferred scheduler counters, and register storage with
-known ISF width evidence. The machine-readable contract advertises these
-through `schedule_report_storage_kind_values`,
+`sample_alias`, `temporal_contract_monitor`, and `watchdog_counter`.
+Temporal-contract pending/fail registers and age counters use
+`temporal_contract_monitor`; use `temporal_contracts[]` to map those signal
+names back to the specific bounded-eventual contract. Optional `width` values
+are positive integer bit widths when present, and are currently present for
+declared actor-owned storage, inferred scheduler counters, and register
+storage with known ISF width evidence. The machine-readable contract
+advertises these through `schedule_report_storage_kind_values`,
 `schedule_report_storage_role_values`, and
 `schedule_report_storage_width_shape`.
 

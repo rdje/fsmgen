@@ -421,6 +421,7 @@ sub build_isf_public_interface_contract {
             't/1249-isf-activation-parameter-constants.t',
             't/1252-isf-actor-phase-stage-report.t',
             't/1253-isf-actor-param-report.t',
+            't/1254-isf-temporal-contract-storage-report.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -1379,6 +1380,7 @@ sub isf_public_interface_schedule_report_storage_role_values {
             latency_counter
             repeat_counter
             sample_alias
+            temporal_contract_monitor
             watchdog_counter
             actor_storage
         ),

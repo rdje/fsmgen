@@ -1262,9 +1262,10 @@ The reviewable artifact is not SVA-only. The scheduled `.fsm` contains one arm
 state plus an always-on monitor DT with pending, age, and fail storage. The
 monitor DT is the source of truth; schedule reports classify it as
 `temporal_contract_monitor` and report pending/fail as registers and age as a
-counter. They also expose bounded `temporal_contracts` entries with the public
-trigger state, observed signal, cycle bound, generated pending/counter/fail
-signal names, reset policy, overlap policy, and assertion projection status.
+counter. Those storage entries carry the `temporal_contract_monitor` storage
+role, while bounded `temporal_contracts` entries expose the public trigger
+state, observed signal, cycle bound, generated pending/counter/fail signal
+names, reset policy, overlap policy, and assertion projection status.
 Generated SystemVerilog assertion text from the fail bit remains deferred;
 the current assertion projection status is `none`. Unsupported bodies and
 nested contracts fail closed. Global

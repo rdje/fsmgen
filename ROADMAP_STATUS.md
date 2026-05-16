@@ -29,8 +29,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   or changing generated `.fsm`/HDL. `ISF-ACTOR-PARAM-REPORTS.1` then exposed
   actor-level parameter defaults through bounded `actor_params[]` schedule
   reports without changing `+params`, reusable-library override, or generated
-  activation parameter semantics. The next PNT selection should choose a fresh
-  roadmap-aligned R14 task tree before implementation.
+  activation parameter semantics.
+  `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` then tagged bounded
+  temporal-contract monitor pending/fail registers and the age counter with
+  advertised `inferred_storage[].role = temporal_contract_monitor`, without
+  changing contract syntax, monitor DT behavior, reset behavior, generated
+  `.fsm`/HDL, or assertion projection. The next PNT selection should choose a
+  fresh roadmap-aligned R14 task tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -149,6 +154,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `schedule_report_actor_param_keys`, and added
   `t/1253-isf-actor-param-report.t`. Actor parameters remain static
   specialization defaults, not runtime payloads.
+  `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1` published bounded
+  `temporal_contract_monitor` inferred-storage roles for generated
+  temporal-contract pending/fail registers and age counters, advertised the new
+  storage role through public contract/manifest metadata, and added
+  `t/1254-isf-temporal-contract-storage-report.t`.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

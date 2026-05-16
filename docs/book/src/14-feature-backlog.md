@@ -731,13 +731,14 @@ optional positive integer widths when width evidence is known.
 `register`). The first optional `inferred_storage[].role` slice is shipped for
 storage families with stable lowering evidence: `watchdog_counter`,
 `latency_counter`, `repeat_counter`, `drive_request`, `drive_payload`,
-`sample_alias`, `extract_field`, `data_register`, and `completion_pulse`.
+`sample_alias`, `extract_field`, `data_register`, `completion_pulse`, and
+`temporal_contract_monitor`.
 
 Remaining direction: keep `role` additive and omit it when evidence is
-ambiguous. Additional roles, including temporal-contract monitor storage,
-child `do`/`spawn` handoff storage, rule-trigger source storage, and
-resource-grant/debug storage, remain backlog until each family has its own
-compatibility rules, public contract metadata, and regression coverage.
+ambiguous. Additional roles, including child `do`/`spawn` handoff storage,
+rule-trigger source storage, and resource-grant/debug storage, remain backlog
+until each family has its own compatibility rules, public contract metadata,
+and regression coverage.
 
 ### Fully Frozen Schedule JSON Schema
 

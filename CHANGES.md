@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF temporal-contract storage roles shipped
+- Completed `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.1`, closing the
+  `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` task tree.
+- Public ISF schedule reports now tag bounded temporal-contract monitor
+  pending/fail registers and the age counter with
+  `inferred_storage[].role = temporal_contract_monitor`.
+- Added the new role value to public contract and capability-manifest
+  metadata through `schedule_report_storage_role_values`.
+- Added [t/1254-isf-temporal-contract-storage-report.t](t/1254-isf-temporal-contract-storage-report.t)
+  to prove in-process and CLI report projection.
+- Temporal-contract source syntax, monitor DT behavior, reset behavior,
+  generated `.fsm`, HDL output, and assertion projection are unchanged.
 ### R14 — ISF actor parameter reports shipped
 - Completed `ISF-ACTOR-PARAM-REPORTS.1`, closing the
   `ISF-ACTOR-PARAM-REPORTS` task tree.
