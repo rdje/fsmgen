@@ -44,7 +44,7 @@ and generated HDL paths that prove user-facing ISF features work together.
 - ID: `ISF-FIXTURES.1`
   Status: `done`
   Goal: `Inventory current ISF fixtures, tests, and regression tiers.`
-  Acceptance: `The task file lists current ISF fixtures, 109x/11xx/12xx
+  Acceptance: `The task file lists current ISF fixtures, 109x/11xx/12xx/13xx
   tests, quick/isf/full tier coverage, strict-mode checks, and gaps.`
   Verification: `./bin/ci-regression --list`; `prove -l t/1183-ci-regression-tier-selection.t t/1091-isf-parser-apb-requester.t t/1094-isf-scheduler-module-header.t t/1112-isf-public-interface-contract.t`; `mdbook build docs/book`; `git diff --check`
   Commit: `ISF-FIXTURES.1: inventory fixture coverage`
@@ -109,10 +109,10 @@ Current ISF regression tier:
 
 - `./bin/ci-regression isf` selects all files matching
   `t/109[1-9]-isf*.t`, `t/11[0-9][0-9]-isf*.t`, and
-  `t/12[0-9][0-9]-isf*.t`, sorted with unmatched future bands ignored by
-  `nullglob`.
-- Current count: `137` ISF-tier tests: `9` in the `109x` band, `98` in the
-  `11xx` band, and `30` in the `12xx` band.
+  `t/12[0-9][0-9]-isf*.t`, and `t/13[0-9][0-9]-isf*.t`, sorted with
+  unmatched future bands ignored by `nullglob`.
+- Current count: `206` ISF-tier tests: `9` in the `109x` band, `98` in the
+  `11xx` band, `98` in the `12xx` band, and `1` in the `13xx` band.
 - The tier covers parser/lowering smoke, public interface contract audits,
   malformed-boundary tests, feature-specific lowering/report tests, generated
   composition, arbitration, data widths, storage roles, and the explicit

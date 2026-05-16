@@ -408,12 +408,13 @@ limitations are:
   parameter defaults, scalar leaves inside generated child transaction
   aggregate/list parameter defaults, direct transaction `set` RHS scalar values,
   scalar operands inside transaction `set` RHS expressions, transaction
-  `when`/`while`/`until` condition expression operands, transaction `switch`
-  branch values, scalar rule assignment RHS values and scalar operands inside
-  rule assignment RHS expressions, scalar operands inside rule guard
-  expressions, scalar drive body RHS values and scalar operands inside drive
-  body RHS expressions, and named drive-call scalar actual values may also use
-  local and package-qualified enum members. Drive-call actual expressions may
+  `when`/`while`/`until` condition expression operands, direct transaction
+  `when`/`while`/`until` scalar conditions, transaction `switch` branch values,
+  scalar rule assignment RHS values and scalar operands inside rule assignment
+  RHS expressions, scalar operands inside rule guard expressions, scalar drive
+  body RHS values and scalar operands inside drive body RHS expressions, and
+  named drive-call scalar actual values may also use local and
+  package-qualified enum members. Drive-call actual expressions may
   use enum members as scalar operands too, inline drive assignment RHS scalar
   values and scalar operands inside inline drive RHS expressions may use enum
   members, and scalar activation parameter overrides for spawn, generated
@@ -426,6 +427,15 @@ limitations are:
   bindings and `library_uses[]` report values. Transaction `switch` selectors
   and branch values may use enum members; dotted enum selectors lower through
   computed `.fsm` selector syntax such as `?(mode.BUSY)`.
+  Direct transaction `when`/`while`/`until` conditions may also use local or
+  package-qualified enum members. For example, `(when mode.BUSY (set fire 1))`,
+  `(while mode.BUSY (set busy 1))`, and
+  `(until shared.mode.BUSY (complete done))` are accepted as standalone scalar
+  enum conditions. They lower through computed `.fsm` selector syntax, so the
+  review artifact uses selectors such as `?(mode.BUSY)` or
+  `?(shared.mode.BUSY)`. Enum members also remain valid as scalar operands
+  inside condition expressions, for example
+  `(when (== mode_in mode.BUSY) (set fire 1))`.
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
@@ -452,13 +462,12 @@ limitations are:
   members in
   expression operator
   position,
-  standalone transaction conditions, set targets, rules
-  outside scalar trigger parameter overrides, rule guard or transaction
-  condition expression operator position, rule assignment expression operator
-  position, drive targets, drive body RHS expression operator position, inline
-  drive assignment RHS expression operator position, drive-call expression
-  operator position, and other non-shipped contexts
-  remain backlog, as do aggregate paths outside
+  standalone rule guards, set targets, rules outside scalar trigger parameter
+  overrides, rule guard or transaction condition expression operator position,
+  rule assignment expression operator position, drive targets, drive body RHS
+  expression operator position, inline drive assignment RHS expression
+  operator position, drive-call expression operator position, and other
+  non-shipped contexts remain backlog, as do aggregate paths outside
   transaction `set` RHS values, direct transaction `set` targets, transaction
   condition scalar values/expression operands, transaction `switch`
   selectors/branch values, rule assignment target tokens, rule assignment RHS

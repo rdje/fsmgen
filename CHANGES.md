@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum standalone conditions shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.46`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.47`.
+- Transaction `when`/`while`/`until` scalar conditions now accept local and
+  package enum members directly.
+- Scheduled `.fsm` branch and loop selectors now format dotted scalar enum
+  conditions through computed selector syntax.
+- Parser diagnostics reject unknown enum members while keeping expression
+  operator-position enum members and enum targets deferred.
+- The local `bin/ci-regression isf` tier now includes the 13xx ISF test band,
+  and the README/mdBook troubleshooting notes describe that current tier.
 ### R14 — ISF aggregate standalone conditions shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.45`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.46`.

@@ -743,8 +743,9 @@ generated child transaction scalar parameter defaults or scalar leaves inside
 generated child transaction aggregate/list parameter defaults, direct
 transaction `set` RHS scalar values or scalar operands inside transaction
 `set` RHS expressions, scalar operands inside transaction `when`/`while`/`until`
-condition expressions, transaction `switch` selector or branch values, scalar
-drive body RHS values, named drive-call scalar actual values or scalar operands inside
+condition expressions, standalone transaction `when`/`while`/`until` scalar
+conditions, transaction `switch` selector or branch values, scalar drive body
+RHS values, named drive-call scalar actual values or scalar operands inside
 drive-call actual expressions, scalar activation parameter overrides, and
 scalar leaves inside activation aggregate/list parameter overrides, scalar rule
 assignment RHS values or scalar operands inside rule assignment RHS expressions,
@@ -753,10 +754,10 @@ scalar values, and scalar operands inside inline drive RHS expressions in this
 slice, using local `mode.BUSY` or package-qualified
 `shared.mode.BUSY` spelling and resolving to non-negative integer literal
 values before lowering.
-Enum member references in expression operator position, standalone transaction
-conditions, targets, rules outside scalar trigger parameter overrides,
-transaction condition, rule guard, or rule assignment expression
-operator position, drive targets, inline drive assignment RHS expression
+Enum member references in expression operator position, standalone rule
+guards, targets, rules outside scalar trigger parameter overrides, transaction
+condition, rule guard, or rule assignment expression operator position, drive
+targets, inline drive assignment RHS expression
 operator position, drive-call expression operator position, and other ISF
 value contexts, additional aggregate carriers, and aggregate field/slice/update
 semantics remain outside the parser/scheduler contract.
@@ -774,7 +775,7 @@ Direct transaction `set` RHS enum member values are checked by
 [t/1263-isf-enum-member-set-values.t](../t/1263-isf-enum-member-set-values.t),
 covering local and package enum members, scheduled `.fsm` review artifacts,
 CLI HDL generation, and fail-closed diagnostics for unknown members and
-deferred operator/condition contexts.
+deferred operator and target contexts.
 Transaction `set` RHS enum member expression operands are checked by
 [t/1264-isf-enum-member-set-expression-values.t](../t/1264-isf-enum-member-set-expression-values.t),
 covering local and package enum member operands, scheduled `.fsm` review
@@ -784,12 +785,12 @@ Transaction `switch` branch enum values are checked by
 [t/1265-isf-enum-member-switch-branch-values.t](../t/1265-isf-enum-member-switch-branch-values.t),
 covering local and package enum member branch values, scheduled `.fsm` review
 artifacts, CLI HDL generation, and fail-closed diagnostics for unknown members
-and deferred condition contexts.
+and non-switch contexts.
 Transaction `switch` selector enum values are checked by
 [t/1295-isf-enum-member-switch-selector-values.t](../t/1295-isf-enum-member-switch-selector-values.t),
 covering local and package enum member selectors, computed `.fsm` selector
 review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
-members and deferred condition contexts.
+members and non-switch contexts.
 Scalar drive body RHS enum member values are checked by
 [t/1266-isf-enum-member-drive-values.t](../t/1266-isf-enum-member-drive-values.t),
 covering local and package enum member drive RHS values, scheduled `.fsm`
@@ -890,7 +891,12 @@ Transaction condition expression enum member operands are checked by
 covering local and package enum member operands inside transaction
 `when`/`while`/`until` condition expressions, scheduled `.fsm` computed-test
 review artifacts, strict CLI HDL generation, and fail-closed diagnostics for
-unknown members, standalone enum conditions, and expression operator position.
+unknown members and expression operator position.
+Standalone transaction condition enum member values are checked by
+[t/1300-isf-enum-member-standalone-condition-values.t](../t/1300-isf-enum-member-standalone-condition-values.t),
+covering local and package enum member values used directly as
+`when`/`while`/`until` conditions, computed `.fsm` selector review artifacts,
+strict CLI HDL generation, and unknown-member diagnostics.
 Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,

@@ -287,15 +287,15 @@ override scalar values or scalar leaves inside aggregate/list use-site
 overrides, by direct transaction `set` RHS scalar values or scalar operands
 inside transaction `set` RHS expressions, by scalar operands inside transaction
 `when`/`while`/`until` condition expressions, by transaction `switch`
-selectors or branch values, by scalar rule assignment RHS values or scalar
-operands inside rule assignment RHS expressions, by scalar operands inside
-rule guard expressions, by scalar drive body RHS values or scalar operands inside drive body RHS
+selectors or branch values, by standalone scalar transaction
+`when`/`while`/`until` conditions, by scalar rule assignment RHS values or
+scalar operands inside rule assignment RHS expressions, by scalar operands
+inside rule guard expressions, by scalar drive body RHS values or scalar operands inside drive body RHS
 expressions, by inline drive assignment RHS scalar values or scalar operands
 inside inline drive RHS expressions, and by named drive-call scalar actual
 values or scalar operands inside drive-call actual expressions in the current
 ISF surface. Enum members in expression operator position,
-standalone guards or standalone transaction conditions, transaction
-condition expression operator position, rule targets, rule
+standalone rule guards, transaction condition expression operator position, rule targets, rule
 guard or rule assignment expression operator position, rule actions outside
 trigger parameter overrides, drive targets, inline drive assignment RHS
 expression operator position, drive body RHS expression operator position,
@@ -367,7 +367,8 @@ or aggregate/list parameter default leaves, scalar activation parameter
 overrides, activation aggregate/list parameter override leaves,
 reusable-library use-site parameter override values or leaves,
 transaction `when`/`while`/`until` condition expression operands, transaction
-`set` RHS scalar values or expression operands, transaction `switch` branch
+`when`/`while`/`until` direct scalar conditions, transaction `set` RHS scalar
+values or expression operands, transaction `switch` branch
 values, rule assignment RHS scalar values or expression operands, rule guard
 expression operands, drive body RHS scalar values or expression operands,
 inline drive assignment RHS scalar values or expression operands, and
@@ -1241,12 +1242,16 @@ activation guard. It may also appear later as inline branching.
 Transaction `when`, `while`, and `until` condition expressions may use local
 enum members such as `mode.BUSY`, package enum members such as
 `shared.mode.BUSY`, or scalar aggregate storage leaves such as `frame.flag` as
-scalar operands. Scalar aggregate storage leaves may also be used directly as
-standalone transaction conditions. The parser resolves those operands before
-lowering and preserves the authored condition expression or scalar aggregate
-condition in the scheduled `.fsm` computed-test selector. Standalone enum
-member transaction conditions and enum members or aggregate paths in
-transaction condition expression operator position remain deferred.
+scalar operands. Scalar aggregate storage leaves and scalar local/package enum
+members may also be used directly as standalone transaction conditions, for
+example `(when frame.flag ...)`, `(while mode.BUSY ...)`, and
+`(until shared.mode.BUSY ...)`. The parser resolves those operands before
+lowering and preserves the authored condition expression, scalar aggregate
+condition, or scalar enum member condition in the scheduled `.fsm`
+computed-test selector. Non-HDL-identifier standalone conditions lower through
+computed selector syntax such as `?(frame.flag)`, `?(mode.BUSY)`, or
+`?(shared.mode.BUSY)`. Enum members or aggregate paths in transaction
+condition expression operator position remain deferred.
 
 ### 7.1.1 Transaction Ports and Actor Pin Access
 
@@ -2890,6 +2895,7 @@ Focused tests:
 - [t/1297-isf-aggregate-drive-target-values.t](../t/1297-isf-aggregate-drive-target-values.t)
 - [t/1298-isf-aggregate-inline-drive-target-values.t](../t/1298-isf-aggregate-inline-drive-target-values.t)
 - [t/1299-isf-aggregate-standalone-condition-values.t](../t/1299-isf-aggregate-standalone-condition-values.t)
+- [t/1300-isf-enum-member-standalone-condition-values.t](../t/1300-isf-enum-member-standalone-condition-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2948,10 +2954,12 @@ Focused tests:
   actor-constant enum member references, direct transaction `set` RHS enum
   member values and expression operands, transaction `switch` branch enum
   values, transaction `when`/`while`/`until` condition expression enum member
-  operands, rule guard expression enum member operands, scalar rule assignment
-  RHS enum member values and expression operands, scalar drive body RHS enum
-  member values and expression operands, scalar drive-call actual enum member
-  values, drive-call actual expression enum member operands, actor scalar
+  operands, standalone transaction `when`/`while`/`until` enum member
+  conditions, transaction `switch` selector enum member values, rule guard
+  expression enum member operands, scalar rule assignment RHS enum member
+  values and expression operands, scalar drive body RHS enum member values and
+  expression operands, scalar drive-call actual enum member values,
+  drive-call actual expression enum member operands, actor scalar
   parameter default enum member values, actor aggregate/list parameter default
   enum member leaves, generated
   child transaction scalar parameter default enum member values, generated
@@ -2976,8 +2984,8 @@ Focused tests:
   values or aggregate/list default leaves, activation parameter scalar values
   or aggregate/list override leaves, reusable-library use-site parameter
   override values or leaves, transaction
-  `when`/`while`/`until` condition expression operands, transaction `set` RHS
-  scalar values/expression operands,
+  `when`/`while`/`until` condition scalar values or expression operands,
+  transaction `set` RHS scalar values/expression operands,
   transaction `switch` selector or branch values, rule guard expression
   operands, rule assignment RHS scalar values or expression operands, drive
   body RHS scalar values or expression operands, inline drive assignment RHS

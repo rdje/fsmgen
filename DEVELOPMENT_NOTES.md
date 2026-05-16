@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum standalone conditions reuse computed selectors
+- `ISF-TYPE-AGGREGATE-PARITY.46` widens enum support from condition expression
+  operands to direct `when`/`while`/`until` scalar conditions.
+- Dotted enum condition tokens are not HDL identifiers, so scheduled `.fsm`
+  emits them with computed selector syntax such as `?(mode.BUSY)` and
+  `?(shared.mode.BUSY)`.
+- Expression operator-position enum members and enum targets remain rejected;
+  they need separate contracts for operator semantics and lvalue ownership.
+- The slice also extends `bin/ci-regression isf` to the 13xx band. Without
+  that gate update, the new focused regression would pass individually but
+  stay outside the broad ISF tier.
 ## 2026-05-16: aggregate standalone conditions use computed selectors
 - `ISF-TYPE-AGGREGATE-PARITY.45` widens aggregate support from condition
   expression operands to direct `when`/`while`/`until` scalar conditions.

@@ -91,6 +91,7 @@ subtest 'ISF tier remains ready for the next numbered band' => sub {
     my $script = slurp($ci);
 
     like($script, qr/t\/12\[0-9\]\[0-9\]-isf\*\.t/, 'ISF tier includes the 12xx ISF band');
+    like($script, qr/t\/13\[0-9\]\[0-9\]-isf\*\.t/, 'ISF tier includes the 13xx ISF band');
     like($script, qr/shopt -s nullglob/, 'unmatched future ISF bands do not produce literal paths');
 };
 

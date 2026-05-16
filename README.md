@@ -277,7 +277,7 @@ cd docs/book && mdbook serve
     ISF public contract.
   - `smoke`: alias for `quick`, provided for the fast basic-functionality
     check described by the tier.
-  - `isf`: all ISF-focused tests in the current 109x, 11xx, and 12xx
+  - `isf`: all ISF-focused tests in the current 109x, 11xx, 12xx, and 13xx
     numbered bands.
   - `full`: the complete Perl regression suite with `prove -I perl t`.
 - With no mode argument it runs `full`, preserving the historical pre-push

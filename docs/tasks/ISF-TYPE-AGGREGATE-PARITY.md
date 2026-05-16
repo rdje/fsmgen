@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`, `ISF-TYPE-AGGREGATE-PARITY.34`, `ISF-TYPE-AGGREGATE-PARITY.35`, `ISF-TYPE-AGGREGATE-PARITY.36`, `ISF-TYPE-AGGREGATE-PARITY.37`, `ISF-TYPE-AGGREGATE-PARITY.38`, `ISF-TYPE-AGGREGATE-PARITY.39`, `ISF-TYPE-AGGREGATE-PARITY.40`, `ISF-TYPE-AGGREGATE-PARITY.41`, `ISF-TYPE-AGGREGATE-PARITY.42`, `ISF-TYPE-AGGREGATE-PARITY.43`, `ISF-TYPE-AGGREGATE-PARITY.44`, `ISF-TYPE-AGGREGATE-PARITY.45`, `ISF-TYPE-AGGREGATE-PARITY.46`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`, `ISF-TYPE-AGGREGATE-PARITY.34`, `ISF-TYPE-AGGREGATE-PARITY.35`, `ISF-TYPE-AGGREGATE-PARITY.36`, `ISF-TYPE-AGGREGATE-PARITY.37`, `ISF-TYPE-AGGREGATE-PARITY.38`, `ISF-TYPE-AGGREGATE-PARITY.39`, `ISF-TYPE-AGGREGATE-PARITY.40`, `ISF-TYPE-AGGREGATE-PARITY.41`, `ISF-TYPE-AGGREGATE-PARITY.42`, `ISF-TYPE-AGGREGATE-PARITY.43`, `ISF-TYPE-AGGREGATE-PARITY.44`, `ISF-TYPE-AGGREGATE-PARITY.45`, `ISF-TYPE-AGGREGATE-PARITY.46`, `ISF-TYPE-AGGREGATE-PARITY.47`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -367,8 +367,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.45: support aggregate standalone conditions`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.46`
+  Status: `done`
+  Goal: `support enum member values as standalone transaction conditions`
+  Acceptance: `transaction when/while/until scalar conditions accept local/package enum members with computed .fsm selector review artifacts, strict CLI HDL generation, and fail-closed diagnostics for unknown members and expression operator-position enum members`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `bash -n bin/ci-regression`; `prove -Iperl t/1300-isf-enum-member-standalone-condition-values.t t/1275-isf-enum-member-condition-values.t t/1295-isf-enum-member-switch-selector-values.t t/1265-isf-enum-member-switch-branch-values.t t/1263-isf-enum-member-set-values.t t/1272-isf-enum-member-rule-values.t t/1274-isf-enum-member-rule-guard-values.t t/1266-isf-enum-member-drive-values.t t/1279-isf-enum-member-inline-drive-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression --list`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.46: support enum standalone conditions`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.47`
   Status: `pending`
-  Goal: `choose the next remaining enum or aggregate value/update context after aggregate standalone transaction conditions`
+  Goal: `choose the next remaining enum or aggregate value/update context after enum standalone transaction conditions`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -377,7 +384,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.46` | `pending` | The next enum or aggregate value/update context can be selected after aggregate standalone transaction conditions are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.47` | `pending` | The next enum or aggregate value/update context can be selected after enum standalone transaction conditions are stable. |
 
 ## Decisions
 
@@ -701,6 +708,13 @@ ISF-only type system.
   stable. Scalar aggregate leaves such as `frame.flag` and `lanes[0]` now
   resolve as direct `when`/`while`/`until` conditions and lower through
   computed `.fsm` selectors, while subaggregate conditions remain closed.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.46` selects standalone enum
+  transaction conditions because enum condition expression operands and enum
+  switch selectors already proved the computed-selector path. Local and
+  package enum members such as `mode.BUSY` and `shared.mode.BUSY` now resolve
+  as direct `when`/`while`/`until` conditions and lower through computed
+  `.fsm` selectors, while expression operator-position enum members and
+  non-condition enum targets remain closed.
 
 ## Open Questions
 
@@ -714,14 +728,14 @@ ISF-only type system.
   transaction parameter scalar values or aggregate/list default leaves,
   activation parameter scalar values and aggregate/list override leaves,
   reusable-library use-site parameter override values or leaves,
-  transaction `set` RHS scalar
-  values/expression operands, transaction `when`/`while`/`until` condition
-  expression operands, transaction `switch` branch values, rule guard
-  expression operands, rule assignment RHS scalar values/expression operands,
-  drive body RHS scalar values/expression operands, inline drive assignment
-  RHS scalar values/expression operands, and drive-call scalar actual
-  values/expression operands should ship next? This remains deferred beyond
-  `ISF-TYPE-AGGREGATE-PARITY.32`.
+  transaction `set` RHS scalar values/expression operands, transaction
+  `when`/`while`/`until` condition scalar values/expression operands,
+  transaction `switch` selector/branch values, rule guard expression operands,
+  rule assignment RHS scalar values/expression operands, drive body RHS scalar
+  values/expression operands, inline drive assignment RHS scalar
+  values/expression operands, and drive-call scalar actual values/expression
+  operands should ship next? Remaining enum work is now mainly target,
+  standalone rule guard, and operator-position contexts.
 - Which enum or aggregate value/update context should ship after aggregate
   switch selectors? `ISF-TYPE-AGGREGATE-PARITY.41` shipped enum switch
   selectors.
@@ -738,8 +752,11 @@ ISF-only type system.
   inline drive targets? `ISF-TYPE-AGGREGATE-PARITY.45` shipped standalone
   aggregate transaction conditions.
 - Which enum or aggregate value/update context should ship after aggregate
+  standalone transaction conditions? `ISF-TYPE-AGGREGATE-PARITY.46` shipped
+  standalone enum transaction conditions.
+- Which enum or aggregate value/update context should ship after enum
   standalone transaction conditions? The current frontier selects this for
-  `ISF-TYPE-AGGREGATE-PARITY.46`.
+  `ISF-TYPE-AGGREGATE-PARITY.47`.
 
 ## Blockers
 
@@ -794,6 +811,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.43` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1297-isf-aggregate-drive-target-values.t t/1287-isf-aggregate-drive-values.t t/1288-isf-aggregate-drive-expression-values.t t/1296-isf-aggregate-rule-target-values.t t/1291-isf-aggregate-inline-drive-values.t t/1261-isf-aggregate-storage-leaf-writes.t t/1285-isf-aggregate-rule-guard-values.t t/1286-isf-aggregate-condition-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.44` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1298-isf-aggregate-inline-drive-target-values.t t/1291-isf-aggregate-inline-drive-values.t t/1292-isf-aggregate-inline-drive-expression-values.t t/1297-isf-aggregate-drive-target-values.t t/1261-isf-aggregate-storage-leaf-writes.t t/1285-isf-aggregate-rule-guard-values.t t/1286-isf-aggregate-condition-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.45` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1299-isf-aggregate-standalone-condition-values.t t/1286-isf-aggregate-condition-values.t t/1261-isf-aggregate-storage-leaf-writes.t t/1285-isf-aggregate-rule-guard-values.t t/1298-isf-aggregate-inline-drive-target-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.46` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `bash -n bin/ci-regression`; `prove -Iperl t/1300-isf-enum-member-standalone-condition-values.t t/1275-isf-enum-member-condition-values.t t/1295-isf-enum-member-switch-selector-values.t t/1265-isf-enum-member-switch-branch-values.t t/1263-isf-enum-member-set-values.t t/1272-isf-enum-member-rule-values.t t/1274-isf-enum-member-rule-guard-values.t t/1266-isf-enum-member-drive-values.t t/1279-isf-enum-member-inline-drive-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression --list`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -844,6 +862,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.43` | `ISF-TYPE-AGGREGATE-PARITY.43: support aggregate drive targets` | `Named drive body target aggregate leaf parser/lowering/provenance slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.44` | `ISF-TYPE-AGGREGATE-PARITY.44: support aggregate inline drive targets` | `Inline drive target aggregate leaf parser/lowering/provenance slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.45` | `ISF-TYPE-AGGREGATE-PARITY.45: support aggregate standalone conditions` | `Standalone transaction condition aggregate leaf parser/lowering slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.46` | `ISF-TYPE-AGGREGATE-PARITY.46: support enum standalone conditions` | `Standalone transaction condition enum member parser/lowering slice.` |
 
 ## Changelog
 
@@ -981,3 +1000,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped standalone transaction condition aggregate leaf values
   for `ISF-TYPE-AGGREGATE-PARITY.45` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.46`.
+- `2026-05-16`: Shipped standalone transaction condition enum member values
+  for `ISF-TYPE-AGGREGATE-PARITY.46` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.47`.

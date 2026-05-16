@@ -298,13 +298,20 @@ values may now also consume local and package-qualified enum members. Direct
 transaction `set` RHS scalar values and scalar operands inside transaction
 `set` RHS expressions may consume local and package-qualified enum members,
 transaction `when`/`while`/`until` condition expressions may consume local and
-package-qualified enum members as scalar operands,
-transaction `switch` selectors and branch values may consume local and
+package-qualified enum members as scalar operands. Direct transaction
+`when`/`while`/`until` scalar conditions may now consume local and
+package-qualified enum members too, such as
+`(when mode.BUSY (set fire 1))`, `(while mode.BUSY (set busy 1))`, or
+`(until shared.mode.BUSY (complete done))`; those dotted standalone condition
+tokens lower through computed `.fsm` selector syntax such as `?(mode.BUSY)` or
+`?(shared.mode.BUSY)`.
+Transaction `switch` selectors and branch values may consume local and
 package-qualified enum members, scalar rule assignment RHS values and scalar
 operands inside rule assignment RHS expressions and scalar operands inside rule
-guard expressions may consume local and package-qualified enum members, and scalar drive body RHS
-values or scalar operands inside drive body RHS expressions may consume local
-and package-qualified enum members. Named drive-call scalar actual values may also
+guard expressions may consume local and package-qualified enum members, and
+scalar drive body RHS values or scalar operands inside drive body RHS
+expressions may consume local and package-qualified enum members. Named
+drive-call scalar actual values may also
 consume local and package-qualified enum members, and drive-call actual
 expressions may use enum members as scalar operands. Inline drive assignment
 RHS scalar values and scalar operands inside inline drive RHS expressions may
@@ -358,14 +365,15 @@ interface or transaction ports, aggregate storage banks, enum member
 references outside actor constants, actor parameter scalar
 values or aggregate/list default leaves, generated child transaction scalar
 parameter defaults or aggregate/list default leaves, activation parameter
-scalar values or aggregate/list override leaves, transaction `set` RHS scalar
+scalar values or aggregate/list override leaves, reusable-library use-site
+parameter override values or leaves, transaction `set` RHS scalar
 values/expression operands, transaction `when`/`while`/`until` condition
-expression operands, transaction `switch` branch values, rule guard expression
-operands, scalar rule assignment RHS values or expression operands, or drive
-body RHS scalar values/expression operands, inline drive assignment RHS scalar
-values/expression operands, or drive-call actual scalar values/expression
-operands, aggregate field/slice/update lowering, and broader aggregate shape
-inference are separate follow-on leaves.
+scalar values/expression operands, transaction `switch` selector/branch values,
+rule guard expression operands, scalar rule assignment RHS values or expression
+operands, or drive body RHS scalar values/expression operands, inline drive
+assignment RHS scalar values/expression operands, or drive-call actual scalar
+values/expression operands, aggregate field/slice/update lowering, and broader
+aggregate shape inference are separate follow-on leaves.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate

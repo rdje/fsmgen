@@ -197,6 +197,7 @@ my $expected_tested_by = [
     't/1297-isf-aggregate-drive-target-values.t',
     't/1298-isf-aggregate-inline-drive-target-values.t',
     't/1299-isf-aggregate-standalone-condition-values.t',
+    't/1300-isf-enum-member-standalone-condition-values.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {
