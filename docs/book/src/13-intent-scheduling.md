@@ -456,7 +456,10 @@ limitations are:
   scalar RHS values and scalar operands inside rule assignment RHS expressions
   may also read scalar aggregate leaves from those carriers, and rule
   assignment targets may write scalar aggregate leaves from those carriers.
-  Rule guard expressions may read scalar aggregate leaves as operands too.
+  Rule guard scalar values and expressions may read scalar aggregate leaves
+  too, for example `(rule fire_when_flag frame.flag ...)` or
+  `(rule fire_when_lane (when lanes[1]) ...)`; standalone aggregate rule guards
+  lower to non-state DT header guards such as `<frame.flag` or `<lanes[1]`.
   Named drive body scalar RHS values and scalar operands inside RHS expressions may read
   scalar aggregate leaves from those carriers, and named drive body targets may
   write scalar aggregate leaves on those carriers. Named drive-call scalar
@@ -477,7 +480,7 @@ limitations are:
   transaction `set` RHS values, direct transaction `set` targets, transaction
   condition scalar values/expression operands, transaction `switch`
   selectors/branch values, rule assignment target tokens, rule assignment RHS
-  values/expression operands, rule guard expression operands, drive target
+  values/expression operands, rule guard scalar values/expression operands, drive target
   tokens, or drive body RHS scalar values/expression operands, inline drive
   target tokens, inline drive assignment RHS scalar values/expression operands,
   or drive-call actual scalar values/expression operands, subaggregate

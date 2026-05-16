@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate standalone rule guards reuse DT header guards
+- `ISF-TYPE-AGGREGATE-PARITY.48` widens aggregate support from rule guard
+  expression operands to direct scalar rule guards.
+- The parser reuses the scalar aggregate leaf read validator, so only declared
+  actor-owned aggregate storage leaves such as `frame.flag` or `lanes[1]` are
+  accepted; unknown paths, out-of-range indexes, and subaggregate paths stay
+  rejected before lowering.
+- The rule lowerer already emits scalar guards as non-state DT header suffixes,
+  so aggregate guards reuse the existing `.fsm` condition-suffix parser and
+  review artifact form instead of the computed selector path used by
+  transaction branch/loop test nodes.
 ## 2026-05-16: enum standalone rule guards reuse DT header guards
 - `ISF-TYPE-AGGREGATE-PARITY.47` widens enum support from rule guard
   expression operands to direct scalar rule guards.

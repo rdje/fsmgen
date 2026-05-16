@@ -150,24 +150,6 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor aggregate_rule_guard_scalar_path
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (output fire))
-  (storage
-    (var frame (type frame_t)))
-  (rule fire_when_flag frame.flag
-    (set fire 1)))
-ISF
-        qr/rule 'fire_when_flag' guard references aggregate storage path 'frame\.flag'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition scalar values or expression scalar operands, transaction switch selector or branch scalar values, rule assignment target scalar leaf writes, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive target scalar leaf writes, drive body RHS scalar values or operands, inline drive target scalar leaf writes, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands/,
-        'standalone aggregate rule guards remain deferred',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
 (actor aggregate_rule_guard_subaggregate_operand
   (types
     (type payload_t (list bit (bits 2)))

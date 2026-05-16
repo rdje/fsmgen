@@ -559,6 +559,12 @@ Rules:
   operands, for example `(rule r (== mode_in mode.BUSY) ...)` or
   `(rule r (when (& ready (== mode_in shared.mode.BUSY))) ...)`. Expression
   operator-position enum members remain deferred.
+- Rule guards may also use scalar aggregate storage leaves directly, for
+  example `(rule r frame.flag ...)` or `(rule r (when lanes[1]) ...)`.
+  Scheduled `.fsm` preserves those guards as non-state DT header suffixes such
+  as `<frame.flag` or `<lanes[1]`, and strict HDL generation accepts that
+  review artifact. Subaggregate rule guards and aggregate paths in expression
+  operator position remain deferred.
 - Scalar drive-call actuals may also use local or package enum members.
   Drive-call actual expressions may use enum members as scalar operands.
   Enum members in drive-call expression operator position remain deferred.
@@ -1002,7 +1008,7 @@ Aggregate member/item access outside direct transaction `set` RHS values,
 direct transaction `set` target tokens, transaction condition scalar values or
 expression operands, transaction `switch` selectors or branch values, rule
 assignment target tokens, rule assignment RHS values or expression operands,
-rule guard expression operands, drive target tokens, drive body RHS scalar
+rule guard scalar values or expression operands, drive target tokens, drive body RHS scalar
 values/expression operands, inline drive target tokens, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands; aggregate paths in drive body RHS, inline drive RHS, or drive-call
@@ -1410,7 +1416,7 @@ Required fail-closed examples:
   `set` RHS values, direct transaction `set` target tokens, transaction
   condition scalar values or expression operands, transaction `switch`
   selectors or branch values, rule assignment target tokens, rule assignment RHS
-  values/expression operands, rule guard expression operands, drive target
+  values/expression operands, rule guard scalar values/expression operands, drive target
   tokens, drive body RHS scalar values/expression operands, inline drive
   target tokens, inline drive assignment RHS scalar values/expression operands,
   or drive-call actual scalar values/expression operands, aggregate paths in
@@ -1516,7 +1522,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1298-isf-aggregate-inline-drive-target-values.t \
   t/1299-isf-aggregate-standalone-condition-values.t \
   t/1300-isf-enum-member-standalone-condition-values.t \
-  t/1301-isf-enum-member-rule-standalone-guard-values.t
+  t/1301-isf-enum-member-rule-standalone-guard-values.t \
+  t/1302-isf-aggregate-rule-standalone-guard-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

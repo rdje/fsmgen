@@ -356,7 +356,7 @@ targets may write scalar aggregate leaves, such as
 paths outside transaction `set` RHS values, direct transaction `set` targets,
 transaction condition scalar values/expression operands, transaction `switch`
 selectors/branch values, rule assignment target tokens, rule assignment RHS
-values/expression operands, rule guard expression operands, drive target
+values/expression operands, rule guard scalar values/expression operands, drive target
 tokens, drive body RHS scalar values/expression operands, inline drive target
 tokens, inline drive assignment RHS scalar values/expression operands, or
 drive-call actual scalar values/expression operands, subaggregate

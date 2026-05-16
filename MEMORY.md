@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate standalone rule guards shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.48` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.49`.
+- Rule guard scalar values now accept local and package-backed aggregate
+  storage leaves such as `frame.flag` and `lanes[1]` in both shorthand and
+  long-form `(when ...)` rule syntax.
+- Scheduled `.fsm` review artifacts preserve standalone aggregate rule guards
+  as guarded non-state DT header suffixes such as `<frame.flag`.
+- Unknown aggregate paths, out-of-range indexes, and subaggregate guards fail
+  closed; aggregate paths in expression operator position remain deferred.
 ## 2026-05-16: ISF enum standalone rule guards shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.47` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

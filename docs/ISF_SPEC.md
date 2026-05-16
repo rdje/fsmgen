@@ -350,7 +350,7 @@ Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
 condition scalar values or expression operands, transaction `switch` selectors
 or branch values, rule assignment targets, rule assignment RHS values or
-expression operands, rule guard expression operands, drive target tokens, drive
+expression operands, rule guard scalar values or expression operands, drive target tokens, drive
 body RHS scalar values or expression operands, inline drive target tokens,
 inline drive assignment RHS scalar values or operands, or drive-call actual
 scalar values/expression operands,
@@ -2186,11 +2186,13 @@ standalone scalar guards, for example `(rule r mode.BUSY ...)` or
 `(rule r (when shared.mode.BUSY) ...)`; scheduled `.fsm` preserves those guards
 as non-state DT header suffixes such as `<mode.BUSY` or
 `<shared.mode.BUSY`. Rule guard expression operands may also use local or
-package enum members, scalar aggregate storage leaves may appear as rule guard
-expression operands, and rule assignment targets may write scalar aggregate
-storage leaves. Rule guard and assignment expression operator-position enum
-members or aggregate paths, and standalone aggregate rule guards, remain
-deferred.
+package enum members. Scalar aggregate storage leaves may appear as standalone
+rule guards or as rule guard expression operands, for example
+`(rule r frame.flag ...)` or `(rule r (when lanes[1]) ...)`; scheduled `.fsm`
+preserves those guards as non-state DT header suffixes such as `<frame.flag`
+or `<lanes[1]`. Rule assignment targets may write scalar aggregate storage
+leaves. Rule guard and assignment expression operator-position enum members or
+aggregate paths, and subaggregate rule guards, remain deferred.
 
 Multi-rule fan-in example:
 
@@ -2902,6 +2904,7 @@ Focused tests:
 - [t/1299-isf-aggregate-standalone-condition-values.t](../t/1299-isf-aggregate-standalone-condition-values.t)
 - [t/1300-isf-enum-member-standalone-condition-values.t](../t/1300-isf-enum-member-standalone-condition-values.t)
 - [t/1301-isf-enum-member-rule-standalone-guard-values.t](../t/1301-isf-enum-member-rule-standalone-guard-values.t)
+- [t/1302-isf-aggregate-rule-standalone-guard-values.t](../t/1302-isf-aggregate-rule-standalone-guard-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -3001,7 +3004,7 @@ Focused tests:
   direct transaction `set` RHS values, direct transaction `set` target tokens,
   transaction condition scalar values or expression operands, transaction
   `switch` selectors or branch values, rule assignment target tokens, rule assignment RHS
-  values/expression operands, rule guard expression operands, drive target
+  values/expression operands, rule guard scalar values/expression operands, drive target
   tokens, drive body RHS scalar values/expression operands, inline drive
   target tokens, inline drive assignment RHS scalar values/expression operands,
   or drive-call actual scalar values/expression operands,

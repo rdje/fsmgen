@@ -35,7 +35,11 @@ standalone scalar rule guards too. A local guard such as `mode.BUSY` lowers to
 the non-state DT header guard `<mode.BUSY`, while a package guard such as
 `shared.mode.BUSY` lowers to `<shared.mode.BUSY`. The guard is evaluated by the
 existing `.fsm` condition-suffix machinery, so a nonzero enum value selects the
-rule and a zero-valued enum member does not.
+rule and a zero-valued enum member does not. Scalar aggregate storage leaves
+from declared actor-owned storage are valid standalone rule guards as well.
+For example, `frame.flag` lowers to `<frame.flag`, and a package-backed list
+leaf such as `lanes[1]` lowers to `<lanes[1]`. Subaggregate guards, such as a
+whole record member or whole list member, still fail closed.
 
 ```lisp
 (rule fire_when_busy mode.BUSY
@@ -43,6 +47,13 @@ rule and a zero-valued enum member does not.
 
 (rule fire_when_shared_busy
   (when shared.mode.BUSY)
+  (set fire 1))
+
+(rule fire_when_flag frame.flag
+  (set fire 1))
+
+(rule fire_when_lane
+  (when lanes[1])
   (set fire 1))
 ```
 
@@ -88,6 +99,10 @@ cycle.
 )
 
 (-fire_when_busy <mode.BUSY
+  (<- (fire> 1))
+)
+
+(-fire_when_flag <frame.flag
   (<- (fire> 1))
 )
 

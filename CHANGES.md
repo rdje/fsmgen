@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate standalone rule guards shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.48`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.49`.
+- Rule guard scalar values now accept local and package-backed aggregate
+  storage leaves in both shorthand and long-form `when` rule syntax.
+- Scheduled `.fsm` rule review artifacts preserve those guards as non-state DT
+  header suffixes such as `<frame.flag` and `<lanes[1]`.
+- Parser diagnostics reject unknown aggregate paths, out-of-range indexes, and
+  subaggregate guards while keeping aggregate paths in expression operator
+  position deferred.
 ### R14 — ISF enum standalone rule guards shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.47`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.48`.

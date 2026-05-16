@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate standalone rule guards shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.48` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.49`, selecting the
+  next enum or aggregate value/update context after aggregate standalone rule
+  guards.
+- Rule guard scalar values now accept scalar aggregate storage leaves in
+  shorthand and long-form `when` rule syntax.
+- Scheduled `.fsm` rule review artifacts preserve those guards as guarded
+  non-state DT header suffixes such as `<frame.flag`.
+- Unknown aggregate paths, out-of-range indexes, and subaggregate guards fail
+  closed; aggregate paths in expression operator position remain deferred.
+
 ## 2026-05-16: R14 — ISF enum standalone rule guards shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.47` in

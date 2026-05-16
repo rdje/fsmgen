@@ -721,7 +721,9 @@ scalar member/item leaves from those same declared storage variables. Inline
 drive targets may also write scalar member/item leaves on those same declared
 storage variables. Named drive-call scalar actual values may also read scalar
 member/item leaves from those same declared storage
-variables, and drive-call actual expressions may use them as scalar operands. Lowering
+variables, and drive-call actual expressions may use them as scalar operands.
+Rule guards may also read scalar member/item leaves directly or as scalar
+operands inside guard expressions. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
 aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
@@ -730,7 +732,7 @@ indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition scalar values or
 expression operands, transaction `switch` selectors or branch values, rule
 assignment RHS values/expression operands, rule assignment target tokens, or
-rule guard expression operands, drive target tokens, drive body RHS scalar
+rule guard scalar values/expression operands, drive target tokens, drive body RHS scalar
 values/expression operands, inline drive target tokens, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands, aggregate paths in expression
@@ -955,8 +957,14 @@ Rule guard expression aggregate leaf operands are checked by
 [t/1285-isf-aggregate-rule-guard-values.t](../t/1285-isf-aggregate-rule-guard-values.t),
 covering shorthand and long-form rule guard expression aggregate leaf operands,
 scheduled `.fsm` review artifacts, public `when` normalization, CLI HDL
-generation, and fail-closed diagnostics for unknown members, standalone
-aggregate guards, operator-position paths, and subaggregate operands.
+generation, and fail-closed diagnostics for unknown members, operator-position
+paths, and subaggregate operands.
+Standalone rule guard aggregate leaf values are checked by
+[t/1302-isf-aggregate-rule-standalone-guard-values.t](../t/1302-isf-aggregate-rule-standalone-guard-values.t),
+covering local and package aggregate leaf reads as shorthand and long-form
+rule guards, non-state DT header guard review artifacts, public `when`
+normalization, CLI HDL generation, and fail-closed diagnostics for unknown
+paths, out-of-range indexes, and subaggregate guards.
 Drive body RHS aggregate leaf values are checked by
 [t/1287-isf-aggregate-drive-values.t](../t/1287-isf-aggregate-drive-values.t),
 covering local and package aggregate leaf reads in named drive body scalar RHS
