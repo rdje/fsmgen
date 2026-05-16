@@ -149,6 +149,7 @@ my $expected_tested_by = [
     't/1246-isf-setter-syntax.t',
     't/1247-isf-clock-domain-partition.t',
     't/1248-isf-rule-trigger-parameter-binding.t',
+    't/1249-isf-activation-parameter-constants.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

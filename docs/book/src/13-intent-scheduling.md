@@ -320,9 +320,10 @@ limitations are:
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,
   validation, child `+params` emission, per-instance override preservation, and
-  generated-top application are shipped for the static `(params ...)` surface.
-  Broader symbolic parameter values, rule-trigger parameter overrides, and
-  richer generated-child surfaces remain backlog work.
+  generated-top application are shipped for the static `(params ...)` surface,
+  including actor-local constants as resolved static override values.
+  Actor/transaction parameter values, runtime-signal values, arbitrary
+  expressions, and richer generated-child surfaces remain backlog work.
 - Transaction-local `(ports ...)` declarations are parser-public metadata and
   can be bound at activation sites with scalar, literal, or list-expression
   input `(bind ...)` sources. `do`

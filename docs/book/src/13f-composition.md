@@ -197,9 +197,9 @@ The shipped activation-parameter surface covers spawned child instances and
 blocking `do` generated child activations. Override names must match child
 transaction parameters, duplicate instance/parameter names fail, scalar
 literal overrides are width-flexible, and aggregate defaults require
-compatible aggregate overrides. Actor-local constants are shipped for static
-wait counts, but symbolic parameter override values remain unsupported until
-that parameter-value surface has its own binding and specialization contract.
+compatible aggregate overrides. Actor-local constants may be used as scalar
+override values, or as scalar leaves inside aggregate/list override values;
+they resolve to literal values before generated-top emission.
 A generated child `.fsm` emits the child transaction defaults in `+params`;
 parameter declarations on non-generated transactions fail closed; the parent
 lowerer IR preserves per-instance override lists, and the generated top applies

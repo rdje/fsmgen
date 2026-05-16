@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF actor-constant parameter overrides shipped
+- Completed `ISF-PARAM-OVERRIDE-CONSTANTS.2` in
+  [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md),
+  closing the actor-constant activation parameter override tree.
+- Generated activation `(params ...)` values for spawn, generated blocking
+  `do`, and rule-trigger sites now accept actor-local constants as scalar
+  values or as scalar leaves inside compatible aggregate/list values.
+- The lowerer resolves actor constants to literal values before generated
+  activation metadata is published, so generated tops and schedule reports
+  keep using the existing self-contained literal value fields.
+- Actor parameters, transaction parameters, runtime signals, interface ports,
+  storage names, unknown names, and arbitrary expressions remain fail-closed
+  as activation parameter override values.
+- Added [t/1249-isf-activation-parameter-constants.t](t/1249-isf-activation-parameter-constants.t)
+  and advertised it in the ISF public contract tested-by provenance.
 ## 2026-05-16: ISF actor-constant parameter override contract selected
 - Completed `ISF-PARAM-OVERRIDE-CONSTANTS.1` in
   [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md).

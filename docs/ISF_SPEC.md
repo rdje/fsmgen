@@ -931,16 +931,15 @@ values, the implementation must specialize distinct logical child instances or
 cloned scheduled regions. It must not lower the parameter as a mutable runtime
 signal shared by every activation of the transaction.
 
-Selected future value-source widening: actor-local constants are the first
-planned symbolic source for activation parameter override values. The selected
-contract is to accept an actor constant name as a scalar override value, or as
-a scalar leaf inside an aggregate/list override value, for generated activation
-forms that already support `(params ...)`: spawn, parameterized blocking `do`,
-and parameterized rule `trigger`. The lowerer must resolve the constant to its
-literal value before generated-top emission, so generated `?fsmc` parameter
-overrides remain self-contained. Unknown names, actor parameters, transaction
-parameters, runtime signals, and arbitrary expressions remain fail-closed until
-a later task explicitly ships a wider value source.
+Actor-local constants are accepted as static activation parameter override
+values. A constant name may appear as a scalar override value, or as a scalar
+leaf inside an aggregate/list override value, for generated activation forms
+that already support `(params ...)`: spawn, parameterized blocking `do`, and
+parameterized rule `trigger`. The lowerer resolves constants to literal values
+before generated-top emission, so generated `?fsmc` parameter overrides remain
+self-contained. Unknown names, actor parameters, transaction parameters,
+runtime signals, and arbitrary expressions remain fail-closed until a later
+task explicitly ships a wider value source.
 
 The parameterized rule-trigger contract follows the same specialization rule.
 It elaborates a generated child activation instance named
@@ -1952,9 +1951,10 @@ Multi-rule fan-in example:
 Malformed trigger `params` blocks fail before scheduled artifacts are emitted:
 more than one `params` block on one trigger action, malformed `(NAME value)`
 entries, non-HDL parameter names, duplicate override names, unknown target
-parameters, shape-incompatible values, unsupported symbolic/expression
-override values, and generated instance name or handoff-port collisions are all
-fail-closed diagnostics. A rule trigger with output bindings remains rejected;
+parameters, shape-incompatible values, unsupported non-constant symbolic or
+expression override values, and generated instance name or handoff-port
+collisions are all fail-closed diagnostics. A rule trigger with output
+bindings remains rejected;
 runtime data must continue to use input ports and `(bind ...)`.
 
 - Inline `(priority over other_rule)` is structurally validated by the parser,

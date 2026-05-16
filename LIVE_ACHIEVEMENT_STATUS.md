@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF actor-constant parameter overrides shipped
+- Completed R14 task-tree slice: `ISF-PARAM-OVERRIDE-CONSTANTS.2`, closing
+  [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md).
+- Spawn, generated blocking `do`, and rule-trigger activation `(params ...)`
+  sites now accept actor-local constants as static override values.
+- Constants resolve to literal values before generated-top emission, so
+  generated tops and schedule reports continue to expose self-contained
+  literal parameter override values through existing fields.
+- Runtime signals, actor/transaction parameters, unknown names, and arbitrary
+  expressions remain fail-closed.
+
 ## 2026-05-16: R14 — ISF actor-constant parameter override contract selected
 - Completed R14 task-tree slice: `ISF-PARAM-OVERRIDE-CONSTANTS.1`.
 - Opened [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md)

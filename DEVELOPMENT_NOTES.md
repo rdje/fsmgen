@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: activation param constants ship as resolved literals
+- `ISF-PARAM-OVERRIDE-CONSTANTS.2` resolves actor constants at the ISF
+  lowering boundary, before generated activation instances are handed to the
+  composition-top emitter. That preserves the existing generated-top and report
+  value shape: consumers see literal values, not parent-local symbol names.
+- The implementation deliberately keeps `_validate_isf_param_value` unchanged
+  for parameter declarations and reusable-library `use` params. Only generated
+  activation override values use the actor-constant resolver.
+- The unsupported-symbol diagnostic now distinguishes this activation value
+  surface from the older generic parameter binding text. Unknown scalar names
+  and runtime-looking signals still fail before scheduled artifacts are
+  emitted.
 ## 2026-05-16: activation param constants resolve before top emission
 - `ISF-PARAM-OVERRIDE-CONSTANTS.1` selects actor-local constants as the first
   symbolic value source for activation parameter overrides because they are

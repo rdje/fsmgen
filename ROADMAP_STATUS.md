@@ -13,9 +13,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Next decision point: select the next roadmap-aligned R14 task tree after
   closing the requested self-contained `.isf` downstream integration handoff
   and synchronizing the stale activation-parameter entry in the canonical ISF
-  feature backlog. The active frontier is now
-  `ISF-PARAM-OVERRIDE-CONSTANTS.2`, implementing the selected actor-constant
-  value-source contract for generated activation parameter overrides.
+  feature backlog. `ISF-PARAM-OVERRIDE-CONSTANTS.2` then shipped actor-local
+  constants as generated activation parameter override values and closed that
+  tree. The next PNT selection should choose a fresh roadmap-aligned R14 task
+  tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -107,6 +108,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   leaves inside aggregate/list override values, and must resolve to literals
   before generated-top emission. Actor/transaction parameters, runtime signals,
   and arbitrary expressions remain fail-closed for this tree.
+  `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped that contract for spawn, generated
+  blocking `do`, and parameterized rule-trigger sites, added focused
+  regression coverage, and synchronized the ISF spec, mdBook, downstream
+  handoff, public contract, and tested-by metadata. The tree is closed.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

@@ -94,7 +94,7 @@ as the scalar/aggregate literal, bounded scalar-expression, and matching-shape
 leafwise aggregate-expression owner for direct `+params`, `.rtlif` defaults, external
 `?rtl` overrides, and generated `?fsmc` / `?dtc` overrides, keeping that value
 policy out of both the parser and backend emitter.
-The newest symbolic parameter override slice uses
+A composition symbolic parameter override slice uses
 [perl/FSM/Composition/ParameterOverrideResolver.pm](perl/FSM/Composition/ParameterOverrideResolver.pm)
 as the post-import owner that resolves deferred child parameter/generic override
 values through composition-top and imported-package symbols before planning or

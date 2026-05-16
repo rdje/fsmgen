@@ -466,6 +466,7 @@ sub _collect_generated_child_transaction_refs($self, $actor) {
 sub _generated_child_transaction_refs {
     my ($actor) = @_;
     my %s;
+    my $constant_values = _actor_constant_value_map($actor);
     for my $tx (@{$actor->{transactions}}) {
         for my $c (@{$tx->{clauses}}) {
             next unless ref($c) eq 'ARRAY' && @$c;
@@ -474,7 +475,7 @@ sub _generated_child_transaction_refs {
                 $s{$c->[1]} = 1;
                 next;
             }
-            if ($c->[0] eq 'do' && @{_do_parameter_overrides($c, $tx->{name}, 'transaction body')}) {
+            if ($c->[0] eq 'do' && @{_do_parameter_overrides($c, $tx->{name}, 'transaction body', $constant_values)}) {
                 $s{$c->[1]} = 1;
             }
         }
@@ -485,7 +486,7 @@ sub _generated_child_transaction_refs {
             next unless ref($action) eq 'ARRAY' && @$action;
             next unless defined($action->[0]) && !ref($action->[0]) && $action->[0] eq 'trigger';
             $s{$action->[1]} = 1
-                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action')};
+                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values)};
         }
     }
     return %s;
@@ -495,6 +496,7 @@ sub _rule_trigger_generated_refs {
     my ($actor, $generated_children) = @_;
     my @refs;
     my %ordinals;
+    my $constant_values = _actor_constant_value_map($actor);
 
     for my $rule (@{$actor->{rules} || []}) {
         my $rule_name = $rule->{name};
@@ -515,7 +517,7 @@ sub _rule_trigger_generated_refs {
                 owner_kind          => 'rule',
                 trigger_ordinal     => $ordinal,
                 trigger_source      => _rule_trigger_source_name($rule_name, $target, $ordinal),
-                parameter_overrides => _trigger_parameter_overrides($action, $rule_name, 'rule action'),
+                parameter_overrides => _trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values),
                 port_bindings       => _activation_bindings_from_clause($action, $rule_name, 'rule trigger'),
             };
         }
@@ -1164,6 +1166,7 @@ sub _validate_child_transaction_refs($self, $actor) {
     my %generated_children;
     my %generated_instances;
     my @child_refs;
+    my $constant_values = _actor_constant_value_map($actor);
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
@@ -1187,7 +1190,7 @@ sub _validate_child_transaction_refs($self, $actor) {
                 $generated_children{$target} = 1;
             }
             $generated_children{$target} = 1
-                if $keyword eq 'do' && @{_do_parameter_overrides($clause, $tx_name, 'transaction body')};
+                if $keyword eq 'do' && @{_do_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values)};
 
             push @child_refs, {
                 tx      => $tx,
@@ -1212,7 +1215,7 @@ sub _validate_child_transaction_refs($self, $actor) {
             confess "Rule '$rule_name': trigger target '$target' is not a declared transaction\n"
                 unless $transactions{$target};
             $generated_children{$target} = 1
-                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action')};
+                if @{_trigger_parameter_overrides($action, $rule_name, 'rule action', $constant_values)};
         }
     }
 
@@ -1249,7 +1252,7 @@ sub _validate_child_transaction_refs($self, $actor) {
         my %declared_params = map {
             $_->{name} => $_
         } @{_transaction_param_declarations($transaction_by_name{$target})};
-        for my $override (@{_activation_parameter_overrides($clause, $tx_name, 'transaction body')}) {
+        for my $override (@{_activation_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values)}) {
             my $name = $override->{name};
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
                 unless exists $declared_params{$name};
@@ -1988,6 +1991,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my $wd  = $actor->{watchdog};
     my $drives = $actor->{drives} || {};
     $generated_children ||= {};
+    my $constant_values = _actor_constant_value_map($actor);
     _validate_supported_transaction_clauses($tx->{clauses}, $tn, 'transaction');
     my $widths = _build_signal_width_map($actor, $tx);
     my @st;
@@ -2091,12 +2095,12 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       {
-            my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children);
+            my $do_ref = _do_ref_from_clause($cl, $tn, $do_ordinal++, $generated_children, $constant_values);
             push @doc, $do_ref;
             push @spc, _clone_isf_value($do_ref) if $do_ref->{generated_child};
             push @st, _ir_do($cl, $tn, $si++, $do_ref);
         }
-        elsif ($k eq 'spawn')    { push @spc, _spawn_ref_from_clause($cl,$tn); push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
+        elsif ($k eq 'spawn')    { push @spc, _spawn_ref_from_clause($cl,$tn,$constant_values); push @dps, "$spc[-1]{instance}_done"; push @st, _ir_spawn($cl,$tn,$si++); }
         elsif ($k eq 'await_all') { push @st, _ir_sync_all($tn,$si++,\@dps); @dps = (); }
         elsif ($k eq 'await_any') { push @st, _ir_sync_any($tn,$si++,\@dps); @dps = (); }
     }
@@ -2434,7 +2438,7 @@ sub _validate_child_action_clause {
             confess "Transaction '$tn': do has duplicate '$head' subclause in $label\n"
                 if $seen_subclause{$head}++;
             if ($head eq 'params') {
-                _parse_activation_params_clause($subclause, $tn, 'do', $clause->[1], $label);
+                _validate_activation_params_clause_shape($subclause, $tn, 'do', $clause->[1], $label);
                 next;
             }
             if ($head eq 'domain') {
@@ -2475,7 +2479,7 @@ sub _validate_child_action_clause {
         confess "Transaction '$tn': spawn has duplicate '$head' subclause in $label\n"
             if $seen_subclause{$head}++;
         if ($head eq 'params') {
-            _parse_activation_params_clause($subclause, $tn, 'spawn', $clause->[3], $label);
+            _validate_activation_params_clause_shape($subclause, $tn, 'spawn', $clause->[3], $label);
             next;
         }
         if ($head eq 'domain') {
@@ -2518,7 +2522,7 @@ sub _validate_rule_trigger_action_clause {
         confess "Rule '$rule_name': trigger has duplicate '$head' subclause in $label\n"
             if $seen_subclause{$head}++;
         if ($head eq 'params') {
-            _parse_activation_params_clause($subclause, $rule_name, 'trigger', $target, $label);
+            _validate_activation_params_clause_shape($subclause, $rule_name, 'trigger', $target, $label);
             next;
         }
         if ($head eq 'bind') {
@@ -2585,12 +2589,12 @@ sub _transaction_param_declarations {
 }
 
 sub _spawn_ref_from_clause {
-    my ($clause, $tn) = @_;
+    my ($clause, $tn, $constant_values) = @_;
     my $instance = $clause->[3] // "${tn}_spawn";
     my $ref = {
         child => $clause->[1],
         instance => $instance,
-        parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body'),
+        parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body', $constant_values),
     };
     my $domain = _activation_domain_from_clause($clause, $tn, 'transaction body');
     $ref->{domain} = $domain if defined $domain;
@@ -2600,7 +2604,7 @@ sub _spawn_ref_from_clause {
 }
 
 sub _do_ref_from_clause {
-    my ($clause, $tn, $ordinal, $generated_children) = @_;
+    my ($clause, $tn, $ordinal, $generated_children, $constant_values) = @_;
     my $child = $clause->[1];
     my $generated_child = $generated_children && $generated_children->{$child} ? 1 : 0;
     my $ref = {
@@ -2609,7 +2613,7 @@ sub _do_ref_from_clause {
         generated_child => $generated_child,
     };
 
-    my $overrides = _do_parameter_overrides($clause, $tn, 'transaction body');
+    my $overrides = _do_parameter_overrides($clause, $tn, 'transaction body', $constant_values);
     if ($generated_child) {
         my $instance = _generated_do_instance_name($tn, $child, $ordinal);
         $ref->{instance} = $instance;
@@ -2624,22 +2628,22 @@ sub _do_ref_from_clause {
 }
 
 sub _spawn_parameter_overrides {
-    my ($clause, $tn, $label) = @_;
-    return _activation_parameter_overrides($clause, $tn, $label);
+    my ($clause, $tn, $label, $constant_values) = @_;
+    return _activation_parameter_overrides($clause, $tn, $label, $constant_values);
 }
 
 sub _do_parameter_overrides {
-    my ($clause, $tn, $label) = @_;
-    return _activation_parameter_overrides($clause, $tn, $label);
+    my ($clause, $tn, $label, $constant_values) = @_;
+    return _activation_parameter_overrides($clause, $tn, $label, $constant_values);
 }
 
 sub _trigger_parameter_overrides {
-    my ($clause, $rule_name, $label) = @_;
-    return _activation_parameter_overrides($clause, $rule_name, $label);
+    my ($clause, $rule_name, $label, $constant_values) = @_;
+    return _activation_parameter_overrides($clause, $rule_name, $label, $constant_values);
 }
 
 sub _activation_parameter_overrides {
-    my ($clause, $tn, $label) = @_;
+    my ($clause, $tn, $label, $constant_values) = @_;
     return [] unless ref($clause) eq 'ARRAY' && @$clause;
     my $keyword = $clause->[0];
     return [] unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do' || $keyword eq 'trigger');
@@ -2655,7 +2659,7 @@ sub _activation_parameter_overrides {
             && defined($subclause->[0])
             && !ref($subclause->[0])
             && $subclause->[0] eq 'params';
-        return _parse_activation_params_clause($subclause, $tn, $keyword, $instance, $label);
+        return _parse_activation_params_clause($subclause, $tn, $keyword, $instance, $label, $constant_values);
     }
     return [];
 }
@@ -2691,6 +2695,27 @@ sub _parse_spawn_params_clause {
 }
 
 sub _parse_activation_params_clause {
+    my ($params_clause, $tn, $activation_kind, $instance, $label, $constant_values) = @_;
+    _validate_activation_params_clause_shape($params_clause, $tn, $activation_kind, $instance, $label);
+
+    my @overrides;
+    for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
+        my ($name, $value) = @$entry;
+        my $resolved_value = _resolve_activation_param_value(
+            $value,
+            "Transaction '$tn': $activation_kind instance '$instance' parameter '$name'",
+            $constant_values,
+        );
+        push @overrides, {
+            name  => $name,
+            value => $resolved_value,
+        };
+    }
+
+    return \@overrides;
+}
+
+sub _validate_activation_params_clause_shape {
     my ($params_clause, $tn, $activation_kind, $instance, $label) = @_;
     confess "Transaction '$tn': $activation_kind params require '(params (NAME value) ...)' in $label\n"
         unless ref($params_clause) eq 'ARRAY'
@@ -2699,7 +2724,6 @@ sub _parse_activation_params_clause {
             && !ref($params_clause->[0])
             && $params_clause->[0] eq 'params';
 
-    my @overrides;
     my %seen;
     for my $entry (@{$params_clause}[1 .. $#$params_clause]) {
         confess "Transaction '$tn': $activation_kind params entries require '(NAME value)' in $label\n"
@@ -2709,17 +2733,11 @@ sub _parse_activation_params_clause {
             unless _is_hdl_identifier($name);
         confess "Transaction '$tn': $activation_kind instance '$instance' has duplicate parameter override '$name'\n"
             if $seen{$name}++;
-        _validate_isf_param_value(
-            $value,
-            "Transaction '$tn': $activation_kind instance '$instance' parameter '$name'",
-        );
-        push @overrides, {
-            name  => $name,
-            value => _clone_isf_value($value),
-        };
+        confess "Transaction '$tn': $activation_kind instance '$instance' parameter '$name' value must be defined in $label\n"
+            unless defined $value;
     }
 
-    return \@overrides;
+    return 1;
 }
 
 sub _generated_do_instance_name {
@@ -3043,6 +3061,31 @@ sub _validate_isf_param_value {
     return 1;
 }
 
+sub _resolve_activation_param_value {
+    my ($value, $context, $constant_values) = @_;
+    $constant_values ||= {};
+
+    if (!ref($value)) {
+        confess "$context uses undefined parameter value; activation parameter values accept numeric, exact-width, actor-constant, and aggregate/list literal values only\n"
+            unless defined($value);
+        return _clone_isf_value($value)
+            if _is_numeric_or_exact_width_literal($value);
+        return _clone_isf_value($constant_values->{$value})
+            if _is_hdl_identifier($value) && exists $constant_values->{$value};
+
+        confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, and aggregate/list literal values only\n";
+    }
+
+    confess "$context uses unsupported parameter value shape; activation parameter values accept non-empty aggregate/list literal values only\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    return [
+        map {
+            _resolve_activation_param_value($_, $context, $constant_values)
+        } @$value
+    ];
+}
+
 sub _is_numeric_or_exact_width_literal {
     my ($value) = @_;
     return 0 unless defined($value) && !ref($value);
@@ -3067,6 +3110,21 @@ sub _clone_isf_value {
     return [ map { _clone_isf_value($_) } @$value ] if ref($value) eq 'ARRAY';
     return { map { $_ => _clone_isf_value($value->{$_}) } keys %$value } if ref($value) eq 'HASH';
     return $value;
+}
+
+sub _actor_constant_value_map {
+    my ($actor) = @_;
+    my %values;
+    return \%values unless ref($actor) eq 'HASH';
+
+    for my $constant (@{$actor->{constants} || []}) {
+        next unless ref($constant) eq 'HASH';
+        my $name = $constant->{name};
+        next unless _is_hdl_identifier($name);
+        $values{$name} = _clone_isf_value($constant->{value});
+    }
+
+    return \%values;
 }
 
 sub _validate_repeat_clause {

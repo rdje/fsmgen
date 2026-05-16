@@ -136,15 +136,12 @@ transaction-local `params` clause, emits child defaults as scheduled child
 `+params`, validates duplicates/unknown overrides/value shapes, rejects
 parameter declarations on non-generated transactions, preserves per-instance
 override lists in the parent lowerer IR, and applies those overrides through
-the generated top. The first value domain is scalar/exact-width literals plus
-compatible aggregate/list literals. Actor-local constants are shipped for
-static wait counts, but symbolic parameter override values still need their
-own implementation before becoming valid parameter values. The selected first
-symbolic source is actor-local constants: a future implementation leaf will
-allow constant names as scalar override values, or scalar leaves inside
-aggregate/list override values, and will resolve them to literal values before
-generated-top emission. Actor parameters, transaction parameters, runtime
-signals, and arbitrary expressions remain outside that selected first slice.
+the generated top. The shipped value domain is scalar/exact-width literals,
+actor-local constants, and compatible aggregate/list literals whose scalar
+leaves are literals or actor-local constants. Constant names are resolved to
+literal values before generated-top emission. Actor parameters, transaction
+parameters, runtime signals, and arbitrary expressions remain outside the
+shipped value domain.
 
 ### General Transaction Activation Parameter Overrides
 

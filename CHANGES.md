@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF actor-constant parameter overrides shipped
+- Completed `ISF-PARAM-OVERRIDE-CONSTANTS.2`, closing the
+  `ISF-PARAM-OVERRIDE-CONSTANTS` task tree.
+- Generated activation parameter overrides for spawn, generated blocking `do`,
+  and rule-trigger sites now accept actor-local constants as scalar values or
+  as scalar leaves inside compatible aggregate/list values.
+- Actor constants resolve to literal values before generated-top emission, so
+  generated `?fsmc` params and schedule-report parameter bindings continue to
+  use existing self-contained value fields.
+- Runtime signals, actor/transaction parameters, unknown names, and arbitrary
+  expressions remain fail-closed.
+- Added [t/1249-isf-activation-parameter-constants.t](t/1249-isf-activation-parameter-constants.t)
+  and synchronized the ISF spec, mdBook, downstream handoff, public contract,
+  and tested-by metadata.
 ### R14 — ISF actor-constant parameter override contract selected
 - Completed `ISF-PARAM-OVERRIDE-CONSTANTS.1`.
 - Opened [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md)

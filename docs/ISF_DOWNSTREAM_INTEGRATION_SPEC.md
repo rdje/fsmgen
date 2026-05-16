@@ -434,7 +434,7 @@ Rules:
 - Use-site parameter overrides are instance-local. Missing overrides use actor
   defaults.
 - Unknown overrides, duplicate overrides, symbolic parameter values, and shape
-  mismatches fail closed.
+  mismatches fail closed for reusable-library `use` sites.
 - Every exported actor clock/reset/interface endpoint must be explicitly bound
   at the use site.
 - Binding direction and known width must match.
@@ -761,6 +761,10 @@ Rules:
 
 - Parameter overrides are static specialization values, not runtime payloads.
 - Runtime-varying values must use transaction ports and `(bind ...)`.
+- Activation parameter override values may be scalar/exact-width literals,
+  actor-local constants, or compatible aggregate/list literals whose scalar
+  leaves are literals or actor-local constants.
+- Actor constants resolve to literal values before generated-top emission.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
 - Parameterized rule triggers lower through generated child activation
@@ -768,8 +772,9 @@ Rules:
 - Rule-trigger parameterization preserves per-rule trigger pulse and input
   payload timing through generated handoff DTs.
 - Direct `(on ...)` activation has no parameter override source shape.
-- Unknown parameter names, duplicate overrides, unsupported symbolic values,
-  and incompatible aggregate/list shapes fail closed.
+- Unknown parameter names, duplicate overrides, unsupported non-constant
+  symbolic or expression values, and incompatible aggregate/list shapes fail
+  closed.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 

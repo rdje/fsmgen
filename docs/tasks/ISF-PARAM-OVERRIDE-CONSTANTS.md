@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-PARAM-OVERRIDE-CONSTANTS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
 - Last updated: `2026-05-16`
@@ -46,7 +46,7 @@ signals or requiring generated composition tops to resolve parent-local names.
 ## Task Tree
 
 - ID: `ISF-PARAM-OVERRIDE-CONSTANTS`
-  Status: `active`
+  Status: `done`
   Goal: `Track actor-local constants as activation parameter override values.`
   Children: `ISF-PARAM-OVERRIDE-CONSTANTS.1`,
   `ISF-PARAM-OVERRIDE-CONSTANTS.2`
@@ -59,17 +59,17 @@ signals or requiring generated composition tops to resolve parent-local names.
   Commit: `ISF-PARAM-OVERRIDE-CONSTANTS.1: specify const params`
 
 - ID: `ISF-PARAM-OVERRIDE-CONSTANTS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement actor-constant activation parameter overrides.`
   Acceptance: `Actor constants work as static activation parameter override values for spawn, generated blocking do, and rule-trigger sites; malformed or runtime-looking names fail closed; focused tests and synchronized docs pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1249-isf-activation-parameter-constants.t`; focused activation/composition/public-contract `prove` set; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-PARAM-OVERRIDE-CONSTANTS.2: ship const params`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-PARAM-OVERRIDE-CONSTANTS.2` | `pending` | The contract is selected; implementation is the next executable slice. |
+| 1 | `closed` | `done` | Actor constants are shipped for the selected activation parameter override value surface. |
 
 ## Decisions
 
@@ -94,6 +94,10 @@ signals or requiring generated composition tops to resolve parent-local names.
   needs to preserve symbolic provenance as a new public field, that leaf must
   update the public contract, downstream handoff, manifest metadata, and tests
   in the same slice.
+- `2026-05-16`: `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped the selected boundary
+  without new report keys. The lowerer resolves actor constants before
+  generated activation metadata is published, so generated tops and schedule
+  reports expose resolved literal values through the existing fields.
 
 ## Open Questions
 
@@ -108,17 +112,19 @@ signals or requiring generated composition tops to resolve parent-local names.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-16` | `ISF-PARAM-OVERRIDE-CONSTANTS.1` | `mdbook build docs/book`; `git diff --check` | `passed` |
-| `2026-05-16` | `ISF-PARAM-OVERRIDE-CONSTANTS.2` | `pending` | `pending` |
+| `2026-05-16` | `ISF-PARAM-OVERRIDE-CONSTANTS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1249-isf-activation-parameter-constants.t`; `prove -Iperl t/1215-isf-spawn-parameter-binding.t t/1217-isf-generated-composition-schedule-report.t t/1248-isf-rule-trigger-parameter-binding.t t/1249-isf-activation-parameter-constants.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-PARAM-OVERRIDE-CONSTANTS.1` | `ISF-PARAM-OVERRIDE-CONSTANTS.1: specify const params` | Selected actor-local constants as the first symbolic activation parameter value source. |
-| `ISF-PARAM-OVERRIDE-CONSTANTS.2` | `pending` | `pending` |
+| `ISF-PARAM-OVERRIDE-CONSTANTS.2` | `ISF-PARAM-OVERRIDE-CONSTANTS.2: ship const params` | Shipped actor constants as static activation parameter override values. |
 
 ## Changelog
 
 - `2026-05-16`: Created the task tree and completed
   `ISF-PARAM-OVERRIDE-CONSTANTS.1`; active frontier advances to
   `ISF-PARAM-OVERRIDE-CONSTANTS.2`.
+- `2026-05-16`: Completed `ISF-PARAM-OVERRIDE-CONSTANTS.2`; the task tree is
+  closed.
