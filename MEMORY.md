@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF shift-left explicit-width evidence shipped
+- Completed `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` and closed
+  [docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md](docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md).
+- `shift_left` now accepts optional `(width N)` as transaction-local
+  register-width evidence. The option can fill missing width evidence for
+  later width-sensitive operations and schedule-report storage metadata, but
+  it does not change the emitted `(| (<< REG 1) BIT)` expression.
+- Plain `(shift_left REG BIT)` remains accepted without width evidence.
+  Malformed width options and conflicts with already-known register widths
+  fail closed with targeted diagnostics.
+- Added
+  [t/1318-isf-shift-left-explicit-width.t](t/1318-isf-shift-left-explicit-width.t)
+  and updated shift-clause boundary, public tested-by metadata, CI tier,
+  spec test-index, and book matrix audit coverage.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook data
+  manipulation/lowering/feature/backlog chapters, data-width notes, roadmap
+  board, README task index, and task tree.
+- Validation: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` passed;
+  focused shift/data/public/book/spec audit tests passed with `Files=8,
+  Tests=110`; `./bin/ci-regression isf --no-book` passed with `Files=224,
+  Tests=984`; `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
 ## 2026-05-16: ISF stage/contract fixture promotion shipped
 - Completed `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md](docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md).

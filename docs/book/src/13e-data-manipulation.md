@@ -25,14 +25,17 @@ arbitrary dynamic divisors nonzero.
 
 **Lowering**: `(<- (var expr))` — sequential Q-named assignment.
 
-## `(shift_left reg bit)` — Shift Register (Left)
+## `(shift_left reg bit [(width N)])` — Shift Register (Left)
 
 ```lisp
 (shift_left rdata sda_in)
+(shift_left rdata sda_in (width 8))
 ```
 
 Shifts `reg` left by 1 and ORs in `bit` at LSB.
-The form is exact: `(shift_left reg bit)`, with scalar `reg` and scalar `bit`.
+The form is exact: `(shift_left reg bit)` or
+`(shift_left reg bit (width N))`, with scalar `reg`, scalar `bit`, and a
+positive integer width when the option is present.
 
 **Lowering**: `(<- (reg (| (<< reg 1) bit)))`, or `reg>` when `reg` is a
 declared output port.
@@ -49,6 +52,13 @@ supported binary operators through SystemVerilog generation, with `shl` and
 serial output, select the intended bit explicitly, for example
 `(drive mosi tx_byte[7])`; FSMGen does not silently truncate an 8-bit word into
 a 1-bit line.
+
+An explicit `(width N)` is transaction-local width evidence for `reg`, not a
+cast or resize. It may fill a missing width fact for later operations such as
+`shift_right` and for schedule-report storage metadata, but it must match any
+already-known width for the shifted register. Plain `(shift_left reg bit)`
+remains accepted without width evidence because the left-shift expression does
+not need a computed MSB insertion position.
 
 **Use case**: I2C/SIPO — capturing serial bits into a parallel register.
 
@@ -151,9 +161,10 @@ remainder fails closed.
 Before lowering a transaction, ISF builds one private width map from the whole
 actor and transaction shape. Interface declarations and actor-owned
 `(storage ...)` declarations seed that map, samples inherit known source
-widths, explicit `shift_right` and `extract` width options add local evidence,
-and `assemble` can infer its target width when all parts are known or infer
-one missing part width from a known target and known siblings. This is
+widths, explicit `shift_left`, `shift_right`, and `extract` width options add
+local evidence, and `assemble` can infer its target width when all parts are
+known or infer one missing part width from a known target and known siblings.
+This is
 type/shape evidence, not cycle-value evidence, so it is not
 source-order-sensitive inside the transaction.
 
@@ -178,9 +189,10 @@ Accepted migrated operation families do not emit `WIDTH`, `HIGH`, or `LOW`
 placeholders. `extract` fails when field positions cannot be proven after the
 single-missing-field inference rule.
 `shift_right` fails when the shifted register width is missing or
-contradictory. `assemble` rejects known target-width mismatches and
-non-positive single-part inferred remainders. `shift_left` does not need
-separate insertion-position width evidence.
+contradictory. `shift_left` accepts optional width evidence and rejects
+contradictory explicit widths while still accepting widthless shifts.
+`assemble` rejects known target-width mismatches and non-positive single-part
+inferred remainders.
 
 ## I2C Shift Register — Complete Example
 

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: shift_left width evidence is metadata, not resize semantics
+- `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` deliberately treats
+  `(shift_left REG BIT (width N))` as static register-width evidence only.
+  The scheduled assignment remains `(<- (REG (| (<< REG 1) BIT)))`; the
+  option is not a cast, truncation, extension, or timing change.
+- The lowerer now parses shift width options through one helper for
+  `shift_left` and `shift_right`, so malformed option shapes and duplicate or
+  non-positive widths get the same targeted diagnostics style on both
+  operations.
+- The width collection pass records explicit `shift_left` evidence before
+  lowering, which lets a later `shift_right` or schedule-report storage entry
+  consume the same static fact without making width evidence source-order
+  sensitive.
+- Widthless `shift_left` stays accepted because left insertion does not need a
+  computed MSB position. This keeps existing sources valid while giving
+  authors a precise way to publish width intent when a later operation needs
+  that fact.
 ## 2026-05-16: stage/contract fixture promotion stays inside shipped temporal surface
 - `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.1` adds
   `isf/stream_stage_contract.isf` as a bounded realism fixture for the already

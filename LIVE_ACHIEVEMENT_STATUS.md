@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF shift-left explicit-width evidence shipped
+- Completed R14 task-tree slice:
+  `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` in
+  [docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md](docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md).
+- The `ISF-SHIFT-LEFT-EXPLICIT-WIDTH` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create
+  a new task tree first.
+- `shift_left` now accepts optional `(width N)` as static register-width
+  evidence, rejects malformed or contradictory width assertions, and can feed
+  that evidence to later `shift_right` lowering plus schedule-report storage
+  width metadata.
+- Widthless `shift_left` remains accepted, and the emitted left-shift
+  scheduled `.fsm` expression remains unchanged.
+- Added
+  [t/1318-isf-shift-left-explicit-width.t](t/1318-isf-shift-left-explicit-width.t)
+  and updated boundary/public/CI/book/spec audit coverage.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, closed
+  data-width notes, roadmap board, README task index, and task tree.
+- Validation: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` passed;
+  focused shift/data/public/book/spec audit tests passed with `Files=8,
+  Tests=110`; `./bin/ci-regression isf --no-book` passed with `Files=224,
+  Tests=984`; `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF stage/contract fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.1` in

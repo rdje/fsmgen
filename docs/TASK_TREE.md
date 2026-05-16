@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-SHIFT-LEFT-EXPLICIT-WIDTH` | `done` | `R14` | `closed` | [docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md](docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md) |
 | `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md](docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md) |
 | `ISF-RULE-RESOURCE-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md](docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md) |
 | `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md](docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md) |
@@ -132,6 +133,7 @@ as done work unless a future task reopens them.
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |
 | Actor-level parameter default schedule-report metadata | `ISF-ACTOR-PARAM-REPORTS` |
 | Data-operation width inference for shift/extract/assemble families | `ISF-DATA-WIDTHS` |
+| Operation-local `shift_left` width evidence | `ISF-SHIFT-LEFT-EXPLICIT-WIDTH` |
 | Single-missing-field `extract` width inference | `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` |
 | Single-missing-part `assemble` width inference | `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE` |
 | Schedule-report storage classes and schedule JSON stabilization | `ISF-SCHEDULE-REPORTS` |

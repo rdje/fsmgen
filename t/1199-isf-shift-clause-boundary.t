@@ -41,18 +41,18 @@ subtest 'valid shift clauses lower to explicit shift expressions' => sub {
     (output done))
   (transaction main
     (on start)
-    (shift_left reg_out din)
+    (shift_left reg_out din (width 8))
     (shift_right reg_out din (width 8))
     (complete done)))
 ISF
 
     my $fsm = $result->{files}{'shift_boundary.fsm'};
-    like($fsm, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) din\)\)\)/, 'shift_left lowers with scalar register and bit');
+    like($fsm, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) din\)\)\)/, 'shift_left lowers with scalar register, bit, and optional width');
     like($fsm, qr/\(<- \(reg_out> \(\| \(>> reg_out 1\) \(<< din 7\)\)\)\)/, 'shift_right lowers with explicit width');
 };
 
 subtest 'malformed shift clauses fail before scheduled emission' => sub {
-    assert_lower_rejected(<<'ISF', 'missing shift_left bit', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'missing shift_left bit', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit \[\(width N\)\]\)' in transaction body/);
 (actor missing_shift_left_bit
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))
@@ -62,7 +62,7 @@ subtest 'malformed shift clauses fail before scheduled emission' => sub {
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'nested shift_left register', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'nested shift_left register', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit \[\(width N\)\]\)' in transaction body/);
 (actor nested_shift_left_register
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))
@@ -72,7 +72,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'extra shift_left operand', qr/\ATransaction 'main': shift_left requires '\(shift_left reg bit\)' in transaction body/);
+    assert_lower_rejected(<<'ISF', 'malformed shift_left width option', qr/\Ashift_left optional arguments must be '\(width N\)'/);
 (actor extra_shift_left_operand
   (clock clk)
   (interface (input start) (input din) (output reg_out) (output done))

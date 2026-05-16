@@ -1,6 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF shift-left explicit-width evidence shipped
+- Completed `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` and closed the task tree.
+- Added optional `(width N)` support to `shift_left` as assertion-style
+  transaction-local register-width evidence. The emitted scheduled `.fsm`
+  expression remains `(| (<< REG 1) BIT)`, and widthless `shift_left` remains
+  accepted.
+- Reused the shift width parser for both `shift_left` and `shift_right`,
+  collecting explicit shift width evidence before lowering and rejecting
+  malformed or contradictory `shift_left` width options with targeted
+  diagnostics.
+- Added `t/1318-isf-shift-left-explicit-width.t` for explicit-width evidence
+  feeding a later `shift_right`, schedule-report storage width/role metadata,
+  nested repeat-body dispatch, unchanged widthless lowering, conflict
+  rejection, and malformed option rejection.
+- Updated shift-clause boundary coverage, public `tested_by` metadata, CI
+  tier coverage, spec focused-test indexing, and book feature-matrix audit
+  coverage.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, the mdBook ISF chapters, the
+  closed data-width task notes, roadmap board, README task index, and task
+  tree.
+- Validation: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm` passed;
+  focused shift/data/public/book/spec audit tests passed with `Files=8,
+  Tests=110`; `./bin/ci-regression isf --no-book` passed with `Files=224,
+  Tests=984`; `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF stage/contract fixture promotion shipped
 - Completed `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.1` and closed the task
   tree.

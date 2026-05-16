@@ -65,6 +65,7 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($isf_block || '', qr/t\/1316-isf-rule-resource-fixture-coverage\.t/, 'ISF tier includes the rule/resource fixture coverage');
     unlike($quick_block || '', qr/t\/1317-isf-stage-contract-fixture-coverage\.t/, 'quick tier does not include the broader stage/contract fixture');
     like($isf_block || '', qr/t\/1317-isf-stage-contract-fixture-coverage\.t/, 'ISF tier includes the stage/contract fixture coverage');
+    like($isf_block || '', qr/t\/1318-isf-shift-left-explicit-width\.t/, 'ISF tier includes the shift-left explicit-width coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -97,6 +98,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($isf->{stdout}, qr/t\/1315-isf-generated-composition-fixture-coverage\.t/, 'ISF dry-run includes generated-composition fixture coverage');
     like($isf->{stdout}, qr/t\/1316-isf-rule-resource-fixture-coverage\.t/, 'ISF dry-run includes rule/resource fixture coverage');
     like($isf->{stdout}, qr/t\/1317-isf-stage-contract-fixture-coverage\.t/, 'ISF dry-run includes stage/contract fixture coverage');
+    like($isf->{stdout}, qr/t\/1318-isf-shift-left-explicit-width\.t/, 'ISF dry-run includes shift-left explicit-width coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');

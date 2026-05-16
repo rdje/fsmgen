@@ -480,6 +480,7 @@ sub build_isf_public_interface_contract {
             't/1315-isf-generated-composition-fixture-coverage.t',
             't/1316-isf-rule-resource-fixture-coverage.t',
             't/1317-isf-stage-contract-fixture-coverage.t',
+            't/1318-isf-shift-left-explicit-width.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

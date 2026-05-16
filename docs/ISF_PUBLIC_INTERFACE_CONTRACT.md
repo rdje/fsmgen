@@ -554,6 +554,11 @@ so explicit `(width N)` fills otherwise missing register-width evidence,
 known-width shifts do not need the option, conflicting explicit widths fail
 closed, and accepted `shift_right` source no longer emits placeholder `WIDTH`
 terms.
+The explicit-width `shift_left` data-operation path is checked by
+[t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
+so optional `(width N)` fills missing register-width evidence for later data
+operations and schedule-report storage metadata, conflicting explicit widths
+fail closed, and ordinary widthless `shift_left` source remains accepted.
 The explicit-width `extract` data-operation path is checked by
 [t/1174-isf-extract-explicit-widths.t](../t/1174-isf-extract-explicit-widths.t)
 so authors can avoid placeholder slice bounds when extract field widths are
@@ -713,8 +718,9 @@ expression payload, and nested expression payloads are formatted as `.fsm`
 expressions instead of Perl reference strings.
 The shift-clause boundary is checked by
 [t/1199-isf-shift-clause-boundary.t](../t/1199-isf-shift-clause-boundary.t)
-so `(shift_left reg bit)` and `(shift_right reg bit [(width N)])` require
-scalar register/bit operands before scheduled `.fsm` emission.
+so `(shift_left reg bit [(width N)])` and
+`(shift_right reg bit [(width N)])` require scalar register/bit operands
+before scheduled `.fsm` emission.
 The assemble-clause boundary is checked by
 [t/1200-isf-assemble-clause-boundary.t](../t/1200-isf-assemble-clause-boundary.t)
 so `(assemble part... as target)` requires one or more scalar parts and one

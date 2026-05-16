@@ -6,7 +6,7 @@
 - Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-14`
-- Last updated: `2026-05-14`
+- Last updated: `2026-05-16`
 - Owner: repo-local workflow
 
 ## Goal
@@ -120,7 +120,9 @@ Current implementation points:
   [t/1101-isf-extract-slices.t](../../t/1101-isf-extract-slices.t),
   [t/1111-isf-sample-before-data-ops.t](../../t/1111-isf-sample-before-data-ops.t),
   [t/1173-isf-shift-right-explicit-width.t](../../t/1173-isf-shift-right-explicit-width.t),
-  and [t/1174-isf-extract-explicit-widths.t](../../t/1174-isf-extract-explicit-widths.t).
+  [t/1174-isf-extract-explicit-widths.t](../../t/1174-isf-extract-explicit-widths.t),
+  and
+  [t/1318-isf-shift-left-explicit-width.t](../../t/1318-isf-shift-left-explicit-width.t).
 
 Width evidence currently collected before transaction lowering:
 
@@ -132,17 +134,18 @@ Width evidence currently collected before transaction lowering:
 - `(sample source as alias)` adds `alias` width only when `source` already has
   known width evidence. Sample collection recurses through top-level and
   nested transaction bodies.
-- `shift_right` explicit `(width N)` adds the shifted register width only when
-  that register does not already have width evidence. The lowering builder
-  still uses the explicit width option directly for that `shift_right`
-  expression when it is present.
+- `shift_left` and `shift_right` explicit `(width N)` options add the shifted
+  register width only when that register does not already have width
+  evidence. The lowerer rejects disagreement with an already-known register
+  width. `shift_right` uses the width to compute the inserted MSB position;
+  `shift_left` uses it only as register-width evidence for later operations
+  and report metadata.
 - `extract` explicit `(widths N...)` adds destination-field widths only when a
   field does not already have width evidence. The lowering builder separately
   rejects explicit widths that conflict with known field widths.
 - `assemble` adds the target width as the sum of all part widths when every
-  part has known width evidence. Today this assignment overwrites any existing
-  target width evidence and does not diagnose disagreement with a declared
-  target width.
+  part has known width evidence and the target does not already have width
+  evidence. If the target width is already known, the part sum must match it.
 - The collectors walk the whole transaction clause tree before lowering, so
   width evidence is not source-order-sensitive inside a transaction. A later
   `assemble` can provide width evidence used by an earlier `extract` of the
@@ -151,38 +154,41 @@ Width evidence currently collected before transaction lowering:
 
 Current generated `.fsm` shapes:
 
-- `shift_left` lowers to `(<- (reg (| (<< reg 1) bit)))`. It has no explicit
-  width option and does not need a width to choose an insertion position.
+- `shift_left` lowers to `(<- (reg (| (<< reg 1) bit)))`. It accepts an
+  optional `(width N)` width-evidence assertion, but that option does not
+  change the emitted expression and no width is required for ordinary
+  `(shift_left reg bit)`.
 - `shift_right` lowers to
   `(<- (reg (| (>> reg 1) (<< bit insert))))`. `insert` is:
   explicit `width - 1` when `(width N)` is present, otherwise known
-  `width(reg) - 1`, otherwise the placeholder expression `(- WIDTH 1)`.
+  `width(reg) - 1`. Missing width evidence fails closed instead of emitting a
+  placeholder.
 - `assemble` lowers to `(<- (target (concat part...)))`. The scheduled
   expression carries no explicit width in the `.fsm` text; any width evidence
   is only in the scheduler's private map for neighboring operations.
 - `extract` lowers to one sequential extraction state using `<=` assignments.
   If the source word width is known, slicing starts at `width(word) - 1`.
   If the source word width is unknown but every field width is known, slicing
-  starts at `sum(field_widths) - 1`. Otherwise each unknown field and every
-  later field whose position can no longer be proven keeps placeholder slice
-  bounds like `(slice packet header HIGH header LOW)`.
+  starts at `sum(field_widths) - 1`. Unknown field positions now fail closed
+  instead of emitting placeholder slice bounds.
 
 Current fallback and underconstrained behavior:
 
-- Unknown-width `shift_right` remains accepted and emits the `WIDTH`
-  placeholder expression.
-- Unknown-width `extract` remains accepted and emits placeholder `HIGH`/`LOW`
-  slice bounds for unproven field positions.
+- Unknown-width `shift_right` fails closed unless an explicit `(width N)`
+  option or earlier evidence supplies the register width.
+- Unknown-width `extract` fails closed when source and destination widths
+  cannot prove exact field positions.
+- `shift_left` malformed or conflicting explicit width options fail closed.
+  Plain widthless `shift_left` remains accepted because it does not compute an
+  insertion position from width evidence.
 - `extract` validates malformed `(widths ...)` options, count mismatches, and
   conflicts between explicit field widths and already-known field widths.
-- `extract` does not currently validate that the sum of field widths equals a
-  known source word width. If the sum is smaller, lower bits of the word can be
-  ignored; if the sum is larger, later computed lows can become negative.
-- `shift_right` does not currently reject an explicit `(width N)` that
-  disagrees with an already-known register width, because the explicit option
-  is used locally by the lowering expression.
-- `assemble` does not currently reject a concat part-total width that
-  disagrees with an already-known or declared target width.
+- `extract` validates that the sum of field widths equals a known source word
+  width when both sides are known.
+- `shift_right` rejects an explicit `(width N)` that disagrees with an
+  already-known register width.
+- `assemble` rejects a concat part-total width that disagrees with an
+  already-known or declared target width.
 
 Historical schedule-report storage effects before `ISF-DATA-WIDTHS.5`:
 
@@ -254,9 +260,9 @@ Operation-specific policy:
   If target width is already known, the part sum must match it. Unknown part
   widths may remain deferred if the emitted concat can still be reviewed, but
   they cannot be used as evidence for neighboring operations.
-- `shift_left` needs no insertion-position width today. It participates mainly
-  by consuming and preserving the register width facts used by other
-  operations.
+- `shift_left` accepts optional `(width N)` as register-width evidence using
+  the same assertion policy as `shift_right`. It still needs no
+  insertion-position width, so plain widthless `shift_left` remains accepted.
 
 Deferred policy details:
 
@@ -310,6 +316,15 @@ Shipped behavior:
   to choose an insertion position and keeps using the existing shifted
   expression shape.
 
+Post-closure synchronization:
+
+- `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` later aligned `shift_left` with the
+  operation-local explicit-width assertion surface. `(shift_left REG BIT
+  (width N))` can now fill missing register-width evidence, rejects malformed
+  or contradictory width assertions, feeds later width-sensitive operations
+  and schedule-report storage metadata, and leaves ordinary widthless
+  `shift_left` lowering unchanged.
+
 Deferred to later leaves or backlog:
 
 - Richer storage classes beyond `counter` and `register` remain outside this
@@ -354,6 +369,9 @@ Deferred to later leaves or backlog:
 - `2026-05-14`: `inferred_storage.width` is now public for register storage
   only when ISF has a positive known width fact. The report still keeps
   storage kind bounded to `counter` and `register`.
+- `2026-05-16`: `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` added the post-closure
+  `shift_left` explicit-width evidence surface while preserving ordinary
+  widthless `shift_left` lowering and timing semantics.
 
 ## Open Questions
 
@@ -373,6 +391,7 @@ Deferred to later leaves or backlog:
 | `2026-05-14` | `ISF-DATA-WIDTHS.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1101-isf-extract-slices.t t/1111-isf-sample-before-data-ops.t t/1174-isf-extract-explicit-widths.t t/1201-isf-extract-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1173-isf-shift-right-explicit-width.t t/1200-isf-assemble-clause-boundary.t t/1099-isf-repeat-data-ops.t t/1199-isf-shift-clause-boundary.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-14` | `ISF-DATA-WIDTHS.5` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -l t/1106-isf-schedule-json-counter-storage.t t/1148-isf-public-storage-metadata-audit.t t/1226-isf-data-width-storage-report.t t/1116-isf-public-schedule-report-key-family-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -l t/1318-isf-shift-left-explicit-width.t t/1199-isf-shift-clause-boundary.t t/1173-isf-shift-right-explicit-width.t t/1226-isf-data-width-storage-report.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed`; post-closure shift-left explicit-width synchronization |
 
 ## Commit Log
 
@@ -384,6 +403,7 @@ Deferred to later leaves or backlog:
 | `ISF-DATA-WIDTHS.3` | `ISF-DATA-WIDTHS.3: enforce exact extract widths` | First migrated data-operation family. |
 | `ISF-DATA-WIDTHS.4` | `ISF-DATA-WIDTHS.4: align shift and assemble widths` | Remaining covered data-operation families aligned to the width policy. |
 | `ISF-DATA-WIDTHS.5` | `ISF-DATA-WIDTHS.5: report data storage widths` | Public schedule-report width metadata for known ordinary register storage. |
+| `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` | `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1: add shift_left width evidence` | Post-closure alignment so `shift_left` can publish optional register-width evidence without requiring it. |
 
 ## Changelog
 
@@ -403,3 +423,7 @@ Deferred to later leaves or backlog:
 - `2026-05-14`: Added schedule-report width metadata for register storage with
   known ISF width evidence, synchronized the public contract/book/spec/live
   docs, and closed the tree.
+- `2026-05-16`: Synchronized this closed tree with
+  `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1`: `shift_left` now accepts optional
+  `(width N)` as assertion-style register-width evidence while keeping
+  ordinary widthless lowering unchanged.

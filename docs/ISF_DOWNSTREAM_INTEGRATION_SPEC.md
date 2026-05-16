@@ -611,6 +611,7 @@ Transaction clauses currently supported:
 (store bank index value)
 (load bank index as target)
 (shift_left reg bit)
+(shift_left reg bit (width N))
 (shift_right reg bit)
 (shift_right reg bit (width N))
 (assemble part... as target)
@@ -803,6 +804,7 @@ Supported forms:
 (set target expr)
 (update target expr)
 (shift_left reg bit)
+(shift_left reg bit (width N))
 (shift_right reg bit)
 (shift_right reg bit (width N))
 (assemble part... as target)
@@ -816,6 +818,9 @@ Rules:
 - `update` is the older transaction-local assignment spelling.
 - Shift/extract/assemble forms use known width evidence and fail closed on
   contradictory or missing width evidence where exact lowering requires it.
+  `shift_left` accepts optional `(width N)` as width evidence for the shifted
+  register, but plain `shift_left` remains accepted without width evidence
+  because left insertion does not require a computed MSB position.
 - `assemble` can infer exactly one missing part width from a known target
   width and known sibling part widths. Two or more unknown parts still lower
   only as non-evidence concat operands; non-positive inferred remainders fail

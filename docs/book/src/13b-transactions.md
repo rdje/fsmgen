@@ -494,7 +494,8 @@ behavior. Division and modulo inside the RHS reject literal-zero divisor
 operands before scheduled `.fsm` emission. Dynamic scalar divisors lower
 unchanged; full runtime nonzero proof is still backlog.
 Shift operations are also exact scalar forms:
-`(shift_left reg bit)` and `(shift_right reg bit [(width N)])`.
+`(shift_left reg bit [(width N)])` and
+`(shift_right reg bit [(width N)])`.
 
 **What happens**:
 1. `(<- (var expr))` — variable modified, takes effect next cycle (flopped)
@@ -541,5 +542,5 @@ bounds use scheduler defaults.
 | `(when cond body...)` | 1 + body | Decision + inline body |
 | `(switch sig (v b)... (default b))` | 1 + body | Decision + inline branch |
 | `(set/update var expr)` | 1 | Flopped assignment |
-| `(shift_left reg bit)` | 1 | Flopped assignment |
+| `(shift_left reg bit [(width N)])` | 1 | Flopped assignment |
 | `(latency (min N) (max M))` | 0 | Verification logic only |

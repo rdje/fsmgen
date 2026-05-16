@@ -866,19 +866,21 @@ Status: backlog.
 Goal: infer widths for data operations in more cases without requiring
 explicit width options, and keep accepted lowering free of width placeholders.
 
-Current boundary: `shift_right` accepts `(width N)` and `extract` accepts
-`(widths N...)` as explicit assertions. `extract` also infers exactly one
-missing destination field width when the source word width and all sibling
-field widths prove one positive remainder; two or more unknown fields remain
-backlog. `extract` fails closed instead of emitting placeholder slice bounds
-when field positions cannot be proven, the inferred remainder is not positive,
-or field totals conflict with known source width. `shift_right` now fails
-closed when width evidence is missing or conflicts with an explicit option.
-`assemble` infers exactly one missing part width when the target width and all
-sibling part widths prove one positive remainder; two or more unknown parts
-remain backlog for inference and are accepted only as non-evidence concat
-operands. `assemble` also rejects known target-width mismatches and
-non-positive single-part inferred remainders.
+Current boundary: `shift_left` and `shift_right` accept `(width N)` and
+`extract` accepts `(widths N...)` as explicit assertions. `shift_left` uses
+the optional width only as register-width evidence; plain widthless
+`shift_left` remains accepted because no insertion-position width is needed.
+`extract` also infers exactly one missing destination field width when the
+source word width and all sibling field widths prove one positive remainder;
+two or more unknown fields remain backlog. `extract` fails closed instead of
+emitting placeholder slice bounds when field positions cannot be proven, the
+inferred remainder is not positive, or field totals conflict with known source
+width. `shift_right` now fails closed when width evidence is missing or
+conflicts with an explicit option. `assemble` infers exactly one missing part
+width when the target width and all sibling part widths prove one positive
+remainder; two or more unknown parts remain backlog for inference and are
+accepted only as non-evidence concat operands. `assemble` also rejects known
+target-width mismatches and non-positive single-part inferred remainders.
 Schedule reports now expose positive integer `width` metadata for inferred
 scheduler counters and register storage with known ISF width evidence.
 

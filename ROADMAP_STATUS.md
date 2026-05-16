@@ -10,14 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION` is closed after
-  adding and promoting `isf/stream_stage_contract.isf` to file-backed
-  scheduled `.fsm`, strict schedule JSON, plain HDL, and strict HDL coverage
-  for the shipped top-level ready/valid stage plus bounded eventual contract
-  subset. The spec, downstream handoff, public contract, mdBook, fixture
-  matrix, public metadata, and tests are synchronized. The next R14 PNT
-  implementation slice must select or create a new task tree before code
-  changes.
+- Next decision point: `ISF-SHIFT-LEFT-EXPLICIT-WIDTH` is closed after
+  adding optional `(width N)` evidence to `shift_left`. The shipped behavior
+  keeps widthless `shift_left` accepted and leaves the emitted left-shift
+  expression unchanged while letting explicit width evidence feed later
+  width-sensitive operations and schedule-report storage metadata. The spec,
+  downstream handoff, public contract, mdBook, data-width notes, public
+  metadata, and tests are synchronized. The next R14 PNT implementation slice
+  must select or create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -1255,6 +1255,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and register storage with known ISF width evidence. The public contract,
   spec, mdBook, task tree, and focused storage-width regressions are
   synchronized. The active PNT frontier moves to `ISF-SCHEDULE-REPORTS.1`.
+- `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` is complete and the tree is closed.
+  `shift_left` now accepts optional `(width N)` as register-width evidence,
+  rejects malformed or contradictory width assertions, can supply that width
+  to later `shift_right` and report metadata, and still accepts ordinary
+  widthless `shift_left` without changing its emitted expression.
 - `ISF-SCHEDULE-REPORTS.1` is complete. The task tree now inventories the
   current bounded schedule-report contract: top-level keys, nested key
   families, storage metadata, feature-owned report branches, scalar/count
@@ -5688,6 +5693,12 @@ Done:
   [t/1173-isf-shift-right-explicit-width.t](t/1173-isf-shift-right-explicit-width.t),
   covering concrete inserted-MSB lowering for `(width N)` and malformed width
   rejection.
+- `shift_left` explicit width syntax is now regression-backed by
+  [t/1318-isf-shift-left-explicit-width.t](t/1318-isf-shift-left-explicit-width.t),
+  covering optional `(width N)` as register-width evidence, later
+  `shift_right` consumption of that evidence, schedule-report storage width
+  metadata, malformed width rejection, conflict rejection, and unchanged
+  widthless `shift_left` lowering.
 - Blocking `do` child-completion handoff timing is now regression-backed by
   [t/1177-isf-do-child-done-pulse.t](t/1177-isf-do-child-done-pulse.t),
   covering `<1` internal `child_done` pulses through scheduled `.fsm` parsing
@@ -5852,7 +5863,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION`, so the next ISF
+  after `ISF-SHIFT-LEFT-EXPLICIT-WIDTH`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

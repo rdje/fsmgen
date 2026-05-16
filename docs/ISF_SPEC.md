@@ -1788,6 +1788,7 @@ The `condition` value is the normalized condition text used in the scheduled
 (set var expr)
 (update var expr)
 (shift_left reg bit)
+(shift_left reg bit (width N))
 (shift_right reg bit)
 (shift_right reg bit (width N))
 (assemble header payload crc as packet)
@@ -1802,8 +1803,14 @@ Current lowering:
   state to `var`.
 - `update` remains supported as the older transaction-local spelling for the
   same flopped transaction update behavior.
-- `shift_left` is structurally validated as `(shift_left reg bit)` with scalar
-  `reg` and scalar `bit`, then emits a left shift plus inserted bit.
+- `shift_left` is structurally validated as
+  `(shift_left reg bit [(width N)])` with scalar `reg` and scalar `bit`, then
+  emits a left shift plus inserted bit. The optional `(width N)` is width
+  evidence for the shifted register. It may fill missing transaction-local
+  width evidence for later data operations and report metadata, but it must
+  match any already-known width for the same register. Plain
+  `(shift_left reg bit)` remains accepted without width evidence because the
+  emitted left-shift expression does not need an insertion-position width.
 - `shift_right` is structurally validated as
   `(shift_right reg bit [(width N)])` with scalar `reg` and scalar `bit`, then
   emits a right shift plus inserted bit. When the shifted signal has a known
@@ -1847,15 +1854,16 @@ as `tx_byte[7]` rather than relying on implicit truncation from an 8-bit word.
 
 Width evidence is transaction-local and private to lowering today. Interface
 declarations seed it, sampled aliases inherit known source widths, explicit
-`shift_right` and `extract` options add local evidence, and `assemble` can
-infer target width from known parts. The evidence is collected from the whole
-transaction clause tree before scheduled state emission, so it is not
-source-order-sensitive. Schedule reports expose positive integer `width`
-metadata for inferred scheduler counters and for register storage whose ISF
-width evidence is known. They also expose optional `role` metadata when the
-lowerer has stable scheduler evidence for the storage purpose, such as
-sampled aliases, extracted fields, ordinary data registers, completion pulses,
-watchdog/latency/repeat counters, and named-drive request/payload storage.
+`shift_left`, `shift_right`, and `extract` options add local evidence, and
+`assemble` can infer target width from known parts. The evidence is collected
+from the whole transaction clause tree before scheduled state emission, so it
+is not source-order-sensitive. Schedule reports expose positive integer
+`width` metadata for inferred scheduler counters and for register storage
+whose ISF width evidence is known. They also expose optional `role` metadata
+when the lowerer has stable scheduler evidence for the storage purpose, such
+as sampled aliases, extracted fields, ordinary data registers, completion
+pulses, watchdog/latency/repeat counters, and named-drive request/payload
+storage.
 
 Planned width-evidence precedence for this tree is: actor interface
 declaration, operation-local explicit option, sampled-alias propagation,
@@ -1873,11 +1881,13 @@ fails when field widths are still ambiguous, explicit field widths conflict
 with known facts, the inferred remainder is not positive, or the sum of field
 widths disagrees with a known source word width. `shift_right` uses a concrete
 insert position from known or explicit width evidence and fails when width
-evidence is missing or contradictory. `assemble` derives a target width only
-from fully known part widths, can infer exactly one missing part width from a
-known target and known siblings, and rejects known target-width mismatches or
-non-positive inferred remainders. `shift_left` does not need separate width
-evidence for its insertion position.
+evidence is missing or contradictory. `shift_left` accepts the same optional
+`(width N)` evidence shape, rejects contradictory explicit widths, and keeps
+plain widthless shifting accepted because no insertion-position width is
+needed. `assemble` derives a target width only from fully known part widths,
+can infer exactly one missing part width from a known target and known
+siblings, and rejects known target-width mismatches or non-positive inferred
+remainders.
 
 ## 8. Composition Between Transactions
 
@@ -3014,6 +3024,7 @@ Focused tests:
 - [t/1315-isf-generated-composition-fixture-coverage.t](../t/1315-isf-generated-composition-fixture-coverage.t)
 - [t/1316-isf-rule-resource-fixture-coverage.t](../t/1316-isf-rule-resource-fixture-coverage.t)
 - [t/1317-isf-stage-contract-fixture-coverage.t](../t/1317-isf-stage-contract-fixture-coverage.t)
+- [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
 
 ## 12. Explicitly Deferred
 

@@ -902,7 +902,7 @@ the switch; that authored branch owns the fallback path and suppresses the
 scheduler's implicit fallthrough branch.
 **Implicit signals**: None.
 
-## `(update var expr)` / `(shift_left reg bit)` / `(shift_right reg bit [(width N)])` → Sequential State
+## `(update var expr)` / `(shift_left reg bit [(width N)])` / `(shift_right reg bit [(width N)])` → Sequential State
 
 **ISF**:
 ```lisp
@@ -926,6 +926,10 @@ an explicit `(width N)` option supplies that width when the register is not
 declared elsewhere. The option is an assertion and must agree with any known
 register width. Unknown widths fail closed instead of emitting the placeholder
 `WIDTH` expression.
+For `shift_left`, the same optional `(width N)` option supplies register-width
+evidence for later data operations and report metadata. It does not change the
+emitted left-shift expression, and plain `shift_left` remains accepted without
+width evidence.
 
 ## `(assemble fields... as var)` / `(extract word as fields... [(widths N...)])` → Sequential State
 

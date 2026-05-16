@@ -1983,12 +1983,13 @@ sub _collect_shift_widths {
     my ($node, $widths) = @_;
     return unless ref($node) eq 'ARRAY';
 
-    if (@$node >= 4 && $node->[0] eq 'shift_right') {
-        my $explicit_width = _parse_shift_right_width($node);
+    if (@$node >= 4 && ($node->[0] eq 'shift_left' || $node->[0] eq 'shift_right')) {
+        my $keyword = $node->[0];
+        my $explicit_width = _parse_shift_width($node, $keyword);
         my $target = $node->[1];
         if (defined($explicit_width) && defined($target) && !ref($target)) {
             my $known_width = $widths->{$target};
-            confess "shift_right explicit width $explicit_width conflicts with known width $known_width for '$target'\n"
+            confess "$keyword explicit width $explicit_width conflicts with known width $known_width for '$target'\n"
                 if defined($known_width) && $known_width > 0 && $known_width != $explicit_width;
             $widths->{$target} = $explicit_width unless defined($known_width) && $known_width > 0;
         }
@@ -2201,16 +2202,25 @@ sub _resolve_extract_field_widths {
 }
 
 sub _parse_shift_right_width {
-    my ($cl) = @_;
+    return _parse_shift_width($_[0], 'shift_right');
+}
+
+sub _parse_shift_left_width {
+    return _parse_shift_width($_[0], 'shift_left');
+}
+
+sub _parse_shift_width {
+    my ($cl, $keyword) = @_;
+    $keyword //= $cl->[0];
     my $width;
 
     for my $idx (3 .. $#$cl) {
         my $option = $cl->[$idx];
-        confess "shift_right optional arguments must be '(width N)'\n"
+        confess "$keyword optional arguments must be '(width N)'\n"
             unless ref($option) eq 'ARRAY' && @$option == 2 && $option->[0] eq 'width';
-        confess "shift_right accepts at most one '(width N)' option\n"
+        confess "$keyword accepts at most one '(width N)' option\n"
             if defined $width;
-        confess "shift_right width must be a positive integer\n"
+        confess "$keyword width must be a positive integer\n"
             if ref($option->[1]) || $option->[1] !~ /\A[1-9][0-9]*\z/;
         $width = 0 + $option->[1];
     }
@@ -2346,7 +2356,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             push @dt, $cdt;
             push @contracts, $cm;
         }
-        elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++); }
+        elsif ($k eq 'shift_left')  { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_left($cl,$tn,$si++,$widths); }
         elsif ($k eq 'shift_right') { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_shift_right($cl,$tn,$si++,$widths); }
         elsif ($k eq 'assemble')    { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_assemble($cl,$tn,$si++); }
         elsif ($k eq 'extract')     { _push_sample_state(\@st,$tn,\@ps,\$si); push @st, _ir_extract($cl,$tn,$si++,$widths); }
@@ -2539,12 +2549,12 @@ sub _validate_shift_clause {
     my ($clause, $tn, $label) = @_;
     my $keyword = $clause->[0];
     my $shape = $keyword eq 'shift_left'
-        ? '(shift_left reg bit)'
+        ? '(shift_left reg bit [(width N)])'
         : '(shift_right reg bit [(width N)])';
 
     confess "Transaction '$tn': $keyword requires '$shape' in $label\n"
         unless @$clause >= 3
-            && @$clause <= ($keyword eq 'shift_right' ? 4 : 3)
+            && @$clause <= 4
             && defined($clause->[1])
             && !ref($clause->[1])
             && length($clause->[1])
@@ -3910,7 +3920,7 @@ sub _ir_when_activation {
         transitions => [],
     };
 }
-sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths) : _ir_update($cl,$tn,$i,$op) }
+sub _ir_data_op  { my ($op,$cl,$tn,$i,$widths)=@_; $op eq'shift_left' ? _ir_shift_left($cl,$tn,$i,$widths) : $op eq'shift_right' ? _ir_shift_right($cl,$tn,$i,$widths) : $op eq'assemble' ? _ir_assemble($cl,$tn,$i) : $op eq'extract' ? _ir_extract($cl,$tn,$i,$widths) : _ir_update($cl,$tn,$i,$op) }
 sub _ir_named_drive_call {
     my ($cl, $tn, $i, $def, $pending_samples) = @_;
     my $name = $cl->[1];
@@ -4160,7 +4170,27 @@ sub _ir_bank_access {
         )
     ]);
 }
-sub _ir_shift_left { my ($cl,$tn,$i)=@_; my$reg=$cl->[1];my$bit=$cl->[2]; {name=>"${tn}_shift_$i",kind=>'sequential',assignments=>[{lhs=>$reg,rhs=>"(| (<< $reg 1) $bit)",op=>'<-',source_kind=>'shift'}],transitions=>[]} }
+sub _ir_shift_left {
+    my ($cl, $tn, $i, $widths) = @_;
+    $widths ||= {};
+    my $reg = $cl->[1];
+    my $bit = $cl->[2];
+    my $explicit_width = _parse_shift_left_width($cl);
+    my $known_width = $widths->{$reg};
+
+    confess "shift_left explicit width $explicit_width conflicts with known width $known_width for '$reg'\n"
+        if defined($explicit_width)
+            && defined($known_width)
+            && $known_width > 0
+            && $explicit_width != $known_width;
+
+    return {
+        name        => "${tn}_shift_$i",
+        kind        => 'sequential',
+        assignments => [{ lhs => $reg, rhs => "(| (<< $reg 1) $bit)", op => '<-', source_kind => 'shift' }],
+        transitions => [],
+    };
+}
 sub _ir_shift_right {
     my ($cl, $tn, $i, $widths) = @_;
     my $reg = $cl->[1];
