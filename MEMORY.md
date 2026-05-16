@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF repeat-body documentation truth synchronized
+- Completed `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` and closed
+  [docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md).
+- The mdBook, ISF spec, downstream handoff, and public contract doc now state
+  the shipped repeat-body clause surface: named drive calls, `await`, `sample`,
+  `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
+  actor-owned bank `store`/`load`, and shipped `wait` clauses.
+- Added
+  [t/1304-isf-repeat-body-doc-truth-audit.t](t/1304-isf-repeat-body-doc-truth-audit.t)
+  so the docs cannot silently lose the shipped `set`/`store`/`load`/`wait`
+  repeat-body entries again.
+- No parser, scheduler, emitter, schedule-report, generated `.fsm`, or HDL
+  behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF public live book paths advertised
 - Completed `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` and closed
   [docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md](docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md).

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF repeat-body documentation truth synchronized
+- Completed `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` and closed the task tree.
+- Updated the mdBook, ISF spec, downstream handoff, and public contract doc so
+  repeat bodies list the currently shipped clause surface, including `set`,
+  actor-owned bank `store`/`load`, and shipped `wait` clauses.
+- Added `t/1304-isf-repeat-body-doc-truth-audit.t` and updated the ISF spec
+  focused-test index.
+- Parser, scheduler, emitter, schedule-report, generated `.fsm`, and HDL
+  behavior are unchanged.
 ### R14 — ISF public live book paths advertised
 - Completed `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` and closed the task tree.
 - `embedding.isf_public_interface.live_document_paths` now includes every

@@ -379,6 +379,12 @@ use their known interface or sample-derived width, and unknown forms fall back
 to 8 bits. Repeats nested in switch branches declare the same transaction
 counter, widened to the largest branch requirement.
 
+The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
+`update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
+actor-owned bank `store` and `load`, and shipped `wait` clauses. `do`,
+`spawn`, `await_all`, `await_any`, `stage`, `contract`, nested `while`, and
+nested `until` remain outside the shipped repeat-body subset.
+
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is
 known. Dynamic counts make latency data-dependent rather than statically fixed;
@@ -414,10 +420,10 @@ run according to their own scheduled control flow until they reach the loop
 check or an explicit terminal path.
 
 The shipped body surface is the same inline transaction subset used by
-`when`/`switch`/`repeat`, plus `(wait N)`: named drives, `await`, `sample`,
-`complete`, `repeat`, `update`, shift/assemble/extract data operations,
-actor-owned bank `store`/`load`, nested `when`, and waits. `do`, `spawn`,
-`await_all`, `await_any`, `stage`, `contract`, and nested loops remain
+`when`/`switch` plus the shipped repeat-body subset: named drives, `await`,
+`sample`, `complete`, `repeat`, `update`, `set`, shift/assemble/extract data
+operations, actor-owned bank `store`/`load`, nested `when`, and waits. `do`,
+`spawn`, `await_all`, `await_any`, `stage`, `contract`, and nested loops remain
 deferred until their re-entry, child-lifetime, and report semantics are
 specified for loop bodies. Body clauses must be non-empty list forms.
 

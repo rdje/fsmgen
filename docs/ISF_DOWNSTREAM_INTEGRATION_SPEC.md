@@ -767,6 +767,11 @@ Rules:
 
 - `when`, `repeat`, `switch`, `while`, and `until` bodies accept the supported
   transaction-body subset implemented for those contexts.
+- The shipped repeat-body clause surface is named drive calls, `await`,
+  `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
+  `extract`, actor-owned bank `store` and `load`, and shipped `wait` clauses.
+  `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, nested
+  `while`, and nested `until` remain outside the shipped repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as
   `shared.mode.BUSY` as scalar operands. Local or package enum members may

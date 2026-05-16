@@ -666,6 +666,11 @@ The repeat-clause boundary is checked by
 [t/1202-isf-repeat-clause-boundary.t](../t/1202-isf-repeat-clause-boundary.t)
 so `(repeat count body...)` requires one scalar non-empty count and at least
 one list-form body clause before repeat counter emission.
+The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
+`update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
+actor-owned bank `store` and `load`, and shipped `wait` clauses. `do`,
+`spawn`, `await_all`, `await_any`, `stage`, `contract`, nested `while`, and
+nested `until` remain outside the shipped repeat-body subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent

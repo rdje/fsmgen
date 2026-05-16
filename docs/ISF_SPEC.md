@@ -1487,8 +1487,11 @@ Current lowering:
   interface/sample width; unknown count forms fall back to `8`.
 - Top-level repeats and switch-nested repeats register the shared transaction
   counter at the widest required width.
-- Repeat bodies lower named drive calls plus `await`, `sample`, `update`,
-  `shift_left`, `shift_right`, `assemble`, and `extract`.
+- The shipped repeat-body clause surface is named drive calls, `await`,
+  `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
+  `extract`, actor-owned bank `store` and `load`, and shipped `wait` clauses.
+  `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, nested
+  `while`, and nested `until` remain outside the shipped repeat-body subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
@@ -2906,6 +2909,7 @@ Focused tests:
 - [t/1301-isf-enum-member-rule-standalone-guard-values.t](../t/1301-isf-enum-member-rule-standalone-guard-values.t)
 - [t/1302-isf-aggregate-rule-standalone-guard-values.t](../t/1302-isf-aggregate-rule-standalone-guard-values.t)
 - [t/1303-isf-public-live-book-paths-audit.t](../t/1303-isf-public-live-book-paths-audit.t)
+- [t/1304-isf-repeat-body-doc-truth-audit.t](../t/1304-isf-repeat-body-doc-truth-audit.t)
 
 ## 12. Explicitly Deferred
 

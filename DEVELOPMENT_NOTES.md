@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: repeat-body docs must track the shipped inline subset
+- `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` fixes stale repeat-body prose that still
+  described the older drive/await/sample/update/data-op subset.
+- The shipped lowerer already accepts transaction `set`, actor-owned bank
+  `store`/`load`, and shipped `wait` clauses in repeat bodies. The slice keeps
+  child activation, await-sync, stage, contract, and nested loop forms
+  explicitly deferred for repeat bodies.
+- The focused audit checks the book, ISF spec, downstream handoff, and public
+  contract doc for the same shipped/deferred repeat-body marker so future
+  docs cannot quietly omit shipped entries.
 ## 2026-05-16: ISF book discovery is public contract metadata
 - `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` treats the ISF mdBook chapter set as a
   discoverable live-document surface in `embedding.isf_public_interface`,

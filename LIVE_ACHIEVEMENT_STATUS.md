@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF repeat-body documentation truth synchronized
+- Completed R14 task-tree slice:
+  `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` in
+  [docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md).
+- The `ISF-REPEAT-BODY-DOC-TRUTH-SYNC` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create a
+  new task tree first.
+- The book/spec/handoff/public-contract docs now list the shipped repeat-body
+  subset, including `set`, actor-owned bank `store`/`load`, and shipped `wait`
+  clauses, while keeping child activation, await-sync, stage, contract, and
+  nested loop forms deferred.
+- Added
+  [t/1304-isf-repeat-body-doc-truth-audit.t](t/1304-isf-repeat-body-doc-truth-audit.t)
+  to prevent repeat-body doc drift.
+- No parser, scheduler, report, generated `.fsm`, or HDL behavior changed.
+
 ## 2026-05-16: R14 — ISF public live book paths advertised
 - Completed R14 task-tree slice:
   `ISF-LIVE-BOOK-DOCUMENT-PATHS.1` in

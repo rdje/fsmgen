@@ -10,10 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-LIVE-BOOK-DOCUMENT-PATHS` is closed after
-  advertising the complete ISF mdBook chapter set through public
-  `live_document_paths`. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
+- Next decision point: `ISF-REPEAT-BODY-DOC-TRUTH-SYNC` is closed after
+  synchronizing repeat-body shipped-subset docs with the current lowerer. The
+  next R14 PNT implementation slice must select or create a new task tree
+  before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -234,6 +234,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   map, and added `t/1303-isf-public-live-book-paths-audit.t` to prevent
   future summary/manifest drift without changing syntax, lowering, generated
   `.fsm`, schedule JSON payloads, or HDL output.
+  `ISF-REPEAT-BODY-DOC-TRUTH-SYNC.1` then corrected stale repeat-body
+  documentation so the mdBook, ISF spec, downstream handoff, and public
+  contract doc all list shipped repeat-body `set`, bank `store`/`load`, and
+  `wait` clauses, added
+  `t/1304-isf-repeat-body-doc-truth-audit.t`, and changed no parser,
+  scheduler, report, generated `.fsm`, or HDL behavior.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated

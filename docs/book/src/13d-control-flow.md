@@ -51,8 +51,9 @@ condition and at least one list-form body clause before branch expansion.
 
 The body tail exits to the same next top-level state, including when the
 `when` appears inside a switch branch. Current body support includes drive,
-await, sample, complete, nested `when`, repeat bodies, and the shipped
-data-operation family (`update`, shifts, `assemble`, and `extract`).
+await, sample, complete, nested `when`, repeat bodies, actor-owned bank
+`store`/`load`, shipped `wait` clauses, and the shipped data-operation family
+(`update`, `set`, shifts, `assemble`, and `extract`).
 
 ## `(switch signal (value body...)...)` — Multi-Way Dispatch
 
@@ -127,9 +128,13 @@ fallthrough target in the generated `.fsm`.
 
 The shipped nested-control subset is explicit. A `switch` branch may contain a
 `when` body, a `when` body may contain another `when`, and `repeat` bodies are
-supported inside top-level `when` and `switch` bodies. Unsupported nested forms
-now fail closed during lowering instead of disappearing from scheduled `.fsm`
-output.
+supported inside top-level `when` and `switch` bodies. The shipped repeat-body
+clause surface is named drive calls, `await`, `sample`, `update`, `set`,
+`shift_left`, `shift_right`, `assemble`, `extract`, actor-owned bank `store`
+and `load`, and shipped `wait` clauses. `do`, `spawn`, `await_all`,
+`await_any`, `stage`, `contract`, nested `while`, and nested `until` remain
+outside the shipped repeat-body subset. Unsupported nested forms now fail
+closed during lowering instead of disappearing from scheduled `.fsm` output.
 
 ```lisp
 (switch opcode
