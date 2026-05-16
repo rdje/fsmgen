@@ -660,10 +660,11 @@ pending/age/fail storage, clears on actor reset, and sets a sticky fail bit if
 the signal is not seen within the window or if the same contract is armed
 again while pending.
 
-Remaining backlog: optional verification-only SystemVerilog assertion text
-from the sticky fail bit, global `always` implication forms, min/max windows,
-dynamic bounds, same-cycle checks, nested contracts, expression operands, and
-multiple outstanding obligations.
+SystemVerilog generation now projects the sticky fail bit into a
+verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays
+assertion-free. Remaining backlog: global `always` implication forms, min/max
+windows, dynamic bounds, same-cycle checks, nested contracts, expression
+operands, and multiple outstanding obligations.
 
 ### Legacy Handshake Semantics
 

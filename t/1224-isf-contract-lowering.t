@@ -5,6 +5,7 @@ use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
+use IPC::Cmd qw(run);
 use JSON::PP ();
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
@@ -110,6 +111,55 @@ ISF
         'within-1 contract expires on the first checked cycle',
     );
     unlike($fsm, qr/main_contract_1_age \(\+ main_contract_1_age 1\)/, 'within-1 contract has no age increment path');
+};
+
+subtest 'SystemVerilog generation projects sticky fail bit as verification assertion' => sub {
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $isf_path = File::Spec->catfile($tempdir, 'contract_assertion_projection.isf');
+    my $sv_path = File::Spec->catfile($tempdir, 'contract_assertion_projection.sv');
+    my $v_path = File::Spec->catfile($tempdir, 'contract_assertion_projection.v');
+    write_file($isf_path, <<'ISF');
+(actor contract_assertion_projection
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack (within 3)))
+    (complete done)))
+ISF
+
+    my ($sv_success, $sv_error, $sv_full, $sv_stdout, $sv_stderr) = run(
+        command => [
+            './bin/fsmgen', '--quiet', '--language', 'systemverilog',
+            '--output', $sv_path, $isf_path,
+        ],
+    );
+    ok($sv_success, 'SystemVerilog generation succeeds for a bounded eventual contract');
+    is(join('', @{$sv_stderr || []}), '', 'SystemVerilog generation keeps stderr clean');
+
+    my $sv = read_file($sv_path);
+    like(
+        $sv,
+        qr/`ifndef SYNTHESIS\s+always_ff @\(posedge clk\) begin\s+if \(rst_n\) begin\s+assert \(!main_contract_1_fail\) else \$error\("temporal contract failed: main\.ack_seen"\);\s+end\s+end\s+`endif/s,
+        'SystemVerilog HDL checks the sticky fail bit under synthesis guard and reset release',
+    );
+
+    my ($v_success, $v_error, $v_full, $v_stdout, $v_stderr) = run(
+        command => [
+            './bin/fsmgen', '--quiet', '--language', 'verilog',
+            '--output', $v_path, $isf_path,
+        ],
+    );
+    ok($v_success, 'Verilog generation succeeds for the same bounded eventual contract');
+    is(join('', @{$v_stderr || []}), '', 'Verilog generation keeps stderr clean');
+
+    my $verilog = read_file($v_path);
+    unlike($verilog, qr/temporal contract failed/, 'Verilog output omits temporal assertion message text');
+    unlike($verilog, qr/\bassert\s*\(/, 'Verilog output omits SystemVerilog assertion syntax');
 };
 
 subtest 'contract monitor storage is reported without exposing arm as storage' => sub {
@@ -225,4 +275,12 @@ sub write_file {
     open my $fh, '>', $path or die "Cannot open $path for write: $!";
     print {$fh} $content or die "Cannot write $path: $!";
     close $fh or die "Cannot close $path: $!";
+}
+
+sub read_file {
+    my ($path) = @_;
+    open my $fh, '<', $path or die "Cannot open $path for read: $!";
+    my $content = do { local $/; <$fh> };
+    close $fh or die "Cannot close $path: $!";
+    return $content;
 }

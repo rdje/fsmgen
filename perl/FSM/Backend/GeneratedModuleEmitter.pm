@@ -202,6 +202,49 @@ sub selector_conflict_assertion_runtime_lines ($class, %args) {
     );
 }
 
+sub temporal_contract_assertion_runtime_lines ($class, %args) {
+    my $target_language = $args{target_language} // 'systemverilog';
+    my $schedule_report = $args{schedule_report};
+
+    return () unless $target_language =~ /^(?:systemverilog|sv)$/;
+    return () unless ref($schedule_report) eq 'HASH';
+
+    my $clock = $schedule_report->{clock};
+    return () unless defined($clock) && !ref($clock) && length($clock);
+
+    my @assertion_lines;
+    for my $contract (@{$schedule_report->{temporal_contracts} || []}) {
+        next unless ref($contract) eq 'HASH';
+        my $fail_signal = $contract->{fail_signal};
+        next unless defined($fail_signal) && !ref($fail_signal) && length($fail_signal);
+
+        my $transaction = _sv_message_fragment($contract->{transaction} // 'unknown_transaction');
+        my $name = _sv_message_fragment($contract->{name} // 'unknown_contract');
+        push @assertion_lines,
+            qq{assert (!$fail_signal) else \$error("temporal contract failed: $transaction.$name");};
+    }
+
+    return () unless @assertion_lines;
+
+    my $reset_guard = _temporal_contract_assertion_reset_guard($schedule_report->{reset});
+    my @body_lines;
+    if (defined($reset_guard) && length($reset_guard)) {
+        push @body_lines, "    if ($reset_guard) begin";
+        push @body_lines, map { "      $_" } @assertion_lines;
+        push @body_lines, "    end";
+    } else {
+        push @body_lines, map { "    $_" } @assertion_lines;
+    }
+
+    return (
+        "  `ifndef SYNTHESIS",
+        "  always_ff @(posedge $clock) begin",
+        @body_lines,
+        "  end",
+        "  `endif",
+    );
+}
+
 sub augment_with_standalone_dt_assertions ($class, %args) {
     my $hdl_code = $args{hdl_code};
     my $module_info = $args{module_info};
@@ -211,6 +254,26 @@ sub augment_with_standalone_dt_assertions ($class, %args) {
 
     my @assertion_lines = $class->standalone_dt_assertion_runtime_lines(
         module_info => $module_info,
+        target_language => $target_language,
+    );
+    return $hdl_code unless @assertion_lines;
+
+    my $assertion_block = join("\n", '', @assertion_lines);
+    if ($hdl_code =~ s/\nendmodule\s*\z/\n$assertion_block\nendmodule/s) {
+        return $hdl_code;
+    }
+
+    return $hdl_code . "\n$assertion_block\n";
+}
+
+sub augment_with_temporal_contract_assertions ($class, %args) {
+    my $hdl_code = $args{hdl_code};
+    my $target_language = $args{target_language} // 'systemverilog';
+
+    return $hdl_code unless defined($hdl_code) && length($hdl_code);
+
+    my @assertion_lines = $class->temporal_contract_assertion_runtime_lines(
+        schedule_report => $args{schedule_report},
         target_language => $target_language,
     );
     return $hdl_code unless @assertion_lines;
@@ -251,6 +314,10 @@ sub augment_with_runtime_assertions ($class, %args) {
         %args,
         hdl_code => $hdl_code,
     );
+    $hdl_code = $class->augment_with_temporal_contract_assertions(
+        %args,
+        hdl_code => $hdl_code,
+    );
     return $class->augment_with_standalone_dt_assertions(
         %args,
         hdl_code => $hdl_code,
@@ -269,6 +336,17 @@ sub _sv_message_fragment ($value) {
     $value =~ s/\\/\\\\/g;
     $value =~ s/"/\\"/g;
     return $value;
+}
+
+sub _temporal_contract_assertion_reset_guard ($reset) {
+    return undef unless ref($reset) eq 'HASH';
+    my $name = $reset->{name};
+    return undef unless defined($name) && !ref($name) && length($name);
+
+    my $polarity = $reset->{polarity} // '';
+    return $name if $polarity eq 'active_low';
+    return "!$name" if $polarity eq 'active_high';
+    return undef;
 }
 
 1;
@@ -303,10 +381,20 @@ module when the current backend target supports those assertions.
 Builds the post-lowering mux-selector assertion block lines for one generated
 module when the current backend target supports those assertions.
 
+=head2 temporal_contract_assertion_runtime_lines
+
+Builds verification-only SystemVerilog assertion block lines for ISF temporal
+contract summaries when the current backend target supports those assertions.
+
 =head2 augment_with_standalone_dt_assertions
 
 Injects the standalone-DT assertion block into emitted generated HDL when the
 lowered module metadata exposes grouped multi-drive targets.
+
+=head2 augment_with_temporal_contract_assertions
+
+Injects the generated ISF temporal-contract assertion block into emitted HDL
+when a schedule report exposes bounded temporal-contract summaries.
 
 =head2 augment_with_selector_conflict_assertions
 

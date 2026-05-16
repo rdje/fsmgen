@@ -1523,7 +1523,7 @@ sub isf_public_interface_schedule_report_temporal_contract_overlap_policy_values
 sub isf_public_interface_schedule_report_temporal_contract_assertion_projection_values {
     return [
         qw(
-            none
+            systemverilog_sticky_fail
         ),
     ];
 }

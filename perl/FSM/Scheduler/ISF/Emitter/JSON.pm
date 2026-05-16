@@ -503,7 +503,7 @@ sub _temporal_contract_summary($self, $ir) {
             fail_signal          => $contract->{fail_signal},
             overlap_policy       => $contract->{overlap_policy},
             reset_policy         => $self->_reset_summary($ir->{reset}),
-            assertion_projection => 'none',
+            assertion_projection => 'systemverilog_sticky_fail',
         };
     }
 

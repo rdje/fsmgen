@@ -56,6 +56,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `ISF-ACTOR-PHASE-STAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md](docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md) |
 | `ISF-ACTOR-PARAM-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-PARAM-REPORTS.md](docs/tasks/ISF-ACTOR-PARAM-REPORTS.md) |
 | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md) |
+| `ISF-TEMPORAL-CONTRACT-ASSERTIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md) |
 | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md](docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md) |
 | `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md) |
 | `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md) |
@@ -103,6 +104,7 @@ as done work unless a future task reopens them.
 | Expression-valued rule assignments and rule action widening | `ISF-RULE-ACTIONS` |
 | Transaction stage lowering and temporal contract lowering | `ISF-STAGES-CONTRACTS` |
 | Temporal-contract monitor storage schedule-report roles | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` |
+| Temporal-contract SystemVerilog assertion projection | `ISF-TEMPORAL-CONTRACT-ASSERTIONS` |
 | Actor-level phase/stage schedule-report metadata | `ISF-ACTOR-PHASE-STAGE-REPORTS` |
 | Actor-level parameter default schedule-report metadata | `ISF-ACTOR-PARAM-REPORTS` |
 | Data-operation width inference for shift/extract/assemble families | `ISF-DATA-WIDTHS` |

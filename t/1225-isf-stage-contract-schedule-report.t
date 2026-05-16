@@ -80,7 +80,7 @@ subtest 'stage and temporal contract summaries expose bounded public metadata' =
                 kind     => 'async',
                 polarity => 'active_low',
             },
-            assertion_projection => 'none',
+            assertion_projection => 'systemverilog_sticky_fail',
         },
         'contract summary exposes bounded check metadata and reset policy',
     );

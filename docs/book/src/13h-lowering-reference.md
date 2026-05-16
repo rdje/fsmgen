@@ -1269,9 +1269,10 @@ counter. Those storage entries carry the `temporal_contract_monitor` storage
 role, while bounded `temporal_contracts` entries expose the public trigger
 state, observed signal, cycle bound, generated pending/counter/fail signal
 names, reset policy, overlap policy, and assertion projection status.
-Generated SystemVerilog assertion text from the fail bit remains deferred;
-the current assertion projection status is `none`. Unsupported bodies and
-nested contracts fail closed. Global
+Generated SystemVerilog now projects the fail bit into a verification-only
+assertion under `` `ifndef SYNTHESIS``; the current assertion projection status
+is `systemverilog_sticky_fail`. Verilog output remains assertion-free.
+Unsupported bodies and nested contracts fail closed. Global
 `always` implication forms, min/max windows, dynamic bounds, same-cycle
 windows, expression operands, and multiple outstanding obligations remain
 deferred.

@@ -320,9 +320,9 @@ Reset and HDL check policy:
 - Actor reset disables the monitor and clears pending, age, and fail storage.
   The reset polarity and sync/async behavior follow the actor's existing reset
   lowering.
-- Generated SystemVerilog may add a verification-only assertion under
+- Generated SystemVerilog now adds a verification-only assertion under
   `` `ifndef SYNTHESIS`` that checks the sticky fail bit remains zero. Verilog
-  emission may keep only the generated monitor storage without an assertion.
+  emission keeps only the generated monitor storage without an assertion.
 - The scheduled `.fsm` monitor remains the source of truth. Backend assertions
   are a projection of that monitor, not an alternate SVA-only lowering path.
 
@@ -407,7 +407,8 @@ Shipped behavior:
 Deferred to later leaves or backlog:
 
 - Verification-only SystemVerilog assertion text from the sticky fail bit is
-  deferred until the report/check-artifact surface is explicit.
+  shipped by `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1`; Verilog output remains
+  assertion-free.
 - Global implication forms, min/max windows, same-cycle checks, dynamic
   bounds, expression operands, nested contracts, and multiple outstanding
   obligation queues remain backlog until their runtime and diagnostic
@@ -427,7 +428,7 @@ Shipped report behavior:
   contract subset: authored transaction and contract names, `kind =
   bounded_eventually`, generated trigger state, observed signal, cycle bound,
   pending/counter/fail signal names, `overlap_policy = fail`, actor reset
-  policy, and `assertion_projection = none`.
+  policy, and `assertion_projection = systemverilog_sticky_fail`.
 - Raw monitor equations, internal arm request names, and backend assertion
   text are deliberately not part of the public contract summary. The scheduled
   `.fsm` monitor remains the reviewable source of truth.

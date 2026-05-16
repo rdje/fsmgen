@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: temporal contract assertions observe the monitor
+- `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1` deliberately projects the generated
+  sticky fail bit instead of re-expressing temporal semantics directly as SVA.
+  That keeps the scheduled `.fsm` monitor as the only source of truth and makes
+  the assertion a verification-only observer.
+- The projection is SystemVerilog-only and guarded by `` `ifndef SYNTHESIS``.
+  Verilog output stays assertion-free, matching the existing selector
+  assertion policy.
+- Schedule JSON advertises the projection with
+  `assertion_projection = systemverilog_sticky_fail`, but it still does not
+  serialize raw monitor equations or backend assertion text.
 ## 2026-05-16: feature-backlog status is regression-audited
 - `ISF-FEATURE-BACKLOG-STATUS-SYNC.1` fixes book status drift from recently
   closed R14 trees without changing compiler behavior. The book now separates

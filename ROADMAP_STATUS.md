@@ -99,6 +99,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   schedule JSON schema freeze, reusable libraries, and multi-clock/CDC
   semantics, adding `t/1256-feature-backlog-status-audit.t` to prevent the
   same truth drift from returning.
+  `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1` then projected shipped bounded
+  eventual contract sticky fail bits into SystemVerilog-only verification
+  assertions under `` `ifndef SYNTHESIS`` and advertised
+  `temporal_contracts[].assertion_projection = systemverilog_sticky_fail`
+  while keeping Verilog output assertion-free.
   The next PNT selection should choose a fresh roadmap-aligned R14 task tree
   before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
@@ -274,6 +279,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-FEATURE-BACKLOG-STATUS-SYNC.1` corrected stale mdBook feature-backlog
   status labels and added a focused audit without changing parser, scheduler,
   report, public contract, generated `.fsm`, or HDL behavior.
+  `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1` emitted SystemVerilog-only
+  verification assertions from bounded temporal-contract sticky fail bits and
+  updated schedule-report assertion-projection metadata while leaving Verilog
+  assertion-free.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

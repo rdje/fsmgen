@@ -841,7 +841,10 @@ Temporal contract:
 ```
 
 Current shipped temporal contract kind is `bounded_eventually`. Reports expose
-contract monitor metadata. Assertion projection is currently `none`.
+contract monitor metadata. Assertion projection is currently
+`systemverilog_sticky_fail`: SystemVerilog HDL generation emits a
+verification-only assertion from the generated sticky fail bit under
+`` `ifndef SYNTHESIS``. Verilog output remains assertion-free.
 
 Latency:
 
@@ -1116,7 +1119,7 @@ transaction_waits.count_kind: static, runtime_scalar, runtime_expression
 transaction_stages.kind: ready_valid_barrier
 temporal_contracts.kind: bounded_eventually
 temporal_contracts.overlap_policy: fail
-temporal_contracts.assertion_projection: none
+temporal_contracts.assertion_projection: systemverilog_sticky_fail
 bank_accesses.kind: store, load
 bank_accesses.same_cycle_policy: read_before_write
 transaction_port_bindings.site_kind: do, spawn, rule_trigger

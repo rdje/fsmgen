@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF temporal contract assertions projected
+- Completed `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1`, closing the
+  `ISF-TEMPORAL-CONTRACT-ASSERTIONS` task tree.
+- Added SystemVerilog-only verification assertion projection from bounded
+  eventual contract sticky fail bits under `` `ifndef SYNTHESIS``.
+- Updated schedule JSON `temporal_contracts[].assertion_projection` and the
+  public contract value family to `systemverilog_sticky_fail`.
+- Verilog output remains assertion-free, and schedule JSON still omits raw
+  monitor equations and backend assertion text.
 ### R14 — ISF feature-backlog status labels synchronized
 - Completed `ISF-FEATURE-BACKLOG-STATUS-SYNC.1`, closing the
   `ISF-FEATURE-BACKLOG-STATUS-SYNC` task tree.

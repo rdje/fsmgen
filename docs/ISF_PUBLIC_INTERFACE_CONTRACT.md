@@ -1317,12 +1317,15 @@ output. The machine-readable contract advertises these through
 
 For each `temporal_contracts` entry, `kind` is currently
 `bounded_eventually`, `overlap_policy` is currently `fail`, and
-`assertion_projection` is currently `none`. The entry reports the generated
-trigger state, observed signal, positive cycle bound, generated pending,
-counter, and fail signal names, and reset policy. `reset_policy` uses the same
-bounded shape as the top-level reset summary when reset is configured and is
-null when the actor omits reset. The machine-readable contract advertises
-these through `schedule_report_temporal_contract_keys`,
+`assertion_projection` is currently `systemverilog_sticky_fail`. The entry
+reports the generated trigger state, observed signal, positive cycle bound,
+generated pending, counter, and fail signal names, and reset policy.
+`reset_policy` uses the same bounded shape as the top-level reset summary when
+reset is configured and is null when the actor omits reset. For
+SystemVerilog-family generation, FSMGen projects the generated sticky fail bit
+into a verification-only assertion under `` `ifndef SYNTHESIS``; Verilog
+output remains assertion-free. The machine-readable contract advertises these
+through `schedule_report_temporal_contract_keys`,
 `schedule_report_temporal_contract_kind_values`,
 `schedule_report_temporal_contract_overlap_policy_values`,
 `schedule_report_temporal_contract_assertion_projection_values`, and

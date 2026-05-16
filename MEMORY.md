@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF temporal contract assertions projected to SystemVerilog
+- Completed `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1` in
+  [docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md),
+  closing the temporal contract assertion-projection tree.
+- SystemVerilog generation for shipped bounded eventual contracts now emits a
+  verification-only sticky-fail assertion under `` `ifndef SYNTHESIS``.
+  Verilog output remains assertion-free.
+- Schedule JSON `temporal_contracts[].assertion_projection` now reports
+  `systemverilog_sticky_fail`, and the public contract value family advertises
+  that value.
+- The scheduled `.fsm` monitor remains the source of truth. Raw monitor
+  equations and backend assertion text are not serialized into schedule JSON.
 ## 2026-05-16: ISF feature-backlog status labels synchronized
 - Completed `ISF-FEATURE-BACKLOG-STATUS-SYNC.1` in
   [docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md](docs/tasks/ISF-FEATURE-BACKLOG-STATUS-SYNC.md),

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF temporal contract assertions projected
+- Completed R14 task-tree slice:
+  `ISF-TEMPORAL-CONTRACT-ASSERTIONS.1`, closing
+  [docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md).
+- SystemVerilog generation for bounded eventual contracts now emits a
+  verification-only assertion from the generated sticky fail bit under
+  `` `ifndef SYNTHESIS``.
+- Schedule JSON reports
+  `temporal_contracts[].assertion_projection = systemverilog_sticky_fail`,
+  and the public contract value family advertises that status.
+- Verilog output remains assertion-free, and schedule reports continue to omit
+  raw monitor equations and backend assertion text.
+
 ## 2026-05-16: R14 — ISF feature-backlog status labels synchronized
 - Completed R14 task-tree slice:
   `ISF-FEATURE-BACKLOG-STATUS-SYNC.1`, closing

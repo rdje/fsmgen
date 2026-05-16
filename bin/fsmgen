@@ -13,6 +13,7 @@ use File::Spec;
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
 # Load required modules
+use FSM::Backend::GeneratedModuleEmitter;
 use FSM::Composition::FailureReportBuilder;
 use FSM::Composition::ProvenanceReportBuilder;
 use FSM::Debug;  # Global debug system
@@ -201,6 +202,7 @@ my $json_output = 0;
 my $emit_semantic_json = 0;
 my $emit_schedule_json = 0;
 my $verify_hdl = 0;
+my $isf_schedule_report;
 
 # Store original ARGV to check for bare flags before GetOptions processes them
 my $has_bare_debug_flag = grep { /^--?d(ebug)?$/ } @ARGV;
@@ -547,6 +549,10 @@ if ($fsm_file =~ /\.isf$/i) {
     if ($@) {
         die normalize_cli_error_text($@);
     }
+    $isf_schedule_report = eval { JSON::PP->new->decode($scheduler->report($actor)); };
+    if ($@) {
+        die normalize_cli_error_text($@);
+    }
 
     my $files = $result->{files};
     my $entry_basename = exists $files->{"$actor->{actor_name}_top.fsm"}
@@ -726,6 +732,14 @@ if ($@) {
 
     print STDERR $display_error;
     exit 1;
+}
+
+if ($isf_schedule_report) {
+    $result->{hdl_code} = FSM::Backend::GeneratedModuleEmitter->augment_with_temporal_contract_assertions(
+        hdl_code => $result->{hdl_code},
+        schedule_report => $isf_schedule_report,
+        target_language => $target_language,
+    );
 }
 
 if ($emit_semantic_json) {

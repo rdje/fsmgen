@@ -2070,11 +2070,14 @@ Schedule reports also expose shipped contracts through `temporal_contracts`
 entries containing the authored transaction and contract names, `kind =
 bounded_eventually`, trigger state, observed signal, cycle bound, pending,
 counter, and fail signal names, overlap policy, reset policy, and assertion
-projection status. Raw monitor equations and backend assertion text are not
-schedule-report payloads. SystemVerilog assertion text under `` `ifndef
-SYNTHESIS`` remains deferred; the scheduled monitor is already the source of
-truth. Historical/free-form contract bodies, global `always` implication
-forms, min/max windows, dynamic bounds, same-cycle checks, nested contracts,
+projection status. The current assertion projection is
+`systemverilog_sticky_fail`: SystemVerilog generation emits a
+verification-only assertion under `` `ifndef SYNTHESIS`` that checks the
+generated sticky fail bit remains clear outside reset, while Verilog output
+stays assertion-free. Raw monitor equations and backend assertion text are not
+schedule-report payloads; the scheduled monitor remains the source of truth.
+Historical/free-form contract bodies, global `always` implication forms,
+min/max windows, dynamic bounds, same-cycle checks, nested contracts,
 expression operands, and multiple outstanding obligations remain
 fail-closed/deferred.
 
@@ -2259,8 +2262,10 @@ subset. Each entry has `transaction`, authored contract `name`, `kind =
 bounded_eventually`, `trigger`, observed `signal`, `within_cycles`,
 `pending_signal`, `counter_signal`, `fail_signal`, `overlap_policy`,
 `reset_policy`, and `assertion_projection`. The current `overlap_policy` is
-`fail`, and the current assertion projection value is `none`; monitor logic
-exists in scheduled `.fsm`, but no backend assertion text is emitted yet. The
+`fail`, and the current assertion projection value is
+`systemverilog_sticky_fail`; monitor logic exists in scheduled `.fsm`, and
+SystemVerilog generation projects the sticky fail bit into verification-only
+assertion text. The
 capability-manifest ISF public contract advertises the keys, kind values,
 overlap values, assertion-projection values, and reset-policy shape through the
 matching `schedule_report_temporal_contract_*` metadata fields.
