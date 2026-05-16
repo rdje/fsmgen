@@ -993,6 +993,11 @@ The phase fixture is now promoted in the `isf` tier for file-backed strict
 schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, transaction phase pass-through states, absence of reusable
 `done` drive storage, and delayed completion pulse behavior.
+The switch fixture is now promoted in the `isf` tier for file-backed strict
+schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, sampled selector capture, explicit branch dispatch, default
+fallthrough to completion, named-drive branch starts, and delayed completion
+pulse behavior.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

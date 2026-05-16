@@ -124,6 +124,12 @@ to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
 strict HDL generation, transaction phase pass-through states, absence of
 reusable `done` drive storage, and delayed completion pulse behavior covered
 without claiming executable actor-level phase scheduling.
+The switch fixture is checked by
+[t/1313-isf-switch-fixture-coverage.t](../t/1313-isf-switch-fixture-coverage.t)
+to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
+strict HDL generation, sampled selector capture, explicit branch dispatch,
+default fallthrough, named-drive branch starts, and delayed completion pulse
+behavior covered.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

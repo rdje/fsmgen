@@ -104,6 +104,13 @@ strict HDL generation, and delayed completion pulse behavior. It does not
 claim executable actor-level phase scheduling; actor-level phase/stage
 metadata remains report-only.
 
+The switch fixture is file-backed in the `isf` regression tier for sampled
+selector capture, explicit switch branch dispatch, default fallthrough to
+completion, named-drive branch starts, strict schedule JSON parity, scheduled
+`.fsm` structure, plain and strict HDL generation, and delayed completion
+pulse behavior. It does not widen the deferred nested child/await-sync branch
+body surface.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

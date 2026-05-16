@@ -2735,6 +2735,10 @@ states, parser-validated phase body metadata, no reusable `done` drive
 storage, delayed completion pulse behavior, and strict generated HDL
 reachability. It remains phase-metadata coverage, not a claim that
 actor-level phase metadata creates runtime scheduling.
+The [isf/switch_test.isf](../isf/switch_test.isf) fixture now has file-backed
+schedule/HDL/strict coverage for sampled selector capture, explicit branch
+dispatch, default fallthrough to completion, named-drive branch starts,
+delayed completion pulse behavior, and strict generated HDL reachability.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -2974,6 +2978,7 @@ Focused tests:
 - [t/1310-isf-burst-fixture-coverage.t](../t/1310-isf-burst-fixture-coverage.t)
 - [t/1311-isf-uart-fixture-coverage.t](../t/1311-isf-uart-fixture-coverage.t)
 - [t/1312-isf-phase-fixture-coverage.t](../t/1312-isf-phase-fixture-coverage.t)
+- [t/1313-isf-switch-fixture-coverage.t](../t/1313-isf-switch-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

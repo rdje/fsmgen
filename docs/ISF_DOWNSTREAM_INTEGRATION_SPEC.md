@@ -1509,6 +1509,11 @@ proves strict schedule JSON parity, scheduled `.fsm` structure, plain and
 strict HDL generation, transaction phase pass-through states, no reusable
 `done` drive storage, and delayed completion pulse behavior without claiming
 runtime actor-level phase scheduling.
+The switch fixture is covered by `t/1313-isf-switch-fixture-coverage.t`,
+which proves strict schedule JSON parity, scheduled `.fsm` structure, plain
+and strict HDL generation, sampled selector capture, explicit branch
+dispatch, default fallthrough to completion, named-drive branch starts, and
+delayed completion pulse behavior.
 
 Recommended downstream smoke commands:
 
@@ -1518,6 +1523,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/burst_reader.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/uart_tx.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/phase_test.isf
+./bin/fsmgen --strict --emit-schedule-json isf/switch_test.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf

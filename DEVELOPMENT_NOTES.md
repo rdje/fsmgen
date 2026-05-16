@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: switch fixture promotion is structural coverage
+- `ISF-SWITCH-FIXTURE-PROMOTION.1` promotes `isf/switch_test.isf` without
+  changing switch semantics. The fixture already expressed the shipped surface
+  cleanly.
+- The regression focuses on durable structure: sampled selector capture,
+  explicit branch states, default fallthrough, named-drive branch starts, and
+  delayed completion pulse behavior.
+- The fixture deliberately does not widen deferred nested child activation or
+  await-sync behavior inside switch branches. Those remain separate backlog
+  items because they need re-entry and child lifetime policy, not just fixture
+  coverage.
 ## 2026-05-16: phase fixture promotion keeps done ownership single-source
 - `ISF-PHASE-FIXTURE-PROMOTION.1` promotes `isf/phase_test.isf` as a bounded
   phase-metadata/pass-through fixture, not as executable actor-level phase
