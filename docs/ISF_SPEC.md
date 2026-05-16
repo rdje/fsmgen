@@ -2698,6 +2698,7 @@ Representative shipped fixtures:
 - [isf/i2c_master.isf](../isf/i2c_master.isf)
 - [isf/spawn_parent.isf](../isf/spawn_parent.isf)
 - [isf/rule_resource_arbiter.isf](../isf/rule_resource_arbiter.isf)
+- [isf/stream_stage_contract.isf](../isf/stream_stage_contract.isf)
 - [isf/clock_domain_event_crossing.isf](../isf/clock_domain_event_crossing.isf)
 - [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 - [isf/spi_master.isf](../isf/spi_master.isf)
@@ -2760,6 +2761,15 @@ rule, bounded `priority_resolutions[]` and `resource_arbitration[]` report
 metadata, delayed completion pulse behavior, and strict generated HDL
 reachability. It covers the shipped `rule_slot` plus `priority` subset only;
 other resource kinds and arbiters remain explicitly deferred.
+The [isf/stream_stage_contract.isf](../isf/stream_stage_contract.isf)
+fixture now has file-backed schedule/HDL/strict coverage for a sampled
+payload, top-level ready/valid stage, top-level bounded eventual contract,
+temporal monitor storage roles, SystemVerilog sticky-fail assertion
+projection, delayed completion pulse behavior, and strict generated HDL
+reachability. It covers the shipped `ready_valid_barrier` stage and
+`bounded_eventually` contract subset only; nested stages, nested contracts,
+stage-local compute, expression contracts, and wider temporal operators remain
+explicitly deferred.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -3003,6 +3013,7 @@ Focused tests:
 - [t/1314-isf-when-fixture-coverage.t](../t/1314-isf-when-fixture-coverage.t)
 - [t/1315-isf-generated-composition-fixture-coverage.t](../t/1315-isf-generated-composition-fixture-coverage.t)
 - [t/1316-isf-rule-resource-fixture-coverage.t](../t/1316-isf-rule-resource-fixture-coverage.t)
+- [t/1317-isf-stage-contract-fixture-coverage.t](../t/1317-isf-stage-contract-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

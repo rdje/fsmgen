@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF stage/contract fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md](docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md).
+- The `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION` tree is now closed. No active
+  ISF task tree remains open; the next R14 implementation slice must select
+  or create a new task tree first.
+- Added [isf/stream_stage_contract.isf](isf/stream_stage_contract.isf) as a
+  bounded ready/valid stage plus bounded eventual contract fixture.
+- Added
+  [t/1317-isf-stage-contract-fixture-coverage.t](t/1317-isf-stage-contract-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, sampled payload forwarding, ready/valid
+  barrier metadata, bounded eventual contract metadata, temporal monitor
+  storage roles, SystemVerilog sticky-fail assertion projection, and delayed
+  completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused stage/contract/public/book/spec audit tests passed with
+  `Files=9, Tests=112`; `./bin/ci-regression isf --no-book` passed with
+  `Files=223, Tests=979`; `mdbook build docs/book` passed; `git diff
+  --check` passed.
+
 ## 2026-05-16: R14 — ISF rule/resource fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-RULE-RESOURCE-FIXTURE-PROMOTION.1` in

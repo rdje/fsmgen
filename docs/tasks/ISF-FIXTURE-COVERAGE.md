@@ -102,6 +102,7 @@ Current checked-in ISF fixtures:
 | `isf/uart_tx.isf` | UART transmit byte flow. | Parameterized drives, repeat, shift-right. | `t/1099-isf-repeat-data-ops.t`; `t/1311-isf-uart-fixture-coverage.t`. | Promoted as a bounded UART-like transmit fixture with explicit serial-bit drive selection and strict schedule/HDL coverage. |
 | `isf/spawn_parent.isf` | Parent/child generated-composition fixture. | Spawned child module, generated top, start/done handoff, named-drive handoff, outdir lowering. | `t/1097`, `t/1117`, `t/1122`, `t/1128`, `t/1153`, `t/1156`, `t/1216`, `t/1217`, `t/1315-isf-generated-composition-fixture-coverage.t`. | Promoted as a bounded generated-composition fixture with strict schedule-report, strict outdir, and top/parent/child HDL coverage. |
 | `isf/rule_resource_arbiter.isf` | Rule/resource arbitration fixture. | Rule-over-transaction priority, `rule_slot` resource arbitration, lower-priority rule gating, delayed completion pulse behavior. | `t/1218-isf-rule-slot-resource-arbitration.t`; `t/1220-isf-arbitration-schedule-report.t`; `t/1316-isf-rule-resource-fixture-coverage.t`. | Promoted as a bounded rule/resource fixture with schedule-report, strict-mode, and HDL coverage. |
+| `isf/stream_stage_contract.isf` | Ready/valid stage plus bounded temporal-contract fixture. | Sampled payload forwarding, ready/valid stage barrier, bounded eventual contract monitor, temporal monitor storage, SystemVerilog assertion projection, delayed completion pulse behavior. | `t/1223-isf-stage-lowering.t`; `t/1224-isf-contract-lowering.t`; `t/1225-isf-stage-contract-schedule-report.t`; `t/1254-isf-temporal-contract-storage-report.t`; `t/1317-isf-stage-contract-fixture-coverage.t`. | Promoted as a bounded stage/contract fixture with schedule-report, strict-mode, and HDL coverage. |
 | `isf/switch_test.isf` | Simple switch dispatch fixture. | Sampled selector capture, explicit switch branches, default fallthrough, named-drive branch starts, delayed completion pulse behavior. | `t/1097`; `t/1103`; `t/1205`; `t/1313-isf-switch-fixture-coverage.t`. | Promoted as a bounded switch-dispatch fixture with schedule-report, strict-mode, and HDL coverage. |
 | `isf/when_test.isf` | Simple conditional body fixture. | Entry drive setup, conditional decision states, multi-step true-body drives, false-path fallthrough, compatible named-drive fan-in, delayed completion pulse behavior. | `t/1097`; `t/1104`; `t/1107`; `t/1206`; `t/1314-isf-when-fixture-coverage.t`. | Promoted as a bounded `when` fixture with schedule-report, strict-mode, and HDL coverage. |
 | `isf/phase_test.isf` | Transaction phase pass-through fixture. | Transaction phase metadata/pass-through states, delayed completion pulse behavior. | `t/1179-isf-phase-stage-boundary.t`; `t/1312-isf-phase-fixture-coverage.t`. | Promoted as a bounded phase-metadata fixture with schedule-report, strict-mode, and HDL coverage. |
@@ -112,8 +113,8 @@ Current ISF regression tier:
   `t/109[1-9]-isf*.t`, `t/11[0-9][0-9]-isf*.t`, and
   `t/12[0-9][0-9]-isf*.t`, and `t/13[0-9][0-9]-isf*.t`, sorted with
   unmatched future bands ignored by `nullglob`.
-- Current count: `222` ISF-tier tests: `9` in the `109x` band, `98` in the
-  `11xx` band, `98` in the `12xx` band, and `17` in the `13xx` band.
+- Current count: `223` ISF-tier tests: `9` in the `109x` band, `98` in the
+  `11xx` band, `98` in the `12xx` band, and `18` in the `13xx` band.
 - The tier covers parser/lowering smoke, public interface contract audits,
   malformed-boundary tests, feature-specific lowering/report tests, generated
   composition, arbitration, data widths, storage roles, and the explicit
@@ -167,20 +168,24 @@ Current strict-mode ISF coverage:
 - `t/1316-isf-rule-resource-fixture-coverage.t` proves strict schedule JSON
   parity and strict HDL generation for the bounded rule/resource arbitration
   fixture.
+- `t/1317-isf-stage-contract-fixture-coverage.t` proves strict schedule JSON
+  parity and strict HDL generation for the bounded stage/contract fixture.
 
 Remaining inventory gaps after `ISF-FIXTURES.5`:
 
-- I2C, burst-reader, UART, phase, switch, when, generated composition, and
-  rule/resource arbitration have post-closure file-backed schedule JSON,
-  strict-mode, and generated HDL assertions.
+- I2C, burst-reader, UART, phase, switch, when, generated composition,
+  rule/resource arbitration, and stage/contract have post-closure file-backed
+  schedule JSON, strict-mode, and generated HDL assertions.
 - Quick/smoke currently exercises only APB for ISF; that is intentional for
   turnaround. The SPI-like, I2C-like, burst-reader, UART-like, phase, switch,
-  and when fixtures stay in `isf`, not `quick`.
+  when, generated-composition, rule/resource, and stage/contract fixtures stay
+  in `isf`, not `quick`.
 - Strict-mode accepted-source fixture coverage is APB plus the bounded
-  SPI-like, I2C-like, burst-reader, UART-like, phase, switch, when, and
-  generated-composition, and rule/resource fixtures.
-- Stage/contract realism fixtures remain future coverage candidates when those
-  interactions need a protocol-like owner.
+  SPI-like, I2C-like, burst-reader, UART-like, phase, switch, when,
+  generated-composition, rule/resource, and stage/contract fixtures.
+- No known fixture matrix candidate remains unpromoted. Future fixture work
+  should open a new task tree when a shipped interaction needs a protocol-like
+  owner.
 
 ## ISF-FIXTURES.2 Realistic Fixture Matrix
 
@@ -209,7 +214,7 @@ Matrix rules:
 | `isf/spawn_parent.isf` | Composition realism baseline. | Spawned child module, generated top, start/done handoff, named-drive handoff, parameter overrides, outdir lowering. | `generated_composition` summary, child/instance/link/binding keys, parent-only report scope, strict schedule JSON CLI parity. | Multi-file lower result, generated top reachability, strict `--outdir` behavior, strict generated top/parent/child HDL generation. | `isf`; not quick. | Promoted by [ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION](ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md) with bounded strict/outdir/HDL coverage. |
 | `isf/full_featured.isf` | Parser/public-shell breadth fixture, not a realism signoff fixture. | Rules, triggers, priorities, resources, `do`, `spawn`, named drives, ordering metadata. | Actor-shell metadata and parser-carried resource/priority/stage/phase surfaces. | No strict/HDL promotion requirement because the source intentionally exercises breadth, not protocol realism. | `isf` parser/public contract tests. | Keep for parser breadth; do not use as proof of protocol behavior. |
 | `isf/rule_resource_arbiter.isf` | Rule/resource realism fixture. | Rule-over-transaction priority, multiple rules sharing a `rule_slot`, priority arbitration, lower-priority rule gating, delayed completion pulse behavior. | `priority_resolutions`, `resource_arbitration`, rule DT blocks, transaction state order, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-RULE-RESOURCE-FIXTURE-PROMOTION](ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
-| Future `isf/stream_stage_contract.isf` | Future stage/contract realism fixture. | Ready/valid transaction stage, bounded eventual contract monitor, reset policy, generated monitor storage. | `transaction_stages`, `temporal_contracts`, monitor storage kind/role/width where available. | Generated HDL reachability for stage and monitor states/DTs. | `isf`; no quick promotion. | Add after stage/contract syntax stabilizes enough to be a user-facing example. |
+| `isf/stream_stage_contract.isf` | Stage/contract realism fixture. | Sampled payload forwarding, ready/valid transaction stage, bounded eventual contract monitor, reset policy, generated monitor storage, SystemVerilog assertion projection. | `transaction_stages`, `temporal_contracts`, monitor storage kind/role/width, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-STAGE-CONTRACT-FIXTURE-PROMOTION](ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/phase_test.isf` | Phase metadata/pass-through fixture. | Transaction phase pass-through states, delayed completion pulse behavior, no reusable `done` drive storage. | Transaction state order, completion-pulse storage, rdata drive storage, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-PHASE-FIXTURE-PROMOTION](ISF-PHASE-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/switch_test.isf` | Switch dispatch fixture. | Sampled selector capture, explicit branch dispatch, default fallthrough, named-drive branch starts, delayed completion pulse behavior. | Transaction state order, sampled selector storage, named-drive DT blocks, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-SWITCH-FIXTURE-PROMOTION](ISF-SWITCH-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/when_test.isf` | Conditional body fixture. | Entry drive setup, two conditional decision states, multi-step true-body drives, false-path fallthrough, compatible named-drive start fan-in, delayed completion pulse behavior. | Transaction state order, compatible fan-in group for `result_start`, result drive DT block, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-WHEN-FIXTURE-PROMOTION](ISF-WHEN-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
@@ -217,8 +222,9 @@ Matrix rules:
 Closure state:
 
 - `ISF-FIXTURES.5` closes this tree. The shipped realistic fixture surface is
-  now APB as the quick/smoke baseline plus the SPI-like serial-transfer fixture
-  in the broader `isf` tier.
+  now APB as the quick/smoke baseline plus the SPI-like, I2C-like,
+  burst-reader, UART-like, phase, switch, when, generated-composition,
+  rule/resource, and stage/contract fixtures in the broader `isf` tier.
 - Future fixture work should be opened as a new leaf under the relevant
   feature tree, or as a new fixture-focused tree if it cuts across several
   feature families.
@@ -339,6 +345,19 @@ generation, rule-over-transaction priority suppression, `rule_slot`/`priority`
 resource metadata, lower-priority rule gating by a higher-priority rule, and
 delayed completion pulse behavior. It remains in the `isf` regression tier,
 not `quick`, and does not claim deferred resource kinds or arbiter families.
+
+## Post-Closure Stage/Contract Fixture Promotion
+
+`ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.1` adds and promotes
+`isf/stream_stage_contract.isf` after this matrix tree closed. The
+file-backed regression `t/1317-isf-stage-contract-fixture-coverage.t` covers
+scheduled `.fsm` structure, strict schedule JSON parity, plain and strict HDL
+generation, sampled payload forwarding, ready/valid barrier metadata, bounded
+eventual contract metadata, temporal monitor storage roles, SystemVerilog
+sticky-fail assertion projection, and delayed completion pulse behavior. It
+remains in the `isf` regression tier, not `quick`, and does not claim nested
+stages, nested contracts, stage-local compute, expression contracts, or
+broader temporal operators.
 
 ## ISF-FIXTURES.4 Regression Tier Placement
 
@@ -494,3 +513,7 @@ composition.
 - `2026-05-16`: Recorded post-closure rule/resource fixture promotion through
   strict schedule JSON, scheduled `.fsm`, and plain/strict HDL coverage for
   the shipped `rule_slot`/`priority` subset.
+- `2026-05-16`: Recorded post-closure stage/contract fixture promotion
+  through strict schedule JSON, scheduled `.fsm`, and plain/strict HDL
+  coverage for the shipped top-level ready/valid stage plus bounded eventual
+  contract subset.

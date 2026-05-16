@@ -98,6 +98,7 @@ my @required_examples = (
     'when fixture',
     'generated-composition fixture',
     'rule/resource fixture',
+    'stage/contract fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

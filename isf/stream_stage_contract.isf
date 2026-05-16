@@ -1,0 +1,20 @@
+;; Ready/valid stream-stage fixture with a bounded eventual acknowledgement contract.
+(actor stream_stage_contract
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+  (interface
+    (input start)
+    (input ready)
+    (input ack)
+    (input data_in (width 8))
+    (output valid)
+    (output data_out (width 8))
+    (output done))
+  (transaction main
+    (on start
+      (sample data_in as captured))
+    (set data_out captured)
+    (stage accept (input ready) (output valid))
+    (contract ack_seen (eventually ack (within 3)))
+    (complete done)))

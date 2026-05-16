@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: stage/contract fixture promotion stays inside shipped temporal surface
+- `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.1` adds
+  `isf/stream_stage_contract.isf` as a bounded realism fixture for the already
+  shipped top-level ready/valid stage and top-level bounded eventual contract
+  subsets.
+- The fixture deliberately combines sampled payload forwarding with the stage
+  and contract surfaces so one file-backed path proves state scheduling,
+  `transaction_stages[]`, `temporal_contracts[]`, monitor storage roles, and
+  SystemVerilog assertion projection together.
+- The regression checks stable scheduled `.fsm` and HDL structure rather than
+  full snapshots: payload capture/forwarding, ready-gated stage exit,
+  contract arm, monitor pending/age/fail storage, sticky-fail assertion text,
+  and delayed completion pulse are the contract points.
+- Nested stages, nested contracts, stage-local compute, expression contracts,
+  and wider temporal operators remain deferred. This slice proves the shipped
+  subset in a file-backed fixture; it does not widen the temporal language.
 ## 2026-05-16: rule/resource fixture promotion stays inside shipped arbitration
 - `ISF-RULE-RESOURCE-FIXTURE-PROMOTION.1` adds
   `isf/rule_resource_arbiter.isf` as a bounded realism fixture for the already

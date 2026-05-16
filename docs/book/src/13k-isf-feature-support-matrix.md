@@ -136,6 +136,16 @@ scheduled `.fsm` structure, plain and strict HDL generation, and delayed
 completion pulse behavior. It does not widen the deferred backlog resource
 kinds or arbiter families.
 
+The stage/contract fixture is file-backed in the `isf` regression tier for a
+sampled ready/valid stream handoff with a bounded eventual acknowledgement
+contract: sampled payload forwarding, top-level ready/valid barrier metadata,
+top-level bounded eventual contract metadata, temporal monitor storage roles,
+SystemVerilog sticky-fail assertion projection, strict schedule JSON parity,
+scheduled `.fsm` structure, plain and strict HDL generation, and delayed
+completion pulse behavior. It does not widen nested stages, nested contracts,
+stage-local compute, expression contracts, min/max windows, or broader
+temporal operators.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

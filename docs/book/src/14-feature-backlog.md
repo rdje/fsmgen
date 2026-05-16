@@ -816,6 +816,11 @@ verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays
 assertion-free. Remaining backlog: global `always` implication forms, min/max
 windows, dynamic bounds, same-cycle checks, nested contracts, expression
 operands, and multiple outstanding obligations.
+The file-backed `isf/stream_stage_contract.isf` fixture covers the shipped
+top-level ready/valid stage plus bounded eventual contract path through
+strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, temporal monitor storage roles, and SystemVerilog sticky-fail
+assertion projection.
 
 ### Legacy Handshake Semantics
 
@@ -1014,6 +1019,11 @@ strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, rule-over-transaction priority suppression, `rule_slot`/`priority`
 resource metadata, lower-priority rule gating by a higher-priority rule, and
 delayed completion pulse behavior.
+The stage/contract fixture is now promoted in the `isf` tier for file-backed
+strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, sampled payload forwarding, ready/valid stage metadata, bounded
+eventual contract metadata, temporal monitor storage roles, SystemVerilog
+sticky-fail assertion projection, and delayed completion pulse behavior.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

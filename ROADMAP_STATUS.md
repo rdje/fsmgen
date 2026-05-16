@@ -10,13 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-RULE-RESOURCE-FIXTURE-PROMOTION` is closed after
-  adding and promoting `isf/rule_resource_arbiter.isf` to file-backed
+- Next decision point: `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION` is closed after
+  adding and promoting `isf/stream_stage_contract.isf` to file-backed
   scheduled `.fsm`, strict schedule JSON, plain HDL, and strict HDL coverage
-  for the shipped `rule_slot`/`priority` resource subset. The spec,
-  downstream handoff, public contract, mdBook, fixture matrix, public
-  metadata, and tests are synchronized. The next R14 PNT implementation slice
-  must select or create a new task tree before code changes.
+  for the shipped top-level ready/valid stage plus bounded eventual contract
+  subset. The spec, downstream handoff, public contract, mdBook, fixture
+  matrix, public metadata, and tests are synchronized. The next R14 PNT
+  implementation slice must select or create a new task tree before code
+  changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -5502,6 +5503,14 @@ Done:
   strict HDL generation, rule-over-transaction priority suppression,
   `rule_slot`/`priority` report metadata, lower-priority rule gating, and
   delayed completion pulse behavior.
+- `isf/stream_stage_contract.isf` now has file-backed stage/contract fixture
+  coverage through
+  [t/1317-isf-stage-contract-fixture-coverage.t](t/1317-isf-stage-contract-fixture-coverage.t),
+  covering strict schedule JSON parity, scheduled `.fsm` structure, plain and
+  strict HDL generation, sampled payload forwarding, ready/valid stage
+  metadata, bounded eventual contract metadata, temporal monitor storage
+  roles, SystemVerilog sticky-fail assertion projection, and delayed
+  completion pulse behavior.
 - ISF runtime divisor safety now rejects numeric/exact-width literal-zero
   divisors and actor-level constants that resolve to zero before scheduled
   `.fsm` emission, while preserving nonzero literal/constant divisors and
@@ -5843,7 +5852,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-RULE-RESOURCE-FIXTURE-PROMOTION`, so the next ISF
+  after `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

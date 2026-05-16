@@ -1536,6 +1536,16 @@ metadata, lower-priority rule gating by a higher-priority rule, and delayed
 completion pulse behavior. This fixture covers the shipped priority arbiter
 for `rule_slot`; it does not claim round-robin, weighted, token bucket, or
 output-bundle resource support.
+The stage/contract fixture is covered by
+`t/1317-isf-stage-contract-fixture-coverage.t`, which proves strict schedule
+JSON parity, scheduled `.fsm` structure, plain and strict HDL generation,
+sampled payload handoff, ready/valid barrier metadata, bounded eventual
+contract metadata, temporal monitor storage roles, SystemVerilog sticky-fail
+assertion projection, and delayed completion pulse behavior. This fixture
+covers the shipped top-level `ready_valid_barrier` stage and
+`bounded_eventually` temporal contract subset; it does not claim nested
+stages, nested contracts, stage-local compute, expression contracts, min/max
+windows, or broader temporal operators.
 
 Recommended downstream smoke commands:
 
@@ -1549,6 +1559,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/when_test.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/spawn_parent.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/rule_resource_arbiter.isf
+./bin/fsmgen --strict --emit-schedule-json isf/stream_stage_contract.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
