@@ -999,6 +999,11 @@ contract for this bank access surface. It proves a depth-4 bank whose
 loads through `rd_ptr`, including strict schedule JSON parity, scheduled
 `.fsm` structure, and plain plus strict HDL generation.
 
+The sibling fixture `isf/fifo_controller.isf` is the file-backed forward
+contract for the controller-only matrix. It proves idle, push-only, pop-only,
+and simultaneous push+pop occupancy/full/empty behavior plus 2-bit pointer
+wrap without claiming data-bank storage or `data_out` transfer behavior.
+
 ## 6. Drive Definitions and Calls
 
 Drive definitions are actor-level reusable output phases.
@@ -3032,6 +3037,7 @@ Focused tests:
 - [t/1317-isf-stage-contract-fixture-coverage.t](../t/1317-isf-stage-contract-fixture-coverage.t)
 - [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
 - [t/1319-isf-fifo-datapath-fixture-coverage.t](../t/1319-isf-fifo-datapath-fixture-coverage.t)
+- [t/1320-isf-fifo-controller-fixture-coverage.t](../t/1320-isf-fifo-controller-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

@@ -161,6 +161,12 @@ to keep file-backed strict schedule JSON, scheduled `.fsm`, bounded
 `bank_accesses[]` metadata, plain HDL generation, strict HDL generation,
 scalarized depth-4 bank storage, pointer-guarded accepted pushes, and
 pointer-guarded accepted pops covered.
+The FIFO controller fixture is checked by
+[t/1320-isf-fifo-controller-fixture-coverage.t](../t/1320-isf-fifo-controller-fixture-coverage.t)
+to keep file-backed strict schedule JSON, scheduled `.fsm`, compatible
+same-value fan-in metadata, plain HDL generation, strict HDL generation,
+occupancy/full/empty updates, and 2-bit pointer wrap covered without claiming
+data-bank storage or `data_out` datapath transfer behavior.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -1308,6 +1314,9 @@ the read-before-write same-cycle policy. The file-backed
 `isf/fifo_data_path.isf` fixture is the public bank datapath example and is
 covered by `t/1319-isf-fifo-datapath-fixture-coverage.t` for strict schedule
 JSON parity plus plain and strict HDL generation.
+The sibling `isf/fifo_controller.isf` fixture is the public controller-only
+example for occupancy, full/empty, and pointer updates; it is covered by
+`t/1320-isf-fifo-controller-fixture-coverage.t`.
 `store` is bank-entry-only public syntax. Scalar storage updates remain the
 ordinary rule assignment and transaction `update` surfaces.
 The current public parser handoff also advertises one bounded subshape inside

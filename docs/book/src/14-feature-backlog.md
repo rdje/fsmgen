@@ -1033,6 +1033,13 @@ depth-4 `data_0` through `data_3` storage, pointer-guarded accepted pushes,
 and pointer-guarded accepted pops. It does not claim general memory-array HDL
 emission, write-first collision behavior, bypassing, or arbitrary-depth
 parameterized FIFOs.
+The FIFO controller fixture is now promoted in the `isf` tier for file-backed
+strict schedule JSON parity, scheduled `.fsm` structure, compatible
+same-value fan-in metadata, plain and strict HDL generation, idle cycles,
+push-only, pop-only, simultaneous push+pop occupancy updates,
+actor-maintained full/empty flags, and 2-bit pointer wrap. It is
+controller-only and does not claim data-bank storage or `data_out` datapath
+transfer behavior.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal
@@ -1268,6 +1275,10 @@ actor-maintained and is `1` when `occupancy == 0`. `wr_ptr` names the next
 entry selected by an accepted push; `rd_ptr` names the next entry selected by
 an accepted pop. For the depth-4 controller matrix both pointers wrap from
 entry 3 back to entry 0.
+`isf/fifo_controller.isf` is now the strict file-backed controller fixture for
+this matrix. It proves strict schedule JSON parity, scheduled `.fsm`
+structure, compatible same-value fan-in metadata, plain and strict HDL
+generation, and the explicit controller-only boundary.
 Transaction `(when condition body...)` is ordered control flow, so using a
 chain of `when` branches to model FIFO ports would be misleading. Disjoint-rule
 proof for same-target FIFO-style rule writes is shipped for direct

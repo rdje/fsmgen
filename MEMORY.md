@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF FIFO controller fixture promotion shipped
+- Completed `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md).
+- Added
+  [t/1320-isf-fifo-controller-fixture-coverage.t](t/1320-isf-fifo-controller-fixture-coverage.t)
+  for file-backed strict schedule JSON parity, scheduled `.fsm` structure,
+  compatible same-value fan-in metadata, plain and strict HDL generation,
+  idle cycles, push-only, pop-only, simultaneous push+pop occupancy updates,
+  actor-maintained full/empty flags, and 2-bit pointer wrap for
+  [isf/fifo_controller.isf](isf/fifo_controller.isf).
+- The fixture is explicitly controller-only. It does not claim data-bank
+  storage or `data_out` datapath transfer behavior; those remain covered by
+  the FIFO datapath and reusable FIFO fixture paths.
+- Updated public `tested_by` metadata, CI tier assertions, the ISF spec,
+  downstream handoff, public contract, mdBook feature matrix/backlog and
+  intent chapters, fixture matrix, roadmap board, README task index, and task
+  tree.
+- Validation: syntax checks for changed Perl files passed; focused
+  controller/public/book/spec audit tests passed with `Files=7, Tests=105`;
+  `./bin/ci-regression isf --no-book` passed with `Files=226, Tests=992`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
 ## 2026-05-16: ISF FIFO datapath fixture promotion shipped
 - Completed `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md).

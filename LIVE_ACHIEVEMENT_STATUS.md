@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF FIFO controller fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md).
+- The `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION` tree is now closed. No active
+  ISF task tree remains open; the next R14 implementation slice must select
+  or create a new task tree first.
+- Added
+  [t/1320-isf-fifo-controller-fixture-coverage.t](t/1320-isf-fifo-controller-fixture-coverage.t)
+  for file-backed strict schedule JSON parity, scheduled `.fsm` structure,
+  compatible same-value fan-in metadata, plain and strict HDL generation,
+  idle cycles, push-only, pop-only, simultaneous push+pop occupancy updates,
+  actor-maintained full/empty flags, and 2-bit pointer wrap for
+  [isf/fifo_controller.isf](isf/fifo_controller.isf).
+- The fixture is explicitly controller-only and does not claim data-bank
+  storage or `data_out` datapath transfer behavior.
+- Updated public `tested_by` metadata, CI tier checks, the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl files passed; focused
+  controller/public/book/spec audit tests passed with `Files=7, Tests=105`;
+  `./bin/ci-regression isf --no-book` passed with `Files=226, Tests=992`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF FIFO datapath fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.1` in

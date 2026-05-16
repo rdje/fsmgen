@@ -154,6 +154,13 @@ parity, scheduled `.fsm` structure, and plain plus strict HDL generation. It
 does not claim general memory-array HDL emission, write-first collision
 behavior, bypassing, or arbitrary-depth parameterized FIFOs.
 
+The FIFO controller fixture is file-backed in the `isf` regression tier for
+the shipped controller-only matrix: idle, push-only, pop-only, and simultaneous
+push+pop occupancy updates; actor-maintained `full`/`empty`; 2-bit `wr_ptr` and
+`rd_ptr` wrap; compatible same-value fan-in metadata; strict schedule JSON
+parity; scheduled `.fsm` structure; and plain plus strict HDL generation. It
+does not claim data-bank storage or `data_out` datapath transfer behavior.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

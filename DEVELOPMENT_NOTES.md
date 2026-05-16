@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: FIFO controller fixture promotion keeps controller and datapath claims separate
+- `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` promotes
+  `isf/fifo_controller.isf` as a file-backed strict fixture for the existing
+  depth-4 controller matrix.
+- The regression checks stable controller structure rather than full
+  snapshots: idle, push-only, pop-only, and simultaneous push+pop occupancy
+  rules; actor-maintained `full`/`empty`; 2-bit `wr_ptr` and `rd_ptr` wrap;
+  compatible same-value fan-in metadata; strict schedule JSON parity; and
+  generated HDL storage/assertion shape.
+- The fixture deliberately remains controller-only. `data_in` and `data_out`
+  stay interface-review signals in the scheduled `.fsm`, but data-bank storage
+  and `data_out` transfer behavior are not claimed here; those are covered by
+  the FIFO datapath and reusable FIFO fixtures.
 ## 2026-05-16: FIFO datapath fixture promotion is coverage, not new bank semantics
 - `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.1` promotes the existing
   `isf/fifo_data_path.isf` bank-access fixture without changing source syntax,

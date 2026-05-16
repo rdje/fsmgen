@@ -409,6 +409,8 @@ Rules:
 - Schedule reports expose declared storage through `inferred_storage`.
 - `isf/fifo_data_path.isf` is the representative file-backed bank datapath
   fixture for scalarized store/load behavior.
+- `isf/fifo_controller.isf` is the representative file-backed controller-only
+  fixture for occupancy, full/empty, and pointer update behavior.
 
 Bank access:
 
@@ -1491,6 +1493,7 @@ isf/full_featured.isf
 isf/clock_domain_event_crossing.isf
 isf/clock_domain_dual_event_crossing.isf
 isf/common/fifo.isf
+isf/fifo_controller.isf
 isf/fifo_data_path.isf
 isf/fifo_library_use.isf
 ```
@@ -1562,6 +1565,14 @@ storage, pointer-guarded accepted pushes, and pointer-guarded accepted pops.
 This fixture covers the shipped depth-4 scalarized bank store/load surface; it
 does not claim general memory-array HDL emission, write-first collision
 behavior, bypassing, or arbitrary-depth parameterized FIFOs.
+The FIFO controller fixture is covered by
+`t/1320-isf-fifo-controller-fixture-coverage.t`, which proves strict schedule
+JSON parity, scheduled `.fsm` structure, compatible same-value fan-in
+metadata, plain and strict HDL generation, idle cycles, push-only, pop-only,
+simultaneous push+pop occupancy updates, actor-maintained full/empty flags,
+and 2-bit pointer wrap. This
+fixture is controller-only; it does not claim data-bank storage or `data_out`
+datapath transfer behavior.
 
 Recommended downstream smoke commands:
 
@@ -1576,6 +1587,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/spawn_parent.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/rule_resource_arbiter.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/stream_stage_contract.isf
+./bin/fsmgen --strict --emit-schedule-json isf/fifo_controller.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_data_path.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf

@@ -10,10 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION` is closed after
-  promoting `isf/fifo_data_path.isf` to file-backed strict schedule JSON,
-  scheduled `.fsm`, and plain/strict HDL fixture coverage for the shipped
-  scalarized bank store/load surface. The next R14 PNT implementation slice
+- Next decision point: `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION` is closed
+  after promoting `isf/fifo_controller.isf` to file-backed strict schedule
+  JSON, scheduled `.fsm`, and plain/strict HDL fixture coverage for the
+  shipped depth-4 controller matrix. The next R14 PNT implementation slice
   must select or create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
@@ -5520,6 +5520,13 @@ Done:
   `bank_accesses[]` metadata, plain and strict HDL generation, scalarized
   depth-4 bank storage, pointer-guarded accepted pushes, and pointer-guarded
   accepted pops.
+- `isf/fifo_controller.isf` now has file-backed FIFO controller fixture
+  coverage through
+  [t/1320-isf-fifo-controller-fixture-coverage.t](t/1320-isf-fifo-controller-fixture-coverage.t),
+  covering strict schedule JSON parity, scheduled `.fsm` structure,
+  compatible same-value fan-in metadata, plain and strict HDL generation,
+  idle cycles, push-only, pop-only, simultaneous push+pop occupancy updates,
+  actor-maintained full/empty flags, and 2-bit pointer wrap.
 - ISF runtime divisor safety now rejects numeric/exact-width literal-zero
   divisors and actor-level constants that resolve to zero before scheduled
   `.fsm` emission, while preserving nonzero literal/constant divisors and
@@ -5867,7 +5874,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION`, so the next ISF
+  after `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

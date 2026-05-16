@@ -368,7 +368,11 @@ current limitations are:
   checked-in `isf/fifo_data_path.isf` datapath fixture now proves that
   store/load surface through file-backed strict schedule JSON parity,
   scheduled `.fsm` structure, and plain plus strict HDL generation. The
-  first reusable FIFO fixture is now shipped as `isf/common/fifo.isf`, with
+  checked-in `isf/fifo_controller.isf` fixture separately proves the
+  controller-only occupancy/full/empty and pointer-update matrix through the
+  same strict schedule JSON and HDL handoff paths without claiming data-bank
+  storage or `data_out` transfer behavior. The first reusable FIFO fixture is
+  now shipped as `isf/common/fifo.isf`, with
   `isf/fifo_library_use.isf` proving the file-backed import/use source. It is
   fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`, and
   covers push-only, pop-only, simultaneous push+pop, idle cycles,

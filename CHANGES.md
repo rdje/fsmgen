@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF FIFO controller fixture promotion shipped
+- Completed `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` and closed the task
+  tree.
+- Added `t/1320-isf-fifo-controller-fixture-coverage.t` for file-backed strict
+  schedule JSON parity, scheduled `.fsm` structure, compatible same-value
+  fan-in metadata, plain and strict HDL generation, idle cycles, push-only,
+  pop-only, simultaneous push+pop occupancy updates, actor-maintained
+  full/empty flags, and 2-bit pointer wrap for `isf/fifo_controller.isf`.
+- Kept the fixture boundary controller-only: it does not claim data-bank
+  storage or `data_out` datapath transfer behavior.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, the mdBook feature matrix,
+  intent-scheduling and backlog chapters, the fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl files passed; focused
+  controller/public/book/spec audit tests passed with `Files=7, Tests=105`;
+  `./bin/ci-regression isf --no-book` passed with `Files=226, Tests=992`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF FIFO datapath fixture promotion shipped
 - Completed `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.1` and closed the task tree.
 - Added `t/1319-isf-fifo-datapath-fixture-coverage.t` for file-backed strict
