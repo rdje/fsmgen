@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF activation handshake storage roles shipped
+- Completed `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1`, closing the
+  `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` task tree.
+- Public ISF schedule reports now tag generated activation start handoff
+  storage with `inferred_storage[].role = activation_start_handoff` when that
+  one-bit handoff appears in `inferred_storage[]`.
+- Public ISF schedule reports now tag generated activation done handoff
+  storage with `inferred_storage[].role = activation_done_handoff`.
+- Added both roles to `schedule_report_storage_role_values` in the public ISF
+  contract and capability manifest.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with generated spawn and generated rule-trigger handoff probes for role and
+  width coverage.
+- Activation syntax, generated child instantiation, start/done timing,
+  generated `.fsm`, and HDL output are unchanged.
 ### R14 — ISF rule-trigger storage roles shipped
 - Completed `ISF-RULE-TRIGGER-STORAGE-REPORTS.1`, closing the
   `ISF-RULE-TRIGGER-STORAGE-REPORTS` task tree.

@@ -2159,7 +2159,8 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 advertises this value family through `schedule_report_dt_kind_values`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
-lowerer has direct evidence: `actor_storage`, `completion_pulse`,
+lowerer has direct evidence: `activation_done_handoff`,
+`activation_start_handoff`, `actor_storage`, `completion_pulse`,
 `data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
 `extract_field`, `latency_counter`, `repeat_counter`,
 `rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
@@ -2171,6 +2172,9 @@ lowering.
 Rule-trigger source pulses use `rule_trigger_source`; per-input trigger
 payload-source storage uses `rule_trigger_payload_source` before fan-in or
 generated activation handoff storage consumes the payload.
+Generated activation start/done handoff storage uses
+`activation_start_handoff` and `activation_done_handoff` when those one-bit
+generated handoff signals appear in `inferred_storage[]`.
 Generated activation port-binding handoff storage uses
 `transaction_port_binding`; generated rule-trigger completion observation uses
 `trigger_done_observe`.

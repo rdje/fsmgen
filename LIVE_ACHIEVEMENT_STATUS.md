@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF activation handshake storage roles shipped
+- Completed R14 task-tree slice:
+  `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1`, closing
+  [docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md).
+- Public schedule JSON now tags generated activation start handoff storage
+  with `inferred_storage[].role = activation_start_handoff` when that one-bit
+  handoff appears in `inferred_storage[]`.
+- Public schedule JSON now tags generated activation done handoff storage with
+  `inferred_storage[].role = activation_done_handoff`.
+- The ISF public contract and capability manifest advertise both roles through
+  `schedule_report_storage_role_values`.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with generated spawn and generated rule-trigger handoff probes.
+- Activation syntax, generated child instantiation, start/done timing,
+  generated `.fsm`, and HDL output are unchanged.
+
 ## 2026-05-16: R14 — ISF rule-trigger storage roles shipped
 - Completed R14 task-tree slice:
   `ISF-RULE-TRIGGER-STORAGE-REPORTS.1`, closing

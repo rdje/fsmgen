@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: activation handshake roles follow generated-instance evidence
+- `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` records
+  `activation_start_handoff` and `activation_done_handoff` where the lowerer
+  creates generated activation instance start/done handoff ports. This keeps
+  the role tied to generated-instance provenance instead of suffix matching
+  every direct transaction handshake named `*_start` or `*_done`.
+- The report remains additive: some generated start pulses are combinational
+  state outputs and do not currently appear in `inferred_storage[]`; when a
+  generated start handoff is materialized there, it now carries
+  `activation_start_handoff`.
+- This keeps payload transfer roles distinct. `transaction_port_binding`
+  covers generated activation port payload handoffs, while the new roles cover
+  the one-bit activation handshake side.
 ## 2026-05-16: rule-trigger storage roles are lowerer-owned
 - `ISF-RULE-TRIGGER-STORAGE-REPORTS.1` assigns rule-trigger storage roles at
   the lowering boundary, where the generated source pulse and payload-source
@@ -11,8 +24,8 @@ This document captures engineering rationale, design constraints, and working de
 - Generated activation binding storage remains separate:
   `rule_trigger_payload_source` names the rule-owned payload capture, while
   `transaction_port_binding` names the generated activation handoff storage
-  that consumes that payload. Generated start/done handoff storage remains
-  intentionally unclassified until a separate compatibility slice closes it.
+  that consumes that payload. Generated start/done handoff storage is covered
+  by the later `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` slice.
 ## 2026-05-16: transaction port storage role is contract sync
 - `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` advertises the `transaction_port`
   storage role because schedule reports already emit it when a declared
@@ -28,10 +41,12 @@ This document captures engineering rationale, design constraints, and working de
   family with two roles already emitted by schedule reports:
   `transaction_port_binding` for generated activation port handoff storage and
   `trigger_done_observe` for generated rule-trigger completion observation.
-- The slice deliberately does not invent roles for every generated
-  start/done/payload signal. Unassigned generated start/done handoffs remained
-  unpromised, and rule-trigger payload-source storage was left for the later
-  `ISF-RULE-TRIGGER-STORAGE-REPORTS` slice that now owns that distinction.
+- The slice deliberately did not invent roles for every generated
+  start/done/payload signal. Rule-trigger payload-source storage and generated
+  activation start/done handoff storage were left for the later
+  `ISF-RULE-TRIGGER-STORAGE-REPORTS` and
+  `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` slices that now own those
+  distinctions.
 - As with the dynamic-wait role sync, this keeps manifest metadata truthful
   without changing lowering or generated artifacts.
 ## 2026-05-16: dynamic wait storage role is public contract sync

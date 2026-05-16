@@ -1372,6 +1372,8 @@ sub isf_public_interface_schedule_report_storage_kind_values {
 sub isf_public_interface_schedule_report_storage_role_values {
     return [
         qw(
+            activation_done_handoff
+            activation_start_handoff
             completion_pulse
             data_register
             dynamic_wait_counter

@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF activation handshake storage roles shipped
+- Completed `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` in
+  [docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md),
+  closing the generated activation handshake storage report-role tree.
+- Generated activation start handoff storage now reports
+  `inferred_storage[].role = activation_start_handoff` when the one-bit start
+  handoff appears in `inferred_storage[]`.
+- Generated activation done handoff storage now reports
+  `inferred_storage[].role = activation_done_handoff`.
+- The ISF public contract and capability manifest advertise both roles through
+  `schedule_report_storage_role_values`.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with generated spawn and generated rule-trigger handoff probes for those
+  roles and one-bit widths.
+- Activation syntax, generated child instantiation, start/done timing,
+  generated `.fsm`, and HDL output are unchanged.
 ## 2026-05-16: ISF rule-trigger storage roles shipped
 - Completed `ISF-RULE-TRIGGER-STORAGE-REPORTS.1` in
   [docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md](docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md),

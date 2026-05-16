@@ -108,6 +108,8 @@ subtest 'runtime dynamic wait storage role follows advertised metadata' => sub {
 subtest 'generated activation handoff storage roles follow advertised metadata' => sub {
     my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
 
+    ok($role{activation_done_handoff}, 'activation_done_handoff is an advertised storage role');
+    ok($role{activation_start_handoff}, 'activation_start_handoff is an advertised storage role');
     ok($role{transaction_port_binding}, 'transaction_port_binding is an advertised storage role');
     ok($role{trigger_done_observe}, 'trigger_done_observe is an advertised storage role');
 
@@ -127,7 +129,34 @@ subtest 'generated activation handoff storage roles follow advertised metadata' 
             if $entry;
     }
 
+    my ($spawn_done) = grep {
+        ($_->{name} // '') eq 'w0_done'
+    } @{$spawn_report->{inferred_storage} || []};
+    ok($spawn_done, 'spawn binding report exposes generated done handoff storage');
+    is($spawn_done->{kind}, 'counter', 'generated spawn done handoff uses the generated counter class')
+        if $spawn_done;
+    is($spawn_done->{role}, 'activation_done_handoff', 'generated spawn done handoff reports its role')
+        if $spawn_done;
+    is($spawn_done->{width}, 1, 'generated spawn done handoff is one bit')
+        if $spawn_done;
+
     my $trigger_report = report_source(trigger_binding_source(), 'trigger-binding-storage-role.isf');
+    for my $case (
+        ['launch_worker_trigger_0_start', 'activation_start_handoff'],
+        ['launch_worker_trigger_0_done', 'activation_done_handoff'],
+    ) {
+        my ($name, $expected_role) = @$case;
+        my ($entry) = grep { ($_->{name} // '') eq $name } @{$trigger_report->{inferred_storage} || []};
+
+        ok($entry, "generated rule-trigger report exposes '$name' handoff storage");
+        is($entry->{kind}, 'counter', "'$name' handoff storage uses the generated counter class")
+            if $entry;
+        is($entry->{role}, $expected_role, "'$name' handoff storage reports its role")
+            if $entry;
+        is($entry->{width}, 1, "'$name' handoff storage is one bit")
+            if $entry;
+    }
+
     my ($done_seen) = grep {
         ($_->{name} // '') eq 'launch_worker_trigger_0_done_seen'
     } @{$trigger_report->{inferred_storage} || []};

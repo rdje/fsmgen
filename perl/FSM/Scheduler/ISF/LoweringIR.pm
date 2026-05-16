@@ -298,6 +298,10 @@ sub _register_generated_activation_instance {
 
     $ctrs->{"${instance}_start"} = 1;
     $ctrs->{"${instance}_done"} = 1;
+    $storage_roles->{"${instance}_start"} = 'activation_start_handoff'
+        if ref($storage_roles) eq 'HASH';
+    $storage_roles->{"${instance}_done"} = 'activation_done_handoff'
+        if ref($storage_roles) eq 'HASH';
     _ensure_port(
         $ports,
         "${instance}_start",

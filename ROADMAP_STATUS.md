@@ -51,8 +51,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-RULE-TRIGGER-STORAGE-REPORTS.1` then assigned and advertised
   `rule_trigger_source` and `rule_trigger_payload_source` roles for
   rule-trigger source pulse and payload-source storage, without changing
-  rule-trigger syntax, timing, generated `.fsm`, or HDL output. The next PNT
-  selection should choose a fresh roadmap-aligned R14 task tree before
+  rule-trigger syntax, timing, generated `.fsm`, or HDL output.
+  `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` then assigned and advertised
+  `activation_start_handoff` and `activation_done_handoff` roles for
+  generated activation start/done handoff storage that appears in
+  `inferred_storage[]`, without changing activation syntax, generated child
+  instantiation, start/done timing, generated `.fsm`, or HDL output. The next
+  PNT selection should choose a fresh roadmap-aligned R14 task tree before
   implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
@@ -195,6 +200,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   through public contract/manifest metadata and extended
   `t/1148-isf-public-storage-metadata-audit.t` with direct and generated
   rule-trigger report probes.
+  `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.1` published
+  `activation_start_handoff` and `activation_done_handoff` storage roles
+  through public contract/manifest metadata and extended
+  `t/1148-isf-public-storage-metadata-audit.t` with generated spawn and
+  generated rule-trigger handoff probes.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

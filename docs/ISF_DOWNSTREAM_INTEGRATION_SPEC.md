@@ -1065,12 +1065,12 @@ bank_accesses.same_cycle_policy: read_before_write
 transaction_port_bindings.site_kind: do, spawn, rule_trigger
 generated_composition.kind: activation_generated_top, spawn_generated_top
 inferred_storage.kind: counter, register
-inferred_storage.role: actor_storage, completion_pulse, data_register,
-  dynamic_wait_counter, drive_payload, drive_request, extract_field,
-  latency_counter, repeat_counter, rule_trigger_payload_source,
-  rule_trigger_source, sample_alias, temporal_contract_monitor,
-  transaction_port, transaction_port_binding, trigger_done_observe,
-  watchdog_counter
+inferred_storage.role: activation_done_handoff, activation_start_handoff,
+  actor_storage, completion_pulse, data_register, dynamic_wait_counter,
+  drive_payload, drive_request, extract_field, latency_counter,
+  repeat_counter, rule_trigger_payload_source, rule_trigger_source,
+  sample_alias, temporal_contract_monitor, transaction_port,
+  transaction_port_binding, trigger_done_observe, watchdog_counter
 dt_blocks.kind: drive, do_port_binding, latency_counter, rule,
   rule_trigger_fanin, spawn_port_binding, temporal_contract_monitor,
   trigger_generated_activation

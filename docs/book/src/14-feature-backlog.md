@@ -729,17 +729,18 @@ Current boundary: schedule reports expose bounded storage metadata with
 optional positive integer widths when width evidence is known.
 `inferred_storage[].kind` remains the coarse storage category (`counter` or
 `register`). The first optional `inferred_storage[].role` slice is shipped for
-storage families with stable lowering evidence: `watchdog_counter`,
-`latency_counter`, `repeat_counter`, `dynamic_wait_counter`, `drive_request`,
-`drive_payload`, `sample_alias`, `extract_field`, `data_register`,
-`completion_pulse`, `temporal_contract_monitor`,
+storage families with stable lowering evidence: `activation_done_handoff`,
+`activation_start_handoff`, `watchdog_counter`, `latency_counter`,
+`repeat_counter`, `dynamic_wait_counter`, `drive_request`, `drive_payload`,
+`sample_alias`, `extract_field`, `data_register`, `completion_pulse`,
+`temporal_contract_monitor`,
 `rule_trigger_source`, `rule_trigger_payload_source`, `transaction_port`,
 `transaction_port_binding`, and `trigger_done_observe`.
 
 Remaining direction: keep `role` additive and omit it when evidence is
-ambiguous. Additional roles, including generated start/done handoff storage
-and resource-grant/debug storage, remain backlog until each family has its own
-compatibility rules, public contract metadata, and regression coverage.
+ambiguous. Additional roles, including resource-grant/debug storage, remain
+backlog until each family has its own compatibility rules, public contract
+metadata, and regression coverage.
 
 ### Fully Frozen Schedule JSON Schema
 

@@ -50,6 +50,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md](docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md) |
 | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md](docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md) |
 | `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md) |
+| `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md](docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md) |
 | `ISF-TRANSACTION-PORT-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TRANSACTION-PORT-STORAGE-REPORTS.md](docs/tasks/ISF-TRANSACTION-PORT-STORAGE-REPORTS.md) |
 | `ISF-RULE-TRIGGER-STORAGE-REPORTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md](docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md) |
 | `ISF-ACTIVATION-PARAM-OVERRIDES` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md) |
@@ -118,6 +119,7 @@ as done work unless a future task reopens them.
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |
 | Runtime dynamic-wait counter storage schedule-report roles | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` |
 | Generated activation handoff storage schedule-report roles | `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS` |
+| Generated activation start/done handoff storage schedule-report roles | `ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS` |
 | Transaction-local port storage schedule-report roles | `ISF-TRANSACTION-PORT-STORAGE-REPORTS` |
 | Rule-trigger source and payload-source storage schedule-report roles | `ISF-RULE-TRIGGER-STORAGE-REPORTS` |
 | ISF spec, mdBook, public interface contract, and manifest synchronization | `ISF-PUBLIC-CONTRACT` |
