@@ -95,11 +95,11 @@ Current checked-in ISF fixtures:
 | Fixture | Current purpose | Covered feature families | Current direct coverage | Gaps / notes |
 | --- | --- | --- | --- | --- |
 | `isf/apb_requester.isf` | Primary realistic APB request/response actor. | Interface widths, async active-low reset, watchdog, named/parameterized drives, samples, await, complete pulse, latency, schedule report storage metadata, strict HDL generation. | `t/1091`, `t/1094`, `t/1096`, `t/1100`, `t/1105`, `t/1106`, `t/1112`, `t/1116`, `t/1121`, `t/1123`, `t/1124`, `t/1146`-`t/1155`, and several public contract audits. | Strong baseline fixture; not enough by itself for repeat/control-flow/composition realism. |
-| `isf/burst_reader.isf` | Burst read transaction with repeated await loop. | Dynamic repeat count, sampled aliases, await, watchdog, latency, completion pulse. | `t/1095-isf-scheduler-burst-reader.t`. | Schedule-report and HDL assertions are narrow. |
+| `isf/burst_reader.isf` | Burst read transaction with repeated await loop. | Dynamic repeat count, sampled aliases, await, watchdog, latency, completion pulse. | `t/1095-isf-scheduler-burst-reader.t`; `t/1310-isf-burst-fixture-coverage.t`. | Promoted as a bounded burst/wait-loop fixture with schedule-report, strict-mode, and HDL coverage. |
 | `isf/full_featured.isf` | Broad parser/public-shell fixture. | Rules, triggers, priorities, resources, `do`, `spawn`, named drives, transaction ordering. | `t/1093`, `t/1157`, `t/1158`, `t/1166`, `t/1176`. | Good metadata/parser breadth; not a realistic protocol. |
-| `isf/i2c_master.isf` | I2C-like serial transaction. | Parameterized drives, repeats, switch, shift-left, nested repeat in switch branches. | `t/1099-isf-repeat-data-ops.t`. | Needs schedule-report/HDL/strict fixture assertions before it can be a realistic signoff fixture. |
+| `isf/i2c_master.isf` | I2C-like serial transaction. | Parameterized drives, repeats, switch, shift-left, nested repeat in switch branches. | `t/1099-isf-repeat-data-ops.t`; `t/1309-isf-i2c-fixture-coverage.t`. | Promoted as a bounded I2C-like fixture with schedule-report, strict-mode, and HDL coverage. |
 | `isf/spi_master.isf` | SPI-like mode-0 style serial transfer. | Parameterized drives, repeat, shift-left, sampled transmit byte, explicit serial bit drive, strict schedule/HDL path. | `t/1228-isf-spi-fixture-coverage.t` plus downstream `.fsm` shift-expression coverage in `t/271-systemverilog-shift-expression-generation.t`. | Covered as a bounded SPI-like mode-0 fixture, not as full SPI protocol compliance. |
-| `isf/uart_tx.isf` | UART transmit byte flow. | Parameterized drives, repeat, shift-right. | `t/1099-isf-repeat-data-ops.t`. | Needs explicit-width `shift_right` fixture refresh and explicit serial-bit drive selection before strict/HDL promotion. |
+| `isf/uart_tx.isf` | UART transmit byte flow. | Parameterized drives, repeat, shift-right. | `t/1099-isf-repeat-data-ops.t`; `t/1311-isf-uart-fixture-coverage.t`. | Promoted as a bounded UART-like transmit fixture with explicit serial-bit drive selection and strict schedule/HDL coverage. |
 | `isf/spawn_parent.isf` | Parent/child generated-composition fixture. | Spawned child module, generated top, start/done handoff, named-drive handoff, outdir lowering. | `t/1097`, `t/1117`, `t/1122`, `t/1128`, `t/1153`, `t/1156`, `t/1216`, `t/1217`. | Strong composition fixture; realistic protocol semantics are intentionally small. |
 | `isf/switch_test.isf` | Simple switch dispatch fixture. | `switch` branch lowering and implicit fallthrough smoke. | `t/1097`; richer switch behavior is covered by inline sources in `t/1103` and `t/1205`. | File-backed schedule/HDL assertions are minimal. |
 | `isf/when_test.isf` | Simple conditional body fixture. | `when` body lowering and repeated `when` smoke. | `t/1097`; richer `when` behavior is covered by inline sources in `t/1104`, `t/1107`, and `t/1206`. | File-backed schedule/HDL assertions are minimal. |
@@ -111,8 +111,8 @@ Current ISF regression tier:
   `t/109[1-9]-isf*.t`, `t/11[0-9][0-9]-isf*.t`, and
   `t/12[0-9][0-9]-isf*.t`, and `t/13[0-9][0-9]-isf*.t`, sorted with
   unmatched future bands ignored by `nullglob`.
-- Current count: `206` ISF-tier tests: `9` in the `109x` band, `98` in the
-  `11xx` band, `98` in the `12xx` band, and `1` in the `13xx` band.
+- Current count: `217` ISF-tier tests: `9` in the `109x` band, `98` in the
+  `11xx` band, `98` in the `12xx` band, and `12` in the `13xx` band.
 - The tier covers parser/lowering smoke, public interface contract audits,
   malformed-boundary tests, feature-specific lowering/report tests, generated
   composition, arbitration, data widths, storage roles, and the explicit
@@ -147,22 +147,28 @@ Current strict-mode ISF coverage:
   success metadata and the APB strict HDL path.
 - `t/1228-isf-spi-fixture-coverage.t` proves strict schedule JSON parity and
   strict HDL generation for the SPI-like fixture.
-- No current strict-mode fixture regression targets I2C, UART, burst,
-  switch/when, phase, or generated-composition sources.
+- `t/1309-isf-i2c-fixture-coverage.t` proves strict schedule JSON parity and
+  strict HDL generation for the bounded I2C-like fixture.
+- `t/1310-isf-burst-fixture-coverage.t` proves strict schedule JSON parity
+  and strict HDL generation for the bounded burst-reader fixture.
+- `t/1311-isf-uart-fixture-coverage.t` proves strict schedule JSON parity and
+  strict HDL generation for the bounded UART-like transmit fixture.
+- No current strict-mode fixture regression targets switch/when, phase, or
+  generated-composition sources.
 
 Remaining inventory gaps after `ISF-FIXTURES.5`:
 
-- I2C and UART are covered through repeat/data-op lowering but not through
-  schedule JSON, strict mode, or generated HDL assertions.
+- I2C, burst-reader, and UART have post-closure file-backed schedule JSON,
+  strict-mode, and generated HDL assertions.
 - `phase_test.isf` is listed as a fixture but lacks direct file-backed
   coverage; inline tests cover the semantics.
 - Quick/smoke currently exercises only APB for ISF; that is intentional for
-  turnaround. The SPI-like fixture stays in `isf`, not `quick`.
+  turnaround. The SPI-like, I2C-like, burst-reader, and UART-like fixtures
+  stay in `isf`, not `quick`.
 - Strict-mode accepted-source fixture coverage is APB plus the bounded
-  SPI-like serial-transfer fixture.
-- I2C, UART, burst, rule/resource arbitration, and stage/contract realism
-  fixtures remain future coverage candidates when those interactions need a
-  protocol-like owner.
+  SPI-like, I2C-like, burst-reader, and UART-like fixtures.
+- Rule/resource arbitration and stage/contract realism fixtures remain future
+  coverage candidates when those interactions need a protocol-like owner.
 
 ## ISF-FIXTURES.2 Realistic Fixture Matrix
 
@@ -187,7 +193,7 @@ Matrix rules:
 | `isf/spi_master.isf` | Compact SPI-like mode-0 serial-transfer fixture. | Parameterized drives, active-low `cs`, `sclk` toggling, explicit `mosi` bit-select drive, `miso` sampling, fixed 8-cycle repeat loop, sampled transmit byte, shift-left data movement. | Transaction state list/count, repeat counter storage, data-register storage/width, DT kind coverage for drive blocks, compatible request fan-in for repeated drive starts. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path, direct shift-expression HDL support. | `isf`; not `quick` initially. | Covered by `ISF-FIXTURES.3`; maintain as bounded SPI-like fixture, not full SPI compliance. |
 | `isf/i2c_master.isf` | Second serial-protocol promotion target. | Parameterized drives, nested repeat, switch branches, shift-left, branch-specific serial behavior. | Transaction states, repeat counters, switch branch state coverage, storage width/role where known. | Generated HDL reachability and strict-mode acceptance after SPI proves the pattern. | `isf`; no quick promotion planned. | Promoted by [ISF-I2C-FIXTURE-PROMOTION](ISF-I2C-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/burst_reader.isf` | Burst/wait-loop realism target. | Dynamic repeat count, sampled aliases, await, watchdog, latency, completion pulse. | Repeat/latency/watchdog storage roles, transaction state count/order, completion pulse storage. | Generated HDL reachability; strict mode only after the fixture is checked as forward-contract clean. | `isf`. | Promoted by [ISF-BURST-FIXTURE-PROMOTION](ISF-BURST-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
-| `isf/uart_tx.isf` | Data-width and shift-right realism target. | Parameterized drives, repeat, explicit-width `shift_right`, serial transmit framing. | Data register width evidence, transaction states, repeat counter storage. | Generated HDL reachability; strict mode if the fixture is promoted as a forward-contract example. | `isf`. | Use only if it adds width/shift-right signal beyond existing focused tests; it needs explicit serial-bit drive selection before strict/HDL promotion. |
+| `isf/uart_tx.isf` | Data-width and shift-right realism target. | Parameterized drives, repeat, explicit-width `shift_right`, serial transmit framing. | Data register width evidence, transaction states, repeat counter storage. | Generated HDL reachability; strict mode if the fixture is promoted as a forward-contract example. | `isf`. | Promoted by [ISF-UART-FIXTURE-PROMOTION](ISF-UART-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/spawn_parent.isf` | Composition realism baseline. | Spawned child module, generated top, start/done handoff, named-drive handoff, parameter overrides, outdir lowering. | `generated_composition` summary, child/instance/link/binding keys, parent-only report scope. | Multi-file lower result, generated top reachability, `--outdir` behavior. | `isf`; not quick. | Maintain existing coverage; expand only when generated-child public surface widens. |
 | `isf/full_featured.isf` | Parser/public-shell breadth fixture, not a realism signoff fixture. | Rules, triggers, priorities, resources, `do`, `spawn`, named drives, ordering metadata. | Actor-shell metadata and parser-carried resource/priority/stage/phase surfaces. | No strict/HDL promotion requirement because the source intentionally exercises breadth, not protocol realism. | `isf` parser/public contract tests. | Keep for parser breadth; do not use as proof of protocol behavior. |
 | Future `isf/rule_resource_arbiter.isf` | Future rule/resource realism fixture. | Multiple rules sharing a `rule_slot`, priority arbitration, rule-trigger fan-in, conflict suppression. | `priority_resolutions`, `resource_arbitration`, compatible fan-in groups, compile-issue absence on the accepted path. | Generated HDL reachability for grant-gated rule DTs. | `isf`; no quick promotion. | Add only after a concrete protocol-like owner exists; focused tests already own mechanics. |
@@ -249,6 +255,19 @@ strict schedule JSON parity, plain HDL generation, strict HDL generation,
 dynamic repeat counter storage, watchdog and latency counter roles, sampled
 aliases, and completion/timeout pulse fan-in. It remains in the `isf`
 regression tier, not `quick`.
+
+## Post-Closure UART-Like Fixture Promotion
+
+`ISF-UART-FIXTURE-PROMOTION.1` promotes `isf/uart_tx.isf` after this matrix
+tree closed. The fixture now drives the serial `tx` output from `byte_data[0]`
+instead of the full sampled byte, so strict HDL generation no longer fails on
+implicit truncation. The file-backed regression
+`t/1311-isf-uart-fixture-coverage.t` covers scheduled `.fsm` structure, strict
+schedule JSON parity, plain HDL generation, strict HDL generation,
+known-width `shift_right`, repeat counter storage, busy drive sequencing, and
+completion pulse behavior. It remains in the `isf` regression tier, not
+`quick`, and is a bounded UART-like transmit fixture rather than a complete
+UART protocol compliance suite.
 
 ## ISF-FIXTURES.4 Regression Tier Placement
 
@@ -318,9 +337,6 @@ The fixture tree closes with these current fixture-backed claims:
 
 The following interactions remain unclaimed by a realistic fixture:
 
-- I2C and UART schedule JSON, strict mode, and generated HDL fixture paths.
-- Burst/wait-loop strict-mode and generated-HDL fixture paths beyond the
-  current focused burst scheduler coverage.
 - Direct file-backed `phase_test.isf` coverage, if that fixture remains a
   representative public fixture.
 - Rule/resource arbitration and stage/contract protocol-like realism fixtures.

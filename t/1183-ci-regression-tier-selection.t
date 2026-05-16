@@ -51,6 +51,8 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($isf_block || '', qr/t\/1309-isf-i2c-fixture-coverage\.t/, 'ISF tier includes the I2C-like fixture coverage');
     unlike($quick_block || '', qr/t\/1310-isf-burst-fixture-coverage\.t/, 'quick tier does not include the broader burst-reader fixture');
     like($isf_block || '', qr/t\/1310-isf-burst-fixture-coverage\.t/, 'ISF tier includes the burst-reader fixture coverage');
+    unlike($quick_block || '', qr/t\/1311-isf-uart-fixture-coverage\.t/, 'quick tier does not include the broader UART-like fixture');
+    like($isf_block || '', qr/t\/1311-isf-uart-fixture-coverage\.t/, 'ISF tier includes the UART-like fixture coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -76,6 +78,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($isf->{stdout}, qr/t\/1228-isf-spi-fixture-coverage\.t/, 'ISF dry-run includes SPI-like fixture coverage');
     like($isf->{stdout}, qr/t\/1309-isf-i2c-fixture-coverage\.t/, 'ISF dry-run includes I2C-like fixture coverage');
     like($isf->{stdout}, qr/t\/1310-isf-burst-fixture-coverage\.t/, 'ISF dry-run includes burst-reader fixture coverage');
+    like($isf->{stdout}, qr/t\/1311-isf-uart-fixture-coverage\.t/, 'ISF dry-run includes UART-like fixture coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');

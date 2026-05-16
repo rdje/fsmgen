@@ -111,6 +111,13 @@ The burst-reader fixture is checked by
 to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
 strict HDL generation, dynamic repeat counter storage, watchdog and latency
 counter roles, sampled aliases, and completion/timeout pulse fan-in covered.
+The UART-like transmit fixture is checked by
+[t/1311-isf-uart-fixture-coverage.t](../t/1311-isf-uart-fixture-coverage.t)
+to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
+strict HDL generation, sampled-byte LSB drive selection, known-width
+`shift_right`, repeat counter storage, busy drive sequencing, and completion
+pulse behavior covered without claiming full external UART protocol
+compliance.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

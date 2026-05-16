@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF UART-like fixture promotion shipped
+- Completed `ISF-UART-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-UART-FIXTURE-PROMOTION.md](docs/tasks/ISF-UART-FIXTURE-PROMOTION.md).
+- Refreshed [isf/uart_tx.isf](isf/uart_tx.isf) so the repeated data-bit loop
+  drives the serial `tx` output from sampled `byte_data[0]` before shifting
+  the sampled byte right, rather than assigning the full byte to a one-bit
+  output.
+- Added
+  [t/1311-isf-uart-fixture-coverage.t](t/1311-isf-uart-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, known-width `shift_right`, repeat counter
+  storage, busy drive sequencing, and completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: `prove -l t/1311-isf-uart-fixture-coverage.t t/1099-isf-repeat-data-ops.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`
+  passed with `Files=6, Tests=96`; `git diff --check` passed; `mdbook build docs/book`
+  passed; `./bin/ci-regression isf --no-book` passed with `Files=217,
+  Tests=955`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF burst-reader fixture promotion shipped
 - Completed `ISF-BURST-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-BURST-FIXTURE-PROMOTION.md](docs/tasks/ISF-BURST-FIXTURE-PROMOTION.md).

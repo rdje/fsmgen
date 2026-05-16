@@ -985,6 +985,10 @@ The burst-reader fixture is now also promoted in the `isf` tier for
 file-backed strict schedule JSON parity, scheduled `.fsm` structure, plain and
 strict HDL generation, dynamic repeat counter storage, watchdog/latency
 counter roles, sampled aliases, and completion/timeout pulse fan-in.
+The UART-like fixture is now promoted in the `isf` tier for file-backed strict
+schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, sampled-byte LSB drive selection, known-width `shift_right`,
+repeat counter storage, busy drive sequencing, and completion pulse behavior.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

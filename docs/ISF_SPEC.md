@@ -2723,6 +2723,12 @@ The [isf/burst_reader.isf](../isf/burst_reader.isf) fixture now has
 file-backed schedule/HDL/strict coverage for dynamic repeat counts, watchdog
 and latency counters, sampled aliases, completion/timeout pulse fan-in, and
 strict generated HDL reachability.
+The [isf/uart_tx.isf](../isf/uart_tx.isf) fixture now has file-backed
+schedule/HDL/strict coverage as a bounded UART-like transmit example. It
+proves sampled-byte LSB drive selection from `byte_data[0]`, known-width
+`shift_right`, repeat counter storage, busy drive sequencing, completion pulse
+behavior, and strict generated HDL reachability without claiming complete UART
+protocol compliance.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -2960,6 +2966,7 @@ Focused tests:
 - [t/1308-isf-dynamic-divisor-safety.t](../t/1308-isf-dynamic-divisor-safety.t)
 - [t/1309-isf-i2c-fixture-coverage.t](../t/1309-isf-i2c-fixture-coverage.t)
 - [t/1310-isf-burst-fixture-coverage.t](../t/1310-isf-burst-fixture-coverage.t)
+- [t/1311-isf-uart-fixture-coverage.t](../t/1311-isf-uart-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

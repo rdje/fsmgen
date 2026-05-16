@@ -92,6 +92,7 @@ my @required_examples = (
     '--strict --outdir /tmp/isf-build',
     'I2C-like fixture',
     'burst-reader fixture',
+    'UART-like fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

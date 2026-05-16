@@ -21,7 +21,7 @@ subtest 'repeat body lowers parameterized drive calls and shift_right' => sub {
     my $fsm = lower_fixture('uart_tx.isf', 'uart_tx.fsm');
 
     like($fsm, qr/\(= \(tx_start 1\)\)/, 'repeat drive call asserts tx_start');
-    like($fsm, qr/\(= \(tx_val byte_data\)\)/, 'repeat drive call binds byte_data actual');
+    like($fsm, qr/\(= \(tx_val byte_data\[0\]\)\)/, 'repeat drive call binds byte_data LSB actual');
     like(
         $fsm,
         qr/\(<- \(byte_data \(\| \(>> byte_data 1\) \(<< 0 7\)\)\)\)/,

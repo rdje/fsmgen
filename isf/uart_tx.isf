@@ -25,7 +25,7 @@
 
     ;; Send 8 data bits, LSB first
     (repeat 8
-      (drive tx byte_data)
+      (drive tx byte_data[0])
       (shift_right byte_data 0))
 
     ;; Send stop bit (tx=1)

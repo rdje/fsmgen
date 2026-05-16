@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF UART-like fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-UART-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-UART-FIXTURE-PROMOTION.md](docs/tasks/ISF-UART-FIXTURE-PROMOTION.md).
+- The `ISF-UART-FIXTURE-PROMOTION` tree is now closed. No active ISF task tree
+  remains open; the next R14 implementation slice must select or create a new
+  task tree first.
+- [isf/uart_tx.isf](isf/uart_tx.isf) now drives serial `tx` from sampled
+  `byte_data[0]` before shifting the sampled byte right, so strict HDL
+  generation no longer relies on full-byte truncation into a one-bit output.
+- Added
+  [t/1311-isf-uart-fixture-coverage.t](t/1311-isf-uart-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, known-width `shift_right`, repeat counter
+  storage, busy drive sequencing, and completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused UART/public/book/spec audit tests passed with
+  `Files=6, Tests=96`; `git diff --check` passed; `mdbook build docs/book`
+  passed; broad `./bin/ci-regression isf --no-book` passed with `Files=217,
+  Tests=955`.
+
 ## 2026-05-16: R14 — ISF burst-reader fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-BURST-FIXTURE-PROMOTION.1` in

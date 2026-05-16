@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF UART-like fixture promotion shipped
+- Completed `ISF-UART-FIXTURE-PROMOTION.1` and closed the task tree.
+- Refreshed `isf/uart_tx.isf` so the repeated transmit loop drives `tx` from
+  sampled `byte_data[0]` before shifting the sampled byte right, avoiding the
+  previous full-byte assignment to a one-bit output under strict HDL
+  generation.
+- Added `t/1311-isf-uart-fixture-coverage.t` for file-backed scheduled `.fsm`
+  structure, strict schedule JSON parity, plain and strict HDL generation,
+  known-width `shift_right`, repeat counter storage, busy drive sequencing,
+  and completion pulse behavior.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook feature matrix and
+  backlog chapters.
+- Validation: focused UART/public/book/spec audit tests passed with
+  `Files=6, Tests=96`; `git diff --check` passed; `mdbook build docs/book`
+  passed; broad `./bin/ci-regression isf --no-book` passed with `Files=217,
+  Tests=955`.
 ### R14 — ISF burst-reader fixture promotion shipped
 - Completed `ISF-BURST-FIXTURE-PROMOTION.1` and closed the task tree.
 - Added `t/1310-isf-burst-fixture-coverage.t` for file-backed scheduled

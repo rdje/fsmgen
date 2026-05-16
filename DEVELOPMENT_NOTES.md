@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: UART fixture promotion makes truncation explicit
+- `ISF-UART-FIXTURE-PROMOTION.1` promotes the checked-in UART transmit fixture
+  as a bounded UART-like serial flow, not as a complete UART protocol model.
+- The old fixture drove `tx` from the whole sampled byte in the repeat body.
+  That was enough for early shift smoke coverage, but it was not an honest
+  strict HDL fixture because a one-bit serial output should be fed by an
+  explicit bit selection.
+- The fixture now drives `byte_data[0]` before shifting `byte_data` right.
+  That mirrors the intended LSB-first transmit behavior while staying within
+  already shipped sampled aliases, bit selection, parameterized drives,
+  repeat, and `shift_right` semantics.
+- The regression checks stable structural facts in scheduled `.fsm`, schedule
+  JSON, and HDL rather than snapshotting full generated artifacts. The goal is
+  to make strict forward-contract coverage real without freezing private
+  formatting.
 ## 2026-05-16: burst fixture promotion is coverage, not semantics
 - `ISF-BURST-FIXTURE-PROMOTION.1` promotes an already accepted fixture rather
   than changing wait, repeat, watchdog, latency, or HDL semantics.

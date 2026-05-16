@@ -90,6 +90,13 @@ strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, dynamic repeat counter storage, watchdog and latency counter
 roles, sampled aliases, and completion/timeout pulse fan-in.
 
+The UART-like fixture is a bounded transmit example, not a full UART protocol
+compliance claim. It is file-backed in the `isf` regression tier for strict
+schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, sampled-byte LSB drive selection from `byte_data[0]`, known-width
+`shift_right`, repeat counter storage, busy drive sequencing, and completion
+pulse behavior.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

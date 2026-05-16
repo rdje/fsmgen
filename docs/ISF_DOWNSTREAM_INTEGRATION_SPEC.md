@@ -1498,6 +1498,12 @@ The burst-reader fixture is covered by
 parity, scheduled `.fsm` structure, plain and strict HDL generation, dynamic
 repeat counter storage, watchdog and latency counter roles, sampled aliases,
 and completion/timeout pulse fan-in.
+The UART-like transmit fixture is covered by
+`t/1311-isf-uart-fixture-coverage.t`, which proves strict schedule JSON
+parity, scheduled `.fsm` structure, plain and strict HDL generation,
+sampled-byte LSB drive selection from `byte_data[0]`, known-width
+`shift_right`, repeat counter storage, busy drive sequencing, and completion
+pulse behavior.
 
 Recommended downstream smoke commands:
 
@@ -1505,6 +1511,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --emit-schedule-json isf/apb_requester.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/i2c_master.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/burst_reader.isf
+./bin/fsmgen --strict --emit-schedule-json isf/uart_tx.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
