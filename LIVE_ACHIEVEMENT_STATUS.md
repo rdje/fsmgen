@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF schedule-report schema version shipped
+- Completed R14 task-tree slice:
+  `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1`, closing
+  [docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md](docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md).
+- In-process and CLI schedule JSON reports now include top-level
+  `schema_version: 1`.
+- The ISF public contract advertises `schema_version` in
+  `schedule_report_top_level_keys`; this report payload version is separate
+  from `embedding.isf_public_interface.schema_version`.
+- Updated focused report tests plus the ISF spec, downstream handoff, public
+  contract doc, mdBook, roadmap, and live docs.
+- Lowering semantics, generated `.fsm`, and HDL output are unchanged.
+
 ## 2026-05-16: R14 — ISF generated-name stability policy documented
 - Completed R14 task-tree slice:
   `ISF-GENERATED-NAME-POLICY.1`, closing

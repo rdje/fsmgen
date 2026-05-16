@@ -1116,6 +1116,7 @@ to keep stderr clean and emit the JSON payload on stdout.
 The bounded public top-level key family is:
 
 ```text
+schema_version
 source
 scheduled_fsm
 clock
@@ -1339,6 +1340,9 @@ domain-local counts in `clock_domains[]`. The machine-readable contract
 advertises this through `schedule_report_interface_count_shape` and
 `schedule_report_state_count_shape`.
 
+The top-level `schema_version` value is integer `1` for the current
+schedule-report payload shape and is separate from the
+`embedding.isf_public_interface` contract metadata `schema_version`.
 The top-level `source` value is an actor-derived `.isf` basename, and
 `scheduled_fsm` is the scheduled `.fsm` basename for the current report scope.
 Multi-domain reports use the generated `<actor>_top.fsm` artifact. `clock` is
@@ -1469,8 +1473,6 @@ Bounded but not fully frozen:
 
 Blockers before flipping `schedule_report_full_schema_stable` to true:
 
-- Decide whether the report gets its own schema/version field or continues to
-  rely on `embedding.isf_public_interface` as the schema discovery surface.
 - Decide whether assignment provenance and multi-file child summaries stay
   private or gain bounded public summaries.
 - Define additive/deprecation policy for future top-level keys, nested optional

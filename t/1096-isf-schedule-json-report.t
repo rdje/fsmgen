@@ -27,6 +27,7 @@ subtest 'schedule JSON report describes APB requester lowering IR' => sub {
     my $json     = FSM::Scheduler::ISF->new()->report($actor);
     my $report   = JSON::PP->new->decode($json);
 
+    is($report->{schema_version}, 1, 'schedule report schema version');
     is($report->{source},        'apb_requester.isf', 'source name');
     is($report->{scheduled_fsm}, 'apb_requester.fsm', 'scheduled fsm name');
     is($report->{clock},         'clk',               'clock name');

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF schedule-report schema version shipped
+- Completed `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1`, closing the
+  `ISF-SCHEDULE-REPORT-SCHEMA-VERSION` task tree.
+- In-process and CLI ISF schedule JSON reports now include top-level
+  `schema_version: 1`.
+- Added `schema_version` to the public
+  `schedule_report_top_level_keys` family.
+- Updated focused schedule-report tests and synchronized the ISF spec,
+  downstream handoff, public contract doc, mdBook, roadmap, task tree, and
+  live docs.
+- Lowering semantics, generated `.fsm`, and HDL output are unchanged.
 ### R14 — ISF generated-name stability policy documented
 - Completed `ISF-GENERATED-NAME-POLICY.1`, closing the
   `ISF-GENERATED-NAME-POLICY` task tree.

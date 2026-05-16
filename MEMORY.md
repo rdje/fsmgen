@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF schedule-report schema version shipped
+- Completed `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` in
+  [docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md](docs/tasks/ISF-SCHEDULE-REPORT-SCHEMA-VERSION.md),
+  closing the schedule-report schema-version tree.
+- In-process and CLI ISF schedule JSON reports now include top-level
+  `schema_version: 1`.
+- The ISF public contract advertises `schema_version` in
+  `schedule_report_top_level_keys`. The report payload version is separate
+  from the `embedding.isf_public_interface.schema_version` contract metadata
+  version.
+- Updated focused schedule-report, public key-family, CLI parity, spec,
+  downstream handoff, public contract doc, mdBook, roadmap, and live docs.
+- Lowering semantics, generated `.fsm`, and HDL output are unchanged.
 ## 2026-05-16: ISF generated-name stability policy documented
 - Completed `ISF-GENERATED-NAME-POLICY.1` in
   [docs/tasks/ISF-GENERATED-NAME-POLICY.md](docs/tasks/ISF-GENERATED-NAME-POLICY.md),

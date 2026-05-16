@@ -2084,6 +2084,7 @@ fail-closed/deferred.
 
 ```json
 {
+  "schema_version": 1,
   "source": "actor_name.isf",
   "scheduled_fsm": "actor_name.fsm",
   "clock": "clk",
@@ -2124,6 +2125,8 @@ fail-closed/deferred.
 This is a machine-readable schedule report generated from the same lowering IR
 as `.fsm` output. It now has a bounded public key-family contract through
 `embedding.isf_public_interface`, but it is not a frozen full schema. Current
+reports carry `schema_version: 1`; that value versions the schedule-report
+payload separately from the `embedding.isf_public_interface` contract metadata.
 scalar source values such as `watchdog` are preserved as parser-carried strings
 in the JSON report. Assigned scheduler counters using the generated `*_wd`,
 `*_cc`, and `*_cnt` naming families are reported as `kind: counter` with the
@@ -2349,11 +2352,10 @@ keys or new value-family members may be added only with public-contract
 metadata, focused tests, and documentation in the same slice.
 
 The remaining blockers before a whole-schema freeze are explicit: decide
-whether the report needs its own schema/version field, decide whether
-assignment provenance and multi-file child summaries stay private or become
-bounded public summaries, define additive/deprecation policy, and maintain a
-golden fixture matrix for every advertised branch through both in-process and
-CLI report paths.
+whether assignment provenance and multi-file child summaries stay private or
+become bounded public summaries, define additive/deprecation policy, and
+maintain a golden fixture matrix for every advertised branch through both
+in-process and CLI report paths.
 
 ## 11. Current Regression Fixtures
 

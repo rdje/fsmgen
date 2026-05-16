@@ -832,6 +832,7 @@ sub isf_public_interface_dt_ordering_policy {
 sub isf_public_interface_schedule_report_top_level_keys {
     return [
         qw(
+            schema_version
             source
             scheduled_fsm
             clock

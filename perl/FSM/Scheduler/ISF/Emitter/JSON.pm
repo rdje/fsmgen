@@ -24,6 +24,7 @@ sub emit($self, $ir) {
 
 sub report_hash($self, $ir) {
     my $report = {
+        schema_version => 1,
         source         => $ir->{actor_name} . '.isf',
         scheduled_fsm  => $ir->{actor_name} . '.fsm',
         clock          => $ir->{clock},

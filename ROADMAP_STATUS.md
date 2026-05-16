@@ -68,9 +68,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   mdBook: generated names are deterministic for the same source and FSMGen
   version and usable as report-local/artifact-local identifiers when public
   fields reference them, but downstream tools should use bounded metadata
-  fields instead of parsing generated spelling as semantic API. The next PNT
-  selection should choose a fresh roadmap-aligned R14 task tree before
-  implementation.
+  fields instead of parsing generated spelling as semantic API.
+  `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` then added top-level
+  `schema_version: 1` to in-process and CLI schedule JSON reports and
+  advertised that key through `schedule_report_top_level_keys`, closing the
+  schema/version freeze-readiness blocker without freezing the whole schedule
+  JSON tree. The next PNT selection should choose a fresh roadmap-aligned R14
+  task tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -224,6 +228,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-GENERATED-NAME-POLICY.1` documented generated-name stability policy and
   removed it from the open whole-schema freeze blocker list without changing
   generated names, schedule JSON payloads, generated `.fsm`, or HDL output.
+  `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` added report-level
+  `schema_version: 1`, updated the public top-level key family, and removed
+  schema/version selection from the remaining whole-schema freeze blockers.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

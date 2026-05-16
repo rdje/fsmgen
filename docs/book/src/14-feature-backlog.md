@@ -776,9 +776,8 @@ downstream consumers should use bounded metadata fields instead of parsing
 generated-name spelling as a semantic contract.
 
 Blockers before flipping `schedule_report_full_schema_stable` are: decide
-whether the report needs its own schema/version field, decide whether
-assignment provenance and multi-file child summaries stay private or gain
-bounded public summaries, document additive/deprecation rules, and keep a
+whether assignment provenance and multi-file child summaries stay private or
+gain bounded public summaries, document additive/deprecation rules, and keep a
 golden fixture matrix for every advertised branch.
 
 ### ISF Realistic Fixture Matrix

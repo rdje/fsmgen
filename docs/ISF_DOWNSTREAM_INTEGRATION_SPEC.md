@@ -941,6 +941,7 @@ hash-backed drive DT blocks are sorted lexically by drive name
 bounded schedule report. Top-level keys currently advertised:
 
 ```text
+schema_version
 source
 scheduled_fsm
 clock
@@ -986,6 +987,9 @@ updates docs, contract metadata where applicable, and tests.
 
 Scalar summaries:
 
+- `schema_version`: integer `1` for the current schedule-report payload
+  shape. This is separate from the
+  `embedding.isf_public_interface.schema_version` contract metadata.
 - `source`: report source basename derived from the actor name with `.isf`.
 - `scheduled_fsm`: scheduled `.fsm` basename for the report scope. Multi-domain
   reports use the generated `<actor>_top.fsm` artifact.

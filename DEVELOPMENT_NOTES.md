@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: schedule reports carry their own payload version
+- `ISF-SCHEDULE-REPORT-SCHEMA-VERSION.1` adds top-level `schema_version: 1`
+  to the schedule JSON payload. This is intentionally separate from
+  `embedding.isf_public_interface.schema_version`, which versions the public
+  contract metadata object.
+- The field closes the schema/version freeze-readiness blocker without
+  claiming the whole schedule JSON tree is frozen. The remaining freeze work is
+  assignment provenance, multi-file child summaries, additive/deprecation
+  policy, and a golden fixture matrix.
+- The slice changes report metadata only. It does not affect lowering,
+  scheduled `.fsm`, or HDL generation.
 ## 2026-05-16: generated names are identifiers, not semantic grammar
 - `ISF-GENERATED-NAME-POLICY.1` makes the generated-name contract explicit
   without changing any generated strings. Names remain deterministic for the
