@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum reusable-library use-site overrides shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.27` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.28`.
+- Reusable-library use-site parameter overrides now accept local enum members
+  such as `mode.BUSY` and package-qualified enum members such as
+  `shared.mode.BUSY` as scalar values and aggregate/list leaves.
+- Parser validation resolves those enum members to literal generated-top
+  `?fsmc` parameter bindings and `library_uses[]` schedule-report values.
+- Unknown use-site enum members fail before lowering, while plain symbolic
+  use-site values such as `TOP_WIDTH` remain rejected.
 ## 2026-05-16: ISF enum inline drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.26` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

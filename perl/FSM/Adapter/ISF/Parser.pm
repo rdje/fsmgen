@@ -1417,7 +1417,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults or aggregate/list parameter default leaves, activation scalar parameter overrides or aggregate/list override leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, inline drive assignment RHS scalar values or operands, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults or aggregate/list parameter default leaves, transaction scalar parameter defaults or aggregate/list parameter default leaves, activation scalar parameter overrides or aggregate/list override leaves, reusable-library use-site parameter override values or leaves, transaction condition expression operands, transaction set RHS scalar values or operands, transaction switch branch values, rule guard expression operands, rule assignment RHS scalar values or operands, drive body RHS scalar values, inline drive assignment RHS scalar values or operands, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }
@@ -2181,8 +2181,41 @@ sub _validate_use_params($self, $actor, $use, $exported_actor) {
             unless exists $declared{$name};
         confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' parameter '$name' shape does not match actor '$exported_actor->{actor_name}' declaration\n"
             unless _param_values_shape_compatible($declared{$name}{value}, $override->{value});
+        $override->{value} = $self->_resolve_library_use_param_value(
+            $actor,
+            $override->{value},
+            "actor '$actor->{actor_name}' use '$use->{instance}' parameter '$name'",
+        );
     }
     return 1;
+}
+
+sub _resolve_library_use_param_value($self, $actor, $value, $context) {
+    if (!ref($value)) {
+        confess "Error: $context uses undefined parameter value; reusable-library use-site parameter overrides accept numeric, exact-width, enum member, and aggregate/list literal values only\n"
+            unless defined($value);
+        return _clone_isf_value($value)
+            if _is_numeric_or_exact_width_literal($value);
+        if (_is_enum_member_reference($value)) {
+            my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
+            confess "Error: $context references unknown enum member '$value'\n"
+                unless defined($resolved_value) && !ref($resolved_value);
+            confess "Error: $context enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless _is_non_negative_integer_literal_value($resolved_value);
+            return _clone_isf_value($resolved_value);
+        }
+
+        confess "Error: $context uses unsupported parameter value '$value'; reusable-library use-site parameter overrides accept numeric, exact-width, enum member, and aggregate/list literal values only\n";
+    }
+
+    confess "Error: $context uses unsupported parameter value shape; reusable-library use-site parameter overrides accept non-empty aggregate/list literal values only\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    return [
+        map {
+            $self->_resolve_library_use_param_value($actor, $_, $context)
+        } @$value
+    ];
 }
 
 sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
@@ -2330,8 +2363,8 @@ sub _is_library_namespace {
 sub _validate_isf_param_value {
     my ($value, $context) = @_;
     if (!ref($value)) {
-        confess "$context uses unsupported parameter value '$value'; first ISF library parameter binding accepts numeric, exact-width, and aggregate/list literals only\n"
-            unless defined($value) && _is_numeric_or_exact_width_literal($value);
+        confess "$context uses unsupported parameter value '$value'; first ISF library parameter binding accepts numeric, exact-width, enum member, and aggregate/list literals only\n"
+            unless defined($value) && (_is_numeric_or_exact_width_literal($value) || _is_enum_member_reference($value));
         return 1;
     }
 

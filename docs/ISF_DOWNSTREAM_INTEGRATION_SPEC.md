@@ -462,9 +462,10 @@ Rules:
   use local or package-qualified enum member references. Scalar activation
   parameter overrides and scalar leaves inside activation aggregate/list
   parameter override values may also use local or package-qualified enum member
-  references on generated activation sites. Reusable-library use-site enum
-  overrides, duplicate overrides, unknown overrides, and shape mismatches fail
-  closed.
+  references on generated activation sites. Reusable-library use-site parameter
+  overrides may also use local or package-qualified enum members as scalar
+  values or scalar leaves inside compatible aggregate/list override values.
+  Duplicate overrides, unknown overrides, and shape mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored enum
   tokens. These are static specialization defaults, not runtime payloads.
@@ -824,6 +825,9 @@ Rules:
 - Actor constants and scalar enum members resolve to literal values before
   generated-top emission, including scalar enum leaves inside activation
   aggregate/list override values.
+- Reusable-library use-site enum member overrides resolve to literal values
+  before generated-top emission and before `library_uses[]` report
+  publication. Use-site overrides do not accept actor constants yet.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
 - Parameterized rule triggers lower through generated child activation
@@ -913,18 +917,18 @@ Rules:
   consume local or package enum members, scalar activation parameter overrides
   may consume local or package enum members, scalar leaves inside activation
   aggregate/list parameter override values may consume local or package enum
-  members, and scalar rule assignment RHS values or expression operands may
-  consume local or package enum members. Rule guard expressions may use enum
-  members as scalar operands, and inline drive assignment RHS scalar values or
-  operands inside inline drive RHS expressions may consume local or package
-  enum members. Enum members in
+  members, reusable-library use-site parameter override values or leaves may
+  consume local or package enum members, and scalar rule assignment RHS values
+  or expression operands may consume local or package enum members. Rule guard
+  expressions may use enum members as scalar operands, and inline drive
+  assignment RHS scalar values or operands inside inline drive RHS expressions
+  may consume local or package enum members. Enum members in
   expression operator position, standalone transaction conditions, switch
   selectors, targets, rules outside scalar trigger parameter overrides, rule
   guard or transaction condition expression operator position, rule assignment
   expression operator position, drive targets, inline drive assignment RHS
-  expression operator position, drive-call expression operator position,
-  reusable-library use-site parameter overrides, and other contexts remain
-  deferred.
+  expression operator position, drive-call expression operator position, and
+  other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1402,7 +1406,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1277-isf-enum-member-actor-aggregate-params.t \
   t/1278-isf-enum-member-transaction-aggregate-params.t \
   t/1279-isf-enum-member-inline-drive-values.t \
-  t/1280-isf-enum-member-inline-drive-expression-values.t
+  t/1280-isf-enum-member-inline-drive-expression-values.t \
+  t/1281-isf-enum-member-library-use-params.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

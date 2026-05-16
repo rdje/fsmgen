@@ -160,28 +160,6 @@ ISF
         'unknown aggregate activation enum leaf fails before lowering',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_use_site_override_still_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (clock clk)
-  (interface
-    (input trigger)
-    (output fired))
-  (imports
-    (library common.pulse as pulse_lib))
-  (use pulse_lib.pulse_actor as rx
-    (params
-      (WIDTH mode.BUSY))
-    (bind
-      (clock clk)
-      (input trigger trigger)
-      (output fired fired))))
-ISF
-        qr/use 'rx' parameter 'WIDTH' uses unsupported parameter value 'mode\.BUSY'; first ISF library parameter binding accepts numeric, exact-width, and aggregate\/list literals only/,
-        'library use-site enum overrides remain deferred',
-    );
 };
 
 done_testing();

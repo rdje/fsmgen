@@ -141,10 +141,12 @@ actor-local constants, scalar local or package-qualified enum members, and
 compatible aggregate/list literals whose scalar leaves are literals,
 actor-local constants for activation overrides, or enum members for actor
 parameter defaults, generated child transaction parameter defaults, and
-activation overrides. Constant names and scalar enum members are resolved to
-literal values before generated-top emission. Reusable-library use-site enum
-overrides, runtime signals, and arbitrary expressions remain outside the
-shipped value domain.
+activation overrides. Reusable-library use-site parameter overrides may use
+enum members as scalar values or scalar leaves inside compatible aggregate/list
+override values. Constant names and scalar enum members on activation sites,
+and enum members on reusable-library use sites, are resolved to literal values
+before generated-top emission. Runtime signals and arbitrary expressions remain
+outside the shipped value domain.
 
 ### General Transaction Activation Parameter Overrides
 
@@ -306,7 +308,10 @@ package-qualified enum members. Named drive-call scalar actual values may also
 consume local and package-qualified enum members, and drive-call actual
 expressions may use enum members as scalar operands. Inline drive assignment
 RHS scalar values and scalar operands inside inline drive RHS expressions may
-now also consume local and package-qualified enum members.
+now also consume local and package-qualified enum members. Reusable-library
+use-site parameter override values and aggregate/list leaves may consume local
+and package-qualified enum members too, resolving to literal generated-top
+bindings and `library_uses[]` report values.
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as
 `frame.mode` or `lanes[0]`, either directly or as scalar operands inside

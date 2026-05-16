@@ -282,22 +282,23 @@ parameter defaults or scalar leaves inside actor aggregate/list parameter
 defaults, by generated child transaction scalar parameter defaults or scalar
 leaves inside generated child transaction aggregate/list parameter defaults,
 by scalar activation parameter overrides or scalar leaves inside activation
-aggregate/list parameter overrides, by direct transaction `set` RHS scalar
-values or scalar operands inside transaction `set` RHS expressions, by scalar
-operands inside transaction `when`/`while`/`until` condition expressions, by
-transaction `switch` branch values, by scalar rule assignment RHS values or
-scalar operands inside rule assignment RHS expressions, by scalar operands
-inside rule guard expressions, by scalar drive body RHS values, by inline
-drive assignment RHS scalar values or scalar operands inside inline drive RHS
-expressions, and by named drive-call scalar actual values or scalar operands
-inside drive-call actual expressions in the current ISF surface. Enum members in expression operator
-position, standalone guards or standalone transaction conditions, transaction
+aggregate/list parameter overrides, by reusable-library use-site parameter
+override scalar values or scalar leaves inside aggregate/list use-site
+overrides, by direct transaction `set` RHS scalar values or scalar operands
+inside transaction `set` RHS expressions, by scalar operands inside transaction
+`when`/`while`/`until` condition expressions, by transaction `switch` branch
+values, by scalar rule assignment RHS values or scalar operands inside rule
+assignment RHS expressions, by scalar operands inside rule guard expressions,
+by scalar drive body RHS values, by inline drive assignment RHS scalar values
+or scalar operands inside inline drive RHS expressions, and by named drive-call
+scalar actual values or scalar operands inside drive-call actual expressions in
+the current ISF surface. Enum members in expression operator position,
+standalone guards or standalone transaction conditions, transaction
 condition expression operator position, switch selectors, rule targets, rule
 guard or rule assignment expression operator position, rule actions outside
 trigger parameter overrides, drive targets, inline drive assignment RHS
-expression operator position, drive-call expression operator position,
-reusable-library use-site parameter overrides, and typed aggregate carriers do
-not consume enum member references yet.
+expression operator position, drive-call expression operator position, and
+typed aggregate carriers do not consume enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -424,7 +425,11 @@ leaves are numeric, exact-width, or local/package enum member literals for
 actor and generated child transaction parameter defaults. Scalar activation
 parameter overrides and scalar leaves inside activation aggregate/list
 parameter override values may also use local or package-qualified enum members.
-Library use-site enum overrides remain deferred. Schedule
+Reusable-library use-site parameter overrides may use local or
+package-qualified enum members as scalar override values or as scalar leaves
+inside compatible aggregate/list override values. Library use-site enum
+overrides resolve to literal values before generated-top `?fsmc` parameter
+emission and `library_uses[]` schedule-report publication. Schedule
 reports expose actor parameter defaults through `actor_params[]` entries with
 each authored parameter `name` and
 JSON-safe default `value`, preserving authored enum tokens such as `mode.BUSY`
@@ -1069,10 +1074,12 @@ member such as `mode.BUSY` or package enum member such as `shared.mode.BUSY`
 may appear as either a scalar override value or a scalar leaf inside an
 aggregate/list override value. The lowerer resolves constants and enum members
 to literal values before generated-top emission, so generated `?fsmc`
-parameter overrides remain self-contained. Unknown names, unknown enum
-members, actor parameters, transaction parameters, reusable-library use-site
-overrides, runtime signals, and arbitrary expressions remain fail-closed until
-a later task explicitly ships a wider value source.
+parameter overrides remain self-contained. Reusable-library use-site parameter
+overrides follow the same enum-member rule for scalar values and aggregate/list
+leaves, but do not accept actor constants. Unknown names, unknown enum
+members, actor parameters, transaction parameters, runtime signals, and
+arbitrary expressions remain fail-closed until a later task explicitly ships a
+wider value source.
 
 The parameterized rule-trigger contract follows the same specialization rule.
 It elaborates a generated child activation instance named
@@ -2769,6 +2776,7 @@ Focused tests:
 - [t/1278-isf-enum-member-transaction-aggregate-params.t](../t/1278-isf-enum-member-transaction-aggregate-params.t)
 - [t/1279-isf-enum-member-inline-drive-values.t](../t/1279-isf-enum-member-inline-drive-values.t)
 - [t/1280-isf-enum-member-inline-drive-expression-values.t](../t/1280-isf-enum-member-inline-drive-expression-values.t)
+- [t/1281-isf-enum-member-library-use-params.t](../t/1281-isf-enum-member-library-use-params.t)
 
 ## 12. Explicitly Deferred
 
@@ -2835,15 +2843,17 @@ Focused tests:
   child transaction scalar parameter default enum member values, generated
   child transaction aggregate/list parameter default enum member leaves, scalar
   activation parameter override enum member values, activation aggregate/list
-  override enum member leaves, inline drive assignment RHS enum member values
-  and expression operands, actor-owned aggregate storage variable carriers,
+  override enum member leaves, reusable-library use-site parameter override
+  enum member values and leaves, inline drive assignment RHS enum member
+  values and expression operands, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction `set` target aggregate leaf writes,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
   aggregate/list default leaves, generated child transaction parameter scalar
   values or aggregate/list default leaves, activation parameter scalar values
-  or aggregate/list override leaves, transaction
+  or aggregate/list override leaves, reusable-library use-site parameter
+  override values or leaves, transaction
   `when`/`while`/`until` condition expression operands, transaction `set` RHS
   scalar values/expression operands,
   transaction `switch` branch values, rule guard expression operands, rule

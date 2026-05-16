@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum reusable-library use-site overrides shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.27`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.28`.
+- Reusable-library use-site parameter overrides now accept local and
+  package-qualified enum members as scalar values and as scalar leaves inside
+  compatible aggregate/list override values.
+- Parser validation resolves use-site enum members to literal generated-top
+  `?fsmc` parameter bindings and `library_uses[]` schedule-report values.
+- Unknown use-site enum members fail before lowering, while plain symbolic
+  use-site parameter values remain rejected.
 ### R14 — ISF enum inline drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.26`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.27`.

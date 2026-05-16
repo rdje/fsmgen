@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum library use params resolve at use site
+- `ISF-TYPE-AGGREGATE-PARITY.27` widens reusable-library use-site parameter
+  overrides from numeric/exact-width literals to local or package enum members
+  as scalar values and as scalar leaves inside compatible aggregate/list
+  override values.
+- The parser resolves use-site enum members while validating the imported
+  actor parameter contract, after the importing actor enum/package tables are
+  finalized and before the generated composition top is emitted.
+- `library_uses[]` report values intentionally expose the resolved literal
+  values, matching the generated-top `?fsmc` parameter bindings that downstream
+  composition consumes. Actor constants and plain symbolic use-site values
+  remain rejected on this path.
 ## 2026-05-16: enum inline drive expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.26` widens inline drive enum support from direct
   scalar RHS values to scalar operands inside inline drive RHS expressions,

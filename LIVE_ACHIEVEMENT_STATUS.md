@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum reusable-library use-site overrides shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.27` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.28`, selecting the
+  next enum or aggregate value/update context after reusable-library use-site
+  enum overrides.
+- Reusable-library use-site parameter overrides now accept local and
+  package-qualified enum members as scalar values and aggregate/list leaves.
+- Those use-site enum members resolve to literal generated-top `?fsmc`
+  parameter bindings and `library_uses[]` schedule-report values; unknown enum
+  members and plain symbolic use-site values fail closed.
+
 ## 2026-05-16: R14 — ISF enum inline drive RHS expression operands shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.26` in

@@ -419,6 +419,10 @@ limitations are:
   for spawn, generated blocking `do`, and rule `trigger` may use enum members
   as static specialization values. Scalar leaves inside those activation
   aggregate/list parameter override values may use enum members too.
+  Reusable-library use-site parameter overrides may also use enum members as
+  scalar values or scalar leaves inside compatible aggregate/list override
+  values; those use-site enum members resolve to literal generated-top
+  bindings and `library_uses[]` report values.
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
@@ -428,8 +432,7 @@ limitations are:
   outside scalar trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
   position, drive targets, inline drive assignment RHS expression operator
-  position, drive-call expression operator position, reusable-library use-site
-  parameter overrides, and other non-shipped contexts
+  position, drive-call expression operator position, and other non-shipped contexts
   remain backlog, as do aggregate paths outside
   transaction `set` RHS values or direct targets, subaggregate
   operands/updates, and aggregate interface/transaction/bank carriers.
