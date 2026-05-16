@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum rule guard expression operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.20` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.21`, selecting the
+  next enum or aggregate value/update context after rule guard enum expression
+  operands.
+- Shorthand and long-form rule guard expressions now accept local and
+  package-qualified enum members as scalar operands, preserve authored guard
+  expressions in scheduled `.fsm` rule DT headers, and pass strict CLI HDL
+  generation.
+- Standalone enum guards, expression operator-position enum members, rule
+  targets, and other non-shipped rule enum contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum rule assignment expression values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.19` in

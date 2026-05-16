@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum rule guard expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.20` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.21`.
+- Shorthand and long-form rule guard expressions now accept local enum members
+  such as `mode.BUSY` and package-qualified enum members such as
+  `shared.mode.BUSY` as scalar operands.
+- The parser resolves those guard enum operands before lowering, preserves the
+  authored guard expression in scheduled `.fsm` rule DT headers, and strict CLI
+  HDL generation accepts the result.
+- Standalone enum member guards, expression operator-position enum members, rule
+  targets, and other non-shipped rule enum contexts remain deferred.
 ## 2026-05-16: ISF enum rule assignment expression values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.19` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

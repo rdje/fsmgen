@@ -282,13 +282,14 @@ parameter defaults, by generated child transaction scalar parameter defaults,
 by scalar activation parameter overrides, by direct transaction `set` RHS scalar
 values or scalar operands inside transaction `set` RHS expressions, by
 transaction `switch` branch values, by scalar rule assignment RHS values or
-scalar operands inside rule assignment RHS expressions, by scalar drive body RHS
-values, and by named drive-call scalar actual values or scalar operands inside
-drive-call actual expressions in the current ISF surface. Enum members in
-expression operator position, guards, switch selectors, rule targets, rule
+scalar operands inside rule assignment RHS expressions, by scalar operands
+inside rule guard expressions, by scalar drive body RHS values, and by named
+drive-call scalar actual values or scalar operands inside drive-call actual
+expressions in the current ISF surface. Enum members in expression operator
+position, standalone guards, switch selectors, rule targets, rule guard or rule
 assignment expression operator position, rule actions outside scalar trigger
-parameter overrides and scalar assignment RHS values/operands, drive targets,
-drive-call expression operator position, aggregate/list
+parameter overrides, scalar assignment RHS values/operands, and rule guard
+expression operands, drive targets, drive-call expression operator position, aggregate/list
 parameter leaves, aggregate/list activation override leaves, and typed
 aggregate carriers do not consume enum member references yet.
 
@@ -860,9 +861,10 @@ transaction step that becomes part of the transaction state sequence. Rule
 assignment direct scalar RHS values and scalar operands inside RHS expressions
 may use local enum members such as `mode.BUSY` or package enum members such as
 `shared.mode.BUSY`; the parser resolves those values before lowering and
-preserves the authored token in the guarded rule DT. Rule guard enum members,
-rule target enum members, and enum members in rule assignment expression
-operator position remain deferred.
+preserves the authored token in the guarded rule DT. Scalar operands inside
+rule guard expressions may also use enum members. Standalone enum member guards,
+rule target enum members, and enum members in rule guard or rule assignment
+expression operator position remain deferred.
 
 `(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
 entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering emits
@@ -2048,8 +2050,9 @@ Current lowering:
 Direct scalar rule assignment RHS values and scalar operands inside rule
 assignment RHS expressions may use local or package enum members, and strict
 HDL generation accepts the guarded rule DT header plus canonical assignment-pair
-body form. Rule assignment expression operator-position enum members remain
-deferred.
+body form. Rule guard expression operands may also use local or package enum
+members. Rule guard and assignment expression operator-position enum members
+remain deferred.
 
 Multi-rule fan-in example:
 
@@ -2732,6 +2735,7 @@ Focused tests:
 - [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t)
 - [t/1272-isf-enum-member-rule-values.t](../t/1272-isf-enum-member-rule-values.t)
 - [t/1273-isf-enum-member-rule-expression-values.t](../t/1273-isf-enum-member-rule-expression-values.t)
+- [t/1274-isf-enum-member-rule-guard-values.t](../t/1274-isf-enum-member-rule-guard-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2789,21 +2793,23 @@ Focused tests:
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum
   member values and expression operands, transaction `switch` branch enum
-  values, scalar rule assignment RHS enum member values and expression
-  operands, scalar drive body RHS enum member values, scalar drive-call actual
-  enum member values, drive-call actual expression enum member operands, actor
-  scalar parameter default enum member values, generated child transaction
-  scalar parameter default enum member values, scalar activation parameter
-  override enum member values, actor-owned aggregate storage variable carriers,
+  values, rule guard expression enum member operands, scalar rule assignment RHS
+  enum member values and expression operands, scalar drive body RHS enum member
+  values, scalar drive-call actual enum member values, drive-call actual
+  expression enum member operands, actor scalar parameter default enum member
+  values, generated child transaction scalar parameter default enum member
+  values, scalar activation parameter override enum member values, actor-owned
+  aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction `set` target aggregate leaf writes,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor scalar parameter defaults,
   generated child transaction scalar parameter defaults, scalar activation
   parameter overrides, transaction `set` RHS scalar values/expression operands,
-  transaction `switch` branch values, rule assignment RHS scalar values or
-  expression operands, drive body RHS scalar values, or drive-call actual scalar
-  values/expression operands remain deferred.
+  transaction `switch` branch values, rule guard expression operands, rule
+  assignment RHS scalar values or expression operands, drive body RHS scalar
+  values, or drive-call actual scalar values/expression operands remain
+  deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values or target tokens, subaggregate
   updates/operands, aggregate field/slice/update lowering, and broad

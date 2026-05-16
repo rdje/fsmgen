@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum rule guard expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.20`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.21`.
+- Shorthand and long-form rule guard expressions now accept local and
+  package-qualified enum members as scalar operands.
+- Scheduled `.fsm` preserves authored enum guard expressions in rule DT headers,
+  and strict CLI HDL generation accepts the guarded output.
+- Parser diagnostics reject unknown rule guard enum operands and keep
+  standalone enum guards, expression operator-position enum members, rule
+  targets, and other non-shipped rule enum contexts closed for later slices.
 ### R14 — ISF enum rule assignment expression values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.19`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.20`.

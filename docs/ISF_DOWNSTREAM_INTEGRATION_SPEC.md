@@ -543,6 +543,10 @@ Rules:
   direct scalar RHS values and scalar operands inside RHS expressions in
   explicit `(set port value)` and shorthand `(port value)` rule assignments.
   Rule assignment expression operator-position enum members remain deferred.
+- Rule guard expressions may use local or package enum members as scalar
+  operands, for example `(rule r (== mode_in mode.BUSY) ...)` or
+  `(rule r (when (& ready (== mode_in shared.mode.BUSY))) ...)`. Standalone enum
+  member guards and expression operator-position enum members remain deferred.
 - Scalar drive-call actuals may also use local or package enum members.
   Drive-call actual expressions may use enum members as scalar operands.
   Enum members in drive-call expression operator position remain deferred.
@@ -899,11 +903,13 @@ Rules:
   transaction scalar parameter defaults may consume local or package enum
   members, scalar activation parameter overrides may consume local or package
   enum members, and scalar rule assignment RHS values or expression operands
-  may consume local or package enum members. Enum members in expression operator position,
-  conditions, switch selectors, targets, rules outside scalar trigger parameter
-  overrides and scalar assignment RHS values/operands, rule assignment
-  expression operator position, drive targets, drive-call expression operator
-  position, inline drive assignments, aggregate/list parameter leaves,
+  may consume local or package enum members. Rule guard expressions may use enum
+  members as scalar operands. Enum members in expression operator position,
+  conditions outside rule guard expressions, switch selectors, targets, rules
+  outside scalar trigger parameter overrides, scalar assignment RHS
+  values/operands, and rule guard expression operands, rule guard or rule
+  assignment expression operator position, drive targets, drive-call expression
+  operator position, inline drive assignments, aggregate/list parameter leaves,
   aggregate/list activation override leaves, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
@@ -1372,7 +1378,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1270-isf-enum-member-transaction-params.t \
   t/1271-isf-enum-member-activation-params.t \
   t/1272-isf-enum-member-rule-values.t \
-  t/1273-isf-enum-member-rule-expression-values.t
+  t/1273-isf-enum-member-rule-expression-values.t \
+  t/1274-isf-enum-member-rule-guard-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book
