@@ -1,0 +1,31 @@
+;; Rule/resource arbitration fixture — priority rule slot plus rule/transaction conflict
+(actor rule_resource_arbiter
+  (clock clk)
+  (reset (rst_n async active_low))
+  (watchdog 65536)
+  (interface
+    (input start)
+    (input force)
+    (input high_req)
+    (input low_req)
+    (output done)
+    (output out)
+    (output valid)
+    (output err))
+  (priority force_out over main)
+  (priority high over low)
+  (resources
+    (resource shared_slot
+      (kind rule_slot)
+      (arbiter priority)
+      (users high low)))
+  (transaction main
+    (on start)
+    (update out 0)
+    (complete done))
+  (rule force_out force
+    (out 1))
+  (rule high high_req
+    (valid 1))
+  (rule low low_req
+    (err 1)))

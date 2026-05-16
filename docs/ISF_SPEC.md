@@ -2697,6 +2697,7 @@ Representative shipped fixtures:
 - [isf/full_featured.isf](../isf/full_featured.isf)
 - [isf/i2c_master.isf](../isf/i2c_master.isf)
 - [isf/spawn_parent.isf](../isf/spawn_parent.isf)
+- [isf/rule_resource_arbiter.isf](../isf/rule_resource_arbiter.isf)
 - [isf/clock_domain_event_crossing.isf](../isf/clock_domain_event_crossing.isf)
 - [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 - [isf/spi_master.isf](../isf/spi_master.isf)
@@ -2751,6 +2752,14 @@ request/payload handoffs, public input fanout, `await_all` synchronization,
 strict `--outdir` file emission, and strict HDL generation for the generated
 top, parent, and child artifacts. It remains a bounded generated-child
 composition fixture, not an external protocol compliance claim.
+The [isf/rule_resource_arbiter.isf](../isf/rule_resource_arbiter.isf)
+fixture now has file-backed schedule/HDL/strict coverage for a
+rule-over-transaction priority resolution, a `rule_slot`/`priority` resource
+with two rule users, lower-priority rule suppression by a higher-priority
+rule, bounded `priority_resolutions[]` and `resource_arbitration[]` report
+metadata, delayed completion pulse behavior, and strict generated HDL
+reachability. It covers the shipped `rule_slot` plus `priority` subset only;
+other resource kinds and arbiters remain explicitly deferred.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -2993,6 +3002,7 @@ Focused tests:
 - [t/1313-isf-switch-fixture-coverage.t](../t/1313-isf-switch-fixture-coverage.t)
 - [t/1314-isf-when-fixture-coverage.t](../t/1314-isf-when-fixture-coverage.t)
 - [t/1315-isf-generated-composition-fixture-coverage.t](../t/1315-isf-generated-composition-fixture-coverage.t)
+- [t/1316-isf-rule-resource-fixture-coverage.t](../t/1316-isf-rule-resource-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

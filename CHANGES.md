@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF rule/resource fixture promotion shipped
+- Completed `ISF-RULE-RESOURCE-FIXTURE-PROMOTION.1` and closed the task tree.
+- Added `isf/rule_resource_arbiter.isf` as a bounded `rule_slot`/`priority`
+  resource arbitration fixture.
+- Added `t/1316-isf-rule-resource-fixture-coverage.t` for file-backed
+  scheduled `.fsm` structure, strict schedule JSON parity, plain and strict
+  HDL generation, rule-over-transaction priority suppression, resource
+  arbitration report metadata, lower-priority rule gating, and delayed
+  completion pulse behavior.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook feature matrix and
+  backlog chapters.
+- Validation: focused rule/resource/public/book/spec audit tests passed with
+  `Files=7, Tests=106`; `./bin/ci-regression isf --no-book` passed with
+  `Files=222, Tests=975`; `mdbook build docs/book` passed; `git diff --check`
+  passed.
 ### R14 — ISF generated-composition fixture promotion shipped
 - Completed `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` and closed the
   task tree.

@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF rule/resource fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-RULE-RESOURCE-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md](docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md).
+- The `ISF-RULE-RESOURCE-FIXTURE-PROMOTION` tree is now closed. No active ISF
+  task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- Added [isf/rule_resource_arbiter.isf](isf/rule_resource_arbiter.isf) as a
+  bounded `rule_slot`/`priority` resource arbitration fixture.
+- Added
+  [t/1316-isf-rule-resource-fixture-coverage.t](t/1316-isf-rule-resource-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, rule-over-transaction priority
+  suppression, resource arbitration report metadata, lower-priority rule
+  gating, and delayed completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused rule/resource/public/book/spec audit tests passed with
+  `Files=7, Tests=106`; `./bin/ci-regression isf --no-book` passed with
+  `Files=222, Tests=975`; `mdbook build docs/book` passed; `git diff --check`
+  passed.
+
 ## 2026-05-16: R14 — ISF generated-composition fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` in

@@ -127,6 +127,15 @@ strict schedule JSON parity, strict `--outdir` file emission, and strict HDL
 generation for the generated top, parent, and child artifacts. It is a bounded
 generated-composition fixture, not an external protocol compliance claim.
 
+The rule/resource fixture is file-backed in the `isf` regression tier for
+resource arbitration coverage: a rule-over-transaction priority resolution, a
+`rule_slot` resource with `priority` arbitration, high-priority rule
+ownership, lower-priority rule gating, bounded `priority_resolutions[]` and
+`resource_arbitration[]` report metadata, strict schedule JSON parity,
+scheduled `.fsm` structure, plain and strict HDL generation, and delayed
+completion pulse behavior. It does not widen the deferred backlog resource
+kinds or arbiter families.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

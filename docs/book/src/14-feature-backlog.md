@@ -1009,6 +1009,11 @@ generated top, parent, and child scheduled `.fsm` artifacts, start/done
 handoffs, named-drive request/payload handoffs, public input fanout,
 `await_all` synchronization, and strict HDL generation for the generated top,
 parent, and child artifacts.
+The rule/resource fixture is now promoted in the `isf` tier for file-backed
+strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, rule-over-transaction priority suppression, `rule_slot`/`priority`
+resource metadata, lower-priority rule gating by a higher-priority rule, and
+delayed completion pulse behavior.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

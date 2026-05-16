@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF rule/resource fixture promotion shipped
+- Completed `ISF-RULE-RESOURCE-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md](docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md).
+- Added [isf/rule_resource_arbiter.isf](isf/rule_resource_arbiter.isf) as a
+  bounded `rule_slot`/`priority` resource arbitration fixture.
+- Added
+  [t/1316-isf-rule-resource-fixture-coverage.t](t/1316-isf-rule-resource-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, rule-over-transaction priority
+  suppression, resource arbitration report metadata, lower-priority rule
+  gating, and delayed completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: `prove -l t/1316-isf-rule-resource-fixture-coverage.t t/1218-isf-rule-slot-resource-arbitration.t t/1220-isf-arbitration-schedule-report.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`
+  passed with `Files=7, Tests=106`; `./bin/ci-regression isf --no-book`
+  passed with `Files=222, Tests=975`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF generated-composition fixture promotion shipped
 - Completed `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md](docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md).

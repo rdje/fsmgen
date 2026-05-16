@@ -1479,6 +1479,7 @@ isf/apb_requester.isf
 isf/i2c_master.isf
 isf/spi_master.isf
 isf/spawn_parent.isf
+isf/rule_resource_arbiter.isf
 isf/full_featured.isf
 isf/clock_domain_event_crossing.isf
 isf/clock_domain_dual_event_crossing.isf
@@ -1527,6 +1528,14 @@ named-drive request/payload handoffs, public input fanout, `await_all`
 synchronization, and strict HDL generation for the generated top, parent, and
 child artifacts. This is the representative downstream handoff path for
 spawned generated-child composition; it is not a protocol compliance claim.
+The rule/resource fixture is covered by
+`t/1316-isf-rule-resource-fixture-coverage.t`, which proves strict schedule
+JSON parity, scheduled `.fsm` structure, plain and strict HDL generation,
+rule-over-transaction priority suppression, `rule_slot`/`priority` resource
+metadata, lower-priority rule gating by a higher-priority rule, and delayed
+completion pulse behavior. This fixture covers the shipped priority arbiter
+for `rule_slot`; it does not claim round-robin, weighted, token bucket, or
+output-bundle resource support.
 
 Recommended downstream smoke commands:
 
@@ -1539,6 +1548,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/switch_test.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/when_test.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/spawn_parent.isf
+./bin/fsmgen --strict --emit-schedule-json isf/rule_resource_arbiter.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf

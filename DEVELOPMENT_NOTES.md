@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: rule/resource fixture promotion stays inside shipped arbitration
+- `ISF-RULE-RESOURCE-FIXTURE-PROMOTION.1` adds
+  `isf/rule_resource_arbiter.isf` as a bounded realism fixture for the already
+  shipped `rule_slot` resource kind and `priority` arbiter.
+- The fixture deliberately combines two public arbitration surfaces: a
+  rule-over-transaction priority resolution on `out`, and a resource-level
+  priority grant where the `low` rule is gated by `! high_req`.
+- The regression checks durable scheduled `.fsm` and HDL structure rather than
+  full snapshots: the transaction write suppression, `-force_out`, `-high`,
+  `-low <(& low_req (! high_req))`, bounded report arrays, and delayed
+  completion pulse are the important contract points.
+- Backlog resource kinds and arbiters remain deferred. This slice proves the
+  shipped subset in a file-backed fixture; it does not widen the resource
+  catalog.
 ## 2026-05-16: generated-composition fixture promotion closes strict handoff coverage
 - `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` promotes
   `isf/spawn_parent.isf` as bounded generated-child composition coverage

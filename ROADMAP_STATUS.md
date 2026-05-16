@@ -10,10 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION` is
-  closed after promoting the `spawn_parent` generated-composition fixture to
-  file-backed strict schedule JSON, strict `--outdir`, scheduled top/parent/
-  child `.fsm`, and generated top/parent/child HDL coverage. The spec,
+- Next decision point: `ISF-RULE-RESOURCE-FIXTURE-PROMOTION` is closed after
+  adding and promoting `isf/rule_resource_arbiter.isf` to file-backed
+  scheduled `.fsm`, strict schedule JSON, plain HDL, and strict HDL coverage
+  for the shipped `rule_slot`/`priority` resource subset. The spec,
   downstream handoff, public contract, mdBook, fixture matrix, public
   metadata, and tests are synchronized. The next R14 PNT implementation slice
   must select or create a new task tree before code changes.
@@ -5495,6 +5495,13 @@ Done:
   top/parent/child scheduled `.fsm` artifacts, start/done handoffs,
   named-drive request/payload handoffs, public input fanout, `await_all`
   synchronization, and strict HDL generation for each generated artifact.
+- `isf/rule_resource_arbiter.isf` now has file-backed rule/resource fixture
+  coverage through
+  [t/1316-isf-rule-resource-fixture-coverage.t](t/1316-isf-rule-resource-fixture-coverage.t),
+  covering strict schedule JSON parity, scheduled `.fsm` structure, plain and
+  strict HDL generation, rule-over-transaction priority suppression,
+  `rule_slot`/`priority` report metadata, lower-priority rule gating, and
+  delayed completion pulse behavior.
 - ISF runtime divisor safety now rejects numeric/exact-width literal-zero
   divisors and actor-level constants that resolve to zero before scheduled
   `.fsm` emission, while preserving nonzero literal/constant divisors and
@@ -5836,7 +5843,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION`, so the next ISF
+  after `ISF-RULE-RESOURCE-FIXTURE-PROMOTION`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and
