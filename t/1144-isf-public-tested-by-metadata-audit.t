@@ -181,6 +181,7 @@ my $expected_tested_by = [
     't/1281-isf-enum-member-library-use-params.t',
     't/1282-isf-enum-member-drive-expression-values.t',
     't/1283-isf-aggregate-rule-values.t',
+    't/1284-isf-aggregate-rule-expression-values.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

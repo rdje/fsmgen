@@ -428,9 +428,10 @@ limitations are:
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
   expressions, and direct transaction `set` targets may write scalar aggregate
-  leaves on those same carriers. Rule assignment scalar RHS values may also
-  read scalar aggregate leaves from those carriers. Enum members in expression
-  operator position,
+  leaves on those same carriers. Rule assignment scalar RHS values and scalar
+  operands inside rule assignment RHS expressions may also read scalar
+  aggregate leaves from those carriers. Enum members in expression operator
+  position,
   standalone transaction conditions, switch selectors, set targets, rules
   outside scalar trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
@@ -438,9 +439,9 @@ limitations are:
   drive assignment RHS expression operator position, drive-call expression
   operator position, and other non-shipped contexts
   remain backlog, as do aggregate paths outside
-  transaction `set` RHS values, direct transaction `set` targets, or direct
-  rule assignment RHS values, subaggregate operands/updates, and aggregate
-  interface/transaction/bank carriers.
+  transaction `set` RHS values, direct transaction `set` targets, or rule
+  assignment RHS values/expression operands, subaggregate operands/updates, and
+  aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

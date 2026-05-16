@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate rule RHS expression operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.30` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.31`, selecting the
+  next enum or aggregate value/update context after rule assignment RHS
+  aggregate expression operands.
+- Rule assignment RHS expressions now accept scalar aggregate storage leaves as
+  operands and preserve authored expression payloads in guarded rule DTs and
+  assignment provenance.
+- Operator-position aggregate paths, subaggregate operands, and aggregate rule
+  assignment targets fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate rule RHS values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.29` in

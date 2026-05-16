@@ -702,15 +702,16 @@ target aggregate_leaf)` clauses may read scalar member/item leaves from those
 declared storage variables, transaction `set` RHS expressions may use scalar
 member/item leaves as operands, and transaction `(set aggregate_leaf value)`
 clauses may write scalar member/item leaves on those same declared storage
-variables. Rule assignment scalar RHS values may read scalar member/item leaves
-from those same declared storage variables. Lowering preserves `+types`,
-`+import`, typed `+size` entries, and embedded imported package roots in
-scheduled `.fsm` review artifacts. Unknown aliases, package aliases,
-`(width ...)` plus `(type ...)` conflicts, aggregate aliases outside actor-owned
-storage variables, unknown aggregate members, out-of-range list indexes,
-aggregate paths outside direct transaction `set` RHS values, direct transaction
-`set` target tokens, or direct rule assignment RHS values, aggregate paths in
-expression operator position, and subaggregate operands/updates fail closed.
+variables. Rule assignment RHS values and RHS expressions may read scalar
+member/item leaves from those same declared storage variables. Lowering
+preserves `+types`, `+import`, typed `+size` entries, and embedded imported
+package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
+aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
+actor-owned storage variables, unknown aggregate members, out-of-range list
+indexes, aggregate paths outside direct transaction `set` RHS values, direct
+transaction `set` target tokens, or rule assignment RHS values/expression
+operands, aggregate paths in expression operator position, and subaggregate
+operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
 references are public as actor constant values, scalar actor parameter
@@ -889,6 +890,12 @@ covering explicit and shorthand rule assignment RHS aggregate leaf reads,
 scheduled `.fsm` review artifacts, assignment provenance, CLI HDL generation,
 and fail-closed diagnostics for unknown members, rule RHS expressions, and
 rule targets.
+Rule assignment RHS expression aggregate leaf operands are checked by
+[t/1284-isf-aggregate-rule-expression-values.t](../t/1284-isf-aggregate-rule-expression-values.t),
+covering explicit and shorthand rule assignment RHS expression aggregate leaf
+operands, scheduled `.fsm` review artifacts, assignment provenance, CLI HDL
+generation, and fail-closed diagnostics for unknown members, operator-position
+paths, and subaggregate operands.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

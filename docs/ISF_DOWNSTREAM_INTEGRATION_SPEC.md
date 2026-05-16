@@ -893,11 +893,12 @@ Rules:
   `(set frame.mode mode_in)` or `(set lanes[0] bit_in)`. Subaggregate targets
   such as a record member whose type is still a `list` or `record` remain
   deferred.
-- Rule assignment scalar RHS values may read scalar aggregate leaves on
-  declared actor-owned aggregate storage, for example
-  `(rule expose ready (set mode_out frame.mode))` or shorthand
-  `(rule expose ready (pair_out lanes[1]))`. Rule assignment aggregate leaf
-  RHS expressions and rule assignment aggregate targets remain deferred.
+- Rule assignment scalar RHS values and scalar operands inside rule assignment
+  RHS expressions may read scalar aggregate leaves on declared actor-owned
+  aggregate storage, for example `(rule expose ready (set mode_out frame.mode))`
+  or shorthand `(rule expose ready (pair_out (^ lanes[1] pair_in)))`. Rule
+  assignment aggregate targets and aggregate paths in rule assignment RHS
+  expression operator position remain deferred.
 - `(type NAME)` and `(width N)` are mutually exclusive.
 - `NAME` may be local (`byte`) or package-qualified (`shared.byte`).
 - Lowered scheduled `.fsm` preserves review artifacts with `+types`,
@@ -942,12 +943,12 @@ Rules:
   other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values,
-direct transaction `set` target tokens, or direct rule assignment RHS values,
-subaggregate operands/updates, aggregate interface or transaction ports, and
-aggregate storage banks are not shipped yet. Existing aggregate support beyond
-the actor-owned storage-variable carrier and direct scalar leaf read/write
-context is limited to compatible aggregate/list literal parameter values and
-scalarized actor-owned bank/storage lowering.
+direct transaction `set` target tokens, or rule assignment RHS values or
+expression operands, subaggregate operands/updates, aggregate interface or
+transaction ports, and aggregate storage banks are not shipped yet. Existing
+aggregate support beyond the actor-owned storage-variable carrier and direct
+scalar leaf read/write context is limited to compatible aggregate/list literal
+parameter values and scalarized actor-owned bank/storage lowering.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 
@@ -1342,8 +1343,8 @@ Required fail-closed examples:
   declaration, package import aliases, aggregate type aliases outside
   actor-owned storage variables, unknown aggregate members, out-of-range list
   indexes, aggregate storage member/item paths outside direct transaction
-  `set` RHS values, direct transaction `set` target tokens, or direct rule
-  assignment RHS values, aggregate paths in expression operator position,
+  `set` RHS values, direct transaction `set` target tokens, or rule assignment
+  RHS values/expression operands, aggregate paths in expression operator position,
   subaggregate operands/updates, and enum member references outside
   the shipped actor-constant, actor parameter scalar default or aggregate/list
   default leaf, generated child transaction scalar parameter default or
@@ -1422,7 +1423,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1280-isf-enum-member-inline-drive-expression-values.t \
   t/1281-isf-enum-member-library-use-params.t \
   t/1282-isf-enum-member-drive-expression-values.t \
-  t/1283-isf-aggregate-rule-values.t
+  t/1283-isf-aggregate-rule-values.t \
+  t/1284-isf-aggregate-rule-expression-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

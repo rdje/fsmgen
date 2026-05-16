@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate rule RHS expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.30`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.31`.
+- Explicit and shorthand rule assignment RHS expressions now accept scalar
+  aggregate storage member/item leaves as operands.
+- Scheduled `.fsm` rule DTs and assignment provenance preserve authored
+  aggregate expression payloads, and strict CLI HDL generation accepts them.
+- Parser diagnostics reject unknown aggregate members, operator-position
+  aggregate paths, and subaggregate operands inside rule assignment RHS
+  expressions.
 ### R14 — ISF aggregate rule RHS values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.29`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.30`.

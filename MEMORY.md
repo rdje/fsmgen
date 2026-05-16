@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate rule RHS expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.30` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.31`.
+- Rule assignment RHS expressions now accept scalar aggregate storage leaves
+  such as `frame.mode` and `lanes[1]` as scalar operands.
+- Scheduled `.fsm` rule DTs, assignment provenance, and strict CLI HDL
+  generation preserve and consume the authored aggregate expression payloads.
+- Operator-position aggregate paths, subaggregate operands, and aggregate rule
+  assignment targets remain deferred.
 ## 2026-05-16: ISF aggregate rule RHS values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.29` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

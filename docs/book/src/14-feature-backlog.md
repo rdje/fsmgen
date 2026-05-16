@@ -318,10 +318,11 @@ aggregate storage carriers, such as
 transaction `set` RHS expressions. Direct transaction `set` targets may write
 scalar aggregate leaves on those same carriers, such as `(set frame.flag
 flag_in)` or `(set lanes[0] bit_in)`. Rule assignment scalar RHS values may
-read scalar aggregate leaves too, such as `(set mode_out frame.mode)` inside a
-rule body. Aggregate member paths outside transaction `set` RHS values, direct
-transaction `set` targets, or direct rule assignment RHS values, subaggregate
-operands/updates, aggregate interface or transaction ports, aggregate storage
+read scalar aggregate leaves directly or as scalar operands inside RHS
+expressions, such as `(set mode_out (+ frame.mode mode_in))` inside a rule
+body. Aggregate member paths outside transaction `set` RHS values, direct
+transaction `set` targets, or rule assignment RHS values/expression operands,
+subaggregate operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, actor parameter scalar
 values or aggregate/list default leaves, generated child transaction scalar
 parameter defaults or aggregate/list default leaves, activation parameter
@@ -434,11 +435,11 @@ rule assignments under the rule DT DTE, where `expr` may be a scalar token or
 one list expression from the transaction `set`/`update`/`.fsm` RHS expression
 domain. Direct scalar rule assignment RHS values and scalar operands inside RHS
 expressions may use local or package-qualified enum members. Direct scalar rule
-assignment RHS values may also read scalar aggregate storage leaves such as
-`frame.mode` or `lanes[1]`. Rule guard expressions may use enum members as
-scalar operands; aggregate leaves inside rule assignment RHS expressions,
-expression operator-position enum members, standalone enum guards, and rule
-targets remain backlog.
+assignment RHS values and scalar operands inside RHS expressions may also read
+scalar aggregate storage leaves such as `frame.mode` or `lanes[1]`. Rule guard
+expressions may use enum members as scalar operands; aggregate paths in rule
+assignment RHS expression operator position, expression operator-position enum
+members, standalone enum guards, and rule targets remain backlog.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as
