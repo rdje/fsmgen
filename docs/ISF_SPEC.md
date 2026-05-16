@@ -286,14 +286,18 @@ The shipped aggregate carrier surface is deliberately whole-storage-root only:
 the generated `.fsm` preserves the authored aggregate alias in `+size`, and
 the schedule report exposes the carrier as declared actor storage with packed
 `width`, authored `type`, and resolved `type_kind` (`list` or `record`).
-Member/item access such as `frame.flag` or `frame[0]`, partial aggregate
-updates, aggregate interface or transaction ports, and aggregate storage banks
-remain deferred. Existing ISF aggregate support beyond this carrier remains
-limited to compatible aggregate/list literal parameter values and scalarized
-storage/bank lowering. Future enum member value references outside actor
-constants, additional aggregate carriers, aggregate field/slice/update
-lowering, incompatible enum values, aggregate shape mismatches, and ambiguous
-partial updates remain owned by later `ISF-TYPE-AGGREGATE-PARITY` leaves.
+Scalar member/item reads such as `frame.flag` or `lanes[0]` are accepted only
+as the direct RHS token of transaction `(set target aggregate_leaf)` clauses,
+where they resolve against the declared aggregate storage shape before
+lowering. Partial aggregate updates, aggregate member paths inside broader
+expressions, aggregate interface or transaction ports, and aggregate storage
+banks remain deferred. Existing ISF aggregate support beyond this carrier and
+leaf-read context remains limited to compatible aggregate/list literal
+parameter values and scalarized storage/bank lowering. Future enum member value
+references outside actor constants, additional aggregate carriers, aggregate
+field/slice/update lowering, incompatible enum values, aggregate shape
+mismatches, and ambiguous partial updates remain owned by later
+`ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -2656,6 +2660,7 @@ Focused tests:
 - [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t)
 - [t/1258-isf-enum-member-constants.t](../t/1258-isf-enum-member-constants.t)
 - [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t)
+- [t/1260-isf-aggregate-storage-leaf-reads.t](../t/1260-isf-aggregate-storage-leaf-reads.t)
 
 ## 12. Explicitly Deferred
 
@@ -2712,11 +2717,12 @@ Focused tests:
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, actor-owned aggregate storage
-  variable carriers, aggregate/list parameter-literal, and data-operation
-  evidence model. Enum member references outside actor constants, aggregate
-  interface/transaction/bank carriers, member/item access, partial aggregate
-  updates, aggregate field/slice/update lowering, and broad aggregate/record
-  width inference remain deferred to the active
+  variable carriers, transaction `set` RHS aggregate leaf reads,
+  aggregate/list parameter-literal, and data-operation evidence model. Enum
+  member references outside actor constants, aggregate interface/transaction/bank
+  carriers, aggregate member paths outside direct transaction `set` RHS tokens,
+  partial aggregate updates, aggregate field/slice/update lowering, and broad
+  aggregate/record width inference remain deferred to the active
   `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

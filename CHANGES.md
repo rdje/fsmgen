@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate storage leaf reads shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.6`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.7`.
+- Transaction `(set target aggregate_leaf)` RHS values now accept scalar
+  record member and list item reads from declared actor-owned aggregate
+  storage carriers.
+- Parser diagnostics resolve paths against the declared aggregate shape before
+  lowering, rejecting unknown members, out-of-range indexes, partial writes,
+  and aggregate paths inside broader expressions.
+- Added focused local/package coverage with scheduled `.fsm` review artifacts
+  and strict CLI HDL generation.
 ### R14 — ISF aggregate storage carriers shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.5`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.6`.

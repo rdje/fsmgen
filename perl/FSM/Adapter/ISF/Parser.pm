@@ -16,6 +16,7 @@ use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
 use FSM::Adapter::FSMGenFull::SignalManager;
 use FSM::Debug;
+use FSM::Package::AggregatePathSupport;
 use FSM::Package::ImportResolver;
 use FSM::Package::IntegerLiteralSupport;
 use FSM::Package::Parser;
@@ -623,13 +624,13 @@ sub _resolve_actor_type_spec($self, $actor, $type_name) {
 }
 
 sub _validate_actor_aggregate_storage_paths($self, $actor) {
-    my %aggregate_roots = map { $_->{name} => 1 }
+    my %aggregate_roots = map { $_->{name} => _clone_isf_value($_->{type_spec}) }
         grep { _is_aggregate_type_spec($_->{type_spec}) }
         @{$actor->{storage} || []};
     return 1 unless keys %aggregate_roots;
 
     for my $tx (@{$actor->{transactions} || []}) {
-        _reject_aggregate_storage_paths(
+        _validate_transaction_aggregate_storage_paths(
             $tx->{clauses},
             \%aggregate_roots,
             "transaction '$tx->{name}'",
@@ -651,6 +652,115 @@ sub _validate_actor_aggregate_storage_paths($self, $actor) {
             "drive '$drive_name'",
         );
     }
+
+    return 1;
+}
+
+sub _validate_transaction_aggregate_storage_paths {
+    my ($clauses, $aggregate_roots, $context) = @_;
+    return 1 unless ref($clauses) eq 'ARRAY';
+
+    for my $clause (@$clauses) {
+        _validate_transaction_aggregate_storage_clause($clause, $aggregate_roots, $context);
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_aggregate_storage_clause {
+    my ($clause, $aggregate_roots, $context) = @_;
+    return _reject_aggregate_storage_paths($clause, $aggregate_roots, $context)
+        unless ref($clause) eq 'ARRAY' && @$clause;
+
+    my $head = $clause->[0];
+    return _reject_aggregate_storage_paths($clause, $aggregate_roots, $context)
+        unless defined($head) && !ref($head);
+
+    if ($head eq 'set') {
+        _reject_aggregate_storage_paths(
+            $clause->[1],
+            $aggregate_roots,
+            "$context set target",
+        );
+        if (@$clause >= 3) {
+            _validate_transaction_set_aggregate_storage_rhs(
+                $clause->[2],
+                $aggregate_roots,
+                "$context set RHS",
+            );
+        }
+        for my $extra (@{$clause}[3 .. $#$clause]) {
+            _reject_aggregate_storage_paths($extra, $aggregate_roots, "$context set clause");
+        }
+        return 1;
+    }
+
+    if ($head eq 'when' || $head eq 'while' || $head eq 'until') {
+        _reject_aggregate_storage_paths($clause->[1], $aggregate_roots, "$context $head condition");
+        _validate_transaction_aggregate_storage_paths(
+            [ @{$clause}[2 .. $#$clause] ],
+            $aggregate_roots,
+            "$context $head body",
+        );
+        return 1;
+    }
+
+    if ($head eq 'repeat') {
+        _reject_aggregate_storage_paths($clause->[1], $aggregate_roots, "$context repeat count");
+        _validate_transaction_aggregate_storage_paths(
+            [ @{$clause}[2 .. $#$clause] ],
+            $aggregate_roots,
+            "$context repeat body",
+        );
+        return 1;
+    }
+
+    if ($head eq 'switch') {
+        _reject_aggregate_storage_paths($clause->[1], $aggregate_roots, "$context switch selector");
+        for my $branch (@{$clause}[2 .. $#$clause]) {
+            next unless ref($branch) eq 'ARRAY' && @$branch;
+            _reject_aggregate_storage_paths($branch->[0], $aggregate_roots, "$context switch branch value");
+            _validate_transaction_aggregate_storage_paths(
+                [ @{$branch}[1 .. $#$branch] ],
+                $aggregate_roots,
+                "$context switch branch",
+            );
+        }
+        return 1;
+    }
+
+    return _reject_aggregate_storage_paths($clause, $aggregate_roots, $context);
+}
+
+sub _validate_transaction_set_aggregate_storage_rhs {
+    my ($rhs, $aggregate_roots, $context) = @_;
+    if (!ref($rhs)) {
+        my $path = _aggregate_storage_path_token($rhs, $aggregate_roots);
+        _validate_aggregate_storage_leaf_read_path($path, $aggregate_roots, $context)
+            if defined $path;
+        return 1;
+    }
+
+    return _reject_aggregate_storage_paths($rhs, $aggregate_roots, $context);
+}
+
+sub _validate_aggregate_storage_leaf_read_path {
+    my ($path, $aggregate_roots, $context) = @_;
+    my ($root, $path_text) = _aggregate_storage_path_parts($path, $aggregate_roots);
+    confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage leaf reads only from declared actor-owned storage variables\n"
+        unless defined($root) && defined($path_text);
+
+    my $result = FSM::Package::AggregatePathSupport->resolve(
+        root_type_spec => $aggregate_roots->{$root},
+        path_text => $path_text,
+    );
+    confess "Error: $context references invalid aggregate storage path '$path': "
+        . _aggregate_storage_path_error_summary($result) . "\n"
+        unless $result->{ok};
+
+    my $type_spec = $result->{type_spec};
+    confess "Error: $context references aggregate storage path '$path' that resolves to aggregate kind '$type_spec->{kind}'; this ISF slice accepts only scalar aggregate leaf reads\n"
+        if _is_aggregate_type_spec($type_spec);
 
     return 1;
 }
@@ -678,6 +788,55 @@ sub _aggregate_storage_path_token {
         return $value if $value =~ /\A\Q$root\E(?:\.|\[)/;
     }
     return undef;
+}
+
+sub _aggregate_storage_path_parts {
+    my ($value, $aggregate_roots) = @_;
+    return unless defined($value) && !ref($value);
+    for my $root (sort { length($b) <=> length($a) } keys %{$aggregate_roots || {}}) {
+        return ($root, $1) if $value =~ /\A\Q$root\E((?:\.|\[).*)\z/;
+    }
+    return;
+}
+
+sub _aggregate_storage_path_error_summary {
+    my ($error) = @_;
+    my $code = ref($error) eq 'HASH' ? ($error->{code} || 'unknown') : 'unknown';
+
+    return "member access '." . ($error->{member_name} // '?') . "' is only valid on record values; current path type is '"
+        . ($error->{current_type_label} || 'unknown') . "'"
+        if $code eq 'member_on_non_record';
+
+    return "record member '" . ($error->{member_name} // '?') . "' is not declared; known members: "
+        . join(', ', @{ $error->{known_members} || [] })
+        if $code eq 'unknown_member';
+
+    return "list ranges are not supported; select one item with '[N]'"
+        if $code eq 'list_range_not_supported';
+
+    return "list index '" . ($error->{index} // '?') . "' is outside the declared item range 0.."
+        . ($error->{max_index} // -1)
+        if $code eq 'list_index_out_of_range';
+
+    return "scalar slice [" . ($error->{high} // '?') . ':' . ($error->{low} // '?')
+        . "] exceeds resolved scalar width '" . ($error->{scalar_width} // '?') . "'"
+        if $code eq 'scalar_slice_out_of_range';
+
+    return "scalar index '" . ($error->{index} // '?')
+        . "' exceeds resolved scalar width '" . ($error->{scalar_width} // '?') . "'"
+        if $code eq 'scalar_index_out_of_range';
+
+    return "index access is valid only on list and scalar bit-vector values; current path type is '"
+        . ($error->{current_type_label} || 'unknown') . "'"
+        if $code eq 'index_on_non_indexable';
+
+    return "could not parse remaining path '" . ($error->{remaining} || '') . "'"
+        if $code eq 'parse_error';
+
+    return "resolved aggregate leaf has no positive packed width"
+        if $code eq 'missing_leaf_width';
+
+    return "aggregate path resolution failed with code '$code'";
 }
 
 sub _validate_actor_constant_names($self, $actor) {

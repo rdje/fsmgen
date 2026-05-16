@@ -426,6 +426,7 @@ sub build_isf_public_interface_contract {
             't/1257-isf-scalar-type-aliases.t',
             't/1258-isf-enum-member-constants.t',
             't/1259-isf-aggregate-storage-type-aliases.t',
+            't/1260-isf-aggregate-storage-leaf-reads.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

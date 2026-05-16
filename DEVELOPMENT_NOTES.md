@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate leaf reads stay read-only and direct
+- `ISF-TYPE-AGGREGATE-PARITY.6` selects direct transaction `set` RHS tokens as
+  the first aggregate leaf read context because the generated `.fsm` already
+  has typed aggregate path support for scalar record/list leaves.
+- The parser validates each leaf path with the shared aggregate path resolver
+  before lowering, so unknown members and out-of-range list indexes fail in
+  ISF space instead of surfacing later as backend surprises.
+- The slice intentionally rejects aggregate paths inside broader expressions
+  and all partial aggregate writes. Those contexts need separate shape,
+  timing, and assignment-merge semantics before they can be public.
 ## 2026-05-16: aggregate storage variables are the first ISF aggregate carrier
 - `ISF-TYPE-AGGREGATE-PARITY.5` deliberately selects actor-owned storage
   variables as the first aggregate carrier because they already lower through

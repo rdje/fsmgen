@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate storage leaf reads shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.6` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.7`, selecting one
+  aggregate update or value context after read-only leaf access.
+- Transaction `set` RHS values now accept scalar record member and list item
+  reads from declared actor-owned aggregate storage carriers.
+- Partial aggregate writes, aggregate paths inside broader expressions, and
+  aggregate leaf reads outside transaction `set` RHS remain deferred.
+
 ## 2026-05-16: R14 — ISF aggregate storage carriers shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.5` in

@@ -400,9 +400,10 @@ limitations are:
   members such as `shared.mode.BUSY`; those constants preserve the authored
   token in `+constants` and schedule reports while resolving to non-negative
   integer values for static waits and existing static activation-parameter
-  overrides. Other enum member expression/value contexts, aggregate member
-  access, partial aggregate updates, and aggregate interface/transaction/bank
-  carriers remain backlog.
+  overrides. Transaction `set` RHS clauses may read scalar aggregate leaves
+  from declared aggregate storage carriers. Other enum member expression/value
+  contexts, aggregate paths inside broader expressions, partial aggregate
+  updates, and aggregate interface/transaction/bank carriers remain backlog.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

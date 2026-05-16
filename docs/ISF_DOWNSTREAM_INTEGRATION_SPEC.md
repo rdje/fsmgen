@@ -838,6 +838,10 @@ Rules:
 - Actor-owned storage variables may also use `(type NAME)` when `NAME`
   resolves to a packed aggregate `list` or `record` alias. The first aggregate
   carrier subset is whole-storage-root only.
+- Transaction `(set target aggregate_leaf)` clauses may read scalar aggregate
+  leaves from declared actor-owned aggregate storage, for example
+  `frame.mode` or `lanes[0]`. The leaf path is resolved against the declared
+  shape before lowering.
 - `(type NAME)` and `(width N)` are mutually exclusive.
 - `NAME` may be local (`byte`) or package-qualified (`shared.byte`).
 - Lowered scheduled `.fsm` preserves review artifacts with `+types`,
@@ -853,11 +857,12 @@ Rules:
   members fail closed before generated artifacts are emitted.
 - No other ISF expression or value context consumes enum members yet.
 
-Aggregate member/item access such as `frame.flag` or `frame[0]`, partial
-aggregate updates, aggregate interface or transaction ports, and aggregate
-storage banks are not shipped yet. Existing aggregate support beyond the
-actor-owned storage-variable carrier is limited to compatible aggregate/list
-literal parameter values and scalarized actor-owned bank/storage lowering.
+Aggregate member/item access outside direct transaction `set` RHS tokens,
+partial aggregate updates, aggregate interface or transaction ports, and
+aggregate storage banks are not shipped yet. Existing aggregate support beyond
+the actor-owned storage-variable carrier and direct leaf read context is
+limited to compatible aggregate/list literal parameter values and scalarized
+actor-owned bank/storage lowering.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 
@@ -1250,8 +1255,9 @@ Required fail-closed examples:
   incompatible aggregate/list shapes.
 - Unknown type aliases, `(width ...)` plus `(type ...)` on the same
   declaration, package import aliases, aggregate type aliases outside
-  actor-owned storage variables, and aggregate storage member/item paths or
-  partial updates.
+  actor-owned storage variables, unknown aggregate members, out-of-range list
+  indexes, aggregate storage member/item paths outside direct transaction
+  `set` RHS tokens, and partial updates.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1298,7 +1304,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1255-isf-schedule-report-golden-matrix.t \
   t/1257-isf-scalar-type-aliases.t \
   t/1258-isf-enum-member-constants.t \
-  t/1259-isf-aggregate-storage-type-aliases.t
+  t/1259-isf-aggregate-storage-type-aliases.t \
+  t/1260-isf-aggregate-storage-leaf-reads.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

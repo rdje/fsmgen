@@ -276,9 +276,11 @@ lowering and existing static activation-parameter overrides.
 The implementation path remains task-tree-managed. The current shipped subset
 also continues to accept numeric/exact-width parameter values, actor-local
 constants for selected static specialization values, and compatible
-aggregate/list literal parameter values. Aggregate member/item access, partial
-aggregate updates, aggregate interface or transaction ports, aggregate storage
-banks, enum member references outside actor constants, aggregate
+aggregate/list literal parameter values. Transaction `set` RHS clauses may
+read scalar aggregate leaves from declared aggregate storage carriers, such as
+`frame.mode` or `lanes[0]`. Aggregate member paths inside broader expressions,
+partial aggregate updates, aggregate interface or transaction ports, aggregate
+storage banks, enum member references outside actor constants, aggregate
 field/slice/update lowering, and broader aggregate shape inference are
 separate follow-on leaves.
 
