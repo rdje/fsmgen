@@ -276,6 +276,8 @@ lowering and existing static activation-parameter overrides.
 The implementation path remains task-tree-managed. The current shipped subset
 also continues to accept numeric/exact-width parameter values, scalar actor
 parameter defaults backed by local or package-qualified enum members,
+generated child transaction scalar parameter defaults backed by local or
+package-qualified enum members,
 actor-local constants for selected static specialization values, and
 compatible aggregate/list literal parameter values. Direct transaction `set`
 RHS scalar values and scalar operands inside transaction `set` RHS expressions
@@ -294,9 +296,10 @@ flag_in)` or `(set lanes[0] bit_in)`. Aggregate member paths outside
 transaction `set` RHS values or direct targets, subaggregate
 operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, actor scalar parameter
-defaults, transaction `set` RHS scalar values/expression operands,
-transaction `switch` branch values, or drive body RHS scalar values or
-drive-call actual scalar values/expression operands,
+defaults, generated child transaction scalar parameter defaults, transaction
+`set` RHS scalar values/expression operands, transaction `switch` branch
+values, or drive body RHS scalar values or drive-call actual scalar
+values/expression operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 

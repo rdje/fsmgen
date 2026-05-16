@@ -146,7 +146,7 @@ ISF
 
     assert_parse_rejected(
         <<'ISF',
-(actor enum_transaction_param_still_deferred
+(actor enum_activation_param_still_deferred
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -154,16 +154,18 @@ ISF
   (interface
     (input start)
     (output done))
-  (transaction child
-    (params
-      (DEFAULT_MODE mode.BUSY))
-    (complete done))
   (transaction main
     (on start)
-    (spawn child as c0)))
+    (spawn child as c0
+      (params
+        (DEFAULT_MODE mode.BUSY))))
+  (transaction child
+    (params
+      (DEFAULT_MODE 0))
+    (complete done)))
 ISF
-        qr/transaction 'child' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
-        'transaction parameter enum defaults remain deferred',
+        qr/transaction 'main' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        'activation parameter enum overrides remain deferred',
     );
 };
 

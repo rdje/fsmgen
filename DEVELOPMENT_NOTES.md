@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum transaction params stay scalar-default-only
+- `ISF-TYPE-AGGREGATE-PARITY.16` selects generated child transaction scalar
+  parameter defaults after actor parameters because generated child `.fsm`
+  artifacts already emit transaction defaults as `+params`, and
+  generated-composition schedule reports already expose child defaults and
+  default instance bindings.
+- The parser now validates scalar enum member references in transaction
+  `params` clauses against the actor enum tables, and the lowerer repeats the
+  same check for direct scheduler use before publishing child IR.
+- Aggregate/list enum leaves and activation/use-site enum overrides stay
+  closed. Those paths need separate override compatibility and generated-top
+  value-source rules rather than inheriting scalar default behavior.
 ## 2026-05-16: enum actor params stay scalar-default-only
 - `ISF-TYPE-AGGREGATE-PARITY.15` selects actor-level scalar parameter
   defaults as the next enum context because generated `.fsm` already supports

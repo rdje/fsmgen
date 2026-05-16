@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum transaction parameter defaults shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.16` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.17`.
+- Generated child transaction scalar `(params ...)` defaults now accept local
+  enum members such as `mode.BUSY` and package-qualified enum members such as
+  `shared.mode.BUSY`.
+- The lowerer validates enum-backed transaction defaults, preserves the
+  authored token in generated child scheduled `.fsm` `+params`, and preserves
+  the token in generated-composition child parameter summaries plus default
+  instance bindings.
+- Enum leaves inside aggregate/list transaction parameters, activation
+  parameter overrides, reusable-library use-site overrides, rules, conditions,
+  selectors, and other non-shipped contexts remain deferred.
 ## 2026-05-16: ISF enum actor parameter defaults shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.15` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

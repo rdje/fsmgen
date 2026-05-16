@@ -186,9 +186,10 @@ General source rules:
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
   otherwise.
-- Actor constants and scalar actor parameter defaults use non-negative integer
-  literals or enum member references that resolve to non-negative integers;
-  static wait counts use non-negative integer literals or actor constants.
+- Actor constants, scalar actor parameter defaults, and generated child
+  transaction scalar parameter defaults use non-negative integer literals or
+  enum member references that resolve to non-negative integers; static wait
+  counts use non-negative integer literals or actor constants.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -455,8 +456,9 @@ Rules:
 - Use-site parameter overrides are instance-local. Missing overrides use actor
   defaults.
 - Actor parameter scalar defaults may use local or package-qualified enum
-  member references. Aggregate/list enum member leaves, transaction-local
-  parameter defaults, activation parameter overrides, reusable-library
+  member references. Generated child transaction scalar parameter defaults may
+  also use local or package-qualified enum member references. Aggregate/list
+  enum member leaves, activation parameter overrides, reusable-library
   use-site enum overrides, duplicate overrides, unknown overrides, and shape
   mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
@@ -798,6 +800,9 @@ Rules:
 - Activation parameter override values may be scalar/exact-width literals,
   actor-local constants, or compatible aggregate/list literals whose scalar
   leaves are literals or actor-local constants.
+- Transaction-local scalar parameter defaults may use local or
+  package-qualified enum members; generated child `.fsm` `+params` and
+  generated-composition schedule reports preserve the authored enum token.
 - Actor constants resolve to literal values before generated-top emission.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
@@ -879,11 +884,12 @@ Rules:
   consume local or package enum members, and scalar drive body RHS values may
   consume local or package enum members. Named drive-call scalar actual values
   may also consume local or package enum members, drive-call actual
-  expressions may use enum members as scalar operands, and scalar actor
-  parameter defaults may consume local or package enum members. Enum members
-  in expression operator position, conditions, switch selectors, targets,
-  rules, drive targets, drive-call expression operator position, inline drive
-  assignments, transaction parameter defaults, activation parameter overrides,
+  expressions may use enum members as scalar operands, scalar actor parameter
+  defaults may consume local or package enum members, and generated child
+  transaction scalar parameter defaults may consume local or package enum
+  members. Enum members in expression operator position, conditions, switch
+  selectors, targets, rules, drive targets, drive-call expression operator
+  position, inline drive assignments, activation parameter overrides,
   aggregate/list parameter leaves, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
@@ -1348,7 +1354,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1266-isf-enum-member-drive-values.t \
   t/1267-isf-enum-member-drive-call-values.t \
   t/1268-isf-enum-member-drive-call-expression-values.t \
-  t/1269-isf-enum-member-actor-params.t
+  t/1269-isf-enum-member-actor-params.t \
+  t/1270-isf-enum-member-transaction-params.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

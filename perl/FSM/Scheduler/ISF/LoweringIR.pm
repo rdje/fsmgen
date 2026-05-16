@@ -125,7 +125,7 @@ sub _build_child_ir($self, $tx, $actor, $cname) {
         type_declarations => _actor_type_declarations($actor),
         enum_declarations => _actor_enum_declarations($actor),
         constants  => _actor_constant_declarations($actor),
-        params     => _transaction_param_declarations($tx),
+        params     => _transaction_param_declarations($tx, $actor),
         ports      => $ports,
         states     => $states,
         dt_blocks  => $dts,
@@ -1279,7 +1279,7 @@ sub _validate_child_transaction_refs($self, $actor) {
 
         my %declared_params = map {
             $_->{name} => $_
-        } @{_transaction_param_declarations($transaction_by_name{$target})};
+        } @{_transaction_param_declarations($transaction_by_name{$target}, $actor)};
         for my $override (@{_activation_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values)}) {
             my $name = $override->{name};
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
@@ -1309,7 +1309,7 @@ sub _validate_child_transaction_refs($self, $actor) {
 
         my %declared_params = map {
             $_->{name} => $_
-        } @{_transaction_param_declarations($transaction_by_name{$target})};
+        } @{_transaction_param_declarations($transaction_by_name{$target}, $actor)};
         for my $override (@{$ref->{parameter_overrides} || []}) {
             my $name = $override->{name};
             confess "Rule '$rule_name': trigger instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
@@ -1324,7 +1324,7 @@ sub _validate_child_transaction_refs($self, $actor) {
 
 sub _validate_transaction_parameter_clauses($self, $actor, $generated_children) {
     for my $tx (@{$actor->{transactions} || []}) {
-        my $params = _transaction_param_declarations($tx);
+        my $params = _transaction_param_declarations($tx, $actor);
         next unless @$params;
 
         my $tx_name = $tx->{name};
@@ -2689,7 +2689,7 @@ sub _validate_sync_clause {
 }
 
 sub _transaction_param_declarations {
-    my ($tx) = @_;
+    my ($tx, $actor) = @_;
     return [] unless ref($tx) eq 'HASH';
 
     my $tx_name = $tx->{name} // 'unknown';
@@ -2715,14 +2715,18 @@ sub _transaction_param_declarations {
             unless _is_hdl_identifier($name);
         confess "Transaction '$tx_name': duplicate parameter '$name'\n"
             if $seen{$name}++;
-        _validate_isf_param_value(
+        _validate_transaction_param_value(
             $value,
             "Transaction '$tx_name': parameter '$name'",
+            $actor,
         );
-        push @params, {
+        my %param = (
             name  => $name,
             value => _clone_isf_value($value),
-        };
+        );
+        $param{resolved_value} = _clone_isf_value(_resolve_actor_enum_member_value($actor, $value))
+            if _is_enum_member_reference($value);
+        push @params, \%param;
     }
 
     return \@params;
@@ -3208,6 +3212,56 @@ sub _validate_isf_param_value {
     return 1;
 }
 
+sub _validate_transaction_param_value {
+    my ($value, $context, $actor) = @_;
+
+    if (!ref($value)) {
+        confess "$context uses undefined parameter value; transaction parameter defaults accept numeric, exact-width, aggregate/list, and scalar enum member literals only\n"
+            unless defined($value);
+        return 1 if _is_numeric_or_exact_width_literal($value);
+        if (_is_enum_member_reference($value)) {
+            my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
+            confess "$context references unknown enum member '$value'\n"
+                unless defined($resolved_value) && !ref($resolved_value);
+            confess "$context enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless defined _non_negative_integer_from_literal($resolved_value);
+            return 1;
+        }
+
+        confess "$context uses unsupported parameter value '$value'; transaction parameter defaults accept numeric, exact-width, aggregate/list, and scalar enum member literals only\n";
+    }
+
+    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    for my $item (@$value) {
+        _validate_transaction_param_aggregate_leaf_value($item, $context);
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_param_aggregate_leaf_value {
+    my ($value, $context) = @_;
+
+    if (!ref($value)) {
+        confess "$context uses unsupported aggregate/list parameter leaf '$value'; transaction parameter aggregate/list defaults accept numeric and exact-width literal leaves only, while enum member leaves remain deferred\n"
+            if _is_enum_member_reference($value);
+        confess "$context uses unsupported parameter value '$value'; transaction parameter aggregate/list defaults accept numeric and exact-width literal leaves only\n"
+            unless defined($value) && _is_numeric_or_exact_width_literal($value);
+        return 1;
+    }
+
+    confess "$context uses unsupported parameter value shape; transaction parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    for my $item (@$value) {
+        _validate_transaction_param_aggregate_leaf_value($item, $context);
+    }
+
+    return 1;
+}
+
 sub _resolve_activation_param_value {
     my ($value, $context, $constant_values) = @_;
     $constant_values ||= {};
@@ -3272,6 +3326,24 @@ sub _actor_constant_value_map {
     }
 
     return \%values;
+}
+
+sub _resolve_actor_enum_member_value {
+    my ($actor, $member_ref) = @_;
+    return undef unless ref($actor) eq 'HASH' && _is_enum_member_reference($member_ref);
+
+    my $symbols = $actor->{enum_symbols} || {};
+    if ($member_ref =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
+        my ($package_name, $enum_name, $member_name) = ($1, $2, $3);
+        return _clone_isf_value(((($symbols->{packages} || {})->{$package_name} || {})->{$enum_name} || {})->{$member_name});
+    }
+
+    if ($member_ref =~ /\A([A-Za-z_]\w*)\.([A-Za-z_]\w*)\z/) {
+        my ($enum_name, $member_name) = ($1, $2);
+        return _clone_isf_value((($symbols->{local} || {})->{$enum_name} || {})->{$member_name});
+    }
+
+    return undef;
 }
 
 sub _constant_resolved_value {

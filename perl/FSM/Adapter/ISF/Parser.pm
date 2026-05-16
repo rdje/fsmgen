@@ -734,6 +734,11 @@ sub _validate_transaction_enum_member_value_clause {
     return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context)
         unless defined($head) && !ref($head);
 
+    if ($head eq 'params') {
+        _validate_transaction_params_enum_member_values($clause, $actor, $aggregate_roots, $context);
+        return 1;
+    }
+
     if ($head eq 'set') {
         _reject_enum_member_value_contexts($clause->[1], $actor, $aggregate_roots, "$context set target");
         _validate_transaction_set_enum_member_rhs($clause->[2], $actor, $aggregate_roots, "$context set RHS")
@@ -845,6 +850,74 @@ sub _validate_transaction_switch_branch_enum_member_value {
     return 1;
 }
 
+sub _validate_transaction_params_enum_member_values {
+    my ($clause, $actor, $aggregate_roots, $context) = @_;
+
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        return _reject_enum_member_value_contexts($entry, $actor, $aggregate_roots, $context)
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+
+        my ($name, $value) = @$entry;
+        return _reject_enum_member_value_contexts($entry, $actor, $aggregate_roots, $context)
+            unless defined($name) && !ref($name) && length($name);
+
+        _validate_transaction_param_enum_member_value(
+            $value,
+            $actor,
+            $aggregate_roots,
+            "$context parameter '$name'",
+        );
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_param_enum_member_value {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+
+    if (!ref($value)) {
+        my $member = _enum_member_value_token($value, $aggregate_roots);
+        _validate_enum_member_value($member, $actor, $context)
+            if defined $member;
+        return 1;
+    }
+
+    return 1 unless ref($value) eq 'ARRAY';
+
+    for my $item (@$value) {
+        _validate_transaction_param_enum_member_aggregate_leaf(
+            $item,
+            $actor,
+            $aggregate_roots,
+            $context,
+        );
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_param_enum_member_aggregate_leaf {
+    my ($value, $actor, $aggregate_roots, $context) = @_;
+
+    if (!ref($value)) {
+        my $member = _enum_member_value_token($value, $aggregate_roots);
+        confess "Error: $context uses unsupported aggregate/list parameter leaf '$member'; transaction parameter aggregate/list defaults accept numeric and exact-width literal leaves only, while enum member leaves remain deferred\n"
+            if defined $member;
+        return 1;
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        _validate_transaction_param_enum_member_aggregate_leaf(
+            $_,
+            $actor,
+            $aggregate_roots,
+            $context,
+        ) for @$value;
+    }
+
+    return 1;
+}
+
 sub _validate_drive_enum_member_value_contexts {
     my ($drive_name, $drive, $actor, $aggregate_roots) = @_;
     for my $entry (@{$drive->{body} || []}) {
@@ -923,7 +996,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }
