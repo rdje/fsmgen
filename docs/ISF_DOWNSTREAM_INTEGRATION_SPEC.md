@@ -407,6 +407,8 @@ Rules:
 - Banks lower to deterministic scalar storage entries such as `data_0`,
   `data_1`, `data_2`, and `data_3`.
 - Schedule reports expose declared storage through `inferred_storage`.
+- `isf/fifo_data_path.isf` is the representative file-backed bank datapath
+  fixture for scalarized store/load behavior.
 
 Bank access:
 
@@ -1489,6 +1491,7 @@ isf/full_featured.isf
 isf/clock_domain_event_crossing.isf
 isf/clock_domain_dual_event_crossing.isf
 isf/common/fifo.isf
+isf/fifo_data_path.isf
 isf/fifo_library_use.isf
 ```
 
@@ -1551,6 +1554,14 @@ covers the shipped top-level `ready_valid_barrier` stage and
 `bounded_eventually` temporal contract subset; it does not claim nested
 stages, nested contracts, stage-local compute, expression contracts, min/max
 windows, or broader temporal operators.
+The FIFO datapath fixture is covered by
+`t/1319-isf-fifo-datapath-fixture-coverage.t`, which proves strict schedule
+JSON parity, scheduled `.fsm` structure, bounded `bank_accesses[]` metadata,
+plain and strict HDL generation, scalarized `data_0` through `data_3` bank
+storage, pointer-guarded accepted pushes, and pointer-guarded accepted pops.
+This fixture covers the shipped depth-4 scalarized bank store/load surface; it
+does not claim general memory-array HDL emission, write-first collision
+behavior, bypassing, or arbitrary-depth parameterized FIFOs.
 
 Recommended downstream smoke commands:
 
@@ -1565,6 +1576,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/spawn_parent.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/rule_resource_arbiter.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/stream_stage_contract.isf
+./bin/fsmgen --strict --emit-schedule-json isf/fifo_data_path.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf

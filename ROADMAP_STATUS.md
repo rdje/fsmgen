@@ -10,13 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-SHIFT-LEFT-EXPLICIT-WIDTH` is closed after
-  adding optional `(width N)` evidence to `shift_left`. The shipped behavior
-  keeps widthless `shift_left` accepted and leaves the emitted left-shift
-  expression unchanged while letting explicit width evidence feed later
-  width-sensitive operations and schedule-report storage metadata. The spec,
-  downstream handoff, public contract, mdBook, data-width notes, public
-  metadata, and tests are synchronized. The next R14 PNT implementation slice
+- Next decision point: `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION` is closed after
+  promoting `isf/fifo_data_path.isf` to file-backed strict schedule JSON,
+  scheduled `.fsm`, and plain/strict HDL fixture coverage for the shipped
+  scalarized bank store/load surface. The next R14 PNT implementation slice
   must select or create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
@@ -5516,6 +5513,13 @@ Done:
   metadata, bounded eventual contract metadata, temporal monitor storage
   roles, SystemVerilog sticky-fail assertion projection, and delayed
   completion pulse behavior.
+- `isf/fifo_data_path.isf` now has file-backed FIFO datapath fixture coverage
+  through
+  [t/1319-isf-fifo-datapath-fixture-coverage.t](t/1319-isf-fifo-datapath-fixture-coverage.t),
+  covering strict schedule JSON parity, scheduled `.fsm` structure, bounded
+  `bank_accesses[]` metadata, plain and strict HDL generation, scalarized
+  depth-4 bank storage, pointer-guarded accepted pushes, and pointer-guarded
+  accepted pops.
 - ISF runtime divisor safety now rejects numeric/exact-width literal-zero
   divisors and actor-level constants that resolve to zero before scheduled
   `.fsm` emission, while preserving nonzero literal/constant divisors and
@@ -5863,7 +5867,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-SHIFT-LEFT-EXPLICIT-WIDTH`, so the next ISF
+  after `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

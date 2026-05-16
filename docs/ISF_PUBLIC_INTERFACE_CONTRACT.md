@@ -155,6 +155,12 @@ strict HDL generation, sampled payload handoff, ready/valid barrier metadata,
 bounded eventual contract metadata, temporal monitor storage roles,
 SystemVerilog sticky-fail assertion projection, and delayed completion pulse
 behavior covered.
+The FIFO datapath fixture is checked by
+[t/1319-isf-fifo-datapath-fixture-coverage.t](../t/1319-isf-fifo-datapath-fixture-coverage.t)
+to keep file-backed strict schedule JSON, scheduled `.fsm`, bounded
+`bank_accesses[]` metadata, plain HDL generation, strict HDL generation,
+scalarized depth-4 bank storage, pointer-guarded accepted pushes, and
+pointer-guarded accepted pops covered.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -1298,7 +1304,10 @@ second item is the authored bank name; actors may declare multiple banks. They
 lower to scalarized guarded `.fsm` assignments and successful reports expose
 bounded `bank_accesses` metadata with the access kind, owner, container, bank
 name, index token, width/depth, scalarized entries, value or target, and
-the read-before-write same-cycle policy.
+the read-before-write same-cycle policy. The file-backed
+`isf/fifo_data_path.isf` fixture is the public bank datapath example and is
+covered by `t/1319-isf-fifo-datapath-fixture-coverage.t` for strict schedule
+JSON parity plus plain and strict HDL generation.
 `store` is bank-entry-only public syntax. Scalar storage updates remain the
 ordinary rule assignment and transaction `update` surfaces.
 The current public parser handoff also advertises one bounded subshape inside

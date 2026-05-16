@@ -993,6 +993,12 @@ The first implementation requires:
   selected index token, scalarized entries, width/depth, and the
   read-before-write same-cycle policy.
 
+The checked-in fixture `isf/fifo_data_path.isf` is the file-backed forward
+contract for this bank access surface. It proves a depth-4 bank whose
+`accepted_push` rule stores through `wr_ptr` and whose `accepted_pop` rule
+loads through `rd_ptr`, including strict schedule JSON parity, scheduled
+`.fsm` structure, and plain plus strict HDL generation.
+
 ## 6. Drive Definitions and Calls
 
 Drive definitions are actor-level reusable output phases.
@@ -3025,6 +3031,7 @@ Focused tests:
 - [t/1316-isf-rule-resource-fixture-coverage.t](../t/1316-isf-rule-resource-fixture-coverage.t)
 - [t/1317-isf-stage-contract-fixture-coverage.t](../t/1317-isf-stage-contract-fixture-coverage.t)
 - [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
+- [t/1319-isf-fifo-datapath-fixture-coverage.t](../t/1319-isf-fifo-datapath-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

@@ -1026,6 +1026,13 @@ strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, sampled payload forwarding, ready/valid stage metadata, bounded
 eventual contract metadata, temporal monitor storage roles, SystemVerilog
 sticky-fail assertion projection, and delayed completion pulse behavior.
+The FIFO datapath fixture is now promoted in the `isf` tier for file-backed
+strict schedule JSON parity, scheduled `.fsm` structure, bounded
+`bank_accesses[]` metadata, plain and strict HDL generation, scalarized
+depth-4 `data_0` through `data_3` storage, pointer-guarded accepted pushes,
+and pointer-guarded accepted pops. It does not claim general memory-array HDL
+emission, write-first collision behavior, bypassing, or arbitrary-depth
+parameterized FIFOs.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal
@@ -1236,6 +1243,11 @@ forms: access kind, owner, container, bank name, index expression, width,
 depth, scalarized entries, value or target, and the same-cycle policy. The
 shipped index is a scalar signal or literal token; full list-expression indexes
 remain future work.
+`isf/fifo_data_path.isf` is now the strict file-backed datapath fixture for
+this surface. It proves strict schedule JSON parity, scheduled `.fsm`
+structure, bounded `bank_accesses[]` metadata, plain and strict HDL
+generation, scalarized depth-4 bank storage, pointer-guarded accepted pushes,
+and pointer-guarded accepted pops.
 
 The shipped FIFO fixture is a real FIFO actor, not a depth-1 placeholder. A
 depth-1 element may be useful as a register slice or holding element, but it

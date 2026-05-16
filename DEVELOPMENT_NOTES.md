@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: FIFO datapath fixture promotion is coverage, not new bank semantics
+- `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.1` promotes the existing
+  `isf/fifo_data_path.isf` bank-access fixture without changing source syntax,
+  lowering semantics, or the read-before-write same-cycle policy.
+- The new regression deliberately checks stable structural points instead of
+  snapshotting full artifacts: scalarized `data_0` through `data_3` storage,
+  `accepted_push` write-pointer guards, `accepted_pop` read-pointer guards,
+  bounded `bank_accesses[]` metadata, strict schedule JSON parity, and the
+  generated HDL mux/storage shape.
+- The fixture remains in the broader `isf` regression tier. It is the
+  file-backed forward contract for the shipped scalarized bank store/load
+  surface, not a claim for general memory-array HDL emission, write-first
+  collision behavior, bypassing, or arbitrary-depth parameterized FIFOs.
 ## 2026-05-16: shift_left width evidence is metadata, not resize semantics
 - `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` deliberately treats
   `(shift_left REG BIT (width N))` as static register-width evidence only.

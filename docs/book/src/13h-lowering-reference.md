@@ -1010,6 +1010,10 @@ Malformed access, unknown banks, non-bank storage names, literal indexes
 outside fixed depth, and known width mismatches fail before scheduled `.fsm`
 is accepted. Successful schedule reports include bounded `bank_accesses`
 metadata for downstream tools.
+The checked-in `isf/fifo_data_path.isf` fixture is the file-backed regression
+for this surface; it proves strict schedule JSON parity, the scalarized
+scheduled `.fsm` shape, and plain plus strict HDL generation for a depth-4
+bank datapath.
 
 ## `(latency (min N) (max M))` → Verification Logic
 

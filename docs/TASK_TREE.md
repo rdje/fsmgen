@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md) |
 | `ISF-SHIFT-LEFT-EXPLICIT-WIDTH` | `done` | `R14` | `closed` | [docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md](docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md) |
 | `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md](docs/tasks/ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md) |
 | `ISF-RULE-RESOURCE-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md](docs/tasks/ISF-RULE-RESOURCE-FIXTURE-PROMOTION.md) |
@@ -146,6 +147,7 @@ as done work unless a future task reopens them.
 | Generated-composition fixture strict/outdir/HDL promotion | `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION` |
 | Rule/resource arbitration realistic fixture promotion | `ISF-RULE-RESOURCE-FIXTURE-PROMOTION` |
 | Stage/contract realistic fixture promotion | `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION` |
+| FIFO datapath bank-access realistic fixture promotion | `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION` |
 | I2C-like realistic fixture promotion | `ISF-I2C-FIXTURE-PROMOTION` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |

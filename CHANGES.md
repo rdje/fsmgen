@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF FIFO datapath fixture promotion shipped
+- Completed `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.1` and closed the task tree.
+- Added `t/1319-isf-fifo-datapath-fixture-coverage.t` for file-backed strict
+  schedule JSON parity, scheduled `.fsm` structure, bounded `bank_accesses[]`
+  metadata, plain and strict HDL generation, scalarized depth-4 bank storage,
+  pointer-guarded accepted pushes, and pointer-guarded accepted pops for
+  `isf/fifo_data_path.isf`.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, the mdBook feature matrix,
+  lowering reference, intent-scheduling and backlog chapters, the fixture
+  matrix, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl files passed; focused
+  bank-access/public/book/spec audit tests passed with `Files=7, Tests=105`;
+  `./bin/ci-regression isf --no-book` passed with `Files=225, Tests=988`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF shift-left explicit-width evidence shipped
 - Completed `ISF-SHIFT-LEFT-EXPLICIT-WIDTH.1` and closed the task tree.
 - Added optional `(width N)` support to `shift_left` as assertion-style

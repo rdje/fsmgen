@@ -365,6 +365,9 @@ current limitations are:
   conservative disjoint-rule proof for same-target FIFO-style rule writes,
   and pointer-selected `(store <bank-name> <index> <value>)` /
   `(load <bank-name> <index> as <target>)` access for actor-owned banks. The
+  checked-in `isf/fifo_data_path.isf` datapath fixture now proves that
+  store/load surface through file-backed strict schedule JSON parity,
+  scheduled `.fsm` structure, and plain plus strict HDL generation. The
   first reusable FIFO fixture is now shipped as `isf/common/fifo.isf`, with
   `isf/fifo_library_use.isf` proving the file-backed import/use source. It is
   fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`, and

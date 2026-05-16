@@ -146,6 +146,14 @@ completion pulse behavior. It does not widen nested stages, nested contracts,
 stage-local compute, expression contracts, min/max windows, or broader
 temporal operators.
 
+The FIFO datapath fixture is file-backed in the `isf` regression tier for the
+shipped actor-owned bank access surface: a depth-4 `data` bank scalarized into
+`data_0` through `data_3`, pointer-guarded accepted pushes, pointer-guarded
+accepted pops, bounded `bank_accesses[]` report metadata, strict schedule JSON
+parity, scheduled `.fsm` structure, and plain plus strict HDL generation. It
+does not claim general memory-array HDL emission, write-first collision
+behavior, bypassing, or arbitrary-depth parameterized FIFOs.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp
