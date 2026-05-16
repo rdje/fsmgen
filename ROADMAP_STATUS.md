@@ -77,9 +77,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` then documented additive and
   breaking schedule-report change rules across the ISF spec, downstream
   handoff, public contract doc, and mdBook, tying breaking changes to
-  `schema_version` bumps plus migration/deprecation documentation. The next
-  PNT selection should choose a fresh roadmap-aligned R14 task tree before
-  implementation.
+  `schema_version` bumps plus migration/deprecation documentation.
+  `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` then documented that raw
+  assignment provenance, private assignment indexes, activation proof
+  internals, and recursive child report dumps stay private while bounded
+  summary arrays, counts, the public `lower(...)` files map, named generated
+  artifacts, `generated_composition`, `library_uses[]`, and
+  `clock_domains[]` / `crossings[]` remain the public review surface. The
+  next PNT selection should choose the remaining golden-fixture-matrix
+  schedule-report freeze blocker or another roadmap-aligned R14 task tree
+  before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -239,6 +246,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` documented additive/deprecation
   policy and removed that policy item from the remaining whole-schema freeze
   blockers without changing schedule JSON payloads.
+  `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` documented the private raw
+  assignment-provenance and recursive child-report boundary and removed that
+  decision from the remaining whole-schema freeze blockers without changing
+  schedule JSON payloads.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

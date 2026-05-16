@@ -2345,11 +2345,27 @@ entry records an enforced resource's name, kind, arbiter, bound rule user, and
 the higher-priority rule users that can suppress that user's grant. These
 entries describe the static lowering decision; they are not per-cycle runtime
 grant traces.
+Raw assignment provenance remains a private `LoweringIR` implementation
+detail. Public reports expose only bounded substitutes: capped source
+summaries in `compile_issues[]`, compatible fan-in facts in
+`compatible_fanin_groups[]`, priority/resource decision summaries in
+`priority_resolutions[]` and `resource_arbitration[]`,
+`transaction_port_bindings[]`, and aggregate access summaries such as
+`bank_accesses[]`. `dt_blocks[].assignments` is intentionally a count, not a
+serialized assignment list, so downstream consumers must not depend on private
+assignment indexes or proof internals.
 The CLI `--emit-schedule-json` entrypoint is expected to emit the same report as
 the in-process scheduler on stdout and keep stderr clean on success.
 For single-clock multi-file lowerings, that report currently describes the
 parent scheduled module only. For multi-domain lowerings, it describes the
 generated top and projects bounded per-domain/crossing summaries.
+Parent reports do not recursively embed child schedule reports. Public
+multi-file review surfaces are the `lower(...)` files map, the emitted
+scheduled `.fsm`/generated-top artifacts, and bounded report summaries such as
+`generated_composition`, `library_uses[]`, and `clock_domains[]` /
+`crossings[]`. A downstream consumer that needs child detail should inspect the
+named generated artifact or the explicit bounded summary field rather than a
+raw child `LoweringIR` or recursive child report dump.
 
 Schema-freeze readiness is tracked separately from the current bounded public
 contract. The report is contractual today through the exact metadata advertised
@@ -2359,10 +2375,9 @@ CLI/in-process parity. It is not yet a frozen whole-tree schema. New optional
 keys or new value-family members may be added only with public-contract
 metadata, focused tests, and documentation in the same slice.
 
-The remaining blockers before a whole-schema freeze are explicit: decide
-whether assignment provenance and multi-file child summaries stay private or
-become bounded public summaries, and maintain a golden fixture matrix for every
-advertised branch through both in-process and CLI report paths.
+The remaining blocker before a whole-schema freeze is maintaining a golden
+fixture matrix for every advertised branch through both in-process and CLI
+report paths.
 
 ## 11. Current Regression Fixtures
 

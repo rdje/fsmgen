@@ -196,7 +196,17 @@ bindings now project as bounded `transaction_port_bindings` entries with
 binding site, owner, target transaction, port role/name, scalar actor signal
 where applicable, formatted actor expression, width, and generated handoff
 signal names where applicable. Raw assignment
-provenance and activation proof internals remain private. Shipped transaction
+provenance, private assignment indexes, and activation proof internals remain
+private. Public substitutes are the bounded source summaries in
+`compile_issues[]`, compatible fan-in facts in `compatible_fanin_groups[]`,
+priority/resource summaries in `priority_resolutions[]` and
+`resource_arbitration[]`, binding summaries in `transaction_port_bindings[]`,
+aggregate access summaries such as `bank_accesses[]`, and counts such as
+`dt_blocks[].assignments`; the report does not serialize raw assignment lists.
+Parent schedule reports also do not embed recursive child reports. Multi-file
+review stays bounded to the lower-result `files` map, the named generated
+artifacts, `generated_composition`, `library_uses[]`, and `clock_domains[]` /
+`crossings[]`. Shipped transaction
 stages now project into `transaction_stages` with authored names, generated
 state, and ready/valid endpoints. Shipped bounded eventual contracts project
 into `temporal_contracts` with trigger state, observed signal, cycle bound,

@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF schedule-report summary boundary documented
+- Completed `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` in
+  [docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md](docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md),
+  closing the schedule-report summary-boundary tree.
+- ISF spec, downstream handoff, public contract doc, and mdBook now state that
+  raw assignment provenance, private assignment indexes, activation proof
+  internals, and recursive child report dumps remain private.
+- The public substitute surface is the bounded schedule-report arrays and
+  counts already advertised by the contract, plus the public `lower(...)`
+  files map and generated artifacts for multi-file review.
+- Removed the assignment-provenance/multi-file child summary decision from the
+  open whole-schema freeze blockers, leaving the golden fixture matrix as the
+  remaining blocker.
+- This is documentation-policy synchronization only. Schedule JSON payloads,
+  parser, scheduler, generated `.fsm`, and HDL output are unchanged.
 ## 2026-05-16: ISF schedule-report evolution policy documented
 - Completed `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` in
   [docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md](docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md),

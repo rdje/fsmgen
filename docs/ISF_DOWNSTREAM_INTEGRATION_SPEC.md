@@ -997,6 +997,23 @@ Schedule-report evolution rules:
   migration or deprecation documentation in the same slice.
 - Deprecated fields stay documented until the schema version that removes them.
 
+Assignment and child-summary boundary:
+
+- Raw assignment provenance, private assignment indexes, and activation proof
+  internals are not public schedule-report fields.
+- Public substitutes are bounded summaries: `compile_issues[]` source
+  summaries, `compatible_fanin_groups[]`, `priority_resolutions[]`,
+  `resource_arbitration[]`, `transaction_port_bindings[]`, `bank_accesses[]`,
+  and aggregate counts such as `dt_blocks[].assignments`.
+- Parent reports do not embed recursive child schedule reports. Public
+  multi-file detail is the `lower(...)` files map, generated `.fsm` artifacts,
+  `generated_composition`, `library_uses[]`, and `clock_domains[]` /
+  `crossings[]`.
+- SPECFORGE-style integrations should report bugs with the runnable source,
+  command, bundle, and observed output. They do not need to classify whether a
+  failure belongs to `.fsm`, `.isf`, private provenance, or generated child
+  internals.
+
 Scalar summaries:
 
 - `schema_version`: integer `1` for the current schedule-report payload

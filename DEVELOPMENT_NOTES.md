@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: schedule reports expose summaries, not raw provenance
+- `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` closes the assignment-provenance
+  and multi-file child-summary freeze-readiness decision without changing
+  payloads. Raw assignment provenance, private assignment indexes, activation
+  proof internals, and recursive child report dumps remain internal.
+- The public contract already has the useful review surface: bounded source,
+  fan-in, priority/resource, binding, aggregate-access, storage, generated
+  composition, library, clock-domain, and crossing summaries, plus
+  `dt_blocks[].assignments` as a count.
+- Keeping child detail anchored to the public `lower(...)` files map and named
+  generated artifacts avoids promising recursive report trees before the whole
+  schema is frozen.
 ## 2026-05-16: schedule-report evolution policy is explicit
 - `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1` closes the additive/deprecation
   freeze-readiness blocker without changing payloads. Additive report growth

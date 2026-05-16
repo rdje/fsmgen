@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF schedule-report summary boundary documented
+- Completed R14 task-tree slice:
+  `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1`, closing
+  [docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md](docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md).
+- ISF spec, downstream handoff, public contract doc, and mdBook now state that
+  raw assignment provenance, private assignment indexes, activation proof
+  internals, and recursive child report dumps remain private.
+- Public consumers should use bounded summary arrays and counts, the
+  lower-result `files` map, named generated artifacts, `generated_composition`,
+  `library_uses[]`, and `clock_domains[]` / `crossings[]`.
+- The assignment-provenance/multi-file child summary decision is no longer an
+  open whole-schema freeze blocker; the golden fixture matrix remains.
+- Schedule JSON payloads, parser, scheduler, generated `.fsm`, and HDL output
+  are unchanged.
+
 ## 2026-05-16: R14 — ISF schedule-report evolution policy documented
 - Completed R14 task-tree slice:
   `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1`, closing

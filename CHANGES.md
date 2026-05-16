@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF schedule-report summary boundary documented
+- Completed `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1`, closing the
+  `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY` task tree.
+- Documented that raw assignment provenance, private assignment indexes,
+  activation proof internals, and recursive child report dumps are private
+  scheduler/lowering internals.
+- Documented the public substitute surface: bounded summary arrays and counts,
+  the public `lower(...)` files map, named generated artifacts,
+  `generated_composition`, `library_uses[]`, and `clock_domains[]` /
+  `crossings[]`.
+- Removed the assignment-provenance/multi-file child summary decision from the
+  remaining whole-schema freeze blockers.
+- Schedule JSON payloads, parser, scheduler, generated `.fsm`, and HDL output
+  are unchanged.
 ### R14 — ISF schedule-report evolution policy documented
 - Completed `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.1`, closing the
   `ISF-SCHEDULE-REPORT-EVOLUTION-POLICY` task tree.

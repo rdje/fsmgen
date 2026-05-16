@@ -1478,11 +1478,17 @@ Bounded but not fully frozen:
   `transaction_stages[]`, `transaction_loops[]`, `temporal_contracts[]`,
   `transaction_port_bindings[]`, `library_uses[]`, and
   `generated_composition` are bounded summaries, not raw IR exports.
+- Raw assignment provenance, private assignment indexes, and activation proof
+  internals remain private. Public substitutes are the bounded summary arrays
+  advertised above plus aggregate fields such as `dt_blocks[].assignments`,
+  which is a count rather than a serialized assignment list.
+- Parent schedule reports do not recursively embed child schedule reports.
+  Multi-file public detail is bounded to `generated_composition`,
+  `library_uses[]`, `clock_domains[]` / `crossings[]`, and the public
+  `lower(...)` files map.
 
 Blockers before flipping `schedule_report_full_schema_stable` to true:
 
-- Decide whether assignment provenance and multi-file child summaries stay
-  private or gain bounded public summaries.
 - Keep a golden fixture matrix covering every advertised branch through both
   in-process and CLI report paths.
 

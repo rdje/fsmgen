@@ -780,11 +780,19 @@ focused tests, and user-facing docs move in the same slice. Removing,
 renaming, changing required/optional status, changing value type, or changing
 advertised value meaning is breaking and requires a `schema_version` bump plus
 migration or deprecation documentation.
+Assignment-provenance and multi-file child-summary policy is explicit: raw
+assignment provenance, private assignment indexes, activation proof internals,
+and recursive child report dumps stay private. The public boundary is bounded
+summary arrays such as `compile_issues[]`, `compatible_fanin_groups[]`,
+`priority_resolutions[]`, `resource_arbitration[]`,
+`transaction_port_bindings[]`, `bank_accesses[]`, counts such as
+`dt_blocks[].assignments`, the lower-result `files` map, named generated
+artifacts, `generated_composition`, `library_uses[]`, and `clock_domains[]` /
+`crossings[]`.
 
-Blockers before flipping `schedule_report_full_schema_stable` are: decide
-whether assignment provenance and multi-file child summaries stay private or
-gain bounded public summaries and keep a golden fixture matrix for every
-advertised branch.
+The blocker before flipping `schedule_report_full_schema_stable` is keeping a
+golden fixture matrix for every advertised branch through both in-process and
+CLI report paths.
 
 ### ISF Realistic Fixture Matrix
 
