@@ -2524,9 +2524,9 @@ Focused tests:
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail
-  closed as unsupported transaction clauses. It is not auto-mapped to
-  `(set ...)`, `(update ...)`, `(drive ...)`, rule actions, or `(complete ...)`
-  because the old keyword does not carry enough timing intent.
+  closed with a migration-specific unsupported-clause diagnostic. It is not
+  auto-mapped to `(set ...)`, `(update ...)`, `(drive ...)`, rule actions, or
+  `(complete ...)` because the old keyword does not carry enough timing intent.
 - Broader generated-child top instantiation surfaces beyond the covered ISF
   spawn and parameterized blocking `do` patterns. The current generated top
   covers scheduled parent/child wiring, start/done handoff, explicit

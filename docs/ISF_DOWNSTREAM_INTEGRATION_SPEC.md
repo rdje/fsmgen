@@ -1090,7 +1090,9 @@ Required fail-closed examples:
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
   incompatible aggregate/list shapes.
-- Unsupported raw `assign` compatibility forms.
+- Unsupported raw `assign` compatibility forms. The removed transaction
+  `(assign ...)` keyword has targeted migration guidance to existing explicit
+  timing constructs; it is not accepted or auto-mapped.
 
 Compatibility rule:
 

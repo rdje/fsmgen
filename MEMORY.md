@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF removed assign diagnostic truth synchronized
+- Completed `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` in
+  [docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md),
+  closing the removed-assign diagnostic truth-sync tree.
+- Corrected the canonical mdBook feature backlog so it no longer says the
+  removed transaction `(assign ...)` targeted diagnostic is pending.
+- The book, ISF spec, downstream handoff, public contract, and existing
+  `t/1180-isf-unsupported-transaction-clause-boundary.t` evidence now agree:
+  `(assign ...)` remains fail-closed with migration guidance to `(set ...)`,
+  `(update ...)`, `(drive ...)`, rule assignments, or `(complete ...)`.
+- This is documentation-truth synchronization only. Parser, scheduler,
+  schedule-report, public manifest, generated `.fsm`, and HDL behavior are
+  unchanged.
 ## 2026-05-16: ISF actor-constant parameter overrides shipped
 - Completed `ISF-PARAM-OVERRIDE-CONSTANTS.2` in
   [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md),

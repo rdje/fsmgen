@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF removed assign diagnostic truth synchronized
+- Completed `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1`, closing the
+  `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC` task tree.
+- Corrected the canonical mdBook feature backlog so the removed transaction
+  `(assign ...)` item reflects the already-shipped targeted migration
+  diagnostic rather than saying that diagnostic remains pending.
+- Kept the downstream handoff and ISF spec explicit that `(assign ...)`
+  remains fail-closed and is not auto-mapped to `(set ...)`, `(update ...)`,
+  `(drive ...)`, rule assignments, or `(complete ...)`.
+- This is documentation-only. Parser, scheduler, schedule-report, manifest,
+  generated `.fsm`, HDL output, and accepted source behavior are unchanged.
 ### R14 — ISF actor-constant parameter overrides shipped
 - Completed `ISF-PARAM-OVERRIDE-CONSTANTS.2`, closing the
   `ISF-PARAM-OVERRIDE-CONSTANTS` task tree.

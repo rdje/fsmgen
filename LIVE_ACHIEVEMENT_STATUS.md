@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF removed assign diagnostic truth synchronized
+- Completed R14 task-tree slice:
+  `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1`, closing
+  [docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md).
+- Corrected the canonical mdBook feature backlog so the removed transaction
+  `(assign ...)` entry reflects the shipped targeted migration diagnostic.
+- `(assign ...)` remains fail-closed and is not auto-mapped to accepted timing
+  constructs; the diagnostic points authors to `(set ...)`, `(update ...)`,
+  `(drive ...)`, rule assignments, or `(complete ...)`.
+- Parser, scheduler, schedule-report, manifest, generated `.fsm`, and HDL
+  behavior are unchanged.
+
 ## 2026-05-16: R14 — ISF actor-constant parameter overrides shipped
 - Completed R14 task-tree slice: `ISF-PARAM-OVERRIDE-CONSTANTS.2`, closing
   [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md).

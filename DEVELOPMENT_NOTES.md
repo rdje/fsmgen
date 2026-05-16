@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: removed assign diagnostic was already shipped
+- `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` fixes documentation drift only. The
+  lowerer already recognizes the removed transaction `(assign ...)` keyword
+  before the generic unsupported-clause path and emits the migration-specific
+  guidance.
+- The public contract already pointed to
+  `t/1180-isf-unsupported-transaction-clause-boundary.t`, which proves the
+  top-level and nested `when`/`switch`/`repeat` fail-closed contexts. The
+  stale text was confined to the canonical book backlog status wording.
+- Keeping this as a truth-sync slice avoids widening the language accidentally:
+  `(assign ...)` remains removed, and any future transaction-local
+  combinational assignment needs a new construct with explicit timing.
 ## 2026-05-16: activation param constants ship as resolved literals
 - `ISF-PARAM-OVERRIDE-CONSTANTS.2` resolves actor constants at the ISF
   lowering boundary, before generated activation instances are handed to the
