@@ -458,11 +458,11 @@ Rules:
 - Actor parameter scalar defaults may use local or package-qualified enum
   member references. Generated child transaction scalar parameter defaults may
   also use local or package-qualified enum member references. Scalar activation
-  parameter overrides may also use local or package-qualified enum member
-  references on generated activation sites. Aggregate/list enum member leaves,
-  aggregate/list activation enum override leaves, reusable-library use-site
-  enum overrides, duplicate overrides, unknown overrides, and shape mismatches
-  fail closed.
+  parameter overrides and scalar leaves inside activation aggregate/list
+  parameter override values may also use local or package-qualified enum member
+  references on generated activation sites. Aggregate/list parameter-default
+  enum member leaves, reusable-library use-site enum overrides, duplicate
+  overrides, unknown overrides, and shape mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored enum
   tokens. These are static specialization defaults, not runtime payloads.
@@ -815,13 +815,13 @@ Rules:
 - Activation parameter override values may be scalar/exact-width literals,
   actor-local constants, scalar local or package-qualified enum members, or
   compatible aggregate/list literals whose scalar leaves are literals or
-  actor-local constants.
+  actor-local constants or local/package-qualified enum members.
 - Transaction-local scalar parameter defaults may use local or
   package-qualified enum members; generated child `.fsm` `+params` and
   generated-composition schedule reports preserve the authored enum token.
 - Actor constants and scalar enum members resolve to literal values before
-  generated-top emission. Enum leaves inside aggregate/list activation override
-  values remain fail-closed.
+  generated-top emission, including scalar enum leaves inside activation
+  aggregate/list override values.
 - Spawned children and parameterized/generated blocking `do` activations lower
   through generated composition.
 - Parameterized rule triggers lower through generated child activation
@@ -907,15 +907,17 @@ Rules:
   operands, scalar actor parameter defaults may consume local or package enum
   members, generated child transaction scalar parameter defaults may consume
   local or package enum members, scalar activation parameter overrides may
-  consume local or package enum members, and scalar rule assignment RHS values
-  or expression operands may consume local or package enum members. Rule guard
-  expressions may use enum members as scalar operands. Enum members in
+  consume local or package enum members, scalar leaves inside activation
+  aggregate/list parameter override values may consume local or package enum
+  members, and scalar rule assignment RHS values or expression operands may
+  consume local or package enum members. Rule guard expressions may use enum
+  members as scalar operands. Enum members in
   expression operator position, standalone transaction conditions, switch
   selectors, targets, rules outside scalar trigger parameter overrides, rule
   guard or transaction condition expression operator position, rule assignment
   expression operator position, drive targets, drive-call expression operator
-  position, inline drive assignments, aggregate/list parameter leaves,
-  aggregate/list activation override leaves, and other contexts remain
+  position, inline drive assignments, aggregate/list parameter-default leaves,
+  reusable-library use-site parameter overrides, and other contexts remain
   deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
@@ -1388,7 +1390,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1272-isf-enum-member-rule-values.t \
   t/1273-isf-enum-member-rule-expression-values.t \
   t/1274-isf-enum-member-rule-guard-values.t \
-  t/1275-isf-enum-member-condition-values.t
+  t/1275-isf-enum-member-condition-values.t \
+  t/1276-isf-enum-member-activation-aggregate-params.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

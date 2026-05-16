@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum activation aggregate leaves shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.22` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.23`, selecting the
+  next enum or aggregate value/update context after activation aggregate/list
+  enum leaves.
+- Aggregate/list activation parameter overrides on `spawn`, generated blocking
+  `do`, and rule `trigger` now accept local and package-qualified enum members
+  as scalar leaves, resolving them to literal generated-top and
+  generated-composition report bindings.
+- Reusable-library use-site enum overrides, aggregate/list parameter-default
+  enum leaves, direct `(on ...)` activation overrides, and broader non-shipped
+  value contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum transaction condition operands shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.21` in

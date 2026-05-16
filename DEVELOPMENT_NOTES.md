@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum activation aggregate leaves reuse static specialization
+- `ISF-TYPE-AGGREGATE-PARITY.22` widens activation parameter enum support from
+  scalar override values to scalar leaves inside aggregate/list override values
+  because generated activation overrides already resolve static constants
+  leaf-by-leaf before generated-top emission.
+- The parser validates enum leaves against the parent actor enum tables, and
+  the lowerer resolves local and package-qualified enum leaves to non-negative
+  integer literals before publishing generated-top/report bindings.
+- Reusable-library use-site enum overrides stay closed because those bindings
+  are a separate library-instantiation contract, not generated activation-site
+  specialization. Aggregate/list parameter-default enum leaves also remain
+  separate from activation override leaves.
 ## 2026-05-16: enum transaction conditions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.21` widens enum support from rule guard operands
   to scalar operands inside transaction `when`/`while`/`until` condition

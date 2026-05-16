@@ -3277,7 +3277,7 @@ sub _resolve_activation_param_value {
         return _clone_isf_value($constant_values->{$value})
             if _is_hdl_identifier($value) && exists $constant_values->{$value};
         if (_is_enum_member_reference($value)) {
-            confess "$context uses unsupported aggregate/list override leaf '$value'; activation parameter aggregate/list overrides accept numeric, exact-width, and actor-constant leaves only, while enum member leaves remain deferred\n"
+            confess "$context uses unsupported aggregate/list override leaf '$value'; activation parameter aggregate/list overrides accept numeric, exact-width, actor-constant, and enum member leaves only when enum members resolve to non-negative integer literal values\n"
                 unless $allow_enum_member;
             my $resolved_value = _resolve_actor_enum_member_value($actor, $value);
             confess "$context references unknown enum member '$value'\n"
@@ -3290,12 +3290,12 @@ sub _resolve_activation_param_value {
         confess "$context uses unsupported parameter value '$value'; activation parameter values accept numeric, exact-width, actor-constant, scalar enum member, and aggregate/list literal values only\n";
     }
 
-    confess "$context uses unsupported parameter value shape; activation parameter values accept non-empty aggregate/list literal values only, with enum member leaves deferred\n"
+    confess "$context uses unsupported parameter value shape; activation parameter values accept non-empty aggregate/list literal values only\n"
         unless ref($value) eq 'ARRAY' && @$value;
 
     return [
         map {
-            _resolve_activation_param_value($_, $context, $constant_values, $actor, 0)
+            _resolve_activation_param_value($_, $context, $constant_values, $actor, $allow_enum_member)
         } @$value
     ];
 }

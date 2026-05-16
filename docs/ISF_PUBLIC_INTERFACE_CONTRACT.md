@@ -687,9 +687,10 @@ The shipped surface preserves validated per-instance spawn and generated `do`
 overrides plus parameterized rule-trigger overrides in lowerer metadata, emits
 child transaction defaults into generated child scheduled `.fsm` `+params`
 blocks, resolves actor-local constants and scalar enum members in activation
-parameter override values, rejects duplicate instances, duplicate parameters,
-unknown overrides, unsupported non-constant symbolic or expression values,
-aggregate/list enum override leaves, and aggregate shape mismatches, and rejects
+parameter override values and scalar enum member leaves inside activation
+aggregate/list override values, rejects duplicate instances, duplicate
+parameters, unknown overrides, unsupported non-constant symbolic or expression
+values, and aggregate shape mismatches, and rejects
 parameter declarations on non-generated transactions.
 The public ISF surface now accepts the scalar type-alias subset plus one
 aggregate storage-carrier subset: actor-local `(types ...)` declarations,
@@ -715,19 +716,19 @@ transaction `set` RHS scalar values or scalar operands inside transaction
 `set` RHS expressions, transaction `switch` branch values, scalar drive body
 RHS values, named drive-call scalar actual values or scalar operands inside
 drive-call actual expressions, scalar activation parameter overrides, and
-scalar rule assignment RHS values or scalar operands inside rule assignment RHS
+scalar leaves inside activation aggregate/list parameter overrides, scalar rule
+assignment RHS values or scalar operands inside rule assignment RHS
 expressions, and scalar operands inside rule guard expressions in this slice,
 using local `mode.BUSY` or package-qualified `shared.mode.BUSY` spelling and
 resolving to non-negative integer literal values before lowering.
 Enum member references in expression operator position, standalone transaction
 conditions, switch selectors, targets, rules outside scalar trigger parameter
-overrides, scalar assignment RHS values/operands, and rule guard expression
-operands, transaction condition, rule guard, or rule assignment expression
+overrides, transaction condition, rule guard, or rule assignment expression
 operator position, drive targets, drive-call expression operator position,
-inline drive assignments, aggregate/list parameter leaves, aggregate/list
-activation override leaves, and other ISF value contexts, additional aggregate
-carriers, and aggregate field/slice/update semantics remain outside the
-parser/scheduler contract.
+inline drive assignments, aggregate/list parameter-default leaves,
+reusable-library use-site parameter overrides, and other ISF value contexts,
+additional aggregate carriers, and aggregate field/slice/update semantics
+remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -773,7 +774,7 @@ Actor scalar parameter default enum member values are checked by
 covering local and package enum member actor parameter defaults, scheduled
 `.fsm` `+params` review artifacts, schedule-report value preservation, CLI HDL
 generation, and fail-closed diagnostics for unknown members, aggregate/list
-parameter leaves, and aggregate/list activation override leaves.
+parameter leaves, and other non-shipped contexts.
 Generated child transaction scalar parameter default enum member values are
 checked by
 [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t),
@@ -781,13 +782,19 @@ covering local and package enum member transaction parameter defaults,
 generated child `.fsm` `+params` review artifacts, generated-composition
 schedule-report value preservation, CLI HDL generation, and fail-closed
 diagnostics for unknown members, aggregate/list parameter leaves, and
-aggregate/list activation override leaves.
+reusable-library use-site override contexts.
 Scalar activation parameter override enum member values are checked by
 [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t),
 covering local and package enum member overrides on spawn, generated blocking
 `do`, and rule-trigger activation sites, generated-top literal parameter
 bindings, generated-composition schedule-report bindings, and fail-closed
-diagnostics for unknown members and aggregate/list activation override leaves.
+diagnostics for unknown members and non-activation structural targets.
+Aggregate/list activation parameter override enum member leaves are checked by
+[t/1276-isf-enum-member-activation-aggregate-params.t](../t/1276-isf-enum-member-activation-aggregate-params.t),
+covering local and package enum member leaves on generated activation sites,
+literal generated-top bindings, generated-composition schedule-report bindings,
+strict CLI HDL generation, unknown-member diagnostics, and the still-deferred
+reusable-library use-site enum override boundary.
 Scalar rule assignment RHS enum member values are checked by
 [t/1272-isf-enum-member-rule-values.t](../t/1272-isf-enum-member-rule-values.t),
 covering local and package enum member explicit `(set port value)` and shorthand
@@ -1426,9 +1433,10 @@ sites. The machine-readable contract advertises these through
 Generated-composition child `parameters[]` and instance
 `parameter_bindings[]` entries also preserve authored scalar enum member
 tokens for generated child transaction parameter defaults. Scalar activation
-override enum values are resolved to literal values before generated-top
-emission, so generated-composition instance `parameter_bindings[]` entries
-carry the emitted literal override value for those use sites.
+override enum values and enum leaves inside activation aggregate/list override
+values are resolved to literal values before generated-top emission, so
+generated-composition instance `parameter_bindings[]` entries carry the emitted
+literal override value for those use sites.
 
 For each `actor_phases` or `actor_stages` entry, `name` is the authored
 actor-level metadata name and `body` is the JSON-safe copy of the

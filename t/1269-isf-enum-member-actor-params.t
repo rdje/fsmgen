@@ -144,29 +144,6 @@ ISF
         'enum leaves inside aggregate/list actor parameters remain deferred',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_activation_param_aggregate_leaf_still_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output done))
-  (transaction main
-	    (on start)
-	    (spawn child as c0
-	      (params
-	        (DEFAULT_MODES (mode.BUSY 1)))))
-	  (transaction child
-	    (params
-	      (DEFAULT_MODES (0 1)))
-	    (complete done)))
-ISF
-        qr/transaction 'main' spawn instance 'c0' parameter 'DEFAULT_MODES' uses unsupported aggregate\/list override leaf 'mode\.BUSY'; activation parameter aggregate\/list overrides accept numeric, exact-width, and actor-constant leaves only, while enum member leaves remain deferred/,
-        'aggregate/list activation parameter enum override leaves remain deferred',
-    );
 };
 
 done_testing();

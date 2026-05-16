@@ -46,7 +46,8 @@ clear lower-layer mapping, and clear runtime behavior.
   values emit as scheduled `.fsm` `+params` and schedule-report
   `actor_params[]`; scalar defaults may use enum members, and they are not
   runtime payload wires. Generated activation-site scalar parameter overrides
-  may also use enum members, which resolve to literal generated-top bindings.
+  and aggregate/list override leaves may also use enum members, which resolve
+  to literal generated-top bindings.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,
@@ -412,7 +413,9 @@ limitations are:
   values may also use local and package-qualified enum members. Drive-call
   actual expressions may use enum members as scalar operands too, and scalar
   activation parameter overrides for spawn, generated blocking `do`, and rule
-  `trigger` may use enum members as static specialization values.
+  `trigger` may use enum members as static specialization values. Scalar
+  leaves inside those activation aggregate/list parameter override values may
+  use enum members too.
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
@@ -421,7 +424,7 @@ limitations are:
   standalone transaction conditions, switch selectors, set targets, rules
   outside scalar trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
-  position, drive targets, drive-call expression operator position, inline drive assignments, aggregate/list activation override leaves,
+  position, drive targets, drive-call expression operator position, inline drive assignments,
   aggregate/list parameter
   leaves, and other non-shipped contexts remain backlog, as do aggregate paths outside
   transaction `set` RHS values or direct targets, subaggregate

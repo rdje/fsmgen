@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum activation aggregate leaves shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.22` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.23`.
+- Aggregate/list activation parameter overrides on `spawn`, generated blocking
+  `do`, and rule `trigger` now accept local enum members such as `mode.BUSY`
+  and package-qualified enum members such as `shared.mode.BUSY` as scalar
+  leaves.
+- The lowerer resolves those enum leaves to literal generated-top `?fsmc`
+  parameter bindings and exposes the literal aggregate/list values in
+  generated-composition instance parameter bindings.
+- Unknown aggregate/list activation enum leaves fail before lowering, while
+  reusable-library use-site enum overrides, aggregate/list parameter-default
+  enum leaves, direct `(on ...)` activation overrides, and broader value
+  contexts remain deferred.
 ## 2026-05-16: ISF enum transaction condition operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.21` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
