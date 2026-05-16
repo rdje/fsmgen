@@ -527,6 +527,10 @@ Rules:
 - Call arity must exactly match the drive's formal count.
 - Actuals may be scalar tokens, numeric/exact-width literals, or non-empty
   list expressions.
+- Scalar drive body RHS values may use local enum members such as `mode.BUSY`
+  or package enum members such as `shared.mode.BUSY`. FSMGen resolves those
+  members before lowering and preserves the authored token in the generated
+  drive DT.
 - Drive DT assignments use flopped output assignment (`<-`) by default, so a
   drive call consumes one state and driven output changes on the following
   clock.
@@ -864,11 +868,12 @@ Rules:
   package enum members such as `shared.mode.BUSY`. Unknown enum families or
   members fail closed before generated artifacts are emitted.
 - Direct transaction `(set target enum_member)` RHS scalar values may also
-  consume local or package enum members, and transaction `set` RHS
-  expressions may use enum members as scalar operands. Transaction `switch`
-  branch values may also consume local or package enum members. Enum members
-  in expression operator position, conditions, switch selectors, targets,
-  rules, drives, parameters, and other contexts remain deferred.
+  consume local or package enum members, transaction `set` RHS expressions may
+  use enum members as scalar operands, transaction `switch` branch values may
+  consume local or package enum members, and scalar drive body RHS values may
+  consume local or package enum members. Enum members in expression operator
+  position, conditions, switch selectors, targets, rules, drive targets, drive
+  call actuals, parameters, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1273,7 +1278,7 @@ Required fail-closed examples:
   `set` RHS values or target tokens, aggregate paths in expression operator
   position, subaggregate operands/updates, and enum member references outside
   actor constants, transaction `set` RHS scalar values/expression operands, or
-  transaction `switch` branch values.
+  transaction `switch` branch values, or drive body RHS scalar values.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1326,7 +1331,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1262-isf-aggregate-storage-leaf-expression-reads.t \
   t/1263-isf-enum-member-set-values.t \
   t/1264-isf-enum-member-set-expression-values.t \
-  t/1265-isf-enum-member-switch-branch-values.t
+  t/1265-isf-enum-member-switch-branch-values.t \
+  t/1266-isf-enum-member-drive-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

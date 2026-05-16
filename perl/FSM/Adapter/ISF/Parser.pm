@@ -681,11 +681,11 @@ sub _validate_actor_enum_member_value_contexts($self, $actor) {
     }
 
     for my $drive_name (sort keys %{$actor->{drives} || {}}) {
-        _reject_enum_member_value_contexts(
-            $actor->{drives}{$drive_name}{body},
+        _validate_drive_enum_member_value_contexts(
+            $drive_name,
+            $actor->{drives}{$drive_name},
             $actor,
             \%aggregate_roots,
-            "drive '$drive_name'",
         );
     }
 
@@ -808,6 +808,40 @@ sub _validate_transaction_switch_branch_enum_member_value {
     return 1;
 }
 
+sub _validate_drive_enum_member_value_contexts {
+    my ($drive_name, $drive, $actor, $aggregate_roots) = @_;
+    for my $entry (@{$drive->{body} || []}) {
+        next unless ref($entry) eq 'ARRAY' && @$entry;
+        _reject_enum_member_value_contexts(
+            $entry->[0],
+            $actor,
+            $aggregate_roots,
+            "drive '$drive_name' target",
+        );
+        _validate_drive_enum_member_rhs(
+            $entry->[1],
+            $actor,
+            $aggregate_roots,
+            "drive '$drive_name' RHS",
+        ) if @$entry >= 2;
+        for my $extra (@{$entry}[2 .. $#$entry]) {
+            _reject_enum_member_value_contexts($extra, $actor, $aggregate_roots, "drive '$drive_name' body");
+        }
+    }
+    return 1;
+}
+
+sub _validate_drive_enum_member_rhs {
+    my ($rhs, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($rhs, $actor, $aggregate_roots, "$context expression")
+        if ref($rhs);
+
+    my $member = _enum_member_value_token($rhs, $aggregate_roots);
+    _validate_enum_member_value($member, $actor, $context)
+        if defined $member;
+    return 1;
+}
+
 sub _validate_enum_member_value {
     my ($member, $actor, $context) = @_;
     my $resolved_value = FSM::Adapter::ISF::Parser->_resolve_actor_enum_member_value($actor, $member);
@@ -822,7 +856,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF slice accepts enum member references only as direct transaction set RHS scalar values\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values\n"
             if defined $member;
         return 1;
     }

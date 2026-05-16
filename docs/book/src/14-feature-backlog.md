@@ -278,8 +278,9 @@ also continues to accept numeric/exact-width parameter values, actor-local
 constants for selected static specialization values, and compatible
 aggregate/list literal parameter values. Direct transaction `set` RHS scalar
 values and scalar operands inside transaction `set` RHS expressions may
-consume local and package-qualified enum members, and transaction `switch`
-branch values may consume local and package-qualified enum members.
+consume local and package-qualified enum members, transaction `switch` branch
+values may consume local and package-qualified enum members, and scalar drive
+body RHS values may consume local and package-qualified enum members.
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as
 `frame.mode` or `lanes[0]`, either directly or as scalar operands inside
@@ -289,7 +290,8 @@ flag_in)` or `(set lanes[0] bit_in)`. Aggregate member paths outside
 transaction `set` RHS values or direct targets, subaggregate
 operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, transaction `set` RHS
-scalar values/expression operands, or transaction `switch` branch values,
+scalar values/expression operands, transaction `switch` branch values, or
+drive body RHS scalar values,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 

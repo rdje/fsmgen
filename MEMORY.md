@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum drive values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.12` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.13`.
+- Scalar drive body RHS values now accept local enum members such as
+  `mode.BUSY` and package-qualified enum members such as `shared.mode.BUSY`.
+- The parser resolves drive RHS enum values before lowering, preserves
+  authored values in generated drive DTs, and rejects unknown enum members in
+  drive RHS positions.
+- Enum members in drive targets, drive-call actuals, rules, conditions,
+  switch selectors, set targets, parameters, and other non-shipped contexts
+  remain deferred.
 ## 2026-05-16: ISF enum switch branch values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.11` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

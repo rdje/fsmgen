@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum drive values stay body-RHS-only
+- `ISF-TYPE-AGGREGATE-PARITY.12` selects scalar drive body RHS values as the
+  next enum context because drive definitions already lower to explicit
+  non-state DT assignments that preserve authored RHS tokens and reach strict
+  CLI HDL generation.
+- The parser validates enum members before lowering but keeps drive targets
+  and drive-call actuals closed. Targets need assignment/ownership semantics,
+  and actuals need a separate transaction-clause value contract.
+- Rule enum RHS support is intentionally not bundled here. A local probe
+  exposed a separate strict-mode generated `.fsm` boundary for guarded rule
+  assignments, so rules need a dedicated lowering/strictness slice before
+  becoming public enum-value contexts.
 ## 2026-05-16: enum switch branch values reuse selector lowering
 - `ISF-TYPE-AGGREGATE-PARITY.11` selects transaction `switch` branch values
   as the next enum context because the scheduled `.fsm` selector path already

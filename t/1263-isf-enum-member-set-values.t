@@ -137,7 +137,7 @@ ISF
     (when mode.BUSY
       (set done 1))))
 ISF
-        qr/when condition references enum member 'mode\.BUSY'; this ISF slice accepts enum member references only as direct transaction set RHS scalar values/,
+        qr/when condition references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values/,
         'enum members in conditions remain deferred',
     );
 
@@ -155,7 +155,7 @@ ISF
     (on start)
     (set mode.BUSY 1)))
 ISF
-        qr/set target references enum member 'mode\.BUSY'; this ISF slice accepts enum member references only as direct transaction set RHS scalar values/,
+        qr/set target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values/,
         'enum members in set targets remain deferred',
     );
 
@@ -172,28 +172,8 @@ ISF
   (rule mark_busy ready
     (set mode_out mode.BUSY)))
 ISF
-        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF slice accepts enum member references only as direct transaction set RHS scalar values/,
+        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values/,
         'enum members in rule actions remain deferred',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_drive_body_still_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output mode_out))
-  (drive mark_busy
-    (mode_out mode.BUSY))
-  (transaction main
-    (on start)
-    (drive mark_busy)))
-ISF
-        qr/drive 'mark_busy' references enum member 'mode\.BUSY'; this ISF slice accepts enum member references only as direct transaction set RHS scalar values/,
-        'enum members in drive bodies remain deferred',
     );
 
     assert_parse_rejected(
