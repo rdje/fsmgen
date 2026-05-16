@@ -17,8 +17,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   activation parameter override values and closed that tree,
   `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` corrected the removed `(assign ...)`
   backlog wording so it matches the already-shipped targeted migration
-  diagnostic and `t/1180` evidence. The next PNT selection should choose a
-  fresh roadmap-aligned R14 task tree before implementation.
+  diagnostic and `t/1180` evidence. `ISF-SPEC-TEST-INDEX-SYNC.1` then
+  synchronized the ISF spec focused-test index through the current
+  `t/*-isf-*.t` files and added an audit to prevent future drift. The next PNT
+  selection should choose a fresh roadmap-aligned R14 task tree before
+  implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -119,6 +122,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(assign ...)` targeted migration diagnostic. This was documentation-truth
   synchronization only; parser, scheduler, report, generated `.fsm`, and HDL
   behavior stayed unchanged.
+  `ISF-SPEC-TEST-INDEX-SYNC.1` synchronized the ISF spec focused-test list
+  with the current `t/*-isf-*.t` regression files and added
+  `t/1250-isf-spec-focused-test-index-audit.t` so future ISF test additions
+  must keep the live spec index synchronized.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

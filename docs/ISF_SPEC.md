@@ -2455,6 +2455,8 @@ Focused tests:
 - [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
 - [t/1205-isf-switch-clause-boundary.t](../t/1205-isf-switch-clause-boundary.t)
 - [t/1206-isf-when-clause-boundary.t](../t/1206-isf-when-clause-boundary.t)
+- [t/1207-isf-assignment-provenance-inventory.t](../t/1207-isf-assignment-provenance-inventory.t)
+- [t/1208-isf-compatible-fanin-classification.t](../t/1208-isf-compatible-fanin-classification.t)
 - [t/1209-isf-static-conflict-detection.t](../t/1209-isf-static-conflict-detection.t)
 - [t/1210-isf-priority-conflict-resolution.t](../t/1210-isf-priority-conflict-resolution.t)
 - [t/1211-isf-runtime-selector-conflict-instrumentation.t](../t/1211-isf-runtime-selector-conflict-instrumentation.t)
@@ -2494,6 +2496,9 @@ Focused tests:
 - [t/1245-isf-transaction-loop-lowering.t](../t/1245-isf-transaction-loop-lowering.t)
 - [t/1246-isf-setter-syntax.t](../t/1246-isf-setter-syntax.t)
 - [t/1247-isf-clock-domain-partition.t](../t/1247-isf-clock-domain-partition.t)
+- [t/1248-isf-rule-trigger-parameter-binding.t](../t/1248-isf-rule-trigger-parameter-binding.t)
+- [t/1249-isf-activation-parameter-constants.t](../t/1249-isf-activation-parameter-constants.t)
+- [t/1250-isf-spec-focused-test-index-audit.t](../t/1250-isf-spec-focused-test-index-audit.t)
 
 ## 12. Explicitly Deferred
 

@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF spec focused-test index audited
+- Completed `ISF-SPEC-TEST-INDEX-SYNC.1`, closing the
+  `ISF-SPEC-TEST-INDEX-SYNC` task tree.
+- Added the missing focused-test links for
+  [t/1207-isf-assignment-provenance-inventory.t](t/1207-isf-assignment-provenance-inventory.t),
+  [t/1208-isf-compatible-fanin-classification.t](t/1208-isf-compatible-fanin-classification.t),
+  [t/1248-isf-rule-trigger-parameter-binding.t](t/1248-isf-rule-trigger-parameter-binding.t),
+  and [t/1249-isf-activation-parameter-constants.t](t/1249-isf-activation-parameter-constants.t)
+  to the ISF spec focused-test list.
+- Added [t/1250-isf-spec-focused-test-index-audit.t](t/1250-isf-spec-focused-test-index-audit.t)
+  to keep that spec list synchronized with `t/*-isf-*.t`.
+- This is documentation and regression guardrail work only. Parser, scheduler,
+  report payload, generated `.fsm`, HDL output, and accepted source behavior
+  are unchanged.
 ### R14 — ISF removed assign diagnostic truth synchronized
 - Completed `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1`, closing the
   `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC` task tree.

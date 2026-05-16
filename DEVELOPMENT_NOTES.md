@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: ISF spec test list is audited
+- `ISF-SPEC-TEST-INDEX-SYNC.1` turns a manual spec-maintenance obligation into
+  a focused regression. The new audit reads the `Focused tests:` section in
+  `docs/ISF_SPEC.md` and compares it with the repository's `t/*-isf-*.t`
+  files.
+- The immediate drift was append-only: `t/1207`, `t/1208`, `t/1248`, and
+  `t/1249` existed but were not listed in the spec index. The slice also lists
+  the new audit itself so later ISF test additions must update the spec in the
+  same slice.
+- No compiler behavior is involved; this is a documentation integrity guard for
+  the live downstream-readable ISF spec.
 ## 2026-05-16: removed assign diagnostic was already shipped
 - `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` fixes documentation drift only. The
   lowerer already recognizes the removed transaction `(assign ...)` keyword

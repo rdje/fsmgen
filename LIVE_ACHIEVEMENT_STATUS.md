@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF spec focused-test index audited
+- Completed R14 task-tree slice: `ISF-SPEC-TEST-INDEX-SYNC.1`, closing
+  [docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md).
+- Updated [docs/ISF_SPEC.md](docs/ISF_SPEC.md) so its focused-test list covers
+  the current ISF regression files through `t/1250`.
+- Added [t/1250-isf-spec-focused-test-index-audit.t](t/1250-isf-spec-focused-test-index-audit.t)
+  to keep that list synchronized with `t/*-isf-*.t`.
+- Parser, scheduler, report payload, generated `.fsm`, and HDL behavior are
+  unchanged.
+
 ## 2026-05-16: R14 — ISF removed assign diagnostic truth synchronized
 - Completed R14 task-tree slice:
   `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1`, closing

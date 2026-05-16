@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF spec focused-test index audited
+- Completed `ISF-SPEC-TEST-INDEX-SYNC.1` in
+  [docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md),
+  closing the spec test-index sync tree.
+- Added the missing focused-test links for assignment provenance,
+  compatible fan-in classification, rule-trigger parameter binding, and
+  actor-constant activation parameter overrides to [docs/ISF_SPEC.md](docs/ISF_SPEC.md).
+- Added [t/1250-isf-spec-focused-test-index-audit.t](t/1250-isf-spec-focused-test-index-audit.t)
+  so the ISF spec focused-test list must stay synchronized with
+  `t/*-isf-*.t`.
+- This changes documentation and regression guardrails only. Parser,
+  scheduler, report payload, generated `.fsm`, HDL output, and accepted source
+  behavior are unchanged.
 ## 2026-05-16: ISF removed assign diagnostic truth synchronized
 - Completed `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` in
   [docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md),

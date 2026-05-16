@@ -43,6 +43,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `ISF-BACKLOG-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md) |
 | `ISF-PARAM-OVERRIDE-CONSTANTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md) |
 | `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md) |
+| `ISF-SPEC-TEST-INDEX-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
 | `ISF-ACTIVATION-PARAM-OVERRIDES` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md](docs/tasks/ISF-ACTIVATION-PARAM-OVERRIDES.md) |
 | `ISF-PUBLIC-CONTRACT` | `done` | `R14` | `closed` | [docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md](docs/tasks/ISF-PUBLIC-CONTRACT-SYNC.md) |
 | `ISF-DYNAMIC-WAIT` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md) |
@@ -98,6 +99,7 @@ as done work unless a future task reopens them.
 | Remaining rule-trigger and direct-activation parameter overrides | `ISF-ACTIVATION-PARAM-OVERRIDES` |
 | Actor constants as activation parameter override values | `ISF-PARAM-OVERRIDE-CONSTANTS` |
 | Removed `(assign ...)` diagnostic truth synchronization | `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC` |
+| ISF spec focused-test index synchronization | `ISF-SPEC-TEST-INDEX-SYNC` |
 | Self-contained downstream ISF integration handoff | `ISF-DOWNSTREAM-INTEGRATION-SPEC` |
 | ISF feature-backlog truth synchronization | `ISF-BACKLOG-TRUTH-SYNC` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
