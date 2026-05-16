@@ -186,9 +186,9 @@ General source rules:
   accepted identifier spelling is compatible with `[A-Za-z_][A-Za-z0-9_]*`.
 - Widths and depths are positive integer literals unless a specific clause says
   otherwise.
-- Actor constants use non-negative integer literals or enum member references
-  that resolve to non-negative integers; static wait counts use non-negative
-  integer literals or actor constants.
+- Actor constants and scalar actor parameter defaults use non-negative integer
+  literals or enum member references that resolve to non-negative integers;
+  static wait counts use non-negative integer literals or actor constants.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -454,11 +454,14 @@ Rules:
 - Reusable actor parameters are declared by actor-level `(params ...)`.
 - Use-site parameter overrides are instance-local. Missing overrides use actor
   defaults.
-- Unknown overrides, duplicate overrides, symbolic parameter values, and shape
-  mismatches fail closed for reusable-library `use` sites.
+- Actor parameter scalar defaults may use local or package-qualified enum
+  member references. Aggregate/list enum member leaves, transaction-local
+  parameter defaults, activation parameter overrides, reusable-library
+  use-site enum overrides, duplicate overrides, unknown overrides, and shape
+  mismatches fail closed.
 - Schedule reports expose actor parameter defaults through `actor_params[]`
-  entries with `name` and JSON-safe default `value`. These are static
-  specialization defaults, not runtime payloads.
+  entries with `name` and JSON-safe default `value`, preserving authored enum
+  tokens. These are static specialization defaults, not runtime payloads.
 - Every exported actor clock/reset/interface endpoint must be explicitly bound
   at the use site.
 - Binding direction and known width must match.
@@ -875,11 +878,13 @@ Rules:
   use enum members as scalar operands, transaction `switch` branch values may
   consume local or package enum members, and scalar drive body RHS values may
   consume local or package enum members. Named drive-call scalar actual values
-  may also consume local or package enum members, and drive-call actual
-  expressions may use enum members as scalar operands. Enum members in
-  expression operator position, conditions, switch selectors, targets, rules,
-  drive targets, drive-call expression operator position, inline drive
-  assignments, parameters, and other contexts remain deferred.
+  may also consume local or package enum members, drive-call actual
+  expressions may use enum members as scalar operands, and scalar actor
+  parameter defaults may consume local or package enum members. Enum members
+  in expression operator position, conditions, switch selectors, targets,
+  rules, drive targets, drive-call expression operator position, inline drive
+  assignments, transaction parameter defaults, activation parameter overrides,
+  aggregate/list parameter leaves, and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1283,9 +1288,10 @@ Required fail-closed examples:
   indexes, aggregate storage member/item paths outside direct transaction
   `set` RHS values or target tokens, aggregate paths in expression operator
   position, subaggregate operands/updates, and enum member references outside
-  the shipped actor-constant, transaction `set` RHS scalar/expression-operand,
-  transaction `switch` branch-value, drive body RHS scalar, and drive-call
-  actual scalar/expression-operand contexts.
+  the shipped actor-constant, actor scalar parameter default, transaction
+  `set` RHS scalar/expression-operand, transaction `switch` branch-value,
+  drive body RHS scalar, and drive-call actual scalar/expression-operand
+  contexts.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1341,7 +1347,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1265-isf-enum-member-switch-branch-values.t \
   t/1266-isf-enum-member-drive-values.t \
   t/1267-isf-enum-member-drive-call-values.t \
-  t/1268-isf-enum-member-drive-call-expression-values.t
+  t/1268-isf-enum-member-drive-call-expression-values.t \
+  t/1269-isf-enum-member-actor-params.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

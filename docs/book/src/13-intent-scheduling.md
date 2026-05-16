@@ -44,7 +44,8 @@ clear lower-layer mapping, and clear runtime behavior.
   runtime ports and not overrideable `params`.
 - **Parameters are specialization defaults**. Actor-level `(params ...)`
   values emit as scheduled `.fsm` `+params` and schedule-report
-  `actor_params[]`; they are not runtime payload wires.
+  `actor_params[]`; scalar defaults may use enum members, and they are not
+  runtime payload wires.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,
@@ -400,18 +401,20 @@ limitations are:
   members such as `shared.mode.BUSY`; those constants preserve the authored
   token in `+constants` and schedule reports while resolving to non-negative
   integer values for static waits and existing static activation-parameter
-  overrides. Direct transaction `set` RHS scalar values, scalar operands
-  inside transaction `set` RHS expressions, transaction `switch` branch
-  values, scalar drive body RHS values, and named drive-call scalar actual
-  values may also use local and package-qualified enum members. Drive-call
-  actual expressions may use enum members as scalar operands too. Transaction
+  overrides. Scalar actor parameter defaults, direct transaction `set` RHS
+  scalar values, scalar operands inside transaction `set` RHS expressions,
+  transaction `switch` branch values, scalar drive body RHS values, and named
+  drive-call scalar actual values may also use local and package-qualified
+  enum members. Drive-call actual expressions may use enum members as scalar
+  operands too. Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
   expressions, and direct transaction `set` targets may write scalar aggregate
   leaves on those same carriers. Enum members in expression operator position,
   conditions, switch selectors, set targets, rules, drive targets, drive-call
-  expression operator position, inline drive assignments, parameters, and other
-  non-shipped contexts remain backlog, as do aggregate paths outside
+  expression operator position, inline drive assignments, transaction
+  parameter defaults, activation parameter overrides, aggregate/list parameter
+  leaves, and other non-shipped contexts remain backlog, as do aggregate paths outside
   transaction `set` RHS values or direct targets, subaggregate
   operands/updates, and aggregate interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one

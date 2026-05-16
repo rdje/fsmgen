@@ -1511,13 +1511,20 @@ sub _actor_param_declarations {
             unless _is_hdl_identifier($name);
         confess "Actor '$actor_name': duplicate parameter '$name'\n"
             if $seen{$name}++;
-        _validate_isf_param_value(
-            $param->{value},
-            "Actor '$actor_name': parameter '$name'",
-        );
+        my $value = $param->{value};
+        if (!ref($value) && _is_enum_member_reference($value)) {
+            confess "Actor '$actor_name': parameter '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
+                unless defined _non_negative_integer_from_literal(_param_resolved_value($param));
+        } else {
+            _validate_isf_param_value(
+                $value,
+                "Actor '$actor_name': parameter '$name'",
+            );
+        }
         push @params, {
             name  => $name,
-            value => _clone_isf_value($param->{value}),
+            value => _clone_isf_value($value),
+            (exists($param->{resolved_value}) ? (resolved_value => _clone_isf_value($param->{resolved_value})) : ()),
         };
     }
 
@@ -3071,6 +3078,13 @@ sub _is_hdl_identifier {
     return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
 }
 
+sub _is_enum_member_reference {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && $value =~ /\A[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)+\z/;
+}
+
 sub _is_activation_input_binding_expr_shape {
     my ($expr) = @_;
     return 1 if ref($expr) eq 'ARRAY' && @$expr;
@@ -3266,6 +3280,14 @@ sub _constant_resolved_value {
     return exists($constant->{resolved_value})
         ? $constant->{resolved_value}
         : $constant->{value};
+}
+
+sub _param_resolved_value {
+    my ($param) = @_;
+    return undef unless ref($param) eq 'HASH';
+    return exists($param->{resolved_value})
+        ? $param->{resolved_value}
+        : $param->{value};
 }
 
 sub _validate_repeat_clause {

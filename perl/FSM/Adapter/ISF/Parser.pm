@@ -263,6 +263,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
 
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
+    $self->_finalize_actor_param_values($result);
     $self->_finalize_actor_type_references($result);
     $self->_validate_actor_aggregate_storage_paths($result);
     $self->_validate_actor_enum_member_value_contexts($result);
@@ -320,7 +321,7 @@ sub _parse_actor_params($self, $clause, $actor_name) {
             unless _is_hdl_identifier($name);
         confess "Error: actor '$actor_name' has duplicate parameter '$name'\n"
             if $seen{$name}++;
-        _validate_isf_param_value(
+        _validate_actor_param_value(
             $value,
             "Error: actor '$actor_name' parameter '$name'",
         );
@@ -524,6 +525,27 @@ sub _finalize_actor_constant_values($self, $actor) {
         confess "Error: actor '$actor_name' constant '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
             unless _is_non_negative_integer_literal_value($resolved_value);
         $constant->{resolved_value} = _clone_isf_value($resolved_value);
+    }
+
+    return 1;
+}
+
+sub _finalize_actor_param_values($self, $actor) {
+    my $actor_name = $actor->{actor_name} // 'unknown';
+
+    for my $param (@{$actor->{params} || []}) {
+        my $name = $param->{name};
+        my $value = $param->{value};
+        next if ref($value);
+        next if _is_numeric_or_exact_width_literal($value);
+        next unless _is_enum_member_reference($value);
+
+        my $resolved_value = $self->_resolve_actor_enum_member_value($actor, $value);
+        confess "Error: actor '$actor_name' parameter '$name' references unknown enum member '$value'\n"
+            unless defined($resolved_value) && !ref($resolved_value);
+        confess "Error: actor '$actor_name' parameter '$name' enum member '$value' must resolve to a non-negative integer literal value\n"
+            unless _is_non_negative_integer_literal_value($resolved_value);
+        $param->{resolved_value} = _clone_isf_value($resolved_value);
     }
 
     return 1;
@@ -901,7 +923,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }
@@ -1824,6 +1846,41 @@ sub _validate_isf_param_value {
 
     for my $item (@$value) {
         _validate_isf_param_value($item, $context);
+    }
+    return 1;
+}
+
+sub _validate_actor_param_value {
+    my ($value, $context) = @_;
+    if (!ref($value)) {
+        confess "$context uses unsupported parameter value '$value'; actor parameter defaults accept numeric, exact-width, aggregate/list, and scalar enum member literals only\n"
+            unless defined($value)
+                && (_is_numeric_or_exact_width_literal($value) || _is_enum_member_reference($value));
+        return 1;
+    }
+
+    confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    for my $item (@$value) {
+        _validate_actor_param_aggregate_leaf_value($item, $context);
+    }
+    return 1;
+}
+
+sub _validate_actor_param_aggregate_leaf_value {
+    my ($value, $context) = @_;
+    if (!ref($value)) {
+        confess "$context uses unsupported aggregate/list parameter leaf '$value'; actor parameter aggregate/list defaults accept numeric and exact-width literal leaves only, while enum member leaves remain deferred\n"
+            unless defined($value) && _is_numeric_or_exact_width_literal($value);
+        return 1;
+    }
+
+    confess "$context uses unsupported parameter value shape; actor parameter defaults accept non-empty aggregate/list literals, but enum member leaves inside aggregate/list parameter defaults remain deferred\n"
+        unless ref($value) eq 'ARRAY' && @$value;
+
+    for my $item (@$value) {
+        _validate_actor_param_aggregate_leaf_value($item, $context);
     }
     return 1;
 }

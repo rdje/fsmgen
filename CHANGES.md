@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum actor parameter defaults shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.15`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.16`.
+- Actor-level scalar `(params ...)` defaults now accept local and
+  package-qualified enum members while preserving authored tokens in scheduled
+  `.fsm` `+params` and `actor_params[]` schedule reports.
+- Parser diagnostics reject unknown enum-backed actor parameter defaults and
+  keep enum leaves inside aggregate/list actor params, transaction params,
+  activation parameter overrides, reusable-library use-site overrides, rules,
+  conditions, selectors, and other contexts closed for later slices.
+- Added focused local/package coverage with scheduled `.fsm` review artifacts,
+  schedule-report value preservation, and strict CLI HDL generation.
 ### R14 — ISF enum drive-call expression values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.14`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.15`.

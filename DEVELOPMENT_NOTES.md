@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum actor params stay scalar-default-only
+- `ISF-TYPE-AGGREGATE-PARITY.15` selects actor-level scalar parameter
+  defaults as the next enum context because generated `.fsm` already supports
+  enum-backed `+params`, and schedule reports already preserve actor parameter
+  default values through `actor_params[]`.
+- The parser resolves local and package enum members after the actor symbol
+  tables are finalized, records a non-negative integer `resolved_value` for
+  validation, and still emits/reports the authored token so the review
+  artifact stays transparent.
+- Aggregate/list parameter enum leaves, transaction-local parameter defaults,
+  activation parameter overrides, and reusable-library use-site overrides stay
+  closed. Those contexts need separate shape and override-compatibility rules
+  before they should become public.
 ## 2026-05-16: enum drive-call expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.14` widens named drive-call enum actual support
   from scalar actual values to scalar operands inside drive-call actual

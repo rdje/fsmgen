@@ -277,14 +277,16 @@ positive packed width through the existing `.fsm` `+types` machinery.
 Aggregate aliases on actor interface ports, transaction-local ports, storage
 banks, and other width-bearing declarations fail closed. Actor-local
 `(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
-`+enums`. Enum members are consumed by actor constants, by direct transaction
-`set` RHS scalar values or scalar operands inside transaction `set` RHS
-expressions, by transaction `switch` branch values, by scalar drive body RHS
-values, and by named drive-call scalar actual values or scalar operands inside
-drive-call actual expressions in the current ISF surface. Enum members in
-expression operator position, guards, switch selectors, rule actions, drive
-targets, drive-call expression operator position, parameter defaults, and
-typed aggregate carriers do not consume enum member references yet.
+`+enums`. Enum members are consumed by actor constants, by actor scalar
+parameter defaults, by direct transaction `set` RHS scalar values or scalar
+operands inside transaction `set` RHS expressions, by transaction `switch`
+branch values, by scalar drive body RHS values, and by named drive-call scalar
+actual values or scalar operands inside drive-call actual expressions in the
+current ISF surface. Enum members in expression operator position, guards,
+switch selectors, rule actions, drive targets, drive-call expression operator
+position, transaction parameter defaults, activation parameter overrides,
+aggregate/list parameter leaves, and typed aggregate carriers do not consume
+enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -304,12 +306,13 @@ transaction ports, and aggregate storage banks remain deferred. Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
-outside actor constants, transaction `set` RHS scalar values or expression
-operands, transaction `switch` branch values, drive body RHS scalar values,
-and drive-call actual scalar values or expression operands, additional
-aggregate carriers, aggregate field/slice/update lowering, incompatible enum
-values, aggregate shape mismatches, and ambiguous subaggregate updates remain
-owned by later `ISF-TYPE-AGGREGATE-PARITY` leaves.
+outside actor constants, actor scalar parameter defaults, transaction `set`
+RHS scalar values or expression operands, transaction `switch` branch values,
+drive body RHS scalar values, and drive-call actual scalar values or
+expression operands, additional aggregate carriers, aggregate
+field/slice/update lowering, incompatible enum values, aggregate shape
+mismatches, and ambiguous subaggregate updates remain owned by later
+`ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -399,11 +402,15 @@ Use-site overrides are instance-local. Missing overrides use the exported
 actor default. Unknown overrides, duplicate overrides, unsupported symbolic
 values, and override shapes that do not match aggregate/list defaults fail
 closed. The first value domain is scalar decimal literals, exact-width numeric
-literals in the shipped ISF parameter syntax, and compatible aggregate/list
-literals. Schedule reports expose actor parameter defaults through
-`actor_params[]` entries with each authored parameter `name` and JSON-safe
-default `value`. These entries describe static specialization defaults; they
-are not runtime ports and do not replace generated-composition parameter
+literals in the shipped ISF parameter syntax, scalar local or
+package-qualified enum members, and compatible aggregate/list literals whose
+leaves are numeric or exact-width literals. Aggregate/list enum member leaves,
+transaction-local parameter defaults, and activation or library use-site enum
+overrides remain deferred. Schedule reports expose actor parameter defaults
+through `actor_params[]` entries with each authored parameter `name` and
+JSON-safe default `value`, preserving authored enum tokens such as `mode.BUSY`
+or `shared.mode.BUSY`. These entries describe static specialization defaults;
+they are not runtime ports and do not replace generated-composition parameter
 binding reports for activation or library use sites.
 
 Bindings are explicit. A reusable actor with a clock or reset must bind that
@@ -2245,11 +2252,12 @@ Each entry contains `name` and stringified `value`. The values are
 compile-time constants; they are not runtime ports, not overrideable params,
 and not hidden scheduler registers.
 The `actor_params` array reports actor-level parameter defaults in source
-order. Each entry contains `name` and JSON-safe default `value`. Parameter
-defaults are static specialization values, not runtime ports; activation-site,
-generated-child, and reusable-library override bindings remain reported by
-their existing generated-composition and library-use summary families. The
-capability-manifest ISF public contract advertises this shape through
+order. Each entry contains `name` and JSON-safe default `value`; scalar enum
+member defaults preserve the authored token. Parameter defaults are static
+specialization values, not runtime ports; activation-site, generated-child,
+and reusable-library override bindings remain reported by their existing
+generated-composition and library-use summary families. The capability-manifest
+ISF public contract advertises this shape through
 `schedule_report_actor_param_keys`.
 Each `dt_blocks` entry's `assignments` value is a non-negative count of
 assignment forms in the matching scheduled `.fsm` DT block, not an assignment
@@ -2690,6 +2698,7 @@ Focused tests:
 - [t/1266-isf-enum-member-drive-values.t](../t/1266-isf-enum-member-drive-values.t)
 - [t/1267-isf-enum-member-drive-call-values.t](../t/1267-isf-enum-member-drive-call-values.t)
 - [t/1268-isf-enum-member-drive-call-expression-values.t](../t/1268-isf-enum-member-drive-call-expression-values.t)
+- [t/1269-isf-enum-member-actor-params.t](../t/1269-isf-enum-member-actor-params.t)
 
 ## 12. Explicitly Deferred
 
@@ -2748,14 +2757,15 @@ Focused tests:
   actor-constant enum member references, direct transaction `set` RHS enum
   member values and expression operands, transaction `switch` branch enum
   values, scalar drive body RHS enum member values, scalar drive-call actual
-  enum member values, drive-call actual expression enum member operands,
-  actor-owned aggregate storage variable carriers, transaction `set` RHS
-  aggregate leaf reads, transaction `set` RHS expression aggregate leaf
-  operands, transaction `set` target aggregate leaf writes, aggregate/list
-  parameter-literal, and data-operation evidence model. Enum member references
-  outside actor constants, transaction `set` RHS scalar values/expression
-  operands, transaction `switch` branch values, drive body RHS scalar values,
-  or drive-call actual scalar values/expression operands remain deferred.
+  enum member values, drive-call actual expression enum member operands, actor
+  scalar parameter default enum member values, actor-owned aggregate storage
+  variable carriers, transaction `set` RHS aggregate leaf reads, transaction
+  `set` RHS expression aggregate leaf operands, transaction `set` target
+  aggregate leaf writes, aggregate/list parameter-literal, and data-operation
+  evidence model. Enum member references outside actor constants, actor scalar
+  parameter defaults, transaction `set` RHS scalar values/expression operands,
+  transaction `switch` branch values, drive body RHS scalar values, or
+  drive-call actual scalar values/expression operands remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values or target tokens, subaggregate
   updates/operands, aggregate field/slice/update lowering, and broad
