@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF loop-body documentation truth synchronized
+- Completed `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` and closed the task tree.
+- Corrected the ISF spec and mdBook feature-backlog dynamic-loop body surface
+  so the shipped inline subset includes transaction `set`.
+- Added `t/1307-isf-loop-body-doc-truth-audit.t` and updated the ISF spec
+  focused-test index.
+- Parser, scheduler, emitter, schedule-report payload, generated `.fsm`, and
+  HDL behavior are unchanged.
 ### R14 — ISF rule-guard backlog truth synchronized
 - Completed `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` and closed the task tree.
 - Corrected the ISF spec and mdBook feature backlog so standalone enum member

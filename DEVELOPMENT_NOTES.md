@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: loop-body docs must include shipped transaction set
+- `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` fixes a stale dynamic-loop body list that
+  still omitted transaction `set` after the shipped inline-body subset grew.
+- The correction keeps the child/nested deferrals intact: `do`, `spawn`,
+  `await_all`, `await_any`, `stage`, `contract`, and nested loops still need
+  separate semantics before they can be accepted inside loop bodies.
+- The focused audit checks the ISF spec, mdBook feature backlog, and
+  transaction chapter for the same shipped `set` marker and deferral list.
 ## 2026-05-16: rule-guard backlog wording must follow the 1301/1302 shipped surface
 - `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` fixes stale wording left behind after
   standalone enum member and scalar aggregate rule guards shipped.

@@ -1735,7 +1735,7 @@ own scheduled control flow until they reach the loop check or exit path.
 
 The shipped loop source position is top-level inside a transaction body. Loop
 bodies accept the current inline body subset: named drive calls, `await`,
-`sample`, `complete`, `repeat`, `update`, shift/assemble/extract data
+`sample`, `complete`, `repeat`, `update`, `set`, shift/assemble/extract data
 operations, actor-owned bank `store`/`load`, nested `when`, and shipped
 `(wait N)` clauses. `do`, `spawn`, `await_all`, `await_any`, `stage`,
 `contract`, loops nested inside loop bodies, and loops nested under
@@ -2917,6 +2917,7 @@ Focused tests:
 - [t/1304-isf-repeat-body-doc-truth-audit.t](../t/1304-isf-repeat-body-doc-truth-audit.t)
 - [t/1305-isf-book-feature-matrix-audit.t](../t/1305-isf-book-feature-matrix-audit.t)
 - [t/1306-isf-rule-guard-doc-truth-audit.t](../t/1306-isf-rule-guard-doc-truth-audit.t)
+- [t/1307-isf-loop-body-doc-truth-audit.t](../t/1307-isf-loop-body-doc-truth-audit.t)
 
 ## 12. Explicitly Deferred
 

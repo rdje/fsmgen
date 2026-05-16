@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF loop-body documentation truth synchronized
+- Completed `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` and closed
+  [docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md).
+- Corrected the ISF spec and mdBook feature-backlog loop-body shipped-clause
+  list so it includes transaction `set`, matching the transaction chapter.
+- Added
+  [t/1307-isf-loop-body-doc-truth-audit.t](t/1307-isf-loop-body-doc-truth-audit.t)
+  so the `set` loop-body entry and the child/nested deferral list cannot drift
+  silently.
+- No parser, scheduler, emitter, schedule-report payload, generated `.fsm`, or
+  HDL behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF rule-guard backlog truth synchronized
 - Completed `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` and closed
   [docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md](docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md).

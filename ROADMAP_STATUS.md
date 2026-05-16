@@ -10,10 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-RULE-GUARD-DOC-TRUTH-SYNC` is closed after
-  correcting stale rule-guard backlog wording in the ISF spec and mdBook and
-  adding a focused audit. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
+- Next decision point: `ISF-LOOP-BODY-DOC-TRUTH-SYNC` is closed after adding
+  the shipped transaction `set` clause to loop-body shipped-subset docs and a
+  focused audit. The next R14 PNT implementation slice must select or create a
+  new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -252,6 +252,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   aggregate rule guards as backlog, added
   `t/1306-isf-rule-guard-doc-truth-audit.t`, and changed no parser,
   scheduler, report payload, generated `.fsm`, or HDL behavior.
+  `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` then corrected stale ISF spec and mdBook
+  feature-backlog dynamic-loop body wording so the shipped inline subset lists
+  transaction `set`, added `t/1307-isf-loop-body-doc-truth-audit.t`, and
+  changed no parser, scheduler, report payload, generated `.fsm`, or HDL
+  behavior.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated
@@ -5434,6 +5439,10 @@ Done:
   long-form rule syntax; the remaining enum target, enum operator-position,
   aggregate operator-position, and subaggregate rule-target deferrals remain
   explicit.
+- The mdBook feature backlog and ISF spec now include transaction `set` in the
+  shipped dynamic-loop body inline subset, matching the transaction chapter
+  while keeping child activation, await-sync, stage, contract, and nested loop
+  forms deferred.
 - The bootstrap import-tree snapshot now records the reachable ISF adapter and
   scheduler path.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
@@ -5768,7 +5777,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-RULE-GUARD-DOC-TRUTH-SYNC`, so the next ISF implementation slice
+  after `ISF-LOOP-BODY-DOC-TRUTH-SYNC`, so the next ISF implementation slice
   must either activate an existing proposed tree or create a new feature tree
   before changing parser/scheduler/emitter/contract/fixture/book behavior.
   Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.

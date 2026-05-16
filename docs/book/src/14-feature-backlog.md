@@ -657,7 +657,7 @@ loop should be authored as `(while (! done) body...)` rather than overloading
 
 Loop bodies must be non-empty and currently reuse the shipped inline-body
 surface: named drive calls, `await`, `sample`, `complete`, `repeat`,
-`update`, shift/assemble/extract data operations, actor-owned bank
+`update`, `set`, shift/assemble/extract data operations, actor-owned bank
 `store`/`load`, nested `when`, and shipped `(wait N)` clauses. The first
 implementation continues rejecting `do`, `spawn`, `await_all`, `await_any`,
 `stage`, `contract`, and nested `while`/`until` until re-entry, child

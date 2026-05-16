@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF loop-body documentation truth synchronized
+- Completed R14 task-tree slice:
+  `ISF-LOOP-BODY-DOC-TRUTH-SYNC.1` in
+  [docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md).
+- The `ISF-LOOP-BODY-DOC-TRUTH-SYNC` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create a
+  new task tree first.
+- The ISF spec and mdBook feature backlog now include transaction `set` in
+  the shipped loop-body inline subset, matching the transaction chapter.
+- Added
+  [t/1307-isf-loop-body-doc-truth-audit.t](t/1307-isf-loop-body-doc-truth-audit.t)
+  to prevent loop-body shipped-clause drift.
+- No parser, scheduler, report payload, generated `.fsm`, or HDL behavior
+  changed.
+
 ## 2026-05-16: R14 — ISF rule-guard backlog truth synchronized
 - Completed R14 task-tree slice:
   `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` in
