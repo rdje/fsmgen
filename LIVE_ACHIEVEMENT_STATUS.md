@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF feature matrix port/binding coverage synchronized
+- Completed R14 task-tree slice:
+  `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.1` in
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md).
+- The `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC` tree is now closed. No
+  active ISF task tree remains open; the next R14 implementation slice must
+  select or create a new task tree first.
+- The ISF shipped feature matrix now explicitly lists transaction ports,
+  activation-site bindings, `transaction_port_bindings[]` report provenance,
+  and the remaining rule-trigger output-binding and snapshot-vs-live timing
+  non-claims.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  to keep those shipped feature-family and non-claim markers present.
+- No parser, scheduler, report payload, generated `.fsm`, or HDL behavior
+  changed.
+
 ## 2026-05-16: R14 — ISF feature matrix stage/contract coverage synchronized
 - Completed R14 task-tree slice:
   `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` in

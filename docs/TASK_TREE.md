@@ -26,9 +26,6 @@ must activate an existing proposed tree or create a new `docs/tasks/*.md` tree
 before changing ISF parser, scheduler, emitter, contract, fixture, or book
 behavior.
 
-| Tree | Status | Roadmap lane | Current frontier | File |
-| --- | --- | --- | --- | --- |
-
 ## Proposed Task Trees
 
 Proposed trees record accepted backlog direction, but they are not
@@ -42,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md) |
 | `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md) |
 | `ISF-LOOP-BODY-DOC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-LOOP-BODY-DOC-TRUTH-SYNC.md) |
 | `ISF-RULE-GUARD-DOC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md](docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md) |
@@ -161,6 +159,7 @@ as done work unless a future task reopens them.
 | Standalone enum/aggregate rule-guard backlog truth synchronization | `ISF-RULE-GUARD-DOC-TRUTH-SYNC` |
 | Loop-body shipped-clause documentation truth synchronization | `ISF-LOOP-BODY-DOC-TRUTH-SYNC` |
 | ISF shipped feature matrix coverage synchronization | `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC` |
+| Transaction port/binding feature matrix coverage | `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC` |
 
 ## ISF Task-Tree Rule
 

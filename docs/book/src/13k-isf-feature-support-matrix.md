@@ -41,6 +41,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Enum member values | shipped bounded surface | Local and package enum members in constants, scalar and aggregate/list parameter leaves, activation overrides, reusable-library use-site overrides, transaction/rule/drive scalar values, scalar expression operands, switch values/selectors, and standalone conditions/guards. | Authored enum tokens are preserved where scheduled `.fsm` can carry them; static specialization contexts resolve to literals before generated-top emission. Enum targets and operator-position enum members fail closed. |
 | Aggregate scalar leaves | shipped bounded surface | Scalar member/item paths from declared actor-owned aggregate storage in documented RHS, target, guard, condition, switch, drive, and drive-call contexts. | Scalar leaves preserve authored paths in scheduled `.fsm` or lower through computed selector syntax when needed. Whole-record/list values, subaggregate writes, aggregate ports, and aggregate banks remain backlog. |
 | Transaction entry | shipped | `(transaction NAME (on START ...) body...)`, direct entry samples, transaction ports, and parameter declarations where generated-child behavior owns them. | Entry logic generates start/idle behavior, captures accepted samples, and records transaction order in schedule reports. Unsupported entry-body forms fail closed. |
+| Transaction ports and activation bindings | shipped bounded surface | Transaction `(ports ...)` declarations plus activation-site `(bind ...)` blocks on `do`, `spawn`, and rule `trigger` where documented. | Ports materialize as transaction-local data/control boundaries and generated handoff assignments. Reports expose bounded `transaction_port_bindings[]` provenance. Rule-trigger output bindings and snapshot-vs-live binding timing remain backlog. |
 | Transaction assignments | shipped | `(set TARGET EXPR)` and `(update VAR EXPR)` with scalar targets and expression payloads in the documented value domain. | Assignments lower to scheduled `.fsm` state assignments with correct flopped/combinational semantics for the form. Scalar aggregate leaves and enum members are accepted only in shipped contexts. |
 | Named and inline drives | shipped | Actor-level `(drive NAME [(PARAM ...)] body...)`; transaction body `(drive NAME actual...)`; inline drive assignments where documented. | A named drive emits a non-state DT. A drive call consumes one state and transfers actuals through generated drive parameter signals. Inline drive assignments become state assignments. |
 | Await and latency | shipped | `(await PORT)`, actor watchdogs, and `(latency (min N) (max N))` on transactions. | Awaits lower to wait/test states and watchdog counters when configured. Latency counters and schedule-report storage metadata are emitted for the supported shapes. |
@@ -115,6 +116,32 @@ the event safely across the domain boundary.
 The scheduled `.fsm` review artifact owns the exact cycle placement: samples
 materialize at the accepted entry boundary, drive calls consume states, awaits
 test the selected port, and completion pulses the authored done output.
+
+### Transaction Ports And Bindings
+
+```lisp
+(transaction read_word
+  (ports
+    (input addr (width 32))
+    (output data (width 32)))
+  ...)
+
+(do read_word
+  (bind
+    (input addr req_addr)
+    (output data read_data)))
+
+(rule launch_read ready
+  (trigger read_word
+    (bind
+      (input addr (+ base_addr offset)))))
+```
+
+Input bindings accept scalar signals, numeric literals, exact-width literals,
+and non-empty list expressions. `do` and `spawn` support input and output
+bindings; rule `trigger` supports input bindings only. Successful schedule
+reports expose bounded `transaction_port_bindings[]` entries rather than raw
+binding internals.
 
 ### Stage And Contract
 
@@ -291,6 +318,9 @@ does not exist:
 - Direct `(on ...)` activation-site `(params ...)` is unsupported; static
   specialization belongs to spawn, generated blocking `do`, and rule-trigger
   generated activation sites.
+- Rule-trigger output bindings, snapshot-vs-live binding timing selection,
+  richer binding reports, and broader static binding conflict diagnostics are
+  not shipped.
 - Nested stages, stage-local compute/action bodies, multiple ready/valid
   endpoints, registered-valid variants, and skid buffers are not shipped.
 - Temporal contracts beyond the top-level bounded eventual subset, including

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: the ISF feature matrix must make port bindings explicit
+- `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.1` expands the book matrix
+  because transaction ports and activation-site bindings are shipped
+  user-visible behavior, not just implementation details under generated
+  children.
+- The row deliberately uses `shipped bounded surface`: transaction
+  `(ports ...)`, `do`/`spawn` input and output bindings, rule-trigger input
+  bindings, actor-side scalar/literal/expression input payloads, and bounded
+  `transaction_port_bindings[]` report provenance are documented as shipped.
+- Rule-trigger output bindings, snapshot-vs-live binding timing selection,
+  richer binding reports, and broader static binding conflict diagnostics
+  remain explicit backlog.
 ## 2026-05-16: the ISF feature matrix must call out stage and contract features
 - `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` expands the book matrix because
   shipped stage lowering and temporal contract assertion projection are

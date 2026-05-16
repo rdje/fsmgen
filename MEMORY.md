@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF feature matrix port/binding coverage synchronized
+- Completed `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.1` and closed
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md).
+- The ISF shipped feature matrix now has an explicit row and example for
+  transaction `(ports ...)`, activation-site `(bind ...)` on `do`, `spawn`,
+  and rule-trigger input binding, plus `transaction_port_bindings[]` report
+  provenance.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  so those markers and the rule-trigger output-binding/snapshot-vs-live
+  non-claims cannot disappear silently.
+- No parser, scheduler, emitter, schedule-report payload, generated `.fsm`, or
+  HDL behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF feature matrix stage/contract coverage synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.1` and closed
   [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-COVERAGE-SYNC.md).
