@@ -270,20 +270,30 @@ Width-bearing actor interface ports, transaction-local ports, and actor-owned
 storage entries may use `(type NAME)` for a scalar alias and keep `(width N)`
 for raw positive integer widths; those options are mutually exclusive. `NAME`
 may be local, such as `byte`, or package-qualified, such as `shared.byte`.
-Unknown aliases fail closed. Aliases whose resolved type is `list` or `record`
-also fail closed in this scalar-only slice. Actor-local `(enums ...)`
-declarations are accepted and preserved into scheduled `.fsm` as `+enums`.
-Enum members are consumed only by actor constants in the current ISF surface;
-rule/transaction expressions, guards, switch branches, parameter defaults, and
-typed aggregate carriers do not consume enum member references yet.
+Unknown aliases fail closed. Resolved `list` or `record` aliases are accepted
+only on actor-owned storage variables, for example `(var frame (type
+frame_t))` or `(var frame (type shared.frame_t))`; the alias must resolve to a
+positive packed width through the existing `.fsm` `+types` machinery.
+Aggregate aliases on actor interface ports, transaction-local ports, storage
+banks, and other width-bearing declarations fail closed. Actor-local
+`(enums ...)` declarations are accepted and preserved into scheduled `.fsm` as
+`+enums`. Enum members are consumed only by actor constants in the current ISF
+surface; rule/transaction expressions, guards, switch branches, parameter
+defaults, and typed aggregate carriers do not consume enum member references
+yet.
 
-Typed aggregate carrier/update semantics are not shipped yet. Existing ISF
-aggregate support beyond declaration artifacts remains limited to compatible
-aggregate/list literal parameter values and scalarized storage/bank lowering.
-Future enum member value references outside actor constants, aggregate
-carriers, aggregate field/slice/update lowering, incompatible enum values,
-aggregate shape mismatches, and ambiguous partial updates remain owned by
-later `ISF-TYPE-AGGREGATE-PARITY` leaves.
+The shipped aggregate carrier surface is deliberately whole-storage-root only:
+the generated `.fsm` preserves the authored aggregate alias in `+size`, and
+the schedule report exposes the carrier as declared actor storage with packed
+`width`, authored `type`, and resolved `type_kind` (`list` or `record`).
+Member/item access such as `frame.flag` or `frame[0]`, partial aggregate
+updates, aggregate interface or transaction ports, and aggregate storage banks
+remain deferred. Existing ISF aggregate support beyond this carrier remains
+limited to compatible aggregate/list literal parameter values and scalarized
+storage/bank lowering. Future enum member value references outside actor
+constants, additional aggregate carriers, aggregate field/slice/update
+lowering, incompatible enum values, aggregate shape mismatches, and ambiguous
+partial updates remain owned by later `ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -785,7 +795,9 @@ Lowering emits declared storage signals in scheduled `.fsm` `+size`. The
 lowerer also carries their widths as normal width evidence so updates and data
 operations can reuse the existing expression and mux paths. Schedule reports
 include declared storage entries in `inferred_storage` with kind `register`,
-role `actor_storage`, and positive integer `width`. Used storage signals reach
+role `actor_storage`, and positive integer `width`. Declared typed
+actor-owned storage may also expose the authored `type` token and resolved
+`type_kind` without exposing raw type-spec hashes. Used storage signals reach
 SystemVerilog generation through the existing scalar assignment path.
 The report `kind` is the generated storage class; authored scalar storage uses
 the normalized scalar storage kind. `(state ...)` and `(register ...)` are not
@@ -2245,6 +2257,9 @@ Generated activation port-binding handoff storage uses
 `trigger_done_observe`.
 Transaction-local port storage uses `transaction_port` when a declared
 transaction port is materialized in the scheduled `.fsm` review artifact.
+Typed actor-owned storage may additionally report the authored alias in
+`type` and the resolved top-level kind in `type_kind`; this is intentionally a
+bounded summary, not a raw type-spec dump.
 Temporal-contract monitor storage uses that one role for the generated
 pending and sticky-fail registers plus the generated age counter; the
 `temporal_contracts[]` entry remains the public summary that names each signal
@@ -2640,6 +2655,7 @@ Focused tests:
 - [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t)
 - [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t)
 - [t/1258-isf-enum-member-constants.t](../t/1258-isf-enum-member-constants.t)
+- [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t)
 
 ## 12. Explicitly Deferred
 
@@ -2695,10 +2711,12 @@ Focused tests:
   eventual subset.
 - Rich storage-class optimization in schedule reports.
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
-  actor-constant enum member references, aggregate/list parameter-literal, and
-  data-operation evidence model. Enum member references outside actor
-  constants, typed aggregate carriers, aggregate field/slice/update lowering,
-  and broad aggregate/record width inference remain deferred to the active
+  actor-constant enum member references, actor-owned aggregate storage
+  variable carriers, aggregate/list parameter-literal, and data-operation
+  evidence model. Enum member references outside actor constants, aggregate
+  interface/transaction/bank carriers, member/item access, partial aggregate
+  updates, aggregate field/slice/update lowering, and broad aggregate/record
+  width inference remain deferred to the active
   `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

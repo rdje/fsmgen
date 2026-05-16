@@ -241,6 +241,10 @@ sub _storage_summary($self, $ir) {
                 role  => 'actor_storage',
                 width => $signal->{width},
             );
+            $entry{type} = $signal->{type}
+                if defined($signal->{type}) && !ref($signal->{type}) && length($signal->{type});
+            my $type_kind = _declared_type_kind($signal->{type_spec});
+            $entry{type_kind} = $type_kind if defined $type_kind;
             push @storage, \%entry;
         }
     }
@@ -319,6 +323,14 @@ sub _storage_role_for_name {
             && defined $storage_roles->{$name}
             && length $storage_roles->{$name};
     return undef;
+}
+
+sub _declared_type_kind {
+    my ($type_spec) = @_;
+    return undef unless ref($type_spec) eq 'HASH';
+    my $kind = $type_spec->{kind};
+    return undef unless defined($kind) && !ref($kind) && length($kind);
+    return $kind;
 }
 
 sub _contract_monitor_storage_kind($name) {

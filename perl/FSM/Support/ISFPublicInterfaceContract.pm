@@ -425,6 +425,7 @@ sub build_isf_public_interface_contract {
             't/1255-isf-schedule-report-golden-matrix.t',
             't/1257-isf-scalar-type-aliases.t',
             't/1258-isf-enum-member-constants.t',
+            't/1259-isf-aggregate-storage-type-aliases.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -1359,6 +1360,8 @@ sub isf_public_interface_schedule_report_storage_optional_keys {
     return [
         qw(
             role
+            type
+            type_kind
             width
         ),
     ];
@@ -1400,7 +1403,7 @@ sub isf_public_interface_schedule_report_storage_role_values {
 }
 
 sub isf_public_interface_schedule_report_storage_width_shape {
-    return 'positive integer bit width when present; currently present for declared actor-owned storage, inferred scheduler counters, and register storage with known ISF width evidence';
+    return 'positive integer bit width when present; currently present for declared actor-owned storage, inferred scheduler counters, and register storage with known ISF width evidence; declared typed actor-owned storage may also expose authored type and resolved type_kind without exposing raw type-spec hashes';
 }
 
 sub isf_public_interface_schedule_report_transaction_keys {

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate storage carriers shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.5` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.6`, implementing
+  one declared aggregate leaf access context after storage carriers.
+- Actor-owned storage variables now accept local and package aggregate
+  `list`/`record` aliases, preserve the authored alias in scheduled `.fsm`
+  `+size`, and expose bounded `inferred_storage[].type` / `type_kind`
+  schedule-report metadata.
+- Aggregate aliases on interface ports, transaction ports, storage banks,
+  member/item paths, and partial aggregate updates remain deferred.
+
 ## 2026-05-16: R14 — ISF actor-constant enum members shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.4` in

@@ -802,12 +802,14 @@ Rules:
 
 ### 11.6.1 Enum, Type, And Aggregate Boundary
 
-Current shipped ISF accepts the first scalar type-alias subset:
+Current shipped ISF accepts scalar aliases plus one aggregate storage-carrier
+subset:
 
 ```lisp
 (types
   (type byte (bits 8))
-  (type flag bit))
+  (type flag bit)
+  (type frame_t (record (mode (bits 2)) (flag bit))))
 
 (imports
   (package shared))
@@ -817,7 +819,8 @@ Current shipped ISF accepts the first scalar type-alias subset:
   (output data_out (type shared.byte)))
 
 (storage
-  (var accum (type byte)))
+  (var accum (type byte))
+  (var frame (type frame_t)))
 
 (transaction main
   (ports
@@ -832,13 +835,17 @@ Rules:
   this first contract.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use `(type NAME)` for scalar aliases.
+- Actor-owned storage variables may also use `(type NAME)` when `NAME`
+  resolves to a packed aggregate `list` or `record` alias. The first aggregate
+  carrier subset is whole-storage-root only.
 - `(type NAME)` and `(width N)` are mutually exclusive.
 - `NAME` may be local (`byte`) or package-qualified (`shared.byte`).
 - Lowered scheduled `.fsm` preserves review artifacts with `+types`,
   `+import`, typed `+size` entries, and embedded imported package roots so CLI
   HDL generation remains self-contained.
-- Unknown aliases and aliases that resolve to aggregate `list` or `record`
-  types fail closed in this scalar-only slice.
+- Unknown aliases fail closed. Aggregate aliases used on actor interface
+  ports, transaction-local ports, storage banks, or any non-storage-variable
+  declaration fail closed.
 - Actor-local `(enums ...)` declarations are preserved into scheduled `.fsm`
   as `+enums`.
 - Actor constants may consume local enum members such as `mode.BUSY` and
@@ -846,10 +853,11 @@ Rules:
   members fail closed before generated artifacts are emitted.
 - No other ISF expression or value context consumes enum members yet.
 
-Typed aggregate carrier/update semantics are not shipped yet. Existing
-aggregate support beyond declaration artifacts is limited to compatible
-aggregate/list literal parameter values and scalarized actor-owned bank/storage
-lowering.
+Aggregate member/item access such as `frame.flag` or `frame[0]`, partial
+aggregate updates, aggregate interface or transaction ports, and aggregate
+storage banks are not shipped yet. Existing aggregate support beyond the
+actor-owned storage-variable carrier is limited to compatible aggregate/list
+literal parameter values and scalarized actor-owned bank/storage lowering.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 
@@ -1122,7 +1130,7 @@ actor_phases[]: name, body
 actor_stages[]: name, body
 actor_params[]: name, value
 inferred_storage[] required: name, kind
-inferred_storage[] optional: role, width
+inferred_storage[] optional: role, type, type_kind, width
 transactions[]: name, states, count
 transaction_waits[]: transaction, cycles, count_kind, count_source,
   entry_state, exit_state, counter_signal, counter_width
@@ -1198,6 +1206,8 @@ inferred_storage.role: activation_done_handoff, activation_start_handoff,
   repeat_counter, rule_trigger_payload_source, rule_trigger_source,
   sample_alias, temporal_contract_monitor, transaction_port,
   transaction_port_binding, trigger_done_observe, watchdog_counter
+inferred_storage.type/type_kind: optional bounded authored type token and
+  resolved top-level type kind for declared typed actor-owned storage
 dt_blocks.kind: drive, do_port_binding, latency_counter, rule,
   rule_trigger_fanin, spawn_port_binding, temporal_contract_monitor,
   trigger_generated_activation
@@ -1238,9 +1248,10 @@ Required fail-closed examples:
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
   incompatible aggregate/list shapes.
-- Unknown scalar type aliases, `(width ...)` plus `(type ...)` on the same
-  declaration, package import aliases, and aggregate type aliases used in the
-  scalar-only type subset.
+- Unknown type aliases, `(width ...)` plus `(type ...)` on the same
+  declaration, package import aliases, aggregate type aliases outside
+  actor-owned storage variables, and aggregate storage member/item paths or
+  partial updates.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1286,7 +1297,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1144-isf-public-tested-by-metadata-audit.t \
   t/1255-isf-schedule-report-golden-matrix.t \
   t/1257-isf-scalar-type-aliases.t \
-  t/1258-isf-enum-member-constants.t
+  t/1258-isf-enum-member-constants.t \
+  t/1259-isf-aggregate-storage-type-aliases.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

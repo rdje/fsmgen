@@ -68,7 +68,6 @@ sub golden_matrix_cases {
                   schedule_report_reset_kind_values
                   schedule_report_reset_polarity_values
                   schedule_report_storage_required_keys
-                  schedule_report_storage_optional_keys
                   schedule_report_storage_kind_values
                   schedule_report_storage_role_values
                   schedule_report_storage_width_shape
@@ -83,6 +82,12 @@ sub golden_matrix_cases {
                   schedule_report_compile_issues_success_shape
                 )
             ],
+        },
+        {
+            name => 'typed_storage',
+            filename => 'typed_storage_report.isf',
+            source => typed_storage_source(),
+            covers => ['schedule_report_storage_optional_keys'],
         },
         {
             name => 'compatible_fanin',
@@ -814,6 +819,25 @@ sub actor_param_source {
   (transaction main
     (on start)
     (complete done)))
+ISF
+}
+
+sub typed_storage_source {
+    return <<'ISF';
+(actor typed_storage_report
+  (types
+    (type frame_t (record (mode (bits 2)) (flag bit))))
+  (clock clk)
+  (interface
+    (input start)
+    (input frame_in (width 3))
+    (output frame_out (width 3)))
+  (storage
+    (var frame (type frame_t)))
+  (transaction main
+    (on start)
+    (set frame frame_in)
+    (set frame_out frame)))
 ISF
 }
 

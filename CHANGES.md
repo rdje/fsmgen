@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate storage carriers shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.5`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.6`.
+- Actor-owned storage variables now accept local and package aggregate
+  `list`/`record` type aliases while interface ports, transaction ports,
+  storage banks, member/item paths, and partial aggregate updates fail closed.
+- Lowering preserves aggregate aliases in scheduled `.fsm` `+size` review
+  artifacts and exposes bounded `inferred_storage[].type` / `type_kind`
+  schedule-report metadata without exposing raw type-spec hashes.
+- Added focused coverage for local and package aggregate aliases, CLI HDL
+  generation, schedule-report metadata, and fail-closed diagnostics for
+  non-carrier aggregate aliases and partial aggregate updates.
 ### R14 — ISF actor-constant enum members shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.4`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.5`.

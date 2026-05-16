@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate storage carriers shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.5` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.6`.
+- Actor-owned storage variables now accept local and package aggregate
+  `list`/`record` aliases such as `frame_t` and `shared.frame_t`, reusing the
+  existing `.fsm` package/type machinery.
+- Lowered scheduled `.fsm` preserves the authored aggregate alias in `+size`;
+  schedule reports expose bounded `inferred_storage[].type` and `type_kind`
+  metadata while keeping raw type-spec hashes private.
+- Aggregate aliases on interface ports, transaction ports, storage banks,
+  member/item paths, and partial aggregate updates remain deferred.
 ## 2026-05-16: ISF actor-constant enum members shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.4` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

@@ -1644,6 +1644,8 @@ sub _declared_storage_for_ir {
                 width => $_->{width},
             );
             $signal{type} = $_->{type} if exists $_->{type};
+            $signal{type_spec} = _clone_isf_value($_->{type_spec})
+                if exists $_->{type_spec};
             $signal{index} = $_->{index} if exists $_->{index};
             \%signal;
         } @{$entry->{signals} || []};
@@ -1655,6 +1657,8 @@ sub _declared_storage_for_ir {
             signals => \@signals,
         );
         $copy{type} = $entry->{type} if exists $entry->{type};
+        $copy{type_spec} = _clone_isf_value($entry->{type_spec})
+            if exists $entry->{type_spec};
         $copy{depth} = $entry->{depth} if exists $entry->{depth};
         push @storage, \%copy;
     }

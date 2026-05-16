@@ -690,20 +690,23 @@ blocks, resolves actor-local constants in activation parameter override values,
 rejects duplicate instances, duplicate parameters, unknown overrides,
 unsupported non-constant symbolic or expression values, and aggregate shape
 mismatches, and rejects parameter declarations on non-generated transactions.
-The public ISF surface now accepts the first scalar type-alias subset:
-actor-local `(types ...)` declarations, `(imports (package NAME) ...)` for
-existing `.fsm` package roots, and `(type NAME)` on width-bearing actor
-interface ports, transaction-local ports, and actor-owned storage entries.
-Lowering preserves `+types`, `+import`, typed `+size` entries, and embedded
-imported package roots in scheduled `.fsm` review artifacts. Unknown aliases,
-package aliases, `(width ...)` plus `(type ...)` conflicts, and aggregate
-aliases used in this scalar-only subset fail closed. Actor-local `(enums ...)`
-declarations are preserved as scheduled `.fsm` `+enums`. Enum member
-references are public only as actor constant values in this slice, using local
-`mode.BUSY` or package-qualified `shared.mode.BUSY` spelling and resolving to
-non-negative integer literal values before lowering. Enum member references in
-other ISF expression/value contexts and typed aggregate carrier/update
-semantics remain outside the parser/scheduler contract.
+The public ISF surface now accepts the scalar type-alias subset plus one
+aggregate storage-carrier subset: actor-local `(types ...)` declarations,
+`(imports (package NAME) ...)` for existing `.fsm` package roots, `(type
+NAME)` scalar aliases on width-bearing actor interface ports,
+transaction-local ports, and actor-owned storage entries, and packed `list` or
+`record` aliases only on actor-owned storage variables. Lowering preserves
+`+types`, `+import`, typed `+size` entries, and embedded imported package roots
+in scheduled `.fsm` review artifacts. Unknown aliases, package aliases,
+`(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
+actor-owned storage variables, aggregate storage member/item paths, and
+partial aggregate updates fail closed. Actor-local `(enums ...)` declarations
+are preserved as scheduled `.fsm` `+enums`. Enum member references are public
+only as actor constant values in this slice, using local `mode.BUSY` or
+package-qualified `shared.mode.BUSY` spelling and resolving to non-negative
+integer literal values before lowering. Enum member references in other ISF
+expression/value contexts, additional aggregate carriers, and aggregate
+field/slice/update semantics remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -714,6 +717,12 @@ Actor-constant enum member references are checked by
 covering local and package enum members, authored `+constants` review
 artifacts, schedule-report value preservation, CLI HDL generation, and
 fail-closed diagnostics.
+Actor-owned aggregate storage variable carriers are checked by
+[t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
+covering local and package aggregate aliases, typed `+size` review artifacts,
+bounded `inferred_storage[].type` / `type_kind` report metadata, CLI HDL
+generation, and fail-closed diagnostics for non-carrier aggregate aliases and
+partial aggregate updates.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.
@@ -1184,7 +1193,7 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
-inferred_storage entries: name, kind, optional role, optional width
+inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
 transaction_waits count_kind values: static, runtime_scalar, runtime_expression
@@ -1244,9 +1253,12 @@ Temporal-contract pending/fail registers and age counters use
 names back to the specific bounded-eventual contract. Optional `width` values
 are positive integer bit widths when present, and are currently present for
 declared actor-owned storage, inferred scheduler counters, and register
-storage with known ISF width evidence. The machine-readable contract
-advertises these through `schedule_report_storage_kind_values`,
-`schedule_report_storage_role_values`, and
+storage with known ISF width evidence. Declared typed actor-owned storage may
+also report the authored alias in `type` and the resolved top-level kind in
+`type_kind`; these are bounded summaries and do not expose raw type-spec
+hashes. The machine-readable contract advertises these through
+`schedule_report_storage_kind_values`, `schedule_report_storage_role_values`,
+`schedule_report_storage_optional_keys`, and
 `schedule_report_storage_width_shape`.
 
 Generated names in schedule reports and generated artifacts are deterministic

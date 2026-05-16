@@ -256,30 +256,31 @@ Status: active task tree in
 Goal: let ISF use the same enum, type, and aggregate variable capability that
 `.fsm` already exposes, without inventing a second type system.
 
-Current boundary: ISF now ships the first scalar type-alias subset for
-width-bearing actor interface ports, transaction ports, and actor-owned
-storage. Actor bodies may carry `(types ...)` declarations whose payloads map
-directly to `.fsm` `+types`; existing `.fsm` packages may be referenced with
-`(imports (package shared_pkg) ...)`; and declarations may use `(type NAME)`
-instead of `(width N)`, where `NAME` is local (`byte`) or package-qualified
-(`shared_pkg.byte`). Lowered scheduled `.fsm` preserves `+types`, `+import`,
-typed `+size` entries, and embedded imported package roots so the review
-artifact and CLI HDL generation stay self-contained. Actor-local `(enums ...)`
-declarations are accepted as declaration artifacts and preserved as scheduled
-`.fsm` `+enums`. Actor constants may now consume enum members with local
-`mode.BUSY` or package-qualified `shared.mode.BUSY` spelling; the authored
-token is preserved in scheduled `.fsm` `+constants` and schedule reports,
-while the resolved non-negative integer value feeds static wait lowering and
-existing static activation-parameter overrides.
+Current boundary: ISF now ships scalar type aliases for width-bearing actor
+interface ports, transaction ports, and actor-owned storage, plus packed
+`list`/`record` aliases on actor-owned storage variables only. Actor bodies may
+carry `(types ...)` declarations whose payloads map directly to `.fsm`
+`+types`; existing `.fsm` packages may be referenced with `(imports (package
+shared_pkg) ...)`; and declarations may use `(type NAME)` instead of `(width
+N)`, where `NAME` is local (`byte`, `frame_t`) or package-qualified
+(`shared_pkg.byte`, `shared_pkg.frame_t`). Lowered scheduled `.fsm` preserves
+`+types`, `+import`, typed `+size` entries, and embedded imported package roots
+so the review artifact and CLI HDL generation stay self-contained. Actor-local
+`(enums ...)` declarations are accepted as declaration artifacts and preserved
+as scheduled `.fsm` `+enums`. Actor constants may now consume enum members
+with local `mode.BUSY` or package-qualified `shared.mode.BUSY` spelling; the
+authored token is preserved in scheduled `.fsm` `+constants` and schedule
+reports, while the resolved non-negative integer value feeds static wait
+lowering and existing static activation-parameter overrides.
 
 The implementation path remains task-tree-managed. The current shipped subset
 also continues to accept numeric/exact-width parameter values, actor-local
 constants for selected static specialization values, and compatible
-aggregate/list literal parameter values. Typed aggregate carrier/update
-semantics are not shipped; aggregate aliases used as scalar `(type NAME)`
-references fail closed. Enum member references outside actor constants, typed
-aggregate carriers, aggregate field/slice/update lowering, and broader
-aggregate shape inference are separate follow-on leaves.
+aggregate/list literal parameter values. Aggregate member/item access, partial
+aggregate updates, aggregate interface or transaction ports, aggregate storage
+banks, enum member references outside actor constants, aggregate
+field/slice/update lowering, and broader aggregate shape inference are
+separate follow-on leaves.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate
@@ -754,12 +755,15 @@ storage families with stable lowering evidence: `activation_done_handoff`,
 `temporal_contract_monitor`,
 `rule_trigger_source`, `rule_trigger_payload_source`, `transaction_port`,
 `transaction_port_binding`, and `trigger_done_observe`.
+Declared typed actor-owned storage may also expose optional `type` and
+`type_kind` summaries; those fields are bounded metadata, not raw type-spec
+hashes.
 
-Remaining direction: keep `role` additive and omit it when evidence is
-ambiguous. Per-cycle resource-grant/debug storage remains deferred because
-the shipped `rule_slot`/`priority` implementation exposes static grant
-shaping through `resource_arbitration[]` and guard lowering rather than
-materialized grant storage. Add a storage role only if future resource
+Remaining direction: keep `role`, `type`, and `type_kind` additive and omit
+them when evidence is ambiguous. Per-cycle resource-grant/debug storage remains
+deferred because the shipped `rule_slot`/`priority` implementation exposes
+static grant shaping through `resource_arbitration[]` and guard lowering
+rather than materialized grant storage. Add a storage role only if future resource
 lowering materializes such signals with compatibility rules, public contract
 metadata, and regression coverage.
 

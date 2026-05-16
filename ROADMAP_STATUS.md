@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.5` is the active PNT
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.6` is the active PNT
   frontier. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -24,7 +24,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   references for local and package enums, preserving authored tokens in
   `+constants` and schedule reports while resolving non-negative integer
   values for static waits and existing static activation-parameter overrides.
-  The next slice implements one declared aggregate carrier. Previous R14
+  `ISF-TYPE-AGGREGATE-PARITY.5` then shipped actor-owned aggregate storage
+  variable carriers for local and package `list`/`record` aliases, preserving
+  authored aliases in `+size`, exposing bounded `inferred_storage[].type` and
+  `type_kind` metadata, and keeping aggregate interface/transaction/bank
+  carriers, member/item access, and partial updates deferred. The next slice
+  selects one declared aggregate leaf access context. Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated
   activation parameter override values and closed that tree,

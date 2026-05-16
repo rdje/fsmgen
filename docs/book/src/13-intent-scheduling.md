@@ -270,7 +270,10 @@ Temporal-contract pending/fail registers and age counters share the
 `temporal_contract_monitor` role; `temporal_contracts[]` names the specific
 pending, counter, and fail signals for each contract. Optional positive
 integer `width` values belong to declared actor-owned storage, inferred
-counters, and register storage with known ISF width evidence.
+counters, and register storage with known ISF width evidence. Declared typed
+actor-owned storage may also expose optional `type` and `type_kind` summaries;
+the full type shape remains in the scheduled `.fsm` `+types`/`+size` review
+artifact.
 Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by
 name while each `states` array keeps scheduled `.fsm` state emission order.
@@ -386,17 +389,20 @@ limitations are:
   snapshot-vs-live timing selection remain backlog.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
-  NAME)`, mutually exclusive with `(width N)`. Local aliases come from
-  actor-local `(types ...)`; package-qualified aliases come from existing
-  `.fsm` packages imported with `(imports (package NAME) ...)`. Lowered
-  scheduled `.fsm` preserves `+types`, `+import`, typed `+size` entries, and
-  embedded package roots. Actor-local `(enums ...)` are preserved as `+enums`
-  declaration artifacts. Actor constants may use local enum members such as
-  `mode.BUSY` or package enum members such as `shared.mode.BUSY`; those
-  constants preserve the authored token in `+constants` and schedule reports
-  while resolving to non-negative integer values for static waits and existing
-  static activation-parameter overrides. Other enum member expression/value
-  contexts and typed aggregate carriers remain backlog.
+  NAME)`, mutually exclusive with `(width N)`. Actor-owned storage variables
+  may also use packed `list` or `record` aliases as whole-root aggregate
+  carriers. Local aliases come from actor-local `(types ...)`;
+  package-qualified aliases come from existing `.fsm` packages imported with
+  `(imports (package NAME) ...)`. Lowered scheduled `.fsm` preserves `+types`,
+  `+import`, typed `+size` entries, and embedded package roots. Actor-local
+  `(enums ...)` are preserved as `+enums` declaration artifacts. Actor
+  constants may use local enum members such as `mode.BUSY` or package enum
+  members such as `shared.mode.BUSY`; those constants preserve the authored
+  token in `+constants` and schedule reports while resolving to non-negative
+  integer values for static waits and existing static activation-parameter
+  overrides. Other enum member expression/value contexts, aggregate member
+  access, partial aggregate updates, and aggregate interface/transaction/bank
+  carriers remain backlog.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
   rule users under the `priority` arbiter. Future kinds such as

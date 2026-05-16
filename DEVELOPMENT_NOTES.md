@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate storage variables are the first ISF aggregate carrier
+- `ISF-TYPE-AGGREGATE-PARITY.5` deliberately selects actor-owned storage
+  variables as the first aggregate carrier because they already lower through
+  scheduled `.fsm` `+size` and `inferred_storage[]` without widening public
+  interface or transaction port contracts.
+- The parser resolves local and package `list`/`record` aliases through the
+  existing `.fsm` package/type machinery, records the packed width for
+  scheduler use, preserves the authored alias in `+size`, and rejects
+  aggregate aliases on interface ports, transaction ports, and storage banks.
+- Schedule reports expose only bounded `type` and `type_kind` summaries for
+  declared typed actor-owned storage. Raw type-spec hashes stay private, and
+  member/item access plus partial aggregate updates remain separate leaves.
 ## 2026-05-16: actor constants are the first ISF enum value context
 - `ISF-TYPE-AGGREGATE-PARITY.4` deliberately chooses actor constants as the
   first enum-member value context because they are static, actor-scoped,

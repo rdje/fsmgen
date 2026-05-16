@@ -263,6 +263,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_symbol_tables($result, $source_label);
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_type_references($result);
+    $self->_validate_actor_aggregate_storage_paths($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
@@ -561,10 +562,13 @@ sub _finalize_actor_type_references($self, $actor) {
             $actor,
             $entry,
             "actor '$actor_name' storage '$entry->{name}'",
+            allow_aggregate => (($entry->{kind} // '') eq 'var' ? 1 : 0),
         );
         for my $signal (@{$entry->{signals} || []}) {
             $signal->{width} = $entry->{width};
             $signal->{type} = $entry->{type} if exists $entry->{type};
+            $signal->{type_spec} = _clone_isf_value($entry->{type_spec})
+                if exists $entry->{type_spec};
         }
     }
 
@@ -583,7 +587,7 @@ sub _finalize_actor_type_references($self, $actor) {
     return 1;
 }
 
-sub _resolve_typed_width_entry($self, $actor, $entry, $context) {
+sub _resolve_typed_width_entry($self, $actor, $entry, $context, %options) {
     return 1 unless exists $entry->{type};
 
     my $type_name = $entry->{type};
@@ -592,8 +596,12 @@ sub _resolve_typed_width_entry($self, $actor, $entry, $context) {
         unless ref($type_spec) eq 'HASH';
 
     my $kind = $type_spec->{kind} || '';
-    confess "Error: $context references aggregate type '$type_name'; this ISF slice accepts only scalar type aliases in width-bearing declarations\n"
-        unless $kind eq 'bit' || $kind eq 'bits';
+    my $is_scalar = $kind eq 'bit' || $kind eq 'bits';
+    my $is_aggregate = _is_aggregate_type_spec($type_spec);
+    confess "Error: $context references aggregate type '$type_name'; this ISF slice accepts aggregate type aliases only on actor-owned storage variables\n"
+        if $is_aggregate && !$options{allow_aggregate};
+    confess "Error: $context references unsupported type '$type_name' of kind '$kind'\n"
+        unless $is_scalar || $is_aggregate;
     confess "Error: $context type '$type_name' does not resolve to a positive width\n"
         unless defined($type_spec->{width}) && !ref($type_spec->{width}) && $type_spec->{width} > 0;
 
@@ -612,6 +620,64 @@ sub _resolve_actor_type_spec($self, $actor, $type_name) {
     }
 
     return _clone_isf_value(($symbols->{local} || {})->{$type_name});
+}
+
+sub _validate_actor_aggregate_storage_paths($self, $actor) {
+    my %aggregate_roots = map { $_->{name} => 1 }
+        grep { _is_aggregate_type_spec($_->{type_spec}) }
+        @{$actor->{storage} || []};
+    return 1 unless keys %aggregate_roots;
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        _reject_aggregate_storage_paths(
+            $tx->{clauses},
+            \%aggregate_roots,
+            "transaction '$tx->{name}'",
+        );
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        _reject_aggregate_storage_paths(
+            $rule->{actions},
+            \%aggregate_roots,
+            "rule '$rule->{name}'",
+        );
+    }
+
+    for my $drive_name (sort keys %{$actor->{drives} || {}}) {
+        _reject_aggregate_storage_paths(
+            $actor->{drives}{$drive_name}{body},
+            \%aggregate_roots,
+            "drive '$drive_name'",
+        );
+    }
+
+    return 1;
+}
+
+sub _reject_aggregate_storage_paths {
+    my ($value, $aggregate_roots, $context) = @_;
+    if (!ref($value)) {
+        my $path = _aggregate_storage_path_token($value, $aggregate_roots);
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts only whole actor-owned aggregate storage carriers, not member/item access or partial aggregate updates\n"
+            if defined $path;
+        return 1;
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        _reject_aggregate_storage_paths($_, $aggregate_roots, $context) for @$value;
+    }
+
+    return 1;
+}
+
+sub _aggregate_storage_path_token {
+    my ($value, $aggregate_roots) = @_;
+    return undef unless defined($value) && !ref($value);
+    for my $root (sort { length($b) <=> length($a) } keys %{$aggregate_roots || {}}) {
+        return $value if $value =~ /\A\Q$root\E(?:\.|\[)/;
+    }
+    return undef;
 }
 
 sub _validate_actor_constant_names($self, $actor) {
@@ -1256,6 +1322,13 @@ sub _is_type_reference {
 sub _is_enum_member_reference {
     my ($value) = @_;
     return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\.[A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?\z/;
+}
+
+sub _is_aggregate_type_spec {
+    my ($type_spec) = @_;
+    return 0 unless ref($type_spec) eq 'HASH';
+    my $kind = $type_spec->{kind} || '';
+    return ($kind eq 'list' || $kind eq 'record') ? 1 : 0;
 }
 
 sub _is_activation_input_binding_expr_shape {

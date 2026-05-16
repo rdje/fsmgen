@@ -284,8 +284,11 @@ scalarized bank elements.
 
 Declared storage is emitted in scheduled `.fsm` `+size`, contributes width
 evidence to later lowering, and appears in schedule reports as `kind:
-register`, `role: actor_storage`, with positive integer `width`. Used storage
-signals reach SystemVerilog through the normal scalar assignment path.
+register`, `role: actor_storage`, with positive integer `width`. Declared
+typed actor-owned storage may also report the authored `type` and resolved
+`type_kind`; the full shape remains in the scheduled `.fsm` review artifact.
+Used storage signals reach SystemVerilog through the normal scalar assignment
+path.
 The report `kind` is the generated storage class; authored scalar storage uses
 the normalized scalar storage kind. `(state ...)` and `(register ...)` are not
 accepted storage entry spellings.

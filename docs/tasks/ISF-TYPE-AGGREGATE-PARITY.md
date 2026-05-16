@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -80,9 +80,16 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.4: support enum constants`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.5`
-  Status: `pending`
+  Status: `done`
   Goal: `extend the implemented path to one declared aggregate carrier only after scalar alias and enum resolution are stable`
   Acceptance: `one declared aggregate actor/interface or storage carrier lowers through reviewable .fsm with shape checks, focused tests, and bounded schedule-report visibility; partial aggregate updates remain deferred unless explicitly specified`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1226-isf-data-width-storage-report.t t/1232-isf-actor-storage-declarations.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.5: ship aggregate storage carriers`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.6`
+  Status: `pending`
+  Goal: `implement one declared aggregate leaf access context after storage carriers are stable`
+  Acceptance: `one documented member/item access context resolves against the declared aggregate storage carrier shape, lowers through reviewable .fsm with diagnostics for unknown members or out-of-range indexes, and keeps partial aggregate writes deferred unless this leaf explicitly selects them`
   Verification: `pending`
   Commit: `pending`
 
@@ -90,7 +97,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.5` | `pending` | One declared aggregate carrier can start after scalar aliases and actor-constant enum references are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.6` | `pending` | One aggregate leaf access context can start after actor-owned aggregate storage carriers are stable. |
 
 ## Decisions
 
@@ -149,6 +156,14 @@ ISF-only type system.
   schedule reports, and resolve them to non-negative integer values for
   existing static wait lowering and static activation-parameter override use.
   Other enum member expression/value contexts remain deferred.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.5` selects actor-owned storage
+  variables as the first declared aggregate carrier. Storage variables now
+  accept local and package `list`/`record` aliases, preserve the authored alias
+  in scheduled `.fsm` `+size`, expose bounded `inferred_storage[].type` and
+  `type_kind` report metadata, and reuse the existing `.fsm` package/type
+  machinery for shape resolution and CLI HDL generation. Aggregate aliases on
+  interface ports, transaction ports, storage banks, member/item paths, and
+  partial aggregate updates remain deferred.
 
 ## Open Questions
 
@@ -159,6 +174,8 @@ ISF-only type system.
   JSON expansion.
 - Which non-constant enum member expression/value context should ship next?
   This remains deferred beyond `ISF-TYPE-AGGREGATE-PARITY.4`.
+- Which aggregate leaf access context should ship first after declared storage
+  carriers? The current frontier selects this for `ISF-TYPE-AGGREGATE-PARITY.6`.
 
 ## Blockers
 
@@ -172,6 +189,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.2` | `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.4` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1244-isf-wait-clause-lowering.t t/1249-isf-activation-parameter-constants.t t/1250-isf-spec-focused-test-index-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.5` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1257-isf-scalar-type-aliases.t t/1258-isf-enum-member-constants.t t/1259-isf-aggregate-storage-type-aliases.t t/1255-isf-schedule-report-golden-matrix.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1226-isf-data-width-storage-report.t t/1232-isf-actor-storage-declarations.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -181,6 +199,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.2` | `ISF-TYPE-AGGREGATE-PARITY.2: specify type source contract` | `Symbol-source and first type-reference contract slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.3` | `ISF-TYPE-AGGREGATE-PARITY.3: ship scalar type aliases` | `Scalar type-alias parser/lowering implementation slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.4` | `ISF-TYPE-AGGREGATE-PARITY.4: support enum constants` | `Actor-constant enum member parser/lowering implementation slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.5` | `ISF-TYPE-AGGREGATE-PARITY.5: ship aggregate storage carriers` | `Actor-owned aggregate storage carrier parser/lowering/report slice.` |
 
 ## Changelog
 
@@ -195,3 +214,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped actor-constant enum member references for
   `ISF-TYPE-AGGREGATE-PARITY.4` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.5`.
+- `2026-05-16`: Shipped actor-owned aggregate storage variable carriers for
+  `ISF-TYPE-AGGREGATE-PARITY.5` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.6`.
