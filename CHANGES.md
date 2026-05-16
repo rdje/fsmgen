@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF generated-composition fixture promotion shipped
+- Completed `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` and closed the
+  task tree.
+- Added `t/1315-isf-generated-composition-fixture-coverage.t` for
+  file-backed generated top, parent, and child scheduled `.fsm` structure,
+  strict schedule JSON parity, strict `--outdir` file emission, generated top
+  HDL wiring, parent start/await/data handoff behavior, and child drive
+  request/payload handoff behavior.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook feature matrix and
+  backlog chapters.
+- Validation: focused generated-composition/public/book/spec audit tests
+  passed with `Files=9, Tests=105`; `./bin/ci-regression isf --no-book`
+  passed with `Files=221, Tests=971`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
 ### R14 — ISF when fixture promotion shipped
 - Completed `ISF-WHEN-FIXTURE-PROMOTION.1` and closed the task tree.
 - Added `t/1314-isf-when-fixture-coverage.t` for file-backed scheduled `.fsm`

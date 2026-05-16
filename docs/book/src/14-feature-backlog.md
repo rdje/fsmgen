@@ -1003,6 +1003,12 @@ schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, entry drive setup, two conditional decision states, multi-step
 true-body drives, false-path fallthrough, compatible named-drive start fan-in,
 and delayed completion pulse behavior.
+The generated-composition fixture is now promoted in the `isf` tier for
+file-backed strict schedule JSON parity, strict `--outdir` file emission,
+generated top, parent, and child scheduled `.fsm` artifacts, start/done
+handoffs, named-drive request/payload handoffs, public input fanout,
+`await_all` synchronization, and strict HDL generation for the generated top,
+parent, and child artifacts.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

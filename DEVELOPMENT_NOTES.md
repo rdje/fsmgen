@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: generated-composition fixture promotion closes strict handoff coverage
+- `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` promotes
+  `isf/spawn_parent.isf` as bounded generated-child composition coverage
+  without changing spawn or generated-top semantics.
+- The regression intentionally checks stable handoff structure rather than
+  snapshotting private full artifacts: generated top `?fsmc` instances,
+  public input fanout, parent start outputs, child done inputs, named-drive
+  request/payload handoffs, and parent `await_all` synchronization.
+- Strict coverage is split across the public paths users and downstream tools
+  rely on: `--emit-schedule-json`, `--outdir`, generated-top HDL, parent HDL,
+  and child HDL. That catches drift in both scheduler emission and downstream
+  composition/direct HDL handoff.
+- The fixture remains a composition contract fixture, not an external protocol
+  compliance claim.
 ## 2026-05-16: when fixture promotion locks branch body shape
 - `ISF-WHEN-FIXTURE-PROMOTION.1` promotes `isf/when_test.isf` without changing
   `when` semantics. The fixture already exercises the shipped transaction-local

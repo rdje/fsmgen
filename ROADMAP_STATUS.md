@@ -10,11 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-WHEN-FIXTURE-PROMOTION` is closed after promoting
-  the `when` fixture to file-backed schedule JSON, scheduled `.fsm`, strict
-  mode, and HDL coverage for entry drive setup, two conditional decision
-  states, multi-step true-body drives, false-path fallthrough, compatible
-  named-drive start fan-in, and delayed completion pulse behavior. The spec,
+- Next decision point: `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION` is
+  closed after promoting the `spawn_parent` generated-composition fixture to
+  file-backed strict schedule JSON, strict `--outdir`, scheduled top/parent/
+  child `.fsm`, and generated top/parent/child HDL coverage. The spec,
   downstream handoff, public contract, mdBook, fixture matrix, public
   metadata, and tests are synchronized. The next R14 PNT implementation slice
   must select or create a new task tree before code changes.
@@ -5489,6 +5488,13 @@ Done:
   `bin/fsmgen-issue-bundle` example for format-agnostic bug reports.
 - The ISF shipped feature matrix now includes copyable CLI examples for
   `--strict`, `--emit-schedule-json`, multi-file `--outdir`, and HDL handoff.
+- `isf/spawn_parent.isf` now has file-backed strict generated-composition
+  fixture coverage through
+  [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t),
+  covering strict schedule JSON parity, strict `--outdir` emission, generated
+  top/parent/child scheduled `.fsm` artifacts, start/done handoffs,
+  named-drive request/payload handoffs, public input fanout, `await_all`
+  synchronization, and strict HDL generation for each generated artifact.
 - ISF runtime divisor safety now rejects numeric/exact-width literal-zero
   divisors and actor-level constants that resolve to zero before scheduled
   `.fsm` emission, while preserving nonzero literal/constant divisors and
@@ -5830,7 +5836,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC`, so the next ISF
+  after `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

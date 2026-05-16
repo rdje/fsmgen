@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md](docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md) |
 | `ISF-WHEN-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md](docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md) |
 | `ISF-SWITCH-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-SWITCH-FIXTURE-PROMOTION.md](docs/tasks/ISF-SWITCH-FIXTURE-PROMOTION.md) |
 | `ISF-PHASE-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-PHASE-FIXTURE-PROMOTION.md](docs/tasks/ISF-PHASE-FIXTURE-PROMOTION.md) |
@@ -138,6 +139,7 @@ as done work unless a future task reopens them.
 | Phase metadata realistic fixture promotion | `ISF-PHASE-FIXTURE-PROMOTION` |
 | Switch dispatch realistic fixture promotion | `ISF-SWITCH-FIXTURE-PROMOTION` |
 | Conditional `when` realistic fixture promotion | `ISF-WHEN-FIXTURE-PROMOTION` |
+| Generated-composition fixture strict/outdir/HDL promotion | `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION` |
 | I2C-like realistic fixture promotion | `ISF-I2C-FIXTURE-PROMOTION` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |

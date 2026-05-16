@@ -119,6 +119,14 @@ compatible named-drive start fan-in, strict schedule JSON parity, scheduled
 pulse behavior. It does not widen the deferred nested child/await-sync body
 surface.
 
+The generated-composition fixture is file-backed in the `isf` regression tier
+for spawned generated-child composition coverage: generated top emission,
+parent/child scheduled `.fsm` artifacts, start/done handoffs, named-drive
+request/payload handoffs, public input fanout, `await_all` synchronization,
+strict schedule JSON parity, strict `--outdir` file emission, and strict HDL
+generation for the generated top, parent, and child artifacts. It is a bounded
+generated-composition fixture, not an external protocol compliance claim.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

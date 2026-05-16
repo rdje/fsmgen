@@ -1519,6 +1519,14 @@ proves strict schedule JSON parity, scheduled `.fsm` structure, plain and
 strict HDL generation, entry drive setup, two conditional decision states,
 multi-step true-body drives, false-path fallthrough, compatible named-drive
 start fan-in, and delayed completion pulse behavior.
+The generated-composition fixture is covered by
+`t/1315-isf-generated-composition-fixture-coverage.t`, which proves strict
+schedule JSON parity, strict `--outdir` file emission, generated top,
+parent, and child scheduled `.fsm` artifacts, start/done handoffs,
+named-drive request/payload handoffs, public input fanout, `await_all`
+synchronization, and strict HDL generation for the generated top, parent, and
+child artifacts. This is the representative downstream handoff path for
+spawned generated-child composition; it is not a protocol compliance claim.
 
 Recommended downstream smoke commands:
 
@@ -1530,8 +1538,9 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/phase_test.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/switch_test.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/when_test.isf
+./bin/fsmgen --strict --emit-schedule-json isf/spawn_parent.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
-./bin/fsmgen --outdir /tmp/isf-build isf/spawn_parent.isf
+./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest

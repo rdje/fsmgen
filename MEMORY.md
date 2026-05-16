@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF generated-composition fixture promotion shipped
+- Completed `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md](docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md).
+- Added
+  [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t)
+  for file-backed generated top, parent, and child scheduled `.fsm`
+  structure, strict schedule JSON parity, strict `--outdir` file emission,
+  generated top HDL wiring, parent start/await/data handoff behavior, and
+  child drive request/payload handoff behavior for
+  [isf/spawn_parent.isf](isf/spawn_parent.isf).
+- Updated public `tested_by` metadata and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: `prove -l t/1315-isf-generated-composition-fixture-coverage.t t/1122-isf-public-cli-outdir-lowering-audit.t t/1128-isf-public-multifile-schedule-report-audit.t t/1216-isf-generated-composition-top.t t/1217-isf-generated-composition-schedule-report.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`
+  passed with `Files=9, Tests=105`; `./bin/ci-regression isf --no-book`
+  passed with `Files=221, Tests=971`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF when fixture promotion shipped
 - Completed `ISF-WHEN-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md](docs/tasks/ISF-WHEN-FIXTURE-PROMOTION.md).

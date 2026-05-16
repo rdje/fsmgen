@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF generated-composition fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md](docs/tasks/ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION.md).
+- The `ISF-GENERATED-COMPOSITION-FIXTURE-PROMOTION` tree is now closed. No
+  active ISF task tree remains open; the next R14 implementation slice must
+  select or create a new task tree first.
+- Added
+  [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t)
+  for file-backed generated top, parent, and child scheduled `.fsm`
+  structure, strict schedule JSON parity, strict `--outdir` file emission,
+  generated top HDL wiring, parent start/await/data handoff behavior, and
+  child drive request/payload handoff behavior.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused generated-composition/public/book/spec audit tests
+  passed with `Files=9, Tests=105`; `./bin/ci-regression isf --no-book`
+  passed with `Files=221, Tests=971`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF when fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-WHEN-FIXTURE-PROMOTION.1` in

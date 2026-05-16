@@ -96,6 +96,7 @@ my @required_examples = (
     'phase fixture',
     'switch fixture',
     'when fixture',
+    'generated-composition fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

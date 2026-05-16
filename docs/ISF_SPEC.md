@@ -2744,6 +2744,13 @@ schedule/HDL/strict coverage for entry drive setup, two conditional decision
 states, multi-step true-body drives, false-path fallthrough, compatible
 named-drive start fan-in, delayed completion pulse behavior, and strict
 generated HDL reachability.
+The [isf/spawn_parent.isf](../isf/spawn_parent.isf) fixture now has
+file-backed strict generated-composition coverage for generated top emission,
+parent/child scheduled `.fsm` artifacts, start/done handoffs, named-drive
+request/payload handoffs, public input fanout, `await_all` synchronization,
+strict `--outdir` file emission, and strict HDL generation for the generated
+top, parent, and child artifacts. It remains a bounded generated-child
+composition fixture, not an external protocol compliance claim.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -2985,6 +2992,7 @@ Focused tests:
 - [t/1312-isf-phase-fixture-coverage.t](../t/1312-isf-phase-fixture-coverage.t)
 - [t/1313-isf-switch-fixture-coverage.t](../t/1313-isf-switch-fixture-coverage.t)
 - [t/1314-isf-when-fixture-coverage.t](../t/1314-isf-when-fixture-coverage.t)
+- [t/1315-isf-generated-composition-fixture-coverage.t](../t/1315-isf-generated-composition-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

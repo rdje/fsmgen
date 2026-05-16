@@ -208,6 +208,7 @@ my $expected_tested_by = [
     't/1312-isf-phase-fixture-coverage.t',
     't/1313-isf-switch-fixture-coverage.t',
     't/1314-isf-when-fixture-coverage.t',
+    't/1315-isf-generated-composition-fixture-coverage.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

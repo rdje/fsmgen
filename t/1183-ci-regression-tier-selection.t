@@ -59,6 +59,8 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($isf_block || '', qr/t\/1313-isf-switch-fixture-coverage\.t/, 'ISF tier includes the switch fixture coverage');
     unlike($quick_block || '', qr/t\/1314-isf-when-fixture-coverage\.t/, 'quick tier does not include the broader when fixture');
     like($isf_block || '', qr/t\/1314-isf-when-fixture-coverage\.t/, 'ISF tier includes the when fixture coverage');
+    unlike($quick_block || '', qr/t\/1315-isf-generated-composition-fixture-coverage\.t/, 'quick tier does not include the broader generated-composition fixture');
+    like($isf_block || '', qr/t\/1315-isf-generated-composition-fixture-coverage\.t/, 'ISF tier includes the generated-composition fixture coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -88,6 +90,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($isf->{stdout}, qr/t\/1312-isf-phase-fixture-coverage\.t/, 'ISF dry-run includes phase fixture coverage');
     like($isf->{stdout}, qr/t\/1313-isf-switch-fixture-coverage\.t/, 'ISF dry-run includes switch fixture coverage');
     like($isf->{stdout}, qr/t\/1314-isf-when-fixture-coverage\.t/, 'ISF dry-run includes when fixture coverage');
+    like($isf->{stdout}, qr/t\/1315-isf-generated-composition-fixture-coverage\.t/, 'ISF dry-run includes generated-composition fixture coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');
