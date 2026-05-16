@@ -888,6 +888,11 @@ Rules:
 - Transaction `set` RHS expressions may use scalar aggregate leaves as
   operands, for example `(set mode_out (+ frame.mode mode_in))`. Aggregate
   paths are not accepted in expression operator position.
+- Transaction `when`/`while`/`until` condition expressions may use scalar
+  aggregate leaves as operands, for example
+  `(when (& ready frame.flag) (set fire 1))`. Standalone aggregate conditions
+  and aggregate paths in condition expression operator position remain
+  deferred.
 - Transaction `(set aggregate_leaf value)` clauses may write scalar aggregate
   leaves on declared actor-owned aggregate storage, for example
   `(set frame.mode mode_in)` or `(set lanes[0] bit_in)`. Subaggregate targets
@@ -948,8 +953,9 @@ Rules:
   other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values,
-direct transaction `set` target tokens, rule assignment RHS values or
-expression operands, or rule guard expression operands, subaggregate
+direct transaction `set` target tokens, transaction condition expression
+operands, rule assignment RHS values or expression operands, or rule guard
+expression operands, subaggregate
 operands/updates, aggregate interface or transaction ports, and aggregate
 storage banks are not shipped yet. Existing
 aggregate support beyond the actor-owned storage-variable carrier and direct
@@ -1349,10 +1355,10 @@ Required fail-closed examples:
   declaration, package import aliases, aggregate type aliases outside
   actor-owned storage variables, unknown aggregate members, out-of-range list
   indexes, aggregate storage member/item paths outside direct transaction
-  `set` RHS values, direct transaction `set` target tokens, rule assignment
-  RHS values/expression operands, or rule guard expression operands, aggregate
-  paths in expression operator position, subaggregate operands/updates, and enum
-  member references outside
+  `set` RHS values, direct transaction `set` target tokens, transaction
+  condition expression operands, rule assignment RHS values/expression operands,
+  or rule guard expression operands, aggregate paths in expression operator
+  position, subaggregate operands/updates, and enum member references outside
   the shipped actor-constant, actor parameter scalar default or aggregate/list
   default leaf, generated child transaction scalar parameter default or
   aggregate/list default leaf, scalar activation parameter override,
@@ -1432,7 +1438,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1282-isf-enum-member-drive-expression-values.t \
   t/1283-isf-aggregate-rule-values.t \
   t/1284-isf-aggregate-rule-expression-values.t \
-  t/1285-isf-aggregate-rule-guard-values.t
+  t/1285-isf-aggregate-rule-guard-values.t \
+  t/1286-isf-aggregate-condition-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

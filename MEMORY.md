@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate transaction condition operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.32` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.33`.
+- Transaction `when`/`while`/`until` condition expressions now accept scalar
+  aggregate storage leaves such as `frame.flag` and `lanes[1]` as operands.
+- Scheduled `.fsm` computed-test selectors and strict CLI HDL generation
+  preserve and consume the authored aggregate condition expressions.
+- Standalone aggregate conditions, operator-position aggregate paths, and
+  subaggregate operands remain deferred.
 ## 2026-05-16: ISF aggregate rule guard expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.31` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

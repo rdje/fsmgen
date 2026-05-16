@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate transaction conditions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.32` widens aggregate operand support from rule
+  guards to transaction `when`/`while`/`until` condition expressions.
+- The parser walks transaction condition expression trees, validates aggregate
+  member/item paths against declared actor-owned aggregate storage, and rejects
+  aggregate paths in condition expression operator position.
+- Standalone aggregate conditions stay closed so condition sampling continues
+  to use the existing scalar/list-expression contract rather than a new
+  implicit truthiness rule for aggregate leaves.
 ## 2026-05-16: aggregate rule guards are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.31` widens aggregate rule support from assignment
   RHS contexts to scalar operands inside rule guard expressions.

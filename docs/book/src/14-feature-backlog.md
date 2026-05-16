@@ -321,12 +321,14 @@ flag_in)` or `(set lanes[0] bit_in)`. Rule assignment scalar RHS values may
 read scalar aggregate leaves directly or as scalar operands inside RHS
 expressions, such as `(set mode_out (+ frame.mode mode_in))` inside a rule
 body. Rule guard expressions may read scalar aggregate leaves as operands, such
-as `(rule fire (& ready frame.flag) (set seen 1))`. Aggregate member paths
-outside transaction `set` RHS values, direct transaction `set` targets, rule
-assignment RHS values/expression operands, or rule guard expression operands,
-subaggregate operands/updates, aggregate interface or transaction ports,
-aggregate storage banks, enum member references outside actor constants, actor
-parameter scalar
+as `(rule fire (& ready frame.flag) (set seen 1))`. Transaction
+`when`/`while`/`until` condition expressions may read scalar aggregate leaves as
+operands, such as `(when (& ready frame.flag) (set seen 1))`. Aggregate member
+paths outside transaction `set` RHS values, direct transaction `set` targets,
+transaction condition expression operands, rule assignment RHS values/expression
+operands, or rule guard expression operands, subaggregate operands/updates,
+aggregate interface or transaction ports, aggregate storage banks, enum member
+references outside actor constants, actor parameter scalar
 values or aggregate/list default leaves, generated child transaction scalar
 parameter defaults or aggregate/list default leaves, activation parameter
 scalar values or aggregate/list override leaves, transaction `set` RHS scalar

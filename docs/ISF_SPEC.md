@@ -318,12 +318,16 @@ expressions, for example
 `(rule expose ready (set mode_out frame.mode))` or the shorthand
 `(rule expose ready (mode_out (^ lanes[1] pair_in)))`. Rule guard expressions
 may read scalar aggregate member/item leaves as scalar operands, for example
-`(rule expose (& ready frame.flag) (set fire 1))`. These forms resolve against
-the declared aggregate storage shape before lowering. Aggregate paths outside
-transaction `set` RHS values, direct transaction `set` targets, rule assignment
-RHS values or expression operands, or rule guard expression operands, aggregate
-paths in expression operator position, subaggregate writes/operands, aggregate
-interface or transaction ports, and aggregate storage banks remain deferred.
+`(rule expose (& ready frame.flag) (set fire 1))`. Transaction
+`when`/`while`/`until` condition expressions may read scalar aggregate
+member/item leaves as scalar operands too, for example
+`(when (& ready frame.flag) (set fire 1))`. These forms resolve against the
+declared aggregate storage shape before lowering. Aggregate paths outside
+transaction `set` RHS values, direct transaction `set` targets, transaction
+condition expression operands, rule assignment RHS values or expression
+operands, or rule guard expression operands, aggregate paths in expression
+operator position, subaggregate writes/operands, aggregate interface or
+transaction ports, and aggregate storage banks remain deferred.
 Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
@@ -1181,12 +1185,13 @@ entry transition.
 `(when condition ...)` may be used as the first transaction clause as an
 activation guard. It may also appear later as inline branching.
 Transaction `when`, `while`, and `until` condition expressions may use local
-enum members such as `mode.BUSY` or package enum members such as
-`shared.mode.BUSY` as scalar operands. The parser resolves those operands
-before lowering and preserves the authored condition expression in the
-scheduled `.fsm` computed-test selector. Standalone enum member transaction
-conditions and enum members in transaction condition expression operator
-position remain deferred.
+enum members such as `mode.BUSY`, package enum members such as
+`shared.mode.BUSY`, or scalar aggregate storage leaves such as `frame.flag` as
+scalar operands. The parser resolves those operands before lowering and
+preserves the authored condition expression in the scheduled `.fsm`
+computed-test selector. Standalone enum member or aggregate transaction
+conditions and enum members or aggregate paths in transaction condition
+expression operator position remain deferred.
 
 ### 7.1.1 Transaction Ports and Actor Pin Access
 
@@ -2806,6 +2811,7 @@ Focused tests:
 - [t/1283-isf-aggregate-rule-values.t](../t/1283-isf-aggregate-rule-values.t)
 - [t/1284-isf-aggregate-rule-expression-values.t](../t/1284-isf-aggregate-rule-expression-values.t)
 - [t/1285-isf-aggregate-rule-guard-values.t](../t/1285-isf-aggregate-rule-guard-values.t)
+- [t/1286-isf-aggregate-condition-values.t](../t/1286-isf-aggregate-condition-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2877,7 +2883,8 @@ Focused tests:
   enum member values and leaves, inline drive assignment RHS enum member
   values and expression operands, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
-  aggregate leaf operands, transaction `set` target aggregate leaf writes,
+  aggregate leaf operands, transaction condition expression aggregate leaf
+  operands, transaction `set` target aggregate leaf writes,
   rule assignment RHS aggregate leaf values and expression operands, rule
   guard expression aggregate leaf operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
@@ -2895,8 +2902,9 @@ Focused tests:
   remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values, direct transaction `set` target tokens,
-  rule assignment RHS values/expression operands, or rule guard expression
-  operands, aggregate paths in rule assignment RHS or rule guard expression
+  transaction condition expression operands, rule assignment RHS
+  values/expression operands, or rule guard expression operands, aggregate
+  paths in transaction condition, rule assignment RHS, or rule guard expression
   operator position, subaggregate updates/operands, aggregate field/slice/update
   lowering, and broad aggregate/record width inference remain deferred to the
   active `ISF-TYPE-AGGREGATE-PARITY` task tree.

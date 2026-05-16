@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate transaction condition operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.32`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.33`.
+- Transaction `when`/`while`/`until` condition expressions now accept scalar
+  aggregate storage member/item leaves as operands.
+- Scheduled `.fsm` computed-test selectors preserve authored aggregate
+  condition expressions, and strict CLI HDL generation accepts them.
+- Parser diagnostics reject unknown aggregate members, standalone aggregate
+  conditions, operator-position aggregate paths, and subaggregate operands
+  inside transaction condition expressions.
 ### R14 — ISF aggregate rule guard expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.31`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.32`.

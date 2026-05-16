@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate transaction condition operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.32` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.33`, selecting the
+  next enum or aggregate value/update context after transaction condition
+  aggregate expression operands.
+- Transaction `when`/`while`/`until` condition expressions now accept scalar
+  aggregate storage leaves as operands and preserve authored condition payloads
+  in scheduled `.fsm` computed-test selectors.
+- Standalone aggregate conditions, operator-position aggregate paths, and
+  subaggregate operands fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate rule guard expression operands shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.31` in

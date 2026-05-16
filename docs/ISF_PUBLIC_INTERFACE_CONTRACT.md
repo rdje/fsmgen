@@ -700,19 +700,22 @@ transaction-local ports, and actor-owned storage entries, and packed `list` or
 `record` aliases only on actor-owned storage variables. Transaction `(set
 target aggregate_leaf)` clauses may read scalar member/item leaves from those
 declared storage variables, transaction `set` RHS expressions may use scalar
-member/item leaves as operands, and transaction `(set aggregate_leaf value)`
-clauses may write scalar member/item leaves on those same declared storage
-variables. Rule assignment RHS values and RHS expressions may read scalar
-member/item leaves from those same declared storage variables. Rule guard
-expressions may also read scalar member/item leaves as operands. Lowering
+member/item leaves as operands, transaction `when`/`while`/`until` condition
+expressions may use scalar member/item leaves as operands, and transaction
+`(set aggregate_leaf value)` clauses may write scalar member/item leaves on
+those same declared storage variables. Rule assignment RHS values and RHS
+expressions may read scalar member/item leaves from those same declared storage
+variables. Rule guard expressions may also read scalar member/item leaves as
+operands. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
 aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
 actor-owned storage variables, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
-transaction `set` target tokens, rule assignment RHS values/expression
-operands, or rule guard expression operands, aggregate paths in expression
-operator position, and subaggregate operands/updates fail closed.
+transaction `set` target tokens, transaction condition expression operands,
+rule assignment RHS values/expression operands, or rule guard expression
+operands, aggregate paths in expression operator position, and subaggregate
+operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
 references are public as actor constant values, scalar actor parameter
@@ -720,14 +723,15 @@ defaults or scalar leaves inside actor aggregate/list parameter defaults,
 generated child transaction scalar parameter defaults or scalar leaves inside
 generated child transaction aggregate/list parameter defaults, direct
 transaction `set` RHS scalar values or scalar operands inside transaction
-`set` RHS expressions, transaction `switch` branch values, scalar drive body
-RHS values, named drive-call scalar actual values or scalar operands inside
+`set` RHS expressions, scalar operands inside transaction `when`/`while`/`until`
+condition expressions, transaction `switch` branch values, scalar drive body RHS
+values, named drive-call scalar actual values or scalar operands inside
 drive-call actual expressions, scalar activation parameter overrides, and
 scalar leaves inside activation aggregate/list parameter overrides, scalar rule
-assignment RHS values or scalar operands inside rule assignment RHS
-expressions, scalar operands inside rule guard expressions, inline drive
-assignment RHS scalar values, and scalar operands inside inline drive RHS
-expressions in this slice, using local `mode.BUSY` or package-qualified
+assignment RHS values or scalar operands inside rule assignment RHS expressions,
+scalar operands inside rule guard expressions, inline drive assignment RHS
+scalar values, and scalar operands inside inline drive RHS expressions in this
+slice, using local `mode.BUSY` or package-qualified
 `shared.mode.BUSY` spelling and resolving to non-negative integer literal
 values before lowering.
 Enum member references in expression operator position, standalone transaction
@@ -884,6 +888,13 @@ Transaction `set` RHS expression aggregate leaf operands are checked by
 covering record member and package list item expression operands, scheduled
 `.fsm` review artifacts, CLI HDL generation, and fail-closed diagnostics for
 unknown members, operator-position paths, and subaggregate operands.
+Transaction condition expression aggregate leaf operands are checked by
+[t/1286-isf-aggregate-condition-values.t](../t/1286-isf-aggregate-condition-values.t),
+covering local and package aggregate leaf operands inside transaction
+`when`/`while`/`until` condition expressions, scheduled `.fsm` computed-test
+review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
+members, standalone aggregate conditions, operator-position paths, and
+subaggregate operands.
 Rule assignment RHS aggregate leaf values are checked by
 [t/1283-isf-aggregate-rule-values.t](../t/1283-isf-aggregate-rule-values.t),
 covering explicit and shorthand rule assignment RHS aggregate leaf reads,

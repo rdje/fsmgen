@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.32` is the active PNT
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.33` is the active PNT
   frontier. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -154,8 +154,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   storage leaf operands inside rule guard expressions, preserving authored
   guard payloads in scheduled `.fsm` rule DT headers and public `when`
   normalization while keeping standalone aggregate guards, operator-position
-  aggregate paths, and subaggregate operands deferred. The next slice selects
-  the next enum or aggregate value/update context after rule guard aggregate
+  aggregate paths, and subaggregate operands deferred.
+  `ISF-TYPE-AGGREGATE-PARITY.32` then shipped scalar aggregate storage leaf
+  operands inside transaction `when`/`while`/`until` condition expressions,
+  preserving authored computed-test payloads in scheduled `.fsm` while keeping
+  standalone aggregate conditions, operator-position aggregate paths, and
+  subaggregate operands deferred. The next slice selects the next enum or
+  aggregate value/update context after transaction condition aggregate
   expression operands.
   Previous R14
   sequencing: after

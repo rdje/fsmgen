@@ -49,7 +49,7 @@ ISF-only type system.
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
   Status: `active`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
-  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`
+  Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.1`
   Status: `done`
@@ -269,8 +269,15 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.31: support aggregate rule guards`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.32`
+  Status: `done`
+  Goal: `support scalar aggregate storage leaf operands inside transaction condition expressions`
+  Acceptance: `transaction when/while/until condition expressions accept local/package aggregate storage member/item leaves as scalar operands with shape diagnostics, reviewable .fsm computed-test projection, strict CLI HDL generation, and fail-closed diagnostics for standalone aggregate conditions, operator-position aggregate paths, and subaggregate operands`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1275-isf-enum-member-condition-values.t t/1233-isf-rule-expression-guards.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.32: support aggregate conditions`
+
+- ID: `ISF-TYPE-AGGREGATE-PARITY.33`
   Status: `pending`
-  Goal: `choose the next remaining enum or aggregate value/update context after rule guard aggregate expression operands`
+  Goal: `choose the next remaining enum or aggregate value/update context after transaction condition aggregate expression operands`
   Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
   Verification: `pending`
   Commit: `pending`
@@ -279,7 +286,7 @@ ISF-only type system.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.32` | `pending` | The next enum or aggregate value/update context can be selected after rule guard aggregate expression operands are stable. |
+| 1 | `ISF-TYPE-AGGREGATE-PARITY.33` | `pending` | The next enum or aggregate value/update context can be selected after transaction condition aggregate expression operands are stable. |
 
 ## Decisions
 
@@ -526,6 +533,12 @@ ISF-only type system.
   scalar aggregate leaf operands. Standalone aggregate guards, rule guard
   operator-position aggregate paths, and subaggregate operands remain separate
   contracts.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.32` selects transaction condition
+  expression aggregate operands because transaction `when`/`while`/`until`
+  conditions already preserve authored expression text in scheduled `.fsm`
+  computed-test selectors. Standalone aggregate conditions, condition
+  operator-position aggregate paths, and subaggregate operands remain separate
+  contracts.
 
 ## Open Questions
 
@@ -546,10 +559,10 @@ ISF-only type system.
   drive body RHS scalar values/expression operands, inline drive assignment
   RHS scalar values/expression operands, and drive-call scalar actual
   values/expression operands should ship next? This remains deferred beyond
-  `ISF-TYPE-AGGREGATE-PARITY.31`.
-- Which enum or aggregate value/update context should ship after rule
-  guard aggregate expression operands? The current frontier selects this for
   `ISF-TYPE-AGGREGATE-PARITY.32`.
+- Which enum or aggregate value/update context should ship after transaction
+  condition aggregate expression operands? The current frontier selects this
+  for `ISF-TYPE-AGGREGATE-PARITY.33`.
 
 ## Blockers
 
@@ -590,6 +603,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.29` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1221-isf-rule-expression-assignment.t t/1272-isf-enum-member-rule-values.t t/1273-isf-enum-member-rule-expression-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.30` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1221-isf-rule-expression-assignment.t t/1272-isf-enum-member-rule-values.t t/1273-isf-enum-member-rule-expression-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.31` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1233-isf-rule-expression-guards.t t/1274-isf-enum-member-rule-guard-values.t t/1272-isf-enum-member-rule-values.t t/1273-isf-enum-member-rule-expression-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.32` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1286-isf-aggregate-condition-values.t t/1285-isf-aggregate-rule-guard-values.t t/1284-isf-aggregate-rule-expression-values.t t/1283-isf-aggregate-rule-values.t t/1260-isf-aggregate-storage-leaf-reads.t t/1261-isf-aggregate-storage-leaf-writes.t t/1262-isf-aggregate-storage-leaf-expression-reads.t t/1275-isf-enum-member-condition-values.t t/1233-isf-rule-expression-guards.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -626,6 +640,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.29` | `ISF-TYPE-AGGREGATE-PARITY.29: support aggregate rule values` | `Rule assignment RHS aggregate leaf parser/lowering/provenance slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.30` | `ISF-TYPE-AGGREGATE-PARITY.30: support aggregate rule expressions` | `Rule assignment RHS expression aggregate leaf operand parser/lowering/provenance slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.31` | `ISF-TYPE-AGGREGATE-PARITY.31: support aggregate rule guards` | `Rule guard expression aggregate leaf operand parser/lowering slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.32` | `ISF-TYPE-AGGREGATE-PARITY.32: support aggregate conditions` | `Transaction condition expression aggregate leaf operand parser/lowering slice.` |
 
 ## Changelog
 
@@ -721,3 +736,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped rule guard expression aggregate leaf operands for
   `ISF-TYPE-AGGREGATE-PARITY.31` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.32`.
+- `2026-05-16`: Shipped transaction condition expression aggregate leaf
+  operands for `ISF-TYPE-AGGREGATE-PARITY.32` and advanced the frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.33`.
