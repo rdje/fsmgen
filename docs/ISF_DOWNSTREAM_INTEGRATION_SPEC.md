@@ -898,8 +898,8 @@ Rules:
   `(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
   `(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`.
   Aggregate switch selectors lower through computed `.fsm` selector syntax
-  such as `?(frame.mode)` or `?(lanes[1])`. Enum switch selectors and
-  subaggregate selectors or branch values remain deferred.
+  such as `?(frame.mode)` or `?(lanes[1])`. Subaggregate selectors or branch
+  values remain deferred.
 - Transaction `(set aggregate_leaf value)` clauses may write scalar aggregate
   leaves on declared actor-owned aggregate storage, for example
   `(set frame.mode mode_in)` or `(set lanes[0] bit_in)`. Subaggregate targets
@@ -950,8 +950,8 @@ Rules:
   consume local or package enum members, transaction `set` RHS expressions may
   use enum members as scalar operands, transaction `when`/`while`/`until`
   condition expressions may use enum members as scalar operands, transaction
-  `switch` branch values may consume local or package enum members, and scalar
-  drive body RHS values or operands inside drive body RHS expressions may
+  `switch` selectors or branch values may consume local or package enum
+  members, and scalar drive body RHS values or operands inside drive body RHS expressions may
   consume local or package enum members. Named drive-call scalar actual values
   may also consume local or package enum members, drive-call actual expressions
   may use enum members as scalar
@@ -968,8 +968,8 @@ Rules:
   expressions may use enum members as scalar operands, and inline drive
   assignment RHS scalar values or operands inside inline drive RHS expressions
   may consume local or package enum members. Enum members in
-  expression operator position, standalone transaction conditions, switch
-  selectors, targets, rules outside scalar trigger parameter overrides, rule
+  expression operator position, standalone transaction conditions, targets,
+  rules outside scalar trigger parameter overrides, rule
   guard or transaction condition expression operator position, rule assignment
   expression operator position, drive targets, drive body RHS expression
   operator position, inline drive assignment RHS expression operator position,
@@ -1397,9 +1397,10 @@ Required fail-closed examples:
   default leaf, generated child transaction scalar parameter default or
   aggregate/list default leaf, scalar activation parameter override,
   transaction condition expression operand, transaction `set` RHS
-  scalar/expression operand, transaction `switch` branch-value, rule guard
-  expression operand, rule assignment RHS scalar/expression operand, drive body
-  RHS scalar, and drive-call actual scalar/expression-operand contexts.
+  scalar/expression operand, transaction `switch` selector/branch-value, rule
+  guard expression operand, rule assignment RHS scalar/expression operand,
+  drive body RHS scalar, and drive-call actual scalar/expression-operand
+  contexts.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1481,7 +1482,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1291-isf-aggregate-inline-drive-values.t \
   t/1292-isf-aggregate-inline-drive-expression-values.t \
   t/1293-isf-aggregate-switch-branch-values.t \
-  t/1294-isf-aggregate-switch-selector-values.t
+  t/1294-isf-aggregate-switch-selector-values.t \
+  t/1295-isf-enum-member-switch-selector-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

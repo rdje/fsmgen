@@ -299,10 +299,10 @@ transaction `set` RHS scalar values and scalar operands inside transaction
 `set` RHS expressions may consume local and package-qualified enum members,
 transaction `when`/`while`/`until` condition expressions may consume local and
 package-qualified enum members as scalar operands,
-transaction `switch` branch values may consume local and package-qualified enum
-members, scalar rule assignment RHS values and scalar operands inside rule
-assignment RHS expressions and scalar operands inside rule guard expressions may
-consume local and package-qualified enum members, and scalar drive body RHS
+transaction `switch` selectors and branch values may consume local and
+package-qualified enum members, scalar rule assignment RHS values and scalar
+operands inside rule assignment RHS expressions and scalar operands inside rule
+guard expressions may consume local and package-qualified enum members, and scalar drive body RHS
 values or scalar operands inside drive body RHS expressions may consume local
 and package-qualified enum members. Named drive-call scalar actual values may also
 consume local and package-qualified enum members, and drive-call actual
@@ -465,9 +465,9 @@ aggregate storage leaves such as `frame.flag`; aggregate paths in rule
 assignment RHS or rule guard expression operator position, expression
 operator-position enum members, standalone enum/aggregate guards, and rule
 targets remain backlog. Transaction `switch` selectors and branch values may
-read scalar aggregate storage leaves such as `frame.mode`; enum switch
-selectors and subaggregate selectors/branch values remain backlog. Named drive
-body scalar RHS values
+read scalar aggregate storage leaves such as `frame.mode`, and selectors or
+branch values may use enum members; subaggregate selectors/branch values remain
+backlog. Named drive body scalar RHS values
 and scalar operands inside RHS expressions may read scalar aggregate storage
 leaves such as `frame.mode`; aggregate paths in drive body RHS expression
 operator position and drive targets remain backlog. Named drive-call scalar

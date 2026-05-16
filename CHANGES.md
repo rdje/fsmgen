@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum switch selectors shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.41`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.42`.
+- Transaction `switch` selectors now accept local and package enum members.
+- Scheduled `.fsm` switch review artifacts emit dotted enum selectors through
+  computed selector syntax, and strict CLI HDL generation accepts them.
+- Parser diagnostics reject unknown enum selectors while keeping standalone
+  enum conditions and enum targets deferred.
 ### R14 — ISF aggregate switch selectors shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.40`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.41`.

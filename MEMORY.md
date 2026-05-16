@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum switch selectors shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.41` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.42`.
+- Transaction `switch` selectors now accept local and package enum members such
+  as `mode.BUSY` and `shared.mode.BUSY`.
+- Scheduled `.fsm` switch review artifacts emit dotted enum selectors through
+  computed selector syntax, for example `?(mode.BUSY)`.
+- Standalone enum conditions, enum targets, and enum members in expression
+  operator position remain deferred.
 ## 2026-05-16: ISF aggregate switch selectors shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.40` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

@@ -423,7 +423,9 @@ limitations are:
   Reusable-library use-site parameter overrides may also use enum members as
   scalar values or scalar leaves inside compatible aggregate/list override
   values; those use-site enum members resolve to literal generated-top
-  bindings and `library_uses[]` report values.
+  bindings and `library_uses[]` report values. Transaction `switch` selectors
+  and branch values may use enum members; dotted enum selectors lower through
+  computed `.fsm` selector syntax such as `?(mode.BUSY)`.
   Transaction
   `set` RHS clauses may read scalar aggregate leaves from declared aggregate
   storage carriers directly or as operands inside transaction `set` RHS
@@ -444,7 +446,7 @@ limitations are:
   members in
   expression operator
   position,
-  standalone transaction conditions, switch selectors, set targets, rules
+  standalone transaction conditions, set targets, rules
   outside scalar trigger parameter overrides, rule guard or transaction
   condition expression operator position, rule assignment expression operator
   position, drive targets, drive body RHS expression operator position, inline

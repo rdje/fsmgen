@@ -286,16 +286,16 @@ aggregate/list parameter overrides, by reusable-library use-site parameter
 override scalar values or scalar leaves inside aggregate/list use-site
 overrides, by direct transaction `set` RHS scalar values or scalar operands
 inside transaction `set` RHS expressions, by scalar operands inside transaction
-`when`/`while`/`until` condition expressions, by transaction `switch` branch
-values, by scalar rule assignment RHS values or scalar operands inside rule
-assignment RHS expressions, by scalar operands inside rule guard expressions,
-by scalar drive body RHS values or scalar operands inside drive body RHS
+`when`/`while`/`until` condition expressions, by transaction `switch`
+selectors or branch values, by scalar rule assignment RHS values or scalar
+operands inside rule assignment RHS expressions, by scalar operands inside
+rule guard expressions, by scalar drive body RHS values or scalar operands inside drive body RHS
 expressions, by inline drive assignment RHS scalar values or scalar operands
 inside inline drive RHS expressions, and by named drive-call scalar actual
 values or scalar operands inside drive-call actual expressions in the current
 ISF surface. Enum members in expression operator position,
 standalone guards or standalone transaction conditions, transaction
-condition expression operator position, switch selectors, rule targets, rule
+condition expression operator position, rule targets, rule
 guard or rule assignment expression operator position, rule actions outside
 trigger parameter overrides, drive targets, inline drive assignment RHS
 expression operator position, drive body RHS expression operator position,
@@ -1635,15 +1635,16 @@ normalizes to the same public `when` field as the long guard spelling.
 signal and one or more list-form branches before branch expansion. Each branch
 must provide one scalar value and at least one list-form body clause. The
 scheduler then creates one decision state with one branch per unique explicit
-value. The selector may be a signal or scalar aggregate storage leaf, and
-branch values may use local/package enum members or scalar aggregate storage
-leaves such as `frame.mode` and `lanes[1]`; aggregate switch selectors and
-branch values are resolved against declared actor-owned aggregate storage before
-lowering. Aggregate switch selectors lower through computed `.fsm` selector
-syntax such as `?(frame.mode)` or `?(lanes[1])`, because direct `.fsm` plain
-test selectors are reserved for HDL-identifier-compatible signal names.
-Enum switch selectors and subaggregate selectors or branch values remain
-deferred. Duplicate explicit values are rejected. A switch may also contain
+value. The selector may be a signal, local/package enum member, or scalar
+aggregate storage leaf, and branch values may use local/package enum members or
+scalar aggregate storage leaves such as `frame.mode` and `lanes[1]`; aggregate
+switch selectors and branch values are resolved against declared actor-owned
+aggregate storage before lowering. Enum or aggregate switch selectors that are
+not HDL identifiers lower through computed `.fsm` selector syntax such as
+`?(mode.BUSY)`, `?(shared.mode.BUSY)`, `?(frame.mode)`, or `?(lanes[1])`,
+because direct `.fsm` plain test selectors are reserved for
+HDL-identifier-compatible signal names. Subaggregate selectors or branch values
+remain deferred. Duplicate explicit values are rejected. A switch may also contain
 one fallback branch, spelled `(default body...)` or `(_ body...)`. Those
 spellings are aliases and are rejected if both appear in the same switch. If
 no authored fallback branch is present, the scheduler emits an implicit `.fsm`
@@ -2861,6 +2862,7 @@ Focused tests:
 - [t/1292-isf-aggregate-inline-drive-expression-values.t](../t/1292-isf-aggregate-inline-drive-expression-values.t)
 - [t/1293-isf-aggregate-switch-branch-values.t](../t/1293-isf-aggregate-switch-branch-values.t)
 - [t/1294-isf-aggregate-switch-selector-values.t](../t/1294-isf-aggregate-switch-selector-values.t)
+- [t/1295-isf-enum-member-switch-selector-values.t](../t/1295-isf-enum-member-switch-selector-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2948,11 +2950,11 @@ Focused tests:
   override values or leaves, transaction
   `when`/`while`/`until` condition expression operands, transaction `set` RHS
   scalar values/expression operands,
-  transaction `switch` branch values, rule guard expression operands, rule
-  assignment RHS scalar values or expression operands, drive body RHS scalar
-  values or expression operands, inline drive assignment RHS scalar values or
-  expression operands, or drive-call actual scalar values/expression operands
-  remain deferred.
+  transaction `switch` selector or branch values, rule guard expression
+  operands, rule assignment RHS scalar values or expression operands, drive
+  body RHS scalar values or expression operands, inline drive assignment RHS
+  scalar values or expression operands, or drive-call actual scalar
+  values/expression operands remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values, direct transaction `set` target tokens,
   transaction condition expression operands, transaction `switch` selectors or

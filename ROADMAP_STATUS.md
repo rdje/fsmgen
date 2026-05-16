@@ -10,7 +10,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.41` is the active PNT
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.42` is the active PNT
   frontier. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -188,9 +188,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-TYPE-AGGREGATE-PARITY.40` then shipped scalar aggregate storage leaf
   reads as transaction `switch` selectors, emitting non-HDL-identifier
   selector paths through computed `.fsm` selector syntax while keeping enum
-  switch selectors and subaggregate selectors deferred. The next slice selects
-  the next enum or aggregate value/update context after aggregate switch
-  selectors.
+  switch selectors deferred until `.41` and subaggregate selectors deferred.
+  `ISF-TYPE-AGGREGATE-PARITY.41` then shipped enum member transaction `switch`
+  selectors, reusing computed `.fsm` selector syntax for dotted local/package
+  enum selector tokens while keeping standalone enum conditions and target or
+  operator-position enum contexts deferred. The next slice selects the next
+  enum or aggregate value/update context after enum switch selectors.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated

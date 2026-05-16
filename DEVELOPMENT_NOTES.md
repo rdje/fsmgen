@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum switch selectors reuse computed .fsm selectors
+- `ISF-TYPE-AGGREGATE-PARITY.41` widens enum member support into transaction
+  `switch` selectors.
+- Dotted local/package enum selector tokens are not HDL identifier plain-test
+  names, so scheduled `.fsm` emits them with computed selector syntax such as
+  `?(mode.BUSY)` or `?(shared.mode.BUSY)`.
+- The parser resolves selectors before lowering, rejects unknown enum members,
+  and leaves standalone enum conditions, enum targets, and expression
+  operator-position enum members closed.
 ## 2026-05-16: aggregate switch selectors use computed .fsm selectors
 - `ISF-TYPE-AGGREGATE-PARITY.40` widens aggregate storage leaf reads into
   transaction `switch` selectors.
