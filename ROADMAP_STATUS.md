@@ -10,9 +10,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: select the next roadmap-aligned R14 task tree after
-  closing the requested self-contained `.isf` downstream integration handoff
-  and synchronizing stale canonical ISF feature-backlog entries. After
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.2` is the active PNT
+  frontier. The first parity slice, `ISF-TYPE-AGGREGATE-PARITY.1`, inventoried
+  existing `.fsm` enum/type/aggregate support against the shipped ISF scalar
+  boundary and opened the active task tree. The next slice must specify the
+  ISF symbol-source contract for enum/type declarations and imports before any
+  parser surface is widened. Previous R14 sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated
   activation parameter override values and closed that tree,
   `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.1` corrected the removed `(assign ...)`

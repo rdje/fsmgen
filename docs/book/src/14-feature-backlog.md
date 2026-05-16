@@ -250,19 +250,28 @@ distinct runtime model should stay inside IAL1 or remain out of the language.
 
 ### ISF Enum, Type, And Aggregate Parity
 
-Status: backlog.
+Status: active task tree in
+[ISF-TYPE-AGGREGATE-PARITY](../../tasks/ISF-TYPE-AGGREGATE-PARITY.md).
 
 Goal: let ISF use the same enum, type, and aggregate variable capability that
 `.fsm` already exposes, without inventing a second type system.
 
-Current boundary: ISF still uses mostly scalar width evidence and scalarized
-actor-owned storage in the shipped parser/lowering path. Long term, ISF
-should be able to reference enum and aggregate types from the same `.fsm` and
-package-backed type machinery used by IAL0. The staged path should be:
-reference existing enum/aggregate type declarations first, allow actor ports,
-parameters, and actor-owned variables to carry those types second, then add
-aggregate field/slice/update lowering with explicit cycle semantics and
-schedule-report visibility.
+Current boundary: ISF still uses scalar width evidence for actor interface
+ports, transaction ports, and scalarized actor-owned storage in the shipped
+parser/lowering path. It also accepts numeric/exact-width parameter values,
+actor-local constants for selected static specialization values, and
+compatible aggregate/list literal parameter values. ISF does not yet accept
+enum declarations, type declarations, named type tokens in width-bearing
+declarations, or typed aggregate carrier/update semantics.
+
+The implementation path is task-tree-managed. The next boundary to settle is
+the ISF symbol-source contract: how ISF references declarations while reusing
+the existing `.fsm` package/type/symbol machinery instead of creating a second
+type system. After that, the staged path should be: reference existing
+enum/aggregate type declarations first, allow actor ports, parameters, and
+actor-owned variables to carry those types second, then add aggregate
+field/slice/update lowering with explicit cycle semantics and schedule-report
+visibility.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate

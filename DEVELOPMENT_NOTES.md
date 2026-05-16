@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: ISF type parity starts with source ownership
+- `ISF-TYPE-AGGREGATE-PARITY.1` deliberately opens with an inventory and
+  boundary slice because the feature crosses the `.fsm` package/type engine,
+  ISF parser, lowerer, schedule reports, generated `.fsm`, downstream handoff,
+  and public contract metadata.
+- The accepted direction is reuse: ISF must reference existing `.fsm`
+  enum/type/aggregate machinery or a documented adapter around it. A parallel
+  ISF-only type engine would create drift between IAL0 and IAL1 and is
+  rejected.
+- The next executable slice must specify the symbol-source contract before
+  parser widening. In particular, it has to settle declaration/import shape,
+  package/type resolution, diagnostics, lowered `.fsm` projection, and bounded
+  report visibility before any source form is accepted.
 ## 2026-05-16: CDC fixture hardening stays semantic-neutral
 - `ISF-CDC-FIXTURE-MATRIX.1` adds a dual acknowledged-event fixture instead
   of widening the CDC source language. Multiple event entries already lower as

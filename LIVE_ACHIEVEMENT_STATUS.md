@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum/type/aggregate parity tree opened
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.1`, opening
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.2`, which must
+  specify the ISF symbol-source contract before parser widening.
+- Documented the current truth boundary: `.fsm` has package-backed
+  constants/enums/type aliases and bounded aggregate typing; ISF does not yet
+  accept enum declarations, type declarations, named type tokens in width
+  slots, or typed aggregate carrier/update semantics.
+- Synchronized the task-tree index, ISF spec, downstream handoff, public
+  contract notes, mdBook backlog, roadmap, and live docs. No compiler behavior
+  changed in this slice.
+
 ## 2026-05-16: R14 — ISF CDC fixture matrix hardened
 - Completed R14 task-tree slice:
   `ISF-CDC-FIXTURE-MATRIX.1`, closing

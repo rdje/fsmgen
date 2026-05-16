@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `_None_` | `_None_` | `_None_` | `_None_` | `_None_` |
+| `ISF-TYPE-AGGREGATE-PARITY` | `active` | `R14` | `ISF-TYPE-AGGREGATE-PARITY.2` | [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md) |
 
 ## Proposed Task Trees
 
@@ -115,6 +115,7 @@ as done work unless a future task reopens them.
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |
 | Multi-clock, asynchronous, and interacting clock-domain semantics | `ISF-CLOCK-DOMAINS` |
 | Multi-clock/CDC fixture matrix hardening | `ISF-CDC-FIXTURE-MATRIX` |
+| ISF enum/type/aggregate parity with existing `.fsm` semantic machinery | `ISF-TYPE-AGGREGATE-PARITY` |
 | Actor-owned scalar storage source vocabulary | `ISF-STORAGE-VAR-SURFACE`, `ISF-STORAGE-VAR-ALIASES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Expression-valued activation input bindings | `ISF-ACTIVATION-BIND-EXPRESSIONS` |

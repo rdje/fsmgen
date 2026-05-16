@@ -249,6 +249,19 @@ transaction `params` are not wait-count constants because they are overrideable
 specialization values; using them to choose a fixed generated wait-state count
 would make later overrides disagree with the emitted schedule.
 
+ISF enum/type/aggregate parity is not shipped yet. The current parser does not
+accept actor-level enum declarations, actor-level type declarations, named
+type tokens in `(width ...)` slots, or typed aggregate carrier/update
+semantics. Existing ISF aggregate support is limited to compatible
+aggregate/list literal parameter values and scalarized storage/bank lowering.
+The active `ISF-TYPE-AGGREGATE-PARITY` task tree will first specify how ISF
+references existing `.fsm` package/type/symbol machinery before any parser
+surface is widened. Any future accepted enum/type/aggregate source must lower
+to reviewable scheduled `.fsm` declarations or aggregate forms and must fail
+closed for unknown types, unresolved enum members, incompatible enum values,
+aggregate shape mismatches, and ambiguous partial updates before HDL
+generation.
+
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
   non-empty scalar name plus list-form body entries; duplicate actor phase
@@ -2656,7 +2669,11 @@ Focused tests:
 - Temporal `(contract ...)` forms beyond the shipped top-level bounded
   eventual subset.
 - Rich storage-class optimization in schedule reports.
-- Broad aggregate/record width inference beyond the explicitly documented ISF
-  data-operation evidence model.
+- ISF enum/type/aggregate parity beyond the explicitly documented scalar width,
+  actor-constant, aggregate/list parameter-literal, and data-operation evidence
+  model. Actor-level enum/type declarations, named type tokens in width slots,
+  typed aggregate carriers, aggregate field/slice/update lowering, and broad
+  aggregate/record width inference remain deferred to the active
+  `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

@@ -122,6 +122,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-TEMPORAL-CONTRACT-STORAGE-REPORTS.md` — completed `R14` task tree for temporal-contract monitor storage schedule-report roles.
 - `docs/tasks/ISF-TEMPORAL-CONTRACT-ASSERTIONS.md` — completed `R14` task tree for temporal-contract SystemVerilog assertion projection.
 - `docs/tasks/ISF-CDC-FIXTURE-MATRIX.md` — completed `R14` task tree for dual acknowledged-event CDC fixture hardening.
+- `docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md` — active `R14` task tree for ISF enum/type/aggregate parity with existing `.fsm` semantic machinery.
 - `docs/tasks/ISF-DYNAMIC-WAIT-STORAGE-REPORTS.md` — completed `R14` task tree for runtime dynamic-wait counter storage schedule-report roles.
 - `docs/tasks/ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.md` — completed `R14` task tree for generated activation handoff storage schedule-report roles.
 - `docs/tasks/ISF-ACTIVATION-HANDSHAKE-STORAGE-REPORTS.md` — completed `R14` task tree for generated activation start/done handoff storage schedule-report roles.

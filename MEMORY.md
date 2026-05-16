@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum/type/aggregate parity tree opened
+- Completed `ISF-TYPE-AGGREGATE-PARITY.1` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  opening the active R14 parity tree with frontier
+  `ISF-TYPE-AGGREGATE-PARITY.2`.
+- Inventoried the current boundary: `.fsm` already ships package-backed
+  constants, enum families, scalar type aliases, packed list/record aliases,
+  declared aggregate signal access, partial aggregate LHS writes, and shape
+  checks on live SystemVerilog paths.
+- Clarified that current ISF still has scalar width evidence for interface,
+  transaction-port, and actor-owned storage declarations, plus numeric,
+  exact-width, actor-constant, and compatible aggregate/list parameter values;
+  it does not yet accept enum declarations, type declarations, named type
+  tokens, or typed aggregate carrier/update semantics.
+- Synchronized the task-tree index, ISF spec, downstream handoff, public
+  contract notes, mdBook backlog, roadmap, and live docs. No parser,
+  scheduler, schedule JSON, generated `.fsm`, or HDL behavior changed.
 ## 2026-05-16: ISF CDC fixture matrix hardened
 - Completed `ISF-CDC-FIXTURE-MATRIX.1` in
   [docs/tasks/ISF-CDC-FIXTURE-MATRIX.md](docs/tasks/ISF-CDC-FIXTURE-MATRIX.md),

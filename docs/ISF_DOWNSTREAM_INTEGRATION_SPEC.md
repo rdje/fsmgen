@@ -791,6 +791,22 @@ Rules:
   symbolic or expression values, and incompatible aggregate/list shapes fail
   closed.
 
+### 11.6.1 Enum, Type, And Aggregate Boundary
+
+Current shipped ISF does not accept enum declarations, type declarations,
+named type tokens in `(width ...)` slots, or typed aggregate carrier/update
+semantics. Width-bearing interface, transaction-port, and storage declarations
+still use explicit positive integer width evidence. Existing aggregate support
+is limited to compatible aggregate/list literal parameter values and
+scalarized actor-owned bank/storage lowering.
+
+Downstream consumers must not generate or depend on ISF enum/type/aggregate
+forms yet. The active `ISF-TYPE-AGGREGATE-PARITY` task tree is first
+specifying how ISF will reference the existing `.fsm` package/type/symbol
+machinery without a second type system. When that surface ships, this handoff,
+the ISF spec, mdBook, public contract notes, manifest metadata, tests, and
+generated artifact examples must change in the same slice.
+
 ### 11.7 Blocking Do, Spawn, Await Sync
 
 Blocking `do`:
@@ -1178,6 +1194,8 @@ Required fail-closed examples:
 - Width mismatch where width evidence is known.
 - Parameter override unknown names, duplicate names, symbolic values, and
   incompatible aggregate/list shapes.
+- Authored enum/type/typed aggregate forms in ISF sources, until the active
+  parity task tree ships and documents a public source contract for them.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.

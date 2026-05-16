@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum/type/aggregate parity tree opened
+- Completed `ISF-TYPE-AGGREGATE-PARITY.1`, opening the active
+  `ISF-TYPE-AGGREGATE-PARITY` tree with frontier
+  `ISF-TYPE-AGGREGATE-PARITY.2`.
+- Recorded the current `.fsm` enum/type/aggregate capability inventory and
+  the current ISF scalar-first boundary before accepting any new ISF syntax.
+- Synchronized the ISF spec, downstream handoff, public contract notes, mdBook
+  backlog, roadmap, task-tree index, and live docs so downstream readers see
+  that enum/type declarations, named type tokens, and typed aggregate carriers
+  are not yet supported in ISF.
+- Parser, scheduler, schedule JSON, generated `.fsm`, and HDL behavior are
+  unchanged.
 ### R14 — ISF CDC fixture matrix hardened
 - Completed `ISF-CDC-FIXTURE-MATRIX.1`, closing the
   `ISF-CDC-FIXTURE-MATRIX` task tree.

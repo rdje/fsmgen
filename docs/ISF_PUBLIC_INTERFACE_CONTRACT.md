@@ -690,6 +690,12 @@ blocks, resolves actor-local constants in activation parameter override values,
 rejects duplicate instances, duplicate parameters, unknown overrides,
 unsupported non-constant symbolic or expression values, and aggregate shape
 mismatches, and rejects parameter declarations on non-generated transactions.
+The public ISF surface does not yet accept enum declarations, type
+declarations, named type tokens in `(width ...)` slots, or typed aggregate
+carrier/update semantics. Those forms remain outside the parser/scheduler
+contract until the active `ISF-TYPE-AGGREGATE-PARITY` task tree ships a
+documented source contract, focused tests, and synchronized manifest/public
+contract metadata.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.
