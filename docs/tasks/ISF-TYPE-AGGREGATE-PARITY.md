@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-TYPE-AGGREGATE-PARITY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
 - Last updated: `2026-05-16`
@@ -47,7 +47,7 @@ ISF-only type system.
 ## Task Tree
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY`
-  Status: `active`
+  Status: `done`
   Goal: `close the ISF enum/type/aggregate parity gap against the existing .fsm semantic machinery`
   Children: `ISF-TYPE-AGGREGATE-PARITY.1`, `ISF-TYPE-AGGREGATE-PARITY.2`, `ISF-TYPE-AGGREGATE-PARITY.3`, `ISF-TYPE-AGGREGATE-PARITY.4`, `ISF-TYPE-AGGREGATE-PARITY.5`, `ISF-TYPE-AGGREGATE-PARITY.6`, `ISF-TYPE-AGGREGATE-PARITY.7`, `ISF-TYPE-AGGREGATE-PARITY.8`, `ISF-TYPE-AGGREGATE-PARITY.9`, `ISF-TYPE-AGGREGATE-PARITY.10`, `ISF-TYPE-AGGREGATE-PARITY.11`, `ISF-TYPE-AGGREGATE-PARITY.12`, `ISF-TYPE-AGGREGATE-PARITY.13`, `ISF-TYPE-AGGREGATE-PARITY.14`, `ISF-TYPE-AGGREGATE-PARITY.15`, `ISF-TYPE-AGGREGATE-PARITY.16`, `ISF-TYPE-AGGREGATE-PARITY.17`, `ISF-TYPE-AGGREGATE-PARITY.18`, `ISF-TYPE-AGGREGATE-PARITY.19`, `ISF-TYPE-AGGREGATE-PARITY.20`, `ISF-TYPE-AGGREGATE-PARITY.21`, `ISF-TYPE-AGGREGATE-PARITY.22`, `ISF-TYPE-AGGREGATE-PARITY.23`, `ISF-TYPE-AGGREGATE-PARITY.24`, `ISF-TYPE-AGGREGATE-PARITY.25`, `ISF-TYPE-AGGREGATE-PARITY.26`, `ISF-TYPE-AGGREGATE-PARITY.27`, `ISF-TYPE-AGGREGATE-PARITY.28`, `ISF-TYPE-AGGREGATE-PARITY.29`, `ISF-TYPE-AGGREGATE-PARITY.30`, `ISF-TYPE-AGGREGATE-PARITY.31`, `ISF-TYPE-AGGREGATE-PARITY.32`, `ISF-TYPE-AGGREGATE-PARITY.33`, `ISF-TYPE-AGGREGATE-PARITY.34`, `ISF-TYPE-AGGREGATE-PARITY.35`, `ISF-TYPE-AGGREGATE-PARITY.36`, `ISF-TYPE-AGGREGATE-PARITY.37`, `ISF-TYPE-AGGREGATE-PARITY.38`, `ISF-TYPE-AGGREGATE-PARITY.39`, `ISF-TYPE-AGGREGATE-PARITY.40`, `ISF-TYPE-AGGREGATE-PARITY.41`, `ISF-TYPE-AGGREGATE-PARITY.42`, `ISF-TYPE-AGGREGATE-PARITY.43`, `ISF-TYPE-AGGREGATE-PARITY.44`, `ISF-TYPE-AGGREGATE-PARITY.45`, `ISF-TYPE-AGGREGATE-PARITY.46`, `ISF-TYPE-AGGREGATE-PARITY.47`, `ISF-TYPE-AGGREGATE-PARITY.48`, `ISF-TYPE-AGGREGATE-PARITY.49`
 
@@ -388,17 +388,17 @@ ISF-only type system.
   Commit: `ISF-TYPE-AGGREGATE-PARITY.48: support aggregate standalone rule guards`
 
 - ID: `ISF-TYPE-AGGREGATE-PARITY.49`
-  Status: `pending`
-  Goal: `choose the next remaining enum or aggregate value/update context after aggregate standalone rule guards`
-  Acceptance: `one documented enum or aggregate value/update context ships with diagnostics and reviewable .fsm projection, or the tree records exhaustion/closure with explicit remaining deferrals`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `close the enum/type/aggregate parity tree with an explicit shipped-surface book matrix and remaining-deferral boundary`
+  Acceptance: `the tree records exhaustion/closure, the mdBook has a self-contained type/enum/aggregate shipped-surface page with examples, review-artifact guidance, diagnostics, and explicit deferrals, and the spec, downstream handoff, task index, roadmap status, and live docs agree that remaining enum target/operator and aggregate carrier/subaggregate work requires future task-tree ownership`
+  Verification: `mdbook build docs/book`; `prove -Iperl t/1120-isf-public-live-document-path-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check`
+  Commit: `ISF-TYPE-AGGREGATE-PARITY.49: close type aggregate parity tree`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-TYPE-AGGREGATE-PARITY.49` | `pending` | The next enum or aggregate value/update context can be selected after aggregate standalone rule guards are stable. |
+| 1 | `none` | `done` | This tree is exhausted and closed; remaining enum target/operator and aggregate carrier/subaggregate work is explicitly deferred to future task-tree ownership. |
 
 ## Decisions
 
@@ -744,6 +744,13 @@ ISF-only type system.
   through the public rule `when` field, and lower to guarded non-state DT
   headers such as `<frame.flag`, while subaggregate guards and aggregate paths
   in expression operator position remain closed.
+- `2026-05-16`: `ISF-TYPE-AGGREGATE-PARITY.49` closes this task tree because
+  the remaining enum and aggregate items are semantic-contract families rather
+  than adjacent parser widenings. Enum target/lvalue and operator-position
+  behavior, subaggregate operands/updates, additional aggregate carriers,
+  broader field/slice/update lowering, and shape inference now remain explicit
+  future work outside this closed tree. The mdBook owns a self-contained
+  shipped-surface matrix for the closed subset.
 
 ## Open Questions
 
@@ -791,12 +798,17 @@ ISF-only type system.
   standalone rule guards? `ISF-TYPE-AGGREGATE-PARITY.48` shipped standalone
   aggregate rule guards.
 - Which enum or aggregate value/update context should ship after aggregate
-  standalone rule guards? The current frontier selects this for
-  `ISF-TYPE-AGGREGATE-PARITY.49`.
+  standalone rule guards? `ISF-TYPE-AGGREGATE-PARITY.49` closed this tree
+  after documenting the shipped surface and remaining deferrals.
+- Which enum/type/aggregate items remain after this closure? Enum
+  target/lvalue and operator-position behavior, non-static rule-action enum
+  contexts outside shipped trigger overrides, subaggregate operands/updates,
+  additional aggregate carriers, broader aggregate field/slice/update
+  lowering, and shape inference require future task-tree ownership.
 
 ## Blockers
 
-- None for the current frontier.
+- None; this task tree is closed.
 
 ## Verification Log
 
@@ -850,6 +862,7 @@ ISF-only type system.
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.46` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `bash -n bin/ci-regression`; `prove -Iperl t/1300-isf-enum-member-standalone-condition-values.t t/1275-isf-enum-member-condition-values.t t/1295-isf-enum-member-switch-selector-values.t t/1265-isf-enum-member-switch-branch-values.t t/1263-isf-enum-member-set-values.t t/1272-isf-enum-member-rule-values.t t/1274-isf-enum-member-rule-guard-values.t t/1266-isf-enum-member-drive-values.t t/1279-isf-enum-member-inline-drive-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1183-ci-regression-tier-selection.t`; `./bin/ci-regression --list`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.47` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1301-isf-enum-member-rule-standalone-guard-values.t t/1274-isf-enum-member-rule-guard-values.t t/1263-isf-enum-member-set-values.t t/1272-isf-enum-member-rule-values.t t/1266-isf-enum-member-drive-values.t t/1279-isf-enum-member-inline-drive-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression --list`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
 | `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.48` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1302-isf-aggregate-rule-standalone-guard-values.t t/1285-isf-aggregate-rule-guard-values.t t/1299-isf-aggregate-standalone-condition-values.t t/1301-isf-enum-member-rule-standalone-guard-values.t t/1274-isf-enum-member-rule-guard-values.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t`; `./bin/ci-regression --list`; `./bin/ci-regression isf --no-book`; `mdbook build docs/book`; `git diff --check` | `passed` |
+| `2026-05-16` | `ISF-TYPE-AGGREGATE-PARITY.49` | `mdbook build docs/book`; `prove -Iperl t/1120-isf-public-live-document-path-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `passed` |
 
 ## Commit Log
 
@@ -903,6 +916,7 @@ ISF-only type system.
 | `ISF-TYPE-AGGREGATE-PARITY.46` | `ISF-TYPE-AGGREGATE-PARITY.46: support enum standalone conditions` | `Standalone transaction condition enum member parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.47` | `ISF-TYPE-AGGREGATE-PARITY.47: support enum standalone rule guards` | `Standalone rule guard enum member parser/lowering slice.` |
 | `ISF-TYPE-AGGREGATE-PARITY.48` | `ISF-TYPE-AGGREGATE-PARITY.48: support aggregate standalone rule guards` | `Standalone rule guard aggregate leaf parser/lowering slice.` |
+| `ISF-TYPE-AGGREGATE-PARITY.49` | `ISF-TYPE-AGGREGATE-PARITY.49: close type aggregate parity tree` | `Tree closure and shipped-surface mdBook matrix slice.` |
 
 ## Changelog
 
@@ -1049,3 +1063,6 @@ ISF-only type system.
 - `2026-05-16`: Shipped standalone rule guard aggregate leaf values for
   `ISF-TYPE-AGGREGATE-PARITY.48` and advanced the frontier to
   `ISF-TYPE-AGGREGATE-PARITY.49`.
+- `2026-05-16`: Closed the enum/type/aggregate parity tree with
+  `ISF-TYPE-AGGREGATE-PARITY.49`, adding a self-contained mdBook shipped
+  surface and recording remaining deferrals as future task-tree work.

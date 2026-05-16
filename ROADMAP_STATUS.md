@@ -10,8 +10,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-TYPE-AGGREGATE-PARITY.49` is the active PNT
-  frontier. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
+- Next decision point: `ISF-TYPE-AGGREGATE-PARITY` is closed. The next R14
+  PNT implementation slice must select or create a new task tree before code
+  changes. `ISF-TYPE-AGGREGATE-PARITY.1` inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
   source contract for actor-local `(types ...)` / `(enums ...)`, `(imports
@@ -220,9 +221,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   scalar aggregate storage leaf values as standalone rule guards in shorthand
   and long-form `when` syntax, preserving the guard as a non-state DT header
   suffix such as `<frame.flag` or `<lanes[1]` while keeping subaggregate guards
-  and aggregate operator-position paths deferred. The next slice selects the
-  next enum or aggregate value/update context after aggregate standalone rule
-  guards.
+  and aggregate operator-position paths deferred.
+  `ISF-TYPE-AGGREGATE-PARITY.49` then closed the task tree with a dedicated
+  mdBook shipped-surface matrix for types, enums, and aggregates, and recorded
+  the remaining enum target/operator and aggregate carrier/subaggregate work as
+  future task-tree-owned deferrals.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated

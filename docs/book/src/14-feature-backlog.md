@@ -259,8 +259,11 @@ distinct runtime model should stay inside IAL1 or remain out of the language.
 
 ### ISF Enum, Type, And Aggregate Parity
 
-Status: active task tree in
-[ISF-TYPE-AGGREGATE-PARITY](../../tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+Status: shipped bounded surface; broader enum target/operator and aggregate
+carrier/subaggregate surfaces remain backlog. The completed task tree is
+[ISF-TYPE-AGGREGATE-PARITY](../../tasks/ISF-TYPE-AGGREGATE-PARITY.md), and
+the user-facing shipped-surface matrix is
+[Types, Enums, And Aggregates](13j-type-enum-aggregate.md).
 
 Goal: let ISF use the same enum, type, and aggregate variable capability that
 `.fsm` already exposes, without inventing a second type system.
@@ -328,7 +331,9 @@ flag_in)` or `(set lanes[0] bit_in)`. Rule assignment scalar RHS values may
 read scalar aggregate leaves directly or as scalar operands inside RHS
 expressions, such as `(set mode_out (+ frame.mode mode_in))` inside a rule
 body. Rule guard expressions may read scalar aggregate leaves as operands, such
-as `(rule fire (& ready frame.flag) (set seen 1))`. Transaction
+as `(rule fire (& ready frame.flag) (set seen 1))`, and standalone rule guards
+may read scalar aggregate leaves directly, such as
+`(rule fire frame.flag (set seen 1))`. Transaction
 `when`/`while`/`until` conditions may read scalar aggregate leaves directly or
 as operands inside condition expressions, such as
 `(when frame.flag (set seen 1))` or
@@ -373,7 +378,8 @@ rule guard scalar values/expression operands, scalar rule assignment RHS values
 or expression operands, or drive body RHS scalar values/expression operands, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
 values/expression operands, aggregate field/slice/update lowering, and broader
-aggregate shape inference are separate follow-on leaves.
+aggregate shape inference require future task-tree ownership before they can
+ship.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate

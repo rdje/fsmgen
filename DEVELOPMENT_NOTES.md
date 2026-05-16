@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: type/enum/aggregate parity closes at scalar leaves
+- `ISF-TYPE-AGGREGATE-PARITY.49` closes the parity tree after the scalar type
+  alias, enum member, aggregate storage carrier, and scalar aggregate leaf
+  contexts reached a documented and tested boundary.
+- The remaining enum and aggregate items are not adjacent syntax widenings:
+  enum targets and operator-position enum members need lvalue/operator
+  semantics, and subaggregate operands/updates plus additional aggregate
+  carriers need ownership, shape, partial-update, and reporting contracts.
+- The mdBook now has a self-contained shipped-surface matrix so users do not
+  have to reconstruct the closed subset from task history, tests, or code.
 ## 2026-05-16: aggregate standalone rule guards reuse DT header guards
 - `ISF-TYPE-AGGREGATE-PARITY.48` widens aggregate support from rule guard
   expression operands to direct scalar rule guards.

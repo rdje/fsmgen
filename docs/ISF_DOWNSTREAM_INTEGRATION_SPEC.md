@@ -934,9 +934,13 @@ Rules:
   deferred.
 - Rule guard expressions may read scalar aggregate leaves on declared
   actor-owned aggregate storage as scalar operands, for example
-  `(rule expose (& ready frame.flag) (set fire 1))`. Standalone aggregate
-  guards and aggregate paths in rule guard expression operator position remain
-  deferred.
+  `(rule expose (& ready frame.flag) (set fire 1))`. Standalone rule guards
+  may also read scalar aggregate leaves, for example
+  `(rule expose frame.flag (set fire 1))` or
+  `(rule expose (when lanes[1]) (set fire 1))`; the scheduled `.fsm` preserves
+  those guards as non-state DT header suffixes such as `<frame.flag` or
+  `<lanes[1]`. Subaggregate guards and aggregate paths in rule guard
+  expression operator position remain deferred.
 - Named drive body scalar RHS values and scalar operands inside RHS expressions
   may read scalar aggregate leaves on declared actor-owned aggregate storage,
   for example `(drive publish (mode_out frame.mode))` or
@@ -1634,8 +1638,9 @@ Supporting artifacts:
 - `perl/FSM/Support/ISFPublicInterfaceContract.pm`: machine-readable contract
   owner advertised through the capability manifest.
 - `docs/ISF_LIBRARY_CATALOG.md`: shipped reusable library catalog.
-- `docs/book/src/13-intent-scheduling.md` and child chapters: tutorial and
-  explanatory user documentation.
+- `docs/book/src/13-intent-scheduling.md` and child chapters, especially
+  `docs/book/src/13j-type-enum-aggregate.md`: tutorial and explanatory user
+  documentation.
 - `t/`: regression and audit evidence.
 
 Evolution rule:

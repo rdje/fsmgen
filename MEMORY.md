@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF type/enum/aggregate parity tree closed
+- Completed `ISF-TYPE-AGGREGATE-PARITY.49` and closed
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- Added the mdBook page
+  [docs/book/src/13j-type-enum-aggregate.md](docs/book/src/13j-type-enum-aggregate.md)
+  as the self-contained user-facing matrix for shipped ISF type aliases, enum
+  member contexts, aggregate storage carriers, scalar aggregate leaf contexts,
+  review artifacts, diagnostics, and explicit deferrals.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree before parser/scheduler/emitter/contract
+  changes.
+- Remaining enum target/operator-position and aggregate carrier/subaggregate
+  work is explicit future task-tree-owned backlog, not part of the closed
+  parity tree.
 ## 2026-05-16: ISF aggregate standalone rule guards shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.48` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

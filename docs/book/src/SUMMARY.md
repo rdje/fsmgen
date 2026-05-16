@@ -24,5 +24,6 @@
   - [Rules and Priorities](13g-rules.md)
   - [Lowering Reference](13h-lowering-reference.md)
   - [Downstream Integration](13i-downstream-integration.md)
+  - [Types, Enums, and Aggregates](13j-type-enum-aggregate.md)
 - [Feature Backlog](14-feature-backlog.md)
 - [Reference Map](90-reference-map.md)

@@ -21,9 +21,13 @@ evidence for one top-level task.
 
 ## Active Task Trees
 
+No active task tree is currently open. The next R14 PNT implementation slice
+must activate an existing proposed tree or create a new `docs/tasks/*.md` tree
+before changing ISF parser, scheduler, emitter, contract, fixture, or book
+behavior.
+
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-TYPE-AGGREGATE-PARITY` | `active` | `R14` | `ISF-TYPE-AGGREGATE-PARITY.27` | [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md) |
 
 ## Proposed Task Trees
 
@@ -38,6 +42,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TYPE-AGGREGATE-PARITY` | `done` | `R14` | `closed` | [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md) |
 | `ISF-CDC-FIXTURE-MATRIX` | `done` | `R14` | `closed` | [docs/tasks/ISF-CDC-FIXTURE-MATRIX.md](docs/tasks/ISF-CDC-FIXTURE-MATRIX.md) |
 | `ISF-CLOCK-DOMAINS` | `done` | `R14` | `closed` | [docs/tasks/ISF-CLOCK-DOMAINS.md](docs/tasks/ISF-CLOCK-DOMAINS.md) |
 | `ISF-DOWNSTREAM-INTEGRATION-SPEC` | `done` | `R14` | `closed` | [docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md](docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md) |

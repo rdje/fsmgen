@@ -318,7 +318,9 @@ expressions, for example
 `(rule expose ready (set mode_out frame.mode))` or the shorthand
 `(rule expose ready (mode_out (^ lanes[1] pair_in)))`. Rule guard expressions
 may read scalar aggregate member/item leaves as scalar operands, for example
-`(rule expose (& ready frame.flag) (set fire 1))`. Transaction
+`(rule expose (& ready frame.flag) (set fire 1))`. Standalone rule guards may
+also read scalar aggregate member/item leaves directly, for example
+`(rule expose frame.flag (set fire 1))`. Transaction
 `when`/`while`/`until` conditions may read scalar aggregate member/item leaves
 directly or as scalar operands inside condition expressions, for example
 `(when frame.flag (set fire 1))` or
@@ -360,23 +362,15 @@ transaction ports, and aggregate storage banks remain deferred.
 Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
-and scalarized storage/bank lowering. Future enum member value references
-outside actor constants, actor scalar parameter defaults or aggregate/list
-parameter default leaves, generated child transaction scalar parameter defaults
-or aggregate/list parameter default leaves, scalar activation parameter
-overrides, activation aggregate/list parameter override leaves,
-reusable-library use-site parameter override values or leaves,
-transaction `when`/`while`/`until` condition expression operands, transaction
-`when`/`while`/`until` direct scalar conditions, transaction `set` RHS scalar
-values or expression operands, transaction `switch` branch
-values, rule assignment RHS scalar values or expression operands, rule guard
-scalar values or expression operands, drive body RHS scalar values or expression operands,
-inline drive assignment RHS scalar values or expression operands, and
-drive-call actual scalar values or expression operands, additional aggregate
-carriers, aggregate field/slice/update lowering, incompatible enum values,
-aggregate shape mismatches, and ambiguous subaggregate updates remain owned by
-later
-`ISF-TYPE-AGGREGATE-PARITY` leaves.
+and scalarized storage/bank lowering. Remaining enum work is limited to future
+semantic contracts for target/lvalue positions, expression operator position,
+non-static rule-action contexts outside the shipped trigger override surface,
+and incompatible enum values. Remaining aggregate work is limited to future
+semantic contracts for additional aggregate carriers, aggregate paths in
+expression operator position, subaggregate operands or updates,
+field/slice/update lowering beyond scalar leaves, broader shape inference, and
+ambiguous partial-update behavior. Those items are not part of the closed
+`ISF-TYPE-AGGREGATE-PARITY` shipped surface.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -2965,9 +2959,10 @@ Focused tests:
   values, transaction `when`/`while`/`until` condition expression enum member
   operands, standalone transaction `when`/`while`/`until` enum member
   conditions, transaction `switch` selector enum member values, rule guard
-  expression enum member operands, scalar rule assignment RHS enum member
-  values and expression operands, scalar drive body RHS enum member values and
-  expression operands, scalar drive-call actual enum member values,
+  expression enum member operands, standalone rule guard enum member values,
+  scalar rule assignment RHS enum member values and expression operands,
+  scalar drive body RHS enum member values and expression operands,
+  scalar drive-call actual enum member values,
   drive-call actual expression enum member operands, actor scalar
   parameter default enum member values, actor aggregate/list parameter default
   enum member leaves, generated
@@ -2983,10 +2978,11 @@ Focused tests:
   `set` target aggregate leaf writes,
   rule assignment target aggregate leaf writes, rule assignment RHS aggregate
   leaf values and expression operands, rule guard expression aggregate leaf
-  operands, drive target aggregate leaf writes, drive body RHS aggregate leaf
-  values and expression operands, inline drive assignment RHS aggregate leaf
-  values and expression operands, inline drive target aggregate leaf writes,
-  drive-call actual aggregate leaf values and expression operands,
+  operands, standalone rule guard aggregate leaf values, drive target aggregate
+  leaf writes, drive body RHS aggregate leaf values and expression operands,
+  inline drive assignment RHS aggregate leaf values and expression operands,
+  inline drive target aggregate leaf writes, drive-call actual aggregate leaf
+  values and expression operands,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
   aggregate/list default leaves, generated child transaction parameter scalar
@@ -3012,7 +3008,7 @@ Focused tests:
   assignment RHS, rule guard, drive body RHS expression, inline drive RHS
   expression, or drive-call actual expression operator position,
   subaggregate updates/operands, aggregate field/slice/update lowering, and broad
-  aggregate/record width inference remain deferred to the active
-  `ISF-TYPE-AGGREGATE-PARITY` task tree.
+  aggregate/record width inference remain deferred to future task-tree
+  ownership.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

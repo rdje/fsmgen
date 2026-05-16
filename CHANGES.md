@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF type/enum/aggregate parity tree closed
+- Completed `ISF-TYPE-AGGREGATE-PARITY.49` and closed the
+  enum/type/aggregate parity task tree.
+- Added a dedicated mdBook shipped-surface page for ISF type aliases, enum
+  member contexts, aggregate storage carriers, scalar aggregate leaf contexts,
+  review artifacts, diagnostics, and explicit deferrals.
+- Synchronized the spec, downstream handoff, feature backlog, task-tree index,
+  roadmap status, and live docs so remaining enum target/operator-position and
+  aggregate carrier/subaggregate work is future task-tree-owned backlog.
 ### R14 — ISF aggregate standalone rule guards shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.48`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.49`.

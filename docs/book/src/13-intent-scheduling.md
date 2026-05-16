@@ -344,8 +344,11 @@ states, body start, body states, exit state, and body clause count.
 ## Current Limitations
 
 The consolidated backlog for deferred user-visible work is
-[Feature Backlog](14-feature-backlog.md). The ISF-specific current
-limitations are:
+[Feature Backlog](14-feature-backlog.md). The closed shipped surface for ISF
+type aliases, enum members, aggregate storage carriers, scalar aggregate
+leaves, examples, lowering artifacts, diagnostics, and explicit deferrals is
+[Types, Enums, And Aggregates](13j-type-enum-aggregate.md). The ISF-specific
+current limitations are:
 
 - Reusable library imports currently ship the resolver/review-artifact slice:
   actor-scoped `(imports ...)`, `(use ...)`, exported actor resolution,

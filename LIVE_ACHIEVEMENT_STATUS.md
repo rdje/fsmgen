@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF type/enum/aggregate parity tree closed
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.49` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The `ISF-TYPE-AGGREGATE-PARITY` tree is now closed. No active ISF task tree
+  remains open; the next R14 implementation slice must select or create a new
+  task tree first.
+- Added
+  [docs/book/src/13j-type-enum-aggregate.md](docs/book/src/13j-type-enum-aggregate.md)
+  as the self-contained mdBook page for shipped ISF type aliases, enum member
+  contexts, aggregate storage carriers, scalar aggregate leaf contexts, review
+  artifacts, diagnostics, and explicit deferrals.
+- Remaining enum target/operator-position and aggregate carrier/subaggregate
+  work is future task-tree-owned backlog.
+
 ## 2026-05-16: R14 — ISF aggregate standalone rule guards shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.48` in
