@@ -63,6 +63,21 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 
 ## Examples By Family
 
+### CLI Entrypoints
+
+```bash
+./bin/fsmgen --strict isf/apb_requester.isf
+./bin/fsmgen --emit-schedule-json isf/i2c_master.isf
+./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
+./bin/fsmgen -l sv isf/apb_requester.isf
+```
+
+`--emit-schedule-json` reports the scheduled intent view and exits before HDL
+generation. `--outdir` is the public path for multi-file lowering, including
+generated-child and accepted multi-domain actors. Plain `.isf` HDL generation
+lowers through scheduled `.fsm` first, then continues through the existing HDL
+pipeline.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

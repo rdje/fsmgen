@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF feature matrix CLI examples synchronized
+- Completed `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` and closed
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md).
+- The ISF shipped feature matrix now includes copyable `.isf` CLI examples for
+  `--strict`, `--emit-schedule-json`, `--strict --outdir`, and plain `-l sv`
+  HDL handoff.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  so those CLI markers cannot disappear silently.
+- No parser, scheduler, CLI behavior, schedule-report payload, generated
+  `.fsm`, or HDL behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF feature matrix issue-bundle coverage synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.1` and closed
   [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md).

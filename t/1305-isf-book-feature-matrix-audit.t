@@ -74,6 +74,7 @@ for my $row (@required_rows) {
 
 my @required_examples = (
     '(clock-domains',
+    './bin/fsmgen --strict isf/apb_requester.isf',
     '(crossings',
     '(stage wait_ready',
     '(contract finish_seen',
@@ -87,6 +88,8 @@ my @required_examples = (
     '(spawn worker as w0',
     '(imports',
     '--emit-schedule-json',
+    '--strict --outdir /tmp/isf-build',
+    './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',
     '"actor_phases"',

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: the ISF feature matrix should show the shipped CLI shapes
+- `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` adds copyable CLI examples
+  for the shipped `.isf` paths so users can see strict mode, schedule JSON,
+  multi-file `--outdir`, and HDL handoff directly in the support matrix.
+- The examples mirror the already-documented ISF spec commands. This slice is
+  documentation coverage only and does not widen CLI flags or strict-mode
+  behavior.
+- `--outdir` remains the review-artifact path for multi-file lowering, while
+  plain `.isf` HDL generation still lowers through scheduled `.fsm` before
+  entering the existing HDL pipeline.
 ## 2026-05-16: the ISF feature matrix should include issue-bundle execution
 - `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.1` adds the
   `bin/fsmgen-issue-bundle` invocation to the book matrix because downstream

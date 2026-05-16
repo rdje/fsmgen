@@ -10,11 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC` is
-  closed after adding a runnable downstream issue-bundle example to the ISF
-  shipped feature matrix and widening the matrix audit. The next R14 PNT
-  implementation slice must select or create a new task tree before code
-  changes. `ISF-TYPE-AGGREGATE-PARITY.1`
+- Next decision point: `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC` is closed
+  after adding copyable CLI examples to the ISF shipped feature matrix and
+  widening the matrix audit. The next R14 PNT implementation slice must select
+  or create a new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -277,6 +276,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   widened `t/1305-isf-book-feature-matrix-audit.t`, and changed no parser,
   scheduler, issue-bundle helper behavior, report payload, generated `.fsm`,
   or HDL behavior.
+  `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` then added copyable `.isf`
+  CLI examples for strict mode, schedule JSON, multi-file `--outdir`, and
+  SystemVerilog HDL handoff to the ISF shipped feature matrix, widened
+  `t/1305-isf-book-feature-matrix-audit.t`, and changed no parser, scheduler,
+  CLI behavior, report payload, generated `.fsm`, or HDL behavior.
   Previous R14
   sequencing: after
   `ISF-PARAM-OVERRIDE-CONSTANTS.2` shipped actor-local constants as generated
@@ -5475,6 +5479,8 @@ Done:
   report-internal non-claims.
 - The ISF shipped feature matrix now includes a runnable downstream
   `bin/fsmgen-issue-bundle` example for format-agnostic bug reports.
+- The ISF shipped feature matrix now includes copyable CLI examples for
+  `--strict`, `--emit-schedule-json`, multi-file `--outdir`, and HDL handoff.
 - The bootstrap import-tree snapshot now records the reachable ISF adapter and
   scheduler path.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
@@ -5809,7 +5815,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC`, so the next ISF
+  after `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

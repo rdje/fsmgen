@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF feature matrix CLI examples synchronized
+- Completed R14 task-tree slice:
+  `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.1` in
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC.md).
+- The `ISF-MDBOOK-FEATURE-MATRIX-CLI-EXAMPLES-SYNC` tree is now closed. No
+  active ISF task tree remains open; the next R14 implementation slice must
+  select or create a new task tree first.
+- The ISF shipped feature matrix now includes copyable CLI examples for
+  strict mode, schedule JSON, multi-file `--outdir`, and SystemVerilog HDL
+  handoff.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  to keep the CLI markers present.
+- No parser, scheduler, CLI behavior, schedule-report payload, generated
+  `.fsm`, or HDL behavior changed.
+
 ## 2026-05-16: R14 — ISF feature matrix issue-bundle coverage synchronized
 - Completed R14 task-tree slice:
   `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.1` in
