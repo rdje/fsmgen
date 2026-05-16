@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: backlog truth follows closed ISF trees
+- `ISF-BACKLOG-TRUTH-SYNC.1` fixes the canonical feature backlog after the
+  activation-parameter override tree closed. The book had the correct
+  behavioral details later in the section, but its status paragraph still
+  described the tree as active and implied direct activation parameter test
+  closure was pending.
+- The ISF spec and downstream handoff did not need edits for this slice; they
+  already described the shipped boundary correctly. The change keeps the book's
+  backlog status aligned with the closed task tree and regression evidence.
+- This slice deliberately makes no compiler or public contract metadata
+  changes.
 ## 2026-05-16: downstream ISF handoff is now a sync target
 - `ISF-DOWNSTREAM-INTEGRATION-SPEC.1` packages the existing `.isf` definition
   into one downstream-facing document. The issue was not that `.isf` lacked an

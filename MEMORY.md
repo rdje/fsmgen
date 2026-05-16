@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF feature backlog truth synchronized
+- Completed `ISF-BACKLOG-TRUTH-SYNC.1` in
+  [docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md).
+- Corrected the canonical mdBook feature backlog so the general transaction
+  activation parameter override entry no longer describes
+  `ISF-ACTIVATION-PARAM-OVERRIDES` as active or says direct activation
+  parameter implementation/test closure remains pending.
+- The backlog now states the shipped bounded surface: spawn, blocking `do`,
+  and rule-trigger parameter overrides are shipped where documented, while
+  direct `(on ...)` activation parameter syntax is unsupported and
+  regression-covered as fail-closed.
+- This is documentation-truth synchronization only. The ISF spec and
+  downstream handoff were already accurate, and parser, scheduler, report
+  payload, manifest, and HDL behavior are unchanged.
 ## 2026-05-16: ISF downstream integration handoff published
 - Completed `ISF-DOWNSTREAM-INTEGRATION-SPEC.1` in
   [docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md](docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md).

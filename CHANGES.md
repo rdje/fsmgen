@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF feature backlog truth synchronized
+- Completed `ISF-BACKLOG-TRUTH-SYNC.1`.
+- Corrected the canonical mdBook feature backlog entry for general transaction
+  activation parameter overrides so it no longer describes the closed
+  `ISF-ACTIVATION-PARAM-OVERRIDES` tree as active or says direct activation
+  parameter implementation/test closure remains pending.
+- The backlog now matches the shipped bounded surface: spawn, blocking `do`,
+  and rule-trigger parameter overrides are shipped where documented; direct
+  `(on ...)` activation parameter syntax is unsupported and regression-covered
+  as fail-closed.
+- This is documentation-only. Parser, scheduler, report payload, manifest, HDL
+  output, and accepted source behavior are unchanged.
 ### R14 — ISF downstream integration handoff published
 - Completed `ISF-DOWNSTREAM-INTEGRATION-SPEC.1`.
 - Added

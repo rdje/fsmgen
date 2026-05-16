@@ -143,12 +143,13 @@ own specialization contract before becoming valid parameter values.
 
 ### General Transaction Activation Parameter Overrides
 
-Status: partially shipped. The original `ISF-TRANSACTION-ACTIVATION` tree is
-closed for spawn and blocking `do`; the active
-`ISF-ACTIVATION-PARAM-OVERRIDES` tree owns the remaining rule-trigger and
-direct-activation work. Rule-trigger parameter overrides are now shipped. Direct
-`(on ...)` activation is specified as unsupported for activation-site
-`(params ...)`; implementation/test closure remains in this tree.
+Status: shipped bounded surface; broader activation forms remain backlog.
+The original `ISF-TRANSACTION-ACTIVATION` tree is closed for spawn and
+blocking `do`, and the `ISF-ACTIVATION-PARAM-OVERRIDES` tree is closed for
+rule-trigger overrides plus the direct-activation boundary. Rule-trigger
+parameter overrides are shipped. Direct `(on ...)` activation is unsupported
+for activation-site `(params ...)` and is regression-covered as a fail-closed
+entry-body form.
 
 Goal: extend the task-like transaction activation model so activation sites can
 override declared transaction parameters where that is semantically valid.

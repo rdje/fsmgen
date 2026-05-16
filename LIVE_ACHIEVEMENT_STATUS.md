@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF feature backlog truth synchronized
+- Completed R14 task-tree slice: `ISF-BACKLOG-TRUTH-SYNC.1`.
+- Updated the canonical mdBook feature backlog so activation-parameter
+  override status matches the closed `ISF-ACTIVATION-PARAM-OVERRIDES` tree.
+- The backlog now states that spawn, blocking `do`, and rule-trigger parameter
+  overrides are the shipped bounded activation-parameter surface, and direct
+  `(on ...)` activation parameter syntax is unsupported and regression-covered
+  as fail-closed.
+- Parser, scheduler, schedule-report, manifest, and HDL behavior are
+  unchanged by this documentation-truth slice.
+
 ## 2026-05-16: R14 — ISF downstream integration handoff published
 - Completed R14 task-tree slice: `ISF-DOWNSTREAM-INTEGRATION-SPEC.1`.
 - Added [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md)

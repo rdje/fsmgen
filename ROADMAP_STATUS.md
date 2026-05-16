@@ -11,7 +11,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
 - Next decision point: select the next roadmap-aligned R14 task tree after
-  closing the requested self-contained `.isf` downstream integration handoff.
+  closing the requested self-contained `.isf` downstream integration handoff
+  and synchronizing the stale activation-parameter entry in the canonical ISF
+  feature backlog.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -91,6 +93,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   contract live-doc path list, and updated the ISF public synchronization
   workflow so it remains truthful with the codebase, live spec, book, public
   contract, manifest metadata, tests, and deferrals.
+  `ISF-BACKLOG-TRUTH-SYNC.1` corrected the canonical feature backlog so the
+  general transaction activation parameter override entry matches the closed
+  activation-parameter override tree: spawn, blocking `do`, and rule-trigger
+  parameter overrides are shipped where documented, and direct `(on ...)`
+  activation parameter syntax is unsupported and regression-covered as
+  fail-closed.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.
