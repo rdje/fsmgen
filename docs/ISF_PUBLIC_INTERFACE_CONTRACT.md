@@ -1453,21 +1453,21 @@ key families and policy strings they name.
 
 ### Schedule-Report Freeze Readiness
 
-`schedule_report_full_schema_stable` is currently false. The contractual
-surface is the advertised metadata in `embedding.isf_public_interface`, not the
-raw JSON tree as a whole.
+`schedule_report_full_schema_stable` is currently true. Schedule JSON payload
+schema version `1` is a public, stable schema under the evolution rules below.
+Raw parser actor hashes and `LoweringIR` objects remain non-public.
 
 Contractual now:
 
 - The in-process `report(...)` path and `--emit-schedule-json` CLI path emit
   the same successful schedule report for accepted sources.
 - `schedule_report_top_level_keys` and the advertised nested key/value
-  families define the current bounded public shape.
+  families define the stable schema-version-1 public shape.
 - Scalar count, reset/nullability, transaction ordering, DT ordering, storage
-  kind/role/width, and feature-owned summary arrays are public only to the
-  extent described by their advertised metadata fields.
+  kind/role/width, and feature-owned summary arrays are public to the extent
+  described by their advertised metadata fields.
 
-Bounded but not fully frozen:
+Stable, versioned evolution:
 
 - New optional keys or value-family members may be added when the same slice
   updates this contract, the mdBook/spec, and focused regressions.
@@ -1487,12 +1487,10 @@ Bounded but not fully frozen:
   `library_uses[]`, `clock_domains[]` / `crossings[]`, and the public
   `lower(...)` files map.
 
-Final freeze step before flipping `schedule_report_full_schema_stable` to true:
-
-- Review and intentionally flip the flag in a dedicated freeze slice. The
-  executable golden matrix in
+- Breaking schedule-report changes require a `schema_version` bump plus
+  migration or deprecation documentation. The executable golden matrix in
   [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t)
-  now assigns every advertised `schedule_report_*` branch to at least one
+  assigns every advertised `schedule_report_*` branch to at least one
   in-process/CLI parity case.
 
 ## Non-Public Internals

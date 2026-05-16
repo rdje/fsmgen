@@ -44,8 +44,8 @@ sub assert_freeze_boundary {
 
     is($contract->{status}, 'bounded_public', "$label remains bounded public");
     ok(
-        !$contract->{schedule_report_full_schema_stable},
-        "$label does not claim full schedule-report schema stability",
+        $contract->{schedule_report_full_schema_stable},
+        "$label claims schedule-report schema version 1 stability",
     );
     ok(
         $contract->{evolves_with_isf_implementation},

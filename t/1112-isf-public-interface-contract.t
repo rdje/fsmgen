@@ -96,7 +96,7 @@ subtest 'contract advertises the bounded ISF public interface' => sub {
     ok($contract->{evolves_with_isf_implementation}, 'contract flags implementation-coupled evolution');
     ok(!$contract->{raw_actor_full_hash_stable}, 'contract does not freeze the raw actor hash as a full API');
     ok(!$contract->{lowering_ir_full_hash_stable}, 'contract does not freeze LoweringIR as a full API');
-    ok(!$contract->{schedule_report_full_schema_stable}, 'contract does not freeze the whole schedule report schema');
+    ok($contract->{schedule_report_full_schema_stable}, 'contract freezes the schedule report schema version 1');
 };
 
 subtest 'contract advertises the current shareable resource registry' => sub {

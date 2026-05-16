@@ -2371,16 +2371,18 @@ Schema-freeze readiness is tracked separately from the current bounded public
 contract. The report is contractual today through the exact metadata advertised
 by `embedding.isf_public_interface`, including top-level keys, nested
 key/value families, scalar policies, ordering policies, nullability rules, and
-CLI/in-process parity. It is not yet a frozen whole-tree schema. New optional
-keys or new value-family members may be added only with public-contract
-metadata, focused tests, and documentation in the same slice.
+CLI/in-process parity. Schedule JSON schema version `1` is now frozen as a
+public schema. New optional keys or new value-family members may be added only
+with public-contract metadata, focused tests, and documentation in the same
+slice; breaking changes require a `schema_version` bump plus migration or
+deprecation documentation.
 
 The executable golden fixture matrix is maintained by
 [t/1255-isf-schedule-report-golden-matrix.t](../t/1255-isf-schedule-report-golden-matrix.t).
 It assigns every advertised `schedule_report_*` branch to at least one matrix
 case and proves that each case emits the same report through the in-process and
-CLI paths. `schedule_report_full_schema_stable` remains false until a separate
-final freeze slice intentionally flips that public contract flag.
+CLI paths. The public contract now advertises
+`schedule_report_full_schema_stable = true` for schema version `1`.
 
 ## 11. Current Regression Fixtures
 

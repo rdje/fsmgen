@@ -111,6 +111,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-SCHEDULE-REPORT-EVOLUTION-POLICY.md` — completed `R14` task tree for schedule-report additive/deprecation evolution policy.
 - `docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md` — completed `R14` task tree for schedule-report assignment provenance and multi-file child summary boundary.
 - `docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md` — completed `R14` task tree for the executable schedule-report golden fixture matrix.
+- `docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md` — completed `R14` task tree for freezing schedule JSON schema version 1.
 - `docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md` — completed `R14` task tree for actor constants in activation parameter overrides.
 - `docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md` — completed `R14` task tree for synchronizing removed `(assign ...)` diagnostic truth.
 - `docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md` — completed `R14` task tree for keeping the ISF spec focused-test index synchronized.

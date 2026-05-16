@@ -188,11 +188,12 @@ Feature-owned report branches:
 | `compatible_fanin_groups[]` and `compile_issues[]` conflict projections | `ISF-CONFLICTS`, with rule-action integration from `ISF-RULE-ACTIONS`. |
 | `priority_resolutions[]` and `resource_arbitration[]` | `ISF-RESOURCE-PRIORITY`. |
 
-Non-frozen branches and boundaries:
+Frozen branches and boundaries:
 
-- `schedule_report_full_schema_stable` is false. Downstream consumers should
-  use the advertised bounded key families rather than assuming the whole JSON
-  tree is frozen.
+- `schedule_report_full_schema_stable` is true for schedule JSON
+  `schema_version: 1`. Downstream consumers should use the advertised
+  key/value families and evolution policy rather than private implementation
+  details.
 - Raw `LoweringIR` hashes, raw assignment provenance, activation proof context,
   assignment indexes, priority/resource suppression bookkeeping, and raw
   monitor equations are private.
@@ -256,10 +257,10 @@ Deferred `role` values:
 
 ## ISF-SCHEDULE-REPORTS.4 Schema-Freeze Readiness Plan
 
-The current schedule report is a bounded public report, not a fully frozen
-JSON schema. Downstream consumers should discover the current supported surface
-from `embedding.isf_public_interface` and should treat
-`schedule_report_full_schema_stable = false` as normative.
+The current schedule report is a stable public schema for schedule JSON
+`schema_version: 1`. Downstream consumers should discover the current
+supported surface from `embedding.isf_public_interface` and should treat
+`schedule_report_full_schema_stable = true` as normative.
 
 Contractual now:
 
@@ -319,8 +320,8 @@ Full-freeze readiness status:
 - `t/1255-isf-schedule-report-golden-matrix.t` now maintains the executable
   golden matrix for every advertised `schedule_report_*` branch through both
   in-process and CLI report paths.
-- `schedule_report_full_schema_stable` remains false until a later dedicated
-  freeze slice intentionally flips the public flag.
+- `schedule_report_full_schema_stable` is true for schedule JSON
+  `schema_version: 1`.
 
 Readiness checklist for freezing any branch:
 
@@ -333,7 +334,7 @@ Readiness checklist for freezing any branch:
    compatibility policy.
 5. Additive evolution rules are clear, and private implementation fields are
    explicitly excluded.
-6. `schedule_report_full_schema_stable` is flipped only after every top-level
+6. `schedule_report_full_schema_stable` is true only after every top-level
    branch satisfies the same checklist.
 
 ## Decisions
@@ -354,9 +355,8 @@ Readiness checklist for freezing any branch:
 - `2026-05-14`: Full schedule JSON schema freeze remained blocked by explicit
   schema/version policy, remaining role families, generated-name policy,
   assignment-provenance policy, multi-file report scope, compatibility rules,
-  and a golden fixture matrix. Later slices closed those blockers; the report
-  remains bounded public metadata until a dedicated freeze slice flips
-  `schedule_report_full_schema_stable`.
+  and a golden fixture matrix. Later slices closed those blockers, and the
+  dedicated freeze slice flipped `schedule_report_full_schema_stable`.
 - `2026-05-14`: The schedule-report tree is closed after adding an explicit
   freeze-boundary regression. Future schedule-report feature additions should
   reopen this tree or create a feature-owned tree before changing report shape.

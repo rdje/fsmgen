@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF schedule-report full schema frozen
+- Completed R14 task-tree slice:
+  `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1`, closing
+  [docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md](docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md).
+- The public ISF contract now advertises
+  `schedule_report_full_schema_stable = true` for schedule JSON
+  `schema_version: 1`.
+- Direct contract, manifest, CLI manifest, and CLI manifest alias views all
+  assert the stable schedule-report schema flag.
+- Raw parser actor hashes and `LoweringIR` remain non-public full APIs, and
+  future report changes still follow the documented evolution policy.
+
 ## 2026-05-16: R14 — ISF schedule-report golden matrix shipped
 - Completed R14 task-tree slice:
   `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1`, closing
@@ -12,8 +24,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   and must emit equal payloads.
 - Every advertised `schedule_report_*` contract branch except
   `schedule_report_full_schema_stable` now has a matrix owner.
-- `schedule_report_full_schema_stable` remains false until a later dedicated
-  freeze slice intentionally flips that public flag.
+- That slice deliberately left `schedule_report_full_schema_stable` unchanged;
+  the later full-schema-freeze slice flips it for schedule JSON
+  `schema_version: 1`.
 
 ## 2026-05-16: R14 — ISF schedule-report summary boundary documented
 - Completed R14 task-tree slice:

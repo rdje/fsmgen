@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: schedule-report schema version 1 is stable
+- `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1` flips
+  `schedule_report_full_schema_stable` to true after the prerequisite
+  schema-version, evolution-policy, public/private-boundary, and golden-matrix
+  slices were completed.
+- The freeze is deliberately scoped to schedule JSON `schema_version: 1` and
+  the advertised `schedule_report_*` public contract. It does not make raw
+  parser actor hashes or `LoweringIR` objects public APIs.
+- Future schedule-report additions must still move contract metadata, tests,
+  and user-facing docs together; breaking changes require a `schema_version`
+  bump plus migration or deprecation documentation.
 ## 2026-05-16: schedule-report freeze evidence is executable
 - `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1` converts the remaining golden-matrix
   freeze-readiness item into one focused audit. The matrix is deliberately an
@@ -8,9 +19,9 @@ This document captures engineering rationale, design constraints, and working de
 - Every matrix case runs through both the in-process scheduler report facade
   and the CLI `--emit-schedule-json` path. That keeps path parity tied to the
   same fixture/source cases that own the advertised report branches.
-- The public `schedule_report_full_schema_stable` flag is unchanged. Flipping
-  it should be a separate final freeze slice so the semantic meaning of that
-  flag is easy to review.
+- The public `schedule_report_full_schema_stable` flag was unchanged in that
+  slice. The later full-schema-freeze slice flips it for schedule JSON
+  `schema_version: 1`.
 ## 2026-05-16: schedule reports expose summaries, not raw provenance
 - `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` closes the assignment-provenance
   and multi-file child-summary freeze-readiness decision without changing

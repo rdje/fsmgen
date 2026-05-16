@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF schedule-report full schema frozen
+- Completed `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1`, closing the
+  `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE` task tree.
+- Set `embedding.isf_public_interface.schedule_report_full_schema_stable` to
+  true for schedule JSON `schema_version: 1`.
+- Updated direct/manifest freeze-boundary tests and identity flag audits to
+  assert the stable schedule-report schema flag.
+- Synchronized the ISF spec, downstream handoff, public contract doc, mdBook,
+  roadmap, task tree, and live docs.
+- Raw actor hashes and `LoweringIR` remain non-public full APIs.
 ### R14 — ISF schedule-report golden matrix shipped
 - Completed `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1`, closing the
   `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX` task tree.
@@ -11,8 +21,9 @@ This is the persistent technical change history for FSMGen.
   case.
 - Updated the public contract `tested_by` metadata, ISF spec, downstream
   handoff, mdBook, fixture inventory, roadmap, task tree, and live docs.
-- `schedule_report_full_schema_stable` remains false until a later dedicated
-  freeze slice intentionally flips that public flag.
+- That slice deliberately left `schedule_report_full_schema_stable` unchanged;
+  the later full-schema-freeze slice flips it for schedule JSON
+  `schema_version: 1`.
 ### R14 — ISF schedule-report summary boundary documented
 - Completed `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1`, closing the
   `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY` task tree.

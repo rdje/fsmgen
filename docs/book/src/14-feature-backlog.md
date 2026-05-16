@@ -37,7 +37,7 @@ as expressions; FSMGen does not yet prove every dynamic divisor nonzero.
 
 ### Automatic Aggregate Growth From Usage
 
-Status: backlog.
+Status: shipped for schedule JSON `schema_version: 1`.
 
 Goal: infer aggregate record/list shapes from member/index usage when no
 explicit aggregate type anchor is present.
@@ -49,7 +49,7 @@ aggregate type growth from arbitrary usage is not fully shipped.
 
 ### Backend-Owned Struct/Record Default Lowering
 
-Status: backlog.
+Status: shipped for schedule JSON `schema_version: 1`.
 
 Goal: make backend-owned structured `struct`/record emission the default
 lowering where it is portable and synthesizable.
@@ -751,9 +751,10 @@ Status: backlog.
 
 Goal: freeze the whole schedule JSON schema as a public contract.
 
-Current boundary: schedule JSON is public only through bounded key families
-advertised by `embedding.isf_public_interface`. The whole JSON tree is not yet
-promised as permanently frozen. The conflict/fan-in projection boundary is now
+Current boundary: schedule JSON `schema_version: 1` is public and stable
+through the schema, key/value families, scalar policies, ordering policies,
+nullability rules, and evolution policy advertised by
+`embedding.isf_public_interface`. The conflict/fan-in projection boundary is
 defined. Nonfatal conflict issues project into `compile_issues`, and accepted
 fan-in groups project into `compatible_fanin_groups`, both with bounded
 summary shapes. Successful priority/resource decisions project into
@@ -762,7 +763,7 @@ summaries. Shipped transaction stages and bounded eventual contracts project
 into `transaction_stages` and `temporal_contracts` with bounded public
 summary shapes.
 
-Freeze-readiness plan: the current contractual surface is the metadata
+Freeze policy: the current contractual surface is the metadata
 advertised by `embedding.isf_public_interface`, including top-level keys,
 nested key/value families, scalar policies, ordering policies, nullability
 rules, storage kind/role/width metadata, and CLI/in-process report parity.
@@ -794,9 +795,8 @@ The executable golden fixture matrix now exists in
 `t/1255-isf-schedule-report-golden-matrix.t`. It assigns every advertised
 `schedule_report_*` branch to at least one matrix case, runs each case through
 both `FSM::Scheduler::ISF->report(...)` and `./bin/fsmgen
---emit-schedule-json`, and requires equal payloads. The
-`schedule_report_full_schema_stable` flag remains false until a separate final
-freeze slice intentionally flips that public contract flag.
+--emit-schedule-json`, and requires equal payloads. The public contract now
+advertises `schedule_report_full_schema_stable = true` for schema version `1`.
 
 ### ISF Realistic Fixture Matrix
 

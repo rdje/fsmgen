@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF schedule-report full schema frozen
+- Completed `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1` in
+  [docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md](docs/tasks/ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.md),
+  closing the schedule-report full-schema-freeze tree.
+- `embedding.isf_public_interface.schedule_report_full_schema_stable` is now
+  true in direct and manifest contract views for schedule JSON
+  `schema_version: 1`.
+- Raw parser actor hashes and `FSM::Scheduler::ISF::LoweringIR` remain
+  non-public full APIs. Future schedule-report changes still follow the
+  documented additive/breaking evolution policy.
+- Updated freeze-boundary tests, identity flag audits, ISF spec, downstream
+  handoff, public contract doc, mdBook, roadmap, task tree, and live docs.
 ## 2026-05-16: ISF schedule-report golden matrix shipped
 - Completed `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1` in
   [docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md](docs/tasks/ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.md),
@@ -13,8 +25,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - The ISF spec, downstream handoff, public contract doc, mdBook, task trees,
   tested-by metadata, and fixture inventory now describe the matrix as current
   evidence rather than a missing blocker.
-- `schedule_report_full_schema_stable` remains false until a later dedicated
-  freeze slice intentionally flips that public flag.
+- That slice deliberately left `schedule_report_full_schema_stable` unchanged;
+  the later full-schema-freeze slice flips it for schedule JSON
+  `schema_version: 1`.
 ## 2026-05-16: ISF schedule-report summary boundary documented
 - Completed `ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.1` in
   [docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md](docs/tasks/ISF-SCHEDULE-REPORT-SUMMARY-BOUNDARY.md),

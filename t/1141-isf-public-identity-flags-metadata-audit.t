@@ -87,8 +87,8 @@ sub assert_identity_flags {
     ok(!$contract->{raw_actor_full_hash_stable}, "$label keeps raw actor full hash non-public");
     ok(!$contract->{lowering_ir_full_hash_stable}, "$label keeps LoweringIR full hash non-public");
     ok(
-        !$contract->{schedule_report_full_schema_stable},
-        "$label keeps full schedule-report schema non-public",
+        $contract->{schedule_report_full_schema_stable},
+        "$label marks schedule-report schema version 1 stable",
     );
     ok(
         $contract->{scheduled_fsm_text_is_review_artifact},

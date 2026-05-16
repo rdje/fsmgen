@@ -89,9 +89,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   advertised `schedule_report_*` contract branch except the explicit
   `schedule_report_full_schema_stable` flag to at least one matrix case and
   proves each case emits equal payloads through in-process and CLI report
-  paths. The next PNT selection should choose the final schedule-report freeze
-  flag decision or another roadmap-aligned R14 task tree before
-  implementation.
+  paths.
+  `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1` then flipped
+  `schedule_report_full_schema_stable` to true for schedule JSON
+  `schema_version: 1` while keeping raw parser actor hashes and `LoweringIR`
+  non-public and preserving the documented schema-version/evolution policy.
+  The next PNT selection should choose a fresh roadmap-aligned R14 task tree
+  before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -258,6 +262,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-SCHEDULE-REPORT-GOLDEN-MATRIX.1` added the executable golden matrix
   for advertised schedule-report branches and removed the matrix as a missing
   freeze-readiness artifact without changing schedule JSON payloads.
+  `ISF-SCHEDULE-REPORT-FULL-SCHEMA-FREEZE.1` flipped the public
+  `schedule_report_full_schema_stable` flag to true for schedule JSON
+  `schema_version: 1` without changing parser, lowering, generated `.fsm`, or
+  HDL behavior.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

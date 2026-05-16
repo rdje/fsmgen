@@ -38,15 +38,17 @@ The current integration status is `bounded_public`:
 - Public syntax, public lower-result shape, and public schedule-report key
   families are regression-backed.
 
-The contract is bounded rather than frozen:
+The source/lowering contract remains bounded even though schedule JSON
+`schema_version: 1` is now stable:
 
 - Parser acceptance alone is not support.
 - A construct is public only when this document gives its source shape,
   lowering behavior, runtime meaning, diagnostics boundary, report visibility,
   and regression evidence.
-- Full raw parser hashes, full `LoweringIR` objects, and the complete schedule
-  JSON schema are not frozen. Use the bounded key families described here and
-  the machine-readable manifest for exact discovery.
+- Full raw parser hashes and full `LoweringIR` objects are not frozen. The
+  schedule JSON schema is stable for `schema_version: 1`; use the key/value
+  families described here and the machine-readable manifest for exact
+  discovery.
 - Future `.isf` changes must update this document, the public contract, tests,
   and book content in the same implementation slice.
 
@@ -1003,10 +1005,10 @@ Golden fixture matrix:
   the advertised schedule-report branches.
 - Each matrix case runs through both `FSM::Scheduler::ISF->report(...)` and
   `./bin/fsmgen --emit-schedule-json`, and the test requires equal payloads.
-- Every advertised `schedule_report_*` contract field except the explicit
-  `schedule_report_full_schema_stable` flag has a matrix owner.
-- `schedule_report_full_schema_stable` remains false until a later dedicated
-  freeze slice intentionally changes that public flag.
+- Every advertised `schedule_report_*` contract branch has a matrix owner
+  where that branch is a schedule-report payload family.
+- `schedule_report_full_schema_stable` is true for schedule JSON
+  `schema_version: 1`.
 
 Assignment and child-summary boundary:
 

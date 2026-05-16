@@ -281,7 +281,7 @@ sub build_isf_public_interface_contract {
         evolves_with_isf_implementation => JSON::PP::true,
         raw_actor_full_hash_stable => JSON::PP::false,
         lowering_ir_full_hash_stable => JSON::PP::false,
-        schedule_report_full_schema_stable => JSON::PP::false,
+        schedule_report_full_schema_stable => JSON::PP::true,
         scheduled_fsm_text_is_review_artifact => JSON::PP::true,
         tested_by => [
             't/1096-isf-schedule-json-report.t',
