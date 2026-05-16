@@ -300,6 +300,8 @@ sub _storage_role_for_assignment {
     return 'sample_alias' if $source_kind eq 'sample_capture';
     return 'extract_field' if $source_kind eq 'extract_capture';
     return 'completion_pulse' if $source_kind eq 'complete_pulse' || $source_kind eq 'timeout_pulse';
+    return 'rule_trigger_source' if $source_kind eq 'rule_trigger_source';
+    return 'rule_trigger_payload_source' if $source_kind eq 'rule_trigger_payload_source';
     return 'data_register' if $source_kind eq 'update'
         || $source_kind eq 'set'
         || $source_kind eq 'shift'

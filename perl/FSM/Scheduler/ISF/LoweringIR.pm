@@ -249,7 +249,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
     }
     push @spawn_instances, map { _clone_isf_value($_) } @rule_trigger_instances;
 
-    push @dts, $self->_build_rules($actor, \%ctrs, \@bank_accesses, $generated_children);
+    push @dts, $self->_build_rules($actor, \%ctrs, \@bank_accesses, $generated_children, \%storage_roles);
     push @dts, @rule_trigger_dts;
     $self->_wire_do_children(\@states, \%ctrs, $actor, $generated_children);
     my $local_drive_filter = keys(%$generated_children) ? \%local_drive_uses : undef;
@@ -6312,7 +6312,7 @@ sub _inj_latency {
 }
 
 sub _build_rules {
-    my ($self, $actor, $ctrs, $bank_accesses, $generated_children) = @_;
+    my ($self, $actor, $ctrs, $bank_accesses, $generated_children, $storage_roles) = @_;
     my @d;
     my %fanin_by_transaction;
     my %payload_by_transaction;
@@ -6342,6 +6342,8 @@ sub _build_rules {
                 my $source = _rule_trigger_source_name($r->{name}, $target, $trigger_ordinal);
                 push @a, { lhs => $source, rhs => 1, op => '<1', source_kind => 'rule_trigger_source' };
                 $ctrs->{$source} = 1 if $ctrs;
+                $storage_roles->{$source} = 'rule_trigger_source'
+                    if ref($storage_roles) eq 'HASH';
                 $ctrs->{"${target}_start"} = 1 if $ctrs && !$generated_trigger;
                 my %target_ports = _transaction_port_map($transaction_by_name{$target});
                 for my $binding (@{_activation_bindings_from_clause($ac, $r->{name}, 'rule trigger')}) {
@@ -6355,6 +6357,8 @@ sub _build_rules {
                         source_kind => 'rule_trigger_payload_source',
                     };
                     $ctrs->{$payload} = $width if $ctrs;
+                    $storage_roles->{$payload} = 'rule_trigger_payload_source'
+                        if ref($storage_roles) eq 'HASH';
                     $ctrs->{$binding->{port}} = $width if $ctrs;
                     push @{$payload_by_transaction{$target}{$binding->{port}}}, {
                         trigger_source => $source,

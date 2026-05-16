@@ -1380,6 +1380,8 @@ sub isf_public_interface_schedule_report_storage_role_values {
             extract_field
             latency_counter
             repeat_counter
+            rule_trigger_payload_source
+            rule_trigger_source
             sample_alias
             temporal_contract_monitor
             transaction_port

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: rule-trigger storage roles are lowerer-owned
+- `ISF-RULE-TRIGGER-STORAGE-REPORTS.1` assigns rule-trigger storage roles at
+  the lowering boundary, where the generated source pulse and payload-source
+  names are created. That keeps report semantics tied to direct lowering
+  evidence rather than generated-name pattern matching in the JSON emitter.
+- The JSON emitter also recognizes the same `source_kind` values as a
+  fallback so future storage-summary traversal changes do not lose the role
+  semantics if they inspect assignment provenance directly.
+- Generated activation binding storage remains separate:
+  `rule_trigger_payload_source` names the rule-owned payload capture, while
+  `transaction_port_binding` names the generated activation handoff storage
+  that consumes that payload. Generated start/done handoff storage remains
+  intentionally unclassified until a separate compatibility slice closes it.
 ## 2026-05-16: transaction port storage role is contract sync
 - `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` advertises the `transaction_port`
   storage role because schedule reports already emit it when a declared
@@ -16,9 +29,9 @@ This document captures engineering rationale, design constraints, and working de
   `transaction_port_binding` for generated activation port handoff storage and
   `trigger_done_observe` for generated rule-trigger completion observation.
 - The slice deliberately does not invent roles for every generated
-  start/done/payload signal. Unassigned generated start/done handoffs and
-  rule-trigger payload-source storage remain unpromised until a separate slice
-  assigns semantics and coverage.
+  start/done/payload signal. Unassigned generated start/done handoffs remained
+  unpromised, and rule-trigger payload-source storage was left for the later
+  `ISF-RULE-TRIGGER-STORAGE-REPORTS` slice that now owns that distinction.
 - As with the dynamic-wait role sync, this keeps manifest metadata truthful
   without changing lowering or generated artifacts.
 ## 2026-05-16: dynamic wait storage role is public contract sync

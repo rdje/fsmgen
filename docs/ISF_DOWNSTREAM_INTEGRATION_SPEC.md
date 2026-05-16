@@ -1067,7 +1067,8 @@ generated_composition.kind: activation_generated_top, spawn_generated_top
 inferred_storage.kind: counter, register
 inferred_storage.role: actor_storage, completion_pulse, data_register,
   dynamic_wait_counter, drive_payload, drive_request, extract_field,
-  latency_counter, repeat_counter, sample_alias, temporal_contract_monitor,
+  latency_counter, repeat_counter, rule_trigger_payload_source,
+  rule_trigger_source, sample_alias, temporal_contract_monitor,
   transaction_port, transaction_port_binding, trigger_done_observe,
   watchdog_counter
 dt_blocks.kind: drive, do_port_binding, latency_counter, rule,

@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF rule-trigger storage roles shipped
+- Completed R14 task-tree slice:
+  `ISF-RULE-TRIGGER-STORAGE-REPORTS.1`, closing
+  [docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md](docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md).
+- Public schedule JSON now tags rule-trigger source pulse storage with
+  `inferred_storage[].role = rule_trigger_source`.
+- Public schedule JSON now tags per-input rule-trigger payload-source storage
+  with `inferred_storage[].role = rule_trigger_payload_source`.
+- The ISF public contract and capability manifest advertise both roles through
+  `schedule_report_storage_role_values`.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with direct and generated rule-trigger report probes.
+- Rule-trigger syntax, guard semantics, activation timing, generated `.fsm`,
+  and HDL output are unchanged.
+
 ## 2026-05-16: R14 — ISF transaction-port storage role synchronized
 - Completed R14 task-tree slice:
   `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1`, closing

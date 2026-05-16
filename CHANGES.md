@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF rule-trigger storage roles shipped
+- Completed `ISF-RULE-TRIGGER-STORAGE-REPORTS.1`, closing the
+  `ISF-RULE-TRIGGER-STORAGE-REPORTS` task tree.
+- Public ISF schedule reports now tag rule-trigger source pulse storage with
+  `inferred_storage[].role = rule_trigger_source`.
+- Public ISF schedule reports now tag per-input rule-trigger payload-source
+  storage with `inferred_storage[].role = rule_trigger_payload_source`.
+- Added both roles to `schedule_report_storage_role_values` in the public ISF
+  contract and capability manifest.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with direct and generated rule-trigger report probes for role and width
+  coverage.
+- Rule-trigger syntax, guard semantics, activation timing, generated `.fsm`,
+  and HDL output are unchanged.
 ### R14 — ISF transaction-port storage role synchronized
 - Completed `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1`, closing the
   `ISF-TRANSACTION-PORT-STORAGE-REPORTS` task tree.

@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF rule-trigger storage roles shipped
+- Completed `ISF-RULE-TRIGGER-STORAGE-REPORTS.1` in
+  [docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md](docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md),
+  closing the rule-trigger storage report-role tree.
+- Rule-trigger source pulse storage now reports
+  `inferred_storage[].role = rule_trigger_source`; per-input trigger
+  payload-source storage now reports
+  `inferred_storage[].role = rule_trigger_payload_source`.
+- The ISF public contract and capability manifest advertise both roles through
+  `schedule_report_storage_role_values`.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with direct and generated rule-trigger report probes for those roles and
+  widths.
+- Rule-trigger syntax, guard semantics, activation timing, generated `.fsm`,
+  and HDL output are unchanged.
 ## 2026-05-16: ISF transaction-port storage role synchronized
 - Completed `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` in
   [docs/tasks/ISF-TRANSACTION-PORT-STORAGE-REPORTS.md](docs/tasks/ISF-TRANSACTION-PORT-STORAGE-REPORTS.md),

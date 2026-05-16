@@ -2161,12 +2161,16 @@ Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
 lowerer has direct evidence: `actor_storage`, `completion_pulse`,
 `data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
-`extract_field`, `latency_counter`, `repeat_counter`, `sample_alias`,
+`extract_field`, `latency_counter`, `repeat_counter`,
+`rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
 `temporal_contract_monitor`, `transaction_port`, `transaction_port_binding`,
 `trigger_done_observe`, and `watchdog_counter`.
 Runtime scalar and runtime expression waits use `dynamic_wait_counter` for the
 generated sampled-count storage that backs zero-bypass and decrement-loop
 lowering.
+Rule-trigger source pulses use `rule_trigger_source`; per-input trigger
+payload-source storage uses `rule_trigger_payload_source` before fan-in or
+generated activation handoff storage consumes the payload.
 Generated activation port-binding handoff storage uses
 `transaction_port_binding`; generated rule-trigger completion observation uses
 `trigger_done_observe`.

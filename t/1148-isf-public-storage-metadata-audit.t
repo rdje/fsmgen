@@ -168,6 +168,33 @@ subtest 'transaction-local port storage role follows advertised metadata' => sub
         if $entry;
 };
 
+subtest 'rule-trigger source storage roles follow advertised metadata' => sub {
+    my $direct_report = report_source(rule_trigger_storage_source(), 'rule-trigger-storage-role.isf');
+    my $generated_report = report_source(trigger_binding_source(), 'generated-rule-trigger-storage-role.isf');
+    my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
+
+    ok($role{rule_trigger_source}, 'rule_trigger_source is an advertised storage role');
+    ok($role{rule_trigger_payload_source}, 'rule_trigger_payload_source is an advertised storage role');
+
+    for my $case (
+        [$direct_report, 'launch_worker', 'rule_trigger_source', 1],
+        [$direct_report, 'launch_worker_addr', 'rule_trigger_payload_source', 8],
+        [$generated_report, 'launch_worker_trigger_0', 'rule_trigger_source', 1],
+        [$generated_report, 'launch_worker_trigger_0_addr_payload', 'rule_trigger_payload_source', 8],
+    ) {
+        my ($report, $name, $expected_role, $width) = @$case;
+        my ($entry) = grep { ($_->{name} // '') eq $name } @{$report->{inferred_storage} || []};
+
+        ok($entry, "rule-trigger report exposes '$name' storage");
+        is($entry->{kind}, 'counter', "'$name' storage uses the generated counter class")
+            if $entry;
+        is($entry->{role}, $expected_role, "'$name' storage reports its role")
+            if $entry;
+        is($entry->{width}, $width, "'$name' storage reports its inferred width")
+            if $entry;
+    }
+};
+
 done_testing();
 
 sub assert_storage_metadata {
@@ -309,5 +336,25 @@ sub transaction_port_source {
     (on start)
     (set addr req)
     (complete done)))
+ISF
+}
+
+sub rule_trigger_storage_source {
+    return <<'ISF';
+(actor rule_trigger_storage_role
+  (clock clk)
+  (interface
+    (input fire)
+    (input req (width 8))
+    (output done))
+  (transaction worker
+    (ports
+      (input addr (width 8)))
+    (on worker_start)
+    (complete done))
+  (rule launch fire
+    (trigger worker
+      (bind
+        (input addr req)))))
 ISF
 }
