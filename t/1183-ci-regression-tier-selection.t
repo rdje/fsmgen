@@ -70,6 +70,8 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($isf_block || '', qr/t\/1319-isf-fifo-datapath-fixture-coverage\.t/, 'ISF tier includes the FIFO datapath fixture coverage');
     unlike($quick_block || '', qr/t\/1320-isf-fifo-controller-fixture-coverage\.t/, 'quick tier does not include the broader FIFO controller fixture');
     like($isf_block || '', qr/t\/1320-isf-fifo-controller-fixture-coverage\.t/, 'ISF tier includes the FIFO controller fixture coverage');
+    unlike($quick_block || '', qr/t\/1321-isf-fifo-library-fixture-coverage\.t/, 'quick tier does not include the broader FIFO library fixture');
+    like($isf_block || '', qr/t\/1321-isf-fifo-library-fixture-coverage\.t/, 'ISF tier includes the FIFO library fixture coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -105,6 +107,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($isf->{stdout}, qr/t\/1318-isf-shift-left-explicit-width\.t/, 'ISF dry-run includes shift-left explicit-width coverage');
     like($isf->{stdout}, qr/t\/1319-isf-fifo-datapath-fixture-coverage\.t/, 'ISF dry-run includes FIFO datapath fixture coverage');
     like($isf->{stdout}, qr/t\/1320-isf-fifo-controller-fixture-coverage\.t/, 'ISF dry-run includes FIFO controller fixture coverage');
+    like($isf->{stdout}, qr/t\/1321-isf-fifo-library-fixture-coverage\.t/, 'ISF dry-run includes FIFO library fixture coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');

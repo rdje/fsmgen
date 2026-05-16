@@ -167,6 +167,13 @@ to keep file-backed strict schedule JSON, scheduled `.fsm`, compatible
 same-value fan-in metadata, plain HDL generation, strict HDL generation,
 occupancy/full/empty updates, and 2-bit pointer wrap covered without claiming
 data-bank storage or `data_out` datapath transfer behavior.
+The FIFO reusable-library fixture is checked by
+[t/1321-isf-fifo-library-fixture-coverage.t](../t/1321-isf-fifo-library-fixture-coverage.t)
+to keep file-backed strict schedule JSON, generated importer/child/top
+scheduled `.fsm` artifacts, strict `--outdir` emission, fixed parameter
+overrides, use-site bindings, scalarized FIFO data entries, and plain plus
+strict generated-top HDL generation covered without claiming parameter-driven
+interface/storage elaboration or nested library imports.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -1219,7 +1226,11 @@ source [isf/common/fifo.isf](../isf/common/fifo.isf), import fixture
 `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`, the public FIFO
 interface, actor-owned storage, runtime semantics, tests, and limitations.
 The same information is mirrored in `shipped_library_definitions` for
-machine-readable discovery.
+machine-readable discovery. The file-backed import fixture is also the
+strict reusable-library handoff example: it emits the importing actor,
+specialized child, and generated top scheduled `.fsm` artifacts, records
+fixed parameter overrides and binding provenance in `library_uses[]`, and
+reaches plain plus strict generated-top SystemVerilog.
 
 Supported CLI entrypoints:
 
@@ -1317,6 +1328,11 @@ JSON parity plus plain and strict HDL generation.
 The sibling `isf/fifo_controller.isf` fixture is the public controller-only
 example for occupancy, full/empty, and pointer updates; it is covered by
 `t/1320-isf-fifo-controller-fixture-coverage.t`.
+The `isf/fifo_library_use.isf` fixture is the public fixed reusable-library
+example for the combined controller/datapath FIFO actor; it is covered by
+`t/1321-isf-fifo-library-fixture-coverage.t` for strict schedule JSON parity,
+multi-file scheduled `.fsm` emission, fixed parameter/binding provenance, and
+plain plus strict generated-top HDL generation.
 `store` is bank-entry-only public syntax. Scalar storage updates remain the
 ordinary rule assignment and transaction `update` surfaces.
 The current public parser handoff also advertises one bounded subshape inside

@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md) |
 | `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md) |
 | `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md) |
 | `ISF-SHIFT-LEFT-EXPLICIT-WIDTH` | `done` | `R14` | `closed` | [docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md](docs/tasks/ISF-SHIFT-LEFT-EXPLICIT-WIDTH.md) |
@@ -150,6 +151,7 @@ as done work unless a future task reopens them.
 | Stage/contract realistic fixture promotion | `ISF-STAGE-CONTRACT-FIXTURE-PROMOTION` |
 | FIFO controller realistic fixture promotion | `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION` |
 | FIFO datapath bank-access realistic fixture promotion | `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION` |
+| FIFO reusable-library realistic fixture promotion | `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION` |
 | I2C-like realistic fixture promotion | `ISF-I2C-FIXTURE-PROMOTION` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |

@@ -214,6 +214,7 @@ my $expected_tested_by = [
     't/1318-isf-shift-left-explicit-width.t',
     't/1319-isf-fifo-datapath-fixture-coverage.t',
     't/1320-isf-fifo-controller-fixture-coverage.t',
+    't/1321-isf-fifo-library-fixture-coverage.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

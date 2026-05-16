@@ -378,9 +378,13 @@ current limitations are:
   covers push-only, pop-only, simultaneous push+pop, idle cycles,
   pointer-selected bank access, 2-bit pointer wrap, occupancy values 0
   through 4, and full/empty derivation. It also reaches generated-top
-  SystemVerilog through the CLI. Reusable library clock/reset bindings now
-  support parent/child name remapping through explicit generated-top links.
-  That remapping is a single-clock-domain name binding only.
+  SystemVerilog through the CLI. The promoted fixture regression also proves
+  strict schedule JSON parity, strict `--outdir` emission of the importer,
+  specialized child, and generated-top scheduled `.fsm` artifacts, fixed
+  parameter and binding provenance in `library_uses[]`, and both plain and
+  strict generated-top HDL generation. Reusable library clock/reset bindings
+  now support parent/child name remapping through explicit generated-top
+  links. That remapping is a single-clock-domain name binding only.
   Parameter-driven
   interface/storage widths, arbitrary-depth generation beyond the first
   `DEPTH=4` fixture, automatic non-zero reset values, standalone

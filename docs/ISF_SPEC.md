@@ -563,7 +563,11 @@ now shipped as [isf/common/fifo.isf](../isf/common/fifo.isf), exported as
 as the file-backed import/use fixture. That fixture reaches generated-top
 SystemVerilog through the CLI and checks the specialized FIFO child parameter
 bindings, scalarized data entries, pointer-gated accepted push/pop selectors,
-and generated top wiring.
+and generated top wiring. The promoted fixture regression
+[t/1321-isf-fifo-library-fixture-coverage.t](../t/1321-isf-fifo-library-fixture-coverage.t)
+also proves strict schedule JSON parity against the in-process report, strict
+`--outdir` emission of the importer, specialized child, and generated top
+`.fsm` artifacts, and both plain and strict generated-top HDL paths.
 The public catalog/contract synchronization slice is shipped as
 `ISF-LIBRARIES.5`: [docs/ISF_LIBRARY_CATALOG.md](ISF_LIBRARY_CATALOG.md)
 lists the shipped reusable definition with status, parameters, interface,
@@ -1003,6 +1007,17 @@ The sibling fixture `isf/fifo_controller.isf` is the file-backed forward
 contract for the controller-only matrix. It proves idle, push-only, pop-only,
 and simultaneous push+pop occupancy/full/empty behavior plus 2-bit pointer
 wrap without claiming data-bank storage or `data_out` transfer behavior.
+
+The reusable fixture `isf/fifo_library_use.isf` is the file-backed forward
+contract for the fixed FIFO library-use path. It imports `common.fifo.fifo`,
+binds instance `u_fifo`, emits the importing actor, specialized child, and
+generated top scheduled `.fsm` files, records fixed parameter overrides and
+use-site bindings in `library_uses[]`, and reaches plain plus strict generated
+top SystemVerilog. This fixture is deliberately fixed to `DATA_WIDTH=8`,
+`DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`; it does not claim
+parameter-driven interface/storage elaboration, nested library imports,
+standalone exported transactions or drives, memory-array backend emission, or
+automatic non-zero reset values.
 
 ## 6. Drive Definitions and Calls
 
@@ -2795,6 +2810,11 @@ explicitly deferred.
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
 bounded schedule-report metadata.
+The [isf/fifo_library_use.isf](../isf/fifo_library_use.isf) fixture now has
+file-backed strict reusable-library coverage for importer/child/generated-top
+scheduled `.fsm` artifacts, fixed FIFO parameter overrides, use-site bindings,
+strict schedule JSON parity, strict `--outdir` emission, and plain plus strict
+generated-top HDL reachability.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a
@@ -3038,6 +3058,7 @@ Focused tests:
 - [t/1318-isf-shift-left-explicit-width.t](../t/1318-isf-shift-left-explicit-width.t)
 - [t/1319-isf-fifo-datapath-fixture-coverage.t](../t/1319-isf-fifo-datapath-fixture-coverage.t)
 - [t/1320-isf-fifo-controller-fixture-coverage.t](../t/1320-isf-fifo-controller-fixture-coverage.t)
+- [t/1321-isf-fifo-library-fixture-coverage.t](../t/1321-isf-fifo-library-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

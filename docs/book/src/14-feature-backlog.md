@@ -1040,6 +1040,16 @@ push-only, pop-only, simultaneous push+pop occupancy updates,
 actor-maintained full/empty flags, and 2-bit pointer wrap. It is
 controller-only and does not claim data-bank storage or `data_out` datapath
 transfer behavior.
+The FIFO library fixture is now promoted in the `isf` tier for file-backed
+strict schedule JSON parity, strict `--outdir` emission, generated importer,
+specialized child, and top scheduled `.fsm` artifacts, fixed FIFO parameter
+overrides, use-site bindings, scalarized FIFO data entries, generated-top
+wiring, and plain plus strict generated-top HDL generation. It is the fixed
+`DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, `OCC_WIDTH=3` reusable FIFO handoff
+fixture, not a claim for parameter-driven interface/storage elaboration,
+nested imports, standalone transaction/drive exports, arbitrary-depth
+generated FIFOs, memory-array backend emission, or automatic non-zero reset
+values.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal
@@ -1126,6 +1136,10 @@ The first repo-local reusable FIFO fixture uses that model through
 the public FIFO ports to instance `u_fifo`. The generated HDL proof checks
 the specialized child module, fixed parameter bindings, scalarized data
 entries, pointer-gated accepted push/pop selectors, and generated top wiring.
+The promoted fixture coverage additionally checks strict schedule JSON parity,
+strict `--outdir` file emission for the importer, specialized child, and
+generated top `.fsm` files, fixed use-site binding provenance, and both plain
+and strict generated-top HDL generation.
 
 Imports are actor-scoped in the first shipped model. Imported definitions stay
 namespaced by default; `as alias` creates a local namespace alias, not
@@ -1279,6 +1293,12 @@ entry 3 back to entry 0.
 this matrix. It proves strict schedule JSON parity, scheduled `.fsm`
 structure, compatible same-value fan-in metadata, plain and strict HDL
 generation, and the explicit controller-only boundary.
+`isf/fifo_library_use.isf` is now the strict file-backed reusable FIFO fixture
+for the combined fixed controller/datapath actor. It proves strict schedule
+JSON parity, generated importer/child/top scheduled `.fsm` files, strict
+`--outdir` emission, fixed parameter and binding provenance, scalarized bank
+entries, generated top wiring, and plain plus strict generated-top HDL
+generation.
 Transaction `(when condition body...)` is ordered control flow, so using a
 chain of `when` branches to model FIFO ports would be misleading. Disjoint-rule
 proof for same-target FIFO-style rule writes is shipped for direct

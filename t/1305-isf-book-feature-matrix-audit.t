@@ -101,6 +101,7 @@ my @required_examples = (
     'stage/contract fixture',
     'FIFO datapath fixture',
     'FIFO controller fixture',
+    'FIFO library fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

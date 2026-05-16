@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: FIFO library fixture promotion is fixed-shape handoff coverage
+- `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` promotes the existing
+  `isf/fifo_library_use.isf` fixture without changing reusable-library syntax,
+  binding semantics, parameter resolution, or generated-top lowering.
+- The regression checks stable handoff points rather than full snapshots:
+  importer/child/generated-top scheduled `.fsm` artifacts, strict schedule
+  JSON parity, strict `--outdir` emission, fixed parameter overrides,
+  clock/reset/input/output binding provenance, scalarized data entries,
+  pointer-gated accepted push/pop paths, and plain plus strict generated-top
+  HDL generation.
+- The fixture remains deliberately fixed to `DATA_WIDTH=8`, `DEPTH=4`,
+  `PTR_WIDTH=2`, and `OCC_WIDTH=3`. Generic parameter-driven storage/interface
+  elaboration, nested library imports, standalone transaction/drive exports,
+  memory-array backend emission, and automatic non-zero reset values remain
+  explicit future work.
 ## 2026-05-16: FIFO controller fixture promotion keeps controller and datapath claims separate
 - `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` promotes
   `isf/fifo_controller.isf` as a file-backed strict fixture for the existing

@@ -411,6 +411,9 @@ Rules:
   fixture for scalarized store/load behavior.
 - `isf/fifo_controller.isf` is the representative file-backed controller-only
   fixture for occupancy, full/empty, and pointer update behavior.
+- `isf/fifo_library_use.isf` is the representative file-backed fixed FIFO
+  reusable-library fixture for import/use binding, specialized child emission,
+  generated-top wiring, and fixed parameter provenance.
 
 Bank access:
 
@@ -510,6 +513,18 @@ Known FIFO library limitations:
 - No automatic non-zero reset values yet.
 - No standalone transaction or drive exports yet.
 - No nested library imports from library actors yet.
+
+The fixed FIFO library handoff is covered by
+`t/1321-isf-fifo-library-fixture-coverage.t`. That regression proves strict
+schedule JSON parity against the in-process report, generated importer,
+specialized child, and top `.fsm` artifacts in `--outdir`, fixed
+`DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3` parameter
+bindings, use-site clock/reset/input/output bindings, scalarized bank entries,
+pointer-gated accepted push/pop datapath paths, and plain plus strict
+generated-top HDL generation. It is a fixed-shape reusable-library fixture,
+not a claim for parameter-derived interface/storage elaboration, nested
+imports, standalone transaction/drive exports, arbitrary-depth generated
+FIFOs, memory-array backend emission, or automatic non-zero reset values.
 
 ## 10. Drive Definitions And Calls
 
@@ -1573,6 +1588,12 @@ simultaneous push+pop occupancy updates, actor-maintained full/empty flags,
 and 2-bit pointer wrap. This
 fixture is controller-only; it does not claim data-bank storage or `data_out`
 datapath transfer behavior.
+The FIFO library fixture is covered by
+`t/1321-isf-fifo-library-fixture-coverage.t`, which proves strict schedule
+JSON parity, generated importer/child/top scheduled `.fsm` artifacts, strict
+`--outdir` file emission, fixed parameter overrides, use-site bindings,
+scalarized FIFO data entries, plain and strict generated-top HDL generation,
+and generated top wiring for `isf/fifo_library_use.isf`.
 
 Recommended downstream smoke commands:
 
@@ -1589,8 +1610,10 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/stream_stage_contract.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_controller.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_data_path.isf
+./bin/fsmgen --strict --emit-schedule-json isf/fifo_library_use.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
+./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest

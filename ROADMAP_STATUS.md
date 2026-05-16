@@ -10,10 +10,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION` is closed
-  after promoting `isf/fifo_controller.isf` to file-backed strict schedule
-  JSON, scheduled `.fsm`, and plain/strict HDL fixture coverage for the
-  shipped depth-4 controller matrix. The next R14 PNT implementation slice
+- Next decision point: `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION` is closed after
+  promoting `isf/fifo_library_use.isf` to file-backed strict schedule JSON,
+  strict `--outdir` importer/child/top scheduled `.fsm` emission, fixed FIFO
+  parameter/binding provenance, and plain/strict generated-top HDL fixture
+  coverage for the shipped fixed reusable-library path. The next R14 PNT
+  implementation slice
   must select or create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
@@ -5527,6 +5529,13 @@ Done:
   compatible same-value fan-in metadata, plain and strict HDL generation,
   idle cycles, push-only, pop-only, simultaneous push+pop occupancy updates,
   actor-maintained full/empty flags, and 2-bit pointer wrap.
+- `isf/fifo_library_use.isf` now has file-backed FIFO reusable-library
+  fixture coverage through
+  [t/1321-isf-fifo-library-fixture-coverage.t](t/1321-isf-fifo-library-fixture-coverage.t),
+  covering strict schedule JSON parity, strict `--outdir` importer/child/top
+  scheduled `.fsm` emission, fixed FIFO parameter overrides and use-site
+  bindings, scalarized data entries, generated top wiring, and plain plus
+  strict generated-top HDL generation.
 - ISF runtime divisor safety now rejects numeric/exact-width literal-zero
   divisors and actor-level constants that resolve to zero before scheduled
   `.fsm` emission, while preserving nonzero literal/constant divisors and
@@ -5874,7 +5883,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION`, so the next ISF
+  after `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

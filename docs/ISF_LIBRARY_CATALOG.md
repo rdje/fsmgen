@@ -109,6 +109,10 @@ Verification:
   proves CLI generated-top SystemVerilog for the FIFO fixture, including
   fixed parameter bindings, scalarized data entries, and pointer-gated
   accepted push/pop selectors.
+- [t/1321-isf-fifo-library-fixture-coverage.t](../t/1321-isf-fifo-library-fixture-coverage.t)
+  promotes the file-backed fixture to strict schedule JSON parity, strict
+  `--outdir` importer/child/top `.fsm` emission, fixed use-site parameter and
+  binding provenance, and plain plus strict generated-top HDL generation.
 - [t/1239-isf-library-catalog-contract.t](../t/1239-isf-library-catalog-contract.t)
   keeps this catalog aligned with the machine-readable ISF public contract.
 

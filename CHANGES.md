@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF FIFO library fixture promotion shipped
+- Completed `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` and closed the task tree.
+- Added `t/1321-isf-fifo-library-fixture-coverage.t` for file-backed strict
+  schedule JSON parity, generated importer/child/top scheduled `.fsm`
+  artifacts, strict `--outdir` file emission, fixed FIFO parameter overrides,
+  use-site bindings, scalarized FIFO data entries, generated top wiring, and
+  plain plus strict generated-top HDL generation for
+  `isf/fifo_library_use.isf`.
+- Kept the fixture boundary fixed-shape: it does not claim
+  parameter-driven interface/storage elaboration, nested imports, standalone
+  transaction/drive exports, arbitrary-depth generated FIFOs, memory-array
+  backend emission, or automatic non-zero reset values.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, the reusable-library catalog, the
+  mdBook feature matrix, intent-scheduling and backlog chapters, the fixture
+  matrix, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl files passed; focused
+  library/public/book/catalog/spec audit tests passed with
+  `Files=9, Tests=112`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=996`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF FIFO controller fixture promotion shipped
 - Completed `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` and closed the task
   tree.

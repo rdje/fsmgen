@@ -161,6 +161,17 @@ push+pop occupancy updates; actor-maintained `full`/`empty`; 2-bit `wr_ptr` and
 parity; scheduled `.fsm` structure; and plain plus strict HDL generation. It
 does not claim data-bank storage or `data_out` datapath transfer behavior.
 
+The FIFO library fixture is file-backed in the `isf` regression tier for the
+shipped fixed reusable FIFO path. `isf/fifo_library_use.isf` imports
+`common.fifo.fifo`, binds instance `u_fifo`, emits the importing actor,
+specialized child, and generated top scheduled `.fsm` artifacts, records fixed
+parameter overrides and use-site bindings in `library_uses[]`, and reaches
+plain plus strict generated-top HDL generation. It is fixed to
+`DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`; it does not claim
+parameter-driven interface/storage elaboration, nested imports, standalone
+exported transactions or drives, arbitrary-depth generated FIFOs,
+memory-array backend emission, or automatic non-zero reset values.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

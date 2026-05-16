@@ -175,22 +175,25 @@ Current strict-mode ISF coverage:
   fixture.
 - `t/1320-isf-fifo-controller-fixture-coverage.t` proves strict schedule JSON
   parity and strict HDL generation for the bounded FIFO controller fixture.
+- `t/1321-isf-fifo-library-fixture-coverage.t` proves strict schedule JSON
+  parity, strict `--outdir` file emission, and plain plus strict generated-top
+  HDL generation for the bounded fixed FIFO reusable-library fixture.
 
 Remaining inventory gaps after `ISF-FIXTURES.5`:
 
 - I2C, burst-reader, UART, phase, switch, when, generated composition,
-  rule/resource arbitration, stage/contract, FIFO datapath, and FIFO
-  controller have
+  rule/resource arbitration, stage/contract, FIFO datapath, FIFO controller,
+  and FIFO library have
   post-closure file-backed schedule JSON, strict-mode, and generated HDL
   assertions.
 - Quick/smoke currently exercises only APB for ISF; that is intentional for
   turnaround. The SPI-like, I2C-like, burst-reader, UART-like, phase, switch,
   when, generated-composition, rule/resource, stage/contract, FIFO datapath,
-  and FIFO controller fixtures stay in `isf`, not `quick`.
+  FIFO controller, and FIFO library fixtures stay in `isf`, not `quick`.
 - Strict-mode accepted-source fixture coverage is APB plus the bounded
   SPI-like, I2C-like, burst-reader, UART-like, phase, switch, when,
-  generated-composition, rule/resource, stage/contract, FIFO datapath, and
-  FIFO controller fixtures.
+  generated-composition, rule/resource, stage/contract, FIFO datapath, FIFO
+  controller, and FIFO library fixtures.
 - No known fixture matrix candidate remains unpromoted. Future fixture work
   should open a new task tree when a shipped interaction needs a protocol-like
   owner.
@@ -225,6 +228,7 @@ Matrix rules:
 | `isf/stream_stage_contract.isf` | Stage/contract realism fixture. | Sampled payload forwarding, ready/valid transaction stage, bounded eventual contract monitor, reset policy, generated monitor storage, SystemVerilog assertion projection. | `transaction_stages`, `temporal_contracts`, monitor storage kind/role/width, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-STAGE-CONTRACT-FIXTURE-PROMOTION](ISF-STAGE-CONTRACT-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/fifo_controller.isf` | FIFO controller matrix fixture. | Depth-4 occupancy/full/empty update matrix, accepted push/pop pointer wrap, simultaneous push+pop controller behavior, no data-bank storage. | Actor-storage entries for pointers and occupancy, compatible fan-in groups, rule DT assignment counts, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION](ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/fifo_data_path.isf` | FIFO datapath bank-access fixture. | Actor-owned depth-4 bank store/load, pointer-selected accepted push/pop, scalarized storage entries, read-before-write same-cycle policy. | `bank_accesses`, actor-storage entries for `data_0` through `data_3`, rule DT assignment counts, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-FIFO-DATAPATH-FIXTURE-PROMOTION](ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
+| `isf/fifo_library_use.isf` | Fixed FIFO reusable-library fixture. | Import/use binding for `common.fifo.fifo`, generated top wiring, fixed FIFO parameter overrides, scalarized child data entries, combined controller/datapath behavior. | `library_uses`, fixed parameter provenance, clock/reset/input/output bindings, strict schedule JSON CLI parity. | Importing actor, specialized child, and generated top scheduled `.fsm` artifacts; strict `--outdir`; plain and strict generated-top HDL reachability. | `isf`; not quick. | Promoted by [ISF-FIFO-LIBRARY-FIXTURE-PROMOTION](ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md) with bounded schedule/strict/outdir/HDL coverage. |
 | `isf/phase_test.isf` | Phase metadata/pass-through fixture. | Transaction phase pass-through states, delayed completion pulse behavior, no reusable `done` drive storage. | Transaction state order, completion-pulse storage, rdata drive storage, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-PHASE-FIXTURE-PROMOTION](ISF-PHASE-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/switch_test.isf` | Switch dispatch fixture. | Sampled selector capture, explicit branch dispatch, default fallthrough, named-drive branch starts, delayed completion pulse behavior. | Transaction state order, sampled selector storage, named-drive DT blocks, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-SWITCH-FIXTURE-PROMOTION](ISF-SWITCH-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/when_test.isf` | Conditional body fixture. | Entry drive setup, two conditional decision states, multi-step true-body drives, false-path fallthrough, compatible named-drive start fan-in, delayed completion pulse behavior. | Transaction state order, compatible fan-in group for `result_start`, result drive DT block, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-WHEN-FIXTURE-PROMOTION](ISF-WHEN-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
@@ -394,6 +398,22 @@ It remains in the `isf` regression tier, not `quick`, and remains
 controller-only: data-bank storage and `data_out` datapath transfer behavior
 are owned by the datapath and reusable FIFO fixtures.
 
+## Post-Closure FIFO Library Fixture Promotion
+
+`ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` promotes
+`isf/fifo_library_use.isf` after this matrix tree closed. The file-backed
+regression `t/1321-isf-fifo-library-fixture-coverage.t` covers strict
+schedule JSON parity, importer/child/generated-top scheduled `.fsm`
+artifacts, strict `--outdir` file emission, fixed parameter overrides,
+clock/reset/input/output binding provenance, scalarized FIFO data entries,
+generated top wiring, and plain plus strict generated-top HDL generation.
+It remains in the `isf` regression tier, not `quick`, and remains a fixed
+`DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, `OCC_WIDTH=3` reusable-library
+handoff rather than a claim for parameter-driven interface/storage
+elaboration, nested imports, standalone transaction/drive exports,
+arbitrary-depth generated FIFOs, memory-array backend emission, or automatic
+non-zero reset values.
+
 ## ISF-FIXTURES.4 Regression Tier Placement
 
 `ISF-FIXTURES.4` keeps the SPI-like fixture in the `isf` regression tier and
@@ -558,3 +578,7 @@ composition.
 - `2026-05-16`: Recorded post-closure FIFO controller fixture promotion
   through strict schedule JSON, scheduled `.fsm`, and plain/strict HDL
   coverage for the shipped depth-4 controller matrix subset.
+- `2026-05-16`: Recorded post-closure FIFO library fixture promotion through
+  strict schedule JSON, strict `--outdir`, generated importer/child/top
+  scheduled `.fsm`, and plain/strict generated-top HDL coverage for the
+  shipped fixed reusable FIFO subset.

@@ -2,6 +2,31 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF FIFO library fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md).
+- The `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION` tree is now closed. No active ISF
+  task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- Added
+  [t/1321-isf-fifo-library-fixture-coverage.t](t/1321-isf-fifo-library-fixture-coverage.t)
+  for file-backed strict schedule JSON parity, generated importer/child/top
+  scheduled `.fsm` artifacts, strict `--outdir` file emission, fixed FIFO
+  parameter overrides, use-site bindings, scalarized FIFO data entries,
+  generated top wiring, and plain plus strict generated-top HDL generation for
+  [isf/fifo_library_use.isf](isf/fifo_library_use.isf).
+- The fixture remains fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
+  `OCC_WIDTH=3`; broader reusable-library generalization remains deferred.
+- Updated public `tested_by` metadata, CI tier checks, the ISF spec,
+  downstream handoff, public contract, reusable-library catalog, mdBook,
+  fixture matrix, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl files passed; focused
+  library/public/book/catalog/spec audit tests passed with
+  `Files=9, Tests=112`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=996`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF FIFO controller fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.1` in
