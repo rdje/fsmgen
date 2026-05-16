@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF feature matrix report metadata coverage synchronized
+- Completed `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` and closed
+  the task tree.
+- Added explicit actor report metadata and schedule-report schema/storage-role
+  rows plus a schedule JSON example to the ISF shipped feature matrix.
+- Widened `t/1305-isf-book-feature-matrix-audit.t` so actor
+  params/phases/stages, `schema_version`, storage roles,
+  `schedule_report_full_schema_stable`, and report-internal non-claims remain
+  documented.
+- Parser, scheduler, emitter, schedule-report payload, generated `.fsm`, and
+  HDL behavior are unchanged.
 ### R14 — ISF feature matrix port/binding coverage synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.1` and closed the
   task tree.

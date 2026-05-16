@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF feature matrix report metadata coverage synchronized
+- Completed `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` and closed
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.md).
+- The ISF shipped feature matrix now has explicit rows and examples for
+  actor-level params, report-only actor phases/stages, schedule JSON
+  `schema_version: 1`, storage role metadata, and
+  `schedule_report_full_schema_stable`.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  so those markers and the actor-level runtime/report-internal non-claims
+  cannot disappear silently.
+- No parser, scheduler, emitter, schedule-report payload, generated `.fsm`, or
+  HDL behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF feature matrix port/binding coverage synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.1` and closed
   [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.md).

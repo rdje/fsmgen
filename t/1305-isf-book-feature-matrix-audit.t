@@ -32,6 +32,7 @@ my @required_rows = (
     ['`.isf` CLI input', 'shipped'],
     ['Public parser and scheduler facades', 'shipped bounded surface'],
     ['Actor envelope', 'shipped'],
+    ['Actor report metadata and params', 'shipped bounded surface'],
     ['Single-clock timing', 'shipped'],
     ['Multi-clock domains', 'shipped bounded surface'],
     ['Acknowledged event CDC', 'shipped bounded surface'],
@@ -58,6 +59,7 @@ my @required_rows = (
     ['Spawned generated children', 'shipped bounded surface'],
     ['Reusable ISF libraries', 'shipped bounded surface'],
     ['Schedule reports', 'shipped bounded surface'],
+    ['Schedule report schema and storage roles', 'shipped bounded surface'],
     ['Diagnostics and downstream issue reporting', 'shipped'],
 );
 
@@ -85,6 +87,11 @@ my @required_examples = (
     '(spawn worker as w0',
     '(imports',
     '--emit-schedule-json',
+    '"schema_version": 1',
+    '"actor_params"',
+    '"actor_phases"',
+    'dynamic_wait_counter',
+    'schedule_report_full_schema_stable',
 );
 
 for my $example (@required_examples) {
@@ -101,11 +108,13 @@ my @required_non_claims = (
     'Enum members are not writable targets',
     'Aggregate interface ports',
     'Backlog resource kinds',
+    'Actor-level phase and stage metadata is report-only',
     'Direct `(on ...)` activation-site `(params ...)`',
     'Rule-trigger output bindings',
     'snapshot-vs-live binding timing selection',
     'Nested stages',
     'Temporal contracts beyond the top-level bounded eventual subset',
+    'Raw parser actor hashes',
     'VHDL is recognized as a target family',
 );
 

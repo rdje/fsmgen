@@ -31,6 +31,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | `.isf` CLI input | shipped | `./bin/fsmgen file.isf`, `--strict file.isf`, `--emit-schedule-json`, and `--outdir DIR` for multi-file lower results. | Single-file actors lower to scheduled `.fsm` before HDL. Multi-file generated-child and accepted multi-domain actors write every scheduled `.fsm` artifact, then use the generated top for HDL generation. |
 | Public parser and scheduler facades | shipped bounded surface | `FSM::Adapter::ISF->new(debug => ...)`, `parse_file`, `parse_source`, `FSM::Scheduler::ISF->new(...)`, `lower`, and `report`. | Public methods validate receivers and argument shapes before private parsing/lowering. The capability manifest advertises the live public contract under `embedding.isf_public_interface`. |
 | Actor envelope | shipped | `(actor NAME ...)` with singleton `(clock ...)`, `(clock-domains ...)`, `(reset ...)`, `(watchdog ...)`, `(interface ...)`, `(storage ...)`, `(types ...)`, `(enums ...)`, `(imports ...)`, `(constants ...)`, `(params ...)`, `(resources ...)`, and reusable-library `(use ...)` where documented. | The scheduled `.fsm` preserves reviewable system, size, constants, params, type, enum, import, storage, rule, drive, and transaction artifacts. Duplicate singleton clauses fail closed. |
+| Actor report metadata and params | shipped bounded surface | Actor-level `(params ...)`, `(phase NAME ...)`, and `(stage NAME ...)` metadata where documented. | Parameter defaults preserve source-order report entries in `actor_params[]`. Actor-level phase/stage clauses are parser-validated and report-only through `actor_phases[]` and `actor_stages[]`; they do not add generated `.fsm` or HDL runtime scheduling behavior. |
 | Single-clock timing | shipped | `(clock clk)` plus optional `(reset ...)` and `(watchdog N)`. | The actor has one clock domain. Resets lower to the matching `.fsm` system reset form. Watchdogs create inferred counters for accepted awaits. |
 | Multi-clock domains | shipped bounded surface | Actor-level `(clock-domains ...)` with named domains, one default domain, optional per-domain resets, and `(domain NAME)` ownership annotations. | Lowering partitions the actor into one scheduled `.fsm` per domain plus a generated top. Direct cross-domain reads, writes, activations, and bindings fail closed unless a shipped crossing primitive owns the path. |
 | Acknowledged event CDC | shipped bounded surface | `(crossings (event NAME (from SRC SRC_REQ) (to DST DST_PULSE) (ready SRC_READY)))`. | The generated top wires a concrete acknowledged-event CDC child. The source side sees `ready`; the destination side receives a one-cycle pulse. No data payload or same-cycle delivery is promised. |
@@ -57,6 +58,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Spawned generated children | shipped bounded surface | `(spawn child as instance [(params ...)])`, `(await_all done)`, and `(await_any done)`. | Lowering emits parent, child, and generated top scheduled `.fsm` artifacts. Instance start/done handoffs, named-drive handoffs, parameter overrides, and schedule-report generated-composition metadata are bounded public review surfaces. |
 | Reusable ISF libraries | shipped bounded surface | `(library NAME (exports (actor A)) (actor A ...))`, actor `(imports (library NAME as ALIAS))`, and `(use ALIAS.actor as INSTANCE (params ...) (bind ...))`. | Library use lowers to generated composition artifacts and report `library_uses[]` metadata. The shipped catalog includes `common.fifo.fifo`; parameter-driven shape elaboration and nested library imports remain backlog. |
 | Schedule reports | shipped bounded surface | `--emit-schedule-json` and in-process `report(...)`. | Reports expose actor, transaction, storage, rule, drive, generated-composition, library-use, clock-domain, crossing, issue, schema-version, and public-contract metadata only through bounded documented keys. |
+| Schedule report schema and storage roles | shipped bounded surface | Schedule JSON `schema_version: 1`, public `schedule_report_full_schema_stable`, advertised key/value families, and `inferred_storage[].kind`/`role` values. | The version-1 schedule JSON schema is stable through the public contract. Storage roles include dynamic waits, activation handoffs, rule-trigger sources, transaction ports/bindings, and temporal contract monitors. Raw parser actor hashes, private `LoweringIR` internals, raw assignment lists, and recursive child report dumps remain private. |
 | Diagnostics and downstream issue reporting | shipped | Fail-closed parser/lowering diagnostics, strict-mode compatibility cuts, and `bin/fsmgen-issue-bundle`. | Unsupported public forms reject before misleading artifacts are emitted. Downstream consumers can provide a reproducible issue bundle without understanding `.fsm` or `.isf` internals. |
 
 ## Examples By Family
@@ -300,6 +302,37 @@ The schedule report is the machine-readable companion to the scheduled `.fsm`
 review artifact. The capability manifest advertises the live ISF public
 contract, including this book chapter through `live_document_paths`.
 
+```json
+{
+  "schema_version": 1,
+  "actor_params": [
+    { "name": "WIDTH", "value": 8 }
+  ],
+  "actor_phases": [
+    { "name": "capture", "body": [["note", "metadata"]] }
+  ],
+  "actor_stages": [],
+  "inferred_storage": [
+    {
+      "name": "wait_count",
+      "kind": "counter",
+      "role": "dynamic_wait_counter",
+      "width": 4
+    },
+    {
+      "name": "done_fail",
+      "kind": "register",
+      "role": "temporal_contract_monitor"
+    }
+  ]
+}
+```
+
+The manifest flag `schedule_report_full_schema_stable` is true for
+`schema_version: 1`. Consumers should still prefer advertised keys, value
+families, and explicit role fields over parsing generated signal names as
+semantic API.
+
 ## Explicit Non-Claims
 
 These are important because they prevent the matrix from implying support that
@@ -315,6 +348,9 @@ does not exist:
 - Aggregate interface ports, transaction-local aggregate ports, aggregate
   banks, subaggregate updates, and whole-record/list truthiness remain backlog.
 - Backlog resource kinds are registry names, not runtime arbitration support.
+- Actor-level phase and stage metadata is report-only; it does not schedule
+  actor-level runtime phases, barriers, generated `.fsm` states, or HDL
+  behavior.
 - Direct `(on ...)` activation-site `(params ...)` is unsupported; static
   specialization belongs to spawn, generated blocking `do`, and rule-trigger
   generated activation sites.
@@ -326,6 +362,9 @@ does not exist:
 - Temporal contracts beyond the top-level bounded eventual subset, including
   global implication forms, dynamic bounds, expression operands, and multiple
   outstanding obligations, are not shipped.
+- Raw parser actor hashes, private `LoweringIR` internals, raw assignment
+  provenance lists, and recursive child report dumps are not public schedule
+  JSON API.
 - VHDL is recognized as a target family, but the full VHDL backend is not
   shipped.
 

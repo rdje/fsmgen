@@ -10,10 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC` is closed
-  after adding explicit transaction port and activation binding coverage to
-  the ISF shipped feature matrix and widening the matrix audit. The next R14
-  PNT implementation slice must select or create a new task tree before code
+- Next decision point: `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC` is
+  closed after adding explicit report metadata coverage to the ISF shipped
+  feature matrix and widening the matrix audit. The next R14 PNT
+  implementation slice must select or create a new task tree before code
   changes. `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -265,6 +265,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.1` then added explicit
   transaction port and activation binding row/example/non-claim coverage to
   the ISF shipped feature matrix, widened
+  `t/1305-isf-book-feature-matrix-audit.t`, and changed no parser, scheduler,
+  report payload, generated `.fsm`, or HDL behavior.
+  `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` then added explicit
+  actor report metadata and schedule-report schema/storage-role rows plus a
+  schedule JSON example to the ISF shipped feature matrix, widened
   `t/1305-isf-book-feature-matrix-audit.t`, and changed no parser, scheduler,
   report payload, generated `.fsm`, or HDL behavior.
   Previous R14
@@ -5460,6 +5465,9 @@ Done:
   activation-site bindings, `transaction_port_bindings[]` report provenance,
   and the rule-trigger output-binding plus snapshot-vs-live timing
   non-claims.
+- The ISF shipped feature matrix now explicitly lists actor report metadata,
+  actor params, schedule JSON schema-version stability, storage roles, and
+  report-internal non-claims.
 - The bootstrap import-tree snapshot now records the reachable ISF adapter and
   scheduler path.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
@@ -5794,7 +5802,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC`, so the next ISF
+  after `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

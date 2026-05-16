@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: the ISF feature matrix must expose report metadata boundaries
+- `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` expands the book matrix
+  because actor params, actor phase/stage report metadata, schema-version
+  stability, and storage roles are public downstream review surfaces.
+- Actor-level phase/stage metadata remains deliberately report-only: the
+  parser validates and reports it, but the scheduler does not create runtime
+  actor phases, barriers, `.fsm` states, or HDL behavior from it.
+- The matrix now separates public schedule JSON metadata from private
+  internals: raw parser actor hashes, private `LoweringIR`, raw assignment
+  provenance lists, and recursive child report dumps are not public API.
 ## 2026-05-16: the ISF feature matrix must make port bindings explicit
 - `ISF-MDBOOK-FEATURE-MATRIX-PORT-BINDING-SYNC.1` expands the book matrix
   because transaction ports and activation-site bindings are shipped
