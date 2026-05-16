@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF generated-name stability policy documented
+- Completed `ISF-GENERATED-NAME-POLICY.1`, closing the
+  `ISF-GENERATED-NAME-POLICY` task tree.
+- Documented that generated names in ISF schedule reports and generated
+  artifacts are deterministic for the same source and FSMGen version and may
+  be used as report-local/artifact-local identifiers when explicit public
+  fields reference them.
+- Documented that generated names are not a semantic string grammar; downstream
+  consumers should use bounded metadata fields instead of reverse-engineering
+  generated spelling.
+- Removed generated-name stability from the remaining whole-schema freeze
+  blocker list while keeping the unrelated blockers intact.
+- Parser, scheduler, report payload, public manifest, generated `.fsm`, and
+  HDL behavior are unchanged.
 ### R14 — ISF resource backlog truth synchronized
 - Completed `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1`, closing the
   `ISF-RESOURCE-BACKLOG-TRUTH-SYNC` task tree.

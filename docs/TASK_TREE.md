@@ -42,6 +42,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 | `ISF-DOWNSTREAM-INTEGRATION-SPEC` | `done` | `R14` | `closed` | [docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md](docs/tasks/ISF-DOWNSTREAM-INTEGRATION-SPEC.md) |
 | `ISF-BACKLOG-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md) |
 | `ISF-RESOURCE-BACKLOG-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md) |
+| `ISF-GENERATED-NAME-POLICY` | `done` | `R14` | `closed` | [docs/tasks/ISF-GENERATED-NAME-POLICY.md](docs/tasks/ISF-GENERATED-NAME-POLICY.md) |
 | `ISF-PARAM-OVERRIDE-CONSTANTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md) |
 | `ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md](docs/tasks/ISF-ASSIGN-DIAGNOSTIC-TRUTH-SYNC.md) |
 | `ISF-SPEC-TEST-INDEX-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md](docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md) |
@@ -116,6 +117,7 @@ as done work unless a future task reopens them.
 | Self-contained downstream ISF integration handoff | `ISF-DOWNSTREAM-INTEGRATION-SPEC` |
 | ISF feature-backlog truth synchronization | `ISF-BACKLOG-TRUTH-SYNC` |
 | Resource arbitration and storage-role backlog truth synchronization | `ISF-RESOURCE-BACKLOG-TRUTH-SYNC` |
+| Generated-name stability policy for schedule reports and generated artifacts | `ISF-GENERATED-NAME-POLICY` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |

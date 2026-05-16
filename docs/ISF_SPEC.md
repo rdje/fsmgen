@@ -2138,6 +2138,16 @@ The capability-manifest ISF public contract exposes the same policy through
 `scheduled_fsm_dt_ordering` and `schedule_report_dt_ordering`.
 Those ordering fields are audited as exact paired metadata across direct and
 manifest views.
+Generated names in schedule reports and generated artifacts are deterministic
+for the same source and FSMGen version, and report fields may reference those
+names for joins inside the same emitted report or artifact set. They are not a
+semantic string grammar for downstream tools to parse. Consumers should prefer
+explicit bounded metadata such as `owner`, `owner_kind`, `role`, `kind`,
+`instance`, `parent_port`, `child_port`, `trigger_source`, `payload_source`,
+storage `role`, and generated-composition summaries. Before the whole schedule
+JSON schema is frozen, generated spelling may change in a future
+feature-scoped slice, but any such downstream-visible change must update the
+public docs, contract metadata where applicable, and tests in the same slice.
 The `actor_constants` array reports actor-level ISF constants in source order.
 Each entry contains `name` and stringified `value`. The values are
 compile-time constants; they are not runtime ports, not overrideable params,
@@ -2339,12 +2349,11 @@ keys or new value-family members may be added only with public-contract
 metadata, focused tests, and documentation in the same slice.
 
 The remaining blockers before a whole-schema freeze are explicit: decide
-whether the report needs its own schema/version field, close or deliberately
-defer remaining storage-role families, define generated-name stability,
-decide whether assignment provenance and multi-file child summaries stay
-private or become bounded public summaries, define additive/deprecation
-policy, and maintain a golden fixture matrix for every advertised branch
-through both in-process and CLI report paths.
+whether the report needs its own schema/version field, decide whether
+assignment provenance and multi-file child summaries stay private or become
+bounded public summaries, define additive/deprecation policy, and maintain a
+golden fixture matrix for every advertised branch through both in-process and
+CLI report paths.
 
 ## 11. Current Regression Fixtures
 

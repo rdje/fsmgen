@@ -1221,6 +1221,17 @@ advertises these through `schedule_report_storage_kind_values`,
 `schedule_report_storage_role_values`, and
 `schedule_report_storage_width_shape`.
 
+Generated names in schedule reports and generated artifacts are deterministic
+for the same source and FSMGen version, and bounded report fields may use them
+as report-local or artifact-local identifiers. They are not a public semantic
+string grammar. Downstream consumers should use explicit bounded fields such
+as `owner`, `owner_kind`, `role`, `kind`, `instance`, `parent_port`,
+`child_port`, `trigger_source`, `payload_source`, storage `role`, and
+generated-composition summaries instead of deriving semantics from generated
+name spelling. Before full schema freeze, a feature-scoped slice may change a
+generated spelling only with synchronized docs, contract metadata where
+applicable, and tests.
+
 For each `bank_accesses` entry, `kind` is `store` or `load`;
 `same_cycle_policy` is currently `read_before_write`; `scalar_entries` lists
 the deterministic scalarized storage entries used in the scheduled `.fsm`;
@@ -1460,8 +1471,6 @@ Blockers before flipping `schedule_report_full_schema_stable` to true:
 
 - Decide whether the report gets its own schema/version field or continues to
   rely on `embedding.isf_public_interface` as the schema discovery surface.
-- Close or explicitly defer remaining storage-role families and generated-name
-  stability policy.
 - Decide whether assignment provenance and multi-file child summaries stay
   private or gain bounded public summaries.
 - Define additive/deprecation policy for future top-level keys, nested optional

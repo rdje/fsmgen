@@ -215,6 +215,13 @@ through `dt_assignment_operator_family_map`.
 Rule guards lower through non-state DT DTE headers in scheduled `.fsm` review
 artifacts, so the guard activates the whole rule DT once instead of being
 repeated on every action.
+Generated names in schedule reports and generated artifacts are deterministic
+for the same source and FSMGen version and may be used for report-local or
+artifact-local joins when a public field explicitly references the same name.
+They are not a semantic string grammar; downstream consumers should use
+bounded metadata fields such as owner, role, kind, instance, binding, storage
+role, and generated-composition summaries instead of parsing generated name
+spelling.
 Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
 advertises that shape through `schedule_report_dt_assignments_shape`.

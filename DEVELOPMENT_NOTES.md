@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: generated names are identifiers, not semantic grammar
+- `ISF-GENERATED-NAME-POLICY.1` makes the generated-name contract explicit
+  without changing any generated strings. Names remain deterministic for the
+  same source and FSMGen version, which supports report-local joins and
+  review-artifact comparison.
+- The policy deliberately avoids promising generated-name spelling as a
+  semantic API. Downstream consumers should use explicit report fields such as
+  owner, role, kind, instance, binding summaries, storage role, and
+  generated-composition summaries.
+- This keeps future feature slices able to adjust generated spelling before
+  full schedule-schema freeze, provided the slice updates docs, contract
+  metadata where applicable, and tests together.
 ## 2026-05-16: resource grant storage remains an explicit deferral
 - `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` corrects book status text only. The
   shipped resource-arbitration implementation already enforces

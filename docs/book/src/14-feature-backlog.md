@@ -769,12 +769,17 @@ rules, storage kind/role/width metadata, and CLI/in-process report parity.
 New optional keys or value-family members may be added only when the same slice
 updates contract metadata, focused tests, and user-facing docs.
 
+Generated-name policy is now explicit: generated names are deterministic for
+the same source and FSMGen version and may be used for report-local or
+artifact-local joins when public fields explicitly reference them, but
+downstream consumers should use bounded metadata fields instead of parsing
+generated-name spelling as a semantic contract.
+
 Blockers before flipping `schedule_report_full_schema_stable` are: decide
-whether the report needs its own schema/version field, close or explicitly
-defer remaining storage-role families, define generated-name stability policy,
-decide whether assignment provenance and multi-file child summaries stay
-private or gain bounded public summaries, document additive/deprecation rules,
-and keep a golden fixture matrix for every advertised branch.
+whether the report needs its own schema/version field, decide whether
+assignment provenance and multi-file child summaries stay private or gain
+bounded public summaries, document additive/deprecation rules, and keep a
+golden fixture matrix for every advertised branch.
 
 ### ISF Realistic Fixture Matrix
 

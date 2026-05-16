@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF generated-name stability policy documented
+- Completed `ISF-GENERATED-NAME-POLICY.1` in
+  [docs/tasks/ISF-GENERATED-NAME-POLICY.md](docs/tasks/ISF-GENERATED-NAME-POLICY.md),
+  closing the generated-name policy tree.
+- ISF spec, downstream handoff, public contract doc, and mdBook now state that
+  generated names are deterministic for the same source and FSMGen version and
+  can be used as report-local/artifact-local identifiers when public fields
+  explicitly reference them.
+- The same docs now state generated names are not a semantic string grammar;
+  downstream consumers should use bounded metadata fields such as owner, role,
+  kind, instance, binding summaries, storage role, and generated-composition
+  summaries instead of parsing generated spelling.
+- Removed generated-name stability from the open schedule-report whole-schema
+  freeze blockers while leaving schema/version, assignment provenance,
+  multi-file child summaries, additive/deprecation policy, and golden fixture
+  matrix blockers intact.
+- This is documentation-policy synchronization only. Parser, scheduler, report
+  payload, public manifest, generated `.fsm`, and HDL behavior are unchanged.
 ## 2026-05-16: ISF resource backlog truth synchronized
 - Completed `ISF-RESOURCE-BACKLOG-TRUTH-SYNC.1` in
   [docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-RESOURCE-BACKLOG-TRUTH-SYNC.md),

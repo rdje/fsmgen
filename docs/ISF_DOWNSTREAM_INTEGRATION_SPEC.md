@@ -973,6 +973,17 @@ clock_domains
 crossings
 ```
 
+Generated names in reports and generated artifacts are deterministic for the
+same source and FSMGen version. They can be used as report-local or
+artifact-local identifiers when another public field explicitly references the
+same name. They are not a semantic string grammar for downstream tools to
+parse. SPECFORGE-style consumers should use explicit bounded fields such as
+`owner`, `owner_kind`, `role`, `kind`, `instance`, `parent_port`,
+`child_port`, `trigger_source`, `payload_source`, storage `role`, and
+generated-composition summaries. Before the whole schedule JSON schema is
+frozen, generated spelling may change only in a feature-scoped slice that also
+updates docs, contract metadata where applicable, and tests.
+
 Scalar summaries:
 
 - `source`: report source basename derived from the actor name with `.isf`.

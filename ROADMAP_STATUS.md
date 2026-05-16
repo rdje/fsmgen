@@ -62,8 +62,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   resource arbitration is marked partially shipped for the `rule_slot` /
   `priority` subset, and per-cycle resource-grant/debug storage is explicitly
   deferred until future lowering materializes such signals. This was
-  documentation-truth synchronization only. The next PNT selection should
-  choose a fresh roadmap-aligned R14 task tree before implementation.
+  documentation-truth synchronization only.
+  `ISF-GENERATED-NAME-POLICY.1` then documented the generated-name stability
+  policy across the ISF spec, downstream handoff, public contract doc, and
+  mdBook: generated names are deterministic for the same source and FSMGen
+  version and usable as report-local/artifact-local identifiers when public
+  fields reference them, but downstream tools should use bounded metadata
+  fields instead of parsing generated spelling as semantic API. The next PNT
+  selection should choose a fresh roadmap-aligned R14 task tree before
+  implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -214,6 +221,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   resource arbitration status and explicitly deferred per-cycle
   resource-grant/debug storage until a future implementation materializes
   grant/debug signals with public contract metadata and regression coverage.
+  `ISF-GENERATED-NAME-POLICY.1` documented generated-name stability policy and
+  removed it from the open whole-schema freeze blocker list without changing
+  generated names, schedule JSON payloads, generated `.fsm`, or HDL output.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.
