@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate storage leaf expression reads shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.8` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.9`.
+- Transaction `set` RHS expressions now accept scalar aggregate leaf operands
+  from declared actor-owned aggregate storage carriers, such as
+  `(set mode_out (+ frame.mode mode_in))`.
+- The parser rejects aggregate paths in expression operator position,
+  unknown members, out-of-range indexes, and subaggregate operands before
+  lowering.
+- Aggregate paths outside transaction `set` RHS values or direct set targets,
+  aggregate interface/transaction/bank carriers, and enum member references
+  outside actor constants remain deferred.
 ## 2026-05-16: ISF aggregate storage leaf writes shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.7` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

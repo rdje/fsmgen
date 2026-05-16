@@ -124,25 +124,6 @@ ISF
         'unknown record member fails before lowering',
     );
 
-    assert_parse_rejected(
-        <<'ISF',
-(actor aggregate_expr_still_deferred
-  (types
-    (type frame_t (record (mode (bits 2)) (flag bit))))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output mode_out (width 2)))
-  (storage
-    (var frame (type frame_t)))
-  (transaction main
-    (on start)
-    (set mode_out (+ frame.mode 1))))
-ISF
-        qr/set RHS references aggregate storage path 'frame\.mode'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads or direct transaction set target scalar leaf writes/,
-        'aggregate paths inside expressions remain deferred',
-    );
 };
 
 done_testing();

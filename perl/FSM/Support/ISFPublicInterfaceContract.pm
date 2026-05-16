@@ -428,6 +428,7 @@ sub build_isf_public_interface_contract {
             't/1259-isf-aggregate-storage-type-aliases.t',
             't/1260-isf-aggregate-storage-leaf-reads.t',
             't/1261-isf-aggregate-storage-leaf-writes.t',
+            't/1262-isf-aggregate-storage-leaf-expression-reads.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

@@ -842,6 +842,9 @@ Rules:
   leaves from declared actor-owned aggregate storage, for example
   `frame.mode` or `lanes[0]`. The leaf path is resolved against the declared
   shape before lowering.
+- Transaction `set` RHS expressions may use scalar aggregate leaves as
+  operands, for example `(set mode_out (+ frame.mode mode_in))`. Aggregate
+  paths are not accepted in expression operator position.
 - Transaction `(set aggregate_leaf value)` clauses may write scalar aggregate
   leaves on declared actor-owned aggregate storage, for example
   `(set frame.mode mode_in)` or `(set lanes[0] bit_in)`. Subaggregate targets
@@ -862,12 +865,12 @@ Rules:
   members fail closed before generated artifacts are emitted.
 - No other ISF expression or value context consumes enum members yet.
 
-Aggregate member/item access outside direct transaction `set` RHS or target
-tokens, subaggregate updates, aggregate interface or transaction ports, and
-aggregate storage banks are not shipped yet. Existing aggregate support beyond
-the actor-owned storage-variable carrier and direct scalar leaf read/write
-context is limited to compatible aggregate/list literal parameter values and
-scalarized actor-owned bank/storage lowering.
+Aggregate member/item access outside direct transaction `set` RHS values or
+target tokens, subaggregate operands/updates, aggregate interface or
+transaction ports, and aggregate storage banks are not shipped yet. Existing
+aggregate support beyond the actor-owned storage-variable carrier and direct
+scalar leaf read/write context is limited to compatible aggregate/list literal
+parameter values and scalarized actor-owned bank/storage lowering.
 
 ### 11.7 Blocking Do, Spawn, Await Sync
 
@@ -1262,7 +1265,8 @@ Required fail-closed examples:
   declaration, package import aliases, aggregate type aliases outside
   actor-owned storage variables, unknown aggregate members, out-of-range list
   indexes, aggregate storage member/item paths outside direct transaction
-  `set` RHS or target tokens, and subaggregate updates.
+  `set` RHS values or target tokens, aggregate paths in expression operator
+  position, and subaggregate operands/updates.
 - Unsupported raw `assign` compatibility forms. The removed transaction
   `(assign ...)` keyword has targeted migration guidance to existing explicit
   timing constructs; it is not accepted or auto-mapped.
@@ -1311,7 +1315,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1258-isf-enum-member-constants.t \
   t/1259-isf-aggregate-storage-type-aliases.t \
   t/1260-isf-aggregate-storage-leaf-reads.t \
-  t/1261-isf-aggregate-storage-leaf-writes.t
+  t/1261-isf-aggregate-storage-leaf-writes.t \
+  t/1262-isf-aggregate-storage-leaf-expression-reads.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

@@ -278,13 +278,15 @@ also continues to accept numeric/exact-width parameter values, actor-local
 constants for selected static specialization values, and compatible
 aggregate/list literal parameter values. Transaction `set` RHS clauses may
 read scalar aggregate leaves from declared aggregate storage carriers, such as
-`frame.mode` or `lanes[0]`, and direct transaction `set` targets may write
+`frame.mode` or `lanes[0]`, either directly or as scalar operands inside
+transaction `set` RHS expressions. Direct transaction `set` targets may write
 scalar aggregate leaves on those same carriers, such as `(set frame.flag
-flag_in)` or `(set lanes[0] bit_in)`. Aggregate member paths inside broader
-expressions, subaggregate updates, aggregate interface or transaction ports,
-aggregate storage banks, enum member references outside actor constants,
-aggregate field/slice/update lowering, and broader aggregate shape inference
-are separate follow-on leaves.
+flag_in)` or `(set lanes[0] bit_in)`. Aggregate member paths outside
+transaction `set` RHS values or direct targets, subaggregate
+operands/updates, aggregate interface or transaction ports, aggregate storage
+banks, enum member references outside actor constants, aggregate
+field/slice/update lowering, and broader aggregate shape inference are
+separate follow-on leaves.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate

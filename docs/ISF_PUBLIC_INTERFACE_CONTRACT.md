@@ -697,15 +697,17 @@ NAME)` scalar aliases on width-bearing actor interface ports,
 transaction-local ports, and actor-owned storage entries, and packed `list` or
 `record` aliases only on actor-owned storage variables. Transaction `(set
 target aggregate_leaf)` clauses may read scalar member/item leaves from those
-declared storage variables, and transaction `(set aggregate_leaf value)`
+declared storage variables, transaction `set` RHS expressions may use scalar
+member/item leaves as operands, and transaction `(set aggregate_leaf value)`
 clauses may write scalar member/item leaves on those same declared storage
 variables. Lowering preserves `+types`, `+import`, typed `+size` entries, and
 embedded imported package roots in scheduled `.fsm` review artifacts. Unknown
 aliases, package aliases, `(width ...)` plus `(type ...)` conflicts, aggregate
 aliases outside actor-owned storage variables, unknown aggregate members,
 out-of-range list indexes, aggregate paths outside direct transaction `set`
-RHS or target tokens, and subaggregate updates fail closed. Actor-local
-`(enums ...)` declarations are preserved as scheduled `.fsm` `+enums`. Enum
+RHS values or target tokens, aggregate paths in expression operator position,
+and subaggregate operands/updates fail closed. Actor-local `(enums ...)`
+declarations are preserved as scheduled `.fsm` `+enums`. Enum
 member references are public only as actor constant values in this slice, using
 local `mode.BUSY` or package-qualified
 `shared.mode.BUSY` spelling and resolving to non-negative integer literal
@@ -738,6 +740,11 @@ covering record member writes, package list item writes, scheduled `.fsm`
 review artifacts, CLI HDL generation, and fail-closed diagnostics for unknown
 members, subaggregate writes, and aggregate paths outside direct transaction
 `set` positions.
+Transaction `set` RHS expression aggregate leaf operands are checked by
+[t/1262-isf-aggregate-storage-leaf-expression-reads.t](../t/1262-isf-aggregate-storage-leaf-expression-reads.t),
+covering record member and package list item expression operands, scheduled
+`.fsm` review artifacts, CLI HDL generation, and fail-closed diagnostics for
+unknown members, operator-position paths, and subaggregate operands.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

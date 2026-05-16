@@ -159,6 +159,7 @@ my $expected_tested_by = [
     't/1259-isf-aggregate-storage-type-aliases.t',
     't/1260-isf-aggregate-storage-leaf-reads.t',
     't/1261-isf-aggregate-storage-leaf-writes.t',
+    't/1262-isf-aggregate-storage-leaf-expression-reads.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

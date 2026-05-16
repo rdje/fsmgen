@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate leaf expression reads are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.8` widens the read side from direct transaction
+  `set` RHS tokens to scalar operands inside transaction `set` RHS
+  expressions. This uses the same parser-side shape resolver and the same
+  scheduled `.fsm` aggregate path projection as direct leaf reads.
+- Aggregate paths are rejected in expression operator position so the source
+  still has ordinary expression heads and the lowerer does not need to define
+  aggregate-path callable semantics.
+- The slice keeps non-`set` expression contexts closed. Conditions, waits,
+  rule actions, drives, and subaggregate operands need separate timing and
+  width/shape contracts before they can become public.
 ## 2026-05-16: aggregate leaf writes reuse the partial-LHS path
 - `ISF-TYPE-AGGREGATE-PARITY.7` selects direct transaction `set` targets as
   the first aggregate update context because `.fsm` already supports typed

@@ -734,14 +734,32 @@ sub _validate_transaction_aggregate_storage_clause {
 
 sub _validate_transaction_set_aggregate_storage_rhs {
     my ($rhs, $aggregate_roots, $context) = @_;
-    if (!ref($rhs)) {
-        my $path = _aggregate_storage_path_token($rhs, $aggregate_roots);
+    return _validate_transaction_set_rhs_aggregate_storage_reads($rhs, $aggregate_roots, $context);
+}
+
+sub _validate_transaction_set_rhs_aggregate_storage_reads {
+    my ($value, $aggregate_roots, $context) = @_;
+    if (!ref($value)) {
+        my $path = _aggregate_storage_path_token($value, $aggregate_roots);
         _validate_aggregate_storage_leaf_read_path($path, $aggregate_roots, $context)
             if defined $path;
         return 1;
     }
 
-    return _reject_aggregate_storage_paths($rhs, $aggregate_roots, $context);
+    if (ref($value) eq 'ARRAY') {
+        for my $index (0 .. $#$value) {
+            my $item = $value->[$index];
+            if ($index == 0 && defined($item) && !ref($item)) {
+                my $path = _aggregate_storage_path_token($item, $aggregate_roots);
+                confess "Error: $context expression operator references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths inside set RHS expressions only as scalar operands\n"
+                    if defined $path;
+                next;
+            }
+            _validate_transaction_set_rhs_aggregate_storage_reads($item, $aggregate_roots, $context);
+        }
+    }
+
+    return 1;
 }
 
 sub _validate_transaction_set_aggregate_storage_target {

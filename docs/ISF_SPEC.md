@@ -288,18 +288,22 @@ variables: the generated `.fsm` preserves the authored aggregate alias in
 with packed `width`, authored `type`, and resolved `type_kind` (`list` or
 `record`). Scalar member/item reads such as `frame.flag` or `lanes[0]` are
 accepted as the direct RHS token of transaction
-`(set target aggregate_leaf)` clauses, and scalar member/item writes such as
+`(set target aggregate_leaf)` clauses and as scalar operands inside
+transaction `set` RHS expressions, for example
+`(set mode_out (+ frame.mode mode_in))`. Scalar member/item writes such as
 `(set frame.flag flag_in)` or `(set lanes[0] bit_in)` are accepted as direct
-transaction `set` targets. Both forms resolve against the declared aggregate
-storage shape before lowering. Aggregate paths inside broader expressions,
-subaggregate writes, aggregate interface or transaction ports, and aggregate
-storage banks remain deferred. Existing ISF aggregate support beyond this
-carrier plus direct scalar leaf read/write context remains limited to
-compatible aggregate/list literal parameter values and scalarized storage/bank
-lowering. Future enum member value references outside actor constants,
-additional aggregate carriers, aggregate field/slice/update lowering,
-incompatible enum values, aggregate shape mismatches, and ambiguous
-subaggregate updates remain owned by later `ISF-TYPE-AGGREGATE-PARITY` leaves.
+transaction `set` targets. These forms resolve against the declared aggregate
+storage shape before lowering. Aggregate paths outside transaction `set` RHS
+values or direct transaction `set` targets, aggregate paths in expression
+operator position, subaggregate writes/operands, aggregate interface or
+transaction ports, and aggregate storage banks remain deferred. Existing ISF
+aggregate support beyond this carrier plus direct scalar leaf read/write
+context remains limited to compatible aggregate/list literal parameter values
+and scalarized storage/bank lowering. Future enum member value references
+outside actor constants, additional aggregate carriers, aggregate
+field/slice/update lowering, incompatible enum values, aggregate shape
+mismatches, and ambiguous subaggregate updates remain owned by later
+`ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
 - actor-level `(phase name property...)`, structurally validated as a
@@ -2664,6 +2668,7 @@ Focused tests:
 - [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t)
 - [t/1260-isf-aggregate-storage-leaf-reads.t](../t/1260-isf-aggregate-storage-leaf-reads.t)
 - [t/1261-isf-aggregate-storage-leaf-writes.t](../t/1261-isf-aggregate-storage-leaf-writes.t)
+- [t/1262-isf-aggregate-storage-leaf-expression-reads.t](../t/1262-isf-aggregate-storage-leaf-expression-reads.t)
 
 ## 12. Explicitly Deferred
 
@@ -2721,10 +2726,11 @@ Focused tests:
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, actor-owned aggregate storage
   variable carriers, transaction `set` RHS aggregate leaf reads, transaction
-  `set` target aggregate leaf writes, aggregate/list parameter-literal, and
-  data-operation evidence model. Enum member references outside actor constants,
-  aggregate interface/transaction/bank carriers, aggregate member paths outside
-  direct transaction `set` RHS or target tokens, subaggregate updates,
+  `set` RHS expression aggregate leaf operands, transaction `set` target
+  aggregate leaf writes, aggregate/list parameter-literal, and data-operation
+  evidence model. Enum member references outside actor constants, aggregate
+  interface/transaction/bank carriers, aggregate member paths outside direct
+  transaction `set` RHS values or target tokens, subaggregate updates/operands,
   aggregate field/slice/update lowering, and broad aggregate/record width
   inference remain deferred to the active
   `ISF-TYPE-AGGREGATE-PARITY` task tree.
