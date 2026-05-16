@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF actor parameter reports shipped
+- Completed R14 task-tree slice: `ISF-ACTOR-PARAM-REPORTS.1`, closing
+  [docs/tasks/ISF-ACTOR-PARAM-REPORTS.md](docs/tasks/ISF-ACTOR-PARAM-REPORTS.md).
+- Public schedule JSON now exposes actor-level `(params ...)` defaults through
+  `actor_params[]`.
+- Each entry exposes the parameter `name` and JSON-safe default `value`, with
+  `schedule_report_actor_param_keys` advertised through the ISF public
+  contract and capability manifest.
+- Added [t/1253-isf-actor-param-report.t](t/1253-isf-actor-param-report.t)
+  for in-process and CLI report projection.
+- Actor parameters remain static specialization defaults, not runtime payloads;
+  generated `.fsm` `+params` emission and override behavior are unchanged.
+
 ## 2026-05-16: R14 — ISF actor phase/stage metadata reports shipped
 - Completed R14 task-tree slice:
   `ISF-ACTOR-PHASE-STAGE-REPORTS.1`, closing

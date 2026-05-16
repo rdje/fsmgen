@@ -1103,7 +1103,10 @@ validated, preserved in the parent lowerer IR, and applied through generated
 `?fsmc` `(params ...)` blocks in the top. The generated top wires parent start
 outputs, parent done inputs, child `start`/`done` ports, explicit port-binding
 handoffs, and named-drive handoff signals through the existing composition
-pipeline.
+pipeline. Schedule reports expose actor-level parameter defaults directly
+through `actor_params[]` entries with `name` and JSON-safe default `value`;
+use-site overrides remain reported by the generated-composition and
+library-use binding summaries.
 
 The generated child instance is static HDL. A spawn state activates that
 instance through its start path; the child terminal state returns to the

@@ -96,6 +96,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_state_count_shape
     isf_public_interface_schedule_report_actor_phase_keys
     isf_public_interface_schedule_report_actor_stage_keys
+    isf_public_interface_schedule_report_actor_param_keys
     isf_public_interface_schedule_report_actor_constant_keys
     isf_public_interface_schedule_report_storage_kind_values
     isf_public_interface_schedule_report_storage_optional_keys
@@ -214,6 +215,7 @@ sub build_isf_public_interface_contract {
         schedule_report_crossing_keys => isf_public_interface_schedule_report_crossing_keys(),
         schedule_report_actor_phase_keys => isf_public_interface_schedule_report_actor_phase_keys(),
         schedule_report_actor_stage_keys => isf_public_interface_schedule_report_actor_stage_keys(),
+        schedule_report_actor_param_keys => isf_public_interface_schedule_report_actor_param_keys(),
         schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
         schedule_report_compile_issues_success_shape => isf_public_interface_schedule_report_compile_issues_success_shape(),
         schedule_report_compile_issue_keys => isf_public_interface_schedule_report_compile_issue_keys(),
@@ -418,6 +420,7 @@ sub build_isf_public_interface_contract {
             't/1248-isf-rule-trigger-parameter-binding.t',
             't/1249-isf-activation-parameter-constants.t',
             't/1252-isf-actor-phase-stage-report.t',
+            't/1253-isf-actor-param-report.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -493,6 +496,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_watchdog_shape
             schedule_report_actor_phase_keys
             schedule_report_actor_stage_keys
+            schedule_report_actor_param_keys
             schedule_report_actor_constant_keys
             schedule_report_clock_domain_keys
             schedule_report_clock_domain_child_instance_keys
@@ -834,6 +838,7 @@ sub isf_public_interface_schedule_report_top_level_keys {
             watchdog
             actor_phases
             actor_stages
+            actor_params
             actor_constants
             port_count
             inputs
@@ -1221,6 +1226,15 @@ sub isf_public_interface_schedule_report_actor_stage_keys {
     ];
 }
 
+sub isf_public_interface_schedule_report_actor_param_keys {
+    return [
+        qw(
+            name
+            value
+        ),
+    ];
+}
+
 sub isf_public_interface_schedule_report_clock_domain_keys {
     return [
         qw(
@@ -1541,6 +1555,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_reset_keys => isf_public_interface_schedule_report_reset_keys(),
         schedule_report_actor_phase_keys => isf_public_interface_schedule_report_actor_phase_keys(),
         schedule_report_actor_stage_keys => isf_public_interface_schedule_report_actor_stage_keys(),
+        schedule_report_actor_param_keys => isf_public_interface_schedule_report_actor_param_keys(),
         schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
         schedule_report_clock_domain_keys => isf_public_interface_schedule_report_clock_domain_keys(),
         schedule_report_clock_domain_child_instance_keys => isf_public_interface_schedule_report_clock_domain_child_instance_keys(),

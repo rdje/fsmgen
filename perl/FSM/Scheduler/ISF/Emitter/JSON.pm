@@ -31,6 +31,7 @@ sub report_hash($self, $ir) {
         watchdog       => $ir->{watchdog},
         actor_phases   => $self->_actor_metadata_summary($ir, 'actor_phases'),
         actor_stages   => $self->_actor_metadata_summary($ir, 'actor_stages'),
+        actor_params    => $self->_actor_param_summary($ir),
         actor_constants => $self->_actor_constant_summary($ir),
         port_count     => scalar(@{$ir->{ports}}),
         inputs         => scalar(grep { $_->{direction} eq 'input'  } @{$ir->{ports}}),
@@ -408,6 +409,17 @@ sub _actor_metadata_summary($self, $ir, $key) {
                 body => _clone_report_value($_->{body} || []),
             }
         } @{$ir->{$key} || []}
+    ];
+}
+
+sub _actor_param_summary($self, $ir) {
+    return [
+        map {
+            {
+                name  => $_->{name},
+                value => _clone_report_value($_->{value}),
+            }
+        } @{$ir->{params} || []}
     ];
 }
 

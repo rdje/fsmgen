@@ -42,6 +42,9 @@ clear lower-layer mapping, and clear runtime behavior.
 - **Constants are structural**. Actor-level `(constants ...)` are compile-time
   symbols for lowering decisions and emitted `.fsm` `+constants`; they are not
   runtime ports and not overrideable `params`.
+- **Parameters are specialization defaults**. Actor-level `(params ...)`
+  values emit as scheduled `.fsm` `+params` and schedule-report
+  `actor_params[]`; they are not runtime payload wires.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,

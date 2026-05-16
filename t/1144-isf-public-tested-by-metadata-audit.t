@@ -151,6 +151,7 @@ my $expected_tested_by = [
     't/1248-isf-rule-trigger-parameter-binding.t',
     't/1249-isf-activation-parameter-constants.t',
     't/1252-isf-actor-phase-stage-report.t',
+    't/1253-isf-actor-param-report.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

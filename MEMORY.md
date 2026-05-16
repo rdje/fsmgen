@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF actor parameter reports shipped
+- Completed `ISF-ACTOR-PARAM-REPORTS.1` in
+  [docs/tasks/ISF-ACTOR-PARAM-REPORTS.md](docs/tasks/ISF-ACTOR-PARAM-REPORTS.md),
+  closing the actor parameter schedule-report metadata tree.
+- Public schedule JSON now exposes actor-level `(params ...)` defaults through
+  `actor_params[]`, with each entry carrying the parameter `name` and
+  JSON-safe default `value`.
+- This is report projection only. Actor parameters remain static
+  specialization defaults, not runtime payloads, and generated `.fsm`
+  `+params`, reusable-library overrides, and generated activation parameter
+  bindings keep their existing behavior.
+- Added [t/1253-isf-actor-param-report.t](t/1253-isf-actor-param-report.t)
+  and advertised `schedule_report_actor_param_keys` through the ISF public
+  contract and capability manifest.
 ## 2026-05-16: ISF actor phase/stage metadata reports shipped
 - Completed `ISF-ACTOR-PHASE-STAGE-REPORTS.1` in
   [docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md](docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md),

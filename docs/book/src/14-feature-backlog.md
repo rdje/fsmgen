@@ -442,7 +442,8 @@ state, optional counter signal, and optional counter width. Static waits keep
 an integer `cycles`; runtime scalar and runtime expression waits keep `cycles`
 null and expose their source/counter metadata with `count_kind`
 `runtime_scalar` or `runtime_expression`. Schedule reports also expose actor
-constants through `actor_constants[]`.
+constants through `actor_constants[]` and actor parameter defaults separately
+through `actor_params[]`.
 
 Malformed waits such as missing counts, extra operands, negative counts,
 non-integer counts, unknown constant names, actor/transaction parameter names,

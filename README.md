@@ -110,6 +110,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-SPEC-TEST-INDEX-SYNC.md` — completed `R14` task tree for keeping the ISF spec focused-test index synchronized.
 - `docs/tasks/DOWNSTREAM-ISSUE-REPRO-FLOW.md` — completed `R14` task tree for downstream reproducible issue-reporting flow.
 - `docs/tasks/ISF-ACTOR-PHASE-STAGE-REPORTS.md` — completed `R14` task tree for actor-level phase/stage schedule-report metadata.
+- `docs/tasks/ISF-ACTOR-PARAM-REPORTS.md` — completed `R14` task tree for actor-level parameter default schedule-report metadata.
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — proposed architecture task tree for current IR inventory and consolidation policy.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.

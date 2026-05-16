@@ -1119,6 +1119,7 @@ reset
 watchdog
 actor_phases
 actor_stages
+actor_params
 actor_constants
 port_count
 inputs
@@ -1149,6 +1150,7 @@ Current bounded nested and array summary families:
 reset: name, kind, polarity
 actor_phases entries: name, body
 actor_stages entries: name, body
+actor_params entries: name, value
 actor_constants entries: name, value
 inferred_storage entries: name, kind, optional role, optional width
 transactions entries: name, states, count
@@ -1223,6 +1225,13 @@ For each `actor_constants` entry, `name` is the actor-local constant name and
 `value` is the stringified compile-time value emitted into scheduled `.fsm`
 `+constants`. These constants are compile-time scheduler/source symbols, not
 runtime ports, not overrideable params, and not inferred storage.
+
+For each `actor_params` entry, `name` is the actor-level parameter name and
+`value` is the JSON-safe default value emitted into scheduled `.fsm`
+`+params`. These are static specialization defaults, not runtime ports, and do
+not replace the generated-composition or reusable-library parameter binding
+reports for use sites. The machine-readable contract advertises these through
+`schedule_report_actor_param_keys`.
 
 For each `actor_phases` or `actor_stages` entry, `name` is the authored
 actor-level metadata name and `body` is the JSON-safe copy of the
@@ -1422,8 +1431,8 @@ Bounded but not fully frozen:
 - `inferred_storage[].role`, `compile_issues[]`,
   `compatible_fanin_groups[]`, `priority_resolutions[]`,
   `resource_arbitration[]`, `actor_constants[]`, `actor_phases[]`,
-  `actor_stages[]`, `transaction_waits[]`, `transaction_stages[]`,
-  `transaction_loops[]`, `temporal_contracts[]`,
+  `actor_stages[]`, `actor_params[]`, `transaction_waits[]`,
+  `transaction_stages[]`, `transaction_loops[]`, `temporal_contracts[]`,
   `transaction_port_bindings[]`, `library_uses[]`, and
   `generated_composition` are bounded summaries, not raw IR exports.
 

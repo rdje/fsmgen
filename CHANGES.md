@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF actor parameter reports shipped
+- Completed `ISF-ACTOR-PARAM-REPORTS.1`, closing the
+  `ISF-ACTOR-PARAM-REPORTS` task tree.
+- Public ISF schedule reports now include `actor_params[]` entries for
+  actor-level `(params ...)` defaults.
+- Added bounded public contract and capability-manifest metadata through
+  `schedule_report_actor_param_keys`.
+- Added [t/1253-isf-actor-param-report.t](t/1253-isf-actor-param-report.t)
+  to prove in-process and CLI schedule JSON projection and to confirm
+  scheduled `.fsm` `+params` emission stays unchanged.
+- Actor parameters remain static specialization defaults, not runtime payloads.
 ### R14 — ISF actor phase/stage metadata reports shipped
 - Completed `ISF-ACTOR-PHASE-STAGE-REPORTS.1`, closing the
   `ISF-ACTOR-PHASE-STAGE-REPORTS` task tree.

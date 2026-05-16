@@ -440,6 +440,9 @@ Rules:
   defaults.
 - Unknown overrides, duplicate overrides, symbolic parameter values, and shape
   mismatches fail closed for reusable-library `use` sites.
+- Schedule reports expose actor parameter defaults through `actor_params[]`
+  entries with `name` and JSON-safe default `value`. These are static
+  specialization defaults, not runtime payloads.
 - Every exported actor clock/reset/interface endpoint must be explicitly bound
   at the use site.
 - Binding direction and known width must match.
@@ -945,6 +948,7 @@ reset
 watchdog
 actor_phases
 actor_stages
+actor_params
 actor_constants
 port_count
 inputs
@@ -989,6 +993,7 @@ Important entry key families:
 actor_constants[]: name, value
 actor_phases[]: name, body
 actor_stages[]: name, body
+actor_params[]: name, value
 inferred_storage[] required: name, kind
 inferred_storage[] optional: role, width
 transactions[]: name, states, count

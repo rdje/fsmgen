@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: actor params are report-visible defaults
+- `ISF-ACTOR-PARAM-REPORTS.1` exposes actor-level `(params ...)` defaults in
+  schedule JSON because downstream consumers should not need to parse
+  scheduled `.fsm` text just to learn static specialization defaults.
+- The report deliberately mirrors the existing declaration shape: parameter
+  `name` plus JSON-safe default `value`. It does not introduce runtime
+  parameter signals or alter generated activation/library override reporting.
+- Keeping actor parameters separate from `actor_constants[]` matters:
+  constants are compile-time lowering symbols, while params are overrideable
+  static specialization defaults.
 ## 2026-05-16: actor phase/stage metadata is report-only
 - `ISF-ACTOR-PHASE-STAGE-REPORTS.1` deliberately projects actor-level
   `(phase ...)` and `(stage ...)` metadata into schedule JSON without making it

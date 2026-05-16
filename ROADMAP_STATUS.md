@@ -26,8 +26,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   first. `ISF-ACTOR-PHASE-STAGE-REPORTS.1` then exposed parser-validated
   actor-level phase/stage metadata through bounded `actor_phases[]` and
   `actor_stages[]` schedule-report arrays without assigning runtime semantics
-  or changing generated `.fsm`/HDL. The next PNT selection should choose a
-  fresh roadmap-aligned R14 task tree before implementation.
+  or changing generated `.fsm`/HDL. `ISF-ACTOR-PARAM-REPORTS.1` then exposed
+  actor-level parameter defaults through bounded `actor_params[]` schedule
+  reports without changing `+params`, reusable-library override, or generated
+  activation parameter semantics. The next PNT selection should choose a fresh
+  roadmap-aligned R14 task tree before implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -141,6 +144,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   families through the public contract/manifest, and added
   `t/1252-isf-actor-phase-stage-report.t`. Actor-level phase/stage runtime
   semantics remain deferred.
+  `ISF-ACTOR-PARAM-REPORTS.1` published bounded report-only `actor_params[]`
+  metadata for actor-level parameter defaults, advertised
+  `schedule_report_actor_param_keys`, and added
+  `t/1253-isf-actor-param-report.t`. Actor parameters remain static
+  specialization defaults, not runtime payloads.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

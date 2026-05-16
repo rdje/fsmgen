@@ -337,7 +337,11 @@ actor default. Unknown overrides, duplicate overrides, unsupported symbolic
 values, and override shapes that do not match aggregate/list defaults fail
 closed. The first value domain is scalar decimal literals, exact-width numeric
 literals in the shipped ISF parameter syntax, and compatible aggregate/list
-literals.
+literals. Schedule reports expose actor parameter defaults through
+`actor_params[]` entries with each authored parameter `name` and JSON-safe
+default `value`. These entries describe static specialization defaults; they
+are not runtime ports and do not replace generated-composition parameter
+binding reports for activation or library use sites.
 
 Bindings are explicit. A reusable actor with a clock or reset must bind that
 signal at the use site. Reset kind and polarity remain owned by the reusable
@@ -2091,6 +2095,7 @@ fail-closed/deferred.
   "watchdog": "65536",
   "actor_phases": [],
   "actor_stages": [],
+  "actor_params": [],
   "actor_constants": [],
   "port_count": 0,
   "inputs": 0,
@@ -2137,6 +2142,13 @@ The `actor_constants` array reports actor-level ISF constants in source order.
 Each entry contains `name` and stringified `value`. The values are
 compile-time constants; they are not runtime ports, not overrideable params,
 and not hidden scheduler registers.
+The `actor_params` array reports actor-level parameter defaults in source
+order. Each entry contains `name` and JSON-safe default `value`. Parameter
+defaults are static specialization values, not runtime ports; activation-site,
+generated-child, and reusable-library override bindings remain reported by
+their existing generated-composition and library-use summary families. The
+capability-manifest ISF public contract advertises this shape through
+`schedule_report_actor_param_keys`.
 Each `dt_blocks` entry's `assignments` value is a non-negative count of
 assignment forms in the matching scheduled `.fsm` DT block, not an assignment
 payload list. The capability-manifest ISF public contract advertises this shape
@@ -2512,6 +2524,7 @@ Focused tests:
 - [t/1249-isf-activation-parameter-constants.t](../t/1249-isf-activation-parameter-constants.t)
 - [t/1250-isf-spec-focused-test-index-audit.t](../t/1250-isf-spec-focused-test-index-audit.t)
 - [t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t)
+- [t/1253-isf-actor-param-report.t](../t/1253-isf-actor-param-report.t)
 
 ## 12. Explicitly Deferred
 
