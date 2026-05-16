@@ -538,6 +538,11 @@ Rules:
   or package enum members such as `shared.mode.BUSY`. FSMGen resolves those
   members before lowering and preserves the authored token in the generated
   drive DT.
+- Scalar rule assignment RHS values may use local enum members such as
+  `mode.BUSY` or package enum members such as `shared.mode.BUSY`. This is
+  limited to direct scalar RHS values in explicit `(set port value)` and
+  shorthand `(port value)` rule assignments; rule assignment expression enum
+  operands remain deferred.
 - Scalar drive-call actuals may also use local or package enum members.
   Drive-call actual expressions may use enum members as scalar operands.
   Enum members in drive-call expression operator position remain deferred.
@@ -892,12 +897,14 @@ Rules:
   expressions may use enum members as scalar operands, scalar actor parameter
   defaults may consume local or package enum members, generated child
   transaction scalar parameter defaults may consume local or package enum
-  members, and scalar activation parameter overrides may consume local or
+  members, scalar activation parameter overrides may consume local or package
+  enum members, and scalar rule assignment RHS values may consume local or
   package enum members. Enum members in expression operator position,
   conditions, switch selectors, targets, rules outside scalar trigger parameter
-  overrides, drive targets, drive-call expression operator position, inline
-  drive assignments, aggregate/list parameter leaves, aggregate/list activation
-  override leaves, and other contexts remain deferred.
+  overrides and scalar assignment RHS values, rule assignment expressions, drive
+  targets, drive-call expression operator position, inline drive assignments,
+  aggregate/list parameter leaves, aggregate/list activation override leaves,
+  and other contexts remain deferred.
 
 Aggregate member/item access outside direct transaction `set` RHS values or
 target tokens, subaggregate operands/updates, aggregate interface or
@@ -1363,7 +1370,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1268-isf-enum-member-drive-call-expression-values.t \
   t/1269-isf-enum-member-actor-params.t \
   t/1270-isf-enum-member-transaction-params.t \
-  t/1271-isf-enum-member-activation-params.t
+  t/1271-isf-enum-member-activation-params.t \
+  t/1272-isf-enum-member-rule-values.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

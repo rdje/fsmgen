@@ -931,6 +931,13 @@ sub _validate_rule_enum_member_value_contexts {
     my ($rule, $actor, $aggregate_roots) = @_;
     my $rule_name = $rule->{name};
 
+    _reject_enum_member_value_contexts(
+        $rule->{when},
+        $actor,
+        $aggregate_roots,
+        "rule '$rule_name' guard",
+    );
+
     for my $action (@{$rule->{actions} || []}) {
         if (ref($action) eq 'ARRAY'
             && @$action
@@ -947,12 +954,88 @@ sub _validate_rule_enum_member_value_contexts {
             next;
         }
 
+        if (ref($action) eq 'ARRAY'
+            && @$action
+            && defined($action->[0])
+            && !ref($action->[0])
+            && $action->[0] eq 'set')
+        {
+            _reject_enum_member_value_contexts(
+                $action->[1],
+                $actor,
+                $aggregate_roots,
+                "rule '$rule_name' set target",
+            );
+            _validate_rule_assignment_enum_member_rhs(
+                $action->[2],
+                $actor,
+                $aggregate_roots,
+                "rule '$rule_name' assignment RHS",
+            ) if @$action >= 3;
+            next;
+        }
+
+        if (ref($action) eq 'ARRAY'
+            && @$action
+            && defined($action->[0])
+            && !ref($action->[0])
+            && !exists($RULE_ASSIGNMENT_FORBIDDEN_EXPR_HEADS{$action->[0]})
+            && $action->[0] ne 'priority'
+            && $action->[0] ne 'store'
+            && $action->[0] ne 'load')
+        {
+            _reject_enum_member_value_contexts(
+                $action->[0],
+                $actor,
+                $aggregate_roots,
+                "rule '$rule_name' assignment target",
+            );
+            _validate_rule_assignment_enum_member_rhs(
+                $action->[1],
+                $actor,
+                $aggregate_roots,
+                "rule '$rule_name' assignment RHS",
+            ) if @$action >= 2;
+            next;
+        }
+
         _reject_enum_member_value_contexts(
             $action,
             $actor,
             $aggregate_roots,
             "rule '$rule_name'",
         );
+    }
+
+    return 1;
+}
+
+sub _validate_rule_assignment_enum_member_rhs {
+    my ($rhs, $actor, $aggregate_roots, $context) = @_;
+
+    if (!ref($rhs)) {
+        my $member = _enum_member_value_token($rhs, $aggregate_roots);
+        _validate_enum_member_value($member, $actor, $context)
+            if defined $member;
+        return 1;
+    }
+
+    return 1 unless ref($rhs) eq 'ARRAY';
+
+    for my $index (0 .. $#$rhs) {
+        my $item = $rhs->[$index];
+        next if ref($item);
+
+        my $member = _enum_member_value_token($item, $aggregate_roots);
+        next unless defined $member;
+
+        my $position = $index == 0 ? 'expression operator' : 'expression operand';
+        confess "Error: $context $position references enum member '$member'; this ISF slice accepts enum member references in rule assignment RHS only as direct scalar values\n";
+    }
+
+    for my $item (@$rhs) {
+        _validate_rule_assignment_enum_member_rhs($item, $actor, $aggregate_roots, $context)
+            if ref($item);
     }
 
     return 1;
@@ -1149,7 +1232,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, rule assignment RHS scalar values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }

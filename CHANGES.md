@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum rule assignment RHS values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.18`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.19`.
+- Explicit `(set port value)` and shorthand `(port value)` rule assignments
+  now accept local and package-qualified enum members as direct scalar RHS
+  values.
+- Scheduled `.fsm` preserves authored enum RHS tokens in guarded rule DTs,
+  assignment provenance records the authored RHS, and strict CLI HDL generation
+  accepts the guarded DT form.
+- Parser diagnostics reject unknown rule RHS enum values and keep rule guards,
+  rule targets, enum members inside rule assignment RHS expressions, and other
+  non-shipped rule enum contexts closed for later slices.
 ### R14 — ISF enum activation parameter overrides shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.17`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.18`.

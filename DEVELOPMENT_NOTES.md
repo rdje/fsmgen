@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum rule values are direct-RHS-only
+- `ISF-TYPE-AGGREGATE-PARITY.18` selects scalar rule assignment RHS values
+  after activation parameter overrides because rule assignments already lower to
+  guarded scheduled `.fsm` DT bodies that preserve authored RHS tokens.
+- The parser validates enum RHS values for both explicit `(set port value)` and
+  shorthand `(port value)` rule assignments, but keeps rule guards, targets, and
+  enum operands inside rule assignment RHS expressions closed. Those contexts
+  need separate expression and ownership contracts before becoming public.
+- Strict-mode generated `.fsm` validation now distinguishes guarded rule DT
+  headers from legacy infix assignments, so documented guarded rule output is no
+  longer rejected while the legacy infix-assignment detector remains active for
+  real nested assignment forms.
 ## 2026-05-16: enum activation params are scalar-specialization values
 - `ISF-TYPE-AGGREGATE-PARITY.17` selects scalar activation parameter overrides
   after transaction parameter defaults because generated activation sites already

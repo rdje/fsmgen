@@ -619,6 +619,7 @@ sub _strict_infix_assignment_issue_for_action ($class, $node) {
 
     my ($target, $spec) = @$node[0, 1];
     return undef if defined($target) && !ref($target) && $class->_is_assignment_operator_token($target);
+    return undef if defined($target) && !ref($target) && $target =~ /\A</;
     return undef unless $class->_is_strict_infix_assignment_target($target);
     return undef unless ref($spec) eq 'ARRAY' && @$spec >= 2;
 

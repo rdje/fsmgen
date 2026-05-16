@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF enum rule assignment RHS values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.18` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.19`.
+- Explicit `(set port value)` and shorthand `(port value)` rule assignments now
+  accept local enum members such as `mode.BUSY` and package-qualified enum
+  members such as `shared.mode.BUSY` as direct scalar RHS values.
+- The parser resolves those rule RHS enum values before lowering, preserves the
+  authored token in guarded scheduled `.fsm` rule DTs and assignment
+  provenance, and strict CLI HDL generation accepts the guarded DT form.
+- Rule guards, rule targets, enum members inside rule assignment RHS
+  expressions, and other non-shipped rule enum contexts remain deferred.
 ## 2026-05-16: ISF enum activation parameter overrides shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.17` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

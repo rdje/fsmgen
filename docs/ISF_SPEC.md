@@ -281,13 +281,15 @@ banks, and other width-bearing declarations fail closed. Actor-local
 parameter defaults, by generated child transaction scalar parameter defaults,
 by scalar activation parameter overrides, by direct transaction `set` RHS scalar
 values or scalar operands inside transaction `set` RHS expressions, by
-transaction `switch` branch values, by scalar drive body RHS values, and by
-named drive-call scalar actual values or scalar operands inside drive-call
-actual expressions in the current ISF surface. Enum members in expression
-operator position, guards, switch selectors, rule actions outside scalar
-trigger parameter overrides, drive targets, drive-call expression operator
-position, aggregate/list parameter leaves, aggregate/list activation override
-leaves, and typed aggregate carriers do not consume enum member references yet.
+transaction `switch` branch values, by scalar rule assignment RHS values, by
+scalar drive body RHS values, and by named drive-call scalar actual values or
+scalar operands inside drive-call actual expressions in the current ISF
+surface. Enum members in expression operator position, guards, switch
+selectors, rule targets, rule assignment expression operands, rule actions
+outside scalar trigger parameter overrides and scalar assignment RHS values,
+drive targets, drive-call expression operator position, aggregate/list
+parameter leaves, aggregate/list activation override leaves, and typed
+aggregate carriers do not consume enum member references yet.
 
 The shipped aggregate carrier surface is anchored on actor-owned storage
 variables: the generated `.fsm` preserves the authored aggregate alias in
@@ -310,8 +312,9 @@ and scalarized storage/bank lowering. Future enum member value references
 outside actor constants, actor scalar parameter defaults, generated child
 transaction scalar parameter defaults, scalar activation parameter overrides,
 transaction `set` RHS scalar values or expression operands, transaction
-`switch` branch values, drive body RHS scalar values, and drive-call actual
-scalar values or expression operands, additional aggregate carriers, aggregate
+`switch` branch values, rule assignment RHS scalar values, drive body RHS scalar
+values, and drive-call actual scalar values or expression operands, additional
+aggregate carriers, aggregate
 field/slice/update lowering, incompatible enum values, aggregate shape
 mismatches, and ambiguous subaggregate updates remain owned by later
 `ISF-TYPE-AGGREGATE-PARITY` leaves.
@@ -852,7 +855,12 @@ transaction-local spelling, and ordinary rule assignments such as `(wr_ptr 1)`
 remain supported shorthand. The setter word is shared, but the runtime region
 is still owned by context: a rule `set` is actor-level concurrent logic guarded
 by the rule's non-state DT enable, while transaction `set` is an ordered
-transaction step that becomes part of the transaction state sequence.
+transaction step that becomes part of the transaction state sequence. Rule
+assignment direct scalar RHS values may use local enum members such as
+`mode.BUSY` or package enum members such as `shared.mode.BUSY`; the parser
+resolves those values before lowering and preserves the authored token in the
+guarded rule DT. Rule guard enum members, rule target enum members, and enum
+members inside rule assignment RHS expressions remain deferred.
 
 `(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
 entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering emits
@@ -2035,6 +2043,11 @@ Current lowering:
 )
 ```
 
+Direct scalar rule assignment RHS values may use local or package enum members,
+and strict HDL generation accepts the guarded rule DT header plus canonical
+assignment-pair body form. Rule assignment expressions do not consume enum
+member operands yet.
+
 Multi-rule fan-in example:
 
 ```lisp
@@ -2714,6 +2727,7 @@ Focused tests:
 - [t/1269-isf-enum-member-actor-params.t](../t/1269-isf-enum-member-actor-params.t)
 - [t/1270-isf-enum-member-transaction-params.t](../t/1270-isf-enum-member-transaction-params.t)
 - [t/1271-isf-enum-member-activation-params.t](../t/1271-isf-enum-member-activation-params.t)
+- [t/1272-isf-enum-member-rule-values.t](../t/1272-isf-enum-member-rule-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2771,19 +2785,21 @@ Focused tests:
 - ISF enum/type/aggregate parity beyond the shipped scalar type-alias subset,
   actor-constant enum member references, direct transaction `set` RHS enum
   member values and expression operands, transaction `switch` branch enum
-  values, scalar drive body RHS enum member values, scalar drive-call actual
-  enum member values, drive-call actual expression enum member operands, actor
-  scalar parameter default enum member values, generated child transaction
-  scalar parameter default enum member values, scalar activation parameter
-  override enum member values, actor-owned aggregate storage variable carriers,
+  values, scalar rule assignment RHS enum member values, scalar drive body RHS
+  enum member values, scalar drive-call actual enum member values, drive-call
+  actual expression enum member operands, actor scalar parameter default enum
+  member values, generated child transaction scalar parameter default enum
+  member values, scalar activation parameter override enum member values,
+  actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction `set` target aggregate leaf writes,
   aggregate/list parameter-literal, and data-operation evidence model. Enum
   member references outside actor constants, actor scalar parameter defaults,
   generated child transaction scalar parameter defaults, scalar activation
   parameter overrides, transaction `set` RHS scalar values/expression operands,
-  transaction `switch` branch values, drive body RHS scalar values, or
-  drive-call actual scalar values/expression operands remain deferred.
+  transaction `switch` branch values, rule assignment RHS scalar values, drive
+  body RHS scalar values, or drive-call actual scalar values/expression operands
+  remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values or target tokens, subaggregate
   updates/operands, aggregate field/slice/update lowering, and broad

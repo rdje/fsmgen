@@ -714,15 +714,17 @@ defaults, generated child transaction scalar parameter defaults, direct
 transaction `set` RHS scalar values or scalar operands inside transaction
 `set` RHS expressions, transaction `switch` branch values, scalar drive body
 RHS values, named drive-call scalar actual values or scalar operands inside
-drive-call actual expressions, and scalar activation parameter overrides in
-this slice, using local `mode.BUSY` or package-qualified `shared.mode.BUSY`
-spelling and resolving to non-negative integer literal values before lowering.
+drive-call actual expressions, scalar activation parameter overrides, and
+scalar rule assignment RHS values in this slice, using local `mode.BUSY` or
+package-qualified `shared.mode.BUSY` spelling and resolving to non-negative
+integer literal values before lowering.
 Enum member references in expression operator position, conditions, switch
-selectors, targets, rules outside scalar trigger parameter overrides, drive
-targets, drive-call expression operator position, inline drive assignments,
-aggregate/list parameter leaves, aggregate/list activation override leaves, and
-other ISF value contexts, additional aggregate carriers, and aggregate
-field/slice/update semantics remain outside the parser/scheduler contract.
+selectors, targets, rules outside scalar trigger parameter overrides and scalar
+assignment RHS values, rule assignment expressions, drive targets, drive-call
+expression operator position, inline drive assignments, aggregate/list parameter
+leaves, aggregate/list activation override leaves, and other ISF value contexts,
+additional aggregate carriers, and aggregate field/slice/update semantics remain
+outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -783,6 +785,13 @@ covering local and package enum member overrides on spawn, generated blocking
 `do`, and rule-trigger activation sites, generated-top literal parameter
 bindings, generated-composition schedule-report bindings, and fail-closed
 diagnostics for unknown members and aggregate/list activation override leaves.
+Scalar rule assignment RHS enum member values are checked by
+[t/1272-isf-enum-member-rule-values.t](../t/1272-isf-enum-member-rule-values.t),
+covering local and package enum member explicit `(set port value)` and shorthand
+`(port value)` rule assignments, scheduled `.fsm` review artifacts, assignment
+provenance, strict CLI HDL generation, strict guarded-DT parsing, and
+fail-closed diagnostics for unknown members, rule assignment expressions, rule
+guards, and rule targets.
 Actor-owned aggregate storage variable carriers are checked by
 [t/1259-isf-aggregate-storage-type-aliases.t](../t/1259-isf-aggregate-storage-type-aliases.t),
 covering local and package aggregate aliases, typed `+size` review artifacts,

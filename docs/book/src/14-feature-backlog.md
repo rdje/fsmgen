@@ -288,9 +288,10 @@ overrides may now also consume local and package-qualified enum members. Direct
 transaction `set` RHS scalar values and scalar operands inside transaction
 `set` RHS expressions may consume local and package-qualified enum members,
 transaction `switch` branch values may consume local and package-qualified enum
-members, and scalar drive body RHS values may consume local and
-package-qualified enum members. Named drive-call scalar actual values may also
-consume local and package-qualified enum members, and drive-call actual
+members, scalar rule assignment RHS values may consume local and
+package-qualified enum members, and scalar drive body RHS values may consume
+local and package-qualified enum members. Named drive-call scalar actual values
+may also consume local and package-qualified enum members, and drive-call actual
 expressions may use enum members as scalar operands.
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as
@@ -303,8 +304,9 @@ operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, actor scalar parameter
 defaults, generated child transaction scalar parameter defaults, scalar
 activation parameter overrides, transaction `set` RHS scalar values/expression
-operands, transaction `switch` branch values, or drive body RHS scalar values
-or drive-call actual scalar values/expression operands,
+operands, transaction `switch` branch values, scalar rule assignment RHS values,
+or drive body RHS scalar values or drive-call actual scalar values/expression
+operands,
 aggregate field/slice/update lowering, and broader aggregate shape inference
 are separate follow-on leaves.
 
@@ -406,7 +408,9 @@ priority targets remain scalar-only today. `(set port expr)` is the canonical
 explicit setter; `(port expr)` remains shorthand. Both lower as flopped `<-`
 rule assignments under the rule DT DTE, where `expr` may be a scalar token or
 one list expression from the transaction `set`/`update`/`.fsm` RHS expression
-domain.
+domain. Direct scalar rule assignment RHS values may use local or
+package-qualified enum members; enum members inside rule assignment RHS
+expressions, rule guards, and rule targets remain backlog.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as
