@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum rule expressions are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.19` widens rule assignment enum support from
+  direct scalar RHS values to scalar operands inside RHS expressions, matching
+  the already-shipped transaction `set` and drive-call expression operand
+  boundaries.
+- The parser walks rule assignment RHS expression trees and resolves enum
+  members before lowering, but rejects enum members in expression operator
+  position so expression heads remain ordinary operators.
+- Rule guards and rule targets stay closed because those contexts need separate
+  guard-expression and assignment-ownership contracts rather than inheriting
+  expression RHS behavior.
 ## 2026-05-16: enum rule values are direct-RHS-only
 - `ISF-TYPE-AGGREGATE-PARITY.18` selects scalar rule assignment RHS values
   after activation parameter overrides because rule assignments already lower to

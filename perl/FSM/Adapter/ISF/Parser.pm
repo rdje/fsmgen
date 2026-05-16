@@ -1024,18 +1024,13 @@ sub _validate_rule_assignment_enum_member_rhs {
 
     for my $index (0 .. $#$rhs) {
         my $item = $rhs->[$index];
-        next if ref($item);
-
-        my $member = _enum_member_value_token($item, $aggregate_roots);
-        next unless defined $member;
-
-        my $position = $index == 0 ? 'expression operator' : 'expression operand';
-        confess "Error: $context $position references enum member '$member'; this ISF slice accepts enum member references in rule assignment RHS only as direct scalar values\n";
-    }
-
-    for my $item (@$rhs) {
-        _validate_rule_assignment_enum_member_rhs($item, $actor, $aggregate_roots, $context)
-            if ref($item);
+        if ($index == 0 && defined($item) && !ref($item)) {
+            my $member = _enum_member_value_token($item, $aggregate_roots);
+            confess "Error: $context expression operator references enum member '$member'; this ISF slice accepts enum member references inside rule assignment RHS expressions only as scalar operands\n"
+                if defined $member;
+            next;
+        }
+        _validate_rule_assignment_enum_member_rhs($item, $actor, $aggregate_roots, $context);
     }
 
     return 1;
@@ -1232,7 +1227,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, rule assignment RHS scalar values, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands\n"
             if defined $member;
         return 1;
     }

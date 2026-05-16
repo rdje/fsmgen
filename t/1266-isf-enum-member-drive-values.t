@@ -126,13 +126,13 @@ ISF
     (on start)
     (drive mark_busy)))
 ISF
-        qr/drive 'mark_busy' target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, rule assignment RHS scalar values, drive body RHS scalar values, and drive-call actual scalar values or operands/,
+        qr/drive 'mark_busy' target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, actor scalar parameter defaults, transaction scalar parameter defaults, activation scalar parameter overrides, transaction set RHS scalar values or operands, transaction switch branch values, rule assignment RHS scalar values or operands, drive body RHS scalar values, and drive-call actual scalar values or operands/,
         'enum members in drive targets remain deferred',
     );
 
     assert_parse_rejected(
         <<'ISF',
-(actor enum_rule_expression_still_deferred_after_drive
+(actor enum_rule_expression_operator_still_deferred_after_drive
   (enums
     (mode (IDLE 0) (BUSY 1)))
   (clock clk)
@@ -141,10 +141,10 @@ ISF
     (input ready)
     (output mode_out (width 2)))
   (rule mark_busy ready
-    (set mode_out (+ mode.BUSY 1))))
+    (set mode_out (mode.BUSY 1))))
 ISF
-        qr/rule 'mark_busy' assignment RHS expression operand references enum member 'mode\.BUSY'; this ISF slice accepts enum member references in rule assignment RHS only as direct scalar values/,
-        'enum members in rule assignment expressions remain deferred',
+        qr/rule 'mark_busy' assignment RHS expression operator references enum member 'mode\.BUSY'; this ISF slice accepts enum member references inside rule assignment RHS expressions only as scalar operands/,
+        'enum members in rule assignment expression operator position remain deferred',
     );
 };
 

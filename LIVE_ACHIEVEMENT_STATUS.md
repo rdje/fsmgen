@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF enum rule assignment expression values shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.19` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.20`, selecting the
+  next enum or aggregate value/update context after rule assignment RHS enum
+  expression operands.
+- Explicit `(set port expr)` and shorthand `(port expr)` rule assignments now
+  accept local and package-qualified enum members as scalar operands inside RHS
+  expressions, preserve authored expression payloads in guarded scheduled
+  `.fsm` rule DTs, and pass strict CLI HDL generation.
+- Expression operator-position enum members, rule guards, rule targets, and
+  other non-shipped rule enum contexts remain deferred.
+
 ## 2026-05-16: R14 — ISF enum rule assignment RHS values shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.18` in
