@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF feature matrix issue-bundle coverage synchronized
+- Completed `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.1` and closed the
+  task tree.
+- Added a runnable `bin/fsmgen-issue-bundle` example to the ISF shipped
+  feature matrix and documented the format-agnostic reproduction boundary.
+- Widened `t/1305-isf-book-feature-matrix-audit.t` so the helper invocation,
+  `--issue-id`, `--failure-class`, and rerunnable `commands.sh` markers remain
+  present.
+- Parser, scheduler, issue-bundle helper behavior, schedule-report payload,
+  generated `.fsm`, and HDL behavior are unchanged.
 ### R14 — ISF feature matrix report metadata coverage synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` and closed
   the task tree.

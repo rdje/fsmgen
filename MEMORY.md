@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF feature matrix issue-bundle coverage synchronized
+- Completed `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.1` and closed
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md).
+- The ISF shipped feature matrix now includes a runnable
+  `./bin/fsmgen-issue-bundle` example with `--issue-id`,
+  `--speforge-version`, `--failure-class unknown`, expected/observed text, and
+  the exact FSMGen command after `--`.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  so the helper invocation, option markers, format-agnostic reporting promise,
+  and rerunnable `commands.sh` marker cannot disappear silently.
+- No parser, scheduler, issue-bundle helper behavior, schedule-report payload,
+  generated `.fsm`, or HDL behavior changed. No active ISF task tree remains
+  open.
 ## 2026-05-16: ISF feature matrix report metadata coverage synchronized
 - Completed `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` and closed
   [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.md).

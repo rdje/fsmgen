@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: the ISF feature matrix should include issue-bundle execution
+- `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.1` adds the
+  `bin/fsmgen-issue-bundle` invocation to the book matrix because downstream
+  users need the reporting path at the same review surface as shipped
+  diagnostics.
+- The example intentionally uses `--failure-class unknown`: SPECFORGE and
+  other downstream tools should provide reproducible artifacts and the exact
+  FSMGen command, not guess whether a failure is parser, lowering, HDL, `.fsm`,
+  `.isf`, or API-specific.
+- The matrix remains an index. The included mdBook issue-reporting chapter is
+  still the complete protocol for bundle layout, environment capture, and
+  manual API-only cases.
 ## 2026-05-16: the ISF feature matrix must expose report metadata boundaries
 - `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` expands the book matrix
   because actor params, actor phase/stage report metadata, schema-version

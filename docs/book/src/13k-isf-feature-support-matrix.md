@@ -333,6 +333,25 @@ The manifest flag `schedule_report_full_schema_stable` is true for
 families, and explicit role fields over parsing generated signal names as
 semantic API.
 
+### Downstream Issue Bundles
+
+```bash
+./bin/fsmgen-issue-bundle \
+  --case path/to/fsmgen-facing-artifact \
+  --issue-id sf-0001 \
+  --speforge-version "SPECFORGE_COMMIT" \
+  --failure-class unknown \
+  --expected "FSMGen should accept this generated artifact" \
+  --observed "FSMGen rejects it" \
+  -- --strict --check --json
+```
+
+Downstream tools do not need to decide whether the root cause is `.fsm`,
+`.isf`, parser, lowering, HDL, or API-specific before filing. The bundle
+captures the FSMGen-facing artifact, exact command, environment, observed
+stdout/stderr/status, JSON probes, generated artifacts, and a rerunnable
+`commands.sh` so the issue can be reproduced from the FSMGen repository root.
+
 ## Explicit Non-Claims
 
 These are important because they prevent the matrix from implying support that

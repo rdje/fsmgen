@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF feature matrix issue-bundle coverage synchronized
+- Completed R14 task-tree slice:
+  `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.1` in
+  [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC.md).
+- The `ISF-MDBOOK-FEATURE-MATRIX-ISSUE-BUNDLE-SYNC` tree is now closed. No
+  active ISF task tree remains open; the next R14 implementation slice must
+  select or create a new task tree first.
+- The ISF shipped feature matrix now includes a runnable
+  `bin/fsmgen-issue-bundle` example and states that downstream tools do not
+  need to classify `.fsm`, `.isf`, parser, lowering, HDL, or API root cause
+  before reporting.
+- Widened
+  [t/1305-isf-book-feature-matrix-audit.t](t/1305-isf-book-feature-matrix-audit.t)
+  to keep the helper invocation markers present.
+- No parser, scheduler, issue-bundle helper behavior, schedule-report payload,
+  generated `.fsm`, or HDL behavior changed.
+
 ## 2026-05-16: R14 — ISF feature matrix report metadata coverage synchronized
 - Completed R14 task-tree slice:
   `ISF-MDBOOK-FEATURE-MATRIX-REPORT-METADATA-SYNC.1` in

@@ -92,6 +92,10 @@ my @required_examples = (
     '"actor_phases"',
     'dynamic_wait_counter',
     'schedule_report_full_schema_stable',
+    './bin/fsmgen-issue-bundle',
+    '--issue-id sf-0001',
+    '--failure-class unknown',
+    'commands.sh',
 );
 
 for my $example (@required_examples) {
