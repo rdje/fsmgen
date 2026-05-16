@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: activation param constants resolve before top emission
+- `ISF-PARAM-OVERRIDE-CONSTANTS.1` selects actor-local constants as the first
+  symbolic value source for activation parameter overrides because they are
+  compile-time literals already owned by the actor and already used by static
+  wait counts.
+- The selected implementation boundary resolves constants inside the ISF
+  lowerer before generated-top emission. That keeps the generated `?fsmc`
+  parameter override self-contained and avoids teaching the composition layer
+  about parent-local ISF constants.
+- The slice intentionally excludes actor parameters, transaction parameters,
+  runtime signals, interface ports, storage names, and arbitrary expressions.
+  Those would need separate lifetime, width, provenance, and diagnostics
+  contracts before they are safe parameter value sources.
 ## 2026-05-16: backlog truth follows closed ISF trees
 - `ISF-BACKLOG-TRUTH-SYNC.1` fixes the canonical feature backlog after the
   activation-parameter override tree closed. The book had the correct

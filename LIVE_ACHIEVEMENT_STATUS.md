@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF actor-constant parameter override contract selected
+- Completed R14 task-tree slice: `ISF-PARAM-OVERRIDE-CONSTANTS.1`.
+- Opened [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md)
+  as the active owner for actor-local constants in activation parameter
+  overrides.
+- Selected the future source contract: actor constants may be used as scalar
+  values, or scalar leaves in aggregate/list values, on generated activation
+  `(params ...)` sites. They must resolve to literals before generated-top
+  emission.
+- Actor/transaction parameters, runtime signals, and arbitrary expressions
+  remain out of scope for this tree.
+- This slice is specification-only; compiler behavior is unchanged.
+- The active frontier advances to `ISF-PARAM-OVERRIDE-CONSTANTS.2`.
+
 ## 2026-05-16: R14 — ISF feature backlog truth synchronized
 - Completed R14 task-tree slice: `ISF-BACKLOG-TRUTH-SYNC.1`.
 - Updated the canonical mdBook feature backlog so activation-parameter

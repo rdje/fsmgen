@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF actor-constant parameter override contract selected
+- Completed `ISF-PARAM-OVERRIDE-CONSTANTS.1`.
+- Opened [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md)
+  as the active R14 task tree for actor-local constants in activation
+  parameter override values.
+- Selected actor constants as the first bounded symbolic source for generated
+  activation `(params ...)` values. Constants may be scalar override values or
+  scalar leaves inside aggregate/list override values, and must resolve to
+  literals before generated-top emission.
+- Actor parameters, transaction parameters, runtime signals, interface ports,
+  storage names, and arbitrary expressions remain fail-closed for this tree.
+- This is specification-only. Parser, scheduler, report payload, manifest, HDL
+  output, and accepted source behavior are unchanged.
 ### R14 — ISF feature backlog truth synchronized
 - Completed `ISF-BACKLOG-TRUTH-SYNC.1`.
 - Corrected the canonical mdBook feature backlog entry for general transaction

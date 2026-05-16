@@ -23,7 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `_None_` | `_None_` | `_None_` | `_None_` | `_None_` |
+| `ISF-PARAM-OVERRIDE-CONSTANTS` | `active` | `R14` | `ISF-PARAM-OVERRIDE-CONSTANTS.2` | [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md) |
 
 ## Proposed Task Trees
 
@@ -94,6 +94,7 @@ as done work unless a future task reopens them.
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
 | Remaining rule-trigger and direct-activation parameter overrides | `ISF-ACTIVATION-PARAM-OVERRIDES` |
+| Actor constants as activation parameter override values | `ISF-PARAM-OVERRIDE-CONSTANTS` |
 | Self-contained downstream ISF integration handoff | `ISF-DOWNSTREAM-INTEGRATION-SPEC` |
 | ISF feature-backlog truth synchronization | `ISF-BACKLOG-TRUTH-SYNC` |
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |

@@ -139,7 +139,12 @@ override lists in the parent lowerer IR, and applies those overrides through
 the generated top. The first value domain is scalar/exact-width literals plus
 compatible aggregate/list literals. Actor-local constants are shipped for
 static wait counts, but symbolic parameter override values still need their
-own specialization contract before becoming valid parameter values.
+own implementation before becoming valid parameter values. The selected first
+symbolic source is actor-local constants: a future implementation leaf will
+allow constant names as scalar override values, or scalar leaves inside
+aggregate/list override values, and will resolve them to literal values before
+generated-top emission. Actor parameters, transaction parameters, runtime
+signals, and arbitrary expressions remain outside that selected first slice.
 
 ### General Transaction Activation Parameter Overrides
 

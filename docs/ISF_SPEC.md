@@ -931,6 +931,17 @@ values, the implementation must specialize distinct logical child instances or
 cloned scheduled regions. It must not lower the parameter as a mutable runtime
 signal shared by every activation of the transaction.
 
+Selected future value-source widening: actor-local constants are the first
+planned symbolic source for activation parameter override values. The selected
+contract is to accept an actor constant name as a scalar override value, or as
+a scalar leaf inside an aggregate/list override value, for generated activation
+forms that already support `(params ...)`: spawn, parameterized blocking `do`,
+and parameterized rule `trigger`. The lowerer must resolve the constant to its
+literal value before generated-top emission, so generated `?fsmc` parameter
+overrides remain self-contained. Unknown names, actor parameters, transaction
+parameters, runtime signals, and arbitrary expressions remain fail-closed until
+a later task explicitly ships a wider value source.
+
 The parameterized rule-trigger contract follows the same specialization rule.
 It elaborates a generated child activation instance named
 `{rule}_{transaction}_trigger_{ordinal}` for each lexical parameterized trigger

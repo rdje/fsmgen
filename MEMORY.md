@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF actor-constant parameter override contract selected
+- Completed `ISF-PARAM-OVERRIDE-CONSTANTS.1` in
+  [docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md](docs/tasks/ISF-PARAM-OVERRIDE-CONSTANTS.md).
+- Opened the active R14 task tree for allowing actor-local constants as static
+  activation parameter override values.
+- Selected the first bounded symbolic value source: actor constants may appear
+  as scalar override values, or as scalar leaves inside aggregate/list override
+  values, on generated activation forms that already support `(params ...)`.
+- The future implementation must resolve constants to literal values before
+  generated-top emission so generated `?fsmc` parameter overrides stay
+  self-contained.
+- Actor parameters, transaction parameters, runtime signals, interface ports,
+  storage names, and arbitrary expressions remain fail-closed for this tree.
+- This slice is specification-only. Parser, scheduler, report payload,
+  manifest, HDL behavior, and accepted source behavior are unchanged.
+- The active frontier is `ISF-PARAM-OVERRIDE-CONSTANTS.2`, implementing the
+  selected actor-constant activation parameter override contract.
 ## 2026-05-16: ISF feature backlog truth synchronized
 - Completed `ISF-BACKLOG-TRUTH-SYNC.1` in
   [docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md](docs/tasks/ISF-BACKLOG-TRUTH-SYNC.md).
