@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF I2C-like fixture promotion shipped
+- Completed `ISF-I2C-FIXTURE-PROMOTION.1` and closed the task tree.
+- Refreshed `isf/i2c_master.isf` so the write-data branch drives SDA from the
+  sampled byte bit `data[7]` and shifts the sampled byte after each bit,
+  avoiding the previous implicit `data_bit` input in generated HDL.
+- Added `t/1309-isf-i2c-fixture-coverage.t` for file-backed scheduled `.fsm`
+  structure, strict schedule JSON parity, plain and strict HDL generation,
+  switch-branch repeats, read-data shifting, sampled write-data bit selection,
+  and absence of implicit `data_bit` ports.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook control-flow,
+  feature matrix, and backlog chapters.
+- Validation: focused I2C/public/book/spec audit tests passed with
+  `Files=5, Tests=92`; `git diff --check` passed; broad
+  `./bin/ci-regression isf --no-book` passed with `Files=215, Tests=947`.
 ### R14 — ISF assemble single-part width inference shipped
 - Completed `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` and closed the task
   tree.

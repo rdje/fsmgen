@@ -10,11 +10,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE` is closed
-  after shipping exactly-one-missing-part `assemble` width inference and
-  synchronizing the spec, downstream handoff, public contract, mdBook, and
-  tests. The next R14 PNT implementation slice must select or create a new
-  task tree before code changes.
+- Next decision point: `ISF-I2C-FIXTURE-PROMOTION` is closed after promoting
+  the I2C-like fixture to file-backed schedule JSON, scheduled `.fsm`, strict
+  mode, and HDL coverage while avoiding an implicit `data_bit` input. The
+  spec, downstream handoff, public contract, mdBook, public metadata, and
+  tests are synchronized. The next R14 PNT implementation slice must select or
+  create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and

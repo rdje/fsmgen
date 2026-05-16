@@ -47,6 +47,8 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     my ($isf_block) = $result->{stdout} =~ /isf tests:\n(.*)\z/s;
     unlike($quick_block || '', qr/t\/1228-isf-spi-fixture-coverage\.t/, 'quick tier does not include the broader SPI-like fixture');
     like($isf_block || '', qr/t\/1228-isf-spi-fixture-coverage\.t/, 'ISF tier includes the SPI-like fixture coverage');
+    unlike($quick_block || '', qr/t\/1309-isf-i2c-fixture-coverage\.t/, 'quick tier does not include the broader I2C-like fixture');
+    like($isf_block || '', qr/t\/1309-isf-i2c-fixture-coverage\.t/, 'ISF tier includes the I2C-like fixture coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -70,6 +72,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($isf->{stdout}, qr/==> Perl ISF regression suite/, 'ISF dry-run selects ISF suite');
     like($isf->{stdout}, qr/t\/1246-isf-setter-syntax\.t/, 'ISF dry-run includes latest ISF setter syntax test');
     like($isf->{stdout}, qr/t\/1228-isf-spi-fixture-coverage\.t/, 'ISF dry-run includes SPI-like fixture coverage');
+    like($isf->{stdout}, qr/t\/1309-isf-i2c-fixture-coverage\.t/, 'ISF dry-run includes I2C-like fixture coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');

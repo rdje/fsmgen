@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-I2C-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md](docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md) |
 | `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE` | `done` | `R14` | `closed` | [docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md](docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md) |
 | `ISF-DYNAMIC-DIVISOR-CONSTANTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md](docs/tasks/ISF-DYNAMIC-DIVISOR-CONSTANTS.md) |
 | `ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE` | `done` | `R14` | `closed` | [docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md](docs/tasks/ISF-EXTRACT-SINGLE-FIELD-WIDTH-INFERENCE.md) |
@@ -127,6 +128,7 @@ as done work unless a future task reopens them.
 | Single-missing-part `assemble` width inference | `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE` |
 | Schedule-report storage classes and schedule JSON stabilization | `ISF-SCHEDULE-REPORTS` |
 | Realistic protocol fixtures, strict-mode checks, and end-to-end coverage | `ISF-FIXTURES` |
+| I2C-like realistic fixture promotion | `ISF-I2C-FIXTURE-PROMOTION` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |
 | Multi-clock, asynchronous, and interacting clock-domain semantics | `ISF-CLOCK-DOMAINS` |

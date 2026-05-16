@@ -2714,6 +2714,11 @@ coverage and records which feature families each fixture owns. The
 schedule/HDL/strict coverage as a compact SPI-like mode-0 serial-transfer
 example, not as a complete SPI protocol compliance suite. It stays in the
 `isf` regression tier rather than the curated quick/smoke tier.
+The [isf/i2c_master.isf](../isf/i2c_master.isf) fixture now also has
+file-backed schedule/HDL/strict coverage as a compact I2C-like
+serial-transfer example. It proves switch-branch repeats, read-data shifting,
+sampled write-data bit selection from `data[7]`, and no implicit `data_bit`
+input, without claiming complete I2C protocol compliance.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -2949,6 +2954,7 @@ Focused tests:
 - [t/1306-isf-rule-guard-doc-truth-audit.t](../t/1306-isf-rule-guard-doc-truth-audit.t)
 - [t/1307-isf-loop-body-doc-truth-audit.t](../t/1307-isf-loop-body-doc-truth-audit.t)
 - [t/1308-isf-dynamic-divisor-safety.t](../t/1308-isf-dynamic-divisor-safety.t)
+- [t/1309-isf-i2c-fixture-coverage.t](../t/1309-isf-i2c-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

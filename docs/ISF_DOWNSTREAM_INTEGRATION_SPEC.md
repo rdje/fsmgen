@@ -1486,10 +1486,19 @@ isf/common/fifo.isf
 isf/fifo_library_use.isf
 ```
 
+The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
+complete external protocol compliance suites. SPI is covered by
+`t/1228-isf-spi-fixture-coverage.t`. I2C is covered by
+`t/1309-isf-i2c-fixture-coverage.t`, which proves strict schedule JSON parity,
+scheduled `.fsm` structure, plain and strict HDL generation, switch-branch
+repeats, read-data shifting, sampled write-data bit selection from `data[7]`,
+and no implicit `data_bit` input.
+
 Recommended downstream smoke commands:
 
 ```bash
 ./bin/fsmgen --emit-schedule-json isf/apb_requester.isf
+./bin/fsmgen --strict --emit-schedule-json isf/i2c_master.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf

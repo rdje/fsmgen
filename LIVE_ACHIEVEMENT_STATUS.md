@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF I2C-like fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-I2C-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md](docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md).
+- The `ISF-I2C-FIXTURE-PROMOTION` tree is now closed. No active ISF task tree
+  remains open; the next R14 implementation slice must select or create a new
+  task tree first.
+- [isf/i2c_master.isf](isf/i2c_master.isf) now drives write-data SDA from
+  sampled `data[7]` and shifts the sampled byte after each driven bit, avoiding
+  an implicit `data_bit` input in generated HDL.
+- Added
+  [t/1309-isf-i2c-fixture-coverage.t](t/1309-isf-i2c-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, switch-branch repeats, read-data shifting,
+  sampled write-data bit selection, and absence of an implicit `data_bit`
+  input.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused I2C/public/book/spec audit tests passed with
+  `Files=5, Tests=92`; `git diff --check` passed; broad
+  `./bin/ci-regression isf --no-book` passed with `Files=215, Tests=947`.
+
 ## 2026-05-16: R14 — ISF assemble single-part width inference shipped
 - Completed R14 task-tree slice:
   `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` in

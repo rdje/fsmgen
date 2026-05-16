@@ -973,10 +973,14 @@ belongs in the `isf` regression tier. The active matrix in
 [ISF-FIXTURE-COVERAGE](../../tasks/ISF-FIXTURE-COVERAGE.md) now covers
 `isf/spi_master.isf` as a bounded SPI-like mode-0 serial-transfer fixture
 through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL
-checks. It is not a complete SPI protocol compliance suite. Future fixture
-promotions should add stable structural assertions rather than full HDL or full
-schedule JSON snapshots. The SPI-like fixture intentionally stays out of the
-quick/smoke tier for now; `quick` remains APB-centered for fast turnaround.
+checks, and [ISF-I2C-FIXTURE-PROMOTION](../../tasks/ISF-I2C-FIXTURE-PROMOTION.md)
+now covers `isf/i2c_master.isf` as a bounded I2C-like serial-transfer fixture
+through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL
+checks. These are not complete SPI or I2C protocol compliance suites. Future
+fixture promotions should add stable structural assertions rather than full
+HDL or full schedule JSON snapshots. The SPI-like and I2C-like fixtures
+intentionally stay out of the quick/smoke tier for now; `quick` remains
+APB-centered for fast turnaround.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

@@ -79,6 +79,12 @@ generated-child and accepted multi-domain actors. Plain `.isf` HDL generation
 lowers through scheduled `.fsm` first, then continues through the existing HDL
 pipeline.
 
+The I2C-like fixture is a bounded realistic fixture, not a full I2C protocol
+compliance claim. It is file-backed in the `isf` regression tier for strict
+schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, switch-branch repeats, read-data shifting, sampled write-data bit
+selection from `data[7]`, and absence of an implicit `data_bit` input.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

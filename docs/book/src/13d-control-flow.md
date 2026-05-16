@@ -154,13 +154,15 @@ closed during lowering instead of disappearing from scheduled `.fsm` output.
          (shift_left rdata sda_in)
          (drive scl 0)))
     (0 (repeat 8
+         (drive sda data[7])
          (drive scl 1)
-         (drive sda data_bit)
-         (drive scl 0))))
+         (drive scl 0)
+         (shift_left data 0))))
   ...)
 ```
 
 Read branch: captures 8 bits via shift register.
-Write branch: drives 8 bits of data.
+Write branch: drives the sampled data byte MSB-first and shifts the sampled
+byte left after each bit.
 Both branch repeats exit to the same post-switch STOP sequence when their
 repeat checks complete.

@@ -185,7 +185,7 @@ Matrix rules:
 | --- | --- | --- | --- | --- | --- | --- |
 | `isf/apb_requester.isf` | Current baseline realistic fixture. | Interface widths, async active-low reset metadata, watchdog, named/parameterized drives, samples, await, latency, complete pulse, storage roles. | Reset shape, transaction order/states/counts, DT kinds/counts, inferred storage kind/role/width where available, schedule JSON CLI parity. | Scheduled module header, plain HDL generation, strict HDL generation, clean stderr. | `quick` for parse/header/contract only; broader APB assertions in `isf`. | Maintain as baseline; do not add more APB-only quick tests unless a new public contract needs it. |
 | `isf/spi_master.isf` | Compact SPI-like mode-0 serial-transfer fixture. | Parameterized drives, active-low `cs`, `sclk` toggling, explicit `mosi` bit-select drive, `miso` sampling, fixed 8-cycle repeat loop, sampled transmit byte, shift-left data movement. | Transaction state list/count, repeat counter storage, data-register storage/width, DT kind coverage for drive blocks, compatible request fan-in for repeated drive starts. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path, direct shift-expression HDL support. | `isf`; not `quick` initially. | Covered by `ISF-FIXTURES.3`; maintain as bounded SPI-like fixture, not full SPI compliance. |
-| `isf/i2c_master.isf` | Second serial-protocol promotion target. | Parameterized drives, nested repeat, switch branches, shift-left, branch-specific serial behavior. | Transaction states, repeat counters, switch branch state coverage, storage width/role where known. | Generated HDL reachability and strict-mode acceptance after SPI proves the pattern. | `isf`; no quick promotion planned. | Follow SPI with a narrower I2C schedule/HDL slice if runtime cost stays acceptable. |
+| `isf/i2c_master.isf` | Second serial-protocol promotion target. | Parameterized drives, nested repeat, switch branches, shift-left, branch-specific serial behavior. | Transaction states, repeat counters, switch branch state coverage, storage width/role where known. | Generated HDL reachability and strict-mode acceptance after SPI proves the pattern. | `isf`; no quick promotion planned. | Promoted by [ISF-I2C-FIXTURE-PROMOTION](ISF-I2C-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/burst_reader.isf` | Burst/wait-loop realism target. | Dynamic repeat count, sampled aliases, await, watchdog, latency, completion pulse. | Repeat/latency/watchdog storage roles, transaction state count/order, completion pulse storage. | Generated HDL reachability; strict mode only after the fixture is checked as forward-contract clean. | `isf`. | Refresh after serial fixtures to improve wait-loop/report assertions. |
 | `isf/uart_tx.isf` | Data-width and shift-right realism target. | Parameterized drives, repeat, explicit-width `shift_right`, serial transmit framing. | Data register width evidence, transaction states, repeat counter storage. | Generated HDL reachability; strict mode if the fixture is promoted as a forward-contract example. | `isf`. | Use only if it adds width/shift-right signal beyond existing focused tests; it needs explicit serial-bit drive selection before strict/HDL promotion. |
 | `isf/spawn_parent.isf` | Composition realism baseline. | Spawned child module, generated top, start/done handoff, named-drive handoff, parameter overrides, outdir lowering. | `generated_composition` summary, child/instance/link/binding keys, parent-only report scope. | Multi-file lower result, generated top reachability, `--outdir` behavior. | `isf`; not quick. | Maintain existing coverage; expand only when generated-child public surface widens. |
@@ -228,6 +228,17 @@ Implementation notes:
 
 The fixture remains in the `isf` regression tier, not `quick`, so fast
 turnaround remains APB-centered.
+
+## Post-Closure I2C-Like Fixture Promotion
+
+`ISF-I2C-FIXTURE-PROMOTION.1` promotes `isf/i2c_master.isf` after this matrix
+tree closed. The fixture now has its own file-backed regression,
+`t/1309-isf-i2c-fixture-coverage.t`, covering scheduled `.fsm` structure,
+strict schedule JSON parity, plain HDL generation, strict HDL generation,
+switch-branch repeats, read-data shifting, sampled write-data bit selection
+from `data[7]`, and absence of an implicit `data_bit` input. It remains in the
+`isf` regression tier, not `quick`, and is still a bounded I2C-like fixture
+rather than a complete I2C protocol compliance suite.
 
 ## ISF-FIXTURES.4 Regression Tier Placement
 

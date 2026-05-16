@@ -100,6 +100,12 @@ The compact SPI-like serial fixture is checked by
 to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
 strict HDL generation, explicit MOSI bit selection, and ISF shift handoff
 covered without claiming full external SPI protocol compliance.
+The compact I2C-like serial fixture is checked by
+[t/1309-isf-i2c-fixture-coverage.t](../t/1309-isf-i2c-fixture-coverage.t)
+to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
+strict HDL generation, switch-branch repeats, read-data shifting, sampled
+write-data bit selection, and absence of an implicit `data_bit` input covered
+without claiming full external I2C protocol compliance.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

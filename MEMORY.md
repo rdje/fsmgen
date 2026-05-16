@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF I2C-like fixture promotion shipped
+- Completed `ISF-I2C-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md](docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md).
+- Refreshed [isf/i2c_master.isf](isf/i2c_master.isf) so the write-data branch
+  drives SDA from the sampled byte bit `data[7]` and shifts the sampled byte
+  left after each driven bit, rather than relying on an implicit `data_bit`
+  input.
+- Added
+  [t/1309-isf-i2c-fixture-coverage.t](t/1309-isf-i2c-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, switch-branch repeats, read-data shifting,
+  sampled write-data bit selection, and absence of an implicit `data_bit`
+  input.
+- Updated public `tested_by` metadata and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: `prove -l t/1309-isf-i2c-fixture-coverage.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`
+  passed with `Files=5, Tests=92`; `git diff --check` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=215, Tests=947`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF assemble single-part width inference shipped
 - Completed `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` and closed
   [docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md](docs/tasks/ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.md).

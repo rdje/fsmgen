@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: I2C fixture promotion must not rely on implicit ports
+- `ISF-I2C-FIXTURE-PROMOTION.1` keeps the I2C example bounded and honest: it
+  is a realistic serial-transfer fixture, not a complete I2C protocol
+  compliance suite.
+- The old write branch used `data_bit`, which the backend treated as an
+  ordinary input because it was not declared or sampled. That made the fixture
+  less useful as an authoring example even though generated HDL succeeded.
+- The promoted fixture now drives `sda` from `data[7]` and then shifts the
+  sampled `data` byte left. That keeps all write-data behavior inside
+  documented sampled aliases, bit selection, parameterized drives, and
+  `shift_left`.
+- The new regression intentionally checks both source-level artifacts and HDL
+  text for absence of `data_bit`, because the risk was an accidental public
+  port rather than a parser failure.
 ## 2026-05-16: assemble can infer one missing part width without guessing layouts
 - `ISF-ASSEMBLE-SINGLE-PART-WIDTH-INFERENCE.1` mirrors the conservative
   extract inference policy: exactly one missing `assemble` part width can be
