@@ -91,6 +91,7 @@ my @required_examples = (
     '--emit-schedule-json',
     '--strict --outdir /tmp/isf-build',
     'I2C-like fixture',
+    'burst-reader fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF burst-reader fixture promotion shipped
+- Completed `ISF-BURST-FIXTURE-PROMOTION.1` and closed the task tree.
+- Added `t/1310-isf-burst-fixture-coverage.t` for file-backed scheduled
+  `.fsm` structure, strict schedule JSON parity, plain and strict HDL
+  generation, dynamic repeat counter storage, watchdog and latency counter
+  roles, sampled aliases, and completion/timeout pulse fan-in.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook feature matrix and
+  backlog chapters.
+- Validation: focused burst/public/book/spec audit tests passed with
+  `Files=5, Tests=93`; `git diff --check` passed; broad
+  `./bin/ci-regression isf --no-book` passed with `Files=216, Tests=951`.
 ### R14 — ISF I2C-like fixture promotion shipped
 - Completed `ISF-I2C-FIXTURE-PROMOTION.1` and closed the task tree.
 - Refreshed `isf/i2c_master.isf` so the write-data branch drives SDA from the

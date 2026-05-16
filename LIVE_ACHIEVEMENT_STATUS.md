@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF burst-reader fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-BURST-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-BURST-FIXTURE-PROMOTION.md](docs/tasks/ISF-BURST-FIXTURE-PROMOTION.md).
+- The `ISF-BURST-FIXTURE-PROMOTION` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create a
+  new task tree first.
+- Added
+  [t/1310-isf-burst-fixture-coverage.t](t/1310-isf-burst-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, dynamic repeat counter storage, watchdog
+  and latency counter roles, sampled aliases, and completion/timeout pulse
+  fan-in.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused burst/public/book/spec audit tests passed with
+  `Files=5, Tests=93`; `git diff --check` passed; broad
+  `./bin/ci-regression isf --no-book` passed with `Files=216, Tests=951`.
+
 ## 2026-05-16: R14 — ISF I2C-like fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-I2C-FIXTURE-PROMOTION.1` in

@@ -203,6 +203,7 @@ my $expected_tested_by = [
     't/1303-isf-public-live-book-paths-audit.t',
     't/1308-isf-dynamic-divisor-safety.t',
     't/1309-isf-i2c-fixture-coverage.t',
+    't/1310-isf-burst-fixture-coverage.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

@@ -106,6 +106,11 @@ to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
 strict HDL generation, switch-branch repeats, read-data shifting, sampled
 write-data bit selection, and absence of an implicit `data_bit` input covered
 without claiming full external I2C protocol compliance.
+The burst-reader fixture is checked by
+[t/1310-isf-burst-fixture-coverage.t](../t/1310-isf-burst-fixture-coverage.t)
+to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
+strict HDL generation, dynamic repeat counter storage, watchdog and latency
+counter roles, sampled aliases, and completion/timeout pulse fan-in covered.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

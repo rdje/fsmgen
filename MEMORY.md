@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF burst-reader fixture promotion shipped
+- Completed `ISF-BURST-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-BURST-FIXTURE-PROMOTION.md](docs/tasks/ISF-BURST-FIXTURE-PROMOTION.md).
+- Added
+  [t/1310-isf-burst-fixture-coverage.t](t/1310-isf-burst-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, dynamic repeat counter storage, watchdog
+  and latency counter roles, sampled aliases, and completion/timeout pulse
+  fan-in for [isf/burst_reader.isf](isf/burst_reader.isf).
+- Updated public `tested_by` metadata and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: `prove -l t/1310-isf-burst-fixture-coverage.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`
+  passed with `Files=5, Tests=93`; `git diff --check` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=216, Tests=951`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF I2C-like fixture promotion shipped
 - Completed `ISF-I2C-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md](docs/tasks/ISF-I2C-FIXTURE-PROMOTION.md).

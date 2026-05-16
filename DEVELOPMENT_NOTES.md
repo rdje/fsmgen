@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: burst fixture promotion is coverage, not semantics
+- `ISF-BURST-FIXTURE-PROMOTION.1` promotes an already accepted fixture rather
+  than changing wait, repeat, watchdog, latency, or HDL semantics.
+- The fixture is valuable because it crosses several public report surfaces in
+  one realistic flow: a dynamic repeat count sampled from an input, watchdog
+  timeout handling, latency counter storage, sampled read data, and
+  completion/timeout pulse fan-in.
+- The new regression checks stable structure rather than snapshotting full
+  JSON or HDL. That keeps the fixture useful for downstream confidence without
+  freezing private formatting details.
 ## 2026-05-16: I2C fixture promotion must not rely on implicit ports
 - `ISF-I2C-FIXTURE-PROMOTION.1` keeps the I2C example bounded and honest: it
   is a realistic serial-transfer fixture, not a complete I2C protocol

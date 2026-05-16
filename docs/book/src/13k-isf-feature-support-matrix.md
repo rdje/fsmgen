@@ -85,6 +85,11 @@ schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, switch-branch repeats, read-data shifting, sampled write-data bit
 selection from `data[7]`, and absence of an implicit `data_bit` input.
 
+The burst-reader fixture is file-backed in the `isf` regression tier for
+strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, dynamic repeat counter storage, watchdog and latency counter
+roles, sampled aliases, and completion/timeout pulse fan-in.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

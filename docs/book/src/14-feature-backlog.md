@@ -981,6 +981,10 @@ fixture promotions should add stable structural assertions rather than full
 HDL or full schedule JSON snapshots. The SPI-like and I2C-like fixtures
 intentionally stay out of the quick/smoke tier for now; `quick` remains
 APB-centered for fast turnaround.
+The burst-reader fixture is now also promoted in the `isf` tier for
+file-backed strict schedule JSON parity, scheduled `.fsm` structure, plain and
+strict HDL generation, dynamic repeat counter storage, watchdog/latency
+counter roles, sampled aliases, and completion/timeout pulse fan-in.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal
