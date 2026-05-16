@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: transaction port storage role is contract sync
+- `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` advertises the `transaction_port`
+  storage role because schedule reports already emit it when a declared
+  transaction port is materialized in scheduled `.fsm` storage.
+- The slice keeps transaction ports as the existing transaction-local storage
+  and binding surface. It does not change port direction semantics, binding
+  timing, generated handoff wiring, or HDL.
+- With this role added, the known storage roles emitted by the current
+  scheduler are aligned with the public `schedule_report_storage_role_values`
+  contract.
 ## 2026-05-16: activation handoff roles are advertised only where emitted
 - `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1` synchronizes the public role
   family with two roles already emitted by schedule reports:

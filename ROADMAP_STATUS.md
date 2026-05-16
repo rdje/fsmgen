@@ -43,8 +43,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   storage role family with the already-emitted generated activation
   `transaction_port_binding` and `trigger_done_observe` roles, without
   changing generated activation lowering, generated-top wiring, rule-trigger
-  timing, or generated artifacts. The next PNT selection should choose a fresh
-  roadmap-aligned R14 task tree before implementation.
+  timing, or generated artifacts.
+  `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` then synchronized the public
+  storage role family with the already-emitted `transaction_port` role for
+  materialized transaction-local port storage, without changing transaction
+  port syntax, binding syntax, timing, or generated artifacts. The next PNT
+  selection should choose a fresh roadmap-aligned R14 task tree before
+  implementation.
   `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` is now the single human
   SPECFORGE-style integration contract and a mandatory sync target for future
   downstream-visible ISF source syntax, diagnostics, lowering, public facade,
@@ -177,6 +182,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   public contract/manifest metadata and extended
   `t/1148-isf-public-storage-metadata-audit.t` with spawn and generated
   rule-trigger report probes.
+  `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1` published the already-emitted
+  `transaction_port` storage role through public contract/manifest metadata
+  and extended `t/1148-isf-public-storage-metadata-audit.t` with a direct
+  transaction-port report probe.
   Standalone public interface stabilization/audit work remains feature-driven;
   the completed `ISF-PUBLIC-CONTRACT` tree now supplies the synchronization
   checklist for future feature trees.

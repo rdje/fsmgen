@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF transaction-port storage role synchronized
+- Completed R14 task-tree slice:
+  `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1`, closing
+  [docs/tasks/ISF-TRANSACTION-PORT-STORAGE-REPORTS.md](docs/tasks/ISF-TRANSACTION-PORT-STORAGE-REPORTS.md).
+- Public contract metadata now advertises `transaction_port` through
+  `schedule_report_storage_role_values`, matching already-emitted
+  transaction-local port storage roles.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with a direct transaction-port report probe.
+- Transaction port syntax, binding syntax, timing, generated `.fsm`, and HDL
+  output are unchanged.
+
 ## 2026-05-16: R14 — ISF activation handoff storage roles synchronized
 - Completed R14 task-tree slice:
   `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1`, closing

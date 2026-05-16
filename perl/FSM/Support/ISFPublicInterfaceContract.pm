@@ -1382,6 +1382,7 @@ sub isf_public_interface_schedule_report_storage_role_values {
             repeat_counter
             sample_alias
             temporal_contract_monitor
+            transaction_port
             transaction_port_binding
             trigger_done_observe
             watchdog_counter

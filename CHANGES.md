@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF transaction-port storage role synchronized
+- Completed `ISF-TRANSACTION-PORT-STORAGE-REPORTS.1`, closing the
+  `ISF-TRANSACTION-PORT-STORAGE-REPORTS` task tree.
+- Added the already-emitted `transaction_port` role to
+  `schedule_report_storage_role_values` in the public ISF contract and
+  capability manifest.
+- Extended [t/1148-isf-public-storage-metadata-audit.t](t/1148-isf-public-storage-metadata-audit.t)
+  with a direct transaction-port report probe.
+- Synchronized the ISF spec, downstream handoff, mdBook, README, task tree,
+  roadmap status, and live docs.
+- Transaction port syntax, binding syntax, timing, generated `.fsm`, and HDL
+  output are unchanged.
 ### R14 — ISF activation handoff storage roles synchronized
 - Completed `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS.1`, closing the
   `ISF-ACTIVATION-HANDOFF-STORAGE-REPORTS` task tree.

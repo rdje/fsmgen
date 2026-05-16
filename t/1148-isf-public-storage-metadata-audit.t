@@ -149,6 +149,25 @@ subtest 'generated activation handoff storage roles follow advertised metadata' 
         if $trigger_payload;
 };
 
+subtest 'transaction-local port storage role follows advertised metadata' => sub {
+    my $report = report_source(transaction_port_source(), 'transaction-port-storage-role.isf');
+    my %role = map { $_ => 1 } @{isf_public_interface_schedule_report_storage_role_values()};
+
+    ok($role{transaction_port}, 'transaction_port is an advertised storage role');
+
+    my ($entry) = grep {
+        ($_->{name} // '') eq 'addr'
+    } @{$report->{inferred_storage} || []};
+
+    ok($entry, 'transaction port report exposes materialized port storage');
+    is($entry->{kind}, 'register', 'transaction port storage is a register')
+        if $entry;
+    is($entry->{role}, 'transaction_port', 'transaction port storage reports its role')
+        if $entry;
+    is($entry->{width}, 8, 'transaction port storage reports its declared width')
+        if $entry;
+};
+
 done_testing();
 
 sub assert_storage_metadata {
@@ -273,5 +292,22 @@ sub trigger_binding_source {
         (WIDTH 16))
       (bind
         (input addr req)))))
+ISF
+}
+
+sub transaction_port_source {
+    return <<'ISF';
+(actor transaction_port_storage_role
+  (clock clk)
+  (interface
+    (input start)
+    (input req (width 8))
+    (output done))
+  (transaction main
+    (ports
+      (input addr (width 8)))
+    (on start)
+    (set addr req)
+    (complete done)))
 ISF
 }
