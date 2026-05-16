@@ -312,11 +312,15 @@ accepted as the direct RHS token of transaction
 transaction `set` RHS expressions, for example
 `(set mode_out (+ frame.mode mode_in))`. Scalar member/item writes such as
 `(set frame.flag flag_in)` or `(set lanes[0] bit_in)` are accepted as direct
-transaction `set` targets. These forms resolve against the declared aggregate
-storage shape before lowering. Aggregate paths outside transaction `set` RHS
-values or direct transaction `set` targets, aggregate paths in expression
-operator position, subaggregate writes/operands, aggregate interface or
-transaction ports, and aggregate storage banks remain deferred. Existing ISF
+transaction `set` targets. Rule assignments may also read scalar aggregate
+member/item leaves as direct scalar RHS values, for example
+`(rule expose ready (set mode_out frame.mode))` or the shorthand
+`(rule expose ready (mode_out lanes[1]))`. These forms resolve against the
+declared aggregate storage shape before lowering. Aggregate paths outside
+transaction `set` RHS values, direct transaction `set` targets, or direct rule
+assignment RHS values, aggregate paths in expression operator position,
+subaggregate writes/operands, aggregate interface or transaction ports, and
+aggregate storage banks remain deferred. Existing ISF
 aggregate support beyond this carrier plus direct scalar leaf read/write
 context remains limited to compatible aggregate/list literal parameter values
 and scalarized storage/bank lowering. Future enum member value references
@@ -332,8 +336,8 @@ expression operands, drive body RHS scalar values or expression operands,
 inline drive assignment RHS scalar values or expression operands, and
 drive-call actual scalar values or expression operands, additional aggregate
 carriers, aggregate field/slice/update lowering, incompatible enum values,
-aggregate shape
-mismatches, and ambiguous subaggregate updates remain owned by later
+aggregate shape mismatches, and ambiguous subaggregate updates remain owned by
+later
 `ISF-TYPE-AGGREGATE-PARITY` leaves.
 
 Additional actor clauses with mixed parser/scheduler behavior:
@@ -878,13 +882,17 @@ remain supported shorthand. The setter word is shared, but the runtime region
 is still owned by context: a rule `set` is actor-level concurrent logic guarded
 by the rule's non-state DT enable, while transaction `set` is an ordered
 transaction step that becomes part of the transaction state sequence. Rule
-assignment direct scalar RHS values and scalar operands inside RHS expressions
-may use local enum members such as `mode.BUSY` or package enum members such as
-`shared.mode.BUSY`; the parser resolves those values before lowering and
-preserves the authored token in the guarded rule DT. Scalar operands inside
-rule guard expressions may also use enum members. Standalone enum member guards,
-rule target enum members, and enum members in rule guard or rule assignment
-expression operator position remain deferred.
+assignment direct scalar RHS values may read scalar aggregate member/item
+leaves such as `frame.mode` or `lanes[1]`; the parser resolves those paths
+against declared actor-owned aggregate storage before lowering and preserves
+the authored path in the guarded rule DT. Rule assignment direct scalar RHS
+values and scalar operands inside RHS expressions may also use local enum
+members such as `mode.BUSY` or package enum members such as `shared.mode.BUSY`;
+the parser resolves those values before lowering and preserves the authored
+token in the guarded rule DT. Scalar operands inside rule guard expressions may
+also use enum members. Aggregate leaves inside rule assignment RHS expressions,
+standalone enum member guards, rule target enum members, and enum members in
+rule guard or rule assignment expression operator position remain deferred.
 
 `(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
 entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering emits
@@ -2786,6 +2794,7 @@ Focused tests:
 - [t/1280-isf-enum-member-inline-drive-expression-values.t](../t/1280-isf-enum-member-inline-drive-expression-values.t)
 - [t/1281-isf-enum-member-library-use-params.t](../t/1281-isf-enum-member-library-use-params.t)
 - [t/1282-isf-enum-member-drive-expression-values.t](../t/1282-isf-enum-member-drive-expression-values.t)
+- [t/1283-isf-aggregate-rule-values.t](../t/1283-isf-aggregate-rule-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2858,7 +2867,8 @@ Focused tests:
   values and expression operands, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction `set` target aggregate leaf writes,
-  aggregate/list parameter-literal, and data-operation evidence model. Enum
+  rule assignment RHS aggregate leaf values, aggregate/list parameter-literal,
+  and data-operation evidence model. Enum
   member references outside actor constants, actor parameter scalar values or
   aggregate/list default leaves, generated child transaction parameter scalar
   values or aggregate/list default leaves, activation parameter scalar values
@@ -2872,9 +2882,10 @@ Focused tests:
   expression operands, or drive-call actual scalar values/expression operands
   remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
-  direct transaction `set` RHS values or target tokens, subaggregate
-  updates/operands, aggregate field/slice/update lowering, and broad
-  aggregate/record width inference remain deferred to the active
-  `ISF-TYPE-AGGREGATE-PARITY` task tree.
+  direct transaction `set` RHS values, direct transaction `set` target tokens,
+  or direct rule assignment RHS values, rule assignment RHS expression
+  aggregate operands, subaggregate updates/operands, aggregate
+  field/slice/update lowering, and broad aggregate/record width inference
+  remain deferred to the active `ISF-TYPE-AGGREGATE-PARITY` task tree.
 - Treating the schedule JSON as a fully frozen public schema beyond the bounded
   key families advertised by `embedding.isf_public_interface`.

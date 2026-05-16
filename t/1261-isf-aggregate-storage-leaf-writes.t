@@ -166,7 +166,7 @@ ISF
     (when frame.flag
       (set done 1))))
 ISF
-        qr/when condition references aggregate storage path 'frame\.flag'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads or direct transaction set target scalar leaf writes/,
+        qr/when condition references aggregate storage path 'frame\.flag'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, or rule assignment RHS scalar leaf reads/,
         'aggregate paths outside direct transaction set positions remain deferred',
     );
 };

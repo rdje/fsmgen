@@ -317,8 +317,10 @@ aggregate storage carriers, such as
 `frame.mode` or `lanes[0]`, either directly or as scalar operands inside
 transaction `set` RHS expressions. Direct transaction `set` targets may write
 scalar aggregate leaves on those same carriers, such as `(set frame.flag
-flag_in)` or `(set lanes[0] bit_in)`. Aggregate member paths outside
-transaction `set` RHS values or direct targets, subaggregate
+flag_in)` or `(set lanes[0] bit_in)`. Rule assignment scalar RHS values may
+read scalar aggregate leaves too, such as `(set mode_out frame.mode)` inside a
+rule body. Aggregate member paths outside transaction `set` RHS values, direct
+transaction `set` targets, or direct rule assignment RHS values, subaggregate
 operands/updates, aggregate interface or transaction ports, aggregate storage
 banks, enum member references outside actor constants, actor parameter scalar
 values or aggregate/list default leaves, generated child transaction scalar
@@ -327,10 +329,10 @@ scalar values or aggregate/list override leaves, transaction `set` RHS scalar
 values/expression operands, transaction `when`/`while`/`until` condition
 expression operands, transaction `switch` branch values, rule guard expression
 operands, scalar rule assignment RHS values or expression operands, or drive
-body RHS scalar values/expression operands, inline drive assignment RHS scalar values/expression
-operands, or drive-call actual scalar values/expression operands,
-aggregate field/slice/update lowering, and broader aggregate shape inference
-are separate follow-on leaves.
+body RHS scalar values/expression operands, inline drive assignment RHS scalar
+values/expression operands, or drive-call actual scalar values/expression
+operands, aggregate field/slice/update lowering, and broader aggregate shape
+inference are separate follow-on leaves.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate
@@ -431,10 +433,12 @@ explicit setter; `(port expr)` remains shorthand. Both lower as flopped `<-`
 rule assignments under the rule DT DTE, where `expr` may be a scalar token or
 one list expression from the transaction `set`/`update`/`.fsm` RHS expression
 domain. Direct scalar rule assignment RHS values and scalar operands inside RHS
-expressions may use local or package-qualified enum members. Rule guard
-expressions may use enum members as scalar operands; expression
-operator-position enum members, standalone enum guards, and rule targets remain
-backlog.
+expressions may use local or package-qualified enum members. Direct scalar rule
+assignment RHS values may also read scalar aggregate storage leaves such as
+`frame.mode` or `lanes[1]`. Rule guard expressions may use enum members as
+scalar operands; aggregate leaves inside rule assignment RHS expressions,
+expression operator-position enum members, standalone enum guards, and rule
+targets remain backlog.
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as

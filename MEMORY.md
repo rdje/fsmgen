@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate rule RHS values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.29` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.30`.
+- Rule assignment scalar RHS values now accept scalar aggregate storage leaves
+  such as `frame.mode` and `lanes[1]` from declared actor-owned aggregate
+  storage variables.
+- The parser resolves those paths against aggregate shape before lowering,
+  rejects unknown members, and keeps rule RHS expression aggregate operands and
+  aggregate rule targets deferred.
+- Scheduled `.fsm` rule DTs, assignment provenance, and strict CLI HDL
+  generation preserve and consume the authored aggregate leaf paths.
 ## 2026-05-16: ISF enum named drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.28` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

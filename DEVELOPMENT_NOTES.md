@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate rule RHS values stay scalar-only
+- `ISF-TYPE-AGGREGATE-PARITY.29` widens aggregate storage leaf reads from
+  transaction `set` RHS contexts into direct scalar rule assignment RHS values.
+- The parser validates explicit `(set port frame.mode)` and shorthand
+  `(port lanes[1])` rule assignments against declared actor-owned aggregate
+  storage shapes, but still rejects aggregate paths in rule targets and inside
+  rule assignment RHS expressions.
+- The lowerer already preserves scalar rule RHS values in guarded rule DTs and
+  assignment provenance, so this slice only changes validation boundaries and
+  focused public coverage.
 ## 2026-05-16: enum named drive body expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.28` widens named drive body RHS support from
   direct scalar enum values to scalar operands inside named drive body RHS
