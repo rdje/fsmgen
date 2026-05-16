@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF rule-guard backlog truth synchronized
+- Completed `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` and closed
+  [docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md](docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md).
+- Corrected stale ISF spec and mdBook feature-backlog wording that still
+  treated standalone enum member and scalar aggregate rule guards as backlog.
+- The spec and book backlog now match the shipped behavior covered by
+  `t/1301` and `t/1302`: shorthand and long-form rule guards may use enum
+  members and scalar aggregate storage leaves, while enum targets,
+  operator-position enum members, aggregate operator-position paths, and
+  subaggregate rule targets remain deferred.
+- Added
+  [t/1306-isf-rule-guard-doc-truth-audit.t](t/1306-isf-rule-guard-doc-truth-audit.t)
+  so this stale backlog wording cannot return silently.
+- No parser, scheduler, emitter, schedule-report payload, generated `.fsm`, or
+  HDL behavior changed. No active ISF task tree remains open.
 ## 2026-05-16: ISF book shipped feature matrix added
 - Completed `ISF-MDBOOK-FEATURE-MATRIX.1` and closed
   [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md).

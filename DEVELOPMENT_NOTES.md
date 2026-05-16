@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: rule-guard backlog wording must follow the 1301/1302 shipped surface
+- `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` fixes stale wording left behind after
+  standalone enum member and scalar aggregate rule guards shipped.
+- The implementation already supports shorthand and long-form rule guards such
+  as `(rule fire mode.BUSY ...)`, `(rule fire (when shared.mode.BUSY) ...)`,
+  `(rule fire frame.flag ...)`, and `(rule fire (when lanes[1]) ...)`.
+- The correction deliberately keeps the remaining rule-adjacent deferrals:
+  enum targets, expression operator-position enum members, aggregate
+  operator-position paths, and subaggregate rule targets still need their own
+  contracts before they can ship.
 ## 2026-05-16: shipped ISF features need one book-facing review matrix
 - `ISF-MDBOOK-FEATURE-MATRIX.1` adds a support matrix because dispersed
   chapters are not enough for a reviewer who uses the book as the primary

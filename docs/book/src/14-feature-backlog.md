@@ -486,10 +486,14 @@ scalar aggregate storage leaves such as `frame.mode` or `lanes[1]`. Rule
 assignment targets may write scalar aggregate storage leaves such as
 `frame.mode` or `lanes[1]`. Rule guard expressions may use enum members as
 scalar operands and may read scalar aggregate storage leaves such as
-`frame.flag`; aggregate paths in rule assignment RHS or rule guard expression
-operator position, expression operator-position enum members, standalone
-enum/aggregate guards, enum rule targets, and subaggregate rule targets remain
-backlog. Transaction `switch` selectors and branch values may
+`frame.flag`. Standalone scalar enum and scalar aggregate rule guards are
+shipped in both shorthand and long-form `(when ...)` rule syntax, such as
+`(rule fire mode.BUSY (set seen 1))` and
+`(rule fire (when frame.flag) (set seen 1))`; they lower to guarded non-state
+DT headers. The remaining backlog is aggregate paths in rule assignment RHS or
+rule guard expression operator position, expression operator-position enum
+members, enum rule targets, and subaggregate rule targets. Transaction
+`switch` selectors and branch values may
 read scalar aggregate storage leaves such as `frame.mode`, and selectors or
 branch values may use enum members; subaggregate selectors/branch values remain
 backlog. Named drive body scalar RHS values

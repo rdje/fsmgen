@@ -10,11 +10,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-MDBOOK-FEATURE-MATRIX` is closed after adding the
-  book-facing shipped ISF feature matrix, wiring it into the mdBook summary
-  and public `live_document_paths`, and adding a focused support-matrix audit.
-  The next R14 PNT implementation slice must select or create a new task tree
-  before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
+- Next decision point: `ISF-RULE-GUARD-DOC-TRUTH-SYNC` is closed after
+  correcting stale rule-guard backlog wording in the ISF spec and mdBook and
+  adding a focused audit. The next R14 PNT implementation slice must select or
+  create a new task tree before code changes. `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
   opened the active task tree. `ISF-TYPE-AGGREGATE-PARITY.2` then selected the
@@ -247,6 +246,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   generated/reported behavior, and explicit non-claims, advertised it through
   the public `live_document_paths` manifest surface, added
   `t/1305-isf-book-feature-matrix-audit.t`, and changed no parser,
+  scheduler, report payload, generated `.fsm`, or HDL behavior.
+  `ISF-RULE-GUARD-DOC-TRUTH-SYNC.1` then corrected stale ISF spec and mdBook
+  feature-backlog wording that still treated standalone enum member and scalar
+  aggregate rule guards as backlog, added
+  `t/1306-isf-rule-guard-doc-truth-audit.t`, and changed no parser,
   scheduler, report payload, generated `.fsm`, or HDL behavior.
   Previous R14
   sequencing: after
@@ -5425,6 +5429,11 @@ Done:
   [docs/book/src/13k-isf-feature-support-matrix.md](docs/book/src/13k-isf-feature-support-matrix.md),
   a book-facing matrix of shipped ISF feature families, examples,
   generated/reported behavior, and explicit non-claims.
+- The mdBook feature backlog and ISF spec now agree that standalone enum
+  member and scalar aggregate rule guards are shipped in shorthand and
+  long-form rule syntax; the remaining enum target, enum operator-position,
+  aggregate operator-position, and subaggregate rule-target deferrals remain
+  explicit.
 - The bootstrap import-tree snapshot now records the reachable ISF adapter and
   scheduler path.
 - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) is synchronized to the current shipped
@@ -5759,10 +5768,10 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-MDBOOK-FEATURE-MATRIX`, so the next ISF implementation slice must
-  either activate an existing proposed tree or create a new feature tree before
-  changing parser/scheduler/emitter/contract/fixture/book behavior. Keep
-  `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
+  after `ISF-RULE-GUARD-DOC-TRUTH-SYNC`, so the next ISF implementation slice
+  must either activate an existing proposed tree or create a new feature tree
+  before changing parser/scheduler/emitter/contract/fixture/book behavior.
+  Keep `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

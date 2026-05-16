@@ -42,6 +42,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-RULE-GUARD-DOC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md](docs/tasks/ISF-RULE-GUARD-DOC-TRUTH-SYNC.md) |
 | `ISF-MDBOOK-FEATURE-MATRIX` | `done` | `R14` | `closed` | [docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md](docs/tasks/ISF-MDBOOK-FEATURE-MATRIX.md) |
 | `ISF-REPEAT-BODY-DOC-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md](docs/tasks/ISF-REPEAT-BODY-DOC-TRUTH-SYNC.md) |
 | `ISF-LIVE-BOOK-DOCUMENT-PATHS` | `done` | `R14` | `closed` | [docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md](docs/tasks/ISF-LIVE-BOOK-DOCUMENT-PATHS.md) |
@@ -155,6 +156,7 @@ as done work unless a future task reopens them.
 | Public ISF live-document manifest discovery for mdBook chapters | `ISF-LIVE-BOOK-DOCUMENT-PATHS` |
 | Repeat-body shipped-subset documentation truth synchronization | `ISF-REPEAT-BODY-DOC-TRUTH-SYNC` |
 | Book-facing ISF shipped feature matrix | `ISF-MDBOOK-FEATURE-MATRIX` |
+| Standalone enum/aggregate rule-guard backlog truth synchronization | `ISF-RULE-GUARD-DOC-TRUTH-SYNC` |
 
 ## ISF Task-Tree Rule
 

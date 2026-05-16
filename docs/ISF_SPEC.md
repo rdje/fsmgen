@@ -936,10 +936,13 @@ guarded rule DT. Scalar operands inside rule guard expressions may use enum
 members or read scalar aggregate storage leaves such as `frame.flag`;
 aggregate rule guard paths resolve against declared actor-owned aggregate
 storage before lowering and preserve the authored path in the guarded rule DT
-header. Aggregate paths in rule assignment RHS or rule guard expression
-operator position, standalone enum member or aggregate guards, rule target
-enum members, and enum members in rule guard or rule assignment expression
-operator position remain deferred.
+header. Standalone enum member rule guards and standalone scalar aggregate
+storage leaf rule guards are shipped in shorthand and long-form `(when ...)`
+rule syntax; they lower to non-state DT header guards such as `<mode.BUSY` and
+`<frame.flag`. Aggregate paths in rule assignment RHS or rule guard expression
+operator position, rule target enum members, enum members in rule guard or
+rule assignment expression operator position, and subaggregate rule targets
+remain deferred.
 
 `(store data wr_ptr data_in)` means: write `data_in` into the actor-owned bank
 entry selected by `wr_ptr`. For a fixed-depth scalarized bank, lowering emits
@@ -2913,6 +2916,7 @@ Focused tests:
 - [t/1303-isf-public-live-book-paths-audit.t](../t/1303-isf-public-live-book-paths-audit.t)
 - [t/1304-isf-repeat-body-doc-truth-audit.t](../t/1304-isf-repeat-body-doc-truth-audit.t)
 - [t/1305-isf-book-feature-matrix-audit.t](../t/1305-isf-book-feature-matrix-audit.t)
+- [t/1306-isf-rule-guard-doc-truth-audit.t](../t/1306-isf-rule-guard-doc-truth-audit.t)
 
 ## 12. Explicitly Deferred
 
