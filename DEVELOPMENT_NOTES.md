@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate named drive RHS values stay direct-scalar-only
+- `ISF-TYPE-AGGREGATE-PARITY.33` widens aggregate storage leaf reads from rule
+  and transaction condition contexts into direct named drive body RHS values.
+- The parser validates drive body RHS scalar values against declared
+  actor-owned aggregate storage shapes while keeping drive targets and aggregate
+  paths inside drive body RHS expressions closed.
+- The lowerer already preserves scalar drive body RHS tokens in drive DTs, so
+  this slice only changes validation boundaries and focused public coverage.
 ## 2026-05-16: aggregate transaction conditions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.32` widens aggregate operand support from rule
   guards to transaction `when`/`while`/`until` condition expressions.

@@ -453,6 +453,7 @@ sub build_isf_public_interface_contract {
             't/1284-isf-aggregate-rule-expression-values.t',
             't/1285-isf-aggregate-rule-guard-values.t',
             't/1286-isf-aggregate-condition-values.t',
+            't/1287-isf-aggregate-drive-values.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

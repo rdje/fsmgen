@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate named drive RHS values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.33` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.34`.
+- Named drive body scalar RHS values now accept scalar aggregate storage leaves
+  such as `frame.mode` and `lanes[1]`.
+- Scheduled `.fsm` drive DTs and strict CLI HDL generation preserve and consume
+  the authored aggregate leaf RHS tokens.
+- Drive targets, drive RHS expression aggregate operands, and subaggregate RHS
+  values remain deferred.
 ## 2026-05-16: ISF aggregate transaction condition operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.32` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

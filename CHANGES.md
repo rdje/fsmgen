@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate named drive RHS values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.33`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.34`.
+- Named drive body scalar RHS values now accept scalar aggregate storage
+  member/item leaves from declared actor-owned aggregate storage variables.
+- Scheduled `.fsm` drive DTs preserve authored aggregate leaf RHS tokens, and
+  strict CLI HDL generation accepts the generated drive assignments.
+- Parser diagnostics reject unknown aggregate members, aggregate drive targets,
+  drive RHS expression operands, and subaggregate drive RHS values.
 ### R14 — ISF aggregate transaction condition operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.32`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.33`.

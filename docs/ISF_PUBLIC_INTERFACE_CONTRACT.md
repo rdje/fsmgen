@@ -706,7 +706,8 @@ expressions may use scalar member/item leaves as operands, and transaction
 those same declared storage variables. Rule assignment RHS values and RHS
 expressions may read scalar member/item leaves from those same declared storage
 variables. Rule guard expressions may also read scalar member/item leaves as
-operands. Lowering
+operands. Named drive body scalar RHS values may also read scalar member/item
+leaves from those same declared storage variables. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
 aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
@@ -714,8 +715,8 @@ actor-owned storage variables, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition expression operands,
 rule assignment RHS values/expression operands, or rule guard expression
-operands, aggregate paths in expression operator position, and subaggregate
-operands/updates fail closed.
+operands, or drive body RHS scalar values, aggregate paths in expression
+operator position, and subaggregate operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
 references are public as actor constant values, scalar actor parameter
@@ -913,6 +914,12 @@ covering shorthand and long-form rule guard expression aggregate leaf operands,
 scheduled `.fsm` review artifacts, public `when` normalization, CLI HDL
 generation, and fail-closed diagnostics for unknown members, standalone
 aggregate guards, operator-position paths, and subaggregate operands.
+Drive body RHS aggregate leaf values are checked by
+[t/1287-isf-aggregate-drive-values.t](../t/1287-isf-aggregate-drive-values.t),
+covering local and package aggregate leaf reads in named drive body scalar RHS
+values, scheduled `.fsm` drive-DT review artifacts, CLI HDL generation, and
+fail-closed diagnostics for unknown members, drive targets, RHS expression
+operands, and subaggregate RHS values.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.
