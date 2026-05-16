@@ -93,6 +93,7 @@ my @required_examples = (
     'I2C-like fixture',
     'burst-reader fixture',
     'UART-like fixture',
+    'phase fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

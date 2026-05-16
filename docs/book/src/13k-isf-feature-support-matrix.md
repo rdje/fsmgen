@@ -97,6 +97,13 @@ generation, sampled-byte LSB drive selection from `byte_data[0]`, known-width
 `shift_right`, repeat counter storage, busy drive sequencing, and completion
 pulse behavior.
 
+The phase fixture is file-backed in the `isf` regression tier for transaction
+`(phase ...)` pass-through state coverage, parser-validated phase body
+metadata, strict schedule JSON parity, scheduled `.fsm` structure, plain and
+strict HDL generation, and delayed completion pulse behavior. It does not
+claim executable actor-level phase scheduling; actor-level phase/stage
+metadata remains report-only.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

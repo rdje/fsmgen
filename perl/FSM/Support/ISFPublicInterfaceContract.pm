@@ -474,6 +474,7 @@ sub build_isf_public_interface_contract {
             't/1309-isf-i2c-fixture-coverage.t',
             't/1310-isf-burst-fixture-coverage.t',
             't/1311-isf-uart-fixture-coverage.t',
+            't/1312-isf-phase-fixture-coverage.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

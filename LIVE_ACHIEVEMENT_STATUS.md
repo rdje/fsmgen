@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF phase fixture promotion shipped
+- Completed R14 task-tree slice:
+  `ISF-PHASE-FIXTURE-PROMOTION.1` in
+  [docs/tasks/ISF-PHASE-FIXTURE-PROMOTION.md](docs/tasks/ISF-PHASE-FIXTURE-PROMOTION.md).
+- The `ISF-PHASE-FIXTURE-PROMOTION` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create
+  a new task tree first.
+- [isf/phase_test.isf](isf/phase_test.isf) now leaves `done` exclusively owned
+  by `complete done`, avoiding mixed reusable-drive and delayed-pulse
+  assignment families during HDL generation.
+- Added
+  [t/1312-isf-phase-fixture-coverage.t](t/1312-isf-phase-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, transaction phase pass-through states, no
+  reusable `done` drive storage, and delayed completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the spec, downstream
+  handoff, public contract, mdBook, fixture matrix, and live docs.
+- Validation: focused phase/public/book/spec audit tests passed with
+  `Files=6, Tests=99`; `git diff --check` passed; `mdbook build docs/book`
+  passed; broad `./bin/ci-regression isf --no-book` passed with `Files=218,
+  Tests=959`.
+
 ## 2026-05-16: R14 — ISF UART-like fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-UART-FIXTURE-PROMOTION.1` in

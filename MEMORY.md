@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF phase fixture promotion shipped
+- Completed `ISF-PHASE-FIXTURE-PROMOTION.1` and closed
+  [docs/tasks/ISF-PHASE-FIXTURE-PROMOTION.md](docs/tasks/ISF-PHASE-FIXTURE-PROMOTION.md).
+- Refreshed [isf/phase_test.isf](isf/phase_test.isf) so `done` is owned only
+  by `complete done`; the fixture no longer defines a reusable `done` drive
+  that conflicts with delayed completion-pulse HDL generation.
+- Added
+  [t/1312-isf-phase-fixture-coverage.t](t/1312-isf-phase-fixture-coverage.t)
+  for file-backed scheduled `.fsm` structure, strict schedule JSON parity,
+  plain and strict HDL generation, transaction phase pass-through states, no
+  reusable `done` drive storage, and delayed completion pulse behavior.
+- Updated public `tested_by` metadata and synchronized the ISF spec,
+  downstream handoff, public contract, mdBook, fixture matrix, roadmap board,
+  README task index, and task tree.
+- Validation: `prove -l t/1312-isf-phase-fixture-coverage.t t/1179-isf-phase-stage-boundary.t t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`
+  passed with `Files=6, Tests=99`; `git diff --check` passed; `mdbook build docs/book`
+  passed; `./bin/ci-regression isf --no-book` passed with `Files=218,
+  Tests=959`.
+- No active ISF task tree remains open.
 ## 2026-05-16: ISF UART-like fixture promotion shipped
 - Completed `ISF-UART-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-UART-FIXTURE-PROMOTION.md](docs/tasks/ISF-UART-FIXTURE-PROMOTION.md).

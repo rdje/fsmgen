@@ -2729,6 +2729,12 @@ proves sampled-byte LSB drive selection from `byte_data[0]`, known-width
 `shift_right`, repeat counter storage, busy drive sequencing, completion pulse
 behavior, and strict generated HDL reachability without claiming complete UART
 protocol compliance.
+The [isf/phase_test.isf](../isf/phase_test.isf) fixture now has file-backed
+schedule/HDL/strict coverage for transaction `(phase ...)` pass-through
+states, parser-validated phase body metadata, no reusable `done` drive
+storage, delayed completion pulse behavior, and strict generated HDL
+reachability. It remains phase-metadata coverage, not a claim that
+actor-level phase metadata creates runtime scheduling.
 [isf/clock_domain_dual_event_crossing.isf](../isf/clock_domain_dual_event_crossing.isf)
 hardens the CDC fixture surface by covering two opposite-direction acknowledged
 event crossings in one generated top with two concrete CDC child modules and
@@ -2967,6 +2973,7 @@ Focused tests:
 - [t/1309-isf-i2c-fixture-coverage.t](../t/1309-isf-i2c-fixture-coverage.t)
 - [t/1310-isf-burst-fixture-coverage.t](../t/1310-isf-burst-fixture-coverage.t)
 - [t/1311-isf-uart-fixture-coverage.t](../t/1311-isf-uart-fixture-coverage.t)
+- [t/1312-isf-phase-fixture-coverage.t](../t/1312-isf-phase-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

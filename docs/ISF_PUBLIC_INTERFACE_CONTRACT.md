@@ -118,6 +118,12 @@ strict HDL generation, sampled-byte LSB drive selection, known-width
 `shift_right`, repeat counter storage, busy drive sequencing, and completion
 pulse behavior covered without claiming full external UART protocol
 compliance.
+The phase fixture is checked by
+[t/1312-isf-phase-fixture-coverage.t](../t/1312-isf-phase-fixture-coverage.t)
+to keep file-backed schedule JSON, scheduled `.fsm`, plain HDL generation,
+strict HDL generation, transaction phase pass-through states, absence of
+reusable `done` drive storage, and delayed completion pulse behavior covered
+without claiming executable actor-level phase scheduling.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

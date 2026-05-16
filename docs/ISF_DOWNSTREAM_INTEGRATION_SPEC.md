@@ -1504,6 +1504,11 @@ parity, scheduled `.fsm` structure, plain and strict HDL generation,
 sampled-byte LSB drive selection from `byte_data[0]`, known-width
 `shift_right`, repeat counter storage, busy drive sequencing, and completion
 pulse behavior.
+The phase fixture is covered by `t/1312-isf-phase-fixture-coverage.t`, which
+proves strict schedule JSON parity, scheduled `.fsm` structure, plain and
+strict HDL generation, transaction phase pass-through states, no reusable
+`done` drive storage, and delayed completion pulse behavior without claiming
+runtime actor-level phase scheduling.
 
 Recommended downstream smoke commands:
 
@@ -1512,6 +1517,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/i2c_master.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/burst_reader.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/uart_tx.isf
+./bin/fsmgen --strict --emit-schedule-json isf/phase_test.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf

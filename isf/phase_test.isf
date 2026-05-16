@@ -8,7 +8,6 @@
     (output rdata (width 32)))
 
   (drive (rdata val) (rdata val))
-  (drive (done val) (done val))
 
   (transaction t
     (on start)

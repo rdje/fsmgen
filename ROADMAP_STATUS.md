@@ -10,13 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-UART-FIXTURE-PROMOTION` is closed after
-  promoting the UART-like transmit fixture to file-backed schedule JSON,
-  scheduled `.fsm`, strict mode, and HDL coverage with explicit `byte_data[0]`
-  serial-bit drive selection before `shift_right`. The spec, downstream
-  handoff, public contract, mdBook, fixture matrix, public metadata, and tests
-  are synchronized. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes.
+- Next decision point: `ISF-PHASE-FIXTURE-PROMOTION` is closed after
+  promoting the phase fixture to file-backed schedule JSON, scheduled `.fsm`,
+  strict mode, and HDL coverage for transaction phase pass-through states,
+  single-source `done` completion-pulse ownership, and no reusable `done`
+  drive storage. The spec, downstream handoff, public contract, mdBook,
+  fixture matrix, public metadata, and tests are synchronized. The next R14
+  PNT implementation slice must select or create a new task tree before code
+  changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and

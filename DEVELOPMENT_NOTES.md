@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: phase fixture promotion keeps done ownership single-source
+- `ISF-PHASE-FIXTURE-PROMOTION.1` promotes `isf/phase_test.isf` as a bounded
+  phase-metadata/pass-through fixture, not as executable actor-level phase
+  scheduling.
+- The old fixture declared a reusable `done` drive while the transaction also
+  used `complete done`. That made `done` have both ordinary sequential drive
+  ownership and delayed-pulse completion ownership, which the HDL backend
+  correctly rejects as mixed assignment families.
+- The refreshed fixture removes the unused reusable `done` drive. `done` is
+  now owned only by `complete done`, while the transaction phases still lower
+  as pass-through states and the `rdata` drive remains a harmless named-drive
+  block for report/HDL reachability.
+- The regression asserts structural behavior across scheduled `.fsm`,
+  schedule JSON, and HDL without freezing full generated artifacts.
 ## 2026-05-16: UART fixture promotion makes truncation explicit
 - `ISF-UART-FIXTURE-PROMOTION.1` promotes the checked-in UART transmit fixture
   as a bounded UART-like serial flow, not as a complete UART protocol model.

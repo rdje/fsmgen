@@ -989,6 +989,10 @@ The UART-like fixture is now promoted in the `isf` tier for file-backed strict
 schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, sampled-byte LSB drive selection, known-width `shift_right`,
 repeat counter storage, busy drive sequencing, and completion pulse behavior.
+The phase fixture is now promoted in the `isf` tier for file-backed strict
+schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
+generation, transaction phase pass-through states, absence of reusable
+`done` drive storage, and delayed completion pulse behavior.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

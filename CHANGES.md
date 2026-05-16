@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF phase fixture promotion shipped
+- Completed `ISF-PHASE-FIXTURE-PROMOTION.1` and closed the task tree.
+- Refreshed `isf/phase_test.isf` so `done` is owned only by `complete done`,
+  removing the unused reusable `done` drive that mixed non-pulse and
+  pulse-delayed assignment families during HDL generation.
+- Added `t/1312-isf-phase-fixture-coverage.t` for file-backed scheduled
+  `.fsm` structure, strict schedule JSON parity, plain and strict HDL
+  generation, transaction phase pass-through states, no reusable `done` drive
+  storage, and delayed completion pulse behavior.
+- Added the test to public `tested_by` metadata and the ISF regression tier
+  checks.
+- Synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, and the mdBook feature matrix and
+  backlog chapters.
+- Validation: focused phase/public/book/spec audit tests passed with
+  `Files=6, Tests=99`; `git diff --check` passed; `mdbook build docs/book`
+  passed; broad `./bin/ci-regression isf --no-book` passed with `Files=218,
+  Tests=959`.
 ### R14 — ISF UART-like fixture promotion shipped
 - Completed `ISF-UART-FIXTURE-PROMOTION.1` and closed the task tree.
 - Refreshed `isf/uart_tx.isf` so the repeated transmit loop drives `tx` from
