@@ -189,7 +189,8 @@ General source rules:
 - Actor constants, scalar actor parameter defaults, and generated child
   transaction scalar parameter defaults use non-negative integer literals or
   enum member references that resolve to non-negative integers; static wait
-  counts use non-negative integer literals or actor constants.
+  counts use non-negative integer literals, actor constants, or actor-local
+  scalar parameter defaults.
 - Numeric and exact-width integer literals are accepted where this document
   says scalar numeric literals are accepted.
 - Runtime expression positions may use scalar tokens, numeric/exact-width
@@ -385,7 +386,10 @@ Rules:
 - Schedule reports preserve the authored value token in `actor_constants[]`.
 - Constants may be used as static `(wait NAME)` counts and existing static
   activation parameter override values.
-- Actor or transaction `params` are not wait constants.
+- Actor-local scalar parameter defaults may also be used as static
+  `(wait NAME)` counts when they resolve to non-negative integer literals.
+  Transaction `params` and generated activation use-site overrides are not
+  wait-count constants.
 
 Actor-owned storage:
 
@@ -732,13 +736,15 @@ Wait:
 ```lisp
 (wait 3)
 (wait WAIT_TWO)
+(wait WAIT_PARAM)
 (wait count_signal)
 (wait (+ count_a count_b))
 ```
 
 Rules:
 
-- Static literal/constant waits are accepted, including zero.
+- Static literal, actor-constant, and actor-parameter waits are accepted,
+  including zero.
 - Runtime scalar waits are accepted when the count source has known positive
   width and the predecessor-edge split is implemented.
 - Runtime expression waits are accepted when every operand has known width and
@@ -746,7 +752,8 @@ Rules:
 - Wait-count division and modulo expressions reject literal-zero and
   actor-constant-zero divisors before scheduled `.fsm` emission. Dynamic
   divisor nonzero proof remains outside the shipped wait contract.
-- Transaction `params` are not wait-count constants.
+- Transaction `params` and generated activation use-site overrides are not
+  wait-count constants.
 - Reports expose `transaction_waits[]`.
 
 Completion:
@@ -1754,7 +1761,8 @@ For a SPECFORGE-style producer:
 - Use transaction ports and `(bind ...)` for runtime-varying data.
 - Use `(params ...)` only for static specialization on generated activation
   forms that explicitly support it.
-- Use actor constants for static wait-count symbols.
+- Use actor constants or actor-local scalar parameter defaults for static
+  wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.
 - Use `--emit-schedule-json` in tests to confirm schedule/report shape.
 - Use generated `.fsm` as the human review artifact before HDL.

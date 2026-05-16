@@ -10,13 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION` is closed after
-  promoting `isf/fifo_library_use.isf` to file-backed strict schedule JSON,
-  strict `--outdir` importer/child/top scheduled `.fsm` emission, fixed FIFO
-  parameter/binding provenance, and plain/strict generated-top HDL fixture
-  coverage for the shipped fixed reusable-library path. The next R14 PNT
-  implementation slice
-  must select or create a new task tree before code changes.
+- Next decision point: `ISF-PARAM-WAIT-COUNTS` is closed after shipping
+  actor-local scalar parameter defaults as static `(wait NAME)` counts. The
+  lowerer resolves those defaults after actor constants, emits the same fixed
+  wait-state chains and `transaction_waits[]` static metadata as literal and
+  actor-constant waits, and keeps transaction params, non-scalar actor params,
+  and use-site override specialization fail-closed. The next R14 PNT
+  implementation slice must select or create a new task tree before code
+  changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -600,13 +601,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   a separate no-resample wait-loop state when the sampled count is greater than
   one, while zero counts bypass to a sample-preserving clone of the following
   state when that state can carry samples without changing timing. Other
-  top-level zero-count successors, parameter-backed counts, unknown-width or
-  malformed count expressions, and any remaining predecessor-edge splits
-  remain fail-closed until their exact bypass and snapshot behavior is
-  implemented. Pending samples before
+  top-level zero-count successors, unknown-width or malformed count
+  expressions, and any remaining predecessor-edge splits remain fail-closed
+  until their exact bypass and snapshot behavior is implemented. Pending
+  samples before
   `when`-body, `switch`-branch, `repeat`, `while`, and `until` runtime waits
   are now shipped for sample-compatible selected successors; incompatible
   selected successors remain fail-closed.
+- ISF parameter-backed static wait update: `(wait NAME)` now resolves
+  actor-local scalar parameter defaults after actor constants for static waits.
+  Parameter-backed waits lower exactly like literal and actor-constant waits:
+  zero counts are transparent, positive counts emit fixed wait-state chains,
+  and `transaction_waits[]` reports `count_kind: static`, exact `cycles`, and
+  the authored parameter name in `count_source`. Transaction parameters,
+  non-scalar actor parameter defaults, unknown symbolic names, and use-site
+  activation override specialization remain fail-closed for wait counts.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -5883,7 +5892,7 @@ Left:
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
   when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION`, so the next ISF
+  after `ISF-PARAM-WAIT-COUNTS`, so the next ISF
   implementation slice must either activate an existing proposed tree or create
   a new feature tree before changing parser, scheduler, emitter, contract,
   fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and

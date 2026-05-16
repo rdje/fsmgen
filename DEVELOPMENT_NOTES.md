@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: parameter-backed waits are static actor-default resolution only
+- `ISF-PARAM-WAIT-COUNTS.1` accepts actor-local scalar parameter defaults as
+  static wait-count symbols because those defaults are already part of the
+  actor schedule surface and schedule reports expose them through
+  `actor_params[]`.
+- The implementation deliberately resolves actor constants before actor
+  parameters. This preserves the existing symbolic wait behavior and only
+  widens the fallback path for valid scalar actor parameter defaults.
+- Accepted parameter waits reuse `count_kind: static`; there is no new report
+  kind because generated timing is indistinguishable from literal and
+  actor-constant waits after default resolution.
+- Use-site parameter override specialization is not shipped here. Generated
+  wait-state chains are emitted from the actor-local default schedule, so a
+  later override must not silently imply a different number of generated wait
+  states.
+- Non-scalar parameter defaults fail closed with a targeted wait-parameter
+  diagnostic instead of falling through to runtime dynamic wait handling.
 ## 2026-05-16: FIFO library fixture promotion is fixed-shape handoff coverage
 - `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` promotes the existing
   `isf/fifo_library_use.isf` fixture without changing reusable-library syntax,

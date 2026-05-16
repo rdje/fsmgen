@@ -48,6 +48,9 @@ clear lower-layer mapping, and clear runtime behavior.
   enum members, and they are not runtime payload wires. Generated
   activation-site scalar parameter overrides and aggregate/list override leaves
   may also use enum members, which resolve to literal generated-top bindings.
+  Actor-local scalar parameter defaults that resolve to non-negative integer
+  literals may also be used as static `(wait NAME)` counts in the owning
+  actor schedule.
 - **Every construct has semantics**. A construct is not considered shipped just
   because the parser accepts it. It needs a documented lowering path into
   scheduled `.fsm`, a runtime meaning in terms of cycles, activation, storage,

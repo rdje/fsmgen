@@ -847,19 +847,27 @@ sub wait_matrix_source {
   (clock clk)
   (constants
     (WAIT_TWO 2))
+  (params
+    (WAIT_PARAM 1))
   (interface
     (input start_static)
+    (input start_param)
     (input start_scalar)
     (input start_expr)
     (input cycles (width 4))
     (input bias (width 4))
     (output done_static)
+    (output done_param)
     (output done_scalar)
     (output done_expr))
   (transaction static_tx
     (on start_static)
     (wait WAIT_TWO)
     (complete done_static))
+  (transaction param_tx
+    (on start_param)
+    (wait WAIT_PARAM)
+    (complete done_param))
   (transaction scalar_tx
     (on start_scalar)
     (wait cycles)

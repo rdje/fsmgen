@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF parameter-backed static wait counts shipped
+- Completed `ISF-PARAM-WAIT-COUNTS.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so transaction `(wait NAME)`
+  resolves actor-local scalar parameter defaults after actor constants when
+  the default resolves to a non-negative integer literal.
+- Parameter-backed waits reuse the static wait contract: zero is transparent,
+  positive values emit fixed wait-state chains, and `transaction_waits[]`
+  reports `count_kind: static`, exact `cycles`, and the authored parameter
+  name in `count_source`.
+- Non-scalar actor parameter defaults, non-integer defaults, transaction
+  parameters, unknown symbolic names, and use-site override specialization
+  remain fail-closed for wait counts.
+- Extended `t/1244-isf-wait-clause-lowering.t` and the schedule-report golden
+  matrix, and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/intent/backlog
+  and feature-matrix chapters, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/report/book/spec audit tests passed with `Files=4, Tests=115`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=998`;
+  `mdbook build docs/book` passed.
 ### R14 — ISF FIFO library fixture promotion shipped
 - Completed `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` and closed the task tree.
 - Added `t/1321-isf-fifo-library-fixture-coverage.t` for file-backed strict

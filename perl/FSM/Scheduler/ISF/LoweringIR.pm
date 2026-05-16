@@ -3639,6 +3639,18 @@ sub _wait_count_spec {
                 };
             }
 
+            my $param = _actor_param_by_name($actor, $count);
+            if ($param) {
+                my $param_value = _non_negative_integer_from_literal(_param_resolved_value($param));
+                confess "Transaction '$tn': wait parameter '$count' must resolve to a non-negative integer literal in $label\n"
+                    unless defined $param_value;
+                return {
+                    kind   => 'static',
+                    cycles => $param_value,
+                    source => $count,
+                };
+            }
+
             my $width = _dynamic_wait_source_width($count, $widths);
             if (defined $width) {
                 confess "Transaction '$tn': runtime dynamic wait count '$count' is not supported in $label in the current dynamic-wait slice\n"
@@ -3650,7 +3662,7 @@ sub _wait_count_spec {
                 };
             }
 
-            confess "Transaction '$tn': wait count '$count' is neither a declared actor constant nor a known-width runtime scalar in $label\n";
+            confess "Transaction '$tn': wait count '$count' is neither a declared actor constant, actor parameter, nor a known-width runtime scalar in $label\n";
         }
 
         _confess_wait_requires($tn, $label);
@@ -3684,7 +3696,7 @@ sub _wait_count_spec {
 
 sub _confess_wait_requires {
     my ($tn, $label) = @_;
-    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_known_width_runtime_scalar_or_expression)' in $label\n";
+    confess "Transaction '$tn': wait requires '(wait non_negative_integer_literal_or_constant_or_parameter_or_known_width_runtime_scalar_or_expression)' in $label\n";
 }
 
 sub _is_wait_expression_shape {
@@ -3762,6 +3774,18 @@ sub _actor_constant_by_name {
     for my $constant (@{$actor->{constants} || []}) {
         next unless ref($constant) eq 'HASH';
         return $constant if ($constant->{name} // '') eq $name;
+    }
+
+    return undef;
+}
+
+sub _actor_param_by_name {
+    my ($actor, $name) = @_;
+    return undef unless ref($actor) eq 'HASH' && defined($name) && !ref($name);
+
+    for my $param (@{$actor->{params} || []}) {
+        next unless ref($param) eq 'HASH';
+        return $param if ($param->{name} // '') eq $name;
     }
 
     return undef;

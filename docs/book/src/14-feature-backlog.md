@@ -545,10 +545,11 @@ report families for future stage kinds.
 
 ### Transaction Unconditional Wait
 
-Status: shipped base surface, actor-constant symbolic counts, bounded runtime
-scalar counts, bounded runtime expression counts, and pending-sample
-preservation for sample-compatible runtime wait successors. Remaining
-parameter-backed or unknown-width count shapes stay fail-closed.
+Status: shipped base surface, actor-constant symbolic counts,
+actor-parameter symbolic counts, bounded runtime scalar counts, bounded
+runtime expression counts, and pending-sample preservation for
+sample-compatible runtime wait successors. Remaining unknown-width count
+shapes stay fail-closed.
 
 Goal: support an unconditional cycle delay such as `(wait N)` inside a
 transaction body.
@@ -557,21 +558,24 @@ Shipped contract: `(wait N)` advances only after exactly `N` active
 transaction clock cycles, without checking an external condition. It is
 different from `(await cond)`, which waits for a signal condition, and
 different from `(repeat N body...)`, which repeats a body. The static surface
-accepts non-negative integer literals and actor-level constants declared with
-`(constants (NAME value) ...)`. `wait 0` and constants that resolve to zero are
-transparent no-ops that emit no wait state, consume no active transaction
-cycle, and create no report entry. `wait 1` occupies one generated wait state
-for one active cycle and advances on the next state transition; `wait N`
-contributes exactly `N` active cycles wherever it executes, including inside
-`when`, `switch`, `repeat`, `while`, and `until` bodies. The bounded runtime
+accepts non-negative integer literals, actor-level constants declared with
+`(constants (NAME value) ...)`, and actor-local scalar parameter defaults
+declared with `(params (NAME value) ...)` when they resolve to non-negative
+integer literals. `wait 0`, constants that resolve to zero, and scalar actor
+parameters that resolve to zero are transparent no-ops that emit no wait
+state, consume no active transaction cycle, and create no report entry.
+`wait 1` occupies one generated wait state for one active cycle and advances
+on the next state transition; `wait N` contributes exactly `N` active cycles
+wherever it executes, including inside `when`, `switch`, `repeat`, `while`,
+and `until` bodies. The bounded runtime
 surface accepts `(wait count_signal)` when `count_signal` has known unsigned
 width and `(wait (<op> ...))` when all referenced operands have known widths
 and the expression-width helper derives a positive result width.
 
 The static lowering is a reviewable fixed scheduled-state chain. No hidden
-wait counter is introduced for the static literal/constant surface. Pending
-samples before a positive static wait piggyback onto the first wait state;
-pending samples before a zero wait remain pending for the next
+wait counter is introduced for the static literal/constant/parameter surface.
+Pending samples before a positive static wait piggyback onto the first wait
+state; pending samples before a zero wait remain pending for the next
 state-producing clause. The runtime scalar lowering splits the predecessor
 edge: zero bypasses the generated wait state, and positive counts load a
 generated counter before entering the wait state. The wait state decrements the
@@ -590,23 +594,25 @@ that edge while preserving the opposite loop branch.
 Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
 state, optional counter signal, and optional counter width. Static waits keep
-an integer `cycles`; runtime scalar and runtime expression waits keep `cycles`
-null and expose their source/counter metadata with `count_kind`
-`runtime_scalar` or `runtime_expression`. Schedule reports also expose actor
-constants through `actor_constants[]` and actor parameter defaults separately
-through `actor_params[]`.
+an integer `cycles` and preserve the authored literal, actor constant name, or
+actor parameter name in `count_source`; runtime scalar and runtime expression
+waits keep `cycles` null and expose their source/counter metadata with
+`count_kind` `runtime_scalar` or `runtime_expression`. Schedule reports also
+expose actor constants through `actor_constants[]` and actor parameter
+defaults separately through `actor_params[]`.
 
 Malformed waits such as missing counts, extra operands, negative counts,
-non-integer counts, unknown constant names, actor/transaction parameter names,
-unknown-width dynamic names, malformed or unknown-width dynamic expressions, or
-unsupported dynamic contexts fail closed today.
+non-integer counts, unknown symbolic names, non-scalar or non-integer actor
+parameter defaults, transaction parameter names, unknown-width dynamic names,
+malformed or unknown-width dynamic expressions, or unsupported dynamic
+contexts fail closed today.
 
 Remaining backlog: runtime waits after any remaining predecessor kinds whose
 edge split is not implemented yet, top-level pending-sample zero bypasses
 whose successor cannot yet carry samples without changing timing, branch
 pending-sample zero bypasses whose successor cannot yet carry samples without
-changing timing, repeat/loop pending-sample zero bypasses whose successor
-cannot yet carry samples without changing timing, and parameter-backed counts.
+changing timing, and repeat/loop pending-sample zero bypasses whose successor
+cannot yet carry samples without changing timing.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
 subset, `switch` branches are shipped for the no-pending-sample subset, and

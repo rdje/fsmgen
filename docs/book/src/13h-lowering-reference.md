@@ -406,13 +406,14 @@ Timeout state:
   (-> main_drive_3))
 ```
 
-The static shipped surface accepts either a non-negative integer literal or an
-actor-level constant name. For a resolved `N > 0`, lowering emits exactly `N`
-generated `*_wait_*` states, each advancing unconditionally to the next wait
-state or the following transaction clause. `(wait 0)` emits no generated state,
-consumes no active transaction cycle, and falls through to the following
-transaction clause. No hidden wait counter is introduced for this static
-literal/constant surface.
+The static shipped surface accepts a non-negative integer literal, an
+actor-level constant name, or an actor-local scalar parameter default that
+resolves to a non-negative integer literal. For a resolved `N > 0`, lowering
+emits exactly `N` generated `*_wait_*` states, each advancing unconditionally
+to the next wait state or the following transaction clause. `(wait 0)` emits
+no generated state, consumes no active transaction cycle, and falls through to
+the following transaction clause. No hidden wait counter is introduced for
+this static literal/constant/parameter surface.
 
 If samples are pending before a positive wait, they are emitted in the first
 wait state:
@@ -431,19 +432,21 @@ Schedule reports expose each authored positive static wait through
 `count_kind`, `count_source`, `entry_state`, `exit_state`, `counter_signal`,
 and `counter_width`. Only waits whose resolved count is greater than zero
 create report entries. Static waits report `count_kind` as `static`,
-`count_source` as the literal or actor constant name, and
+`count_source` as the literal, actor constant name, or actor parameter name, and
 `counter_signal`/`counter_width` as null for the fixed-chain lowering.
 Runtime scalar and runtime expression waits additionally expose their
 generated sampled-count storage through `inferred_storage[]` with role
 `dynamic_wait_counter` and the known counter width.
 
 The shipped symbolic surface is `(wait NAME)`, where `NAME` is an actor-level
-constant declared with `(constants (NAME value) ...)`. The constant must
+constant declared with `(constants (NAME value) ...)` or an actor-local scalar
+parameter default declared with `(params (NAME value) ...)`. The value must
 resolve before lowering to a non-negative integer literal. Once resolved, it
 uses the same fixed-chain lowering as a literal: a resolved zero emits no wait
-state and a resolved positive count emits that many wait states. Actor or
-transaction `params` are not wait-count constants because they are overrideable
-after scheduled state emission.
+state and a resolved positive count emits that many wait states. Transaction
+`params`, non-scalar actor parameter defaults, and use-site override
+specialization are not wait-count constants because they would require a
+different fixed state chain after scheduled state emission.
 
 The first runtime scalar surface is top-level only:
 
@@ -716,8 +719,8 @@ body, while the false exit branch samples or bypasses the following wait.
 
 Runtime waits remain fail-closed when the selected zero-count successor cannot
 carry pending samples without changing timing, after predecessor states whose
-edge split is not implemented yet, and for expression-valued or
-parameter-backed counts.
+edge split is not implemented yet, and for malformed or unknown-width runtime
+expressions.
 
 **Timing**: exactly `N` active transaction cycles, no external condition.
 **Cycles**: `N`.

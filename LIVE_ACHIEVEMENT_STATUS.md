@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF parameter-backed static wait counts shipped
+- Completed R14 task-tree slice:
+  `ISF-PARAM-WAIT-COUNTS.1` in
+  [docs/tasks/ISF-PARAM-WAIT-COUNTS.md](docs/tasks/ISF-PARAM-WAIT-COUNTS.md).
+- The `ISF-PARAM-WAIT-COUNTS` tree is now closed. No active ISF task tree
+  remains open; the next R14 implementation slice must select or create a new
+  task tree first.
+- `(wait NAME)` now accepts actor-local scalar parameter defaults when the
+  default resolves to a non-negative integer literal. Zero defaults are
+  transparent, positive defaults emit fixed wait-state chains, and
+  `transaction_waits[]` records static wait metadata with the authored
+  parameter name in `count_source`.
+- Transaction parameters, non-scalar actor parameter defaults, non-integer
+  defaults, unknown symbolic names, and use-site override specialization remain
+  fail-closed for wait counts.
+- Updated the ISF spec, downstream handoff, public contract, mdBook,
+  schedule-report golden matrix, roadmap board, README task index, and task
+  tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/report/book/spec audit tests passed with `Files=4, Tests=115`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=998`;
+  `mdbook build docs/book` passed.
+
 ## 2026-05-16: R14 — ISF FIFO library fixture promotion shipped
 - Completed R14 task-tree slice:
   `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` in
@@ -1761,9 +1784,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   against zero and bypass the wait state.
 - `transaction_waits[]` reports expression counts as `runtime_expression` with
   null `cycles`, normalized `count_source`, and generated counter metadata.
-- Unknown-width/malformed expressions and parameter-backed counts remain
-  fail-closed. `ISF-DYNAMIC-WAIT` is closed; the active R14 frontier advances
-  to `ISF-PUBLIC-CONTRACT.1`.
+- Unknown-width/malformed expressions remained fail-closed at that slice.
+  Actor-parameter-backed static counts later shipped under
+  `ISF-PARAM-WAIT-COUNTS.1`. `ISF-DYNAMIC-WAIT` is closed.
 
 ## 2026-05-15: Bootstrap — import tree snapshot refreshed
 - Re-ran the README/session-bootstrap import-tree sanity pass.
@@ -1947,9 +1970,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   decision state.
 - The next frontier is `ISF-DYNAMIC-WAIT.3.2`, first bounded runtime scalar
   wait lowering for scalar count names with known unsigned width.
-- Pending samples, inline branch/switch/repeat/loop dynamic waits, count
-  expressions, and parameter-backed counts remain fail-closed until their
-  exact bypass/snapshot behavior is implemented.
+- Pending samples, inline branch/switch/repeat/loop dynamic waits, and count
+  expressions remained fail-closed at that slice until their exact
+  bypass/snapshot behavior was implemented. Actor-parameter-backed static
+  counts later shipped under `ISF-PARAM-WAIT-COUNTS.1`.
 
 ## 2026-05-15: R14 — ISF non-literal wait-count contract
 - Completed R14 task-tree slice: `ISF-DYNAMIC-WAIT.1`.

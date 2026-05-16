@@ -311,12 +311,14 @@ Successful schedule reports include `transaction_waits[]` entries with
 `transaction`, `cycles`, `count_kind`, `count_source`, `entry_state`,
 `exit_state`, `counter_signal`, and `counter_width`. Only positive static
 waits and accepted runtime waits create report entries. Static waits report
-the resolved integer in `cycles`; runtime scalar and runtime expression waits
-report `cycles` as null and expose the source/counter metadata instead.
-Expression waits use `count_kind` `runtime_expression` and keep the normalized
-expression in `count_source`. Malformed waits such as `(wait)`, `(wait 1 2)`,
-`(wait -1)`, unknown-width dynamic counts, unknown-width or malformed
-expression counts, parameter-backed counts, and unsupported runtime contexts
+the resolved integer in `cycles` and keep the authored literal, actor constant
+name, or actor parameter name in `count_source`; runtime scalar and runtime
+expression waits report `cycles` as null and expose the source/counter
+metadata instead. Expression waits use `count_kind` `runtime_expression` and
+keep the normalized expression in `count_source`. Malformed waits such as
+`(wait)`, `(wait 1 2)`, `(wait -1)`, non-scalar or non-integer actor
+parameter counts, transaction parameter counts, unknown-width dynamic counts,
+unknown-width or malformed expression counts, and unsupported runtime contexts
 fail closed. Inline dynamic waits are supported in `when` and
 `repeat` bodies, `switch` branches, and `while`/`until` bodies for the
 no-pending-sample subset. Pending samples are also supported for `when` bodies

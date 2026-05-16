@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF parameter-backed static wait counts shipped
+- Completed `ISF-PARAM-WAIT-COUNTS.1` and closed
+  [docs/tasks/ISF-PARAM-WAIT-COUNTS.md](docs/tasks/ISF-PARAM-WAIT-COUNTS.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now resolves transaction `(wait NAME)` counts through actor-local scalar
+  parameter defaults after actor constants. Accepted parameters must resolve to
+  non-negative integer literals and lower through the static wait contract:
+  zero counts emit no state/report entry, positive counts emit fixed wait-state
+  chains, and `transaction_waits[]` reports `count_kind: static`, exact
+  `cycles`, and the authored parameter name in `count_source`.
+- Non-scalar or non-integer actor parameter defaults, transaction parameters,
+  unknown symbolic names, and use-site override specialization remain
+  fail-closed for wait counts.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook feature matrix/backlog/transactions/intent chapters, schedule-report
+  golden matrix, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/report/book/spec audit tests passed with `Files=4, Tests=115`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=998`;
+  `mdbook build docs/book` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence is now every 30 unpushed commits, not after every
+  slice.
 ## 2026-05-16: ISF FIFO library fixture promotion shipped
 - Completed `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.1` and closed
   [docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md).
@@ -1694,9 +1718,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - `transaction_waits[]` now reports expression counts with `count_kind`
   `runtime_expression`, null `cycles`, normalized `count_source`, and the
   generated counter signal/width.
-- Unknown-width or malformed expression counts and parameter-backed counts
-  remain fail-closed. The next active R14 frontier is
-  `ISF-PUBLIC-CONTRACT.1`.
+- Unknown-width or malformed expression counts remained fail-closed at that
+  slice. Actor-parameter-backed static counts later shipped under
+  `ISF-PARAM-WAIT-COUNTS.1`.
 ## 2026-05-15: Bootstrap import tree refreshed
 - Re-ran the `README.md` / `SESSION_BOOTSTRAP.md` startup pass before new
   feature work.
@@ -1895,11 +1919,12 @@ This is the live continuity document for fast session recovery after crashes, re
   `counter_width`; runtime scalar waits keep `cycles` null and name their
   generated `counter_signal`.
 - Pending samples before runtime waits, inline dynamic wait contexts,
-  unsupported predecessor kinds, expression counts, and parameter-backed counts
-  remained fail-closed in this slice. Consecutive runtime waits later shipped
-  under `ISF-DYNAMIC-WAIT.3.3.2`; expression counts later shipped under
-  `ISF-DYNAMIC-WAIT.3.3.6`; the current frontier is recorded in the latest
-  dynamic-wait entry above.
+  unsupported predecessor kinds, and expression counts remained fail-closed in
+  this slice. Consecutive runtime waits later shipped under
+  `ISF-DYNAMIC-WAIT.3.3.2`; expression counts later shipped under
+  `ISF-DYNAMIC-WAIT.3.3.6`; actor-parameter-backed static counts later shipped
+  under `ISF-PARAM-WAIT-COUNTS.1`; the current frontier is recorded in the
+  latest entry above.
 ## 2026-05-15: ISF runtime dynamic wait split
 - Split `ISF-DYNAMIC-WAIT.3` into executable leaves in
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md).
@@ -1910,8 +1935,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - The next frontier is `ISF-DYNAMIC-WAIT.3.2`: first bounded runtime scalar
   wait lowering for scalar count names with known unsigned width in contexts
   where the predecessor-edge split is safe.
-  Pending samples, inline branch/switch/repeat/loop contexts, count
-  expressions, and parameter-backed counts remain fail-closed.
+  Pending samples, inline branch/switch/repeat/loop contexts, and count
+  expressions remained fail-closed at that slice. Actor-parameter-backed static
+  counts later shipped under `ISF-PARAM-WAIT-COUNTS.1`.
 ## 2026-05-15: ISF non-literal wait-count contract
 - Created
   [docs/tasks/ISF-DYNAMIC-WAIT.md](docs/tasks/ISF-DYNAMIC-WAIT.md)

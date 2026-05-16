@@ -47,7 +47,7 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Runtime expression divisor safety | shipped bounded surface | Division and modulo in shipped runtime expression contexts such as transaction RHS, wait counts, activation input bindings, rule guards/actions, drive bodies/calls, inline drives, and bank access index/value expressions. | Numeric/exact-width literal-zero divisors and actor-constant-zero divisors fail closed before scheduled `.fsm` emission. Nonzero literal/actor-constant divisors and dynamic scalar divisors lower unchanged; full dynamic nonzero proof remains backlog. |
 | Named and inline drives | shipped | Actor-level `(drive NAME [(PARAM ...)] body...)`; transaction body `(drive NAME actual...)`; inline drive assignments where documented. | A named drive emits a non-state DT. A drive call consumes one state and transfers actuals through generated drive parameter signals. Inline drive assignments become state assignments. |
 | Await and latency | shipped | `(await PORT)`, actor watchdogs, and `(latency (min N) (max N))` on transactions. | Awaits lower to wait/test states and watchdog counters when configured. Latency counters and schedule-report storage metadata are emitted for the supported shapes. |
-| Static and dynamic waits | shipped bounded surface | `(wait N)`, `(wait 0)`, and accepted non-literal wait count expressions in documented contexts. | Static waits create explicit wait states unless zero-count bypass semantics apply. Runtime waits use generated counters and fail closed when a selected zero-count successor cannot carry pending samples safely. |
+| Static and dynamic waits | shipped bounded surface | `(wait N)`, `(wait 0)`, actor-constant wait counts, actor-parameter wait counts, and accepted runtime wait count expressions in documented contexts. | Static waits create explicit wait states unless zero-count bypass semantics apply. Runtime waits use generated counters and fail closed when a selected zero-count successor cannot carry pending samples safely. |
 | Transaction control flow | shipped bounded surface | Body-bearing `(when COND body...)`, `(switch SELECTOR branches...)`, `(while COND body...)`, `(until COND body...)`, and `(repeat COUNT body...)`. | Control flow lowers to explicit decision states, branch states, loop counters, and exits. The shipped repeat-body clause surface is limited to documented drive, await, sample, update, set, shift, assemble, extract, store/load, and wait clauses. |
 | Transaction stages | shipped bounded surface | Top-level `(stage NAME (input READY) (output VALID))` transaction clauses. | A stage lowers to one ready/valid barrier state that drives `VALID` while active and advances only when `READY` is true. Actor-level phase/stage metadata is report-visible but has no runtime scheduling semantics yet. |
 | Temporal contracts | shipped bounded surface | Top-level `(contract NAME (eventually SIGNAL (within CYCLES)))`. | Lowering emits monitor state/storage in scheduled `.fsm`; SystemVerilog projects the sticky fail bit into a verification-only assertion under `` `ifndef SYNTHESIS``. Verilog output remains assertion-free. |
@@ -276,11 +276,14 @@ backlog.
 ### Waits And Repeat Bodies
 
 ```lisp
+(params
+  (WAIT_PARAM 2))
+
 (transaction pulse_train
   (on start)
   (repeat count
     (drive pulse 1)
-    (wait 1)
+    (wait WAIT_PARAM)
     (drive pulse 0)
     (update count_seen (+ count_seen 1)))
   (complete done))
@@ -288,6 +291,9 @@ backlog.
 
 The repeat body may use the shipped inline body clauses documented in
 [Transactions](13b-transactions.md) and [Control Flow](13d-control-flow.md).
+`WAIT_PARAM` is an actor parameter wait count: scalar actor parameter defaults
+that resolve to non-negative integer literals lower through the same static
+wait contract as literals and actor constants.
 Nested child activation and nested `stage` or `contract` clauses remain
 outside the shipped repeat-body subset.
 

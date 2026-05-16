@@ -107,6 +107,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-CONTROL-FLOW.md` — completed `R14` task tree for transaction-local waits and dynamic loops.
 - `docs/tasks/ISF-WAIT-ZERO.md` — completed `R14` task tree for zero-count transaction wait semantics.
 - `docs/tasks/ISF-DYNAMIC-WAIT.md` — completed `R14` task tree for non-literal transaction wait counts.
+- `docs/tasks/ISF-PARAM-WAIT-COUNTS.md` — completed `R14` task tree for actor-parameter-backed static transaction wait counts.
 - `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md` — completed `R14` task tree for expression-valued activation input bindings.
 - `docs/tasks/ISF-SETTER-SYNTAX.md` — completed `R14` task tree for scalar setter syntax shared by rules and transactions.
 - `docs/tasks/ISF-TRANSACTION-ACTIVATION.md` — completed `R14` task tree for task-like transaction activation and parameter overrides.

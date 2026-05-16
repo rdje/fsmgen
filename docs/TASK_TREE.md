@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-PARAM-WAIT-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-PARAM-WAIT-COUNTS.md](docs/tasks/ISF-PARAM-WAIT-COUNTS.md) |
 | `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md) |
 | `ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md) |
 | `ISF-FIFO-DATAPATH-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md) |
@@ -180,6 +181,7 @@ as done work unless a future task reopens them.
 | Legacy handshake metadata and removed transaction `assign` compatibility | `ISF-COMPATIBILITY` |
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |
+| Parameter-backed static transaction wait counts | `ISF-PARAM-WAIT-COUNTS` |
 | Dynamic divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-SAFETY` |
 | Actor-constant zero divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-CONSTANTS` |
 | Runtime dynamic-wait counter storage schedule-report roles | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` |
