@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate rule guard expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.31`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.32`.
+- Shorthand and long-form rule guard expressions now accept scalar aggregate
+  storage member/item leaves as operands.
+- Scheduled `.fsm` rule DT headers and public `when` normalization preserve
+  authored aggregate guard expressions, and strict CLI HDL generation accepts
+  them.
+- Parser diagnostics reject unknown aggregate members, standalone aggregate
+  guards, operator-position aggregate paths, and subaggregate operands inside
+  rule guard expressions.
 ### R14 — ISF aggregate rule RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.30`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.31`.

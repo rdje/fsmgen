@@ -1529,7 +1529,7 @@ sub _validate_rule_aggregate_storage_paths {
     my ($rule, $aggregate_roots) = @_;
     my $rule_name = $rule->{name};
 
-    _reject_aggregate_storage_paths(
+    _validate_rule_guard_aggregate_storage_paths(
         $rule->{when},
         $aggregate_roots,
         "rule '$rule_name' guard",
@@ -1618,6 +1618,51 @@ sub _validate_rule_assignment_aggregate_storage_rhs {
     return _reject_aggregate_storage_paths($rhs, $aggregate_roots, "$context expression");
 }
 
+sub _validate_rule_guard_aggregate_storage_paths {
+    my ($guard, $aggregate_roots, $context) = @_;
+    return 1 unless defined $guard;
+
+    my $condition = $guard;
+    $condition = $guard->[1]
+        if ref($guard) eq 'ARRAY'
+            && @$guard
+            && defined($guard->[0])
+            && !ref($guard->[0])
+            && $guard->[0] eq 'when';
+
+    return _reject_aggregate_storage_paths($condition, $aggregate_roots, $context)
+        unless ref($condition);
+
+    return _validate_rule_guard_aggregate_storage_expr($condition, $aggregate_roots, $context);
+}
+
+sub _validate_rule_guard_aggregate_storage_expr {
+    my ($expr, $aggregate_roots, $context) = @_;
+
+    if (!ref($expr)) {
+        my $path = _aggregate_storage_path_token($expr, $aggregate_roots);
+        _validate_aggregate_storage_leaf_read_path($path, $aggregate_roots, $context)
+            if defined $path;
+        return 1;
+    }
+
+    return _reject_aggregate_storage_paths($expr, $aggregate_roots, "$context expression")
+        unless ref($expr) eq 'ARRAY';
+
+    for my $index (0 .. $#$expr) {
+        my $item = $expr->[$index];
+        if ($index == 0 && defined($item) && !ref($item)) {
+            my $path = _aggregate_storage_path_token($item, $aggregate_roots);
+            confess "Error: $context expression operator references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths inside rule guard expressions only as scalar operands\n"
+                if defined $path;
+            next;
+        }
+        _validate_rule_guard_aggregate_storage_expr($item, $aggregate_roots, $context);
+    }
+
+    return 1;
+}
+
 sub _validate_transaction_set_rhs_aggregate_storage_reads {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
@@ -1690,7 +1735,7 @@ sub _reject_aggregate_storage_paths {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $path = _aggregate_storage_path_token($value, $aggregate_roots);
-        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, or rule assignment RHS scalar values or operands\n"
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, rule assignment RHS scalar values or operands, or rule guard expression scalar operands\n"
             if defined $path;
         return 1;
     }

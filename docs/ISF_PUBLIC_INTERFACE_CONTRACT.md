@@ -703,15 +703,16 @@ declared storage variables, transaction `set` RHS expressions may use scalar
 member/item leaves as operands, and transaction `(set aggregate_leaf value)`
 clauses may write scalar member/item leaves on those same declared storage
 variables. Rule assignment RHS values and RHS expressions may read scalar
-member/item leaves from those same declared storage variables. Lowering
+member/item leaves from those same declared storage variables. Rule guard
+expressions may also read scalar member/item leaves as operands. Lowering
 preserves `+types`, `+import`, typed `+size` entries, and embedded imported
 package roots in scheduled `.fsm` review artifacts. Unknown aliases, package
 aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
 actor-owned storage variables, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
-transaction `set` target tokens, or rule assignment RHS values/expression
-operands, aggregate paths in expression operator position, and subaggregate
-operands/updates fail closed.
+transaction `set` target tokens, rule assignment RHS values/expression
+operands, or rule guard expression operands, aggregate paths in expression
+operator position, and subaggregate operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
 references are public as actor constant values, scalar actor parameter
@@ -733,10 +734,9 @@ Enum member references in expression operator position, standalone transaction
 conditions, switch selectors, targets, rules outside scalar trigger parameter
 overrides, transaction condition, rule guard, or rule assignment expression
 operator position, drive targets, inline drive assignment RHS expression
-operator position, drive-call expression operator position, reusable-library
-use-site parameter overrides, and other ISF value contexts, additional
-aggregate carriers, and aggregate field/slice/update semantics remain outside
-the parser/scheduler contract.
+operator position, drive-call expression operator position, and other ISF
+value contexts, additional aggregate carriers, and aggregate field/slice/update
+semantics remain outside the parser/scheduler contract.
 The scalar type-alias subset is checked by
 [t/1257-isf-scalar-type-aliases.t](../t/1257-isf-scalar-type-aliases.t),
 covering actor-local aliases, package aliases, typed `+size` review artifacts,
@@ -888,7 +888,7 @@ Rule assignment RHS aggregate leaf values are checked by
 [t/1283-isf-aggregate-rule-values.t](../t/1283-isf-aggregate-rule-values.t),
 covering explicit and shorthand rule assignment RHS aggregate leaf reads,
 scheduled `.fsm` review artifacts, assignment provenance, CLI HDL generation,
-and fail-closed diagnostics for unknown members, rule RHS expressions, and
+and fail-closed diagnostics for unknown members, subaggregate RHS values, and
 rule targets.
 Rule assignment RHS expression aggregate leaf operands are checked by
 [t/1284-isf-aggregate-rule-expression-values.t](../t/1284-isf-aggregate-rule-expression-values.t),
@@ -896,6 +896,12 @@ covering explicit and shorthand rule assignment RHS expression aggregate leaf
 operands, scheduled `.fsm` review artifacts, assignment provenance, CLI HDL
 generation, and fail-closed diagnostics for unknown members, operator-position
 paths, and subaggregate operands.
+Rule guard expression aggregate leaf operands are checked by
+[t/1285-isf-aggregate-rule-guard-values.t](../t/1285-isf-aggregate-rule-guard-values.t),
+covering shorthand and long-form rule guard expression aggregate leaf operands,
+scheduled `.fsm` review artifacts, public `when` normalization, CLI HDL
+generation, and fail-closed diagnostics for unknown members, standalone
+aggregate guards, operator-position paths, and subaggregate operands.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

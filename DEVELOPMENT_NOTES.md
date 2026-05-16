@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate rule guards are operand-only
+- `ISF-TYPE-AGGREGATE-PARITY.31` widens aggregate rule support from assignment
+  RHS contexts to scalar operands inside rule guard expressions.
+- The parser unwraps the public `when` guard shape, walks the guard expression
+  tree, and validates aggregate member/item paths against declared actor-owned
+  aggregate storage before lowering.
+- Standalone aggregate guards stay closed so this slice only promises the
+  expression-operand form that scheduled `.fsm` DT headers and strict HDL
+  generation already preserve.
 ## 2026-05-16: aggregate rule RHS expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.30` widens aggregate rule RHS support from direct
   scalar RHS values to scalar operands inside rule assignment RHS expressions.

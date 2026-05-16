@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate rule guard expression operands shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.31` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.32`.
+- Rule guard expressions now accept scalar aggregate storage leaves such as
+  `frame.flag` and `lanes[1]` as scalar operands.
+- Scheduled `.fsm` rule DT headers and the public `when` normalization preserve
+  authored aggregate guard expressions, and strict CLI HDL generation accepts
+  them.
+- Standalone aggregate guards, operator-position aggregate paths, subaggregate
+  operands, and aggregate rule assignment targets remain deferred.
 ## 2026-05-16: ISF aggregate rule RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.30` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

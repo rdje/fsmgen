@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate rule guard expression operands shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.31` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.32`, selecting the
+  next enum or aggregate value/update context after rule guard aggregate
+  expression operands.
+- Rule guard expressions now accept scalar aggregate storage leaves as operands
+  and preserve authored guard payloads in scheduled `.fsm` rule DT headers plus
+  public `when` normalization.
+- Standalone aggregate guards, operator-position aggregate paths, and
+  subaggregate operands fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate rule RHS expression operands shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.30` in
