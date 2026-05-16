@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF aggregate switch branch values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.39` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),
+  advancing the active frontier to `ISF-TYPE-AGGREGATE-PARITY.40`.
+- Transaction `switch` branch scalar values now accept scalar aggregate
+  storage leaves such as `frame.mode` and `lanes[1]`.
+- Scheduled `.fsm` switch review artifacts and strict CLI HDL generation
+  preserve and consume the authored aggregate branch-value tokens.
+- Switch selectors and subaggregate branch values remain deferred.
 ## 2026-05-16: ISF aggregate inline drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.38` in
   [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md),

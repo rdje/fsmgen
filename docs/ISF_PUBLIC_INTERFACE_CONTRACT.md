@@ -719,10 +719,11 @@ aliases, `(width ...)` plus `(type ...)` conflicts, aggregate aliases outside
 actor-owned storage variables, unknown aggregate members, out-of-range list
 indexes, aggregate paths outside direct transaction `set` RHS values, direct
 transaction `set` target tokens, transaction condition expression operands,
-rule assignment RHS values/expression operands, or rule guard expression
-operands, drive body RHS scalar values/expression operands, inline drive
-assignment RHS scalar values/expression operands, or drive-call actual scalar values/expression
-operands, aggregate paths in expression
+transaction `switch` branch values, rule assignment RHS values/expression
+operands, or rule guard expression operands, drive body RHS scalar
+values/expression operands, inline drive assignment RHS scalar
+values/expression operands, or drive-call actual scalar
+values/expression operands, aggregate paths in expression
 operator position, and subaggregate operands/updates fail closed.
 Actor-local `(enums ...)`
 declarations are preserved as scheduled `.fsm` `+enums`. Enum member
@@ -957,6 +958,12 @@ covering local and package aggregate leaf operands inside inline drive RHS
 expressions, scheduled `.fsm` state-assignment review artifacts, CLI HDL
 generation, and fail-closed diagnostics for unknown members, operator-position
 paths, and subaggregate operands.
+Transaction switch branch aggregate leaf values are checked by
+[t/1293-isf-aggregate-switch-branch-values.t](../t/1293-isf-aggregate-switch-branch-values.t),
+covering local and package aggregate leaf reads as transaction `switch` branch
+values, scheduled `.fsm` switch review artifacts, CLI HDL generation, and
+fail-closed diagnostics for unknown members, switch selectors, and
+subaggregate branch values.
 Generated composition-top links use the canonical Lisp-ish `?wiring` list
 spelling, for example `(parent.instance_start instance.start)`, rather than
 the older slash-token compatibility spelling.

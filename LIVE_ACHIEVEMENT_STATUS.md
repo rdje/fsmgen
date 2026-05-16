@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF aggregate switch branch values shipped
+- Completed R14 task-tree slice:
+  `ISF-TYPE-AGGREGATE-PARITY.39` in
+  [docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md](docs/tasks/ISF-TYPE-AGGREGATE-PARITY.md).
+- The active PNT frontier is now `ISF-TYPE-AGGREGATE-PARITY.40`, selecting the
+  next enum or aggregate value/update context after aggregate switch branch
+  values.
+- Transaction `switch` branch scalar values now accept scalar aggregate storage
+  leaves and preserve authored branch-value tokens in scheduled `.fsm` switch
+  review artifacts.
+- Switch selectors and subaggregate branch values fail closed.
+
 ## 2026-05-16: R14 — ISF aggregate inline drive RHS expression operands shipped
 - Completed R14 task-tree slice:
   `ISF-TYPE-AGGREGATE-PARITY.38` in

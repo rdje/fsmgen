@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF aggregate switch branch values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.39`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.40`.
+- Transaction `switch` branch scalar values now accept scalar aggregate
+  storage member/item leaves from declared actor-owned aggregate storage.
+- Scheduled `.fsm` switch review artifacts preserve authored aggregate branch
+  values, and strict CLI HDL generation accepts them.
+- Parser diagnostics reject unknown aggregate members, aggregate switch
+  selectors, and subaggregate branch values.
 ### R14 — ISF aggregate inline drive RHS expression operands shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.38`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.39`.

@@ -321,8 +321,11 @@ may read scalar aggregate member/item leaves as scalar operands, for example
 `(rule expose (& ready frame.flag) (set fire 1))`. Transaction
 `when`/`while`/`until` condition expressions may read scalar aggregate
 member/item leaves as scalar operands too, for example
-`(when (& ready frame.flag) (set fire 1))`. Named drive body scalar RHS values
-and scalar operands inside RHS expressions may read scalar aggregate
+`(when (& ready frame.flag) (set fire 1))`. Transaction `switch` branch
+scalar values may read scalar aggregate member/item leaves, for example
+`(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`.
+Named drive body scalar RHS values and scalar operands inside RHS expressions
+may read scalar aggregate
 member/item leaves, for example `(drive publish (mode_out frame.mode))` or
 `(drive publish (mode_out (+ frame.mode mode_in)))`. Inline transaction drive
 assignment scalar RHS values and scalar operands inside RHS expressions may
@@ -335,9 +338,10 @@ read scalar aggregate member/item leaves, for example
 `(drive publish frame.mode)` or `(drive publish (+ frame.mode mode_in))`.
 Aggregate paths outside
 transaction `set` RHS values, direct transaction `set` targets, transaction
-condition expression operands, rule assignment RHS values or expression
-operands, rule guard expression operands, drive body RHS scalar values or
-expression operands, inline drive assignment RHS scalar values or operands, or drive-call
+condition expression operands, transaction `switch` branch values, rule
+assignment RHS values or expression operands, rule guard expression operands,
+drive body RHS scalar values or expression operands, inline drive assignment
+RHS scalar values or operands, or drive-call
 actual scalar values/expression operands,
 aggregate paths in
 expression operator position, subaggregate writes/operands, aggregate interface or
@@ -1630,10 +1634,14 @@ normalizes to the same public `when` field as the long guard spelling.
 signal and one or more list-form branches before branch expansion. Each branch
 must provide one scalar value and at least one list-form body clause. The
 scheduler then creates one decision state with one branch per unique explicit
-value. Duplicate explicit values are rejected. A switch may also contain one
-fallback branch, spelled `(default body...)` or `(_ body...)`. Those spellings
-are aliases and are rejected if both appear in the same switch. If no authored
-fallback branch is present, the scheduler emits an implicit `.fsm`
+value. Branch values may use local/package enum members or scalar aggregate
+storage leaves such as `frame.mode` and `lanes[1]`; aggregate switch branch
+values are resolved against declared actor-owned aggregate storage before
+lowering, while switch selectors and subaggregate branch values remain
+deferred. Duplicate explicit values are rejected. A switch may also contain
+one fallback branch, spelled `(default body...)` or `(_ body...)`. Those
+spellings are aliases and are rejected if both appear in the same switch. If
+no authored fallback branch is present, the scheduler emits an implicit `.fsm`
 `(default (-> next_state))` fallthrough branch to the first state after the
 whole switch.
 
@@ -2846,6 +2854,7 @@ Focused tests:
 - [t/1290-isf-aggregate-drive-call-expression-values.t](../t/1290-isf-aggregate-drive-call-expression-values.t)
 - [t/1291-isf-aggregate-inline-drive-values.t](../t/1291-isf-aggregate-inline-drive-values.t)
 - [t/1292-isf-aggregate-inline-drive-expression-values.t](../t/1292-isf-aggregate-inline-drive-expression-values.t)
+- [t/1293-isf-aggregate-switch-branch-values.t](../t/1293-isf-aggregate-switch-branch-values.t)
 
 ## 12. Explicitly Deferred
 
@@ -2918,7 +2927,8 @@ Focused tests:
   values and expression operands, actor-owned aggregate storage variable carriers,
   transaction `set` RHS aggregate leaf reads, transaction `set` RHS expression
   aggregate leaf operands, transaction condition expression aggregate leaf
-  operands, transaction `set` target aggregate leaf writes,
+  operands, transaction `switch` branch aggregate leaf values, transaction
+  `set` target aggregate leaf writes,
   rule assignment RHS aggregate leaf values and expression operands, rule
   guard expression aggregate leaf operands, drive body RHS aggregate leaf values
   and expression operands, inline drive assignment RHS aggregate leaf values and
@@ -2939,7 +2949,8 @@ Focused tests:
   remain deferred.
   Aggregate interface/transaction/bank carriers, aggregate member paths outside
   direct transaction `set` RHS values, direct transaction `set` target tokens,
-  transaction condition expression operands, rule assignment RHS
+  transaction condition expression operands, transaction `switch` branch
+  values, rule assignment RHS
   values/expression operands, rule guard expression operands, drive body RHS
   scalar values/expression operands, inline drive assignment RHS scalar
   values/expression operands, or drive-call actual scalar

@@ -1519,7 +1519,11 @@ sub _validate_transaction_aggregate_storage_clause {
         _reject_aggregate_storage_paths($clause->[1], $aggregate_roots, "$context switch selector");
         for my $branch (@{$clause}[2 .. $#$clause]) {
             next unless ref($branch) eq 'ARRAY' && @$branch;
-            _reject_aggregate_storage_paths($branch->[0], $aggregate_roots, "$context switch branch value");
+            _validate_transaction_switch_branch_aggregate_storage_value(
+                $branch->[0],
+                $aggregate_roots,
+                "$context switch branch value",
+            );
             _validate_transaction_aggregate_storage_paths(
                 [ @{$branch}[1 .. $#$branch] ],
                 $aggregate_roots,
@@ -1650,6 +1654,19 @@ sub _validate_drive_aggregate_storage_paths {
 sub _validate_transaction_set_aggregate_storage_rhs {
     my ($rhs, $aggregate_roots, $context) = @_;
     return _validate_transaction_set_rhs_aggregate_storage_reads($rhs, $aggregate_roots, $context);
+}
+
+sub _validate_transaction_switch_branch_aggregate_storage_value {
+    my ($value, $aggregate_roots, $context) = @_;
+
+    if (!ref($value)) {
+        my $path = _aggregate_storage_path_token($value, $aggregate_roots);
+        _validate_aggregate_storage_leaf_read_path($path, $aggregate_roots, $context)
+            if defined $path;
+        return 1;
+    }
+
+    return _reject_aggregate_storage_paths($value, $aggregate_roots, $context);
 }
 
 sub _validate_drive_body_aggregate_storage_rhs {
@@ -1947,7 +1964,7 @@ sub _reject_aggregate_storage_paths {
     my ($value, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $path = _aggregate_storage_path_token($value, $aggregate_roots);
-        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands\n"
+        confess "Error: $context references aggregate storage path '$path'; this ISF slice accepts aggregate storage paths only as direct transaction set RHS scalar leaf reads, direct transaction set target scalar leaf writes, transaction condition expression scalar operands, transaction switch branch scalar values, rule assignment RHS scalar values or operands, rule guard expression scalar operands, drive body RHS scalar values or operands, inline drive assignment RHS scalar values or operands, or drive-call actual scalar values or operands\n"
             if defined $path;
         return 1;
     }

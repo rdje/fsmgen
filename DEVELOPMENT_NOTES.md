@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: aggregate switch branch values stay scalar-only
+- `ISF-TYPE-AGGREGATE-PARITY.39` widens aggregate storage leaf reads into
+  transaction `switch` branch scalar values.
+- This mirrors the earlier enum switch branch value slice: branch values are
+  preserved as authored `.fsm` switch selectors, while parser validation
+  resolves aggregate member/item paths against declared actor-owned aggregate
+  storage before lowering.
+- Switch selectors and subaggregate branch values remain closed because those
+  require separate selector-read and packed aggregate comparison contracts.
 ## 2026-05-16: aggregate inline drive RHS expressions are operand-only
 - `ISF-TYPE-AGGREGATE-PARITY.38` widens aggregate inline drive support from
   direct scalar RHS values to scalar operands inside inline drive RHS
