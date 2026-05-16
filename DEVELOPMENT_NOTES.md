@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: enum drive-call values stay scalar-actual-only
+- `ISF-TYPE-AGGREGATE-PARITY.13` selects named drive-call scalar actuals as
+  the next enum context because the existing drive-parameter handoff state
+  already preserves authored scalar actual tokens in scheduled `.fsm`.
+- The parser validates enum members before lowering and leaves drive-call
+  expression actuals closed. Expression actuals already exist for ordinary
+  signals, but enum-valued operands there need their own width/value contract
+  instead of being inferred from scalar actual support.
+- Inline drive assignments remain deferred for enum members because they use a
+  separate transaction-clause lowering path from named drive calls and do not
+  share the drive-parameter handoff boundary.
 ## 2026-05-16: enum drive values stay body-RHS-only
 - `ISF-TYPE-AGGREGATE-PARITY.12` selects scalar drive body RHS values as the
   next enum context because drive definitions already lower to explicit

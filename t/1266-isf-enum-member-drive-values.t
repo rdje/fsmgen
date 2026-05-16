@@ -89,7 +89,7 @@ ISF
     ok(-s $hdl_path, 'CLI writes HDL for package enum member drive RHS values');
 };
 
-subtest 'drive enum diagnostics stay scalar-RHS only' => sub {
+subtest 'drive body enum diagnostics reject non-RHS contexts' => sub {
     assert_parse_rejected(
         <<'ISF',
 (actor unknown_enum_drive_value
@@ -126,7 +126,7 @@ ISF
     (on start)
     (drive mark_busy)))
 ISF
-        qr/drive 'mark_busy' target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values/,
+        qr/drive 'mark_busy' target references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call scalar actual values/,
         'enum members in drive targets remain deferred',
     );
 
@@ -143,28 +143,8 @@ ISF
   (rule mark_busy ready
     (set mode_out mode.BUSY)))
 ISF
-        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values/,
+        qr/rule 'mark_busy' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call scalar actual values/,
         'enum members in rule actions remain deferred',
-    );
-
-    assert_parse_rejected(
-        <<'ISF',
-(actor enum_drive_call_actual_still_deferred
-  (enums
-    (mode (IDLE 0) (BUSY 1)))
-  (clock clk)
-  (reset rst)
-  (interface
-    (input start)
-    (output mode_out (width 2)))
-  (drive (mark_mode value)
-    (mode_out value))
-  (transaction main
-    (on start)
-    (drive mark_mode mode.BUSY)))
-ISF
-        qr/transaction 'main' references enum member 'mode\.BUSY'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values/,
-        'enum members in drive call actuals remain deferred',
     );
 };
 

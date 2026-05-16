@@ -764,6 +764,21 @@ sub _validate_transaction_enum_member_value_clause {
         return 1;
     }
 
+    if ($head eq 'drive') {
+        my $drive_name = $clause->[1];
+        if (defined($drive_name) && !ref($drive_name) && exists(($actor->{drives} || {})->{$drive_name})) {
+            for my $actual (@{$clause}[2 .. $#$clause]) {
+                _validate_drive_call_enum_member_actual(
+                    $actual,
+                    $actor,
+                    $aggregate_roots,
+                    "$context drive '$drive_name' actual",
+                );
+            }
+            return 1;
+        }
+    }
+
     return _reject_enum_member_value_contexts($clause, $actor, $aggregate_roots, $context);
 }
 
@@ -842,6 +857,17 @@ sub _validate_drive_enum_member_rhs {
     return 1;
 }
 
+sub _validate_drive_call_enum_member_actual {
+    my ($actual, $actor, $aggregate_roots, $context) = @_;
+    return _reject_enum_member_value_contexts($actual, $actor, $aggregate_roots, "$context expression")
+        if ref($actual);
+
+    my $member = _enum_member_value_token($actual, $aggregate_roots);
+    _validate_enum_member_value($member, $actor, $context)
+        if defined $member;
+    return 1;
+}
+
 sub _validate_enum_member_value {
     my ($member, $actor, $context) = @_;
     my $resolved_value = FSM::Adapter::ISF::Parser->_resolve_actor_enum_member_value($actor, $member);
@@ -856,7 +882,7 @@ sub _reject_enum_member_value_contexts {
     my ($value, $actor, $aggregate_roots, $context) = @_;
     if (!ref($value)) {
         my $member = _enum_member_value_token($value, $aggregate_roots);
-        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, and drive body RHS scalar values\n"
+        confess "Error: $context references enum member '$member'; this ISF surface accepts enum member references only as actor constants, transaction set RHS scalar values or operands, transaction switch branch values, drive body RHS scalar values, and drive-call scalar actual values\n"
             if defined $member;
         return 1;
     }

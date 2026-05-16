@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF enum drive-call values shipped
+- Completed `ISF-TYPE-AGGREGATE-PARITY.13`, advancing the active frontier to
+  `ISF-TYPE-AGGREGATE-PARITY.14`.
+- Named drive-call scalar actuals now accept local and package-qualified enum
+  members while preserving authored actual values in generated drive-parameter
+  assignments.
+- Parser diagnostics reject unknown enum drive-call actual values and keep
+  enum members in drive-call expression actuals, inline drive assignments,
+  rules, conditions, switch selectors, set targets, parameters, and other
+  contexts closed for later slices.
+- Added focused local/package coverage with scheduled `.fsm` review artifacts
+  and strict CLI HDL generation.
 ### R14 — ISF enum drive values shipped
 - Completed `ISF-TYPE-AGGREGATE-PARITY.12`, advancing the active frontier to
   `ISF-TYPE-AGGREGATE-PARITY.13`.
