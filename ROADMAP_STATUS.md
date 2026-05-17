@@ -2,6 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`.
+  Leaf `.59` selected top-level switch-branch nested repeat local `do` while
+  generated nested spawn is pending as the next bounded implementation subset.
+  The selected proof mirrors the shipped when-contained leaf: local do waits
+  for its fresh local done pulse without clearing the generated-spawn done set,
+  and a later same-body `await_all` drain gates nested repeat re-entry on all
+  outstanding generated child done handoffs. This selection changes no shipped
+  compiler behavior yet.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -382,8 +390,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   switch-contained analogue, `await_any` before or after the do, new spawn
   after the do before drain, cross-domain activation, deeper branch/loop
   nesting, and broader outstanding-child semantics remain fail-closed. The
-  next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`, which must
-  select the next bounded repeat-body child activation subset before code.
+  next active frontier, `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`, then selected
+  the direct top-level switch-branch analogue: a repeat directly inside a
+  top-level `switch` branch with one or more generated nested spawns, local
+  `(do child)` while those generated spawns remain pending, and a later
+  same-body `(await_all done)` drain before the nested repeat check can loop.
+  The next implementation frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

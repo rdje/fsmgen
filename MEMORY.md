@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained repeat do while spawn pending selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`.
+- The active R14 task tree now selects the direct top-level `switch` branch
+  analogue of the shipped when-contained local-do-while-spawn-pending subset.
+- The selected source shape is a repeat directly inside a top-level `switch`
+  branch with one or more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  followed by local `(do child)` while those generated spawns remain pending,
+  and a later same-body `(await_all done)` drain before the nested repeat
+  check can loop.
+- The selected contract keeps the do target local to the parent scheduled
+  module, keeps the generated spawn done set live across the local do state,
+  and requires the later drain to gate nested repeat re-entry on every
+  outstanding generated child.
+- Generated `do` while spawn pending, `await_any` before or after the local
+  do, new spawn after the local do before drain, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  deferred.
+- The mdBook feature backlog documents the selected surface as not shipped
+  yet.
+- Validation: `mdbook build docs/book` and `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`.
 ## 2026-05-18: public GitHub CI and Pages automation re-enabled
 - Completed `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` under the project-operations
   task tree.

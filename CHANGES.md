@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF switch-contained repeat do while spawn pending selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`.
+- Selected top-level `switch` branches containing nested repeats with one or
+  more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  followed by local `(do child)` while those generated spawns remain pending,
+  and a later same-body `(await_all done)` drain before the nested repeat
+  check can loop.
+- The selected surface mirrors the shipped when-contained pending-spawn local
+  do proof: the do target remains local to the parent scheduled module, the
+  generated spawn done set stays live across the local do state, and the later
+  drain still gates nested repeat re-entry on every outstanding generated
+  child.
+- Generated `do` while spawn pending, `await_any` before or after the local
+  do, new spawn after the local do before drain, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  deferred.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
+- Validation: `mdbook build docs/book` and `git diff --check` passed.
 ### Project operations — GitHub CI and Pages re-enabled
 - Completed `GITHUB-PUBLIC-AUTOMATION-REENABLE.1`.
 - Restored discoverable hosted regression CI at

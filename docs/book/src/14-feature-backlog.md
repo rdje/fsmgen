@@ -427,9 +427,10 @@ pending, provided a later same-body `(await_all done)` drains the outstanding
 generated children before the nested repeat check can loop. This subset is
 shipped. The `do` target must remain local to the parent scheduled module; it
 uses the parent-module start/done pulse contract and leaves generated-spawn
-done handoffs live until the later drain. Generated `do` while spawn pending,
-the switch-contained analogue, `await_any` observation before or after the do,
-new spawn after the do before the drain, cross-domain activation, deeper
+done handoffs live until the later drain. The direct top-level `switch` branch
+analogue is selected for the next implementation leaf but is not shipped yet.
+Generated `do` while spawn pending, `await_any` observation before or after the
+do, new spawn after the do before the drain, cross-domain activation, deeper
 branch/loop nesting, and broader outstanding-child semantics remain deferred.
 
 Dynamic repeat counts are compatible with this model because `count` is a

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: switch-contained local do while spawn pending is the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.59` selects the direct switch-branch
+  analogue of the shipped when-contained pending-spawn local-do subset.
+- The selected implementation should allow only local `(do child)` inside a
+  repeat directly under a top-level `switch` branch after one or more
+  generated nested spawns are pending and before a later same-body `await_all`
+  drains those generated spawns.
+- The lifetime proof mirrors the when-contained leaf: the local do must wait
+  for its fresh local child done pulse without clearing the pending
+  generated-spawn set, and the later `await_all` must still gate nested
+  repeat re-entry on all outstanding generated child done handoffs.
+- Generated `do` while spawn pending, `await_any` before or after the local
+  do, new spawn after the local do before drain, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  separate contracts.
 ## 2026-05-18: hosted automation restored for the public repository
 - `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` is an operations-only slice. It
   restores GitHub discovery for CI and Pages after the repository was made
