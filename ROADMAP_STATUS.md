@@ -2,15 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`.
-  Leaf `.60` shipped top-level switch-branch nested repeat local `do` while
-  generated nested spawns are pending before a later same-body `await_all`
-  drain. The local do waits for its fresh local done pulse without clearing the
-  generated-spawn done set, and the later drain gates switch-branch nested
-  repeat re-entry on all outstanding generated child done handoffs. Leaf `.61`
-  is selection-only and must pick the next bounded repeat-body child activation
-  subset before further code. Validation passed through the full ISF gate
-  (`./bin/ci-regression isf --no-book`: Files=227, Tests=1187).
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.62`.
+  Leaf `.61` selected top-level when-body nested repeat generated-child plain
+  `do` while generated nested spawns are pending before a later same-body
+  `await_all` drain. The selected proof is that the generated do site owns one
+  deterministic generated instance, waits for that instance's fresh done
+  handoff, leaves the pending generated-spawn done set live, and still requires
+  the later drain before nested repeat re-entry. This selection changes no
+  shipped compiler behavior yet.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -400,9 +399,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   Generated `do` while pending, `await_any` around the local do, new nested
   spawn after the local do before drain, cross-domain activation, deeper
   branch/loop nesting, and broader outstanding-child semantics remain
-  fail-closed. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`, which must select the next bounded
-  repeat-body child activation subset before code.
+  fail-closed. The next active frontier,
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`, then selected top-level when-body
+  nested repeat generated-child plain `(do child)` while generated nested
+  spawns are pending before a later same-body `(await_all done)` drain. The
+  next implementation frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.62`.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

@@ -432,9 +432,18 @@ analogue is also shipped: a repeat directly inside a top-level `switch` branch
 may run a local `(do child)` while generated nested spawns remain pending,
 with the same later same-body `(await_all done)` drain requirement and the
 same local start/done proof.
-Generated `do` while spawn pending, `await_any` observation before or after the
-do, new spawn after the do before the drain, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics remain deferred.
+The next selected implementation leaf is the top-level `when` body
+generated-child analogue: plain `(do child)` while generated nested spawns are
+pending, where `child` is already emitted as a generated child by another
+activation site. That selected leaf is not shipped yet. Its intended proof is
+that the generated do site owns one deterministic generated instance, waits
+for that instance's fresh done handoff, and leaves the pending generated-spawn
+done set live for the later same-body `(await_all done)` drain.
+Parameterized/bound/domain-qualified generated `do` while spawn pending, the
+switch-contained generated-child analogue, `await_any` observation before or
+after the do, new spawn after the do before the drain, cross-domain
+activation, deeper branch/loop nesting, and broader outstanding-child
+semantics remain deferred.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

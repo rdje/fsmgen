@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained repeat generated do while spawn pending selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`.
+- The active R14 task tree now selects top-level `when` body nested repeats
+  that run generated-child plain `(do child)` while generated nested spawns
+  remain pending, before a later same-body `(await_all done)` drain.
+- The selected do target must already be emitted as a generated child by
+  another activation site. The intended implementation owns one deterministic
+  generated do instance for the lexical do site, waits for that instance's
+  fresh done handoff, and leaves pending generated-spawn done handoffs live
+  for the later drain.
+- Static params, bind/domain subclauses on that do, the switch-contained
+  analogue, `await_any` before or after the do, new spawn after the do before
+  drain, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred.
+- The mdBook feature backlog documents the selected surface as not shipped
+  yet.
+- Validation: `mdbook build docs/book` and `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.62`.
 ## 2026-05-18: switch-contained repeat do while spawn pending shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
