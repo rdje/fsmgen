@@ -901,15 +901,16 @@ Rules:
   to an explicit sample state at their source-order timing point: before a
   later spawn state for sample-before-spawn ordering, or before the sync state
   for sample-after-spawn ordering. A repeat directly inside a top-level `when`
-  body also accepts exactly one generated
+  body or directly inside a top-level `switch` branch also accepts exactly one
+  generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
   same nested repeat body reaches `(await_all done)` before the nested repeat
-  check can loop. That when-contained nested spawn reuses the static
-  generated-child handoff model and preserves source-order samples before the
+  check can loop. Those branch-contained nested spawns reuse the static
+  generated-child handoff model and preserve source-order samples before the
   nested spawn or sync states; `await_any`, multiple pending nested spawns,
-  switch-contained spawn nesting, and `do` while the nested spawn is pending
-  remain fail-closed. Cross-domain repeat-body `do`, broader outstanding-child
-  semantics, `stage`,
+  `do` while the nested spawn is pending, deeper branch/loop nesting, and
+  cross-domain activation remain fail-closed. Cross-domain repeat-body `do`,
+  broader outstanding-child semantics, `stage`,
   `contract`, deeper branch nesting, nested `while`, and nested `until` remain
   outside the shipped repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
@@ -1204,11 +1205,12 @@ Rules:
   `do`, and both top-level branch-contained subsets may pair those params
   with `(bind ...)` input/output handoffs. Both top-level branch-contained
   subsets may also carry same-domain `(domain NAME)` metadata. A top-level
-  `when` body nested repeat may also use exactly one generated
+  `when` body or top-level `switch` branch nested repeat may also use exactly
+  one generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
   same nested repeat body reaches `(await_all done)` before the nested repeat
-  check can loop. No switch-contained nested spawn, deeper branch repeat, or
-  loop-contained repeat is included in those shipped nested subsets. Top-level
+  check can loop. No deeper branch repeat or loop-contained repeat is
+  included in those shipped nested subsets. Top-level
   repeat bodies
   may also use
   `(do child (params ...))` with static parameter overrides; that form creates

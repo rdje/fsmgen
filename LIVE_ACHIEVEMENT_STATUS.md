@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF switch-contained repeat spawn await_all shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.44`.
+- Top-level `switch` branches may now contain nested repeats with exactly one
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  when the same nested repeat body reaches same-body `(await_all done)` before
+  the nested repeat check can loop.
+- Lowering emits one static generated child instance for the lexical nested
+  spawn, preserves generated-top parameter overrides, input/output binding
+  handoffs, and same-domain metadata, and keeps source-order samples before
+  nested spawn or sync states explicit.
+- `await_any`, multiple pending nested spawns, `do` while a nested spawn is
+  pending, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred. The active frontier advances
+  to `ISF-REPEAT-BODY-CHILD-ACTIVATION.45`, which must select the next
+  bounded repeat-body child activation subset before code.
+
 ## 2026-05-17: R14 — ISF switch-contained repeat spawn await_all selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.43`.
 - Selected top-level `switch` branches containing nested repeats with exactly

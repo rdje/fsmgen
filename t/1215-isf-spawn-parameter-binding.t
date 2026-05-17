@@ -389,6 +389,105 @@ ISF
     );
 };
 
+subtest 'switch branch nested repeat spawn drains through same-body await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_spawn_await_all
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (width 2) (domain core))
+    (input loops (width 3) (domain core))
+    (input payload (width 8) (domain core))
+    (input status (domain core))
+    (output done (domain core))
+    (output worker_done (domain core))
+    (output result (width 8) (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0
+            (params
+              (WIDTH 16))
+            (bind
+              (input data payload)
+              (output resp result))
+            (domain core))
+          (sample status as after)
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (update resp data)
+    (complete worker_done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'switch-branch nested repeat spawn contributes one static generated child instance');
+    is($ir->{spawn_instances}[0]{child}, 'worker',
+        'switch-branch nested repeat spawn targets the worker transaction');
+    is($ir->{spawn_instances}[0]{instance}, 'w0',
+        'switch-branch nested repeat spawn preserves the lexical instance name');
+    is($ir->{spawn_instances}[0]{domain}, 'core',
+        'switch-branch nested repeat spawn preserves declared same-domain metadata');
+    is_deeply(
+        $ir->{spawn_instances}[0]{parameter_overrides},
+        [{ name => 'WIDTH', value => '16' }],
+        'switch-branch nested repeat spawn preserves static parameter overrides',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_spawn_await_all.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_spawn_await_all_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch nested repeat spawn parent scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'switch-branch nested repeat spawn generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before switch nested spawn materializes before the spawn state');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_sample_\d+\)/,
+        'switch-branch nested spawn starts the static child before the following sample');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'sample after switch nested spawn materializes before await_all');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+        'same-body await_all gates the switch nested repeat check on the spawned child done');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top applies switch nested repeat-spawn parameter overrides once');
+    like($top_fsm, qr/\(switch_repeat_spawn_await_all\.w0_data w0\.data\)/,
+        'generated top wires switch nested repeat-spawn input binding handoff');
+    like($top_fsm, qr/\(w0\.resp switch_repeat_spawn_await_all\.w0_resp\)/,
+        'generated top wires switch nested repeat-spawn output binding handoff');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:data',
+            'spawn:w0:resp',
+        ],
+        'report exposes switch-branch nested repeat-spawn transaction port-binding provenance',
+    );
+    is_deeply(
+        $report->{clock_domains}[0]{child_instances},
+        [{ kind => 'spawn', owner => 'parent', child => 'worker', instance => 'w0' }],
+        'clock-domain report metadata groups the switch-branch nested repeat-spawn child by declared domain',
+    );
+};
+
 subtest 'repeat body await_any accepts exactly one pending static child' => sub {
     my $source = <<'ISF';
 (actor repeat_spawn_await_any
@@ -1816,8 +1915,25 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat spawn', qr/repeat-body spawn is supported only for top-level repeat clauses or top-level when-body nested repeat clauses/);
-(actor switch_nested_repeat_spawn
+    assert_lower_rejected(<<'ISF', 'switch nested when repeat spawn', qr/repeat-body spawn is supported only for top-level repeat clauses, top-level when-body nested repeat clauses, or top-level switch-branch nested repeat clauses/);
+(actor switch_nested_when_repeat_spawn
+  (clock clk)
+  (interface (input start) (input cond) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (when cond
+          (repeat loops
+            (spawn worker as w0)
+            (await_all done)))))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat spawn await_any', qr/switch-branch nested repeat spawn supports only same-body '\(await_all done\)' in the current spawn-nesting subset/);
+(actor switch_nested_repeat_spawn_await_any
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (output done))
   (transaction parent
@@ -1826,6 +1942,23 @@ ISF
       (0
         (repeat loops
           (spawn worker as w0)
+          (await_any done))))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat multiple spawns', qr/switch-branch nested repeat spawn supports exactly one pending generated child before same-body await_all in the current spawn-nesting subset/);
+(actor switch_nested_repeat_multiple_spawns
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0)
+          (spawn worker as w1)
           (await_all done))))
     (complete done))
   (transaction worker
@@ -1962,6 +2095,21 @@ ISF
     (when cond
       (repeat loops
         (spawn worker as w0)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat spawn without await_all', qr/switch-branch nested repeat spawn requires same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_spawn_without_await_all
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0))))
     (complete done))
   (transaction worker
     (complete done)))

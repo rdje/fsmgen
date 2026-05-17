@@ -1567,14 +1567,15 @@ Current lowering:
   `(domain NAME)` as declared same-domain metadata when static `(params ...)`
   overrides are present. Deeper branch nesting and loop-contained repeats
   remain outside both nested subsets. Repeats directly inside a top-level
-  `when` body also accept exactly one generated
+  `when` body or directly inside a top-level `switch` branch also accept
+  exactly one generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
   same nested repeat body reaches `(await_all done)` before the nested repeat
-  check can loop. That when-contained nested spawn reuses the static
-  generated-child handoff model and preserves source-order samples before the
+  check can loop. Those branch-contained nested spawns reuse the static
+  generated-child handoff model and preserve source-order samples before the
   nested spawn or sync states; `await_any`, multiple pending nested spawns,
-  switch-contained spawn nesting, and `do` while the nested spawn is pending
-  remain fail-closed. Top-level
+  `do` while the nested spawn is pending, deeper branch/loop nesting, and
+  cross-domain activation remain fail-closed. Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
@@ -1970,7 +1971,9 @@ switch-branch nested repeat local, plain generated-child `(do child)`, or
 static-parameter generated
 `(do child (params ...))` with optional `(bind ...)` handoffs and optional
 declared same-domain `(domain NAME)` metadata, top-level when-body nested
-repeat single generated spawn with same-body `await_all`, repeat-body
+repeat single generated spawn with same-body `await_all`, top-level
+switch-branch nested repeat single generated spawn with same-body
+`await_all`, repeat-body
 generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]
 [(domain NAME)])`, and repeat-body spawn followed by same-body `await_all`,

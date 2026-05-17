@@ -1052,16 +1052,16 @@ to an explicit sample state before the same-body sync state, so capture timing
 is visible before the repeat check. Spawning again after that pending sample
 remains deferred.
 
-The same static child handoff is shipped for one narrower nested placement: a
-repeat directly inside a top-level `when` body may contain exactly one
-generated spawn with optional static `(params ...)`, optional `(bind ...)`
-handoffs, and optional declared same-domain `(domain NAME)` metadata. The
-same nested repeat body must reach `(await_all done)` before the nested repeat
-check can loop. Sample-before-spawn and sample-after-spawn timing stay
-explicit, and the generated top still instantiates one static child named by
-the lexical `spawn` instance. Nested `await_any`, multiple pending nested
-spawns, switch-contained spawn nesting, and `do` while that nested spawn is
-pending remain fail-closed.
+The same static child handoff is shipped for two narrower nested placements: a
+repeat directly inside a top-level `when` body or directly inside a top-level
+`switch` branch may contain exactly one generated spawn with optional static
+`(params ...)`, optional `(bind ...)` handoffs, and optional declared
+same-domain `(domain NAME)` metadata. The same nested repeat body must reach
+`(await_all done)` before the nested repeat check can loop.
+Sample-before-spawn and sample-after-spawn timing stay explicit, and the
+generated top still instantiates one static child named by the lexical
+`spawn` instance. Nested `await_any`, multiple pending nested spawns, and
+`do` while that nested spawn is pending remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1174,7 +1174,7 @@ overrides are present. Both nested subsets reject deeper branch nesting,
 loop-contained repeats, and
 generated/spawned nested activation
 beyond the documented branch-contained generated `do` cases and the
-when-contained single generated-spawn plus same-body `await_all` case.
+branch-contained single generated-spawn plus same-body `await_all` cases.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
@@ -1198,13 +1198,13 @@ handoff, then an optional sample state, before the repeat check:
     (=0 (-> parent_done_6))))
 ```
 
-For a repeat directly inside a top-level `when` body, the representative shape
-is the same except the branch decision targets the nested repeat init state.
-The nested repeat body may have one generated spawn, optional samples around
-that spawn, and a mandatory same-body `await_all` before the nested
-`repeat_check` state. The generated top applies any static parameter override,
-binding handoff, and same-domain metadata once to the lexical nested spawn
-instance.
+For a repeat directly inside a top-level `when` body or top-level `switch`
+branch, the representative shape is the same except the branch decision
+targets the nested repeat init state. The nested repeat body may have one
+generated spawn, optional samples around that spawn, and a mandatory same-body
+`await_all` before the nested `repeat_check` state. The generated top applies
+any static parameter override, binding handoff, and same-domain metadata once
+to the lexical nested spawn instance.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:
@@ -1234,7 +1234,7 @@ live until a later same-body `await_all` drain:
 
 Cross-domain repeat-body `do`, cross-domain spawn, broader outstanding-child
 semantics, generated/spawned nested activation beyond the documented top-level
-branch-contained generated `do` cases and when-contained single-spawn case,
+branch-contained generated `do` cases and branch-contained single-spawn cases,
 and deeper branch/loop forms remain fail-closed until their re-entry and
 report behavior is specified.
 
