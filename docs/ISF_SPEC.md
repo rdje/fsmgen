@@ -1655,13 +1655,15 @@ yet, and malformed or unknown-width runtime count expressions remain rejected.
 Pending samples before top-level runtime waits are supported for the first
 path-specific sample-materialization subset when the following state can carry
 the zero-count sample without changing timing, such as a drive call, an await,
-or a static wait state. The positive-count path matches positive static waits
-by materializing samples in the first active wait state. For counts greater
-than one, a second generated wait-loop state consumes the remaining sampled
-counter value without repeating the sample. The zero-count path matches
-`wait 0` by materializing samples in a specialized clone of the next
-state-producing clause, so no hidden sample-only cycle is added and the
+static wait state, or completion state. The positive-count path matches
+positive static waits by materializing samples in the first active wait state.
+For counts greater than one, a second generated wait-loop state consumes the
+remaining sampled counter value without repeating the sample. The zero-count
+path matches `wait 0` by materializing samples in a specialized clone of the
+next state-producing clause, so no hidden sample-only cycle is added and the
 original following state does not double-sample after a positive wait.
+Completion zero-count clones preserve the same delayed-pulse assignment and
+return-to-idle transition as the original completion state.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
 samples without changing timing fail closed. The same path-specific
 materialization is also supported inside `when` bodies and `switch` branches
@@ -1670,8 +1672,10 @@ false path of `when`, other explicit switch cases, and implicit switch
 fallthrough remain unchanged. `repeat`, `while`, and `until` bodies use the
 same materialization when the zero-count body successor can carry pending
 samples. Repeat loop-back/exit behavior, `while` false exits, and `until` true
-exits remain unchanged. Runtime waits whose selected zero-count successor
-cannot yet carry pending samples without changing timing fail closed.
+exits remain unchanged. Completion states are sample-compatible selected
+successors in the shipped top-level, `when`-body, and `switch`-branch subset.
+Runtime waits whose selected zero-count successor cannot yet carry pending
+samples without changing timing fail closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

@@ -463,10 +463,12 @@ bypass paths. Pending samples before top-level runtime waits are covered: the
 positive path materializes samples in the first wait state, counts greater
 than one continue through a no-resample wait-loop state, and the zero path uses
 a sample-preserving clone of the following state when that state can carry the
-sample without changing timing. Top-level zero-count successors that cannot
-yet carry pending samples fail closed. Pending samples before `when`-body and
-`switch`-branch runtime waits are now covered by the same one-shot positive
-sample and zero-clone contract when the selected successor can carry samples.
+sample without changing timing, including completion states that preserve their
+delayed pulse and return-to-idle transition. Top-level zero-count successors
+that cannot yet carry pending samples fail closed. Pending samples before
+`when`-body and `switch`-branch runtime waits are now covered by the same
+one-shot positive sample and zero-clone contract when the selected successor
+can carry samples, including selected completion successors.
 Pending samples before `repeat`, `while`, and `until` dynamic waits are covered
 by the same contract for sample-compatible body successors while preserving
 loop-back and loop-exit edges. Dynamic waits whose selected zero-count

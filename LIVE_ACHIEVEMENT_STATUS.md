@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF completion zero-bypass pending-sample dynamic waits shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md).
+- The `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE` tree is now closed. No active ISF
+  task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- Runtime dynamic waits with pending samples can now zero-bypass into a
+  compatible completion successor. The zero path materializes the pending
+  sample assignments in a completion clone, emits the delayed completion pulse,
+  and returns to idle without adding a hidden sample-only cycle.
+- Positive-count paths still sample in the first wait state and exit through
+  the original completion state. Unsafe data-operation successors, consecutive
+  pending-sample runtime waits, and unsupported loop/check-state successors
+  remain fail-closed.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=114`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1001`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF parameter-backed static wait counts shipped
 - Completed R14 task-tree slice:
   `ISF-PARAM-WAIT-COUNTS.1` in

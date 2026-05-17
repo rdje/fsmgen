@@ -10,14 +10,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-PARAM-WAIT-COUNTS` is closed after shipping
-  actor-local scalar parameter defaults as static `(wait NAME)` counts. The
-  lowerer resolves those defaults after actor constants, emits the same fixed
-  wait-state chains and `transaction_waits[]` static metadata as literal and
-  actor-constant waits, and keeps transaction params, non-scalar actor params,
-  and use-site override specialization fail-closed. The next R14 PNT
-  implementation slice must select or create a new task tree before code
-  changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE` is closed after
+  shipping completion-state zero-bypass for pending-sample runtime waits. A
+  top-level or shipped branch `(sample ...) (wait count) (complete done)` path
+  now lowers a zero-count runtime wait to a sample-preserving completion clone
+  that emits the delayed completion pulse and returns to idle without adding a
+  hidden sample-only cycle. Unsafe data-operation successors, consecutive
+  pending-sample runtime waits, and unsupported loop/check-state successors
+  remain fail-closed. The next R14 PNT implementation slice must select or
+  create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -407,7 +408,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.5.4` shipped repeat/loop
   pending-sample preservation, `ISF-DYNAMIC-WAIT.3.3.6` shipped
   expression-valued runtime wait counts, and the `ISF-DYNAMIC-WAIT` tree is
-  now closed. `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
+  now closed. `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` then shipped the completion
+  successor subset for pending-sample runtime wait zero-bypass: top-level and
+  selected branch completion states can be cloned to carry pending samples,
+  emit the delayed completion pulse, and return to idle, while unsafe
+  data-operation and loop/check-state successors remain fail-closed.
+  `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
   checklist, `ISF-PUBLIC-CONTRACT.3` applied that checklist by reference from
@@ -616,6 +622,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the authored parameter name in `count_source`. Transaction parameters,
   non-scalar actor parameter defaults, unknown symbolic names, and use-site
   activation override specialization remain fail-closed for wait counts.
+- ISF pending-sample completion wait update: runtime dynamic waits with
+  pending samples can now zero-bypass into a compatible completion successor.
+  The zero path uses a sample-preserving completion clone that performs the
+  pending sample assignments, emits the delayed completion pulse, and returns
+  to idle. Positive-count paths still sample in the first wait state and exit
+  through the original completion state. Unsafe data-operation successors and
+  unsupported loop/check-state completion paths remain fail-closed.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -810,7 +823,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   shipped branch runtime waits with pending samples, and
   `ISF-DYNAMIC-WAIT.3.3.5.4` shipped repeat and loop runtime waits with
   pending samples. `ISF-DYNAMIC-WAIT.3.3.6` shipped expression-valued runtime
-  counts and closed the tree. The active frontier is `ISF-PUBLIC-CONTRACT.1`.
+  counts and closed the tree. `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` later
+  shipped completion-state zero-bypass clones for top-level and selected branch
+  pending-sample runtime waits; unsafe successor classes remain fail-closed.
+  No active ISF task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

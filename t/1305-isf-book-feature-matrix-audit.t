@@ -107,6 +107,7 @@ my @required_examples = (
     '"actor_params"',
     '"actor_phases"',
     'dynamic_wait_counter',
+    'sample-preserving zero-count clones',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: completion zero-bypass can carry pending samples directly
+- `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` treats completion as a compatible
+  pending-sample zero-count successor because completion states do not consume
+  the sampled alias as data. They only emit the delayed completion pulse and
+  return to idle.
+- The lowerer reuses the existing sample-preserving zero-clone machinery
+  instead of inserting a hidden sample-only state. That preserves zero-count
+  timing: a zero runtime wait after a sample reaches completion in the same
+  scheduled step that would otherwise have entered the compatible successor.
+- Positive-count paths remain unchanged. They materialize pending samples in
+  the first wait state, use the no-resample loop for counts greater than one,
+  and exit through the original completion state.
+- Data-operation successors still fail closed because many of those states can
+  read the just-sampled alias. They need a separate timing contract before a
+  zero-count clone can be considered signoff-quality.
 ## 2026-05-16: parameter-backed waits are static actor-default resolution only
 - `ISF-PARAM-WAIT-COUNTS.1` accepts actor-local scalar parameter defaults as
   static wait-count symbols because those defaults are already part of the

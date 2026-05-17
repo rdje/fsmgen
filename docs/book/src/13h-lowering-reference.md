@@ -518,6 +518,18 @@ repeating the sample on every loop cycle. If the zero-count successor cannot
 carry the pending sample without changing timing, the lowerer rejects the form
 until that successor shape has an explicit materialization rule.
 
+Completion is a sample-compatible zero-count successor because it does not read
+the sampled alias. A zero-count clone of a completion state carries the pending
+sample assignment, preserves the delayed completion pulse, and returns to idle
+like the original completion state:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (<1 (done> 1))
+  (-> main_idle_0))
+```
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

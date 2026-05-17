@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF completion zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into compatible completion successors.
+- The zero-count path now uses a sample-preserving completion clone that
+  performs pending sample assignments, emits the delayed completion pulse, and
+  returns to idle. Positive-count paths continue to sample in the first wait
+  state and exit through the original completion state.
+- Unsafe data-operation successors, consecutive pending-sample runtime waits,
+  and unsupported loop/check-state successors remain fail-closed.
+- Extended `t/1244-isf-wait-clause-lowering.t` for top-level and shipped
+  branch completion successors, widened the book feature-matrix audit marker,
+  and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/lowering/backlog
+  and feature-matrix chapters, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=114`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1001`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF parameter-backed static wait counts shipped
 - Completed `ISF-PARAM-WAIT-COUNTS.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so transaction `(wait NAME)`

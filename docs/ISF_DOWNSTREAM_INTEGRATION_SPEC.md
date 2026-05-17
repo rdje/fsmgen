@@ -749,6 +749,13 @@ Rules:
   width and the predecessor-edge split is implemented.
 - Runtime expression waits are accepted when every operand has known width and
   the expression width helper derives a positive result width.
+- Pending samples before accepted runtime waits materialize in the first active
+  wait state on positive-count paths. On zero-count paths, FSMGen uses a
+  sample-preserving clone when the selected successor can carry the sample
+  without changing timing. Shipped sample-compatible successors include drive,
+  await, static wait, and completion states for top-level waits; selected
+  completion successors are also shipped for `when` bodies and `switch`
+  branches.
 - Wait-count division and modulo expressions reject literal-zero and
   actor-constant-zero divisors before scheduled `.fsm` emission. Dynamic
   divisor nonzero proof remains outside the shipped wait contract.

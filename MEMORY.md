@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF completion zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts pending samples before runtime dynamic waits when the zero-count
+  successor is a compatible completion state. The zero path materializes a
+  sample-preserving completion clone, emits the existing delayed completion
+  pulse, and returns to idle without adding a hidden sample-only cycle.
+- Positive-count paths still sample in the first wait state and exit through
+  the original completion state. Unsafe data-operation successors, consecutive
+  pending-sample runtime waits, and unsupported loop/check-state successors
+  remain fail-closed.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=114`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1001`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence remains every 30 unpushed commits.
 ## 2026-05-16: ISF parameter-backed static wait counts shipped
 - Completed `ISF-PARAM-WAIT-COUNTS.1` and closed
   [docs/tasks/ISF-PARAM-WAIT-COUNTS.md](docs/tasks/ISF-PARAM-WAIT-COUNTS.md).

@@ -534,6 +534,73 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into completion' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-complete');
+(actor wait_dynamic_sample_complete
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_complete.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving completion clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_done_2\)\)/,
+        'positive path exits to the original completion state');
+
+    my $done = state_block($fsm, 'main_done_2');
+    unlike($done, qr/\(<= \(hold din\)\)/,
+        'original completion state does not double-sample after a positive wait');
+    like($done, qr/\(<1 \(done> 1\)\)/,
+        'original completion pulse is unchanged');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count completion clone materializes the pending sample');
+    like($zero_clone, qr/\(<1 \(done> 1\)\)/,
+        'zero-count completion clone emits the completion pulse without a hidden sample-only cycle');
+    like($zero_clone, qr/\(-> main_idle_0\)/,
+        'zero-count completion clone returns to idle like the original completion state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_done_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'completion zero-bypass report still points at the original positive successor',
+    );
+    is_deeply(
+        $report->{transactions}[0]{states},
+        [qw(main_idle_0 main_wait_1 main_wait_1_loop main_done_2 main_wait_1_zero_sample)],
+        'transaction state summary includes the terminal zero-sample clone in emitted order',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_complete');
+};
+
 subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
 (actor wait_dynamic_pair
@@ -1205,6 +1272,111 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_switch_sample');
 };
 
+subtest 'branch runtime scalar waits can zero-bypass pending samples into completion' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-when-sample-complete');
+(actor wait_dynamic_when_sample_complete
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cond)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (when cond
+      (sample din as hold)
+      (wait cycles))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_when_sample_complete.fsm'};
+    my $branch = state_block($fsm, 'main_when_1');
+    like($branch, qr/\(-> main_wait_2_zero_sample <\(& cond \(== cycles 0\)\)\)/,
+        'when true zero path bypasses directly to a sample-preserving completion clone');
+    like($branch, qr/\(-> main_done_3 <\(! cond\)\)/,
+        'when false path still skips to the original completion state');
+
+    my $zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'when completion clone materializes the pending sample');
+    like($zero_clone, qr/\(<1 \(done> 1\)\)/,
+        'when completion clone emits the completion pulse');
+    like($zero_clone, qr/\(-> main_idle_0\)/,
+        'when completion clone returns to idle like the original completion state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_done_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'when completion zero-bypass report points at the original completion state',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_when_sample_complete');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-switch-sample-complete');
+(actor wait_dynamic_switch_sample_complete
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input sel)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (switch sel
+      (0 (sample din as hold)
+         (wait cycles)))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_switch_sample_complete.fsm'};
+    like($fsm, qr/\(-> main_wait_1_zero_sample <\(& \(== sel 0\) \(== cycles 0\)\)\)/,
+        'switch selected zero path bypasses directly to a sample-preserving completion clone');
+    like($fsm, qr/\(-> main_done_3 <\(! \(== sel 0\)\)\)/,
+        'switch fallthrough still skips to the original completion state');
+
+    $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'switch completion clone materializes the pending sample');
+    like($zero_clone, qr/\(<1 \(done> 1\)\)/,
+        'switch completion clone emits the completion pulse');
+    like($zero_clone, qr/\(-> main_idle_0\)/,
+        'switch completion clone returns to idle like the original completion state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_done_3',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'switch completion zero-bypass report points at the original completion state',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_switch_sample_complete');
+};
+
 subtest 'runtime scalar waits lower inside while and until bodies' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-while');
 (actor wait_dynamic_while
@@ -1572,32 +1744,6 @@ ISF
   (transaction main
     (on start)
     (wait WAIT_PAIR)
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'pending sample before when dynamic wait with non-piggyback successor', qr/\ARuntime dynamic wait 'main_wait_2' with pending samples cannot zero-bypass to state 'main_done_3' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
-(actor wait_when_dynamic_after_sample
-  (clock clk)
-  (reset (rst_n async active_low))
-  (interface (input start) (input cond) (input cycles (width 4)) (input din (width 8)) (output done))
-  (transaction main
-    (on start)
-    (when cond
-      (sample din as hold)
-      (wait cycles))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'pending sample before switch dynamic wait with non-piggyback successor', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_done_3' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
-(actor wait_switch_dynamic_after_sample
-  (clock clk)
-  (reset (rst_n async active_low))
-  (interface (input start) (input sel) (input cycles (width 4)) (input din (width 8)) (output done))
-  (transaction main
-    (on start)
-    (switch sel
-      (0 (sample din as hold)
-         (wait cycles)))
     (complete done)))
 ISF
 

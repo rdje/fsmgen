@@ -6711,6 +6711,9 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
     return 1 if $kind eq 'wait';
     return 1 if $kind eq 'await'
         && !grep { ($_->{source_kind} // '') =~ /\Ado_/ } @{$target_state->{assignments} || []};
+    return 1 if $kind eq 'terminal'
+        && @{$target_state->{assignments} || []}
+        && !grep { ($_->{source_kind} // '') ne 'complete_pulse' } @{$target_state->{assignments} || []};
 
     if ($kind eq 'sequential') {
         for my $assignment (@{$target_state->{assignments} || []}) {
