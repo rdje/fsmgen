@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained nested await_any drain is the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.53` selects multi-pending `(await_any done)`
+  inside a repeat that is directly inside a top-level `when` body.
+- The selected semantics intentionally mirror the top-level repeat-body drain
+  proof: `await_any` is only an observation point, the outstanding generated
+  child done handoffs remain live, and a later same-body `(await_all done)`
+  must drain them before the nested repeat check can re-enter.
+- The selected contract forbids new nested `spawn` or `do` clauses before the
+  drain. Switch-contained multi-pending `await_any`, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child lifetime semantics
+  remain separate contracts.
 ## 2026-05-17: switch-contained multiple nested spawns reuse await_all drain
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.52` implements only the selected
   switch-contained multiple generated-spawn subset.
