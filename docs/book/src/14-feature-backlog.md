@@ -323,9 +323,20 @@ shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
 
-Nested generated-do domain metadata, switch-contained bound nested `do`, spawn
-nesting, cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain backlog.
+The next bounded nested generated-do leaf selects a repeat directly inside a
+top-level `switch` branch with generated blocking
+`(do child (params ...) (bind ...))`: static parameter overrides plus
+input/output port bindings only. The selected nested do site mirrors the
+shipped when-contained binding subset, reuses the same deterministic
+generated do instance as the switch-contained static-parameter subset, adds
+generated-top binding handoffs once for that lexical site, waits for the
+instance's fresh done handoff before the switch-branch repeat check, and keeps
+`(domain NAME)`, spawn nesting, deeper branch/loop nesting, cross-domain
+activation, and broader outstanding-child semantics out of scope.
+
+Nested generated-do domain metadata, spawn nesting, cross-domain activation,
+deeper branch/loop nesting, and broader outstanding-child semantics remain
+backlog beyond the selected switch-contained bound nested `do` leaf.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
