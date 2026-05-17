@@ -1543,12 +1543,14 @@ Current lowering:
   child transaction remains local to the scheduled parent. The repeat-body
   `do` state asserts `child_start`, waits for the child's fresh `child_done`
   pulse, and only then reaches the repeat check back-edge. Top-level repeat
-  bodies also accept generated blocking `(do child (params ...))` with static
-  parameter overrides; the generated top emits one generated do instance for
-  the lexical do site, applies the parameter override once, and the do state
-  waits for that generated instance's fresh done pulse before the repeat check.
-  Repeat-body do `(bind ...)`, `(domain NAME)`, repeat-body `do` targeting an
-  already generated child without this selected static parameter site, and
+  bodies also accept generated blocking
+  `(do child (params ...) [(bind ...)])` with static parameter overrides and
+  optional input/output port bindings; the generated top emits one generated
+  do instance for the lexical do site, applies the parameter override once,
+  wires the binding handoff ports once for that generated instance, and the do
+  state waits for that generated instance's fresh done pulse before the repeat
+  check. Repeat-body do `(domain NAME)`, repeat-body `do` targeting an already
+  generated child without this selected static parameter site, and
   sample-before/after-do timing remain deferred. Top-level repeat bodies also
   accept the generated spawn subset:
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
@@ -1569,9 +1571,9 @@ Current lowering:
   `await_any`; those pending samples materialize in an explicit sample state
   before the sync state, so sample timing is reviewable before the repeat
   check. A later repeat-body spawn after a pending sample remains deferred.
-  Repeat-body do bindings, domain-qualified repeat-body `do`, multi-pending
-  `await_any`, `stage`, `contract`, nested `while`, and nested `until` remain
-  outside the shipped repeat-body subset.
+  Domain-qualified repeat-body `do`, multi-pending `await_any`, `stage`,
+  `contract`, nested `while`, and nested `until` remain outside the shipped
+  repeat-body subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
@@ -1913,15 +1915,18 @@ nested `when`, and shipped `(wait N)` clauses. They continue to reject `do`,
 bodies, and loops nested under `when`/`switch`/`repeat` until re-entry, child
 lifetime, and report semantics are specified for those combinations. Top-level
 repeat-body local `(do child)`, repeat-body generated blocking
-`(do child (params ...))`, and repeat-body spawn followed by same-body
-`await_all` or single-pending same-body `await_any` are the only shipped
-loop-body child-activation subsets, and they apply only to `repeat` bodies.
+`(do child (params ...) [(bind ...)])`, and repeat-body spawn followed by
+same-body `await_all` or single-pending same-body `await_any` are the only
+shipped loop-body child-activation subsets, and they apply only to `repeat`
+bodies.
 Repeat-body spawn may carry the same static `(params ...)` overrides and
 `(bind ...)` port handoffs as top-level spawn; those overrides and handoff
 ports specialize the single lexical child instance and are not per-iteration
-runtime values or per-iteration hardware. Repeat-body generated `do` currently
-ships only for static `(params ...)` overrides and still rejects repeat-body
-do bindings, domain metadata, nested placement, and sample-before/after-do
+runtime values or per-iteration hardware. Repeat-body generated `do` carries
+static `(params ...)` overrides and may also carry `(bind ...)` input/output
+handoffs; those handoff ports specialize the single lexical generated do
+instance and are not per-iteration runtime values or per-iteration hardware.
+It still rejects domain metadata, nested placement, and sample-before/after-do
 timing.
 
 Dynamic loops are ordinary persistent hardware schedule regions, not software
@@ -3233,13 +3238,14 @@ Focused tests:
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,
-  the top-level repeat-body generated `(do child (params ...))` subset, and
-  the top-level repeat-body spawn plus same-body `await_all` or
+  the top-level repeat-body generated
+  `(do child (params ...) [(bind ...)])` subset, and the top-level
+  repeat-body spawn plus same-body `await_all` or
   single-pending `await_any` subset with optional static `(params ...)`,
   optional `(bind ...)`, and optional declared same-domain `(domain NAME)`
   metadata: nested loops, loops under `when`/`switch`/`repeat`, repeat-body do
-  bindings, domain-qualified repeat-body `do`, multi-pending repeat-body
-  `await_any`, and `while`/`until` loop bodies containing `do`,
+  domain metadata, domain-qualified repeat-body `do`, multi-pending
+  repeat-body `await_any`, and `while`/`until` loop bodies containing `do`,
   `spawn`, `await_all`, `await_any`, `stage`, or `contract` remain deferred
   until re-entry, child lifetime, and report semantics are specified.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility

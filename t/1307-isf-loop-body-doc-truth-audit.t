@@ -57,6 +57,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/repeat(?:-body| body).*generated.*do.*bind/s,
+        "$path documents the shipped repeat-body generated do binding subset",
+    );
+    like(
+        $content,
         qr/repeat(?:-body| body).*sample.*spawn.*sync/s,
         "$path documents the shipped repeat-body sample-after-spawn timing",
     );

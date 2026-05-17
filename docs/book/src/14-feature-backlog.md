@@ -272,14 +272,16 @@ Parameter overrides reuse the same static specialization contract as top-level
 spawn: they specialize the one lexical child instance in the generated top and do not
 create per-iteration parameter values. Binding handoffs generate one set of
 parent handoff ports for the lexical static instance and are wired in the
-generated top. Domain annotations are accepted only when they name the same
-declared domain as the owning transaction and child; cross-domain activation
-still needs an explicit CDC/protocol contract. Repeat-body do bindings,
-domain-qualified repeat-body `do`, repeat-body `do` targeting an already
-generated child without the selected static parameter site,
-sample-before/after-do timing, spawn-after-sample ordering, multi-pending
-`await_any`, cross-domain activation, and spawn nested under branch or loop
-bodies remain backlog until their re-entry, binding, domain, and report
+generated top. Repeat-body generated `do` now uses the same static
+parameter-plus-binding handoff model for its lexical generated do instance.
+Domain annotations are accepted only when they name the same declared domain
+as the owning transaction and child; cross-domain activation still needs an
+explicit CDC/protocol contract. Domain-qualified repeat-body `do`,
+repeat-body `do` targeting an already generated child without the selected
+static parameter site, sample-before/after-do timing,
+spawn-after-sample ordering, multi-pending `await_any`, cross-domain
+activation, and spawn nested under branch or loop bodies remain backlog until
+their re-entry, binding, domain, and report
 contracts are specified.
 The next selected task-tree leaf is the generated `do` binding subset:
 top-level repeat-body `(do child (params ...) (bind ...))`, with generated

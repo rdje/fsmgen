@@ -798,33 +798,37 @@ The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, the top-level
 local blocking `(do child)` subset, and top-level generated blocking
-`(do child (params ...))` with static parameter overrides. Local repeat-body
-`do` starts a child transaction that remains in the parent scheduled module and
-waits for the child's fresh `child_done` pulse before the repeat check can
-loop. Generated repeat-body `do` emits one generated child instance for the
-lexical do site, applies the parameter override once in the generated top, and
-waits for that generated instance's done handoff before the repeat check.
-Repeat-body do `(bind ...)`, `(domain NAME)`, repeat-body `do` targeting an
-already generated child without this selected static parameter site, and
-sample-before/after-do timing remain deferred. The shipped repeat-body clause surface
+`(do child (params ...) [(bind ...)])` with static parameter overrides and
+optional input/output port bindings. Local repeat-body `do` starts a child
+transaction that remains in the parent scheduled module and waits for the
+child's fresh `child_done` pulse before the repeat check can loop. Generated
+repeat-body `do` emits one generated child instance for the lexical do site,
+applies the parameter override once in the generated top, wires optional
+binding handoff ports once for that generated instance, and waits for that
+generated instance's done handoff before the repeat check. Repeat-body do
+`(domain NAME)`, repeat-body `do` targeting an already generated child without
+this selected static parameter site, and sample-before/after-do timing remain
+deferred. The shipped repeat-body clause surface
 also includes the top-level spawn plus same-body `await_all` subset with
 optional static `(params ...)` overrides, optional `(bind ...)` port handoffs,
 and optional declared same-domain `(domain NAME)` ownership metadata.
 Single-pending repeat-body `await_any` is also shipped when exactly one
-repeat-body spawn is pending. Repeat-body do bindings, domain-qualified
-repeat-body `do`, multi-pending `await_any`, `stage`, `contract`, nested
-`while`, and nested `until` remain outside the shipped repeat-body subset.
+repeat-body spawn is pending. Domain-qualified repeat-body `do`,
+multi-pending `await_any`, `stage`, `contract`, nested `while`, and nested
+`until` remain outside the shipped repeat-body subset.
 Samples may follow a repeat-body spawn before the
 same-body `await_all` or single-pending `await_any`; those pending samples
 materialize in an explicit sample state before the sync state. A later
 repeat-body spawn after a pending sample remains deferred.
 The shipped repeat-body child-activation subset is
-local `(do child)`, generated `(do child (params ...))`, plus
+local `(do child)`, generated `(do child (params ...) [(bind ...)])`, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
 Local repeat-body `do` reuses the local child start/done pulse contract.
 Generated repeat-body `do` reuses the generated child start/done handoff
-contract with a deterministic `{parent}_{child}_repeat_do_{ordinal}` instance.
+contract with a deterministic `{parent}_{child}_repeat_do_{ordinal}` instance
+and reuses the generated-child input/output binding handoff contract when
+`(bind ...)` is present.
 Repeat-body spawn reuses one static generated child instance across
 iterations. Optional parameter overrides specialize that instance once in the
 generated top, optional input/output bindings create generated handoff ports
@@ -2061,7 +2065,8 @@ These are not stable public interfaces yet:
   samples, and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public except for the documented
   top-level repeat-body local `(do child)` subset, top-level repeat-body
-  generated `(do child (params ...))` subset, and top-level repeat-body spawn
+  generated `(do child (params ...) [(bind ...)])` subset, and top-level
+  repeat-body spawn
   plus optional static `(params ...)`, optional `(bind ...)` port handoffs,
   optional declared same-domain `(domain NAME)` metadata, same-body
   `await_all`, and single-pending same-body `await_any` subset.

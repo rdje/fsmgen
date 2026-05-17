@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body generated do bindings shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`.
+- Top-level repeat bodies may now use generated blocking
+  `(do child (params ...) (bind ...))` with static parameter overrides and
+  input/output port bindings.
+- The generated do state starts one deterministic generated instance for the
+  lexical do site, generated-top wiring applies the parameter and binding
+  handoffs once, and repeat re-entry waits for that instance's fresh done
+  handoff.
+- Schedule JSON reports the binding provenance for the repeat-body generated
+  do site. Repeat-body do domain metadata, plain local do targeting an
+  already generated child, nested placement, cross-domain activation,
+  multi-pending `await_any`, and sample-before/after-do timing remain
+  fail-closed. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`.
+
 ## 2026-05-17: R14 — ISF repeat-body generated do bindings selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`.
 - Selected top-level repeat-body generated blocking
@@ -22,10 +38,11 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - The generated do state starts one generated instance for the lexical do site
   and waits for that instance's fresh done handoff before the repeat check can
   loop.
-- Repeat-body do bindings, domain metadata, plain local do targeting an
+- Generated-do binding handoffs, domain metadata, plain local do targeting an
   already generated child, sample-before/after-do timing, nested placement,
-  cross-domain activation, and multi-pending `await_any` remain fail-closed.
-  The active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`.
+  cross-domain activation, and multi-pending `await_any` were still
+  fail-closed at that leaf. The active frontier advanced to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`.
 
 ## 2026-05-17: R14 — ISF repeat-body generated do parameter subset selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`.
@@ -34,9 +51,10 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - The selected contract is one static generated child instance for the lexical
   do site, static parameter overrides in the generated top, and repeat
   re-entry only after the generated instance's fresh done pulse.
-- Repeat-body do bindings, domain metadata, nested placement, cross-domain
-  activation, multi-pending `await_any`, and sample-before/after-do timing
-  remain deferred. The active frontier advances to
+- Generated-do binding handoffs, domain metadata, nested placement,
+  cross-domain activation, multi-pending `await_any`, and
+  sample-before/after-do timing remained deferred at that selection leaf. The
+  active frontier advanced to
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`.
 
 ## 2026-05-17: R14 — ISF repeat-body sample-after-spawn timing shipped

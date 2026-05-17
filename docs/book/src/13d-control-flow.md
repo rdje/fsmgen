@@ -139,8 +139,9 @@ parameter overrides, and top-level repeat-body spawn with optional static
 `await_any` when exactly one spawn is pending. Samples may follow repeat-body
 spawn before that same-body sync; they lower to an explicit sample state
 before `await_all` or single-pending `await_any`. Repeat-body generated `do`
-currently accepts only static `(params ...)`; repeat-body do bindings,
-domain-qualified repeat-body `do`, generated-child targets not owned by that
+accepts static `(params ...)` overrides and optional `(bind ...)` input/output
+handoffs; those handoffs are wired once for the lexical generated do instance.
+Domain-qualified repeat-body `do`, generated-child targets not owned by that
 parameterized do site, and sample-before/after-do timing remain deferred. The multi-pending `await_any`,
 `stage`, spawn-after-sample ordering, `contract`, nested `while`, and nested
 `until` forms remain outside the shipped repeat-body subset.

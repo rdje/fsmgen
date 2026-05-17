@@ -37,7 +37,6 @@ my @shipped_terms = qw(
 );
 
 my @deferred_terms = (
-    'do bindings',
     'domain-qualified',
     'multi-pending',
     'stage',
@@ -58,7 +57,7 @@ for my $path (@docs) {
     }
 
     for my $term (@deferred_terms) {
-        like($section, qr/\Q$term\E/, "$path repeat-body section names deferred '$term'");
+        like($section, qr/\Q$term\E/i, "$path repeat-body section names deferred '$term'");
     }
 }
 

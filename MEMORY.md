@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body generated do bindings shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts top-level repeat-body generated blocking
+  `(do child (params ...) (bind ...))` with static parameter overrides and
+  input/output port bindings.
+- The generated do site owns one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter
+  overrides once in the generated top, wires binding handoff ports once for
+  that lexical do site, and reaches the repeat check only after the generated
+  instance's fresh done handoff.
+- Schedule JSON exposes repeat-body generated do binding provenance through
+  `transaction_port_bindings[]` with `site_kind: "do"` and the generated
+  repeat-do instance name.
+- Repeat-body do `(domain NAME)`, plain local do targeting an already
+  generated child, nested placement, cross-domain activation, multi-pending
+  `await_any`, and sample-before/after-do timing remain fail-closed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body generated do bindings selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`.
 - The active R14 task tree now selects top-level repeat-body generated

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated do bindings reuse generated handoffs
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.10` extends the `.8` repeat-body
+  generated `do` instance with the existing generated-child binding handoff
+  model instead of adding a repeat-specific payload path.
+- The binding surface remains tied to static `(params ...)` in this subset, so
+  the lexical repeat-body do site owns one generated instance, one static
+  parameter specialization, and one generated-top binding handoff set reused
+  across repeat iterations.
+- The repeat re-entry proof remains unchanged: the repeat body cannot reach
+  the counter check until the generated do instance's fresh done handoff is
+  observed. Domain metadata, nested placement, cross-domain activation, and
+  broader outstanding-child semantics still need their own leaves.
 ## 2026-05-17: repeat-body generated do bindings are the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.9` selects binding handoffs for the
   generated repeat-body `do` instance shipped in `.8`.
@@ -17,9 +29,9 @@ This document captures engineering rationale, design constraints, and working de
 - This keeps the repeat re-entry proof identical to local repeat-body `do`:
   the repeat check is reachable only after the generated instance's done
   handoff, so the next iteration cannot reassert start before fresh completion.
-- Bindings and domain metadata remain separate leaves because they add runtime
-  payload handoffs and clock-domain ownership surfaces beyond static parameter
-  specialization.
+- Binding handoffs and domain metadata were kept as separate leaves because
+  they add runtime payload handoffs and clock-domain ownership surfaces beyond
+  static parameter specialization.
 ## 2026-05-17: repeat-body generated do starts with static params
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` selects static parameter overrides as
   the first generated repeat-body `do` subset because it can reuse the
@@ -28,8 +40,9 @@ This document captures engineering rationale, design constraints, and working de
 - The intended re-entry proof mirrors local repeat-body `do`: the repeat body
   starts one generated child instance and cannot reach the repeat check until
   that instance's done handoff is observed.
-- Repeat-body do bindings and domain metadata stay separate because they need
-  their own generated handoff and ownership review surfaces.
+- Generated repeat-body `do` binding handoffs and domain metadata stayed
+  separate because they need their own generated handoff and ownership review
+  surfaces.
 ## 2026-05-17: repeat-body sample-after-spawn lowers before sync
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` widens repeat-body spawn timing without
   changing the static-child lifetime model. The repeat body still has to reach

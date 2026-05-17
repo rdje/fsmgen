@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body generated do bindings shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`.
+- Top-level repeat bodies now accept generated blocking
+  `(do child (params ...) (bind ...))` with static parameter overrides and
+  input/output port bindings.
+- The lowerer emits one generated do instance for the lexical repeat-body do
+  site, names it `{parent}_{child}_repeat_do_{ordinal}`, applies parameter
+  overrides once in the generated top, wires binding handoff ports once for
+  that generated instance, and waits for that instance's fresh done handoff
+  before the repeat check can loop.
+- Schedule reports expose the repeat-body generated do binding provenance
+  through `transaction_port_bindings[]`.
+- Repeat-body do domain metadata, plain local do targeting an already
+  generated child, nested placement, cross-domain activation, multi-pending
+  `await_any`, and sample-before/after-do timing remain fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, and task tree.
 ### R14 — ISF repeat-body generated do bindings selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`.
 - Selected top-level repeat-body generated blocking
@@ -22,9 +40,10 @@ This is the persistent technical change history for FSMGen.
   site, names it `{parent}_{child}_repeat_do_{ordinal}`, applies parameter
   overrides once in the generated top, and waits for that instance's fresh done
   handoff before the repeat check can loop.
-- Repeat-body do bindings, domain metadata, plain local do targeting an
+- Generated-do binding handoffs, domain metadata, plain local do targeting an
   already generated child, sample-before/after-do timing, nested placement,
-  cross-domain activation, and multi-pending `await_any` remain fail-closed.
+  cross-domain activation, and multi-pending `await_any` were still
+  fail-closed at that leaf.
 - Synchronized the ISF spec, downstream handoff, public contract, mdBook
   transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
   board, and task tree.
@@ -35,7 +54,7 @@ This is the persistent technical change history for FSMGen.
 - The selected contract will reuse one static generated child instance for the
   lexical do site and require the repeat body to wait for that instance's
   fresh done pulse before the repeat check can loop.
-- Repeat-body do `(bind ...)`, `(domain NAME)`, nested placement,
+- Repeat-body generated `do` `(bind ...)`, `(domain NAME)`, nested placement,
   cross-domain activation, multi-pending `await_any`, and
   sample-before/after-do timing remain deferred.
 - Synchronized the task tree, roadmap board, live docs, and mdBook backlog.

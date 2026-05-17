@@ -617,6 +617,88 @@ ISF
     );
 };
 
+subtest 'repeat body parameterized do bindings lower through generated handoffs' => sub {
+    my $source = <<'ISF';
+(actor repeat_parameterized_do_binding
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input req_addr (width 8))
+    (output done)
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker
+        (params
+          (WIDTH 16))
+        (bind
+          (input addr req_addr)
+          (output data resp))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{instance}, 'parent_worker_repeat_do_0', 'repeat-body generated do binding instance name is deterministic');
+    is_deeply(
+        $instance->{port_bindings},
+        [
+            {
+                role         => 'input',
+                child_port   => 'addr',
+                parent_port  => 'parent_worker_repeat_do_0_addr',
+                actor_signal => 'req_addr',
+                actor_expr => 'req_addr',
+                actor_expression => 'req_addr',
+                width        => 8,
+            },
+            {
+                role         => 'output',
+                child_port   => 'data',
+                parent_port  => 'parent_worker_repeat_do_0_data',
+                actor_signal => 'resp',
+                actor_expr => 'resp',
+                actor_expression => 'resp',
+                width        => 8,
+            },
+        ],
+        'repeat-body generated do exposes reviewable port-binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'repeat_parameterized_do_binding.fsm'};
+    my $top_fsm = $lowered->{files}{'repeat_parameterized_do_binding_top.fsm'};
+
+    like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'repeat-body generated do parent .fsm keeps binding handoffs reviewable');
+    like($top_fsm, qr/\(repeat_parameterized_do_binding\.parent_worker_repeat_do_0_addr parent_worker_repeat_do_0\.addr\)/,
+        'generated top wires repeat-body do input binding handoff');
+    like($top_fsm, qr/\(parent_worker_repeat_do_0\.data repeat_parameterized_do_binding\.parent_worker_repeat_do_0_data\)/,
+        'generated top wires repeat-body do output binding handoff');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'do:parent_worker_repeat_do_0:addr',
+            'do:parent_worker_repeat_do_0:data',
+        ],
+        'report exposes repeat-body generated do transaction port-binding provenance',
+    );
+};
+
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_lower_rejected(<<'ISF', 'repeat spawn without await_all', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
 (actor repeat_spawn_without_await_all
@@ -672,7 +754,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat do port binding', qr/repeat-body generated do supports only static '\(params \.\.\.\)' in the generated blocking-do subset/);
+    assert_lower_rejected(<<'ISF', 'repeat do port binding without params', qr/repeat-body generated do bindings require static '\(params \.\.\.\)' overrides in the current generated blocking-do subset/);
 (actor repeat_do_port_binding
   (clock clk)
   (interface (input start) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
@@ -691,7 +773,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat do domain metadata', qr/repeat-body generated do supports only static '\(params \.\.\.\)' in the generated blocking-do subset/);
+    assert_lower_rejected(<<'ISF', 'repeat do domain metadata', qr/repeat-body generated do supports only static '\(params \.\.\.\)' and '\(bind \.\.\.\)' in the generated blocking-do subset/);
 (actor repeat_do_domain_metadata
   (clock-domains
     (domain default (clock clk)))

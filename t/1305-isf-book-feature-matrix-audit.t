@@ -123,7 +123,7 @@ my @required_examples = (
     'top-level contract arm states',
     'loop decision states',
     'top-level repeat-body local blocking do',
-    'top-level repeat-body generated blocking do with static params',
+    'top-level repeat-body generated blocking do with static params and bind handoffs',
     'sample-after-spawn before same-body sync',
     'top-level repeat-body spawn with optional static params, optional bind handoffs, optional same-domain domain metadata, sample-after-spawn before same-body sync, same-body await_all, and single-pending same-body await_any',
     'actor parameter wait count',
@@ -148,7 +148,7 @@ for my $example (@required_examples) {
 
 my @required_non_claims = (
     'Multi-bit CDC payloads',
-    'Repeat-body do bindings, domain-qualified repeat-body `do`, multi-pending `await_any`',
+    'Domain-qualified repeat-body `do`, multi-pending `await_any`',
     'spawn-after-sample ordering',
     'cross-domain activation inside repeat bodies',
     'Dynamic division/modulo nonzero proof is not shipped',

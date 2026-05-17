@@ -29,26 +29,24 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` then shipped samples after repeat-body
   spawn when the same body reaches `await_all` or single-pending `await_any`
   before the repeat check; the lowerer emits an explicit sample state before
-  that sync. Generated, parameterized, bound, domain-qualified,
-  generated-child-target repeat-body `do`, multi-pending `await_any`,
-  cross-domain activation, spawn-after-sample ordering,
-  sample-before/after-do timing, and nested branch/loop activation remain
-  deferred and tracked in the same active tree. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` after
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` selected top-level repeat-body
-  generated blocking `(do child (params ...))` as the next bounded
-  implementation subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` then shipped
-  that static-parameter generated-do subset with one generated instance per
-  lexical do site and repeat re-entry gated by that instance's fresh done
-  handoff. `ISF-REPEAT-BODY-CHILD-ACTIVATION.9` selected repeat-body
-  generated blocking `(do child (params ...) (bind ...))` as the next bounded
-  subset. The next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`;
-  repeat-body do domain metadata, plain local do targeting an already
-  generated child, nested placement, cross-domain activation, multi-pending
-  `await_any`, and sample-before/after-do timing remain deferred. The workflow also
-  requires task-tree ownership before any code, test, source,
-  generated-artifact, or config change. Push cadence is every 30 unpushed
-  commits unless the user explicitly requests an earlier push.
+  that sync. `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` selected top-level
+  repeat-body generated blocking `(do child (params ...))` as the next
+  bounded implementation subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` then
+  shipped that static-parameter generated-do subset with one generated
+  instance per lexical do site and repeat re-entry gated by that instance's
+  fresh done handoff. `ISF-REPEAT-BODY-CHILD-ACTIVATION.9` selected
+  repeat-body generated blocking `(do child (params ...) (bind ...))` as the
+  next bounded subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.10` then shipped
+  that generated-do binding subset with generated-top input/output handoff
+  ports, report-visible do-site binding provenance, and the same done-gated
+  repeat re-entry proof. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`; repeat-body do domain metadata,
+  plain local do targeting an already generated child, nested placement,
+  cross-domain activation, multi-pending `await_any`,
+  spawn-after-sample ordering, and sample-before/after-do timing remain
+  deferred. The workflow also requires task-tree ownership before any code,
+  test, source, generated-artifact, or config change. Push cadence is every 30
+  unpushed commits unless the user explicitly requests an earlier push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
