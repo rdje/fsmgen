@@ -389,6 +389,16 @@ cross-domain activation, deeper branch/loop nesting, and broader
 outstanding-child semantics remain backlog beyond the shipped
 branch-contained single-spawn leaves.
 
+Next selected leaf: top-level `when` body nested repeats with two or more
+generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+sites must drain through same-body `(await_all done)` before the nested repeat
+check can loop. This selected subset is not shipped yet. It intentionally
+reuses the static generated-child handoff model and source-order sample
+timing from the shipped branch-contained single-spawn leaves while keeping
+nested `await_any` for multiple pending children, switch-contained multiple
+nested spawns, `do` while a nested spawn is pending, cross-domain activation,
+deeper branch/loop nesting, and broader outstanding-child semantics deferred.
+
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
 data-dependent, and the repeat contract still needs an explicit zero-count
