@@ -2613,6 +2613,213 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_until_sample');
 };
 
+subtest 'loop decision runtime scalar waits preserve pending samples' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-repeat-check');
+(actor wait_dynamic_sample_repeat_check
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (repeat 2
+      (sample din as hold)
+      (wait cycles))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_repeat_check.fsm'};
+    my $repeat_init = state_block($fsm, 'main_repeat_init_1');
+    like($repeat_init, qr/\(-> main_wait_2_zero_sample <\(== cycles 0\)\)/,
+        'repeat zero-count body path bypasses to a sample-preserving check clone');
+
+    my $wait = state_block($fsm, 'main_wait_2');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'repeat positive path samples in the first active wait cycle');
+    like($wait, qr/\?main_wait_2_cnt[\s\S]*\(=1 \(-> main_repeat_check_3\)\)/,
+        'repeat positive path exits to the original repeat check');
+
+    my $repeat_check = state_block($fsm, 'main_repeat_check_3');
+    unlike($repeat_check, qr/\(<= \(hold din\)\)/,
+        'original repeat check does not double-sample after a positive wait');
+    like($repeat_check, qr/\(<- \(main_cnt \(- main_cnt 1\)\)\)/,
+        'original repeat check decrements the repeat counter');
+
+    my $zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'repeat check zero clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(main_cnt \(- main_cnt 1\)\)\)/,
+        'repeat check zero clone preserves the repeat counter decrement');
+    like($zero_clone, qr/\?main_cnt[\s\S]*\(=1 \(-> main_repeat_init_1\)\)/,
+        'repeat check zero clone preserves loop-back behavior');
+    like($zero_clone, qr/\?main_cnt[\s\S]*\(=0 \(-> main_done_4\)\)/,
+        'repeat check zero clone preserves exit behavior');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_repeat_check_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'repeat decision pending-sample dynamic wait report keeps the original check successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_repeat_check');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-while-check');
+(actor wait_dynamic_sample_while_check
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input keep)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (while keep
+      (sample din as hold)
+      (wait cycles))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_sample_while_check.fsm'};
+    my $entry = state_block($fsm, 'main_while_entry_1');
+    like($entry, qr/\(-> main_wait_2_zero_sample <\(& keep \(== cycles 0\)\)\)/,
+        'while entry zero-count body path bypasses to a sample-preserving check clone');
+
+    $wait = state_block($fsm, 'main_wait_2');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'while positive path samples in the first active wait cycle');
+    like($wait, qr/\?main_wait_2_cnt[\s\S]*\(=1 \(-> main_while_check_3\)\)/,
+        'while positive path exits to the original while check');
+
+    my $while_check = state_block($fsm, 'main_while_check_3');
+    unlike($while_check, qr/\(<= \(hold din\)\)/,
+        'original while check does not double-sample after a positive wait');
+    like($while_check, qr/\(-> main_wait_2_zero_sample <\(& keep \(== cycles 0\)\)\)/,
+        'original while check zero-count loop-back targets the same sample-preserving clone');
+    like($while_check, qr/\(-> main_done_4 <\(! keep\)\)/,
+        'original while check false path still exits');
+
+    $zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'while check zero clone materializes the pending sample');
+    like($zero_clone, qr/\(-> main_wait_2_zero_sample <\(& keep \(== cycles 0\)\)\)/,
+        'while check zero clone preserves the zero-count loop-back');
+    like($zero_clone, qr/\(-> main_done_4 <\(! keep\)\)/,
+        'while check zero clone preserves false exit behavior');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_while_check_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'while decision pending-sample dynamic wait report keeps the original check successor',
+    );
+    is(0 + @{$report->{transaction_loops}}, 1,
+        'while schedule report keeps one loop entry after adding the zero clone');
+    is_deeply(
+        $report->{transaction_loops}[0]{decision_states},
+        [qw(main_while_entry_1 main_while_check_3)],
+        'while decision zero clone does not appear as a schedule-report decision state',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_while_check');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-until-check');
+(actor wait_dynamic_sample_until_check
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input stop)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (until stop
+      (sample din as hold)
+      (wait cycles))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_sample_until_check.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'until initial zero-count body path bypasses to a sample-preserving check clone');
+
+    $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'until positive path samples in the first active wait cycle');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_until_check_2\)\)/,
+        'until positive path exits to the original until check');
+
+    my $until_check = state_block($fsm, 'main_until_check_2');
+    unlike($until_check, qr/\(<= \(hold din\)\)/,
+        'original until check does not double-sample after a positive wait');
+    like($until_check, qr/\(-> main_done_3 <stop\)/,
+        'original until true path still exits');
+    like($until_check, qr/\(-> main_wait_1_zero_sample <\(& \(! stop\) \(== cycles 0\)\)\)/,
+        'original until false zero-count loop-back targets the same sample-preserving clone');
+
+    $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'until check zero clone materializes the pending sample');
+    like($zero_clone, qr/\(-> main_done_3 <stop\)/,
+        'until check zero clone preserves true exit behavior');
+    like($zero_clone, qr/\(-> main_wait_1_zero_sample <\(& \(! stop\) \(== cycles 0\)\)\)/,
+        'until check zero clone preserves the zero-count loop-back');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_until_check_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'until decision pending-sample dynamic wait report keeps the original check successor',
+    );
+    is(0 + @{$report->{transaction_loops}}, 1,
+        'until schedule report keeps one loop entry after adding the zero clone');
+    is_deeply(
+        $report->{transaction_loops}[0]{decision_states},
+        ['main_until_check_2'],
+        'until decision zero clone does not appear as a schedule-report decision state',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_until_check');
+};
+
 subtest 'malformed wait clauses fail before scheduled emission' => sub {
     assert_lower_rejected(<<'ISF', 'missing wait count', qr/\ATransaction 'main': wait requires '\(wait non_negative_integer_literal_or_constant_or_parameter_or_known_width_runtime_scalar_or_expression\)' in transaction body/);
 (actor wait_missing_count
@@ -2682,40 +2889,27 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'pending sample before repeat dynamic wait with non-piggyback successor', qr/\ARuntime dynamic wait 'main_wait_2' with pending samples cannot zero-bypass to state 'main_repeat_check_3' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
-(actor wait_repeat_dynamic_after_sample
+    assert_lower_rejected(<<'ISF', 'pending sample before while dynamic wait with sample-consuming condition', qr/\ARuntime dynamic wait 'main_wait_2' with pending samples cannot zero-bypass to state 'main_while_check_3' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_while_dynamic_after_sample_condition
   (clock clk)
   (reset (rst_n async active_low))
   (interface (input start) (input cycles (width 4)) (input din (width 8)) (output done))
   (transaction main
     (on start)
-    (repeat 1
+    (while hold
       (sample din as hold)
       (wait cycles))
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'pending sample before while dynamic wait with non-piggyback successor', qr/\ARuntime dynamic wait 'main_wait_2' with pending samples cannot zero-bypass to state 'main_while_check_3' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
-(actor wait_while_dynamic_after_sample
+    assert_lower_rejected(<<'ISF', 'pending sample before until dynamic wait with sample-consuming condition', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_until_check_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_until_dynamic_after_sample_condition
   (clock clk)
   (reset (rst_n async active_low))
-  (interface (input start) (input cond) (input cycles (width 4)) (input din (width 8)) (output done))
+  (interface (input start) (input cycles (width 4)) (input din (width 8)) (output done))
   (transaction main
     (on start)
-    (while cond
-      (sample din as hold)
-      (wait cycles))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'pending sample before until dynamic wait with non-piggyback successor', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_until_check_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
-(actor wait_until_dynamic_after_sample
-  (clock clk)
-  (reset (rst_n async active_low))
-  (interface (input start) (input cond) (input cycles (width 4)) (input din (width 8)) (output done))
-  (transaction main
-    (on start)
-    (until cond
+    (until hold
       (sample din as hold)
       (wait cycles))
     (complete done)))

@@ -1712,6 +1712,10 @@ arm request and advance to the same successor as the original contract arm
 state. Contract monitor DTs remain the owners of pending, age, and fail
 storage. Contract arm states that would read or overwrite a pending sample
 alias remain fail-closed for the same reason.
+Loop decision zero-count clones preserve the original repeat check decrement
+or while/until condition decision. Repeat check assignments and loop
+conditions that read or overwrite a pending sample alias remain fail-closed
+for the same reason.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
 samples without changing timing fail closed. Consecutive top-level runtime
 wait chains carry pending samples across zero-count wait links when the final
@@ -1730,8 +1734,10 @@ states, plus independent bank-load and bank-store states, are
 sample-compatible selected successors in the shipped `when`-body and
 `switch`-branch subset; top-level ready/valid stage states are also
 sample-compatible for top-level waits, as are top-level bounded-eventual
-contract arm states. Runtime waits whose selected zero-count successor cannot
-yet carry pending samples without changing timing fail closed.
+contract arm states. Repeat, while, and until loop decision/check states are
+sample-compatible when their assignments and loop conditions do not touch
+pending sample aliases. Runtime waits whose selected zero-count successor
+cannot yet carry pending samples without changing timing fail closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

@@ -761,12 +761,15 @@ Rules:
   independent shift, independent assemble, independent extract, independent
   bank-load, and independent bank-store successors are shipped for `when`
   bodies and `switch` branches. A scalar setter, shift, assemble state,
-  extract state, bank-load state, bank-store state, stage state, or contract
-  arm state is independent only when it neither reads nor overwrites a pending
-  sample alias.
+  extract state, bank-load state, bank-store state, stage state, contract arm
+  state, or loop decision/check state is independent only when it neither
+  reads nor overwrites a pending sample alias.
   Consecutive top-level runtime waits carry pending samples across zero-count
   wait links with generated downstream wait-entry clones for zero-then-positive
   paths and final sample-compatible target clones for all-zero paths.
+  Repeat, while, and until body waits can zero-bypass into independent loop
+  decision/check clones that preserve the original repeat counter decrement or
+  while/until condition branch behavior.
 - Wait-count division and modulo expressions reject literal-zero and
   actor-constant-zero divisors before scheduled `.fsm` emission. Dynamic
   divisor nonzero proof remains outside the shipped wait contract.

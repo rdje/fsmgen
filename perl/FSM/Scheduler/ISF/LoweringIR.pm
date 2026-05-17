@@ -6789,6 +6789,7 @@ sub _clone_dynamic_wait_pending_entry_target {
     delete $clone{dynamic_wait_pending_entry_clone_requests};
     delete $clone{dynamic_wait_carried_zero_sample_clone_requests};
     delete $clone{pending_sample_assignments};
+    delete $clone{loop_entry};
 
     return \%clone;
 }
@@ -6825,6 +6826,7 @@ sub _clone_dynamic_wait_zero_sample_target {
     delete $clone{dynamic_wait_pending_entry_clone_requests};
     delete $clone{dynamic_wait_carried_zero_sample_clone_requests};
     delete $clone{pending_sample_assignments};
+    delete $clone{loop_entry};
 
     return \%clone;
 }
@@ -6844,6 +6846,8 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
         && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(stage_valid latency_increment_request));
     return 1 if $kind eq 'contract'
         && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(contract_arm_request latency_increment_request));
+    return 1 if ($kind eq 'repeat_check' || $kind eq 'loop_while' || $kind eq 'loop_until')
+        && _dynamic_wait_zero_sample_target_is_independent_control_state($wait_state, $target_state);
 
     if ($kind eq 'sequential') {
         for my $assignment (@{$target_state->{assignments} || []}) {
@@ -6869,6 +6873,32 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
 sub _dynamic_wait_zero_sample_target_is_independent_setter {
     my ($wait_state, $target_state) = @_;
     return _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(set update latency_increment_request));
+}
+
+sub _dynamic_wait_zero_sample_target_is_independent_control_state {
+    my ($wait_state, $target_state) = @_;
+    return 0 unless _dynamic_wait_has_pending_samples($wait_state);
+
+    my %pending_sample = map {
+        my $lhs = $_->{lhs};
+        defined($lhs) && !ref($lhs) && length($lhs) ? ($lhs => 1) : ();
+    } @{$wait_state->{pending_sample_assignments} || []};
+    return 0 unless %pending_sample;
+
+    for my $assignment (@{$target_state->{assignments} || []}) {
+        return 0 if _dynamic_wait_assignment_touches_pending_sample($assignment, \%pending_sample);
+    }
+
+    for my $transition (@{$target_state->{transitions} || []}) {
+        return 0 if _dynamic_wait_condition_touches_pending_sample($transition->{condition}, \%pending_sample);
+    }
+
+    for my $condition ($target_state->{loop_condition}, $target_state->{condition}) {
+        my $text = ref($condition) ? _format_isf_expr($condition) : $condition;
+        return 0 if _dynamic_wait_text_touches_pending_sample($text, \%pending_sample);
+    }
+
+    return @{$target_state->{transitions} || []} ? 1 : 0;
 }
 
 sub _dynamic_wait_zero_sample_target_is_independent_data_op {

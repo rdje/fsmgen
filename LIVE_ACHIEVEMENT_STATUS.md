@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF loop decision zero-bypass pending-sample dynamic waits shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.md).
+- The `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE` tree is now closed. No active ISF
+  task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- Runtime dynamic waits with pending samples can now zero-bypass into repeat
+  check states and while/until loop decision states when their counter
+  assignment and loop condition are independent of pending sample aliases. The
+  zero path materializes pending samples and preserves the original repeat
+  counter decrement or while/until branch behavior.
+- Positive-count paths still sample in the first active wait state and then
+  enter the original loop decision/check state without double-sampling.
+- Loop decisions whose counter assignment or loop condition touches a pending
+  sample alias remain fail-closed, as do unrelated remaining dynamic-wait
+  predecessor/successor shapes.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=137`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1024`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF contract arm zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` in
@@ -18,8 +42,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   enter the original contract arm state without double-sampling.
 - The contract monitor DT remains the sole owner of pending/age/fail storage
   and observes the same arm request. Contract arm states that read or
-  overwrite pending sample aliases, nested/unsupported contract shapes, and
-  loop/check-state successors remain fail-closed.
+  overwrite pending sample aliases and nested/unsupported contract shapes
+  remain fail-closed. A later slice enabled independent loop decision/check
+  successors.
 - Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
   board, README task index, and task tree.
 - Validation: syntax checks for changed Perl tests/modules passed; focused
@@ -86,9 +111,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   or overwrite one as a scalarized destination entry, remain fail-closed.
   A later slice enabled consecutive top-level runtime waits to carry pending
   samples across zero-count wait links. Later slices enabled top-level
-  ready/valid stage successors and top-level bounded-eventual contract arm
-  successors when they do not touch pending sample aliases; loop/check-state
-  successors remain fail-closed.
+  ready/valid stage successors, top-level bounded-eventual contract arm
+  successors, and independent loop decision/check successors when they do not
+  touch pending sample aliases.
 - Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
   board, README task index, and task tree.
 - Validation: syntax checks for changed Perl tests/modules passed; focused
@@ -134,9 +159,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Extract states that read a pending sample alias as the source word or
   overwrite one as a destination field remain fail-closed. Later slices
   independently enabled bank-load, bank-store, top-level ready/valid stage
-  successors, and top-level bounded-eventual contract arm successors when they
-  do not touch pending sample aliases; loop/check successors remain
-  fail-closed.
+  successors, top-level bounded-eventual contract arm successors, and
+  independent loop decision/check successors when they do not touch pending
+  sample aliases.
 - Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
   board, README task index, and task tree.
 - Validation: syntax checks for changed Perl tests/modules passed; focused
@@ -157,9 +182,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   to the original assemble successor without adding a hidden sample-only cycle.
 - Assemble states that read a pending sample alias as a part or overwrite one
   as the target remain fail-closed. Later slices independently enabled
-  extract, bank-load, bank-store, top-level ready/valid stage successors, and
-  top-level bounded-eventual contract arm successors when they do not touch
-  pending sample aliases; loop/check successors remain fail-closed.
+  extract, bank-load, bank-store, top-level ready/valid stage successors,
+  top-level bounded-eventual contract arm successors, and independent loop
+  decision/check successors when they do not touch pending sample aliases.
 - Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
   board, README task index, and task tree.
 - Validation: syntax checks for changed Perl tests/modules passed; focused
@@ -180,9 +205,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   original shift successor without adding a hidden sample-only cycle.
 - Shifts that read or overwrite a pending sample alias remain fail-closed.
   Later slices independently enabled assemble, extract, bank-load, bank-store,
-  top-level ready/valid stage successors, and top-level bounded-eventual
-  contract arm successors when they do not touch pending sample aliases;
-  loop/check successors remain fail-closed for zero-bypass.
+  top-level ready/valid stage successors, top-level bounded-eventual contract
+  arm successors, and independent loop decision/check successors when they do
+  not touch pending sample aliases.
 - Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
   board, README task index, and task tree.
 - Validation: syntax checks for changed Perl tests/modules passed; focused
@@ -220,9 +245,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   sample-only cycle.
 - Setters that read or overwrite a pending sample alias remain fail-closed.
   Later slices independently enabled shift, assemble, extract, bank-load,
-  bank-store, top-level ready/valid stage successors, and top-level
-  bounded-eventual contract arm successors when they do not touch pending
-  sample aliases; loop/check successors remain fail-closed for zero-bypass.
+  bank-store, top-level ready/valid stage successors, top-level
+  bounded-eventual contract arm successors, and independent loop
+  decision/check successors when they do not touch pending sample aliases.
 - Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
   board, README task index, and task tree.
 - Validation: syntax checks for changed Perl tests/modules passed; focused

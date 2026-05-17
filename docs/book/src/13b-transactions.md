@@ -297,6 +297,9 @@ shapes fail closed until their sample materialization is specified.
 Consecutive top-level runtime waits carry pending samples across zero-count
 wait links with generated downstream wait-entry clones for zero-then-positive
 paths and final compatible target clones for all-zero paths.
+Repeat, while, and until loop decision/check states can also carry pending
+samples when their repeat-counter assignment and loop condition are
+independent of the pending sample alias.
 Runtime waits inside `when` bodies and `switch` branches now use the same
 one-shot positive sample plus zero-count clone scheme for sample-compatible
 successors, including completion, independent scalar setter, independent
@@ -344,6 +347,8 @@ waits also preserve pending samples through zero-count links when the final
 target can carry the sample. Top-level stage successors preserve the original
 ready/valid barrier in their sample-preserving zero-count clone. Top-level
 contract arm successors preserve the original one-cycle monitor arm request.
+Loop decision/check successors preserve the original repeat counter decrement
+or while/until branch decision.
 In a `switch`, only the selected branch's runtime wait edge is split; other
 cases remain selectable and implicit fallthrough is guarded by the complement
 of all explicit case values. In loops, the relevant entry, back-edge, or exit

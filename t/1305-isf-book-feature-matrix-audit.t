@@ -117,6 +117,7 @@ my @required_examples = (
     'independent bank stores',
     'top-level ready/valid stages',
     'top-level contract arm states',
+    'loop decision states',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

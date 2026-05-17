@@ -874,6 +874,25 @@ of the following body state when that successor can carry samples. `while`
 false exits and `until` true exits remain unchanged, and loop-back edges keep
 using the runtime count split on later iterations.
 
+When the runtime wait is the final state-producing clause in a loop body, the
+zero-count successor is the loop decision/check state itself. That state can
+carry the pending sample when its counter assignment and condition do not read
+or overwrite the pending alias:
+
+```lisp
+(main_wait_2_zero_sample
+  (<= (hold din))
+  (<- (main_cnt (- main_cnt 1)))
+  (?main_cnt
+    (=1 (-> main_repeat_init_1))
+    (=0 (-> main_done_4))))
+```
+
+For `while` and `until`, the clone preserves the same branch behavior as the
+original decision state. If the loop condition reads the pending alias, the
+form remains fail-closed instead of sampling and testing that alias in the
+same state.
+
 Loop decision states can also split a following runtime wait on loop exit. For
 a `while` followed by `(wait cycles)`, the true branch still loops to the
 body, while the false exit branch samples or bypasses the following wait.

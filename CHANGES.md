@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF loop decision zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into independent repeat check states and
+  while/until loop decision states.
+- The zero-count path now uses a sample-preserving loop decision clone that
+  materializes pending samples and preserves the original repeat counter
+  decrement or while/until branch behavior. Positive-count paths still sample
+  in the first wait state and enter the original loop decision/check state.
+- Loop decision states whose counter assignment or loop condition reads or
+  overwrites a pending sample alias remain fail-closed.
+- Extended `t/1244-isf-wait-clause-lowering.t` for repeat/while/until loop
+  decision zero-bypass and alias-consuming condition rejection, widened the
+  book feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/lowering/backlog
+  and feature-matrix chapters, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=137`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1024`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF contract arm zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
@@ -11,9 +32,9 @@ This is the persistent technical change history for FSMGen.
   state. The existing monitor DT remains the sole owner of pending/age/fail
   storage and observes the same arm request. Positive-count paths still sample
   in the first wait state and enter the original contract arm state.
-- Contract arm states that read or overwrite pending sample aliases,
-  nested/unsupported contract shapes, and loop/check-state successors remain
-  fail-closed.
+- Contract arm states that read or overwrite pending sample aliases and
+  nested/unsupported contract shapes remain fail-closed. A later slice enabled
+  independent loop decision/check successors.
 - Extended `t/1244-isf-wait-clause-lowering.t` for contract arm zero-bypass,
   widened the book feature-matrix audit marker, and synchronized
   `docs/ISF_SPEC.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
@@ -124,9 +145,9 @@ This is the persistent technical change history for FSMGen.
 - Extract states that read a pending sample alias as the source word or
   overwrite one as a destination field remain fail-closed. Later slices
   independently enabled bank-load, bank-store, top-level ready/valid stage
-  successors, and top-level bounded-eventual contract arm successors when they
-  do not touch pending sample aliases; loop/check successors remain
-  fail-closed.
+  successors, top-level bounded-eventual contract arm successors, and
+  independent loop decision/check successors when they do not touch pending
+  sample aliases.
 - Extended `t/1244-isf-wait-clause-lowering.t` for independent extract
   zero-bypass and sample-consuming extract rejection, widened the book
   feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
@@ -148,9 +169,9 @@ This is the persistent technical change history for FSMGen.
   sample in the first wait state and exit through the original assemble state.
 - Assemble states that read a pending sample alias as a part or overwrite one
   as the target remain fail-closed. Later slices independently enabled
-  extract, bank-load, bank-store, top-level ready/valid stage successors, and
-  top-level bounded-eventual contract arm successors when they do not touch
-  pending sample aliases; loop/check successors remain fail-closed.
+  extract, bank-load, bank-store, top-level ready/valid stage successors,
+  top-level bounded-eventual contract arm successors, and independent loop
+  decision/check successors when they do not touch pending sample aliases.
 - Extended `t/1244-isf-wait-clause-lowering.t` for independent assemble
   zero-bypass and sample-consuming assemble rejection, widened the book
   feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
@@ -172,9 +193,9 @@ This is the persistent technical change history for FSMGen.
   first wait state and exit through the original shift state.
 - Shifts that read or overwrite a pending sample alias remain fail-closed.
   Later slices independently enabled assemble, extract, bank-load, bank-store,
-  top-level ready/valid stage successors, and top-level bounded-eventual
-  contract arm successors when they do not touch pending sample aliases;
-  loop/check successors remain fail-closed for zero-bypass.
+  top-level ready/valid stage successors, top-level bounded-eventual contract
+  arm successors, and independent loop decision/check successors when they do
+  not touch pending sample aliases.
 - Extended `t/1244-isf-wait-clause-lowering.t` for independent shift
   zero-bypass and sample-consuming shift rejection, widened the book
   feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
@@ -210,9 +231,9 @@ This is the persistent technical change history for FSMGen.
   in the first wait state and exit through the original setter state.
 - Setters that read or overwrite a pending sample alias remain fail-closed.
   Later slices independently enabled shift, assemble, extract, bank-load,
-  bank-store, top-level ready/valid stage successors, and top-level
-  bounded-eventual contract arm successors when they do not touch pending
-  sample aliases; loop/check successors remain fail-closed for zero-bypass.
+  bank-store, top-level ready/valid stage successors, top-level
+  bounded-eventual contract arm successors, and independent loop
+  decision/check successors when they do not touch pending sample aliases.
 - Extended `t/1244-isf-wait-clause-lowering.t` for top-level, `when`,
   `switch`, and `repeat` independent setter successors, widened the book
   feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,

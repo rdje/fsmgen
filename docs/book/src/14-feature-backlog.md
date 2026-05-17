@@ -624,8 +624,10 @@ a pending sample alias. Shift, assemble, extract, bank-load, and bank-store
 successors are shipped only when independent; stage successors are shipped
 only when the ready input and valid output are independent of the pending
 sample alias; contract arm successors are shipped only when independent of the
-pending sample alias; forms that read or overwrite a pending sample alias
-remain backlog.
+pending sample alias; loop decision/check successors are shipped only when
+their counter assignment and loop condition are independent of the pending
+sample alias; forms that read or overwrite a pending sample alias remain
+backlog.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
 subset, `switch` branches are shipped for the no-pending-sample subset, and
@@ -638,8 +640,10 @@ assemble, extract, bank-load, and bank-store successors. A scalar setter,
 shift, assemble state, extract state, bank-load state, or bank-store state is
 independent only when it neither reads nor overwrites a pending sample alias.
 Pending samples before `repeat`, `while`, and `until` dynamic waits are also
-shipped when the selected zero-count body successor can carry samples without
-changing timing.
+shipped when the zero-count successor is an independent loop decision/check
+state that preserves the repeat counter decrement or while/until branch
+decision, or when the selected zero-count body successor can carry samples
+without changing timing.
 
 Expansion order is tracked under `ISF-DYNAMIC-WAIT.3.3`: consecutive
 top-level dynamic waits and the requested additional top-level predecessor
