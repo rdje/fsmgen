@@ -819,13 +819,17 @@ also includes the top-level spawn plus same-body `await_all` subset with
 optional static `(params ...)` overrides, optional `(bind ...)` port handoffs,
 and optional declared same-domain `(domain NAME)` ownership metadata.
 Single-pending repeat-body `await_any` is also shipped when exactly one
-repeat-body spawn is pending. Cross-domain repeat-body `do`,
-multi-pending `await_any`, `stage`, `contract`, nested `while`, and nested
-`until` remain outside the shipped repeat-body subset.
+repeat-body spawn is pending. Multi-pending repeat-body `await_any` is shipped
+only as an observation point when a later same-body `await_all` drains the same
+outstanding spawned children before the repeat check; new repeat-body `spawn`
+or `do` clauses before that drain remain rejected. Cross-domain repeat-body
+`do`, broader outstanding-child semantics, `stage`, `contract`, nested
+`while`, and nested `until` remain outside the shipped repeat-body subset.
 Samples may appear before or after repeat-body spawn as long as the same
-repeat body reaches same-body `await_all` or single-pending `await_any` before
-the repeat check can loop. Pending samples materialize in an explicit sample
-state at their source-order timing point: before a later spawn state for
+repeat body reaches same-body `await_all`, single-pending `await_any`, or
+multi-pending `await_any` followed by same-body `await_all` before the repeat
+check can loop. Pending samples materialize in an explicit sample state at
+their source-order timing point: before a later spawn state for
 sample-before-spawn ordering, or before the sync state for sample-after-spawn
 ordering.
 The shipped repeat-body child-activation subset is
@@ -2082,7 +2086,8 @@ These are not stable public interfaces yet:
   repeat-body spawn
   plus optional static `(params ...)`, optional `(bind ...)` port handoffs,
   optional declared same-domain `(domain NAME)` metadata, same-body
-  `await_all`, and single-pending same-body `await_any` subset.
+  `await_all`, single-pending same-body `await_any`, and multi-pending
+  same-body `await_any` followed by same-body `await_all` drain subset.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
   wait counts, sample-incompatible runtime wait successors, nested loops, and
   loop bodies containing broader child activation, stages, or contracts need

@@ -80,6 +80,11 @@ for my $path (@loop_docs) {
         qr/repeat(?:-body| body).*sample.*do.*repeat check/s,
         "$path documents the shipped repeat-body sample/do timing",
     );
+    like(
+        $content,
+        qr/(?:repeat(?:-body| body).*multi-pending|multi-pending.*repeat(?:-body| body)).*await_any.*await_all.*drain/si,
+        "$path documents the shipped repeat-body multi-pending await_any drain",
+    );
 }
 
 done_testing();

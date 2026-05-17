@@ -3764,6 +3764,7 @@ sub _validate_repeat_clause {
 sub _validate_repeat_body_spawn_subset {
     my ($clause, $tn, $label) = @_;
     my @pending_spawns;
+    my $awaiting_multi_pending_drain = 0;
 
     for my $body_clause (@{$clause}[2 .. $#$clause]) {
         next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
@@ -3773,6 +3774,8 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'spawn') {
             confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses\n"
                 unless $label eq 'transaction body';
+            confess "Transaction '$tn': repeat-body spawn cannot follow multi-pending await_any before same-body await_all drains outstanding children\n"
+                if $awaiting_multi_pending_drain;
             for my $subclause (@{$body_clause}[4 .. $#$body_clause]) {
                 confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)', '(bind ...)', or '(domain ...)' in the spawn domain subset\n"
                     unless ref($subclause) eq 'ARRAY'
@@ -3814,9 +3817,12 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'await_all' || $keyword eq 'await_any') {
             confess "Transaction '$tn': repeat-body $keyword is supported only after repeat-body spawn clauses\n"
                 unless @pending_spawns;
-            confess "Transaction '$tn': repeat-body await_any is supported only when exactly one repeat-body spawn is pending; use await_all or split the loop before broader outstanding-child semantics ship\n"
-                if $keyword eq 'await_any' && @pending_spawns > 1;
+            if ($keyword eq 'await_any' && @pending_spawns > 1) {
+                $awaiting_multi_pending_drain = 1;
+                next;
+            }
             @pending_spawns = ();
+            $awaiting_multi_pending_drain = 0;
             next;
         }
     }
@@ -5154,7 +5160,7 @@ sub _ir_repeat {
         elsif($bk eq'await_any'){
             _push_sample_state(\@s,$tn,\@lp,$ir);
             push @s,_ir_sync_any($tn,$$ir++,\@spawn_done_ports);
-            @spawn_done_ports = ();
+            @spawn_done_ports = () if @spawn_done_ports <= 1;
         }}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};

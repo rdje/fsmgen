@@ -332,6 +332,51 @@ ISF
         'generated top instantiates the repeat-spawn await_any child once');
 };
 
+subtest 'repeat body multi-pending await_any requires later await_all drain' => sub {
+    my $source = <<'ISF';
+(actor repeat_await_any_multi_pending_drain
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (spawn worker as w1)
+      (await_any done)
+      (sample status as after_any)
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $lowered = lower_source($source);
+    my $parent_fsm = $lowered->{files}{'repeat_await_any_multi_pending_drain.fsm'};
+    my $top_fsm = $lowered->{files}{'repeat_await_any_multi_pending_drain_top.fsm'};
+
+    ok(defined($parent_fsm), 'multi-pending await_any drain parent scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'multi-pending await_any drain generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'first repeat-body spawn advances to the second spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'second repeat-body spawn advances to multi-pending await_any');
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'multi-pending await_any observes either spawned child before continuing');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'sample after multi-pending await_any materializes before the drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+        'mandatory await_all drain keeps all spawned children before the repeat check');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top instantiates first multi-pending repeat child once');
+    like($top_fsm, qr/\(\?fsmc:w1 worker(?:\s|\))/,
+        'generated top instantiates second multi-pending repeat child once');
+};
+
 subtest 'repeat body local do waits for child done before re-entry' => sub {
     my $source = <<'ISF';
 (actor repeat_do_local
@@ -908,8 +953,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat await_any with multiple pending spawns', qr/repeat-body await_any is supported only when exactly one repeat-body spawn is pending/);
-(actor repeat_await_any_multi_pending
+    assert_lower_rejected(<<'ISF', 'repeat multi-pending await_any without drain', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
+(actor repeat_await_any_multi_pending_without_drain
   (clock clk)
   (interface (input start) (input loops (width 3)) (output done))
   (transaction parent
@@ -920,6 +965,42 @@ ISF
       (await_any done))
     (complete done))
   (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat spawn after multi-pending await_any before drain', qr/repeat-body spawn cannot follow multi-pending await_any before same-body await_all drains outstanding children/);
+(actor repeat_spawn_after_multi_pending_await_any
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (spawn worker as w1)
+      (await_any done)
+      (spawn worker as w2)
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat do after multi-pending await_any before drain', qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/);
+(actor repeat_do_after_multi_pending_await_any
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (spawn worker as w1)
+      (await_any done)
+      (do local_worker)
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction local_worker
     (complete done)))
 ISF
 

@@ -127,7 +127,8 @@ my @required_examples = (
     'top-level repeat-body generated blocking do with static params, bind handoffs, and same-domain domain metadata',
     'samples before or after spawn before same-body sync',
     'samples before or after repeat-body do before the repeat check',
-    'top-level repeat-body spawn with optional static params, optional bind handoffs, optional same-domain domain metadata, samples before or after spawn before same-body sync, same-body await_all, and single-pending same-body await_any',
+    'multi-pending repeat-body await_any with mandatory same-body await_all drain',
+    'top-level repeat-body spawn with optional static params, optional bind handoffs, optional same-domain domain metadata, samples before or after spawn before same-body sync, same-body await_all, single-pending same-body await_any, and multi-pending repeat-body await_any with mandatory same-body await_all drain subset',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',
@@ -150,7 +151,7 @@ for my $example (@required_examples) {
 
 my @required_non_claims = (
     'Multi-bit CDC payloads',
-    'Cross-domain repeat-body `do`, multi-pending `await_any`',
+    'Cross-domain repeat-body `do`, broader outstanding-child semantics',
     'cross-domain activation inside repeat bodies',
     'Dynamic division/modulo nonzero proof is not shipped',
     'Enum members are not writable targets',

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body multi-pending await_any drain shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`.
+- Top-level repeat bodies may now use multi-pending `(await_any done)` after
+  multiple repeat-body spawns only when a later same-body `(await_all done)`
+  drains the same outstanding children before the repeat check can loop.
+- Lowering keeps the outstanding spawned done-port set live after
+  multi-pending `await_any`, then clears it at the mandatory `await_all`
+  drain.
+- New repeat-body `spawn` or `do` clauses before that drain remain
+  fail-closed. Nested placement, cross-domain activation, and broader
+  outstanding-child semantics remain deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`.
+
 ## 2026-05-17: R14 — ISF repeat-body multi-pending await_any drain selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`.
 - Selected multi-pending repeat-body `(await_any done)` as the next bounded

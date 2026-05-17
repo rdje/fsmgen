@@ -34,11 +34,12 @@ my @shipped_terms = qw(
     domain
     await_all
     await_any
+    drain
 );
 
 my @deferred_terms = (
     'cross-domain',
-    'multi-pending',
+    'outstanding-child',
     'stage',
     'contract',
     'while',

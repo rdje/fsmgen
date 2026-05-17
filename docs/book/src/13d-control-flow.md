@@ -142,14 +142,18 @@ after repeat-body spawn before that same-body sync; they lower to an explicit
 sample state before the later spawn state or before `await_all` /
 single-pending `await_any`, matching source order. Samples may also appear
 before or after repeat-body `do`; they lower before the do state or after the
-do state's fresh done guard and before the repeat check. Repeat-body generated `do`
+do state's fresh done guard and before the repeat check. Multi-pending
+repeat-body `await_any` is shipped only when a later same-body `await_all`
+drains the same outstanding spawn set before the repeat check; new
+repeat-body `spawn` or `do` clauses before that drain remain rejected.
+Repeat-body generated `do`
 accepts already generated child targets or static `(params ...)` overrides,
 optional `(bind ...)` input/output handoffs, and optional same-domain
 `(domain NAME)` metadata; those handoffs and domain summaries are
 wired/recorded once for the lexical generated do instance. Cross-domain
-repeat-body `do` remains deferred. The multi-pending `await_any`,
-`stage`, `contract`, nested `while`, and nested
-`until` forms remain outside the shipped repeat-body subset.
+repeat-body `do` remains deferred. Broader outstanding-child semantics,
+`stage`, `contract`, nested `while`, and nested `until` forms remain outside
+the shipped repeat-body subset.
 Unsupported nested forms now fail closed during lowering instead of
 disappearing from scheduled `.fsm` output.
 

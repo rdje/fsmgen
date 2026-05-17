@@ -67,7 +67,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   multi-pending repeat-body `(await_any done)` only as an observation point
   when a later same-body `(await_all done)` drains the same outstanding
   repeat-body spawns before the repeat check can loop. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`; nested placement,
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` then shipped that drain subset by
+  keeping the outstanding spawned done-port set live after multi-pending
+  `await_any` until the mandatory same-body `await_all` drain. The next active
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`; nested placement,
   cross-domain activation, and broader outstanding-child semantics remain
   deferred. The workflow also requires
   task-tree ownership before any

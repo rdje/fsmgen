@@ -42,7 +42,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION`
   Status: `active`
   Goal: `Ship remaining repeat-body child activation subsets safely.`
-  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`
+  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`
   Status: `done`
@@ -178,9 +178,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.19: select repeat await_any drain`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship repeat-body multi-pending await_any with mandatory same-body await_all drain if selected.`
   Acceptance: `Top-level repeat bodies accept multi-pending '(await_any done)' only after multiple repeat-body spawns when a later same-body '(await_all done)' drains those outstanding children before the repeat check can loop; lowering emits the await_any sync state without clearing the outstanding spawn set until await_all, rejects new repeat-body spawn or do before that drain, preserves samples before each sync point, and leaves nested placement, cross-domain activation, and broader outstanding-child semantics fail-closed.`
+  Verification: `syntax checks; focused repeat/spawn/await-any/doc tests; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.20: implement repeat await_any drain`
+
+- ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`
+  Status: `pending`
+  Goal: `Select the next repeat-body child activation subset.`
+  Acceptance: `Task tree, roadmap, and book backlog select the next bounded repeat-body activation implementation subset after shipped multi-pending await_any drain semantics; the selected contract names source shape, exclusions, validation plan, and unchanged fail-closed boundaries before implementation.`
   Verification: `pending`
   Commit: `pending`
 
@@ -207,7 +214,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | 17 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` | `done` | Selected repeat-body sample-before/after-do timing as the next bounded subset. |
 | 18 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` | `done` | Shipped repeat-body sample-before/after-do timing around local and generated `do` states. |
 | 19 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.19` | `done` | Selected multi-pending repeat-body `await_any` with mandatory same-body `await_all` drain. |
-| 20 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` | `pending` | Ships the selected multi-pending await_any drain subset. |
+| 20 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` | `done` | Shipped multi-pending repeat-body `await_any` with mandatory same-body `await_all` drain. |
+| 21 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.21` | `pending` | Selects the next bounded repeat-body activation subset. |
 
 ## Decisions
 
@@ -362,11 +370,15 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   `(await_all done)` drains the same outstanding repeat-body spawns before the
   repeat check can loop. New repeat-body `spawn` or `do` clauses before that
   mandatory drain remain out of scope for the selected implementation.
+- `2026-05-17`: Leaf `.20` shipped the selected multi-pending repeat-body
+  `await_any` drain subset. Lowering emits the `await_any` sync state without
+  clearing the outstanding spawned done-port set, then uses the later
+  same-body `await_all` drain to gate the repeat check.
 
 ## Open Questions
 
 - Which deferred repeat-body activation subset should follow after the
-  selected multi-pending await_any drain implementation: nested branch/loop
+  shipped multi-pending await_any drain implementation: nested branch/loop
   activation, cross-domain activation, or broader outstanding-child semantics.
 
 ## Blockers
@@ -398,6 +410,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting repeat-body sample-before/after-do timing` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/do/generated-composition/doc checks (Files=11, Tests=317), book build, full ISF gate (Files=227, Tests=1102), and diff checks passed` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.19` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting multi-pending repeat-body await_any with mandatory same-body await_all drain` |
+| `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/spawn/await-any/doc checks (single touched test Files=1, Tests=14; focused suite Files=11, Tests=327), book build, full ISF gate (Files=227, Tests=1112), and diff checks passed` |
 
 ## Commit Log
 
@@ -423,6 +436,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17: select repeat do samples` | `selected repeat-body sample-before/after-do timing` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18: implement repeat do samples` | `repeat-body sample-before/after-do timing shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.19` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.19: select repeat await_any drain` | `selected multi-pending repeat-body await_any with mandatory same-body await_all drain` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.20: implement repeat await_any drain` | `multi-pending repeat-body await_any drain shipped` |
 
 ## Changelog
 
@@ -476,3 +490,5 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - `2026-05-17`: Selected multi-pending repeat-body `await_any` with a
   mandatory later same-body `await_all` drain as the next bounded
   implementation subset.
+- `2026-05-17`: Shipped multi-pending repeat-body `await_any` with mandatory
+  later same-body `await_all` drain.

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body multi-pending await_any keeps pending done ports
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` implements the selected drain
+  contract by leaving the repeat-body spawned done-port set live after a
+  multi-pending `await_any`.
+- A later same-body `await_all` consumes that same outstanding set and remains
+  the re-entry proof before the repeat check. Single-pending `await_any`
+  remains unchanged and clears the set because it is equivalent to waiting for
+  one child.
+- The validator rejects new repeat-body `spawn` or `do` clauses before the
+  drain so the slice does not create a broader outstanding-child lifetime
+  model.
 ## 2026-05-17: repeat-body multi-pending await_any needs a drain
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.19` selects multi-pending repeat-body
   `await_any` only when the same body later performs an `await_all` drain

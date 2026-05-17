@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body multi-pending await_any drain shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`.
+- Top-level repeat bodies now accept multi-pending `(await_any done)` after
+  multiple repeat-body spawns only when a later same-body `(await_all done)`
+  drains those outstanding children before the repeat check can loop.
+- Lowering keeps the outstanding spawned done-port set live after
+  multi-pending `await_any` and clears it only at the mandatory `await_all`
+  drain.
+- New repeat-body `spawn` or `do` clauses before that drain remain
+  fail-closed. Nested placement, cross-domain activation, and broader
+  outstanding-child semantics remain deferred.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, and task tree.
 ### R14 — ISF repeat-body multi-pending await_any drain selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`.
 - Selected multi-pending repeat-body `(await_any done)` as the next bounded

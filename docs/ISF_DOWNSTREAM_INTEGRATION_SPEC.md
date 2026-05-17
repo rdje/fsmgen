@@ -859,21 +859,26 @@ Rules:
   Top-level repeat bodies also accept
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses when the same repeat body reaches `(await_all done)` before the
-  repeat check can loop. `(await_any done)` is accepted in repeat bodies only
-  when exactly one repeat-body spawn is pending, so the static child cannot be
-  restarted before its fresh done pulse. Static parameter overrides specialize
+  repeat check can loop. `(await_any done)` is accepted in repeat bodies when
+  exactly one repeat-body spawn is pending, so the static child cannot be
+  restarted before its fresh done pulse. When multiple repeat-body spawns are
+  pending, `(await_any done)` is accepted only as an observation point before a
+  later same-body `(await_all done)` drains the same outstanding spawned
+  children before the repeat check; new repeat-body `spawn` or `do` clauses
+  before that drain remain rejected. Static parameter overrides specialize
   the one lexical generated child instance and are not per-iteration runtime
   values. Input and output bindings reuse the same generated-top handoff model
   as top-level spawn: handoff ports are generated once for the static child
   instance. Optional `(domain NAME)` annotations are declared same-domain
   ownership metadata only; they do not imply CDC behavior or allow
   cross-domain activation. Samples may appear before or after repeat-body
-  spawn as long as the same repeat body reaches same-body `await_all` or
-  single-pending `await_any` before the repeat check can loop. Those samples
-  lower to an explicit sample state at their source-order timing point: before
-  a later spawn state for sample-before-spawn ordering, or before the sync
-  state for sample-after-spawn ordering. Cross-domain repeat-body `do`,
-  multi-pending `await_any`, `stage`, `contract`, nested `while`, and nested
+  spawn as long as the same repeat body reaches same-body `await_all`,
+  single-pending `await_any`, or multi-pending `await_any` followed by
+  same-body `await_all` before the repeat check can loop. Those samples lower
+  to an explicit sample state at their source-order timing point: before a
+  later spawn state for sample-before-spawn ordering, or before the sync state
+  for sample-after-spawn ordering. Cross-domain repeat-body `do`, broader
+  outstanding-child semantics, `stage`, `contract`, nested `while`, and nested
   `until` remain outside the shipped repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as

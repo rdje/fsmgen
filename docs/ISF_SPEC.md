@@ -1563,24 +1563,30 @@ Current lowering:
   clauses followed by a same-body `(await_all done)` before the repeat check
   can loop. `(await_any done)` is also accepted in repeat bodies when exactly
   one repeat-body spawn is pending, making the re-entry proof equivalent to
-  waiting for that one static child. That subset reuses one static generated
-  child instance per lexical spawn name; it does not create one child instance
-  per repeat iteration. Parameter overrides specialize that static instance
-  once in the generated top and use the same value/shape contract as top-level
-  spawn. Input and output bindings reuse the top-level generated-child handoff
-  contract: generated parent handoff ports are wired once in the generated top
-  for the static instance, not recreated per iteration. Optional
+  waiting for that one static child. When multiple repeat-body spawns are
+  pending, `(await_any done)` is accepted only as an observation point before a
+  later same-body `(await_all done)` drains the same outstanding spawned
+  children before the repeat check. New repeat-body `spawn` or `do` clauses
+  between that multi-pending `await_any` and its mandatory drain remain
+  rejected. That subset reuses one static generated child instance per lexical
+  spawn name; it does not create one child instance per repeat iteration.
+  Parameter overrides specialize that static instance once in the generated
+  top and use the same value/shape contract as top-level spawn. Input and
+  output bindings reuse the top-level generated-child handoff contract:
+  generated parent handoff ports are wired once in the generated top for the
+  static instance, not recreated per iteration. Optional
   `(domain NAME)` annotations are declared same-domain ownership metadata only:
   they group the static child instance with the activation domain and do not
   imply CDC behavior or allow cross-domain activation. Samples may appear
   before or after repeat-body spawn as long as the same repeat body reaches
-  same-body `await_all` or single-pending `await_any` before the repeat check
-  can loop. Pending samples materialize in an explicit sample state at their
+  same-body `await_all`, single-pending `await_any`, or multi-pending
+  `await_any` followed by same-body `await_all` before the repeat check can
+  loop. Pending samples materialize in an explicit sample state at their
   source-order timing point: before a later spawn state for sample-before-spawn
   ordering, or before the sync state for sample-after-spawn ordering.
-  Cross-domain repeat-body `do`, multi-pending `await_any`, `stage`,
-  `contract`, nested `while`, and nested `until` remain outside the shipped
-  repeat-body subset.
+  Cross-domain repeat-body `do`, broader outstanding-child semantics,
+  `stage`, `contract`, nested `while`, and nested `until` remain outside the
+  shipped repeat-body subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
@@ -1924,9 +1930,10 @@ lifetime, and report semantics are specified for those combinations. Top-level
 repeat-body local `(do child)`, repeat-body generated blocking
 `(do child)` for already generated child targets,
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, and repeat-body spawn
-followed by same-body `await_all` or single-pending same-body `await_any` are
-the only shipped loop-body child-activation subsets, and they apply only to
-`repeat` bodies.
+followed by same-body `await_all`, single-pending same-body `await_any`, or
+multi-pending same-body `await_any` followed by a same-body `await_all` drain
+are the only shipped loop-body child-activation subsets, and they apply only
+to `repeat` bodies.
 Repeat-body spawn may carry the same static `(params ...)` overrides and
 `(bind ...)` port handoffs as top-level spawn; those overrides and handoff
 ports specialize the single lexical child instance and are not per-iteration
@@ -3252,11 +3259,11 @@ Focused tests:
   the top-level repeat-body generated-child `(do child)` subset, the top-level
   repeat-body generated
   `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and the
-  top-level repeat-body spawn plus same-body `await_all` or
-  single-pending `await_any` subset with optional static `(params ...)`,
-  optional `(bind ...)`, and optional declared same-domain `(domain NAME)`
-  metadata: nested loops, loops under `when`/`switch`/`repeat`,
-  cross-domain repeat-body `do`, multi-pending repeat-body `await_any`, and
+  top-level repeat-body spawn plus same-body `await_all`, single-pending
+  `await_any`, or multi-pending `await_any` followed by same-body `await_all`
+  drain subset with optional static `(params ...)`, optional `(bind ...)`, and
+  optional declared same-domain `(domain NAME)` metadata: nested loops, loops
+  under `when`/`switch`/`repeat`, cross-domain repeat-body `do`, and
   `while`/`until` loop bodies containing `do`,
   `spawn`, `await_all`, `await_any`, `stage`, or `contract` remain deferred
   until re-entry, child lifetime, and report semantics are specified.

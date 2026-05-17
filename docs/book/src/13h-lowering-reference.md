@@ -1036,9 +1036,11 @@ known, but it makes loop latency runtime-dependent and forces the zero-count
 policy to be explicit. For repeat-body spawn, the generated top still
 instantiates one static child instance for the lexical spawn name. The repeat
 body starts that instance, waits for the same instance's done port, and only
-then reaches the repeat check. `await_any` is allowed in this position only
-when exactly one spawn is pending, so it has the same re-entry proof as
-`await_all` for that child. If the spawn carries `(params ...)`, those
+then reaches the repeat check. `await_any` has the same direct re-entry proof
+as `await_all` only when exactly one spawn is pending. With multiple pending
+spawns, `await_any` is allowed only as an observation point before a later
+same-body `await_all` drains the same outstanding spawn set. If the spawn
+carries `(params ...)`, those
 overrides appear once on that static generated-top child instance, not on each
 iteration. If it carries `(bind ...)`, the generated parent handoff ports are
 also emitted once for that static instance and wired by the generated top. If
@@ -1131,9 +1133,35 @@ handoff, then an optional sample state, before the repeat check:
     (=0 (-> parent_done_6))))
 ```
 
-Cross-domain repeat-body `do`, multi-pending `await_any`, cross-domain spawn,
-and nested branch/loop forms remain fail-closed until their re-entry and
-report behavior is specified.
+Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
+live until a later same-body `await_all` drain:
+
+```lisp
+(parent_spawn_2
+  (= (w0_start> 1))
+  (-> parent_spawn_3))
+
+(parent_spawn_3
+  (= (w1_start> 1))
+  (-> parent_await_any_4))
+
+(parent_await_any_4
+  (<w0_done
+    (-> parent_sample_5))
+  (<w1_done
+    (-> parent_sample_5)))
+
+(parent_sample_5
+  (<= (after_any status))
+  (-> parent_await_all_6))
+
+(parent_await_all_6
+  (-> parent_repeat_check_7 <(& w0_done w1_done)))
+```
+
+Cross-domain repeat-body `do`, cross-domain spawn, broader outstanding-child
+semantics, and nested branch/loop forms remain fail-closed until their
+re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 
