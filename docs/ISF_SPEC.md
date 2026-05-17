@@ -1672,9 +1672,10 @@ reads nor overwrites a pending sample alias, top-level ready/valid `stage`
 state that neither reads nor overwrites a pending sample alias, or top-level
 bounded-eventual `contract` arm state that neither reads nor overwrites a
 pending sample alias, or top-level `await_all`/`await_any` sync state whose
-collected done ports do not reference a pending sample alias. The
-positive-count path matches positive static waits by materializing samples in
-the first active wait state.
+collected done ports do not reference a pending sample alias, or top-level
+`spawn` state whose generated start handoff does not overwrite a pending
+sample alias. The positive-count path matches positive static waits by
+materializing samples in the first active wait state.
 For counts greater than one, a second generated wait-loop state consumes the
 remaining sampled counter value without repeating the sample. The zero-count
 path matches `wait 0` by materializing samples in a specialized clone of the
@@ -1711,6 +1712,11 @@ Await-all and await-any zero-count clones preserve the original collected
 done-port synchronization behavior and advance to the same successor as the
 original sync state. Sync states whose collected done ports read a pending
 sample alias remain fail-closed for the same reason.
+Spawn zero-count clones preserve the original generated child start handoff
+and advance to the same successor as the original spawn state. Spawn states
+whose generated start handoff overwrites a pending sample alias remain
+fail-closed for the same reason. Blocking `do` remains separate because it
+also owns input/output bindings and a completion guard.
 Ready/valid stage zero-count clones preserve the original `valid` assignment
 and ready-gated transition, then advance to the same successor as the original
 stage state when `ready` is true. Stage states that read a pending sample
@@ -1742,13 +1748,13 @@ independent shift states, independent assemble states, and independent extract
 states, plus independent bank-load and bank-store states, are
 sample-compatible selected successors in the shipped `when`-body and
 `switch`-branch subset; top-level await-all/await-any sync states,
-ready/valid stage states, and bounded-eventual contract arm states are also
-sample-compatible for top-level waits when their synchronization, ready/valid,
-or arm signals do not touch pending sample aliases. Repeat, while, and until
-loop decision/check states are sample-compatible when their assignments and
-loop conditions do not touch pending sample aliases. Runtime waits whose
-selected zero-count successor cannot yet carry pending samples without
-changing timing fail closed.
+spawn states, ready/valid stage states, and bounded-eventual contract arm
+states are also sample-compatible for top-level waits when their
+synchronization, start-handoff, ready/valid, or arm signals do not touch
+pending sample aliases. Repeat, while, and until loop decision/check states
+are sample-compatible when their assignments and loop conditions do not touch
+pending sample aliases. Runtime waits whose selected zero-count successor
+cannot yet carry pending samples without changing timing fail closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

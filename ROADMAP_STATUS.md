@@ -10,13 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-SYNC-SAMPLE` is closed after
-  shipping pending-sample runtime wait zero-bypass into top-level `await_all`
-  and `await_any` sync states. The zero-count clone materializes pending
-  samples and preserves the original all-done or any-done transition when the
-  collected done ports are independent of pending sample aliases; sync ports
-  that consume aliases remain fail-closed. The next R14 PNT implementation
-  slice must select or create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE` is closed after
+  shipping pending-sample runtime wait zero-bypass into top-level `spawn`
+  states. The zero-count clone materializes pending samples, asserts the
+  original generated child start handoff, and advances like the original spawn
+  state when that handoff is independent of pending sample aliases. Blocking
+  `do` successors remain separate because they also own input/output bindings
+  and a completion guard. The next R14 PNT implementation slice must select or
+  create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -644,8 +645,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   one, while zero counts bypass to a sample-preserving clone of the following
   state when that state can carry samples without changing timing, including
   top-level await_all/await_any sync states whose collected done ports do not
-  reference pending sample aliases. Other top-level zero-count successors,
-  unknown-width or malformed count
+  reference pending sample aliases and top-level spawn states whose generated
+  start handoff is independent of pending sample aliases. Other top-level
+  zero-count successors, unknown-width or malformed count
   expressions, and any remaining predecessor-edge splits remain fail-closed
   until their exact bypass and snapshot behavior is implemented. Pending
   samples before
@@ -728,6 +730,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   performs pending sample assignments and preserves the original all-done or
   any-done transition. Sync done ports that read pending sample aliases remain
   fail-closed.
+- ISF spawn successor pending-sample runtime wait update: runtime dynamic
+  waits with pending samples can now zero-bypass into top-level `spawn` states
+  when the generated child start handoff does not touch any pending sample
+  alias. The zero path uses a sample-preserving spawn clone that performs
+  pending sample assignments, asserts the original `inst_start` handoff, and
+  advances like the original spawn state. Blocking `do` remains separate
+  because it also owns input/output bindings and a completion guard.
 - ISF consecutive pending-sample runtime wait update: pending samples before
   consecutive top-level runtime waits now carry across zero-count wait links.
   A zero first wait plus positive second wait enters a generated

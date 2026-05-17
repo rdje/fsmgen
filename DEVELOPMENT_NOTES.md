@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: spawn successors can carry pending samples when the start handoff is independent
+- `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` adds top-level spawn states to the
+  pending-sample runtime wait zero-bypass surface.
+- A spawn state has one observable action in the parent schedule: assert the
+  generated `inst_start` handoff for the static child instance. When that
+  assignment does not touch a pending sample alias, the zero-count clone can
+  prepend pending sample materialization and preserve the original spawn
+  behavior without adding a hidden sample-only cycle.
+- The accepted clone does not alter generated-top wiring or child lifetime.
+  The static child instance, start/done handoffs, and following `await_all` or
+  `await_any` synchronization continue to use the existing generated
+  composition contract.
+- Blocking `do` remains separate because its state can own input bindings,
+  output bindings, and a completion guard in addition to a start handoff.
 ## 2026-05-16: sync successors can carry pending samples when done ports are independent
 - `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` adds top-level `await_all` and `await_any`
   states to the pending-sample runtime wait zero-bypass surface.

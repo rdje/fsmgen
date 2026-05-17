@@ -666,6 +666,21 @@ For `await_any`, the clone keeps one transition per collected done port. If a
 collected done port is `hold`, the form remains fail-closed for the same
 sample-and-consume timing reason.
 
+Top-level `spawn` states can carry the pending sample when the generated
+start handoff does not overwrite the pending sample alias. The clone keeps the
+child start pulse and advances like the original spawn state:
+
+```lisp
+(parent_wait_1_zero_sample
+  (<= (hold din))
+  (= (w0_start> 1))
+  (-> parent_await_all_3))
+```
+
+If the generated start handoff is `hold`, the form remains fail-closed.
+Blocking `do` remains a separate shape because it also owns input/output
+bindings and a completion guard.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

@@ -1598,6 +1598,90 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_sync_any');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into spawn states' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-spawn');
+(actor wait_dynamic_sample_spawn
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output flag)
+    (output sample_out (width 8))
+    (output done))
+  (drive tick
+    (flag 1))
+  (drive (captured val)
+    (sample_out val))
+  (transaction worker
+    (on start)
+    (drive tick)
+    (complete done))
+  (transaction parent
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (spawn worker as w0)
+    (await_all done)
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_spawn.fsm'};
+    my $idle = state_block($fsm, 'parent_idle_0');
+    like($idle, qr/\(-> parent_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'spawn zero path bypasses directly to a sample-preserving spawn clone');
+
+    my $wait = state_block($fsm, 'parent_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'spawn positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?parent_wait_1_cnt[\s\S]*\(=1 \(-> parent_spawn_2\)\)/,
+        'spawn positive path exits to the original spawn state');
+
+    my $spawn = state_block($fsm, 'parent_spawn_2');
+    unlike($spawn, qr/\(<= \(hold din\)\)/,
+        'original spawn state does not double-sample after a positive wait');
+    like($spawn, qr/\(= \(w0_start> 1\)\)/,
+        'original spawn state asserts the child start handoff');
+    like($spawn, qr/\(-> parent_await_all_3\)/,
+        'original spawn state advances to the following sync state');
+
+    my $zero_clone = state_block($fsm, 'parent_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'spawn zero-count clone materializes the pending sample');
+    like($zero_clone, qr/\(= \(w0_start> 1\)\)/,
+        'spawn zero-count clone asserts the same child start handoff');
+    like($zero_clone, qr/\(-> parent_await_all_3\)/,
+        'spawn zero-count clone advances like the original spawn state');
+
+    my $top_fsm = $lowered->{files}{'wait_dynamic_sample_spawn_top.fsm'};
+    ok(defined($top_fsm), 'spawn sample actor emits a generated top .fsm');
+    like($top_fsm, qr/\(wait_dynamic_sample_spawn\.w0_start w0\.start\)/,
+        'generated top wires the spawn start handoff');
+    like($top_fsm, qr/\(w0\.done wait_dynamic_sample_spawn\.w0_done\)/,
+        'generated top wires the spawn done handoff');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'parent',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'parent_wait_1',
+                exit_state     => 'parent_spawn_2',
+                counter_signal => 'parent_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'spawn zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_spawn');
+};
+
 subtest 'runtime scalar waits split additional top-level predecessor kinds' => sub {
     my ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-await');
 (actor wait_dynamic_after_await
@@ -3341,6 +3425,31 @@ ISF
     (spawn worker as w1)
     (sample din as w0_done)
     (wait cycles)
+    (await_all done)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-overwriting spawn start', qr/\ARuntime dynamic wait 'parent_wait_1' with pending samples cannot zero-bypass to state 'parent_spawn_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_spawn_start
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din)
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction worker
+    (on start)
+    (drive tick)
+    (complete done))
+  (transaction parent
+    (on start)
+    (sample din as w0_start)
+    (wait cycles)
+    (spawn worker as w0)
     (await_all done)
     (complete done)))
 ISF

@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF spawn successor zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lets pending-sample runtime waits zero-bypass into top-level `spawn`
+  states when the generated child start handoff does not overwrite a pending
+  sample alias.
+- Positive-count paths still materialize pending samples in the first active
+  wait state and then enter the original spawn state without double-sampling.
+  Zero-count clones materialize the sample, assert the original `inst_start`
+  handoff, and advance like the original spawn state.
+- Spawn states whose generated start handoff touches a pending sample alias
+  remain fail-closed. Blocking `do` successors remain separate because they
+  also own input/output bindings and a completion guard.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=142`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1029`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF sync successor zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-SYNC-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SYNC-SAMPLE.md).

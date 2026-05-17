@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF spawn successor zero-bypass pending-sample dynamic waits shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md).
+- The `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create a
+  new task tree first.
+- Runtime dynamic waits with pending samples can now zero-bypass into
+  top-level `spawn` states when the generated child start handoff is
+  independent of pending sample aliases. The zero path materializes pending
+  samples, asserts the original `inst_start` handoff, and advances like the
+  original spawn state.
+- Positive-count paths still sample in the first active wait state and then
+  enter the original spawn state without double-sampling.
+- Spawn states whose generated start handoff touches pending sample aliases
+  remain fail-closed. Blocking `do` successors remain separate because they
+  also own input/output bindings and a completion guard.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=142`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1029`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF sync successor zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` in

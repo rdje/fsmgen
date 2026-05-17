@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF spawn successor zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into top-level `spawn` states when the
+  generated child start handoff does not overwrite a pending sample alias.
+- The zero-count path now uses a sample-preserving spawn clone that
+  materializes pending samples, asserts the original `inst_start` handoff, and
+  advances like the original spawn state. Positive-count paths still sample in
+  the first wait state and enter the original spawn state without
+  double-sampling.
+- Spawn states whose generated start handoff touches pending sample aliases
+  remain fail-closed. Blocking `do` successors remain separate because they
+  also own input/output bindings and a completion guard.
+- Extended `t/1244-isf-wait-clause-lowering.t` for spawn zero-bypass,
+  generated-top handoff checks, and alias-touching spawn-start rejection,
+  widened the book feature-matrix audit marker, and synchronized
+  `docs/ISF_SPEC.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook
+  transaction/lowering/backlog and feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=142`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1029`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF sync successor zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
