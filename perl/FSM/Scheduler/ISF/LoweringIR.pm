@@ -6673,7 +6673,7 @@ sub _clone_dynamic_wait_zero_sample_target {
     my ($wait_state, $target_state, $clone_name) = @_;
 
     confess "Runtime dynamic wait '$wait_state->{name}' with pending samples cannot zero-bypass to state '$target_state->{name}' because that state cannot materialize pending samples without changing timing in the current pending-sample slice\n"
-        unless _dynamic_wait_zero_sample_target_accepts_samples($target_state);
+        unless _dynamic_wait_zero_sample_target_accepts_samples($wait_state, $target_state);
 
     my %clone = %$target_state;
     $clone{name} = $clone_name;
@@ -6704,7 +6704,7 @@ sub _clone_dynamic_wait_zero_sample_target {
 }
 
 sub _dynamic_wait_zero_sample_target_accepts_samples {
-    my ($target_state) = @_;
+    my ($wait_state, $target_state) = @_;
     my $kind = $target_state->{kind} // '';
     return 0 if $target_state->{dynamic_wait_entry} || $target_state->{dynamic_wait_loop_for};
 
@@ -6723,8 +6723,62 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
                     || $source_kind eq 'inline_drive'
                     || $source_kind eq 'sample_capture';
         }
+        return 1 if _dynamic_wait_zero_sample_target_is_independent_setter($wait_state, $target_state);
     }
 
+    return 0;
+}
+
+sub _dynamic_wait_zero_sample_target_is_independent_setter {
+    my ($wait_state, $target_state) = @_;
+    return 0 unless _dynamic_wait_has_pending_samples($wait_state);
+
+    my %pending_sample = map {
+        my $lhs = $_->{lhs};
+        defined($lhs) && !ref($lhs) && length($lhs) ? ($lhs => 1) : ();
+    } @{$wait_state->{pending_sample_assignments} || []};
+    return 0 unless %pending_sample;
+
+    my $has_setter = 0;
+    for my $assignment (@{$target_state->{assignments} || []}) {
+        my $source_kind = $assignment->{source_kind} // '';
+        if ($source_kind eq 'set' || $source_kind eq 'update') {
+            $has_setter = 1;
+        } elsif ($source_kind ne 'latency_increment_request') {
+            return 0;
+        }
+        return 0 if _dynamic_wait_assignment_touches_pending_sample($assignment, \%pending_sample);
+    }
+
+    for my $transition (@{$target_state->{transitions} || []}) {
+        return 0 if _dynamic_wait_condition_touches_pending_sample($transition->{condition}, \%pending_sample);
+    }
+
+    return $has_setter ? 1 : 0;
+}
+
+sub _dynamic_wait_assignment_touches_pending_sample {
+    my ($assignment, $pending_sample) = @_;
+    return 1 if $pending_sample->{$assignment->{lhs} // ''};
+    return 1 if _dynamic_wait_text_touches_pending_sample($assignment->{rhs}, $pending_sample);
+    return _dynamic_wait_condition_touches_pending_sample($assignment->{guard}, $pending_sample);
+}
+
+sub _dynamic_wait_condition_touches_pending_sample {
+    my ($condition, $pending_sample) = @_;
+    return 0 unless ref($condition) eq 'HASH';
+    for my $key (qw(expr signal port)) {
+        return 1 if _dynamic_wait_text_touches_pending_sample($condition->{$key}, $pending_sample);
+    }
+    return 0;
+}
+
+sub _dynamic_wait_text_touches_pending_sample {
+    my ($text, $pending_sample) = @_;
+    return 0 unless defined($text) && !ref($text);
+    for my $name (keys %$pending_sample) {
+        return 1 if $text =~ /(?<![A-Za-z0-9_])\Q$name\E(?![A-Za-z0-9_])/;
+    }
     return 0;
 }
 

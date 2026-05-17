@@ -10,15 +10,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE` is closed after
-  shipping completion-state zero-bypass for pending-sample runtime waits. A
-  top-level or shipped branch `(sample ...) (wait count) (complete done)` path
-  now lowers a zero-count runtime wait to a sample-preserving completion clone
-  that emits the delayed completion pulse and returns to idle without adding a
-  hidden sample-only cycle. Unsafe data-operation successors, consecutive
-  pending-sample runtime waits, and unsupported loop/check-state successors
-  remain fail-closed. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE` is closed
+  after shipping independent scalar setter zero-bypass for pending-sample
+  runtime waits. A top-level or shipped branch `(sample ...) (wait count)
+  (set out expr)` path now lowers a zero-count runtime wait to a
+  sample-preserving setter clone when the setter neither reads nor overwrites
+  a pending sample alias. Sample-consuming setters, broader data-operation
+  successors, consecutive pending-sample runtime waits, and unsupported
+  loop/check-state successors remain fail-closed. The next R14 PNT
+  implementation slice must select or create a new task tree before code
+  changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -413,6 +414,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   selected branch completion states can be cloned to carry pending samples,
   emit the delayed completion pulse, and return to idle, while unsafe
   data-operation and loop/check-state successors remain fail-closed.
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` then shipped the independent
+  scalar setter subset for pending-sample runtime wait zero-bypass: top-level,
+  `when`, `switch`, and repeat-body selected `set`/`update` states can be
+  cloned when they neither read nor overwrite pending sample aliases, while
+  sample-consuming setters and broader data-operation successors remain
+  fail-closed.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
@@ -629,6 +636,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   to idle. Positive-count paths still sample in the first wait state and exit
   through the original completion state. Unsafe data-operation successors and
   unsupported loop/check-state completion paths remain fail-closed.
+- ISF pending-sample independent setter wait update: runtime dynamic waits
+  with pending samples can now zero-bypass into an independent scalar
+  `set`/`update` successor. The zero path uses a sample-preserving setter clone
+  that performs pending sample assignments, emits the original setter
+  assignment, and advances to the original setter successor. Setters that read
+  or overwrite a pending sample alias remain fail-closed, as do broader
+  data-operation successors.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -825,8 +839,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pending samples. `ISF-DYNAMIC-WAIT.3.3.6` shipped expression-valued runtime
   counts and closed the tree. `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` later
   shipped completion-state zero-bypass clones for top-level and selected branch
-  pending-sample runtime waits; unsafe successor classes remain fail-closed.
-  No active ISF task tree remains open.
+  pending-sample runtime waits. `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1`
+  later shipped independent scalar setter zero-bypass clones for top-level,
+  `when`, `switch`, and repeat-body pending-sample runtime waits. Unsafe
+  successor classes remain fail-closed. No active ISF task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

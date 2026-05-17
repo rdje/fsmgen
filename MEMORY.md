@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF independent setter zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lets pending-sample runtime waits zero-bypass into scalar `set`/`update`
+  successors when every setter assignment is independent of the pending sample
+  aliases. The clone materializes pending samples, performs the original
+  setter assignment, and advances to the original setter successor.
+- Setters that read or overwrite a pending sample alias remain fail-closed, as
+  do broader data-operation successors such as shift, assemble, extract, bank
+  load/store, stage, contract, and loop/check states.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=118`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1005`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence remains every 30 unpushed commits.
 ## 2026-05-16: ISF completion zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md).

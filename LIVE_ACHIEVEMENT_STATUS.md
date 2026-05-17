@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF independent setter zero-bypass pending-sample dynamic waits shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md).
+- The `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE` tree is now closed. No active
+  ISF task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- Runtime dynamic waits with pending samples can now zero-bypass into an
+  independent scalar `set`/`update` successor. The zero path materializes the
+  pending samples in a setter clone, performs the original setter assignment,
+  and advances to the original setter successor without adding a hidden
+  sample-only cycle.
+- Setters that read or overwrite a pending sample alias remain fail-closed, as
+  do broader data-operation successors such as shift, assemble, extract, bank
+  load/store, stage, contract, and loop/check states.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=118`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1005`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF completion zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` in

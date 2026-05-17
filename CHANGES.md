@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF independent setter zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` and closed the task
+  tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into independent scalar `set`/`update`
+  successors.
+- The zero-count path now uses a sample-preserving setter clone that performs
+  pending sample assignments, emits the original setter assignment, and
+  advances to the original setter successor. Positive-count paths still sample
+  in the first wait state and exit through the original setter state.
+- Setters that read or overwrite a pending sample alias remain fail-closed, as
+  do broader data-operation successors such as shift, assemble, extract, bank
+  load/store, stage, contract, and loop/check states.
+- Extended `t/1244-isf-wait-clause-lowering.t` for top-level, `when`,
+  `switch`, and `repeat` independent setter successors, widened the book
+  feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/lowering/backlog
+  and feature-matrix chapters, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=118`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1005`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF completion zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with

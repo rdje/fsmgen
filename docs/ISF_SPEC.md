@@ -1649,14 +1649,18 @@ loop. Runtime waits inside `until` bodies are also supported for the
 no-pending-sample subset. The initial predecessor enters or bypasses the first
 body wait, the `until` true path exits, and the false loop-back path reloads
 or bypasses the runtime wait for the next iteration. Runtime waits after
-pending samples, after predecessor states whose edge split is not implemented
-yet, and malformed or unknown-width runtime count expressions remain rejected.
+pending samples remain rejected when the selected successor cannot carry the
+sample without changing timing. Runtime waits after predecessor states whose
+edge split is not implemented yet, malformed counts, and unknown-width runtime
+count expressions remain rejected.
 
 Pending samples before top-level runtime waits are supported for the first
 path-specific sample-materialization subset when the following state can carry
 the zero-count sample without changing timing, such as a drive call, an await,
-static wait state, or completion state. The positive-count path matches
-positive static waits by materializing samples in the first active wait state.
+static wait state, completion state, or independent scalar `set`/`update`
+state that neither reads nor overwrites a pending sample alias. The
+positive-count path matches positive static waits by materializing samples in
+the first active wait state.
 For counts greater than one, a second generated wait-loop state consumes the
 remaining sampled counter value without repeating the sample. The zero-count
 path matches `wait 0` by materializing samples in a specialized clone of the
@@ -1664,6 +1668,10 @@ next state-producing clause, so no hidden sample-only cycle is added and the
 original following state does not double-sample after a positive wait.
 Completion zero-count clones preserve the same delayed-pulse assignment and
 return-to-idle transition as the original completion state.
+Independent setter zero-count clones preserve the original scalar setter and
+advance to the same successor as the original setter state. Setters that read
+or overwrite a pending sample alias remain fail-closed because the zero-count
+clone would otherwise sample and consume that alias in one state.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
 samples without changing timing fail closed. The same path-specific
 materialization is also supported inside `when` bodies and `switch` branches
@@ -1672,10 +1680,11 @@ false path of `when`, other explicit switch cases, and implicit switch
 fallthrough remain unchanged. `repeat`, `while`, and `until` bodies use the
 same materialization when the zero-count body successor can carry pending
 samples. Repeat loop-back/exit behavior, `while` false exits, and `until` true
-exits remain unchanged. Completion states are sample-compatible selected
-successors in the shipped top-level, `when`-body, and `switch`-branch subset.
-Runtime waits whose selected zero-count successor cannot yet carry pending
-samples without changing timing fail closed.
+exits remain unchanged. Completion states and independent scalar setter states
+are sample-compatible selected successors in the shipped top-level,
+`when`-body, and `switch`-branch subset. Runtime waits whose selected
+zero-count successor cannot yet carry pending samples without changing timing
+fail closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.

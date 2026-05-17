@@ -289,15 +289,18 @@ sample-only cycle is inserted and the original following state does not sample
 again after a positive wait. This top-level subset is limited to following
 states that can carry the zero-count sample without changing timing, including
 completion states that preserve the delayed completion pulse and return-to-idle
-transition; other successor shapes fail closed until their sample
-materialization is specified.
+transition plus independent scalar `set`/`update` states that neither read nor
+overwrite a pending sample alias; other successor shapes fail closed until
+their sample materialization is specified.
 Runtime waits inside `when` bodies and `switch` branches now use the same
 one-shot positive sample plus zero-count clone scheme for sample-compatible
-successors, including completion successors, while preserving false,
-other-case, and fallthrough exits. Pending samples before `repeat`, `while`,
-and `until` runtime waits use the same scheme when the body successor can
-carry samples; loop-back and loop-exit edges remain unchanged. Runtime waits
-whose selected zero-count successor cannot yet carry samples fail closed.
+successors, including completion and independent scalar setter successors,
+while preserving false, other-case, and fallthrough exits. Setters that read or
+overwrite a pending sample alias remain fail-closed. Pending samples before
+`repeat`, `while`, and `until` runtime waits use the same scheme when the body
+successor can carry samples; loop-back and loop-exit edges remain unchanged.
+Runtime waits whose selected zero-count successor cannot yet carry samples fail
+closed.
 
 **Generated .fsm** for `(wait 2)` followed by `(drive tick)`:
 
@@ -325,9 +328,9 @@ fail closed. Inline dynamic waits are supported in `when` and
 `repeat` bodies, `switch` branches, and `while`/`until` bodies for the
 no-pending-sample subset. Pending samples are also supported for `when` bodies
 and `switch` branches when the selected zero-count successor can carry samples
-without changing timing, including completion successors. The same
-pending-sample rule is also supported in `repeat`, `while`, and `until` bodies
-for sample-compatible body successors.
+without changing timing, including completion and independent scalar setter
+successors. The same pending-sample rule is also supported in `repeat`,
+`while`, and `until` bodies for sample-compatible body successors.
 In a `switch`, only the selected branch's runtime wait edge is split; other
 cases remain selectable and implicit fallthrough is guarded by the complement
 of all explicit case values. In loops, the relevant entry, back-edge, or exit

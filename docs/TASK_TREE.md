@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.md) |
 | `ISF-PARAM-WAIT-COUNTS` | `done` | `R14` | `closed` | [docs/tasks/ISF-PARAM-WAIT-COUNTS.md](docs/tasks/ISF-PARAM-WAIT-COUNTS.md) |
 | `ISF-FIFO-LIBRARY-FIXTURE-PROMOTION` | `done` | `R14` | `closed` | [docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md](docs/tasks/ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md) |
@@ -184,6 +185,7 @@ as done work unless a future task reopens them.
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |
 | Parameter-backed static transaction wait counts | `ISF-PARAM-WAIT-COUNTS` |
 | Completion zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE` |
+| Independent setter zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE` |
 | Dynamic divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-SAFETY` |
 | Actor-constant zero divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-CONSTANTS` |
 | Runtime dynamic-wait counter storage schedule-report roles | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` |

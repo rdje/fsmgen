@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: independent setters can carry pending samples when they do not consume them
+- `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` adds the first data-operation
+  successor class to pending-sample runtime wait zero-bypass. The accepted
+  subset is deliberately limited to scalar `set`/`update` states whose target,
+  RHS, assignment guard, and transition conditions do not reference any pending
+  sample alias.
+- The zero-count clone prepends the pending sample assignments to the original
+  independent setter state. This preserves zero-count timing without adding a
+  hidden sample-only cycle and without moving the original positive-count
+  setter state.
+- A setter such as `(set out hold)` remains fail-closed after `(sample din as
+  hold) (wait cycles)` because the clone would need to sample `hold` and read
+  `hold` in one state. That timing rule is not equivalent to the positive path
+  and needs a separate future contract before it can ship.
+- Broader data-operation successors remain deferred because each class has its
+  own read/write timing, width, and side-effect surface.
 ## 2026-05-16: completion zero-bypass can carry pending samples directly
 - `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE.1` treats completion as a compatible
   pending-sample zero-count successor because completion states do not consume

@@ -601,6 +601,77 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_complete');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into independent setters' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-set');
+(actor wait_dynamic_sample_set
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output out (width 8))
+    (output done))
+  (drive (outp val)
+    (out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (set out 1)
+    (drive outp hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_set.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving setter clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_set_2\)\)/,
+        'positive path exits to the original setter state');
+
+    my $set = state_block($fsm, 'main_set_2');
+    unlike($set, qr/\(<= \(hold din\)\)/,
+        'original setter state does not double-sample after a positive wait');
+    like($set, qr/\(<- \(out> 1\)\)/,
+        'original setter behavior is unchanged');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count setter clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(out> 1\)\)/,
+        'zero-count setter clone performs the independent set');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'zero-count setter clone advances like the original setter state');
+
+    my $drive = state_block($fsm, 'main_drive_3');
+    like($drive, qr/\(= \(outp_val hold\)\)/,
+        'later state still consumes the materialized sample alias');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_set_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'independent setter zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_set');
+};
+
 subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
 (actor wait_dynamic_pair
@@ -1375,6 +1446,183 @@ ISF
     );
 
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_switch_sample_complete');
+};
+
+subtest 'branch runtime scalar waits can zero-bypass pending samples into independent setters' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-when-sample-set');
+(actor wait_dynamic_when_sample_set
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cond)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output out (width 8))
+    (output done))
+  (drive (outp val)
+    (out val))
+  (transaction main
+    (on start)
+    (when cond
+      (sample din as hold)
+      (wait cycles)
+      (set out 1)
+      (drive outp hold))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_when_sample_set.fsm'};
+    my $branch = state_block($fsm, 'main_when_1');
+    like($branch, qr/\(-> main_wait_2_zero_sample <\(& cond \(== cycles 0\)\)\)/,
+        'when true zero path bypasses directly to a sample-preserving setter clone');
+    like($branch, qr/\(-> main_done_5 <\(! cond\)\)/,
+        'when false path still skips the sampled body');
+
+    my $zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'when setter clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(out> 1\)\)/,
+        'when setter clone performs the independent set');
+    like($zero_clone, qr/\(-> main_drive_4\)/,
+        'when setter clone advances like the original setter state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_set_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'when independent setter zero-bypass report points at the original setter state',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_when_sample_set');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-switch-sample-set');
+(actor wait_dynamic_switch_sample_set
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input sel)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output out (width 8))
+    (output done))
+  (drive (outp val)
+    (out val))
+  (transaction main
+    (on start)
+    (switch sel
+      (0 (sample din as hold)
+         (wait cycles)
+         (set out 1)
+         (drive outp hold)))
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_switch_sample_set.fsm'};
+    like($fsm, qr/\(-> main_wait_1_zero_sample <\(& \(== sel 0\) \(== cycles 0\)\)\)/,
+        'switch selected zero path bypasses directly to a sample-preserving setter clone');
+    like($fsm, qr/\(-> main_done_5 <\(! \(== sel 0\)\)\)/,
+        'switch fallthrough still skips the sampled body');
+
+    $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'switch setter clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(out> 1\)\)/,
+        'switch setter clone performs the independent set');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'switch setter clone advances like the original setter state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_set_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'switch independent setter zero-bypass report points at the original setter state',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_switch_sample_set');
+};
+
+subtest 'repeat-body runtime scalar waits can zero-bypass pending samples into independent setters' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-repeat-sample-set');
+(actor wait_dynamic_repeat_sample_set
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output out (width 8))
+    (output done))
+  (drive (outp val)
+    (out val))
+  (transaction main
+    (on start)
+    (repeat 2
+      (sample din as hold)
+      (wait cycles)
+      (set out 1)
+      (drive outp hold))
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_repeat_sample_set.fsm'};
+    my $repeat_init = state_block($fsm, 'main_repeat_init_1');
+    like($repeat_init, qr/\(-> main_wait_2_zero_sample <\(== cycles 0\)\)/,
+        'repeat zero path bypasses directly to a sample-preserving setter clone');
+
+    my $zero_clone = state_block($fsm, 'main_wait_2_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'repeat setter clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(out> 1\)\)/,
+        'repeat setter clone performs the independent set');
+    like($zero_clone, qr/\(-> main_drive_4\)/,
+        'repeat setter clone advances like the original setter state');
+
+    my $repeat_check = state_block($fsm, 'main_repeat_check_5');
+    like($repeat_check, qr/\?main_cnt[\s\S]*\(=1 \(-> main_repeat_init_1\)\)/,
+        'repeat loop-back remains available after the sampled setter body');
+    like($repeat_check, qr/\?main_cnt[\s\S]*\(=0 \(-> main_done_6\)\)/,
+        'repeat exit remains available after the sampled setter body');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_set_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'repeat independent setter zero-bypass report points at the original setter state',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_repeat_sample_set');
 };
 
 subtest 'runtime scalar waits lower inside while and until bodies' => sub {

@@ -530,6 +530,21 @@ like the original completion state:
   (-> main_idle_0))
 ```
 
+An independent scalar setter is also sample-compatible when it does not read or
+overwrite the pending sample alias. The clone carries the pending sample, emits
+the original setter assignment, and advances to the original setter successor:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (<- (out> 1))
+  (-> main_drive_3))
+```
+
+If the setter reads `hold`, or writes `hold`, the form remains fail-closed
+because the clone would otherwise combine sample materialization and sample
+consumption in one state.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 
