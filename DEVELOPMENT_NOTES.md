@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body spawn bindings are the next selected subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` selects repeat-body spawn
+  `(bind ...)` before implementation. The subset is intentionally limited to
+  top-level repeat bodies whose spawned child instance is consumed by a
+  same-body `(await_all done)` before the repeat check can loop.
+- This keeps the shipped static-instance model intact. The lexical spawn name
+  still denotes one generated child instance in the generated top, and binding
+  handoff ports are generated once for that instance rather than per repeat
+  iteration.
+- `(domain ...)` is deferred because cross-domain repeat re-entry needs a
+  separate ownership contract. `await_any`, repeat-body `do`, nested
+  activation, and sample-after-spawn timing also stay out of this slice.
 ## 2026-05-17: repeat-body activation remainders are tracked before coding
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION` is a proposed tree, not an active
   implementation claim. Its purpose is to prevent repeat-body activation work

@@ -15,13 +15,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   when the same repeat body reaches `await_all` before the repeat check can
   loop. Repeat-body `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples
   after repeat-body spawn, and nested branch/loop activation remain deferred.
-  The proposed `ISF-REPEAT-BODY-CHILD-ACTIVATION` tree now explicitly tracks
+  The active `ISF-REPEAT-BODY-CHILD-ACTIVATION` tree now explicitly tracks
   that remaining repeat-body child-activation backlog before future code work.
   The workflow now also requires task-tree ownership before any code, test,
-  source, generated-artifact, or config change. No active ISF task tree
-  remains open; the next R14 PNT slice must select or activate a task tree
-  first. Push cadence is every 30 unpushed commits unless the user explicitly
-  requests an earlier push.
+  source, generated-artifact, or config change. The next selected leaf is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, which will ship repeat-body spawn
+  `(bind ...)` on the existing top-level repeat plus same-body `await_all`
+  path while keeping `(domain ...)`, `await_any`, repeat-body `do`, nested
+  activation, and sample-after-spawn deferred. Push cadence is every 30
+  unpushed commits unless the user explicitly requests an earlier push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and

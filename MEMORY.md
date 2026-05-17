@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body spawn bindings selected as next ISF PNT leaf
+- Activated
+  [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
+- Completed selection leaf `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`.
+- The next active R14 frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`:
+  repeat-body `(spawn child as inst [(params ...)] (bind ...))` on the
+  existing top-level repeat plus same-body `(await_all done)` path.
+- Remaining repeat-body activation surfaces, including `(domain ...)`,
+  `await_any`, repeat-body `do`, nested activation, and sample-after-spawn
+  timing, stay deferred until their own leaves.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: ISF remaining repeat-body child activation now has proposed task-tree ownership
 - Created proposed R14 task tree
   [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).

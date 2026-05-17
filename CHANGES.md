@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body spawn binding subset selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`.
+- Activated the repeat-body child-activation task tree and selected
+  repeat-body spawn `(bind ...)` as the next bounded implementation leaf.
+- The selected source shape is top-level
+  `(repeat count (spawn child as inst [(params ...)] (bind ...)) ... (await_all done))`,
+  reusing the existing static generated-child handoff model.
+- Repeat-body spawn `(domain ...)`, `await_any`, repeat-body `do`, nested
+  activation, and sample-after-spawn timing remain deferred to later leaves.
 ### R14 — ISF remaining repeat-body child activation task-tree tracking
 - Created proposed task tree `ISF-REPEAT-BODY-CHILD-ACTIVATION`.
 - The proposed tree explicitly owns the remaining repeat-body child activation

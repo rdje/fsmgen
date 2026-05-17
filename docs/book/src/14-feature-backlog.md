@@ -230,6 +230,11 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 Status: partially shipped; broader repeat-body child activation remains backlog.
 Task-tree owner for the remaining backlog:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
+The next selected leaf is repeat-body spawn `(bind ...)`, limited to the
+already shipped top-level repeat plus same-body `await_all` path. It is
+selected to reuse the static generated-child handoff model: one lexical spawn
+name maps to one generated child instance, and binding payload ports are
+generated once for that instance rather than per repeat iteration.
 
 Goal: allow `(spawn child as name)` inside `(repeat count body...)` without
 implying dynamic hardware creation.

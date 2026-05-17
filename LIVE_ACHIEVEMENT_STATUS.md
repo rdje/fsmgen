@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body spawn bindings selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`.
+- Activated the repeat-body child-activation task tree.
+- Selected repeat-body `(spawn child as inst [(params ...)] (bind ...))` as
+  the next implementation subset, limited to the existing top-level repeat
+  plus same-body `(await_all done)` path.
+- Deferred repeat-body `(domain ...)`, `await_any`, `do`, nested activation,
+  and sample-after-spawn timing remain tracked in later leaves.
+
 ## 2026-05-17: R14 — ISF repeat-body activation remainders now tracked
 - Created proposed R14 task tree:
   [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
