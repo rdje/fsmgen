@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF switch-contained repeat local do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`.
+- Top-level `switch` branches may now contain nested repeats with local
+  repeat-body `(do child)` when the child remains in the parent scheduled
+  module.
+- Lowering wires the local child start/done handoff, preserves samples around
+  the nested do in source order, and keeps the switch-branch repeat check
+  gated by the child's fresh done pulse.
+- `(params ...)`, `(bind ...)`, `(domain NAME)`, generated targets,
+  repeat-body spawn, generated/spawn nested activation, deeper branch/loop
+  nesting, cross-domain activation, and broader outstanding-child semantics
+  remain fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, and task tree.
 ### R14 — ISF switch-contained repeat local do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`.
 - Selected top-level `switch` branches containing nested repeats with local
@@ -21,9 +36,8 @@ This is the persistent technical change history for FSMGen.
   the nested do in source order, and keeps the branch-owned repeat check gated
   by the child's fresh done pulse.
 - `(params ...)`, `(bind ...)`, `(domain NAME)`, generated targets,
-  generated/spawn nested activation, switch-contained repeats, deeper `when`
-  repeats, loop-contained repeats, cross-domain activation, and broader
-  outstanding-child semantics remain fail-closed.
+  generated/spawn nested activation, deeper branch/loop repeats, cross-domain
+  activation, and broader outstanding-child semantics remain fail-closed.
 - Synchronized the ISF spec, downstream handoff, public contract, mdBook
   transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
   board, and task tree.

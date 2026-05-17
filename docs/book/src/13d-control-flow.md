@@ -135,8 +135,9 @@ and `load`, shipped `wait` clauses, top-level repeat-body local `(do child)`,
 top-level repeat-body generated `(do child)` for already generated child
 targets, top-level repeat-body generated `(do child (params ...))` with
 static parameter overrides, top-level when-body nested repeat local
-`(do child)`, and top-level repeat-body spawn with optional static
-`(params ...)`, optional `(bind ...)`, and optional declared same-domain
+`(do child)`, top-level switch-branch nested repeat local `(do child)`, and
+top-level repeat-body spawn with optional static `(params ...)`, optional
+`(bind ...)`, and optional declared same-domain
 `(domain NAME)` metadata followed by same-body `await_all` or by same-body
 `await_any` when exactly one spawn is pending. Samples may appear before or
 after repeat-body spawn before that same-body sync; they lower to an explicit
@@ -152,11 +153,12 @@ accepts already generated child targets or static `(params ...)` overrides,
 optional `(bind ...)` input/output handoffs, and optional same-domain
 `(domain NAME)` metadata; those handoffs and domain summaries are
 wired/recorded once for the lexical generated do instance. Cross-domain
-repeat-body `do` remains deferred. The when-contained nested subset is
-local-only: it accepts only a repeat directly inside a top-level `when` body,
-rejects params, bindings, domain metadata, already-generated child targets,
-switch-contained repeats, deeper `when` repeats, and loop-contained repeats,
-and keeps the nested repeat check gated by the child's fresh done pulse.
+repeat-body `do` remains deferred. The when-contained and switch-contained
+nested subsets are local-only: they accept only a repeat directly inside a
+top-level `when` body or directly inside a top-level `switch` branch, reject
+params, bindings, domain metadata, already-generated child targets, deeper
+branch nesting, and loop-contained repeats, and keep the nested repeat check
+gated by the child's fresh done pulse.
 Broader outstanding-child semantics, generated or spawned nested activation,
 `stage`, `contract`, nested `while`, and nested `until` forms remain outside
 the shipped repeat-body subset.

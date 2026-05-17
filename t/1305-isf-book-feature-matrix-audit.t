@@ -124,6 +124,7 @@ my @required_examples = (
     'loop decision states',
     'top-level repeat-body local blocking do',
     'top-level when-body nested repeat local do',
+    'top-level switch-branch nested repeat local do',
     'top-level repeat-body generated-child blocking do',
     'top-level repeat-body generated blocking do with static params, bind handoffs, and same-domain domain metadata',
     'samples before or after spawn before same-body sync',

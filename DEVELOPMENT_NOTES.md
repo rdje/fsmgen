@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained repeat local do reuses switch branch repeats
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.24` implements the selected switch branch
+  subset by collecting child action refs from repeats that are direct clauses
+  in top-level `switch` branches.
+- The validator now proves the when-contained and switch-contained local do
+  subsets are truly top-level branch placements by matching exact context
+  depths. That keeps `when` under `switch`, deeper `switch`, and loop-contained
+  placements fail-closed instead of relying on missing child wiring.
+- The lowering path still reuses `_ir_repeat` and local child start/done
+  wiring. Generated targets, activation subclauses, nested spawn, cross-domain
+  activation, and broader outstanding-child lifetime semantics remain separate
+  contracts.
 ## 2026-05-17: switch-contained repeat local do is the next nested subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.23` selects the switch analogue of the
   shipped when-contained local do subset: a repeat directly inside a top-level

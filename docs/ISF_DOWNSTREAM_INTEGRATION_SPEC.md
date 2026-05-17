@@ -846,9 +846,13 @@ Rules:
   local-only `(do child)` subset. The nested child remains in the parent
   scheduled module, samples around the nested do lower in source order, and
   the branch-owned repeat check is reached only after the fresh child done
-  pulse. That when-contained subset rejects `(params ...)`, `(bind ...)`,
-  `(domain NAME)`, already-generated child targets, switch-contained repeats,
-  deeper nested `when` repeats, and loop-contained repeats. Top-level repeat
+  pulse. Repeats directly inside a top-level `switch` branch accept the same
+  local-only `(do child)` subset, with the child kept in the parent scheduled
+  module, source-order samples around the nested do, and a branch-owned repeat
+  check gated by the fresh child done pulse. Those when-contained and
+  switch-contained subsets reject `(params ...)`, `(bind ...)`,
+  `(domain NAME)`, already-generated child targets, deeper branch nesting, and
+  loop-contained repeats. Top-level repeat
   bodies also accept generated blocking
   `(do child)` when the target child is already emitted as a generated child
   by another activation site, and
@@ -886,8 +890,8 @@ Rules:
   later spawn state for sample-before-spawn ordering, or before the sync state
   for sample-after-spawn ordering. Cross-domain repeat-body `do`, generated or
   spawned nested activation, broader outstanding-child semantics, `stage`,
-  `contract`, switch-contained activation, deeper `when` nesting, nested
-  `while`, and nested `until` remain outside the shipped repeat-body subset.
+  `contract`, deeper branch nesting, nested `while`, and nested `until` remain
+  outside the shipped repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as
   `shared.mode.BUSY` as scalar operands. Local or package enum members may
@@ -1172,10 +1176,11 @@ Rules:
 - Top-level repeat bodies may use that same local `(do child)` form when the
   child remains in the parent scheduled module. Repeats directly inside a
   top-level `when` body may also use local `(do child)` when the child remains
-  in the parent scheduled module; no `(params ...)`, `(bind ...)`,
-  `(domain NAME)`, generated target, switch-contained repeat, deeper nested
-  `when` repeat, or loop-contained repeat is included in that shipped nested
-  subset. They may also use
+  in the parent scheduled module. Repeats directly inside a top-level
+  `switch` branch may also use local `(do child)` under the same local-only
+  contract. No `(params ...)`, `(bind ...)`, `(domain NAME)`, generated
+  target, deeper branch repeat, or loop-contained repeat is included in those
+  shipped nested subsets. They may also use
   `(do child (params ...))` with static parameter overrides; that form creates
   one generated child activation instance named
   `{parent}_{child}_repeat_do_{ordinal}` and waits for that instance's done

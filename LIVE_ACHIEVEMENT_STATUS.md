@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF switch-contained repeat local do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`.
+- Top-level `switch` branches may now contain nested repeats with local
+  repeat-body `(do child)` when the child remains in the parent scheduled
+  module.
+- The lowerer wires local child start/done handoffs, keeps samples around the
+  nested do in source order, and gates the switch-branch repeat check on the
+  child's fresh done pulse.
+- Generated targets, `(params ...)`, `(bind ...)`, `(domain NAME)`,
+  repeat-body spawn, generated/spawn nested activation, deeper branch/loop
+  nesting, cross-domain activation, and broader outstanding-child semantics
+  remain fail-closed. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`.
+
 ## 2026-05-17: R14 — ISF switch-contained repeat local do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`.
 - Selected top-level `switch` branches containing nested repeats with local
@@ -22,10 +36,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   nested do in source order, and gates the branch-owned repeat check on the
   child's fresh done pulse.
 - Generated targets, `(params ...)`, `(bind ...)`, `(domain NAME)`,
-  generated/spawn nested activation, switch-contained repeats, deeper `when`
-  repeats, loop-contained repeats, cross-domain activation, and broader
-  outstanding-child semantics remain fail-closed. The active frontier advances
-  to `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`.
+  generated/spawn nested activation, deeper branch/loop repeats, cross-domain
+  activation, and broader outstanding-child semantics remain fail-closed. The
+  active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`.
 
 ## 2026-05-17: R14 — ISF when-contained repeat local do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`.

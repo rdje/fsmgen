@@ -78,18 +78,22 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   samples around the nested do remain explicit, and the branch-owned repeat
   check stays gated by the child's fresh done pulse. Generated targets,
   `(params ...)`, `(bind ...)`, `(domain NAME)`, generated/spawn nested
-  activation, switch-contained repeats, deeper `when` repeats, loop-contained
-  repeats, cross-domain activation, and broader outstanding-child semantics
-  remain deferred. `ISF-REPEAT-BODY-CHILD-ACTIVATION.23` then selected
+  activation, deeper branch/loop nesting, cross-domain activation, and broader
+  outstanding-child semantics remain deferred. `ISF-REPEAT-BODY-CHILD-ACTIVATION.23` then selected
   top-level switch-branch nested repeat local `(do child)` as the next bounded
   nested-placement subset. That selected contract keeps the child local to the
   parent scheduled module, preserves source-order samples around the nested do,
   and keeps the switch-branch repeat check gated by the child's fresh done
-  pulse. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`; generated targets, activation
-  subclauses, repeat-body spawn, deeper branch/loop nesting, cross-domain
-  activation, and broader outstanding-child semantics remain deferred for the
-  selected switch-contained subset. The workflow also requires
+  pulse. `ISF-REPEAT-BODY-CHILD-ACTIVATION.24` then shipped that local-only
+  subset for repeats directly inside top-level `switch` branches, including
+  local child start/done wiring, source-order sample timing around the nested
+  do, and fail-closed diagnostics for generated targets, activation subclauses,
+  nested spawn, deeper branch/loop nesting, and already-generated child
+  targets. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`, which must select the next bounded
+  repeat-body child-activation subset before code. Cross-domain activation,
+  generated/spawn nested activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier

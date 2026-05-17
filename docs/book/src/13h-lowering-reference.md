@@ -1112,11 +1112,11 @@ repeat check:
   (-> parent_repeat_check_5))
 ```
 
-When the repeat is directly inside a top-level `when` body, the same local
-`do` lowering is shipped inside the branch-owned repeat region. The branch
-enters the repeat only on the true edge, the nested do asserts the local child
-start, and the nested repeat check remains unreachable until the child done
-pulse has been observed:
+When the repeat is directly inside a top-level `when` body or directly inside
+a top-level `switch` branch, the same local `do` lowering is shipped inside
+the branch-owned repeat region. The branch enters the repeat only through the
+selected path, the nested do asserts the local child start, and the nested
+repeat check remains unreachable until the child done pulse has been observed:
 
 ```lisp
 (parent_when_1
@@ -1138,10 +1138,19 @@ pulse has been observed:
   (-> parent_repeat_check_6))
 ```
 
-That nested subset is local-only. It rejects `(params ...)`, `(bind ...)`,
-`(domain NAME)`, already-generated child targets, switch-contained repeats,
-deeper nested `when` repeats, loop-contained repeats, and generated/spawned
-nested activation.
+For a switch branch, the selector targets the branch-owned repeat init state:
+
+```lisp
+(parent_switch_7
+  (?mode
+    (=0 (-> parent_repeat_init_2))
+    (=1 (-> parent_sample_6))
+    (default (-> parent_done_8))))
+```
+
+Those nested subsets are local-only. They reject `(params ...)`, `(bind ...)`,
+`(domain NAME)`, already-generated child targets, deeper branch nesting,
+loop-contained repeats, and generated/spawned nested activation.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
@@ -1192,9 +1201,8 @@ live until a later same-body `await_all` drain:
 ```
 
 Cross-domain repeat-body `do`, cross-domain spawn, broader outstanding-child
-semantics, generated/spawned nested activation, switch-contained activation,
-and deeper branch/loop forms remain fail-closed until their re-entry and
-report behavior is specified.
+semantics, generated/spawned nested activation, and deeper branch/loop forms
+remain fail-closed until their re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

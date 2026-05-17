@@ -1546,10 +1546,13 @@ Current lowering:
   inside a top-level `when` body accept the same local-only `(do child)` form:
   the child remains in the parent scheduled module, samples around the nested
   do stay in source order, and the branch-owned repeat check is unreachable
-  until the fresh child done pulse is observed. That when-contained subset
-  rejects `(params ...)`, `(bind ...)`, `(domain NAME)`, already-generated
-  child targets, switch-contained repeats, deeper nested `when` repeats, and
-  loop-contained repeats. Top-level repeat bodies also accept generated
+  until the fresh child done pulse is observed. Repeats directly inside a
+  top-level `switch` branch accept the same local-only `(do child)` form with
+  the same source-order sample timing and done-gated nested repeat check.
+  Those when-contained and switch-contained subsets reject `(params ...)`,
+  `(bind ...)`, `(domain NAME)`, already-generated child targets, deeper
+  branch nesting, and loop-contained repeats. Top-level repeat bodies also
+  accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
   `(do child (params ...) [(bind ...)] [(domain NAME)])` with static
@@ -1592,9 +1595,9 @@ Current lowering:
   source-order timing point: before a later spawn state for sample-before-spawn
   ordering, or before the sync state for sample-after-spawn ordering.
   Cross-domain repeat-body `do`, generated or spawned nested activation,
-  broader outstanding-child semantics, `stage`, `contract`, switch-contained
-  activation, deeper `when` nesting, nested `while`, and nested `until` remain
-  outside the shipped repeat-body subset.
+  broader outstanding-child semantics, `stage`, `contract`, deeper branch
+  nesting, nested `while`, and nested `until` remain outside the shipped
+  repeat-body subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
