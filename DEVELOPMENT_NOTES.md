@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained generated do domains are the next nested subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.37` selects generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` in a top-level `when`
+  body.
+- This is the branch-contained analogue of the shipped top-level repeat-body
+  generated-do same-domain metadata subset, starting with the when path before
+  the switch analogue. The selected implementation should preserve declared
+  same-domain ownership in generated-composition metadata and schedule-report
+  clock-domain summaries without changing done-gated nested repeat re-entry.
+- Switch-contained domain metadata, spawned nested activation, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  lifetime semantics remain separate contracts.
 ## 2026-05-17: switch-contained generated do bindings reuse static handoffs
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.36` implements only the selected static
   parameter plus binding handoff shape for repeats that are direct clauses of
