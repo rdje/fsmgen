@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body spawn bindings shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts repeat-body `(spawn child as inst [(params ...)] (bind ...))`
+  on the shipped top-level repeat plus same-body `(await_all done)` path.
+- Repeat-body spawn input/output bindings reuse the existing static
+  generated-child handoff model: one lexical child instance, one generated-top
+  binding path, and no per-iteration hardware or runtime binding allocation.
+- Schedule reports expose repeat-body spawn binding provenance through
+  `transaction_port_bindings[]`, and invalid/missing repeat-body bindings fail
+  closed through the same binding validator as top-level spawn.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`; repeat-body `(domain ...)`,
+  `await_any`, `do`, nested activation, and sample-after-spawn timing remain
+  deferred.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body spawn bindings selected as next ISF PNT leaf
 - Activated
   [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).

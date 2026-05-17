@@ -17,13 +17,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   after repeat-body spawn, and nested branch/loop activation remain deferred.
   The active `ISF-REPEAT-BODY-CHILD-ACTIVATION` tree now explicitly tracks
   that remaining repeat-body child-activation backlog before future code work.
-  The workflow now also requires task-tree ownership before any code, test,
-  source, generated-artifact, or config change. The next selected leaf is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, which will ship repeat-body spawn
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` then shipped repeat-body spawn
   `(bind ...)` on the existing top-level repeat plus same-body `await_all`
-  path while keeping `(domain ...)`, `await_any`, repeat-body `do`, nested
-  activation, and sample-after-spawn deferred. Push cadence is every 30
-  unpushed commits unless the user explicitly requests an earlier push.
+  path. Repeat-body `(domain ...)`, `await_any`, `do`, samples after
+  repeat-body spawn, and nested branch/loop activation remain deferred and
+  tracked in the same active tree. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, but domain overrides still need their
+  own clock-domain/re-entry contract before implementation. The workflow also
+  requires task-tree ownership before any code, test, source,
+  generated-artifact, or config change. Push cadence is every 30 unpushed
+  commits unless the user explicitly requests an earlier push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -465,6 +468,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-REPEAT-SPAWN-PARAMS.2` then widened that subset so repeat-body spawn
   may carry optional static `(params ...)` overrides that specialize the same
   lexical generated child instance once in the generated top.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` then widened that subset again so
+  repeat-body spawn may carry optional `(bind ...)` input/output handoffs for
+  the same static generated child instance, with generated-top wiring and
+  schedule-report provenance.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization

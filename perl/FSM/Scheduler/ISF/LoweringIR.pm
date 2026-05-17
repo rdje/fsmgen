@@ -1374,22 +1374,22 @@ sub _validate_transaction_port_bindings($self, $actor) {
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
-        for my $clause (@{$tx->{clauses} || []}) {
-            next unless ref($clause) eq 'ARRAY' && @$clause;
-            my $keyword = $clause->[0];
-            next unless defined($keyword) && !ref($keyword);
-
-            if ($keyword eq 'do' || $keyword eq 'spawn') {
-                my $target = $clause->[1];
-                next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
-                _validate_activation_bindings(
-                    $actor,
-                    $tx,
-                    $transaction_by_name{$target},
-                    _activation_bindings_from_clause($clause, $tx_name, 'transaction body'),
-                    "Transaction '$tx_name': $keyword target '$target'",
-                );
-            }
+        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx_name)) {
+            my $clause = $ref->{clause};
+            my $keyword = $ref->{keyword};
+            my $label = $ref->{label};
+            my $target = $clause->[1];
+            next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
+            my $context = $label eq 'repeat body'
+                ? "Transaction '$tx_name': repeat-body $keyword target '$target'"
+                : "Transaction '$tx_name': $keyword target '$target'";
+            _validate_activation_bindings(
+                $actor,
+                $tx,
+                $transaction_by_name{$target},
+                _activation_bindings_from_clause($clause, $tx_name, $label),
+                $context,
+            );
         }
     }
 
@@ -1423,10 +1423,10 @@ sub _transaction_port_binding_metadata {
     for my $tx (@{$actor->{transactions} || []}) {
         my $owner = $tx->{name};
         my $do_ordinal = 0;
-        for my $clause (@{$tx->{clauses} || []}) {
-            next unless ref($clause) eq 'ARRAY' && @$clause;
-            my $keyword = $clause->[0];
-            next unless defined($keyword) && !ref($keyword) && ($keyword eq 'do' || $keyword eq 'spawn');
+        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $owner)) {
+            my $clause = $ref->{clause};
+            my $keyword = $ref->{keyword};
+            my $label = $ref->{label};
             my $target = $clause->[1];
             next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
             my $current_do_ordinal;
@@ -1434,7 +1434,7 @@ sub _transaction_port_binding_metadata {
                 $current_do_ordinal = $do_ordinal++;
             }
 
-            my $bindings = _activation_bindings_from_clause($clause, $owner, 'transaction body');
+            my $bindings = _activation_bindings_from_clause($clause, $owner, $label);
             next unless @$bindings;
             my %target_ports = _transaction_port_map($transaction_by_name{$target});
             my $instance = $keyword eq 'spawn'
@@ -3617,19 +3617,17 @@ sub _validate_repeat_body_spawn_subset {
             confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses\n"
                 unless $label eq 'transaction body';
             for my $subclause (@{$body_clause}[4 .. $#$body_clause]) {
-                confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)' in the parameterized spawn subset\n"
+                confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)' or '(bind ...)' in the spawn binding subset\n"
                     unless ref($subclause) eq 'ARRAY'
                         && @$subclause
                         && defined($subclause->[0])
                         && !ref($subclause->[0])
                         && length($subclause->[0]);
                 my $head = $subclause->[0];
-                next if $head eq 'params';
-                confess "Transaction '$tn': repeat-body spawn '(bind ...)' is not supported before repeat re-entry payload timing is specified\n"
-                    if $head eq 'bind';
+                next if $head eq 'params' || $head eq 'bind';
                 confess "Transaction '$tn': repeat-body spawn '(domain ...)' is not supported before repeat cross-domain ownership is specified\n"
                     if $head eq 'domain';
-                confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)' subclause in the parameterized spawn subset\n";
+                confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)' and '(bind ...)' subclauses in the spawn binding subset\n";
             }
             confess "Transaction '$tn': repeat-body spawn cannot follow pending samples in the first spawn-in-repeat subset\n"
                 if $pending_sample_run;

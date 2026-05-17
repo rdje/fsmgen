@@ -1024,7 +1024,8 @@ known interface or sample-derived width, and unknown count forms fall back to
 widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
 data operations, and the first child-activation subset: spawn with optional
-static `(params ...)` followed by same-body `await_all`.
+static `(params ...)` and optional `(bind ...)` handoffs followed by same-body
+`await_all`.
 
 `N` is a counter load value, not a structural replication count. A dynamic
 scalar count is therefore compatible with the hardware model when its width is
@@ -1034,7 +1035,8 @@ instantiates one static child instance for the lexical spawn name. The repeat
 body starts that instance, waits for the same instance's done port, and only
 then reaches the repeat check. If the spawn carries `(params ...)`, those
 overrides appear once on that static generated-top child instance, not on each
-iteration:
+iteration. If it carries `(bind ...)`, the generated parent handoff ports are
+also emitted once for that static instance and wired by the generated top:
 
 ```lisp
 (parent_spawn_2

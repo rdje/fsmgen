@@ -149,6 +149,97 @@ ISF
     like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\(LANES \(8'hA5 8'h3C\)\)\s+\)\s+\)/s, 'generated top applies per-instance spawn parameter overrides');
 };
 
+subtest 'repeat body spawn accepts port bindings through one static child instance' => sub {
+    my $source = <<'ISF';
+(actor repeat_spawn_binding
+  (clock clk)
+  (interface
+    (input start)
+    (input payload (width 8))
+    (input loops (width 3))
+    (output result (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0
+        (bind
+          (input data payload)
+          (output resp result)))
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (update resp data)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'repeat-body spawn binding contributes one static generated child instance');
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{child}, 'worker', 'repeat-body spawn binding targets the child transaction');
+    is($instance->{instance}, 'w0', 'repeat-body spawn binding preserves the lexical instance name');
+    is_deeply(
+        $instance->{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'data',
+                parent_port      => 'w0_data',
+                actor_signal     => 'payload',
+                actor_expr       => 'payload',
+                actor_expression => 'payload',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'resp',
+                parent_port      => 'w0_resp',
+                actor_signal     => 'result',
+                actor_expr       => 'result',
+                actor_expression => 'result',
+                width            => 8,
+            },
+        ],
+        'repeat-body spawn binding exposes reviewable generated handoff metadata',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'repeat_spawn_binding.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'repeat_spawn_binding_top.fsm'};
+
+    ok(defined($parent_fsm), 'repeat-spawn binding parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'repeat-spawn binding child scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'repeat-spawn binding generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_spawn_2[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_all_3\)/,
+        'repeat body spawn binding still starts the static child and advances to await_all');
+    like($parent_fsm, qr/\(parent_await_all_3[\s\S]*\(-> parent_repeat_check_4 <w0_done\)/,
+        'repeat body spawn binding waits for child done before the repeat check');
+    like($parent_fsm, qr/\(-w0_port_bindings\s+\(= \(w0_data> payload\)\)\s+\(= \(result> w0_resp\)\)\s+\)/s,
+        'parent .fsm keeps repeat-spawn input and output bindings reviewable');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top instantiates the repeat-spawn binding child once');
+    like($top_fsm, qr/\(repeat_spawn_binding\.w0_data w0\.data\)/,
+        'generated top wires repeat-spawn input binding handoff');
+    like($top_fsm, qr/\(w0\.resp repeat_spawn_binding\.w0_resp\)/,
+        'generated top wires repeat-spawn output binding handoff');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:data',
+            'spawn:w0:resp',
+        ],
+        'report exposes repeat-spawn transaction port-binding provenance',
+    );
+};
+
 subtest 'parameterized do lowers through a generated child activation instance' => sub {
     my $source = <<'ISF';
 (actor parameterized_do_binding
@@ -297,16 +388,32 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat spawn with bind', qr/repeat-body spawn '\(bind \.\.\.\)' is not supported/);
-(actor repeat_spawn_with_bind
+    assert_lower_rejected(<<'ISF', 'repeat spawn with child ports requires bindings', qr/repeat-body spawn target 'worker' requires '\(bind \.\.\.\)' because transaction 'worker' declares ports/);
+(actor repeat_spawn_missing_bind
   (clock clk)
   (interface (input start) (input payload (width 8)) (input loops (width 3)) (output done))
   (transaction parent
     (on start)
     (repeat loops
+      (spawn worker as w0)
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (ports
+      (input data (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat spawn bind validates actor signal', qr/repeat-body spawn target 'worker' binding for port 'data' references unknown actor signal 'missing_payload'/);
+(actor repeat_spawn_bind_unknown_signal
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
       (spawn worker as w0
         (bind
-          (input data payload)))
+          (input data missing_payload)))
       (await_all done))
     (complete done))
   (transaction worker

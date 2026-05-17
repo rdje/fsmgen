@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body spawn bindings shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`.
+- Top-level repeat bodies may now use
+  `(spawn child as inst [(params ...)] (bind ...))` when the same repeat body
+  reaches `(await_all done)` before the repeat check can loop.
+- Input/output bindings reuse the static generated-child handoff model and are
+  visible in generated-top wiring plus schedule-report
+  `transaction_port_bindings[]` provenance.
+- Repeat-body `(domain ...)`, `await_any`, `do`, nested activation, and
+  sample-after-spawn timing remain deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`.
+
 ## 2026-05-17: R14 — ISF repeat-body spawn bindings selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`.
 - Activated the repeat-body child-activation task tree.

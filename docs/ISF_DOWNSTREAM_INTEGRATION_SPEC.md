@@ -840,12 +840,14 @@ Rules:
   `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
   `extract`, actor-owned bank `store` and `load`, and shipped `wait` clauses.
   Top-level repeat bodies also accept
-  `(spawn child as instance [(params ...)])` clauses when the same repeat body
-  reaches `(await_all done)` before the repeat check can loop. Static
-  parameter overrides specialize the one lexical generated child instance and
-  are not per-iteration runtime values. `do`, `await_any`, spawn activation
-  `(bind ...)` or `(domain ...)`, `stage`, `contract`, nested `while`, and
-  nested `until` remain outside the shipped repeat-body subset.
+  `(spawn child as instance [(params ...)] [(bind ...)])` clauses when the
+  same repeat body reaches `(await_all done)` before the repeat check can
+  loop. Static parameter overrides specialize the one lexical generated child
+  instance and are not per-iteration runtime values. Input and output
+  bindings reuse the same generated-top handoff model as top-level spawn:
+  handoff ports are generated once for the static child instance. `do`,
+  `await_any`, spawn activation `(domain ...)`, `stage`, `contract`, nested
+  `while`, and nested `until` remain outside the shipped repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as
   `shared.mode.BUSY` as scalar operands. Local or package enum members may
@@ -1150,9 +1152,11 @@ Rules:
 - `await_any` waits for any currently pending spawned done port.
 - The shipped repeat-body spawn subset reuses the same static generated child
   instance on every iteration. Optional `(params ...)` overrides specialize
-  that static instance once in the generated top. The same repeat body must
-  consume pending done ports through `await_all` before the repeat check can
-  loop, preventing re-entry before fresh child completion.
+  that static instance once in the generated top. Optional `(bind ...)` input
+  and output port handoffs are also generated once for that same instance.
+  The same repeat body must consume pending done ports through `await_all`
+  before the repeat check can loop, preventing re-entry before fresh child
+  completion.
 
 ### 11.8 Stages, Contracts, Latency
 

@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `active` | `R14` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `active` | `R14` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
 
 ## Proposed Task Trees
 
@@ -202,7 +202,7 @@ as done work unless a future task reopens them.
 | Actor-owned scalar storage source vocabulary | `ISF-STORAGE-VAR-SURFACE`, `ISF-STORAGE-VAR-ALIASES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Expression-valued activation input bindings | `ISF-ACTIVATION-BIND-EXPRESSIONS` |
-| Remaining repeat-body child activation widening: spawn `(bind ...)`, spawn `(domain ...)`, `await_any`, repeat-body `do`, nested branch/loop activation, and sample-after-spawn timing | `ISF-REPEAT-BODY-CHILD-ACTIVATION` |
+| Remaining repeat-body child activation widening: spawn `(domain ...)`, `await_any`, repeat-body `do`, nested branch/loop activation, and sample-after-spawn timing | `ISF-REPEAT-BODY-CHILD-ACTIVATION` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
 | Remaining rule-trigger and direct-activation parameter overrides | `ISF-ACTIVATION-PARAM-OVERRIDES` |

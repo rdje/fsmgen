@@ -230,11 +230,11 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 Status: partially shipped; broader repeat-body child activation remains backlog.
 Task-tree owner for the remaining backlog:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
-The next selected leaf is repeat-body spawn `(bind ...)`, limited to the
-already shipped top-level repeat plus same-body `await_all` path. It is
-selected to reuse the static generated-child handoff model: one lexical spawn
-name maps to one generated child instance, and binding payload ports are
-generated once for that instance rather than per repeat iteration.
+Repeat-body spawn `(bind ...)` is shipped for the already shipped top-level
+repeat plus same-body `await_all` path. It reuses the static generated-child
+handoff model: one lexical spawn name maps to one generated child instance,
+and binding payload ports are generated once for that instance rather than per
+repeat iteration.
 
 Goal: allow `(spawn child as name)` inside `(repeat count body...)` without
 implying dynamic hardware creation.
@@ -254,9 +254,12 @@ iteration cannot re-assert an instance start before the previous activation
 has returned fresh done. Parameter overrides reuse the same static
 specialization contract as top-level spawn: they specialize the one lexical
 child instance in the generated top and do not create per-iteration parameter
-values. `await_any`, repeat-body `do`, activation `(bind ...)`, activation
-`(domain ...)`, and spawn nested under branch or loop bodies remain backlog
-until their re-entry, binding, and report contracts are specified.
+values. Binding handoffs are now shipped for the same subset: optional
+`(bind ...)` input and output ports generate one set of parent handoff ports
+for the lexical static instance and are wired in the generated top. `await_any`,
+repeat-body `do`, activation `(domain ...)`, and spawn nested under branch or
+loop bodies remain backlog until their re-entry, binding, domain, and report
+contracts are specified.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

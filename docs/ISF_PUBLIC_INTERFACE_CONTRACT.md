@@ -431,6 +431,11 @@ are direction- and known-width-checked, keep actor inputs read-only, reject
 actor output readback, produce hidden generated-top handoffs for spawned
 bindings, avoid duplicate same-name child wiring for explicit spawn binding
 sources, and use per-rule source signals before trigger fan-in.
+Repeat-body spawn bindings are checked by
+[t/1215-isf-spawn-parameter-binding.t](../t/1215-isf-spawn-parameter-binding.t):
+the shipped top-level repeat-body spawn plus same-body `await_all` subset may
+also carry `(bind ...)` input and output handoffs on the same static generated
+child instance used by top-level spawn.
 The actor-pin binding conflict boundary is checked by
 [t/1242-isf-port-binding-conflict-semantics.t](../t/1242-isf-port-binding-conflict-semantics.t)
 so spawned output bindings keep parent-transaction ownership in assignment
@@ -793,14 +798,15 @@ The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
 top-level spawn plus same-body `await_all` subset with optional static
-`(params ...)` overrides. `do`, `await_any`, spawn activation `(bind ...)`,
-spawn activation `(domain ...)`, `stage`, `contract`, nested `while`, and
-nested `until` remain outside the shipped repeat-body subset.
+`(params ...)` overrides and optional `(bind ...)` port handoffs. `do`,
+`await_any`, spawn activation `(domain ...)`, `stage`, `contract`, nested
+`while`, and nested `until` remain outside the shipped repeat-body subset.
 The shipped repeat-body child-activation subset is
-`(spawn child as instance [(params ...)])` followed by a same-body
+`(spawn child as instance [(params ...)] [(bind ...)])` followed by a same-body
 `(await_all done)` before the repeat check can loop, reusing one static
 generated child instance across iterations. Optional parameter overrides
-specialize that instance once in the generated top.
+specialize that instance once in the generated top, and optional input/output
+bindings create generated handoff ports once for the same static instance.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent
@@ -1579,9 +1585,11 @@ Parameterized/generated `do` activations use generated instance handoffs such
 as `{parent}_{child}_do_{ordinal}_start` and `_done`.
 Spawned child instances are static generated HDL. Runtime spawn states only
 activate the persistent child instance through its start path, and child
-completion returns that instance to start-gated idle. Future spawn-in-repeat
-support must reuse the same lexical instance on each iteration and must reject
-or sequence starts that could hit a still-busy child.
+completion returns that instance to start-gated idle. Repeat-body spawn reuses
+the same lexical instance on each iteration, including optional static
+parameter overrides and optional input/output binding handoff ports, and the
+shipped repeat-body subset requires same-body `await_all` sequencing before
+the repeat check can re-enter the spawn.
 ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
 generated `rule_transaction` trigger source. Generated combinational fan-in
 then drives `transaction_start` from every source for that transaction. This
@@ -2023,8 +2031,8 @@ These are not stable public interfaces yet:
   sample-compatible runtime wait pending
   samples, and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public except for the documented
-  top-level repeat-body spawn plus optional static `(params ...)` and
-  same-body `await_all` subset.
+  top-level repeat-body spawn plus optional static `(params ...)`, optional
+  `(bind ...)` port handoffs, and same-body `await_all` subset.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
   wait counts, sample-incompatible runtime wait successors, nested loops, and
   loop bodies containing broader child activation, stages, or contracts need

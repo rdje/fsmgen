@@ -52,11 +52,11 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1: select repeat spawn bindings`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship repeat-body spawn port bindings if selected.`
   Acceptance: `Top-level repeat bodies accept '(spawn child as inst [(params ...)] (bind ...))' only when the same repeat body reaches '(await_all done)' before the repeat check can loop; input and output bindings reuse the shipped static generated-child handoff model, generated-top wiring, diagnostics, docs, and tests while domain overrides, await_any, repeat-body do, nested activation, and sample-after-spawn remain deferred.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused repeat/spawn/port-binding/doc tests; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.2: implement repeat spawn bindings`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`
   Status: `pending`
@@ -91,8 +91,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` | `done` | Selected repeat-body spawn port bindings as the next bounded implementation subset. |
-| 2 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` | `pending` | Reuses the static generated-child spawn handoff model on the shipped top-level repeat plus same-body `await_all` path. |
-| 3 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` | `pending` | Tracks repeat-body spawn clock-domain ownership. |
+| 2 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` | `done` | Shipped repeat-body spawn port-binding handoffs on the top-level repeat plus same-body `await_all` path. |
+| 3 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` | `pending` | Tracks repeat-body spawn clock-domain ownership and needs its own ownership/re-entry contract before implementation. |
 | 4 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` | `pending` | Tracks repeat-body await_any outstanding-child semantics. |
 | 5 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` | `pending` | Tracks repeat-body blocking do activation. |
 | 6 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` | `pending` | Tracks nested repeat-body child activation and sample-after-spawn timing. |
@@ -116,6 +116,11 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - `2026-05-17`: Repeat-body spawn `(domain ...)`, `await_any`, repeat-body
   `do`, nested branch/loop activation, and sample-after-spawn timing remain
   deferred after the binding selection.
+- `2026-05-17`: Leaf `.2` shipped repeat-body spawn `(bind ...)` for top-level
+  repeat bodies that reach same-body `(await_all done)` before the repeat check.
+  Validation now covers generated parent handoff metadata, generated-top
+  wiring, schedule-report `transaction_port_bindings[]` provenance, and
+  fail-closed validation for missing/invalid repeat-body bindings.
 
 ## Open Questions
 
@@ -134,13 +139,15 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | --- | --- | --- | --- |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after task-tree gate policy sync` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed` |
+| `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/spawn/doc checks, adjacent port-binding/report checks, book build, full ISF gate, and diff check passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `ISF-REPEAT-BODY-CHILD-ACTIVATION: track repeat activation backlog` | `e942bfc6; proposed tracking tree created` |
-| `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.1: select repeat spawn bindings` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.1: select repeat spawn bindings` | `47715e55; selected repeat-body spawn binding subset` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.2: implement repeat spawn bindings` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
 
 ## Changelog
 
@@ -151,3 +158,5 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   backlog.
 - `2026-05-17`: Activated the tree and selected repeat-body spawn
   `(bind ...)` as the next bounded implementation leaf.
+- `2026-05-17`: Shipped repeat-body spawn `(bind ...)` on the existing
+  top-level repeat plus same-body `await_all` subset.

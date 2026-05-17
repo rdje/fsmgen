@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body spawn bindings reuse static handoffs
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` deliberately reuses the existing
+  top-level spawn binding machinery instead of inventing a repeat-specific
+  payload path. The repeat body still starts one static generated child
+  instance and must reach same-body `await_all` before re-entering the repeat
+  check.
+- The validation gap was that top-level transaction binding walkers did not
+  include repeat-body spawn sites. The fix routes binding validation and
+  schedule-report binding metadata through the generated-child action
+  reference walker that already includes top-level repeat-body spawn clauses.
+- `(domain ...)` stays deferred because that is not just a subclause-shape
+  problem. It changes clock-domain ownership and needs an explicit re-entry
+  contract before code.
 ## 2026-05-17: repeat-body spawn bindings are the next selected subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` selects repeat-body spawn
   `(bind ...)` before implementation. The subset is intentionally limited to

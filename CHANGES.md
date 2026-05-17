@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body spawn bindings shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`.
+- Repeat-body spawn now accepts optional `(bind ...)` input/output port
+  handoffs on the existing top-level repeat plus same-body `await_all` subset.
+- The lowerer validates repeat-body spawn bindings, emits generated parent
+  handoff ports and `spawn_port_binding` DT metadata, wires those handoffs in
+  the generated top, and exposes repeat-body binding provenance through
+  schedule-report `transaction_port_bindings[]`.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, README task index, and task tree.
+- Repeat-body `(domain ...)`, `await_any`, `do`, nested activation, and
+  sample-after-spawn timing remain deferred.
 ### R14 — ISF repeat-body spawn binding subset selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`.
 - Activated the repeat-body child-activation task tree and selected
