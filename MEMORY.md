@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: switch-contained repeat multiple spawns selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.51`.
+- The active R14 task tree now selects a repeat directly inside a top-level
+  `switch` branch with two or more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
+  that must drain through same-body `(await_all done)` before the nested
+  repeat check can loop.
+- The selected contract mirrors the shipped when-contained multiple-spawn
+  leaf and reuses the static generated-child handoff model plus source-order
+  sample timing before nested spawn or sync states.
+- Nested `await_any` for multiple pending children, `do` while a nested spawn
+  is pending, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.52`.
+- Workflow note: push cadence remains every 30 unpushed commits unless the
+  user explicitly requests an earlier push.
 ## 2026-05-17: when-contained repeat multiple spawns shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.50`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

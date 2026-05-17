@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF switch-contained repeat multiple spawns selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.51`.
+- Selected top-level `switch` branches containing nested repeats with two or
+  more generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites that must drain through same-body `(await_all done)` before the nested
+  repeat check can loop.
+- The selected surface mirrors the shipped when-contained multiple-spawn leaf,
+  reuses the static generated-child handoff model, and preserves source-order
+  samples before nested spawn or sync states.
+- Nested `await_any` for multiple pending children, `do` while a nested spawn
+  is pending, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.52`.
+
 ## 2026-05-17: R14 — ISF when-contained repeat multiple spawns shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.50`.
 - Top-level `when` bodies may now contain nested repeats with two or more

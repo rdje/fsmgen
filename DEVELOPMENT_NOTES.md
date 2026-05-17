@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained multiple nested spawns are the next drain subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.51` selects multiple generated `spawn`
+  sites inside a repeat that is directly inside a top-level `switch` branch.
+- The selected implementation should mirror the shipped when-contained
+  multiple-spawn drain proof: require same-body `(await_all done)` before the
+  switch-branch nested repeat check can loop, and keep every pending static
+  generated child done handoff in the guard.
+- Nested `await_any` for multiple pending children, spawned/blocked child
+  interaction, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child lifetime semantics remain separate contracts.
 ## 2026-05-17: when-contained multiple nested spawns reuse await_all drain
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.50` implements only the selected
   when-contained multiple generated-spawn subset.
