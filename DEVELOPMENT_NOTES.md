@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: repeat-body spawn implementation is a static-instance re-entry contract
+- `ISF-SPAWN-IN-REPEAT.2` implements only the subset whose lifetime model is
+  already reviewable in scheduled `.fsm`: top-level repeat-body plain spawn,
+  followed by a same-body `await_all` before the repeat check state.
+- The lowerer collects child references recursively from transaction clauses so
+  repeat-body spawn participates in the same generated-top static instance
+  inventory as top-level spawn. It does not elaborate per-iteration children;
+  the lexical instance name is the generated child instance identity.
+- The repeat lowering path carries pending repeat-body spawn done ports until
+  `await_all`, then emits a sync state before the repeat check. That ordering
+  is the re-entry proof: the loop can only reach the next iteration after all
+  pending spawned children for the current iteration have reported done.
+- The validator intentionally rejects parameterized, bound, domain-qualified,
+  nested, and `await_any` repeat-body activation forms. Those forms need
+  separate generated-top binding, outstanding-child, clock-domain, and
+  report-provenance contracts before they can be shipped without ambiguity.
 ## 2026-05-16: repeat-body spawn ships only with an await-all re-entry proof first
 - `ISF-SPAWN-IN-REPEAT.1` selects the first implementation contract before
   lowering changes: a repeat body may start a static generated child instance

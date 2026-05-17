@@ -424,9 +424,14 @@ counter, widened to the largest branch requirement.
 
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
-actor-owned bank `store` and `load`, and shipped `wait` clauses. `do`,
-`spawn`, `await_all`, `await_any`, `stage`, `contract`, nested `while`, and
+actor-owned bank `store` and `load`, shipped `wait` clauses, and the
+top-level plain-spawn plus same-body `await_all` subset. `do`, `await_any`,
+broader spawn activation forms, `stage`, `contract`, nested `while`, and
 nested `until` remain outside the shipped repeat-body subset.
+The shipped repeat-body child-activation subset is plain
+`(spawn child as instance)` followed by a same-body `(await_all done)` before
+the repeat check can loop. The lexical spawn name denotes one static generated
+child instance reused across repeat iterations.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is
@@ -437,11 +442,11 @@ semantics important: a fully general repeat contract must either define
 zero-count as "skip the body" or reject zero as an illegal count before the
 loop body can run.
 
-If a future repeat body contains `(spawn child as name)`, that loop still
-reuses one static child instance named `name`. It does not elaborate one child
-per iteration. The scheduler must therefore prove the loop waits for the
-instance's fresh completion before a later iteration can start it again, or
-reject the construct with a targeted busy/re-entry diagnostic.
+For the shipped repeat-body spawn subset, `(spawn child as name)` still reuses
+one static child instance named `name`. It does not elaborate one child per
+iteration. The same repeat body must reach `(await_all done)` before the
+repeat check can loop, so a later iteration cannot start the static instance
+again until its fresh completion has been observed.
 
 ## `(while cond body...)` / `(until cond body...)` — Transaction Loops
 
@@ -462,13 +467,14 @@ continuous guard over a multi-cycle body; once a loop body starts, its states
 run according to their own scheduled control flow until they reach the loop
 check or an explicit terminal path.
 
-The shipped body surface is the same inline transaction subset used by
-`when`/`switch` plus the shipped repeat-body subset: named drives, `await`,
-`sample`, `complete`, `repeat`, `update`, `set`, shift/assemble/extract data
-operations, actor-owned bank `store`/`load`, nested `when`, and waits. `do`,
-`spawn`, `await_all`, `await_any`, `stage`, `contract`, and nested loops remain
-deferred until their re-entry, child-lifetime, and report semantics are
-specified for loop bodies. Body clauses must be non-empty list forms.
+The shipped `while`/`until` body surface is the same inline transaction subset
+used by `when`/`switch`: named drives, `await`, `sample`, `complete`, `repeat`,
+`update`, `set`, shift/assemble/extract data operations, actor-owned bank
+`store`/`load`, nested `when`, and waits. `while`/`until` bodies continue to
+reject `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, and nested
+loops until their re-entry, child-lifetime, and report semantics are specified.
+The shipped repeat-body spawn plus same-body `await_all` subset applies only to
+`repeat` bodies. Body clauses must be non-empty list forms.
 
 Successful schedule reports expose `transaction_loops[]` entries with the
 authored transaction, loop kind, normalized condition, generated decision

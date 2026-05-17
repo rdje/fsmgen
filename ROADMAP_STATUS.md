@@ -10,13 +10,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-SPAWN-IN-REPEAT` is the active R14 PNT feature
-  tree after `ISF-DYNAMIC-WAIT-PHASE-SAMPLE` closed. Current frontier:
-  `ISF-SPAWN-IN-REPEAT.2`, implementing the documented first safe subset:
-  top-level repeat-body plain `spawn` clauses whose pending done ports are
-  consumed by a same-body `await_all` before the repeat check can loop.
-  `await_any`, `do`, activation params/bindings/domains, and nested
-  branch/loop forms remain deferred.
+- Next decision point: `ISF-SPAWN-IN-REPEAT` is closed after shipping the
+  documented first safe subset: top-level repeat-body plain `spawn` clauses
+  whose pending done ports are consumed by a same-body `await_all` before the
+  repeat check can loop. `await_any`, repeat-body `do`, activation
+  params/bindings/domains, samples after repeat-body spawn, and nested
+  branch/loop forms remain deferred. No active ISF task tree remains open; the
+  next R14 PNT slice must select or create a new task tree first. Push cadence
+  is every 30 unpushed commits unless the user explicitly requests an earlier
+  push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -451,6 +453,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` then shipped transaction phase
   pass-through zero-bypass clones while leaving actor-level phase metadata
   report-only.
+  `ISF-SPAWN-IN-REPEAT.2` then shipped the first repeat-body child activation
+  subset: a top-level repeat body may use plain `spawn` clauses when the same
+  repeat body reaches `await_all` before the repeat check can loop, reusing one
+  static generated child instance per lexical spawn name.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization

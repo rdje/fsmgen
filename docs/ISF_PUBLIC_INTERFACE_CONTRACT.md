@@ -791,9 +791,14 @@ so `(repeat count body...)` requires one scalar non-empty count and at least
 one list-form body clause before repeat counter emission.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
-actor-owned bank `store` and `load`, and shipped `wait` clauses. `do`,
-`spawn`, `await_all`, `await_any`, `stage`, `contract`, nested `while`, and
+actor-owned bank `store` and `load`, shipped `wait` clauses, and the
+top-level plain-spawn plus same-body `await_all` subset. `do`, `await_any`,
+broader spawn activation forms, `stage`, `contract`, nested `while`, and
 nested `until` remain outside the shipped repeat-body subset.
+The shipped repeat-body child-activation subset is plain
+`(spawn child as instance)` followed by a same-body `(await_all done)` before
+the repeat check can loop, reusing one static generated child instance across
+iterations.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent
@@ -2015,11 +2020,13 @@ These are not stable public interfaces yet:
   constant and actor parameter/runtime scalar/runtime expression `(wait N)`,
   sample-compatible runtime wait pending
   samples, and top-level transaction `(while cond body...)` /
-  `(until cond body...)` remains non-public. Unsupported transaction parameter
-  wait counts, non-scalar actor parameter wait counts, sample-incompatible
-  runtime wait successors, nested loops, and loop bodies containing child
-  activation, stages, or contracts need parser, lowering, report, and
-  regression-backed contracts before downstream users can rely on them.
+  `(until cond body...)` remains non-public except for the documented
+  top-level repeat-body plain-spawn plus same-body `await_all` subset.
+  Unsupported transaction parameter wait counts, non-scalar actor parameter
+  wait counts, sample-incompatible runtime wait successors, nested loops, and
+  loop bodies containing broader child activation, stages, or contracts need
+  parser, lowering, report, and regression-backed contracts before downstream
+  users can rely on them.
 - `FSM::Scheduler::ISF::LoweringIR` internals.
 - Emitter-private state objects.
 - Any unadvertised keys in the lower-result hash or schedule report.

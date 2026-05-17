@@ -122,6 +122,7 @@ my @required_examples = (
     'top-level ready/valid stages',
     'top-level contract arm states',
     'loop decision states',
+    'top-level repeat-body spawn followed by same-body await_all',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

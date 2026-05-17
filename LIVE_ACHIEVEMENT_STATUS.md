@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF repeat-body spawn plus await_all subset shipped
+- Completed R14 task-tree slice:
+  `ISF-SPAWN-IN-REPEAT.2` in
+  [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md).
+- The `ISF-SPAWN-IN-REPEAT` tree is now closed. No active ISF task tree
+  remains open; the next R14 PNT slice must select or create a new task tree
+  first.
+- Top-level repeat bodies may now contain plain `(spawn child as inst)` when
+  the same repeat body reaches `(await_all done)` before the repeat check can
+  loop.
+- The lexical spawn name denotes one static generated child instance reused
+  across repeat iterations, and the same-body `await_all` observes all pending
+  child done ports before re-entry.
+- `await_any`, repeat-body `do`, spawn params/bind/domain forms, samples after
+  repeat-body spawn, and nested branch/loop repeat-body spawn forms remain
+  fail-closed.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl modules/tests passed; focused
+  repeat/spawn/doc tests passed with `Files=5, Tests=228`;
+  `mdbook build docs/book` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1036`; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF spawn-in-repeat first contract selected
 - Completed R14 task-tree slice:
   `ISF-SPAWN-IN-REPEAT.1` in

@@ -34,7 +34,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
     repeat => {
         map { $_ => 1 } qw(
             drive await sample update set shift_left shift_right assemble extract
-            store load wait
+            store load wait spawn await_all
         )
     },
     while => {
@@ -496,15 +496,15 @@ sub _generated_child_transaction_refs {
     my %s;
     my $constant_values = _actor_constant_value_map($actor);
     for my $tx (@{$actor->{transactions}}) {
-        for my $c (@{$tx->{clauses}}) {
-            next unless ref($c) eq 'ARRAY' && @$c;
-            next unless defined($c->[0]) && !ref($c->[0]);
-            if ($c->[0] eq 'spawn') {
-                $s{$c->[1]} = 1;
+        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+            my $clause = $ref->{clause};
+            my $label = $ref->{label};
+            if ($clause->[0] eq 'spawn') {
+                $s{$clause->[1]} = 1;
                 next;
             }
-            if ($c->[0] eq 'do' && @{_do_parameter_overrides($c, $tx->{name}, 'transaction body', $constant_values, $actor)}) {
-                $s{$c->[1]} = 1;
+            if ($clause->[0] eq 'do' && @{_do_parameter_overrides($clause, $tx->{name}, $label, $constant_values, $actor)}) {
+                $s{$clause->[1]} = 1;
             }
         }
     }
@@ -518,6 +518,40 @@ sub _generated_child_transaction_refs {
         }
     }
     return %s;
+}
+
+sub _child_action_refs_from_transaction_clauses {
+    my ($clauses, $tx_name) = @_;
+    my @refs;
+
+    for my $clause (@{$clauses || []}) {
+        next unless ref($clause) eq 'ARRAY' && @$clause;
+        next unless defined($clause->[0]) && !ref($clause->[0]);
+
+        my $keyword = $clause->[0];
+        if ($keyword eq 'do' || $keyword eq 'spawn') {
+            push @refs, {
+                clause  => $clause,
+                keyword => $keyword,
+                label   => 'transaction body',
+            };
+            next;
+        }
+
+        next unless $keyword eq 'repeat';
+        for my $body_clause (@{$clause}[2 .. $#$clause]) {
+            next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
+            next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
+            next unless $body_clause->[0] eq 'spawn';
+            push @refs, {
+                clause  => $body_clause,
+                keyword => 'spawn',
+                label   => 'repeat body',
+            };
+        }
+    }
+
+    return @refs;
 }
 
 sub _rule_trigger_generated_refs {
@@ -637,13 +671,13 @@ sub _build_domain_partition($self, $actor) {
     my %do_ordinals;
     for my $tx (@{$actor->{transactions} || []}) {
         my $owner_domain = _domain_for_entry($tx, $default_domain);
-        for my $clause (@{$tx->{clauses} || []}) {
-            next unless ref($clause) eq 'ARRAY' && @$clause;
-            my $keyword = $clause->[0];
-            next unless defined($keyword) && !ref($keyword) && ($keyword eq 'spawn' || $keyword eq 'do');
+        for my $child_ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+            my $clause = $child_ref->{clause};
+            my $keyword = $child_ref->{keyword};
+            next unless $keyword eq 'spawn' || $keyword eq 'do';
 
             my $target = $clause->[1];
-            my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, 'transaction body') // $owner_domain;
+            my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, $child_ref->{label}) // $owner_domain;
             confess "Transaction '$tx->{name}': $keyword target '$target' uses unknown clock domain '$activation_domain'\n"
                 unless exists $groups{$activation_domain};
             my $include_instance = $keyword eq 'spawn' || ($keyword eq 'do' && $generated_children{$target});
@@ -1198,13 +1232,12 @@ sub _validate_child_transaction_refs($self, $actor) {
 
     for my $tx (@{$actor->{transactions} || []}) {
         my $tx_name = $tx->{name};
-        for my $clause (@{$tx->{clauses} || []}) {
-            next unless ref($clause) eq 'ARRAY' && @$clause;
-            my $keyword = $clause->[0];
-            next unless defined($keyword) && !ref($keyword);
-            next unless $keyword eq 'do' || $keyword eq 'spawn';
+        for my $child_ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx_name)) {
+            my $clause = $child_ref->{clause};
+            my $keyword = $child_ref->{keyword};
+            my $label = $child_ref->{label};
 
-            _validate_child_action_clause($clause, $tx_name, 'transaction body');
+            _validate_child_action_clause($clause, $tx_name, $label);
 
             my $target = $clause->[1];
             confess "Transaction '$tx_name': $keyword target must be a scalar transaction name\n"
@@ -1226,6 +1259,7 @@ sub _validate_child_transaction_refs($self, $actor) {
                 clause  => $clause,
                 keyword => $keyword,
                 target  => $target,
+                label   => $label,
             };
         }
     }
@@ -1253,6 +1287,7 @@ sub _validate_child_transaction_refs($self, $actor) {
         my $clause   = $ref->{clause};
         my $keyword  = $ref->{keyword};
         my $target   = $ref->{target};
+        my $label    = $ref->{label};
         my $generated_activation = $keyword eq 'spawn' || ($keyword eq 'do' && $generated_children{$target});
         next unless $generated_activation;
 
@@ -1280,7 +1315,7 @@ sub _validate_child_transaction_refs($self, $actor) {
         my %declared_params = map {
             $_->{name} => $_
         } @{_transaction_param_declarations($transaction_by_name{$target}, $actor)};
-        for my $override (@{_activation_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values, $actor)}) {
+        for my $override (@{_activation_parameter_overrides($clause, $tx_name, $label, $constant_values, $actor)}) {
             my $name = $override->{name};
             confess "Transaction '$tx_name': $keyword instance '$instance' overrides unknown parameter '$name' on child '$target'\n"
                 unless exists $declared_params{$name};
@@ -2376,7 +2411,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles,$actor,\@bank_accesses);
             push @st, @$ss;
         }
-        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
+        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses,\@spc,$constant_values); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       {
@@ -2500,6 +2535,7 @@ sub _validate_supported_transaction_clauses {
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'when');
         } elsif ($keyword eq 'repeat') {
             _validate_repeat_clause($clause, $tn, $label);
+            _validate_repeat_body_spawn_subset($clause, $tn, $label);
             _validate_supported_transaction_clauses([@{$clause}[2 .. $#$clause]], $tn, 'repeat');
         } elsif ($keyword eq 'while' || $keyword eq 'until') {
             _validate_loop_clause($clause, $tn, $label, $keyword);
@@ -3557,6 +3593,51 @@ sub _validate_repeat_clause {
             && defined($clause->[1])
             && !ref($clause->[1])
             && length($clause->[1]);
+
+    return 1;
+}
+
+sub _validate_repeat_body_spawn_subset {
+    my ($clause, $tn, $label) = @_;
+    my @pending_spawns;
+    my $saw_spawn = 0;
+    my $pending_sample_run = 0;
+
+    for my $body_clause (@{$clause}[2 .. $#$clause]) {
+        next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
+        my $keyword = $body_clause->[0];
+        next unless defined($keyword) && !ref($keyword);
+
+        if ($keyword eq 'sample' && $saw_spawn) {
+            confess "Transaction '$tn': repeat-body sample after spawn is not supported in the first spawn-in-repeat subset\n";
+        }
+
+        if ($keyword eq 'spawn') {
+            confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses\n"
+                unless $label eq 'transaction body';
+            confess "Transaction '$tn': repeat-body spawn supports only plain '(spawn child as instance)' before the re-entry contract is widened\n"
+                unless @$body_clause == 4;
+            confess "Transaction '$tn': repeat-body spawn cannot follow pending samples in the first spawn-in-repeat subset\n"
+                if $pending_sample_run;
+            push @pending_spawns, $body_clause->[3];
+            $saw_spawn = 1;
+            $pending_sample_run = 0;
+            next;
+        }
+
+        if ($keyword eq 'await_all') {
+            confess "Transaction '$tn': repeat-body await_all is supported only after repeat-body spawn clauses\n"
+                unless @pending_spawns;
+            @pending_spawns = ();
+            $pending_sample_run = 0;
+            next;
+        }
+
+        $pending_sample_run = $keyword eq 'sample' ? 1 : 0;
+    }
+
+    confess "Transaction '$tn': repeat-body spawn requires same-body '(await_all done)' before the repeat check can loop\n"
+        if @pending_spawns;
 
     return 1;
 }
@@ -4813,7 +4894,7 @@ sub _expand_loop_body {
 }
 
 sub _ir_repeat {
-    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters;
+    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
     my $width = _repeat_count_width($cl->[1], $widths);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
@@ -4833,7 +4914,18 @@ sub _ir_repeat {
             }
         }
         elsif($bk eq'update'||$bk eq'set'||$bk eq'shift_left'||$bk eq'shift_right'||$bk eq'assemble'||$bk eq'extract'){_push_sample_state(\@s,$tn,\@lp,$ir);push @s,_ir_data_op($bk,$bc,$tn,$$ir++,$widths)}
-        elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@s,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @s,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}}
+        elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@s,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @s,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
+        elsif($bk eq'spawn'){
+            _push_sample_state(\@s,$tn,\@lp,$ir);
+            my $spawn_ref = _spawn_ref_from_clause($bc,$tn,$constant_values || {},$actor);
+            push @$spawn_refs, $spawn_ref if ref($spawn_refs) eq 'ARRAY';
+            push @spawn_done_ports, "$spawn_ref->{instance}_done";
+            push @s,_ir_spawn($bc,$tn,$$ir++);
+        }
+        elsif($bk eq'await_all'){
+            push @s,_ir_sync_all($tn,$$ir++,\@spawn_done_ports);
+            @spawn_done_ports = ();
+        }}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}
     my $fb=$s[0]{name};
     push @s, {name=>"${tn}_repeat_check_".$$ir++,kind=>'repeat_check',assignments=>[{lhs=>$ctr,rhs=>"(- $ctr 1)",op=>'<-'}],transitions=>[],loop_target=>$fb,counter=>$ctr};

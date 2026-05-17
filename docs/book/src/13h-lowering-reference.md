@@ -1022,15 +1022,36 @@ the minimum width that can represent the loaded count, named counts use their
 known interface or sample-derived width, and unknown count forms fall back to
 8 bits. Switch-nested repeats register the same transaction counter at the
 widest required branch width.
-Repeat bodies lower named drive calls, awaits, samples, updates, and the
-current data operations.
+Repeat bodies lower named drive calls, awaits, samples, updates, the current
+data operations, and the first child-activation subset: plain spawn followed
+by same-body `await_all`.
 
 `N` is a counter load value, not a structural replication count. A dynamic
 scalar count is therefore compatible with the hardware model when its width is
 known, but it makes loop latency runtime-dependent and forces the zero-count
-policy to be explicit. The current shipped repeat-body subset does not include
-`spawn`; when that is added, a repeated spawn must reactivate the same static
-child instance and must not imply dynamic module-instance creation.
+policy to be explicit. For repeat-body spawn, the generated top still
+instantiates one static child instance for the lexical spawn name. The repeat
+body starts that instance, waits for the same instance's done port, and only
+then reaches the repeat check:
+
+```lisp
+(parent_spawn_2
+  (= (w0_start> 1))
+  (-> parent_await_all_3))
+
+(parent_await_all_3
+  (-> parent_repeat_check_4 <w0_done))
+
+(parent_repeat_check_4
+  (<- (parent_cnt (- parent_cnt 1)))
+  (?parent_cnt
+    (=1 (-> parent_repeat_init_1))
+    (=0 (-> parent_done_5))))
+```
+
+Broader repeat-body child activation, including `await_any`, parameterized or
+bound spawn, `do`, and nested branch/loop forms, remains fail-closed until its
+re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

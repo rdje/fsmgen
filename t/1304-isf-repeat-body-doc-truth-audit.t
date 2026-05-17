@@ -28,12 +28,12 @@ my @shipped_terms = qw(
     store
     load
     wait
+    spawn
+    await_all
 );
 
 my @deferred_terms = qw(
     do
-    spawn
-    await_all
     await_any
     stage
     contract

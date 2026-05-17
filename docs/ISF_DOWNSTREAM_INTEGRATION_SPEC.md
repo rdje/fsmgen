@@ -839,8 +839,11 @@ Rules:
 - The shipped repeat-body clause surface is named drive calls, `await`,
   `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
   `extract`, actor-owned bank `store` and `load`, and shipped `wait` clauses.
-  `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, nested
-  `while`, and nested `until` remain outside the shipped repeat-body subset.
+  Top-level repeat bodies also accept plain `(spawn child as instance)`
+  clauses when the same repeat body reaches `(await_all done)` before the
+  repeat check can loop. `do`, `await_any`, spawn activation `(params ...)`,
+  `(bind ...)`, or `(domain ...)`, `stage`, `contract`, nested `while`, and
+  nested `until` remain outside the shipped repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as
   `shared.mode.BUSY` as scalar operands. Local or package enum members may
@@ -1143,6 +1146,10 @@ Rules:
 - Spawned child `start` and `done` are explicit handoffs.
 - `await_all` waits for all currently pending spawned done ports.
 - `await_any` waits for any currently pending spawned done port.
+- The shipped repeat-body spawn subset reuses the same static generated child
+  instance on every iteration. The same repeat body must consume pending done
+  ports through `await_all` before the repeat check can loop, preventing
+  re-entry before fresh child completion.
 
 ### 11.8 Stages, Contracts, Latency
 

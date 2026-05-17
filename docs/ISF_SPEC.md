@@ -1539,16 +1539,23 @@ Current lowering:
 - The shipped repeat-body clause surface is named drive calls, `await`,
   `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
   `extract`, actor-owned bank `store` and `load`, and shipped `wait` clauses.
-  `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, nested
-  `while`, and nested `until` remain outside the shipped repeat-body subset.
+  Top-level repeat bodies also accept the first child-activation subset:
+  plain `(spawn child as instance)` clauses followed by a same-body
+  `(await_all done)` before the repeat check can loop. That subset reuses one
+  static generated child instance per lexical spawn name; it does not create
+  one child instance per repeat iteration. `do`, `await_any`, spawn activation
+  `(params ...)`, `(bind ...)`, or `(domain ...)`, `stage`, `contract`,
+  nested `while`, and nested `until` remain outside the shipped repeat-body
+  subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
 dynamic scalar signals when their width is known, but they make transaction
 latency data-dependent and require a clear zero-count policy before the loop
-can be treated as fully general. Future spawn-in-repeat support must preserve
-the same rule: the loop reactivates a lexically named static child instance; it
-does not create one child instance per iteration.
+can be treated as fully general. Repeat-body spawn support preserves the same
+runtime-counter rule: the loop reactivates a lexically named static child
+instance after same-body `await_all`; it does not create one child instance
+per iteration.
 
 ### 7.6.1 Transaction Wait
 
@@ -1870,14 +1877,16 @@ generated decision state. It is not a continuous guard over every state inside
 a multi-cycle body; once the body starts, body states run according to their
 own scheduled control flow until they reach the loop check or exit path.
 
-The shipped loop source position is top-level inside a transaction body. Loop
-bodies accept the current inline body subset: named drive calls, `await`,
-`sample`, `complete`, `repeat`, `update`, `set`, shift/assemble/extract data
-operations, actor-owned bank `store`/`load`, nested `when`, and shipped
-`(wait N)` clauses. `do`, `spawn`, `await_all`, `await_any`, `stage`,
-`contract`, loops nested inside loop bodies, and loops nested under
-`when`/`switch`/`repeat` remain deferred until re-entry, child lifetime, and
-report semantics are specified for those combinations.
+The shipped `while`/`until` loop source position is top-level inside a
+transaction body. `while`/`until` loop bodies accept the current inline body
+subset: named drive calls, `await`, `sample`, `complete`, `repeat`, `update`,
+`set`, shift/assemble/extract data operations, actor-owned bank `store`/`load`,
+nested `when`, and shipped `(wait N)` clauses. They continue to reject `do`,
+`spawn`, `await_all`, `await_any`, `stage`, `contract`, loops nested inside loop
+bodies, and loops nested under `when`/`switch`/`repeat` until re-entry, child
+lifetime, and report semantics are specified for those combinations. Top-level
+repeat-body spawn followed by same-body `await_all` is the only shipped
+loop-body child-activation subset and applies only to `repeat` bodies.
 
 Dynamic loops are ordinary persistent hardware schedule regions, not software
 processes that appear or die. They may run for data-dependent or unbounded
@@ -3186,10 +3195,11 @@ Focused tests:
   remain under `ISF-PORT-BINDING` and
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
-  `while`/`until` subset: nested loops, loops under `when`/`switch`/`repeat`,
-  and loop bodies containing `do`, `spawn`, `await_all`, `await_any`, `stage`,
-  or `contract` remain deferred until re-entry, child lifetime, and report
-  semantics are specified.
+  `while`/`until` subset and the top-level repeat-body plain-spawn plus
+  same-body `await_all` subset: nested loops, loops under
+  `when`/`switch`/`repeat`, and `while`/`until` loop bodies containing `do`,
+  `spawn`, `await_all`, `await_any`, `stage`, or `contract` remain deferred
+  until re-entry, child lifetime, and report semantics are specified.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

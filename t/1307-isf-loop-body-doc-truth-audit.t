@@ -22,8 +22,13 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
-        qr/`do`,\s+`spawn`,\s+`await_all`,\s+`await_any`,\s+`stage`,\s+`contract`/s,
-        "$path keeps child, await-sync, stage, and contract loop-body deferrals",
+        qr/`do`.*`spawn`.*`await_all`.*`await_any`.*`stage`.*`contract`/s,
+        "$path keeps while/until child, await-sync, stage, and contract loop-body deferrals",
+    );
+    like(
+        $content,
+        qr/repeat(?:-body| body).*spawn.*(?:same-body|same repeat body).*await_all/s,
+        "$path documents the shipped repeat-body spawn plus same-body await_all subset",
     );
 }
 

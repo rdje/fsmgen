@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-SPAWN-IN-REPEAT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
 - Last updated: `2026-05-16`
@@ -43,7 +43,7 @@ instance without implying dynamic hardware creation.
 ## Task Tree
 
 - ID: `ISF-SPAWN-IN-REPEAT`
-  Status: `active`
+  Status: `done`
   Goal: `Ship the first safe repeat-body spawn subset.`
   Children: `ISF-SPAWN-IN-REPEAT.1`, `ISF-SPAWN-IN-REPEAT.2`
 
@@ -55,18 +55,18 @@ instance without implying dynamic hardware creation.
   Commit: `ISF-SPAWN-IN-REPEAT.1: select repeat spawn contract`
 
 - ID: `ISF-SPAWN-IN-REPEAT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement top-level repeat-body spawn followed by await_all.`
   Acceptance: `Lowering, generated-top wiring, fail-closed diagnostics, docs, and ISF gates prove the safe subset.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused repeat/spawn/doc tests; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-SPAWN-IN-REPEAT.2: implement repeat spawn await_all`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-SPAWN-IN-REPEAT.1` | `done` | The first safe repeat-body spawn contract is selected and documented. |
-| 2 | `ISF-SPAWN-IN-REPEAT.2` | `pending` | Implements the documented first subset after the policy is pinned down. |
+| 2 | `ISF-SPAWN-IN-REPEAT.2` | `done` | Implemented the documented first subset after the policy was pinned down. |
 
 ## Decisions
 
@@ -91,12 +91,14 @@ instance without implying dynamic hardware creation.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
 | `2026-05-16` | `ISF-SPAWN-IN-REPEAT.1` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed` |
+| `2026-05-16` | `ISF-SPAWN-IN-REPEAT.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1202-isf-repeat-clause-boundary.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused checks, book build, full ISF gate, and diff check passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-SPAWN-IN-REPEAT.1` | `ISF-SPAWN-IN-REPEAT.1: select repeat spawn contract` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-SPAWN-IN-REPEAT.2` | `ISF-SPAWN-IN-REPEAT.2: implement repeat spawn await_all` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
 
 ## Changelog
 
@@ -104,3 +106,7 @@ instance without implying dynamic hardware creation.
   re-entry contract as the next R14 PNT feature family.
 - `2026-05-16`: Closed `ISF-SPAWN-IN-REPEAT.1` after documenting the first
   implementation subset and exclusions in the book backlog.
+- `2026-05-16`: Closed `ISF-SPAWN-IN-REPEAT.2` and the task tree after
+  implementing the top-level repeat-body plain-spawn plus same-body
+  `await_all` subset, documenting the shipped behavior, and validating the
+  broad ISF gate.

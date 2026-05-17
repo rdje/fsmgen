@@ -1,5 +1,30 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF repeat-body spawn plus await_all subset shipped
+- Completed `ISF-SPAWN-IN-REPEAT.2` and closed
+  [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lowers top-level repeat-body plain `(spawn child as inst)` clauses
+  followed by same-body `(await_all done)`.
+- The lexical spawn name reuses one static generated child instance in the
+  generated top across repeat iterations. The same-body `await_all` consumes
+  pending done ports before the repeat check can loop, so a later iteration
+  cannot re-enter the same child before observing fresh completion.
+- Unsupported repeat-body child activation remains fail-closed: `await_any`,
+  repeat-body `do`, spawn `(params ...)`, `(bind ...)`, `(domain ...)`,
+  nested branch/loop spawn forms, samples after repeat-body spawn, and spawn
+  sequences that reach the repeat check without same-body `await_all`.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/control-flow/lowering/backlog/feature-matrix chapters,
+  roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl modules/tests passed; focused
+  repeat/spawn/doc tests passed with `Files=5, Tests=228`;
+  `mdbook build docs/book` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1036`; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 PNT slice must select or
+  create a new task tree first.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF spawn-in-repeat first contract selected
 - Completed `ISF-SPAWN-IN-REPEAT.1` in
   [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md).

@@ -227,7 +227,7 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 
 ### Spawn Inside Repeat Bodies
 
-Status: backlog.
+Status: partially shipped; broader repeat-body child activation remains backlog.
 
 Goal: allow `(spawn child as name)` inside `(repeat count body...)` without
 implying dynamic hardware creation.
@@ -239,7 +239,7 @@ busy/re-entry rule before this can ship: either prove or insert sequencing so
 each later iteration observes the child's fresh done pulse before starting it
 again, or reject the loop with a targeted diagnostic.
 
-Selected first implementation subset: a top-level repeat body may use plain
+Shipped first implementation subset: a top-level repeat body may use plain
 `(spawn child as inst)` clauses when the same repeat body reaches
 `(await_all done)` before the repeat check can loop. That `await_all` consumes
 the pending done ports for the spawned child instances, so the next iteration

@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF repeat-body spawn plus await_all subset shipped
+- Completed `ISF-SPAWN-IN-REPEAT.2` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so top-level repeat bodies may
+  lower plain `(spawn child as inst)` clauses when the same repeat body reaches
+  `(await_all done)` before the repeat check can loop.
+- The repeat-body spawn path contributes static generated child references to
+  generated-top composition, reuses one lexical child instance across repeat
+  iterations, and emits a same-body sync state over the pending done ports
+  before loop re-entry.
+- Broader repeat-body activation surfaces remain fail-closed with targeted
+  diagnostics: `await_any`, repeat-body `do`, spawn `(params ...)`,
+  `(bind ...)`, `(domain ...)`, nested branch/loop spawn forms, samples after
+  repeat-body spawn, and spawn sequences that reach the repeat check without a
+  same-body `await_all`.
+- Extended `t/1215-isf-spawn-parameter-binding.t` for the shipped generated-top
+  wiring and fail-closed cases, updated doc truth audits for the repeat-body
+  exception versus `while`/`until` loop-body deferrals, and synchronized
+  `docs/ISF_SPEC.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/control-flow/
+  lowering/backlog and feature-matrix chapters, roadmap board, README task
+  index, and task tree.
+- Validation: syntax checks for changed Perl modules/tests passed; focused
+  repeat/spawn/doc tests passed with `Files=5, Tests=228`;
+  `mdbook build docs/book` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1036`; `git diff --check` passed.
 ### R14 — ISF spawn-in-repeat first contract selected
 - Completed `ISF-SPAWN-IN-REPEAT.1`.
 - Created the active `ISF-SPAWN-IN-REPEAT` task tree and selected the first
