@@ -1573,15 +1573,14 @@ Current lowering:
   nested repeat check can loop. Repeats directly inside a top-level `switch`
   branch accept the same multiple generated-spawn plus same-body `await_all`
   subset. Both branch-contained paths may use single-pending
-  `(await_any done)` directly when exactly one generated child is pending. The
-  when-contained path may also use multi-pending `(await_any done)` as an
+  `(await_any done)` directly when exactly one generated child is pending. Both
+  branch-contained paths may also use multi-pending `(await_any done)` as an
   observation point when a later same-body `(await_all done)` drains the same
   outstanding generated children before the nested repeat check can loop.
   Those branch-contained nested spawns reuse the static generated-child
   handoff model and preserve source-order samples before the nested spawn or
-  sync states; switch-contained multi-pending `await_any`, `do` while a
-  nested spawn is pending, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed. Top-level
+  sync states; `do` while a nested spawn is pending, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed. Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
@@ -1639,7 +1638,7 @@ support preserve the same runtime-counter rule: the loop reactivates a local
 child only after its fresh done pulse, or reactivates a lexically named static
 spawn child instance after same-body `await_all`, or after same-body
 `await_any` when exactly one child is pending, or for top-level repeat bodies
-and documented when-contained nested repeats after multi-pending `await_any`
+and documented branch-contained nested repeats after multi-pending `await_any`
 followed by a same-body `await_all` drain; neither form creates one child
 instance per iteration.
 
@@ -1979,11 +1978,10 @@ switch-branch nested repeat local, plain generated-child `(do child)`, or
 static-parameter generated
 `(do child (params ...))` with optional `(bind ...)` handoffs and optional
 declared same-domain `(domain NAME)` metadata, top-level when-body and
-switch-branch nested repeat generated spawns with same-body `await_all` or
+switch-branch nested repeat generated spawns with same-body `await_all`,
 single-pending same-body `await_any` when exactly one generated child is
-pending, top-level when-body nested repeat generated spawns with
-multi-pending same-body `await_any` followed by a mandatory same-body
-`await_all` drain,
+pending, or multi-pending same-body `await_any` followed by a mandatory
+same-body `await_all` drain,
 repeat-body
 generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]

@@ -326,8 +326,8 @@ the same nested repeat body reaches `(await_all done)` before the nested
 repeat check can loop. Repeats directly inside a top-level `switch` branch
 accept the same multiple generated-spawn plus same-body `await_all` subset.
 Both branch-contained paths may use single-pending `(await_any done)` directly
-when exactly one generated child is pending. The when-contained path may also
-use multi-pending `(await_any done)` as an observation point when a later
+when exactly one generated child is pending. Both branch-contained paths may
+also use multi-pending `(await_any done)` as an observation point when a later
 same-body `(await_all done)` drains the same outstanding generated children
 before the nested repeat check can loop. Those branch-contained nested spawn
 subsets reuse the static generated-child handoff model, preserve source-order
@@ -397,19 +397,20 @@ repeat directly inside a top-level `when` body with two or more generated
 `(await_any done)` as an observation point, and a later same-body
 `(await_all done)` drain before the nested repeat check can loop. This subset
 is shipped. New nested `spawn` or `do` clauses before the mandatory drain,
-switch-contained multi-pending `await_any`, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics remain backlog
-beyond the shipped branch-contained spawn leaves.
+cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog beyond the shipped
+branch-contained spawn leaves.
 
-Next selected leaf: top-level `switch` branch nested repeats with two or more
-generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
-sites may use `(await_any done)` only as an observation point when a later
-same-body `(await_all done)` drains the same outstanding generated children
-before the nested repeat check can loop. This selected subset is not shipped
-yet. It intentionally mirrors the shipped when-contained multi-pending
-`await_any` drain leaf while keeping new nested `spawn` or `do` clauses before
-the mandatory drain, cross-domain activation, deeper branch/loop nesting, and
-broader outstanding-child semantics deferred.
+The switch-contained nested repeat multi-pending `await_any` leaf covers the
+direct switch analogue: a repeat directly inside a top-level `switch` branch
+with two or more generated
+`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+`(await_any done)` as an observation point, and a later same-body
+`(await_all done)` drain before the nested repeat check can loop. This subset
+is shipped. New nested `spawn` or `do` clauses before the mandatory drain,
+cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog beyond the shipped
+branch-contained spawn leaves.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

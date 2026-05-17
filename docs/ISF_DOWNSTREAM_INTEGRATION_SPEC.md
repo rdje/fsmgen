@@ -907,15 +907,14 @@ Rules:
   nested repeat check can loop. A repeat directly inside a top-level `switch`
   branch accepts the same multiple generated-spawn plus same-body `await_all`
   subset. Both branch-contained paths may use single-pending
-  `(await_any done)` directly when exactly one generated child is pending. The
-  when-contained path may also use multi-pending `(await_any done)` as an
+  `(await_any done)` directly when exactly one generated child is pending. Both
+  branch-contained paths may also use multi-pending `(await_any done)` as an
   observation point when a later same-body `(await_all done)` drains the same
   outstanding generated children before the nested repeat check can loop.
   Those branch-contained nested spawns reuse the static generated-child
   handoff model and preserve source-order samples before the nested spawn or
-  sync states; switch-contained multi-pending `await_any`, `do` while the
-  nested spawn is pending, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed.
+  sync states; `do` while the nested spawn is pending, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed.
   Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,
   `contract`, deeper branch nesting, nested `while`, and nested `until` remain
@@ -1218,7 +1217,7 @@ Rules:
   nested repeat check can loop. A top-level `switch` branch nested repeat may
   use the same multiple generated-spawn plus same-body `await_all` subset.
   Exactly one pending generated child in either branch-contained path may
-  instead use single-pending `(await_any done)`. The when-contained path may
+  instead use single-pending `(await_any done)`. Both branch-contained paths may
   also use multi-pending `(await_any done)` only as an observation point before
   a later same-body `(await_all done)` drains those same outstanding generated
   children. No deeper branch repeat or loop-contained repeat is included in
@@ -1264,7 +1263,7 @@ Rules:
   ownership only; they are not CDC primitives and do not allow cross-domain
   activation. The same repeat body must consume pending done ports through
   `await_all`, through `await_any` when exactly one spawn is pending, or in
-  the documented when-contained nested subset through multi-pending
+  the documented branch-contained nested subsets through multi-pending
   `await_any` followed by same-body `await_all`, before the repeat check can
   loop, preventing re-entry before fresh child completion.
 - Samples after repeat-body spawn lower before the same-body `await_all`,

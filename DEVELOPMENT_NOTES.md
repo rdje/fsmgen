@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained nested await_any drain reuses outstanding spawn sets
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.56` implements only the selected
+  switch-contained multi-pending `await_any` drain subset.
+- No generated-top model changed. The lowerer already kept outstanding spawn
+  done ports live after multi-pending `await_any`; this slice allows that
+  proof for repeats directly inside top-level `switch` branches and requires
+  the later same-body `await_all` drain before the nested repeat check can
+  re-enter.
+- The validator still rejects new nested `spawn` or `do` clauses before the
+  drain, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.57` must
+  pick one bounded frontier before any additional behavior change.
 ## 2026-05-17: switch-contained nested await_any drain is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.55` selects multi-pending `(await_any done)`
   inside a repeat that is directly inside a top-level `switch` branch.

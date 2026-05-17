@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF switch-contained repeat await_any drain shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.56`.
+- Top-level `switch` branches may now contain nested repeats with two or more
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites, a multi-pending `(await_any done)` observation point, and a mandatory
+  later same-body `(await_all done)` drain before the nested repeat check can
+  loop.
+- Lowering keeps the outstanding generated child done set live after the
+  `await_any` observation point, preserves source-order samples before the
+  drain, and rejects new nested `spawn` or `do` clauses before the drain.
+- The mdBook, ISF spec, downstream integration spec, public contract, and doc
+  audits now state the same branch-contained rule for top-level `when` bodies
+  and top-level `switch` branches.
+- `do` while a nested spawn is pending, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  fail-closed. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.57`, which must select the next bounded
+  repeat-body child activation subset before code.
+
 ## 2026-05-17: R14 — ISF switch-contained repeat await_any drain selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.55`.
 - Selected top-level `switch` branches containing nested repeats with two or
