@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body do samples reuse existing drains
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` ships sample timing around shipped
+  repeat-body `do` forms by removing the temporary validator rejection, not by
+  adding a second lowering path.
+- The existing repeat lowering already drains pending samples before emitting
+  a blocking do state and again before the repeat check. That makes the
+  source-order guarantee explicit for both local child do and generated-child
+  do instances.
+- The slice stays intentionally narrow: it does not change nested placement,
+  cross-domain activation, multi-pending `await_any`, or outstanding static
+  child lifetime semantics.
 ## 2026-05-17: repeat-body do sample timing follows existing drain points
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` selects sample timing around
   repeat-body `do` because the repeat lowering already has explicit sample

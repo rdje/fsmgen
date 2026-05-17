@@ -1553,8 +1553,11 @@ Current lowering:
   records same-domain ownership for generated composition and clock-domain
   report summaries when `(domain NAME)` is present, and the do state waits for
   that generated instance's fresh done pulse before the repeat check.
-  Cross-domain repeat-body `do` and sample-before/after-do timing remain
-  deferred. Top-level repeat bodies also
+  Samples may appear before or after repeat-body `do`; pending samples before
+  `do` materialize before the do state, while pending samples after `do`
+  materialize after the do state's fresh done guard and before the repeat
+  check. Cross-domain repeat-body `do` remains deferred. Top-level repeat
+  bodies also
   accept the generated spawn subset:
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses followed by a same-body `(await_all done)` before the repeat check
@@ -1932,8 +1935,10 @@ selected either by an already generated child target or by static
 `(params ...)` overrides; when it has `(bind ...)` input/output handoffs and
 same-domain `(domain NAME)` ownership metadata, those handoff ports and domain
 summaries specialize the single lexical generated do instance and are not
-per-iteration runtime values or per-iteration hardware. It still rejects
-cross-domain activation, nested placement, and sample-before/after-do timing.
+per-iteration runtime values or per-iteration hardware. Samples around
+repeat-body `do` materialize at their source-order timing point before the do
+state or after the do state's done guard and before the repeat check. It still
+rejects cross-domain activation and nested placement.
 
 Dynamic loops are ordinary persistent hardware schedule regions, not software
 processes that appear or die. They may run for data-dependent or unbounded

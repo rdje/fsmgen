@@ -437,8 +437,10 @@ lexical repeat-body do site, applies the parameter override once when
 present, wires binding handoff ports once when present, records same-domain
 ownership for generated-composition and clock-domain report summaries when
 `(domain NAME)` is present, and waits for that instance's done handoff before
-the repeat check. The shipped repeat-body
-clause surface also includes
+the repeat check. Samples may appear before or after repeat-body `do`;
+pending samples before `do` materialize before the do state, while pending
+samples after `do` materialize after the do state's fresh done guard and
+before the repeat check. The shipped repeat-body clause surface also includes
 the top-level spawn plus same-body
 `await_all` subset with optional static `(params ...)` overrides, optional
 `(bind ...)` port handoffs, and optional declared same-domain `(domain NAME)`
@@ -466,9 +468,10 @@ instance once in the generated top, optional input/output bindings create
 generated handoff ports once for that instance, and optional domain annotations
 group the static child with a declared same-domain activation owner without
 implying CDC behavior. `(await_any done)` may replace `await_all` only when
-that repeat body has exactly one pending spawn. Samples after the spawn lower
-before that sync state, so the scheduled `.fsm` shows the capture timing before
-the repeat check.
+that repeat body has exactly one pending spawn. Samples around repeat-body
+spawn and do lower into explicit source-order sample states, so the scheduled
+`.fsm` shows capture timing before spawn/do, before spawn sync, or after do
+completion before the repeat check.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is
@@ -507,6 +510,11 @@ same-domain ownership metadata. Binding handoff ports and domain metadata are
 generated once for the deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance. Repeat-body generated `do`
 still rejects cross-domain activation.
+
+Samples around repeat-body `do` are explicit timing states. A sample before
+`do` appears before the child start state; a sample after `do` appears only
+after the do state observes the child's fresh done handoff and before the
+repeat counter check.
 
 Example:
 

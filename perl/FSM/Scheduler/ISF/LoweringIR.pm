@@ -3764,17 +3764,11 @@ sub _validate_repeat_clause {
 sub _validate_repeat_body_spawn_subset {
     my ($clause, $tn, $label) = @_;
     my @pending_spawns;
-    my $saw_do = 0;
-    my $pending_sample_run = 0;
 
     for my $body_clause (@{$clause}[2 .. $#$clause]) {
         next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
         my $keyword = $body_clause->[0];
         next unless defined($keyword) && !ref($keyword);
-
-        if ($keyword eq 'sample' && $saw_do) {
-            confess "Transaction '$tn': repeat-body sample after do is not supported in the current blocking-do subset\n";
-        }
 
         if ($keyword eq 'spawn') {
             confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses\n"
@@ -3791,7 +3785,6 @@ sub _validate_repeat_body_spawn_subset {
                 confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)', '(bind ...)', and '(domain ...)' subclauses in the spawn domain subset\n";
             }
             push @pending_spawns, $body_clause->[3];
-            $pending_sample_run = 0;
             next;
         }
 
@@ -3815,10 +3808,6 @@ sub _validate_repeat_body_spawn_subset {
                 if $uses_domain && !$uses_generated_params;
             confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
                 if @pending_spawns;
-            confess "Transaction '$tn': repeat-body do cannot follow pending samples in the current blocking-do subset\n"
-                if $pending_sample_run;
-            $saw_do = 1;
-            $pending_sample_run = 0;
             next;
         }
 
@@ -3828,11 +3817,8 @@ sub _validate_repeat_body_spawn_subset {
             confess "Transaction '$tn': repeat-body await_any is supported only when exactly one repeat-body spawn is pending; use await_all or split the loop before broader outstanding-child semantics ship\n"
                 if $keyword eq 'await_any' && @pending_spawns > 1;
             @pending_spawns = ();
-            $pending_sample_run = 0;
             next;
         }
-
-        $pending_sample_run = $keyword eq 'sample' ? 1 : 0;
     }
 
     confess "Transaction '$tn': repeat-body spawn requires same-body '(await_all done)' before the repeat check can loop\n"

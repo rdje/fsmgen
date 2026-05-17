@@ -1089,6 +1089,26 @@ generated-top instance has no local parameter override:
 (?fsmc:parent_worker_repeat_do_0 worker)
 ```
 
+Samples around repeat-body `do` lower at their source-order timing point. A
+sample before `do` materializes before the child start state. A sample after
+`do` materializes after the do state observes fresh child done and before the
+repeat check:
+
+```lisp
+(parent_sample_2
+  (<= (before status))
+  (-> parent_do_3))
+
+(parent_do_3
+  (= (worker_start 1))
+  (<worker_done
+    (-> parent_sample_4)))
+
+(parent_sample_4
+  (<= (after status))
+  (-> parent_repeat_check_5))
+```
+
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
 
@@ -1111,9 +1131,9 @@ handoff, then an optional sample state, before the repeat check:
     (=0 (-> parent_done_6))))
 ```
 
-Cross-domain repeat-body `do`, sample-before/after-do timing, multi-pending
-`await_any`, cross-domain spawn, and nested branch/loop forms remain
-fail-closed until their re-entry and report behavior is specified.
+Cross-domain repeat-body `do`, multi-pending `await_any`, cross-domain spawn,
+and nested branch/loop forms remain fail-closed until their re-entry and
+report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

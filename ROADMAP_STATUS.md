@@ -58,9 +58,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   then shipped that subset with a deterministic generated do instance for the
   lexical repeat-body site and done-gated repeat re-entry.
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` then selected repeat-body
-  sample-before/after-do timing as the next bounded subset. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`; nested placement,
-  cross-domain activation, multi-pending `await_any`, and broader
+  sample-before/after-do timing as the next bounded subset.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` then shipped that timing subset:
+  samples before shipped repeat-body local or generated `do` states lower
+  into explicit sample states before the do state, and samples after those do
+  states lower after the fresh done guard and before the repeat check. The
+  next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`; nested
+  placement, cross-domain activation, multi-pending `await_any`, and broader
   outstanding-child semantics remain deferred. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

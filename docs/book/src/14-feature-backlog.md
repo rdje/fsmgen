@@ -282,9 +282,11 @@ shipped for targets already generated elsewhere: it creates one deterministic
 generated do instance for the lexical repeat-body do site without requiring
 `(params ...)`,
 `(bind ...)`, or `(domain NAME)` on that site, then gates repeat re-entry on
-that instance's fresh done handoff. The next repeat-body activation
-task-tree leaf has selected sample-before/after-do timing as the next bounded
-implementation subset. Cross-domain repeat-body `do`, multi-pending
+that instance's fresh done handoff. Samples immediately before shipped
+repeat-body local or generated `do` states now lower into explicit sample
+states before the do state. Samples immediately after those do states lower
+after the do state's fresh done guard and before the repeat check.
+Cross-domain repeat-body `do`, multi-pending
 `await_any`, and spawn nested under branch or loop bodies remain backlog until
 their re-entry, binding, domain, and report contracts are specified.
 

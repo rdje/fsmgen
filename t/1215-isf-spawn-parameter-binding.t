@@ -804,6 +804,70 @@ ISF
         'generated top also instantiates the later spawned child');
 };
 
+subtest 'repeat body samples around do materialize in source order' => sub {
+    my $local_source = <<'ISF';
+(actor repeat_do_samples_local
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (sample status as before)
+      (do worker)
+      (sample status as after))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $local = lower_source($local_source);
+    my $local_fsm = $local->{files}{'repeat_do_samples_local.fsm'};
+    like($local_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'sample before local repeat do materializes before the do state');
+    like($local_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(worker_start 1\)\)[\s\S]*<worker_done\s+\(-> parent_sample_\d+\)/,
+        'local repeat do waits for done before the following sample state');
+    like($local_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_repeat_check_\d+\)/,
+        'sample after local repeat do materializes before the repeat check');
+
+    my $generated_source = <<'ISF';
+(actor repeat_do_samples_generated
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (sample status as before)
+      (do worker
+        (params
+          (WIDTH 16)))
+      (sample status as after))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
+    my $generated = lower_source($generated_source);
+    my $generated_fsm = $generated->{files}{'repeat_do_samples_generated.fsm'};
+    like($generated_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'sample before generated repeat do materializes before the generated do state');
+    like($generated_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'generated repeat do waits for done before the following sample state');
+    like($generated_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_repeat_check_\d+\)/,
+        'sample after generated repeat do materializes before the repeat check');
+};
+
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_lower_rejected(<<'ISF', 'repeat spawn without await_all', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
 (actor repeat_spawn_without_await_all
@@ -923,21 +987,6 @@ ISF
   (transaction worker
     (complete done))
   (transaction local_worker
-    (on start)
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'repeat sample after do', qr/repeat-body sample after do is not supported in the current blocking-do subset/);
-(actor repeat_sample_after_do
-  (clock clk)
-  (interface (input start) (input loops (width 3)) (input status) (output done))
-  (transaction parent
-    (on start)
-    (repeat loops
-      (do worker)
-      (sample status as seen))
-    (complete done))
-  (transaction worker
     (on start)
     (complete done)))
 ISF

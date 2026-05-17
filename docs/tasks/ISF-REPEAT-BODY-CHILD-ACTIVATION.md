@@ -42,7 +42,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION`
   Status: `active`
   Goal: `Ship remaining repeat-body child activation subsets safely.`
-  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`
+  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`
   Status: `done`
@@ -164,9 +164,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.17: select repeat do samples`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship repeat-body sample-before/after-do timing if selected.`
   Acceptance: `Top-level repeat bodies accept samples before or after shipped repeat-body local or generated do states; pending samples before do lower into an explicit sample state before the do state, pending samples after do lower into an explicit sample state after the do state's fresh done guard and before the repeat check, and nested placement, cross-domain activation, multi-pending await_any, and broader outstanding-child semantics remain fail-closed.`
+  Verification: `syntax checks; focused repeat/do/generated-composition/doc tests; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.18: implement repeat do samples`
+
+- ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`
+  Status: `pending`
+  Goal: `Select the next repeat-body child activation subset.`
+  Acceptance: `Task tree, roadmap, and book backlog select the next bounded repeat-body activation implementation subset after shipped sample-before/after-do timing; the selected contract names source shape, exclusions, validation plan, and unchanged fail-closed boundaries before implementation.`
   Verification: `pending`
   Commit: `pending`
 
@@ -191,7 +198,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | 15 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.15` | `done` | Selected repeat-body plain `do` targeting an already generated child as the next bounded subset. |
 | 16 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.16` | `done` | Shipped repeat-body generated-child `do` for already generated targets. |
 | 17 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` | `done` | Selected repeat-body sample-before/after-do timing as the next bounded subset. |
-| 18 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` | `pending` | Ships the selected repeat-body sample-before/after-do timing subset. |
+| 18 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` | `done` | Shipped repeat-body sample-before/after-do timing around local and generated `do` states. |
+| 19 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.19` | `pending` | Selects the next bounded repeat-body activation subset. |
 
 ## Decisions
 
@@ -336,11 +344,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   samples before do into an explicit sample state before the do state, and
   samples after do into an explicit sample state after the do state's fresh
   done guard and before the repeat check.
+- `2026-05-17`: Leaf `.18` shipped repeat-body sample-before/after-do timing
+  around shipped top-level repeat-body local and generated `do` states.
+  Pending samples before do materialize before the do state; pending samples
+  after do materialize after the do state's fresh done guard and before the
+  repeat check.
 
 ## Open Questions
 
 - Which deferred repeat-body activation subset should follow after the
-  selected sample-before/after-do timing implementation: nested branch/loop
+  shipped sample-before/after-do timing implementation: nested branch/loop
   activation, cross-domain activation, multi-pending `await_any`, or broader
   outstanding-child semantics.
 
@@ -371,6 +384,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.15` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting repeat-body generated-child do` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.16` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/do/generated-composition/doc checks (Files=11, Tests=312), book build, full ISF gate (Files=227, Tests=1097), and diff check passed` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting repeat-body sample-before/after-do timing` |
+| `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/do/generated-composition/doc checks (Files=11, Tests=317), book build, full ISF gate (Files=227, Tests=1102), and diff checks passed` |
 
 ## Commit Log
 
@@ -394,6 +408,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.15` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.15: select repeat generated-child do` | `selected repeat-body plain do targeting already generated children` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.16` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.16: implement repeat generated-child do` | `repeat-body generated-child do shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.17: select repeat do samples` | `selected repeat-body sample-before/after-do timing` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.18: implement repeat do samples` | `repeat-body sample-before/after-do timing shipped` |
 
 ## Changelog
 
@@ -442,3 +457,5 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   generated children through deterministic generated do instances.
 - `2026-05-17`: Selected repeat-body sample-before/after-do timing as the next
   bounded implementation subset.
+- `2026-05-17`: Shipped repeat-body sample-before/after-do timing around
+  shipped local and generated repeat-body `do` states.

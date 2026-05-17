@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body do sample timing shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`.
+- Top-level repeat bodies now accept samples immediately before or after
+  shipped repeat-body local or generated `do` states.
+- Pending samples before do lower into an explicit sample state before the do
+  state. Pending samples after do lower into an explicit sample state after
+  the do state's fresh done guard and before the repeat check.
+- Nested placement, cross-domain activation, multi-pending `await_any`, and
+  broader outstanding-child semantics remain fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, and task tree.
 ### R14 — ISF repeat-body do sample timing selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`.
 - Selected top-level repeat-body sample-before/after-do timing as the next

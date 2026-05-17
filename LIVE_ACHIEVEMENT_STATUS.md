@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body do sample timing shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`.
+- Top-level repeat bodies may now sample immediately before or after shipped
+  repeat-body local or generated `do` states.
+- Samples before repeat-body `do` lower into an explicit sample state before
+  the do state; samples after repeat-body `do` lower after the do state's
+  fresh done guard and before the repeat check.
+- Nested placement, cross-domain activation, multi-pending `await_any`, and
+  broader outstanding-child semantics remain deferred. The active frontier
+  advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`.
+
 ## 2026-05-17: R14 — ISF repeat-body do sample timing selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`.
 - Selected top-level repeat-body sample-before/after-do timing as the next

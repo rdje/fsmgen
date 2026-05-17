@@ -852,8 +852,10 @@ Rules:
   override once when present, wires binding handoff ports once when present,
   and records same-domain ownership for generated-composition and
   clock-domain report summaries when `(domain NAME)` is present.
-  Cross-domain repeat-body `do` and sample-before/after-do timing remain
-  deferred.
+  Samples may appear before or after repeat-body `do`; pending samples before
+  `do` materialize before the do state, while pending samples after `do`
+  materialize after the do state's fresh done guard and before the repeat
+  check. Cross-domain repeat-body `do` remains deferred.
   Top-level repeat bodies also accept
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses when the same repeat body reaches `(await_all done)` before the

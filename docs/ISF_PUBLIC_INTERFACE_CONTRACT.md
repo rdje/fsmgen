@@ -810,8 +810,11 @@ applies the parameter override once in the generated top, wires optional
 binding handoff ports once for that generated instance, records same-domain
 ownership for generated-composition and clock-domain report summaries when
 `(domain NAME)` is present, and waits for that generated instance's done
-handoff before the repeat check. Cross-domain repeat-body `do` and
-sample-before/after-do timing remain deferred. The shipped repeat-body clause surface
+handoff before the repeat check. Samples may appear before or after
+repeat-body `do`; pending samples before `do` materialize before the do state,
+while pending samples after `do` materialize after the do state's fresh done
+guard and before the repeat check. Cross-domain repeat-body `do` remains
+deferred. The shipped repeat-body clause surface
 also includes the top-level spawn plus same-body `await_all` subset with
 optional static `(params ...)` overrides, optional `(bind ...)` port handoffs,
 and optional declared same-domain `(domain NAME)` ownership metadata.
@@ -2074,7 +2077,8 @@ These are not stable public interfaces yet:
   `(until cond body...)` remains non-public except for the documented
   top-level repeat-body local `(do child)` subset, top-level repeat-body
   generated-child `(do child)` subset, top-level repeat-body generated
-  `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and top-level
+  `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, repeat-body
+  samples before or after shipped do states, and top-level
   repeat-body spawn
   plus optional static `(params ...)`, optional `(bind ...)` port handoffs,
   optional declared same-domain `(domain NAME)` metadata, same-body
