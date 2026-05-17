@@ -436,12 +436,12 @@ when-contained form emits one deterministic
 site. Both when-contained forms keep samples around the nested do in source
 order and reach the branch-owned repeat check only after a fresh local or
 generated child done handoff. Repeats directly inside a top-level `switch`
-branch accept only the local `(do child)` form with the same source-order
-sample timing and done-gated repeat check. Those when-contained and
-switch-contained subsets reject `(params ...)`, `(bind ...)`, and
-`(domain NAME)`. The switch-contained subset also rejects already-generated
-child targets. Deeper branch nesting and loop-contained repeats remain
-outside both nested subsets. The shipped
+branch accept the same local or plain generated-child `(do child)` forms with
+the same deterministic generated-instance naming, source-order sample timing,
+and done-gated repeat check. Those when-contained and switch-contained
+subsets reject `(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper
+branch nesting and loop-contained repeats remain outside both nested subsets.
+The shipped
 repeat-body clause
 surface also includes generated blocking `(do child)` when the target child is
 already emitted as a generated child by another activation site, and
@@ -465,7 +465,7 @@ when exactly one repeat-body spawn is pending. Multi-pending repeat-body
 same-body `await_all` drains the same outstanding spawned children before the
 repeat check; new repeat-body `spawn` or `do` clauses before that drain remain
 rejected. Cross-domain repeat-body `do`, generated or spawned nested
-activation beyond the documented top-level when-body generated-child do case,
+activation beyond the documented top-level when/switch generated-child do cases,
 broader outstanding-child semantics, `stage`, `contract`, deeper branch
 nesting, nested `while`, and nested `until` remain outside the shipped
 repeat-body subset. Samples may
@@ -498,13 +498,12 @@ before spawn/do, before spawn sync, between multi-pending `await_any` and its
 drain, or after do completion before the repeat check.
 The local `(do child)` form is also shipped inside a repeat that is directly
 inside a top-level `when` body or directly inside a top-level `switch` branch.
-The `when` nested repeat form also accepts a plain generated-child
-`(do child)` target that is already generated elsewhere. That nested generated
-do site owns one `{parent}_{child}_repeat_do_{ordinal}` instance, uses no
-parameter override, port binding, or domain annotation, and waits for the
-generated instance's fresh done handoff before the nested repeat check. The
-switch nested repeat form remains local-only; deeper branch/loop placement
-remains backlog.
+Those nested repeat forms also accept a plain generated-child `(do child)`
+target that is already generated elsewhere. That nested generated do site owns
+one `{parent}_{child}_repeat_do_{ordinal}` instance, uses no parameter
+override, port binding, or domain annotation, and waits for the generated
+instance's fresh done handoff before the nested repeat check. Deeper
+branch/loop placement remains backlog.
 
 Example: a parent can spawn `worker` once, then call the already generated
 `worker` from a repeat nested inside a top-level `when` without reintroducing
@@ -528,6 +527,30 @@ That nested `(do worker)` emits a generated do instance such as
 parent scheduled `.fsm` starts `parent_worker_repeat_do_0_start>`, waits for
 `parent_worker_repeat_do_0_done`, then runs the `after` sample before the
 nested repeat check.
+
+The same generated-child shape is supported for a repeat directly inside a
+top-level `switch` branch:
+
+```lisp
+(transaction parent
+  (on start)
+  (spawn worker as w0)
+  (await_all done)
+  (switch mode
+    (0
+      (repeat loops
+        (sample status as before)
+        (do worker)
+        (sample status as after)))
+    (1
+      (sample status as other)))
+  (complete done))
+```
+
+Only the selected branch enters the generated-child nested repeat region. The
+generated do instance still has deterministic
+`{parent}_{child}_repeat_do_{ordinal}` naming and the branch-owned repeat
+check is reached only after that instance reports fresh done.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is

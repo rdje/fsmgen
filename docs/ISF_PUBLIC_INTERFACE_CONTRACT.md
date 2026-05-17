@@ -812,13 +812,12 @@ generated-child when-contained form emits one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance for the lexical nested do
 site, preserves source-order samples around the nested do, and gates the
 branch-owned repeat check on that generated instance's fresh done handoff.
-That when-contained subset is paired with the switch-contained local subset:
-repeats directly inside a top-level `switch` branch may use local-only
-`(do child)` with the same source-order sample timing and done-gated
-branch-owned repeat check. Those nested subsets reject `(params ...)`,
-`(bind ...)`, and `(domain NAME)`. The switch-contained subset also rejects
-already-generated child targets. Deeper branch nesting and loop-contained
-repeats remain outside both nested subsets. Generated
+The same switch-contained local or plain generated-child forms are shipped for
+repeats directly inside a top-level `switch` branch, with the same
+source-order sample timing and done-gated branch-owned repeat check. Those
+nested subsets reject `(params ...)`, `(bind ...)`, and `(domain NAME)`.
+Deeper branch nesting and loop-contained repeats remain outside both nested
+subsets. Generated
 repeat-body `do` emits one generated child instance for the lexical do site,
 applies the parameter override once in the generated top, wires optional
 binding handoff ports once for that generated instance, records same-domain
@@ -838,7 +837,7 @@ only as an observation point when a later same-body `await_all` drains the same
 outstanding spawned children before the repeat check; new repeat-body `spawn`
 or `do` clauses before that drain remain rejected. Cross-domain repeat-body
 `do`, generated or spawned nested activation beyond the documented top-level
-when-body generated-child do case, broader outstanding-child semantics,
+when/switch generated-child do cases, broader outstanding-child semantics,
 `stage`, `contract`, deeper branch nesting, nested `while`, and nested
 `until` remain outside the shipped repeat-body subset.
 Samples may appear before or after repeat-body spawn as long as the same
@@ -854,11 +853,10 @@ local `(do child)`, generated-child `(do child)`, generated
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
 The local `(do child)` subset is also shipped inside a repeat directly inside
-a top-level `when` body or top-level `switch` branch. The top-level `when`
-nested repeat subset also accepts plain generated-child `(do child)` for a
-target already generated elsewhere; that generated nested do remains
-done-gated before the nested repeat check and does not accept activation
-subclauses.
+a top-level `when` body or top-level `switch` branch. Those top-level nested
+repeat subsets also accept plain generated-child `(do child)` for a target
+already generated elsewhere; that generated nested do remains done-gated
+before the nested repeat check and does not accept activation subclauses.
 Local repeat-body `do` reuses the local child start/done pulse contract.
 Generated repeat-body `do` reuses the generated child start/done handoff
 contract with a deterministic `{parent}_{child}_repeat_do_{ordinal}` instance;

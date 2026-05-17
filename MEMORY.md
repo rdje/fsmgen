@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: switch-contained repeat generated-child do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts plain `(do child)` inside a repeat that is directly inside a
+  top-level `switch` branch when `child` is already emitted as a generated
+  child by another activation site.
+- The lowerer emits one deterministic `{parent}_{child}_repeat_do_{ordinal}`
+  instance for the lexical nested do site, starts that generated instance from
+  the branch-owned repeat region, waits for its fresh done handoff, and only
+  then reaches samples after the do and the switch-branch repeat check.
+- `(params ...)`, `(bind ...)`, `(domain NAME)`, spawn nesting, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain fail-closed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, which must select the next bounded
+  repeat-body child activation subset before any further code changes.
+- Workflow note: push cadence remains every 30 unpushed commits unless the
+  user explicitly requests an earlier push.
 ## 2026-05-17: switch-contained repeat generated-child do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`.
 - The active R14 task tree now selects a repeat directly inside a top-level

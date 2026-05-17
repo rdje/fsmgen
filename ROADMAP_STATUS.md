@@ -103,11 +103,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantics remain deferred. `ISF-REPEAT-BODY-CHILD-ACTIVATION.27` then
   selected top-level switch-branch nested repeat plain `(do child)` targeting
   an already generated child as the next bounded nested generated-child
-  subset. The next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`,
-  which will implement that selected switch-contained generated-child subset
-  while keeping activation subclauses, spawn nesting, deeper branch/loop
+  subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.28` then shipped that subset by
+  threading generated-child context into repeats that are direct clauses of a
+  top-level `switch` branch, emitting one deterministic generated do instance
+  for the lexical nested do site, preserving source-order samples around that
+  do, and gating the switch-branch repeat check on the generated instance's
+  fresh done handoff. Activation subclauses, spawn nesting, deeper branch/loop
   nesting, cross-domain activation, and broader outstanding-child semantics
-  deferred. The workflow also requires
+  remain deferred. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, which must select the next bounded
+  repeat-body child activation subset before code changes. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier

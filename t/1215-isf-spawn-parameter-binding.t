@@ -1087,6 +1087,72 @@ ISF
         'local child terminal pulses the switch-branch repeat done handoff');
 };
 
+subtest 'switch branch nested repeat generated-child do waits for generated instance done before re-entry' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_do_generated_child
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode (width 2))
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (do worker)
+          (sample status as after)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 2,
+        'switch-branch repeat generated-child do plus spawn contribute generated instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'lexical spawn instance still exists');
+    ok($instances{parent_worker_repeat_do_0}, 'switch-branch repeat generated-child do instance is recorded');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'switch-branch repeat generated-child do preserves do activation provenance');
+    is($instances{parent_worker_repeat_do_0}{child}, 'worker',
+        'switch-branch repeat generated-child do targets the generated child transaction');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [],
+        'switch-branch repeat generated-child do does not require local parameter overrides');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_do_generated_child.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_do_generated_child_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch repeat generated-child do parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once');
+    ok(defined($top_fsm), 'switch-branch repeat generated-child do top .fsm is emitted');
+    like($parent_fsm, qr/\(\?mode[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'switch branch enters the generated-child nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'sample before switch-branch generated-child repeat do materializes before the do state');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'switch-branch generated-child repeat do waits for the generated instance before the following sample');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_repeat_check_\d+\)/,
+        'sample after switch-branch generated-child repeat do materializes before the repeat check');
+    unlike($parent_fsm, qr/\bworker_start\b/,
+        'switch-branch generated-child repeat do does not wire a local child start handoff');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker(?:\s|\))/,
+        'generated top instantiates the switch-branch repeat generated-child do child once');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top also instantiates the lexical spawn child');
+};
+
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_lower_rejected(<<'ISF', 'repeat spawn without await_all', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
 (actor repeat_spawn_without_await_all
@@ -1267,7 +1333,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch repeat parameterized do', qr/switch-branch nested repeat do supports only local '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
+    assert_lower_rejected(<<'ISF', 'switch repeat parameterized do', qr/switch-branch nested repeat do supports only plain '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
 (actor switch_repeat_parameterized_do
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (output done))
@@ -1286,7 +1352,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch repeat bound do', qr/switch-branch nested repeat do supports only local '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
+    assert_lower_rejected(<<'ISF', 'switch repeat bound do', qr/switch-branch nested repeat do supports only plain '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
 (actor switch_repeat_bound_do
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
@@ -1304,23 +1370,6 @@ ISF
     (ports
       (input data (width 8))
       (output resp (width 8)))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'switch repeat do target already generated', qr/switch-branch nested repeat do supports only local child targets; target 'worker' is already generated by another activation site/);
-(actor switch_repeat_generated_target_do
-  (clock clk)
-  (interface (input start) (input mode) (input loops (width 3)) (output done))
-  (transaction parent
-    (on start)
-    (spawn worker as w0)
-    (await_all done)
-    (switch mode
-      (0
-        (repeat loops
-          (do worker))))
-    (complete done))
-  (transaction worker
     (complete done)))
 ISF
 

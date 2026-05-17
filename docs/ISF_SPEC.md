@@ -1552,12 +1552,13 @@ Current lowering:
   the lexical nested do site. Both forms keep samples around the nested do in
   source order, and the branch-owned repeat check is unreachable until the
   fresh local or generated child done pulse is observed. Repeats directly
-  inside a top-level `switch` branch accept the same local-only `(do child)`
-  form with the same source-order sample timing and done-gated nested repeat
-  check. Those when-contained and switch-contained subsets reject
-  `(params ...)`, `(bind ...)`, and `(domain NAME)`. The switch-contained
-  subset also rejects already-generated child targets. Deeper branch nesting
-  and loop-contained repeats remain outside both nested subsets. Top-level
+  inside a top-level `switch` branch accept the same local or plain
+  generated-child `(do child)` forms with the same source-order sample timing,
+  deterministic generated-instance naming when the target is already generated
+  elsewhere, and done-gated nested repeat check. Those when-contained and
+  switch-contained subsets reject `(params ...)`, `(bind ...)`, and
+  `(domain NAME)`. Deeper branch nesting and loop-contained repeats remain
+  outside both nested subsets. Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
@@ -1601,7 +1602,7 @@ Current lowering:
   source-order timing point: before a later spawn state for sample-before-spawn
   ordering, or before the sync state for sample-after-spawn ordering.
   Cross-domain repeat-body `do`, generated or spawned nested activation beyond
-  the documented top-level when-body generated-child do case, broader
+  the documented top-level when/switch generated-child do cases, broader
   outstanding-child semantics, `stage`, `contract`, deeper branch nesting,
   nested `while`, and nested `until` remain outside the shipped repeat-body
   subset.
@@ -3276,7 +3277,8 @@ Focused tests:
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,
   the top-level when-body nested repeat local/generated-child `(do child)`
-  subset, the top-level switch-branch nested repeat local `(do child)` subset,
+  subset, the top-level switch-branch nested repeat local/generated-child
+  `(do child)` subset,
   the top-level repeat-body generated-child `(do child)` subset, the top-level
   repeat-body generated
   `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and the
