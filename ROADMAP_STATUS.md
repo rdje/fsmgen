@@ -63,9 +63,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   samples before shipped repeat-body local or generated `do` states lower
   into explicit sample states before the do state, and samples after those do
   states lower after the fresh done guard and before the repeat check. The
-  next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`; nested
-  placement, cross-domain activation, multi-pending `await_any`, and broader
-  outstanding-child semantics remain deferred. The workflow also requires
+  next active `ISF-REPEAT-BODY-CHILD-ACTIVATION.19` then selected
+  multi-pending repeat-body `(await_any done)` only as an observation point
+  when a later same-body `(await_all done)` drains the same outstanding
+  repeat-body spawns before the repeat check can loop. The next active
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`; nested placement,
+  cross-domain activation, and broader outstanding-child semantics remain
+  deferred. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier

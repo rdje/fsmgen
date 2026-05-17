@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body multi-pending await_any drain selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`.
+- Selected multi-pending repeat-body `(await_any done)` as the next bounded
+  subset only when a later same-body `(await_all done)` drains the same
+  outstanding repeat-body spawns before the repeat check can loop.
+- The selected surface treats `await_any` as an observation point and keeps
+  new repeat-body `spawn` or `do` clauses before the mandatory drain out of
+  scope.
+- Nested placement, cross-domain activation, and broader outstanding-child
+  semantics remain deferred.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
 ### R14 — ISF repeat-body do sample timing shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`.
 - Top-level repeat bodies now accept samples immediately before or after

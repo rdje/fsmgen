@@ -286,9 +286,13 @@ that instance's fresh done handoff. Samples immediately before shipped
 repeat-body local or generated `do` states now lower into explicit sample
 states before the do state. Samples immediately after those do states lower
 after the do state's fresh done guard and before the repeat check.
-Cross-domain repeat-body `do`, multi-pending
-`await_any`, and spawn nested under branch or loop bodies remain backlog until
-their re-entry, binding, domain, and report contracts are specified.
+The next bounded repeat-body activation leaf has selected multi-pending
+`await_any` only as an observation point: a later same-body `await_all` must
+drain the same outstanding repeat-body spawns before the repeat check can
+loop, and new repeat-body `spawn` or `do` clauses between that observation and
+the drain remain out of scope. Cross-domain repeat-body `do` and spawn nested
+under branch or loop bodies remain backlog until their re-entry, binding,
+domain, and report contracts are specified.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body multi-pending await_any drain selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`.
+- Selected multi-pending repeat-body `(await_any done)` as the next bounded
+  subset only when a later same-body `(await_all done)` drains the same
+  outstanding repeat-body spawns before the repeat check.
+- The selected contract treats `await_any` as an observation point and keeps
+  new repeat-body `spawn` or `do` clauses before the mandatory drain out of
+  scope.
+- Nested placement, cross-domain activation, and broader outstanding-child
+  semantics remain deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`.
+
 ## 2026-05-17: R14 — ISF repeat-body do sample timing shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`.
 - Top-level repeat bodies may now sample immediately before or after shipped

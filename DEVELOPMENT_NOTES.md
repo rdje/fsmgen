@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body multi-pending await_any needs a drain
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.19` selects multi-pending repeat-body
+  `await_any` only when the same body later performs an `await_all` drain
+  before the repeat check.
+- This keeps the existing static child re-entry proof: `await_any` can let the
+  scheduled body observe that at least one child finished, but the repeat
+  back-edge is still unreachable until every outstanding child from that
+  repeat-body spawn set has reached done.
+- New repeat-body `spawn` or `do` clauses between the observation and the
+  mandatory drain remain excluded because they would require a broader
+  outstanding-child lifetime model.
 ## 2026-05-17: repeat-body do samples reuse existing drains
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.18` ships sample timing around shipped
   repeat-body `do` forms by removing the temporary validator rejection, not by

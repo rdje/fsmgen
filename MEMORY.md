@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body multi-pending await_any drain selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`.
+- The active R14 task tree now selects multi-pending repeat-body
+  `(await_any done)` as the next bounded implementation subset only when a
+  later same-body `(await_all done)` drains the same outstanding repeat-body
+  spawns before the repeat check can loop.
+- The selected contract treats multi-pending `await_any` as an observation
+  point, not as a repeat re-entry proof. New repeat-body `spawn` or `do`
+  clauses between that observation and the mandatory drain remain out of
+  scope for the selected implementation.
+- Nested branch/loop activation, cross-domain activation, and broader
+  outstanding-child semantics remain deferred.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body do sample timing shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
