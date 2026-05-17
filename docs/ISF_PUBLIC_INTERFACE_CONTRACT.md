@@ -468,11 +468,13 @@ sample without changing timing, including completion states that preserve their
 delayed pulse and return-to-idle transition, independent scalar setter states,
 independent shift states, independent assemble states, and independent extract
 states, plus independent bank-load and bank-store states that neither read nor
-overwrite a pending sample alias, plus top-level ready/valid stage states that
-neither read nor overwrite a pending sample alias, plus top-level
-bounded-eventual contract arm states that neither read nor overwrite a pending
-sample alias, plus repeat/while/until loop decision states whose assignments
-and conditions do not touch a pending sample alias. Consecutive top-level
+overwrite a pending sample alias, plus top-level await_all/await_any sync
+states whose collected done ports do not reference a pending sample alias,
+plus top-level ready/valid stage states that neither read nor overwrite a
+pending sample alias, plus top-level bounded-eventual contract arm states that
+neither read nor overwrite a pending sample alias, plus repeat/while/until
+loop decision states whose assignments and conditions do not touch a pending
+sample alias. Consecutive top-level
 runtime waits carry pending samples across zero-count wait links by using generated
 sample-preserving downstream wait-entry clones for zero-then-positive paths and
 final compatible target clones for all-zero paths. Top-level zero-count

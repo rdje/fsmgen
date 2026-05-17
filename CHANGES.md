@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF sync successor zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into top-level `await_all` and `await_any`
+  sync states when their collected done ports do not reference pending sample
+  aliases.
+- The zero-count path now uses a sample-preserving sync clone that materializes
+  pending samples and preserves the original all-done or any-done transition.
+  Positive-count paths still sample in the first wait state and enter the
+  original sync state without double-sampling.
+- Sync states whose collected done ports read pending sample aliases remain
+  fail-closed. Inline-body `await_all`/`await_any` clauses remain outside the
+  shipped branch/loop body surface.
+- Extended `t/1244-isf-wait-clause-lowering.t` for await_all/await_any
+  zero-bypass and alias-touching sync-port rejection, widened the book
+  feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook
+  transaction/lowering/backlog and feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=140`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1027`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF bank-access predecessor runtime dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits can

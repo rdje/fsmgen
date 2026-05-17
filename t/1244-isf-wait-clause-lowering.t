@@ -1448,6 +1448,156 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_contract');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into sync states' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-sync-all');
+(actor wait_dynamic_sample_sync_all
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output flag)
+    (output sample_out (width 8))
+    (output done))
+  (drive tick
+    (flag 1))
+  (drive (captured val)
+    (sample_out val))
+  (transaction worker
+    (on start)
+    (drive tick)
+    (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (sample din as hold)
+    (wait cycles)
+    (await_all done)
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_sync_all.fsm'};
+    my $spawn = state_block($fsm, 'parent_spawn_2');
+    like($spawn, qr/\(-> parent_wait_3_zero_sample <\(== cycles 0\)\)/,
+        'await_all zero path bypasses directly to a sample-preserving sync clone');
+
+    my $wait = state_block($fsm, 'parent_wait_3');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'await_all positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?parent_wait_3_cnt[\s\S]*\(=1 \(-> parent_await_all_4\)\)/,
+        'await_all positive path exits to the original sync state');
+
+    my $sync_all = state_block($fsm, 'parent_await_all_4');
+    unlike($sync_all, qr/\(<= \(hold din\)\)/,
+        'original await_all state does not double-sample after a positive wait');
+    like($sync_all, qr/\(-> parent_drive_5 <\(& w0_done w1_done\)\)/,
+        'original await_all state preserves the all-done transition');
+
+    my $zero_clone = state_block($fsm, 'parent_wait_3_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'await_all zero-count clone materializes the pending sample');
+    like($zero_clone, qr/\(-> parent_drive_5 <\(& w0_done w1_done\)\)/,
+        'await_all zero-count clone preserves the all-done transition');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'parent',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'parent_wait_3',
+                exit_state     => 'parent_await_all_4',
+                counter_signal => 'parent_wait_3_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'await_all zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_sync_all');
+
+    ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-sync-any');
+(actor wait_dynamic_sample_sync_any
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output flag)
+    (output sample_out (width 8))
+    (output done))
+  (drive tick
+    (flag 1))
+  (drive (captured val)
+    (sample_out val))
+  (transaction worker
+    (on start)
+    (drive tick)
+    (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (sample din as hold)
+    (wait cycles)
+    (await_any done)
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_sample_sync_any.fsm'};
+    $spawn = state_block($fsm, 'parent_spawn_2');
+    like($spawn, qr/\(-> parent_wait_3_zero_sample <\(== cycles 0\)\)/,
+        'await_any zero path bypasses directly to a sample-preserving sync clone');
+
+    $wait = state_block($fsm, 'parent_wait_3');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'await_any positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?parent_wait_3_cnt[\s\S]*\(=1 \(-> parent_await_any_4\)\)/,
+        'await_any positive path exits to the original sync state');
+
+    my $sync_any = state_block($fsm, 'parent_await_any_4');
+    unlike($sync_any, qr/\(<= \(hold din\)\)/,
+        'original await_any state does not double-sample after a positive wait');
+    like($sync_any, qr/\(<w0_done\s+\(-> parent_drive_5\)\s+\)/,
+        'original await_any state preserves the first any-done transition');
+    like($sync_any, qr/\(<w1_done\s+\(-> parent_drive_5\)\s+\)/,
+        'original await_any state preserves the second any-done transition');
+
+    $zero_clone = state_block($fsm, 'parent_wait_3_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'await_any zero-count clone materializes the pending sample');
+    like($zero_clone, qr/\(<w0_done\s+\(-> parent_drive_5\)\s+\)/,
+        'await_any zero-count clone preserves the first any-done transition');
+    like($zero_clone, qr/\(<w1_done\s+\(-> parent_drive_5\)\s+\)/,
+        'await_any zero-count clone preserves the second any-done transition');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'parent',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'parent_wait_3',
+                exit_state     => 'parent_await_any_4',
+                counter_signal => 'parent_wait_3_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'await_any zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_sync_any');
+};
+
 subtest 'runtime scalar waits split additional top-level predecessor kinds' => sub {
     my ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-await');
 (actor wait_dynamic_after_await
@@ -3166,6 +3316,32 @@ ISF
     (sample din as hold)
     (wait cycles)
     (store data idx hold)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-consuming await_all done port', qr/\ARuntime dynamic wait 'parent_wait_3' with pending samples cannot zero-bypass to state 'parent_await_all_4' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_sync_done_port
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din)
+    (output flag)
+    (output done))
+  (drive tick
+    (flag 1))
+  (transaction worker
+    (on start)
+    (drive tick)
+    (complete done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (spawn worker as w1)
+    (sample din as w0_done)
+    (wait cycles)
+    (await_all done)
     (complete done)))
 ISF
 

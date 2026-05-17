@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF sync successor zero-bypass pending-sample dynamic waits shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-SYNC-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SYNC-SAMPLE.md).
+- The `ISF-DYNAMIC-WAIT-SYNC-SAMPLE` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create a
+  new task tree first.
+- Runtime dynamic waits with pending samples can now zero-bypass into
+  top-level `await_all` and `await_any` sync states when the collected done
+  ports are independent of pending sample aliases. The zero path materializes
+  pending samples and preserves the original all-done or any-done transition.
+- Positive-count paths still sample in the first active wait state and then
+  enter the original sync state without double-sampling.
+- Sync states whose collected done ports read pending sample aliases remain
+  fail-closed. Inline-body `await_all`/`await_any` clauses remain outside the
+  shipped branch/loop body surface.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=140`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1027`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF bank-access predecessor runtime dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` in

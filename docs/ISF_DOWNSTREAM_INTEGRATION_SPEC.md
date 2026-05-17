@@ -758,15 +758,17 @@ Rules:
   without changing timing. Shipped sample-compatible successors include drive,
   await, static wait, completion, independent scalar setter, independent
   shift, independent assemble, independent extract, and independent bank-load
-  and bank-store states, plus top-level ready/valid stage states, for
-  top-level waits; top-level bounded-eventual contract arm states are also
-  sample-compatible. Selected completion, independent scalar setter,
+  and bank-store states, plus top-level await_all/await_any sync states and
+  ready/valid stage states, for top-level waits; top-level bounded-eventual
+  contract arm states are also sample-compatible. Selected completion,
+  independent scalar setter,
   independent shift, independent assemble, independent extract, independent
   bank-load, and independent bank-store successors are shipped for `when`
   bodies and `switch` branches. A scalar setter, shift, assemble state,
-  extract state, bank-load state, bank-store state, stage state, contract arm
-  state, or loop decision/check state is independent only when it neither
-  reads nor overwrites a pending sample alias.
+  extract state, bank-load state, bank-store state, sync state, stage state,
+  contract arm state, or loop decision/check state is independent only when it
+  neither reads nor overwrites a pending sample alias. For sync states, that
+  independence applies to the collected done ports.
   Consecutive top-level runtime waits carry pending samples across zero-count
   wait links with generated downstream wait-entry clones for zero-then-positive
   paths and final sample-compatible target clones for all-zero paths.

@@ -652,6 +652,20 @@ The monitor DT still owns pending, age, and fail storage and observes the same
 arm signal. Contract arm states that would read or overwrite `hold` remain
 fail-closed for the same sample-and-consume timing reason.
 
+Top-level `await_all` and `await_any` sync states can also carry the pending
+sample when their collected done ports do not read the pending sample alias.
+The clone keeps the original synchronization transition:
+
+```lisp
+(parent_wait_3_zero_sample
+  (<= (hold din))
+  (-> parent_drive_5 <(& w0_done w1_done)))
+```
+
+For `await_any`, the clone keeps one transition per collected done port. If a
+collected done port is `hold`, the form remains fail-closed for the same
+sample-and-consume timing reason.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

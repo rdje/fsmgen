@@ -116,6 +116,7 @@ my @required_examples = (
     'independent extract states',
     'independent bank loads',
     'independent bank stores',
+    'top-level await_all/await_any sync states',
     'top-level ready/valid stages',
     'top-level contract arm states',
     'loop decision states',

@@ -618,17 +618,18 @@ pending-sample zero bypasses whose successor cannot yet carry samples without
 changing timing outside the shipped completion and independent-setter
 successor subsets plus independent shift, assemble, and extract successor
 subsets plus independent bank-load, bank-store, top-level stage, and top-level
-contract-arm successor subsets,
+await-all/await-any sync, and top-level contract-arm successor subsets,
 repeat/loop pending-sample zero bypasses whose successor cannot yet carry
 samples without changing timing, and setter successors that read or overwrite
 a pending sample alias. Shift, assemble, extract, bank-load, and bank-store
 successors are shipped only when independent; stage successors are shipped
 only when the ready input and valid output are independent of the pending
-sample alias; contract arm successors are shipped only when independent of the
-pending sample alias; loop decision/check successors are shipped only when
-their counter assignment and loop condition are independent of the pending
-sample alias; forms that read or overwrite a pending sample alias remain
-backlog.
+sample alias; await-all/await-any sync successors are shipped only when their
+collected done ports are independent of the pending sample alias; contract arm
+successors are shipped only when independent of the pending sample alias; loop
+decision/check successors are shipped only when their counter assignment and
+loop condition are independent of the pending sample alias; forms that read or
+overwrite a pending sample alias remain backlog.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
 subset, `switch` branches are shipped for the no-pending-sample subset, and
@@ -676,7 +677,8 @@ Independent bank stores now share that same independent-successor rule, and
 top-level ready/valid stages can carry samples when their ready input and
 valid output are independent of the pending sample alias. Top-level bounded
 eventual contract arm states can carry samples while preserving the monitor
-arm pulse.
+arm pulse. Top-level await-all/await-any sync states can carry samples when
+their collected done ports are independent of the pending sample alias.
 Consecutive top-level runtime waits carry pending samples through zero-count
 wait links with generated downstream wait-entry clones for zero-then-positive
 paths and final compatible target clones for all-zero paths. `when` and

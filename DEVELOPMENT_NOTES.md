@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: sync successors can carry pending samples when done ports are independent
+- `ISF-DYNAMIC-WAIT-SYNC-SAMPLE.1` adds top-level `await_all` and `await_any`
+  states to the pending-sample runtime wait zero-bypass surface.
+- Sync states have no data assignments of their own, but their observable
+  condition lives in collected done ports rather than ordinary transition
+  guards. The independence check therefore inspects `done_ports` directly so a
+  zero-count clone cannot sample an alias and test that same alias as a sync
+  done port in one state.
+- The zero-count clone prepends pending sample assignments to the original
+  sync state and keeps the same all-done or any-done transition behavior.
+  Positive-count paths still enter the original sync state after sampling in
+  the first active wait state.
+- This slice is only about top-level sync successors. Inline-body
+  `await_all`/`await_any` clauses remain outside the shipped branch/loop body
+  surface until re-entry, child lifetime, and report behavior are specified.
 ## 2026-05-16: bank access predecessors use ordinary dynamic wait edge splitting
 - `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` adds transaction bank `load` and
   `store` states to the predecessor surface for runtime dynamic waits.

@@ -6850,6 +6850,8 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
         && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(contract_arm_request latency_increment_request));
     return 1 if ($kind eq 'repeat_check' || $kind eq 'loop_while' || $kind eq 'loop_until')
         && _dynamic_wait_zero_sample_target_is_independent_control_state($wait_state, $target_state);
+    return 1 if ($kind eq 'sync_all' || $kind eq 'sync_any')
+        && _dynamic_wait_zero_sample_target_is_independent_sync_state($wait_state, $target_state);
 
     if ($kind eq 'sequential') {
         for my $assignment (@{$target_state->{assignments} || []}) {
@@ -6881,10 +6883,7 @@ sub _dynamic_wait_zero_sample_target_is_independent_control_state {
     my ($wait_state, $target_state) = @_;
     return 0 unless _dynamic_wait_has_pending_samples($wait_state);
 
-    my %pending_sample = map {
-        my $lhs = $_->{lhs};
-        defined($lhs) && !ref($lhs) && length($lhs) ? ($lhs => 1) : ();
-    } @{$wait_state->{pending_sample_assignments} || []};
+    my %pending_sample = _dynamic_wait_pending_sample_names($wait_state);
     return 0 unless %pending_sample;
 
     for my $assignment (@{$target_state->{assignments} || []}) {
@@ -6903,14 +6902,29 @@ sub _dynamic_wait_zero_sample_target_is_independent_control_state {
     return @{$target_state->{transitions} || []} ? 1 : 0;
 }
 
+sub _dynamic_wait_zero_sample_target_is_independent_sync_state {
+    my ($wait_state, $target_state) = @_;
+    return 0 unless _dynamic_wait_has_pending_samples($wait_state);
+
+    my %pending_sample = _dynamic_wait_pending_sample_names($wait_state);
+    return 0 unless %pending_sample;
+
+    for my $port (@{$target_state->{done_ports} || []}) {
+        return 0 if _dynamic_wait_text_touches_pending_sample($port, \%pending_sample);
+    }
+
+    for my $transition (@{$target_state->{transitions} || []}) {
+        return 0 if _dynamic_wait_condition_touches_pending_sample($transition->{condition}, \%pending_sample);
+    }
+
+    return @{$target_state->{transitions} || []} ? 1 : 0;
+}
+
 sub _dynamic_wait_zero_sample_target_is_independent_data_op {
     my ($wait_state, $target_state, @source_kinds) = @_;
     return 0 unless _dynamic_wait_has_pending_samples($wait_state);
 
-    my %pending_sample = map {
-        my $lhs = $_->{lhs};
-        defined($lhs) && !ref($lhs) && length($lhs) ? ($lhs => 1) : ();
-    } @{$wait_state->{pending_sample_assignments} || []};
+    my %pending_sample = _dynamic_wait_pending_sample_names($wait_state);
     return 0 unless %pending_sample;
 
     my %accepted_source_kind = map { $_ => 1 } @source_kinds;
@@ -6927,6 +6941,14 @@ sub _dynamic_wait_zero_sample_target_is_independent_data_op {
     }
 
     return $has_data_op ? 1 : 0;
+}
+
+sub _dynamic_wait_pending_sample_names {
+    my ($wait_state) = @_;
+    return map {
+        my $lhs = $_->{lhs};
+        defined($lhs) && !ref($lhs) && length($lhs) ? ($lhs => 1) : ();
+    } @{$wait_state->{pending_sample_assignments} || []};
 }
 
 sub _dynamic_wait_assignment_touches_pending_sample {

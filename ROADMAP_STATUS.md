@@ -10,14 +10,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR` is closed after
-  shipping runtime dynamic waits after transaction bank `load` and `store`
-  predecessor states. Bank access states keep their guarded scalarized
-  assignments, while the following runtime wait edge now splits into
-  positive-count counter snapshot and zero-count bypass paths. Bank syntax,
-  load/store assignment semantics, and pending-sample successor compatibility
-  are unchanged. The next R14 PNT implementation slice must select or create a
-  new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-SYNC-SAMPLE` is closed after
+  shipping pending-sample runtime wait zero-bypass into top-level `await_all`
+  and `await_any` sync states. The zero-count clone materializes pending
+  samples and preserves the original all-done or any-done transition when the
+  collected done ports are independent of pending sample aliases; sync ports
+  that consume aliases remain fail-closed. The next R14 PNT implementation
+  slice must select or create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -643,8 +642,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   are now shipped: positive counts sample once in the first wait state and use
   a separate no-resample wait-loop state when the sampled count is greater than
   one, while zero counts bypass to a sample-preserving clone of the following
-  state when that state can carry samples without changing timing. Other
-  top-level zero-count successors, unknown-width or malformed count
+  state when that state can carry samples without changing timing, including
+  top-level await_all/await_any sync states whose collected done ports do not
+  reference pending sample aliases. Other top-level zero-count successors,
+  unknown-width or malformed count
   expressions, and any remaining predecessor-edge splits remain fail-closed
   until their exact bypass and snapshot behavior is implemented. Pending
   samples before
@@ -720,6 +721,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   bypasses directly to the post-wait state on zero counts. This is a
   predecessor-edge split only: bank syntax, scalarized bank assignment
   semantics, and pending-sample bank successor compatibility are unchanged.
+- ISF sync successor pending-sample runtime wait update: runtime dynamic waits
+  with pending samples can now zero-bypass into top-level `await_all` and
+  `await_any` sync states when the collected done ports do not reference any
+  pending sample alias. The zero path uses a sample-preserving sync clone that
+  performs pending sample assignments and preserves the original all-done or
+  any-done transition. Sync done ports that read pending sample aliases remain
+  fail-closed.
 - ISF consecutive pending-sample runtime wait update: pending samples before
   consecutive top-level runtime waits now carry across zero-count wait links.
   A zero first wait plus positive second wait enters a generated
