@@ -854,15 +854,17 @@ multi-pending `await_any` followed by same-body `await_all` before the repeat
 check can loop. Pending samples materialize in an explicit sample state at
 their source-order timing point: before a later spawn state for
 sample-before-spawn ordering, or before the sync state for sample-after-spawn
-ordering. A repeat directly inside a top-level `when` body or directly inside
-a top-level `switch` branch also accepts exactly one generated
-`(spawn child as inst [(params ...)] [(bind ...)]
+ordering. A repeat directly inside a top-level `when` body also accepts exactly
+one generated `(spawn child as inst [(params ...)] [(bind ...)]
 [(domain NAME)])` when the same nested repeat body reaches `(await_all done)`
-before the nested repeat check can loop. Those branch-contained nested spawns
-reuse the static generated-child handoff model and preserve source-order
-samples before the nested spawn or sync states; `await_any`, multiple pending
-nested spawns, `do` while the nested spawn is pending, deeper branch/loop
-nesting, and cross-domain activation remain fail-closed.
+or single-pending `(await_any done)` before the nested repeat check can loop.
+A repeat directly inside a top-level `switch` branch accepts the same single
+generated spawn only on the same-body `(await_all done)` path. Those
+branch-contained nested spawns reuse the static generated-child handoff model
+and preserve source-order samples before the nested spawn or sync states;
+switch-contained `await_any`, multiple pending nested spawns, `do` while the
+nested spawn is pending, deeper branch/loop nesting, and cross-domain
+activation remain fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -2128,6 +2130,9 @@ These are not stable public interfaces yet:
   optional declared same-domain `(domain NAME)` metadata, same-body
   `await_all`, single-pending same-body `await_any`, and multi-pending
   same-body `await_any` followed by same-body `await_all` drain subset.
+  Top-level when-body nested repeat single generated spawn also supports
+  same-body `await_all` or single-pending same-body `await_any`; the
+  switch-branch nested analogue remains same-body `await_all` only.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
   wait counts, sample-incompatible runtime wait successors, nested loops, and
   loop bodies containing broader child activation, stages, or contracts need

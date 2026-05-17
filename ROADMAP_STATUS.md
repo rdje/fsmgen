@@ -241,8 +241,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   child and keeps multiple pending nested spawns, switch-contained
   `await_any`, `do` while a nested spawn is pending, cross-domain activation,
   deeper branch/loop nesting, and broader outstanding-child semantics
-  deferred. The next active implementation frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.46`.
+  deferred. `ISF-REPEAT-BODY-CHILD-ACTIVATION.46` then shipped that selected
+  when-contained repeat spawn await_any subset: the lowerer accepts exactly
+  one pending generated spawn in a repeat directly inside a top-level `when`
+  body when the same nested repeat body reaches single-pending
+  `(await_any done)`, preserves source-order samples before nested spawn or
+  sync states, generated-top parameter overrides, input/output binding
+  handoffs, declared same-domain metadata, schedule-report binding/domain
+  metadata, and keeps multiple pending nested spawns, switch-contained
+  `await_any`, `do` while a nested spawn is pending, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics
+  fail-closed. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.47`, which must select the next bounded
+  repeat-body child activation subset before code.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

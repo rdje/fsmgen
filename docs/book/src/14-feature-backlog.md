@@ -319,14 +319,17 @@ Multi-pending repeat-body `await_any` is now shipped only as an observation
 point: a later same-body `await_all` must drain the same outstanding
 repeat-body spawns before the repeat check can loop, and new repeat-body
 `spawn` or `do` clauses between that observation and the drain remain out of
-scope. Repeats directly inside a top-level `when` body or directly inside a
-top-level `switch` branch may also use exactly one generated
+scope. Repeats directly inside a top-level `when` body may also use exactly
+one generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
-same nested repeat body reaches `(await_all done)` before the nested repeat
-check can loop. Those branch-contained nested single-spawn subsets reuse the
-static generated-child handoff model, preserve source-order samples before
-the nested spawn or sync states, and gate the nested repeat check on the
-spawned child done handoff. Cross-domain repeat-body `do`,
+same nested repeat body reaches `(await_all done)` or single-pending
+`(await_any done)` before the nested repeat check can loop. Repeats directly
+inside a top-level `switch` branch accept the same single generated spawn only
+on the same-body `(await_all done)` path. Those branch-contained nested
+single-spawn subsets reuse the static generated-child handoff model, preserve
+source-order samples before the nested spawn or sync states, and gate the
+nested repeat check on the spawned child done handoff. Cross-domain
+repeat-body `do`,
 generated/spawn nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained single-spawn cases, deeper branch
 repeat activation, loop-contained repeat activation, and broader
@@ -365,10 +368,11 @@ cross-domain activation.
 The when-contained nested repeat spawn leaf covers a repeat directly inside a
 top-level `when` body with exactly one generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` that
-reaches same-body `(await_all done)` before the nested repeat check can loop.
-This subset is shipped. It reuses the static generated-child handoff model,
-keeps source-order samples before the spawn or sync states explicit, and keeps
-the nested repeat re-entry gated on the spawned child's done handoff.
+reaches same-body `(await_all done)` or single-pending `(await_any done)`
+before the nested repeat check can loop. This subset is shipped. It reuses the
+static generated-child handoff model, keeps source-order samples before the
+spawn or sync states explicit, and keeps the nested repeat re-entry gated on
+the spawned child's done handoff.
 
 The switch-contained nested repeat spawn leaf covers the direct switch
 analogue: a repeat directly inside a top-level `switch` branch with exactly
@@ -379,21 +383,13 @@ This subset is shipped. It reuses the static generated-child handoff model,
 keeps source-order samples before the spawn or sync states explicit, and keeps
 the nested repeat re-entry gated on the spawned child's done handoff.
 
-Next selected leaf: top-level `when` body nested repeats with exactly one
-generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
-may drain through same-body single-pending `(await_any done)`. This selected
-subset is not shipped yet. It intentionally mirrors the top-level repeat-body
-single-pending `await_any` proof: with exactly one nested static child pending,
-`await_any` observes the same done handoff that `await_all` would wait for
-before the nested repeat check can loop.
-
 `await_any`, multiple pending nested spawns, `do` while a nested spawn is
 pending, cross-domain activation, deeper branch/loop nesting, and broader
 outstanding-child semantics remain backlog beyond the shipped branch-contained
-single-spawn leaves. For the selected next leaf, this backlog statement now
-means switch-contained `await_any`, multiple pending nested spawns, `do` while
-a nested spawn is pending, cross-domain activation, deeper branch/loop
-nesting, and broader outstanding-child semantics.
+single-spawn leaves. For branch-contained single-spawn leaves, this backlog
+statement now means switch-contained `await_any`, multiple pending nested
+spawns, `do` while a nested spawn is pending, cross-domain activation, deeper
+branch/loop nesting, and broader outstanding-child semantics.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

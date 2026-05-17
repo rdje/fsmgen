@@ -389,6 +389,100 @@ ISF
     );
 };
 
+subtest 'when body nested repeat spawn drains through single-pending await_any' => sub {
+    my $source = <<'ISF';
+(actor when_repeat_spawn_await_any
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input cond (domain core))
+    (input loops (width 3) (domain core))
+    (input payload (width 8) (domain core))
+    (input status (domain core))
+    (output done (domain core))
+    (output worker_done (domain core))
+    (output result (width 8) (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (when cond
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0
+          (params
+            (WIDTH 16))
+          (bind
+            (input data payload)
+            (output resp result))
+          (domain core))
+        (sample status as after)
+        (await_any done)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (update resp data)
+    (complete worker_done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'when-body nested repeat await_any spawn contributes one static generated child instance');
+    is($ir->{spawn_instances}[0]{child}, 'worker',
+        'when-body nested repeat await_any spawn targets the worker transaction');
+    is($ir->{spawn_instances}[0]{instance}, 'w0',
+        'when-body nested repeat await_any spawn preserves the lexical instance name');
+    is($ir->{spawn_instances}[0]{domain}, 'core',
+        'when-body nested repeat await_any spawn preserves declared same-domain metadata');
+    is_deeply(
+        $ir->{spawn_instances}[0]{parameter_overrides},
+        [{ name => 'WIDTH', value => '16' }],
+        'when-body nested repeat await_any spawn preserves static parameter overrides',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'when_repeat_spawn_await_any.fsm'};
+    my $top_fsm = $lowered->{files}{'when_repeat_spawn_await_any_top.fsm'};
+
+    ok(defined($parent_fsm), 'when-body nested repeat await_any parent scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'when-body nested repeat await_any generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before nested await_any spawn materializes before the spawn state');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_sample_\d+\)/,
+        'when-body nested await_any spawn starts the static child before the following sample');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'sample after nested spawn materializes before await_any');
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_\d+\)/,
+        'single-pending await_any gates the nested repeat check on the spawned child done');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top applies nested repeat-spawn await_any parameter overrides once');
+    like($top_fsm, qr/\(when_repeat_spawn_await_any\.w0_data w0\.data\)/,
+        'generated top wires nested repeat-spawn await_any input binding handoff');
+    like($top_fsm, qr/\(w0\.resp when_repeat_spawn_await_any\.w0_resp\)/,
+        'generated top wires nested repeat-spawn await_any output binding handoff');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:data',
+            'spawn:w0:resp',
+        ],
+        'report exposes when-body nested repeat-spawn await_any port-binding provenance',
+    );
+    is_deeply(
+        $report->{clock_domains}[0]{child_instances},
+        [{ kind => 'spawn', owner => 'parent', child => 'worker', instance => 'w0' }],
+        'clock-domain report metadata groups the when-body nested repeat-spawn await_any child by declared domain',
+    );
+};
+
 subtest 'switch branch nested repeat spawn drains through same-body await_all' => sub {
     my $source = <<'ISF';
 (actor switch_repeat_spawn_await_all
@@ -1965,22 +2059,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when nested repeat spawn await_any', qr/when-body nested repeat spawn supports only same-body '\(await_all done\)' in the current spawn-nesting subset/);
-(actor when_nested_repeat_spawn_await_any
-  (clock clk)
-  (interface (input start) (input cond) (input loops (width 3)) (output done))
-  (transaction parent
-    (on start)
-    (when cond
-      (repeat loops
-        (spawn worker as w0)
-        (await_any done)))
-    (complete done))
-  (transaction worker
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'when nested repeat multiple spawns', qr/when-body nested repeat spawn supports exactly one pending generated child before same-body await_all in the current spawn-nesting subset/);
+    assert_lower_rejected(<<'ISF', 'when nested repeat multiple spawns', qr/when-body nested repeat spawn supports exactly one pending generated child before same-body sync in the current spawn-nesting subset/);
 (actor when_nested_repeat_multiple_spawns
   (clock clk)
   (interface (input start) (input cond) (input loops (width 3)) (output done))
@@ -2086,7 +2165,7 @@ ISF
     (complete worker_done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when nested repeat spawn without await_all', qr/when-body nested repeat spawn requires same-body '\(await_all done\)' before the nested repeat check can loop/);
+    assert_lower_rejected(<<'ISF', 'when nested repeat spawn without sync', qr/when-body nested repeat spawn requires same-body '\(await_all done\)' or single-pending '\(await_any done\)' before the nested repeat check can loop/);
 (actor when_nested_repeat_spawn_without_await_all
   (clock clk)
   (interface (input start) (input cond) (input loops (width 3)) (output done))

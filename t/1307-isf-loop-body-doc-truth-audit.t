@@ -97,6 +97,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/top-level\s+`?when`?\s+body.*nested\s+repeat.*spawn.*await_any/si,
+        "$path documents the shipped top-level when-body nested repeat spawn await_any subset",
+    );
+    like(
+        $content,
         qr/top-level\s+`?switch`?\s+branch.*nested\s+repeat.*spawn.*await_all/si,
         "$path documents the shipped top-level switch-branch nested repeat spawn await_all subset",
     );

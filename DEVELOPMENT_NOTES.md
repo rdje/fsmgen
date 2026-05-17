@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained repeat spawn await_any reuses the single-child proof
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.46` implements only the selected
+  when-contained nested repeat single-spawn `await_any` subset.
+- The validator now allows same-body `(await_any done)` for that nested
+  when-body placement only when the already-enforced single generated spawn is
+  pending. Because no second nested spawn can be pending in this subset,
+  `await_any` observes the same generated child done handoff as `await_all`
+  before the nested repeat check can loop.
+- The switch-contained analogue still rejects `await_any`, and multiple
+  pending nested spawns, spawned/blocked child interaction, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  lifetime semantics remain separate contracts.
 ## 2026-05-17: when-contained repeat spawn await_any is the next nested spawn subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.45` selects the narrow `await_any`
   analogue of the shipped when-contained single-spawn `await_all` subset.
