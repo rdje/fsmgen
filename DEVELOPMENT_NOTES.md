@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated do bindings are the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.9` selects binding handoffs for the
+  generated repeat-body `do` instance shipped in `.8`.
+- This is narrower than domain or nested activation work: input/output binding
+  ports should be generated once for the lexical do instance in the generated
+  top, while the do state still waits for that instance's done handoff before
+  repeat re-entry.
+- Domain metadata stays separate because it changes ownership/report grouping;
+  nested placement and multi-pending `await_any` still need broader lifetime
+  contracts.
 ## 2026-05-17: repeat-body generated do reuses one static instance
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` implements only the static-parameter
   repeat-body generated `do` subset. The generated do site owns one

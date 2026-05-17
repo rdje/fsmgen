@@ -281,6 +281,10 @@ sample-before/after-do timing, spawn-after-sample ordering, multi-pending
 `await_any`, cross-domain activation, and spawn nested under branch or loop
 bodies remain backlog until their re-entry, binding, domain, and report
 contracts are specified.
+The next selected task-tree leaf is the generated `do` binding subset:
+top-level repeat-body `(do child (params ...) (bind ...))`, with generated
+input/output handoffs emitted once for the lexical repeat-body do instance.
+Repeat-body do domain metadata remains a separate backlog leaf.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
