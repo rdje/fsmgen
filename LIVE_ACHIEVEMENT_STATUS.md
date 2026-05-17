@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: Project operations — GitHub CI and Pages re-enabled
+- Completed `GITHUB-PUBLIC-AUTOMATION-REENABLE.1`.
+- The hosted regression workflow is active again at
+  [.github/workflows/regression.yml](.github/workflows/regression.yml) and
+  uses the shared `./bin/ci-regression` gate for `main` pushes, pull requests
+  targeting `main`, and manual runs.
+- GitHub Pages publishing is now repo-owned at
+  [.github/workflows/pages.yml](.github/workflows/pages.yml): it builds
+  [docs/book](docs/book) and publishes `docs/book/book` when repository Pages
+  settings use GitHub Actions.
+- README, mdBook regression guidance, live docs, and the task tree are
+  synchronized with the active hosted automation state.
+- Validation passed: `bash -n bin/ci-regression`, workflow YAML load through
+  Ruby, `mdbook build docs/book`, `./bin/ci-regression quick --no-book`
+  (Files=8, Tests=145), and `git diff --check`.
+- Active R14 compiler frontier remains
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`.
+
 ## 2026-05-17: R14 — ISF when-contained repeat do while spawn pending shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`.
 - Top-level `when` bodies may now contain nested repeats with one or more

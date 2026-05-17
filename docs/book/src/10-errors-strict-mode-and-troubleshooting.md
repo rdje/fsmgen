@@ -251,9 +251,13 @@ smallest `ci-regression` tier that covers the changed surface. The gate builds
 the mdBook by default, so generated docs and runtime behavior stay under the
 same local quality check. Use `--list` to inspect the concrete quick/ISF test
 sets and `--no-book` only for a deliberately code-only turnaround check.
-GitHub Actions is intentionally parked right now under
-[.github/workflows-disabled/README.md](.github/workflows-disabled/README.md),
-so this local repo-owned gate is the currently active regression entrypoint.
+
+GitHub Actions is active under `.github/workflows/`. The hosted regression
+workflow runs the same `./bin/ci-regression` entrypoint on pushes to `main`,
+pull requests targeting `main`, and manual runs, so local and hosted checks use
+the same gate. The GitHub Pages workflow builds this mdBook from `docs/book`
+and publishes the generated `docs/book/book` artifact when Pages is configured
+to use GitHub Actions.
 
 ## Current Boundary
 

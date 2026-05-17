@@ -2,6 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
+- Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
+  hosted automation after the repository was made public. Regression CI is
+  discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
+  and runs the shared `./bin/ci-regression` gate; GitHub Pages publishing is
+  defined at [.github/workflows/pages.yml](.github/workflows/pages.yml) and
+  builds [docs/book](docs/book) for publication when Pages uses GitHub
+  Actions. This changes no compiler behavior and does not move the active R14
+  frontier.
 - Bootstrap/import-tree checkpoint: the session bootstrap reran the
   [bin/fsmgen](bin/fsmgen) import-tree analysis on `2026-05-15`.
   [docs/BIN_FSMGEN_IMPORT_TREE.md](docs/BIN_FSMGEN_IMPORT_TREE.md) now records

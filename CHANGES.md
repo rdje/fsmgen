@@ -1,5 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-18
+### Project operations — GitHub CI and Pages re-enabled
+- Completed `GITHUB-PUBLIC-AUTOMATION-REENABLE.1`.
+- Restored discoverable hosted regression CI at
+  [.github/workflows/regression.yml](.github/workflows/regression.yml). The
+  workflow now runs for `main` pushes, pull requests targeting `main`, and
+  manual runs, and continues to use `./bin/ci-regression` as the shared
+  local/hosted quality gate.
+- Added [.github/workflows/pages.yml](.github/workflows/pages.yml) to build
+  [docs/book](docs/book) and publish the generated mdBook artifact through
+  GitHub Pages when Pages is configured to use GitHub Actions.
+- Updated the workflow overview, README, mdBook regression guidance, live
+  docs, and task-tree status so current documentation no longer says hosted CI
+  is parked.
+- Validation: `bash -n bin/ci-regression`, workflow YAML load through Ruby,
+  `mdbook build docs/book`, `./bin/ci-regression quick --no-book` (Files=8,
+  Tests=145), and `git diff --check` passed.
 ## 2026-05-17
 ### R14 — ISF when-contained repeat do while spawn pending shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`.

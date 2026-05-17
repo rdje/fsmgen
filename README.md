@@ -201,7 +201,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `COMMIT.md` — canonical commit workflow specification.
 - `WARP.md` — project guidance for Warp/agent workflows.
 - `.agents/workflows/commit.md` — agent workflow definition for commit operations.
-- `.github/workflows-disabled/README.md` — explains why legacy workflows are intentionally parked.
+- `.github/workflows/README.md` — active hosted CI and GitHub Pages workflow overview.
 
 ## Project file and directory map
 ### Core entrypoints and pipeline
@@ -310,6 +310,9 @@ cd docs/book && mdbook serve
 ```
 - The mdBook is the progressive learning surface.
 - `docs/USER_GUIDE.md` remains the broad live reference while that split is still in progress.
+- GitHub Pages publishes the same mdBook from `docs/book` through the active
+  workflow in `.github/workflows/pages.yml` when the repository's Pages source
+  is set to GitHub Actions.
 
 ## Local CI / pre-push regression
 ```bash
@@ -336,7 +339,9 @@ cd docs/book && mdbook serve
   user-facing book stays under the same local quality gate; use `--no-book`
   only for a deliberately code-only local turnaround check.
 - When `verilator` and `yosys` are installed, the external SystemVerilog validation smoke runs too; otherwise that test is skipped.
-- GitHub Actions is intentionally parked right now under [.github/workflows-disabled/README.md](.github/workflows-disabled/README.md), so this local gate is currently the canonical actively used regression entrypoint.
+- GitHub Actions is active again under [.github/workflows/](.github/workflows/).
+  The hosted regression workflow calls `./bin/ci-regression`, so the local and
+  GitHub quality gates use the same repo-owned entrypoint.
 
 ## CLI quick reference
 ```bash

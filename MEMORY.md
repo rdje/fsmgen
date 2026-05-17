@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: public GitHub CI and Pages automation re-enabled
+- Completed `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` under the project-operations
+  task tree.
+- Restored hosted regression CI by moving the parked workflow back to
+  [.github/workflows/regression.yml](.github/workflows/regression.yml). It
+  runs on `main` pushes, pull requests targeting `main`, and manual
+  `workflow_dispatch`, and it calls the same repo-owned `./bin/ci-regression`
+  gate used locally.
+- Added [.github/workflows/pages.yml](.github/workflows/pages.yml) to build
+  [docs/book](docs/book) and publish the generated `docs/book/book` artifact
+  through GitHub Pages when repository Pages settings use GitHub Actions.
+- Replaced current README and mdBook wording that described hosted GitHub
+  Actions as intentionally parked; historical live-doc entries may still
+  mention the old parked state as past context.
+- Validation: `bash -n bin/ci-regression`, workflow YAML load through Ruby,
+  `mdbook build docs/book`, `./bin/ci-regression quick --no-book` (Files=8,
+  Tests=145), and `git diff --check` passed.
+- This does not move the active R14 compiler frontier; the active task remains
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`.
 ## 2026-05-17: when-contained repeat do while spawn pending shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

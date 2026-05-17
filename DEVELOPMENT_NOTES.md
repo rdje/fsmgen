@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: hosted automation restored for the public repository
+- `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` is an operations-only slice. It
+  restores GitHub discovery for CI and Pages after the repository was made
+  public and Actions/Pages were re-enabled in GitHub settings.
+- The regression workflow deliberately calls `./bin/ci-regression` instead of
+  spelling out a second hosted-only test recipe. That preserves one canonical
+  regression entrypoint for local and hosted execution.
+- GitHub Pages builds the mdBook from source through Actions and uploads
+  `docs/book/book` as the Pages artifact. The generated book output stays
+  ignored locally, so validation does not dirty the tracked repository.
+- The Pages workflow requires the repository Pages source to be set to GitHub
+  Actions in GitHub settings. If GitHub is configured for branch-based Pages
+  instead, the workflow can build and upload its artifact but GitHub will not
+  publish from it until that setting is changed.
+- This slice does not change compiler behavior and does not move the active
+  R14 frontier.
 ## 2026-05-17: when-contained local do preserves pending generated spawns
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.58` implements only the selected
   top-level `when` body nested-repeat local-do-while-spawn-pending subset.
