@@ -1406,7 +1406,8 @@ sub _validate_child_transaction_refs($self, $actor) {
             my $uses_bindings = _repeat_body_do_uses_bindings($clause);
             my $uses_domain = _repeat_body_do_uses_domain($clause);
             my $nested_generated_child_do = (
-                (!$uses_domain || ($repeat_parent_label eq 'when body' && $uses_generated_params))
+                (!$uses_domain
+                    || (($repeat_parent_label eq 'when body' || $repeat_parent_label eq 'switch branch') && $uses_generated_params))
                 && (
                     (($repeat_parent_label eq 'when body' || $repeat_parent_label eq 'switch branch')
                         && !$uses_generated_params
@@ -3886,8 +3887,8 @@ sub _validate_repeat_body_spawn_subset {
             } elsif ($switch_branch_repeat) {
                 confess "Transaction '$tn': switch-branch nested repeat generated do bindings require static '(params ...)' overrides in the current nested generated blocking-do subset\n"
                     if $uses_bindings && !$uses_generated_params;
-                confess "Transaction '$tn': switch-branch nested repeat do does not support '(domain ...)' subclauses in the current nested generated blocking-do subset\n"
-                    if $uses_domain;
+                confess "Transaction '$tn': switch-branch nested repeat generated do domain metadata requires static '(params ...)' overrides in the current nested generated blocking-do subset\n"
+                    if $uses_domain && !$uses_generated_params;
             }
             confess "Transaction '$tn': repeat-body generated do bindings require static '(params ...)' overrides in the current generated blocking-do subset\n"
                 if $top_level_repeat && $uses_bindings && !$uses_generated_params;
@@ -3933,7 +3934,7 @@ sub _validate_repeat_body_do_subset {
 
         if ($nested_do_label eq 'when-body') {
             for my $subclause (@subclauses) {
-                confess "Transaction '$tn': when-body nested repeat do supports only plain '(do child)', static '(do child (params ...))', or static bound '(do child (params ...) (bind ...))' without '(domain ...)' subclauses\n"
+                confess "Transaction '$tn': when-body nested repeat do supports only plain '(do child)', static '(do child (params ...))', static bound '(do child (params ...) (bind ...))', or static same-domain '(do child (params ...) [(bind ...)] (domain ...))' in the current nested generated blocking-do subset\n"
                     unless ref($subclause) eq 'ARRAY'
                         && @$subclause
                         && defined($subclause->[0])
@@ -3946,7 +3947,7 @@ sub _validate_repeat_body_do_subset {
                 if $uses_domain && !$uses_generated_params;
         } elsif ($nested_do_label eq 'switch-branch') {
             for my $subclause (@subclauses) {
-                confess "Transaction '$tn': switch-branch nested repeat do supports only plain '(do child)', static '(do child (params ...))', or static bound '(do child (params ...) (bind ...))' without '(domain ...)' subclauses\n"
+                confess "Transaction '$tn': switch-branch nested repeat do supports only plain '(do child)', static '(do child (params ...))', static bound '(do child (params ...) (bind ...))', or static same-domain '(do child (params ...) [(bind ...)] (domain ...))' in the current nested generated blocking-do subset\n"
                     unless ref($subclause) eq 'ARRAY'
                         && @$subclause
                         && defined($subclause->[0])
@@ -3955,8 +3956,8 @@ sub _validate_repeat_body_do_subset {
             }
             confess "Transaction '$tn': switch-branch nested repeat generated do bindings require static '(params ...)' overrides in the current nested generated blocking-do subset\n"
                 if $uses_bindings && !$uses_generated_params;
-            confess "Transaction '$tn': switch-branch nested repeat do does not support '(domain ...)' subclauses in the current nested generated blocking-do subset\n"
-                if $uses_domain;
+            confess "Transaction '$tn': switch-branch nested repeat generated do domain metadata requires static '(params ...)' overrides in the current nested generated blocking-do subset\n"
+                if $uses_domain && !$uses_generated_params;
         }
         return 1;
     }

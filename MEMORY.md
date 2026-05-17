@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: switch-contained repeat generated do domains shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.40`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts declared same-domain `(domain NAME)` metadata on generated
+  blocking `(do child (params ...) [(bind ...)] (domain NAME))` inside a
+  repeat that is directly inside a top-level `switch` branch.
+- The nested do site emits one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` generated child instance, preserves
+  domain ownership in generated-composition metadata and schedule-report
+  `clock_domains[].child_instances`, and keeps the switch-branch repeat check
+  gated on that generated instance's fresh done handoff.
+- Spawn nesting, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child semantics remain fail-closed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.41`, which must select the next bounded
+  repeat-body child activation subset before code.
+- Workflow note: push cadence remains every 30 unpushed commits unless the
+  user explicitly requests an earlier push.
 ## 2026-05-17: switch-contained repeat generated do domains selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`.
 - The active R14 task tree now selects a repeat directly inside a top-level

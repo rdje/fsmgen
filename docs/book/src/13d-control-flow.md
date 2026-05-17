@@ -167,11 +167,11 @@ static-parameter generated bound
 params whenever bindings or domain metadata are present. The
 switch-contained nested subset accepts the same local, plain generated-child,
 static-parameter generated, or static-parameter generated bound forms in a
-repeat directly inside a top-level `switch` branch. Both nested subsets keep
-the nested repeat check gated by the child's fresh done pulse. Both
-branch-contained bound nested generated `do` subsets still reject deeper
-branch nesting and loop-contained repeats; switch-contained nested generated
-`do` still rejects domain metadata.
+repeat directly inside a top-level `switch` branch, and it may also carry
+declared same-domain `(domain NAME)` metadata when static params are present.
+Both nested subsets keep the nested repeat check gated by the child's fresh
+done pulse. Both branch-contained bound nested generated `do` subsets still
+reject deeper branch nesting and loop-contained repeats.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases, `stage`,
 `contract`, nested `while`, and nested `until` forms remain outside the

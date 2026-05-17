@@ -1563,11 +1563,10 @@ Current lowering:
   switch-contained generated nested `do` also accept `(bind ...)` when static
   `(params ...)` overrides are present; the generated top wires those
   input/output binding handoffs once for the lexical nested do site.
-  When-contained generated nested `do` also accepts `(domain NAME)` as
-  declared same-domain metadata when static `(params ...)` overrides are
-  present; the switch-contained subset rejects `(domain NAME)`. Deeper
-  branch nesting and loop-contained repeats remain outside both nested
-  subsets. Top-level
+  When-contained and switch-contained generated nested `do` also accept
+  `(domain NAME)` as declared same-domain metadata when static `(params ...)`
+  overrides are present. Deeper branch nesting and loop-contained repeats
+  remain outside both nested subsets. Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
@@ -1961,7 +1960,8 @@ local, plain generated-child `(do child)`, or static-parameter generated
 declared same-domain `(domain NAME)` metadata, top-level
 switch-branch nested repeat local, plain generated-child `(do child)`, or
 static-parameter generated
-`(do child (params ...))` with optional `(bind ...)` handoffs, repeat-body
+`(do child (params ...))` with optional `(bind ...)` handoffs and optional
+declared same-domain `(domain NAME)` metadata, repeat-body
 generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]
 [(domain NAME)])`, and repeat-body spawn followed by same-body `await_all`,

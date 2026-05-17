@@ -860,10 +860,9 @@ Rules:
   generated child done pulse. The when-contained and switch-contained generated
   nested `do` also accept `(bind ...)` when static `(params ...)` overrides
   are present; the generated top wires those input/output binding handoffs
-  once for the lexical nested do site. The when-contained generated nested `do`
-  also accepts `(domain NAME)` as declared same-domain metadata when static
-  `(params ...)` overrides are present; the switch-contained subset rejects
-  `(domain NAME)`.
+  once for the lexical nested do site. The when-contained and switch-contained
+  generated nested `do` also accept `(domain NAME)` as declared same-domain
+  metadata when static `(params ...)` overrides are present.
   Deeper branch nesting and loop-contained repeats remain outside both nested
   subsets. Top-level repeat
   bodies also accept generated blocking
@@ -1195,10 +1194,10 @@ Rules:
   `(do child)` forms. Top-level `when` body and top-level `switch` branch
   nested repeats may also use static `(params ...)` on generated blocking
   `do`, and both top-level branch-contained subsets may pair those params
-  with `(bind ...)` input/output handoffs. The top-level `when` body subset
-  may also carry same-domain `(domain NAME)` metadata. No switch-bound nested
-  domain metadata, deeper branch repeat, or loop-contained repeat is included
-  in those shipped nested subsets. Top-level
+  with `(bind ...)` input/output handoffs. Both top-level branch-contained
+  subsets may also carry same-domain `(domain NAME)` metadata. No deeper
+  branch repeat or loop-contained repeat is included in those shipped nested
+  subsets. Top-level
   repeat bodies
   may also use
   `(do child (params ...))` with static parameter overrides; that form creates

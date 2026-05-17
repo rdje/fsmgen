@@ -339,22 +339,20 @@ inside a top-level `when` body with generated blocking
 ownership metadata only. This subset is shipped. The nested do site records
 ownership for the deterministic generated do instance at that lexical site,
 preserves generated-composition and schedule-report clock-domain metadata,
-and keeps switch-contained domain metadata, spawn nesting, cross-domain
-activation, deeper branch/loop nesting, and broader outstanding-child
-semantics out of scope.
+and keeps spawn nesting, cross-domain activation, deeper branch/loop nesting,
+and broader outstanding-child semantics out of scope.
 
-The next bounded nested generated-do domain leaf selects a repeat directly
+The switch-contained nested generated-do domain leaf covers a repeat directly
 inside a top-level `switch` branch with generated blocking
 `(do child (params ...) [(bind ...)] (domain NAME))`: declared same-domain
-ownership metadata only. The selected switch-contained subset mirrors the
-shipped when-contained domain subset: the deterministic generated do instance
-at that lexical site should record ownership in generated-composition and
-schedule-report clock-domain metadata without implying CDC or cross-domain
-activation.
+ownership metadata only. This subset is shipped. The deterministic generated
+do instance at that lexical site records ownership in generated-composition
+and schedule-report clock-domain metadata without implying CDC or
+cross-domain activation.
 
 Spawn nesting, cross-domain activation, deeper branch/loop nesting, and
-broader outstanding-child semantics remain backlog beyond the selected
-switch-contained domain metadata leaf.
+broader outstanding-child semantics remain backlog beyond the shipped
+branch-contained domain metadata leaves.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

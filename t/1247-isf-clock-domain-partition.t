@@ -299,6 +299,103 @@ ISF
 ISF
 };
 
+subtest 'switch branch nested repeat generated do domain metadata groups static do instance' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_generated_do_domain_partition
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain aux  (clock aux_clk) (reset aux_rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (width 2) (domain core))
+    (input loops (width 3) (domain core))
+    (input req_addr (width 8) (domain core))
+    (input status (domain core))
+    (output done (domain core))
+    (output worker_done (domain core))
+    (output resp (width 8) (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input addr req_addr)
+              (output data resp))
+            (domain core))
+          (sample status as after))))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete worker_done)))
+ISF
+
+    my $actor = parse_source($source, 'switch-repeat-generated-do-domain-partition');
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{instance}, 'parent_worker_repeat_do_0',
+        'switch-branch repeat generated do keeps deterministic domain instance name');
+    is($instance->{domain}, 'core',
+        'switch-branch repeat generated do preserves same-domain metadata on the generated child instance');
+
+    my %domain = map { $_->{name} => $_ } @{$ir->{domain_partition}{domains}};
+    is_deeply(
+        $domain{core}{child_instances},
+        [{ kind => 'do', owner => 'parent', child => 'worker', instance => 'parent_worker_repeat_do_0' }],
+        'domain partition groups the switch-branch repeat generated do instance with its declared owner domain',
+    );
+    is_deeply($domain{aux}{child_instances}, [],
+        'unrelated domains do not receive the switch-branch repeat generated do instance');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    my %reported_domain = map { $_->{name} => $_ } @{$report->{clock_domains}};
+    is_deeply(
+        $reported_domain{core}{child_instances},
+        [{ kind => 'do', owner => 'parent', child => 'worker', instance => 'parent_worker_repeat_do_0' }],
+        'schedule report groups the switch-branch repeat generated do instance with its declared owner domain',
+    );
+
+    assert_lower_rejected(<<'ISF', 'switch repeat generated do cross-domain metadata', qr/ISF clock-domain violation: transaction 'parent' do target 'worker' references transaction in domain 'bus' from domain 'core' without a crossing primitive/);
+(actor switch_repeat_generated_do_cross_domain
+  (clock-domains
+    (domain core (clock clk) (reset rst_n) :default)
+    (domain bus  (clock bus_clk) (reset bus_rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (width 2) (domain core))
+    (input loops (width 3) (domain core))
+    (output done (domain core))
+    (output worker_done (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (do worker
+            (params
+              (WIDTH 16))
+            (domain bus)))))
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (params
+      (WIDTH 8))
+    (complete worker_done)))
+ISF
+};
+
 subtest 'single-domain clock-domains sources lower through the existing one-clock path' => sub {
     my $source = <<'ISF';
 (actor single_domain_clock_domains
