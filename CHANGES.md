@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF switch-contained repeat generated do params selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.31`.
+- Selected top-level `switch` branches containing nested repeats with
+  generated blocking `(do child (params ...))` and static parameter overrides
+  as the next bounded nested generated-do subset.
+- The selected surface owns one deterministic generated do instance for the
+  lexical nested repeat-body do site, applies parameter overrides once in the
+  generated top, and keeps the switch-branch repeat check gated by that
+  instance's fresh done handoff.
+- `(bind ...)`, `(domain NAME)`, spawn nesting, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  deferred for this selected subset.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
 ### R14 — ISF when-contained repeat generated do params shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`.
 - Top-level `when` bodies may now contain nested repeats with generated

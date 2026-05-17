@@ -311,16 +311,26 @@ point: a later same-body `await_all` must drain the same outstanding
 repeat-body spawns before the repeat check can loop, and new repeat-body
 `spawn` or `do` clauses between that observation and the drain remain out of
 scope. Cross-domain repeat-body `do`, generated/spawn nested activation beyond
-the documented branch-contained generated-child do cases, deeper branch repeat
+the documented branch-contained generated do cases, deeper branch repeat
 activation, loop-contained repeat activation, and broader outstanding-child
 lifetime semantics beyond the mandatory-drain subset remain backlog. The
 shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
-Switch-contained parameterized generated nested `do`, nested generated-do
-bindings, nested generated-do domain metadata, spawn nesting, cross-domain
-activation, deeper branch/loop nesting, and broader outstanding-child
-semantics remain backlog.
+
+The next bounded nested generated-do leaf selects the switch analogue of the
+shipped when-contained static-parameter generated `do` subset: a repeat
+directly inside a top-level `switch` branch with `(do child (params ...))`
+and static parameter overrides only. The selected nested do site owns one
+deterministic generated do instance, applies the parameter overrides once in
+the generated top, waits for that instance's fresh done handoff before the
+switch-branch repeat check, and keeps `(bind ...)`, `(domain NAME)`, spawn
+nesting, deeper branch/loop nesting, cross-domain activation, and broader
+outstanding-child semantics out of scope.
+
+Nested generated-do bindings, nested generated-do domain metadata, spawn
+nesting, cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
