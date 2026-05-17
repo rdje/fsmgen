@@ -72,10 +72,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `await_any` until the mandatory same-body `await_all` drain. The next active
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.21` then selected top-level `when` bodies
   containing nested repeats with local repeat-body `(do child)` as the next
-  bounded nested-placement subset. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`; generated nested repeat activation,
-  spawn nesting, switch/loop nesting, cross-domain activation, and broader
-  outstanding-child semantics remain deferred. The workflow also requires
+  bounded nested-placement subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.22` then
+  shipped that local-only subset for repeats directly inside top-level `when`
+  bodies: the child remains in the parent scheduled module, source-order
+  samples around the nested do remain explicit, and the branch-owned repeat
+  check stays gated by the child's fresh done pulse. Generated targets,
+  `(params ...)`, `(bind ...)`, `(domain NAME)`, generated/spawn nested
+  activation, switch-contained repeats, deeper `when` repeats, loop-contained
+  repeats, cross-domain activation, and broader outstanding-child semantics
+  remain deferred. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, which must select the next bounded
+  repeat-body child-activation subset before code. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier

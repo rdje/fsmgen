@@ -427,7 +427,14 @@ The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
 top-level local blocking `(do child)` subset. Repeat-body local `do` asserts
 the local child `start`, waits for the child's fresh `done` pulse, and only
-then reaches the repeat check back-edge. The shipped repeat-body clause
+then reaches the repeat check back-edge. Repeats directly inside a top-level
+`when` body accept that same local-only `(do child)` form: the child stays in
+the parent scheduled module, samples around the nested do lower in source
+order, and the branch-owned repeat check is reached only after fresh child
+done. That when-contained subset rejects `(params ...)`, `(bind ...)`,
+`(domain NAME)`, already-generated child targets, switch-contained repeats,
+deeper nested `when` repeats, and loop-contained repeats. The shipped
+repeat-body clause
 surface also includes generated blocking `(do child)` when the target child is
 already emitted as a generated child by another activation site, and
 `(do child (params ...) [(bind ...)] [(domain NAME)])` with static parameter
@@ -449,9 +456,10 @@ when exactly one repeat-body spawn is pending. Multi-pending repeat-body
 `await_any` is shipped only as an observation point when a later
 same-body `await_all` drains the same outstanding spawned children before the
 repeat check; new repeat-body `spawn` or `do` clauses before that drain remain
-rejected. Cross-domain repeat-body `do`, broader outstanding-child semantics,
-`stage`, `contract`, nested `while`, and nested `until` remain outside the
-shipped repeat-body subset. Samples may
+rejected. Cross-domain repeat-body `do`, generated or spawned nested
+activation, broader outstanding-child semantics, `stage`, `contract`,
+switch-contained activation, deeper `when` nesting, nested `while`, and nested
+`until` remain outside the shipped repeat-body subset. Samples may
 appear before or after repeat-body spawn as long as the same repeat body
 reaches same-body `await_all`, single-pending `await_any`, or multi-pending
 `await_any` followed by same-body `await_all` before the repeat check can
@@ -479,6 +487,10 @@ finished. Samples around repeat-body spawn and do lower into explicit
 source-order sample states, so the scheduled `.fsm` shows capture timing
 before spawn/do, before spawn sync, between multi-pending `await_any` and its
 drain, or after do completion before the repeat check.
+The local `(do child)` form is also shipped inside a repeat that is directly
+inside a top-level `when` body. It remains local-only in that nested position:
+no generated target, parameter override, port binding, or domain annotation is
+accepted there, and switch/deeper-loop placement remains backlog.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is
@@ -580,7 +592,10 @@ reject `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, and nested
 loops until their re-entry, child-lifetime, and report semantics are specified.
 The shipped repeat-body spawn plus same-body `await_all` subset applies only to
 `repeat` bodies; the same is true for the shipped repeat-body local
-`(do child)` subset. Body clauses must be non-empty list forms.
+`(do child)` subset. The shipped when-contained repeat local `do` exception
+applies only to a repeat directly inside a top-level `when` body, not to
+repeats nested under `while` or `until`. Body clauses must be non-empty list
+forms.
 
 Successful schedule reports expose `transaction_loops[]` entries with the
 authored transaction, loop kind, normalized condition, generated decision

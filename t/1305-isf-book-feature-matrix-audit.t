@@ -123,6 +123,7 @@ my @required_examples = (
     'top-level contract arm states',
     'loop decision states',
     'top-level repeat-body local blocking do',
+    'top-level when-body nested repeat local do',
     'top-level repeat-body generated-child blocking do',
     'top-level repeat-body generated blocking do with static params, bind handoffs, and same-domain domain metadata',
     'samples before or after spawn before same-body sync',
@@ -151,7 +152,7 @@ for my $example (@required_examples) {
 
 my @required_non_claims = (
     'Multi-bit CDC payloads',
-    'Cross-domain repeat-body `do`, broader outstanding-child semantics',
+    'Cross-domain repeat-body `do`, generated or spawned nested activation',
     'cross-domain activation inside repeat bodies',
     'Dynamic division/modulo nonzero proof is not shipped',
     'Enum members are not writable targets',

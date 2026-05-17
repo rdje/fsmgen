@@ -230,12 +230,16 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 Status: partially shipped; broader repeat-body child activation remains backlog.
 Task-tree owner for the remaining backlog:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
-Repeat-body local `(do child)`, repeat-body generated blocking
+Repeat-body local `(do child)`, top-level when-body nested repeat local
+`(do child)`, repeat-body generated blocking
 `(do child (params ...))`, repeat-body spawn `(bind ...)`, and declared
 same-domain `(domain NAME)` metadata are shipped for the already shipped
 top-level repeat plus same-body synchronization paths. The local `do` subset
 stays in the parent scheduled module and waits for the child's fresh done
-pulse before the repeat check can loop. The generated `do` subset emits one
+pulse before the repeat check can loop; when the repeat is directly inside a
+top-level `when` body, the same local-only do state lives in the branch-owned
+repeat region and gates that nested repeat check on fresh child done. The
+generated `do` subset emits one
 generated child instance for the lexical repeat-body do site and applies
 static parameter overrides once in the generated top. The spawn subset reuses
 the static generated-child model: one lexical spawn name maps to one generated
@@ -254,7 +258,11 @@ each later iteration observes the child's fresh done pulse before starting it
 again, or reject the loop with a targeted diagnostic.
 
 Shipped subset: a top-level repeat body may use local `(do child)` when the
-child remains in the parent scheduled module, and may use
+child remains in the parent scheduled module. A repeat directly inside a
+top-level `when` body may also use that local-only `(do child)` subset; it
+rejects generated targets, `(params ...)`, `(bind ...)`, `(domain NAME)`,
+switch-contained repeat activation, deeper nested `when` repeat activation,
+and loop-contained repeat activation. A top-level repeat body may use
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
 when the same repeat body reaches `(await_all done)` before the repeat check
 can loop. A single-pending `(await_any done)` is also shipped when exactly one
@@ -290,13 +298,10 @@ Multi-pending repeat-body `await_any` is now shipped only as an observation
 point: a later same-body `await_all` must drain the same outstanding
 repeat-body spawns before the repeat check can loop, and new repeat-body
 `spawn` or `do` clauses between that observation and the drain remain out of
-scope. The next bounded nested-placement leaf selects a repeat inside a
-top-level `when` body with local repeat-body `(do child)` only: the child must
-stay in the parent scheduled module, and the nested repeat check must remain
-unreachable until the child's fresh done pulse has been observed. Cross-domain
-repeat-body `do`, generated/spawn nested activation, switch/loop nesting, and
-broader outstanding-child lifetime semantics beyond the mandatory-drain subset
-remain backlog.
+scope. Cross-domain repeat-body `do`, generated/spawn nested activation,
+switch-contained repeat activation, deeper nested `when` repeat activation,
+loop-contained repeat activation, and broader outstanding-child lifetime
+semantics beyond the mandatory-drain subset remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

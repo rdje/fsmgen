@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained repeat local do reuses local handoffs
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.22` keeps nested placement narrow by
+  allowing only a repeat directly inside a top-level `when` body to call local
+  `(do child)`.
+- The implementation extends child-action reference collection so local child
+  start/done wiring sees the nested repeat do site, then reuses existing
+  repeat lowering for sample drains and done-gated repeat re-entry.
+- Generated targets and activation subclauses stay rejected in that nested
+  position because `_expand_when` intentionally does not carry generated-child
+  registration or generated-top handoff state for repeat-body `do`.
+  Switch-contained repeats, deeper branch nesting, loop-contained repeats,
+  cross-domain activation, and broader outstanding-child lifetime semantics
+  still need separate contracts.
 ## 2026-05-17: when-contained repeat local do is the next nested subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.21` selects the first nested-placement
   repeat-body activation subset: a top-level `when` body containing a repeat

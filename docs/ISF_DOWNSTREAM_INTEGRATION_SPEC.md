@@ -842,7 +842,14 @@ Rules:
   Top-level repeat bodies also accept local blocking `(do child)` when the
   child transaction remains local to the scheduled parent; the do state starts
   the child and waits for its fresh `child_done` pulse before the repeat check
-  can loop. Top-level repeat bodies also accept generated blocking
+  can loop. Repeats directly inside a top-level `when` body accept that same
+  local-only `(do child)` subset. The nested child remains in the parent
+  scheduled module, samples around the nested do lower in source order, and
+  the branch-owned repeat check is reached only after the fresh child done
+  pulse. That when-contained subset rejects `(params ...)`, `(bind ...)`,
+  `(domain NAME)`, already-generated child targets, switch-contained repeats,
+  deeper nested `when` repeats, and loop-contained repeats. Top-level repeat
+  bodies also accept generated blocking
   `(do child)` when the target child is already emitted as a generated child
   by another activation site, and
   `(do child (params ...) [(bind ...)] [(domain NAME)])` with static
@@ -877,9 +884,10 @@ Rules:
   same-body `await_all` before the repeat check can loop. Those samples lower
   to an explicit sample state at their source-order timing point: before a
   later spawn state for sample-before-spawn ordering, or before the sync state
-  for sample-after-spawn ordering. Cross-domain repeat-body `do`, broader
-  outstanding-child semantics, `stage`, `contract`, nested `while`, and nested
-  `until` remain outside the shipped repeat-body subset.
+  for sample-after-spawn ordering. Cross-domain repeat-body `do`, generated or
+  spawned nested activation, broader outstanding-child semantics, `stage`,
+  `contract`, switch-contained activation, deeper `when` nesting, nested
+  `while`, and nested `until` remain outside the shipped repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as
   `shared.mode.BUSY` as scalar operands. Local or package enum members may
@@ -1162,7 +1170,12 @@ Rules:
 - Local unparameterized `do` rewires the child entry to `child_start` and waits
   for `child_done`.
 - Top-level repeat bodies may use that same local `(do child)` form when the
-  child remains in the parent scheduled module. They may also use
+  child remains in the parent scheduled module. Repeats directly inside a
+  top-level `when` body may also use local `(do child)` when the child remains
+  in the parent scheduled module; no `(params ...)`, `(bind ...)`,
+  `(domain NAME)`, generated target, switch-contained repeat, deeper nested
+  `when` repeat, or loop-contained repeat is included in that shipped nested
+  subset. They may also use
   `(do child (params ...))` with static parameter overrides; that form creates
   one generated child activation instance named
   `{parent}_{child}_repeat_do_{ordinal}` and waits for that instance's done
@@ -1202,9 +1215,10 @@ Rules:
   activation. The same repeat body must consume pending done ports through
   `await_all`, or through `await_any` when exactly one spawn is pending, before
   the repeat check can loop, preventing re-entry before fresh child completion.
-- Samples after repeat-body spawn lower before that `await_all` or
-  single-pending `await_any` sync state. Spawn-after-sample ordering remains
-  outside the shipped subset.
+- Samples after repeat-body spawn lower before the same-body `await_all`,
+  single-pending `await_any`, or multi-pending `await_any` drain sync state
+  that keeps the repeat check unreachable until outstanding spawned children
+  have been observed.
 
 ### 11.8 Stages, Contracts, Latency
 

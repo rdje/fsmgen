@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF when-contained repeat local do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`.
+- Repeats directly inside top-level `when` bodies may now use local
+  `(do child)` when the child remains in the parent scheduled module.
+- Lowering wires the local child start/done handoff, preserves samples around
+  the nested do in source order, and keeps the branch-owned repeat check gated
+  by the child's fresh done pulse.
+- `(params ...)`, `(bind ...)`, `(domain NAME)`, generated targets,
+  generated/spawn nested activation, switch-contained repeats, deeper `when`
+  repeats, loop-contained repeats, cross-domain activation, and broader
+  outstanding-child semantics remain fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, and task tree.
 ### R14 — ISF when-contained repeat local do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`.
 - Selected top-level `when` bodies containing nested repeats with local

@@ -85,6 +85,11 @@ for my $path (@loop_docs) {
         qr/(?:repeat(?:-body| body).*multi-pending|multi-pending.*repeat(?:-body| body)).*await_any.*await_all.*drain/si,
         "$path documents the shipped repeat-body multi-pending await_any drain",
     );
+    like(
+        $content,
+        qr/(?:top-level\s+when-body\s+nested\s+repeat\s+local\s+`?\(do child\)`?|repeat(?:-body| body).*top-level\s+`?when`?\s+body.*local.*do)/si,
+        "$path documents the shipped top-level when-body nested repeat local do subset",
+    );
 }
 
 done_testing();

@@ -1023,8 +1023,9 @@ known interface or sample-derived width, and unknown count forms fall back to
 8 bits. Switch-nested repeats register the same transaction counter at the
 widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
-data operations, local blocking `(do child)`, generated blocking `do` for
-already generated child targets or static parameterized do sites, and the
+data operations, local blocking `(do child)`, top-level when-body nested repeat
+local `(do child)`, generated blocking `do` for already generated child targets
+or static parameterized do sites, and the
 generated child-activation spawn subset with optional static `(params ...)`,
 optional `(bind ...)` handoffs, and optional declared same-domain
 `(domain NAME)` ownership metadata followed by same-body `await_all`, or by
@@ -1111,6 +1112,37 @@ repeat check:
   (-> parent_repeat_check_5))
 ```
 
+When the repeat is directly inside a top-level `when` body, the same local
+`do` lowering is shipped inside the branch-owned repeat region. The branch
+enters the repeat only on the true edge, the nested do asserts the local child
+start, and the nested repeat check remains unreachable until the child done
+pulse has been observed:
+
+```lisp
+(parent_when_1
+  (?cond
+    (=1 (-> parent_repeat_init_2))
+    (=0 (-> parent_done_7))))
+
+(parent_sample_3
+  (<= (before status))
+  (-> parent_do_4))
+
+(parent_do_4
+  (= (worker_start 1))
+  (<worker_done
+    (-> parent_sample_5)))
+
+(parent_sample_5
+  (<= (after status))
+  (-> parent_repeat_check_6))
+```
+
+That nested subset is local-only. It rejects `(params ...)`, `(bind ...)`,
+`(domain NAME)`, already-generated child targets, switch-contained repeats,
+deeper nested `when` repeats, loop-contained repeats, and generated/spawned
+nested activation.
+
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
 
@@ -1160,8 +1192,9 @@ live until a later same-body `await_all` drain:
 ```
 
 Cross-domain repeat-body `do`, cross-domain spawn, broader outstanding-child
-semantics, and nested branch/loop forms remain fail-closed until their
-re-entry and report behavior is specified.
+semantics, generated/spawned nested activation, switch-contained activation,
+and deeper branch/loop forms remain fail-closed until their re-entry and
+report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

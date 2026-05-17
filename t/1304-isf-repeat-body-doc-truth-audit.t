@@ -35,6 +35,7 @@ my @shipped_terms = qw(
     await_all
     await_any
     drain
+    when-contained
 );
 
 my @deferred_terms = (

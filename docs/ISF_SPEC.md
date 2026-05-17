@@ -1542,9 +1542,16 @@ Current lowering:
   Top-level repeat bodies also accept local blocking `(do child)` when the
   child transaction remains local to the scheduled parent. The repeat-body
   `do` state asserts `child_start`, waits for the child's fresh `child_done`
-  pulse, and only then reaches the repeat check back-edge. Top-level repeat
-  bodies also accept generated blocking `(do child)` when the target child is
-  already emitted as a generated child by another activation site, and
+  pulse, and only then reaches the repeat check back-edge. Repeats directly
+  inside a top-level `when` body accept the same local-only `(do child)` form:
+  the child remains in the parent scheduled module, samples around the nested
+  do stay in source order, and the branch-owned repeat check is unreachable
+  until the fresh child done pulse is observed. That when-contained subset
+  rejects `(params ...)`, `(bind ...)`, `(domain NAME)`, already-generated
+  child targets, switch-contained repeats, deeper nested `when` repeats, and
+  loop-contained repeats. Top-level repeat bodies also accept generated
+  blocking `(do child)` when the target child is already emitted as a
+  generated child by another activation site, and
   `(do child (params ...) [(bind ...)] [(domain NAME)])` with static
   parameter overrides, optional input/output port bindings, and optional
   declared same-domain ownership metadata. The generated top emits one
@@ -1584,9 +1591,10 @@ Current lowering:
   loop. Pending samples materialize in an explicit sample state at their
   source-order timing point: before a later spawn state for sample-before-spawn
   ordering, or before the sync state for sample-after-spawn ordering.
-  Cross-domain repeat-body `do`, broader outstanding-child semantics,
-  `stage`, `contract`, nested `while`, and nested `until` remain outside the
-  shipped repeat-body subset.
+  Cross-domain repeat-body `do`, generated or spawned nested activation,
+  broader outstanding-child semantics, `stage`, `contract`, switch-contained
+  activation, deeper `when` nesting, nested `while`, and nested `until` remain
+  outside the shipped repeat-body subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
