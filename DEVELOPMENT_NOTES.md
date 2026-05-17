@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained repeat local do is the next nested subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.23` selects the switch analogue of the
+  shipped when-contained local do subset: a repeat directly inside a top-level
+  `switch` branch whose body uses local `(do child)`.
+- This is a bounded next step because `_expand_switch` already lowers
+  branch-owned repeat regions, and local `do` can reuse the parent-module
+  start/done proof without generated-top or CDC behavior.
+- Generated targets, activation subclauses, repeat-body spawn, deeper
+  branch/loop nesting, cross-domain activation, and broader outstanding-child
+  lifetime semantics remain separate contracts.
 ## 2026-05-17: when-contained repeat local do reuses local handoffs
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.22` keeps nested placement narrow by
   allowing only a repeat directly inside a top-level `when` body to call local

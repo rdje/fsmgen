@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF switch-contained repeat local do selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`.
+- Selected top-level `switch` branches containing nested repeats with local
+  repeat-body `(do child)` as the next bounded nested-placement subset.
+- The selected surface keeps the child local to the parent scheduled module,
+  preserves samples around the nested do in source order, and keeps the
+  switch-branch repeat check gated by the child's fresh done pulse.
+- Generated targets, `(params ...)`, `(bind ...)`, `(domain NAME)`,
+  repeat-body spawn, deeper branch/loop nesting, cross-domain activation, and
+  broader outstanding-child semantics remain deferred for this selected
+  subset.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
 ### R14 — ISF when-contained repeat local do shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`.
 - Repeats directly inside top-level `when` bodies may now use local

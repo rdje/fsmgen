@@ -303,6 +303,15 @@ switch-contained repeat activation, deeper nested `when` repeat activation,
 loop-contained repeat activation, and broader outstanding-child lifetime
 semantics beyond the mandatory-drain subset remain backlog.
 
+The next bounded nested-placement leaf selects a repeat directly inside a
+top-level `switch` branch with local repeat-body `(do child)` only: the child
+must stay in the parent scheduled module, samples around the nested do must
+stay in source order, and the branch-owned repeat check must remain
+unreachable until the child's fresh done pulse has been observed. Generated
+targets, `(params ...)`, `(bind ...)`, `(domain NAME)`, repeat-body spawn,
+deeper branch/loop nesting, cross-domain activation, and broader
+outstanding-child semantics remain out of scope for that selected leaf.
+
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
 data-dependent, and the repeat contract still needs an explicit zero-count

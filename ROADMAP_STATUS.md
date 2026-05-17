@@ -80,9 +80,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(params ...)`, `(bind ...)`, `(domain NAME)`, generated/spawn nested
   activation, switch-contained repeats, deeper `when` repeats, loop-contained
   repeats, cross-domain activation, and broader outstanding-child semantics
-  remain deferred. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, which must select the next bounded
-  repeat-body child-activation subset before code. The workflow also requires
+  remain deferred. `ISF-REPEAT-BODY-CHILD-ACTIVATION.23` then selected
+  top-level switch-branch nested repeat local `(do child)` as the next bounded
+  nested-placement subset. That selected contract keeps the child local to the
+  parent scheduled module, preserves source-order samples around the nested do,
+  and keeps the switch-branch repeat check gated by the child's fresh done
+  pulse. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`; generated targets, activation
+  subclauses, repeat-body spawn, deeper branch/loop nesting, cross-domain
+  activation, and broader outstanding-child semantics remain deferred for the
+  selected switch-contained subset. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier

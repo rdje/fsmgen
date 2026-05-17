@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: switch-contained repeat local do selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`.
+- The active R14 task tree now selects a repeat directly inside a top-level
+  `switch` branch with local `(do child)` as the next bounded
+  nested-placement implementation subset.
+- The selected contract is local child activation only: the child transaction
+  must remain in the parent scheduled module, samples around the nested do
+  must stay in source order, and the switch-branch repeat check must remain
+  unreachable until the child's fresh done pulse has been observed.
+- Generated targets, `(params ...)`, `(bind ...)`, `(domain NAME)`,
+  repeat-body spawn, deeper branch/loop nesting, cross-domain activation, and
+  broader outstanding-child semantics remain deferred for this selected
+  subset.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: when-contained repeat local do shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
