@@ -1150,12 +1150,15 @@ For a switch branch, the selector targets the branch-owned repeat init state:
 
 The `when` and `switch` nested repeat subsets accept local plain `(do child)`
 and plain generated-child `(do child)` when the target is already generated
-elsewhere. The generated-child case emits one deterministic
-`{parent}_{child}_repeat_do_{ordinal}` instance and waits for that instance's
-fresh done handoff before the nested repeat check. Both nested subsets reject
-`(params ...)`, `(bind ...)`, `(domain NAME)`, deeper branch nesting,
-loop-contained repeats, and generated/spawned nested activation beyond the
-documented branch-contained generated-child do cases.
+elsewhere. The `when` subset also accepts static-parameter generated
+`(do child (params ...))`. The generated case emits one deterministic
+`{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter overrides
+once when present, and waits for that instance's fresh done handoff before the
+nested repeat check. The `when` subset rejects `(bind ...)` and
+`(domain NAME)`; the `switch` subset still rejects `(params ...)`,
+`(bind ...)`, and `(domain NAME)`. Both nested subsets reject deeper branch
+nesting, loop-contained repeats, and generated/spawned nested activation
+beyond the documented branch-contained generated do cases.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
@@ -1207,7 +1210,7 @@ live until a later same-body `await_all` drain:
 
 Cross-domain repeat-body `do`, cross-domain spawn, broader outstanding-child
 semantics, generated/spawned nested activation beyond the documented top-level
-when/switch generated-child do cases, and deeper branch/loop forms remain
+branch-contained generated do cases, and deeper branch/loop forms remain
 fail-closed until their re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States

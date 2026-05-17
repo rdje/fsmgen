@@ -264,15 +264,17 @@ again, or reject the loop with a targeted diagnostic.
 
 Shipped subset: a top-level repeat body may use local `(do child)` when the
 child remains in the parent scheduled module. A repeat directly inside a
-top-level `when` body may also use that local `(do child)` subset, or may use
+top-level `when` body may also use that local `(do child)` subset, may use
 plain generated-child `(do child)` when the target child is already emitted as
-a generated child by another activation site. The nested generated-child
-`when` form owns one deterministic generated do instance for the lexical site
-and rejects `(params ...)`, `(bind ...)`, and `(domain NAME)`. A repeat
-directly inside a top-level `switch` branch may also use local or plain
-generated-child `(do child)` under the same generated-target rule; it rejects
-`(params ...)`, `(bind ...)`, `(domain NAME)`, deeper branch nesting, and
-loop-contained repeat activation. A top-level repeat body may use
+a generated child by another activation site, or may use generated blocking
+`(do child (params ...))` with static parameter overrides. The nested
+generated `when` forms own one deterministic generated do instance for the
+lexical site, apply parameter overrides once when present, and reject
+`(bind ...)` and `(domain NAME)`. A repeat directly inside a top-level
+`switch` branch may use local or plain generated-child `(do child)` under the
+same generated-target rule; it rejects `(params ...)`, `(bind ...)`,
+`(domain NAME)`, deeper branch nesting, and loop-contained repeat activation.
+A top-level repeat body may use
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
 when the same repeat body reaches `(await_all done)` before the repeat check
 can loop. A single-pending `(await_any done)` is also shipped when exactly one
@@ -312,18 +314,13 @@ scope. Cross-domain repeat-body `do`, generated/spawn nested activation beyond
 the documented branch-contained generated-child do cases, deeper branch repeat
 activation, loop-contained repeat activation, and broader outstanding-child
 lifetime semantics beyond the mandatory-drain subset remain backlog. The
-shipped branch-contained generated-child nested do subsets still keep
-activation subclauses, spawn nesting, deeper branch/loop nesting,
+shipped branch-contained generated nested do subsets still keep
+unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
-
-The next bounded generated-do nested leaf selects a repeat directly inside a
-top-level `when` body with `(do child (params ...))` and static parameter
-overrides only. The selected nested do site owns one deterministic generated
-do instance, applies the parameter overrides once in the generated top, waits
-for that instance's fresh done handoff before the when-body repeat check, and
-keeps `(bind ...)`, `(domain NAME)`, spawn nesting, switch-contained
-parameterized generated nested `do`, deeper branch/loop nesting, cross-domain
-activation, and broader outstanding-child semantics out of scope.
+Switch-contained parameterized generated nested `do`, nested generated-do
+bindings, nested generated-do domain metadata, spawn nesting, cross-domain
+activation, deeper branch/loop nesting, and broader outstanding-child
+semantics remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

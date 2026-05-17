@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained generated do params reuses generated context
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.30` implements only the selected static
+  parameter generated `do` shape for repeats that are direct clauses of a
+  top-level `when` body.
+- The implementation reuses the generated-child context already threaded for
+  plain when-contained generated `do` and the existing repeat-body generated
+  do parameter override path. That keeps the deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance owner stable while allowing
+  static parameter overrides to flow into the generated top once.
+- `(bind ...)`, `(domain NAME)`, spawned nested activation, switch-contained
+  parameterized nested do, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child lifetime semantics remain separate
+  contracts.
 ## 2026-05-17: when-contained generated do params is the next nested subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.29` selects generated blocking
   `(do child (params ...))` in a top-level `when` body when the parameter

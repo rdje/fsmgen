@@ -429,18 +429,21 @@ top-level local blocking `(do child)` subset. Repeat-body local `do` asserts
 the local child `start`, waits for the child's fresh `done` pulse, and only
 then reaches the repeat check back-edge. Repeats directly inside a top-level
 `when` body accept local `(do child)` under that same parent-module contract,
-and plain generated-child `(do child)` when the target child is already
-emitted as a generated child by another activation site. The generated-child
-when-contained form emits one deterministic
+plain generated-child `(do child)` when the target child is already emitted as
+a generated child by another activation site, and generated blocking
+`(do child (params ...))` with static parameter overrides. The generated
+when-contained forms emit one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance for the lexical nested do
-site. Both when-contained forms keep samples around the nested do in source
-order and reach the branch-owned repeat check only after a fresh local or
-generated child done handoff. Repeats directly inside a top-level `switch`
+site and apply parameter overrides once when present. All shipped
+when-contained forms keep samples around the nested do in source order and
+reach the branch-owned repeat check only after a fresh local or generated
+child done handoff. Repeats directly inside a top-level `switch`
 branch accept the same local or plain generated-child `(do child)` forms with
 the same deterministic generated-instance naming, source-order sample timing,
-and done-gated repeat check. Those when-contained and switch-contained
-subsets reject `(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper
-branch nesting and loop-contained repeats remain outside both nested subsets.
+and done-gated repeat check. The when-contained subset rejects `(bind ...)`
+and `(domain NAME)`, and the switch-contained subset still rejects
+`(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper branch nesting and
+loop-contained repeats remain outside both nested subsets.
 The shipped
 repeat-body clause
 surface also includes generated blocking `(do child)` when the target child is
@@ -499,11 +502,13 @@ drain, or after do completion before the repeat check.
 The local `(do child)` form is also shipped inside a repeat that is directly
 inside a top-level `when` body or directly inside a top-level `switch` branch.
 Those nested repeat forms also accept a plain generated-child `(do child)`
-target that is already generated elsewhere. That nested generated do site owns
-one `{parent}_{child}_repeat_do_{ordinal}` instance, uses no parameter
-override, port binding, or domain annotation, and waits for the generated
-instance's fresh done handoff before the nested repeat check. Deeper
-branch/loop placement remains backlog.
+target that is already generated elsewhere. The top-level `when` nested
+repeat form also accepts static `(params ...)` on generated blocking `do`.
+That nested generated do site owns one
+`{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter overrides
+once when present, uses no port binding or domain annotation, and waits for
+the generated instance's fresh done handoff before the nested repeat check.
+Deeper branch/loop placement remains backlog.
 
 Example: a parent can spawn `worker` once, then call the already generated
 `worker` from a repeat nested inside a top-level `when` without reintroducing
@@ -527,6 +532,26 @@ That nested `(do worker)` emits a generated do instance such as
 parent scheduled `.fsm` starts `parent_worker_repeat_do_0_start>`, waits for
 `parent_worker_repeat_do_0_done`, then runs the `after` sample before the
 nested repeat check.
+
+The top-level `when` nested repeat also supports static parameter overrides on
+that generated do site:
+
+```lisp
+(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (do worker
+        (params
+          (WIDTH 16)))
+      (sample status as after)))
+  (complete done))
+```
+
+The generated top instantiates `parent_worker_repeat_do_0` once with
+`WIDTH 16`; each repeat iteration starts that same generated instance and
+waits for its fresh done handoff before the `after` sample and repeat check.
 
 The same generated-child shape is supported for a repeat directly inside a
 top-level `switch` branch:

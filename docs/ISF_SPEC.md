@@ -1544,21 +1544,25 @@ Current lowering:
   `do` state asserts `child_start`, waits for the child's fresh `child_done`
   pulse, and only then reaches the repeat check back-edge. Repeats directly
   inside a top-level `when` body accept local `(do child)` when the child
-  remains in the parent scheduled module, and plain generated-child
-  `(do child)` when the target child is already emitted as a generated child
-  by another activation site. In the local case, the child remains in the
-  parent scheduled module. In the generated-child case, the generated top
-  emits one deterministic `{parent}_{child}_repeat_do_{ordinal}` instance for
-  the lexical nested do site. Both forms keep samples around the nested do in
-  source order, and the branch-owned repeat check is unreachable until the
-  fresh local or generated child done pulse is observed. Repeats directly
+  remains in the parent scheduled module, plain generated-child `(do child)`
+  when the target child is already emitted as a generated child by another
+  activation site, and generated blocking `(do child (params ...))` with
+  static parameter overrides. In the local case, the child remains in the
+  parent scheduled module. In the generated-child or parameterized generated
+  case, the generated top emits one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance for the lexical nested do
+  site and applies parameter overrides once when present. All shipped
+  when-contained forms keep samples around the nested do in source order, and
+  the branch-owned repeat check is unreachable until the fresh local or
+  generated child done pulse is observed. Repeats directly
   inside a top-level `switch` branch accept the same local or plain
   generated-child `(do child)` forms with the same source-order sample timing,
   deterministic generated-instance naming when the target is already generated
-  elsewhere, and done-gated nested repeat check. Those when-contained and
-  switch-contained subsets reject `(params ...)`, `(bind ...)`, and
-  `(domain NAME)`. Deeper branch nesting and loop-contained repeats remain
-  outside both nested subsets. Top-level
+  elsewhere, and done-gated nested repeat check. The when-contained subset
+  rejects `(bind ...)` and `(domain NAME)`, and the switch-contained subset
+  still rejects `(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper
+  branch nesting and loop-contained repeats remain outside both nested
+  subsets. Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
@@ -1602,7 +1606,7 @@ Current lowering:
   source-order timing point: before a later spawn state for sample-before-spawn
   ordering, or before the sync state for sample-after-spawn ordering.
   Cross-domain repeat-body `do`, generated or spawned nested activation beyond
-  the documented top-level when/switch generated-child do cases, broader
+  the documented top-level branch-contained generated do cases, broader
   outstanding-child semantics, `stage`, `contract`, deeper branch nesting,
   nested `while`, and nested `until` remain outside the shipped repeat-body
   subset.

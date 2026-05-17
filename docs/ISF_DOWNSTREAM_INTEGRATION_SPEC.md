@@ -843,20 +843,23 @@ Rules:
   child transaction remains local to the scheduled parent; the do state starts
   the child and waits for its fresh `child_done` pulse before the repeat check
   can loop. Repeats directly inside a top-level `when` body accept local
-  `(do child)` under that same parent-module contract, and also accept plain
-  generated-child `(do child)` when the target child is already emitted as a
-  generated child by another activation site. The generated-child nested
-  `when` form emits one deterministic `{parent}_{child}_repeat_do_{ordinal}`
-  instance for the lexical nested do site and waits for that instance's fresh
-  done handoff before the branch-owned repeat check. Repeats directly inside
+  `(do child)` under that same parent-module contract, plain generated-child
+  `(do child)` when the target child is already emitted as a generated child
+  by another activation site, and generated blocking
+  `(do child (params ...))` with static parameter overrides. The generated
+  nested `when` forms emit one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` instance for the lexical nested do
+  site, apply parameter overrides once when present, and wait for that
+  instance's fresh done handoff before the branch-owned repeat check. Repeats
+  directly inside
   a top-level `switch` branch accept the same local or plain generated-child
   `(do child)` forms, with source-order samples around the nested do, one
   deterministic generated do instance when the target is already generated
   elsewhere, and a branch-owned repeat check gated by the fresh local or
-  generated child done pulse. Those when-contained and switch-contained
-  subsets reject `(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper
-  branch nesting and loop-contained repeats remain outside both nested
-  subsets. Top-level repeat
+  generated child done pulse. The when-contained subset rejects `(bind ...)`
+  and `(domain NAME)`, and the switch-contained subset still rejects
+  `(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper branch nesting and
+  loop-contained repeats remain outside both nested subsets. Top-level repeat
   bodies also accept generated blocking
   `(do child)` when the target child is already emitted as a generated child
   by another activation site, and
@@ -1183,9 +1186,11 @@ Rules:
   or plain generated-child `(do child)` when the target child is already
   emitted by another generated activation site. Repeats directly inside a
   top-level `switch` branch may use the same local or plain generated-child
-  `(do child)` forms. No `(params ...)`, `(bind ...)`, `(domain NAME)`, deeper
-  branch repeat, or loop-contained repeat is included in those shipped nested
-  subsets. Top-level repeat bodies
+  `(do child)` forms. Top-level `when` body nested repeats may also use
+  static `(params ...)` on generated blocking `do`. No nested `(bind ...)`,
+  `(domain NAME)`, switch-contained `(params ...)`, deeper branch repeat, or
+  loop-contained repeat is included in those shipped nested subsets. Top-level
+  repeat bodies
   may also use
   `(do child (params ...))` with static parameter overrides; that form creates
   one generated child activation instance named
