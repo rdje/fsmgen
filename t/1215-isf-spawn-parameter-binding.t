@@ -376,6 +376,62 @@ ISF
         'local child terminal pulses the generated child done handoff');
 };
 
+subtest 'repeat body samples after spawn materialize before sync' => sub {
+    my $await_all_source = <<'ISF';
+(actor repeat_spawn_sample_after
+  (clock clk)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (sample status as seen)
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $await_all = lower_source($await_all_source);
+    my $await_all_fsm = $await_all->{files}{'repeat_spawn_sample_after.fsm'};
+    like($await_all_fsm, qr/\(parent_spawn_2[\s\S]*\(-> parent_sample_3\)/,
+        'repeat-body spawn advances to the explicit sample state');
+    like($await_all_fsm, qr/\(parent_sample_3[\s\S]*\(<= \(seen status\)\)[\s\S]*\(-> parent_await_all_4\)/,
+        'repeat-body sample after spawn materializes before await_all');
+    like($await_all_fsm, qr/\(parent_await_all_4[\s\S]*\(-> parent_repeat_check_5 <w0_done\)/,
+        'await_all still gates the repeat check after the sample state');
+
+    my $await_any_source = <<'ISF';
+(actor repeat_spawn_sample_after_any
+  (clock clk)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (sample status as seen)
+      (await_any done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $await_any = lower_source($await_any_source);
+    my $await_any_fsm = $await_any->{files}{'repeat_spawn_sample_after_any.fsm'};
+    like($await_any_fsm, qr/\(parent_sample_3[\s\S]*\(<= \(seen status\)\)[\s\S]*\(-> parent_await_any_4\)/,
+        'repeat-body sample after spawn materializes before single-pending await_any');
+    like($await_any_fsm, qr/\(parent_await_any_4[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_5\)/,
+        'single-pending await_any still gates the repeat check after the sample state');
+};
+
 subtest 'parameterized do lowers through a generated child activation instance' => sub {
     my $source = <<'ISF';
 (actor parameterized_do_binding
@@ -647,6 +703,22 @@ ISF
     (complete done))
   (transaction worker
     (on start)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat spawn after pending sample', qr/repeat-body spawn cannot follow pending samples in the current repeat-body child-activation subset/);
+(actor repeat_spawn_after_pending_sample
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (input status) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (sample status as seen)
+      (spawn worker as w1)
+      (await_all done))
+    (complete done))
+  (transaction worker
     (complete done)))
 ISF
 

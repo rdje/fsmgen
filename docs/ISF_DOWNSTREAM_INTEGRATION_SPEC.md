@@ -855,7 +855,10 @@ Rules:
   as top-level spawn: handoff ports are generated once for the static child
   instance. Optional `(domain NAME)` annotations are declared same-domain
   ownership metadata only; they do not imply CDC behavior or allow
-  cross-domain activation. Generated, parameterized, bound, or
+  cross-domain activation. Samples may follow a repeat-body spawn before the
+  same-body `await_all` or single-pending `await_any`; those samples lower to
+  an explicit sample state before the sync state. A later repeat-body spawn
+  after a pending sample remains deferred. Generated, parameterized, bound, or
   domain-qualified repeat-body `do`, multi-pending `await_any`, `stage`,
   `contract`, nested `while`, and nested `until` remain outside the shipped
   repeat-body subset.
@@ -1173,6 +1176,9 @@ Rules:
   activation. The same repeat body must consume pending done ports through
   `await_all`, or through `await_any` when exactly one spawn is pending, before
   the repeat check can loop, preventing re-entry before fresh child completion.
+- Samples after repeat-body spawn lower before that `await_all` or
+  single-pending `await_any` sync state. Spawn-after-sample ordering remains
+  outside the shipped subset.
 
 ### 11.8 Stages, Contracts, Latency
 

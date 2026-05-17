@@ -810,7 +810,10 @@ Single-pending repeat-body `await_any` is also shipped when exactly one
 repeat-body spawn is pending. Generated, parameterized, bound, or
 domain-qualified repeat-body `do`, multi-pending `await_any`, `stage`,
 `contract`, nested `while`, and nested `until` remain outside the shipped
-repeat-body subset.
+repeat-body subset. Samples may follow a repeat-body spawn before the
+same-body `await_all` or single-pending `await_any`; those pending samples
+materialize in an explicit sample state before the sync state. A later
+repeat-body spawn after a pending sample remains deferred.
 The shipped repeat-body child-activation subset is
 local `(do child)` plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
@@ -823,7 +826,8 @@ once for the same static instance, and optional domain annotations group the
 static child with a declared same-domain activation owner without implying CDC
 behavior.
 `(await_any done)` may replace `await_all` only for the exactly-one-pending
-spawn case.
+spawn case. Samples after the spawn lower before the sync state; a later spawn
+after a pending sample remains outside the shipped subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent

@@ -3658,7 +3658,6 @@ sub _validate_repeat_clause {
 sub _validate_repeat_body_spawn_subset {
     my ($clause, $tn, $label) = @_;
     my @pending_spawns;
-    my $saw_spawn = 0;
     my $saw_do = 0;
     my $pending_sample_run = 0;
 
@@ -3667,9 +3666,6 @@ sub _validate_repeat_body_spawn_subset {
         my $keyword = $body_clause->[0];
         next unless defined($keyword) && !ref($keyword);
 
-        if ($keyword eq 'sample' && $saw_spawn) {
-            confess "Transaction '$tn': repeat-body sample after spawn is not supported in the first spawn-in-repeat subset\n";
-        }
         if ($keyword eq 'sample' && $saw_do) {
             confess "Transaction '$tn': repeat-body sample after do is not supported in the local blocking-do subset\n";
         }
@@ -3688,10 +3684,9 @@ sub _validate_repeat_body_spawn_subset {
                 next if $head eq 'params' || $head eq 'bind' || $head eq 'domain';
                 confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)', '(bind ...)', and '(domain ...)' subclauses in the spawn domain subset\n";
             }
-            confess "Transaction '$tn': repeat-body spawn cannot follow pending samples in the first spawn-in-repeat subset\n"
+            confess "Transaction '$tn': repeat-body spawn cannot follow pending samples in the current repeat-body child-activation subset\n"
                 if $pending_sample_run;
             push @pending_spawns, $body_clause->[3];
-            $saw_spawn = 1;
             $pending_sample_run = 0;
             next;
         }
@@ -5033,10 +5028,12 @@ sub _ir_repeat {
             push @s,_ir_do($bc,$tn,$$ir++,{ child => $bc->[1], activation_kind => 'do', generated_child => 0 },'repeat body');
         }
         elsif($bk eq'await_all'){
+            _push_sample_state(\@s,$tn,\@lp,$ir);
             push @s,_ir_sync_all($tn,$$ir++,\@spawn_done_ports);
             @spawn_done_ports = ();
         }
         elsif($bk eq'await_any'){
+            _push_sample_state(\@s,$tn,\@lp,$ir);
             push @s,_ir_sync_any($tn,$$ir++,\@spawn_done_ports);
             @spawn_done_ports = ();
         }}

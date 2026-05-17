@@ -259,7 +259,9 @@ repeat-body spawn is pending; in that case it has the same re-entry proof as
 waiting for the one static child. Local repeat-body `do` and `await_all`
 consume the needed done pulse before the repeat check, so the next iteration
 cannot re-assert the local or static child start before the previous activation
-has returned fresh done.
+has returned fresh done. Samples after repeat-body spawn are shipped when they
+appear before the same-body `await_all` or single-pending `await_any`; they
+materialize in an explicit sample state before the sync state.
 Parameter overrides reuse the same static specialization contract as top-level
 spawn: they specialize the one lexical child instance in the generated top and do not
 create per-iteration parameter values. Binding handoffs generate one set of
@@ -268,10 +270,10 @@ generated top. Domain annotations are accepted only when they name the same
 declared domain as the owning transaction and child; cross-domain activation
 still needs an explicit CDC/protocol contract. Generated, parameterized,
 bound, or domain-qualified repeat-body `do`, repeat-body `do` targeting an
-already generated child, sample-before/after-do timing, multi-pending `await_any`,
-cross-domain activation, and spawn nested under branch or loop bodies remain
-backlog until their re-entry, binding, domain, and report contracts are
-specified.
+already generated child, sample-before/after-do timing, spawn-after-sample
+ordering, multi-pending `await_any`, cross-domain activation, and spawn nested
+under branch or loop bodies remain backlog until their re-entry, binding,
+domain, and report contracts are specified.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

@@ -437,7 +437,10 @@ ownership metadata. Single-pending repeat-body `await_any` is also shipped
 when exactly one repeat-body spawn is pending. Generated, parameterized,
 bound, or domain-qualified repeat-body `do`, multi-pending `await_any`,
 `stage`, `contract`, nested `while`, and nested `until` remain outside the
-shipped repeat-body subset.
+shipped repeat-body subset. Samples may follow a repeat-body spawn before the
+same-body `await_all` or single-pending `await_any`; those pending samples
+materialize in an explicit sample state before the sync state. A later
+repeat-body spawn after a pending sample remains deferred.
 The shipped repeat-body child-activation subset is
 `(do child)` for local child transactions, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
@@ -448,7 +451,9 @@ instance once in the generated top, optional input/output bindings create
 generated handoff ports once for that instance, and optional domain annotations
 group the static child with a declared same-domain activation owner without
 implying CDC behavior. `(await_any done)` may replace `await_all` only when
-that repeat body has exactly one pending spawn.
+that repeat body has exactly one pending spawn. Samples after the spawn lower
+before that sync state, so the scheduled `.fsm` shows the capture timing before
+the repeat check.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is
@@ -469,6 +474,9 @@ completion has been observed. Binding handoff ports are generated once for the
 lexical instance and wired in the generated top just like top-level spawn
 bindings. Domain annotations are accepted only as declared same-domain
 ownership metadata; cross-domain activation remains a CDC/backlog item.
+Samples after repeat-body spawn are accepted only before the same-body sync
+that consumes the spawned done ports; spawning again after a pending sample
+remains fail-closed until a wider ordering contract ships.
 For the shipped repeat-body local `do` subset, `(do child)` must remain plain:
 no repeat-body `(params ...)`, `(bind ...)`, or `(domain NAME)` subclauses are
 accepted, and the child must not already be emitted as a generated child

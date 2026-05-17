@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body sample-after-spawn timing shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts samples after repeat-body spawn when the same top-level repeat
+  body reaches `await_all` or single-pending `await_any` before the repeat
+  check can loop.
+- Pending samples now materialize in an explicit sample state before the
+  repeat-body sync state, making the generated timing visible in scheduled
+  `.fsm` output and the mdBook lowering reference.
+- Repeat-body spawn after pending samples, sample-before/after-do timing,
+  multi-pending `await_any`, nested branch/loop child activation, and
+  cross-domain activation remain fail-closed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body local blocking do shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

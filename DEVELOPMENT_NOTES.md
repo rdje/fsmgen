@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body sample-after-spawn lowers before sync
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` widens repeat-body spawn timing without
+  changing the static-child lifetime model. The repeat body still has to reach
+  `await_all` or the shipped single-pending `await_any` before the repeat
+  check can loop.
+- The implementation drains pending samples before emitting the repeat-body
+  sync state. That preserves the user's source order, makes the sample cycle
+  visible as its own scheduled `.fsm` state, and keeps the sync state focused
+  on the generated child done pulse.
+- Spawn-after-sample ordering remains deferred because it would start a child
+  after pending sample state has accumulated in the same repeat body. That
+  needs its own timing contract instead of piggybacking on this sync-before-
+  re-entry proof.
 ## 2026-05-17: repeat-body do ships only as local blocking activation
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` deliberately ships repeat-body `do` as
   a local-only subset. The child stays in the parent scheduled module, so the

@@ -25,13 +25,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   repeat-body `(await_any done)` when exactly one repeat-body spawn is pending.
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` then shipped top-level repeat-body
   local `(do child)` when the child remains in the parent scheduled module and
-  the repeat check waits for the child's fresh done pulse. Generated,
-  parameterized, bound, domain-qualified, generated-child-target repeat-body
-  `do`, multi-pending `await_any`, cross-domain activation, samples after
-  repeat-body spawn, sample-before/after-do timing, and nested branch/loop activation
-  remain deferred and tracked in the same active tree. The next active frontier
-  is `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` for nested repeat-body child
-  activation or sample-after-spawn forms if selected. The workflow also
+  the repeat check waits for the child's fresh done pulse.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` then shipped samples after repeat-body
+  spawn when the same body reaches `await_all` or single-pending `await_any`
+  before the repeat check; the lowerer emits an explicit sample state before
+  that sync. Generated, parameterized, bound, domain-qualified,
+  generated-child-target repeat-body `do`, multi-pending `await_any`,
+  cross-domain activation, spawn-after-sample ordering,
+  sample-before/after-do timing, and nested branch/loop activation remain
+  deferred and tracked in the same active tree. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` for nested repeat-body child
+  activation, cross-domain activation, or broader outstanding-child forms if
+  selected. The workflow also
   requires task-tree ownership before any code, test, source,
   generated-artifact, or config change. Push cadence is every 30 unpushed
   commits unless the user explicitly requests an earlier push.

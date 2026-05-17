@@ -1043,7 +1043,10 @@ iteration. If it carries `(bind ...)`, the generated parent handoff ports are
 also emitted once for that static instance and wired by the generated top. If
 it carries `(domain NAME)`, that name must be declared by the actor and remain
 the same domain as the owning transaction and child; it only records ownership
-metadata and does not add CDC behavior.
+metadata and does not add CDC behavior. Samples after repeat-body spawn lower
+to an explicit sample state before the same-body sync state, so capture timing
+is visible before the repeat check. Spawning again after that pending sample
+remains deferred.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1057,27 +1060,31 @@ the repeat check only after the child done pulse:
 ```
 
 Representative repeat-body spawn lowering uses the static generated instance
-handoff before the repeat check:
+handoff, then an optional sample state, before the repeat check:
 
 ```lisp
 (parent_spawn_2
   (= (w0_start> 1))
-  (-> parent_await_all_3))
+  (-> parent_sample_3))
 
-(parent_await_all_3
-  (-> parent_repeat_check_4 <w0_done))
+(parent_sample_3
+  (<= (seen status))
+  (-> parent_await_all_4))
 
-(parent_repeat_check_4
+(parent_await_all_4
+  (-> parent_repeat_check_5 <w0_done))
+
+(parent_repeat_check_5
   (<- (parent_cnt (- parent_cnt 1)))
   (?parent_cnt
     (=1 (-> parent_repeat_init_1))
-    (=0 (-> parent_done_5))))
+    (=0 (-> parent_done_6))))
 ```
 
 Generated, parameterized, bound, or domain-qualified repeat-body `do`,
 generated-child targets, sample-before/after-do timing, multi-pending `await_any`,
-cross-domain spawn, and nested branch/loop forms remain fail-closed until their
-re-entry and report behavior is specified.
+spawn-after-sample ordering, cross-domain spawn, and nested branch/loop forms
+remain fail-closed until their re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

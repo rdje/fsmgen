@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body sample-after-spawn timing shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`.
+- Top-level repeat bodies now accept samples after repeat-body spawn when the
+  same body reaches `await_all` or single-pending `await_any` before the
+  repeat check can loop.
+- The lowerer materializes those pending samples in an explicit sample state
+  before the repeat-body sync state, making the timing visible in scheduled
+  `.fsm` output and the mdBook lowering reference.
+- Repeat-body spawn after pending samples, sample-before/after-do timing,
+  multi-pending `await_any`, nested branch/loop activation, and cross-domain
+  activation remain fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, and task tree.
 ### R14 — ISF repeat-body local blocking do shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`.
 - Top-level repeat bodies now accept local `(do child)` when the child remains

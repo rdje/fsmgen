@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body sample-after-spawn timing shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`.
+- Top-level repeat bodies may now sample after repeat-body spawn when the same
+  body reaches `await_all` or single-pending `await_any` before the repeat
+  check can loop.
+- The pending samples lower into an explicit sample state before the sync
+  state, so the generated timing is visible and reviewable.
+- Spawn-after-sample ordering, sample-before/after-do timing, multi-pending
+  `await_any`, nested branch/loop child activation, and cross-domain
+  activation remain fail-closed. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`.
+
 ## 2026-05-17: R14 — ISF repeat-body local blocking do shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`.
 - Top-level repeat bodies may now use local `(do child)` when the child remains

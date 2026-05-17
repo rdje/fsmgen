@@ -42,7 +42,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION`
   Status: `active`
   Goal: `Ship remaining repeat-body child activation subsets safely.`
-  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`
+  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`
   Status: `done`
@@ -80,9 +80,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.5: implement repeat local do`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`
+  Status: `done`
+  Goal: `Ship repeat-body sample-after-spawn timing if selected.`
+  Acceptance: `Top-level repeat bodies accept samples after repeat-body spawn only when the same body still reaches await_all or single-pending await_any before the repeat check can loop; pending samples materialize in an explicit sample state before the sync state, spawn-after-sample and sample-before/after-do remain fail-closed, and docs/tests show the exact timing.`
+  Verification: `syntax checks; focused repeat/spawn/sample/doc tests; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.6: implement repeat spawn samples`
+
+- ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`
   Status: `pending`
-  Goal: `Ship nested repeat-body child activation or sample-after-spawn forms if selected.`
-  Acceptance: `Nested branch/loop placement or sample-after-spawn ordering has explicit timing, diagnostics, docs, and tests.`
+  Goal: `Track nested repeat-body child activation, cross-domain activation, and broader outstanding-child forms if selected.`
+  Acceptance: `Nested branch/loop placement, cross-domain activation, or broader outstanding-child lifetime semantics have explicit timing, diagnostics, docs, and tests before implementation.`
   Verification: `pending`
   Commit: `pending`
 
@@ -95,7 +102,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | 3 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` | `done` | Shipped repeat-body spawn same-domain ownership annotations without implying CDC behavior. |
 | 4 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` | `done` | Shipped repeat-body await_any for the exactly-one-pending-spawn subset. |
 | 5 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` | `done` | Shipped repeat-body local blocking `do` with local child start/done re-entry proof. |
-| 6 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` | `pending` | Tracks nested repeat-body child activation and sample-after-spawn timing. |
+| 6 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` | `done` | Shipped repeat-body sample-after-spawn timing before same-body sync. |
+| 7 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` | `pending` | Tracks nested repeat-body child activation, cross-domain activation, and broader outstanding-child forms. |
 
 ## Decisions
 
@@ -150,13 +158,24 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   pulse; generated/parameterized/bound/domain-qualified repeat-body `do`,
   generated-child targets, nested repeat-body `do`, cross-domain activation,
   and sample-before/after-do timing remain fail-closed.
+- `2026-05-17`: Leaf `.6` is bounded to repeat-body sample-after-spawn timing.
+  The selected source shape is top-level repeat-body spawn, then one or more
+  samples, then same-body `await_all` or single-pending `await_any`; samples
+  must materialize before the sync state so the timing is explicit, while
+  spawn-after-sample and sample-before/after-do remain deferred.
+- `2026-05-17`: Leaf `.6` shipped repeat-body sample-after-spawn timing for
+  the top-level repeat subset. Pending samples after spawn now drain through
+  an explicit sample state before same-body `await_all` or single-pending
+  `await_any`; spawn-after-sample, sample-before/after-do, multi-pending
+  `await_any`, nested activation, and cross-domain activation remain
+  fail-closed.
 
 ## Open Questions
 
-- Which deferred repeat-body activation subset should ship after same-domain
-  spawn metadata, single-pending `await_any`, and local blocking `do`: nested
-  branch/loop activation, cross-domain activation, multi-pending `await_any`,
-  or sample-after-spawn timing.
+- Which deferred repeat-body activation subset should ship after
+  sample-after-spawn timing: nested branch/loop activation, cross-domain
+  activation, multi-pending `await_any`, or the remaining repeat-body `do`
+  and sample-ordering forms.
 
 ## Blockers
 
@@ -173,6 +192,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t t/1247-isf-clock-domain-partition.t`; `prove -l t/1204-isf-child-composition-clause-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/spawn/domain/doc checks, adjacent activation/binding/report checks, book build, full ISF gate, and diff check passed` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1203-isf-await-sync-clause-boundary.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/spawn/await-any/doc checks, book build, full ISF gate, and diff check passed` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/do/doc checks (Files=7, Tests=291), book build, full ISF gate (Files=227, Tests=1089), and diff check passed` |
+| `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/spawn/sample/doc checks (Files=7, Tests=297), book build, full ISF gate (Files=227, Tests=1095), and diff check passed` |
 
 ## Commit Log
 
@@ -184,6 +204,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.3: implement repeat spawn domains` | `027c3d1b; repeat-body spawn same-domain metadata shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.4: implement repeat await_any` | `2d349f08; single-pending repeat-body await_any shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.5: implement repeat local do` | `repeat-body local blocking do shipped` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.6: implement repeat spawn samples` | `repeat-body sample-after-spawn timing shipped` |
 
 ## Changelog
 
@@ -204,3 +225,6 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - `2026-05-17`: Shipped repeat-body local `(do child)` for top-level repeat
   bodies while keeping generated/parameterized/bound/domain-qualified and
   sample-before/after-do forms deferred.
+- `2026-05-17`: Shipped repeat-body sample-after-spawn timing before
+  same-body `await_all` or single-pending `await_any`, while keeping
+  spawn-after-sample ordering and broader outstanding-child forms deferred.
