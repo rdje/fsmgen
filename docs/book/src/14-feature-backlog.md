@@ -320,7 +320,18 @@ shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
 
-Nested generated-do bindings, nested generated-do domain metadata, spawn
+The next bounded nested generated-do leaf selects a repeat directly inside a
+top-level `when` body with generated blocking
+`(do child (params ...) (bind ...))`: static parameter overrides plus
+input/output port bindings only. The selected nested do site reuses the same
+deterministic generated do instance as the when-contained static-parameter
+subset, adds generated-top binding handoffs once for that lexical site, waits
+for the instance's fresh done handoff before the when-body repeat check, and
+keeps `(domain NAME)`, switch-contained bound nested `do`, spawn nesting,
+deeper branch/loop nesting, cross-domain activation, and broader
+outstanding-child semantics out of scope.
+
+Nested generated-do domain metadata, switch-contained bound nested `do`, spawn
 nesting, cross-domain activation, deeper branch/loop nesting, and broader
 outstanding-child semantics remain backlog.
 

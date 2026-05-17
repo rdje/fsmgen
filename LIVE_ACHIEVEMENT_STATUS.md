@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF when-contained repeat generated do bindings selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.33`.
+- Selected top-level `when` bodies containing nested repeats with generated
+  blocking `(do child (params ...) (bind ...))` as the next bounded nested
+  generated-do binding subset.
+- The selected contract reuses the deterministic generated do instance from
+  the when-contained static-parameter subset, wires generated-top input/output
+  binding handoffs once for that lexical nested do site, and gates the
+  when-body repeat check on that instance's fresh done handoff.
+- Domain metadata, switch-contained bound nested `do`, spawn nesting,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.34`.
+
 ## 2026-05-17: R14 — ISF switch-contained repeat generated do params shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.32`.
 - Top-level `switch` branches may now contain nested repeats with generated

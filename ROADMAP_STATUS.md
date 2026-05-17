@@ -131,9 +131,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   source-order samples around the do, and gates the switch-branch repeat check
   on that generated instance's fresh done handoff. Bindings, domain metadata,
   spawn nesting, deeper branch/loop nesting, cross-domain activation, and
-  broader outstanding-child semantics remain deferred. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.33`, which must select the
-  next bounded repeat-body child activation subset before code.
+  broader outstanding-child semantics remain deferred.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.33` then selected top-level when-body
+  nested repeat generated blocking `(do child (params ...) (bind ...))` as
+  the next bounded nested generated-do binding subset. The next active
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.34`, which will implement
+  that selected when-contained generated-do binding subset while keeping
+  domain metadata, switch-contained bound nested do, spawn nesting, deeper
+  branch/loop nesting, cross-domain activation, and broader outstanding-child
+  semantics deferred.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

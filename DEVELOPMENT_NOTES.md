@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained generated do bindings are the next nested subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.33` selects generated blocking
+  `(do child (params ...) (bind ...))` in a top-level `when` body.
+- This intentionally starts with the when-contained branch path before the
+  switch analogue because when-contained and switch-contained static
+  parameter generated `do` are now both shipped, while top-level repeat-body
+  generated `do` already owns the static binding handoff model.
+- Domain metadata, switch-contained bound nested do, spawned nested
+  activation, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child lifetime semantics remain separate contracts.
 ## 2026-05-17: switch-contained generated do params reuses generated context
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.32` implements only the selected static
   parameter generated `do` shape for repeats that are direct clauses of a
