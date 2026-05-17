@@ -1066,14 +1066,14 @@ later same-body `(await_all done)` drains the same outstanding generated
 children before the nested repeat check can loop. Sample-before-spawn and
 sample-after-spawn timing stay explicit, and the generated top still
 instantiates one static child per lexical `spawn` instance.
-The top-level `when` body nested-repeat form may also lower a local plain
-`(do child)` while generated nested spawns are pending, before a later
-same-body `await_all` drain. That local do uses the parent-module start/done
-contract and does not consume the generated-spawn done set; the later
-`await_all` still gates the nested repeat check on every outstanding generated
-child. Generated do while a nested spawn is pending, the switch-contained
-analogue, prior or later `await_any` around that local do, and a new nested
-spawn after the local do before the drain remain fail-closed.
+The top-level `when` body and top-level `switch` branch nested-repeat forms
+may also lower a local plain `(do child)` while generated nested spawns are
+pending, before a later same-body `await_all` drain. That local do uses the
+parent-module start/done contract and does not consume the generated-spawn
+done set; the later `await_all` still gates the nested repeat check on every
+outstanding generated child. Generated do while a nested spawn is pending,
+prior or later `await_any` around that local do, and a new nested spawn after
+the local do before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

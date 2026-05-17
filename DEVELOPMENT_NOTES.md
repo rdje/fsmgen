@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: switch-contained local do preserves pending generated spawns
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.60` implements only the selected
+  top-level `switch` branch nested-repeat local-do-while-spawn-pending subset.
+- The implementation reuses the when-contained proof rather than changing the
+  generated-top model: validation now permits one local plain `(do child)` in
+  a repeat directly under a top-level `switch` branch while generated spawn
+  done handoffs are pending, provided a later same-body `(await_all done)`
+  drains those generated handoffs before the nested repeat check can loop.
+- The local do remains a parent-module activation and consumes only the local
+  child's fresh done pulse. It does not mark generated spawned children as
+  complete and it does not allow switch-branch nested repeat re-entry without
+  the later generated-child drain.
+- The validator remains intentionally narrow: generated do while pending,
+  `await_any` before or after the local do, new nested spawn after the local
+  do before drain, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child semantics remain separate contracts.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.61` must
+  pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: switch-contained local do while spawn pending is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.59` selects the direct switch-branch
   analogue of the shipped when-contained pending-spawn local-do subset.

@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF switch-contained repeat do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`.
+- Top-level `switch` branches may now contain nested repeats with one or more
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites, local plain `(do child)` while those generated spawns remain pending,
+  and a later same-body `(await_all done)` drain before the switch-branch
+  nested repeat check can loop.
+- The local do stays in the parent scheduled module, waits for the local
+  child's fresh done pulse, and leaves generated-spawn done handoffs live for
+  the later drain. Source-order samples around spawn/do/sync remain explicit.
+- Generated `do` while spawn pending, `await_any` before or after the local
+  do, new nested spawn after the local do before drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain fail-closed. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`, which must select the next bounded
+  repeat-body child activation subset before code.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=32), touched repeat/spawn/doc checks (Files=4, Tests=374), focused
+  activation/domain/doc suite (Files=13, Tests=416), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1187), and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — ISF switch-contained repeat do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`.
 - Selected top-level `switch` branches containing nested repeats with one or

@@ -332,14 +332,14 @@ same-body `(await_all done)` drains the same outstanding generated children
 before the nested repeat check can loop. Those branch-contained nested spawn
 subsets reuse the static generated-child handoff model, preserve source-order
 samples before the nested spawn or sync states, and gate the nested repeat
-check on spawned child done handoffs. The top-level `when` body nested-repeat
-subset now also allows a local plain `(do child)` while generated nested
-spawns remain pending, provided there was no prior multi-pending
-`(await_any done)` observation and a later same-body `(await_all done)` drains
-the outstanding generated children before the nested repeat check can loop.
-That local do target remains in the parent scheduled module, waits for the
-local child's fresh done pulse, and does not clear the pending generated-spawn
-done set.
+check on spawned child done handoffs. The top-level `when` body and top-level
+`switch` branch nested-repeat subsets now also allow a local plain
+`(do child)` while generated nested spawns remain pending, provided there was
+no prior multi-pending `(await_any done)` observation and a later same-body
+`(await_all done)` drains the outstanding generated children before the nested
+repeat check can loop. That local do target remains in the parent scheduled
+module, waits for the local child's fresh done pulse, and does not clear the
+pending generated-spawn done set.
 Cross-domain
 repeat-body `do`,
 generated/spawn nested activation beyond the documented branch-contained
@@ -428,7 +428,10 @@ generated children before the nested repeat check can loop. This subset is
 shipped. The `do` target must remain local to the parent scheduled module; it
 uses the parent-module start/done pulse contract and leaves generated-spawn
 done handoffs live until the later drain. The direct top-level `switch` branch
-analogue is selected for the next implementation leaf but is not shipped yet.
+analogue is also shipped: a repeat directly inside a top-level `switch` branch
+may run a local `(do child)` while generated nested spawns remain pending,
+with the same later same-body `(await_all done)` drain requirement and the
+same local start/done proof.
 Generated `do` while spawn pending, `await_any` observation before or after the
 do, new spawn after the do before the drain, cross-domain activation, deeper
 branch/loop nesting, and broader outstanding-child semantics remain deferred.

@@ -866,16 +866,17 @@ also use multi-pending `(await_any done)` as an observation point when a later
 same-body `(await_all done)` drains the same outstanding generated children
 before the nested repeat check can loop. Those branch-contained nested spawns
 reuse the static generated-child handoff model and preserve source-order
-samples before the nested spawn or sync states. The top-level `when` body
-nested-repeat form may also run a local plain `(do child)` while generated
-nested spawns remain pending, provided there was no prior multi-pending
-`(await_any done)` observation and a later same-body `(await_all done)` drains
-every outstanding generated child before the nested repeat check can loop.
-That local do remains in the parent scheduled module, waits for its own fresh
-local done pulse, and does not clear the generated-spawn done set. Generated
-`do` while a nested spawn is pending, the switch-branch analogue, new nested
-`spawn` after that local do before the drain, `await_any` after that local do,
-deeper branch/loop nesting, and cross-domain activation remain fail-closed.
+samples before the nested spawn or sync states. The top-level `when` body and
+top-level `switch` branch nested-repeat forms may also run a local plain
+`(do child)` while generated nested spawns remain pending, provided there was
+no prior multi-pending `(await_any done)` observation and a later same-body
+`(await_all done)` drains every outstanding generated child before the nested
+repeat check can loop. That local do remains in the parent scheduled module,
+waits for its own fresh local done pulse, and does not clear the
+generated-spawn done set. Generated `do` while a nested spawn is pending, new
+nested `spawn` after that local do before the drain, `await_any` after that
+local do, deeper branch/loop nesting, and cross-domain activation remain
+fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -883,8 +884,8 @@ local `(do child)`, generated-child `(do child)`, generated
 followed by a same-body `(await_all done)` before the repeat check can loop,
 including the documented top-level when-body and switch-branch nested
 generated-spawn subsets and the documented top-level when-body nested local
-`do` while generated nested spawns are pending before a same-body `await_all`
-drain.
+`do` and top-level switch-branch nested local `do` while generated nested
+spawns are pending before a same-body `await_all` drain.
 The local `(do child)` subset is also shipped inside a repeat directly inside
 a top-level `when` body or top-level `switch` branch. Those top-level nested
 repeat subsets also accept plain generated-child `(do child)` for a target
@@ -911,12 +912,12 @@ branch-contained nested repeat subsets may also use multi-pending `await_any` as
 an observation point before a later same-body `await_all` drain. Samples after
 the spawn lower before the sync state; a later spawn after a pending sample
 remains outside the shipped subset.
-In the documented top-level `when` body nested subset, local plain
-`(do child)` may run while generated nested spawns are pending. The local do
-uses only the parent-module local child start/done contract and leaves the
-generated-spawn done set live until the later same-body `await_all` drain.
-Generated do, switch-contained pending-spawn do, prior or later `await_any`
-around that local do, and new spawn after the local do before the drain remain
+In the documented top-level `when` body and top-level `switch` branch nested
+subsets, local plain `(do child)` may run while generated nested spawns are
+pending. The local do uses only the parent-module local child start/done
+contract and leaves the generated-spawn done set live until the later
+same-body `await_all` drain. Generated do, prior or later `await_any` around
+that local do, and new spawn after the local do before the drain remain
 outside the public shipped subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be

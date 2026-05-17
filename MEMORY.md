@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained repeat do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts local plain `(do child)` inside a repeat directly under a
+  top-level `switch` branch while one or more generated nested spawns remain
+  pending, only when a later same-body `(await_all done)` drains every
+  outstanding generated child before the switch-branch nested repeat check can
+  loop.
+- The local do target remains in the parent scheduled module, waits for its
+  own fresh local done pulse, and leaves the generated-spawn done set live for
+  the later drain.
+- Generated `do` while spawn pending, `await_any` before or after the local
+  do, new nested spawn after the local do before drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain fail-closed.
+- The live-book, ISF spec, downstream integration spec, public contract, task
+  tree, roadmap board, live docs, and doc audits now describe the same
+  shipped boundary for both when-contained and switch-contained local do while
+  generated nested spawns are pending.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`, which must select the next bounded
+  repeat-body child activation subset before code.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=32),
+  touched repeat/spawn/doc checks (Files=4, Tests=374), focused
+  activation/domain/doc suite (Files=13, Tests=416), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1187), and
+  `git diff --check` passed.
+- Workflow note: push cadence remains every 30 unpushed commits unless the
+  user explicitly requests an earlier push.
 ## 2026-05-18: switch-contained repeat do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`.
 - The active R14 task tree now selects the direct top-level `switch` branch

@@ -1213,6 +1213,92 @@ ISF
     );
 };
 
+subtest 'switch branch nested repeat local do can run while generated spawn is pending before await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_do_while_spawn_pending
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (width 2) (domain core))
+    (input loops (width 3) (domain core))
+    (input payload (width 8) (domain core))
+    (input status (domain core))
+    (output done (domain core))
+    (output worker_done (domain core))
+    (output local_done (domain core))
+    (output result (width 8) (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0
+            (params
+              (WIDTH 16))
+            (bind
+              (input data payload)
+              (output resp result))
+            (domain core))
+          (do local_worker)
+          (sample status as after_do)
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (update resp data)
+    (complete worker_done))
+  (transaction local_worker
+    (domain core)
+    (on start)
+    (complete local_done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'switch-branch nested repeat do-while-spawn-pending keeps only the generated spawn instance');
+    is($ir->{spawn_instances}[0]{instance}, 'w0',
+        'switch-branch nested repeat do-while-spawn-pending preserves the generated spawn instance name');
+    is($ir->{counters}{local_worker_start}, 1,
+        'switch-branch nested repeat do-while-spawn-pending registers the local child start handoff');
+    is($ir->{counters}{local_worker_done}, 1,
+        'switch-branch nested repeat do-while-spawn-pending registers the local child done handoff');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_do_while_spawn_pending.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_do_while_spawn_pending_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch nested repeat do-while-spawn-pending parent scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'switch-branch nested repeat do-while-spawn-pending generated top .fsm is emitted');
+    ok(!exists($lowered->{files}{'local_worker.fsm'}), 'switch local do target remains in the parent scheduled module');
+    like($parent_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the pending-spawn local-do nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before switch pending-spawn local do materializes before the spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'switch generated spawn starts before the local do runs while pending');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(local_worker_start 1\)\)[\s\S]*<local_worker_done\s+\(-> parent_sample_\d+\)/,
+        'switch local do waits for fresh local child done while the generated spawn remains pending');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'sample after switch local do materializes before the generated spawn drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+        'await_all drain gates the switch nested repeat check on the pending generated spawn');
+    like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
+        'local child entry is rewired to the switch nested repeat local do start handoff');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top still instantiates only the switch spawned worker with static parameter override');
+};
+
 subtest 'repeat body await_any accepts exactly one pending static child' => sub {
     my $source = <<'ISF';
 (actor repeat_spawn_await_any
@@ -2693,7 +2779,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat do after multi-pending await_any before drain', qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/);
+    assert_lower_rejected(<<'ISF', 'switch nested repeat do after multi-pending await_any before drain', qr/switch-branch nested repeat local do while generated spawns are pending is supported only before a later same-body '\(await_all done\)' drain, with no prior multi-pending await_any observation/);
 (actor switch_nested_repeat_do_after_multi_pending_await_any
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (output done))
@@ -2838,8 +2924,25 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat local do while spawn pending', qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/);
-(actor switch_nested_repeat_local_do_while_spawn_pending
+    assert_lower_rejected(<<'ISF', 'switch nested repeat generated do while spawn pending', qr/switch-branch nested repeat do while generated spawns are pending supports only local plain '\(do child\)' in the current subset/);
+(actor switch_nested_repeat_generated_do_while_spawn_pending
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0)
+          (do worker)
+          (await_all done))))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat spawn after local do before drain', qr/switch-branch nested repeat spawn cannot follow local do while generated spawns are pending; drain with same-body '\(await_all done\)' before spawning again/);
+(actor switch_nested_repeat_spawn_after_local_do_before_drain
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (output done))
   (transaction parent
@@ -2849,7 +2952,45 @@ ISF
         (repeat loops
           (spawn worker as w0)
           (do local_worker)
+          (spawn worker as w1)
           (await_all done))))
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction local_worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat local do while spawn pending without drain', qr/switch-branch nested repeat local do while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_local_do_while_spawn_pending_without_drain
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0)
+          (do local_worker))))
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction local_worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat local do while spawn pending with await_any drain', qr/switch-branch nested repeat local do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/);
+(actor switch_nested_repeat_local_do_while_spawn_pending_with_await_any
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0)
+          (do local_worker)
+          (await_any done))))
     (complete done))
   (transaction worker
     (complete done))
