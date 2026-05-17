@@ -338,8 +338,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `await_all` drain are rejected. Switch-contained multi-pending
   `await_any`, cross-domain activation, deeper branch/loop nesting, and
   broader outstanding-child semantics remain fail-closed. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.55`, which must select the
-  next bounded repeat-body child activation subset before code.
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.55`, which selected top-level
+  `switch` branches containing nested repeats with two or more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites, a
+  multi-pending `(await_any done)` observation point, and a mandatory later
+  same-body `(await_all done)` drain before the nested repeat check can loop.
+  The selected surface mirrors the shipped when-contained drain proof and
+  keeps new nested `spawn` or `do` clauses before the mandatory drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics deferred. The next active implementation
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.56`.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

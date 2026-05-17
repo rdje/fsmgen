@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: switch-contained repeat await_any drain selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.55`.
+- The active R14 task tree now selects a repeat directly inside a top-level
+  `switch` branch with two or more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  a multi-pending `(await_any done)` observation point, and a mandatory later
+  same-body `(await_all done)` drain before the nested repeat check can loop.
+- The selected contract mirrors the shipped when-contained multi-pending
+  `await_any` drain leaf and forbids new nested `spawn` or `do` clauses before
+  the mandatory drain.
+- Cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.56`.
+- Workflow note: push cadence remains every 30 unpushed commits unless the
+  user explicitly requests an earlier push.
 ## 2026-05-17: when-contained repeat await_any drain shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.54`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
