@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body activation remainders are tracked before coding
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION` is a proposed tree, not an active
+  implementation claim. Its purpose is to prevent repeat-body activation work
+  from being done as ad hoc follow-up patches after the plain-spawn and
+  parameterized-spawn trees closed.
+- The first leaf is deliberately a selection leaf. Repeat-body `(bind ...)`,
+  `(domain ...)`, `await_any`, `do`, nested activation, and sample-after-spawn
+  timing each need separate source-contract, generated-top, re-entry, and
+  report decisions before implementation.
+- Existing broad ownership rows remain valid, but this tree gives the most
+  likely next ISF PNT area a concrete task-tree file and frontier before code
+  changes begin.
+- The workflow rule is now global, not ISF-only: any future code, test,
+  source, generated-artifact, or config change must verify existing task-tree
+  ownership or create a task tree/leaf before edits begin.
 ## 2026-05-16: repeat-body spawn params reuse generated-top specialization
 - `ISF-REPEAT-SPAWN-PARAMS.2` widens repeat-body spawn without changing the
   repeat lifetime model. The lexical spawn name still maps to one generated

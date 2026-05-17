@@ -228,6 +228,8 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 ### Spawn Inside Repeat Bodies
 
 Status: partially shipped; broader repeat-body child activation remains backlog.
+Task-tree owner for the remaining backlog:
+[`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
 
 Goal: allow `(spawn child as name)` inside `(repeat count body...)` without
 implying dynamic hardware creation.

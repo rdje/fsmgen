@@ -4,6 +4,9 @@ Use it first for objective, navigation, and where to find code/docs quickly.
 
 ## Session safety invariant
 - The commit workflow in `COMMIT.md` is mandatory and non-negotiable.
+- Before any code, test, source, generated-artifact, or config change, the work
+  must already have task-tree ownership in `docs/TASK_TREE.md` and
+  `docs/tasks/*.md`.
 - After every completed task, slice, lane, or task-scoped activity, run that workflow before starting or switching to the next one.
 - Do not ask the user whether to run it after completion; run it automatically.
 - Do not batch several finished tasks into one later cleanup commit.
@@ -126,6 +129,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md` — completed `R14` task tree for transaction phase zero-bypass pending-sample dynamic waits.
 - `docs/tasks/ISF-SPAWN-IN-REPEAT.md` — completed `R14` task tree for static child spawn inside repeat bodies.
 - `docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md` — completed `R14` task tree for repeat-body spawn parameter overrides.
+- `docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md` — proposed `R14` task tree for remaining repeat-body child activation widening.
 - `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md` — completed `R14` task tree for expression-valued activation input bindings.
 - `docs/tasks/ISF-SETTER-SYNTAX.md` — completed `R14` task tree for scalar setter syntax shared by rules and transactions.
 - `docs/tasks/ISF-TRANSACTION-ACTIVATION.md` — completed `R14` task tree for task-like transaction activation and parameter overrides.

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body activation remainders now tracked
+- Created proposed R14 task tree:
+  [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
+- The proposed tree owns repeat-body spawn `(bind ...)`, spawn `(domain ...)`,
+  `await_any`, repeat-body `do`, nested branch/loop activation, and
+  sample-after-spawn timing before future implementation.
+- Updated the task-tree index, README task index, roadmap board, live docs,
+  and mdBook feature backlog.
+- Strengthened the workflow so code, test, source, generated-artifact, and
+  config changes must have task-tree ownership before edits begin.
+- No active ISF task tree is open; the next R14 PNT slice must select or
+  activate a task tree first.
+
 ## 2026-05-16: R14 — ISF repeat-body spawn params shipped
 - Completed R14 task-tree slice:
   `ISF-REPEAT-SPAWN-PARAMS.2` in

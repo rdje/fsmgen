@@ -8,6 +8,9 @@ Ignoring it is not a style issue; it is a project-safety failure.
 
 ## Non-negotiable invariant
 - If a task/activity is complete but not committed, that task is not finished.
+- No code, test, source, generated-artifact, or config change may start unless
+  the activity already has task-tree ownership, either through an existing
+  leaf or a newly created `docs/tasks/*.md` tree/leaf.
 - Run this workflow after every completed task, slice, lane, or task-scoped activity without exception.
 - Do not let a long `pnt` streak, apparent momentum, or "just one more small thing" override this rule.
 - Do not expect the user to remind you. The workflow must be followed automatically.
@@ -55,30 +58,33 @@ Ignoring it is not a style issue; it is a project-safety failure.
   - All files touched by the task implementation.
 
 ## Required order of operations
-1. Complete the task implementation.
-2. Update docs in this exact order:
+1. Before changing code, tests, source files, generated artifacts, or config,
+   verify the task-tree owner and current leaf. If none exists, create the
+   smallest honest task tree or leaf from `docs/tasks/TEMPLATE.md` first.
+2. Complete the task implementation.
+3. Update docs in this exact order:
    1. `MEMORY.md`
    2. `ROADMAP_STATUS.md` if the task changed roadmap status, deliverables, remaining work, or the current active lane
    3. `docs/TASK_TREE.md` and the owning `docs/tasks/*.md` file if the activity belongs to an active task tree
    4. `CHANGES.md` and explicitly log any live-status change there
    5. `DEVELOPMENT_NOTES.md`
-3. Run validation appropriate to the scope:
+4. Run validation appropriate to the scope:
    - For code changes: syntax + tests/regression.
    - For doc-only changes: basic repo state checks are sufficient.
-4. Write `git_message_brief.txt` with:
+5. Write `git_message_brief.txt` with:
    - concise subject line,
    - key body lines or bullet points,
    - no attribution trailer unless the user explicitly asks for one.
    - If the completed activity belongs to a task-tree leaf, identify the leaf ID in the subject or first body line.
-5. Stage intended tracked files (`git add ...`).
+6. Stage intended tracked files (`git add ...`).
    - This and every later git write step must run sequentially.
-6. Commit using:
+7. Commit using:
    - `git --no-pager commit -F git_message_brief.txt`
-7. Truncate message file:
+8. Truncate message file:
    - `truncate -s 0 git_message_brief.txt`
-8. Verify final state:
+9. Verify final state:
    - `git --no-pager status --short`
-9. The user-facing close-out must always include the current live status snapshot from `ROADMAP_STATUS.md`.
+10. The user-facing close-out must always include the current live status snapshot from `ROADMAP_STATUS.md`.
    - If live status changed, explicitly state how the completed task affected that snapshot.
    - If live status did not change, explicitly state that the snapshot is unchanged for this task.
    - For every `Rj`, show at least `Status` + brief `Description`.
@@ -88,7 +94,12 @@ Ignoring it is not a style issue; it is a project-safety failure.
 - If `git status --short` shows older unfinished work from another slice, do not start a fresh implementation task until that state is understood and resolved.
 - If you accidentally completed work without committing it, the immediate next task is recovery: document it, validate it, split it into honest task-scoped commits, and only then resume feature work.
 - If the worktree contains unrelated untracked material, leave it alone unless the user explicitly asked for it.
-- If the next task is `R14` / ISF work and no task-tree leaf owns it yet, do not start implementation until the work is attached to an existing active ISF task tree or a new `docs/tasks/*.md` tree is created from `docs/tasks/TEMPLATE.md`.
+- If the next task requires code, test, source, generated-artifact, or config
+  changes and no task-tree leaf owns it yet, do not start implementation until
+  the work is attached to an existing active task tree or a new
+  `docs/tasks/*.md` tree is created from `docs/tasks/TEMPLATE.md`.
+- If the next task is `R14` / ISF work, apply the stricter ISF synchronization
+  expectations in `docs/TASK_TREE.md` after the task-tree owner is selected.
 
 ## Safety and consistency rules
 - Keep commits task-scoped (only files relevant to the completed task).

@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: ISF remaining repeat-body child activation now has proposed task-tree ownership
+- Created proposed R14 task tree
+  [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
+- The tree explicitly owns the remaining repeat-body child activation backlog:
+  spawn `(bind ...)`, spawn `(domain ...)`, `await_any`, repeat-body `do`,
+  nested branch/loop activation, and sample-after-spawn timing.
+- Updated [docs/TASK_TREE.md](docs/TASK_TREE.md), [README.md](README.md),
+  [ROADMAP_STATUS.md](ROADMAP_STATUS.md), and the mdBook feature backlog so
+  future code work has explicit task-tree routing before implementation.
+- Strengthened the repo workflow so code, test, source, generated-artifact, and
+  config changes must verify or create task-tree ownership before edits begin.
+- No active ISF task tree is open; the next R14 PNT slice must select or
+  activate a task tree first.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF repeat-body spawn params shipped
 - Completed `ISF-REPEAT-SPAWN-PARAMS.2` and closed
   [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md).

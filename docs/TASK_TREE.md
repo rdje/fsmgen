@@ -19,6 +19,27 @@ workstream direction. A task tree owns the recursive breakdown, current
 frontier, acceptance criteria, blockers, decisions, validation, and completion
 evidence for one top-level task.
 
+## Mandatory Task-Tree Gate For Code Changes
+
+No code, test, source, generated-artifact, or config change may begin without
+task-tree ownership already in place.
+
+Before implementation starts:
+
+- Attach the work to an existing active task-tree leaf, or create the smallest
+  honest `docs/tasks/*.md` tree or leaf from
+  [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md).
+- Record enough acceptance criteria and verification scope that the slice can
+  be reviewed and recovered after a crash.
+- If the work is too small for a multi-leaf breakdown, create a one-leaf tree
+  or attach it to a clearly matching existing leaf before changing code.
+- Do not treat proposed backlog text as implementation permission. Activate
+  or select the owning leaf first.
+
+Documentation-only workflow repairs may update these docs directly, but any
+future behavior-bearing implementation still has to pass this task-tree gate
+first.
+
 ## Active Task Trees
 
 | Tree | Status | Roadmap lane | Current frontier | File |
@@ -33,6 +54,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `proposed` | `R14` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.1` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
 | `FSMGEN-IR-AUDIT` | `proposed` | `architecture backlog` | `FSMGEN-IR-AUDIT.1` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
 
 ## Completed Task Trees
@@ -182,6 +204,7 @@ as done work unless a future task reopens them.
 | Actor-owned scalar storage source vocabulary | `ISF-STORAGE-VAR-SURFACE`, `ISF-STORAGE-VAR-ALIASES` |
 | Transaction ports, activation bindings, and actor top-level pin access | `ISF-PORT-BINDING` |
 | Expression-valued activation input bindings | `ISF-ACTIVATION-BIND-EXPRESSIONS` |
+| Remaining repeat-body child activation widening: spawn `(bind ...)`, spawn `(domain ...)`, `await_any`, repeat-body `do`, nested branch/loop activation, and sample-after-spawn timing | `ISF-REPEAT-BODY-CHILD-ACTIVATION` |
 | Scalar setter syntax shared by rules and transactions | `ISF-SETTER-SYNTAX` |
 | Task-like transaction activation semantics and parameter overrides | `ISF-TRANSACTION-ACTIVATION` |
 | Remaining rule-trigger and direct-activation parameter overrides | `ISF-ACTIVATION-PARAM-OVERRIDES` |
@@ -236,7 +259,8 @@ as done work unless a future task reopens them.
 
 All ISF work under `R14` is task-tree-managed by default.
 
-Before implementing any ISF task, slice, or PNT-selected activity:
+Before implementing any ISF task, slice, or PNT-selected activity, apply the
+mandatory task-tree gate above and then:
 
 - Attach it to an existing active ISF task tree, or create a new
   `docs/tasks/*.md` tree from [docs/tasks/TEMPLATE.md](docs/tasks/TEMPLATE.md).

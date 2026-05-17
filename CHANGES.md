@@ -1,5 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-17
+### R14 — ISF remaining repeat-body child activation task-tree tracking
+- Created proposed task tree `ISF-REPEAT-BODY-CHILD-ACTIVATION`.
+- The proposed tree explicitly owns the remaining repeat-body child activation
+  backlog: spawn `(bind ...)`, spawn `(domain ...)`, `await_any`,
+  repeat-body `do`, nested branch/loop activation, and sample-after-spawn
+  timing.
+- Synchronized `docs/TASK_TREE.md`, README task index, roadmap board, live
+  docs, and the mdBook feature backlog so future code work has explicit
+  task-tree routing before implementation.
+- Strengthened `COMMIT.md`, `docs/TASK_TREE.md`, `README.md`, and
+  `SESSION_BOOTSTRAP.md` so code, test, source, generated-artifact, and config
+  changes must have task-tree ownership before edits begin.
 ## 2026-05-16
 ### R14 — ISF repeat-body spawn params shipped
 - Completed `ISF-REPEAT-SPAWN-PARAMS.2` and closed the task tree.
