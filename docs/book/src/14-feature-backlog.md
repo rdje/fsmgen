@@ -383,13 +383,23 @@ This subset is shipped. It reuses the static generated-child handoff model,
 keeps source-order samples before the spawn or sync states explicit, and keeps
 the nested repeat re-entry gated on the spawned child's done handoff.
 
+Next selected leaf: top-level `switch` branch nested repeats with exactly one
+generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+may drain through same-body single-pending `(await_any done)`. This selected
+subset is not shipped yet. It intentionally mirrors the shipped when-contained
+single-pending `await_any` proof and the existing switch-contained `await_all`
+leaf: with exactly one nested static child pending, `await_any` observes the
+same done handoff that `await_all` would wait for before the nested repeat
+check can loop.
+
 `await_any`, multiple pending nested spawns, `do` while a nested spawn is
 pending, cross-domain activation, deeper branch/loop nesting, and broader
 outstanding-child semantics remain backlog beyond the shipped branch-contained
 single-spawn leaves. For branch-contained single-spawn leaves, this backlog
-statement now means switch-contained `await_any`, multiple pending nested
-spawns, `do` while a nested spawn is pending, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics.
+statement now means the selected-but-not-yet-shipped switch-contained
+`await_any`, multiple pending nested spawns, `do` while a nested spawn is
+pending, cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

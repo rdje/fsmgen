@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained repeat spawn await_any is the next nested spawn subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.47` selects the direct switch-contained
+  analogue of the shipped when-contained single-spawn `await_any` subset.
+- The selected shape is one generated `spawn` inside a repeat that is directly
+  inside a top-level `switch` branch. The nested body may use same-body
+  `(await_any done)` only because exactly one nested static generated child is
+  pending, so the re-entry proof should match the shipped switch-contained
+  `await_all` leaf and the when-contained `await_any` leaf.
+- Multiple pending nested spawns, spawned/blocked child interaction,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain separate contracts.
 ## 2026-05-17: when-contained repeat spawn await_any reuses the single-child proof
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.46` implements only the selected
   when-contained nested repeat single-spawn `await_any` subset.
