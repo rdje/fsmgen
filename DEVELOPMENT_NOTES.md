@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated do domains are metadata first
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.11` selects same-domain metadata as the
+  next generated repeat-body `do` subset because it can reuse the ownership
+  model already shipped for repeat-body spawn domains.
+- The intended implementation should attach `(domain NAME)` only to the static
+  generated do instance owned by the lexical repeat-body do site. It must not
+  change the done-gated repeat re-entry proof or imply CDC/cross-domain
+  activation.
+- Cross-domain activation, nested placement, and multi-pending `await_any`
+  remain separate because they need broader lifetime and protocol contracts.
 ## 2026-05-17: repeat-body generated do bindings reuse generated handoffs
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.10` extends the `.8` repeat-body
   generated `do` instance with the existing generated-child binding handoff

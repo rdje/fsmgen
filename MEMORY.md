@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body generated do domain metadata selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`.
+- The active R14 task tree now selects top-level repeat-body generated
+  blocking `(do child (params ...) [(bind ...)] (domain NAME))` as the next
+  bounded implementation subset.
+- The selected contract is same-domain ownership metadata only for the static
+  generated do instance. It should preserve generated-composition and
+  schedule-report clock-domain metadata without implying CDC or cross-domain
+  activation.
+- Nested placement, plain local do targeting an already generated child,
+  cross-domain activation, multi-pending `await_any`, and sample-before/after-do
+  timing remain deferred.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body generated do bindings shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

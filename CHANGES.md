@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body generated do domain metadata selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`.
+- Selected top-level repeat-body generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` as the next bounded
+  implementation subset.
+- The selected contract is same-domain ownership metadata only for the static
+  generated do instance; generated composition and schedule-report
+  clock-domain metadata should preserve the ownership without implying CDC or
+  cross-domain activation.
+- Nested placement, plain generated-child local do targets, cross-domain
+  activation, multi-pending `await_any`, and sample-before/after-do timing
+  remain deferred.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
 ### R14 — ISF repeat-body generated do bindings shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`.
 - Top-level repeat bodies now accept generated blocking

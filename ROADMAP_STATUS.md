@@ -39,9 +39,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   next bounded subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.10` then shipped
   that generated-do binding subset with generated-top input/output handoff
   ports, report-visible do-site binding provenance, and the same done-gated
-  repeat re-entry proof. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`; repeat-body do domain metadata,
-  plain local do targeting an already generated child, nested placement,
+  repeat re-entry proof. `ISF-REPEAT-BODY-CHILD-ACTIVATION.11` then selected
+  repeat-body generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` as the next bounded
+  subset. The selected contract is same-domain ownership metadata only for the
+  static generated do instance, with no implied CDC or cross-domain activation.
+  The next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`; plain
+  local do targeting an already generated child, nested placement,
   cross-domain activation, multi-pending `await_any`,
   spawn-after-sample ordering, and sample-before/after-do timing remain
   deferred. The workflow also requires task-tree ownership before any code,

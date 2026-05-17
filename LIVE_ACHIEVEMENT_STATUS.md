@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body generated do domain metadata selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`.
+- Selected top-level repeat-body generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` as the next bounded
+  implementation subset.
+- The selected surface is same-domain ownership metadata only for the static
+  generated do instance, preserving generated-composition and schedule-report
+  clock-domain metadata without implying CDC behavior.
+- Cross-domain activation, nested placement, plain generated-child local do
+  targets, multi-pending `await_any`, and sample-before/after-do timing remain
+  deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`.
+
 ## 2026-05-17: R14 — ISF repeat-body generated do bindings shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`.
 - Top-level repeat bodies may now use generated blocking

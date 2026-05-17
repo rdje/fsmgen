@@ -42,7 +42,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION`
   Status: `active`
   Goal: `Ship remaining repeat-body child activation subsets safely.`
-  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`
+  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`
   Status: `done`
@@ -115,9 +115,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.10: implement repeat generated do bindings`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next repeat-body child activation subset.`
-  Acceptance: `Task tree, roadmap, and book backlog select the next bounded implementation after repeat-body generated do bindings; remaining candidates include repeat-body do domain metadata, plain local do targeting already generated children, nested placement, cross-domain activation, multi-pending await_any, sample-before/after-do timing, and spawn-after-sample ordering.`
+  Acceptance: `Task tree, roadmap, and book backlog select top-level repeat-body generated blocking '(do child (params ...) [(bind ...)] (domain NAME))' as the next bounded implementation; the selected contract is declared same-domain ownership metadata only on the static generated do instance, with no CDC, cross-domain activation, nested placement, multi-pending await_any, plain generated-child local do target, or sample-before/after-do widening.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.11: select repeat generated do domains`
+
+- ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`
+  Status: `pending`
+  Goal: `Ship repeat-body generated blocking do same-domain metadata if selected.`
+  Acceptance: `Top-level repeat bodies accept '(do child (params ...) [(bind ...)] (domain NAME))' when NAME is the declared same-domain owner for the parent transaction and generated child; generated composition metadata and schedule-report clock-domain summaries preserve that ownership for the lexical repeat-do instance, while undeclared domains, cross-domain activation, nested placement, multi-pending await_any, plain generated-child local do targets, and sample-before/after-do timing remain fail-closed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -135,7 +142,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | 8 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` | `done` | Shipped repeat-body generated blocking `do` with static parameter overrides. |
 | 9 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.9` | `done` | Selected repeat-body generated blocking `do` with static parameter overrides and port bindings. |
 | 10 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.10` | `done` | Shipped repeat-body generated blocking `do` with static parameter overrides and port bindings. |
-| 11 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.11` | `pending` | Selects the next remaining repeat-body activation subset. |
+| 11 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.11` | `done` | Selected repeat-body generated blocking `do` same-domain metadata as the next bounded subset. |
+| 12 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.12` | `pending` | Tracks the selected repeat-body generated blocking-do domain metadata implementation subset. |
 
 ## Decisions
 
@@ -233,13 +241,21 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   targeting an already generated child, nested placement, cross-domain
   activation, multi-pending `await_any`, and sample-before/after-do timing
   remain fail-closed.
+- `2026-05-17`: Leaf `.11` selects repeat-body generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` as the next
+  implementation subset. The selected contract is same-domain ownership
+  metadata only for the static generated do instance; it should preserve
+  generated-composition and schedule-report clock-domain metadata without
+  implying CDC, cross-domain activation, nested placement, broader
+  outstanding-child semantics, or sample-before/after-do timing.
 
 ## Open Questions
 
-- Which deferred repeat-body activation subset should follow: repeat-body do
-  domain metadata, plain local do targeting already generated children, nested
-  branch/loop activation, cross-domain activation, multi-pending `await_any`,
-  or the remaining sample-ordering forms.
+- After the selected generated blocking-do domain metadata subset ships, which
+  deferred repeat-body activation subset should follow: plain local do
+  targeting already generated children, nested branch/loop activation,
+  cross-domain activation, multi-pending `await_any`, or the remaining
+  sample-ordering forms.
 
 ## Blockers
 
@@ -261,6 +277,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/do/generated-composition/doc checks (Files=8, Tests=294), book build, full ISF gate (Files=227, Tests=1090), and diff check passed` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.9` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting repeat-body generated blocking do bindings` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.10` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused repeat/do/binding/generated-composition/doc checks (Files=11, Tests=305), book build, full ISF gate (Files=227, Tests=1089), and diff check passed` |
+| `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.11` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting repeat-body generated blocking do same-domain metadata` |
 
 ## Commit Log
 
@@ -277,6 +294,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.8: implement repeat generated do params` | `repeat-body generated blocking do static parameters shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.9` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.9: select repeat generated do bindings` | `selected repeat-body generated blocking do bindings` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.10` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.10: implement repeat generated do bindings` | `repeat-body generated blocking do binding handoffs shipped` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.11` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.11: select repeat generated do domains` | `selected repeat-body generated blocking do same-domain metadata` |
 
 ## Changelog
 
@@ -310,3 +328,5 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - `2026-05-17`: Shipped repeat-body generated blocking `do` bindings for the
   top-level static-parameter subset, with generated-top handoff ports,
   report-visible do-site binding provenance, and done-gated repeat re-entry.
+- `2026-05-17`: Selected repeat-body generated blocking `do` same-domain
+  metadata as the next bounded implementation subset.
