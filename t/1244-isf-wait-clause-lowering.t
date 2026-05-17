@@ -807,6 +807,76 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_shift');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into independent assemble states' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-assemble');
+(actor wait_dynamic_sample_assemble
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input header (width 4))
+    (input payload (width 8))
+    (output packet (width 12))
+    (output sample_out (width 8))
+    (output done))
+  (drive (captured val)
+    (sample_out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (assemble header payload as packet)
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_assemble.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving assemble clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_asm_2\)\)/,
+        'positive path exits to the original assemble state');
+
+    my $assemble = state_block($fsm, 'main_asm_2');
+    unlike($assemble, qr/\(<= \(hold din\)\)/,
+        'original assemble state does not double-sample after a positive wait');
+    like($assemble, qr/\(<- \(packet> \(concat header payload\)\)\)/,
+        'original assemble behavior is unchanged');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count assemble clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(packet> \(concat header payload\)\)\)/,
+        'zero-count assemble clone performs the independent assemble');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'zero-count assemble clone advances like the original assemble state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_asm_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'independent assemble zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_assemble');
+};
+
 subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
 (actor wait_dynamic_pair
@@ -2202,6 +2272,44 @@ ISF
     (sample din as hold)
     (wait cycles)
     (shift_left hold bit (width 8))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-consuming assemble part', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_asm_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_assemble_part
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input payload (width 8))
+    (output packet (width 16))
+    (output done))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (assemble hold payload as packet)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-overwriting assemble target', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_asm_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_assemble_target
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input header (width 4))
+    (input payload (width 4))
+    (output done))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (assemble header payload as hold)
     (complete done)))
 ISF
 

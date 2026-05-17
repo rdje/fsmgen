@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: independent assemble states can carry pending samples when they do not consume them
+- `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.1` adds the next narrow
+  data-operation successor class to pending-sample runtime wait zero-bypass.
+  The accepted subset is limited to assemble states whose target and concat
+  parts do not reference any pending sample alias.
+- The zero-count clone prepends pending sample assignments to the original
+  assemble state, preserving zero-count timing without a hidden sample-only
+  cycle.
+- An assemble such as `(assemble hold payload as packet)` remains fail-closed
+  after `(sample din as hold) (wait cycles)` because the clone would need to
+  sample `hold` and read `hold` as a concat part in one state. Likewise,
+  `(assemble header payload as hold)` remains fail-closed because it would
+  overwrite the pending sample alias in the clone.
+- Extract and bank successors remain deferred so each data-operation family
+  can get explicit timing and side-effect coverage.
 ## 2026-05-16: independent shifts can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.1` adds the next narrow
   data-operation successor class to pending-sample runtime wait zero-bypass.
@@ -10,7 +25,7 @@ This document captures engineering rationale, design constraints, and working de
 - A shift such as `(shift_left hold bit (width 8))` remains fail-closed after
   `(sample din as hold) (wait cycles)` because the clone would need to sample
   `hold` and shift `hold` in one state.
-- Assemble, extract, and bank successors remain deferred so each data-operation
+- Extract and bank successors remain deferred so each data-operation
   family can get explicit timing and side-effect coverage.
 ## 2026-05-16: independent update coverage pins legacy spelling parity
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` is deliberately

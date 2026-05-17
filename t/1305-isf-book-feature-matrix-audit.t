@@ -110,6 +110,7 @@ my @required_examples = (
     'sample-preserving zero-count clones',
     'independent scalar setters',
     'independent shifts',
+    'independent assemble states',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

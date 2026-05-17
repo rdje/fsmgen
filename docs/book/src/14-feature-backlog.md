@@ -612,10 +612,11 @@ edge split is not implemented yet, top-level pending-sample zero bypasses
 whose successor cannot yet carry samples without changing timing, branch
 pending-sample zero bypasses whose successor cannot yet carry samples without
 changing timing outside the shipped completion and independent-setter
-successor subsets, repeat/loop pending-sample zero bypasses whose successor
-cannot yet carry samples without changing timing, and setter successors that
-read or overwrite a pending sample alias. Shift successors are shipped only
-when independent; shifts that read or overwrite a pending sample alias remain
+successor subsets plus independent shift and assemble successor subsets,
+repeat/loop pending-sample zero bypasses whose successor cannot yet carry
+samples without changing timing, and setter successors that read or overwrite
+a pending sample alias. Shift and assemble successors are shipped only when
+independent; forms that read or overwrite a pending sample alias remain
 backlog.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
@@ -625,8 +626,8 @@ samples before `when`-body and `switch`-branch dynamic waits are shipped when
 the selected zero-count successor can carry samples without changing timing;
 selected completion and independent scalar setter successors are now included
 in that sample-compatible branch subset, along with independent shift
-successors. A scalar setter or shift is independent only when it neither reads
-nor overwrites a pending sample alias.
+and assemble successors. A scalar setter, shift, or assemble state is
+independent only when it neither reads nor overwrites a pending sample alias.
 Pending samples before `repeat`, `while`, and `until` dynamic waits are also
 shipped when the selected zero-count body successor can carry samples without
 changing timing.
@@ -653,13 +654,13 @@ separate wait-loop state for counts greater than one, and a zero-bypass clone
 of the following state-producing clause when that successor can carry samples
 without changing timing, including completion states that preserve their
 delayed pulse and return-to-idle behavior plus independent scalar setters that
-neither read nor overwrite pending sample aliases plus independent shifts.
-`when` and `switch` use the same materialization while preserving false,
-other-case, and fallthrough exits, and their selected completion, independent
-setter, and independent shift successors are sample-compatible. `repeat`,
-`while`, and `until` use the same materialization while preserving loop-back
-and loop-exit edges. Other successor shapes that cannot yet carry samples
-remain fail-closed.
+neither read nor overwrite pending sample aliases plus independent shifts and
+independent assemble states. `when` and `switch` use the same materialization
+while preserving false, other-case, and fallthrough exits, and their selected
+completion, independent setter, independent shift, and independent assemble
+successors are sample-compatible. `repeat`, `while`, and `until` use the same
+materialization while preserving loop-back and loop-exit edges. Other
+successor shapes that cannot yet carry samples remain fail-closed.
 
 ### Transaction Dynamic Loops
 

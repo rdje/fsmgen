@@ -559,6 +559,20 @@ successor:
 If the shifted register or inserted bit is `hold`, the form remains
 fail-closed for the same sample-and-consume timing reason.
 
+An independent assemble state follows the same rule. The clone carries the
+pending sample, emits the original concat assignment, and advances to the
+original assemble successor:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (<- (packet> (concat header payload)))
+  (-> main_drive_3))
+```
+
+If the assembled target or any assembled part is `hold`, the form remains
+fail-closed for the same sample-and-consume timing reason.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

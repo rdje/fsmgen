@@ -10,15 +10,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE` is closed
-  after shipping independent shift zero-bypass for pending-sample runtime
-  waits. A top-level `(sample ...) (wait count) (shift_left reg bit ...)` path
-  now lowers a zero-count runtime wait to a sample-preserving shift clone when
-  the shift neither reads nor overwrites a pending sample alias. Sample-
-  consuming shifts, broader data-operation successors, consecutive
-  pending-sample runtime waits, and unsupported loop/check-state successors
-  remain fail-closed. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE` is
+  closed after shipping independent assemble zero-bypass for pending-sample
+  runtime waits. A top-level `(sample ...) (wait count) (assemble part... as
+  target)` path now lowers a zero-count runtime wait to a sample-preserving
+  assemble clone when the assembled target and all concat parts neither read
+  nor overwrite a pending sample alias. Sample-consuming assemble states,
+  extract and bank data-operation successors, consecutive pending-sample
+  runtime waits, and unsupported loop/check-state successors remain
+  fail-closed. The next R14 PNT implementation slice must select or create a
+  new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -424,8 +425,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.1` then shipped the independent
   shift subset for pending-sample runtime wait zero-bypass: selected shift
   states can be cloned when they neither read nor overwrite pending sample
-  aliases, while sample-consuming shifts and broader
-  data-operation successors remain fail-closed.
+  aliases, while sample-consuming shifts and broader data-operation successors
+  remain fail-closed. `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.1` then
+  shipped the independent assemble subset: selected assemble states can be
+  cloned when their target and parts neither read nor overwrite pending sample
+  aliases, while sample-consuming assemble states and other data-operation
+  successors remain fail-closed.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
@@ -656,6 +661,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   assignments, emits the original shift assignment, and advances to the
   original shift successor. Shifts that read or overwrite a pending sample
   alias remain fail-closed, as do broader data-operation successors.
+- ISF pending-sample independent assemble wait update: runtime dynamic waits
+  with pending samples can now zero-bypass into an independent assemble
+  successor. The zero path uses a sample-preserving assemble clone that
+  performs pending sample assignments, emits the original concat assignment,
+  and advances to the original assemble successor. Assemble states that read a
+  pending sample alias as a part or overwrite one as the target remain
+  fail-closed, as do broader data-operation successors.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -858,8 +870,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   successor classes remain fail-closed. The follow-on coverage slice added an
   explicit legacy `update` regression without changing behavior.
   `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.1` later shipped independent
-  shift zero-bypass clones for pending-sample runtime waits. No active ISF task
-  tree remains open.
+  shift zero-bypass clones for pending-sample runtime waits.
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.1` later shipped independent
+  assemble zero-bypass clones for pending-sample runtime waits. No active ISF
+  task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers
