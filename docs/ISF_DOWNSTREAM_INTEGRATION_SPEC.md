@@ -753,11 +753,11 @@ Rules:
   wait state on positive-count paths. On zero-count paths, FSMGen uses a
   sample-preserving clone when the selected successor can carry the sample
   without changing timing. Shipped sample-compatible successors include drive,
-  await, static wait, completion, and independent scalar setter states for
-  top-level waits; selected completion and independent scalar setter
-  successors are also shipped for `when` bodies and `switch` branches. A scalar
-  setter is independent only when it neither reads nor overwrites a pending
-  sample alias.
+  await, static wait, completion, independent scalar setter, and independent
+  shift states for top-level waits; selected completion, independent scalar
+  setter, and independent shift successors are also shipped for `when` bodies
+  and `switch` branches. A scalar setter or shift is independent only when it
+  neither reads nor overwrites a pending sample alias.
 - Wait-count division and modulo expressions reject literal-zero and
   actor-constant-zero divisors before scheduled `.fsm` emission. Dynamic
   divisor nonzero proof remains outside the shipped wait contract.

@@ -739,6 +739,74 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_update');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into independent shifts' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-shift');
+(actor wait_dynamic_sample_shift
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input bit)
+    (output reg_out (width 8))
+    (output done))
+  (drive (outp val)
+    (reg_out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (shift_left reg_out bit (width 8))
+    (drive outp hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_shift.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving shift clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_shift_2\)\)/,
+        'positive path exits to the original shift state');
+
+    my $shift = state_block($fsm, 'main_shift_2');
+    unlike($shift, qr/\(<= \(hold din\)\)/,
+        'original shift state does not double-sample after a positive wait');
+    like($shift, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) bit\)\)\)/,
+        'original shift behavior is unchanged');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count shift clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(reg_out> \(\| \(<< reg_out 1\) bit\)\)\)/,
+        'zero-count shift clone performs the independent shift');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'zero-count shift clone advances like the original shift state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_shift_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'independent shift zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_shift');
+};
+
 subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
 (actor wait_dynamic_pair
@@ -2116,6 +2184,24 @@ ISF
     (sample din as hold)
     (wait cycles)
     (set out hold)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-consuming shift successor', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_shift_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_shift
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input bit)
+    (output done))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (shift_left hold bit (width 8))
     (complete done)))
 ISF
 

@@ -6724,6 +6724,7 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
                     || $source_kind eq 'sample_capture';
         }
         return 1 if _dynamic_wait_zero_sample_target_is_independent_setter($wait_state, $target_state);
+        return 1 if _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(shift latency_increment_request));
     }
 
     return 0;
@@ -6731,6 +6732,11 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
 
 sub _dynamic_wait_zero_sample_target_is_independent_setter {
     my ($wait_state, $target_state) = @_;
+    return _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(set update latency_increment_request));
+}
+
+sub _dynamic_wait_zero_sample_target_is_independent_data_op {
+    my ($wait_state, $target_state, @source_kinds) = @_;
     return 0 unless _dynamic_wait_has_pending_samples($wait_state);
 
     my %pending_sample = map {
@@ -6739,14 +6745,12 @@ sub _dynamic_wait_zero_sample_target_is_independent_setter {
     } @{$wait_state->{pending_sample_assignments} || []};
     return 0 unless %pending_sample;
 
-    my $has_setter = 0;
+    my %accepted_source_kind = map { $_ => 1 } @source_kinds;
+    my $has_data_op = 0;
     for my $assignment (@{$target_state->{assignments} || []}) {
         my $source_kind = $assignment->{source_kind} // '';
-        if ($source_kind eq 'set' || $source_kind eq 'update') {
-            $has_setter = 1;
-        } elsif ($source_kind ne 'latency_increment_request') {
-            return 0;
-        }
+        return 0 unless $accepted_source_kind{$source_kind};
+        $has_data_op = 1 unless $source_kind eq 'latency_increment_request';
         return 0 if _dynamic_wait_assignment_touches_pending_sample($assignment, \%pending_sample);
     }
 
@@ -6754,7 +6758,7 @@ sub _dynamic_wait_zero_sample_target_is_independent_setter {
         return 0 if _dynamic_wait_condition_touches_pending_sample($transition->{condition}, \%pending_sample);
     }
 
-    return $has_setter ? 1 : 0;
+    return $has_data_op ? 1 : 0;
 }
 
 sub _dynamic_wait_assignment_touches_pending_sample {

@@ -545,6 +545,20 @@ If the setter reads `hold`, or writes `hold`, the form remains fail-closed
 because the clone would otherwise combine sample materialization and sample
 consumption in one state.
 
+An independent shift follows the same rule. The clone carries the pending
+sample, emits the original shift assignment, and advances to the original shift
+successor:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (<- (reg_out> (| (<< reg_out 1) bit)))
+  (-> main_drive_3))
+```
+
+If the shifted register or inserted bit is `hold`, the form remains
+fail-closed for the same sample-and-consume timing reason.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

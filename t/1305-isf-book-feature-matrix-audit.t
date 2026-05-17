@@ -109,6 +109,7 @@ my @required_examples = (
     'dynamic_wait_counter',
     'sample-preserving zero-count clones',
     'independent scalar setters',
+    'independent shifts',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

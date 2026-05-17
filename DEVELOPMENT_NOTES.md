@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: independent shifts can carry pending samples when they do not consume them
+- `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.1` adds the next narrow
+  data-operation successor class to pending-sample runtime wait zero-bypass.
+  The accepted subset is limited to shift states whose target and RHS do not
+  reference any pending sample alias.
+- The zero-count clone prepends pending sample assignments to the original
+  shift state, preserving zero-count timing without a hidden sample-only cycle.
+- A shift such as `(shift_left hold bit (width 8))` remains fail-closed after
+  `(sample din as hold) (wait cycles)` because the clone would need to sample
+  `hold` and shift `hold` in one state.
+- Assemble, extract, and bank successors remain deferred so each data-operation
+  family can get explicit timing and side-effect coverage.
 ## 2026-05-16: independent update coverage pins legacy spelling parity
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` is deliberately
   coverage-only. The previous independent-setter slice classified both

@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF independent shift zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.1` and closed the task
+  tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into independent shift successors.
+- The zero-count path now uses a sample-preserving shift clone that performs
+  pending sample assignments, emits the original shift assignment, and advances
+  to the original shift successor. Positive-count paths still sample in the
+  first wait state and exit through the original shift state.
+- Shifts that read or overwrite a pending sample alias remain fail-closed, as
+  do broader data-operation successors such as assemble, extract, bank
+  load/store, stage, contract, and loop/check states.
+- Extended `t/1244-isf-wait-clause-lowering.t` for independent shift
+  zero-bypass and sample-consuming shift rejection, widened the book
+  feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/lowering/backlog
+  and feature-matrix chapters, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=121`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1008`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF independent update zero-bypass coverage
 - Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` and
   closed the task tree.
