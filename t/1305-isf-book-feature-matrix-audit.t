@@ -108,6 +108,7 @@ my @required_examples = (
     '"actor_phases"',
     'dynamic_wait_counter',
     'consecutive runtime waits',
+    'bank access predecessors',
     'sample-preserving zero-count clones',
     'independent scalar setters',
     'independent shifts',

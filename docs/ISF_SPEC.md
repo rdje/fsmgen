@@ -1629,10 +1629,13 @@ by the stage state. After a top-level `repeat`, the repeat-check exit edge
 `counter == 0` is split while the loop-back edge is preserved. After
 `await_all`, the split is gated by the logical AND of all collected done
 signals. After `await_any`, the split is gated by the logical OR of the
-collected done signals. Loop decision states can also split a runtime wait
-edge: a `while` true body-entry or back-edge, an `until` false back-edge, and
-a loop-exit edge that falls through to a following runtime wait can all load
-or bypass the generated counter while preserving the opposite loop branch.
+collected done signals. After transaction bank `load` or `store` states, the
+unconditional advance edge is split while the guarded scalarized bank
+assignments remain in the bank state. Loop decision states can also split a
+runtime wait edge: a `while` true body-entry or back-edge, an `until` false
+back-edge, and a loop-exit edge that falls through to a following runtime wait
+can all load or bypass the generated counter while preserving the opposite
+loop branch.
 
 Runtime waits inside `when` bodies are supported when no pending sample must
 cross the dynamic wait. The branch true edge is split into positive-count

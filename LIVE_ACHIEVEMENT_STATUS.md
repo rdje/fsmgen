@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF bank-access predecessor runtime dynamic waits shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.md](docs/tasks/ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.md).
+- The `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR` tree is now closed. No active ISF
+  task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- Runtime dynamic waits can now follow transaction bank `load` and `store`
+  states. The bank predecessor keeps its guarded scalarized assignments while
+  the following wait edge splits into positive-count counter snapshot and
+  zero-count bypass paths.
+- `(load BANK IDX as TARGET) (wait cycles)` and `(store BANK IDX VALUE) (wait
+  cycles)` now use the shipped sampled-counter runtime wait contract and reach
+  HDL generation.
+- Bank syntax, scalarized bank storage, load/store assignment semantics, and
+  pending-sample bank successor compatibility are unchanged.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=138`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1025`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF loop decision zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` in

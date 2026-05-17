@@ -588,9 +588,10 @@ chain are also shipped when the final zero-count successor can carry the
 sample; zero-then-positive paths use generated downstream wait-entry clones,
 and all-zero paths use final compatible target clones.
 Additional top-level predecessor kinds are shipped for `await`, `stage`,
-`repeat` exit checks, `await_all`, and `await_any`; their own advance
-conditions are ANDed or ORed into the runtime count split, and their unrelated
-alternatives such as await timeouts or repeat loop-back edges are preserved.
+`repeat` exit checks, `await_all`, `await_any`, and bank `load`/`store`
+states; their own advance conditions are ANDed or ORed into the runtime count
+split, and their unrelated alternatives such as await timeouts or repeat
+loop-back edges are preserved.
 Loop decision predecessors are shipped for the no-pending-sample subset: loop
 body entries, loop back-edges, and loop exits that target a runtime wait split
 that edge while preserving the opposite loop branch.

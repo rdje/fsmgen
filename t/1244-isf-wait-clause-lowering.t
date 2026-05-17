@@ -1536,6 +1536,68 @@ ISF
         'repeat exit edge bypasses the dynamic wait on zero');
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_repeat');
 
+    ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-bank-load');
+(actor wait_dynamic_after_bank_load
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input idx (width 2))
+    (output out (width 8))
+    (output done))
+  (storage
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (load data idx as out)
+    (wait cycles)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_after_bank_load.fsm'};
+    my $load = state_block($fsm, 'main_load_1');
+    like($load, qr/\(<- \(out> data_0\) <\(== idx 0\)\)/,
+        'bank load predecessor keeps the first guarded load assignment');
+    like($load, qr/\(<- \(main_wait_2_cnt cycles\) <cycles\)/,
+        'bank load predecessor samples the runtime count on the positive path');
+    like($load, qr/\(-> main_wait_2 <cycles\)/,
+        'bank load predecessor enters the dynamic wait on a positive count');
+    like($load, qr/\(-> main_done_3 <\(== cycles 0\)\)/,
+        'bank load predecessor bypasses the dynamic wait on zero');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_bank_load');
+
+    ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-bank-store');
+(actor wait_dynamic_after_bank_store
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input idx (width 2))
+    (input value (width 8))
+    (output done))
+  (storage
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (store data idx value)
+    (wait cycles)
+    (complete done)))
+ISF
+
+    $fsm = $lowered->{files}{'wait_dynamic_after_bank_store.fsm'};
+    my $store = state_block($fsm, 'main_store_1');
+    like($store, qr/\(<- \(data_0 value\) <\(== idx 0\)\)/,
+        'bank store predecessor keeps the first guarded store assignment');
+    like($store, qr/\(<- \(main_wait_2_cnt cycles\) <cycles\)/,
+        'bank store predecessor samples the runtime count on the positive path');
+    like($store, qr/\(-> main_wait_2 <cycles\)/,
+        'bank store predecessor enters the dynamic wait on a positive count');
+    like($store, qr/\(-> main_done_3 <\(== cycles 0\)\)/,
+        'bank store predecessor bypasses the dynamic wait on zero');
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_after_bank_store');
+
     ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-sync-all');
 (actor wait_dynamic_after_sync_all
   (clock clk)

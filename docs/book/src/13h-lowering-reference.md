@@ -729,6 +729,9 @@ advance condition is explicit in the scheduler IR:
   signals plus the runtime count test.
 - After `await_any`, the split condition is the OR of the collected done
   signals plus the runtime count test.
+- After transaction bank `load` or `store` states, the bank state keeps its
+  guarded scalarized assignments, and only the unconditional advance edge is
+  split into the runtime wait positive and zero-count paths.
 
 For example, a wait after `await_all` lowers the synchronization edge and the
 runtime count check into one guard:
@@ -738,6 +741,20 @@ runtime count check into one guard:
   (<- (parent_wait_4_cnt cycles) <(& w0_done w1_done cycles))
   (-> parent_wait_4 <(& w0_done w1_done cycles))
   (-> parent_done_5 <(& w0_done w1_done (== cycles 0))))
+```
+
+A wait after a bank load keeps every guarded entry assignment in the load
+state and adds the runtime wait split beside those assignments:
+
+```lisp
+(main_load_1
+  (<- (out> data_0) <(== idx 0))
+  (<- (out> data_1) <(== idx 1))
+  (<- (out> data_2) <(== idx 2))
+  (<- (out> data_3) <(== idx 3))
+  (<- (main_wait_2_cnt cycles) <cycles)
+  (-> main_wait_2 <cycles)
+  (-> main_done_3 <(== cycles 0)))
 ```
 
 Runtime wait report entries keep `cycles` null because the exact count is

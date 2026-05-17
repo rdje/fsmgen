@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF bank-access predecessor runtime dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits can
+  follow transaction bank `load` and `store` states.
+- Bank predecessor states keep their guarded scalarized load/store
+  assignments. The original unconditional advance edge now samples the
+  generated wait counter and enters the wait on positive counts, or bypasses
+  directly to the post-wait state on zero counts.
+- Bank syntax, scalarized bank storage, load/store assignment semantics, and
+  pending-sample bank successor compatibility are unchanged.
+- Extended `t/1244-isf-wait-clause-lowering.t` for bank load/store
+  predecessor splits, widened the book feature-matrix audit marker, and
+  synchronized `docs/ISF_SPEC.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook
+  transaction/lowering/backlog and feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=138`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1025`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF loop decision zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with

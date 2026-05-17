@@ -746,7 +746,10 @@ Rules:
 - Static literal, actor-constant, and actor-parameter waits are accepted,
   including zero.
 - Runtime scalar waits are accepted when the count source has known positive
-  width and the predecessor-edge split is implemented.
+  width and the predecessor-edge split is implemented. Implemented predecessor
+  splits include transaction entry, sequential states, contract arm states,
+  await, stage, repeat exit, await_all, await_any, bank load/store states, and
+  loop decision states.
 - Runtime expression waits are accepted when every operand has known width and
   the expression width helper derives a positive result width.
 - Pending samples before accepted runtime waits materialize in the first active

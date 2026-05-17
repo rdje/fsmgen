@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF bank-access predecessor runtime dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.md](docs/tasks/ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lets runtime dynamic waits follow transaction bank `load` and `store`
+  states. The bank predecessor keeps its guarded scalarized assignments while
+  the original unconditional advance edge splits into positive-count counter
+  snapshot and zero-count bypass paths.
+- `(load BANK IDX as TARGET) (wait cycles)` and `(store BANK IDX VALUE) (wait
+  cycles)` now reach HDL generation through the same sampled-counter runtime
+  wait contract as other shipped predecessor-edge splits.
+- This does not change bank syntax, scalarized bank storage, load/store
+  assignment semantics, or pending-sample successor compatibility.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=138`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1025`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF loop decision zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.md).

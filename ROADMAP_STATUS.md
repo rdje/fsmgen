@@ -10,14 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE` is closed after
-  shipping loop decision zero-bypass for pending-sample runtime waits. A
-  zero-count runtime wait before an independent repeat check or while/until
-  decision state now enters a sample-preserving clone that keeps the original
-  repeat counter decrement or loop branch behavior. Alias-consuming loop
-  decisions and unrelated remaining dynamic-wait predecessor/successor shapes
-  remain fail-closed. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR` is closed after
+  shipping runtime dynamic waits after transaction bank `load` and `store`
+  predecessor states. Bank access states keep their guarded scalarized
+  assignments, while the following runtime wait edge now splits into
+  positive-count counter snapshot and zero-count bypass paths. Bank syntax,
+  load/store assignment semantics, and pending-sample successor compatibility
+  are unchanged. The next R14 PNT implementation slice must select or create a
+  new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -633,7 +633,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   edge of an active wait splits into the following wait's positive load and
   zero bypass paths without rereading the previous count source.
   Runtime waits after top-level `await`, `stage`, `repeat_check`, `sync_all`,
-  `sync_any`, and loop-decision predecessors are also supported. Their
+  `sync_any`, bank `load`/`store`, and loop-decision predecessors are also
+  supported. Their
   predecessor advance conditions are combined with the runtime count split
   while unrelated alternatives such as await timeouts, repeat loop-back edges,
   and opposite loop branches remain intact.
@@ -712,6 +713,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   store assignments, and advances to the original bank-store successor. Bank
   stores that read a pending sample alias as the index or stored value, or
   overwrite one as a scalarized destination entry, remain fail-closed.
+- ISF bank-access predecessor dynamic wait update: runtime dynamic waits can
+  now follow transaction bank `load` and `store` states. The bank state keeps
+  its guarded scalarized assignments, then its unconditional advance edge
+  samples the generated wait counter and enters the wait on positive counts or
+  bypasses directly to the post-wait state on zero counts. This is a
+  predecessor-edge split only: bank syntax, scalarized bank assignment
+  semantics, and pending-sample bank successor compatibility are unchanged.
 - ISF consecutive pending-sample runtime wait update: pending samples before
   consecutive top-level runtime waits now carry across zero-count wait links.
   A zero first wait plus positive second wait enters a generated

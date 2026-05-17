@@ -266,8 +266,9 @@ iterate any authored actions.
   evaluates the next wait's zero/positive split, and the final
   sampled-counter edge of an active wait does the same for the following wait.
   Runtime waits can also follow top-level `await`, `stage`, `repeat` exit
-  checks, `await_all`, and `await_any`, where the predecessor's own advance
-  condition is combined with the runtime count split.
+  checks, `await_all`, `await_any`, and bank `load`/`store` states, where the
+  predecessor's own advance condition is combined with the runtime count split
+  and bank states keep their guarded scalarized assignments.
 - `wait (<op> ...)`: use the same runtime zero-bypass and predecessor-edge
   snapshot contract as scalar runtime waits when every referenced signal has
   known width and the expression-width helper derives a positive result width.
@@ -300,6 +301,10 @@ paths and final compatible target clones for all-zero paths.
 Repeat, while, and until loop decision/check states can also carry pending
 samples when their repeat-counter assignment and loop condition are
 independent of the pending sample alias.
+Runtime waits can also follow transaction bank `load` and `store` states. The
+bank state keeps its guarded scalarized assignments, and its unconditional
+advance edge splits into positive-count counter load and zero-count bypass
+paths.
 Runtime waits inside `when` bodies and `switch` branches now use the same
 one-shot positive sample plus zero-count clone scheme for sample-compatible
 successors, including completion, independent scalar setter, independent

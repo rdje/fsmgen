@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: bank access predecessors use ordinary dynamic wait edge splitting
+- `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.1` adds transaction bank `load` and
+  `store` states to the predecessor surface for runtime dynamic waits.
+- Bank access states are unconditional predecessors after their guarded
+  scalarized assignments. They can therefore share the same predecessor-edge
+  split as sequential and contract states: load the generated wait counter and
+  enter the wait when the count is positive, or bypass to the post-wait state
+  when the count is zero.
+- The slice deliberately keeps all guarded bank assignments in the original
+  bank state. Moving them into wait-entry clones would change the observable
+  bank access cycle and would blur the contract already documented for bank
+  load/store lowering.
+- This is separate from pending-sample bank successor compatibility. Existing
+  sample-preserving bank load/store zero-count successor checks are unchanged;
+  this slice only covers a runtime wait that follows a bank access state.
 ## 2026-05-16: loop decision states can carry pending samples when independent
 - `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` adds repeat check states and
   while/until loop decision states to the pending-sample runtime wait

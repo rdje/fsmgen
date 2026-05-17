@@ -450,7 +450,8 @@ positive resolved counts to reviewable fixed wait-state chains, treats
 resolved zero as a transparent no-op, accepts the known-width runtime scalar
 and runtime expression count subsets including
 consecutive top-level runtime waits and waits after shipped `await`, `stage`,
-`repeat` exit, `await_all`, `await_any`, and loop-decision predecessors,
+`repeat` exit, `await_all`, `await_any`, bank load/store, and loop-decision
+predecessors,
 reaches HDL generation, exposes `actor_constants[]` and
 `actor_params[]` plus `transaction_waits[]` provenance, and rejects malformed,
 unknown, unsupported parameter, unknown-width expression, or unsupported

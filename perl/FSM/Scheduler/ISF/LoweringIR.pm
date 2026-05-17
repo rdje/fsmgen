@@ -6526,6 +6526,8 @@ sub _dynamic_wait_predecessor_condition_expr {
     return '1'
         if $kind eq 'sequential'
             || $kind eq 'contract'
+            || $kind eq 'bank_load'
+            || $kind eq 'bank_store'
             || ($kind eq 'wait' && !$state->{dynamic_wait_entry});
     return _guard_condition_expr($state->{guard})
         if $kind eq 'await';
