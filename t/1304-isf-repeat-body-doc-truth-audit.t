@@ -37,7 +37,7 @@ my @shipped_terms = qw(
 );
 
 my @deferred_terms = (
-    'domain-qualified',
+    'cross-domain',
     'multi-pending',
     'stage',
     'contract',

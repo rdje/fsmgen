@@ -1096,7 +1096,7 @@ handoff, then an optional sample state, before the repeat check:
     (=0 (-> parent_done_6))))
 ```
 
-Domain-qualified repeat-body `do`, generated-child targets not owned by the
+Cross-domain repeat-body `do`, generated-child targets not owned by the
 selected static-parameter do site, sample-before/after-do timing,
 multi-pending `await_any`,
 spawn-after-sample ordering, cross-domain spawn, and nested branch/loop forms

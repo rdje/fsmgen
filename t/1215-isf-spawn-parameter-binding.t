@@ -773,7 +773,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat do domain metadata', qr/repeat-body generated do supports only static '\(params \.\.\.\)' and '\(bind \.\.\.\)' in the generated blocking-do subset/);
+    assert_lower_rejected(<<'ISF', 'repeat do domain metadata without params', qr/repeat-body generated do domain metadata requires static '\(params \.\.\.\)' overrides in the current generated blocking-do subset/);
 (actor repeat_do_domain_metadata
   (clock-domains
     (domain default (clock clk)))

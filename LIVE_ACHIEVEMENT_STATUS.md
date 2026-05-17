@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body generated do domain metadata shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`.
+- Top-level repeat bodies may now use generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` for declared
+  same-domain ownership metadata on the static generated do instance.
+- Generated-composition metadata and schedule-report
+  `clock_domains[].child_instances` preserve the lexical repeat-do instance
+  ownership while runtime repeat re-entry remains done-gated.
+- Undeclared domains, cross-domain activation, plain generated-child local do
+  targets, nested placement, multi-pending `await_any`, and
+  sample-before/after-do timing remain fail-closed. The active frontier
+  advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`.
+
 ## 2026-05-17: R14 — ISF repeat-body generated do domain metadata selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`.
 - Selected top-level repeat-body generated blocking

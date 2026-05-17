@@ -44,8 +44,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(do child (params ...) [(bind ...)] (domain NAME))` as the next bounded
   subset. The selected contract is same-domain ownership metadata only for the
   static generated do instance, with no implied CDC or cross-domain activation.
-  The next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`; plain
-  local do targeting an already generated child, nested placement,
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.12` then shipped that same-domain
+  metadata subset, preserving generated-child instance ownership in
+  generated-composition metadata and `clock_domains[].child_instances`
+  summaries without changing done-gated repeat re-entry. The next active
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`; plain local do targeting
+  an already generated child, nested placement,
   cross-domain activation, multi-pending `await_any`,
   spawn-after-sample ordering, and sample-before/after-do timing remain
   deferred. The workflow also requires task-tree ownership before any code,

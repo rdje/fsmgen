@@ -273,24 +273,18 @@ spawn: they specialize the one lexical child instance in the generated top and d
 create per-iteration parameter values. Binding handoffs generate one set of
 parent handoff ports for the lexical static instance and are wired in the
 generated top. Repeat-body generated `do` now uses the same static
-parameter-plus-binding handoff model for its lexical generated do instance.
-Domain annotations are accepted only when they name the same declared domain
-as the owning transaction and child; cross-domain activation still needs an
-explicit CDC/protocol contract. Domain-qualified repeat-body `do`,
-repeat-body `do` targeting an already generated child without the selected
-static parameter site, sample-before/after-do timing,
-spawn-after-sample ordering, multi-pending `await_any`, cross-domain
-activation, and spawn nested under branch or loop bodies remain backlog until
-their re-entry, binding, domain, and report
-contracts are specified.
-The next selected task-tree leaf is the generated `do` same-domain metadata
-subset: top-level repeat-body
-`(do child (params ...) [(bind ...)] (domain NAME))`, where `NAME` must be
-the declared same-domain owner for the generated do instance and child. The
-selection is metadata-only: it should preserve ownership in generated-child
-composition and schedule-report clock-domain summaries without implying CDC,
-cross-domain activation, nested placement, or any new outstanding-child
-lifetime semantics.
+parameter-plus-binding handoff model for its lexical generated do instance and
+may also carry same-domain `(domain NAME)` metadata. Domain annotations are
+accepted only when they name the same declared domain as the owning
+transaction and child; cross-domain activation still needs an explicit
+CDC/protocol contract. Cross-domain repeat-body `do`, repeat-body `do`
+targeting an already generated child without the selected static parameter
+site, sample-before/after-do timing, spawn-after-sample ordering,
+multi-pending `await_any`, and spawn nested under branch or loop bodies remain
+backlog until their re-entry, binding, domain, and report contracts are
+specified.
+The next repeat-body activation task-tree leaf has not yet selected a
+post-domain-metadata implementation subset.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated do domains reuse same-domain metadata
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.12` implements only the same-domain
+  generated repeat-body `do` metadata subset. The source domain annotation is
+  preserved on the static generated do ref and flows into domain partition
+  child-instance summaries.
+- This keeps the runtime proof unchanged: the repeat body still waits on the
+  generated instance's fresh done handoff before the repeat counter check, and
+  `(domain NAME)` adds ownership/report metadata only.
+- Cross-domain activation remains fail-closed through the existing domain
+  validator because it needs an explicit CDC/protocol primitive, not a metadata
+  annotation.
 ## 2026-05-17: repeat-body generated do domains are metadata first
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.11` selects same-domain metadata as the
   next generated repeat-body `do` subset because it can reuse the ownership

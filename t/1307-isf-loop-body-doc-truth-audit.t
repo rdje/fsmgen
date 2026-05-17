@@ -62,6 +62,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/repeat(?:-body| body).*generated.*do.*domain/s,
+        "$path documents the shipped repeat-body generated do same-domain metadata subset",
+    );
+    like(
+        $content,
         qr/repeat(?:-body| body).*sample.*spawn.*sync/s,
         "$path documents the shipped repeat-body sample-after-spawn timing",
     );

@@ -429,17 +429,20 @@ top-level local blocking `(do child)` subset. Repeat-body local `do` asserts
 the local child `start`, waits for the child's fresh `done` pulse, and only
 then reaches the repeat check back-edge. The shipped repeat-body clause
 surface also includes generated blocking
-`(do child (params ...) [(bind ...)])` with static parameter overrides and
-optional input/output port bindings: it emits one generated do instance for
-the lexical repeat-body do site, applies the parameter override once in the
+`(do child (params ...) [(bind ...)] [(domain NAME)])` with static parameter
+overrides, optional input/output port bindings, and optional declared
+same-domain ownership metadata: it emits one generated do instance for the
+lexical repeat-body do site, applies the parameter override once in the
 generated top, wires binding handoff ports once for that generated instance,
-and waits for that instance's done handoff before the repeat check. Repeat-body
-do domain metadata remains deferred. The shipped repeat-body clause surface also includes
+records same-domain ownership for generated-composition and clock-domain
+report summaries when `(domain NAME)` is present, and waits for that
+instance's done handoff before the repeat check. The shipped repeat-body
+clause surface also includes
 the top-level spawn plus same-body
 `await_all` subset with optional static `(params ...)` overrides, optional
 `(bind ...)` port handoffs, and optional declared same-domain `(domain NAME)`
 ownership metadata. Single-pending repeat-body `await_any` is also shipped
-when exactly one repeat-body spawn is pending. Domain-qualified repeat-body
+when exactly one repeat-body spawn is pending. Cross-domain repeat-body
 `do`, multi-pending `await_any`, `stage`, `contract`, nested `while`, and
 nested `until` remain outside the shipped repeat-body subset. Samples may
 follow a repeat-body spawn before the
@@ -448,8 +451,9 @@ materialize in an explicit sample state before the sync state. A later
 repeat-body spawn after a pending sample remains deferred.
 The shipped repeat-body child-activation subset is
 `(do child)` for local child transactions, generated
-`(do child (params ...) [(bind ...)])` for static parameter overrides and
-optional input/output binding handoffs, plus
+`(do child (params ...) [(bind ...)] [(domain NAME)])` for static parameter
+overrides, optional input/output binding handoffs, and optional same-domain
+ownership metadata, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
 The lexical spawn name denotes one static generated child instance reused
@@ -489,11 +493,12 @@ no repeat-body `(params ...)`, `(bind ...)`, or `(domain NAME)` subclauses are
 accepted, and the child must not already be emitted as a generated child
 instance by another activation site.
 For the shipped repeat-body generated `do` subset,
-`(do child (params ...) [(bind ...)])` must carry static parameter overrides
-and may also carry input/output port bindings. Binding handoff ports are
+`(do child (params ...) [(bind ...)] [(domain NAME)])` must carry static
+parameter overrides and may also carry input/output port bindings plus
+same-domain ownership metadata. Binding handoff ports and domain metadata are
 generated once for the deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance. Repeat-body generated `do`
-still rejects `(domain NAME)` metadata.
+still rejects cross-domain activation.
 
 Example:
 
@@ -516,9 +521,12 @@ wires the input handoff `parent_worker_repeat_do_0_addr` from `req_addr` and
 the output handoff `parent_worker_repeat_do_0_data` back to `resp`. The parent
 `.fsm` records those handoffs under `-parent_worker_repeat_do_0_port_bindings`,
 and schedule JSON exposes `transaction_port_bindings[]` entries with
-`site_kind: "do"` and `instance: "parent_worker_repeat_do_0"`. The repeat loop
-still waits for `parent_worker_repeat_do_0_done` before decrementing/checking
-the repeat counter.
+`site_kind: "do"` and `instance: "parent_worker_repeat_do_0"`. If the actor
+declares clock domains, the same source may add `(domain core)` beside the
+`params`/`bind` clauses; schedule JSON then groups
+`parent_worker_repeat_do_0` under the `core` `clock_domains[].child_instances`
+summary. The repeat loop still waits for `parent_worker_repeat_do_0_done`
+before decrementing/checking the repeat counter.
 
 ## `(while cond body...)` / `(until cond body...)` — Transaction Loops
 

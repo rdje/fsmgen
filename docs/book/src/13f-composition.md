@@ -58,10 +58,11 @@ call.
 Top-level repeat bodies may also use the plain local `(do child)` form. In
 that repeat-body subset, the child remains in the parent scheduled module, the
 repeat-body `do` state waits for `child_done`, and the repeat check back-edge
-is reachable only after that fresh done pulse. Repeat-body `do` is deliberately
-narrower than top-level `do`: generated, parameterized, bound, or
-domain-qualified repeat-body `do`, repeat-body `do` targeting an already
-generated child, and sample-before/after-do timing are still backlog.
+is reachable only after that fresh done pulse. Repeat-body generated `do` may
+use static `(params ...)`, optional `(bind ...)`, and optional same-domain
+`(domain NAME)` metadata for one lexical generated instance. Cross-domain
+repeat-body `do`, repeat-body `do` targeting an already generated child, and
+sample-before/after-do timing are still backlog.
 
 Parameterized blocking `do` uses the generated child activation path instead
 of rewiring a local child body. The child is emitted as its own scheduled

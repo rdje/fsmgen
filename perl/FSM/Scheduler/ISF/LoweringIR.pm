@@ -3070,6 +3070,8 @@ sub _repeat_do_ref_from_clause {
     if ($generated_child) {
         $ref->{instance} = _generated_repeat_do_instance_name($tn, $child, $ordinal);
         $ref->{parameter_overrides} = $overrides;
+        my $domain = _activation_domain_from_clause($clause, $tn, 'repeat body');
+        $ref->{domain} = $domain if defined $domain;
         my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'repeat body');
         $ref->{port_bindings} = $port_bindings if @$port_bindings;
     }
@@ -3099,6 +3101,19 @@ sub _repeat_body_do_uses_bindings {
             && defined($subclause->[0])
             && !ref($subclause->[0]);
         return 1 if $subclause->[0] eq 'bind';
+    }
+    return 0;
+}
+
+sub _repeat_body_do_uses_domain {
+    my ($clause) = @_;
+    return 0 unless ref($clause) eq 'ARRAY' && @$clause >= 3;
+    for my $subclause (@{$clause}[2 .. $#$clause]) {
+        next unless ref($subclause) eq 'ARRAY'
+            && @$subclause
+            && defined($subclause->[0])
+            && !ref($subclause->[0]);
+        return 1 if $subclause->[0] eq 'domain';
     }
     return 0;
 }
@@ -3774,16 +3789,19 @@ sub _validate_repeat_body_spawn_subset {
                 unless $label eq 'transaction body';
             my $uses_generated_params = _repeat_body_do_uses_generated_params($body_clause);
             my $uses_bindings = _repeat_body_do_uses_bindings($body_clause);
+            my $uses_domain = _repeat_body_do_uses_domain($body_clause);
             for my $subclause (@{$body_clause}[2 .. $#$body_clause]) {
-                confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)' and '(bind ...)' in the generated blocking-do subset\n"
+                confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)', '(bind ...)', and '(domain ...)' in the generated blocking-do subset\n"
                     unless ref($subclause) eq 'ARRAY'
                         && @$subclause
                         && defined($subclause->[0])
                         && !ref($subclause->[0])
-                        && ($subclause->[0] eq 'params' || $subclause->[0] eq 'bind');
+                        && ($subclause->[0] eq 'params' || $subclause->[0] eq 'bind' || $subclause->[0] eq 'domain');
             }
             confess "Transaction '$tn': repeat-body generated do bindings require static '(params ...)' overrides in the current generated blocking-do subset\n"
                 if $uses_bindings && !$uses_generated_params;
+            confess "Transaction '$tn': repeat-body generated do domain metadata requires static '(params ...)' overrides in the current generated blocking-do subset\n"
+                if $uses_domain && !$uses_generated_params;
             confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
                 if @pending_spawns;
             confess "Transaction '$tn': repeat-body do cannot follow pending samples in the current blocking-do subset\n"
@@ -3824,18 +3842,21 @@ sub _validate_repeat_body_do_subset {
     my @subclauses = ref($clause) eq 'ARRAY' ? @{$clause}[2 .. $#$clause] : ();
     my $uses_generated_params = _repeat_body_do_uses_generated_params($clause);
     my $uses_bindings = _repeat_body_do_uses_bindings($clause);
+    my $uses_domain = _repeat_body_do_uses_domain($clause);
 
     for my $subclause (@subclauses) {
-        confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)' and '(bind ...)' in the generated blocking-do subset\n"
+        confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)', '(bind ...)', and '(domain ...)' in the generated blocking-do subset\n"
             unless ref($subclause) eq 'ARRAY'
                 && @$subclause
                 && defined($subclause->[0])
                 && !ref($subclause->[0])
-                && ($subclause->[0] eq 'params' || $subclause->[0] eq 'bind');
+                && ($subclause->[0] eq 'params' || $subclause->[0] eq 'bind' || $subclause->[0] eq 'domain');
     }
 
     confess "Transaction '$tn': repeat-body generated do bindings require static '(params ...)' overrides in the current generated blocking-do subset\n"
         if $uses_bindings && !$uses_generated_params;
+    confess "Transaction '$tn': repeat-body generated do domain metadata requires static '(params ...)' overrides in the current generated blocking-do subset\n"
+        if $uses_domain && !$uses_generated_params;
 
     confess "Transaction '$tn': repeat-body local do target '$target' is already a generated child; generated repeat-body do currently requires this do site to own static '(params ...)' overrides\n"
         if !$uses_generated_params
