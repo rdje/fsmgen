@@ -170,11 +170,20 @@ static-parameter generated, or static-parameter generated bound forms in a
 repeat directly inside a top-level `switch` branch, and it may also carry
 declared same-domain `(domain NAME)` metadata when static params are present.
 Both nested subsets keep the nested repeat check gated by the child's fresh
-done pulse. Both branch-contained bound nested generated `do` subsets still
-reject deeper branch nesting and loop-contained repeats.
+done pulse. A repeat directly inside a top-level `when` body may also contain
+exactly one generated
+`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
+same nested body reaches `(await_all done)` before the nested repeat check can
+loop. That when-contained nested spawn reuses the static generated-child
+handoff model and preserves source-order samples before the spawn or sync
+states. Both branch-contained bound nested generated `do` subsets still reject
+deeper branch nesting and loop-contained repeats. The when-contained nested
+single-spawn subset still rejects `await_any`, multiple pending nested spawns,
+switch-contained spawn nesting, and `do` while the nested spawn is pending.
 Broader outstanding-child semantics, generated or spawned nested activation
-beyond the documented top-level branch-contained generated do cases, `stage`,
-`contract`, nested `while`, and nested `until` forms remain outside the
+beyond the documented top-level branch-contained generated do cases and
+when-contained single-spawn case, `stage`, `contract`, nested `while`, and
+nested `until` forms remain outside the
 shipped repeat-body subset.
 Unsupported nested forms now fail closed during lowering instead of
 disappearing from scheduled `.fsm` output.

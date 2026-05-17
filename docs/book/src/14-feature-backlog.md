@@ -235,7 +235,8 @@ or generated-child `(do child)`, top-level when-body nested repeat
 static-parameter generated `(do child (params ...))` with optional
 `(bind ...)` handoffs, top-level switch-branch nested repeat local,
 generated-child `(do child)`, or static-parameter generated
-`(do child (params ...))` with optional `(bind ...)` handoffs, repeat-body generated blocking
+`(do child (params ...))` with optional `(bind ...)` handoffs and optional
+declared same-domain `(domain NAME)` metadata, repeat-body generated blocking
 `(do child (params ...))`, repeat-body spawn `(bind ...)`, and declared
 same-domain `(domain NAME)` metadata are shipped for the already shipped
 top-level repeat plus same-body synchronization paths. The local `do` subset
@@ -274,12 +275,14 @@ a generated child by another activation site, or may use generated blocking
 generated `when` forms own one deterministic generated do instance for the
 lexical site, apply parameter overrides once when present, may wire
 input/output binding handoffs once when `(bind ...)` is paired with static
-`(params ...)`, and reject `(domain NAME)`. A repeat directly inside a top-level
+`(params ...)`, and may carry declared same-domain `(domain NAME)` metadata
+when static params are present. A repeat directly inside a top-level
 `switch` branch may use local, plain generated-child `(do child)`, or
 static-parameter generated `(do child (params ...))` under the same
 generated-do rule and may wire input/output binding handoffs once when
-`(bind ...)` is paired with static `(params ...)`; it rejects
-`(domain NAME)`, deeper branch nesting, and loop-contained repeat activation.
+`(bind ...)` is paired with static `(params ...)`; it may also carry declared
+same-domain `(domain NAME)` metadata when static params are present. It
+rejects deeper branch nesting and loop-contained repeat activation.
 A top-level repeat body may use
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
 when the same repeat body reaches `(await_all done)` before the repeat check
@@ -316,10 +319,18 @@ Multi-pending repeat-body `await_any` is now shipped only as an observation
 point: a later same-body `await_all` must drain the same outstanding
 repeat-body spawns before the repeat check can loop, and new repeat-body
 `spawn` or `do` clauses between that observation and the drain remain out of
-scope. Cross-domain repeat-body `do`, generated/spawn nested activation beyond
-the documented branch-contained generated do cases, deeper branch repeat
-activation, loop-contained repeat activation, and broader outstanding-child
-lifetime semantics beyond the mandatory-drain subset remain backlog. The
+scope. A repeat directly inside a top-level `when` body may also use exactly
+one generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+when the same nested repeat body reaches `(await_all done)` before the nested
+repeat check can loop. That when-contained nested single-spawn subset reuses
+the static generated-child handoff model, preserves source-order samples
+before the nested spawn or sync states, and gates the nested repeat check on
+the spawned child done handoff. Cross-domain repeat-body `do`,
+generated/spawn nested activation beyond the documented branch-contained
+generated `do` cases and the when-contained single-spawn case, deeper branch
+repeat activation, loop-contained repeat activation, and broader
+outstanding-child lifetime semantics beyond the mandatory-drain subset remain
+backlog. The
 shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
@@ -350,19 +361,18 @@ do instance at that lexical site records ownership in generated-composition
 and schedule-report clock-domain metadata without implying CDC or
 cross-domain activation.
 
-Spawn nesting, cross-domain activation, deeper branch/loop nesting, and
-broader outstanding-child semantics remain backlog beyond the shipped
-branch-contained domain metadata leaves.
-
-The next bounded spawn-nesting leaf selects a repeat directly inside a
+The when-contained nested repeat spawn leaf covers a repeat directly inside a
 top-level `when` body with exactly one generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` that
 reaches same-body `(await_all done)` before the nested repeat check can loop.
-The selected subset reuses the static generated-child handoff model, keeps
-source-order samples before the spawn or sync states explicit, and keeps
+This subset is shipped. It reuses the static generated-child handoff model,
+keeps source-order samples before the spawn or sync states explicit, and keeps
+the nested repeat re-entry gated on the spawned child's done handoff.
+
 `await_any`, multiple pending nested spawns, switch-contained spawn nesting,
 `do` while a nested spawn is pending, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics out of scope.
+branch/loop nesting, and broader outstanding-child semantics remain backlog
+beyond the shipped when-contained single-spawn leaf.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

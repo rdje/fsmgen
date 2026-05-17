@@ -854,12 +854,20 @@ multi-pending `await_any` followed by same-body `await_all` before the repeat
 check can loop. Pending samples materialize in an explicit sample state at
 their source-order timing point: before a later spawn state for
 sample-before-spawn ordering, or before the sync state for sample-after-spawn
-ordering.
+ordering. A repeat directly inside a top-level `when` body also accepts
+exactly one generated `(spawn child as inst [(params ...)] [(bind ...)]
+[(domain NAME)])` when the same nested repeat body reaches `(await_all done)`
+before the nested repeat check can loop. That when-contained nested spawn
+reuses the static generated-child handoff model and preserves source-order
+samples before the nested spawn or sync states; `await_any`, multiple pending
+nested spawns, switch-contained spawn nesting, and `do` while the nested spawn
+is pending remain fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
-followed by a same-body `(await_all done)` before the repeat check can loop.
+followed by a same-body `(await_all done)` before the repeat check can loop,
+including the documented top-level when-body nested single-spawn subset.
 The local `(do child)` subset is also shipped inside a repeat directly inside
 a top-level `when` body or top-level `switch` branch. Those top-level nested
 repeat subsets also accept plain generated-child `(do child)` for a target

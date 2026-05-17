@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained repeat spawn await_all reuses static child handoffs
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.42` implements only the first nested
+  spawn subset: one generated spawn inside a repeat that is directly inside a
+  top-level `when` body, with same-body `(await_all done)` before the nested
+  repeat check can loop.
+- No new generated-top mechanism was needed. The selected shape reuses the
+  existing repeat-body spawn metadata, static parameter override flow,
+  binding handoff wiring, declared same-domain metadata, and source-order
+  sample-state lowering.
+- The validator deliberately keeps the lifetime proof narrow: a second
+  pending nested spawn, nested `await_any`, switch-contained spawn nesting,
+  and `do` while a nested spawn is pending fail closed until each has a
+  selected contract.
 ## 2026-05-17: when-contained repeat spawn await_all is the first spawn-nesting subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.41` selects exactly one generated
   `spawn` inside a repeat that is directly inside a top-level `when` body,
