@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF when-contained repeat await_any drain shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.54`.
+- Top-level `when` bodies may now contain nested repeats with two or more
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites, a multi-pending `(await_any done)` observation point, and a mandatory
+  later same-body `(await_all done)` drain before the nested repeat check can
+  loop.
+- Lowering keeps the outstanding generated child done set live after the
+  `await_any` observation point, preserves source-order samples before the
+  drain, and rejects new nested `spawn` or `do` clauses before the drain.
+- Switch-contained multi-pending `await_any`, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  fail-closed.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  task tree, roadmap board, live docs, and mdBook.
 ### R14 — ISF when-contained repeat await_any drain selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.53`.
 - Selected top-level `when` bodies containing nested repeats with two or more

@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: when-contained repeat await_any drain shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.54`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts multi-pending `(await_any done)` inside a repeat that is directly
+  inside a top-level `when` body only when a later same-body `(await_all done)`
+  drains the same outstanding generated children before the nested repeat
+  check can loop.
+- The outstanding generated child done set remains live after the
+  observation-point `await_any`; source-order samples before the drain remain
+  explicit; new nested `spawn` or `do` clauses before the drain are rejected.
+- Switch-contained multi-pending `await_any`, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  fail-closed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.55`, which must select the next bounded
+  repeat-body child activation subset before code.
+- Workflow note: push cadence remains every 30 unpushed commits unless the
+  user explicitly requests an earlier push.
 ## 2026-05-17: when-contained repeat await_any drain selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.53`.
 - The active R14 task tree now selects a repeat directly inside a top-level

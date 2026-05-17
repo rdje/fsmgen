@@ -176,14 +176,16 @@ one or more generated
 when the same nested body reaches `(await_all done)` before the nested repeat
 check can loop. A repeat directly inside a top-level `switch` branch may
 contain the same multiple generated-spawn plus same-body `await_all` subset.
-Both branch-contained paths may use single-pending `(await_any done)` only
-when exactly one generated child is pending. Those branch-contained nested
-spawns reuse the static generated-child handoff model and preserve
-source-order samples before the spawn or sync states. Both
+Both branch-contained paths may use single-pending `(await_any done)` directly
+when exactly one generated child is pending. The when-contained path may also
+use multi-pending `(await_any done)` as an observation point only when a later
+same-body `(await_all done)` drains the same outstanding generated children
+before the nested repeat check can loop. Those branch-contained nested spawns
+reuse the static generated-child handoff model and preserve source-order
+samples before the spawn or sync states. Both
 branch-contained bound nested generated `do` subsets still reject deeper
-branch nesting and loop-contained repeats. Nested `await_any` for multiple
-pending generated children and `do` while a nested spawn is pending remain
-fail-closed.
+branch nesting and loop-contained repeats. Switch-contained multi-pending
+`await_any` and `do` while a nested spawn is pending remain fail-closed.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and
 branch-contained spawned cases, `stage`, `contract`, nested `while`, and
