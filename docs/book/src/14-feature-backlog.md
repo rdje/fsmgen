@@ -290,10 +290,13 @@ Multi-pending repeat-body `await_any` is now shipped only as an observation
 point: a later same-body `await_all` must drain the same outstanding
 repeat-body spawns before the repeat check can loop, and new repeat-body
 `spawn` or `do` clauses between that observation and the drain remain out of
-scope. Cross-domain repeat-body `do` and spawn nested under branch or loop
-bodies remain backlog until their re-entry, binding, domain, and report
-contracts are specified. Broader outstanding-child lifetime semantics beyond
-the mandatory-drain subset also remain backlog.
+scope. The next bounded nested-placement leaf selects a repeat inside a
+top-level `when` body with local repeat-body `(do child)` only: the child must
+stay in the parent scheduled module, and the nested repeat check must remain
+unreachable until the child's fresh done pulse has been observed. Cross-domain
+repeat-body `do`, generated/spawn nested activation, switch/loop nesting, and
+broader outstanding-child lifetime semantics beyond the mandatory-drain subset
+remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

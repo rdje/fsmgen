@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained repeat local do is the next nested subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.21` selects the first nested-placement
+  repeat-body activation subset: a top-level `when` body containing a repeat
+  whose body uses local `(do child)`.
+- This is narrower than generated/spawn nested activation because local `do`
+  already has a parent-module start/done proof, and the nested repeat can keep
+  its own repeat check unreachable until the child done pulse is observed.
+- Switch-contained repeats, nested loop bodies, generated child activation,
+  cross-domain activation, and broader outstanding-child lifetime semantics
+  still need separate contracts.
 ## 2026-05-17: repeat-body multi-pending await_any keeps pending done ports
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` implements the selected drain
   contract by leaving the repeat-body spawned done-port set live after a

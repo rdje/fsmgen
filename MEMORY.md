@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: when-contained repeat local do selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`.
+- The active R14 task tree now selects top-level `when` bodies containing
+  `(repeat COUNT ... (do child) ...)` as the next bounded nested-placement
+  implementation subset.
+- The selected contract is local child activation only: the child transaction
+  must remain in the parent scheduled module, and the nested repeat check must
+  remain unreachable until the child's fresh done pulse has been observed.
+- Repeat-body spawn, generated repeat-body `do`, bind/domain metadata,
+  cross-domain activation, `switch`/`while`/`until` nesting, and broader
+  outstanding-child semantics remain deferred for this selected subset.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body multi-pending await_any drain shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

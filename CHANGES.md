@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF when-contained repeat local do selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`.
+- Selected top-level `when` bodies containing nested repeats with local
+  repeat-body `(do child)` as the next bounded nested-placement subset.
+- The selected surface keeps the child local to the parent scheduled module and
+  keeps the nested repeat check gated by the child's fresh done pulse.
+- Repeat-body spawn, generated repeat-body `do`, bind/domain metadata,
+  switch/loop nesting, cross-domain activation, and broader outstanding-child
+  semantics remain deferred.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
 ### R14 — ISF repeat-body multi-pending await_any drain shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`.
 - Top-level repeat bodies now accept multi-pending `(await_any done)` after

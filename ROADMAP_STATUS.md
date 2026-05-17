@@ -70,9 +70,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.20` then shipped that drain subset by
   keeping the outstanding spawned done-port set live after multi-pending
   `await_any` until the mandatory same-body `await_all` drain. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`; nested placement,
-  cross-domain activation, and broader outstanding-child semantics remain
-  deferred. The workflow also requires
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.21` then selected top-level `when` bodies
+  containing nested repeats with local repeat-body `(do child)` as the next
+  bounded nested-placement subset. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`; generated nested repeat activation,
+  spawn nesting, switch/loop nesting, cross-domain activation, and broader
+  outstanding-child semantics remain deferred. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier
