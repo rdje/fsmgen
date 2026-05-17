@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body do sample timing selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`.
+- The active R14 task tree now selects top-level repeat-body
+  sample-before/after-do timing as the next bounded implementation subset.
+- The selected contract allows pending samples immediately before or after
+  shipped repeat-body local or generated do states. Samples before do should
+  materialize before the do state; samples after do should materialize after
+  the do state's fresh done guard and before the repeat check.
+- Nested placement, cross-domain activation, multi-pending `await_any`, and
+  broader outstanding-child semantics remain deferred.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body generated-child do shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

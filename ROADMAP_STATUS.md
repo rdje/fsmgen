@@ -56,11 +56,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   then selected repeat-body plain `(do child)` targeting an already generated
   child as the next bounded subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`
   then shipped that subset with a deterministic generated do instance for the
-  lexical repeat-body site and done-gated repeat re-entry. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`; nested placement,
-  cross-domain activation, multi-pending `await_any`, sample-before/after-do
-  timing, and broader outstanding-child semantics remain deferred. The
-  workflow also requires task-tree ownership before any
+  lexical repeat-body site and done-gated repeat re-entry.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` then selected repeat-body
+  sample-before/after-do timing as the next bounded subset. The next active
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`; nested placement,
+  cross-domain activation, multi-pending `await_any`, and broader
+  outstanding-child semantics remain deferred. The workflow also requires
+  task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier
   push.

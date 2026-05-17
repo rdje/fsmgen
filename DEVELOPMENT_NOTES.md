@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body do sample timing follows existing drain points
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.17` selects sample timing around
+  repeat-body `do` because the repeat lowering already has explicit sample
+  drain points before blocking child activation and before the repeat check.
+- The intended implementation should mirror the now-shipped spawn sample
+  ordering: samples before do materialize before the do state, while samples
+  after do materialize after the do state observes fresh child done and before
+  the repeat counter check.
+- The subset stays independent from nested placement, cross-domain activation,
+  multi-pending `await_any`, and broader outstanding-child lifetime policy.
 ## 2026-05-17: repeat-body generated-child do mirrors top-level fallback
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.16` implements the same core fallback that
   top-level plain `do` already uses: when the target transaction is generated
