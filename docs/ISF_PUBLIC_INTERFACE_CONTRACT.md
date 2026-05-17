@@ -798,6 +798,8 @@ The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, the top-level
 local blocking `(do child)` subset, and top-level generated blocking
+`(do child)` when the target child is already emitted as a generated child by
+another activation site, plus
 `(do child (params ...) [(bind ...)] [(domain NAME)])` with static parameter
 overrides, optional input/output port bindings, and optional declared
 same-domain ownership metadata. Local repeat-body `do` starts a child
@@ -808,9 +810,8 @@ applies the parameter override once in the generated top, wires optional
 binding handoff ports once for that generated instance, records same-domain
 ownership for generated-composition and clock-domain report summaries when
 `(domain NAME)` is present, and waits for that generated instance's done
-handoff before the repeat check. Repeat-body `do` targeting an already
-generated child without this selected static parameter site, cross-domain
-repeat-body `do`, and sample-before/after-do timing remain deferred. The shipped repeat-body clause surface
+handoff before the repeat check. Cross-domain repeat-body `do` and
+sample-before/after-do timing remain deferred. The shipped repeat-body clause surface
 also includes the top-level spawn plus same-body `await_all` subset with
 optional static `(params ...)` overrides, optional `(bind ...)` port handoffs,
 and optional declared same-domain `(domain NAME)` ownership metadata.
@@ -825,16 +826,17 @@ state at their source-order timing point: before a later spawn state for
 sample-before-spawn ordering, or before the sync state for sample-after-spawn
 ordering.
 The shipped repeat-body child-activation subset is
-local `(do child)`, generated
+local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
 Local repeat-body `do` reuses the local child start/done pulse contract.
 Generated repeat-body `do` reuses the generated child start/done handoff
-contract with a deterministic `{parent}_{child}_repeat_do_{ordinal}` instance,
-reuses the generated-child input/output binding handoff contract when
-`(bind ...)` is present, and reuses same-domain ownership metadata when
-`(domain NAME)` is present.
+contract with a deterministic `{parent}_{child}_repeat_do_{ordinal}` instance;
+plain generated-child repeat `do` uses that handoff without local overrides,
+while parameterized generated repeat `do` reuses the generated-child
+input/output binding handoff contract when `(bind ...)` is present and reuses
+same-domain ownership metadata when `(domain NAME)` is present.
 Repeat-body spawn reuses one static generated child instance across
 iterations. Optional parameter overrides specialize that instance once in the
 generated top, optional input/output bindings create generated handoff ports
@@ -2071,7 +2073,8 @@ These are not stable public interfaces yet:
   samples, and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public except for the documented
   top-level repeat-body local `(do child)` subset, top-level repeat-body
-  generated `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and top-level
+  generated-child `(do child)` subset, top-level repeat-body generated
+  `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and top-level
   repeat-body spawn
   plus optional static `(params ...)`, optional `(bind ...)` port handoffs,
   optional declared same-domain `(domain NAME)` metadata, same-body

@@ -753,6 +753,57 @@ ISF
     );
 };
 
+subtest 'repeat body plain do targets already generated child through generated instance' => sub {
+    my $source = <<'ISF';
+(actor repeat_generated_child_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker))
+    (spawn worker as w0)
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 2, 'repeat plain do plus later spawn contribute generated instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{parent_worker_repeat_do_0}, 'repeat-body generated-child do instance is recorded');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'repeat-body generated-child do preserves do activation provenance');
+    is($instances{parent_worker_repeat_do_0}{child}, 'worker',
+        'repeat-body generated-child do targets the generated child transaction');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [],
+        'repeat-body generated-child do does not require local parameter overrides');
+    ok($instances{w0}, 'later spawn instance still exists');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'repeat_generated_child_do.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'repeat_generated_child_do_top.fsm'};
+
+    ok(defined($parent_fsm), 'repeat generated-child do parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once');
+    ok(defined($top_fsm), 'repeat generated-child do top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_repeat_check_\d+\)/,
+        'repeat-body generated-child do starts the generated instance and gates the repeat check on done');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'later spawn still starts its own static instance');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker(?:\s|\))/,
+        'generated top instantiates the repeat-body generated-child do child once');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top also instantiates the later spawned child');
+};
+
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_lower_rejected(<<'ISF', 'repeat spawn without await_all', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
 (actor repeat_spawn_without_await_all
@@ -841,21 +892,6 @@ ISF
     (complete done))
   (transaction worker
     (domain default)
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'repeat do generated child target', qr/repeat-body local do target 'worker' is already a generated child; generated repeat-body do currently requires this do site to own static '\(params \.\.\.\)' overrides/);
-(actor repeat_do_generated_target
-  (clock clk)
-  (interface (input start) (input loops (width 3)) (output done))
-  (transaction parent
-    (on start)
-    (repeat loops
-      (do worker))
-    (spawn worker as w0)
-    (await_all done)
-    (complete done))
-  (transaction worker
     (complete done)))
 ISF
 

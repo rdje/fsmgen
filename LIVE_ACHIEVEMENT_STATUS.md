@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body generated-child do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`.
+- Top-level repeat bodies may now use plain `(do child)` when `child` is
+  already emitted as a generated child by another activation site.
+- The repeat-body do site emits one deterministic generated child activation
+  instance and waits for that instance's fresh done handoff before the repeat
+  check can loop.
+- Sample-before/after-do timing, nested placement, cross-domain activation,
+  multi-pending `await_any`, and broader outstanding-child semantics remain
+  fail-closed. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`.
+
 ## 2026-05-17: R14 — ISF repeat-body generated-child do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`.
 - Selected top-level repeat-body plain `(do child)` targeting an already

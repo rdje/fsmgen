@@ -54,11 +54,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   before the spawn state, and same-body `await_all` or single-pending
   `await_any` still gates repeat re-entry. `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`
   then selected repeat-body plain `(do child)` targeting an already generated
-  child as the next bounded subset. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`; nested placement, cross-domain
-  activation, multi-pending `await_any`, sample-before/after-do timing, and
-  broader outstanding-child semantics remain deferred. The workflow also
-  requires task-tree ownership before any
+  child as the next bounded subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`
+  then shipped that subset with a deterministic generated do instance for the
+  lexical repeat-body site and done-gated repeat re-entry. The next active
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`; nested placement,
+  cross-domain activation, multi-pending `await_any`, sample-before/after-do
+  timing, and broader outstanding-child semantics remain deferred. The
+  workflow also requires task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier
   push.

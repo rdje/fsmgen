@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body generated-child do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts top-level repeat-body plain `(do child)` when `child` is already
+  emitted as a generated child by another activation site.
+- The lowerer emits one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` generated do instance for the
+  lexical repeat-body do site, starts that instance from the repeat body, and
+  gates the repeat check on that instance's fresh done handoff.
+- Local parameter, binding, or domain subclauses are not required for this
+  generated-child fallback. Sample-before/after-do timing, nested placement,
+  cross-domain activation, multi-pending `await_any`, and broader
+  outstanding-child semantics remain fail-closed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body generated-child do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`.
 - The active R14 task tree now selects top-level repeat-body plain

@@ -277,17 +277,14 @@ parameter-plus-binding handoff model for its lexical generated do instance and
 may also carry same-domain `(domain NAME)` metadata. Domain annotations are
 accepted only when they name the same declared domain as the owning
 transaction and child; cross-domain activation still needs an explicit
-CDC/protocol contract. Cross-domain repeat-body `do`, repeat-body `do`
-targeting an already generated child without the selected generated-child do
-site, sample-before/after-do timing, multi-pending `await_any`, and spawn
-nested under branch or loop bodies remain backlog until their re-entry,
-binding, domain, and report contracts are specified.
-The next repeat-body activation task-tree leaf has selected top-level plain
-`(do child)` targeting an already generated child as the next bounded
-implementation subset. That selected subset should create one deterministic
-generated do instance for the lexical repeat-body do site without requiring
-`(params ...)`, `(bind ...)`, or `(domain NAME)` on that site, then gate
-repeat re-entry on that instance's fresh done handoff.
+CDC/protocol contract. Plain repeat-body generated-child `(do child)` is now
+shipped for targets already generated elsewhere: it creates one deterministic
+generated do instance for the lexical repeat-body do site without requiring `(params ...)`,
+`(bind ...)`, or `(domain NAME)` on that site, then gates repeat re-entry on
+that instance's fresh done handoff. Cross-domain repeat-body `do`,
+sample-before/after-do timing, multi-pending `await_any`, and spawn nested
+under branch or loop bodies remain backlog until their re-entry, binding,
+domain, and report contracts are specified.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

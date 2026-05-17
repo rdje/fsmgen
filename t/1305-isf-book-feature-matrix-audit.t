@@ -123,6 +123,7 @@ my @required_examples = (
     'top-level contract arm states',
     'loop decision states',
     'top-level repeat-body local blocking do',
+    'top-level repeat-body generated-child blocking do',
     'top-level repeat-body generated blocking do with static params, bind handoffs, and same-domain domain metadata',
     'samples before or after spawn before same-body sync',
     'top-level repeat-body spawn with optional static params, optional bind handoffs, optional same-domain domain metadata, samples before or after spawn before same-body sync, same-body await_all, and single-pending same-body await_any',

@@ -741,7 +741,7 @@ sub _build_domain_partition($self, $actor) {
             my $top_level_do = $keyword eq 'do' && ($child_ref->{label} // '') eq 'transaction body';
             my $repeat_body_generated_do = $keyword eq 'do'
                 && ($child_ref->{label} // '') eq 'repeat body'
-                && _repeat_body_do_uses_generated_params($clause);
+                && _repeat_body_do_is_generated_activation($clause, $target, \%generated_children);
             my $include_instance = $keyword eq 'spawn'
                 || ($top_level_do && $generated_children{$target})
                 || $repeat_body_generated_do;
@@ -1356,11 +1356,11 @@ sub _validate_child_transaction_refs($self, $actor) {
         my $keyword  = $ref->{keyword};
         my $target   = $ref->{target};
         my $label    = $ref->{label};
-        _validate_repeat_body_do_subset($ref, \%generated_children);
+        _validate_repeat_body_do_subset($ref);
 
         my $repeat_body_generated_do = $keyword eq 'do'
             && $label eq 'repeat body'
-            && _repeat_body_do_uses_generated_params($clause);
+            && _repeat_body_do_is_generated_activation($clause, $target, \%generated_children);
         my $generated_activation = $keyword eq 'spawn'
             || ($keyword eq 'do' && $label eq 'transaction body' && $generated_children{$target})
             || $repeat_body_generated_do;
@@ -1512,7 +1512,7 @@ sub _transaction_port_binding_metadata {
             }
             my $repeat_body_generated_do = $keyword eq 'do'
                 && $label eq 'repeat body'
-                && _repeat_body_do_uses_generated_params($clause);
+                && _repeat_body_do_is_generated_activation($clause, $target, \%generated_children);
 
             my $bindings = _activation_bindings_from_clause($clause, $owner, $label);
             next unless @$bindings;
@@ -3057,10 +3057,13 @@ sub _do_ref_from_clause {
 }
 
 sub _repeat_do_ref_from_clause {
-    my ($clause, $tn, $ordinal, $constant_values, $actor) = @_;
+    my ($clause, $tn, $ordinal, $constant_values, $actor, $generated_children) = @_;
     my $child = $clause->[1];
     my $overrides = _do_parameter_overrides($clause, $tn, 'repeat body', $constant_values, $actor);
-    my $generated_child = @$overrides ? 1 : 0;
+    my $generated_child = (
+        @$overrides
+            || (ref($generated_children) eq 'HASH' && $generated_children->{$child})
+    ) ? 1 : 0;
     my $ref = {
         child           => $child,
         activation_kind => 'do',
@@ -3077,6 +3080,16 @@ sub _repeat_do_ref_from_clause {
     }
 
     return $ref;
+}
+
+sub _repeat_body_do_is_generated_activation {
+    my ($clause, $target, $generated_children) = @_;
+    return 1 if _repeat_body_do_uses_generated_params($clause);
+    return 1 if ref($generated_children) eq 'HASH'
+        && defined($target)
+        && !ref($target)
+        && $generated_children->{$target};
+    return 0;
 }
 
 sub _repeat_body_do_uses_generated_params {
@@ -3829,14 +3842,13 @@ sub _validate_repeat_body_spawn_subset {
 }
 
 sub _validate_repeat_body_do_subset {
-    my ($ref, $generated_children) = @_;
+    my ($ref) = @_;
     return 1 unless ref($ref) eq 'HASH'
         && ($ref->{keyword} // '') eq 'do'
         && ($ref->{label} // '') eq 'repeat body';
 
     my $tn = $ref->{tx_name};
     my $clause = $ref->{clause};
-    my $target = $ref->{target};
     my @subclauses = ref($clause) eq 'ARRAY' ? @{$clause}[2 .. $#$clause] : ();
     my $uses_generated_params = _repeat_body_do_uses_generated_params($clause);
     my $uses_bindings = _repeat_body_do_uses_bindings($clause);
@@ -3855,11 +3867,6 @@ sub _validate_repeat_body_do_subset {
         if $uses_bindings && !$uses_generated_params;
     confess "Transaction '$tn': repeat-body generated do domain metadata requires static '(params ...)' overrides in the current generated blocking-do subset\n"
         if $uses_domain && !$uses_generated_params;
-
-    confess "Transaction '$tn': repeat-body local do target '$target' is already a generated child; generated repeat-body do currently requires this do site to own static '(params ...)' overrides\n"
-        if !$uses_generated_params
-            && ref($generated_children) eq 'HASH'
-            && $generated_children->{$target};
 
     return 1;
 }
@@ -5148,7 +5155,7 @@ sub _ir_repeat {
         elsif($bk eq'do'){
             _push_sample_state(\@s,$tn,\@lp,$ir);
             my $repeat_do_ordinal = ref($repeat_do_ordinal_ref) ? $$repeat_do_ordinal_ref++ : 0;
-            my $do_ref = _repeat_do_ref_from_clause($bc,$tn,$repeat_do_ordinal,$constant_values || {},$actor);
+            my $do_ref = _repeat_do_ref_from_clause($bc,$tn,$repeat_do_ordinal,$constant_values || {},$actor,$generated_children);
             push @$spawn_refs, _clone_isf_value($do_ref)
                 if ref($spawn_refs) eq 'ARRAY' && $do_ref->{generated_child};
             push @s,_ir_do($bc,$tn,$$ir++,$do_ref,'repeat body');

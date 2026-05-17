@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body generated-child do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`.
+- Top-level repeat bodies now accept plain `(do child)` when `child` is
+  already emitted as a generated child by another activation site.
+- The lowerer emits one deterministic
+  `{parent}_{child}_repeat_do_{ordinal}` generated activation instance for the
+  lexical repeat-body do site, starts that instance, and waits for its fresh
+  done handoff before the repeat check can loop.
+- This generated-child fallback does not require local `(params ...)`,
+  `(bind ...)`, or `(domain NAME)` subclauses on the repeat-body do site.
+  Sample-before/after-do timing, nested placement, cross-domain activation,
+  multi-pending `await_any`, and broader outstanding-child semantics remain
+  fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/lowering/backlog/feature-matrix chapters, roadmap
+  board, and task tree.
 ### R14 — ISF repeat-body generated-child do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`.
 - Selected top-level repeat-body plain `(do child)` targeting an already

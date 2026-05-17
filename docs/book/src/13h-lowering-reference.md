@@ -1023,11 +1023,12 @@ known interface or sample-derived width, and unknown count forms fall back to
 8 bits. Switch-nested repeats register the same transaction counter at the
 widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
-data operations, local blocking `(do child)`, and the first generated
-child-activation subset: spawn with optional static `(params ...)`, optional
-`(bind ...)` handoffs, and optional declared same-domain `(domain NAME)`
-ownership metadata followed by same-body `await_all`, or by same-body
-`await_any` when exactly one spawn is pending.
+data operations, local blocking `(do child)`, generated blocking `do` for
+already generated child targets or static parameterized do sites, and the
+generated child-activation spawn subset with optional static `(params ...)`,
+optional `(bind ...)` handoffs, and optional declared same-domain
+`(domain NAME)` ownership metadata followed by same-body `await_all`, or by
+same-body `await_any` when exactly one spawn is pending.
 
 `N` is a counter load value, not a structural replication count. A dynamic
 scalar count is therefore compatible with the hardware model when its width is
@@ -1059,8 +1060,9 @@ the repeat check only after the child done pulse:
     (-> parent_repeat_check_3)))
 ```
 
-Repeat-body generated `do` is shipped only for static parameter overrides. It
-emits one generated child instance for the lexical do site, applies the
+Repeat-body generated `do` is shipped when the plain do target is already a
+generated child, or when the do site carries static parameter overrides. It
+emits one generated child instance for the lexical do site, applies any
 override once in the generated top, and waits for that instance's done handoff
 before the repeat check:
 
@@ -1072,6 +1074,19 @@ before the repeat check:
 
 (?fsmc:parent_worker_repeat_do_0 worker
   (params (WIDTH 16)))
+```
+
+When the generated form is selected only because the target child is already
+generated elsewhere, the parent still uses the same generated handoff, but the
+generated-top instance has no local parameter override:
+
+```lisp
+(parent_do_2
+  (= (parent_worker_repeat_do_0_start> 1))
+  (<parent_worker_repeat_do_0_done
+    (-> parent_repeat_check_3)))
+
+(?fsmc:parent_worker_repeat_do_0 worker)
 ```
 
 Representative repeat-body spawn lowering uses the static generated instance
@@ -1096,10 +1111,9 @@ handoff, then an optional sample state, before the repeat check:
     (=0 (-> parent_done_6))))
 ```
 
-Cross-domain repeat-body `do`, generated-child targets not owned by the
-selected static-parameter do site, sample-before/after-do timing,
-multi-pending `await_any`, cross-domain spawn, and nested branch/loop forms
-remain fail-closed until their re-entry and report behavior is specified.
+Cross-domain repeat-body `do`, sample-before/after-do timing, multi-pending
+`await_any`, cross-domain spawn, and nested branch/loop forms remain
+fail-closed until their re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

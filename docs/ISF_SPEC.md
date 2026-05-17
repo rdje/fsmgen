@@ -1543,18 +1543,18 @@ Current lowering:
   child transaction remains local to the scheduled parent. The repeat-body
   `do` state asserts `child_start`, waits for the child's fresh `child_done`
   pulse, and only then reaches the repeat check back-edge. Top-level repeat
-  bodies also accept generated blocking
+  bodies also accept generated blocking `(do child)` when the target child is
+  already emitted as a generated child by another activation site, and
   `(do child (params ...) [(bind ...)] [(domain NAME)])` with static
   parameter overrides, optional input/output port bindings, and optional
-  declared same-domain ownership metadata; the generated top emits one
+  declared same-domain ownership metadata. The generated top emits one
   generated do instance for the lexical do site, applies the parameter
-  override once, wires the binding handoff ports once for that generated
-  instance, records same-domain ownership for generated composition and
-  clock-domain report summaries when `(domain NAME)` is present, and the do
-  state waits for that generated instance's fresh done pulse before the repeat
-  check. Repeat-body `do` targeting an already generated child without this
-  selected static parameter site, cross-domain repeat-body `do`, and
-  sample-before/after-do timing remain deferred. Top-level repeat bodies also
+  override once when present, wires binding handoff ports once when present,
+  records same-domain ownership for generated composition and clock-domain
+  report summaries when `(domain NAME)` is present, and the do state waits for
+  that generated instance's fresh done pulse before the repeat check.
+  Cross-domain repeat-body `do` and sample-before/after-do timing remain
+  deferred. Top-level repeat bodies also
   accept the generated spawn subset:
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses followed by a same-body `(await_all done)` before the repeat check
@@ -1919,6 +1919,7 @@ nested `when`, and shipped `(wait N)` clauses. They continue to reject `do`,
 bodies, and loops nested under `when`/`switch`/`repeat` until re-entry, child
 lifetime, and report semantics are specified for those combinations. Top-level
 repeat-body local `(do child)`, repeat-body generated blocking
+`(do child)` for already generated child targets,
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, and repeat-body spawn
 followed by same-body `await_all` or single-pending same-body `await_any` are
 the only shipped loop-body child-activation subsets, and they apply only to
@@ -1926,13 +1927,13 @@ the only shipped loop-body child-activation subsets, and they apply only to
 Repeat-body spawn may carry the same static `(params ...)` overrides and
 `(bind ...)` port handoffs as top-level spawn; those overrides and handoff
 ports specialize the single lexical child instance and are not per-iteration
-runtime values or per-iteration hardware. Repeat-body generated `do` carries
-static `(params ...)` overrides and may also carry `(bind ...)` input/output
-handoffs and same-domain `(domain NAME)` ownership metadata; those handoff
-ports and domain summaries specialize the single lexical generated do instance
-and are not per-iteration runtime values or per-iteration hardware. It still
-rejects cross-domain activation, nested placement, and sample-before/after-do
-timing.
+runtime values or per-iteration hardware. Repeat-body generated `do` may be
+selected either by an already generated child target or by static
+`(params ...)` overrides; when it has `(bind ...)` input/output handoffs and
+same-domain `(domain NAME)` ownership metadata, those handoff ports and domain
+summaries specialize the single lexical generated do instance and are not
+per-iteration runtime values or per-iteration hardware. It still rejects
+cross-domain activation, nested placement, and sample-before/after-do timing.
 
 Dynamic loops are ordinary persistent hardware schedule regions, not software
 processes that appear or die. They may run for data-dependent or unbounded
@@ -3243,7 +3244,8 @@ Focused tests:
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,
-  the top-level repeat-body generated
+  the top-level repeat-body generated-child `(do child)` subset, the top-level
+  repeat-body generated
   `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and the
   top-level repeat-body spawn plus same-body `await_all` or
   single-pending `await_any` subset with optional static `(params ...)`,

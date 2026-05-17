@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated-child do mirrors top-level fallback
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.16` implements the same core fallback that
+  top-level plain `do` already uses: when the target transaction is generated
+  elsewhere, the parent must activate a generated child instance instead of
+  referencing a local child body that is no longer present.
+- The repeat-specific part is naming and re-entry proof. The lexical
+  repeat-body do site owns one `{parent}_{child}_repeat_do_{ordinal}`
+  generated instance, and the repeat check remains unreachable until that
+  instance's fresh done handoff is observed.
+- The slice deliberately does not relax timing around samples or add
+  cross-domain/nested semantics. Those need separate source-order and lifetime
+  contracts.
 ## 2026-05-17: repeat-body generated-child do is the next bounded subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.15` selects plain repeat-body
   `(do child)` when the target child is already emitted as a generated child

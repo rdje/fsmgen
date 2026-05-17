@@ -843,16 +843,17 @@ Rules:
   child transaction remains local to the scheduled parent; the do state starts
   the child and waits for its fresh `child_done` pulse before the repeat check
   can loop. Top-level repeat bodies also accept generated blocking
+  `(do child)` when the target child is already emitted as a generated child
+  by another activation site, and
   `(do child (params ...) [(bind ...)] [(domain NAME)])` with static
   parameter overrides, optional input/output port bindings, and optional
-  declared same-domain ownership metadata; the generated top emits one
+  declared same-domain ownership metadata. The generated top emits one
   generated do instance for the lexical do site, applies the parameter
-  override once, wires binding handoff ports once for that generated instance,
+  override once when present, wires binding handoff ports once when present,
   and records same-domain ownership for generated-composition and
   clock-domain report summaries when `(domain NAME)` is present.
-  Repeat-body `do` targeting an already generated child without this selected
-  static parameter site, cross-domain repeat-body `do`, and
-  sample-before/after-do timing remain deferred.
+  Cross-domain repeat-body `do` and sample-before/after-do timing remain
+  deferred.
   Top-level repeat bodies also accept
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses when the same repeat body reaches `(await_all done)` before the

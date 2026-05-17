@@ -132,19 +132,20 @@ supported inside top-level `when` and `switch` bodies. The shipped repeat-body
 clause surface is named drive calls, `await`, `sample`, `update`, `set`,
 `shift_left`, `shift_right`, `assemble`, `extract`, actor-owned bank `store`
 and `load`, shipped `wait` clauses, top-level repeat-body local `(do child)`,
-top-level repeat-body generated `(do child (params ...))` with static
-parameter overrides, and top-level repeat-body spawn with optional static
-`(params ...)`, optional `(bind ...)`, and optional declared same-domain
+top-level repeat-body generated `(do child)` for already generated child
+targets, top-level repeat-body generated `(do child (params ...))` with
+static parameter overrides, and top-level repeat-body spawn with optional
+static `(params ...)`, optional `(bind ...)`, and optional declared same-domain
 `(domain NAME)` metadata followed by same-body `await_all` or by same-body
 `await_any` when exactly one spawn is pending. Samples may appear before or
 after repeat-body spawn before that same-body sync; they lower to an explicit
 sample state before the later spawn state or before `await_all` /
 single-pending `await_any`, matching source order. Repeat-body generated `do`
-accepts static `(params ...)` overrides, optional `(bind ...)` input/output
-handoffs, and optional same-domain `(domain NAME)` metadata; those handoffs
-and domain summaries are wired/recorded once for the lexical generated do
-instance. Cross-domain repeat-body `do`, generated-child targets not owned by
-that parameterized do site, and sample-before/after-do timing remain deferred. The multi-pending `await_any`,
+accepts already generated child targets or static `(params ...)` overrides,
+optional `(bind ...)` input/output handoffs, and optional same-domain
+`(domain NAME)` metadata; those handoffs and domain summaries are
+wired/recorded once for the lexical generated do instance. Cross-domain
+repeat-body `do` and sample-before/after-do timing remain deferred. The multi-pending `await_any`,
 `stage`, `contract`, nested `while`, and nested
 `until` forms remain outside the shipped repeat-body subset.
 Unsupported nested forms now fail closed during lowering instead of
