@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF spawn-in-repeat first contract selected
+- Completed `ISF-SPAWN-IN-REPEAT.1`.
+- Created the active `ISF-SPAWN-IN-REPEAT` task tree and selected the first
+  safe implementation subset for repeat-body child activation.
+- The selected subset is top-level repeat bodies containing plain
+  `(spawn child as inst)` clauses whose pending done ports are consumed by a
+  same-body `(await_all done)` before the repeat check can loop.
+- `await_any`, repeat-body `do`, activation parameters, activation bindings,
+  activation domain overrides, and nested branch/loop repeat-body spawn forms
+  remain deferred until their re-entry and report contracts are specified.
+- Synchronized the mdBook feature backlog, roadmap board, README task index,
+  and task tree.
+- Validation: `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF phase successor zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with

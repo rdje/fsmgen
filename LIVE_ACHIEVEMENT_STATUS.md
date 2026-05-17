@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF spawn-in-repeat first contract selected
+- Completed R14 task-tree slice:
+  `ISF-SPAWN-IN-REPEAT.1` in
+  [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md).
+- The `ISF-SPAWN-IN-REPEAT` tree is active. Current frontier:
+  `ISF-SPAWN-IN-REPEAT.2`, implementing the documented first subset.
+- The first implementation subset is top-level repeat bodies containing plain
+  `(spawn child as inst)` clauses whose pending done ports are consumed by a
+  same-body `(await_all done)` before the repeat check can loop.
+- The lexical spawn name denotes one static generated child instance reused
+  across repeat iterations. `await_any`, repeat-body `do`, activation params,
+  activation bindings, activation domain overrides, and nested branch/loop
+  repeat-body spawn forms remain deferred.
+- Updated the mdBook feature backlog, roadmap board, README task index, and
+  task tree.
+- Validation: `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF phase successor zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` in

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: repeat-body spawn ships only with an await-all re-entry proof first
+- `ISF-SPAWN-IN-REPEAT.1` selects the first implementation contract before
+  lowering changes: a repeat body may start a static generated child instance
+  only when the same repeat body reaches `await_all` before the repeat check
+  can loop.
+- The point of the subset is child re-entry safety. The lexical spawn name
+  maps to one static child instance in the generated top; repeating the body
+  reuses that same instance and must not create per-iteration hardware.
+- `await_all` is the first synchronization form because it proves all pending
+  spawned child done ports have returned before the loop can start another
+  iteration. `await_any` would need a separate rule for outstanding children,
+  so it remains deferred.
+- Activation parameter overrides, port bindings, domain overrides, and nested
+  branch/loop repeat-body spawn forms are also deferred because they add
+  generated-top handoff, domain ownership, and report-provenance questions
+  outside the first re-entry proof.
 ## 2026-05-16: transaction phase markers can carry pending samples as pass-through states
 - `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` adds transaction `(phase ...)` states to
   the top-level pending-sample runtime wait zero-bypass surface.

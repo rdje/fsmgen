@@ -239,6 +239,16 @@ busy/re-entry rule before this can ship: either prove or insert sequencing so
 each later iteration observes the child's fresh done pulse before starting it
 again, or reject the loop with a targeted diagnostic.
 
+Selected first implementation subset: a top-level repeat body may use plain
+`(spawn child as inst)` clauses when the same repeat body reaches
+`(await_all done)` before the repeat check can loop. That `await_all` consumes
+the pending done ports for the spawned child instances, so the next iteration
+cannot re-assert an instance start before the previous activation has returned
+fresh done. `await_any`, repeat-body `do`, activation `(params ...)`,
+activation `(bind ...)`, activation `(domain ...)`, and spawn nested under
+branch or loop bodies remain backlog until their re-entry, binding, and report
+contracts are specified.
+
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
 data-dependent, and the repeat contract still needs an explicit zero-count

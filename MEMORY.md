@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF spawn-in-repeat first contract selected
+- Completed `ISF-SPAWN-IN-REPEAT.1` in
+  [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md).
+- The active R14 task tree is now `ISF-SPAWN-IN-REPEAT`, with current
+  frontier `ISF-SPAWN-IN-REPEAT.2`.
+- The first implementation subset is top-level repeat bodies containing plain
+  `(spawn child as inst)` clauses whose pending done ports are consumed by a
+  same-body `(await_all done)` before the repeat check can loop.
+- The lexical spawn name denotes one static child instance in the generated
+  top and is reused across repeat iterations. `await_any`, repeat-body `do`,
+  activation parameters, activation bindings, activation domain overrides, and
+  nested branch/loop repeat-body spawn forms remain deferred.
+- Updated the mdBook feature backlog, roadmap board, README task index, and
+  task tree.
+- Validation: `mdbook build docs/book` passed; `git diff --check` passed.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF phase successor zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md).

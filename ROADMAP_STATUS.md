@@ -10,14 +10,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-PHASE-SAMPLE` is closed after
-  shipping pending-sample runtime wait zero-bypass into transaction
-  `(phase ...)` pass-through states. The zero-count clone materializes pending
-  samples and preserves the original phase pass-through transition. Actor-level
-  phase metadata remains report-only; this runtime scheduling support is
-  limited to transaction phase marker states with no assignments or guards.
-  The next R14 PNT implementation slice must select or create a new task tree
-  before code changes.
+- Next decision point: `ISF-SPAWN-IN-REPEAT` is the active R14 PNT feature
+  tree after `ISF-DYNAMIC-WAIT-PHASE-SAMPLE` closed. Current frontier:
+  `ISF-SPAWN-IN-REPEAT.2`, implementing the documented first safe subset:
+  top-level repeat-body plain `spawn` clauses whose pending done ports are
+  consumed by a same-body `await_all` before the repeat check can loop.
+  `await_any`, `do`, activation params/bindings/domains, and nested
+  branch/loop forms remain deferred.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and

@@ -23,6 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-SPAWN-IN-REPEAT` | `active` | `R14` | `ISF-SPAWN-IN-REPEAT.2` | [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md) |
 
 ## Proposed Task Trees
 
