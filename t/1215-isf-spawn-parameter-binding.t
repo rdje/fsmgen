@@ -332,6 +332,50 @@ ISF
         'generated top instantiates the repeat-spawn await_any child once');
 };
 
+subtest 'repeat body local do waits for child done before re-entry' => sub {
+    my $source = <<'ISF';
+(actor repeat_do_local
+  (clock clk)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (output child_public_done)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker))
+    (complete done))
+  (transaction worker
+    (on start)
+    (complete child_public_done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 0,
+        'repeat-body local do does not create a generated child instance');
+    is($ir->{counters}{worker_start}, 1,
+        'repeat-body local do registers the local child start handoff');
+    is($ir->{counters}{worker_done}, 1,
+        'repeat-body local do registers the local child done handoff');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $fsm = $lowered->{files}{'repeat_do_local.fsm'};
+
+    ok(defined($fsm), 'repeat-body local do parent scheduled .fsm is emitted');
+    ok(!exists($lowered->{files}{'worker.fsm'}), 'repeat-body local do keeps the child in the parent module');
+    ok(!exists($lowered->{files}{'repeat_do_local_top.fsm'}), 'repeat-body local do does not emit a generated top');
+    like($fsm, qr/\(parent_do_2[\s\S]*\(= \(worker_start 1\)\)[\s\S]*<worker_done[\s\S]*\(-> parent_repeat_check_3\)/,
+        'repeat-body local do starts the child and waits for its fresh done before the repeat check');
+    like($fsm, qr/\(parent_repeat_check_3[\s\S]*\(-> parent_repeat_init_1\)/,
+        'repeat check back-edge is reachable only after the local do state');
+    like($fsm, qr/\(worker_idle_0[\s\S]*<worker_start[\s\S]*\(-> worker_done_1\)/,
+        'local child entry is rewired to the generated start handoff');
+    like($fsm, qr/\(worker_done_1[\s\S]*\(<1 \(worker_done 1\)\)/,
+        'local child terminal pulses the generated child done handoff');
+};
+
 subtest 'parameterized do lowers through a generated child activation instance' => sub {
     my $source = <<'ISF';
 (actor parameterized_do_binding
@@ -505,6 +549,104 @@ ISF
       (await_any done))
     (complete done))
   (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat do parameter override', qr/repeat-body do supports only local '\(do child\)' in the local blocking-do subset/);
+(actor repeat_do_parameter_override
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker
+        (params
+          (WIDTH 16))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat do port binding', qr/repeat-body do supports only local '\(do child\)' in the local blocking-do subset/);
+(actor repeat_do_port_binding
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker
+        (bind
+          (input data payload)
+          (output resp result))))
+    (complete done))
+  (transaction worker
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat do generated child target', qr/repeat-body do target 'worker' is already a generated child; generated repeat-body do remains deferred/);
+(actor repeat_do_generated_target
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker))
+    (spawn worker as w0)
+    (await_all done)
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'nested repeat do', qr/repeat-body do is supported only for top-level repeat clauses/);
+(actor nested_repeat_do
+  (clock clk)
+  (interface (input start) (input cond) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (do worker)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat do while spawn pending', qr/repeat-body do cannot appear while repeat-body spawn clauses are pending/);
+(actor repeat_do_while_spawn_pending
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (do local_worker)
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (complete done))
+  (transaction local_worker
+    (on start)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat sample after do', qr/repeat-body sample after do is not supported in the local blocking-do subset/);
+(actor repeat_sample_after_do
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (input status) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker)
+      (sample status as seen))
+    (complete done))
+  (transaction worker
+    (on start)
     (complete done)))
 ISF
 

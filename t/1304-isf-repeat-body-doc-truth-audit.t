@@ -28,6 +28,7 @@ my @shipped_terms = qw(
     store
     load
     wait
+    do
     spawn
     params
     domain
@@ -36,7 +37,10 @@ my @shipped_terms = qw(
 );
 
 my @deferred_terms = qw(
-    do
+    generated
+    parameterized
+    bound
+    domain-qualified
     multi-pending
     stage
     contract

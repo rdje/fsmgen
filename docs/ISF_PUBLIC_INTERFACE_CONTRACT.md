@@ -797,20 +797,31 @@ one list-form body clause before repeat counter emission.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
-top-level spawn plus same-body `await_all` subset with optional static
-`(params ...)` overrides, optional `(bind ...)` port handoffs, and optional
-declared same-domain `(domain NAME)` ownership metadata. Single-pending
-repeat-body `await_any` is also shipped when exactly one repeat-body spawn is
-pending. `do`, multi-pending `await_any`, `stage`, `contract`, nested `while`,
-and nested `until` remain outside the shipped repeat-body subset.
+top-level local blocking `(do child)` subset. The repeat-body `do` subset is
+local-only: it starts a child transaction that remains in the parent scheduled
+module and waits for the child's fresh `child_done` pulse before the repeat
+check can loop. Generated, parameterized, bound, or domain-qualified
+repeat-body `do`, repeat-body `do` targeting an already generated child, and
+sample-before/after-do timing remain deferred. The shipped repeat-body clause surface
+also includes the top-level spawn plus same-body `await_all` subset with
+optional static `(params ...)` overrides, optional `(bind ...)` port handoffs,
+and optional declared same-domain `(domain NAME)` ownership metadata.
+Single-pending repeat-body `await_any` is also shipped when exactly one
+repeat-body spawn is pending. Generated, parameterized, bound, or
+domain-qualified repeat-body `do`, multi-pending `await_any`, `stage`,
+`contract`, nested `while`, and nested `until` remain outside the shipped
+repeat-body subset.
 The shipped repeat-body child-activation subset is
+local `(do child)` plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
-followed by a same-body `(await_all done)` before the repeat check can loop,
-reusing one static generated child instance across iterations. Optional
-parameter overrides specialize that instance once in the generated top,
-optional input/output bindings create generated handoff ports once for the same
-static instance, and optional domain annotations group the static child with a
-declared same-domain activation owner without implying CDC behavior.
+followed by a same-body `(await_all done)` before the repeat check can loop.
+Local repeat-body `do` reuses the local child start/done pulse contract.
+Repeat-body spawn reuses one static generated child instance across
+iterations. Optional parameter overrides specialize that instance once in the
+generated top, optional input/output bindings create generated handoff ports
+once for the same static instance, and optional domain annotations group the
+static child with a declared same-domain activation owner without implying CDC
+behavior.
 `(await_any done)` may replace `await_all` only for the exactly-one-pending
 spawn case.
 The count is a runtime counter load value, not a hardware-elaboration count:
@@ -1594,8 +1605,10 @@ activate the persistent child instance through its start path, and child
 completion returns that instance to start-gated idle. Repeat-body spawn reuses
 the same lexical instance on each iteration, including optional static
 parameter overrides and optional input/output binding handoff ports, and the
-shipped repeat-body subset requires same-body `await_all` sequencing before
-the repeat check can re-enter the spawn.
+shipped repeat-body subset requires same-body `await_all` sequencing, or
+single-pending same-body `await_any`, before the repeat check can re-enter the
+spawn. Repeat-body local `(do child)` reuses the local child start/done pulse
+contract and reaches the repeat check only after the child done pulse is seen.
 ISF rule `(trigger transaction)` lowering also uses `<1`, not `<-`, for the
 generated `rule_transaction` trigger source. Generated combinational fan-in
 then drives `transaction_start` from every source for that transaction. This
@@ -2037,10 +2050,10 @@ These are not stable public interfaces yet:
   sample-compatible runtime wait pending
   samples, and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public except for the documented
-  top-level repeat-body spawn plus optional static `(params ...)`, optional
-  `(bind ...)` port handoffs, optional declared same-domain `(domain NAME)`
-  metadata, same-body `await_all`, and single-pending same-body `await_any`
-  subset.
+  top-level repeat-body local `(do child)` subset and top-level repeat-body
+  spawn plus optional static `(params ...)`, optional `(bind ...)` port
+  handoffs, optional declared same-domain `(domain NAME)` metadata, same-body
+  `await_all`, and single-pending same-body `await_any` subset.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
   wait counts, sample-incompatible runtime wait successors, nested loops, and
   loop bodies containing broader child activation, stages, or contracts need

@@ -34,7 +34,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
     repeat => {
         map { $_ => 1 } qw(
             drive await sample update set shift_left shift_right assemble extract
-            store load wait spawn await_all await_any
+            store load wait do spawn await_all await_any
         )
     },
     while => {
@@ -504,7 +504,11 @@ sub _generated_child_transaction_refs {
                 $s{$clause->[1]} = 1;
                 next;
             }
-            if ($clause->[0] eq 'do' && @{_do_parameter_overrides($clause, $tx->{name}, $label, $constant_values, $actor)}) {
+            if (
+                $clause->[0] eq 'do'
+                && $label eq 'transaction body'
+                && @{_do_parameter_overrides($clause, $tx->{name}, $label, $constant_values, $actor)}
+            ) {
                 $s{$clause->[1]} = 1;
             }
         }
@@ -543,10 +547,10 @@ sub _child_action_refs_from_transaction_clauses {
         for my $body_clause (@{$clause}[2 .. $#$clause]) {
             next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
             next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
-            next unless $body_clause->[0] eq 'spawn';
+            next unless $body_clause->[0] eq 'do' || $body_clause->[0] eq 'spawn';
             push @refs, {
                 clause  => $body_clause,
-                keyword => 'spawn',
+                keyword => $body_clause->[0],
                 label   => 'repeat body',
             };
         }
@@ -728,10 +732,11 @@ sub _build_domain_partition($self, $actor) {
             my $activation_domain = _activation_domain_from_clause($clause, $tx->{name}, $child_ref->{label}) // $owner_domain;
             confess "Transaction '$tx->{name}': $keyword target '$target' uses unknown clock domain '$activation_domain'\n"
                 unless exists $groups{$activation_domain};
-            my $include_instance = $keyword eq 'spawn' || ($keyword eq 'do' && $generated_children{$target});
+            my $top_level_do = $keyword eq 'do' && ($child_ref->{label} // '') eq 'transaction body';
+            my $include_instance = $keyword eq 'spawn' || ($top_level_do && $generated_children{$target});
             if ($include_instance) {
                 my $ordinal = $do_ordinals{$tx->{name}} // 0;
-                $do_ordinals{$tx->{name}} = $ordinal + 1 if $keyword eq 'do';
+                $do_ordinals{$tx->{name}} = $ordinal + 1 if $top_level_do;
                 my $instance = $keyword eq 'spawn'
                     ? $clause->[3]
                     : _generated_do_instance_name($tx->{name}, $target, $ordinal);
@@ -741,7 +746,7 @@ sub _build_domain_partition($self, $actor) {
                     child  => $target,
                     instance => $instance,
                 };
-            } elsif ($keyword eq 'do') {
+            } elsif ($top_level_do) {
                 $do_ordinals{$tx->{name}}++;
             }
         }
@@ -1299,7 +1304,9 @@ sub _validate_child_transaction_refs($self, $actor) {
                 $generated_children{$target} = 1;
             }
             $generated_children{$target} = 1
-                if $keyword eq 'do' && @{_do_parameter_overrides($clause, $tx_name, 'transaction body', $constant_values, $actor)};
+                if $keyword eq 'do'
+                    && $label eq 'transaction body'
+                    && @{_do_parameter_overrides($clause, $tx_name, $label, $constant_values, $actor)};
 
             push @child_refs, {
                 tx      => $tx,
@@ -1336,6 +1343,8 @@ sub _validate_child_transaction_refs($self, $actor) {
         my $keyword  = $ref->{keyword};
         my $target   = $ref->{target};
         my $label    = $ref->{label};
+        _validate_repeat_body_do_subset($ref, \%generated_children);
+
         my $generated_activation = $keyword eq 'spawn' || ($keyword eq 'do' && $generated_children{$target});
         next unless $generated_activation;
 
@@ -1478,7 +1487,7 @@ sub _transaction_port_binding_metadata {
             my $target = $clause->[1];
             next unless defined($target) && !ref($target) && exists $transaction_by_name{$target};
             my $current_do_ordinal;
-            if ($keyword eq 'do') {
+            if ($keyword eq 'do' && $label eq 'transaction body') {
                 $current_do_ordinal = $do_ordinal++;
             }
 
@@ -1487,7 +1496,7 @@ sub _transaction_port_binding_metadata {
             my %target_ports = _transaction_port_map($transaction_by_name{$target});
             my $instance = $keyword eq 'spawn'
                 ? ($clause->[3] // "${owner}_spawn")
-                : ($generated_children{$target} ? _generated_do_instance_name($owner, $target, $current_do_ordinal) : undef);
+                : ($generated_children{$target} && defined($current_do_ordinal) ? _generated_do_instance_name($owner, $target, $current_do_ordinal) : undef);
             for my $binding (@$bindings) {
                 push @metadata, _transaction_port_binding_entry(
                     binding            => $binding,
@@ -3650,6 +3659,7 @@ sub _validate_repeat_body_spawn_subset {
     my ($clause, $tn, $label) = @_;
     my @pending_spawns;
     my $saw_spawn = 0;
+    my $saw_do = 0;
     my $pending_sample_run = 0;
 
     for my $body_clause (@{$clause}[2 .. $#$clause]) {
@@ -3659,6 +3669,9 @@ sub _validate_repeat_body_spawn_subset {
 
         if ($keyword eq 'sample' && $saw_spawn) {
             confess "Transaction '$tn': repeat-body sample after spawn is not supported in the first spawn-in-repeat subset\n";
+        }
+        if ($keyword eq 'sample' && $saw_do) {
+            confess "Transaction '$tn': repeat-body sample after do is not supported in the local blocking-do subset\n";
         }
 
         if ($keyword eq 'spawn') {
@@ -3683,6 +3696,20 @@ sub _validate_repeat_body_spawn_subset {
             next;
         }
 
+        if ($keyword eq 'do') {
+            confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses\n"
+                unless $label eq 'transaction body';
+            confess "Transaction '$tn': repeat-body do supports only local '(do child)' in the local blocking-do subset\n"
+                if $#$body_clause >= 2;
+            confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
+                if @pending_spawns;
+            confess "Transaction '$tn': repeat-body do cannot follow pending samples in the local blocking-do subset\n"
+                if $pending_sample_run;
+            $saw_do = 1;
+            $pending_sample_run = 0;
+            next;
+        }
+
         if ($keyword eq 'await_all' || $keyword eq 'await_any') {
             confess "Transaction '$tn': repeat-body $keyword is supported only after repeat-body spawn clauses\n"
                 unless @pending_spawns;
@@ -3698,6 +3725,24 @@ sub _validate_repeat_body_spawn_subset {
 
     confess "Transaction '$tn': repeat-body spawn requires same-body '(await_all done)' before the repeat check can loop\n"
         if @pending_spawns;
+
+    return 1;
+}
+
+sub _validate_repeat_body_do_subset {
+    my ($ref, $generated_children) = @_;
+    return 1 unless ref($ref) eq 'HASH'
+        && ($ref->{keyword} // '') eq 'do'
+        && ($ref->{label} // '') eq 'repeat body';
+
+    my $tn = $ref->{tx_name};
+    my $clause = $ref->{clause};
+    my $target = $ref->{target};
+
+    confess "Transaction '$tn': repeat-body do supports only local '(do child)' in the local blocking-do subset\n"
+        if ref($clause) eq 'ARRAY' && $#$clause >= 2;
+    confess "Transaction '$tn': repeat-body do target '$target' is already a generated child; generated repeat-body do remains deferred\n"
+        if ref($generated_children) eq 'HASH' && $generated_children->{$target};
 
     return 1;
 }
@@ -4756,7 +4801,8 @@ sub _unsigned_width_for_max {
 }
 sub _ir_placeholder{ my ($cl,$tn,$i)=@_; {name=>"${tn}_$cl->[0]_$i",kind=>'sequential',assignments=>[],transitions=>[]} }
 sub _ir_do {
-    my ($cl, $tn, $i, $do_ref) = @_;
+    my ($cl, $tn, $i, $do_ref, $label) = @_;
+    $label //= 'transaction body';
     my $c = $cl->[1];
     my $prefix = (ref($do_ref) eq 'HASH' && $do_ref->{generated_child})
         ? $do_ref->{instance}
@@ -4767,7 +4813,7 @@ sub _ir_do {
             { lhs => "${prefix}_start", rhs => 1, op => '=', source_kind => 'do_start' },
         );
     } else {
-        my @bindings = @{_activation_bindings_from_clause($cl, $tn, 'transaction body')};
+        my @bindings = @{_activation_bindings_from_clause($cl, $tn, $label)};
         @assignments = (
             _activation_input_assignments(\@bindings, 'do_input_binding'),
             { lhs => "${prefix}_start", rhs => 1, op => '=', source_kind => 'do_start' },
@@ -4981,6 +5027,10 @@ sub _ir_repeat {
             push @$spawn_refs, $spawn_ref if ref($spawn_refs) eq 'ARRAY';
             push @spawn_done_ports, "$spawn_ref->{instance}_done";
             push @s,_ir_spawn($bc,$tn,$$ir++);
+        }
+        elsif($bk eq'do'){
+            _push_sample_state(\@s,$tn,\@lp,$ir);
+            push @s,_ir_do($bc,$tn,$$ir++,{ child => $bc->[1], activation_kind => 'do', generated_child => 0 },'repeat body');
         }
         elsif($bk eq'await_all'){
             push @s,_ir_sync_all($tn,$$ir++,\@spawn_done_ports);
@@ -7420,10 +7470,19 @@ sub _wire_do_children {
     $generated_children ||= {};
     my %ctx = map { $_->{name} => 1 } @{$actor->{transactions}};
     my %need;
-    for my $tx(@{$actor->{transactions}}){for my $cl(@{$tx->{clauses}}){next unless ref($cl)eq'ARRAY'&&$cl->[0]eq'do';next if $generated_children->{$cl->[1]};$need{$cl->[1]}=1 if$ctx{$cl->[1]}}}
+    for my $tx (@{$actor->{transactions}}) {
+        for my $ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+            next unless ($ref->{keyword} // '') eq 'do';
+            my $target = $ref->{clause}[1];
+            next if $generated_children->{$target};
+            $need{$target} = 1 if $ctx{$target};
+        }
+    }
     for my $c (sort keys %need) {my $s="${c}_start";my $d="${c}_done";
-        my($en)=grep{$_->{name}=~/^${c}_idle_/}@$st;if($en){$en->{guard}={port=>$s};$en->{transitions}=[];my($nx)=grep{$_->{name}=~/^${c}_/&&$_->{kind}ne'entry'&&$_->{name}!~/_timeout$/}@$st;push @{$en->{transitions}},{target=>$nx->{name},condition=>$en->{guard}}if$nx}
-        my($tm)=grep{$_->{name}=~/^${c}_(?:done|complete)_/&&$_->{kind}eq'terminal'}@$st;unshift @{$tm->{assignments}},{lhs=>$d,rhs=>1,op=>'<1'}if$tm}
+        $ctrs->{$s}=1 if ref($ctrs)eq'HASH';
+        $ctrs->{$d}=1 if ref($ctrs)eq'HASH';
+        my($en)=grep{$_->{name}=~/^\Q$c\E_idle_/}@$st;if($en){$en->{guard}={port=>$s};$en->{transitions}=[];my($nx)=grep{$_->{name}=~/^\Q$c\E_/&&$_->{kind}ne'entry'&&$_->{name}!~/_timeout$/}@$st;push @{$en->{transitions}},{target=>$nx->{name},condition=>$en->{guard}}if$nx}
+        my($tm)=grep{$_->{name}=~/^\Q$c\E_(?:done|complete)_/&&$_->{kind}eq'terminal'}@$st;unshift @{$tm->{assignments}},{lhs=>$d,rhs=>1,op=>'<1'}if$tm}
 }
 
 sub _merge_sequential {

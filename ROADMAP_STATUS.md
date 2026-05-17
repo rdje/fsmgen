@@ -23,12 +23,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(domain NAME)` as declared same-domain ownership metadata on that static
   instance subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` then shipped
   repeat-body `(await_any done)` when exactly one repeat-body spawn is pending.
-  Repeat-body `do`, multi-pending `await_any`, cross-domain activation,
-  samples after repeat-body spawn, and nested branch/loop activation remain
-  deferred and tracked in the same active tree. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` for repeat-body blocking `do`
-  activation. The workflow also requires task-tree ownership before any code,
-  test, source,
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` then shipped top-level repeat-body
+  local `(do child)` when the child remains in the parent scheduled module and
+  the repeat check waits for the child's fresh done pulse. Generated,
+  parameterized, bound, domain-qualified, generated-child-target repeat-body
+  `do`, multi-pending `await_any`, cross-domain activation, samples after
+  repeat-body spawn, sample-before/after-do timing, and nested branch/loop activation
+  remain deferred and tracked in the same active tree. The next active frontier
+  is `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` for nested repeat-body child
+  activation or sample-after-spawn forms if selected. The workflow also
+  requires task-tree ownership before any code, test, source,
   generated-artifact, or config change. Push cadence is every 30 unpushed
   commits unless the user explicitly requests an earlier push.
   `ISF-TYPE-AGGREGATE-PARITY.1`

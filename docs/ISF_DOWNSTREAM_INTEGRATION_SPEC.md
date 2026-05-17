@@ -839,7 +839,12 @@ Rules:
 - The shipped repeat-body clause surface is named drive calls, `await`,
   `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
   `extract`, actor-owned bank `store` and `load`, and shipped `wait` clauses.
-  Top-level repeat bodies also accept
+  Top-level repeat bodies also accept local blocking `(do child)` when the
+  child transaction remains local to the scheduled parent; the do state starts
+  the child and waits for its fresh `child_done` pulse before the repeat check
+  can loop. Generated, parameterized, bound, or domain-qualified repeat-body
+  `do`, repeat-body `do` targeting an already generated child, and
+  sample-before/after-do timing remain deferred. Top-level repeat bodies also accept
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses when the same repeat body reaches `(await_all done)` before the
   repeat check can loop. `(await_any done)` is accepted in repeat bodies only
@@ -850,7 +855,8 @@ Rules:
   as top-level spawn: handoff ports are generated once for the static child
   instance. Optional `(domain NAME)` annotations are declared same-domain
   ownership metadata only; they do not imply CDC behavior or allow
-  cross-domain activation. `do`, multi-pending `await_any`, `stage`,
+  cross-domain activation. Generated, parameterized, bound, or
+  domain-qualified repeat-body `do`, multi-pending `await_any`, `stage`,
   `contract`, nested `while`, and nested `until` remain outside the shipped
   repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
@@ -1134,6 +1140,9 @@ Rules:
 
 - Local unparameterized `do` rewires the child entry to `child_start` and waits
   for `child_done`.
+- Top-level repeat bodies may use that same local `(do child)` form when the
+  child remains in the parent scheduled module; generated, parameterized,
+  bound, and domain-qualified repeat-body `do` forms are not shipped.
 - Parameterized/generated `do` creates a generated child activation instance
   named `{parent}_{child}_do_{ordinal}` and waits for that instance's done
   handoff.

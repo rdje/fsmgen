@@ -425,13 +425,21 @@ counter, widened to the largest branch requirement.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
-top-level spawn plus same-body `await_all` subset with optional static
-`(params ...)` overrides, optional `(bind ...)` port handoffs, and optional
-declared same-domain `(domain NAME)` ownership metadata. Single-pending
-repeat-body `await_any` is also shipped when exactly one repeat-body spawn is
-pending. `do`, multi-pending `await_any`, `stage`, `contract`, nested `while`,
-and nested `until` remain outside the shipped repeat-body subset.
+top-level local blocking `(do child)` subset. Repeat-body local `do` asserts
+the local child `start`, waits for the child's fresh `done` pulse, and only
+then reaches the repeat check back-edge. Generated, parameterized, bound, or
+domain-qualified repeat-body `do`, repeat-body `do` targeting an already
+generated child, and sample-before/after-do timing remain deferred. The shipped
+repeat-body clause surface also includes the top-level spawn plus same-body
+`await_all` subset with optional static `(params ...)` overrides, optional
+`(bind ...)` port handoffs, and optional declared same-domain `(domain NAME)`
+ownership metadata. Single-pending repeat-body `await_any` is also shipped
+when exactly one repeat-body spawn is pending. Generated, parameterized,
+bound, or domain-qualified repeat-body `do`, multi-pending `await_any`,
+`stage`, `contract`, nested `while`, and nested `until` remain outside the
+shipped repeat-body subset.
 The shipped repeat-body child-activation subset is
+`(do child)` for local child transactions, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
 The lexical spawn name denotes one static generated child instance reused
@@ -461,6 +469,10 @@ completion has been observed. Binding handoff ports are generated once for the
 lexical instance and wired in the generated top just like top-level spawn
 bindings. Domain annotations are accepted only as declared same-domain
 ownership metadata; cross-domain activation remains a CDC/backlog item.
+For the shipped repeat-body local `do` subset, `(do child)` must remain plain:
+no repeat-body `(params ...)`, `(bind ...)`, or `(domain NAME)` subclauses are
+accepted, and the child must not already be emitted as a generated child
+instance by another activation site.
 
 ## `(while cond body...)` / `(until cond body...)` — Transaction Loops
 
@@ -488,7 +500,8 @@ used by `when`/`switch`: named drives, `await`, `sample`, `complete`, `repeat`,
 reject `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, and nested
 loops until their re-entry, child-lifetime, and report semantics are specified.
 The shipped repeat-body spawn plus same-body `await_all` subset applies only to
-`repeat` bodies. Body clauses must be non-empty list forms.
+`repeat` bodies; the same is true for the shipped repeat-body local
+`(do child)` subset. Body clauses must be non-empty list forms.
 
 Successful schedule reports expose `transaction_loops[]` entries with the
 authored transaction, loop kind, normalized condition, generated decision

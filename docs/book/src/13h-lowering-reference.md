@@ -1023,10 +1023,11 @@ known interface or sample-derived width, and unknown count forms fall back to
 8 bits. Switch-nested repeats register the same transaction counter at the
 widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
-data operations, and the first child-activation subset: spawn with optional
-static `(params ...)`, optional `(bind ...)` handoffs, and optional declared
-same-domain `(domain NAME)` ownership metadata followed by same-body
-`await_all`, or by same-body `await_any` when exactly one spawn is pending.
+data operations, local blocking `(do child)`, and the first generated
+child-activation subset: spawn with optional static `(params ...)`, optional
+`(bind ...)` handoffs, and optional declared same-domain `(domain NAME)`
+ownership metadata followed by same-body `await_all`, or by same-body
+`await_any` when exactly one spawn is pending.
 
 `N` is a counter load value, not a structural replication count. A dynamic
 scalar count is therefore compatible with the hardware model when its width is
@@ -1042,7 +1043,21 @@ iteration. If it carries `(bind ...)`, the generated parent handoff ports are
 also emitted once for that static instance and wired by the generated top. If
 it carries `(domain NAME)`, that name must be declared by the actor and remain
 the same domain as the owning transaction and child; it only records ownership
-metadata and does not add CDC behavior:
+metadata and does not add CDC behavior.
+
+Repeat-body local `do` does not emit a child file or generated top; it reuses
+the same local start/done pulse contract as top-level local `do` and reaches
+the repeat check only after the child done pulse:
+
+```lisp
+(parent_do_2
+  (= (worker_start 1))
+  (<worker_done
+    (-> parent_repeat_check_3)))
+```
+
+Representative repeat-body spawn lowering uses the static generated instance
+handoff before the repeat check:
 
 ```lisp
 (parent_spawn_2
@@ -1059,9 +1074,10 @@ metadata and does not add CDC behavior:
     (=0 (-> parent_done_5))))
 ```
 
-Broader repeat-body child activation, including multi-pending `await_any`,
-cross-domain spawn, `do`, and nested branch/loop forms, remains fail-closed
-until its re-entry and report behavior is specified.
+Generated, parameterized, bound, or domain-qualified repeat-body `do`,
+generated-child targets, sample-before/after-do timing, multi-pending `await_any`,
+cross-domain spawn, and nested branch/loop forms remain fail-closed until their
+re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

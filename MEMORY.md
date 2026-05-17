@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body local blocking do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts top-level repeat-body local `(do child)` when the child remains
+  in the parent scheduled module.
+- The repeat-body `do` state asserts the local child start handoff, waits for
+  the child's fresh done pulse, and reaches the repeat check only after that
+  pulse, preserving re-entry safety.
+- Generated, parameterized, bound, domain-qualified, and generated-child-target
+  repeat-body `do` forms remain fail-closed, as do nested repeat-body `do` and
+  sample-before/after-do timing.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`; nested repeat-body child activation,
+  sample-after-spawn timing, multi-pending `await_any`, and cross-domain
+  activation remain deferred.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body single-pending await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

@@ -131,13 +131,16 @@ The shipped nested-control subset is explicit. A `switch` branch may contain a
 supported inside top-level `when` and `switch` bodies. The shipped repeat-body
 clause surface is named drive calls, `await`, `sample`, `update`, `set`,
 `shift_left`, `shift_right`, `assemble`, `extract`, actor-owned bank `store`
-and `load`, shipped `wait` clauses, and top-level repeat-body spawn with
-optional static `(params ...)`, optional `(bind ...)`, and optional declared
-same-domain `(domain NAME)` metadata followed by same-body `await_all` or by
-same-body `await_any` when exactly one spawn is pending. `do`, multi-pending
-`await_any`, `stage`, `contract`, nested `while`, and nested `until` remain
-outside the shipped repeat-body subset. Unsupported nested forms now fail
-closed during lowering instead of disappearing from scheduled `.fsm` output.
+and `load`, shipped `wait` clauses, top-level repeat-body local `(do child)`,
+and top-level repeat-body spawn with optional static `(params ...)`, optional
+`(bind ...)`, and optional declared same-domain `(domain NAME)` metadata
+followed by same-body `await_all` or by same-body `await_any` when exactly one
+spawn is pending. Repeat-body `do` is local-only: generated, parameterized,
+bound, or domain-qualified repeat-body `do`, generated-child targets, and
+sample-before/after-do timing remain deferred. The multi-pending `await_any`, `stage`,
+`contract`, nested `while`, and nested `until` forms remain outside the shipped
+repeat-body subset. Unsupported nested forms now fail closed during lowering
+instead of disappearing from scheduled `.fsm` output.
 
 ```lisp
 (switch opcode

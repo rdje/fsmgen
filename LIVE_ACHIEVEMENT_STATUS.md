@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body local blocking do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`.
+- Top-level repeat bodies may now use local `(do child)` when the child remains
+  in the parent scheduled module.
+- The repeat-body `do` state starts the local child and waits for the child's
+  fresh done pulse before the repeat check can loop.
+- Generated, parameterized, bound, domain-qualified, generated-child-target,
+  nested, and sample-before/after-do repeat-body `do` forms remain fail-closed.
+  The active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`.
+
 ## 2026-05-17: R14 — ISF repeat-body single-pending await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`.
 - Top-level repeat bodies may now use `(await_any done)` after a repeat-body

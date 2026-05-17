@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body do ships only as local blocking activation
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` deliberately ships repeat-body `do` as
+  a local-only subset. The child stays in the parent scheduled module, so the
+  existing local `child_start`/`child_done` pulse contract is enough to prove
+  repeat re-entry safety.
+- The repeat lowering emits the same await-shaped `do` state as top-level
+  local `do`, then the normal repeat check follows only after the child done
+  pulse. `_wire_do_children` now discovers repeat-body local `do` targets and
+  registers their local start/done handoffs.
+- Generated, parameterized, bound, domain-qualified, generated-child-target,
+  nested, and sample-before/after-do repeat-body `do` forms remain deferred because
+  they need generated-top/report, ownership, or timing contracts beyond the
+  local child pulse proof.
 ## 2026-05-17: repeat-body await_any is limited to one pending child
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` ships the only `await_any` repeat-body
   case that has the same re-entry proof as `await_all`: exactly one pending

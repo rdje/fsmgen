@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body local blocking do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`.
+- Top-level repeat bodies now accept local `(do child)` when the child remains
+  in the parent scheduled module.
+- The lowerer emits a repeat-body await-shaped `do` state that asserts the
+  local child start handoff and waits for the child's fresh done pulse before
+  the repeat check can loop.
+- Repeat-body local `do` participates in local child start/done wiring without
+  creating generated child files or a generated top.
+- Generated, parameterized, bound, domain-qualified, generated-child-target,
+  nested, and sample-before/after-do repeat-body `do` forms remain fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/composition/lowering/backlog/feature-matrix
+  chapters, roadmap board, and task tree.
 ### R14 — ISF repeat-body single-pending await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`.
 - Repeat-body `(await_any done)` is now accepted on the shipped top-level

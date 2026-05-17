@@ -45,6 +45,11 @@ for my $path (@loop_docs) {
         qr/repeat(?:-body| body).*spawn.*await_any/s,
         "$path documents the shipped repeat-body single-pending await_any subset",
     );
+    like(
+        $content,
+        qr/repeat(?:-body| body).*local.*do/s,
+        "$path documents the shipped repeat-body local do subset",
+    );
 }
 
 done_testing();
