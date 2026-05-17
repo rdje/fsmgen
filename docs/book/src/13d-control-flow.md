@@ -134,8 +134,9 @@ clause surface is named drive calls, `await`, `sample`, `update`, `set`,
 and `load`, shipped `wait` clauses, top-level repeat-body local `(do child)`,
 top-level repeat-body generated `(do child)` for already generated child
 targets, top-level repeat-body generated `(do child (params ...))` with
-static parameter overrides, top-level when-body nested repeat local
-`(do child)`, top-level switch-branch nested repeat local `(do child)`, and
+static parameter overrides, top-level when-body nested repeat local or
+generated-child `(do child)`, top-level switch-branch nested repeat local
+`(do child)`, and
 top-level repeat-body spawn with optional static `(params ...)`, optional
 `(bind ...)`, and optional declared same-domain
 `(domain NAME)` metadata followed by same-body `await_all` or by same-body
@@ -153,15 +154,18 @@ accepts already generated child targets or static `(params ...)` overrides,
 optional `(bind ...)` input/output handoffs, and optional same-domain
 `(domain NAME)` metadata; those handoffs and domain summaries are
 wired/recorded once for the lexical generated do instance. Cross-domain
-repeat-body `do` remains deferred. The when-contained and switch-contained
-nested subsets are local-only: they accept only a repeat directly inside a
-top-level `when` body or directly inside a top-level `switch` branch, reject
-params, bindings, domain metadata, already-generated child targets, deeper
-branch nesting, and loop-contained repeats, and keep the nested repeat check
-gated by the child's fresh done pulse.
-Broader outstanding-child semantics, generated or spawned nested activation,
-`stage`, `contract`, nested `while`, and nested `until` forms remain outside
-the shipped repeat-body subset.
+repeat-body `do` remains deferred. The when-contained nested subset accepts
+only a repeat directly inside a top-level `when` body and accepts either local
+plain `(do child)` or plain generated-child `(do child)` for targets already
+generated elsewhere; it rejects params, bindings, and domain metadata. The
+switch-contained nested subset accepts only local plain `(do child)` in a
+repeat directly inside a top-level `switch` branch. Both nested subsets keep
+the nested repeat check gated by the child's fresh done pulse, and both still
+reject deeper branch nesting and loop-contained repeats.
+Broader outstanding-child semantics, generated or spawned nested activation
+beyond the documented top-level when-body generated-child do case, `stage`,
+`contract`, nested `while`, and nested `until` forms remain outside the
+shipped repeat-body subset.
 Unsupported nested forms now fail closed during lowering instead of
 disappearing from scheduled `.fsm` output.
 

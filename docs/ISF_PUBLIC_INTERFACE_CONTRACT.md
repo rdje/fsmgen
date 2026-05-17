@@ -805,16 +805,20 @@ overrides, optional input/output port bindings, and optional declared
 same-domain ownership metadata. Local repeat-body `do` starts a child
 transaction that remains in the parent scheduled module and waits for the
 child's fresh `child_done` pulse before the repeat check can loop. Repeats
-directly inside a top-level `when` body also accept that local-only
-`(do child)` form: the child remains in the parent scheduled module, source
-order samples around the nested do remain explicit, and the branch-owned
-repeat check is gated by the fresh child done pulse. That when-contained
-subset is now paired with the switch-contained local subset: repeats directly
-inside a top-level `switch` branch may also use local-only `(do child)` with
-the same source-order sample timing and done-gated branch-owned repeat check.
-Those nested subsets reject `(params ...)`, `(bind ...)`, `(domain NAME)`,
-already-generated child targets, deeper branch nesting, and loop-contained
-repeats. Generated
+directly inside a top-level `when` body also accept that local `(do child)`
+form, and they accept plain generated-child `(do child)` when the target child
+is already emitted as a generated child by another activation site. The
+generated-child when-contained form emits one deterministic
+`{parent}_{child}_repeat_do_{ordinal}` instance for the lexical nested do
+site, preserves source-order samples around the nested do, and gates the
+branch-owned repeat check on that generated instance's fresh done handoff.
+That when-contained subset is paired with the switch-contained local subset:
+repeats directly inside a top-level `switch` branch may use local-only
+`(do child)` with the same source-order sample timing and done-gated
+branch-owned repeat check. Those nested subsets reject `(params ...)`,
+`(bind ...)`, and `(domain NAME)`. The switch-contained subset also rejects
+already-generated child targets. Deeper branch nesting and loop-contained
+repeats remain outside both nested subsets. Generated
 repeat-body `do` emits one generated child instance for the lexical do site,
 applies the parameter override once in the generated top, wires optional
 binding handoff ports once for that generated instance, records same-domain
@@ -833,9 +837,10 @@ repeat-body spawn is pending. Multi-pending repeat-body `await_any` is shipped
 only as an observation point when a later same-body `await_all` drains the same
 outstanding spawned children before the repeat check; new repeat-body `spawn`
 or `do` clauses before that drain remain rejected. Cross-domain repeat-body
-`do`, generated or spawned nested activation, broader outstanding-child
-semantics, `stage`, `contract`, deeper branch nesting, nested `while`, and
-nested `until` remain outside the shipped repeat-body subset.
+`do`, generated or spawned nested activation beyond the documented top-level
+when-body generated-child do case, broader outstanding-child semantics,
+`stage`, `contract`, deeper branch nesting, nested `while`, and nested
+`until` remain outside the shipped repeat-body subset.
 Samples may appear before or after repeat-body spawn as long as the same
 repeat body reaches same-body `await_all`, single-pending `await_any`, or
 multi-pending `await_any` followed by same-body `await_all` before the repeat
@@ -849,8 +854,11 @@ local `(do child)`, generated-child `(do child)`, generated
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
 The local `(do child)` subset is also shipped inside a repeat directly inside
-a top-level `when` body or top-level `switch` branch, still local-only and
-still done-gated before the nested repeat check.
+a top-level `when` body or top-level `switch` branch. The top-level `when`
+nested repeat subset also accepts plain generated-child `(do child)` for a
+target already generated elsewhere; that generated nested do remains
+done-gated before the nested repeat check and does not accept activation
+subclauses.
 Local repeat-body `do` reuses the local child start/done pulse contract.
 Generated repeat-body `do` reuses the generated child start/done handoff
 contract with a deterministic `{parent}_{child}_repeat_do_{ordinal}` instance;

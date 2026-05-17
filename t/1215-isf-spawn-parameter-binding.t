@@ -967,6 +967,69 @@ ISF
         'local child terminal pulses the when-body repeat done handoff');
 };
 
+subtest 'when body nested repeat generated-child do waits for generated instance done before re-entry' => sub {
+    my $source = <<'ISF';
+(actor when_repeat_do_generated_child
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (spawn worker as w0)
+    (await_all done)
+    (when cond
+      (repeat loops
+        (sample status as before)
+        (do worker)
+        (sample status as after)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 2,
+        'when-body repeat generated-child do plus spawn contribute generated instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'lexical spawn instance still exists');
+    ok($instances{parent_worker_repeat_do_0}, 'when-body repeat generated-child do instance is recorded');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'when-body repeat generated-child do preserves do activation provenance');
+    is($instances{parent_worker_repeat_do_0}{child}, 'worker',
+        'when-body repeat generated-child do targets the generated child transaction');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [],
+        'when-body repeat generated-child do does not require local parameter overrides');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'when_repeat_do_generated_child.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'when_repeat_do_generated_child_top.fsm'};
+
+    ok(defined($parent_fsm), 'when-body repeat generated-child do parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once');
+    ok(defined($top_fsm), 'when-body repeat generated-child do top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_when_\d+[\s\S]*\(=1 \(-> parent_repeat_init_\d+\)\)/,
+        'when true path enters the generated-child nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'sample before when-body generated-child repeat do materializes before the do state');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'when-body generated-child repeat do waits for the generated instance before the following sample');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_repeat_check_\d+\)/,
+        'sample after when-body generated-child repeat do materializes before the repeat check');
+    unlike($parent_fsm, qr/\bworker_start\b/,
+        'when-body generated-child repeat do does not wire a local child start handoff');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker(?:\s|\))/,
+        'generated top instantiates the when-body repeat generated-child do child once');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top also instantiates the lexical spawn child');
+};
+
 subtest 'switch branch nested repeat local do waits for child done before re-entry' => sub {
     my $source = <<'ISF';
 (actor switch_repeat_do_local
@@ -1151,7 +1214,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when repeat parameterized do', qr/when-body nested repeat do supports only local '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
+    assert_lower_rejected(<<'ISF', 'when repeat parameterized do', qr/when-body nested repeat do supports only plain '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
 (actor when_repeat_parameterized_do
   (clock clk)
   (interface (input start) (input cond) (input loops (width 3)) (output done))
@@ -1169,7 +1232,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when repeat bound do', qr/when-body nested repeat do supports only local '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
+    assert_lower_rejected(<<'ISF', 'when repeat bound do', qr/when-body nested repeat do supports only plain '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
 (actor when_repeat_bound_do
   (clock clk)
   (interface (input start) (input cond) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
@@ -1186,22 +1249,6 @@ ISF
     (ports
       (input data (width 8))
       (output resp (width 8)))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'when repeat do target already generated', qr/when-body nested repeat do supports only local child targets; target 'worker' is already generated by another activation site/);
-(actor when_repeat_generated_target_do
-  (clock clk)
-  (interface (input start) (input cond) (input loops (width 3)) (output done))
-  (transaction parent
-    (on start)
-    (spawn worker as w0)
-    (await_all done)
-    (when cond
-      (repeat loops
-        (do worker)))
-    (complete done))
-  (transaction worker
     (complete done)))
 ISF
 

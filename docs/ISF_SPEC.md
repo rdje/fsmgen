@@ -1543,16 +1543,22 @@ Current lowering:
   child transaction remains local to the scheduled parent. The repeat-body
   `do` state asserts `child_start`, waits for the child's fresh `child_done`
   pulse, and only then reaches the repeat check back-edge. Repeats directly
-  inside a top-level `when` body accept the same local-only `(do child)` form:
-  the child remains in the parent scheduled module, samples around the nested
-  do stay in source order, and the branch-owned repeat check is unreachable
-  until the fresh child done pulse is observed. Repeats directly inside a
-  top-level `switch` branch accept the same local-only `(do child)` form with
-  the same source-order sample timing and done-gated nested repeat check.
-  Those when-contained and switch-contained subsets reject `(params ...)`,
-  `(bind ...)`, `(domain NAME)`, already-generated child targets, deeper
-  branch nesting, and loop-contained repeats. Top-level repeat bodies also
-  accept generated
+  inside a top-level `when` body accept local `(do child)` when the child
+  remains in the parent scheduled module, and plain generated-child
+  `(do child)` when the target child is already emitted as a generated child
+  by another activation site. In the local case, the child remains in the
+  parent scheduled module. In the generated-child case, the generated top
+  emits one deterministic `{parent}_{child}_repeat_do_{ordinal}` instance for
+  the lexical nested do site. Both forms keep samples around the nested do in
+  source order, and the branch-owned repeat check is unreachable until the
+  fresh local or generated child done pulse is observed. Repeats directly
+  inside a top-level `switch` branch accept the same local-only `(do child)`
+  form with the same source-order sample timing and done-gated nested repeat
+  check. Those when-contained and switch-contained subsets reject
+  `(params ...)`, `(bind ...)`, and `(domain NAME)`. The switch-contained
+  subset also rejects already-generated child targets. Deeper branch nesting
+  and loop-contained repeats remain outside both nested subsets. Top-level
+  repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
   `(do child (params ...) [(bind ...)] [(domain NAME)])` with static
@@ -1594,10 +1600,11 @@ Current lowering:
   loop. Pending samples materialize in an explicit sample state at their
   source-order timing point: before a later spawn state for sample-before-spawn
   ordering, or before the sync state for sample-after-spawn ordering.
-  Cross-domain repeat-body `do`, generated or spawned nested activation,
-  broader outstanding-child semantics, `stage`, `contract`, deeper branch
-  nesting, nested `while`, and nested `until` remain outside the shipped
-  repeat-body subset.
+  Cross-domain repeat-body `do`, generated or spawned nested activation beyond
+  the documented top-level when-body generated-child do case, broader
+  outstanding-child semantics, `stage`, `contract`, deeper branch nesting,
+  nested `while`, and nested `until` remain outside the shipped repeat-body
+  subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
@@ -1937,14 +1944,15 @@ subset: named drive calls, `await`, `sample`, `complete`, `repeat`, `update`,
 nested `when`, and shipped `(wait N)` clauses. They continue to reject `do`,
 `spawn`, `await_all`, `await_any`, `stage`, `contract`, loops nested inside loop
 bodies, and loops nested under `when`/`switch`/`repeat` until re-entry, child
-lifetime, and report semantics are specified for those combinations. Top-level
-repeat-body local `(do child)`, repeat-body generated blocking
-`(do child)` for already generated child targets,
-`(do child (params ...) [(bind ...)] [(domain NAME)])`, and repeat-body spawn
-followed by same-body `await_all`, single-pending same-body `await_any`, or
-multi-pending same-body `await_any` followed by a same-body `await_all` drain
-are the only shipped loop-body child-activation subsets, and they apply only
-to `repeat` bodies.
+lifetime, and report semantics are specified for those combinations.
+Top-level repeat-body local `(do child)`, top-level when-body nested repeat
+local or plain generated-child `(do child)`, top-level switch-branch nested
+repeat local `(do child)`, repeat-body generated blocking `(do child)` for
+already generated child targets, `(do child (params ...) [(bind ...)]
+[(domain NAME)])`, and repeat-body spawn followed by same-body `await_all`,
+single-pending same-body `await_any`, or multi-pending same-body `await_any`
+followed by a same-body `await_all` drain are the only shipped loop-body
+child-activation subsets, and they apply only to `repeat` bodies.
 Repeat-body spawn may carry the same static `(params ...)` overrides and
 `(bind ...)` port handoffs as top-level spawn; those overrides and handoff
 ports specialize the single lexical child instance and are not per-iteration
@@ -3267,6 +3275,8 @@ Focused tests:
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,
+  the top-level when-body nested repeat local/generated-child `(do child)`
+  subset, the top-level switch-branch nested repeat local `(do child)` subset,
   the top-level repeat-body generated-child `(do child)` subset, the top-level
   repeat-body generated
   `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and the

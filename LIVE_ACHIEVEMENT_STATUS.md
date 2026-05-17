@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF when-contained repeat generated-child do shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.26`.
+- Top-level `when` bodies may now contain nested repeats with plain
+  `(do child)` targeting a child already emitted as a generated child by
+  another activation site.
+- Lowering emits one deterministic generated do instance for the lexical
+  nested do site, preserves source-order samples around that do, and gates the
+  nested repeat check on the generated instance's fresh done handoff.
+- Activation subclauses, spawn nesting, switch-contained generated-child `do`,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`.
+
 ## 2026-05-17: R14 — ISF when-contained repeat generated-child do selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`.
 - Selected top-level `when` bodies containing nested repeats with plain

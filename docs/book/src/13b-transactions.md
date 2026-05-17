@@ -428,13 +428,20 @@ actor-owned bank `store` and `load`, shipped `wait` clauses, and the
 top-level local blocking `(do child)` subset. Repeat-body local `do` asserts
 the local child `start`, waits for the child's fresh `done` pulse, and only
 then reaches the repeat check back-edge. Repeats directly inside a top-level
-`when` body or directly inside a top-level `switch` branch accept that same
-local-only `(do child)` form: the child stays in the parent scheduled module,
-samples around the nested do lower in source order, and the branch-owned
-repeat check is reached only after fresh child done. Those when-contained and
-switch-contained subsets reject `(params ...)`, `(bind ...)`, `(domain NAME)`,
-already-generated child targets, deeper branch nesting, and loop-contained
-repeats. The shipped
+`when` body accept local `(do child)` under that same parent-module contract,
+and plain generated-child `(do child)` when the target child is already
+emitted as a generated child by another activation site. The generated-child
+when-contained form emits one deterministic
+`{parent}_{child}_repeat_do_{ordinal}` instance for the lexical nested do
+site. Both when-contained forms keep samples around the nested do in source
+order and reach the branch-owned repeat check only after a fresh local or
+generated child done handoff. Repeats directly inside a top-level `switch`
+branch accept only the local `(do child)` form with the same source-order
+sample timing and done-gated repeat check. Those when-contained and
+switch-contained subsets reject `(params ...)`, `(bind ...)`, and
+`(domain NAME)`. The switch-contained subset also rejects already-generated
+child targets. Deeper branch nesting and loop-contained repeats remain
+outside both nested subsets. The shipped
 repeat-body clause
 surface also includes generated blocking `(do child)` when the target child is
 already emitted as a generated child by another activation site, and
@@ -458,8 +465,9 @@ when exactly one repeat-body spawn is pending. Multi-pending repeat-body
 same-body `await_all` drains the same outstanding spawned children before the
 repeat check; new repeat-body `spawn` or `do` clauses before that drain remain
 rejected. Cross-domain repeat-body `do`, generated or spawned nested
-activation, broader outstanding-child semantics, `stage`, `contract`, deeper
-branch nesting, nested `while`, and nested `until` remain outside the shipped
+activation beyond the documented top-level when-body generated-child do case,
+broader outstanding-child semantics, `stage`, `contract`, deeper branch
+nesting, nested `while`, and nested `until` remain outside the shipped
 repeat-body subset. Samples may
 appear before or after repeat-body spawn as long as the same repeat body
 reaches same-body `await_all`, single-pending `await_any`, or multi-pending
@@ -490,9 +498,36 @@ before spawn/do, before spawn sync, between multi-pending `await_any` and its
 drain, or after do completion before the repeat check.
 The local `(do child)` form is also shipped inside a repeat that is directly
 inside a top-level `when` body or directly inside a top-level `switch` branch.
-It remains local-only in those nested positions: no generated target,
-parameter override, port binding, or domain annotation is accepted there, and
-deeper branch/loop placement remains backlog.
+The `when` nested repeat form also accepts a plain generated-child
+`(do child)` target that is already generated elsewhere. That nested generated
+do site owns one `{parent}_{child}_repeat_do_{ordinal}` instance, uses no
+parameter override, port binding, or domain annotation, and waits for the
+generated instance's fresh done handoff before the nested repeat check. The
+switch nested repeat form remains local-only; deeper branch/loop placement
+remains backlog.
+
+Example: a parent can spawn `worker` once, then call the already generated
+`worker` from a repeat nested inside a top-level `when` without reintroducing
+a local child body:
+
+```lisp
+(transaction parent
+  (on start)
+  (spawn worker as w0)
+  (await_all done)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (do worker)
+      (sample status as after)))
+  (complete done))
+```
+
+That nested `(do worker)` emits a generated do instance such as
+`parent_worker_repeat_do_0` alongside the lexical spawn instance `w0`. The
+parent scheduled `.fsm` starts `parent_worker_repeat_do_0_start>`, waits for
+`parent_worker_repeat_do_0_done`, then runs the `after` sample before the
+nested repeat check.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is

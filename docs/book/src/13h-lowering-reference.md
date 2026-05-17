@@ -1024,8 +1024,8 @@ known interface or sample-derived width, and unknown count forms fall back to
 widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
 data operations, local blocking `(do child)`, top-level when-body nested repeat
-local `(do child)`, generated blocking `do` for already generated child targets
-or static parameterized do sites, and the
+local or generated-child `(do child)`, generated blocking `do` for already
+generated child targets or static parameterized do sites, and the
 generated child-activation spawn subset with optional static `(params ...)`,
 optional `(bind ...)` handoffs, and optional declared same-domain
 `(domain NAME)` ownership metadata followed by same-body `await_all`, or by
@@ -1148,9 +1148,15 @@ For a switch branch, the selector targets the branch-owned repeat init state:
     (default (-> parent_done_8))))
 ```
 
-Those nested subsets are local-only. They reject `(params ...)`, `(bind ...)`,
-`(domain NAME)`, already-generated child targets, deeper branch nesting,
-loop-contained repeats, and generated/spawned nested activation.
+The `when` nested repeat subset accepts local plain `(do child)` and plain
+generated-child `(do child)` when the target is already generated elsewhere.
+The generated-child case emits one deterministic
+`{parent}_{child}_repeat_do_{ordinal}` instance and waits for that instance's
+fresh done handoff before the nested repeat check. The `switch` nested repeat
+subset remains local-only. Both nested subsets reject `(params ...)`,
+`(bind ...)`, `(domain NAME)`, deeper branch nesting, loop-contained repeats,
+and generated/spawned nested activation beyond the documented when-body
+generated-child do case.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
@@ -1201,8 +1207,9 @@ live until a later same-body `await_all` drain:
 ```
 
 Cross-domain repeat-body `do`, cross-domain spawn, broader outstanding-child
-semantics, generated/spawned nested activation, and deeper branch/loop forms
-remain fail-closed until their re-entry and report behavior is specified.
+semantics, generated/spawned nested activation beyond the documented top-level
+when-body generated-child do case, and deeper branch/loop forms remain
+fail-closed until their re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 
