@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body spawn-after-sample ordering selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`.
+- Selected top-level repeat-body spawn-after-sample ordering as the next
+  bounded implementation subset.
+- The selected timing contract emits pending samples before the later spawn
+  state, then requires same-body `await_all` or single-pending `await_any`
+  before the repeat check can loop.
+- Sample-before/after-do timing, nested placement, cross-domain activation,
+  multi-pending `await_any`, and broader outstanding-child semantics remain
+  deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`.
+
 ## 2026-05-17: R14 — ISF repeat-body generated do domain metadata shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`.
 - Top-level repeat bodies may now use generated blocking

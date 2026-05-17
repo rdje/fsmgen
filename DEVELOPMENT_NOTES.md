@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body spawn-after-sample has explicit order
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.13` selects spawn-after-sample ordering
+  because the repeat lowering already has a natural timing point for pending
+  samples before child activation.
+- The intended implementation should drain pending samples into an explicit
+  sample state before emitting the spawn state, then require the existing
+  same-body `await_all` or single-pending `await_any` before repeat re-entry.
+- This is still narrower than broader outstanding-child work: multi-pending
+  `await_any`, nested activation, cross-domain activation, and
+  sample-before/after-do timing remain separate.
 ## 2026-05-17: repeat-body generated do domains reuse same-domain metadata
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.12` implements only the same-domain
   generated repeat-body `do` metadata subset. The source domain annotation is

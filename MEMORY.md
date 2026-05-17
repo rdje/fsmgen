@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body spawn-after-sample ordering selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`.
+- The active R14 task tree now selects top-level repeat-body
+  spawn-after-sample ordering as the next bounded implementation subset.
+- The selected contract allows repeat-body samples before a later same-body
+  spawn only when the same repeat body still reaches `await_all` or
+  single-pending `await_any` before the repeat check can loop.
+- Pending samples must materialize in an explicit sample state before the
+  spawn state, then the spawned static instance must be synchronized before
+  the repeat back-edge.
+- Sample-before/after-do timing, nested placement, cross-domain activation,
+  multi-pending `await_any`, and broader outstanding-child semantics remain
+  deferred.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body generated do domain metadata shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

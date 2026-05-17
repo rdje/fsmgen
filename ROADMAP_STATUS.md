@@ -48,13 +48,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   metadata subset, preserving generated-child instance ownership in
   generated-composition metadata and `clock_domains[].child_instances`
   summaries without changing done-gated repeat re-entry. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`; plain local do targeting
-  an already generated child, nested placement,
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.14` after
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.13` selected repeat-body
+  spawn-after-sample ordering. That selected timing contract emits pending
+  samples before the later spawn state and still requires same-body
+  `await_all` or single-pending `await_any` before repeat re-entry. Plain
+  local do targeting an already generated child, nested placement,
   cross-domain activation, multi-pending `await_any`,
-  spawn-after-sample ordering, and sample-before/after-do timing remain
-  deferred. The workflow also requires task-tree ownership before any code,
-  test, source, generated-artifact, or config change. Push cadence is every 30
-  unpushed commits unless the user explicitly requests an earlier push.
+  sample-before/after-do timing, and broader outstanding-child semantics
+  remain deferred. The workflow also requires task-tree ownership before any
+  code, test, source, generated-artifact, or config change. Push cadence is
+  every 30 unpushed commits unless the user explicitly requests an earlier
+  push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and

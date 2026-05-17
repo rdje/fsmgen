@@ -283,8 +283,13 @@ site, sample-before/after-do timing, spawn-after-sample ordering,
 multi-pending `await_any`, and spawn nested under branch or loop bodies remain
 backlog until their re-entry, binding, domain, and report contracts are
 specified.
-The next repeat-body activation task-tree leaf has not yet selected a
-post-domain-metadata implementation subset.
+The next selected task-tree leaf is the spawn-after-sample ordering subset:
+top-level repeat-body samples may appear before a later same-body spawn, as
+long as that same repeat body still reaches `await_all` or single-pending
+`await_any` before the repeat check can loop. The selected timing contract is
+that pending samples materialize in an explicit sample state before the spawn
+state, then the spawned static instance is synchronized before the repeat
+back-edge.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
