@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained local do while spawn pending is the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.57` selects the first spawned/blocked
+  interaction after the branch-contained nested spawn drain leaves.
+- The selected implementation should allow only local `(do child)` inside a
+  repeat directly under a top-level `when` body after one or more generated
+  nested spawns are pending and before a later same-body `await_all` drains
+  those generated spawns.
+- The key proof is lifetime preservation: the local do must wait for its
+  fresh local child done pulse without clearing the pending generated-spawn
+  set, and the later `await_all` must still gate nested repeat re-entry on all
+  outstanding generated child done handoffs.
+- Generated `do` while spawn pending, switch-contained pending-spawn do,
+  `await_any` before the do, new spawn after the do before drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain separate contracts.
 ## 2026-05-17: switch-contained nested await_any drain reuses outstanding spawn sets
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.56` implements only the selected
   switch-contained multi-pending `await_any` drain subset.

@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF when-contained repeat do while spawn pending selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.57`.
+- Selected top-level `when` bodies containing nested repeats with one or more
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites, followed by local `(do child)` while those generated spawns remain
+  pending, and a later same-body `(await_all done)` drain before the nested
+  repeat check can loop.
+- The selected surface keeps the do target local to the parent scheduled
+  module and keeps the generated spawn done set live until the later drain.
+- Generated `do` while spawn pending, the switch-contained analogue,
+  `await_any` observation before the do, new spawn after the do before drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred. The active frontier advances
+  to `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`.
+
 ## 2026-05-17: R14 — ISF switch-contained repeat await_any drain shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.56`.
 - Top-level `switch` branches may now contain nested repeats with two or more

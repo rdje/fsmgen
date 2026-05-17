@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: when-contained repeat do while spawn pending selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.57`.
+- The active R14 task tree now selects a repeat directly inside a top-level
+  `when` body with one or more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  followed by local `(do child)` while those generated spawns are still
+  pending, and a later same-body `(await_all done)` drain before the nested
+  repeat check can loop.
+- The selected contract keeps the do target local to the parent scheduled
+  module and requires the generated spawn done set to remain live across the
+  local do state until the later drain.
+- Generated `do` while spawn pending, the switch-contained analogue,
+  `await_any` observation before the do, new spawn after the do before drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain deferred.
+- The mdBook feature backlog documents the selected surface as not shipped
+  yet.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`.
+- Workflow note: push cadence remains every 30 unpushed commits unless the
+  user explicitly requests an earlier push.
 ## 2026-05-17: switch-contained repeat await_any drain shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.56`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
