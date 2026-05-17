@@ -23,7 +23,8 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-REPEAT-SPAWN-PARAMS` | `active` | `R14` | `ISF-REPEAT-SPAWN-PARAMS.2` | [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md) |
+
+No active task trees are open.
 
 ## Proposed Task Trees
 
@@ -38,6 +39,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-SPAWN-PARAMS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md) |
 | `ISF-SPAWN-IN-REPEAT` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md) |
 | `ISF-DYNAMIC-WAIT-PHASE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md) |

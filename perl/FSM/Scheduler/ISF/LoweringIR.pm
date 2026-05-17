@@ -2934,16 +2934,17 @@ sub _transaction_param_declarations {
 }
 
 sub _spawn_ref_from_clause {
-    my ($clause, $tn, $constant_values, $actor) = @_;
+    my ($clause, $tn, $constant_values, $actor, $label) = @_;
+    $label //= 'transaction body';
     my $instance = $clause->[3] // "${tn}_spawn";
     my $ref = {
         child => $clause->[1],
         instance => $instance,
-        parameter_overrides => _spawn_parameter_overrides($clause, $tn, 'transaction body', $constant_values, $actor),
+        parameter_overrides => _spawn_parameter_overrides($clause, $tn, $label, $constant_values, $actor),
     };
-    my $domain = _activation_domain_from_clause($clause, $tn, 'transaction body');
+    my $domain = _activation_domain_from_clause($clause, $tn, $label);
     $ref->{domain} = $domain if defined $domain;
-    my $port_bindings = _activation_bindings_from_clause($clause, $tn, 'transaction body');
+    my $port_bindings = _activation_bindings_from_clause($clause, $tn, $label);
     $ref->{port_bindings} = $port_bindings if @$port_bindings;
     return $ref;
 }
@@ -3615,8 +3616,21 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'spawn') {
             confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses\n"
                 unless $label eq 'transaction body';
-            confess "Transaction '$tn': repeat-body spawn supports only plain '(spawn child as instance)' before the re-entry contract is widened\n"
-                unless @$body_clause == 4;
+            for my $subclause (@{$body_clause}[4 .. $#$body_clause]) {
+                confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)' in the parameterized spawn subset\n"
+                    unless ref($subclause) eq 'ARRAY'
+                        && @$subclause
+                        && defined($subclause->[0])
+                        && !ref($subclause->[0])
+                        && length($subclause->[0]);
+                my $head = $subclause->[0];
+                next if $head eq 'params';
+                confess "Transaction '$tn': repeat-body spawn '(bind ...)' is not supported before repeat re-entry payload timing is specified\n"
+                    if $head eq 'bind';
+                confess "Transaction '$tn': repeat-body spawn '(domain ...)' is not supported before repeat cross-domain ownership is specified\n"
+                    if $head eq 'domain';
+                confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)' subclause in the parameterized spawn subset\n";
+            }
             confess "Transaction '$tn': repeat-body spawn cannot follow pending samples in the first spawn-in-repeat subset\n"
                 if $pending_sample_run;
             push @pending_spawns, $body_clause->[3];
@@ -4917,7 +4931,7 @@ sub _ir_repeat {
         elsif($bk eq'store'||$bk eq'load'){_push_sample_state(\@s,$tn,\@lp,$ir);my($state,$accesses)=_ir_bank_access($bc,$tn,$$ir++,$actor,$widths,'transaction');push @s,$state;push @$bank_accesses,@$accesses if ref($bank_accesses)eq'ARRAY'}
         elsif($bk eq'spawn'){
             _push_sample_state(\@s,$tn,\@lp,$ir);
-            my $spawn_ref = _spawn_ref_from_clause($bc,$tn,$constant_values || {},$actor);
+            my $spawn_ref = _spawn_ref_from_clause($bc,$tn,$constant_values || {},$actor,'repeat body');
             push @$spawn_refs, $spawn_ref if ref($spawn_refs) eq 'ARRAY';
             push @spawn_done_ports, "$spawn_ref->{instance}_done";
             push @s,_ir_spawn($bc,$tn,$$ir++);

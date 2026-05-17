@@ -30,6 +30,11 @@ for my $path (@loop_docs) {
         qr/repeat(?:-body| body).*spawn.*(?:same-body|same repeat body).*await_all/s,
         "$path documents the shipped repeat-body spawn plus same-body await_all subset",
     );
+    like(
+        $content,
+        qr/repeat(?:-body| body).*spawn.*params/s,
+        "$path documents the shipped repeat-body spawn static params subset",
+    );
 }
 
 done_testing();

@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF repeat-body spawn params shipped
+- Completed `ISF-REPEAT-SPAWN-PARAMS.2` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so the shipped top-level
+  repeat-body spawn plus same-body `await_all` subset accepts the optional
+  static `(params ...)` subclause.
+- Repeat-body spawn parameter overrides now flow into the generated-child
+  instance metadata and generated-top `?fsmc` parameter block for the one
+  lexical child instance reused across repeat iterations.
+- Repeat-body `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples after
+  repeat-body spawn, and nested branch/loop activation remain fail-closed.
+- Extended `t/1215-isf-spawn-parameter-binding.t` for accepted repeat-body
+  parameter overrides plus bind/domain rejections, widened doc truth audits,
+  and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook
+  transaction/control-flow/lowering/backlog and feature-matrix chapters,
+  roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl modules/tests passed; focused
+  repeat/spawn/doc tests passed with `Files=5, Tests=236`;
+  `mdbook build docs/book` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1044`; `git diff --check` passed.
 ### R14 — ISF repeat-body spawn params contract selected
 - Completed `ISF-REPEAT-SPAWN-PARAMS.1`.
 - Created the active `ISF-REPEAT-SPAWN-PARAMS` task tree and selected static

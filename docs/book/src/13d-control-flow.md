@@ -131,10 +131,11 @@ The shipped nested-control subset is explicit. A `switch` branch may contain a
 supported inside top-level `when` and `switch` bodies. The shipped repeat-body
 clause surface is named drive calls, `await`, `sample`, `update`, `set`,
 `shift_left`, `shift_right`, `assemble`, `extract`, actor-owned bank `store`
-and `load`, shipped `wait` clauses, and top-level repeat-body plain spawn
-followed by same-body `await_all`. `do`, `await_any`, broader spawn activation
-forms, `stage`, `contract`, nested `while`, and nested `until` remain outside
-the shipped repeat-body subset. Unsupported nested forms now fail closed
+and `load`, shipped `wait` clauses, and top-level repeat-body spawn with
+optional static `(params ...)` followed by same-body `await_all`. `do`,
+`await_any`, spawn activation `(bind ...)`, spawn activation `(domain ...)`,
+`stage`, `contract`, nested `while`, and nested `until` remain outside the
+shipped repeat-body subset. Unsupported nested forms now fail closed
 during lowering instead of disappearing from scheduled `.fsm` output.
 
 ```lisp

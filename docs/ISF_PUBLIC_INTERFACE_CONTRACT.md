@@ -792,13 +792,15 @@ one list-form body clause before repeat counter emission.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
-top-level plain-spawn plus same-body `await_all` subset. `do`, `await_any`,
-broader spawn activation forms, `stage`, `contract`, nested `while`, and
+top-level spawn plus same-body `await_all` subset with optional static
+`(params ...)` overrides. `do`, `await_any`, spawn activation `(bind ...)`,
+spawn activation `(domain ...)`, `stage`, `contract`, nested `while`, and
 nested `until` remain outside the shipped repeat-body subset.
-The shipped repeat-body child-activation subset is plain
-`(spawn child as instance)` followed by a same-body `(await_all done)` before
-the repeat check can loop, reusing one static generated child instance across
-iterations.
+The shipped repeat-body child-activation subset is
+`(spawn child as instance [(params ...)])` followed by a same-body
+`(await_all done)` before the repeat check can loop, reusing one static
+generated child instance across iterations. Optional parameter overrides
+specialize that instance once in the generated top.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent
@@ -2021,7 +2023,8 @@ These are not stable public interfaces yet:
   sample-compatible runtime wait pending
   samples, and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public except for the documented
-  top-level repeat-body plain-spawn plus same-body `await_all` subset.
+  top-level repeat-body spawn plus optional static `(params ...)` and
+  same-body `await_all` subset.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
   wait counts, sample-incompatible runtime wait successors, nested loops, and
   loop bodies containing broader child activation, stages, or contracts need

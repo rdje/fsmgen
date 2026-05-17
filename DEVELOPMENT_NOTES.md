@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: repeat-body spawn params reuse generated-top specialization
+- `ISF-REPEAT-SPAWN-PARAMS.2` widens repeat-body spawn without changing the
+  repeat lifetime model. The lexical spawn name still maps to one generated
+  child instance, and `(params ...)` specializes that instance in the generated
+  top exactly once.
+- The implementation passes the repeat-body label into spawn-ref construction
+  so parameter diagnostics name the right source context, while keeping the
+  existing activation parameter parser and child declaration shape checks.
+- The repeat-body subset validator now permits only `(params ...)` after the
+  spawn instance name. It continues to reject `(bind ...)` and `(domain ...)`
+  because those need explicit runtime payload and clock-domain re-entry
+  contracts.
+- This slice deliberately does not alter the same-body `await_all` proof. The
+  repeat check is still reachable only after all pending spawned done ports
+  from the current iteration have been observed.
 ## 2026-05-16: repeat-body spawn params remain static specialization
 - `ISF-REPEAT-SPAWN-PARAMS.1` selects parameterized repeat-body spawn as the
   next safe subset after the plain-spawn plus same-body `await_all` contract.

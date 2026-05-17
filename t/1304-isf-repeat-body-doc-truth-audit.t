@@ -29,6 +29,7 @@ my @shipped_terms = qw(
     load
     wait
     spawn
+    params
     await_all
 );
 

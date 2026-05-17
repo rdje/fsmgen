@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-REPEAT-SPAWN-PARAMS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-16`
 - Last updated: `2026-05-16`
@@ -45,7 +45,7 @@ same-body `await_all` re-entry proof.
 ## Task Tree
 
 - ID: `ISF-REPEAT-SPAWN-PARAMS`
-  Status: `active`
+  Status: `done`
   Goal: `Ship static parameter overrides for repeat-body spawn.`
   Children: `ISF-REPEAT-SPAWN-PARAMS.1`, `ISF-REPEAT-SPAWN-PARAMS.2`
 
@@ -57,18 +57,18 @@ same-body `await_all` re-entry proof.
   Commit: `ISF-REPEAT-SPAWN-PARAMS.1: select repeat spawn params contract`
 
 - ID: `ISF-REPEAT-SPAWN-PARAMS.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Implement repeat-body spawn parameter overrides.`
   Acceptance: `Lowering, generated-top parameter wiring, fail-closed diagnostics, docs, and ISF gates prove the parameterized repeat-spawn subset.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `syntax checks; focused repeat/spawn/doc tests; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `ISF-REPEAT-SPAWN-PARAMS.2: implement repeat spawn params`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-REPEAT-SPAWN-PARAMS.1` | `done` | The first parameterized repeat-body spawn contract is selected and documented. |
-| 2 | `ISF-REPEAT-SPAWN-PARAMS.2` | `pending` | Implements the documented parameterized repeat-spawn subset. |
+| 2 | `ISF-REPEAT-SPAWN-PARAMS.2` | `done` | Implemented the documented parameterized repeat-spawn subset. |
 
 ## Decisions
 
@@ -94,15 +94,20 @@ same-body `await_all` re-entry proof.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- |
 | `2026-05-16` | `ISF-REPEAT-SPAWN-PARAMS.1` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed` |
+| `2026-05-16` | `ISF-REPEAT-SPAWN-PARAMS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1202-isf-repeat-clause-boundary.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused checks, book build, full ISF gate, and diff check passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-REPEAT-SPAWN-PARAMS.1` | `ISF-REPEAT-SPAWN-PARAMS.1: select repeat spawn params contract` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
+| `ISF-REPEAT-SPAWN-PARAMS.2` | `ISF-REPEAT-SPAWN-PARAMS.2: implement repeat spawn params` | `pending commit hash; leaf completed and ready for COMMIT.md workflow` |
 
 ## Changelog
 
 - `2026-05-16`: Created task tree and selected static parameter overrides as
   the next safe repeat-body spawn subset after the plain-spawn plus same-body
   `await_all` re-entry contract shipped.
+- `2026-05-16`: Closed `ISF-REPEAT-SPAWN-PARAMS.2` and the task tree after
+  implementing repeat-body spawn `(params ...)`, documenting the shipped
+  optional static specialization behavior, and validating the broad ISF gate.

@@ -14,7 +14,7 @@ use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Scheduler::ISF::LoweringIR;
 
-subtest 'repeat body spawn reuses one static child instance through await_all' => sub {
+subtest 'repeat body parameterized spawn reuses one static child instance through await_all' => sub {
     my $source = <<'ISF';
 (actor repeat_spawn
   (clock clk)
@@ -28,10 +28,16 @@ subtest 'repeat body spawn reuses one static child instance through await_all' =
   (transaction parent
     (on start)
     (repeat loops
-      (spawn worker as w0)
+      (spawn worker as w0
+        (params
+          (WIDTH 16)
+          (LANES (8'hA5 8'h3C))))
       (await_all done))
     (complete done))
   (transaction worker
+    (params
+      (WIDTH 8)
+      (LANES (8'h00 8'h00)))
     (drive tick)
     (complete done)))
 ISF
@@ -44,8 +50,14 @@ ISF
         'repeat body static instance targets the worker transaction');
     is($ir->{spawn_instances}[0]{instance}, 'w0',
         'repeat body static instance preserves the lexical spawn name');
-    is_deeply($ir->{spawn_instances}[0]{parameter_overrides}, [],
-        'repeat body static instance has no parameter overrides in the first subset');
+    is_deeply(
+        $ir->{spawn_instances}[0]{parameter_overrides},
+        [
+            { name => 'WIDTH', value => '16' },
+            { name => 'LANES', value => ["8'hA5", "8'h3C"] },
+        ],
+        'repeat body static instance preserves parameter overrides',
+    );
 
     my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
     my $parent_fsm = $lowered->{files}{'repeat_spawn.fsm'};
@@ -63,8 +75,12 @@ ISF
         'repeat body await_all waits for the child done before the repeat check');
     like($parent_fsm, qr/\(parent_repeat_check_4[\s\S]*\(=1 \(-> parent_repeat_init_1\)\)/,
         'repeat check can only loop after the await_all state');
-    like($top_fsm, qr/\(\?fsmc:w0 worker\)/,
+    like($child_fsm, qr/\(\+params\s+\(WIDTH 8\)\s+\(LANES \(8'h00 8'h00\)\)\s+\)/s,
+        'repeat-spawn child emits transaction parameter defaults');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
         'generated top instantiates the repeated static child once');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\(LANES \(8'hA5 8'h3C\)\)\s+\)\s+\)/s,
+        'generated top applies repeat-spawn parameter overrides once on the static child instance');
     like($top_fsm, qr/\(repeat_spawn\.w0_start w0\.start\)/,
         'generated top wires the repeated spawn start handoff');
     like($top_fsm, qr/\(w0\.done repeat_spawn\.w0_done\)/,
@@ -281,21 +297,36 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat spawn with parameter override', qr/repeat-body spawn supports only plain '\(spawn child as instance\)' before the re-entry contract is widened/);
-(actor repeat_spawn_with_params
+    assert_lower_rejected(<<'ISF', 'repeat spawn with bind', qr/repeat-body spawn '\(bind \.\.\.\)' is not supported/);
+(actor repeat_spawn_with_bind
+  (clock clk)
+  (interface (input start) (input payload (width 8)) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0
+        (bind
+          (input data payload)))
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (ports
+      (input data (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat spawn with domain override', qr/repeat-body spawn '\(domain \.\.\.\)' is not supported/);
+(actor repeat_spawn_with_domain
   (clock clk)
   (interface (input start) (input loops (width 3)) (output done))
   (transaction parent
     (on start)
     (repeat loops
       (spawn worker as w0
-        (params
-          (WIDTH 16)))
+        (domain fast))
       (await_all done))
     (complete done))
   (transaction worker
-    (params
-      (WIDTH 8))
     (complete done)))
 ISF
 

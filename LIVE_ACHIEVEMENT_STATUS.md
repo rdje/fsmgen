@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF repeat-body spawn params shipped
+- Completed R14 task-tree slice:
+  `ISF-REPEAT-SPAWN-PARAMS.2` in
+  [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md).
+- The `ISF-REPEAT-SPAWN-PARAMS` tree is now closed. No active ISF task tree
+  remains open; the next R14 PNT slice must select or create a new task tree
+  first.
+- Top-level repeat bodies may now contain
+  `(spawn child as inst (params ...))` when the same repeat body reaches
+  `(await_all done)` before the repeat check can loop.
+- Parameter overrides specialize the single lexical generated child instance
+  once in the generated top; they are not per-iteration runtime values.
+- Repeat-body `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples after
+  repeat-body spawn, and nested branch/loop activation remain fail-closed.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl modules/tests passed; focused
+  repeat/spawn/doc tests passed with `Files=5, Tests=236`;
+  `mdbook build docs/book` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1044`; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF repeat-body spawn params contract selected
 - Completed R14 task-tree slice:
   `ISF-REPEAT-SPAWN-PARAMS.1` in

@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF repeat-body spawn params shipped
+- Completed `ISF-REPEAT-SPAWN-PARAMS.2` and closed
+  [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts repeat-body `(spawn child as inst (params ...))` in the shipped
+  top-level repeat-body spawn plus same-body `await_all` subset.
+- Parameter overrides specialize the single lexical generated child instance
+  once in the generated top. Repeat iteration does not create per-iteration
+  parameter values or per-iteration hardware.
+- Repeat-body spawn `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples
+  after repeat-body spawn, and nested branch/loop activation remain fail-closed
+  with targeted diagnostics or existing unsupported-surface checks.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/control-flow/lowering/backlog/feature-matrix chapters,
+  roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl modules/tests passed; focused
+  repeat/spawn/doc tests passed with `Files=5, Tests=236`;
+  `mdbook build docs/book` passed; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1044`; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 PNT slice must select or
+  create a new task tree first.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF repeat-body spawn params contract selected
 - Completed `ISF-REPEAT-SPAWN-PARAMS.1` in
   [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md).

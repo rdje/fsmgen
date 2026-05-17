@@ -425,13 +425,16 @@ counter, widened to the largest branch requirement.
 The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
-top-level plain-spawn plus same-body `await_all` subset. `do`, `await_any`,
-broader spawn activation forms, `stage`, `contract`, nested `while`, and
+top-level spawn plus same-body `await_all` subset with optional static
+`(params ...)` overrides. `do`, `await_any`, spawn activation `(bind ...)`,
+spawn activation `(domain ...)`, `stage`, `contract`, nested `while`, and
 nested `until` remain outside the shipped repeat-body subset.
-The shipped repeat-body child-activation subset is plain
-`(spawn child as instance)` followed by a same-body `(await_all done)` before
-the repeat check can loop. The lexical spawn name denotes one static generated
-child instance reused across repeat iterations.
+The shipped repeat-body child-activation subset is
+`(spawn child as instance [(params ...)])` followed by a same-body
+`(await_all done)` before the repeat check can loop. The lexical spawn name
+denotes one static generated child instance reused across repeat iterations,
+and optional parameter overrides specialize that instance once in the
+generated top.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is
@@ -442,11 +445,12 @@ semantics important: a fully general repeat contract must either define
 zero-count as "skip the body" or reject zero as an illegal count before the
 loop body can run.
 
-For the shipped repeat-body spawn subset, `(spawn child as name)` still reuses
-one static child instance named `name`. It does not elaborate one child per
-iteration. The same repeat body must reach `(await_all done)` before the
-repeat check can loop, so a later iteration cannot start the static instance
-again until its fresh completion has been observed.
+For the shipped repeat-body spawn subset, `(spawn child as name)` or
+`(spawn child as name (params ...))` still reuses one static child instance
+named `name`. It does not elaborate one child per iteration. The same repeat
+body must reach `(await_all done)` before the repeat check can loop, so a
+later iteration cannot start the static instance again until its fresh
+completion has been observed.
 
 ## `(while cond body...)` / `(until cond body...)` — Transaction Loops
 

@@ -239,24 +239,17 @@ busy/re-entry rule before this can ship: either prove or insert sequencing so
 each later iteration observes the child's fresh done pulse before starting it
 again, or reject the loop with a targeted diagnostic.
 
-Shipped first implementation subset: a top-level repeat body may use plain
-`(spawn child as inst)` clauses when the same repeat body reaches
-`(await_all done)` before the repeat check can loop. That `await_all` consumes
-the pending done ports for the spawned child instances, so the next iteration
-cannot re-assert an instance start before the previous activation has returned
-fresh done. `await_any`, repeat-body `do`, activation `(params ...)`,
-activation `(bind ...)`, activation `(domain ...)`, and spawn nested under
-branch or loop bodies remain backlog until their re-entry, binding, and report
-contracts are specified.
-
-Selected next subset: repeat-body spawn parameter overrides will reuse the
-same static specialization contract as top-level spawn. A top-level repeat
-body may use `(spawn child as inst (params ...))` only when the same body
-reaches `(await_all done)` before the repeat check can loop. The override
-values specialize the one lexical child instance in the generated top; they do
-not create per-iteration parameter values. Repeat-body `(bind ...)`,
-`(domain ...)`, `await_any`, `do`, and nested branch/loop activation remain
-backlog.
+Shipped subset: a top-level repeat body may use
+`(spawn child as inst [(params ...)])` clauses when the same repeat body
+reaches `(await_all done)` before the repeat check can loop. That `await_all`
+consumes the pending done ports for the spawned child instances, so the next
+iteration cannot re-assert an instance start before the previous activation
+has returned fresh done. Parameter overrides reuse the same static
+specialization contract as top-level spawn: they specialize the one lexical
+child instance in the generated top and do not create per-iteration parameter
+values. `await_any`, repeat-body `do`, activation `(bind ...)`, activation
+`(domain ...)`, and spawn nested under branch or loop bodies remain backlog
+until their re-entry, binding, and report contracts are specified.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
