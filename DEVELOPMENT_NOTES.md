@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained repeat spawn await_any reuses the single-child proof
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.48` implements only the selected
+  switch-contained nested repeat single-spawn `await_any` subset.
+- The validator now allows same-body `(await_any done)` for that nested
+  switch-branch placement only when exactly one generated spawn is pending.
+  Because the subset still rejects a second pending nested spawn, `await_any`
+  observes the same generated child done handoff as `await_all` before the
+  switch-branch nested repeat check can loop.
+- The implementation widens diagnostics from "same-body await_all" to
+  "same-body sync" where both shipped sync forms are now valid. Multiple
+  pending nested spawns, spawned/blocked child interaction, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  lifetime semantics remain separate contracts.
 ## 2026-05-17: switch-contained repeat spawn await_any is the next nested spawn subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.47` selects the direct switch-contained
   analogue of the shipped when-contained single-spawn `await_any` subset.

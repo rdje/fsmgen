@@ -3851,7 +3851,7 @@ sub _validate_repeat_body_spawn_subset {
                 unless $top_level_repeat || $when_body_repeat || $switch_branch_repeat;
             confess "Transaction '$tn': when-body nested repeat spawn supports exactly one pending generated child before same-body sync in the current spawn-nesting subset\n"
                 if $when_body_repeat && $when_body_nested_spawn_seen;
-            confess "Transaction '$tn': switch-branch nested repeat spawn supports exactly one pending generated child before same-body await_all in the current spawn-nesting subset\n"
+            confess "Transaction '$tn': switch-branch nested repeat spawn supports exactly one pending generated child before same-body sync in the current spawn-nesting subset\n"
                 if $switch_branch_repeat && $switch_branch_nested_spawn_seen;
             confess "Transaction '$tn': repeat-body spawn cannot follow multi-pending await_any before same-body await_all drains outstanding children\n"
                 if $awaiting_multi_pending_drain;
@@ -3912,8 +3912,8 @@ sub _validate_repeat_body_spawn_subset {
                 unless @pending_spawns;
             confess "Transaction '$tn': when-body nested repeat spawn supports same-body '(await_any done)' only for exactly one pending generated child in the current spawn-nesting subset\n"
                 if $when_body_repeat && $keyword eq 'await_any' && @pending_spawns != 1;
-            confess "Transaction '$tn': switch-branch nested repeat spawn supports only same-body '(await_all done)' in the current spawn-nesting subset\n"
-                if $switch_branch_repeat && $keyword eq 'await_any';
+            confess "Transaction '$tn': switch-branch nested repeat spawn supports same-body '(await_any done)' only for exactly one pending generated child in the current spawn-nesting subset\n"
+                if $switch_branch_repeat && $keyword eq 'await_any' && @pending_spawns != 1;
             if ($keyword eq 'await_any' && @pending_spawns > 1) {
                 $awaiting_multi_pending_drain = 1;
                 next;
@@ -3926,7 +3926,7 @@ sub _validate_repeat_body_spawn_subset {
 
     confess "Transaction '$tn': when-body nested repeat spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the nested repeat check can loop\n"
         if $when_body_repeat && @pending_spawns;
-    confess "Transaction '$tn': switch-branch nested repeat spawn requires same-body '(await_all done)' before the nested repeat check can loop\n"
+    confess "Transaction '$tn': switch-branch nested repeat spawn requires same-body '(await_all done)' or single-pending '(await_any done)' before the nested repeat check can loop\n"
         if $switch_branch_repeat && @pending_spawns;
     confess "Transaction '$tn': repeat-body spawn requires same-body '(await_all done)' before the repeat check can loop\n"
         if $top_level_repeat && @pending_spawns;

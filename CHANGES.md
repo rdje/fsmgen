@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF switch-contained repeat spawn await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.48`.
+- Top-level `switch` branches may now contain nested repeats with exactly one
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  when the same nested repeat body reaches single-pending `(await_any done)`.
+- Lowering preserves source-order samples before nested spawn or sync states,
+  generated-top parameter overrides, input/output binding handoffs, declared
+  same-domain metadata, schedule-report port-binding provenance, and
+  clock-domain child-instance metadata.
+- Multiple pending nested spawns, `do` while a nested spawn is pending,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  task tree, roadmap board, live docs, and mdBook.
 ### R14 — ISF switch-contained repeat spawn await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.47`.
 - Selected top-level `switch` branches containing nested repeats with exactly
