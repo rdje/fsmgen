@@ -112,6 +112,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/top-level\s+`?switch`?\s+branch.*nested\s+repeat.*(?:multiple|one or more|generated spawns).*await_all/si,
+        "$path documents the shipped top-level switch-branch nested repeat multiple-spawn await_all subset",
+    );
+    like(
+        $content,
         qr/top-level\s+`?switch`?\s+branch.*nested\s+repeat.*spawn.*await_any/si,
         "$path documents the shipped top-level switch-branch nested repeat spawn await_any subset",
     );

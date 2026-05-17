@@ -1057,15 +1057,14 @@ repeat directly inside a top-level `when` body may contain one or more
 generated spawns with optional static `(params ...)`, optional `(bind ...)`
 handoffs, and optional declared same-domain `(domain NAME)` metadata when the
 same nested repeat body reaches `(await_all done)` before the nested repeat
-check can loop. The when-contained single-pending `(await_any done)` path is
-limited to exactly one pending generated child. A repeat directly inside a
-top-level `switch` branch may contain exactly one generated spawn on the
-same-body `(await_all done)` or single-pending `(await_any done)` paths.
-Sample-before-spawn and sample-after-spawn timing stay explicit, and the
-generated top still instantiates one static child per lexical `spawn`
-instance. Nested `await_any` for multiple pending generated children,
-switch-contained multiple nested spawns, and `do` while a nested spawn is
-pending remain fail-closed.
+check can loop. A repeat directly inside a top-level `switch` branch may
+contain the same multiple generated-spawn plus same-body `await_all` subset.
+Both branch-contained paths may use single-pending `(await_any done)` only
+when exactly one generated child is pending. Sample-before-spawn and
+sample-after-spawn timing stay explicit, and the generated top still
+instantiates one static child per lexical `spawn` instance. Nested
+`await_any` for multiple pending generated children and `do` while a nested
+spawn is pending remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1209,10 +1208,9 @@ or more generated spawns and optional samples around those spawns. The
 when-contained shape may use same-body `await_all` for one or more pending
 generated children, or single-pending same-body `await_any` for exactly one
 pending generated child, before the nested `repeat_check` state. The
-switch-contained shape remains exactly one generated spawn on same-body
-`await_all` or single-pending same-body `await_any`. The generated top applies
-any static parameter override, binding handoff, and same-domain metadata once
-to each lexical nested spawn instance.
+switch-contained shape follows the same rule. The generated top applies any
+static parameter override, binding handoff, and same-domain metadata once to
+each lexical nested spawn instance.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:

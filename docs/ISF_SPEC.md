@@ -1570,14 +1570,13 @@ Current lowering:
   `when` body also accept one or more generated
   `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
   when the same nested repeat body reaches `(await_all done)` before the
-  nested repeat check can loop; the same when-contained path may use
-  single-pending `(await_any done)` only when exactly one generated child is
-  pending. Repeats directly inside a top-level `switch` branch accept exactly
-  one generated spawn on the same-body `(await_all done)` or single-pending
-  `(await_any done)` paths. Those branch-contained nested spawns reuse the
-  static generated-child handoff model and preserve source-order samples
-  before the nested spawn or sync states; nested `await_any` for multiple
-  pending generated children, switch-contained multiple nested spawns, `do`
+  nested repeat check can loop. Repeats directly inside a top-level `switch`
+  branch accept the same multiple generated-spawn plus same-body `await_all`
+  subset. Both branch-contained paths may use single-pending
+  `(await_any done)` only when exactly one generated child is pending. Those
+  branch-contained nested spawns reuse the static generated-child handoff
+  model and preserve source-order samples before the nested spawn or sync
+  states; nested `await_any` for multiple pending generated children, `do`
   while a nested spawn is pending, deeper branch/loop nesting, and
   cross-domain activation remain fail-closed. Top-level
   repeat bodies also accept generated
@@ -1974,11 +1973,10 @@ declared same-domain `(domain NAME)` metadata, top-level
 switch-branch nested repeat local, plain generated-child `(do child)`, or
 static-parameter generated
 `(do child (params ...))` with optional `(bind ...)` handoffs and optional
-declared same-domain `(domain NAME)` metadata, top-level when-body nested
-repeat generated spawns with same-body `await_all` or single-pending
-same-body `await_any` when exactly one generated child is pending, top-level
-switch-branch nested repeat single generated spawn with same-body `await_all`
-or single-pending same-body `await_any`,
+declared same-domain `(domain NAME)` metadata, top-level when-body and
+switch-branch nested repeat generated spawns with same-body `await_all` or
+single-pending same-body `await_any` when exactly one generated child is
+pending,
 repeat-body
 generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]

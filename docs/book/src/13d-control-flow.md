@@ -174,16 +174,16 @@ done pulse. A repeat directly inside a top-level `when` body may also contain
 one or more generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
 when the same nested body reaches `(await_all done)` before the nested repeat
-check can loop; the when-contained single-pending `(await_any done)` path is
-limited to exactly one pending generated child. A repeat directly inside a
-top-level `switch` branch may contain exactly one generated spawn on the
-same-body `(await_all done)` or single-pending `(await_any done)` paths. Those
-branch-contained nested spawns reuse the static generated-child handoff model
-and preserve source-order samples before the spawn or sync states. Both
+check can loop. A repeat directly inside a top-level `switch` branch may
+contain the same multiple generated-spawn plus same-body `await_all` subset.
+Both branch-contained paths may use single-pending `(await_any done)` only
+when exactly one generated child is pending. Those branch-contained nested
+spawns reuse the static generated-child handoff model and preserve
+source-order samples before the spawn or sync states. Both
 branch-contained bound nested generated `do` subsets still reject deeper
 branch nesting and loop-contained repeats. Nested `await_any` for multiple
-pending generated children, switch-contained multiple nested spawns, and `do`
-while a nested spawn is pending remain fail-closed.
+pending generated children and `do` while a nested spawn is pending remain
+fail-closed.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and
 branch-contained spawned cases, `stage`, `contract`, nested `while`, and

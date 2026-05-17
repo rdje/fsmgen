@@ -477,14 +477,14 @@ rejected. A repeat directly inside a top-level `when` body may also contain
 one or more generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
 provided the same nested repeat body reaches `(await_all done)` before the
-nested repeat check can loop; the same when-contained path may use
-single-pending `(await_any done)` only when exactly one generated child is
-pending. A repeat directly inside a top-level `switch` branch may contain
-exactly one generated spawn on the same-body `(await_all done)` or
-single-pending `(await_any done)` paths. Those branch-contained nested spawns
-reuse the static generated-child handoff model, preserve source-order samples
-before the spawn or sync state, and keep the nested repeat check gated by the
-spawned child done handoffs. Cross-domain repeat-body `do`, generated or
+nested repeat check can loop. A repeat directly inside a top-level `switch`
+branch may contain the same multiple generated-spawn plus same-body
+`await_all` subset. Both branch-contained paths may use single-pending
+`(await_any done)` only when exactly one generated child is pending. Those
+branch-contained nested spawns reuse the static generated-child handoff model,
+preserve source-order samples before the spawn or sync state, and keep the
+nested repeat check gated by the spawned child done handoffs. Cross-domain
+repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained
 generated `do` cases and these branch-contained spawned cases, broader
 outstanding-child semantics, `stage`, `contract`, deeper branch nesting,
@@ -507,7 +507,7 @@ ownership metadata, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop,
 including the documented top-level when-body generated-spawn and
-switch-branch nested single-spawn subsets.
+switch-branch nested generated-spawn subsets.
 The lexical spawn name denotes one static generated child instance reused
 across repeat iterations, optional parameter overrides specialize that
 instance once in the generated top, optional input/output bindings create
@@ -658,7 +658,8 @@ same-body `await_all` drain. A `do` while any nested spawn is pending also
 remains fail-closed.
 
 The direct switch-branch analogue is also shipped for exactly one generated
-spawn in the selected branch:
+spawn in the selected branch, and for multiple generated spawns when the same
+branch-contained nested body drains them through same-body `await_all`:
 
 ```lisp
 (transaction parent
@@ -685,6 +686,35 @@ Only the selected branch enters the nested repeat region. The generated top
 still owns one static `w0` instance, applies the optional parameter/binding
 and same-domain metadata once, and the switch-branch repeat check remains
 unreachable until same-body `await_all` observes `w0_done`.
+
+When a switch branch contains two generated spawns, `await_all` is the shipped
+drain:
+
+```lisp
+(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (spawn worker as w0
+          (params (WIDTH 16))
+          (bind
+            (input data payload0)
+            (output resp result0))
+          (domain core))
+        (sample status as between)
+        (spawn worker as w1
+          (params (WIDTH 32))
+          (bind
+            (input data payload1)
+            (output resp result1))
+          (domain core))
+        (await_all done)))))
+  (complete done))
+```
+
+The generated top owns `w0` and `w1` as separate static child instances, and
+the nested repeat check is guarded by both done handoffs.
 
 The same generated-child shape is supported for a repeat directly inside a
 top-level `switch` branch:
@@ -737,10 +767,9 @@ Sample-before-spawn materializes before the spawn state; sample-after-spawn
 materializes before the sync state. The when-contained nested subset can have
 multiple generated spawns only on the same-body `await_all` path; the
 single-pending same-body `await_any` path is still exactly one generated
-spawn. The switch-contained subset remains exactly one generated spawn on
-same-body `await_all` or single-pending same-body `await_any`. Switch-contained
-multiple nested spawns, nested multi-pending `await_any`, and `do` while a
-nested spawn is pending are rejected until their own contracts ship.
+spawn. The switch-contained subset follows the same rule. Nested
+multi-pending `await_any` and `do` while a nested spawn is pending are rejected
+until their own contracts ship.
 For the shipped repeat-body local `do` subset, `(do child)` remains a local
 child activation when the target child remains in the parent scheduled module.
 If the same target child is already emitted as a generated child by another
@@ -819,7 +848,7 @@ same-body `await_any` subset applies to top-level `repeat` bodies and, in the
 narrower branch-contained forms documented above, to repeats directly inside a
 top-level `when` body or top-level `switch` branch. The when-contained branch
 form permits multiple generated spawns only on same-body `await_all`; the
-switch-contained branch form remains a single generated spawn. The shipped
+switch-contained branch form now follows the same rule. The shipped
 repeat-body local `(do child)` subset and the
 shipped when-contained and switch-contained repeat local/generated `do`
 exceptions apply only to their documented repeat placements, not to repeats

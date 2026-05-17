@@ -323,13 +323,13 @@ scope. Repeats directly inside a top-level `when` body may also use one or
 more generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites when
 the same nested repeat body reaches `(await_all done)` before the nested
-repeat check can loop; the same when-contained path may use single-pending
-`(await_any done)` only when exactly one generated child is pending. Repeats
-directly inside a top-level `switch` branch accept exactly one generated spawn
-on the same-body `(await_all done)` or single-pending `(await_any done)` paths.
-Those branch-contained nested spawn subsets reuse the static generated-child
-handoff model, preserve source-order samples before the nested spawn or sync
-states, and gate the nested repeat check on spawned child done handoffs.
+repeat check can loop. Repeats directly inside a top-level `switch` branch
+accept the same multiple generated-spawn plus same-body `await_all` subset.
+Both branch-contained paths may use single-pending `(await_any done)` only
+when exactly one generated child is pending. Those branch-contained nested
+spawn subsets reuse the static generated-child handoff model, preserve
+source-order samples before the nested spawn or sync states, and gate the
+nested repeat check on spawned child done handoffs.
 Cross-domain
 repeat-body `do`,
 generated/spawn nested activation beyond the documented branch-contained
@@ -378,28 +378,20 @@ explicit, and keeps the nested repeat re-entry gated on spawned child done
 handoffs.
 
 The switch-contained nested repeat spawn leaf covers the direct switch
-analogue: a repeat directly inside a top-level `switch` branch with exactly
-one generated
-`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` that
-reaches same-body `(await_all done)` or single-pending `(await_any done)`
-before the nested repeat check can loop. This subset is shipped. It reuses the
-static generated-child handoff model, keeps source-order samples before the
-spawn or sync states explicit, and keeps the nested repeat re-entry gated on
-the spawned child's done handoff.
+analogue: a repeat directly inside a top-level `switch` branch with one or
+more generated
+`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites that
+reach same-body `(await_all done)` before the nested repeat check can loop.
+This subset is shipped. Exactly one pending generated child may also use
+single-pending `(await_any done)`. It reuses the static generated-child
+handoff model, keeps source-order samples before the spawn or sync states
+explicit, and keeps the nested repeat re-entry gated on spawned child done
+handoffs.
 
-Nested `await_any` for multiple pending children, switch-contained multiple
-nested spawns, `do` while a nested spawn is pending, cross-domain activation,
-deeper branch/loop nesting, and broader outstanding-child semantics remain
-backlog beyond the shipped branch-contained spawn leaves.
-
-Next selected leaf: top-level `switch` branch nested repeats with two or more
-generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
-sites must drain through same-body `(await_all done)` before the nested repeat
-check can loop. This selected subset is not shipped yet. It intentionally
-mirrors the shipped when-contained multiple-spawn leaf while keeping nested
-`await_any` for multiple pending children, `do` while a nested spawn is
+Nested `await_any` for multiple pending children, `do` while a nested spawn is
 pending, cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics deferred.
+outstanding-child semantics remain backlog beyond the shipped
+branch-contained spawn leaves.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
