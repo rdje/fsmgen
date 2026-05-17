@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body await_any is limited to one pending child
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` ships the only `await_any` repeat-body
+  case that has the same re-entry proof as `await_all`: exactly one pending
+  static child instance.
+- Multi-pending `await_any` remains deferred because it would allow the repeat
+  back-edge to run while other static child instances may still be active,
+  making the next iteration's start pulses ambiguous without a broader
+  outstanding-child lifetime policy.
+- The implementation reuses the existing `sync_any` IR/emitter path after the
+  repeat-body subset validator proves there is exactly one pending spawn.
 ## 2026-05-17: repeat-body spawn domains are ownership metadata only
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` deliberately ships only the
   same-domain part of repeat-body `(domain NAME)`. The repeat body still

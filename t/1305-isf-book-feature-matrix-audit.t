@@ -122,7 +122,7 @@ my @required_examples = (
     'top-level ready/valid stages',
     'top-level contract arm states',
     'loop decision states',
-    'top-level repeat-body spawn with optional static params, optional bind handoffs, optional same-domain domain metadata, and same-body await_all',
+    'top-level repeat-body spawn with optional static params, optional bind handoffs, optional same-domain domain metadata, same-body await_all, and single-pending same-body await_any',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',
@@ -145,7 +145,7 @@ for my $example (@required_examples) {
 
 my @required_non_claims = (
     'Multi-bit CDC payloads',
-    'Blocking `do`, `await_any`',
+    'Blocking `do`, multi-pending `await_any`',
     'cross-domain activation inside repeat bodies',
     'Dynamic division/modulo nonzero proof is not shipped',
     'Enum members are not writable targets',

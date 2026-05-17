@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body single-pending await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`.
+- Repeat-body `(await_any done)` is now accepted on the shipped top-level
+  repeat-body spawn subset when exactly one spawned child is pending.
+- The lowerer emits the existing `sync_any` state in repeat bodies for that
+  single-child case, preserving the static-child re-entry proof before the
+  repeat check can loop.
+- Zero-pending and multi-pending repeat-body `await_any` remain fail-closed
+  with targeted diagnostics.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/composition/lowering/backlog/feature-matrix
+  chapters, roadmap board, and task tree.
 ### R14 — ISF repeat-body spawn same-domain metadata shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`.
 - Repeat-body spawn now accepts optional `(domain NAME)` annotations on the

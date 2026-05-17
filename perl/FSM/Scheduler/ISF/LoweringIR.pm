@@ -34,7 +34,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
     repeat => {
         map { $_ => 1 } qw(
             drive await sample update set shift_left shift_right assemble extract
-            store load wait spawn await_all
+            store load wait spawn await_all await_any
         )
     },
     while => {
@@ -3683,9 +3683,11 @@ sub _validate_repeat_body_spawn_subset {
             next;
         }
 
-        if ($keyword eq 'await_all') {
-            confess "Transaction '$tn': repeat-body await_all is supported only after repeat-body spawn clauses\n"
+        if ($keyword eq 'await_all' || $keyword eq 'await_any') {
+            confess "Transaction '$tn': repeat-body $keyword is supported only after repeat-body spawn clauses\n"
                 unless @pending_spawns;
+            confess "Transaction '$tn': repeat-body await_any is supported only when exactly one repeat-body spawn is pending; use await_all or split the loop before broader outstanding-child semantics ship\n"
+                if $keyword eq 'await_any' && @pending_spawns > 1;
             @pending_spawns = ();
             $pending_sample_run = 0;
             next;
@@ -4982,6 +4984,10 @@ sub _ir_repeat {
         }
         elsif($bk eq'await_all'){
             push @s,_ir_sync_all($tn,$$ir++,\@spawn_done_ports);
+            @spawn_done_ports = ();
+        }
+        elsif($bk eq'await_any'){
+            push @s,_ir_sync_any($tn,$$ir++,\@spawn_done_ports);
             @spawn_done_ports = ();
         }}
     if(@lp){push @s,_ir_sample_state($tn,\@lp,$$ir++)}

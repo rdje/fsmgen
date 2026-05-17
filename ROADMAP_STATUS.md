@@ -21,12 +21,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `(bind ...)` on the existing top-level repeat plus same-body `await_all`
   path. `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` then shipped repeat-body spawn
   `(domain NAME)` as declared same-domain ownership metadata on that static
-  instance subset. Repeat-body `await_any`, `do`, cross-domain activation,
+  instance subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` then shipped
+  repeat-body `(await_any done)` when exactly one repeat-body spawn is pending.
+  Repeat-body `do`, multi-pending `await_any`, cross-domain activation,
   samples after repeat-body spawn, and nested branch/loop activation remain
   deferred and tracked in the same active tree. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` for repeat-body `await_any`
-  outstanding-child semantics. The workflow also requires task-tree ownership
-  before any code, test, source,
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.5` for repeat-body blocking `do`
+  activation. The workflow also requires task-tree ownership before any code,
+  test, source,
   generated-artifact, or config change. Push cadence is every 30 unpushed
   commits unless the user explicitly requests an earlier push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
@@ -477,6 +479,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` then widened the same subset to accept
   optional declared same-domain `(domain NAME)` ownership metadata while
   keeping cross-domain activation fail-closed.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` then widened the same subset to accept
+  `(await_any done)` when exactly one repeat-body spawn is pending, while
+  keeping multi-pending outstanding-child semantics fail-closed.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization

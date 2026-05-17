@@ -295,6 +295,43 @@ ISF
     );
 };
 
+subtest 'repeat body await_any accepts exactly one pending static child' => sub {
+    my $source = <<'ISF';
+(actor repeat_spawn_await_any
+  (clock clk)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (await_any done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'repeat-body await_any keeps one static generated child instance');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'repeat_spawn_await_any.fsm'};
+    my $top_fsm = $lowered->{files}{'repeat_spawn_await_any_top.fsm'};
+
+    ok(defined($parent_fsm), 'repeat-spawn await_any parent scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'repeat-spawn await_any generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_spawn_2[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_any_3\)/,
+        'repeat body spawn advances to await_any');
+    like($parent_fsm, qr/\(parent_await_any_3[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_4\)/,
+        'single-pending repeat-body await_any waits for the one child done before the repeat check');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top instantiates the repeat-spawn await_any child once');
+};
+
 subtest 'parameterized do lowers through a generated child activation instance' => sub {
     my $source = <<'ISF';
 (actor parameterized_do_binding
@@ -438,6 +475,34 @@ ISF
     (on start)
     (repeat loops
       (await_all done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat await_any without spawn', qr/repeat-body await_any is supported only after repeat-body spawn clauses/);
+(actor repeat_await_any_without_spawn
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (await_any done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat await_any with multiple pending spawns', qr/repeat-body await_any is supported only when exactly one repeat-body spawn is pending/);
+(actor repeat_await_any_multi_pending
+  (clock clk)
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (spawn worker as w0)
+      (spawn worker as w1)
+      (await_any done))
     (complete done))
   (transaction worker
     (complete done)))

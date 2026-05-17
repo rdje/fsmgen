@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body single-pending await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`.
+- Top-level repeat bodies may now use `(await_any done)` after a repeat-body
+  spawn only when exactly one child instance is pending.
+- The subset preserves the static-child re-entry proof: the repeat check is
+  reached only after the one child has produced fresh `done`.
+- Zero-pending and multi-pending repeat-body `await_any` remain fail-closed.
+  The active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`.
+
 ## 2026-05-17: R14 — ISF repeat-body spawn same-domain metadata shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`.
 - Top-level repeat bodies may now use

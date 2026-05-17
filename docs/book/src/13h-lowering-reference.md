@@ -1026,7 +1026,7 @@ Repeat bodies lower named drive calls, awaits, samples, updates, the current
 data operations, and the first child-activation subset: spawn with optional
 static `(params ...)`, optional `(bind ...)` handoffs, and optional declared
 same-domain `(domain NAME)` ownership metadata followed by same-body
-`await_all`.
+`await_all`, or by same-body `await_any` when exactly one spawn is pending.
 
 `N` is a counter load value, not a structural replication count. A dynamic
 scalar count is therefore compatible with the hardware model when its width is
@@ -1034,7 +1034,9 @@ known, but it makes loop latency runtime-dependent and forces the zero-count
 policy to be explicit. For repeat-body spawn, the generated top still
 instantiates one static child instance for the lexical spawn name. The repeat
 body starts that instance, waits for the same instance's done port, and only
-then reaches the repeat check. If the spawn carries `(params ...)`, those
+then reaches the repeat check. `await_any` is allowed in this position only
+when exactly one spawn is pending, so it has the same re-entry proof as
+`await_all` for that child. If the spawn carries `(params ...)`, those
 overrides appear once on that static generated-top child instance, not on each
 iteration. If it carries `(bind ...)`, the generated parent handoff ports are
 also emitted once for that static instance and wired by the generated top. If
@@ -1057,9 +1059,9 @@ metadata and does not add CDC behavior:
     (=0 (-> parent_done_5))))
 ```
 
-Broader repeat-body child activation, including `await_any`, cross-domain
-spawn, `do`, and nested branch/loop forms, remains fail-closed until its
-re-entry and report behavior is specified.
+Broader repeat-body child activation, including multi-pending `await_any`,
+cross-domain spawn, `do`, and nested branch/loop forms, remains fail-closed
+until its re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

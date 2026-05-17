@@ -842,14 +842,17 @@ Rules:
   Top-level repeat bodies also accept
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses when the same repeat body reaches `(await_all done)` before the
-  repeat check can loop. Static parameter overrides specialize the one lexical
-  generated child instance and are not per-iteration runtime values. Input and
-  output bindings reuse the same generated-top handoff model as top-level
-  spawn: handoff ports are generated once for the static child instance.
-  Optional `(domain NAME)` annotations are declared same-domain ownership
-  metadata only; they do not imply CDC behavior or allow cross-domain
-  activation. `do`, `await_any`, `stage`, `contract`, nested `while`, and
-  nested `until` remain outside the shipped repeat-body subset.
+  repeat check can loop. `(await_any done)` is accepted in repeat bodies only
+  when exactly one repeat-body spawn is pending, so the static child cannot be
+  restarted before its fresh done pulse. Static parameter overrides specialize
+  the one lexical generated child instance and are not per-iteration runtime
+  values. Input and output bindings reuse the same generated-top handoff model
+  as top-level spawn: handoff ports are generated once for the static child
+  instance. Optional `(domain NAME)` annotations are declared same-domain
+  ownership metadata only; they do not imply CDC behavior or allow
+  cross-domain activation. `do`, multi-pending `await_any`, `stage`,
+  `contract`, nested `while`, and nested `until` remain outside the shipped
+  repeat-body subset.
 - Transaction `when`/`while`/`until` condition expressions may use local enum
   members such as `mode.BUSY` or package enum members such as
   `shared.mode.BUSY` as scalar operands. Local or package enum members may
@@ -1159,8 +1162,8 @@ Rules:
   Optional `(domain NAME)` annotations record declared same-domain activation
   ownership only; they are not CDC primitives and do not allow cross-domain
   activation. The same repeat body must consume pending done ports through
-  `await_all` before the repeat check can loop, preventing re-entry before
-  fresh child completion.
+  `await_all`, or through `await_any` when exactly one spawn is pending, before
+  the repeat check can loop, preventing re-entry before fresh child completion.
 
 ### 11.8 Stages, Contracts, Latency
 

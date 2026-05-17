@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body single-pending await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts repeat-body `(await_any done)` only when exactly one
+  repeat-body spawn is pending.
+- That subset is intentionally equivalent to waiting for the one static child
+  instance before the repeat check can loop, so it preserves the repeat
+  re-entry proof shipped for `await_all`.
+- Zero-pending and multi-pending repeat-body `await_any` fail closed with
+  targeted diagnostics until a broader outstanding-child lifetime contract
+  ships.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`; repeat-body `do`, multi-pending
+  `await_any`, nested activation, cross-domain activation, and
+  sample-after-spawn timing remain deferred.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body spawn same-domain metadata shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

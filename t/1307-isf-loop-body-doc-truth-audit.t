@@ -40,6 +40,11 @@ for my $path (@loop_docs) {
         qr/repeat(?:-body| body).*spawn.*domain/s,
         "$path documents the shipped repeat-body spawn same-domain metadata subset",
     );
+    like(
+        $content,
+        qr/repeat(?:-body| body).*spawn.*await_any/s,
+        "$path documents the shipped repeat-body single-pending await_any subset",
+    );
 }
 
 done_testing();

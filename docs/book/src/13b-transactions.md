@@ -427,9 +427,10 @@ The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
 top-level spawn plus same-body `await_all` subset with optional static
 `(params ...)` overrides, optional `(bind ...)` port handoffs, and optional
-declared same-domain `(domain NAME)` ownership metadata. `do`, `await_any`,
-`stage`, `contract`, nested `while`, and nested `until` remain outside the
-shipped repeat-body subset.
+declared same-domain `(domain NAME)` ownership metadata. Single-pending
+repeat-body `await_any` is also shipped when exactly one repeat-body spawn is
+pending. `do`, multi-pending `await_any`, `stage`, `contract`, nested `while`,
+and nested `until` remain outside the shipped repeat-body subset.
 The shipped repeat-body child-activation subset is
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
@@ -438,7 +439,8 @@ across repeat iterations, optional parameter overrides specialize that
 instance once in the generated top, optional input/output bindings create
 generated handoff ports once for that instance, and optional domain annotations
 group the static child with a declared same-domain activation owner without
-implying CDC behavior.
+implying CDC behavior. `(await_any done)` may replace `await_all` only when
+that repeat body has exactly one pending spawn.
 
 The repeat count is not an elaboration count. It is loaded into a runtime
 counter, so a named count may be a dynamic scalar signal when its width is
@@ -453,12 +455,12 @@ For the shipped repeat-body spawn subset, `(spawn child as name)` may add
 optional `(params ...)`, `(bind ...)`, and `(domain NAME)` subclauses while
 still reusing one static child instance named `name`. It does not elaborate
 one child per iteration. The same repeat body must reach `(await_all done)`
-before the repeat check can loop, so a later iteration cannot start the static
-instance again until its fresh completion has been observed. Binding handoff
-ports are generated once for the lexical instance and wired in the generated
-top just like top-level spawn bindings. Domain annotations are accepted only
-as declared same-domain ownership metadata; cross-domain activation remains a
-CDC/backlog item.
+or a single-pending `(await_any done)` before the repeat check can loop, so a
+later iteration cannot start the static instance again until its fresh
+completion has been observed. Binding handoff ports are generated once for the
+lexical instance and wired in the generated top just like top-level spawn
+bindings. Domain annotations are accepted only as declared same-domain
+ownership metadata; cross-domain activation remains a CDC/backlog item.
 
 ## `(while cond body...)` / `(until cond body...)` — Transaction Loops
 

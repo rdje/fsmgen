@@ -1542,18 +1542,20 @@ Current lowering:
   Top-level repeat bodies also accept the first child-activation subset:
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses followed by a same-body `(await_all done)` before the repeat check
-  can loop. That subset reuses one static generated child instance per
-  lexical spawn name; it does not create one child instance per repeat
-  iteration. Parameter overrides specialize that static instance once in the
-  generated top and use the same value/shape contract as top-level spawn.
-  Input and output bindings reuse the top-level generated-child handoff
-  contract: generated parent handoff ports are wired once in the generated
-  top for the static instance, not recreated per iteration. Optional
+  can loop. `(await_any done)` is also accepted in repeat bodies when exactly
+  one repeat-body spawn is pending, making the re-entry proof equivalent to
+  waiting for that one static child. That subset reuses one static generated
+  child instance per lexical spawn name; it does not create one child instance
+  per repeat iteration. Parameter overrides specialize that static instance
+  once in the generated top and use the same value/shape contract as top-level
+  spawn. Input and output bindings reuse the top-level generated-child handoff
+  contract: generated parent handoff ports are wired once in the generated top
+  for the static instance, not recreated per iteration. Optional
   `(domain NAME)` annotations are declared same-domain ownership metadata only:
   they group the static child instance with the activation domain and do not
-  imply CDC behavior or allow cross-domain activation. `do`, `await_any`,
-  `stage`, `contract`, nested `while`, and nested `until` remain outside the
-  shipped repeat-body subset.
+  imply CDC behavior or allow cross-domain activation. `do`, multi-pending
+  `await_any`, `stage`, `contract`, nested `while`, and nested `until` remain
+  outside the shipped repeat-body subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
@@ -1561,8 +1563,9 @@ dynamic scalar signals when their width is known, but they make transaction
 latency data-dependent and require a clear zero-count policy before the loop
 can be treated as fully general. Repeat-body spawn support preserves the same
 runtime-counter rule: the loop reactivates a lexically named static child
-instance after same-body `await_all`; it does not create one child instance
-per iteration.
+instance after same-body `await_all`, or after same-body `await_any` when
+exactly one child is pending; it does not create one child instance per
+iteration.
 
 ### 7.6.1 Transaction Wait
 
@@ -3208,12 +3211,13 @@ Focused tests:
   `ISF-ACTIVATION-BIND-EXPRESSIONS`.
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset and the top-level repeat-body spawn plus same-body
-  `await_all` subset with optional static `(params ...)` and optional
-  `(bind ...)` plus optional declared same-domain `(domain NAME)` metadata:
-  nested loops, loops under `when`/`switch`/`repeat`, and `while`/`until` loop
-  bodies containing `do`, `spawn`, `await_all`, `await_any`, `stage`, or
-  `contract` remain deferred until re-entry, child lifetime, and report
-  semantics are specified.
+  `await_all` or single-pending `await_any` subset with optional static
+  `(params ...)`, optional `(bind ...)`, and optional declared same-domain
+  `(domain NAME)` metadata: nested loops, loops under `when`/`switch`/`repeat`,
+  multi-pending repeat-body `await_any`, and `while`/`until` loop bodies
+  containing `do`, `spawn`, `await_all`, `await_any`, `stage`, or `contract`
+  remain deferred until re-entry, child lifetime, and report semantics are
+  specified.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

@@ -134,9 +134,10 @@ not mean "create N child instances." It means "activate the same lexically
 named child instance once per loop iteration." A design that needs parallel
 workers should author distinct spawn instance names, or use a future
 static-generation surface if one is added. The shipped repeat-body subset
-requires same-body `(await_all done)` before the repeat check can loop, so the
-scheduler rejects paths that could start the static child instance again before
-its fresh `done` pulse has been observed.
+requires same-body `(await_all done)`, or same-body `(await_any done)` when
+exactly one spawn is pending, before the repeat check can loop. The scheduler
+rejects paths that could start the static child instance again before its
+fresh `done` pulse has been observed.
 
 The base form is exact: `(spawn child as name)`. Optional nested subclauses add
 static parameter overrides, explicit port bindings, or declared same-domain

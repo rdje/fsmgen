@@ -133,7 +133,8 @@ clause surface is named drive calls, `await`, `sample`, `update`, `set`,
 `shift_left`, `shift_right`, `assemble`, `extract`, actor-owned bank `store`
 and `load`, shipped `wait` clauses, and top-level repeat-body spawn with
 optional static `(params ...)`, optional `(bind ...)`, and optional declared
-same-domain `(domain NAME)` metadata followed by same-body `await_all`. `do`,
+same-domain `(domain NAME)` metadata followed by same-body `await_all` or by
+same-body `await_any` when exactly one spawn is pending. `do`, multi-pending
 `await_any`, `stage`, `contract`, nested `while`, and nested `until` remain
 outside the shipped repeat-body subset. Unsupported nested forms now fail
 closed during lowering instead of disappearing from scheduled `.fsm` output.

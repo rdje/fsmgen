@@ -32,11 +32,12 @@ my @shipped_terms = qw(
     params
     domain
     await_all
+    await_any
 );
 
 my @deferred_terms = qw(
     do
-    await_any
+    multi-pending
     stage
     contract
     while
