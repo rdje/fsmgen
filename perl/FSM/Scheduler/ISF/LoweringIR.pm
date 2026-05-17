@@ -6730,6 +6730,8 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
     }
     return 1 if $kind eq 'bank_load'
         && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(bank_load latency_increment_request));
+    return 1 if $kind eq 'bank_store'
+        && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(bank_store latency_increment_request));
 
     return 0;
 }

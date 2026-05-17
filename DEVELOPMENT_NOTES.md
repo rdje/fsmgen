@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: independent bank stores can carry pending samples when they do not consume them
+- `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` adds the write-side bank
+  successor class to pending-sample runtime wait zero-bypass. The accepted
+  subset is limited to bank-store states whose stored value, scalarized
+  destination entries, and index guards do not reference any pending sample
+  alias.
+- The zero-count clone prepends pending sample assignments to the original
+  guarded scalarized store assignments and advances to the original
+  bank-store successor. This preserves zero-count timing without inserting a
+  hidden sample-only state and keeps positive-count paths on the original
+  bank-store state.
+- A store such as `(store data hold value)` remains fail-closed after
+  `(sample din as hold) (wait cycles)` because the zero-count clone would need
+  to sample `hold` and evaluate the index guard using `hold` in one state.
+  Likewise, `(store data idx hold)` and any store that overwrites a scalarized
+  entry named `hold` remain fail-closed.
+- Consecutive pending-sample runtime waits and unsupported stage, contract,
+  and loop/check-state successors remain deferred because their sample
+  materialization needs separate timing contracts.
 ## 2026-05-16: independent bank loads can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.1` adds the read-side bank
   successor class to pending-sample runtime wait zero-bypass. The accepted
@@ -14,9 +33,9 @@ This document captures engineering rationale, design constraints, and working de
   to sample `hold` and evaluate the index guard using `hold` in one state.
   Likewise, `(load data idx as hold)` remains fail-closed because it would
   overwrite the pending sample alias in the clone.
-- Bank stores remain deferred for pending-sample zero-bypass because writes to
-  actor-owned bank entries need a separate write-side timing and collision
-  contract.
+- A later slice independently enabled bank-store successors when their index
+  guards, stored value, and scalarized destination entries do not touch
+  pending sample aliases.
 ## 2026-05-16: independent extract states can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.1` adds the final narrow
   shift/assemble/extract data-operation successor class to pending-sample
@@ -31,9 +50,8 @@ This document captures engineering rationale, design constraints, and working de
   sample `hold` and read `hold` as the source word in one state. Likewise,
   `(extract packet as hold payload)` remains fail-closed because it would
   overwrite the pending sample alias in the clone.
-- A later slice independently enabled bank-load successors when they do not
-  touch pending sample aliases. Bank stores remain deferred because write-side
-  side effects need a separate timing contract from read-side loads.
+- Later slices independently enabled bank-load and bank-store successors when
+  they do not touch pending sample aliases.
 ## 2026-05-16: independent assemble states can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.1` adds the next narrow
   data-operation successor class to pending-sample runtime wait zero-bypass.
@@ -47,9 +65,8 @@ This document captures engineering rationale, design constraints, and working de
   sample `hold` and read `hold` as a concat part in one state. Likewise,
   `(assemble header payload as hold)` remains fail-closed because it would
   overwrite the pending sample alias in the clone.
-- A later slice independently enabled extract successors when they do not touch
-  pending sample aliases. Bank successors remain deferred so their store/load
-  side-effect timing can get explicit coverage.
+- Later slices independently enabled extract, bank-load, and bank-store
+  successors when they do not touch pending sample aliases.
 ## 2026-05-16: independent shifts can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.1` adds the next narrow
   data-operation successor class to pending-sample runtime wait zero-bypass.
@@ -60,9 +77,8 @@ This document captures engineering rationale, design constraints, and working de
 - A shift such as `(shift_left hold bit (width 8))` remains fail-closed after
   `(sample din as hold) (wait cycles)` because the clone would need to sample
   `hold` and shift `hold` in one state.
-- Later slices independently enabled assemble and extract successors when they
-  do not touch pending sample aliases. Bank successors remain deferred so their
-  store/load side-effect timing can get explicit coverage.
+- Later slices independently enabled assemble, extract, bank-load, and
+  bank-store successors when they do not touch pending sample aliases.
 ## 2026-05-16: independent update coverage pins legacy spelling parity
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` is deliberately
   coverage-only. The previous independent-setter slice classified both

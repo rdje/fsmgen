@@ -605,8 +605,23 @@ advances to the original bank-load successor:
 
 If the load index, selected scalarized entry name, or load target is `hold`,
 the form remains fail-closed for the same sample-and-consume timing reason.
-Bank stores remain fail-closed for pending-sample zero-bypass until their
-write-side timing is separately specified.
+
+An independent bank-store state follows the same rule. The clone carries the
+pending sample, emits the original guarded scalarized store assignments, and
+advances to the original bank-store successor:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (<- (data_0 value) <(== idx 0))
+  (<- (data_1 value) <(== idx 1))
+  (<- (data_2 value) <(== idx 2))
+  (<- (data_3 value) <(== idx 3))
+  (-> main_drive_3))
+```
+
+If the store index, stored value, or selected scalarized entry name is `hold`,
+the form remains fail-closed for the same sample-and-consume timing reason.
 
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:

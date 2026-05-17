@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF independent bank-store zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` and closed the
+  task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into independent bank-store successors.
+- The zero-count path now uses a sample-preserving bank-store clone that
+  performs pending sample assignments, emits the original guarded scalarized
+  store assignments, and advances to the original bank-store successor.
+  Positive-count paths still sample in the first wait state and exit through
+  the original bank-store state.
+- Bank stores that read a pending sample alias as the index or stored value,
+  or overwrite one as a scalarized destination entry, remain fail-closed.
+- Extended `t/1244-isf-wait-clause-lowering.t` for independent bank-store
+  zero-bypass and sample-consuming index/value rejection, widened the book
+  feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/lowering/backlog
+  and feature-matrix chapters, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait tests passed with `Files=1, Tests=30`; focused wait/book audit tests
+  passed with `Files=2, Tests=129`; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1016`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
 ### R14 — ISF independent bank-load zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.1` and closed the
   task tree.
@@ -13,10 +36,11 @@ This is the persistent technical change history for FSMGen.
   the original bank-load state.
 - The transaction-state linker now advances bank `load` and bank `store`
   states to their following transaction state, fixing ordinary transaction
-  bank access sequencing while keeping store zero-bypass disabled.
+  bank access sequencing. A later slice enables independent store
+  zero-bypass.
 - Bank loads that read a pending sample alias as the index or overwrite one as
-  the target remain fail-closed. Bank stores remain fail-closed for
-  pending-sample zero-bypass until write-side timing is separately specified.
+  the target remain fail-closed. A later slice independently enabled
+  bank-store successors when they do not touch pending sample aliases.
 - Extended `t/1244-isf-wait-clause-lowering.t` for independent bank-load
   zero-bypass, sample-consuming bank-load rejection, and bank-store
   zero-bypass rejection, widened the book feature-matrix audit marker, and
@@ -37,9 +61,9 @@ This is the persistent technical change history for FSMGen.
   advances to the original extract successor. Positive-count paths still
   sample in the first wait state and exit through the original extract state.
 - Extract states that read a pending sample alias as the source word or
-  overwrite one as a destination field remain fail-closed. A later slice
-  independently enabled bank-load successors when they do not touch pending
-  sample aliases; bank stores, stage, contract, and loop/check successors
+  overwrite one as a destination field remain fail-closed. Later slices
+  independently enabled bank-load and bank-store successors when they do not
+  touch pending sample aliases; stage, contract, and loop/check successors
   remain fail-closed.
 - Extended `t/1244-isf-wait-clause-lowering.t` for independent extract
   zero-bypass and sample-consuming extract rejection, widened the book
@@ -61,9 +85,10 @@ This is the persistent technical change history for FSMGen.
   and advances to the original assemble successor. Positive-count paths still
   sample in the first wait state and exit through the original assemble state.
 - Assemble states that read a pending sample alias as a part or overwrite one
-  as the target remain fail-closed. A later slice independently enabled
-  extract successors when they do not touch pending sample aliases; bank
-  load/store, stage, contract, and loop/check successors remain fail-closed.
+  as the target remain fail-closed. Later slices independently enabled
+  extract, bank-load, and bank-store successors when they do not touch pending
+  sample aliases; stage, contract, and loop/check successors remain
+  fail-closed.
 - Extended `t/1244-isf-wait-clause-lowering.t` for independent assemble
   zero-bypass and sample-consuming assemble rejection, widened the book
   feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
@@ -84,9 +109,9 @@ This is the persistent technical change history for FSMGen.
   to the original shift successor. Positive-count paths still sample in the
   first wait state and exit through the original shift state.
 - Shifts that read or overwrite a pending sample alias remain fail-closed.
-  Later slices independently enabled assemble and extract successors when they
-  do not touch pending sample aliases; bank stores, stage, contract, and
-  loop/check successors remain fail-closed for zero-bypass.
+  Later slices independently enabled assemble, extract, bank-load, and
+  bank-store successors when they do not touch pending sample aliases; stage,
+  contract, and loop/check successors remain fail-closed for zero-bypass.
 - Extended `t/1244-isf-wait-clause-lowering.t` for independent shift
   zero-bypass and sample-consuming shift rejection, widened the book
   feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
@@ -121,9 +146,9 @@ This is the persistent technical change history for FSMGen.
   advances to the original setter successor. Positive-count paths still sample
   in the first wait state and exit through the original setter state.
 - Setters that read or overwrite a pending sample alias remain fail-closed.
-  Later slices independently enabled shift, assemble, and extract successors
-  when they do not touch pending sample aliases; bank stores, stage, contract,
-  and loop/check successors remain fail-closed for zero-bypass.
+  Later slices independently enabled shift, assemble, extract, bank-load, and
+  bank-store successors when they do not touch pending sample aliases; stage,
+  contract, and loop/check successors remain fail-closed for zero-bypass.
 - Extended `t/1244-isf-wait-clause-lowering.t` for top-level, `when`,
   `switch`, and `repeat` independent setter successors, widened the book
   feature-matrix audit marker, and synchronized `docs/ISF_SPEC.md`,
