@@ -159,10 +159,11 @@ only a repeat directly inside a top-level `when` body and accepts either local
 plain `(do child)`, plain generated-child `(do child)` for targets already
 generated elsewhere, or static-parameter generated `(do child (params ...))`;
 it rejects bindings and domain metadata. The
-switch-contained nested subset accepts the same local or plain generated-child
-forms in a repeat directly inside a top-level `switch` branch. Both nested
-subsets keep the nested repeat check gated by the child's fresh done pulse,
-and both still reject deeper branch nesting and loop-contained repeats.
+switch-contained nested subset accepts the same local, plain generated-child,
+or static-parameter generated forms in a repeat directly inside a top-level
+`switch` branch. Both nested subsets keep the nested repeat check gated by the
+child's fresh done pulse, and both still reject bindings, domain metadata,
+deeper branch nesting, and loop-contained repeats.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases, `stage`,
 `contract`, nested `while`, and nested `until` forms remain outside the

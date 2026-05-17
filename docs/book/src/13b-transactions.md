@@ -438,12 +438,13 @@ site and apply parameter overrides once when present. All shipped
 when-contained forms keep samples around the nested do in source order and
 reach the branch-owned repeat check only after a fresh local or generated
 child done handoff. Repeats directly inside a top-level `switch`
-branch accept the same local or plain generated-child `(do child)` forms with
-the same deterministic generated-instance naming, source-order sample timing,
-and done-gated repeat check. The when-contained subset rejects `(bind ...)`
-and `(domain NAME)`, and the switch-contained subset still rejects
-`(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper branch nesting and
-loop-contained repeats remain outside both nested subsets.
+branch accept the same local, plain generated-child `(do child)`, and
+static-parameter generated `(do child (params ...))` forms with the same
+deterministic generated-instance naming, static parameter application once
+when present, source-order sample timing, and done-gated repeat check. The
+when-contained and switch-contained static-parameter subsets reject
+`(bind ...)` and `(domain NAME)`. Deeper branch nesting and loop-contained
+repeats remain outside both nested subsets.
 The shipped
 repeat-body clause
 surface also includes generated blocking `(do child)` when the target child is

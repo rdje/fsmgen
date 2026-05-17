@@ -814,11 +814,12 @@ generated when-contained forms emit one deterministic
 site, apply parameter overrides once when present, preserve source-order
 samples around the nested do, and gate the branch-owned repeat check on that
 generated instance's fresh done handoff.
-The same switch-contained local or plain generated-child forms are shipped for
-repeats directly inside a top-level `switch` branch, with the same
-source-order sample timing and done-gated branch-owned repeat check. The
-when-contained subset rejects `(bind ...)` and `(domain NAME)`, and the
-switch-contained subset still rejects `(params ...)`, `(bind ...)`, and
+The same switch-contained local, plain generated-child, and static-parameter
+generated `do` forms are shipped for repeats directly inside a top-level
+`switch` branch, with the same deterministic generated-instance naming,
+static parameter application once when present, source-order sample timing,
+and done-gated branch-owned repeat check. The when-contained and
+switch-contained static-parameter subsets reject `(bind ...)` and
 `(domain NAME)`. Deeper branch nesting and loop-contained repeats remain
 outside both nested subsets. Generated
 repeat-body `do` emits one generated child instance for the lexical do site,

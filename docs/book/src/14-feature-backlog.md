@@ -231,8 +231,9 @@ Status: partially shipped; broader repeat-body child activation remains backlog.
 Task-tree owner for the remaining backlog:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
 Repeat-body local `(do child)`, top-level when-body nested repeat local
-or generated-child `(do child)`, top-level switch-branch nested repeat local
-or generated-child `(do child)`, repeat-body generated blocking
+or generated-child `(do child)`, top-level switch-branch nested repeat local,
+generated-child `(do child)`, or static-parameter generated
+`(do child (params ...))`, repeat-body generated blocking
 `(do child (params ...))`, repeat-body spawn `(bind ...)`, and declared
 same-domain `(domain NAME)` metadata are shipped for the already shipped
 top-level repeat plus same-body synchronization paths. The local `do` subset
@@ -271,9 +272,10 @@ a generated child by another activation site, or may use generated blocking
 generated `when` forms own one deterministic generated do instance for the
 lexical site, apply parameter overrides once when present, and reject
 `(bind ...)` and `(domain NAME)`. A repeat directly inside a top-level
-`switch` branch may use local or plain generated-child `(do child)` under the
-same generated-target rule; it rejects `(params ...)`, `(bind ...)`,
-`(domain NAME)`, deeper branch nesting, and loop-contained repeat activation.
+`switch` branch may use local, plain generated-child `(do child)`, or
+static-parameter generated `(do child (params ...))` under the same
+generated-do rule; it rejects `(bind ...)`, `(domain NAME)`, deeper branch
+nesting, and loop-contained repeat activation.
 A top-level repeat body may use
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
 when the same repeat body reaches `(await_all done)` before the repeat check
@@ -317,16 +319,6 @@ lifetime semantics beyond the mandatory-drain subset remain backlog. The
 shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
-
-The next bounded nested generated-do leaf selects the switch analogue of the
-shipped when-contained static-parameter generated `do` subset: a repeat
-directly inside a top-level `switch` branch with `(do child (params ...))`
-and static parameter overrides only. The selected nested do site owns one
-deterministic generated do instance, applies the parameter overrides once in
-the generated top, waits for that instance's fresh done handoff before the
-switch-branch repeat check, and keeps `(bind ...)`, `(domain NAME)`, spawn
-nesting, deeper branch/loop nesting, cross-domain activation, and broader
-outstanding-child semantics out of scope.
 
 Nested generated-do bindings, nested generated-do domain metadata, spawn
 nesting, cross-domain activation, deeper branch/loop nesting, and broader

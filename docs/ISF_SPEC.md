@@ -1555,12 +1555,13 @@ Current lowering:
   when-contained forms keep samples around the nested do in source order, and
   the branch-owned repeat check is unreachable until the fresh local or
   generated child done pulse is observed. Repeats directly
-  inside a top-level `switch` branch accept the same local or plain
-  generated-child `(do child)` forms with the same source-order sample timing,
-  deterministic generated-instance naming when the target is already generated
-  elsewhere, and done-gated nested repeat check. The when-contained subset
-  rejects `(bind ...)` and `(domain NAME)`, and the switch-contained subset
-  still rejects `(params ...)`, `(bind ...)`, and `(domain NAME)`. Deeper
+  inside a top-level `switch` branch accept the same local, plain
+  generated-child `(do child)`, and generated blocking
+  `(do child (params ...))` forms with the same source-order sample timing,
+  deterministic generated-instance naming, static parameter application once
+  when present, and done-gated nested repeat check. The when-contained and
+  switch-contained static-parameter subsets reject `(bind ...)` and
+  `(domain NAME)`. Deeper
   branch nesting and loop-contained repeats remain outside both nested
   subsets. Top-level
   repeat bodies also accept generated
@@ -1951,8 +1952,10 @@ nested `when`, and shipped `(wait N)` clauses. They continue to reject `do`,
 bodies, and loops nested under `when`/`switch`/`repeat` until re-entry, child
 lifetime, and report semantics are specified for those combinations.
 Top-level repeat-body local `(do child)`, top-level when-body nested repeat
-local or plain generated-child `(do child)`, top-level switch-branch nested
-repeat local `(do child)`, repeat-body generated blocking `(do child)` for
+local, plain generated-child `(do child)`, or static-parameter generated
+`(do child (params ...))`, top-level switch-branch nested repeat local,
+plain generated-child `(do child)`, or static-parameter generated
+`(do child (params ...))`, repeat-body generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]
 [(domain NAME)])`, and repeat-body spawn followed by same-body `await_all`,
 single-pending same-body `await_any`, or multi-pending same-body `await_any`
@@ -3282,7 +3285,8 @@ Focused tests:
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,
   the top-level when-body nested repeat local/generated-child `(do child)`
   subset, the top-level switch-branch nested repeat local/generated-child
-  `(do child)` subset,
+  `(do child)` and static-parameter generated `(do child (params ...))`
+  subset,
   the top-level repeat-body generated-child `(do child)` subset, the top-level
   repeat-body generated
   `(do child (params ...) [(bind ...)] [(domain NAME)])` subset, and the

@@ -1214,6 +1214,70 @@ ISF
         'generated top also instantiates the lexical spawn child');
 };
 
+subtest 'switch branch nested repeat generated do with params waits for generated instance done before re-entry' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_do_params
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode (width 2))
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (do worker
+            (params
+              (WIDTH 16)))
+          (sample status as after)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'switch-branch repeat parameterized do contributes one generated instance');
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{instance}, 'parent_worker_repeat_do_0',
+        'switch-branch repeat parameterized do instance name is deterministic');
+    is($instance->{activation_kind}, 'do',
+        'switch-branch repeat parameterized do preserves do activation provenance');
+    is($instance->{child}, 'worker',
+        'switch-branch repeat parameterized do targets the generated child transaction');
+    is_deeply($instance->{parameter_overrides}, [{ name => 'WIDTH', value => '16' }],
+        'switch-branch repeat parameterized do preserves static parameter overrides');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_do_params.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_do_params_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch repeat parameterized do parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'parameterized generated child scheduled .fsm is emitted once');
+    ok(defined($top_fsm), 'switch-branch repeat parameterized do top .fsm is emitted');
+    like($parent_fsm, qr/\(\?mode[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'switch branch enters the parameterized nested repeat region');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'switch-branch parameterized repeat do waits for the generated instance before the following sample');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after status\)\)[\s\S]*\(-> parent_repeat_check_\d+\)/,
+        'sample after switch-branch parameterized repeat do materializes before the repeat check');
+    unlike($parent_fsm, qr/\bworker_start\b/,
+        'switch-branch parameterized repeat do does not wire a local child start handoff');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top instantiates the switch-branch parameterized do child with static parameter override');
+};
+
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_lower_rejected(<<'ISF', 'repeat spawn without await_all', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
 (actor repeat_spawn_without_await_all
@@ -1400,26 +1464,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch repeat parameterized do', qr/switch-branch nested repeat do supports only plain '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
-(actor switch_repeat_parameterized_do
-  (clock clk)
-  (interface (input start) (input mode) (input loops (width 3)) (output done))
-  (transaction parent
-    (on start)
-    (switch mode
-      (0
-        (repeat loops
-          (do worker
-            (params
-              (WIDTH 16))))))
-    (complete done))
-  (transaction worker
-    (params
-      (WIDTH 8))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'switch repeat bound do', qr/switch-branch nested repeat do supports only plain '\(do child\)' without '\(params \.\.\.\)', '\(bind \.\.\.\)', or '\(domain \.\.\.\)' subclauses/);
+    assert_lower_rejected(<<'ISF', 'switch repeat bound do', qr/switch-branch nested repeat do supports only plain '\(do child\)' or static '\(do child \(params \.\.\.\)\)' without '\(bind \.\.\.\)' or '\(domain \.\.\.\)' subclauses/);
 (actor switch_repeat_bound_do
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
@@ -1434,6 +1479,31 @@ ISF
               (output resp result))))))
     (complete done))
   (transaction worker
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch repeat parameterized bound do', qr/switch-branch nested repeat do supports only plain '\(do child\)' or static '\(do child \(params \.\.\.\)\)' without '\(bind \.\.\.\)' or '\(domain \.\.\.\)' subclauses/);
+(actor switch_repeat_parameterized_bound_do
+  (clock clk)
+  (interface (input start) (input mode) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data payload)
+              (output resp result))))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
     (ports
       (input data (width 8))
       (output resp (width 8)))

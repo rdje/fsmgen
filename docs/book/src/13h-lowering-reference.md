@@ -1148,16 +1148,15 @@ For a switch branch, the selector targets the branch-owned repeat init state:
     (default (-> parent_done_8))))
 ```
 
-The `when` and `switch` nested repeat subsets accept local plain `(do child)`
-and plain generated-child `(do child)` when the target is already generated
-elsewhere. The `when` subset also accepts static-parameter generated
-`(do child (params ...))`. The generated case emits one deterministic
+The `when` and `switch` nested repeat subsets accept local plain `(do child)`,
+plain generated-child `(do child)` when the target is already generated
+elsewhere, and static-parameter generated `(do child (params ...))`. The
+generated case emits one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter overrides
 once when present, and waits for that instance's fresh done handoff before the
-nested repeat check. The `when` subset rejects `(bind ...)` and
-`(domain NAME)`; the `switch` subset still rejects `(params ...)`,
-`(bind ...)`, and `(domain NAME)`. Both nested subsets reject deeper branch
-nesting, loop-contained repeats, and generated/spawned nested activation
+nested repeat check. Both nested static-parameter subsets reject `(bind ...)`
+and `(domain NAME)`. Both nested subsets reject deeper branch nesting,
+loop-contained repeats, and generated/spawned nested activation
 beyond the documented branch-contained generated do cases.
 
 Representative repeat-body spawn lowering uses the static generated instance
