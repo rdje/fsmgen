@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained repeat spawn await_all is the first spawn-nesting subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.41` selects exactly one generated
+  `spawn` inside a repeat that is directly inside a top-level `when` body,
+  with same-body `(await_all done)` before the nested repeat check can loop.
+- This is intentionally narrower than general nested spawn semantics. It
+  reuses the static generated-child handoff model already shipped for
+  top-level repeat-body spawn while avoiding multi-pending lifetime rules,
+  `await_any`, switch-contained spawn nesting, and spawned/blocked child
+  interaction inside the same nested repeat body.
+- Cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child lifetime semantics remain separate contracts.
 ## 2026-05-17: switch-contained generated do domains reuse domain partitioning
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.40` implements only declared same-domain
   metadata for generated `do` sites inside repeats that are direct clauses of
