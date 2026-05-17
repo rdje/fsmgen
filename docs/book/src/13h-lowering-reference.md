@@ -1154,9 +1154,13 @@ elsewhere, and static-parameter generated `(do child (params ...))`. The
 generated case emits one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter overrides
 once when present, and waits for that instance's fresh done handoff before the
-nested repeat check. Both nested static-parameter subsets reject `(bind ...)`
-and `(domain NAME)`. Both nested subsets reject deeper branch nesting,
-loop-contained repeats, and generated/spawned nested activation
+nested repeat check. The when-contained generated case also accepts
+`(bind ...)` when static `(params ...)` overrides are present, wiring
+generated-top input/output binding handoffs once for that lexical nested do
+site. The when-contained subset rejects `(domain NAME)`, and the
+switch-contained subset rejects `(bind ...)` and `(domain NAME)`. Both nested
+subsets reject deeper branch nesting, loop-contained repeats, and
+generated/spawned nested activation
 beyond the documented branch-contained generated do cases.
 
 Representative repeat-body spawn lowering uses the static generated instance

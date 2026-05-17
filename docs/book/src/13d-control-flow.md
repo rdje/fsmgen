@@ -135,8 +135,11 @@ and `load`, shipped `wait` clauses, top-level repeat-body local `(do child)`,
 top-level repeat-body generated `(do child)` for already generated child
 targets, top-level repeat-body generated `(do child (params ...))` with
 static parameter overrides, top-level when-body nested repeat local,
-generated-child, or static-parameter generated `(do child)`, top-level
-switch-branch nested repeat local or generated-child `(do child)`, and
+generated-child `(do child)`, static-parameter generated
+`(do child (params ...))`, or static-parameter generated bound
+`(do child (params ...) (bind ...))`, top-level switch-branch nested repeat
+local, generated-child `(do child)`, or static-parameter generated
+`(do child (params ...))`, and
 top-level repeat-body spawn with optional static `(params ...)`, optional
 `(bind ...)`, and optional declared same-domain
 `(domain NAME)` metadata followed by same-body `await_all` or by same-body
@@ -157,13 +160,16 @@ wired/recorded once for the lexical generated do instance. Cross-domain
 repeat-body `do` remains deferred. The when-contained nested subset accepts
 only a repeat directly inside a top-level `when` body and accepts either local
 plain `(do child)`, plain generated-child `(do child)` for targets already
-generated elsewhere, or static-parameter generated `(do child (params ...))`;
-it rejects bindings and domain metadata. The
+generated elsewhere, static-parameter generated `(do child (params ...))`, or
+static-parameter generated bound
+`(do child (params ...) (bind ...))`; it rejects domain metadata and requires
+static params whenever bindings are present. The
 switch-contained nested subset accepts the same local, plain generated-child,
 or static-parameter generated forms in a repeat directly inside a top-level
 `switch` branch. Both nested subsets keep the nested repeat check gated by the
-child's fresh done pulse, and both still reject bindings, domain metadata,
-deeper branch nesting, and loop-contained repeats.
+child's fresh done pulse. Switch-contained nested repeats still reject
+bindings and domain metadata; both subsets still reject deeper branch nesting
+and loop-contained repeats.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases, `stage`,
 `contract`, nested `while`, and nested `until` forms remain outside the

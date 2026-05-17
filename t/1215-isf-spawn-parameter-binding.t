@@ -1091,6 +1091,100 @@ ISF
         'generated top instantiates the when-body parameterized do child with static parameter override');
 };
 
+subtest 'when body nested repeat generated do with params and bindings lowers generated handoffs' => sub {
+    my $source = <<'ISF';
+(actor when_repeat_do_binding
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input req_addr (width 8))
+    (input status)
+    (output done)
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (sample status as before)
+        (do worker
+          (params
+            (WIDTH 16))
+          (bind
+            (input addr req_addr)
+            (output data resp)))
+        (sample status as after)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'when-body repeat parameterized bound do contributes one generated instance');
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{instance}, 'parent_worker_repeat_do_0',
+        'when-body repeat parameterized bound do instance name is deterministic');
+    is_deeply($instance->{parameter_overrides}, [{ name => 'WIDTH', value => '16' }],
+        'when-body repeat parameterized bound do preserves static parameter overrides');
+    is_deeply(
+        $instance->{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'parent_worker_repeat_do_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'parent_worker_repeat_do_0_data',
+                actor_signal     => 'resp',
+                actor_expr       => 'resp',
+                actor_expression => 'resp',
+                width            => 8,
+            },
+        ],
+        'when-body repeat parameterized bound do exposes reviewable port-binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'when_repeat_do_binding.fsm'};
+    my $top_fsm = $lowered->{files}{'when_repeat_do_binding_top.fsm'};
+
+    like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'when-body repeat generated do parent .fsm keeps binding handoffs reviewable');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'when-body bound repeat do waits for the generated instance before the following sample');
+    like($top_fsm, qr/\(when_repeat_do_binding\.parent_worker_repeat_do_0_addr parent_worker_repeat_do_0\.addr\)/,
+        'generated top wires when-body repeat do input binding handoff');
+    like($top_fsm, qr/\(parent_worker_repeat_do_0\.data when_repeat_do_binding\.parent_worker_repeat_do_0_data\)/,
+        'generated top wires when-body repeat do output binding handoff');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'do:parent_worker_repeat_do_0:addr',
+            'do:parent_worker_repeat_do_0:data',
+        ],
+        'report exposes when-body repeat generated do transaction port-binding provenance',
+    );
+};
+
 subtest 'switch branch nested repeat local do waits for child done before re-entry' => sub {
     my $source = <<'ISF';
 (actor switch_repeat_do_local
@@ -1405,7 +1499,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when repeat bound do', qr/when-body nested repeat do supports only plain '\(do child\)' or static '\(do child \(params \.\.\.\)\)' without '\(bind \.\.\.\)' or '\(domain \.\.\.\)' subclauses/);
+    assert_lower_rejected(<<'ISF', 'when repeat bound do', qr/when-body nested repeat generated do bindings require static '\(params \.\.\.\)' overrides in the current nested generated blocking-do subset/);
 (actor when_repeat_bound_do
   (clock clk)
   (interface (input start) (input cond) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
@@ -1425,27 +1519,25 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when repeat parameterized bound do', qr/when-body nested repeat do supports only plain '\(do child\)' or static '\(do child \(params \.\.\.\)\)' without '\(bind \.\.\.\)' or '\(domain \.\.\.\)' subclauses/);
-(actor when_repeat_parameterized_bound_do
-  (clock clk)
-  (interface (input start) (input cond) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
+    assert_lower_rejected(<<'ISF', 'when repeat parameterized domain do', qr/when-body nested repeat do does not support '\(domain \.\.\.\)' subclauses in the current nested generated blocking-do subset/);
+(actor when_repeat_parameterized_domain_do
+  (clock-domains
+    (domain default (clock clk)))
+  (interface (input start) (input cond) (input loops (width 3)) (output done))
   (transaction parent
+    (domain default)
     (on start)
     (when cond
       (repeat loops
         (do worker
           (params
             (WIDTH 16))
-          (bind
-            (input data payload)
-            (output resp result)))))
+          (domain default))))
     (complete done))
   (transaction worker
+    (domain default)
     (params
       (WIDTH 8))
-    (ports
-      (input data (width 8))
-      (output resp (width 8)))
     (complete done)))
 ISF
 

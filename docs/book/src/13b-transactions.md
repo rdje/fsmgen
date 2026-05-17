@@ -442,9 +442,12 @@ branch accept the same local, plain generated-child `(do child)`, and
 static-parameter generated `(do child (params ...))` forms with the same
 deterministic generated-instance naming, static parameter application once
 when present, source-order sample timing, and done-gated repeat check. The
-when-contained and switch-contained static-parameter subsets reject
-`(bind ...)` and `(domain NAME)`. Deeper branch nesting and loop-contained
-repeats remain outside both nested subsets.
+when-contained generated nested `do` subset also accepts `(bind ...)` when
+static `(params ...)` overrides are present, wiring the input/output binding
+handoffs once in the generated top for that lexical nested do site. The
+when-contained subset rejects `(domain NAME)`, and the switch-contained subset
+rejects `(bind ...)` and `(domain NAME)`. Deeper branch nesting and
+loop-contained repeats remain outside both nested subsets.
 The shipped
 repeat-body clause
 surface also includes generated blocking `(do child)` when the target child is

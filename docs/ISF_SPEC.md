@@ -1559,8 +1559,11 @@ Current lowering:
   generated-child `(do child)`, and generated blocking
   `(do child (params ...))` forms with the same source-order sample timing,
   deterministic generated-instance naming, static parameter application once
-  when present, and done-gated nested repeat check. The when-contained and
-  switch-contained static-parameter subsets reject `(bind ...)` and
+  when present, and done-gated nested repeat check. When-contained generated
+  nested `do` also accepts `(bind ...)` when static `(params ...)` overrides
+  are present; the generated top wires those input/output binding handoffs
+  once for the lexical nested do site. The when-contained subset rejects
+  `(domain NAME)`, and the switch-contained subset rejects `(bind ...)` and
   `(domain NAME)`. Deeper
   branch nesting and loop-contained repeats remain outside both nested
   subsets. Top-level
@@ -1953,8 +1956,9 @@ bodies, and loops nested under `when`/`switch`/`repeat` until re-entry, child
 lifetime, and report semantics are specified for those combinations.
 Top-level repeat-body local `(do child)`, top-level when-body nested repeat
 local, plain generated-child `(do child)`, or static-parameter generated
-`(do child (params ...))`, top-level switch-branch nested repeat local,
-plain generated-child `(do child)`, or static-parameter generated
+`(do child (params ...))` with optional `(bind ...)` handoffs, top-level
+switch-branch nested repeat local, plain generated-child `(do child)`, or
+static-parameter generated
 `(do child (params ...))`, repeat-body generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]
 [(domain NAME)])`, and repeat-body spawn followed by same-body `await_all`,
@@ -3284,6 +3288,7 @@ Focused tests:
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset, the top-level repeat-body local `(do child)` subset,
   the top-level when-body nested repeat local/generated-child `(do child)`
+  and static-parameter generated `(do child (params ...) [(bind ...)])`
   subset, the top-level switch-branch nested repeat local/generated-child
   `(do child)` and static-parameter generated `(do child (params ...))`
   subset,

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained generated do bindings reuse static handoffs
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.34` implements only the selected static
+  parameter plus binding handoff shape for repeats that are direct clauses of
+  a top-level `when` body.
+- The implementation reuses the existing generated repeat-do instance owner
+  and binding handoff plumbing from the top-level repeat-body generated-do
+  binding subset. The validation boundary is deliberately narrow: bindings
+  require static `(params ...)`, are wired once in the generated top for that
+  lexical nested site, and the nested repeat check remains gated on the
+  generated instance's fresh done handoff.
+- Domain metadata, switch-contained bound nested do, spawned nested
+  activation, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child lifetime semantics remain separate contracts.
 ## 2026-05-17: when-contained generated do bindings are the next nested subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.33` selects generated blocking
   `(do child (params ...) (bind ...))` in a top-level `when` body.
