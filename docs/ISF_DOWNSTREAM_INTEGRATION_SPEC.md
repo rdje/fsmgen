@@ -901,16 +901,20 @@ Rules:
   to an explicit sample state at their source-order timing point: before a
   later spawn state for sample-before-spawn ordering, or before the sync state
   for sample-after-spawn ordering. A repeat directly inside a top-level `when`
-  body or directly inside a top-level `switch` branch also accepts exactly one
-  generated
-  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
-  same nested repeat body reaches `(await_all done)` or single-pending
-  `(await_any done)` before the nested repeat check can loop. Those
-  branch-contained nested spawns reuse the static generated-child handoff
-  model and preserve source-order samples before the nested spawn or sync
-  states; multiple pending nested spawns, `do` while the nested spawn is
-  pending, deeper branch/loop nesting, and cross-domain activation remain
-  fail-closed. Cross-domain repeat-body `do`,
+  body also accepts one or more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
+  when the same nested repeat body reaches `(await_all done)` before the
+  nested repeat check can loop; the same when-contained path may use
+  single-pending `(await_any done)` only when exactly one generated child is
+  pending. A repeat directly inside a top-level `switch` branch accepts
+  exactly one generated spawn on the same-body `(await_all done)` or
+  single-pending `(await_any done)` paths. Those branch-contained nested
+  spawns reuse the static generated-child handoff model and preserve
+  source-order samples before the nested spawn or sync states; nested
+  `await_any` for multiple pending generated children, switch-contained
+  multiple nested spawns, `do` while the nested spawn is pending, deeper
+  branch/loop nesting, and cross-domain activation remain fail-closed.
+  Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,
   `contract`, deeper branch nesting, nested `while`, and nested `until` remain
   outside the shipped repeat-body subset.
@@ -1206,12 +1210,14 @@ Rules:
   `do`, and both top-level branch-contained subsets may pair those params
   with `(bind ...)` input/output handoffs. Both top-level branch-contained
   subsets may also carry same-domain `(domain NAME)` metadata. A top-level
-  `when` body or top-level `switch` branch nested repeat may also use exactly
-  one generated
-  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
-  same nested repeat body reaches `(await_all done)` or single-pending
-  `(await_any done)` before the nested repeat check can loop. No deeper branch
-  repeat or loop-contained repeat is included in those shipped nested subsets.
+  `when` body nested repeat may also use one or more generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
+  when the same nested repeat body reaches `(await_all done)` before the
+  nested repeat check can loop; exactly one pending generated child may instead
+  use single-pending `(await_any done)`. A top-level `switch` branch nested
+  repeat may use exactly one generated spawn with same-body `(await_all done)`
+  or single-pending `(await_any done)`. No deeper branch repeat or
+  loop-contained repeat is included in those shipped nested subsets.
   Top-level
   repeat bodies
   may also use

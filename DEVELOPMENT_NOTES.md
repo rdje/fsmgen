@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: when-contained multiple nested spawns reuse await_all drain
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.50` implements only the selected
+  when-contained multiple generated-spawn subset.
+- No new generated-top model was needed. The selected shape reuses the static
+  generated-child handoff model for each lexical nested spawn and lets the
+  existing same-body `await_all` sync consume all pending done handoffs before
+  the nested repeat check can re-enter.
+- The validator still rejects nested `await_any` for multiple pending
+  generated children, switch-contained multiple nested spawns, spawned/blocked
+  child interaction, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child lifetime semantics.
 ## 2026-05-17: when-contained multiple nested spawns are the next drain subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.49` selects multiple generated `spawn`
   sites inside a repeat that is directly inside a top-level `when` body.

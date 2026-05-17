@@ -170,20 +170,23 @@ static-parameter generated, or static-parameter generated bound forms in a
 repeat directly inside a top-level `switch` branch, and it may also carry
 declared same-domain `(domain NAME)` metadata when static params are present.
 Both nested subsets keep the nested repeat check gated by the child's fresh
-done pulse. A repeat directly inside a top-level `when` body or directly
-inside a top-level `switch` branch may also contain exactly one generated
-`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` when the
-same nested body reaches `(await_all done)` or single-pending
-`(await_any done)` before the nested repeat check can loop. Those
+done pulse. A repeat directly inside a top-level `when` body may also contain
+one or more generated
+`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites
+when the same nested body reaches `(await_all done)` before the nested repeat
+check can loop; the when-contained single-pending `(await_any done)` path is
+limited to exactly one pending generated child. A repeat directly inside a
+top-level `switch` branch may contain exactly one generated spawn on the
+same-body `(await_all done)` or single-pending `(await_any done)` paths. Those
 branch-contained nested spawns reuse the static generated-child handoff model
 and preserve source-order samples before the spawn or sync states. Both
 branch-contained bound nested generated `do` subsets still reject deeper
-branch nesting and loop-contained repeats. The branch-contained nested
-single-spawn subsets still reject multiple pending nested spawns and `do`
-while the nested spawn is pending.
+branch nesting and loop-contained repeats. Nested `await_any` for multiple
+pending generated children, switch-contained multiple nested spawns, and `do`
+while a nested spawn is pending remain fail-closed.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and
-branch-contained single-spawn cases, `stage`, `contract`, nested `while`, and
+branch-contained spawned cases, `stage`, `contract`, nested `while`, and
 nested `until` forms remain outside the
 shipped repeat-body subset.
 Unsupported nested forms now fail closed during lowering instead of
