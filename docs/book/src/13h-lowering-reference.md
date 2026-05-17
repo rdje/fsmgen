@@ -637,6 +637,21 @@ keeps the original `valid` assignment and ready-gated transition:
 If the stage ready input or valid output is `hold`, the form remains
 fail-closed for the same sample-and-consume timing reason.
 
+A top-level bounded-eventual contract arm state can also carry the pending
+sample. The clone keeps the original one-cycle arm request and advances like
+the original contract arm state:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (= (main_contract_2_arm 1))
+  (-> main_drive_3))
+```
+
+The monitor DT still owns pending, age, and fail storage and observes the same
+arm signal. Contract arm states that would read or overwrite `hold` remain
+fail-closed for the same sample-and-consume timing reason.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 
@@ -1446,7 +1461,11 @@ state, observed signal, cycle bound, generated pending/counter/fail signal
 names, reset policy, overlap policy, and assertion projection status.
 Generated SystemVerilog now projects the fail bit into a verification-only
 assertion under `` `ifndef SYNTHESIS``; the current assertion projection status
-is `systemverilog_sticky_fail`. Verilog output remains assertion-free.
+is `systemverilog_sticky_fail`. Verilog output remains assertion-free. When a
+runtime wait with pending samples has a zero-count path into the contract arm
+state, the generated contract clone materializes the sample and emits the same
+arm request; the monitor DT remains unchanged and remains the only owner of
+pending, age, and fail storage.
 Unsupported bodies and nested contracts fail closed. Global
 `always` implication forms, min/max windows, dynamic bounds, same-cycle
 windows, expression operands, and multiple outstanding obligations remain

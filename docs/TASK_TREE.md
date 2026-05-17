@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-STAGE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-STAGE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-STAGE-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.md) |
@@ -194,6 +195,7 @@ as done work unless a future task reopens them.
 | Parameter-backed static transaction wait counts | `ISF-PARAM-WAIT-COUNTS` |
 | Consecutive runtime wait pending-sample zero-link carrying | `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` |
 | Stage zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-STAGE-SAMPLE` |
+| Contract arm zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE` |
 | Completion zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE` |
 | Independent setter zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE` |
 | Independent shift zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE` |

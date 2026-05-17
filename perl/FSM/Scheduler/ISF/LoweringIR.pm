@@ -6842,6 +6842,8 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
         && !grep { ($_->{source_kind} // '') ne 'complete_pulse' } @{$target_state->{assignments} || []};
     return 1 if $kind eq 'stage'
         && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(stage_valid latency_increment_request));
+    return 1 if $kind eq 'contract'
+        && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(contract_arm_request latency_increment_request));
 
     if ($kind eq 'sequential') {
         for my $assignment (@{$target_state->{assignments} || []}) {

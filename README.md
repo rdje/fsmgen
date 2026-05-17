@@ -118,6 +118,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.md` — completed `R14` task tree for independent bank-store zero-bypass pending-sample dynamic waits.
 - `docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md` — completed `R14` task tree for carrying pending samples across consecutive runtime wait zero-count links.
 - `docs/tasks/ISF-DYNAMIC-WAIT-STAGE-SAMPLE.md` — completed `R14` task tree for stage zero-bypass pending-sample dynamic waits.
+- `docs/tasks/ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.md` — completed `R14` task tree for contract arm zero-bypass pending-sample dynamic waits.
 - `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md` — completed `R14` task tree for expression-valued activation input bindings.
 - `docs/tasks/ISF-SETTER-SYNTAX.md` — completed `R14` task tree for scalar setter syntax shared by rules and transactions.
 - `docs/tasks/ISF-TRANSACTION-ACTIVATION.md` — completed `R14` task tree for task-like transaction activation and parameter overrides.

@@ -756,12 +756,14 @@ Rules:
   await, static wait, completion, independent scalar setter, independent
   shift, independent assemble, independent extract, and independent bank-load
   and bank-store states, plus top-level ready/valid stage states, for
-  top-level waits; selected completion, independent scalar setter,
+  top-level waits; top-level bounded-eventual contract arm states are also
+  sample-compatible. Selected completion, independent scalar setter,
   independent shift, independent assemble, independent extract, independent
-  bank-load, and independent bank-store successors are also shipped for `when`
+  bank-load, and independent bank-store successors are shipped for `when`
   bodies and `switch` branches. A scalar setter, shift, assemble state,
-  extract state, bank-load state, bank-store state, or stage state is
-  independent only when it neither reads nor overwrites a pending sample alias.
+  extract state, bank-load state, bank-store state, stage state, or contract
+  arm state is independent only when it neither reads nor overwrites a pending
+  sample alias.
   Consecutive top-level runtime waits carry pending samples across zero-count
   wait links with generated downstream wait-entry clones for zero-then-positive
   paths and final sample-compatible target clones for all-zero paths.

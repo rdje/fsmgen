@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: contract arm states can carry pending samples while monitors keep ownership
+- `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` adds top-level bounded-eventual
+  contract arm states to the pending-sample runtime wait zero-bypass surface.
+  The accepted subset is limited to arm states that do not read or overwrite
+  any pending sample alias.
+- The zero-count clone prepends pending sample assignments to the original
+  one-cycle arm request and then advances to the same successor as the
+  original contract arm state. This keeps the positive-count path unchanged
+  and avoids inserting a hidden sample-only cycle.
+- Contract monitor DTs remain unchanged and keep sole ownership of
+  pending/age/fail storage. They observe the same arm request from either the
+  original arm state or the sample-preserving zero-count clone.
+- A contract arm state that reads or overwrites a pending sample alias remains
+  fail-closed because the clone would otherwise sample and consume or replace
+  the alias in one state. Nested/unsupported contract forms and loop/check
+  zero-count successors remain deferred.
 ## 2026-05-16: ready/valid stage states can carry pending samples
 - `ISF-DYNAMIC-WAIT-STAGE-SAMPLE.1` adds top-level transaction stage states to
   the pending-sample runtime wait zero-bypass surface. The accepted subset is
@@ -12,8 +28,10 @@ This document captures engineering rationale, design constraints, and working de
 - A stage whose ready input or valid output is the pending sample alias remains
   fail-closed because the clone would otherwise sample and read or overwrite
   that alias in one state.
-- Temporal contract and loop/check-state successors remain deferred because
-  their monitor or loop-edge timing needs separate contracts.
+- A later slice enabled top-level bounded-eventual contract arm successors
+  while keeping monitor storage ownership unchanged. Loop/check-state
+  successors remain deferred because their loop-edge timing needs a separate
+  contract.
 ## 2026-05-16: consecutive runtime waits carry pending samples through zero links
 - `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` removes the fail-closed guard for
   pending samples before consecutive top-level runtime waits by carrying the
@@ -28,9 +46,9 @@ This document captures engineering rationale, design constraints, and working de
   top-level zero-count clone surface.
 - The slice deliberately avoids putting sample assignments in the predecessor
   state because that would move materialization earlier than the positive wait
-  contract. A later slice enabled top-level ready/valid stage successors;
-  temporal contract and loop/check-state successors still need separate timing
-  contracts.
+  contract. Later slices enabled top-level ready/valid stage successors and
+  top-level bounded-eventual contract arm successors; loop/check-state
+  successors still need separate timing contracts.
 ## 2026-05-16: independent bank stores can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` adds the write-side bank
   successor class to pending-sample runtime wait zero-bypass. The accepted
@@ -47,11 +65,10 @@ This document captures engineering rationale, design constraints, and working de
   to sample `hold` and evaluate the index guard using `hold` in one state.
   Likewise, `(store data idx hold)` and any store that overwrites a scalarized
   entry named `hold` remain fail-closed.
-- Later slices enabled consecutive top-level runtime waits to carry pending
-  samples across zero-count links and top-level ready/valid stages to carry
-  pending samples. Temporal contract and loop/check-state successors remain
-  deferred because their sample materialization needs separate timing
-  contracts.
+- Later slices enabled consecutive top-level runtime waits, top-level
+  ready/valid stages, and top-level bounded-eventual contract arm states to
+  carry pending samples. Loop/check-state successors remain deferred because
+  their sample materialization needs separate timing contracts.
 ## 2026-05-16: independent bank loads can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.1` adds the read-side bank
   successor class to pending-sample runtime wait zero-bypass. The accepted

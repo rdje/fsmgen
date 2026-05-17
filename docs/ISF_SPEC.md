@@ -1665,9 +1665,10 @@ static wait state, completion state, independent scalar `set`/`update` state,
 independent shift state, independent `assemble` state, or independent
 `extract` state, or independent bank `load` state that neither reads nor
 overwrites a pending sample alias, independent bank `store` state that neither
-reads nor overwrites a pending sample alias, or top-level ready/valid `stage`
-state that neither reads nor overwrites a pending sample alias. The
-positive-count path matches positive static waits by
+reads nor overwrites a pending sample alias, top-level ready/valid `stage`
+state that neither reads nor overwrites a pending sample alias, or top-level
+bounded-eventual `contract` arm state that neither reads nor overwrites a
+pending sample alias. The positive-count path matches positive static waits by
 materializing samples in the first active wait state.
 For counts greater than one, a second generated wait-loop state consumes the
 remaining sampled counter value without repeating the sample. The zero-count
@@ -1706,6 +1707,11 @@ and ready-gated transition, then advance to the same successor as the original
 stage state when `ready` is true. Stage states that read a pending sample
 alias as the ready input or overwrite one as the valid output remain
 fail-closed for the same reason.
+Bounded-eventual contract zero-count clones preserve the original one-cycle
+arm request and advance to the same successor as the original contract arm
+state. Contract monitor DTs remain the owners of pending, age, and fail
+storage. Contract arm states that would read or overwrite a pending sample
+alias remain fail-closed for the same reason.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
 samples without changing timing fail closed. Consecutive top-level runtime
 wait chains carry pending samples across zero-count wait links when the final
@@ -1723,9 +1729,9 @@ independent shift states, independent assemble states, and independent extract
 states, plus independent bank-load and bank-store states, are
 sample-compatible selected successors in the shipped `when`-body and
 `switch`-branch subset; top-level ready/valid stage states are also
-sample-compatible for top-level waits. Runtime waits whose selected zero-count
-successor cannot yet carry pending samples without changing timing fail
-closed.
+sample-compatible for top-level waits, as are top-level bounded-eventual
+contract arm states. Runtime waits whose selected zero-count successor cannot
+yet carry pending samples without changing timing fail closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
@@ -2457,6 +2463,10 @@ and sticky-fail storage. Actor reset clears the monitor storage. Seeing
 same contract while pending sets the sticky fail bit. Schedule-report
 `dt_blocks` classify the generated monitor as `temporal_contract_monitor`, and
 `inferred_storage` reports pending/fail as registers and age as a counter.
+Pending samples before a runtime wait whose zero-count successor is the
+contract arm state materialize in a sample-preserving contract clone; the
+clone emits the same one-cycle arm request and leaves the monitor DT as the
+only owner of pending/age/fail storage.
 Schedule reports also expose shipped contracts through `temporal_contracts`
 entries containing the authored transaction and contract names, `kind =
 bounded_eventually`, trigger state, observed signal, cycle bound, pending,

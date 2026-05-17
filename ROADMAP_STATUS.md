@@ -10,14 +10,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-STAGE-SAMPLE` is closed after
-  shipping stage zero-bypass for pending-sample runtime waits. A zero-count
-  runtime wait before a top-level ready/valid stage now enters a
-  sample-preserving stage clone that drives the original `valid` assignment
-  and preserves the original ready-gated transition. Temporal contract and
-  loop/check-state zero-count successors remain fail-closed when they cannot
-  carry pending samples. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE` is closed after
+  shipping contract arm zero-bypass for pending-sample runtime waits. A
+  zero-count runtime wait before a top-level bounded-eventual contract arm
+  state now enters a sample-preserving contract clone that emits the same
+  one-cycle arm request while the monitor DT remains the sole owner of
+  pending/age/fail storage. Loop/check-state zero-count successors remain
+  fail-closed when they cannot carry pending samples. The next R14 PNT
+  implementation slice must select or create a new task tree before code
+  changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -437,6 +438,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   independent bank-load subset: selected bank-load states can be cloned when
   their target, scalarized source entries, and index guards neither read nor
   overwrite pending sample aliases, while bank stores and other unsupported
+  successors remained fail-closed until later slices.
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` then shipped the
+  independent bank-store subset, `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1`
+  carried pending samples across consecutive top-level runtime wait zero-count
+  links, `ISF-DYNAMIC-WAIT-STAGE-SAMPLE.1` shipped top-level ready/valid
+  stage zero-bypass clones, and `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` shipped
+  top-level bounded-eventual contract arm zero-bypass clones while keeping the
+  monitor DT as the owner of pending/age/fail storage. Loop/check-state
   successors remain fail-closed for zero-bypass.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
@@ -711,6 +720,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   sample aliases. The zero path uses a sample-preserving stage clone that
   drives the original `valid` assignment and keeps the original ready-gated
   transition.
+- ISF contract arm pending-sample runtime wait update: runtime dynamic waits
+  with pending samples can now zero-bypass into top-level bounded-eventual
+  contract arm states when the arm state is independent of pending sample
+  aliases. The zero path uses a sample-preserving contract clone that emits the
+  same one-cycle arm request and advances like the original arm state while the
+  monitor DT remains the sole owner of pending/age/fail storage.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -925,8 +940,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` later shipped pending-sample
   carrying across consecutive top-level runtime wait zero-count links.
   `ISF-DYNAMIC-WAIT-STAGE-SAMPLE.1` later shipped top-level ready/valid stage
-  zero-bypass clones for pending-sample runtime waits. No active ISF task tree
-  remains open.
+  zero-bypass clones for pending-sample runtime waits.
+  `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` later shipped top-level
+  bounded-eventual contract arm zero-bypass clones for pending-sample runtime
+  waits while leaving loop/check-state successors fail-closed. No active ISF
+  task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers
