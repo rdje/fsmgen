@@ -63,6 +63,7 @@ my %TRANSACTION_CONTEXT_LABEL = (
 sub build_module($self, $actor) {
     my $domain_partition = $self->_build_domain_partition($actor);
     $self->_validate_child_transaction_refs($actor);
+    $self->_validate_activation_domain_names($actor);
     my %generated_children = $self->_collect_generated_child_transaction_refs($actor);
     $self->_validate_transaction_parameter_clauses($actor, \%generated_children);
     $self->_validate_transaction_port_bindings($actor);
@@ -552,6 +553,53 @@ sub _child_action_refs_from_transaction_clauses {
     }
 
     return @refs;
+}
+
+sub _validate_activation_domain_names($self, $actor) {
+    my %declared_domains = _actor_declared_domain_names($actor);
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        for my $child_ref (_child_action_refs_from_transaction_clauses($tx->{clauses}, $tx->{name})) {
+            my $domain = _activation_domain_from_clause(
+                $child_ref->{clause},
+                $tx->{name},
+                $child_ref->{label},
+            );
+            next unless defined $domain;
+            next if $declared_domains{$domain};
+
+            my $keyword = $child_ref->{keyword};
+            my $target = $child_ref->{clause}[1];
+            confess "Transaction '$tx->{name}': $keyword target '$target' uses unknown clock domain '$domain'\n";
+        }
+    }
+
+    return 1;
+}
+
+sub _actor_declared_domain_names {
+    my ($actor) = @_;
+
+    if (_actor_has_clock_domains($actor)) {
+        return map { $_->{name} => 1 } @{$actor->{clock_domains}{domains} || []};
+    }
+
+    my %domains = (default => 1);
+    for my $entry (
+        @{$actor->{interface}{inputs} || []},
+        @{$actor->{interface}{outputs} || []},
+        @{$actor->{storage} || []},
+        @{$actor->{transactions} || []},
+        @{$actor->{rules} || []},
+        @{$actor->{library_uses} || []},
+    ) {
+        next unless ref($entry) eq 'HASH';
+        my $domain = $entry->{domain};
+        $domains{$domain} = 1
+            if defined($domain) && !ref($domain) && length($domain);
+    }
+
+    return %domains;
 }
 
 sub _rule_trigger_generated_refs {
@@ -3617,17 +3665,15 @@ sub _validate_repeat_body_spawn_subset {
             confess "Transaction '$tn': repeat-body spawn is supported only for top-level repeat clauses\n"
                 unless $label eq 'transaction body';
             for my $subclause (@{$body_clause}[4 .. $#$body_clause]) {
-                confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)' or '(bind ...)' in the spawn binding subset\n"
+                confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)', '(bind ...)', or '(domain ...)' in the spawn domain subset\n"
                     unless ref($subclause) eq 'ARRAY'
                         && @$subclause
                         && defined($subclause->[0])
                         && !ref($subclause->[0])
                         && length($subclause->[0]);
                 my $head = $subclause->[0];
-                next if $head eq 'params' || $head eq 'bind';
-                confess "Transaction '$tn': repeat-body spawn '(domain ...)' is not supported before repeat cross-domain ownership is specified\n"
-                    if $head eq 'domain';
-                confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)' and '(bind ...)' subclauses in the spawn binding subset\n";
+                next if $head eq 'params' || $head eq 'bind' || $head eq 'domain';
+                confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)', '(bind ...)', and '(domain ...)' subclauses in the spawn domain subset\n";
             }
             confess "Transaction '$tn': repeat-body spawn cannot follow pending samples in the first spawn-in-repeat subset\n"
                 if $pending_sample_run;

@@ -17,9 +17,10 @@ the parent transaction.
 
 The base form is exact: `(do child)`, with one scalar child transaction
 operand. The parameterized/bound form accepts nested subclauses:
-`(do child (params (NAME value) ...) (bind ...))`. At most one `params` block
-and one `bind` block may appear. Malformed missing, nested, duplicate, or
-unsupported operands fail before child-target resolution.
+`(do child (domain NAME) (params (NAME value) ...) (bind ...))`. At most one
+`domain` block, one `params` block, and one `bind` block may appear. Malformed
+missing, nested, duplicate, or unsupported operands fail before child-target
+resolution.
 
 **Current local lowering**:
 1. Parent asserts `child_start` and awaits `child_done`
@@ -128,20 +129,22 @@ start path; completing the child transaction returns the same static instance
 to its start-gated idle state. Completion never destroys the instance, and a
 later activation reuses the same child hardware.
 
-This matters for loops. When `(spawn ...)` is eventually accepted inside a
-`(repeat ...)` body, the repeat must not mean "create N child instances." It
-must mean "activate the same lexically named child instance once per loop
-iteration." A design that needs parallel workers should author distinct spawn
-instance names, or use a future static-generation surface if one is added. A
-spawn-in-repeat implementation also needs an explicit busy rule: the scheduler
-must reject or sequence any path that could start an already active child
-instance before its fresh `done` pulse has been observed.
+This matters for loops. In the shipped repeat-body subset, `(spawn ...)` does
+not mean "create N child instances." It means "activate the same lexically
+named child instance once per loop iteration." A design that needs parallel
+workers should author distinct spawn instance names, or use a future
+static-generation surface if one is added. The shipped repeat-body subset
+requires same-body `(await_all done)` before the repeat check can loop, so the
+scheduler rejects paths that could start the static child instance again before
+its fresh `done` pulse has been observed.
 
-The base form is exact: `(spawn child as name)`. The parameterized form adds
-one nested override block: `(spawn child as name (params (NAME value) ...))`.
-Both forms require scalar child and instance names plus the literal `as`
-separator. Malformed spawn forms fail before spawned child collection, so the
-scheduler does not invent a default instance name for an invalid clause.
+The base form is exact: `(spawn child as name)`. Optional nested subclauses add
+static parameter overrides, explicit port bindings, or declared same-domain
+ownership metadata: `(spawn child as name (domain NAME) (params (NAME value)
+...) (bind ...))`. The child, instance, and domain names must be scalar, and
+the literal `as` separator is required. Malformed spawn forms fail before
+spawned child collection, so the scheduler does not invent a default instance
+name for an invalid clause.
 
 **Lowering**:
 - One `.fsm` per unique child module

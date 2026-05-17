@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body spawn same-domain metadata shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts repeat-body `(spawn child as inst [(params ...)] [(bind ...)] (domain NAME))`
+  on the shipped top-level repeat plus same-body `(await_all done)` path when
+  `NAME` is a declared same-domain activation owner.
+- The annotation is ownership metadata only. It preserves the existing static
+  child instance/re-entry model, groups the child through
+  `clock_domains[].child_instances[]`, and does not imply CDC or cross-domain
+  activation behavior.
+- Unknown activation domains now fail closed for single-clock shorthand actors
+  as well as declared `(clock-domains ...)` actors; cross-domain repeat-body
+  activation remains rejected by the existing clock-domain validator.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`; repeat-body `await_any`, `do`,
+  nested activation, cross-domain activation, and sample-after-spawn timing
+  remain deferred.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body spawn bindings shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

@@ -19,12 +19,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   that remaining repeat-body child-activation backlog before future code work.
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` then shipped repeat-body spawn
   `(bind ...)` on the existing top-level repeat plus same-body `await_all`
-  path. Repeat-body `(domain ...)`, `await_any`, `do`, samples after
-  repeat-body spawn, and nested branch/loop activation remain deferred and
-  tracked in the same active tree. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, but domain overrides still need their
-  own clock-domain/re-entry contract before implementation. The workflow also
-  requires task-tree ownership before any code, test, source,
+  path. `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` then shipped repeat-body spawn
+  `(domain NAME)` as declared same-domain ownership metadata on that static
+  instance subset. Repeat-body `await_any`, `do`, cross-domain activation,
+  samples after repeat-body spawn, and nested branch/loop activation remain
+  deferred and tracked in the same active tree. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.4` for repeat-body `await_any`
+  outstanding-child semantics. The workflow also requires task-tree ownership
+  before any code, test, source,
   generated-artifact, or config change. Push cadence is every 30 unpushed
   commits unless the user explicitly requests an earlier push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
@@ -472,6 +474,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   repeat-body spawn may carry optional `(bind ...)` input/output handoffs for
   the same static generated child instance, with generated-top wiring and
   schedule-report provenance.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` then widened the same subset to accept
+  optional declared same-domain `(domain NAME)` ownership metadata while
+  keeping cross-domain activation fail-closed.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization

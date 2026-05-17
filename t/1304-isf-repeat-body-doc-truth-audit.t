@@ -30,6 +30,7 @@ my @shipped_terms = qw(
     wait
     spawn
     params
+    domain
     await_all
 );
 

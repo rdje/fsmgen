@@ -35,6 +35,11 @@ for my $path (@loop_docs) {
         qr/repeat(?:-body| body).*spawn.*params/s,
         "$path documents the shipped repeat-body spawn static params subset",
     );
+    like(
+        $content,
+        qr/repeat(?:-body| body).*spawn.*domain/s,
+        "$path documents the shipped repeat-body spawn same-domain metadata subset",
+    );
 }
 
 done_testing();

@@ -1249,8 +1249,8 @@ Current transaction clauses:
 - `(assemble part... as var)`
 - `(extract word as field...)`
 - `(extract word as field... (widths N...))`
-- `(do transaction [(params (NAME value) ...)] [(bind ...)])`
-- `(spawn transaction as instance [(params (NAME value) ...)] [(bind ...)])`
+- `(do transaction [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
+- `(spawn transaction as instance [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
 - `(trigger transaction [(params (NAME value) ...)] [(bind ...)])`
 - `(await_all done_port)`
 - `(await_any done_port)`
@@ -1540,17 +1540,20 @@ Current lowering:
   `sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
   `extract`, actor-owned bank `store` and `load`, and shipped `wait` clauses.
   Top-level repeat bodies also accept the first child-activation subset:
-  `(spawn child as instance [(params ...)] [(bind ...)])` clauses followed by
-  a same-body `(await_all done)` before the repeat check can loop. That subset
-  reuses one static generated child instance per lexical spawn name; it does
-  not create one child instance per repeat iteration. Parameter overrides
-  specialize that static instance once in the generated top and use the same
-  value/shape contract as top-level spawn. Input and output bindings reuse the
-  top-level generated-child handoff contract: generated parent handoff ports
-  are wired once in the generated top for the static instance, not recreated
-  per iteration. `do`, `await_any`, spawn activation `(domain ...)`, `stage`,
-  `contract`, nested `while`, and nested `until` remain outside the shipped
-  repeat-body subset.
+  `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
+  clauses followed by a same-body `(await_all done)` before the repeat check
+  can loop. That subset reuses one static generated child instance per
+  lexical spawn name; it does not create one child instance per repeat
+  iteration. Parameter overrides specialize that static instance once in the
+  generated top and use the same value/shape contract as top-level spawn.
+  Input and output bindings reuse the top-level generated-child handoff
+  contract: generated parent handoff ports are wired once in the generated
+  top for the static instance, not recreated per iteration. Optional
+  `(domain NAME)` annotations are declared same-domain ownership metadata only:
+  they group the static child instance with the activation domain and do not
+  imply CDC behavior or allow cross-domain activation. `do`, `await_any`,
+  `stage`, `contract`, nested `while`, and nested `until` remain outside the
+  shipped repeat-body subset.
 
 The repeat count is a runtime counter load value, not an elaboration count.
 Literal counts give statically reviewable loop bounds. Named counts may be
@@ -2047,9 +2050,9 @@ Current lowering:
 - Local `do` rewires the child idle state to wait on
   `child_transaction_start`.
 - `do` is structurally validated as
-  `(do transaction [(params (NAME value) ...)] [(bind ...)])` with one scalar
-  child transaction operand and at most one `params` block plus at most one
-  `bind` block before child-target resolution.
+  `(do transaction [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
+  with one scalar child transaction operand and at most one `domain`, `params`,
+  and `bind` block before child-target resolution.
 - The `child_transaction` target must name a declared transaction in the same
   actor. Forward references are accepted; missing targets fail before
   scheduled `.fsm` emission.
@@ -2085,9 +2088,10 @@ Current lowering:
 Current lowering:
 - Spawned transactions are emitted as separate child `.fsm` files.
 - `spawn` is structurally validated as
-  `(spawn transaction as instance [(params (NAME value) ...)])` with one
-  scalar child transaction, one scalar instance name, and at most one validated
-  parameter override block before spawned child collection.
+  `(spawn transaction as instance [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
+  with one scalar child transaction, one scalar instance name, and at most one
+  validated `domain`, parameter override, and bind block before spawned child
+  collection.
 - The spawned transaction target must name a declared transaction in the same
   actor. Forward references are accepted; missing targets fail before
   scheduled `.fsm` emission.
@@ -3205,10 +3209,11 @@ Focused tests:
 - Transaction-local loop combinations beyond the shipped top-level
   `while`/`until` subset and the top-level repeat-body spawn plus same-body
   `await_all` subset with optional static `(params ...)` and optional
-  `(bind ...)`: nested loops, loops under `when`/`switch`/`repeat`, and
-  `while`/`until` loop bodies containing `do`, `spawn`, `await_all`,
-  `await_any`, `stage`, or `contract` remain deferred until re-entry, child
-  lifetime, and report semantics are specified.
+  `(bind ...)` plus optional declared same-domain `(domain NAME)` metadata:
+  nested loops, loops under `when`/`switch`/`repeat`, and `while`/`until` loop
+  bodies containing `do`, `spawn`, `await_all`, `await_any`, `stage`, or
+  `contract` remain deferred until re-entry, child lifetime, and report
+  semantics are specified.
 - Old `(handshake ...)` semantics beyond validated ignored compatibility
   parsing.
 - The removed `(assign ...)` action keyword; authored transaction uses fail

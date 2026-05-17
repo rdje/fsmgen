@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF repeat-body spawn same-domain metadata shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`.
+- Repeat-body spawn now accepts optional `(domain NAME)` annotations on the
+  existing top-level repeat plus same-body `await_all` subset when the
+  annotation names the same declared domain as the owning transaction and
+  child.
+- The lowerer preserves that metadata on the static generated child instance,
+  exposes it through `clock_domains[].child_instances[]`, and keeps
+  undeclared domains plus cross-domain activation fail-closed.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook
+  transaction/control-flow/composition/lowering/backlog/feature-matrix
+  chapters, roadmap board, and task tree.
+- Repeat-body `await_any`, `do`, nested activation, cross-domain activation,
+  and sample-after-spawn timing remain deferred.
 ### R14 — ISF repeat-body spawn bindings shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`.
 - Repeat-body spawn now accepts optional `(bind ...)` input/output port

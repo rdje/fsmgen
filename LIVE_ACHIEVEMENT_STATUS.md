@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body spawn same-domain metadata shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`.
+- Top-level repeat bodies may now use
+  `(spawn child as inst [(params ...)] [(bind ...)] (domain NAME))` when
+  `NAME` is the declared same-domain owner and the same repeat body reaches
+  `(await_all done)` before the repeat check can loop.
+- The domain annotation is metadata only: it groups the static generated child
+  instance in clock-domain reports and does not imply CDC or cross-domain
+  activation support.
+- Repeat-body `await_any`, `do`, nested activation, cross-domain activation,
+  and sample-after-spawn timing remain deferred. The active frontier advances
+  to `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`.
+
 ## 2026-05-17: R14 — ISF repeat-body spawn bindings shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`.
 - Top-level repeat bodies may now use

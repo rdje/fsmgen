@@ -240,6 +240,61 @@ ISF
     );
 };
 
+subtest 'repeat body spawn accepts declared same-domain activation metadata' => sub {
+    my $source = <<'ISF';
+(actor repeat_spawn_domain
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start)
+    (input loops (width 3))
+    (output done))
+  (transaction parent
+    (domain core)
+    (on start)
+    (repeat loops
+      (spawn worker as w0
+        (domain core))
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1,
+        'repeat-body domain spawn contributes one static generated child instance');
+    is($ir->{spawn_instances}[0]{domain}, 'core',
+        'repeat-body spawn preserves declared same-domain activation metadata');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'repeat_spawn_domain.fsm'};
+    my $top_fsm = $lowered->{files}{'repeat_spawn_domain_top.fsm'};
+
+    ok(defined($parent_fsm), 'repeat-spawn domain parent scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'repeat-spawn domain generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_spawn_2[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_all_3\)/,
+        'repeat body domain spawn still starts the static child and advances to await_all');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top instantiates the repeat-spawn domain child once');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        $report->{clock_domains}[0]{child_instances},
+        [
+            {
+                kind     => 'spawn',
+                owner    => 'parent',
+                child    => 'worker',
+                instance => 'w0',
+            },
+        ],
+        'clock-domain report metadata groups the repeated static child by declared activation domain',
+    );
+};
+
 subtest 'parameterized do lowers through a generated child activation instance' => sub {
     my $source = <<'ISF';
 (actor parameterized_do_binding
@@ -422,8 +477,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat spawn with domain override', qr/repeat-body spawn '\(domain \.\.\.\)' is not supported/);
-(actor repeat_spawn_with_domain
+    assert_lower_rejected(<<'ISF', 'repeat spawn with undeclared domain override', qr/spawn target 'worker' uses unknown clock domain 'fast'/);
+(actor repeat_spawn_with_unknown_domain
   (clock clk)
   (interface (input start) (input loops (width 3)) (output done))
   (transaction parent
@@ -435,6 +490,29 @@ ISF
     (complete done))
   (transaction worker
     (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat spawn with cross-domain activation override', qr/clock-domain violation: transaction 'parent' spawn target 'worker' references transaction in domain 'bus' from domain 'core'/);
+(actor repeat_spawn_cross_domain
+  (clock-domains
+    (domain core (clock clk) :default)
+    (domain bus (clock bus_clk)))
+  (interface
+    (input start (domain core))
+    (input loops (width 3) (domain core))
+    (output done (domain core))
+    (output worker_done (domain bus)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (repeat loops
+      (spawn worker as w0
+        (domain bus))
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (domain bus)
+    (complete worker_done)))
 ISF
 
     assert_lower_rejected(<<'ISF', 'nested repeat spawn', qr/repeat-body spawn is supported only for top-level repeat clauses/);

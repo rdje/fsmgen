@@ -230,11 +230,12 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 Status: partially shipped; broader repeat-body child activation remains backlog.
 Task-tree owner for the remaining backlog:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
-Repeat-body spawn `(bind ...)` is shipped for the already shipped top-level
-repeat plus same-body `await_all` path. It reuses the static generated-child
-handoff model: one lexical spawn name maps to one generated child instance,
-and binding payload ports are generated once for that instance rather than per
-repeat iteration.
+Repeat-body spawn `(bind ...)` and declared same-domain `(domain NAME)`
+metadata are shipped for the already shipped top-level repeat plus same-body
+`await_all` path. The subset reuses the static generated-child model: one
+lexical spawn name maps to one generated child instance, binding payload ports
+are generated once for that instance rather than per repeat iteration, and the
+domain annotation records ownership metadata without implying CDC behavior.
 
 Goal: allow `(spawn child as name)` inside `(repeat count body...)` without
 implying dynamic hardware creation.
@@ -247,19 +248,21 @@ each later iteration observes the child's fresh done pulse before starting it
 again, or reject the loop with a targeted diagnostic.
 
 Shipped subset: a top-level repeat body may use
-`(spawn child as inst [(params ...)])` clauses when the same repeat body
-reaches `(await_all done)` before the repeat check can loop. That `await_all`
-consumes the pending done ports for the spawned child instances, so the next
-iteration cannot re-assert an instance start before the previous activation
-has returned fresh done. Parameter overrides reuse the same static
-specialization contract as top-level spawn: they specialize the one lexical
-child instance in the generated top and do not create per-iteration parameter
-values. Binding handoffs are now shipped for the same subset: optional
-`(bind ...)` input and output ports generate one set of parent handoff ports
-for the lexical static instance and are wired in the generated top. `await_any`,
-repeat-body `do`, activation `(domain ...)`, and spawn nested under branch or
-loop bodies remain backlog until their re-entry, binding, domain, and report
-contracts are specified.
+`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
+when the same repeat body reaches `(await_all done)` before the repeat check
+can loop. That `await_all` consumes the pending done ports for the spawned
+child instances, so the next iteration cannot re-assert an instance start
+before the previous activation has returned fresh done. Parameter overrides
+reuse the same static specialization contract as top-level spawn: they
+specialize the one lexical child instance in the generated top and do not
+create per-iteration parameter values. Binding handoffs generate one set of
+parent handoff ports for the lexical static instance and are wired in the
+generated top. Domain annotations are accepted only when they name the same
+declared domain as the owning transaction and child; cross-domain activation
+still needs an explicit CDC/protocol contract. `await_any`, repeat-body `do`,
+cross-domain activation, and spawn nested under branch or loop bodies remain
+backlog until their re-entry, binding, domain, and report contracts are
+specified.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

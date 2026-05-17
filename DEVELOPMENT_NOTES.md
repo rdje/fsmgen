@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body spawn domains are ownership metadata only
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.3` deliberately ships only the
+  same-domain part of repeat-body `(domain NAME)`. The repeat body still
+  reuses one static generated child instance and still needs same-body
+  `await_all` before the repeat check can loop.
+- This is metadata preservation, not CDC. The annotation is accepted only when
+  it names the declared owner domain for the activation; direct cross-domain
+  activation still fails through the clock-domain validator.
+- The implementation also closes the single-clock shorthand gap by treating
+  only `default` as the implicit declared domain when an actor lacks
+  `(clock-domains ...)`, so unknown activation domain names cannot silently
+  pass through repeat-body spawn metadata.
 ## 2026-05-17: repeat-body spawn bindings reuse static handoffs
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.2` deliberately reuses the existing
   top-level spawn binding machinery instead of inventing a repeat-specific

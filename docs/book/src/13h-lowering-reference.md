@@ -1024,7 +1024,8 @@ known interface or sample-derived width, and unknown count forms fall back to
 widest required branch width.
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
 data operations, and the first child-activation subset: spawn with optional
-static `(params ...)` and optional `(bind ...)` handoffs followed by same-body
+static `(params ...)`, optional `(bind ...)` handoffs, and optional declared
+same-domain `(domain NAME)` ownership metadata followed by same-body
 `await_all`.
 
 `N` is a counter load value, not a structural replication count. A dynamic
@@ -1036,7 +1037,10 @@ body starts that instance, waits for the same instance's done port, and only
 then reaches the repeat check. If the spawn carries `(params ...)`, those
 overrides appear once on that static generated-top child instance, not on each
 iteration. If it carries `(bind ...)`, the generated parent handoff ports are
-also emitted once for that static instance and wired by the generated top:
+also emitted once for that static instance and wired by the generated top. If
+it carries `(domain NAME)`, that name must be declared by the actor and remain
+the same domain as the owning transaction and child; it only records ownership
+metadata and does not add CDC behavior:
 
 ```lisp
 (parent_spawn_2
@@ -1053,9 +1057,9 @@ also emitted once for that static instance and wired by the generated top:
     (=0 (-> parent_done_5))))
 ```
 
-Broader repeat-body child activation, including `await_any`, bound or
-domain-qualified spawn, `do`, and nested branch/loop forms, remains
-fail-closed until its re-entry and report behavior is specified.
+Broader repeat-body child activation, including `await_any`, cross-domain
+spawn, `do`, and nested branch/loop forms, remains fail-closed until its
+re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States
 

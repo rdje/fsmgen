@@ -798,15 +798,18 @@ The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 `update`, `set`, `shift_left`, `shift_right`, `assemble`, `extract`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
 top-level spawn plus same-body `await_all` subset with optional static
-`(params ...)` overrides and optional `(bind ...)` port handoffs. `do`,
-`await_any`, spawn activation `(domain ...)`, `stage`, `contract`, nested
-`while`, and nested `until` remain outside the shipped repeat-body subset.
+`(params ...)` overrides, optional `(bind ...)` port handoffs, and optional
+declared same-domain `(domain NAME)` ownership metadata. `do`, `await_any`,
+`stage`, `contract`, nested `while`, and nested `until` remain outside the
+shipped repeat-body subset.
 The shipped repeat-body child-activation subset is
-`(spawn child as instance [(params ...)] [(bind ...)])` followed by a same-body
-`(await_all done)` before the repeat check can loop, reusing one static
-generated child instance across iterations. Optional parameter overrides
-specialize that instance once in the generated top, and optional input/output
-bindings create generated handoff ports once for the same static instance.
+`(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
+followed by a same-body `(await_all done)` before the repeat check can loop,
+reusing one static generated child instance across iterations. Optional
+parameter overrides specialize that instance once in the generated top,
+optional input/output bindings create generated handoff ports once for the same
+static instance, and optional domain annotations group the static child with a
+declared same-domain activation owner without implying CDC behavior.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent
@@ -818,8 +821,8 @@ so `(await_all done_port)` and `(await_any done_port)` require exactly one
 scalar done-port operand before sync-state emission.
 The child-composition clause boundary is checked by
 [t/1204-isf-child-composition-clause-boundary.t](../t/1204-isf-child-composition-clause-boundary.t)
-so `(do transaction [(params (NAME value) ...)] [(bind ...)])` and
-`(spawn transaction as instance [(params (NAME value) ...)] [(bind ...)])`
+so `(do transaction [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])` and
+`(spawn transaction as instance [(domain NAME)] [(params (NAME value) ...)] [(bind ...)])`
 require exact scalar child/instance operands before child-target resolution or
 generated-child collection.
 Spawn and blocking `do` parameter binding are checked by
@@ -2032,7 +2035,8 @@ These are not stable public interfaces yet:
   samples, and top-level transaction `(while cond body...)` /
   `(until cond body...)` remains non-public except for the documented
   top-level repeat-body spawn plus optional static `(params ...)`, optional
-  `(bind ...)` port handoffs, and same-body `await_all` subset.
+  `(bind ...)` port handoffs, optional declared same-domain `(domain NAME)`
+  metadata, and same-body `await_all` subset.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
   wait counts, sample-incompatible runtime wait successors, nested loops, and
   loop bodies containing broader child activation, stages, or contracts need
