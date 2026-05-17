@@ -374,6 +374,16 @@ the nested repeat re-entry gated on the spawned child's done handoff.
 branch/loop nesting, and broader outstanding-child semantics remain backlog
 beyond the shipped when-contained single-spawn leaf.
 
+The next bounded spawn-nesting leaf selects the direct switch analogue: a
+repeat directly inside a top-level `switch` branch with exactly one generated
+`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` that
+reaches same-body `(await_all done)` before the nested repeat check can loop.
+The selected subset should reuse the static generated-child handoff model,
+keep source-order samples before the spawn or sync states explicit, and keep
+`await_any`, multiple pending nested spawns, `do` while a nested spawn is
+pending, cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics out of scope.
+
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
 data-dependent, and the repeat contract still needs an explicit zero-count

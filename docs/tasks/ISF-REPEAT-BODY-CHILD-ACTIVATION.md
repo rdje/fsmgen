@@ -42,7 +42,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION`
   Status: `active`
   Goal: `Ship remaining repeat-body child activation subsets safely.`
-  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.26`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.31`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.32`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.33`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.34`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.35`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.36`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.37`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.38`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.40`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.41`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.42`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.43`
+  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.26`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.31`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.32`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.33`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.34`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.35`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.36`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.37`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.38`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.40`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.41`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.42`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.43`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.44`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`
   Status: `done`
@@ -339,9 +339,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.42: implement when repeat spawn await_all`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.43`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next repeat-body child activation subset.`
-  Acceptance: `Task tree, roadmap, and book backlog select the next bounded subset after the shipped when-contained single-spawn await_all leaf; candidate frontiers include when-contained await_any or multiple nested spawns, switch-contained spawn nesting, do while a nested spawn is pending, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics.`
+  Acceptance: `Task tree, roadmap, and book backlog select top-level switch-branch nested repeat single generated spawn with same-body await_all drain as the next bounded spawn-nesting subset; the selected source shape is a repeat directly inside a top-level switch branch containing exactly one '(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])' that must reach same-body '(await_all done)' before the nested repeat check can loop; the selected contract mirrors the shipped when-contained single-spawn leaf, reuses the static generated-child handoff model, preserves source-order samples before the spawn or sync states, and keeps await_any, multiple pending nested spawns, do while a nested spawn is pending, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics deferred.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.43: select switch repeat spawn await_all`
+
+- ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.44`
+  Status: `pending`
+  Goal: `Ship switch-branch nested repeat single generated spawn with same-body await_all if selected.`
+  Acceptance: `Top-level switch branches accept nested '(repeat COUNT ... (spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)]) ... (await_all done) ...)' only for exactly one pending nested spawn in that repeat body; generated-child metadata, generated-top static parameter/binding/domain handoffs, source-order sample timing before spawn or sync states, and done-gated nested repeat re-entry are preserved, while await_any, multiple pending nested spawns, do while a nested spawn is pending, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics remain fail-closed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -391,7 +398,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | 40 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.40` | `done` | Shipped the selected switch-contained repeat generated do domain subset. |
 | 41 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.41` | `done` | Selected top-level when-body nested repeat single generated spawn with same-body `await_all`. |
 | 42 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.42` | `done` | Shipped the selected when-contained repeat spawn await_all subset. |
-| 43 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.43` | `pending` | Selects the next bounded repeat-body child activation subset. |
+| 43 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.43` | `done` | Selected top-level switch-branch nested repeat single generated spawn with same-body `await_all`. |
+| 44 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.44` | `pending` | Implements the selected switch-contained repeat spawn await_all subset. |
 
 ## Decisions
 
@@ -774,13 +782,23 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   nested spawns, switch-contained spawn nesting, `do` while a nested spawn is
   pending, cross-domain activation, deeper branch/loop nesting, and broader
   outstanding-child semantics.
+- `2026-05-17`: Leaf `.43` selects top-level switch-branch nested repeat
+  single generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  with same-body `(await_all done)` as the next bounded spawn-nesting subset.
+  The selected source shape is a repeat directly inside a top-level `switch`
+  branch, exactly one pending nested spawn, same-body drain before the nested
+  repeat check can loop, and existing static generated-child handoffs for
+  params, bindings, and declared same-domain metadata.
+- `2026-05-17`: Leaf `.44` is the next implementation frontier for the
+  selected switch-contained repeat spawn await_all subset.
 
 ## Open Questions
 
-- Which deferred repeat-body activation subset should leaf `.43` select next:
-  when-contained `await_any` or multiple nested spawns, switch-contained spawn
-  nesting, `do` while a nested spawn is pending, cross-domain activation,
-  deeper branch/loop nesting, or broader outstanding-child semantics?
+- None for leaf `.44` selection. Implementation must prove the
+  switch-contained nested spawn plus same-body await_all path while keeping
+  `await_any`, multiple pending nested spawns, `do` while a nested spawn is
+  pending, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics fail-closed.
 
 ## Blockers
 
@@ -834,6 +852,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.40` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1247-isf-clock-domain-partition.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1247-isf-clock-domain-partition.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1247-isf-clock-domain-partition.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1103-isf-switch-branch-exits.t t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1247-isf-clock-domain-partition.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, touched repeat/do/domain checks (Files=2, Tests=33), repeat/domain/doc suite (Files=5, Tests=338), focused suite (Files=13, Tests=369), book build, full ISF gate (Files=227, Tests=1140), and diff check passed` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.41` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting top-level when-body nested repeat single generated spawn with same-body await_all` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.42` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1103-isf-switch-branch-exits.t t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1247-isf-clock-domain-partition.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, touched repeat/spawn/doc checks (Files=4, Tests=333), focused activation/domain/doc suite (Files=13, Tests=375), book build, full ISF gate (Files=227, Tests=1146), and diff check passed` |
+| `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.43` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting top-level switch-branch nested repeat single generated spawn with same-body await_all` |
 
 ## Commit Log
 
@@ -882,6 +901,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.40` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.40: implement switch repeat generated do domains` | `switch-contained repeat generated do same-domain metadata shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.41` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.41: select when repeat spawn await_all` | `selected when-contained repeat single spawn with same-body await_all` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.42` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.42: implement when repeat spawn await_all` | `when-contained repeat single spawn with same-body await_all shipped` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.43` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.43: select switch repeat spawn await_all` | `selected switch-contained repeat single spawn with same-body await_all` |
 
 ## Changelog
 
@@ -1011,3 +1031,6 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   pending nested spawns, switch-contained spawn nesting, `do` while nested
   spawn is pending, cross-domain activation, deeper branch/loop nesting, and
   broader outstanding-child semantics fail-closed.
+- `2026-05-17`: Selected top-level switch-branch nested repeat single
+  generated spawn with same-body `await_all` as the next bounded
+  spawn-nesting subset.
