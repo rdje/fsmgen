@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body generated-child do selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`.
+- Selected top-level repeat-body plain `(do child)` targeting an already
+  generated child as the next bounded implementation subset.
+- The selected surface owns one deterministic generated activation instance
+  for the lexical repeat-body do site and keeps repeat re-entry gated by that
+  instance's fresh done handoff.
+- Sample-before/after-do timing, nested placement, cross-domain activation,
+  multi-pending `await_any`, and broader outstanding-child semantics remain
+  deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`.
+
 ## 2026-05-17: R14 — ISF repeat-body spawn-after-sample ordering shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`.
 - Top-level repeat bodies may now sample before a later repeat-body spawn

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated-child do is the next bounded subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.15` selects plain repeat-body
+  `(do child)` when the target child is already emitted as a generated child
+  by another activation site.
+- The intended implementation should reuse the top-level generated-child `do`
+  model but keep repeat-specific naming and re-entry proof: one deterministic
+  generated activation instance for the lexical repeat-body do site, then the
+  repeat check only after that instance's fresh done handoff.
+- This remains narrower than parameter/bind/domain widening for that plain
+  site. It also leaves sample-before/after-do timing, nested placement,
+  cross-domain activation, and multi-pending `await_any` as separate contracts.
 ## 2026-05-17: repeat-body spawn-after-sample drains before spawn
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.14` ships the ordering that the repeat
   lowering already models: pending samples are drained before the later spawn
