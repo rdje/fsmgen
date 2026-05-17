@@ -573,6 +573,22 @@ original assemble successor:
 If the assembled target or any assembled part is `hold`, the form remains
 fail-closed for the same sample-and-consume timing reason.
 
+An independent extract state follows the same rule. The clone carries the
+pending sample, emits the original slice assignments, and advances to the
+original extract successor:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (<= (out_header> (slice packet 15 12)))
+  (<= (out_payload> (slice packet 11 4)))
+  (<= (out_crc> (slice packet 3 0)))
+  (-> main_drive_3))
+```
+
+If the extract source word or any destination field is `hold`, the form
+remains fail-closed for the same sample-and-consume timing reason.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

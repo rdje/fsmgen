@@ -1658,9 +1658,9 @@ Pending samples before top-level runtime waits are supported for the first
 path-specific sample-materialization subset when the following state can carry
 the zero-count sample without changing timing, such as a drive call, an await,
 static wait state, completion state, independent scalar `set`/`update` state,
-independent shift state, or independent `assemble` state that neither reads
-nor overwrites a pending sample alias. The positive-count path matches
-positive static waits by
+independent shift state, independent `assemble` state, or independent
+`extract` state that neither reads nor overwrites a pending sample alias. The
+positive-count path matches positive static waits by
 materializing samples in the first active wait state.
 For counts greater than one, a second generated wait-loop state consumes the
 remaining sampled counter value without repeating the sample. The zero-count
@@ -1680,6 +1680,10 @@ Independent assemble zero-count clones preserve the original concat assignment
 and advance to the same successor as the original assemble state. Assemble
 states that read a pending sample alias as a part or overwrite one as the
 target remain fail-closed for the same reason.
+Independent extract zero-count clones preserve the original slice assignments
+and advance to the same successor as the original extract state. Extract
+states that read a pending sample alias as the source word or overwrite one as
+a destination field remain fail-closed for the same reason.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
 samples without changing timing fail closed. The same path-specific
 materialization is also supported inside `when` bodies and `switch` branches
@@ -1689,7 +1693,8 @@ fallthrough remain unchanged. `repeat`, `while`, and `until` bodies use the
 same materialization when the zero-count body successor can carry pending
 samples. Repeat loop-back/exit behavior, `while` false exits, and `until` true
 exits remain unchanged. Completion states, independent scalar setter states,
-independent shift states, and independent assemble states are
+independent shift states, independent assemble states, and independent extract
+states are
 sample-compatible selected successors in the shipped top-level, `when`-body,
 and `switch`-branch subset. Runtime waits whose selected zero-count successor
 cannot yet carry pending samples without changing timing fail closed.

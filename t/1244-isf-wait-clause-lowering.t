@@ -877,6 +877,86 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_assemble');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into independent extract states' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-extract');
+(actor wait_dynamic_sample_extract
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input packet (width 16))
+    (output out_header (width 4))
+    (output out_payload (width 8))
+    (output out_crc (width 4))
+    (output sample_out (width 8))
+    (output done))
+  (drive (captured val)
+    (sample_out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (extract packet as out_header out_payload out_crc)
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_extract.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving extract clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_ext_2\)\)/,
+        'positive path exits to the original extract state');
+
+    my $extract = state_block($fsm, 'main_ext_2');
+    unlike($extract, qr/\(<= \(hold din\)\)/,
+        'original extract state does not double-sample after a positive wait');
+    like($extract, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/,
+        'original extract high slice is unchanged');
+    like($extract, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/,
+        'original extract middle slice is unchanged');
+    like($extract, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,
+        'original extract low slice is unchanged');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count extract clone materializes the pending sample');
+    like($zero_clone, qr/\(<= \(out_header> \(slice packet 15 12\)\)\)/,
+        'zero-count extract clone performs the high slice');
+    like($zero_clone, qr/\(<= \(out_payload> \(slice packet 11 4\)\)\)/,
+        'zero-count extract clone performs the middle slice');
+    like($zero_clone, qr/\(<= \(out_crc> \(slice packet 3 0\)\)\)/,
+        'zero-count extract clone performs the low slice');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'zero-count extract clone advances like the original extract state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_ext_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'independent extract zero-bypass report still points at the original positive successor',
+    );
+
+    unlike($fsm, qr/HIGH|LOW|WIDTH/,
+        'independent extract zero-bypass emits concrete slices without placeholders');
+};
+
 subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
 (actor wait_dynamic_pair
@@ -2310,6 +2390,44 @@ ISF
     (sample din as hold)
     (wait cycles)
     (assemble header payload as hold)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-consuming extract source', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_ext_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_extract_source
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 16))
+    (output header (width 8))
+    (output payload (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (extract hold as header payload)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-overwriting extract field', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_ext_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_extract_field
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input packet (width 16))
+    (output payload (width 8))
+    (output done))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (extract packet as hold payload)
     (complete done)))
 ISF
 

@@ -111,6 +111,7 @@ my @required_examples = (
     'independent scalar setters',
     'independent shifts',
     'independent assemble states',
+    'independent extract states',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

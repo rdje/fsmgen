@@ -6726,6 +6726,7 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
         return 1 if _dynamic_wait_zero_sample_target_is_independent_setter($wait_state, $target_state);
         return 1 if _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(shift latency_increment_request));
         return 1 if _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(assemble latency_increment_request));
+        return 1 if _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(extract_capture latency_increment_request));
     }
 
     return 0;

@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF independent extract zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lets pending-sample runtime waits zero-bypass into `extract` states
+  when the source word and all destination fields are independent of pending
+  sample aliases. The clone materializes pending samples, performs the
+  original slice assignments, and advances to the original extract successor.
+- Extract states that read a pending sample alias as the source word or
+  overwrite one as a destination field remain fail-closed, as do broader
+  data-operation successors such as bank load/store, stage, contract, and
+  loop/check states.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=125`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1012`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence remains every 30 unpushed commits.
 ## 2026-05-16: ISF independent assemble zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.md).
@@ -9,8 +31,9 @@ This is the live continuity document for fast session recovery after crashes, re
   pending sample aliases. The clone materializes pending samples, performs the
   original concat assignment, and advances to the original assemble successor.
 - Assemble states that read a pending sample alias as a part or overwrite one
-  as the target remain fail-closed, as do broader data-operation successors
-  such as extract, bank load/store, stage, contract, and loop/check states.
+  as the target remain fail-closed. A later slice independently enabled
+  extract successors when they do not touch pending sample aliases; bank
+  load/store, stage, contract, and loop/check successors remain fail-closed.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
@@ -29,9 +52,10 @@ This is the live continuity document for fast session recovery after crashes, re
   shift target and RHS expression are independent of the pending sample
   aliases. The clone materializes pending samples, performs the original shift
   assignment, and advances to the original shift successor.
-- Shifts that read or overwrite a pending sample alias remain fail-closed, as
-  do broader data-operation successors such as extract, bank
-  load/store, stage, contract, and loop/check states.
+- Shifts that read or overwrite a pending sample alias remain fail-closed.
+  Later slices independently enabled assemble and extract successors when they
+  do not touch pending sample aliases; bank load/store, stage, contract, and
+  loop/check successors remain fail-closed.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
@@ -69,9 +93,9 @@ This is the live continuity document for fast session recovery after crashes, re
   aliases. The clone materializes pending samples, performs the original
   setter assignment, and advances to the original setter successor.
 - Setters that read or overwrite a pending sample alias remain fail-closed.
-  Later slices independently enabled shift and assemble successors when they do
-  not touch pending sample aliases; extract, bank load/store, stage, contract,
-  and loop/check successors remain fail-closed.
+  Later slices independently enabled shift, assemble, and extract successors
+  when they do not touch pending sample aliases; bank load/store, stage,
+  contract, and loop/check successors remain fail-closed.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
