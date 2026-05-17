@@ -42,7 +42,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION`
   Status: `active`
   Goal: `Ship remaining repeat-body child activation subsets safely.`
-  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.26`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`
+  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.26`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`
   Status: `done`
@@ -241,9 +241,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.28: implement switch repeat generated-child do`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`
-  Status: `pending`
+  Status: `done`
   Goal: `Select the next repeat-body child activation subset.`
-  Acceptance: `Task tree, roadmap, and book backlog select the next bounded implementation subset after branch-contained repeat generated-child do; candidates include parameterized generated nested do, spawn nesting, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics, and no code changes may begin until the selected source shape, exclusions, docs, and validation plan are recorded.`
+  Acceptance: `Task tree, roadmap, and book backlog select top-level when-body nested repeat generated blocking '(do child (params ...))' as the next bounded implementation subset; the selected contract emits one deterministic generated do instance for the lexical nested repeat-body do site, applies static parameter overrides once in the generated top, waits for that instance's fresh done handoff before the when-body nested repeat check, and keeps bind/domain metadata, spawn nesting, switch-contained parameterized nested do, deeper branch/loop nesting, cross-domain activation, and broader outstanding-child semantics deferred.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.29: select when repeat generated do params`
+
+- ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`
+  Status: `pending`
+  Goal: `Ship when-body nested repeat generated do with static parameter overrides if selected.`
+  Acceptance: `Top-level when bodies accept nested '(repeat COUNT ... (do child (params ...)) ...)' with static parameter overrides; lowering emits one deterministic generated do instance for the lexical nested repeat-body do site, applies overrides once in the generated top, waits for that instance's fresh done handoff before the nested repeat check, preserves samples around the nested do through existing source-order sample states, and keeps bind/domain metadata, spawn nesting, switch-contained parameterized nested do, deeper branch/loop nesting, cross-domain activation, and broader outstanding-child semantics fail-closed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -279,7 +286,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | 26 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.26` | `done` | Shipped the selected when-contained repeat generated-child do subset. |
 | 27 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.27` | `done` | Selected top-level switch-branch nested repeat generated-child `do`. |
 | 28 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.28` | `done` | Shipped the selected switch-contained repeat generated-child do subset. |
-| 29 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.29` | `pending` | Selects the next bounded repeat-body child activation subset. |
+| 29 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.29` | `done` | Selected top-level when-body nested repeat generated `do` with static parameter overrides. |
+| 30 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.30` | `pending` | Ships the selected when-contained repeat generated do static-parameter subset. |
 
 ## Decisions
 
@@ -507,13 +515,23 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   broader outstanding-child semantics remain fail-closed.
 - `2026-05-17`: Leaf `.29` is the next frontier and must select the next
   bounded repeat-body child activation subset before any further code changes.
+- `2026-05-17`: Leaf `.29` selects top-level when-body nested repeat
+  generated blocking `(do child (params ...))` as the next bounded nested
+  generated-do subset. The selected source shape is a repeat directly inside a
+  top-level `when` body, with static parameter overrides only at that nested
+  do site; lowering should emit one deterministic generated do instance for
+  the lexical nested do site, apply overrides once in the generated top, and
+  gate the when-body repeat check on that instance's fresh done handoff.
+- `2026-05-17`: Leaf `.30` is the next implementation frontier for the
+  selected when-contained repeat generated do static-parameter subset.
 
 ## Open Questions
 
-- Which deferred repeat-body activation subset should `.29` select after the
-  shipped branch-contained repeat generated-child do implementation:
-  parameterized generated nested do, spawn nesting, cross-domain activation,
-  deeper branch/loop nesting, or
+- Which deferred repeat-body activation subset should follow after the
+  selected when-contained repeat generated do static-parameter implementation:
+  generated nested do bindings, generated nested do domain metadata,
+  switch-contained parameterized generated nested do, spawn nesting,
+  cross-domain activation, deeper branch/loop nesting, or
   broader outstanding-child semantics.
 
 ## Blockers
@@ -554,6 +572,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.26` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1103-isf-switch-branch-exits.t`; `perl -Iperl -c t/1177-isf-do-child-done-pulse.t`; `perl -Iperl -c t/1184-isf-child-transaction-target-boundary.t`; `perl -Iperl -c t/1203-isf-await-sync-clause-boundary.t`; `perl -Iperl -c t/1204-isf-child-composition-clause-boundary.t`; `perl -Iperl -c t/1241-isf-transaction-port-bindings.t`; `perl -Iperl -c t/1242-isf-port-binding-conflict-semantics.t`; `perl -Iperl -c t/1243-isf-port-binding-schedule-report.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `prove -l t/1103-isf-switch-branch-exits.t t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused when/repeat/do/generated-composition/doc checks (single touched test Files=1, Tests=17; repeat/doc suite Files=4, Tests=322; focused suite Files=12, Tests=353), book build, full ISF gate (Files=227, Tests=1133), and diff checks passed` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.27` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting top-level switch-branch nested repeat generated-child do` |
 | `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.28` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1103-isf-switch-branch-exits.t`; `perl -Iperl -c t/1177-isf-do-child-done-pulse.t`; `perl -Iperl -c t/1184-isf-child-transaction-target-boundary.t`; `perl -Iperl -c t/1203-isf-await-sync-clause-boundary.t`; `perl -Iperl -c t/1204-isf-child-composition-clause-boundary.t`; `perl -Iperl -c t/1241-isf-transaction-port-bindings.t`; `perl -Iperl -c t/1242-isf-port-binding-conflict-semantics.t`; `perl -Iperl -c t/1243-isf-port-binding-schedule-report.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `prove -l t/1103-isf-switch-branch-exits.t t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, focused switch/repeat/do/generated-composition/doc checks (single touched test Files=1, Tests=18; repeat/doc suite Files=4, Tests=323; focused suite Files=12, Tests=354), book build, full ISF gate (Files=227, Tests=1134), and diff checks passed` |
+| `2026-05-17` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.29` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed after selecting top-level when-body nested repeat generated do static params` |
 
 ## Commit Log
 
@@ -588,6 +607,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.26` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.26: implement when repeat generated-child do` | `when-contained repeat generated-child do shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.27` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.27: select switch repeat generated-child do` | `selected switch-contained repeat generated-child do` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.28` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.28: implement switch repeat generated-child do` | `switch-contained repeat generated-child do shipped` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.29` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.29: select when repeat generated do params` | `selected when-contained repeat generated do static params` |
 
 ## Changelog
 
@@ -668,3 +688,6 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   `do`, while keeping activation subclauses, spawn nesting, deeper
   branch/loop nesting, cross-domain activation, and broader outstanding-child
   semantics fail-closed.
+- `2026-05-17`: Selected top-level when-body nested repeat generated `do`
+  with static parameter overrides as the next bounded nested generated-do
+  subset.

@@ -316,6 +316,15 @@ shipped branch-contained generated-child nested do subsets still keep
 activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
 
+The next bounded generated-do nested leaf selects a repeat directly inside a
+top-level `when` body with `(do child (params ...))` and static parameter
+overrides only. The selected nested do site owns one deterministic generated
+do instance, applies the parameter overrides once in the generated top, waits
+for that instance's fresh done handoff before the when-body repeat check, and
+keeps `(bind ...)`, `(domain NAME)`, spawn nesting, switch-contained
+parameterized generated nested `do`, deeper branch/loop nesting, cross-domain
+activation, and broader outstanding-child semantics out of scope.
+
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
 data-dependent, and the repeat contract still needs an explicit zero-count

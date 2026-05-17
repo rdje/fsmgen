@@ -110,9 +110,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   do, and gating the switch-branch repeat check on the generated instance's
   fresh done handoff. Activation subclauses, spawn nesting, deeper branch/loop
   nesting, cross-domain activation, and broader outstanding-child semantics
-  remain deferred. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, which must select the next bounded
-  repeat-body child activation subset before code changes. The workflow also requires
+  remain deferred. `ISF-REPEAT-BODY-CHILD-ACTIVATION.29` then selected
+  top-level when-body nested repeat generated blocking
+  `(do child (params ...))` with static parameter overrides as the next
+  bounded nested generated-do subset. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`, which will implement that selected
+  when-contained static-parameter generated do subset while keeping bindings,
+  domain metadata, spawn nesting, switch-contained parameterized nested do,
+  deeper branch/loop nesting, cross-domain activation, and broader
+  outstanding-child semantics deferred. The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
   every 30 unpushed commits unless the user explicitly requests an earlier
