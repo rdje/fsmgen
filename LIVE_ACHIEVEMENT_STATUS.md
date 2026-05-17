@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF when-contained repeat generated do domains shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.38`.
+- Top-level `when` bodies may now contain nested repeats with generated
+  blocking `(do child (params ...) [(bind ...)] (domain NAME))` for declared
+  same-domain ownership metadata.
+- Lowering emits one deterministic generated do instance for the lexical
+  nested do site, preserves generated-composition and schedule-report
+  clock-domain metadata for that instance, and gates the when-body repeat
+  check on that generated instance's fresh done handoff.
+- Switch-contained domain metadata, spawn nesting, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`, which must select the next bounded
+  repeat-body child activation subset before code.
+
 ## 2026-05-17: R14 — ISF when-contained repeat generated do domains selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.37`.
 - Selected top-level `when` bodies containing nested repeats with generated

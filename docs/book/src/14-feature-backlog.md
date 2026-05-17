@@ -333,15 +333,15 @@ instance's fresh done handoff before the switch-branch repeat check, and keeps
 `(domain NAME)`, spawn nesting, deeper branch/loop nesting, cross-domain
 activation, and broader outstanding-child semantics out of scope.
 
-The next bounded nested generated-do leaf selects a repeat directly inside a
-top-level `when` body with generated blocking
+The when-contained nested generated-do domain leaf covers a repeat directly
+inside a top-level `when` body with generated blocking
 `(do child (params ...) [(bind ...)] (domain NAME))`: declared same-domain
-ownership metadata only. The selected nested do site records ownership for the
-deterministic generated do instance at that lexical site, preserves
-generated-composition and schedule-report clock-domain metadata, and keeps
-switch-contained domain metadata, spawn nesting, cross-domain activation,
-deeper branch/loop nesting, and broader outstanding-child semantics out of
-scope.
+ownership metadata only. This subset is shipped. The nested do site records
+ownership for the deterministic generated do instance at that lexical site,
+preserves generated-composition and schedule-report clock-domain metadata,
+and keeps switch-contained domain metadata, spawn nesting, cross-domain
+activation, deeper branch/loop nesting, and broader outstanding-child
+semantics out of scope.
 
 Switch-contained generated-do domain metadata, spawn nesting, cross-domain
 activation, deeper branch/loop nesting, and broader outstanding-child

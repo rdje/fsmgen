@@ -1616,8 +1616,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'when repeat parameterized domain do', qr/when-body nested repeat do does not support '\(domain \.\.\.\)' subclauses in the current nested generated blocking-do subset/);
-(actor when_repeat_parameterized_domain_do
+    assert_lower_rejected(<<'ISF', 'when repeat domain do without params', qr/when-body nested repeat generated do domain metadata requires static '\(params \.\.\.\)' overrides in the current nested generated blocking-do subset/);
+(actor when_repeat_domain_do_without_params
   (clock-domains
     (domain default (clock clk)))
   (interface (input start) (input cond) (input loops (width 3)) (output done))
@@ -1627,14 +1627,10 @@ ISF
     (when cond
       (repeat loops
         (do worker
-          (params
-            (WIDTH 16))
           (domain default))))
     (complete done))
   (transaction worker
     (domain default)
-    (params
-      (WIDTH 8))
     (complete done)))
 ISF
 

@@ -445,8 +445,10 @@ when present, source-order sample timing, and done-gated repeat check. The
 when-contained and switch-contained generated nested `do` subsets also accept
 `(bind ...)` when static `(params ...)` overrides are present, wiring the
 input/output binding handoffs once in the generated top for that lexical
-nested do site. Both nested generated-do binding subsets reject
-`(domain NAME)`. Deeper branch nesting and loop-contained repeats remain
+nested do site. The when-contained generated nested `do` subset also accepts
+declared same-domain `(domain NAME)` metadata when static `(params ...)`
+overrides are present; the switch-contained subset rejects `(domain NAME)`.
+Deeper branch nesting and loop-contained repeats remain
 outside both nested subsets.
 The shipped
 repeat-body clause

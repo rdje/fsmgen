@@ -1156,9 +1156,11 @@ generated case emits one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter overrides
 once when present, and waits for that instance's fresh done handoff before the
 nested repeat check. The generated bound case wires generated-top
-input/output binding handoffs once for that lexical nested do site. Both
-nested generated-do binding subsets reject `(domain NAME)`. Both nested
-subsets reject deeper branch nesting, loop-contained repeats, and
+input/output binding handoffs once for that lexical nested do site. The
+when-contained generated case also accepts `(domain NAME)` as declared
+same-domain metadata when static `(params ...)` overrides are present; the
+switch-contained subset rejects `(domain NAME)`. Both nested subsets reject
+deeper branch nesting, loop-contained repeats, and
 generated/spawned nested activation
 beyond the documented branch-contained generated do cases.
 

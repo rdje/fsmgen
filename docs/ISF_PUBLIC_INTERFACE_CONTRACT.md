@@ -821,9 +821,10 @@ static parameter application once when present, source-order sample timing,
 and done-gated branch-owned repeat check. When-contained and switch-contained
 generated nested `do` also accept `(bind ...)` when static `(params ...)`
 overrides are present; the generated top wires those input/output binding
-handoffs once for the lexical nested do site. The when-contained and
-switch-contained subsets reject `(domain NAME)`. Deeper branch nesting and
-loop-contained repeats remain
+handoffs once for the lexical nested do site. When-contained generated nested
+`do` also accepts `(domain NAME)` as declared same-domain metadata when static
+`(params ...)` overrides are present; the switch-contained subset rejects
+`(domain NAME)`. Deeper branch nesting and loop-contained repeats remain
 outside both nested subsets. Generated
 repeat-body `do` emits one generated child instance for the lexical do site,
 applies the parameter override once in the generated top, wires optional
