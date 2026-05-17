@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE.md) |
@@ -193,6 +194,7 @@ as done work unless a future task reopens them.
 | Independent shift zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE` |
 | Independent assemble zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE` |
 | Independent extract zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE` |
+| Independent bank-load zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE` |
 | Dynamic divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-SAFETY` |
 | Actor-constant zero divisor safety for runtime expression surfaces | `ISF-DYNAMIC-DIVISOR-CONSTANTS` |
 | Runtime dynamic-wait counter storage schedule-report roles | `ISF-DYNAMIC-WAIT-STORAGE-REPORTS` |

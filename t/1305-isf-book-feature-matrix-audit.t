@@ -112,6 +112,7 @@ my @required_examples = (
     'independent shifts',
     'independent assemble states',
     'independent extract states',
+    'independent bank loads',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

@@ -754,12 +754,14 @@ Rules:
   sample-preserving clone when the selected successor can carry the sample
   without changing timing. Shipped sample-compatible successors include drive,
   await, static wait, completion, independent scalar setter, independent
-  shift, independent assemble, and independent extract states for top-level
-  waits; selected completion, independent scalar setter, independent shift,
-  independent assemble, and independent extract successors are also shipped
-  for `when` bodies and `switch` branches. A scalar setter, shift, assemble
-  state, or extract state is independent only when it neither reads nor
-  overwrites a pending sample alias.
+  shift, independent assemble, independent extract, and independent bank-load
+  states for top-level waits; selected completion, independent scalar setter,
+  independent shift, independent assemble, independent extract, and
+  independent bank-load successors are also shipped for `when` bodies and
+  `switch` branches. A scalar setter, shift, assemble state, extract state, or
+  bank-load state is independent only when it neither reads nor overwrites a
+  pending sample alias. Bank stores remain fail-closed for this
+  pending-sample zero-bypass surface.
 - Wait-count division and modulo expressions reject literal-zero and
   actor-constant-zero divisors before scheduled `.fsm` emission. Dynamic
   divisor nonzero proof remains outside the shipped wait contract.

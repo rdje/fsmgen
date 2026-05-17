@@ -6256,7 +6256,7 @@ sub _link_states {
         elsif($s->{kind}eq'await'&&$next){push @{$s->{transitions}},{target=>$next,condition=>$s->{guard}};push @{$s->{transitions}},{target=>"${tn}_timeout",condition=>{signal=>$s->{watchdog}{name},op=>'=',value=>0}}}
         elsif($s->{kind}eq'stage'&&$next){push @{$s->{transitions}},{target=>$next,condition=>{port=>$s->{ready}}}}
         elsif($s->{kind}eq'repeat_check'){push @{$s->{transitions}},{target=>$s->{loop_target},condition=>{signal=>$s->{counter},op=>'!=',value=>0}};push @{$s->{transitions}},{target=>$next,condition=>{signal=>$s->{counter},op=>'=',value=>0}}if$next}
-        elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait')&&$next){push @{$s->{transitions}},{target=>$next}}
+        elsif(($s->{kind}eq'sequential'||$s->{kind}eq'contract'||$s->{kind}eq'wait'||$s->{kind}eq'bank_store'||$s->{kind}eq'bank_load')&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'branch'){my$skip=$s->{branch_exit_target}||$n||$e;push @{$s->{transitions}},{target=>$skip}}
         elsif($s->{kind}eq'sync_all'&&$next){push @{$s->{transitions}},{target=>$next}}
         elsif($s->{kind}eq'sync_any'&&$next){push @{$s->{transitions}},{target=>$next}}
@@ -6728,6 +6728,8 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
         return 1 if _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(assemble latency_increment_request));
         return 1 if _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(extract_capture latency_increment_request));
     }
+    return 1 if $kind eq 'bank_load'
+        && _dynamic_wait_zero_sample_target_is_independent_data_op($wait_state, $target_state, qw(bank_load latency_increment_request));
 
     return 0;
 }

@@ -466,15 +466,17 @@ a sample-preserving clone of the following state when that state can carry the
 sample without changing timing, including completion states that preserve their
 delayed pulse and return-to-idle transition, independent scalar setter states,
 independent shift states, independent assemble states, and independent extract
-states that neither read nor overwrite a pending sample alias. Top-level
-zero-count successors that cannot yet carry pending
+states, plus independent bank-load states that neither read nor overwrite a
+pending sample alias. Top-level zero-count successors that cannot yet carry
+pending
 samples fail closed.
 Pending samples before `when`-body and `switch`-branch runtime waits are now
 covered by the same one-shot positive sample and zero-clone contract when the
 selected successor can carry samples, including selected completion and
-independent scalar setter, shift, assemble, and extract successors. Setters,
-shifts, assemble states, or extract states that read or overwrite a pending
-sample alias remain fail-closed.
+independent scalar setter, shift, assemble, extract, and bank-load successors.
+Setters, shifts, assemble states, extract states, or bank-load states that read
+or overwrite a pending sample alias remain fail-closed. Bank stores remain
+fail-closed for this pending-sample zero-bypass surface.
 Pending samples before `repeat`, `while`, and `until` dynamic waits are covered
 by the same contract for sample-compatible body successors while preserving
 loop-back and loop-exit edges. Dynamic waits whose selected zero-count

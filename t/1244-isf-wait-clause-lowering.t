@@ -957,6 +957,83 @@ ISF
         'independent extract zero-bypass emits concrete slices without placeholders');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into independent bank loads' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-bank-load');
+(actor wait_dynamic_sample_bank_load
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input idx (width 2))
+    (output out (width 8))
+    (output sample_out (width 8))
+    (output done))
+  (storage
+    (bank data (width 8) (depth 4)))
+  (drive (captured val)
+    (sample_out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (load data idx as out)
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_bank_load.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving bank-load clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_load_2\)\)/,
+        'positive path exits to the original bank-load state');
+
+    my $load = state_block($fsm, 'main_load_2');
+    unlike($load, qr/\(<= \(hold din\)\)/,
+        'original bank-load state does not double-sample after a positive wait');
+    like($load, qr/\(<- \(out> data_0\) <\(== idx 0\)\)/,
+        'original bank load keeps the first guarded entry assignment');
+    like($load, qr/\(<- \(out> data_3\) <\(== idx 3\)\)/,
+        'original bank load keeps the final guarded entry assignment');
+    like($load, qr/\(-> main_drive_3\)/,
+        'original bank load advances to the following state');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count bank-load clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(out> data_0\) <\(== idx 0\)\)/,
+        'zero-count bank-load clone performs the first guarded load assignment');
+    like($zero_clone, qr/\(<- \(out> data_3\) <\(== idx 3\)\)/,
+        'zero-count bank-load clone performs the final guarded load assignment');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'zero-count bank-load clone advances like the original bank-load state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_load_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'independent bank-load zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_bank_load');
+};
+
 subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
 (actor wait_dynamic_pair
@@ -2428,6 +2505,67 @@ ISF
     (sample din as hold)
     (wait cycles)
     (extract packet as hold payload)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-consuming bank-load index', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_load_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_bank_load_index
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 2))
+    (output out (width 8))
+    (output done))
+  (storage
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (load data hold as out)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and sample-overwriting bank-load target', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_load_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_bank_load_target
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input idx (width 2))
+    (output done))
+  (storage
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (load data idx as hold)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'pending sample before dynamic wait and bank-store successor', qr/\ARuntime dynamic wait 'main_wait_1' with pending samples cannot zero-bypass to state 'main_store_2' because that state cannot materialize pending samples without changing timing in the current pending-sample slice/);
+(actor wait_dynamic_after_sample_bank_store
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (input idx (width 2))
+    (input value (width 8))
+    (output done))
+  (storage
+    (bank data (width 8) (depth 4)))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (store data idx value)
     (complete done)))
 ISF
 

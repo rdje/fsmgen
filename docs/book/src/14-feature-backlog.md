@@ -613,11 +613,12 @@ whose successor cannot yet carry samples without changing timing, branch
 pending-sample zero bypasses whose successor cannot yet carry samples without
 changing timing outside the shipped completion and independent-setter
 successor subsets plus independent shift, assemble, and extract successor
-subsets, repeat/loop pending-sample zero bypasses whose successor cannot yet
-carry samples without changing timing, and setter successors that read or
-overwrite a pending sample alias. Shift, assemble, and extract successors are
-shipped only when independent; forms that read or overwrite a pending sample
-alias remain backlog.
+subsets plus independent bank-load successor subsets, repeat/loop
+pending-sample zero bypasses whose successor cannot yet carry samples without
+changing timing, and setter successors that read or overwrite a pending sample
+alias. Shift, assemble, extract, and bank-load successors are shipped only
+when independent; forms that read or overwrite a pending sample alias remain
+backlog. Bank-store successors remain backlog for pending-sample zero-bypass.
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
 subset, `switch` branches are shipped for the no-pending-sample subset, and
@@ -626,9 +627,9 @@ samples before `when`-body and `switch`-branch dynamic waits are shipped when
 the selected zero-count successor can carry samples without changing timing;
 selected completion and independent scalar setter successors are now included
 in that sample-compatible branch subset, along with independent shift
-assemble, and extract successors. A scalar setter, shift, assemble state, or
-extract state is independent only when it neither reads nor overwrites a
-pending sample alias.
+assemble, extract, and bank-load successors. A scalar setter, shift, assemble
+state, extract state, or bank-load state is independent only when it neither
+reads nor overwrites a pending sample alias.
 Pending samples before `repeat`, `while`, and `until` dynamic waits are also
 shipped when the selected zero-count body successor can carry samples without
 changing timing.
@@ -656,13 +657,14 @@ of the following state-producing clause when that successor can carry samples
 without changing timing, including completion states that preserve their
 delayed pulse and return-to-idle behavior plus independent scalar setters that
 neither read nor overwrite pending sample aliases plus independent shifts and
-independent assemble and extract states. `when` and `switch` use the same
-materialization while preserving false, other-case, and fallthrough exits, and
-their selected completion, independent setter, independent shift, independent
-assemble, and independent extract successors are sample-compatible. `repeat`,
-`while`, and `until` use the same materialization while preserving loop-back
-and loop-exit edges. Other successor shapes that cannot yet carry samples
-remain fail-closed.
+independent assemble and extract states plus independent bank-load states.
+`when` and `switch` use the same materialization while preserving false,
+other-case, and fallthrough exits, and their selected completion, independent
+setter, independent shift, independent assemble, independent extract, and
+independent bank-load successors are sample-compatible. `repeat`, `while`, and
+`until` use the same materialization while preserving loop-back and loop-exit
+edges. Other successor shapes that cannot yet carry samples remain
+fail-closed.
 
 ### Transaction Dynamic Loops
 

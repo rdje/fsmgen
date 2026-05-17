@@ -589,6 +589,25 @@ original extract successor:
 If the extract source word or any destination field is `hold`, the form
 remains fail-closed for the same sample-and-consume timing reason.
 
+An independent bank-load state follows the same rule. The clone carries the
+pending sample, emits the original guarded scalarized load assignments, and
+advances to the original bank-load successor:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (<- (out> data_0) <(== idx 0))
+  (<- (out> data_1) <(== idx 1))
+  (<- (out> data_2) <(== idx 2))
+  (<- (out> data_3) <(== idx 3))
+  (-> main_drive_3))
+```
+
+If the load index, selected scalarized entry name, or load target is `hold`,
+the form remains fail-closed for the same sample-and-consume timing reason.
+Bank stores remain fail-closed for pending-sample zero-bypass until their
+write-side timing is separately specified.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 

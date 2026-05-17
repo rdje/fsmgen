@@ -10,16 +10,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE` is
-  closed after shipping independent extract zero-bypass for pending-sample
-  runtime waits. A top-level `(sample ...) (wait count) (extract word as
-  field...)` path now lowers a zero-count runtime wait to a sample-preserving
-  extract clone when the source word and destination fields neither read nor
-  overwrite a pending sample alias. Sample-consuming extract states, bank
-  data-operation successors, consecutive pending-sample runtime waits, and
-  unsupported loop/check-state successors remain fail-closed. The next R14 PNT
-  implementation slice must select or create a new task tree before code
-  changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE` is
+  closed after shipping independent bank-load zero-bypass for pending-sample
+  runtime waits. A top-level `(sample ...) (wait count) (load bank idx as
+  target)` path now lowers a zero-count runtime wait to a sample-preserving
+  bank-load clone when the load target, scalarized source entries, and index
+  guards neither read nor overwrite a pending sample alias. The same slice
+  also fixes ordinary transaction bank access sequencing by linking bank
+  `load`/`store` states to their following transaction state. Bank stores
+  remain fail-closed for pending-sample zero-bypass, as do consecutive
+  pending-sample runtime waits and unsupported loop/check-state successors.
+  The next R14 PNT implementation slice must select or create a new task tree
+  before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -435,6 +437,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   cloned when their source word and destination fields neither read nor
   overwrite pending sample aliases, while sample-consuming extract states and
   other data-operation successors remain fail-closed.
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.1` then shipped the
+  independent bank-load subset: selected bank-load states can be cloned when
+  their target, scalarized source entries, and index guards neither read nor
+  overwrite pending sample aliases, while bank stores and other unsupported
+  successors remain fail-closed for zero-bypass.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
@@ -679,6 +686,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and advances to the original extract successor. Extract states that read a
   pending sample alias as the source word or overwrite one as a destination
   field remain fail-closed, as do broader data-operation successors.
+- ISF pending-sample independent bank-load wait update: runtime dynamic waits
+  with pending samples can now zero-bypass into an independent bank-load
+  successor. The zero path uses a sample-preserving bank-load clone that
+  performs pending sample assignments, emits the original guarded scalarized
+  load assignments, and advances to the original bank-load successor. Bank
+  loads that read a pending sample alias as the index or overwrite one as the
+  target remain fail-closed; bank stores remain fail-closed for zero-bypass.
+  The transaction-state linker now also advances bank `load` and bank `store`
+  states to their following transaction state.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -885,7 +901,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-INDEPENDENT-ASSEMBLE-SAMPLE.1` later shipped independent
   assemble zero-bypass clones for pending-sample runtime waits.
   `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.1` later shipped independent
-  extract zero-bypass clones for pending-sample runtime waits. No active ISF
+  extract zero-bypass clones for pending-sample runtime waits.
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.1` later shipped independent
+  bank-load zero-bypass clones for pending-sample runtime waits. No active ISF
   task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
