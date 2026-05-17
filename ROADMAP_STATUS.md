@@ -10,15 +10,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-SPAWN-IN-REPEAT` is closed after shipping the
-  documented first safe subset: top-level repeat-body plain `spawn` clauses
-  whose pending done ports are consumed by a same-body `await_all` before the
-  repeat check can loop. `await_any`, repeat-body `do`, activation
-  params/bindings/domains, samples after repeat-body spawn, and nested
-  branch/loop forms remain deferred. No active ISF task tree remains open; the
-  next R14 PNT slice must select or create a new task tree first. Push cadence
-  is every 30 unpushed commits unless the user explicitly requests an earlier
-  push.
+- Next decision point: `ISF-REPEAT-SPAWN-PARAMS` is the active R14 PNT
+  feature tree after `ISF-SPAWN-IN-REPEAT` closed. Current frontier:
+  `ISF-REPEAT-SPAWN-PARAMS.2`, implementing the selected next safe subset:
+  top-level repeat-body spawn may carry static `(params ...)` overrides when
+  the same repeat body reaches `await_all` before the repeat check can loop.
+  Repeat-body `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples after
+  repeat-body spawn, and nested branch/loop activation remain deferred. Push
+  cadence is every 30 unpushed commits unless the user explicitly requests an
+  earlier push.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and

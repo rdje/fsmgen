@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF repeat-body spawn params contract selected
+- Completed `ISF-REPEAT-SPAWN-PARAMS.1`.
+- Created the active `ISF-REPEAT-SPAWN-PARAMS` task tree and selected static
+  parameter overrides as the next safe repeat-body spawn subset.
+- The selected subset is top-level repeat bodies containing
+  `(spawn child as inst (params ...))` clauses whose pending done ports are
+  consumed by a same-body `(await_all done)` before the repeat check can loop.
+- Parameter overrides specialize one lexical generated child instance in the
+  generated top and do not vary per repeat iteration.
+- Repeat-body `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples after
+  repeat-body spawn, and nested branch/loop activation remain deferred.
+- Synchronized the mdBook feature backlog, roadmap board, README task index,
+  and task tree.
+- Validation: `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF repeat-body spawn plus await_all subset shipped
 - Completed `ISF-SPAWN-IN-REPEAT.2` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so top-level repeat bodies may

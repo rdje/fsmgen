@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF repeat-body spawn params contract selected
+- Completed `ISF-REPEAT-SPAWN-PARAMS.1` in
+  [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md).
+- The active R14 task tree is now `ISF-REPEAT-SPAWN-PARAMS`, with current
+  frontier `ISF-REPEAT-SPAWN-PARAMS.2`.
+- The next safe repeat-body spawn subset is static parameter overrides:
+  top-level repeat bodies may use `(spawn child as inst (params ...))` only
+  when the same repeat body reaches `(await_all done)` before the repeat check
+  can loop.
+- Parameter overrides specialize the single lexical generated child instance
+  in the generated top. They do not create per-iteration hardware or
+  per-iteration runtime parameter values.
+- Repeat-body `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples after
+  repeat-body spawn, and nested branch/loop activation remain deferred.
+- Updated the mdBook feature backlog, roadmap board, README task index, and
+  task tree.
+- Validation: `mdbook build docs/book` passed; `git diff --check` passed.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF repeat-body spawn plus await_all subset shipped
 - Completed `ISF-SPAWN-IN-REPEAT.2` and closed
   [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md).

@@ -23,8 +23,7 @@ evidence for one top-level task.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-
-No active task trees are open.
+| `ISF-REPEAT-SPAWN-PARAMS` | `active` | `R14` | `ISF-REPEAT-SPAWN-PARAMS.2` | [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md) |
 
 ## Proposed Task Trees
 

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: repeat-body spawn params remain static specialization
+- `ISF-REPEAT-SPAWN-PARAMS.1` selects parameterized repeat-body spawn as the
+  next safe subset after the plain-spawn plus same-body `await_all` contract.
+- The design constraint is that the lexical spawn name still denotes one
+  static generated child instance. A `(params ...)` block specializes that
+  instance once in the generated top and is not a runtime value written on each
+  repeat iteration.
+- Reusing the existing spawn parameter value domain keeps the first
+  implementation bounded: duplicate parameter names, unknown child
+  parameters, incompatible aggregate/list shapes, and unsupported value forms
+  should fail through the same activation override checks as top-level spawn.
+- `(bind ...)` and `(domain ...)` remain separate because they introduce
+  runtime payload handoffs and clock-domain ownership, which need their own
+  repeat re-entry and report contracts.
 ## 2026-05-16: repeat-body spawn implementation is a static-instance re-entry contract
 - `ISF-SPAWN-IN-REPEAT.2` implements only the subset whose lifetime model is
   already reviewable in scheduled `.fsm`: top-level repeat-body plain spawn,

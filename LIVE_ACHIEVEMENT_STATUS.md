@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF repeat-body spawn params contract selected
+- Completed R14 task-tree slice:
+  `ISF-REPEAT-SPAWN-PARAMS.1` in
+  [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md).
+- The `ISF-REPEAT-SPAWN-PARAMS` tree is active. Current frontier:
+  `ISF-REPEAT-SPAWN-PARAMS.2`, implementing the selected parameterized
+  repeat-spawn subset.
+- The selected subset allows top-level repeat-body
+  `(spawn child as inst (params ...))` only when the same repeat body reaches
+  `(await_all done)` before the repeat check can loop.
+- Parameter overrides specialize the single lexical generated child instance
+  in the generated top. They are not per-iteration runtime values.
+- Repeat-body `(bind ...)`, `(domain ...)`, `await_any`, `do`, samples after
+  repeat-body spawn, and nested branch/loop activation remain deferred.
+- Updated the mdBook feature backlog, roadmap board, README task index, and
+  task tree.
+- Validation: `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF repeat-body spawn plus await_all subset shipped
 - Completed R14 task-tree slice:
   `ISF-SPAWN-IN-REPEAT.2` in
