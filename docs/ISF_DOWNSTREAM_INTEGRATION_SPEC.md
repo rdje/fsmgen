@@ -755,11 +755,12 @@ Rules:
   without changing timing. Shipped sample-compatible successors include drive,
   await, static wait, completion, independent scalar setter, independent
   shift, independent assemble, independent extract, and independent bank-load
-  and bank-store states for top-level waits; selected completion, independent
-  scalar setter, independent shift, independent assemble, independent extract,
-  independent bank-load, and independent bank-store successors are also
-  shipped for `when` bodies and `switch` branches. A scalar setter, shift,
-  assemble state, extract state, bank-load state, or bank-store state is
+  and bank-store states, plus top-level ready/valid stage states, for
+  top-level waits; selected completion, independent scalar setter,
+  independent shift, independent assemble, independent extract, independent
+  bank-load, and independent bank-store successors are also shipped for `when`
+  bodies and `switch` branches. A scalar setter, shift, assemble state,
+  extract state, bank-load state, bank-store state, or stage state is
   independent only when it neither reads nor overwrites a pending sample alias.
   Consecutive top-level runtime waits carry pending samples across zero-count
   wait links with generated downstream wait-entry clones for zero-then-positive

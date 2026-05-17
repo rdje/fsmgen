@@ -115,6 +115,7 @@ my @required_examples = (
     'independent extract states',
     'independent bank loads',
     'independent bank stores',
+    'top-level ready/valid stages',
     'actor parameter wait count',
     '(/ numerator 0)',
     '(/ numerator ZERO)',

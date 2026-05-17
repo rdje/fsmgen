@@ -623,6 +623,20 @@ advances to the original bank-store successor:
 If the store index, stored value, or selected scalarized entry name is `hold`,
 the form remains fail-closed for the same sample-and-consume timing reason.
 
+A top-level ready/valid stage can also carry the pending sample. The clone
+keeps the original `valid` assignment and ready-gated transition:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (= (valid> 1))
+  (<ready
+    (-> main_drive_3)))
+```
+
+If the stage ready input or valid output is `hold`, the form remains
+fail-closed for the same sample-and-consume timing reason.
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 
@@ -1386,6 +1400,9 @@ is driven combinationally high with `=`, and the state advances only when
 `ready` is true in the same cycle. If `ready` is false, the FSM remains in the
 stage state and keeps `valid` asserted. Pending samples immediately before the
 stage materialize before the stage so a stall does not resample every cycle.
+When a runtime wait with pending samples has a zero-count path into the stage,
+the generated stage clone materializes the sample, drives `valid`, and keeps
+the same ready-gated transition as the original stage.
 Schedule reports expose this shipped subset through `transaction_stages`
 entries with the authored transaction/stage names, `kind =
 ready_valid_barrier`, generated state, ready input, and valid output.

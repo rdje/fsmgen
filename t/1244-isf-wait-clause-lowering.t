@@ -1304,6 +1304,77 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_pair');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into stage states' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-stage');
+(actor wait_dynamic_sample_stage
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input ready)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output valid)
+    (output sample_out (width 8))
+    (output done))
+  (drive (captured val)
+    (sample_out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (stage accept (input ready) (output valid))
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_stage.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving stage clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_stage_2\)\)/,
+        'positive path exits to the original stage state');
+
+    my $stage = state_block($fsm, 'main_stage_2');
+    unlike($stage, qr/\(<= \(hold din\)\)/,
+        'original stage does not double-sample after a positive wait');
+    like($stage, qr/\(= \(valid> 1\)\)/,
+        'original stage drives valid');
+    like($stage, qr/\(<ready\s+\(-> main_drive_3\)\s+\)/,
+        'original stage preserves the ready-gated transition');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count stage clone materializes the pending sample');
+    like($zero_clone, qr/\(= \(valid> 1\)\)/,
+        'zero-count stage clone drives valid');
+    like($zero_clone, qr/\(<ready\s+\(-> main_drive_3\)\s+\)/,
+        'zero-count stage clone preserves the ready-gated transition');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_stage_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'stage zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_stage');
+};
+
 subtest 'runtime scalar waits split additional top-level predecessor kinds' => sub {
     my ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-await');
 (actor wait_dynamic_after_await

@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF stage zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-STAGE-SAMPLE.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-STAGE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-STAGE-SAMPLE.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lets pending-sample runtime waits zero-bypass into top-level
+  ready/valid stage states when the stage ready input and valid output are
+  independent of pending sample aliases. The clone materializes pending
+  samples, drives the original `valid` assignment, and preserves the original
+  ready-gated transition.
+- Positive-count paths still sample in the first active wait state and then
+  enter the original stage state without double-sampling.
+- Temporal contract and loop/check-state zero-count successors remain
+  fail-closed when they cannot carry pending samples.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  stage/wait/book audit tests passed with `Files=3, Tests=136`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1020`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence remains every 30 unpushed commits.
 ## 2026-05-16: ISF consecutive runtime waits carry pending samples across zero links
 - Completed `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md).
@@ -11,8 +34,10 @@ This is the live continuity document for fast session recovery after crashes, re
 - Positive first-count paths still sample in the original first wait, and the
   original downstream wait state remains unsampled for paths that already
   materialized the sample.
-- Unsupported stage, contract, and loop/check-state zero-count successors
-  remain fail-closed when they cannot carry pending samples.
+- A later slice enabled top-level ready/valid stage successors when their
+  ready input and valid output do not touch pending sample aliases. Temporal
+  contract and loop/check-state zero-count successors remain fail-closed when
+  they cannot carry pending samples.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
@@ -36,8 +61,10 @@ This is the live continuity document for fast session recovery after crashes, re
 - Bank stores that read a pending sample alias as the index or stored value,
   or overwrite one as a scalarized destination entry, remain fail-closed.
   A later slice enabled consecutive top-level runtime waits to carry pending
-  samples across zero-count wait links. Unsupported stage, contract, and
-  loop/check-state successors remain fail-closed.
+  samples across zero-count wait links. A later slice enabled top-level
+  ready/valid stage successors when their ready input and valid output do not
+  touch pending sample aliases; temporal contract and loop/check-state
+  successors remain fail-closed.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
@@ -84,9 +111,9 @@ This is the live continuity document for fast session recovery after crashes, re
   original slice assignments, and advances to the original extract successor.
 - Extract states that read a pending sample alias as the source word or
   overwrite one as a destination field remain fail-closed. Later slices
-  independently enabled bank-load and bank-store successors when they do not
-  touch pending sample aliases; stage, contract, and loop/check successors
-  remain fail-closed.
+  independently enabled bank-load, bank-store, and top-level ready/valid stage
+  successors when they do not touch pending sample aliases; temporal contract
+  and loop/check successors remain fail-closed.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
@@ -107,9 +134,9 @@ This is the live continuity document for fast session recovery after crashes, re
   original concat assignment, and advances to the original assemble successor.
 - Assemble states that read a pending sample alias as a part or overwrite one
   as the target remain fail-closed. Later slices independently enabled
-  extract, bank-load, and bank-store successors when they do not touch pending
-  sample aliases; stage, contract, and loop/check successors remain
-  fail-closed.
+  extract, bank-load, bank-store, and top-level ready/valid stage successors
+  when they do not touch pending sample aliases; temporal contract and
+  loop/check successors remain fail-closed.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
@@ -129,9 +156,10 @@ This is the live continuity document for fast session recovery after crashes, re
   aliases. The clone materializes pending samples, performs the original shift
   assignment, and advances to the original shift successor.
 - Shifts that read or overwrite a pending sample alias remain fail-closed.
-  Later slices independently enabled assemble, extract, bank-load, and
-  bank-store successors when they do not touch pending sample aliases; stage,
-  contract, and loop/check successors remain fail-closed for zero-bypass.
+  Later slices independently enabled assemble, extract, bank-load, bank-store,
+  and top-level ready/valid stage successors when they do not touch pending
+  sample aliases; temporal contract and loop/check successors remain
+  fail-closed for zero-bypass.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.
@@ -169,9 +197,10 @@ This is the live continuity document for fast session recovery after crashes, re
   aliases. The clone materializes pending samples, performs the original
   setter assignment, and advances to the original setter successor.
 - Setters that read or overwrite a pending sample alias remain fail-closed.
-  Later slices independently enabled shift, assemble, extract, bank-load, and
-  bank-store successors when they do not touch pending sample aliases; stage,
-  contract, and loop/check successors remain fail-closed for zero-bypass.
+  Later slices independently enabled shift, assemble, extract, bank-load,
+  bank-store, and top-level ready/valid stage successors when they do not touch
+  pending sample aliases; temporal contract and loop/check successors remain
+  fail-closed for zero-bypass.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
   README task index, and task tree.

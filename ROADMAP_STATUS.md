@@ -10,14 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` is closed after
-  shipping pending-sample carrying across consecutive top-level runtime wait
-  zero-count links. A zero first wait plus positive second wait enters a
-  generated sample-preserving second-wait entry clone; an all-zero path enters
-  a generated clone of the final sample-compatible target. Unsupported stage,
-  contract, and loop/check-state zero-count successors remain fail-closed when
-  they cannot carry pending samples. The next R14 PNT implementation slice
-  must select or create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-STAGE-SAMPLE` is closed after
+  shipping stage zero-bypass for pending-sample runtime waits. A zero-count
+  runtime wait before a top-level ready/valid stage now enters a
+  sample-preserving stage clone that drives the original `valid` assignment
+  and preserves the original ready-gated transition. Temporal contract and
+  loop/check-state zero-count successors remain fail-closed when they cannot
+  carry pending samples. The next R14 PNT implementation slice must select or
+  create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -705,6 +705,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   sample-preserving second-wait entry clone, while an all-zero path enters a
   generated clone of the final sample-compatible target. Positive first-count
   paths still use the original first wait and original downstream wait state.
+- ISF stage pending-sample runtime wait update: runtime dynamic waits with
+  pending samples can now zero-bypass into top-level ready/valid stage
+  successors when the ready input and valid output are independent of pending
+  sample aliases. The zero path uses a sample-preserving stage clone that
+  drives the original `valid` assignment and keeps the original ready-gated
+  transition.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -917,8 +923,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` later shipped
   independent bank-store zero-bypass clones, and
   `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` later shipped pending-sample
-  carrying across consecutive top-level runtime wait zero-count links. No
-  active ISF task tree remains open.
+  carrying across consecutive top-level runtime wait zero-count links.
+  `ISF-DYNAMIC-WAIT-STAGE-SAMPLE.1` later shipped top-level ready/valid stage
+  zero-bypass clones for pending-sample runtime waits. No active ISF task tree
+  remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

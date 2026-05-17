@@ -1664,9 +1664,10 @@ the zero-count sample without changing timing, such as a drive call, an await,
 static wait state, completion state, independent scalar `set`/`update` state,
 independent shift state, independent `assemble` state, or independent
 `extract` state, or independent bank `load` state that neither reads nor
-overwrites a pending sample alias, or independent bank `store` state that
-neither reads nor overwrites a pending sample alias. The positive-count path
-matches positive static waits by
+overwrites a pending sample alias, independent bank `store` state that neither
+reads nor overwrites a pending sample alias, or top-level ready/valid `stage`
+state that neither reads nor overwrites a pending sample alias. The
+positive-count path matches positive static waits by
 materializing samples in the first active wait state.
 For counts greater than one, a second generated wait-loop state consumes the
 remaining sampled counter value without repeating the sample. The zero-count
@@ -1700,6 +1701,11 @@ scalarized store assignments and advance to the same successor as the original
 bank-store state. Bank stores that read a pending sample alias as the index or
 stored value, or overwrite one as a scalarized bank entry, remain fail-closed
 for the same reason.
+Ready/valid stage zero-count clones preserve the original `valid` assignment
+and ready-gated transition, then advance to the same successor as the original
+stage state when `ready` is true. Stage states that read a pending sample
+alias as the ready input or overwrite one as the valid output remain
+fail-closed for the same reason.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
 samples without changing timing fail closed. Consecutive top-level runtime
 wait chains carry pending samples across zero-count wait links when the final
@@ -1715,9 +1721,11 @@ samples. Repeat loop-back/exit behavior, `while` false exits, and `until` true
 exits remain unchanged. Completion states, independent scalar setter states,
 independent shift states, independent assemble states, and independent extract
 states, plus independent bank-load and bank-store states, are
-sample-compatible selected successors in the shipped top-level, `when`-body,
-and `switch`-branch subset. Runtime waits whose selected zero-count successor
-cannot yet carry pending samples without changing timing fail closed.
+sample-compatible selected successors in the shipped `when`-body and
+`switch`-branch subset; top-level ready/valid stage states are also
+sample-compatible for top-level waits. Runtime waits whose selected zero-count
+successor cannot yet carry pending samples without changing timing fail
+closed.
 
 Diagnostics:
 - `(wait)` and `(wait N extra)` are malformed arity.
@@ -2427,7 +2435,10 @@ actor output. It lowers to one transaction state that drives
 `valid_signal = 1` while the state is active and advances only when
 `ready_signal` is true in that same cycle. Pending samples immediately before
 the stage materialize before the stage so a stall does not resample every
-cycle. Nested stages, stage-local `(latency ...)`, `(compute ...)`, arbitrary
+cycle. Pending samples before a runtime wait whose zero-count successor is a
+stage materialize in a sample-preserving stage clone; the clone still drives
+`valid_signal` and advances only under `ready_signal`, matching the original
+stage state. Nested stages, stage-local `(latency ...)`, `(compute ...)`, arbitrary
 stage body actions, multiple ready/valid endpoints, registered-valid variants,
 and skid-buffer behavior remain fail-closed/deferred. Schedule reports expose
 shipped transaction stages through `transaction_stages` entries containing the
