@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF when-contained repeat do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`.
+- Top-level `when` bodies may now contain nested repeats that start generated
+  child instances, run local plain `(do child)` while those generated spawns
+  remain pending, and later drain the generated children through same-body
+  `(await_all done)` before the nested repeat check can loop.
+- Lowering keeps the generated-spawn done set live across the local do state,
+  waits for the local child's fresh done pulse, preserves source-order
+  samples around spawn/do/sync points, and rejects generated do while pending,
+  the switch-contained analogue, `await_any` around the do, new spawn after
+  the do before drain, cross-domain activation, deeper branch/loop nesting,
+  and broader outstanding-child semantics.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  task tree, roadmap board, live docs, doc audits, and mdBook.
+- Opened `ISF-REPEAT-BODY-CHILD-ACTIVATION.59` as the next selection leaf
+  before any further repeat-body child activation implementation.
 ### R14 — ISF when-contained repeat do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.57`.
 - Selected top-level `when` bodies containing nested repeats with one or more

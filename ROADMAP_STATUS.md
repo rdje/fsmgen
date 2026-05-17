@@ -365,7 +365,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   switch-contained analogue, `await_any` observation before the do, new spawn
   after the do before drain, cross-domain activation, deeper branch/loop
   nesting, and broader outstanding-child semantics deferred. The next active
-  implementation frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`.
+  implementation frontier, `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`, then
+  shipped that selected when-contained local-do-while-spawn-pending subset:
+  the local plain `(do child)` remains in the parent scheduled module, waits
+  for the local child's fresh done pulse, leaves the generated-spawn done set
+  live, and requires a later same-body `(await_all done)` drain before the
+  nested repeat check can loop. Generated `do` while spawn pending, the
+  switch-contained analogue, `await_any` before or after the do, new spawn
+  after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain fail-closed. The
+  next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`, which must
+  select the next bounded repeat-body child activation subset before code.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

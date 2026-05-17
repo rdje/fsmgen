@@ -1066,7 +1066,14 @@ later same-body `(await_all done)` drains the same outstanding generated
 children before the nested repeat check can loop. Sample-before-spawn and
 sample-after-spawn timing stay explicit, and the generated top still
 instantiates one static child per lexical `spawn` instance.
-`do` while a nested spawn is pending remains fail-closed.
+The top-level `when` body nested-repeat form may also lower a local plain
+`(do child)` while generated nested spawns are pending, before a later
+same-body `await_all` drain. That local do uses the parent-module start/done
+contract and does not consume the generated-spawn done set; the later
+`await_all` still gates the nested repeat check on every outstanding generated
+child. Generated do while a nested spawn is pending, the switch-contained
+analogue, prior or later `await_any` around that local do, and a new nested
+spawn after the local do before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1215,6 +1222,34 @@ same-body `await_all` drains those same generated children before the nested
 `repeat_check` state. The
 generated top applies any static parameter override, binding handoff, and
 same-domain metadata once to each lexical nested spawn instance.
+
+For the shipped top-level `when` body local-do-while-spawn-pending subset, the
+local do appears between the generated spawn state and the same-body
+`await_all` drain. The generated-spawn done handoff remains pending across the
+local do state:
+
+```lisp
+(parent_spawn_3
+  (= (w0_start> 1))
+  (-> parent_do_4))
+
+(parent_do_4
+  (= (local_worker_start 1))
+  (<local_worker_done
+    (-> parent_sample_5)))
+
+(parent_sample_5
+  (<= (after_do status))
+  (-> parent_await_all_6))
+
+(parent_await_all_6
+  (-> parent_repeat_check_7 <w0_done))
+```
+
+That shape is limited to local plain do targets in the parent scheduled module
+and to a later same-body `await_all` drain. It is not the generated-do path
+and it is not enabled for switch branches or for bodies that observed
+multi-pending `await_any` before the local do.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:

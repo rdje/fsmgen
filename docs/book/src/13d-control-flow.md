@@ -185,7 +185,13 @@ reuse the static generated-child handoff model and preserve source-order
 samples before the spawn or sync states. Both
 branch-contained bound nested generated `do` subsets still reject deeper
 branch nesting and loop-contained repeats. `do` while a nested spawn is
-pending remains fail-closed.
+pending is shipped only for a local plain `(do child)` in a repeat directly
+inside a top-level `when` body, before a later same-body `await_all` drain and
+with no prior multi-pending `await_any` observation. The local do waits for the
+local child's fresh done pulse and leaves the generated-spawn done set live
+for the later drain. Generated do, the switch-contained analogue, new spawn
+after that local do before the drain, and await-any-after-do forms remain
+fail-closed.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and
 branch-contained spawned cases, `stage`, `contract`, nested `while`, and

@@ -1579,8 +1579,17 @@ Current lowering:
   outstanding generated children before the nested repeat check can loop.
   Those branch-contained nested spawns reuse the static generated-child
   handoff model and preserve source-order samples before the nested spawn or
-  sync states; `do` while a nested spawn is pending, deeper branch/loop
-  nesting, and cross-domain activation remain fail-closed. Top-level
+  sync states. The top-level `when` body nested-repeat form may also run a
+  local plain `(do child)` while generated nested spawns remain pending,
+  provided there was no prior multi-pending `(await_any done)` observation and
+  a later same-body `(await_all done)` drains every outstanding generated
+  child before the nested repeat check can loop. That local do target remains
+  in the parent scheduled module, waits for its own fresh local done pulse,
+  and does not clear the generated-spawn done set. Generated `do` while a
+  nested spawn is pending, the switch-branch analogue, new nested `spawn`
+  after that local do before the drain, `await_any` after that local do,
+  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
+  Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
   generated child by another activation site, and
@@ -1624,7 +1633,8 @@ Current lowering:
   source-order timing point: before a later spawn state for sample-before-spawn
   ordering, or before the sync state for sample-after-spawn ordering.
   Cross-domain repeat-body `do`, generated or spawned nested activation beyond
-  the documented top-level branch-contained generated do cases, broader
+  the documented top-level branch-contained generated do cases and shipped
+  branch-contained spawn/local-do cases, broader
   outstanding-child semantics, `stage`, `contract`, deeper branch nesting,
   nested `while`, and nested `until` remain outside the shipped repeat-body
   subset.
@@ -1640,7 +1650,10 @@ spawn child instance after same-body `await_all`, or after same-body
 `await_any` when exactly one child is pending, or for top-level repeat bodies
 and documented branch-contained nested repeats after multi-pending `await_any`
 followed by a same-body `await_all` drain; neither form creates one child
-instance per iteration.
+instance per iteration. In the documented top-level `when` body nested-repeat
+local-do-while-spawn-pending subset, a local child may complete before that
+same-body `await_all` drain, but the generated spawn instance is still not
+eligible for re-entry until the later drain observes its done handoff.
 
 ### 7.6.1 Transaction Wait
 
@@ -1981,6 +1994,8 @@ declared same-domain `(domain NAME)` metadata, top-level when-body and
 switch-branch nested repeat generated spawns with same-body `await_all`,
 single-pending same-body `await_any` when exactly one generated child is
 pending, or multi-pending same-body `await_any` followed by a mandatory
+same-body `await_all` drain, top-level when-body nested repeat local
+`(do child)` while generated nested spawns are pending before a later
 same-body `await_all` drain,
 repeat-body
 generated blocking `(do child)` for
@@ -3322,7 +3337,9 @@ Focused tests:
   top-level repeat-body spawn plus same-body `await_all`, single-pending
   `await_any`, or multi-pending `await_any` followed by same-body `await_all`
   drain subset with optional static `(params ...)`, optional `(bind ...)`, and
-  optional declared same-domain `(domain NAME)` metadata: nested loops, loops
+  optional declared same-domain `(domain NAME)` metadata, plus the top-level
+  when-body nested repeat local `(do child)` while generated nested spawns are
+  pending before a later same-body `await_all` drain subset: nested loops, loops
   under `when`/`switch`/`repeat`, cross-domain repeat-body `do`, and
   `while`/`until` loop bodies containing `do`,
   `spawn`, `await_all`, `await_any`, `stage`, or `contract` remain deferred

@@ -332,7 +332,14 @@ same-body `(await_all done)` drains the same outstanding generated children
 before the nested repeat check can loop. Those branch-contained nested spawn
 subsets reuse the static generated-child handoff model, preserve source-order
 samples before the nested spawn or sync states, and gate the nested repeat
-check on spawned child done handoffs.
+check on spawned child done handoffs. The top-level `when` body nested-repeat
+subset now also allows a local plain `(do child)` while generated nested
+spawns remain pending, provided there was no prior multi-pending
+`(await_any done)` observation and a later same-body `(await_all done)` drains
+the outstanding generated children before the nested repeat check can loop.
+That local do target remains in the parent scheduled module, waits for the
+local child's fresh done pulse, and does not clear the pending generated-spawn
+done set.
 Cross-domain
 repeat-body `do`,
 generated/spawn nested activation beyond the documented branch-contained
@@ -412,16 +419,18 @@ cross-domain activation, deeper branch/loop nesting, and broader
 outstanding-child semantics remain backlog beyond the shipped
 branch-contained spawn leaves.
 
-Next selected leaf: top-level `when` body nested repeats with one or more
+The when-contained nested repeat local-do-while-spawn-pending leaf covers
+top-level `when` body nested repeats with one or more
 generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
 sites may run a local `(do child)` while those generated spawns remain
 pending, provided a later same-body `(await_all done)` drains the outstanding
-generated children before the nested repeat check can loop. This selected
-subset is not shipped yet. The `do` target must remain local to the parent
-scheduled module; generated `do` while spawn pending, the switch-contained
-analogue, `await_any` observation before the do, new spawn after the do before
-the drain, cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain deferred.
+generated children before the nested repeat check can loop. This subset is
+shipped. The `do` target must remain local to the parent scheduled module; it
+uses the parent-module start/done pulse contract and leaves generated-spawn
+done handoffs live until the later drain. Generated `do` while spawn pending,
+the switch-contained analogue, `await_any` observation before or after the do,
+new spawn after the do before the drain, cross-domain activation, deeper
+branch/loop nesting, and broader outstanding-child semantics remain deferred.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
