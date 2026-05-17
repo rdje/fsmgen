@@ -6591,10 +6591,10 @@ sub _sync_any_condition_expr {
 }
 
 sub _link_dynamic_wait_entry_edge {
-    my ($state, $wait_state, $base_condition) = @_;
+    my ($state, $wait_state, $base_condition, $carried_sample_wait) = @_;
     my $source = $wait_state->{wait_count_source};
     my $counter = $wait_state->{wait_counter};
-    my $exit_target = $wait_state->{dynamic_wait_exit_target};
+    my $enter_target = _dynamic_wait_entry_target($wait_state, $carried_sample_wait);
 
     my $enter_condition = _combine_condition_exprs($base_condition, $source);
     my $bypass_condition = _combine_condition_exprs($base_condition, "(== $source 0)");
@@ -6607,17 +6607,24 @@ sub _link_dynamic_wait_entry_edge {
         source_kind => 'dynamic_wait_counter_load',
     };
     push @{$state->{transitions}}, {
-        target    => $wait_state->{name},
+        target    => $enter_target,
         condition => { expr => $enter_condition },
     };
 
     my $next_dynamic_wait = $wait_state->{dynamic_wait_next_wait_state};
+    my $sample_source_wait = $carried_sample_wait;
+    $sample_source_wait //= $wait_state
+        if _dynamic_wait_has_pending_samples($wait_state);
+
     if ($next_dynamic_wait) {
-        confess "Transaction dynamic wait '$wait_state->{name}': pending samples before consecutive runtime waits are not supported in the current pending-sample slice\n"
-            if _dynamic_wait_has_pending_samples($wait_state);
-        _link_dynamic_wait_entry_edge($state, $next_dynamic_wait, $bypass_condition);
+        _link_dynamic_wait_entry_edge(
+            $state,
+            $next_dynamic_wait,
+            $bypass_condition,
+            $sample_source_wait,
+        );
     } else {
-        my $target = _dynamic_wait_zero_bypass_target($wait_state);
+        my $target = _dynamic_wait_zero_bypass_target($wait_state, $sample_source_wait);
         push @{$state->{transitions}}, {
             target    => $target,
             condition => { expr => $bypass_condition },
@@ -6625,18 +6632,65 @@ sub _link_dynamic_wait_entry_edge {
     }
 }
 
+sub _dynamic_wait_entry_target {
+    my ($wait_state, $carried_sample_wait) = @_;
+    return $wait_state->{name}
+        unless _dynamic_wait_has_pending_samples($carried_sample_wait);
+    return $wait_state->{name}
+        if ($carried_sample_wait->{name} // '') eq ($wait_state->{name} // '');
+
+    return _dynamic_wait_pending_entry_clone_target($wait_state, $carried_sample_wait);
+}
+
+sub _dynamic_wait_pending_entry_clone_target {
+    my ($wait_state, $carried_sample_wait) = @_;
+    my $source_name = $carried_sample_wait->{name};
+    my $clone_name = join('_', $wait_state->{name}, 'sample_from', $source_name);
+
+    $wait_state->{dynamic_wait_pending_entry_clone_requests}{$source_name} //= {
+        name                       => $clone_name,
+        source_name                => $source_name,
+        pending_sample_assignments => [
+            map { _clone_assignment($_) } @{$carried_sample_wait->{pending_sample_assignments} || []},
+        ],
+    };
+
+    return $clone_name;
+}
+
 sub _dynamic_wait_zero_bypass_target {
-    my ($wait_state) = @_;
+    my ($wait_state, $sample_source_wait) = @_;
+    $sample_source_wait //= $wait_state;
     return $wait_state->{dynamic_wait_exit_target}
-        unless _dynamic_wait_has_pending_samples($wait_state);
+        unless _dynamic_wait_has_pending_samples($sample_source_wait);
+
+    return _dynamic_wait_carried_zero_sample_clone_target($wait_state, $sample_source_wait)
+        if ($sample_source_wait->{name} // '') ne ($wait_state->{name} // '');
 
     my $clone = $wait_state->{dynamic_wait_zero_sample_clone_name}
         //= "$wait_state->{name}_zero_sample";
     return $clone;
 }
 
+sub _dynamic_wait_carried_zero_sample_clone_target {
+    my ($wait_state, $sample_source_wait) = @_;
+    my $source_name = $sample_source_wait->{name};
+    my $clone_name = join('_', $source_name, 'zero_sample_after', $wait_state->{name});
+
+    $wait_state->{dynamic_wait_carried_zero_sample_clone_requests}{$source_name} //= {
+        name                       => $clone_name,
+        source_name                => $source_name,
+        pending_sample_assignments => [
+            map { _clone_assignment($_) } @{$sample_source_wait->{pending_sample_assignments} || []},
+        ],
+    };
+
+    return $clone_name;
+}
+
 sub _dynamic_wait_has_pending_samples {
     my ($wait_state) = @_;
+    return 0 unless $wait_state && ref($wait_state) eq 'HASH';
     return ref($wait_state->{pending_sample_assignments}) eq 'ARRAY'
         && @{$wait_state->{pending_sample_assignments}};
 }
@@ -6644,29 +6698,99 @@ sub _dynamic_wait_has_pending_samples {
 sub _append_dynamic_wait_zero_sample_clones {
     my ($states, $idx_by_name) = @_;
     my @clones;
+    my %planned_clone;
 
     for my $wait_state (@$states) {
         next unless ($wait_state->{dynamic_wait_entry} // 0);
-        next unless _dynamic_wait_has_pending_samples($wait_state);
         my $clone_name = $wait_state->{dynamic_wait_zero_sample_clone_name};
-        next unless defined($clone_name) && length($clone_name);
-        next if exists $idx_by_name->{$clone_name};
+        if (_dynamic_wait_has_pending_samples($wait_state) && defined($clone_name) && length($clone_name)) {
+            next if exists $idx_by_name->{$clone_name} || $planned_clone{$clone_name}++;
 
-        my $target_name = $wait_state->{dynamic_wait_exit_target};
-        my $target_state = _state_by_name($idx_by_name, $states, $target_name);
-        confess "Runtime dynamic wait '$wait_state->{name}' cannot build zero-count sample target '$target_name'\n"
-            unless $target_state;
-        push @clones, _clone_dynamic_wait_zero_sample_target(
-            $wait_state,
-            $target_state,
-            $clone_name,
-        );
+            my $target_name = $wait_state->{dynamic_wait_exit_target};
+            my $target_state = _state_by_name($idx_by_name, $states, $target_name);
+            confess "Runtime dynamic wait '$wait_state->{name}' cannot build zero-count sample target '$target_name'\n"
+                unless $target_state;
+            push @clones, _clone_dynamic_wait_zero_sample_target(
+                $wait_state,
+                $target_state,
+                $clone_name,
+            );
+        }
+
+        for my $source_name (sort keys %{$wait_state->{dynamic_wait_pending_entry_clone_requests} || {}}) {
+            my $request = $wait_state->{dynamic_wait_pending_entry_clone_requests}{$source_name};
+            my $entry_clone_name = $request->{name};
+            next unless defined($entry_clone_name) && length($entry_clone_name);
+            next if exists $idx_by_name->{$entry_clone_name} || $planned_clone{$entry_clone_name}++;
+
+            push @clones, _clone_dynamic_wait_pending_entry_target(
+                $wait_state,
+                $request,
+            );
+        }
+
+        for my $source_name (sort keys %{$wait_state->{dynamic_wait_carried_zero_sample_clone_requests} || {}}) {
+            my $request = $wait_state->{dynamic_wait_carried_zero_sample_clone_requests}{$source_name};
+            my $carried_clone_name = $request->{name};
+            next unless defined($carried_clone_name) && length($carried_clone_name);
+            next if exists $idx_by_name->{$carried_clone_name} || $planned_clone{$carried_clone_name}++;
+
+            my $target_name = $wait_state->{dynamic_wait_exit_target};
+            my $target_state = _state_by_name($idx_by_name, $states, $target_name);
+            confess "Runtime dynamic wait '$request->{source_name}' cannot build carried zero-count sample target '$target_name'\n"
+                unless $target_state;
+            my %sample_wait = (
+                name                       => $request->{source_name},
+                pending_sample_assignments => [
+                    map { _clone_assignment($_) } @{$request->{pending_sample_assignments} || []},
+                ],
+            );
+            push @clones, _clone_dynamic_wait_zero_sample_target(
+                \%sample_wait,
+                $target_state,
+                $carried_clone_name,
+            );
+        }
     }
 
     for my $clone (@clones) {
         $idx_by_name->{$clone->{name}} = scalar(@$states);
         push @$states, $clone;
     }
+}
+
+sub _clone_dynamic_wait_pending_entry_target {
+    my ($wait_state, $request) = @_;
+
+    my %clone = %$wait_state;
+    $clone{name} = $request->{name};
+    $clone{assignments} = [
+        map { _clone_assignment($_) } @{$request->{pending_sample_assignments} || []},
+        map { _clone_assignment($_) } @{$wait_state->{assignments} || []},
+    ];
+    $clone{transitions} = [
+        map { _clone_transition($_) } @{$wait_state->{transitions} || []},
+    ];
+    $clone{carried_sample_entry_clone_of} = $wait_state->{name};
+    $clone{carried_sample_source_wait} = $request->{source_name};
+    delete $clone{wait_entry};
+    delete $clone{wait_state_names};
+    delete $clone{wait_cycles};
+    delete $clone{wait_count_kind};
+    delete $clone{wait_count_source};
+    delete $clone{wait_counter};
+    delete $clone{wait_counter_width};
+    delete $clone{dynamic_wait_entry};
+    delete $clone{dynamic_wait_loop_for};
+    delete $clone{dynamic_wait_loop_state};
+    delete $clone{dynamic_wait_exit_target};
+    delete $clone{dynamic_wait_next_wait_state};
+    delete $clone{dynamic_wait_zero_sample_clone_name};
+    delete $clone{dynamic_wait_pending_entry_clone_requests};
+    delete $clone{dynamic_wait_carried_zero_sample_clone_requests};
+    delete $clone{pending_sample_assignments};
+
+    return \%clone;
 }
 
 sub _clone_dynamic_wait_zero_sample_target {
@@ -6698,6 +6822,8 @@ sub _clone_dynamic_wait_zero_sample_target {
     delete $clone{dynamic_wait_exit_target};
     delete $clone{dynamic_wait_next_wait_state};
     delete $clone{dynamic_wait_zero_sample_clone_name};
+    delete $clone{dynamic_wait_pending_entry_clone_requests};
+    delete $clone{dynamic_wait_carried_zero_sample_clone_requests};
     delete $clone{pending_sample_assignments};
 
     return \%clone;

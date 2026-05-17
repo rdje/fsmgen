@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF consecutive runtime waits carry pending samples across zero links
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md).
+- The `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` tree is now closed. No active ISF
+  task tree remains open; the next R14 implementation slice must select or
+  create a new task tree first.
+- Pending samples before consecutive top-level runtime waits now survive
+  zero-count links. A zero first wait plus positive second wait enters a
+  generated sample-preserving second-wait entry clone; an all-zero path enters
+  a generated clone of the final sample-compatible target.
+- Positive first-count paths still sample in the original first wait, and the
+  original downstream wait state remains unsampled for paths that already
+  materialized the sample.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait tests passed with `Files=1, Tests=31`; focused wait/book audit tests
+  passed with `Files=2, Tests=131`; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1018`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF independent bank-store zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` in
@@ -16,7 +38,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   sample-only cycle.
 - Bank stores that read a pending sample alias as the index or stored value,
   or overwrite one as a scalarized destination entry, remain fail-closed.
-  Consecutive pending-sample runtime waits and unsupported stage, contract, and
+  A later slice enabled consecutive top-level runtime waits to carry pending
+  samples across zero-count wait links. Unsupported stage, contract, and
   loop/check-state successors remain fail-closed.
 - Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
   board, README task index, and task tree.

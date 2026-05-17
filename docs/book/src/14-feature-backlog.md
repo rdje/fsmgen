@@ -583,7 +583,10 @@ sampled counter and loops until the sampled value reaches `1`.
 Consecutive top-level runtime waits are shipped: a zero bypass from one wait
 immediately evaluates the next wait, and the final sampled-counter edge of an
 active wait splits into the following wait's positive sampled-counter and zero
-bypass paths.
+bypass paths. Pending samples before the first top-level runtime wait in the
+chain are also shipped when the final zero-count successor can carry the
+sample; zero-then-positive paths use generated downstream wait-entry clones,
+and all-zero paths use final compatible target clones.
 Additional top-level predecessor kinds are shipped for `await`, `stage`,
 `repeat` exit checks, `await_all`, and `await_any`; their own advance
 conditions are ANDed or ORed into the runtime count split, and their unrelated
@@ -645,6 +648,8 @@ no-pending-sample subset. Pending-sample preservation is now split under
 `ISF-DYNAMIC-WAIT.3.3.5.4`. Expression-valued runtime counts shipped under
 `ISF-DYNAMIC-WAIT.3.3.6` with the same predecessor-edge snapshot contract as
 scalar runtime counts.
+Consecutive top-level runtime waits now include pending-sample zero-link
+carrying for the shipped sample-compatible final target subset.
 
 Pending samples cannot be enabled by simply putting the sample assignment on a
 shared successor state. The positive-count path must behave like a positive
@@ -658,9 +663,12 @@ without changing timing, including completion states that preserve their
 delayed pulse and return-to-idle behavior plus independent scalar setters that
 neither read nor overwrite pending sample aliases plus independent shifts and
 independent assemble and extract states plus independent bank-load states.
-Independent bank stores now share that same independent-successor rule. `when`
-and `switch` use the same materialization while preserving false, other-case,
-and fallthrough exits, and their selected completion, independent setter,
+Independent bank stores now share that same independent-successor rule.
+Consecutive top-level runtime waits carry pending samples through zero-count
+wait links with generated downstream wait-entry clones for zero-then-positive
+paths and final compatible target clones for all-zero paths. `when` and
+`switch` use the same materialization while preserving false, other-case, and
+fallthrough exits, and their selected completion, independent setter,
 independent shift, independent assemble, independent extract, independent
 bank-load, and independent bank-store successors are sample-compatible.
 `repeat`, `while`, and `until` use the same materialization while preserving

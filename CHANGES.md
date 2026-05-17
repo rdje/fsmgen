@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF consecutive runtime waits carry pending samples across zero links
+- Completed `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so pending samples before
+  consecutive top-level runtime waits survive zero-count links without moving
+  sample materialization into the predecessor state.
+- A zero first wait plus positive second wait now enters a generated
+  sample-preserving second-wait entry clone. An all-zero path enters a
+  generated clone of the final sample-compatible target. Positive first-count
+  paths still sample in the original first wait and use the original
+  downstream wait state.
+- Extended `t/1244-isf-wait-clause-lowering.t` for mixed zero/positive and
+  all-zero consecutive pending-sample paths, widened the book feature-matrix
+  audit marker, and synchronized `docs/ISF_SPEC.md`,
+  `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook transaction/lowering/backlog
+  and feature-matrix chapters, roadmap board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait tests passed with `Files=1, Tests=31`; focused wait/book audit tests
+  passed with `Files=2, Tests=131`; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1018`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
 ### R14 — ISF independent bank-store zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` and closed the
   task tree.
@@ -167,8 +188,10 @@ This is the persistent technical change history for FSMGen.
   performs pending sample assignments, emits the delayed completion pulse, and
   returns to idle. Positive-count paths continue to sample in the first wait
   state and exit through the original completion state.
-- Unsafe data-operation successors, consecutive pending-sample runtime waits,
-  and unsupported loop/check-state successors remain fail-closed.
+- Unsafe data-operation successors and unsupported loop/check-state successors
+  remained fail-closed at that point. Later slices enabled independent
+  data-operation successors and consecutive top-level runtime waits when their
+  zero-count targets can carry pending samples.
 - Extended `t/1244-isf-wait-clause-lowering.t` for top-level and shipped
   branch completion successors, widened the book feature-matrix audit marker,
   and synchronized `docs/ISF_SPEC.md`,

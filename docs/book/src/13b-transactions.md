@@ -292,7 +292,10 @@ completion states that preserve the delayed completion pulse and return-to-idle
 transition plus independent scalar `set`/`update` states that neither read nor
 overwrite a pending sample alias plus independent shift, assemble, and extract
 states plus independent bank loads and stores; other successor shapes fail
-closed until their sample materialization is specified.
+closed until their sample materialization is specified. Consecutive top-level
+runtime waits carry pending samples across zero-count wait links with generated
+downstream wait-entry clones for zero-then-positive paths and final compatible
+target clones for all-zero paths.
 Runtime waits inside `when` bodies and `switch` branches now use the same
 one-shot positive sample plus zero-count clone scheme for sample-compatible
 successors, including completion, independent scalar setter, independent
@@ -335,7 +338,9 @@ and `switch` branches when the selected zero-count successor can carry samples
 without changing timing, including completion, independent scalar setter, and
 independent shift, assemble, extract, bank-load, and bank-store successors. The
 same pending-sample rule is also supported in `repeat`, `while`, and `until`
-bodies for sample-compatible body successors.
+bodies for sample-compatible body successors. Consecutive top-level runtime
+waits also preserve pending samples through zero-count links when the final
+target can carry the sample.
 In a `switch`, only the selected branch's runtime wait edge is split; other
 cases remain selectable and implicit fallthrough is guarded by the complement
 of all explicit case values. In loops, the relevant entry, back-edge, or exit

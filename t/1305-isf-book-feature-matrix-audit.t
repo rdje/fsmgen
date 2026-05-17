@@ -107,6 +107,7 @@ my @required_examples = (
     '"actor_params"',
     '"actor_phases"',
     'dynamic_wait_counter',
+    'consecutive runtime waits',
     'sample-preserving zero-count clones',
     'independent scalar setters',
     'independent shifts',

@@ -1614,7 +1614,11 @@ activation edge immediately evaluates the next runtime wait's zero-bypass or
 positive sampled-counter path. If the first wait is active, its final sampled
 counter cycle (`counter == 1`) performs that same split for the next wait
 without rereading the first count source and without adding an extra active
-cycle.
+cycle. Pending samples before the first wait in a consecutive chain use the
+same path-specific timing: positive first-count paths sample in the first
+wait, zero first-count plus positive next-count paths enter a generated
+sample-preserving clone of the next wait state, and all-zero paths materialize
+the sample in a generated clone of the final sample-compatible successor.
 
 Runtime waits are also supported after the shipped top-level predecessor
 states whose advance condition is known to the scheduler. After `(await
@@ -1697,8 +1701,12 @@ bank-store state. Bank stores that read a pending sample alias as the index or
 stored value, or overwrite one as a scalarized bank entry, remain fail-closed
 for the same reason.
 Top-level runtime waits whose zero-count successor cannot yet carry pending
-samples without changing timing fail closed. The same path-specific
-materialization is also supported inside `when` bodies and `switch` branches
+samples without changing timing fail closed. Consecutive top-level runtime
+wait chains carry pending samples across zero-count wait links when the final
+zero-count successor is sample-compatible; the original downstream wait state
+remains unsampled for paths that already materialized the sample. The same
+path-specific materialization is also supported inside `when` bodies and
+`switch` branches
 when the selected zero-count successor can carry the pending samples. The
 false path of `when`, other explicit switch cases, and implicit switch
 fallthrough remain unchanged. `repeat`, `while`, and `until` bodies use the

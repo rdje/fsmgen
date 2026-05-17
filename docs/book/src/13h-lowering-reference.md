@@ -659,6 +659,33 @@ performs the same split for the second wait:
 The second count is sampled only on the edge that enters the second wait. The
 first count source is not reread after the first wait starts.
 
+If a pending sample exists before the first consecutive runtime wait, a zero
+first count carries the sample to generated path-specific clones. A positive
+second count enters a second-wait clone that materializes the sample before
+decrementing the sampled second counter:
+
+```lisp
+(main_idle_0
+  (<- (main_wait_1_cnt first_cycles) <(& start first_cycles))
+  (-> main_wait_1 <(& start first_cycles))
+  (<- (main_wait_2_cnt second_cycles) <(& start (== first_cycles 0) second_cycles))
+  (-> main_wait_2_sample_from_main_wait_1 <(& start (== first_cycles 0) second_cycles))
+  (-> main_wait_1_zero_sample_after_main_wait_2
+      <(& start (== first_cycles 0) (== second_cycles 0))))
+
+(main_wait_2_sample_from_main_wait_1
+  (<= (hold din))
+  (-- main_wait_2_cnt)
+  (?main_wait_2_cnt
+    (=1 (-> main_drive_3))
+    (>1 (-> main_wait_2))))
+```
+
+The original `main_wait_2` remains unsampled for paths where `main_wait_1`
+already materialized the sample. When both counts are zero, the
+`main_wait_1_zero_sample_after_main_wait_2` clone carries the sample and the
+final compatible target assignments, then advances like the original target.
+
 Top-level runtime waits can also follow the shipped predecessor states whose
 advance condition is explicit in the scheduler IR:
 

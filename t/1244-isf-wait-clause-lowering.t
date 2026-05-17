@@ -1200,6 +1200,110 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_pair');
 };
 
+subtest 'consecutive runtime scalar waits carry pending samples across zero first waits' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-pair');
+(actor wait_dynamic_sample_pair
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input first_cycles (width 4))
+    (input second_cycles (width 3))
+    (input din (width 8))
+    (output sample_out (width 8))
+    (output done))
+  (drive (captured val)
+    (sample_out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait first_cycles)
+    (wait second_cycles)
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_pair.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(<- \(main_wait_1_cnt first_cycles\) <\(& start first_cycles\)\)/,
+        'first wait positive path still samples the first runtime count at activation');
+    like($idle, qr/\(-> main_wait_1 <\(& start first_cycles\)\)/,
+        'first wait positive path enters the original sample-carrying first wait');
+    like($idle, qr/\(<- \(main_wait_2_cnt second_cycles\) <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+        'first zero and second positive path samples the second runtime count');
+    like($idle, qr/\(-> main_wait_2_sample_from_main_wait_1 <\(& start \(== first_cycles 0\) second_cycles\)\)/,
+        'first zero and second positive path enters a sample-preserving second-wait clone');
+    like($idle, qr/\(-> main_wait_1_zero_sample_after_main_wait_2 <\(& start \(== first_cycles 0\) \(== second_cycles 0\)\)\)/,
+        'both zero counts bypass to a final sample-preserving target clone');
+
+    my $first_wait = state_block($fsm, 'main_wait_1');
+    like($first_wait, qr/\(<= \(hold din\)\)/,
+        'positive first wait materializes the pending sample in the first active wait state');
+
+    my $first_loop = state_block($fsm, 'main_wait_1_loop');
+    unlike($first_loop, qr/\(<= \(hold din\)\)/,
+        'first wait loop does not resample');
+    like($first_loop, qr/\(-> main_wait_2 <\(& \(== main_wait_1_cnt 1\) second_cycles\)\)/,
+        'positive first wait enters the original second wait on a positive second count');
+    unlike($first_loop, qr/main_wait_2_sample_from_main_wait_1/,
+        'positive first wait does not use the carried-sample second-wait clone');
+    like($first_loop, qr/\(-> main_drive_3 <\(& \(== main_wait_1_cnt 1\) \(== second_cycles 0\)\)\)/,
+        'positive first wait can still bypass a zero second count without a sample clone');
+
+    my $second_wait = state_block($fsm, 'main_wait_2');
+    unlike($second_wait, qr/\(<= \(hold din\)\)/,
+        'original second wait remains unsampled for paths that already materialized the sample');
+    like($second_wait, qr/\(-- main_wait_2_cnt\)/,
+        'original second wait still decrements the sampled second counter');
+    like($second_wait, qr/\?main_wait_2_cnt[\s\S]*\(=1 \(-> main_drive_3\)\)/,
+        'original second wait exits to the following drive');
+
+    my $second_clone = state_block($fsm, 'main_wait_2_sample_from_main_wait_1');
+    like($second_clone, qr/\(<= \(hold din\)\)/,
+        'carried-sample second-wait clone materializes the pending sample');
+    like($second_clone, qr/\(-- main_wait_2_cnt\)/,
+        'carried-sample second-wait clone decrements the same sampled second counter');
+    like($second_clone, qr/\?main_wait_2_cnt[\s\S]*\(=1 \(-> main_drive_3\)\)/,
+        'carried-sample second-wait clone exits like the original second wait');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample_after_main_wait_2');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'all-zero clone materializes the pending sample');
+    like($zero_clone, qr/\(= \(captured_start 1\)\)/,
+        'all-zero clone performs the final compatible drive');
+    like($zero_clone, qr/\(-> main_done_4\)/,
+        'all-zero clone advances like the original drive state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'first_cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_wait_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'second_cycles',
+                entry_state    => 'main_wait_2',
+                exit_state     => 'main_drive_3',
+                counter_signal => 'main_wait_2_cnt',
+                counter_width  => 3,
+            },
+        ],
+        'dynamic wait report keeps the original consecutive wait entries',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_pair');
+};
+
 subtest 'runtime scalar waits split additional top-level predecessor kinds' => sub {
     my ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-await');
 (actor wait_dynamic_after_await

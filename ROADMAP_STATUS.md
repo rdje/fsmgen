@@ -10,16 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE` is
-  closed after shipping independent bank-store zero-bypass for pending-sample
-  runtime waits. A top-level `(sample ...) (wait count) (store bank idx value)`
-  path now lowers a zero-count runtime wait to a sample-preserving bank-store
-  clone when the stored value, scalarized destination entries, and index guards
-  neither read nor overwrite a pending sample alias. Bank stores that consume
-  or overwrite a pending sample alias remain fail-closed, as do consecutive
-  pending-sample runtime waits and unsupported stage, contract, and
-  loop/check-state successors. The next R14 PNT implementation slice must
-  select or create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` is closed after
+  shipping pending-sample carrying across consecutive top-level runtime wait
+  zero-count links. A zero first wait plus positive second wait enters a
+  generated sample-preserving second-wait entry clone; an all-zero path enters
+  a generated clone of the final sample-compatible target. Unsupported stage,
+  contract, and loop/check-state zero-count successors remain fail-closed when
+  they cannot carry pending samples. The next R14 PNT implementation slice
+  must select or create a new task tree before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -701,6 +699,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   store assignments, and advances to the original bank-store successor. Bank
   stores that read a pending sample alias as the index or stored value, or
   overwrite one as a scalarized destination entry, remain fail-closed.
+- ISF consecutive pending-sample runtime wait update: pending samples before
+  consecutive top-level runtime waits now carry across zero-count wait links.
+  A zero first wait plus positive second wait enters a generated
+  sample-preserving second-wait entry clone, while an all-zero path enters a
+  generated clone of the final sample-compatible target. Positive first-count
+  paths still use the original first wait and original downstream wait state.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -909,8 +913,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.1` later shipped independent
   extract zero-bypass clones for pending-sample runtime waits.
   `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.1` later shipped independent
-  bank-load zero-bypass clones for pending-sample runtime waits. No active ISF
-  task tree remains open.
+  bank-load zero-bypass clones for pending-sample runtime waits.
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` later shipped
+  independent bank-store zero-bypass clones, and
+  `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` later shipped pending-sample
+  carrying across consecutive top-level runtime wait zero-count links. No
+  active ISF task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF consecutive runtime waits carry pending samples across zero links
+- Completed `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now carries pending samples across consecutive top-level runtime wait
+  zero-count links. A zero first wait plus positive second wait enters a
+  generated sample-preserving second-wait entry clone; an all-zero path enters
+  a generated clone of the final sample-compatible target.
+- Positive first-count paths still sample in the original first wait, and the
+  original downstream wait state remains unsampled for paths that already
+  materialized the sample.
+- Unsupported stage, contract, and loop/check-state zero-count successors
+  remain fail-closed when they cannot carry pending samples.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait tests passed with `Files=1, Tests=31`; focused wait/book audit tests
+  passed with `Files=2, Tests=131`; `./bin/ci-regression isf --no-book`
+  passed with `Files=227, Tests=1018`; `mdbook build docs/book` passed;
+  `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence remains every 30 unpushed commits.
 ## 2026-05-16: ISF independent bank-store zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.md).
@@ -11,7 +35,8 @@ This is the live continuity document for fast session recovery after crashes, re
   advances to the original bank-store successor.
 - Bank stores that read a pending sample alias as the index or stored value,
   or overwrite one as a scalarized destination entry, remain fail-closed.
-  Consecutive pending-sample runtime waits and unsupported stage, contract, and
+  A later slice enabled consecutive top-level runtime waits to carry pending
+  samples across zero-count wait links. Unsupported stage, contract, and
   loop/check-state successors remain fail-closed.
 - Updated the ISF spec, downstream integration handoff, public contract,
   mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,

@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-STORE-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-BANK-LOAD-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-EXTRACT-SAMPLE.md) |
@@ -190,6 +191,7 @@ as done work unless a future task reopens them.
 | Transaction-local unconditional waits and dynamic loops | `ISF-CONTROL-FLOW`, `ISF-WAIT-ZERO` |
 | Non-literal transaction wait counts | `ISF-DYNAMIC-WAIT` |
 | Parameter-backed static transaction wait counts | `ISF-PARAM-WAIT-COUNTS` |
+| Consecutive runtime wait pending-sample zero-link carrying | `ISF-DYNAMIC-WAIT-CONSECUTIVE-SAMPLE` |
 | Completion zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-COMPLETE-SAMPLE` |
 | Independent setter zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE` |
 | Independent shift zero-bypass for pending-sample runtime waits | `ISF-DYNAMIC-WAIT-INDEPENDENT-SHIFT-SAMPLE` |
