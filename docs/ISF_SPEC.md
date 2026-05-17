@@ -1569,11 +1569,12 @@ Current lowering:
   for the static instance, not recreated per iteration. Optional
   `(domain NAME)` annotations are declared same-domain ownership metadata only:
   they group the static child instance with the activation domain and do not
-  imply CDC behavior or allow cross-domain activation. Samples may follow a
-  repeat-body spawn before the same-body `await_all` or single-pending
-  `await_any`; those pending samples materialize in an explicit sample state
-  before the sync state, so sample timing is reviewable before the repeat
-  check. A later repeat-body spawn after a pending sample remains deferred.
+  imply CDC behavior or allow cross-domain activation. Samples may appear
+  before or after repeat-body spawn as long as the same repeat body reaches
+  same-body `await_all` or single-pending `await_any` before the repeat check
+  can loop. Pending samples materialize in an explicit sample state at their
+  source-order timing point: before a later spawn state for sample-before-spawn
+  ordering, or before the sync state for sample-after-spawn ordering.
   Cross-domain repeat-body `do`, multi-pending `await_any`, `stage`,
   `contract`, nested `while`, and nested `until` remain outside the shipped
   repeat-body subset.

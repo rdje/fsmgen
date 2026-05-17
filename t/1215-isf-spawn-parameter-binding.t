@@ -430,6 +430,60 @@ ISF
         'repeat-body sample after spawn materializes before single-pending await_any');
     like($await_any_fsm, qr/\(parent_await_any_4[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_5\)/,
         'single-pending await_any still gates the repeat check after the sample state');
+
+    my $sample_before_source = <<'ISF';
+(actor repeat_spawn_sample_before
+  (clock clk)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (sample status as seen)
+      (spawn worker as w0)
+      (await_all done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $sample_before = lower_source($sample_before_source);
+    my $sample_before_fsm = $sample_before->{files}{'repeat_spawn_sample_before.fsm'};
+    like($sample_before_fsm, qr/\(parent_sample_2[\s\S]*\(<= \(seen status\)\)[\s\S]*\(-> parent_spawn_3\)/,
+        'repeat-body sample before spawn materializes before the spawn state');
+    like($sample_before_fsm, qr/\(parent_spawn_3[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_await_all_4\)/,
+        'repeat-body spawn after sample still starts the static child before sync');
+    like($sample_before_fsm, qr/\(parent_await_all_4[\s\S]*\(-> parent_repeat_check_5 <w0_done\)/,
+        'await_all gates the repeat check after sample-before-spawn ordering');
+
+    my $sample_before_any_source = <<'ISF';
+(actor repeat_spawn_sample_before_any
+  (clock clk)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (sample status as seen)
+      (spawn worker as w0)
+      (await_any done))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $sample_before_any = lower_source($sample_before_any_source);
+    my $sample_before_any_fsm = $sample_before_any->{files}{'repeat_spawn_sample_before_any.fsm'};
+    like($sample_before_any_fsm, qr/\(parent_sample_2[\s\S]*\(<= \(seen status\)\)[\s\S]*\(-> parent_spawn_3\)/,
+        'repeat-body sample before spawn materializes before single-pending await_any spawn');
+    like($sample_before_any_fsm, qr/\(parent_await_any_4[\s\S]*<w0_done[\s\S]*\(-> parent_repeat_check_5\)/,
+        'single-pending await_any gates the repeat check after sample-before-spawn ordering');
 };
 
 subtest 'parameterized do lowers through a generated child activation instance' => sub {
@@ -849,22 +903,6 @@ ISF
     (complete done))
   (transaction worker
     (on start)
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'repeat spawn after pending sample', qr/repeat-body spawn cannot follow pending samples in the current repeat-body child-activation subset/);
-(actor repeat_spawn_after_pending_sample
-  (clock clk)
-  (interface (input start) (input loops (width 3)) (input status) (output done))
-  (transaction parent
-    (on start)
-    (repeat loops
-      (spawn worker as w0)
-      (sample status as seen)
-      (spawn worker as w1)
-      (await_all done))
-    (complete done))
-  (transaction worker
     (complete done)))
 ISF
 

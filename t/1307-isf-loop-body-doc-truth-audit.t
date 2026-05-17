@@ -68,7 +68,7 @@ for my $path (@loop_docs) {
     like(
         $content,
         qr/repeat(?:-body| body).*sample.*spawn.*sync/s,
-        "$path documents the shipped repeat-body sample-after-spawn timing",
+        "$path documents the shipped repeat-body sample/spawn timing",
     );
 }
 

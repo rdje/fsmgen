@@ -818,10 +818,12 @@ Single-pending repeat-body `await_any` is also shipped when exactly one
 repeat-body spawn is pending. Cross-domain repeat-body `do`,
 multi-pending `await_any`, `stage`, `contract`, nested `while`, and nested
 `until` remain outside the shipped repeat-body subset.
-Samples may follow a repeat-body spawn before the
-same-body `await_all` or single-pending `await_any`; those pending samples
-materialize in an explicit sample state before the sync state. A later
-repeat-body spawn after a pending sample remains deferred.
+Samples may appear before or after repeat-body spawn as long as the same
+repeat body reaches same-body `await_all` or single-pending `await_any` before
+the repeat check can loop. Pending samples materialize in an explicit sample
+state at their source-order timing point: before a later spawn state for
+sample-before-spawn ordering, or before the sync state for sample-after-spawn
+ordering.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus

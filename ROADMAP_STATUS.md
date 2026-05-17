@@ -48,12 +48,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   metadata subset, preserving generated-child instance ownership in
   generated-composition metadata and `clock_domains[].child_instances`
   summaries without changing done-gated repeat re-entry. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.14` after
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.13` selected repeat-body
-  spawn-after-sample ordering. That selected timing contract emits pending
-  samples before the later spawn state and still requires same-body
-  `await_all` or single-pending `await_any` before repeat re-entry. Plain
-  local do targeting an already generated child, nested placement,
+  spawn-after-sample ordering. `ISF-REPEAT-BODY-CHILD-ACTIVATION.14` then
+  shipped that ordering: pending samples before a later spawn materialize
+  before the spawn state, and same-body `await_all` or single-pending
+  `await_any` still gates repeat re-entry. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`; plain local do targeting an already
+  generated child, nested placement,
   cross-domain activation, multi-pending `await_any`,
   sample-before/after-do timing, and broader outstanding-child semantics
   remain deferred. The workflow also requires task-tree ownership before any

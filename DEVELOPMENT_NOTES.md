@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body spawn-after-sample drains before spawn
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.14` ships the ordering that the repeat
+  lowering already models: pending samples are drained before the later spawn
+  state, so the scheduled `.fsm` reflects source order.
+- The validator still enforces the lifetime proof by requiring the same repeat
+  body to reach `await_all` or single-pending `await_any` before the repeat
+  check can loop.
+- This does not change `do` timing or multi-child `await_any`; those remain
+  separate lifetime/timing questions.
 ## 2026-05-17: repeat-body spawn-after-sample has explicit order
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.13` selects spawn-after-sample ordering
   because the repeat lowering already has a natural timing point for pending

@@ -3777,8 +3777,6 @@ sub _validate_repeat_body_spawn_subset {
                 next if $head eq 'params' || $head eq 'bind' || $head eq 'domain';
                 confess "Transaction '$tn': repeat-body spawn supports only optional '(params ...)', '(bind ...)', and '(domain ...)' subclauses in the spawn domain subset\n";
             }
-            confess "Transaction '$tn': repeat-body spawn cannot follow pending samples in the current repeat-body child-activation subset\n"
-                if $pending_sample_run;
             push @pending_spawns, $body_clause->[3];
             $pending_sample_run = 0;
             next;

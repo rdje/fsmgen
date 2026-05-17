@@ -1098,8 +1098,7 @@ handoff, then an optional sample state, before the repeat check:
 
 Cross-domain repeat-body `do`, generated-child targets not owned by the
 selected static-parameter do site, sample-before/after-do timing,
-multi-pending `await_any`,
-spawn-after-sample ordering, cross-domain spawn, and nested branch/loop forms
+multi-pending `await_any`, cross-domain spawn, and nested branch/loop forms
 remain fail-closed until their re-entry and report behavior is specified.
 
 ## `(while cond body...)` / `(until cond body...)` -> Loop Decision States

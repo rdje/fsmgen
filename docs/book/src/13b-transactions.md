@@ -445,10 +445,12 @@ ownership metadata. Single-pending repeat-body `await_any` is also shipped
 when exactly one repeat-body spawn is pending. Cross-domain repeat-body
 `do`, multi-pending `await_any`, `stage`, `contract`, nested `while`, and
 nested `until` remain outside the shipped repeat-body subset. Samples may
-follow a repeat-body spawn before the
-same-body `await_all` or single-pending `await_any`; those pending samples
-materialize in an explicit sample state before the sync state. A later
-repeat-body spawn after a pending sample remains deferred.
+appear before or after repeat-body spawn as long as the same repeat body
+reaches same-body `await_all` or single-pending `await_any` before the repeat
+check can loop. Pending samples materialize in an explicit sample state at
+their source-order timing point: before a later spawn state for
+sample-before-spawn ordering, or before the sync state for sample-after-spawn
+ordering.
 The shipped repeat-body child-activation subset is
 `(do child)` for local child transactions, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])` for static parameter
@@ -485,9 +487,10 @@ completion has been observed. Binding handoff ports are generated once for the
 lexical instance and wired in the generated top just like top-level spawn
 bindings. Domain annotations are accepted only as declared same-domain
 ownership metadata; cross-domain activation remains a CDC/backlog item.
-Samples after repeat-body spawn are accepted only before the same-body sync
-that consumes the spawned done ports; spawning again after a pending sample
-remains fail-closed until a wider ordering contract ships.
+Samples around repeat-body spawn are accepted only when the same-body sync
+that consumes the spawned done ports still appears before the repeat check.
+Sample-before-spawn materializes before the spawn state; sample-after-spawn
+materializes before the sync state.
 For the shipped repeat-body local `do` subset, `(do child)` must remain plain:
 no repeat-body `(params ...)`, `(bind ...)`, or `(domain NAME)` subclauses are
 accepted, and the child must not already be emitted as a generated child
