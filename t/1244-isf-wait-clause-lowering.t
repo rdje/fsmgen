@@ -672,6 +672,73 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_set');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into independent updates' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-update');
+(actor wait_dynamic_sample_update
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output out (width 8))
+    (output done))
+  (drive (outp val)
+    (out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (update out 1)
+    (drive outp hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_update.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'zero path bypasses directly to a sample-preserving update clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_update_2\)\)/,
+        'positive path exits to the original update state');
+
+    my $update = state_block($fsm, 'main_update_2');
+    unlike($update, qr/\(<= \(hold din\)\)/,
+        'original update state does not double-sample after a positive wait');
+    like($update, qr/\(<- \(out> 1\)\)/,
+        'original update behavior is unchanged');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'zero-count update clone materializes the pending sample');
+    like($zero_clone, qr/\(<- \(out> 1\)\)/,
+        'zero-count update clone performs the independent update');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'zero-count update clone advances like the original update state');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_update_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'independent update zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_update');
+};
+
 subtest 'consecutive runtime scalar waits split load and bypass edges' => sub {
     my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-pair');
 (actor wait_dynamic_pair

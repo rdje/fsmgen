@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF independent update zero-bypass coverage
+- Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` and
+  closed the task tree.
+- Added explicit `t/1244-isf-wait-clause-lowering.t` coverage proving the
+  legacy `(update out 1)` spelling uses the same sample-preserving zero-count
+  clone behavior as canonical independent scalar `set` after a pending-sample
+  runtime wait.
+- This is coverage hardening only: no lowering behavior, public contract
+  shape, generated artifact contract, schedule-report schema, or mdBook
+  behavior text changed.
+- Validation: `perl -Iperl -c t/1244-isf-wait-clause-lowering.t` passed;
+  `prove -l t/1244-isf-wait-clause-lowering.t` passed with `Files=1,
+  Tests=25`; `git diff --check` passed.
 ### R14 — ISF independent setter zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` and closed the task
   tree.

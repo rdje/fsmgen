@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF independent update zero-bypass coverage added
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.md).
+- The `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE` tree is now
+  closed. No active ISF task tree remains open; the next R14 implementation
+  slice must select or create a new task tree first.
+- Added explicit wait-lowering regression coverage for independent
+  `(update out 1)` zero-bypass after a pending sample, matching the canonical
+  independent `set` behavior shipped in the previous slice.
+- No source-language behavior, public contract shape, generated artifact
+  contract, schedule-report schema, or mdBook behavior text changed.
+- Validation: `perl -Iperl -c t/1244-isf-wait-clause-lowering.t` passed;
+  `prove -l t/1244-isf-wait-clause-lowering.t` passed with `Files=1,
+  Tests=25`; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF independent setter zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` in

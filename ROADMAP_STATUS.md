@@ -10,16 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE` is closed
-  after shipping independent scalar setter zero-bypass for pending-sample
-  runtime waits. A top-level or shipped branch `(sample ...) (wait count)
-  (set out expr)` path now lowers a zero-count runtime wait to a
-  sample-preserving setter clone when the setter neither reads nor overwrites
-  a pending sample alias. Sample-consuming setters, broader data-operation
-  successors, consecutive pending-sample runtime waits, and unsupported
-  loop/check-state successors remain fail-closed. The next R14 PNT
-  implementation slice must select or create a new task tree before code
-  changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE`
+  is closed after adding explicit coverage for the legacy `(update lhs expr)`
+  spelling in the independent scalar setter zero-bypass subset. This was
+  coverage hardening only; source-language behavior, public contract shape,
+  generated artifact contract, schedule-report schema, and mdBook behavior
+  text are unchanged from `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1`. The
+  next R14 PNT implementation slice must select or create a new task tree
+  before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -419,7 +417,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `when`, `switch`, and repeat-body selected `set`/`update` states can be
   cloned when they neither read nor overwrite pending sample aliases, while
   sample-consuming setters and broader data-operation successors remain
-  fail-closed.
+  fail-closed. `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` then
+  added explicit regression coverage for the legacy `update` spelling without
+  changing lowering behavior or public docs.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
@@ -642,7 +642,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   that performs pending sample assignments, emits the original setter
   assignment, and advances to the original setter successor. Setters that read
   or overwrite a pending sample alias remain fail-closed, as do broader
-  data-operation successors.
+  data-operation successors. Explicit regression coverage now locks the
+  legacy `update` spelling to that same independent setter contract.
 - ISF inline dynamic wait update: dynamic waits in `when`, `switch`, `repeat`,
   `while`, and `until` bodies are split into context-specific leaves. `when`
   bodies, `repeat` bodies, `switch` branches, and `while`/`until` bodies are
@@ -842,7 +843,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pending-sample runtime waits. `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1`
   later shipped independent scalar setter zero-bypass clones for top-level,
   `when`, `switch`, and repeat-body pending-sample runtime waits. Unsafe
-  successor classes remain fail-closed. No active ISF task tree remains open.
+  successor classes remain fail-closed. The follow-on coverage slice added an
+  explicit legacy `update` regression without changing behavior. No active ISF
+  task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

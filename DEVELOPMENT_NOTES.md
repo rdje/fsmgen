@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: independent update coverage pins legacy spelling parity
+- `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` is deliberately
+  coverage-only. The previous independent-setter slice classified both
+  `source_kind => set` and `source_kind => update` as eligible when they are
+  independent of pending sample aliases.
+- The new test protects the legacy `(update lhs expr)` spelling from silently
+  drifting as future zero-bypass successor classes are added.
 ## 2026-05-16: independent setters can carry pending samples when they do not consume them
 - `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` adds the first data-operation
   successor class to pending-sample runtime wait zero-bypass. The accepted

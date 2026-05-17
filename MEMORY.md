@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF independent update zero-bypass coverage added
+- Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.1` and
+  closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-UPDATE-SAMPLE-COVERAGE.md).
+- Added explicit `t/1244-isf-wait-clause-lowering.t` coverage for
+  `(sample ...) (wait cycles) (update out 1)` zero-bypassing into a
+  sample-preserving update clone. This locks the legacy `update` spelling to
+  the same independent setter behavior already documented for canonical
+  `set`.
+- No source-language behavior, public contract shape, schedule-report schema,
+  generated `.fsm`/HDL contract, or mdBook behavior text changed in this
+  coverage-only slice.
+- Validation: `perl -Iperl -c t/1244-isf-wait-clause-lowering.t` passed;
+  `prove -l t/1244-isf-wait-clause-lowering.t` passed with `Files=1,
+  Tests=25`; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence remains every 30 unpushed commits.
 ## 2026-05-16: ISF independent setter zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-INDEPENDENT-SET-SAMPLE.md).
