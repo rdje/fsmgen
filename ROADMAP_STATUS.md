@@ -177,9 +177,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   repeat check on that generated instance's fresh done handoff.
   Switch-contained domain metadata, spawn nesting, deeper branch/loop nesting,
   cross-domain activation, and broader outstanding-child semantics remain
-  deferred. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`, which must select the next bounded
-  repeat-body child activation subset before code.
+  deferred. `ISF-REPEAT-BODY-CHILD-ACTIVATION.39` then selected top-level
+  switch-branch nested repeat generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` as the next bounded
+  nested generated-do same-domain metadata subset. The selected contract
+  mirrors the shipped when-contained domain subset, records declared
+  same-domain ownership for the deterministic generated do instance at the
+  lexical switch-contained site, and preserves generated-composition and
+  schedule-report clock-domain metadata without implying CDC or cross-domain
+  activation. Spawn nesting, deeper branch/loop nesting, cross-domain
+  activation, and broader outstanding-child semantics remain deferred. The
+  next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.40`, which should
+  implement the selected switch-contained repeat generated do same-domain
+  metadata subset.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

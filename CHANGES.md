@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-17
+### R14 — ISF switch-contained repeat generated do domains selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`.
+- Selected top-level `switch` branches containing nested repeats with
+  generated blocking `(do child (params ...) [(bind ...)] (domain NAME))` as
+  the next bounded nested generated-do same-domain metadata subset.
+- The selected surface mirrors the shipped when-contained domain subset:
+  record declared same-domain ownership for the deterministic generated do
+  instance at the lexical nested site and preserve generated-composition and
+  schedule-report clock-domain metadata without implying CDC or cross-domain
+  activation.
+- Spawn nesting, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child semantics remain deferred for this selected
+  subset.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
 ### R14 — ISF when-contained repeat generated do domains shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.38`.
 - Top-level `when` bodies may now contain nested repeats with generated

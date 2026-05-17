@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained generated do domains are the next nested subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.39` selects generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` in a top-level
+  `switch` branch.
+- This is the direct switch analogue of the just-shipped when-contained
+  generated-do same-domain metadata subset. The selected implementation
+  should reuse the deterministic nested generated do instance, preserve
+  declared same-domain ownership in generated-composition metadata and
+  schedule-report clock-domain summaries, and keep switch-branch repeat
+  re-entry gated on the generated instance's fresh done handoff.
+- Spawned nested activation, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child lifetime semantics remain separate
+  contracts.
 ## 2026-05-17: when-contained generated do domains reuse domain partitioning
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.38` implements only declared same-domain
   metadata for generated `do` sites inside repeats that are direct clauses of
