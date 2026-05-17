@@ -312,10 +312,19 @@ scope. Cross-domain repeat-body `do`, generated/spawn nested activation beyond
 the documented when-contained generated-child do case, deeper branch repeat
 activation, loop-contained repeat activation, and broader outstanding-child
 lifetime semantics beyond the mandatory-drain subset remain backlog. The
-shipped when-contained generated-child nested do subset still
-keeps activation subclauses, spawn nesting, switch-contained generated-child
-`do`, deeper branch/loop nesting, cross-domain activation, and broader
-outstanding-child semantics out of scope.
+shipped when-contained generated-child nested do subset still keeps activation
+subclauses, spawn nesting, switch-contained generated-child `do`, deeper
+branch/loop nesting, cross-domain activation, and broader outstanding-child
+semantics out of scope.
+
+The next bounded generated-child nested leaf selects the switch-contained
+analogue: a repeat directly inside a top-level `switch` branch with plain
+`(do child)` only when that child is already emitted as a generated child by
+another activation site. The selected nested do site owns one deterministic
+generated do instance, waits for that instance's fresh done handoff before the
+switch-branch repeat check, and keeps `(params ...)`, `(bind ...)`,
+`(domain NAME)`, spawn nesting, deeper branch/loop nesting, cross-domain
+activation, and broader outstanding-child semantics out of scope.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

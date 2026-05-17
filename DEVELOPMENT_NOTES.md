@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: switch-contained generated-child do is the next nested subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.27` selects plain nested repeat
+  `(do child)` in a top-level `switch` branch when `child` is already emitted
+  as a generated child by another activation site.
+- This follows the shipped when-contained generated-child subset but keeps the
+  implementation contract branch-local: only a repeat that is a direct clause
+  of a top-level switch branch is selected, with no activation subclauses.
+- Spawn nesting, activation subclauses, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child lifetime semantics remain
+  separate contracts.
 ## 2026-05-17: when-contained generated-child do reuses repeat do instances
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.26` implements only the selected plain
   generated-child nested do shape for repeats that are direct clauses of a
