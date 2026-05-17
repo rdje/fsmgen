@@ -139,7 +139,7 @@ generated-child `(do child)`, static-parameter generated
 `(do child (params ...))`, or static-parameter generated bound
 `(do child (params ...) (bind ...))`, top-level switch-branch nested repeat
 local, generated-child `(do child)`, or static-parameter generated
-`(do child (params ...))`, and
+`(do child (params ...))` with optional `(bind ...)` handoffs, and
 top-level repeat-body spawn with optional static `(params ...)`, optional
 `(bind ...)`, and optional declared same-domain
 `(domain NAME)` metadata followed by same-body `await_all` or by same-body
@@ -165,11 +165,11 @@ static-parameter generated bound
 `(do child (params ...) (bind ...))`; it rejects domain metadata and requires
 static params whenever bindings are present. The
 switch-contained nested subset accepts the same local, plain generated-child,
-or static-parameter generated forms in a repeat directly inside a top-level
-`switch` branch. Both nested subsets keep the nested repeat check gated by the
-child's fresh done pulse. Switch-contained nested repeats still reject
-bindings and domain metadata; both subsets still reject deeper branch nesting
-and loop-contained repeats.
+static-parameter generated, or static-parameter generated bound forms in a
+repeat directly inside a top-level `switch` branch. Both nested subsets keep
+the nested repeat check gated by the child's fresh done pulse. Both
+branch-contained bound nested generated `do` subsets still reject domain
+metadata, deeper branch nesting, and loop-contained repeats.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases, `stage`,
 `contract`, nested `while`, and nested `until` forms remain outside the

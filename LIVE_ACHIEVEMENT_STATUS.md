@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF switch-contained repeat generated do bindings shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.36`.
+- Top-level `switch` branches may now contain nested repeats with generated
+  blocking `(do child (params ...) (bind ...))`, static parameter overrides,
+  and input/output port bindings.
+- Lowering emits one deterministic generated do instance for the lexical
+  nested do site, applies parameter overrides once in the generated top, wires
+  binding handoffs once for that instance, preserves source-order samples
+  around the do, and gates the switch-branch repeat check on that generated
+  instance's fresh done handoff.
+- Domain metadata, spawn nesting, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain deferred. The active
+  frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.37`, which must
+  select the next bounded repeat-body child activation subset before code.
+
 ## 2026-05-17: R14 — ISF switch-contained repeat generated do bindings selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.35`.
 - Selected top-level `switch` branches containing nested repeats with

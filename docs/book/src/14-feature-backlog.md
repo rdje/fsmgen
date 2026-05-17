@@ -235,7 +235,7 @@ or generated-child `(do child)`, top-level when-body nested repeat
 static-parameter generated `(do child (params ...))` with optional
 `(bind ...)` handoffs, top-level switch-branch nested repeat local,
 generated-child `(do child)`, or static-parameter generated
-`(do child (params ...))`, repeat-body generated blocking
+`(do child (params ...))` with optional `(bind ...)` handoffs, repeat-body generated blocking
 `(do child (params ...))`, repeat-body spawn `(bind ...)`, and declared
 same-domain `(domain NAME)` metadata are shipped for the already shipped
 top-level repeat plus same-body synchronization paths. The local `do` subset
@@ -277,8 +277,9 @@ input/output binding handoffs once when `(bind ...)` is paired with static
 `(params ...)`, and reject `(domain NAME)`. A repeat directly inside a top-level
 `switch` branch may use local, plain generated-child `(do child)`, or
 static-parameter generated `(do child (params ...))` under the same
-generated-do rule; it rejects `(bind ...)`, `(domain NAME)`, deeper branch
-nesting, and loop-contained repeat activation.
+generated-do rule and may wire input/output binding handoffs once when
+`(bind ...)` is paired with static `(params ...)`; it rejects
+`(domain NAME)`, deeper branch nesting, and loop-contained repeat activation.
 A top-level repeat body may use
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
 when the same repeat body reaches `(await_all done)` before the repeat check
@@ -323,12 +324,10 @@ shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
 
-The next bounded nested generated-do leaf selects a repeat directly inside a
-top-level `switch` branch with generated blocking
-`(do child (params ...) (bind ...))`: static parameter overrides plus
-input/output port bindings only. The selected nested do site mirrors the
-shipped when-contained binding subset, reuses the same deterministic
-generated do instance as the switch-contained static-parameter subset, adds
+The switch-contained static-parameter generated nested `do` subset also
+accepts `(bind ...)` input/output port bindings. The nested do site mirrors
+the shipped when-contained binding subset, reuses the same deterministic
+generated do instance as the switch-contained static-parameter subset, wires
 generated-top binding handoffs once for that lexical site, waits for the
 instance's fresh done handoff before the switch-branch repeat check, and keeps
 `(domain NAME)`, spawn nesting, deeper branch/loop nesting, cross-domain
@@ -336,7 +335,7 @@ activation, and broader outstanding-child semantics out of scope.
 
 Nested generated-do domain metadata, spawn nesting, cross-domain activation,
 deeper branch/loop nesting, and broader outstanding-child semantics remain
-backlog beyond the selected switch-contained bound nested `do` leaf.
+backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
