@@ -34,9 +34,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   cross-domain activation, spawn-after-sample ordering,
   sample-before/after-do timing, and nested branch/loop activation remain
   deferred and tracked in the same active tree. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` for nested repeat-body child
-  activation, cross-domain activation, or broader outstanding-child forms if
-  selected. The workflow also
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` after
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` selected top-level repeat-body
+  generated blocking `(do child (params ...))` as the next bounded
+  implementation subset. The selected generated-do subset is static-parameter
+  only; repeat-body do bindings, domain metadata, nested placement,
+  cross-domain activation, multi-pending `await_any`, and
+  sample-before/after-do timing remain deferred. The workflow also
   requires task-tree ownership before any code, test, source,
   generated-artifact, or config change. Push cadence is every 30 unpushed
   commits unless the user explicitly requests an earlier push.

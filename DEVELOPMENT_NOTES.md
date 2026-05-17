@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated do starts with static params
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` selects static parameter overrides as
+  the first generated repeat-body `do` subset because it can reuse the
+  existing generated-top specialization model from top-level generated `do`
+  without adding runtime port handoffs or domain ownership changes.
+- The intended re-entry proof mirrors local repeat-body `do`: the repeat body
+  starts one generated child instance and cannot reach the repeat check until
+  that instance's done handoff is observed.
+- Repeat-body do bindings and domain metadata stay separate because they need
+  their own generated handoff and ownership review surfaces.
 ## 2026-05-17: repeat-body sample-after-spawn lowers before sync
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.6` widens repeat-body spawn timing without
   changing the static-child lifetime model. The repeat body still has to reach

@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-17: repeat-body generated do parameter subset selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`.
+- The active R14 task tree now selects repeat-body generated blocking
+  `(do child (params ...))` as the next bounded implementation subset.
+- The selected contract is top-level repeat-body only: one static generated
+  child instance for the lexical do site, static parameter overrides applied
+  in the generated top, and repeat re-entry only after that generated instance
+  produces a fresh done pulse.
+- Repeat-body do `(bind ...)`, `(domain NAME)`, nested placement,
+  cross-domain activation, multi-pending `await_any`, and
+  sample-before/after-do timing remain deferred.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-17: repeat-body sample-after-spawn timing shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

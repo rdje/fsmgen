@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body generated do parameter subset selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`.
+- Selected top-level repeat-body generated blocking `(do child (params ...))`
+  as the next bounded implementation subset.
+- The selected contract is one static generated child instance for the lexical
+  do site, static parameter overrides in the generated top, and repeat
+  re-entry only after the generated instance's fresh done pulse.
+- Repeat-body do bindings, domain metadata, nested placement, cross-domain
+  activation, multi-pending `await_any`, and sample-before/after-do timing
+  remain deferred. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`.
+
 ## 2026-05-17: R14 — ISF repeat-body sample-after-spawn timing shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`.
 - Top-level repeat bodies may now sample after repeat-body spawn when the same
