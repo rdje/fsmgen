@@ -427,22 +427,27 @@ The shipped repeat-body clause surface is named drive calls, `await`, `sample`,
 actor-owned bank `store` and `load`, shipped `wait` clauses, and the
 top-level local blocking `(do child)` subset. Repeat-body local `do` asserts
 the local child `start`, waits for the child's fresh `done` pulse, and only
-then reaches the repeat check back-edge. Generated, parameterized, bound, or
-domain-qualified repeat-body `do`, repeat-body `do` targeting an already
-generated child, and sample-before/after-do timing remain deferred. The shipped
-repeat-body clause surface also includes the top-level spawn plus same-body
+then reaches the repeat check back-edge. The shipped repeat-body clause
+surface also includes generated blocking
+`(do child (params ...))` with static parameter overrides: it emits one
+generated do instance for the lexical repeat-body do site, applies the
+parameter override once in the generated top, and waits for that instance's
+done handoff before the repeat check. Repeat-body do bindings and domain
+metadata remain deferred. The shipped repeat-body clause surface also includes
+the top-level spawn plus same-body
 `await_all` subset with optional static `(params ...)` overrides, optional
 `(bind ...)` port handoffs, and optional declared same-domain `(domain NAME)`
 ownership metadata. Single-pending repeat-body `await_any` is also shipped
-when exactly one repeat-body spawn is pending. Generated, parameterized,
-bound, or domain-qualified repeat-body `do`, multi-pending `await_any`,
-`stage`, `contract`, nested `while`, and nested `until` remain outside the
-shipped repeat-body subset. Samples may follow a repeat-body spawn before the
+when exactly one repeat-body spawn is pending. Repeat-body do bindings,
+domain-qualified repeat-body `do`, multi-pending `await_any`, `stage`,
+`contract`, nested `while`, and nested `until` remain outside the shipped
+repeat-body subset. Samples may follow a repeat-body spawn before the
 same-body `await_all` or single-pending `await_any`; those pending samples
 materialize in an explicit sample state before the sync state. A later
 repeat-body spawn after a pending sample remains deferred.
 The shipped repeat-body child-activation subset is
-`(do child)` for local child transactions, plus
+`(do child)` for local child transactions, generated
+`(do child (params ...))` for static parameter overrides, plus
 `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
 followed by a same-body `(await_all done)` before the repeat check can loop.
 The lexical spawn name denotes one static generated child instance reused
@@ -481,6 +486,10 @@ For the shipped repeat-body local `do` subset, `(do child)` must remain plain:
 no repeat-body `(params ...)`, `(bind ...)`, or `(domain NAME)` subclauses are
 accepted, and the child must not already be emitted as a generated child
 instance by another activation site.
+For the shipped repeat-body generated `do` subset, `(do child (params ...))`
+must remain static-parameter-only: no repeat-body `(bind ...)` or
+`(domain NAME)` subclauses are accepted, and the generated instance is named
+`{parent}_{child}_repeat_do_{ordinal}`.
 
 ## `(while cond body...)` / `(until cond body...)` — Transaction Loops
 

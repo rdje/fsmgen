@@ -36,16 +36,14 @@ my @shipped_terms = qw(
     await_any
 );
 
-my @deferred_terms = qw(
-    generated
-    parameterized
-    bound
-    domain-qualified
-    multi-pending
-    stage
-    contract
-    while
-    until
+my @deferred_terms = (
+    'do bindings',
+    'domain-qualified',
+    'multi-pending',
+    'stage',
+    'contract',
+    'while',
+    'until',
 );
 
 for my $path (@docs) {

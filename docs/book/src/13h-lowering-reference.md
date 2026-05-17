@@ -1059,6 +1059,21 @@ the repeat check only after the child done pulse:
     (-> parent_repeat_check_3)))
 ```
 
+Repeat-body generated `do` is shipped only for static parameter overrides. It
+emits one generated child instance for the lexical do site, applies the
+override once in the generated top, and waits for that instance's done handoff
+before the repeat check:
+
+```lisp
+(parent_do_2
+  (= (parent_worker_repeat_do_0_start> 1))
+  (<parent_worker_repeat_do_0_done
+    (-> parent_repeat_check_3)))
+
+(?fsmc:parent_worker_repeat_do_0 worker
+  (params (WIDTH 16)))
+```
+
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
 
@@ -1081,8 +1096,9 @@ handoff, then an optional sample state, before the repeat check:
     (=0 (-> parent_done_6))))
 ```
 
-Generated, parameterized, bound, or domain-qualified repeat-body `do`,
-generated-child targets, sample-before/after-do timing, multi-pending `await_any`,
+Repeat-body do bindings, domain-qualified repeat-body `do`, generated-child
+targets not owned by the selected static-parameter do site,
+sample-before/after-do timing, multi-pending `await_any`,
 spawn-after-sample ordering, cross-domain spawn, and nested branch/loop forms
 remain fail-closed until their re-entry and report behavior is specified.
 

@@ -506,7 +506,7 @@ sub _generated_child_transaction_refs {
             }
             if (
                 $clause->[0] eq 'do'
-                && $label eq 'transaction body'
+                && ($label eq 'transaction body' || $label eq 'repeat body')
                 && @{_do_parameter_overrides($clause, $tx->{name}, $label, $constant_values, $actor)}
             ) {
                 $s{$clause->[1]} = 1;
@@ -528,6 +528,8 @@ sub _generated_child_transaction_refs {
 sub _child_action_refs_from_transaction_clauses {
     my ($clauses, $tx_name) = @_;
     my @refs;
+    my $top_level_do_ordinal = 0;
+    my $repeat_do_ordinal = 0;
 
     for my $clause (@{$clauses || []}) {
         next unless ref($clause) eq 'ARRAY' && @$clause;
@@ -535,11 +537,13 @@ sub _child_action_refs_from_transaction_clauses {
 
         my $keyword = $clause->[0];
         if ($keyword eq 'do' || $keyword eq 'spawn') {
-            push @refs, {
+            my %ref = (
                 clause  => $clause,
                 keyword => $keyword,
                 label   => 'transaction body',
-            };
+            );
+            $ref{do_ordinal} = $top_level_do_ordinal++ if $keyword eq 'do';
+            push @refs, \%ref;
             next;
         }
 
@@ -548,11 +552,13 @@ sub _child_action_refs_from_transaction_clauses {
             next unless ref($body_clause) eq 'ARRAY' && @$body_clause;
             next unless defined($body_clause->[0]) && !ref($body_clause->[0]);
             next unless $body_clause->[0] eq 'do' || $body_clause->[0] eq 'spawn';
-            push @refs, {
+            my %ref = (
                 clause  => $body_clause,
                 keyword => $body_clause->[0],
                 label   => 'repeat body',
-            };
+            );
+            $ref{repeat_do_ordinal} = $repeat_do_ordinal++ if $body_clause->[0] eq 'do';
+            push @refs, \%ref;
         }
     }
 
@@ -733,13 +739,20 @@ sub _build_domain_partition($self, $actor) {
             confess "Transaction '$tx->{name}': $keyword target '$target' uses unknown clock domain '$activation_domain'\n"
                 unless exists $groups{$activation_domain};
             my $top_level_do = $keyword eq 'do' && ($child_ref->{label} // '') eq 'transaction body';
-            my $include_instance = $keyword eq 'spawn' || ($top_level_do && $generated_children{$target});
+            my $repeat_body_generated_do = $keyword eq 'do'
+                && ($child_ref->{label} // '') eq 'repeat body'
+                && _repeat_body_do_uses_generated_params($clause);
+            my $include_instance = $keyword eq 'spawn'
+                || ($top_level_do && $generated_children{$target})
+                || $repeat_body_generated_do;
             if ($include_instance) {
                 my $ordinal = $do_ordinals{$tx->{name}} // 0;
                 $do_ordinals{$tx->{name}} = $ordinal + 1 if $top_level_do;
                 my $instance = $keyword eq 'spawn'
                     ? $clause->[3]
-                    : _generated_do_instance_name($tx->{name}, $target, $ordinal);
+                    : $repeat_body_generated_do
+                        ? _generated_repeat_do_instance_name($tx->{name}, $target, $child_ref->{repeat_do_ordinal} // 0)
+                        : _generated_do_instance_name($tx->{name}, $target, $ordinal);
                 push @{$groups{$activation_domain}{child_instances}}, {
                     kind   => $keyword,
                     owner  => $tx->{name},
@@ -1305,7 +1318,7 @@ sub _validate_child_transaction_refs($self, $actor) {
             }
             $generated_children{$target} = 1
                 if $keyword eq 'do'
-                    && $label eq 'transaction body'
+                    && ($label eq 'transaction body' || $label eq 'repeat body')
                     && @{_do_parameter_overrides($clause, $tx_name, $label, $constant_values, $actor)};
 
             push @child_refs, {
@@ -1345,7 +1358,12 @@ sub _validate_child_transaction_refs($self, $actor) {
         my $label    = $ref->{label};
         _validate_repeat_body_do_subset($ref, \%generated_children);
 
-        my $generated_activation = $keyword eq 'spawn' || ($keyword eq 'do' && $generated_children{$target});
+        my $repeat_body_generated_do = $keyword eq 'do'
+            && $label eq 'repeat body'
+            && _repeat_body_do_uses_generated_params($clause);
+        my $generated_activation = $keyword eq 'spawn'
+            || ($keyword eq 'do' && $label eq 'transaction body' && $generated_children{$target})
+            || $repeat_body_generated_do;
         next unless $generated_activation;
 
         confess "Transaction '$tx_name': $keyword target '$target' conflicts with parent actor module name '$actor->{actor_name}'\n"
@@ -1353,7 +1371,9 @@ sub _validate_child_transaction_refs($self, $actor) {
 
         my $instance = $keyword eq 'spawn'
             ? $clause->[3]
-            : _generated_do_instance_name($tx_name, $target, _do_clause_ordinal($tx, $clause));
+            : $repeat_body_generated_do
+                ? _generated_repeat_do_instance_name($tx_name, $target, $ref->{repeat_do_ordinal} // 0)
+                : _generated_do_instance_name($tx_name, $target, _do_clause_ordinal($tx, $clause));
 
         confess "Transaction '$tx_name': $keyword instance '$instance' conflicts with parent actor instance name '$actor->{actor_name}'\n"
             if $instance eq $actor->{actor_name};
@@ -2391,6 +2411,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
     my %storage_roles;
     my $si  = 0; my $ha = 0; my $wdc; my $lat;
     my $do_ordinal = 0;
+    my $repeat_do_ordinal = 0;
 
     my %transaction_ports = _transaction_port_map($tx);
     for my $port (values %transaction_ports) {
@@ -2468,7 +2489,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             my ($ss) = _expand_switch($cl,$tn,\$si,\@ps,$drives,$wd,$widths,\%ct,\%storage_roles,$actor,\@bank_accesses);
             push @st, @$ss;
         }
-        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses,\@spc,$constant_values); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
+        elsif ($k eq 'repeat')   { my ($rs,$rc,$rw,$rdw) = _ir_repeat($cl,$tn,\$si,\@ps,$wd,$drives,$widths,$actor,\@bank_accesses,\@spc,$constant_values,$generated_children,\$repeat_do_ordinal); push @st,@$rs; _register_repeat_counters(\%ct,\%storage_roles,$rc,$rw,$rdw); }
         elsif ($k eq 'latency')  { $lat = _parse_latency($cl, $tn); }
         elsif ($k eq 'params')   { next; }
         elsif ($k eq 'do')       {
@@ -3030,6 +3051,38 @@ sub _do_ref_from_clause {
     return $ref;
 }
 
+sub _repeat_do_ref_from_clause {
+    my ($clause, $tn, $ordinal, $constant_values, $actor) = @_;
+    my $child = $clause->[1];
+    my $overrides = _do_parameter_overrides($clause, $tn, 'repeat body', $constant_values, $actor);
+    my $generated_child = @$overrides ? 1 : 0;
+    my $ref = {
+        child           => $child,
+        activation_kind => 'do',
+        generated_child => $generated_child,
+    };
+
+    if ($generated_child) {
+        $ref->{instance} = _generated_repeat_do_instance_name($tn, $child, $ordinal);
+        $ref->{parameter_overrides} = $overrides;
+    }
+
+    return $ref;
+}
+
+sub _repeat_body_do_uses_generated_params {
+    my ($clause) = @_;
+    return 0 unless ref($clause) eq 'ARRAY' && @$clause >= 3;
+    for my $subclause (@{$clause}[2 .. $#$clause]) {
+        next unless ref($subclause) eq 'ARRAY'
+            && @$subclause
+            && defined($subclause->[0])
+            && !ref($subclause->[0]);
+        return 1 if $subclause->[0] eq 'params';
+    }
+    return 0;
+}
+
 sub _spawn_parameter_overrides {
     my ($clause, $tn, $label, $constant_values, $actor) = @_;
     return _activation_parameter_overrides($clause, $tn, $label, $constant_values, $actor);
@@ -3148,6 +3201,11 @@ sub _validate_activation_params_clause_shape {
 sub _generated_do_instance_name {
     my ($owner, $child, $ordinal) = @_;
     return "${owner}_${child}_do_$ordinal";
+}
+
+sub _generated_repeat_do_instance_name {
+    my ($owner, $child, $ordinal) = @_;
+    return "${owner}_${child}_repeat_do_$ordinal";
 }
 
 sub _generated_rule_trigger_instance_name {
@@ -3667,7 +3725,7 @@ sub _validate_repeat_body_spawn_subset {
         next unless defined($keyword) && !ref($keyword);
 
         if ($keyword eq 'sample' && $saw_do) {
-            confess "Transaction '$tn': repeat-body sample after do is not supported in the local blocking-do subset\n";
+            confess "Transaction '$tn': repeat-body sample after do is not supported in the current blocking-do subset\n";
         }
 
         if ($keyword eq 'spawn') {
@@ -3694,11 +3752,17 @@ sub _validate_repeat_body_spawn_subset {
         if ($keyword eq 'do') {
             confess "Transaction '$tn': repeat-body do is supported only for top-level repeat clauses\n"
                 unless $label eq 'transaction body';
-            confess "Transaction '$tn': repeat-body do supports only local '(do child)' in the local blocking-do subset\n"
-                if $#$body_clause >= 2;
+            for my $subclause (@{$body_clause}[2 .. $#$body_clause]) {
+                confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)' in the generated blocking-do subset\n"
+                    unless ref($subclause) eq 'ARRAY'
+                        && @$subclause
+                        && defined($subclause->[0])
+                        && !ref($subclause->[0])
+                        && $subclause->[0] eq 'params';
+            }
             confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
                 if @pending_spawns;
-            confess "Transaction '$tn': repeat-body do cannot follow pending samples in the local blocking-do subset\n"
+            confess "Transaction '$tn': repeat-body do cannot follow pending samples in the current blocking-do subset\n"
                 if $pending_sample_run;
             $saw_do = 1;
             $pending_sample_run = 0;
@@ -3733,11 +3797,22 @@ sub _validate_repeat_body_do_subset {
     my $tn = $ref->{tx_name};
     my $clause = $ref->{clause};
     my $target = $ref->{target};
+    my @subclauses = ref($clause) eq 'ARRAY' ? @{$clause}[2 .. $#$clause] : ();
+    my $uses_generated_params = _repeat_body_do_uses_generated_params($clause);
 
-    confess "Transaction '$tn': repeat-body do supports only local '(do child)' in the local blocking-do subset\n"
-        if ref($clause) eq 'ARRAY' && $#$clause >= 2;
-    confess "Transaction '$tn': repeat-body do target '$target' is already a generated child; generated repeat-body do remains deferred\n"
-        if ref($generated_children) eq 'HASH' && $generated_children->{$target};
+    for my $subclause (@subclauses) {
+        confess "Transaction '$tn': repeat-body generated do supports only static '(params ...)' in the generated blocking-do subset\n"
+            unless ref($subclause) eq 'ARRAY'
+                && @$subclause
+                && defined($subclause->[0])
+                && !ref($subclause->[0])
+                && $subclause->[0] eq 'params';
+    }
+
+    confess "Transaction '$tn': repeat-body local do target '$target' is already a generated child; generated repeat-body do currently requires this do site to own static '(params ...)' overrides\n"
+        if !$uses_generated_params
+            && ref($generated_children) eq 'HASH'
+            && $generated_children->{$target};
 
     return 1;
 }
@@ -4995,7 +5070,7 @@ sub _expand_loop_body {
 }
 
 sub _ir_repeat {
-    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
+    my ($cl,$tn,$ir,$ps,$wd,$drives,$widths,$actor,$bank_accesses,$spawn_refs,$constant_values,$generated_children,$repeat_do_ordinal_ref)=@_; my $ctr="${tn}_cnt"; my @s; my @lp; my @dynamic_wait_counters; my @spawn_done_ports;
     my $width = _repeat_count_width($cl->[1], $widths);
     push @s, {name=>"${tn}_repeat_init_".$$ir++,kind=>'sequential',assignments=>[{lhs=>$ctr,rhs=>$cl->[1],op=>'<='}],transitions=>[]};
     for my $bc(@{$cl}[2..$#$cl]){next unless ref($bc)eq'ARRAY';my $bk=$bc->[0];
@@ -5025,7 +5100,11 @@ sub _ir_repeat {
         }
         elsif($bk eq'do'){
             _push_sample_state(\@s,$tn,\@lp,$ir);
-            push @s,_ir_do($bc,$tn,$$ir++,{ child => $bc->[1], activation_kind => 'do', generated_child => 0 },'repeat body');
+            my $repeat_do_ordinal = ref($repeat_do_ordinal_ref) ? $$repeat_do_ordinal_ref++ : 0;
+            my $do_ref = _repeat_do_ref_from_clause($bc,$tn,$repeat_do_ordinal,$constant_values || {},$actor);
+            push @$spawn_refs, _clone_isf_value($do_ref)
+                if ref($spawn_refs) eq 'ARRAY' && $do_ref->{generated_child};
+            push @s,_ir_do($bc,$tn,$$ir++,$do_ref,'repeat body');
         }
         elsif($bk eq'await_all'){
             _push_sample_state(\@s,$tn,\@lp,$ir);

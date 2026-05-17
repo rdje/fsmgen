@@ -553,6 +553,70 @@ ISF
     );
 };
 
+subtest 'repeat body parameterized do lowers through a generated child activation instance' => sub {
+    my $source = <<'ISF';
+(actor repeat_parameterized_do
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input loops (width 3))
+    (output done))
+  (transaction parent
+    (on start)
+    (repeat loops
+      (do worker
+        (params
+          (WIDTH 16))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 1, 'repeat-body parameterized do contributes one generated activation instance');
+    my $instance = $ir->{spawn_instances}[0];
+    is($instance->{activation_kind}, 'do', 'repeat-body generated instance preserves do activation provenance');
+    is($instance->{child}, 'worker', 'repeat-body generated do targets the child transaction module');
+    is($instance->{instance}, 'parent_worker_repeat_do_0', 'repeat-body generated do instance name is deterministic');
+    is_deeply(
+        $instance->{parameter_overrides},
+        [ { name => 'WIDTH', value => '16' } ],
+        'repeat-body generated do preserves parameter overrides',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'repeat_parameterized_do.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'repeat_parameterized_do_top.fsm'};
+
+    ok(defined($parent_fsm), 'repeat-body generated do parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'repeat-body generated do child scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'repeat-body generated do top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_do_2[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_repeat_check_3\)/,
+        'repeat-body generated do starts the generated instance and gates the repeat check on done');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'repeat-body generated top applies the do parameter override once');
+    like($top_fsm, qr/\(repeat_parameterized_do\.parent_worker_repeat_do_0_start parent_worker_repeat_do_0\.start\)/,
+        'repeat-body generated top wires do start handoff');
+    like($top_fsm, qr/\(parent_worker_repeat_do_0\.done repeat_parameterized_do\.parent_worker_repeat_do_0_done\)/,
+        'repeat-body generated top wires do done handoff');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is($report->{generated_composition}{instances}[0]{activation_kind}, 'do',
+        'report preserves repeat-body generated do activation kind');
+    is($report->{generated_composition}{instances}[0]{instance}, 'parent_worker_repeat_do_0',
+        'report exposes repeat-body generated do instance name');
+    is_deeply(
+        $report->{generated_composition}{instances}[0]{parameter_bindings},
+        [ { name => 'WIDTH', source => 'override', value => '16' } ],
+        'report exposes repeat-body generated do parameter binding provenance',
+    );
+};
+
 subtest 'spawn parameter bindings fail closed for unsupported or ambiguous shapes' => sub {
     assert_lower_rejected(<<'ISF', 'repeat spawn without await_all', qr/repeat-body spawn requires same-body '\(await_all done\)' before the repeat check can loop/);
 (actor repeat_spawn_without_await_all
@@ -608,24 +672,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat do parameter override', qr/repeat-body do supports only local '\(do child\)' in the local blocking-do subset/);
-(actor repeat_do_parameter_override
-  (clock clk)
-  (interface (input start) (input loops (width 3)) (output done))
-  (transaction parent
-    (on start)
-    (repeat loops
-      (do worker
-        (params
-          (WIDTH 16))))
-    (complete done))
-  (transaction worker
-    (params
-      (WIDTH 8))
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'repeat do port binding', qr/repeat-body do supports only local '\(do child\)' in the local blocking-do subset/);
+    assert_lower_rejected(<<'ISF', 'repeat do port binding', qr/repeat-body generated do supports only static '\(params \.\.\.\)' in the generated blocking-do subset/);
 (actor repeat_do_port_binding
   (clock clk)
   (interface (input start) (input loops (width 3)) (input payload (width 8)) (output result (width 8)) (output done))
@@ -644,7 +691,24 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat do generated child target', qr/repeat-body do target 'worker' is already a generated child; generated repeat-body do remains deferred/);
+    assert_lower_rejected(<<'ISF', 'repeat do domain metadata', qr/repeat-body generated do supports only static '\(params \.\.\.\)' in the generated blocking-do subset/);
+(actor repeat_do_domain_metadata
+  (clock-domains
+    (domain default (clock clk)))
+  (interface (input start) (input loops (width 3)) (output done))
+  (transaction parent
+    (domain default)
+    (on start)
+    (repeat loops
+      (do worker
+        (domain default)))
+    (complete done))
+  (transaction worker
+    (domain default)
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'repeat do generated child target', qr/repeat-body local do target 'worker' is already a generated child; generated repeat-body do currently requires this do site to own static '\(params \.\.\.\)' overrides/);
 (actor repeat_do_generated_target
   (clock clk)
   (interface (input start) (input loops (width 3)) (output done))
@@ -691,7 +755,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'repeat sample after do', qr/repeat-body sample after do is not supported in the local blocking-do subset/);
+    assert_lower_rejected(<<'ISF', 'repeat sample after do', qr/repeat-body sample after do is not supported in the current blocking-do subset/);
 (actor repeat_sample_after_do
   (clock clk)
   (interface (input start) (input loops (width 3)) (input status) (output done))

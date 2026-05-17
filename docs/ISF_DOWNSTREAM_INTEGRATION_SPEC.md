@@ -842,9 +842,13 @@ Rules:
   Top-level repeat bodies also accept local blocking `(do child)` when the
   child transaction remains local to the scheduled parent; the do state starts
   the child and waits for its fresh `child_done` pulse before the repeat check
-  can loop. Generated, parameterized, bound, or domain-qualified repeat-body
-  `do`, repeat-body `do` targeting an already generated child, and
-  sample-before/after-do timing remain deferred. Top-level repeat bodies also accept
+  can loop. Top-level repeat bodies also accept generated blocking
+  `(do child (params ...))` with static parameter overrides; the generated top
+  emits one generated do instance for the lexical do site and applies the
+  parameter override once. Repeat-body do `(bind ...)`, `(domain NAME)`,
+  repeat-body `do` targeting an already generated child without this selected
+  static parameter site, and sample-before/after-do timing remain deferred.
+  Top-level repeat bodies also accept
   `(spawn child as instance [(params ...)] [(bind ...)] [(domain NAME)])`
   clauses when the same repeat body reaches `(await_all done)` before the
   repeat check can loop. `(await_any done)` is accepted in repeat bodies only
@@ -858,7 +862,7 @@ Rules:
   cross-domain activation. Samples may follow a repeat-body spawn before the
   same-body `await_all` or single-pending `await_any`; those samples lower to
   an explicit sample state before the sync state. A later repeat-body spawn
-  after a pending sample remains deferred. Generated, parameterized, bound, or
+  after a pending sample remains deferred. Repeat-body do bindings,
   domain-qualified repeat-body `do`, multi-pending `await_any`, `stage`,
   `contract`, nested `while`, and nested `until` remain outside the shipped
   repeat-body subset.
@@ -1144,8 +1148,12 @@ Rules:
 - Local unparameterized `do` rewires the child entry to `child_start` and waits
   for `child_done`.
 - Top-level repeat bodies may use that same local `(do child)` form when the
-  child remains in the parent scheduled module; generated, parameterized,
-  bound, and domain-qualified repeat-body `do` forms are not shipped.
+  child remains in the parent scheduled module. They may also use
+  `(do child (params ...))` with static parameter overrides; that form creates
+  one generated child activation instance named
+  `{parent}_{child}_repeat_do_{ordinal}` and waits for that instance's done
+  handoff before the repeat check can loop. Repeat-body do bindings and
+  domain-qualified repeat-body `do` forms are not shipped.
 - Parameterized/generated `do` creates a generated child activation instance
   named `{parent}_{child}_do_{ordinal}` and waits for that instance's done
   handoff.

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-17: R14 — ISF repeat-body generated do static params shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`.
+- Top-level repeat bodies may now use generated blocking
+  `(do child (params ...))` with static parameter overrides.
+- The generated do state starts one generated instance for the lexical do site
+  and waits for that instance's fresh done handoff before the repeat check can
+  loop.
+- Repeat-body do bindings, domain metadata, plain local do targeting an
+  already generated child, sample-before/after-do timing, nested placement,
+  cross-domain activation, and multi-pending `await_any` remain fail-closed.
+  The active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`.
+
 ## 2026-05-17: R14 — ISF repeat-body generated do parameter subset selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`.
 - Selected top-level repeat-body generated blocking `(do child (params ...))`

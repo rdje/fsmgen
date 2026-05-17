@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-17: repeat-body generated do reuses one static instance
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.8` implements only the static-parameter
+  repeat-body generated `do` subset. The generated do site owns one
+  deterministic instance named `{parent}_{child}_repeat_do_{ordinal}`.
+- This keeps the repeat re-entry proof identical to local repeat-body `do`:
+  the repeat check is reachable only after the generated instance's done
+  handoff, so the next iteration cannot reassert start before fresh completion.
+- Bindings and domain metadata remain separate leaves because they add runtime
+  payload handoffs and clock-domain ownership surfaces beyond static parameter
+  specialization.
 ## 2026-05-17: repeat-body generated do starts with static params
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.7` selects static parameter overrides as
   the first generated repeat-body `do` subset because it can reuse the
