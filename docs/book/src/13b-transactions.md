@@ -296,7 +296,7 @@ states plus independent bank loads and stores plus top-level ready/valid
 stages plus top-level await-all/await-any sync states whose collected done
 ports are independent of pending sample aliases plus top-level spawn states
 whose generated start handoff is independent of pending sample aliases plus
-top-level
+top-level transaction phase pass-through states plus top-level
 bounded-eventual contract arm states; other successor shapes fail closed until
 their sample materialization is specified.
 Consecutive top-level runtime waits carry pending samples across zero-count
@@ -357,8 +357,10 @@ target can carry the sample. Top-level stage successors preserve the original
 ready/valid barrier in their sample-preserving zero-count clone. Top-level
 await-all/await-any sync successors preserve the collected done-port
 synchronization behavior. Top-level spawn successors preserve the generated
-child start handoff. Top-level contract arm successors preserve the original
-one-cycle monitor arm request.
+child start handoff. Top-level transaction phase successors preserve the
+original pass-through transition and apply only to transaction `(phase ...)`
+marker states, not actor-level phase metadata. Top-level contract arm
+successors preserve the original one-cycle monitor arm request.
 Loop decision/check successors preserve the original repeat counter decrement
 or while/until branch decision.
 In a `switch`, only the selected branch's runtime wait edge is split; other

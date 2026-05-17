@@ -37,6 +37,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-DYNAMIC-WAIT-PHASE-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-SYNC-SAMPLE` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-SYNC-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SYNC-SAMPLE.md) |
 | `ISF-DYNAMIC-WAIT-BANK-PREDECESSOR` | `done` | `R14` | `closed` | [docs/tasks/ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.md](docs/tasks/ISF-DYNAMIC-WAIT-BANK-PREDECESSOR.md) |

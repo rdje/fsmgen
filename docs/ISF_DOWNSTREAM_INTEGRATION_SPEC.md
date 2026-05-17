@@ -759,8 +759,9 @@ Rules:
   await, static wait, completion, independent scalar setter, independent
   shift, independent assemble, independent extract, and independent bank-load
   and bank-store states, plus top-level await_all/await_any sync states,
-  spawn states, and ready/valid stage states, for top-level waits; top-level
-  bounded-eventual contract arm states are also sample-compatible. Selected
+  spawn states, transaction phase pass-through states, and ready/valid stage
+  states, for top-level waits; top-level bounded-eventual contract arm states
+  are also sample-compatible. Selected
   completion,
   independent scalar setter,
   independent shift, independent assemble, independent extract, independent
@@ -768,9 +769,13 @@ Rules:
   bodies and `switch` branches. A scalar setter, shift, assemble state,
   extract state, bank-load state, bank-store state, sync state, spawn state,
   stage state, contract arm state, or loop decision/check state is independent
-  only when it neither reads nor overwrites a pending sample alias. For sync
-  states, that independence applies to the collected done ports; for spawn
-  states, it applies to the generated start handoff.
+  only when it neither reads nor overwrites a pending sample alias. A
+  transaction phase state is sample-compatible only as the scheduler-created
+  pass-through marker for transaction `(phase ...)`: it has no assignments or
+  guards, and its zero-count clone preserves the same pass-through transition.
+  Actor-level phase metadata remains report-only. For sync states, that
+  independence applies to the collected done ports; for spawn states, it
+  applies to the generated start handoff.
   Consecutive top-level runtime waits carry pending samples across zero-count
   wait links with generated downstream wait-entry clones for zero-then-positive
   paths and final sample-compatible target clones for all-zero paths.

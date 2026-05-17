@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-16: transaction phase markers can carry pending samples as pass-through states
+- `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` adds transaction `(phase ...)` states to
+  the top-level pending-sample runtime wait zero-bypass surface.
+- The accepted state is the scheduler-created transaction phase marker: it has
+  a `phase_name`, no assignments, and only its pass-through transition to the
+  next transaction state. That makes it safe for the zero-count clone to
+  prepend pending sample materialization without adding a hidden sample-only
+  cycle or consuming the sample in the same state.
+- Positive-count paths still materialize the sample in the first active wait
+  state and then enter the original phase marker. The original marker remains
+  the reported wait successor, so schedule-report provenance does not point at
+  generated zero-count clones.
+- The helper deliberately does not generalize every empty sequential state.
+  Actor-level phase metadata remains report-only; this slice only covers
+  transaction phase pass-through scheduling.
 ## 2026-05-16: spawn successors can carry pending samples when the start handoff is independent
 - `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` adds top-level spawn states to the
   pending-sample runtime wait zero-bypass surface.

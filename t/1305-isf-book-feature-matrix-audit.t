@@ -118,6 +118,7 @@ my @required_examples = (
     'independent bank stores',
     'top-level await_all/await_any sync states',
     'top-level spawn states',
+    'top-level transaction phase states',
     'top-level ready/valid stages',
     'top-level contract arm states',
     'loop decision states',

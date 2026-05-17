@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-16: ISF phase successor zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` and closed
+  [docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md).
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now lets pending-sample runtime waits zero-bypass into transaction
+  `(phase ...)` pass-through states.
+- Positive-count paths still materialize pending samples in the first active
+  wait state and then enter the original phase state without double-sampling.
+  Zero-count clones materialize the sample and preserve the original
+  pass-through transition.
+- This does not change actor-level phase metadata: actor phases remain
+  report-only. The accepted runtime scheduling shape is limited to
+  transaction phase marker states with no assignments or guards.
+- Updated the ISF spec, downstream integration handoff, public contract,
+  mdBook transaction/lowering/backlog/feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=144`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1031`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+- No active ISF task tree remains open. The next R14 implementation slice must
+  select or create a new task tree first.
+- Workflow note: push cadence is every 30 unpushed commits unless the user
+  explicitly requests an earlier push.
 ## 2026-05-16: ISF spawn successor zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` and closed
   [docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.md).

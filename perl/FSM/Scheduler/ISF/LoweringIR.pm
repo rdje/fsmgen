@@ -6852,6 +6852,7 @@ sub _dynamic_wait_zero_sample_target_accepts_samples {
         && _dynamic_wait_zero_sample_target_is_independent_control_state($wait_state, $target_state);
     return 1 if ($kind eq 'sync_all' || $kind eq 'sync_any')
         && _dynamic_wait_zero_sample_target_is_independent_sync_state($wait_state, $target_state);
+    return 1 if _dynamic_wait_zero_sample_target_is_phase_marker($target_state);
 
     if ($kind eq 'sequential') {
         for my $assignment (@{$target_state->{assignments} || []}) {
@@ -6900,6 +6901,14 @@ sub _dynamic_wait_zero_sample_target_is_independent_control_state {
         return 0 if _dynamic_wait_text_touches_pending_sample($text, \%pending_sample);
     }
 
+    return @{$target_state->{transitions} || []} ? 1 : 0;
+}
+
+sub _dynamic_wait_zero_sample_target_is_phase_marker {
+    my ($target_state) = @_;
+    return 0 unless ($target_state->{kind} // '') eq 'sequential';
+    return 0 unless defined($target_state->{phase_name}) && length($target_state->{phase_name});
+    return 0 if @{$target_state->{assignments} || []};
     return @{$target_state->{transitions} || []} ? 1 : 0;
 }
 

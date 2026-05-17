@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-16: R14 — ISF phase successor zero-bypass pending-sample dynamic waits shipped
+- Completed R14 task-tree slice:
+  `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` in
+  [docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md](docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md).
+- The `ISF-DYNAMIC-WAIT-PHASE-SAMPLE` tree is now closed. No active ISF task
+  tree remains open; the next R14 implementation slice must select or create a
+  new task tree first.
+- Runtime dynamic waits with pending samples can now zero-bypass into
+  transaction `(phase ...)` pass-through states. The zero path materializes
+  pending samples and preserves the original pass-through transition.
+- Positive-count paths still sample in the first active wait state and then
+  enter the original phase state without double-sampling.
+- Actor-level phase metadata remains report-only. The accepted runtime
+  scheduling shape is limited to transaction phase marker states with no
+  assignments or guards.
+- Updated the ISF spec, downstream handoff, public contract, mdBook, roadmap
+  board, README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=144`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1031`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
+
 ## 2026-05-16: R14 — ISF spawn successor zero-bypass pending-sample dynamic waits shipped
 - Completed R14 task-tree slice:
   `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` in

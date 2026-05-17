@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-16
+### R14 — ISF phase successor zero-bypass pending-sample dynamic waits shipped
+- Completed `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` and closed the task tree.
+- Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with
+  pending samples can zero-bypass into transaction `(phase ...)` pass-through
+  states.
+- The zero-count path now uses a sample-preserving phase clone that
+  materializes pending samples and preserves the original pass-through
+  transition. Positive-count paths still sample in the first wait state and
+  enter the original phase state without double-sampling.
+- Actor-level phase metadata remains report-only. The accepted runtime
+  scheduling shape is limited to transaction phase marker states with no
+  assignments or guards.
+- Extended `t/1244-isf-wait-clause-lowering.t` for phase zero-bypass,
+  widened the book feature-matrix audit marker, and synchronized
+  `docs/ISF_SPEC.md`, `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`,
+  `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`, mdBook
+  transaction/lowering/backlog and feature-matrix chapters, roadmap board,
+  README task index, and task tree.
+- Validation: syntax checks for changed Perl tests/modules passed; focused
+  wait/book audit tests passed with `Files=2, Tests=144`;
+  `./bin/ci-regression isf --no-book` passed with `Files=227, Tests=1031`;
+  `mdbook build docs/book` passed; `git diff --check` passed.
 ### R14 — ISF spawn successor zero-bypass pending-sample dynamic waits shipped
 - Completed `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE.1` and closed the task tree.
 - Updated `FSM::Scheduler::ISF::LoweringIR` so runtime dynamic waits with

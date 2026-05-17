@@ -1682,6 +1682,71 @@ ISF
     assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_spawn');
 };
 
+subtest 'top-level runtime scalar waits can zero-bypass pending samples into phase states' => sub {
+    my ($lowered, $report) = lower_source(<<'ISF', 'wait-dynamic-sample-phase');
+(actor wait_dynamic_sample_phase
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input cycles (width 4))
+    (input din (width 8))
+    (output sample_out (width 8))
+    (output done))
+  (drive (captured val)
+    (sample_out val))
+  (transaction main
+    (on start)
+    (sample din as hold)
+    (wait cycles)
+    (phase capture (outputs sample_out) (next finish))
+    (drive captured hold)
+    (complete done)))
+ISF
+
+    my $fsm = $lowered->{files}{'wait_dynamic_sample_phase.fsm'};
+    my $idle = state_block($fsm, 'main_idle_0');
+    like($idle, qr/\(-> main_wait_1_zero_sample <\(& start \(== cycles 0\)\)\)/,
+        'phase zero path bypasses directly to a sample-preserving phase clone');
+
+    my $wait = state_block($fsm, 'main_wait_1');
+    like($wait, qr/\(<= \(hold din\)\)/,
+        'phase positive path materializes the pending sample in the first wait state');
+    like($wait, qr/\?main_wait_1_cnt[\s\S]*\(=1 \(-> main_phase_2\)\)/,
+        'phase positive path exits to the original phase state');
+
+    my $phase = state_block($fsm, 'main_phase_2');
+    unlike($phase, qr/\(<= \(hold din\)\)/,
+        'original phase state does not double-sample after a positive wait');
+    like($phase, qr/\(-> main_drive_3\)/,
+        'original phase state preserves its pass-through transition');
+
+    my $zero_clone = state_block($fsm, 'main_wait_1_zero_sample');
+    like($zero_clone, qr/\(<= \(hold din\)\)/,
+        'phase zero-count clone materializes the pending sample');
+    like($zero_clone, qr/\(-> main_drive_3\)/,
+        'phase zero-count clone preserves the pass-through transition');
+
+    is_deeply(
+        $report->{transaction_waits},
+        [
+            {
+                transaction    => 'main',
+                cycles         => undef,
+                count_kind     => 'runtime_scalar',
+                count_source   => 'cycles',
+                entry_state    => 'main_wait_1',
+                exit_state     => 'main_phase_2',
+                counter_signal => 'main_wait_1_cnt',
+                counter_width  => 4,
+            },
+        ],
+        'phase zero-bypass report still points at the original positive successor',
+    );
+
+    assert_fsm_reaches_hdl($fsm, 'wait_dynamic_sample_phase');
+};
+
 subtest 'runtime scalar waits split additional top-level predecessor kinds' => sub {
     my ($lowered) = lower_source(<<'ISF', 'wait-dynamic-after-await');
 (actor wait_dynamic_after_await

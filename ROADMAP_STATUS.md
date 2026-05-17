@@ -10,14 +10,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   emitter in the scheduler spine, and the current R14 `LoweringIR` growth as
   the largest active feature-owner hotspot. This changes no shipped compiler
   behavior and does not move the active R14 frontier.
-- Next decision point: `ISF-DYNAMIC-WAIT-SPAWN-SAMPLE` is closed after
-  shipping pending-sample runtime wait zero-bypass into top-level `spawn`
-  states. The zero-count clone materializes pending samples, asserts the
-  original generated child start handoff, and advances like the original spawn
-  state when that handoff is independent of pending sample aliases. Blocking
-  `do` successors remain separate because they also own input/output bindings
-  and a completion guard. The next R14 PNT implementation slice must select or
-  create a new task tree before code changes.
+- Next decision point: `ISF-DYNAMIC-WAIT-PHASE-SAMPLE` is closed after
+  shipping pending-sample runtime wait zero-bypass into transaction
+  `(phase ...)` pass-through states. The zero-count clone materializes pending
+  samples and preserves the original phase pass-through transition. Actor-level
+  phase metadata remains report-only; this runtime scheduling support is
+  limited to transaction phase marker states with no assignments or guards.
+  The next R14 PNT implementation slice must select or create a new task tree
+  before code changes.
   `ISF-TYPE-AGGREGATE-PARITY.1`
   inventoried existing `.fsm`
   enum/type/aggregate support against the shipped ISF scalar boundary and
@@ -449,6 +449,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` then shipped independent repeat
   check and while/until loop decision zero-bypass clones while leaving
   alias-consuming loop decisions fail-closed.
+  `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` then shipped transaction phase
+  pass-through zero-bypass clones while leaving actor-level phase metadata
+  report-only.
   `ISF-PUBLIC-CONTRACT.1` inventoried the current public-doc,
   contract, manifest, test, and live-doc owners, and
   `ISF-PUBLIC-CONTRACT.2` defined the reusable feature-slice synchronization
@@ -644,12 +647,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   a separate no-resample wait-loop state when the sampled count is greater than
   one, while zero counts bypass to a sample-preserving clone of the following
   state when that state can carry samples without changing timing, including
-  top-level await_all/await_any sync states whose collected done ports do not
-  reference pending sample aliases and top-level spawn states whose generated
-  start handoff is independent of pending sample aliases. Other top-level
-  zero-count successors, unknown-width or malformed count
-  expressions, and any remaining predecessor-edge splits remain fail-closed
-  until their exact bypass and snapshot behavior is implemented. Pending
+  drives, awaits, static waits, completion, independent scalar setters,
+  independent shifts, independent assemble/extract states, independent bank
+  loads/stores, top-level await_all/await_any sync states, top-level spawn
+  states, transaction phase pass-through states, top-level ready/valid stages,
+  top-level bounded-eventual contract arm states, and loop decision/check
+  states under their documented independence rules. Other top-level zero-count
+  successors, unknown-width or malformed count expressions, and any remaining
+  predecessor-edge splits remain fail-closed until their exact bypass and
+  snapshot behavior is implemented. Pending
   samples before
   `when`-body, `switch`-branch, `repeat`, `while`, and `until` runtime waits
   are now shipped for sample-compatible selected successors; incompatible
@@ -737,6 +743,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pending sample assignments, asserts the original `inst_start` handoff, and
   advances like the original spawn state. Blocking `do` remains separate
   because it also owns input/output bindings and a completion guard.
+- ISF phase successor pending-sample runtime wait update: runtime dynamic
+  waits with pending samples can now zero-bypass into transaction `(phase ...)`
+  pass-through states. The zero path uses a sample-preserving phase clone that
+  performs pending sample assignments and preserves the original pass-through
+  transition. Actor-level phase metadata remains report-only, and the accepted
+  runtime scheduling shape is limited to transaction phase marker states with
+  no assignments or guards.
 - ISF consecutive pending-sample runtime wait update: pending samples before
   consecutive top-level runtime waits now carry across zero-count wait links.
   A zero first wait plus positive second wait enters a generated
@@ -979,8 +992,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-DYNAMIC-WAIT-CONTRACT-SAMPLE.1` later shipped top-level
   bounded-eventual contract arm zero-bypass clones for pending-sample runtime
   waits. `ISF-DYNAMIC-WAIT-LOOP-CHECK-SAMPLE.1` later shipped independent loop
-  decision zero-bypass clones for pending-sample runtime waits. No active ISF
-  task tree remains open.
+  decision zero-bypass clones for pending-sample runtime waits.
+  `ISF-DYNAMIC-WAIT-PHASE-SAMPLE.1` later shipped transaction phase
+  pass-through zero-bypass clones for pending-sample runtime waits. No active
+  ISF task tree remains open.
 - Top-level transaction-local `(while cond body...)` and
   `(until cond body...)` loops are shipped. `while` lowers as a pre-test
   zero-or-more loop with entry and back-edge decision states; `until` lowers

@@ -681,6 +681,16 @@ If the generated start handoff is `hold`, the form remains fail-closed.
 Blocking `do` remains a separate shape because it also owns input/output
 bindings and a completion guard.
 
+A top-level transaction `(phase ...)` marker can also carry the pending sample.
+The clone preserves the original pass-through transition; actor-level phase
+metadata remains report-only and unrelated to this runtime scheduling path:
+
+```lisp
+(main_wait_1_zero_sample
+  (<= (hold din))
+  (-> main_drive_3))
+```
+
 Consecutive top-level runtime scalar waits reuse the same split on both the
 activation edge and the first wait's final sampled-counter edge. For:
 
