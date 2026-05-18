@@ -3923,13 +3923,13 @@ sub _validate_repeat_body_spawn_subset {
                 my $static_domain_generated_do = $uses_generated_params && $uses_domain && $generated_do;
                 my $allowed_static_parameter_generated_do = defined($pending_generated_do_label) && $static_parameter_generated_do;
                 my $allowed_static_bound_generated_do = defined($pending_generated_do_label) && $static_bound_generated_do;
-                my $allowed_static_domain_generated_do = $when_body_repeat && $static_domain_generated_do;
+                my $allowed_static_domain_generated_do = ($when_body_repeat || $switch_branch_repeat) && $static_domain_generated_do;
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
                     || $allowed_static_parameter_generated_do
                     || $allowed_static_bound_generated_do
                     || $allowed_static_domain_generated_do;
-                my $supported_pending_do = $when_body_repeat
+                my $supported_pending_do = ($when_body_repeat || $switch_branch_repeat)
                     ? "local plain '(do child)', plain generated-child '(do child)', static generated '(do child (params ...))', static bound generated '(do child (params ...) (bind ...))', or static same-domain generated '(do child (params ...) [(bind ...)] (domain ...))'"
                     : defined($pending_generated_do_label)
                         ? "local plain '(do child)', plain generated-child '(do child)', static generated '(do child (params ...))', or static bound generated '(do child (params ...) (bind ...))'"

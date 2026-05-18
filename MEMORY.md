@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained repeat domain do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.76`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` inside a repeat
+  directly under a top-level `switch` branch while one or more generated
+  nested spawns remain pending, only when the same repeat body later reaches
+  `(await_all done)` before the nested repeat check can loop.
+- The generated do site owns one deterministic generated instance, preserves
+  static generated-top parameter binding, optional generated-top input/output
+  binding handoffs, declared same-domain generated-composition metadata, and
+  schedule-report clock-domain child-instance ownership metadata without
+  implying CDC or cross-domain activation.
+- Earlier generated-spawn done handoffs remain live for the later drain, and
+  source-order branch/spawn/do/sync timing remains explicit.
+- `await_any` before or after the do, new nested spawn after the do before
+  drain, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed.
+- The live-book, ISF spec, downstream integration spec, public contract, task
+  tree, roadmap board, live docs, and doc audits now document the
+  switch-contained same-domain pending-spawn generated do subset as shipped.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=40),
+  touched repeat/spawn/doc checks (Files=4, Tests=422), focused
+  activation/domain/doc suite (Files=13, Tests=464), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1235), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.77`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: switch-contained repeat domain do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.75`.
 - The active R14 task tree now selects the direct top-level `switch` branch

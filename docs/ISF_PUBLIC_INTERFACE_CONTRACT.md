@@ -944,15 +944,15 @@ leaves the generated spawn done set live until the later same-body
 are pending. The generated do wires generated-top input/output binding
 handoffs once, waits for its own fresh done handoff, and leaves the generated
 spawn done set live until the later same-body `await_all` drain.
-In the documented top-level `when` body nested subset, static-parameter
-generated `(do child (params ...) [(bind ...)] (domain NAME))` may also run
-while generated nested spawns are pending. The domain annotation is declared
+In the documented top-level `when` body and top-level `switch` branch nested
+subsets, static-parameter generated
+`(do child (params ...) [(bind ...)] (domain NAME))` may also run while
+generated nested spawns are pending. The domain annotation is declared
 same-domain ownership metadata only for the deterministic generated do
 instance; generated-composition/domain partition metadata and schedule JSON
 `clock_domains[].child_instances[]` retain that ownership without implying
-CDC. The switch-branch domain-qualified analogue, prior or later `await_any`
-around that generated do, and new spawn after that generated do before the
-drain remain outside the public shipped subset.
+CDC. Prior or later `await_any` around that generated do and new spawn after
+that generated do before the drain remain outside the public shipped subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent

@@ -137,6 +137,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/switch(?:`|\s|-|branch)[\s\S]{0,1600}(?:same[-\s]+domain|domain NAME)[\s\S]{0,1200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending[\s\S]{0,800}await_all[\s\S]{0,300}drain/i,
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do while generated spawn pending subset",
+    );
+    like(
+        $content,
         qr/top-level\s+`?switch`?\s+branch.*nested\s+repeat.*spawn.*await_all/si,
         "$path documents the shipped top-level switch-branch nested repeat spawn await_all subset",
     );

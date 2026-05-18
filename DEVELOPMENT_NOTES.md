@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: switch-contained domain do preserves pending generated spawns
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.76` implements only the selected
+  top-level `switch` branch nested-repeat same-domain generated
+  do-while-spawn-pending subset.
+- The implementation mirrors the `.74` when-contained proof and keeps the
+  widening validator-local: generated
+  `(do child (params ...) [(bind ...)] (domain NAME))` may run while earlier
+  generated nested spawns remain pending only when a later same-body
+  `(await_all done)` still drains every pending generated child before the
+  nested repeat can loop.
+- The generated do site keeps its own deterministic generated instance,
+  static parameter metadata, optional generated-top binding handoffs, fresh
+  done handoff, and declared same-domain generated-composition/clock-domain
+  report metadata. Earlier generated-spawn done handoffs remain pending until
+  the later drain.
+- The domain annotation does not widen CDC or cross-domain activation.
+  `await_any` before or after the do, new nested spawn after the do before the
+  drain, deeper branch/loop nesting, and broader outstanding-child semantics
+  remain separate contracts.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.77`
+  must pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: switch-contained domain do while spawn pending is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.75` selects the switch-branch
   same-domain metadata analogue of the shipped when-contained

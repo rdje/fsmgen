@@ -1,6 +1,34 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF switch-contained repeat domain do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.76`.
+- Top-level `switch` branches may now contain nested repeats with one or more
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites, followed by generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` with static parameter
+  overrides, optional input/output port bindings, and declared same-domain
+  metadata while those generated spawns remain pending, and a later same-body
+  `(await_all done)` drain before the nested repeat check can loop.
+- Lowering emits one deterministic generated do instance for that lexical do
+  site, preserves static generated-top parameter binding, optional
+  generated-top binding handoffs, generated-composition domain metadata, and
+  schedule-report clock-domain child-instance metadata, waits for that
+  instance's fresh done handoff, and keeps the generated-spawn done set live
+  until the later drain.
+- The domain annotation remains ownership metadata only; it does not imply
+  CDC or cross-domain activation. `await_any` around the do, new nested spawn
+  after the do before drain, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  task tree, roadmap board, live docs, doc audits, and mdBook.
+- Opened `ISF-REPEAT-BODY-CHILD-ACTIVATION.77` as the next selection leaf
+  before any further repeat-body child activation implementation.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=40),
+  touched repeat/spawn/doc checks (Files=4, Tests=422), focused
+  activation/domain/doc suite (Files=13, Tests=464), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1235), and
+  `git diff --check` passed.
 ### R14 — ISF switch-contained repeat domain do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.75`.
 - Selected top-level `switch` branch nested repeats containing one or more

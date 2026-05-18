@@ -1027,14 +1027,14 @@ The top-level `when` body and top-level `switch` branch nested subsets may
 additionally run static-parameter generated
 `(do child (params ...) (bind ...))` in that interval; that generated do wires
 generated-top input/output binding handoffs once and still leaves spawned done
-handoffs pending for the later drain. The top-level `when` body nested subset
-may additionally carry declared same-domain metadata on that generated do:
+handoffs pending for the later drain. The top-level `when` body and top-level
+`switch` branch nested subsets may additionally carry declared same-domain
+metadata on that generated do:
 `(do child (params ...) [(bind ...)] (domain NAME))`. The domain annotation is
 metadata for the deterministic generated do instance; it does not imply CDC,
 does not clear pending generated-spawn done handoffs, and still requires the
-later same-body `await_all` drain. The switch-branch domain-qualified
-analogue, new spawn after that do before the drain, and await-any-after-do
-forms remain rejected.
+later same-body `await_all` drain. New spawn after that do before the drain
+and await-any-after-do forms remain rejected.
 
 Example:
 
@@ -1061,6 +1061,25 @@ The generated do instance is `parent_worker_repeat_do_0`. It keeps its own
 `start`/`done` handoff and binding handoff ports, is grouped with `core` in
 clock-domain child-instance metadata, and the later `await_all` still waits on
 the pending spawned `w0_done` before the nested repeat can loop.
+
+The switch-branch form uses the same generated instance and drain rule inside
+the selected branch:
+
+```lisp
+(switch mode
+  (0
+    (repeat loops
+      (spawn worker as w0
+        (domain core))
+      (do worker
+        (params
+          (WIDTH 32))
+        (bind
+          (input addr req_addr)
+          (output data resp))
+        (domain core))
+      (await_all done))))
+```
 
 For the shipped repeat-body local `do` subset, `(do child)` remains a local
 child activation when the target child remains in the parent scheduled module.

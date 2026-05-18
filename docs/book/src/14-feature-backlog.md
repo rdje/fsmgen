@@ -376,17 +376,16 @@ annotation is declared same-domain ownership metadata only for the
 deterministic generated do instance; it preserves generated-composition/domain
 partition metadata and schedule-report clock-domain child-instance summaries
 without implying CDC or cross-domain activation. The switch-contained
-same-domain analogue is the next selected backlog leaf. It covers a repeat
-directly inside a top-level `switch` branch with one or more generated spawns,
-generated blocking
+same-domain analogue for that pending-spawn interval is also shipped. It
+covers a repeat directly inside a top-level `switch` branch with one or more
+generated spawns, generated blocking
 `(do child (params ...) [(bind ...)] (domain NAME))` while those generated
 nested spawns are pending, and a later same-body `(await_all done)` drain
-before the nested repeat check can loop. The selected domain annotation is
-declared same-domain ownership metadata only for the deterministic generated
-do instance; it should preserve generated-composition/domain partition
-metadata and schedule-report clock-domain child-instance summaries without
-implying CDC or cross-domain activation. That switch-contained
-pending-spawn same-domain subset is selected but not yet shipped.
+before the nested repeat check can loop. The domain annotation is declared
+same-domain ownership metadata only for the deterministic generated do
+instance; it preserves generated-composition/domain partition metadata and
+schedule-report clock-domain child-instance summaries without implying CDC or
+cross-domain activation.
 
 Outside the pending-spawn interval, the when-contained nested generated-do
 domain leaf covers a repeat directly inside a top-level `when` body with
