@@ -918,8 +918,14 @@ branch-contained subsets may also run plain generated-child `(do child)` in
 that interval when the target is already generated elsewhere; that generated
 do waits on its generated do instance's fresh done handoff and still leaves
 spawned done handoffs pending for the later drain.
-Parameterized/bound/domain-qualified generated do, new spawn after that do
-before the drain, and await-any-after-do forms remain rejected.
+The top-level `when` body nested subset may additionally run
+static-parameter generated `(do child (params ...))` in that interval; that
+generated do preserves static generated-top parameter binding, waits on its
+generated do instance's fresh done handoff, and still leaves spawned done
+handoffs pending for the later drain.
+Bound/domain-qualified generated do, the switch-contained static-parameter
+analogue, new spawn after that do before the drain, and await-any-after-do
+forms remain rejected.
 For the shipped repeat-body local `do` subset, `(do child)` remains a local
 child activation when the target child remains in the parent scheduled module.
 If the same target child is already emitted as a generated child by another
@@ -1004,7 +1010,9 @@ branch forms also permit the documented local plain `(do child)` while
 generated nested spawns are pending before a later same-body `await_all`
 drain. Both branch-contained forms also permit the documented plain
 generated-child `(do child)` while generated nested spawns are pending before
-that same later drain. The shipped
+that same later drain, and the top-level `when` form also permits documented
+static-parameter generated `(do child (params ...))` while generated nested
+spawns are pending before that same later drain. The shipped
 repeat-body local `(do child)` subset and the
 shipped when-contained and switch-contained repeat local/generated `do`
 exceptions apply only to their documented repeat placements, not to repeats

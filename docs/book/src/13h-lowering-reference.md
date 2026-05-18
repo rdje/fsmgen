@@ -1285,7 +1285,12 @@ The generated top instantiates both `w0` and
 `parent_worker_repeat_do_0`. The blocking generated-child `do` consumes only
 `parent_worker_repeat_do_0_done`; it does not clear `w0_done`, so the nested
 repeat check remains unreachable until the later `await_all` drain observes
-the spawned child.
+the spawned child. The top-level `when` body static-parameter generated
+pending-spawn subset uses the same state shape, with
+`parent_worker_repeat_do_0` carrying the authored static parameter overrides
+in the generated top. The generated `do` still consumes only its own fresh
+done handoff and leaves the spawned child done handoff live for the later
+drain.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:

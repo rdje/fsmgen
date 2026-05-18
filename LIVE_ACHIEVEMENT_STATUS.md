@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF when-contained repeat parameterized do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.66`.
+- Top-level `when` bodies may now contain nested repeats with one or more
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites, static-parameter generated `(do child (params ...))` while those
+  generated spawns remain pending, and a later same-body `(await_all done)`
+  drain before the nested repeat check can loop.
+- The generated do site owns one deterministic generated instance, preserves
+  static generated-top parameter binding, waits for that instance's fresh done
+  handoff, leaves generated-spawn done handoffs live for the later drain, and
+  preserves source-order samples around spawn/do/sync.
+- Bind/domain subclauses on that do, the switch-contained analogue,
+  `await_any` around the do, new nested spawn after the do before the drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed. The active frontier advances
+  to `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`, which must select the next
+  bounded repeat-body child activation subset before code.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=35), touched repeat/spawn/doc checks (Files=4, Tests=392), focused
+  activation/domain/doc suite (Files=13, Tests=434), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1205), and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — ISF when-contained repeat parameterized do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`.
 - Selected top-level `when` bodies containing nested repeats with one or more

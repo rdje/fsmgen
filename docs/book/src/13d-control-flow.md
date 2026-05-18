@@ -194,9 +194,14 @@ site. Both shipped pending-spawn `do` forms require no prior multi-pending
 nested repeat check can loop. The local do waits for the local child's fresh
 done pulse; the generated-child do waits for its deterministic generated do
 instance's fresh done handoff. Neither form clears the generated-spawn done
-set before the later drain. Parameterized, bound, or domain-qualified
-generated do while pending, new spawn after either do before the drain, and
-await-any-after-do forms remain fail-closed.
+set before the later drain. Top-level `when` body nested repeats may also run
+static-parameter generated `(do child (params ...))` while generated nested
+spawns are pending; that generated do preserves static generated-top
+parameter binding, waits for its deterministic generated do instance's fresh
+done handoff, and leaves the generated-spawn done set live for the later
+drain. Bound/domain-qualified generated do while pending, the
+switch-contained static-parameter analogue, new spawn after either generated
+do before the drain, and await-any-after-do forms remain fail-closed.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and
 branch-contained spawned cases, `stage`, `contract`, nested `while`, and

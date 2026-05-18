@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained repeat parameterized do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.66`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts static-parameter generated `(do child (params ...))` inside a
+  repeat directly under a top-level `when` body while one or more generated
+  nested spawns remain pending, only when a later same-body
+  `(await_all done)` drains every outstanding generated child before the
+  nested repeat check can loop.
+- The generated do site owns one deterministic generated do instance,
+  preserves static generated-top parameter binding, waits for that instance's
+  fresh done handoff, preserves source-order samples around spawn/do/sync, and
+  leaves pending generated-spawn done handoffs live for the later drain.
+- Bind/domain subclauses on that do, the switch-contained analogue,
+  `await_any` before or after the do, new nested spawn after the do before the
+  drain, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed.
+- The live-book, ISF spec, downstream integration spec, public contract, task
+  tree, roadmap board, live docs, and doc audits now document the when-body
+  static-parameter pending-spawn generated do subset as shipped.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=35),
+  touched repeat/spawn/doc checks (Files=4, Tests=392), focused
+  activation/domain/doc suite (Files=13, Tests=434), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1205), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: when-contained repeat parameterized do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`.
 - The active R14 task tree now selects top-level `when` body nested repeats

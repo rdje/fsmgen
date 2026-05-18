@@ -3837,6 +3837,7 @@ sub _validate_repeat_body_spawn_subset {
     my $awaiting_multi_pending_drain = 0;
     my $pending_local_do_before_drain = 0;
     my $pending_generated_do_before_drain = 0;
+    my $pending_generated_do_kind_before_drain;
     my $top_level_repeat = $label eq 'transaction body';
     my $when_body_repeat = $label eq 'when body'
         && _context_depths_match_exactly($context_depths, { when => 1 });
@@ -3865,7 +3866,7 @@ sub _validate_repeat_body_spawn_subset {
                 if $awaiting_multi_pending_drain;
             confess "Transaction '$tn': $pending_local_do_label nested repeat spawn cannot follow local do while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
                 if defined $pending_local_do_label && $pending_local_do_before_drain && @pending_spawns;
-            confess "Transaction '$tn': $pending_generated_do_label nested repeat spawn cannot follow generated-child do while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
+            confess "Transaction '$tn': $pending_generated_do_label nested repeat spawn cannot follow $pending_generated_do_kind_before_drain while generated spawns are pending; drain with same-body '(await_all done)' before spawning again\n"
                 if defined $pending_generated_do_label && $pending_generated_do_before_drain && @pending_spawns;
             for my $subclause (@{$body_clause}[4 .. $#$body_clause]) {
                 confess "Transaction '$tn': repeat-body spawn subclauses must be '(params ...)', '(bind ...)', or '(domain ...)' in the spawn domain subset\n"
@@ -3917,19 +3918,33 @@ sub _validate_repeat_body_spawn_subset {
             if (@pending_spawns) {
                 my $plain_local_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && !$generated_do;
                 my $plain_generated_child_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
-                my $allowed_pending_do = $plain_local_do || (defined $pending_generated_do_label && $plain_generated_child_do);
+                my $static_parameter_generated_do = $uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
+                my $allowed_static_parameter_generated_do = $when_body_repeat && $static_parameter_generated_do;
+                my $allowed_pending_do = $plain_local_do
+                    || (defined $pending_generated_do_label && $plain_generated_child_do)
+                    || $allowed_static_parameter_generated_do;
+                my $supported_pending_do = $when_body_repeat
+                    ? "local plain '(do child)', plain generated-child '(do child)', or static generated '(do child (params ...))'"
+                    : "local plain '(do child)' or plain generated-child '(do child)'";
                 confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if defined $pending_local_do_label && $plain_local_do && $awaiting_multi_pending_drain;
                 confess "Transaction '$tn': $pending_generated_do_label nested repeat generated-child do while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if defined $pending_generated_do_label && $plain_generated_child_do && $awaiting_multi_pending_drain;
-                confess "Transaction '$tn': $pending_generated_do_label nested repeat do while generated spawns are pending supports only local plain '(do child)' or plain generated-child '(do child)' in the current subset\n"
+                confess "Transaction '$tn': when-body nested repeat generated do with static params while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
+                    if $allowed_static_parameter_generated_do && $awaiting_multi_pending_drain;
+                confess "Transaction '$tn': $pending_generated_do_label nested repeat do while generated spawns are pending supports only $supported_pending_do in the current subset\n"
                     if defined $pending_generated_do_label && !$awaiting_multi_pending_drain && !$allowed_pending_do;
                 confess "Transaction '$tn': $pending_local_do_label nested repeat do while generated spawns are pending supports only local plain '(do child)' in the current subset\n"
                     if !defined $pending_generated_do_label && defined $pending_local_do_label && !$awaiting_multi_pending_drain && !$allowed_pending_do;
                 confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
                     unless defined $pending_local_do_label && !$awaiting_multi_pending_drain && $allowed_pending_do;
                 $pending_local_do_before_drain = 1 if $plain_local_do;
-                $pending_generated_do_before_drain = 1 if $plain_generated_child_do;
+                if ($plain_generated_child_do || $allowed_static_parameter_generated_do) {
+                    $pending_generated_do_before_drain = 1;
+                    $pending_generated_do_kind_before_drain = $plain_generated_child_do
+                        ? 'generated-child do'
+                        : 'generated do with static params';
+                }
             }
             next;
         }
@@ -3939,7 +3954,7 @@ sub _validate_repeat_body_spawn_subset {
                 unless @pending_spawns;
             confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
                 if defined $pending_local_do_label && $pending_local_do_before_drain && $keyword eq 'await_any';
-            confess "Transaction '$tn': $pending_generated_do_label nested repeat generated-child do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
+            confess "Transaction '$tn': $pending_generated_do_label nested repeat $pending_generated_do_kind_before_drain while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
                 if defined $pending_generated_do_label && $pending_generated_do_before_drain && $keyword eq 'await_any';
             if ($keyword eq 'await_any' && @pending_spawns > 1) {
                 $awaiting_multi_pending_drain = 1;
@@ -3949,13 +3964,14 @@ sub _validate_repeat_body_spawn_subset {
             $awaiting_multi_pending_drain = 0;
             $pending_local_do_before_drain = 0;
             $pending_generated_do_before_drain = 0;
+            $pending_generated_do_kind_before_drain = undef;
             next;
         }
     }
 
     confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending requires later same-body '(await_all done)' before the nested repeat check can loop\n"
         if defined $pending_local_do_label && $pending_local_do_before_drain && @pending_spawns;
-    confess "Transaction '$tn': $pending_generated_do_label nested repeat generated-child do while generated spawns are pending requires later same-body '(await_all done)' before the nested repeat check can loop\n"
+    confess "Transaction '$tn': $pending_generated_do_label nested repeat $pending_generated_do_kind_before_drain while generated spawns are pending requires later same-body '(await_all done)' before the nested repeat check can loop\n"
         if defined $pending_generated_do_label && $pending_generated_do_before_drain && @pending_spawns;
     confess "Transaction '$tn': when-body nested repeat multi-pending await_any requires later same-body '(await_all done)' before the nested repeat check can loop\n"
         if $when_body_repeat && $awaiting_multi_pending_drain;
