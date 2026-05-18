@@ -512,9 +512,19 @@ spawns, a multi-pending `(await_any done)` observation, local blocking
 same-body `(await_all done)` drain before the nested repeat check can loop.
 The local do target stays in the parent scheduled module and the
 generated-spawn done handoffs stay live through the local do until the later
-drain. Generated do after prior `await_any`, `await_any` after the do, spawn
-after the do before the drain, cross-domain activation, deeper branch/loop
-nesting, and broader outstanding-child semantics remain backlog.
+drain. The next selected backlog leaf is the when-contained generated-child
+`await_any`-before-do subset: a repeat directly inside a top-level `when`
+body with multiple generated spawns, a multi-pending `(await_any done)`
+observation, a plain generated-child `(do child)` whose target is already
+emitted by another activation site, and a later same-body `(await_all done)`
+drain before the nested repeat check can loop. The generated do instance keeps
+its own fresh done handoff while the pending generated-spawn done set remains
+live for the later drain. Parameterized, bound, or domain-qualified generated
+do after prior `await_any`, the switch-contained generated-child analogue,
+`await_any` after the do, spawn after the do before the drain, cross-domain
+activation, deeper branch/loop nesting, and broader outstanding-child
+semantics remain backlog. This when-contained generated-child
+await-any-before-do subset is selected but not yet shipped.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
