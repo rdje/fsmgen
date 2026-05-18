@@ -16,6 +16,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_actor_network_event_wait_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
     isf_public_interface_schedule_report_actor_network_keys
+    isf_public_interface_schedule_report_actor_network_transaction_trigger_keys
 );
 
 subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
@@ -34,6 +35,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                 },
             ],
             event_waits => [],
+            transaction_triggers => [],
         },
         'parser preserves actor-body static actor-network instance identity',
     );
@@ -59,6 +61,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                 },
             ],
             event_waits => [],
+            transaction_triggers => [],
         },
         'actor-body network report',
     );
@@ -193,8 +196,76 @@ ISF
                     source      => 'external_handoff',
                 },
             ],
+            transaction_triggers => [],
         },
         'actor-event wait report',
+    );
+};
+
+subtest 'selected qualified transaction trigger lowers to parent handoff output' => sub {
+    my $actor = parse_source(<<'ISF', 'atl-transaction-trigger.isf');
+(actor atl_transaction_trigger
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (complete done)))
+ISF
+
+    is_deeply(
+        $actor->{actor_network}{transaction_triggers},
+        [
+            {
+                owner_transaction  => 'run',
+                context            => 'transaction_body',
+                instance           => 'reader',
+                target_transaction => 'capture',
+                signal             => 'reader_capture_start',
+                sink               => 'external_handoff',
+            },
+        ],
+        'parser records the selected actor-transaction trigger handoff metadata',
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    my $fsm = $lowered->{files}{'atl_transaction_trigger.fsm'};
+    ok($fsm, 'selected actor-transaction trigger still emits the parent scheduled .fsm only');
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ['atl_transaction_trigger.fsm'],
+        'selected actor-transaction trigger does not emit ATL child artifacts or a generated top',
+    );
+    like($fsm, qr/\(reader_capture_start 1\)/, 'scheduled .fsm exposes generated trigger handoff output');
+    like($fsm, qr/\(<1 \(reader_capture_start> 1\)\)/, 'scheduled .fsm pulses the generated trigger handoff output');
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'reader',
+                    actor_type  => 'packet_reader',
+                    declaration => 'actor',
+                },
+            ],
+            event_waits => [],
+            transaction_triggers => [
+                {
+                    owner_transaction  => 'run',
+                    context            => 'transaction_body',
+                    instance           => 'reader',
+                    target_transaction => 'capture',
+                    signal             => 'reader_capture_start',
+                    sink               => 'external_handoff',
+                },
+            ],
+        },
+        'actor-transaction trigger report',
     );
 };
 
@@ -271,17 +342,88 @@ ISF
 
     parse_fails_like(
         <<'ISF',
-(actor qualified_transaction_trigger
+(actor nested_qualified_transaction_trigger
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (when start
+      (trigger reader.capture))
+    (complete done)))
+ISF
+        qr/ATL actor transaction trigger '\(trigger reader\.capture\)' is reserved for top-level transaction bodies only/,
+        'nested qualified actor trigger fails closed before generic unsupported-clause diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor multiple_qualified_transaction_triggers
   (clock clk)
   (interface (input start) (output done))
   (instance reader of packet_reader)
   (transaction run
     (on start)
     (trigger reader.capture)
+    (trigger reader.flush)
     (complete done)))
 ISF
-        qr/ATL actor transaction trigger '\(trigger reader\.capture\)' is reserved but not supported yet/,
-        'transaction-body qualified actor trigger fails closed before generic unsupported-clause diagnostics',
+        qr/exceeds the current one-trigger subset/,
+        'multiple qualified actor triggers fail closed until fan-in/fan-out policy ships',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_transaction_trigger_signal_conflict
+  (clock clk)
+  (interface
+    (input start)
+    (output done)
+    (output reader_capture_start))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (complete done)))
+ISF
+        qr/generated handoff signal 'reader_capture_start' conflicts with a declared actor signal/,
+        'generated actor trigger handoff names fail closed on actor signal conflicts',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_handoff_signal_conflict
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (await reader.capture_start)
+    (trigger reader.capture)
+    (complete done)))
+ISF
+        qr/generated handoff signal 'reader_capture_start' is used by both actor event wait 'reader\.capture_start' and actor transaction trigger 'reader\.capture'/,
+        'event and trigger generated handoff name collisions fail closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_transaction_trigger_multi_domain
+  (clock-domains
+    (domain core (clock clk_a) :default)
+    (domain io (clock clk_b)))
+  (interface
+    (input start (domain core))
+    (output done (domain core)))
+  (instance reader of packet_reader)
+  (transaction run
+    (domain core)
+    (on start)
+    (trigger reader.capture)
+    (complete done)))
+ISF
+        qr/ATL actor transaction triggers require a single-clock actor in the current subset/,
+        'actor transaction triggers fail closed for multi-domain actors until cross-clock ATL triggers ship',
     );
 
     parse_fails_like(
@@ -340,6 +482,13 @@ sub assert_actor_network_report {
             [sort keys %{$report->{actor_network}{event_waits}[0]}],
             [sort @{isf_public_interface_schedule_report_actor_network_event_wait_keys()}],
             "$label exposes advertised actor_network event_wait keys",
+        );
+    }
+    if (@{$report->{actor_network}{transaction_triggers} || []}) {
+        is_deeply(
+            [sort keys %{$report->{actor_network}{transaction_triggers}[0]}],
+            [sort @{isf_public_interface_schedule_report_actor_network_transaction_trigger_keys()}],
+            "$label exposes advertised actor_network transaction_trigger keys",
         );
     }
     is_deeply($report->{actor_network}, $expected, "$label preserves actor-network identity");

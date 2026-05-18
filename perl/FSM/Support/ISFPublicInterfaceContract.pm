@@ -99,6 +99,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_actor_network_event_wait_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
     isf_public_interface_schedule_report_actor_network_keys
+    isf_public_interface_schedule_report_actor_network_transaction_trigger_keys
     isf_public_interface_schedule_report_actor_param_keys
     isf_public_interface_schedule_report_actor_constant_keys
     isf_public_interface_schedule_report_storage_kind_values
@@ -221,6 +222,7 @@ sub build_isf_public_interface_contract {
         schedule_report_actor_network_keys => isf_public_interface_schedule_report_actor_network_keys(),
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_event_wait_keys => isf_public_interface_schedule_report_actor_network_event_wait_keys(),
+        schedule_report_actor_network_transaction_trigger_keys => isf_public_interface_schedule_report_actor_network_transaction_trigger_keys(),
         schedule_report_actor_param_keys => isf_public_interface_schedule_report_actor_param_keys(),
         schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
         schedule_report_compile_issues_success_shape => isf_public_interface_schedule_report_compile_issues_success_shape(),
@@ -569,6 +571,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_actor_network_keys
             schedule_report_actor_network_instance_keys
             schedule_report_actor_network_event_wait_keys
+            schedule_report_actor_network_transaction_trigger_keys
             schedule_report_actor_param_keys
             schedule_report_actor_constant_keys
             schedule_report_clock_domain_keys
@@ -822,7 +825,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current one-instance ATL subset, including selected parent-handoff event waits when present; reserved unsupported qualified ATL trigger forms fail closed before scheduled emission when the qualifier names a static actor instance';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current one-instance ATL subset, including selected parent-handoff event waits and selected parent-handoff transaction triggers when present; unsupported qualified ATL trigger variants fail closed before scheduled emission when the qualifier names a static actor instance';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
@@ -1308,6 +1311,7 @@ sub isf_public_interface_schedule_report_actor_network_keys {
             event_waits
             kind
             instances
+            transaction_triggers
         ),
     ];
 }
@@ -1331,6 +1335,19 @@ sub isf_public_interface_schedule_report_actor_network_event_wait_keys {
             signal
             source
             transaction
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_actor_network_transaction_trigger_keys {
+    return [
+        qw(
+            context
+            instance
+            owner_transaction
+            signal
+            sink
+            target_transaction
         ),
     ];
 }
@@ -1407,7 +1424,7 @@ sub isf_public_interface_schedule_report_crossing_keys {
 }
 
 sub isf_public_interface_schedule_report_multi_file_scope {
-    return 'single-clock multi-file report transaction/state/dt/storage summaries describe the parent module; actor_network summarizes static ATL actor declarations and selected parent-handoff event waits without embedding child reports, generated child artifacts, generated ATL tops, or qualified actor-trigger behavior; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; multi-domain reports describe the generated top at the top level and expose per-domain scheduled artifacts plus crossing metadata through clock_domains and crossings; child and domain scheduled .fsm text remains available through lower_result files';
+    return 'single-clock multi-file report transaction/state/dt/storage summaries describe the parent module; actor_network summarizes static ATL actor declarations plus selected parent-handoff event waits and transaction triggers without embedding child reports, generated child artifacts, generated ATL tops, or HDL event wiring; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; multi-domain reports describe the generated top at the top level and expose per-domain scheduled artifacts plus crossing metadata through clock_domains and crossings; child and domain scheduled .fsm text remains available through lower_result files';
 }
 
 sub isf_public_interface_schedule_report_interface_count_shape {
@@ -1678,6 +1695,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_actor_network_keys => isf_public_interface_schedule_report_actor_network_keys(),
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_event_wait_keys => isf_public_interface_schedule_report_actor_network_event_wait_keys(),
+        schedule_report_actor_network_transaction_trigger_keys => isf_public_interface_schedule_report_actor_network_transaction_trigger_keys(),
         schedule_report_actor_param_keys => isf_public_interface_schedule_report_actor_param_keys(),
         schedule_report_actor_constant_keys => isf_public_interface_schedule_report_actor_constant_keys(),
         schedule_report_clock_domain_keys => isf_public_interface_schedule_report_clock_domain_keys(),

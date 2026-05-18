@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL actor triggers lower to parent handoff output
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`.
+- FSMGen now accepts exactly one top-level transaction-body
+  `(trigger actor.transaction)` when `actor` names the current single
+  declared static actor instance. The parser normalizes the trigger to a
+  deterministic one-cycle parent handoff output named
+  `actor_transaction_start`; for example, `reader.capture` lowers to
+  `reader_capture_start`.
+- The scheduled parent `.fsm` exposes the generated trigger output and pulses
+  it at the trigger point. Schedule JSON reports accepted triggers under
+  `actor_network.transaction_triggers[]` with `owner_transaction`, `context`,
+  `instance`, `target_transaction`, `signal`, and `sink` keys. The current
+  sink is `external_handoff`.
+- The trigger sink remains external. Actor type resolution, generated ATL
+  child `.fsm` files, generated ATL tops, child trigger wiring, trigger
+  payloads/bindings, ready/backpressure, fan-in/fan-out, multiple or nested
+  triggers, rule-level qualified triggers, cross-clock actor triggers,
+  concurrent groups, data movement, and HDL behavior remain deferred or
+  fail-closed.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, roadmap board, changes, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5`, which must be decomposed before code.
+- Validation passed: focused syntax and actor-network/report/public-contract
+  tests, `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=229, Tests=1347), and `git diff --check`.
 ## 2026-05-18: ATL actor trigger handoff subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` as the selection leaf
   before implementing qualified actor-transaction trigger behavior.

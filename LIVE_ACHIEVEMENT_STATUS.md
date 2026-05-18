@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL actor triggers lower to parent handoff output
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`.
+- Exactly one top-level transaction-body `(trigger actor.transaction)` may
+  now target the current single static actor instance.
+- FSMGen lowers the trigger to a generated one-cycle parent output named
+  `actor_transaction_start`; for example, `reader.capture` becomes
+  `reader_capture_start`.
+- The scheduled parent `.fsm` exposes and pulses that output. Schedule JSON
+  reports the trigger in `actor_network.transaction_triggers[]`.
+- The trigger sink is `external_handoff`. Actor type resolution, generated ATL
+  child `.fsm` files, generated ATL tops, child trigger wiring, payloads or
+  bindings, ready/backpressure, multiple/nested triggers, fan-in/fan-out,
+  cross-clock actor triggers, concurrent groups, data movement, and HDL
+  behavior remain deferred or fail-closed.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.5`;
+  that activity must be decomposed/selected before behavior-bearing code.
+- Validation passed: focused syntax and actor-network/report/public-contract
+  tests, `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=229, Tests=1347), and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL actor trigger handoff selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1`.
 - The next qualified actor-transaction trigger behavior is scoped to one

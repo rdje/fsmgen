@@ -110,12 +110,14 @@ ATL v0 now has a selected public source direction:
   safety.
 
 The current generated-artifact contract is also explicit: FSMGen may add the
-selected one-bit actor-event handoff input to the parent scheduled `.fsm` and
-report it through `actor_network.event_waits[]`. It still emits no generated
-ATL child `.fsm`, generated ATL top, route mux, internal handoff storage,
-child instance, or HDL event wiring. Later leaves must add their generated
-artifact names, report keys, examples, and fail-closed diagnostics in the
-same slice that ships the behavior.
+selected one-bit actor-event handoff input to the parent scheduled `.fsm`,
+may add the selected one-cycle actor-transaction trigger handoff output to
+the parent scheduled `.fsm`, and reports those handoffs through
+`actor_network.event_waits[]` and `actor_network.transaction_triggers[]`. It
+still emits no generated ATL child `.fsm`, generated ATL top, route mux,
+internal handoff storage, child instance, or HDL event wiring. Later leaves
+must add their generated artifact names, report keys, examples, and
+fail-closed diagnostics in the same slice that ships the behavior.
 
 ## Shipped First Actor-Event Wait Subset
 
@@ -152,15 +154,14 @@ Schedule JSON records accepted waits in `actor_network.event_waits[]` with
 The current `source` value is `external_handoff`.
 
 The first subset explicitly excludes fan-in, fan-out, multiple actor-event
-waits, nested actor-event waits, rule-level or transaction-body qualified
-triggers, event payloads, cross-clock actor events, generated ATL child
-artifacts, generated ATL tops, and concurrent group events. Those forms stay
-fail-closed until later leaves select their exact artifact and scheduling
-contracts.
+waits, nested actor-event waits, event payloads, cross-clock actor events,
+generated ATL child artifacts, generated ATL tops, and concurrent group
+events. Those forms stay fail-closed until later leaves select their exact
+artifact and scheduling contracts.
 
-## First Actor-Transaction Trigger Selection
+## Shipped First Actor-Transaction Trigger Subset
 
-The next selected trigger subset mirrors the parent-handoff event boundary:
+The first behavior-bearing actor-transaction trigger subset is shipped:
 
 ```lisp
 (actor packet_pipe
@@ -179,25 +180,25 @@ The next selected trigger subset mirrors the parent-handoff event boundary:
 The selected lowering is one top-level transaction-body
 `(trigger actor.transaction)` targeting the current single declared static
 actor instance. The target transaction name must be a scalar HDL identifier.
-The next implementation leaf lowers that trigger to a deterministic one-cycle
-parent output handoff named `actor_transaction_start`; for example,
-`reader.capture` becomes `reader_capture_start`. The scheduled parent `.fsm`
-pulses that output at the trigger point.
+FSMGen lowers that trigger to a deterministic one-cycle parent output handoff
+named `actor_transaction_start`; for example, `reader.capture` becomes
+`reader_capture_start`. The scheduled parent `.fsm` exposes and pulses that
+output at the trigger point.
 
 The trigger sink is external in this subset. FSMGen does not resolve
 `packet_reader`, emit a child `.fsm`, generate an ATL top, connect the start
 pulse to an actor instance, add ready/backpressure, or carry trigger payloads
-yet. Schedule JSON will record accepted triggers in
+yet. Schedule JSON records accepted triggers in
 `actor_network.transaction_triggers[]` with `owner_transaction`, `context`,
 `instance`, `target_transaction`, `signal`, and `sink` keys. The selected
 `sink` value is `external_handoff`.
 
 The selected subset explicitly excludes rule-level qualified triggers, nested
-qualified triggers, multiple qualified triggers, fan-in, fan-out, trigger
-payloads or bindings, ready/backpressure, cross-clock actor triggers,
-generated ATL child artifacts, generated ATL tops, and concurrent group
-triggers. Those forms stay fail-closed until later leaves select their exact
-artifact and scheduling contracts.
+qualified triggers, multiple qualified triggers, generated handoff signal
+conflicts, fan-in, fan-out, trigger payloads or bindings, ready/backpressure,
+cross-clock actor triggers, generated ATL child artifacts, generated ATL tops,
+and concurrent group triggers. Those forms stay fail-closed until later leaves
+select their exact artifact and scheduling contracts.
 
 ## Shipped Static Metadata Slice
 
@@ -519,41 +520,41 @@ Scheduling should split cleanly:
 - The schedule report should expose `actor_network` metadata without requiring
   downstream consumers to parse generated `.fsm` text.
 
-## First Implementation Subset
+## Current Implementation Subset
 
-The shipped first implementation is metadata-only: one direct actor-body
-`(instance name of actor_type)` clause is accepted and reported under
-`actor_network`. It does not schedule actor interactions yet.
+The shipped first static implementation accepts one direct actor-body
+`(instance name of actor_type)` clause and reports it under `actor_network`.
 
-The first selected event/trigger implementation boundary is intentionally
-fail-closed. Before any generated actor-event behavior ships, FSMGen
-recognizes the reserved qualified forms and rejects them with ATL-specific
-diagnostics instead of letting them fall through as enum-member, unknown
-transaction, or unsupported local-clause errors when the qualifier names a
-declared static actor instance:
+The shipped first behavior-bearing handoff subset accepts one top-level
+transaction-body `(await actor.event)` and one top-level transaction-body
+`(trigger actor.transaction)` for the current single static actor instance.
+The event wait lowers to a parent input named `actor_event`; the transaction
+trigger lowers to a parent output named `actor_transaction_start`. Both
+handoffs are external: FSMGen does not resolve actor types, generate child
+artifacts, emit an ATL top, or wire HDL event/trigger routes yet.
 
-- `(await actor.event)` in a transaction body;
-- `(trigger actor.transaction)` in a transaction body;
-- `(trigger actor.transaction)` in a rule body.
-
-This boundary preserves existing unqualified local behavior:
+The parser still recognizes unsupported reserved qualified forms and rejects
+them with ATL-specific diagnostics instead of letting them fall through as
+enum-member, unknown-transaction, or unsupported local-clause errors when the
+qualifier names a declared static actor instance. Rule-level qualified
+`(trigger actor.transaction)`, nested waits/triggers, multiple waits/triggers,
+generated handoff signal conflicts, and cross-clock ATL handoffs remain
+fail-closed. Existing unqualified local behavior is preserved:
 `(await signal)` remains a local transaction wait, and rule-level
 `(trigger transaction)` remains the local transaction trigger surface.
 Enum-looking dotted names whose qualifier is not a declared static actor
 instance keep their prior diagnostics.
 
-The smallest later behavior-bearing ATL implementation should then select
-explicit generated artifact names and report keys before accepting event
-waits or actor transaction triggers. A likely useful subset is:
+The smallest later data-movement ATL implementation should select explicit
+generated artifact names and report keys before accepting endpoint-aware drive
+movement. A likely useful next subset is:
 
 1. One top-level `(actor ...)` with direct actor-body ATL clauses.
 2. Single clock/reset only.
 3. Static `(instance name of actor_type)` declarations.
-4. One explicit event source and one actor-event wait, or one explicit
-   blocking orchestration target and its completion event.
-5. One named drive body whose assignment pair references two qualified
+4. One named drive body whose assignment pair references two qualified
    endpoints, plus one transaction drive call that activates it.
-6. Schedule-report metadata for instance identity, event/endpoint bindings,
+5. Schedule-report metadata for instance identity, event/endpoint bindings,
    generated artifact names, and
    generated mux/enable/handoff or connectivity artifacts.
 

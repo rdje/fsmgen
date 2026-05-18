@@ -364,15 +364,16 @@ The report field is `actor_network`:
       "declaration": "actor"
     }
   ],
-  "event_waits": []
+  "event_waits": [],
+  "transaction_triggers": []
 }
 ```
 
 This is not generated-child composition yet. FSMGen does not resolve
 `packet_reader`, emit a child `.fsm`, build an ATL top, route data between
-actors, trigger `reader` transactions, or wait on `reader` events in this
-slice. Multiple instances, groups, endpoint-aware drive-body movement, actor
-events, qualified transaction triggers, and generated ATL wiring remain
+actors, or wire `reader` transactions/events to child artifacts in this
+slice. Multiple instances, groups, endpoint-aware drive-body movement, event
+fan-in/fan-out, trigger fan-in/fan-out, and generated ATL wiring remain
 backlog under the actor-network task tree.
 
 The broader ATL v0 contract is selected for later slices. The source root
@@ -399,26 +400,30 @@ The event producer is external in this subset. FSMGen still does not resolve
 the actor type, emit an ATL child `.fsm`, generate an ATL top, trigger actor
 transactions, carry event payloads, or support fan-in/fan-out, multiple waits,
 nested waits, cross-clock actor events, or concurrent group events.
-Transaction-body and rule-level `(trigger actor.transaction)` still reject
-with ATL-specific diagnostics. Unqualified local forms keep their existing
-meaning: `(await signal)` waits on a local transaction signal, and rule-level
-`(trigger transaction)` triggers a local transaction. Dotted enum-looking
-names that do not name a static actor instance keep their prior diagnostics.
+Unqualified local forms keep their existing meaning: `(await signal)` waits
+on a local transaction signal, and rule-level `(trigger transaction)` triggers
+a local transaction. Dotted enum-looking names that do not name a static
+actor instance keep their prior diagnostics.
 
-The next selected qualified trigger subset is one top-level transaction-body
-`(trigger actor.transaction)` for the current single static actor instance.
-It will lower to a generated one-cycle parent output handoff named
-`actor_transaction_start`; for example, `reader.capture` becomes
-`reader_capture_start`. The trigger sink is external in that subset. FSMGen
-still will not resolve the actor type, emit an ATL child `.fsm`, generate an
-ATL top, add ready/backpressure, carry trigger payloads, or support rule-level
-qualified triggers, nested triggers, multiple triggers, fan-in/fan-out,
-cross-clock actor triggers, or concurrent group triggers.
+The current qualified trigger behavior is the matching parent-handoff subset.
+One top-level transaction-body `(trigger actor.transaction)` may target the
+current single static actor instance. FSMGen lowers it to a generated
+one-cycle parent output named `actor_transaction_start`; for example,
+`reader.capture` becomes `reader_capture_start`. The scheduled parent `.fsm`
+exposes and pulses that output at the trigger point, and schedule JSON records
+the trigger under `actor_network.transaction_triggers[]`.
+
+The trigger sink is external in this subset. FSMGen still does not resolve
+the actor type, emit an ATL child `.fsm`, generate an ATL top, connect the
+start pulse to an actor instance, add ready/backpressure, carry trigger
+payloads, or support rule-level qualified triggers, nested triggers, multiple
+triggers, generated handoff signal conflicts, fan-in/fan-out, cross-clock
+actor triggers, or concurrent group triggers.
 
 Until those later leaves ship, `actor_network` remains discovery metadata
-plus selected event-wait metadata. It does not imply generated ATL child
-artifacts, generated ATL top names, route muxes, handoff storage, or HDL
-behavior.
+plus selected event-wait and transaction-trigger handoff metadata. It does not
+imply generated ATL child artifacts, generated ATL top names, route muxes,
+internal handoff storage, or HDL event wiring.
 
 ## Schedule Report Projection
 

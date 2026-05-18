@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL actor triggers lower to parent handoff output
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`.
+- FSMGen now accepts exactly one top-level transaction-body
+  `(trigger actor.transaction)` for the current single static actor instance
+  and lowers it to a generated one-cycle parent output named
+  `actor_transaction_start`.
+- The scheduled parent `.fsm` exposes and pulses the generated trigger output;
+  schedule JSON reports the trigger under
+  `actor_network.transaction_triggers[]`.
+- The trigger sink remains external. Actor type resolution, generated ATL
+  child artifacts, ATL tops, child trigger wiring, payloads or bindings,
+  ready/backpressure, multiple or nested triggers, rule-level qualified
+  triggers, fan-in/fan-out, cross-clock triggers, concurrent groups, endpoint
+  data movement, and HDL behavior remain deferred.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook,
+  task tree, roadmap board, live achievement status, and development notes.
+  The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.5`.
 ### R14 — ATL actor trigger handoff selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` as a task-tree
   selection slice before implementation.

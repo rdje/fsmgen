@@ -1561,10 +1561,12 @@ part of the shipped source surface. That field is not a required actor shell
 key. When present, `actor_network` is a `static_declaration` hash with
 exactly one instance entry in the current subset, and schedule reports project
 it through top-level `actor_network`. The shipped event-wait subset may also
-add `event_waits[]` entries for generated parent-handoff waits. No child actor
-type resolution, generated child scheduled `.fsm`, generated ATL top,
-actor-to-actor movement, qualified actor trigger behavior, or HDL event
-wiring is promised by this field.
+add `event_waits[]` entries for generated parent-handoff waits, and the
+shipped actor-transaction trigger subset may add `transaction_triggers[]`
+entries for generated parent-handoff trigger pulses. No child actor type
+resolution, generated child scheduled `.fsm`, generated ATL top,
+actor-to-actor movement, generated child trigger wiring, or HDL event wiring
+is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
 behavior until advertised by capability metadata. Endpoint-aware movement
@@ -1585,22 +1587,26 @@ Schedule reports expose this through `actor_network.event_waits[]` entries
 with `transaction`, `context`, `instance`, `event`, `signal`, and `source`
 keys, where `source` is currently `external_handoff`. The event source is
 external; actor type resolution, ATL child generation, generated ATL tops,
-and qualified actor transaction triggers are still deferred. Multiple event
-waits, nested event waits, fan-in, fan-out, event payloads, cross-clock actor
-events, and concurrent group events remain fail-closed/deferred. Existing
+and generated child event wiring are still deferred. Multiple event waits,
+nested event waits, fan-in, fan-out, event payloads, cross-clock actor events,
+and concurrent group events remain fail-closed/deferred. Existing
 unqualified local `(await signal)` and rule-level `(trigger transaction)`
 behavior remains unchanged, and dotted enum-looking names outside
 actor-network instances keep their prior diagnostics.
-The next selected qualified actor-trigger subset is exactly one top-level
+The current qualified actor-trigger subset is exactly one top-level
 transaction-body `(trigger actor.transaction)` for the current single declared
 static actor instance, lowered to a generated one-cycle parent output handoff
-named `actor_transaction_start`. For example, `reader.capture` will lower
-through `reader_capture_start`. The trigger sink is external until actor type
-resolution, ATL child generation, generated ATL tops, trigger payloads, and
+named `actor_transaction_start`. For example, `reader.capture` lowers through
+`reader_capture_start`, and the scheduled parent `.fsm` pulses that output at
+the trigger point. The trigger sink is external until actor type resolution,
+ATL child generation, generated ATL tops, trigger payloads, and
 ready/backpressure semantics ship. Rule-level qualified triggers, nested
-triggers, multiple triggers, fan-in/fan-out, cross-clock actor triggers, and
-concurrent group triggers remain deferred. The selected future report surface
-is `actor_network.transaction_triggers[]`.
+triggers, multiple triggers, generated handoff signal conflicts,
+fan-in/fan-out, cross-clock actor triggers, and concurrent group triggers
+remain deferred. Schedule reports expose this through
+`actor_network.transaction_triggers[]` entries with `owner_transaction`,
+`context`, `instance`, `target_transaction`, `signal`, and `sink` keys, where
+`sink` is currently `external_handoff`.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`
@@ -1920,9 +1926,10 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
-actor_network: kind, instances, event_waits
+actor_network: kind, instances, event_waits, transaction_triggers
 actor_network instances entries: name, actor_type, declaration
 actor_network event_waits entries: transaction, context, instance, event, signal, source
+actor_network transaction_triggers entries: owner_transaction, context, instance, target_transaction, signal, sink
 inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width

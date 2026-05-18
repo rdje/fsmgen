@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL trigger lowering stays a parent handoff
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` implements the selected
+  behavior-bearing qualified actor-transaction trigger subset.
+- The parser rewrites only the accepted top-level
+  `(trigger actor.transaction)` to an internal `atl_trigger` clause after
+  recording the original actor endpoint in
+  `actor_network.transaction_triggers[]`. That keeps transaction-body
+  unqualified `trigger` from becoming source syntax and keeps rule-level
+  `(trigger transaction)` as the existing local rule-trigger surface.
+- Lowering emits a one-cycle pulse on a generated parent output named
+  `actor_transaction_start`. The output is intentionally external: this slice
+  proves the parent can express an actor-named start handoff, but it does not
+  resolve actor types, instantiate children, wire generated ATL tops, select
+  ready/backpressure, or carry trigger payloads.
+- The one-trigger limit remains a safety boundary. It avoids selecting
+  fan-in, fan-out, priority, ordering, route mux, CDC, or lifetime policy
+  before actor-to-actor movement and generated ATL child wiring have their own
+  task-tree leaves.
 ## 2026-05-18: First ATL trigger mirrors event handoffs
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` selects the first
   behavior-bearing qualified actor-transaction trigger subset before code.

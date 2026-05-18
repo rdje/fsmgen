@@ -734,6 +734,7 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         @{(($actor->{actor_network} || {})->{instances}) || []};
     my %declared_signals = _actor_declared_signal_names($actor);
     my @event_waits;
+    my @transaction_triggers;
 
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_atl_reserved_qualified_forms(
@@ -742,9 +743,11 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
             \%actor_instances,
             \%declared_signals,
             \@event_waits,
+            \@transaction_triggers,
             {
-                transaction      => $tx->{name},
-                allow_event_wait => 1,
+                transaction         => $tx->{name},
+                allow_event_wait    => 1,
+                allow_actor_trigger => 1,
             },
         );
     }
@@ -761,17 +764,50 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         }
     }
 
+    _validate_actor_atl_generated_handoff_signal_conflicts(
+        $actor,
+        \@event_waits,
+        \@transaction_triggers,
+    );
+
     if (@event_waits) {
         confess "Error: actor '$actor->{actor_name}' ATL actor event waits require a single-clock actor in the current subset\n"
             if ref($actor->{clock_domains}) eq 'HASH';
         $actor->{actor_network}{event_waits} = \@event_waits;
+    }
+    if (@transaction_triggers) {
+        confess "Error: actor '$actor->{actor_name}' ATL actor transaction triggers require a single-clock actor in the current subset\n"
+            if ref($actor->{clock_domains}) eq 'HASH';
+        $actor->{actor_network}{transaction_triggers} = \@transaction_triggers;
+    }
+
+    return 1;
+}
+
+sub _validate_actor_atl_generated_handoff_signal_conflicts {
+    my ($actor, $event_waits, $transaction_triggers) = @_;
+    my %seen;
+
+    for my $wait (@{$event_waits || []}) {
+        my $signal = $wait->{signal};
+        next unless defined($signal) && length($signal);
+        $seen{$signal} = "actor event wait '$wait->{instance}.$wait->{event}'";
+    }
+
+    for my $trigger (@{$transaction_triggers || []}) {
+        my $signal = $trigger->{signal};
+        next unless defined($signal) && length($signal);
+        if (my $owner = $seen{$signal}) {
+            confess "Error: actor '$actor->{actor_name}' ATL generated handoff signal '$signal' is used by both $owner and actor transaction trigger '$trigger->{instance}.$trigger->{target_transaction}'; rename the event or transaction before using both handoffs\n";
+        }
+        $seen{$signal} = "actor transaction trigger '$trigger->{instance}.$trigger->{target_transaction}'";
     }
 
     return 1;
 }
 
 sub _validate_transaction_atl_reserved_qualified_forms {
-    my ($clauses, $context, $actor_instances, $declared_signals, $event_waits, $options) = @_;
+    my ($clauses, $context, $actor_instances, $declared_signals, $event_waits, $transaction_triggers, $options) = @_;
     return 1 unless ref($clauses) eq 'ARRAY';
     $options ||= {};
 
@@ -779,6 +815,10 @@ sub _validate_transaction_atl_reserved_qualified_forms {
         next unless ref($clause) eq 'ARRAY' && @$clause;
         my $head = $clause->[0];
         next unless defined($head) && !ref($head);
+
+        if ($head eq 'atl_trigger') {
+            confess "Error: $context '(atl_trigger ...)' is reserved for FSMGen internal ATL lowering and is not source syntax\n";
+        }
 
         if ($head eq 'await' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
             my $target = $clause->[1];
@@ -798,7 +838,18 @@ sub _validate_transaction_atl_reserved_qualified_forms {
 
         if ($head eq 'trigger' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
             my $target = $clause->[1];
-            confess "Error: $context ATL actor transaction trigger '(trigger $target)' is reserved but not supported yet; transaction-body qualified actor triggers remain deferred\n";
+            if ($options->{allow_actor_trigger}) {
+                _accept_top_level_atl_transaction_trigger(
+                    $clause,
+                    $context,
+                    $actor_instances,
+                    $declared_signals,
+                    $transaction_triggers,
+                    $options->{transaction},
+                );
+                next;
+            }
+            confess "Error: $context ATL actor transaction trigger '(trigger $target)' is reserved for top-level transaction bodies only in the current subset; nested actor transaction triggers remain deferred\n";
         }
 
         if ($head eq 'on' || $head eq 'when' || $head eq 'repeat'
@@ -810,9 +861,11 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                 $actor_instances,
                 $declared_signals,
                 $event_waits,
+                $transaction_triggers,
                 {
-                    transaction      => $options->{transaction},
-                    allow_event_wait => 0,
+                    transaction         => $options->{transaction},
+                    allow_event_wait    => 0,
+                    allow_actor_trigger => 0,
                 },
             );
             next;
@@ -827,14 +880,45 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     $actor_instances,
                     $declared_signals,
                     $event_waits,
+                    $transaction_triggers,
                     {
-                        transaction      => $options->{transaction},
-                        allow_event_wait => 0,
+                        transaction         => $options->{transaction},
+                        allow_event_wait    => 0,
+                        allow_actor_trigger => 0,
                     },
                 );
             }
         }
     }
+
+    return 1;
+}
+
+sub _accept_top_level_atl_transaction_trigger {
+    my ($clause, $context, $actor_instances, $declared_signals, $transaction_triggers, $owner_transaction) = @_;
+    my $target = $clause->[1];
+    my ($instance, $transaction) = _parse_qualified_atl_endpoint_token($target, $actor_instances);
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' is not a declared static actor endpoint\n"
+        unless defined($instance) && defined($transaction);
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' transaction name must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($transaction);
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' exceeds the current one-trigger subset; fan-in, fan-out, and multiple actor transaction triggers remain deferred\n"
+        if @$transaction_triggers;
+
+    my $signal = _actor_atl_transaction_trigger_handoff_signal($instance, $transaction);
+    confess "Error: $context ATL actor transaction trigger '(trigger $target)' generated handoff signal '$signal' conflicts with a declared actor signal\n"
+        if $declared_signals->{$signal};
+
+    $clause->[0] = 'atl_trigger';
+    $clause->[1] = $signal;
+    push @$transaction_triggers, {
+        owner_transaction => $owner_transaction,
+        context           => 'transaction_body',
+        instance          => $instance,
+        target_transaction => $transaction,
+        signal            => $signal,
+        sink              => 'external_handoff',
+    };
 
     return 1;
 }
@@ -884,6 +968,11 @@ sub _parse_qualified_atl_endpoint_token {
 sub _actor_atl_event_handoff_signal {
     my ($instance, $event) = @_;
     return "${instance}_${event}";
+}
+
+sub _actor_atl_transaction_trigger_handoff_signal {
+    my ($instance, $transaction) = @_;
+    return "${instance}_${transaction}_start";
 }
 
 sub _actor_declared_signal_names {
@@ -4589,6 +4678,7 @@ sub _actor_network_from_instances {
         kind      => 'static_declaration',
         instances => [ map { _clone_isf_value($_) } @instances ],
         event_waits => [],
+        transaction_triggers => [],
     };
 }
 

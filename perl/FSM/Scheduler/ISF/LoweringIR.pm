@@ -17,6 +17,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
             await_any params stage contract store load wait while until set
+            atl_trigger
         )
     },
     when => {
@@ -325,6 +326,16 @@ sub _actor_network_for_ir {
             source      => $_->{source},
         }
     } @{$network->{event_waits} || []};
+    my @transaction_triggers = map {
+        {
+            owner_transaction  => $_->{owner_transaction},
+            context            => $_->{context},
+            instance           => $_->{instance},
+            target_transaction => $_->{target_transaction},
+            signal             => $_->{signal},
+            sink               => $_->{sink},
+        }
+    } @{$network->{transaction_triggers} || []};
 
     return {
         kind      => $network->{kind} // 'static_declaration',
@@ -338,6 +349,7 @@ sub _actor_network_for_ir {
             } @{$network->{instances}}
         ],
         event_waits => \@event_waits,
+        transaction_triggers => \@transaction_triggers,
     };
 }
 
@@ -1896,6 +1908,9 @@ sub _build_ports($self, $actor) {
     for my $wait (@{(($actor->{actor_network} || {})->{event_waits}) || []}) {
         _push_port(\@p, \%seen, $wait->{signal}, 'input', 1);
     }
+    for my $trigger (@{(($actor->{actor_network} || {})->{transaction_triggers}) || []}) {
+        _push_port(\@p, \%seen, $trigger->{signal}, 'output', 1);
+    }
     return \@p;
 }
 
@@ -2533,6 +2548,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
             push @st, _ir_transaction_drive_clause($cl, $tn, $si++, $drives, [splice @ps]);
         }
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
+        elsif ($k eq 'atl_trigger') { push @st, _ir_atl_trigger($cl, $tn, $si++, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'wait') {
             my $wait = _wait_count_spec($cl, $tn, 'transaction body', $actor, $widths, 1);
@@ -4674,6 +4690,25 @@ sub _ir_await {
         transitions => [],
         guard       => { port => $cl->[1] },
         watchdog    => { name => "${tn}_wd", limit => $wd // 65536 },
+    };
+}
+sub _ir_atl_trigger {
+    my ($cl, $tn, $i, $pending_samples) = @_;
+    my @assignments = (
+        _sample_assignments($pending_samples || []),
+        {
+            lhs         => $cl->[1],
+            rhs         => 1,
+            op          => '<1',
+            source_kind => 'atl_actor_transaction_trigger',
+        },
+    );
+
+    return {
+        name        => "${tn}_atl_trigger_$i",
+        kind        => 'sequential',
+        assignments => \@assignments,
+        transitions => [],
     };
 }
 sub _ir_wait {

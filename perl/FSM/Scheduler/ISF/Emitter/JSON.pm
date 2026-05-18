@@ -356,7 +356,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|atl_trigger|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }
@@ -612,6 +612,18 @@ sub _actor_network_summary($self, $ir) {
                     source      => $_->{source},
                 }
             } @{$network->{event_waits} || []}
+        ],
+        transaction_triggers => [
+            map {
+                {
+                    owner_transaction  => $_->{owner_transaction},
+                    context            => $_->{context},
+                    instance           => $_->{instance},
+                    target_transaction => $_->{target_transaction},
+                    signal             => $_->{signal},
+                    sink               => $_->{sink},
+                }
+            } @{$network->{transaction_triggers} || []}
         ],
     };
 }

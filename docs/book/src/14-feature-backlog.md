@@ -675,10 +675,11 @@ declared with the direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
 The enclosing actor is the network boundary; `(network ...)` is not part of
 the shipped source surface. The accepted form lowers to parser shell and
 schedule-report metadata under `actor_network` with `declaration: "actor"`.
-The current slice does not resolve the actor type, instantiate a child, emit
-a generated ATL top, move data between actors, or change HDL. Multiple
-instances, groups, events, qualified actor transaction triggers, and widened
-drive-body endpoint movement remain backlog.
+The current shipped ATL surface does not resolve the actor type, instantiate
+a child, emit a generated ATL top, move data between actors, or wire HDL.
+Multiple instances, groups, broader event/trigger behavior beyond the single
+parent-handoff subsets, and widened drive-body endpoint movement remain
+backlog.
 Actor-to-actor and pin-to-actor movement is not expressed as top-level
 `connect` clauses. The selected ATL v0 proposal reuses existing drive
 definitions and drive calls: a drive body keeps its shipped `(sink source)`
@@ -709,24 +710,26 @@ input, and schedule JSON records the wait under
 The producer of that pulse remains external until later ATL leaves resolve
 actor types, generate child artifacts, emit ATL tops, and support qualified
 actor transaction triggers. Multiple waits, nested waits, fan-in, fan-out,
-event payloads, cross-clock events, concurrent group events, transaction-body
-`(trigger actor.transaction)`, and rule-level
-`(trigger actor.transaction)` stay fail-closed/deferred. Existing unqualified
-local forms stay unchanged: `(await signal)` remains a transaction wait, and
-rule-level `(trigger transaction)` remains a local transaction trigger.
-Dotted enum-looking names that do not name a static actor instance keep their
-prior diagnostics.
+event payloads, cross-clock events, and concurrent group events stay
+fail-closed/deferred. Existing unqualified local forms stay unchanged:
+`(await signal)` remains a transaction wait, and rule-level
+`(trigger transaction)` remains a local transaction trigger. Dotted
+enum-looking names that do not name a static actor instance keep their prior
+diagnostics.
 
-The next selected qualified actor-transaction trigger subset mirrors that
-handoff boundary. One top-level transaction-body
-`(trigger actor.transaction)` against the current single static actor instance
-will lower to a generated one-cycle parent output named
-`actor_transaction_start`; for example, `reader.capture` maps to
-`reader_capture_start`. The trigger sink remains external until later ATL
-leaves resolve actor types, generate child artifacts, emit ATL tops, and add
-ready/backpressure or payload semantics. Rule-level qualified triggers,
-nested triggers, multiple triggers, fan-in, fan-out, cross-clock triggers, and
-concurrent group triggers stay fail-closed/deferred.
+The shipped qualified actor-transaction trigger subset mirrors that handoff
+boundary. One top-level transaction-body `(trigger actor.transaction)` against
+the current single static actor instance lowers to a generated one-cycle
+parent output named `actor_transaction_start`; for example, `reader.capture`
+maps to `reader_capture_start`. The scheduled parent `.fsm` exposes and
+pulses that output at the trigger point, and schedule JSON records the
+trigger under `actor_network.transaction_triggers[]`.
+
+The trigger sink remains external until later ATL leaves resolve actor types,
+generate child artifacts, emit ATL tops, and add ready/backpressure or payload
+semantics. Rule-level qualified triggers, nested triggers, multiple triggers,
+generated handoff signal conflicts, fan-in, fan-out, cross-clock triggers,
+and concurrent group triggers stay fail-closed/deferred.
 
 Direct actor-body proposal:
 

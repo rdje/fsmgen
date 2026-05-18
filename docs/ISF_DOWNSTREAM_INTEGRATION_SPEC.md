@@ -1534,7 +1534,8 @@ The schedule report exposes this through top-level `actor_network`:
       "declaration": "actor"
     }
   ],
-  "event_waits": []
+  "event_waits": [],
+  "transaction_triggers": []
 }
 ```
 
@@ -1542,7 +1543,8 @@ The schedule report exposes this through top-level `actor_network`:
 a direct actor-body declaration. Current fail-closed boundaries include
 multiple instances, `(network ...)`, `(group ...)`, dynamic/non-scalar names,
 direct recursive instantiation, actor-to-actor endpoint movement, qualified
-actor transaction triggers, and actor event waits.
+actor/event behavior beyond the selected single parent-handoff event wait and
+single parent-handoff transaction trigger subsets.
 
 The broader ATL v0 contract is selected for future slices, but downstream
 producers must not emit it until the corresponding support appears in the
@@ -1578,40 +1580,47 @@ Schedule JSON reports accepted waits under `actor_network.event_waits[]`.
 Each entry exposes `transaction`, `context`, `instance`, `event`, `signal`,
 and `source`; the current source is `external_handoff`.
 
-The rest of the ATL event/trigger boundary remains fail-closed. Downstream
-producers must not emit multiple actor-event waits, nested actor-event waits,
+The rest of the ATL event boundary remains fail-closed. Downstream producers
+must not emit multiple actor-event waits, nested actor-event waits,
 fan-in/fan-out event structures, event payloads, cross-clock actor events,
-concurrent group events, transaction-body `(trigger actor.transaction)`,
-rule-level `(trigger actor.transaction)`, or source that relies on generated
-ATL child artifacts or generated ATL top wiring until the corresponding
-support is documented here and advertised in the manifest. Existing
-unqualified local forms are unchanged: `(await signal)` remains a local
-transaction wait, and rule-level `(trigger transaction)` remains a local
-transaction trigger. Dotted enum-looking names that do not name a static actor
-instance keep their prior diagnostics.
+concurrent group events, or source that relies on generated ATL child
+artifacts or generated ATL top wiring until the corresponding support is
+documented here and advertised in the manifest. Existing unqualified local
+forms are unchanged: `(await signal)` remains a local transaction wait, and
+rule-level `(trigger transaction)` remains a local transaction trigger.
+Dotted enum-looking names that do not name a static actor instance keep their
+prior diagnostics.
 
-Next selected trigger handoff subset: downstream producers should prepare for
-exactly one top-level transaction-body `(trigger actor.transaction)` against
-the current single declared static actor instance. The target transaction name
-must be a scalar HDL identifier. The selected lowering maps that trigger to a
-generated one-cycle parent output named `actor_transaction_start`; for
-example, `reader.capture` maps to `reader_capture_start`. The sink of that
-trigger is external in this subset. Do not emit rule-level qualified triggers,
-nested qualified triggers, multiple qualified triggers, fan-in/fan-out trigger
-structures, trigger payloads or bindings, ready/backpressure assumptions,
-cross-clock actor triggers, concurrent group triggers, or source that relies
-on generated ATL child artifacts or generated ATL top wiring until the
-corresponding support is documented here and advertised in the manifest.
-Schedule JSON for that future trigger subset will use
-`actor_network.transaction_triggers[]`.
+Current actor-transaction trigger handoff subset: downstream producers may
+emit exactly one top-level transaction-body `(trigger actor.transaction)`
+against the current single declared static actor instance. The target
+transaction name must be a scalar HDL identifier. FSMGen maps that trigger to
+a generated one-cycle parent output named `actor_transaction_start`; for
+example, `reader.capture` maps to `reader_capture_start`. The scheduled
+parent `.fsm` exposes and pulses that output at the trigger point. The sink of
+that trigger is external in this subset.
+
+Schedule JSON reports accepted triggers under
+`actor_network.transaction_triggers[]`. Each entry exposes
+`owner_transaction`, `context`, `instance`, `target_transaction`, `signal`,
+and `sink`; the current sink is `external_handoff`.
+
+Downstream producers must not emit rule-level qualified triggers, nested
+qualified triggers, multiple qualified triggers, fan-in/fan-out trigger
+structures, generated handoff signal conflicts, trigger payloads or bindings,
+ready/backpressure assumptions, cross-clock actor triggers, concurrent group
+triggers, or source that relies on generated ATL child artifacts or generated
+ATL top wiring until the corresponding support is documented here and
+advertised in the manifest.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
-the selected one-bit actor-event handoff input. FSMGen still emits no
-generated ATL child `.fsm`, no generated ATL top, no route mux, no internal
-handoff storage, and no HDL event wiring. Downstream consumers must treat
-`actor_network` as discovery/review metadata plus the explicitly reported
-`event_waits[]` entries until a later task-tree leaf documents broader
-generated artifact names and report keys in this handoff.
+the selected one-bit actor-event handoff input and selected one-cycle
+actor-transaction trigger output. FSMGen still emits no generated ATL child
+`.fsm`, no generated ATL top, no route mux, no internal handoff storage, and
+no HDL event wiring. Downstream consumers must treat `actor_network` as
+discovery/review metadata plus the explicitly reported `event_waits[]` and
+`transaction_triggers[]` entries until a later task-tree leaf documents
+broader generated artifact names and report keys in this handoff.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -1774,10 +1783,12 @@ transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
   role, port, actor_signal, actor_expression, width, instance, parent_port,
   child_port, start_signal, done_signal, trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
-actor_network: kind, instances, event_waits
+actor_network: kind, instances, event_waits, transaction_triggers
 actor_network.instances[]: name, actor_type, declaration
 actor_network.event_waits[]: transaction, context, instance, event, signal,
   source
+actor_network.transaction_triggers[]: owner_transaction, context, instance,
+  target_transaction, signal, sink
 library_uses[]: library, alias, export, kind, instance, module,
   scheduled_fsm, parameters, bindings
 clock_domains[]: name, default, clock, reset, scheduled_fsm, ports, storage,
