@@ -531,21 +531,18 @@ generated spawns remain pending, and a later same-body `(await_all done)`
 drain before the nested repeat check can loop. The generated do instance
 carries its static parameter binding in the generated top, waits on its own
 fresh done handoff, and does not clear the pending generated-spawn done set
-that the later drain must consume. Bind handoffs, domain metadata, the
-switch-contained static-parameter analogue, `await_any` after the do, new
-spawn after the do before the drain, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics remain backlog.
-The next selected backlog leaf is the switch-contained static-parameter
-generated `await_any`-before-do analogue: a repeat directly inside a top-level
-`switch` branch with multiple generated spawns, a multi-pending
-`(await_any done)` observation, generated blocking
-`(do child (params ...))` with static parameter overrides, and a later
-same-body `(await_all done)` drain before the nested repeat check can loop.
-This switch-contained static-parameter generated-do await-any-before-do subset
-is selected but not yet shipped; bind handoffs, domain metadata, `await_any`
-after the do, new spawn after the do before the drain, cross-domain
-activation, deeper branch/loop nesting, and broader outstanding-child
-semantics remain backlog.
+that the later drain must consume. The switch-contained static-parameter
+generated `await_any`-before-do analogue is shipped with the same contract: a
+repeat directly inside a top-level `switch` branch may have multiple
+generated spawns, a multi-pending `(await_any done)` observation, generated
+blocking `(do child (params ...))` with static parameter overrides while those
+generated spawns remain pending, and a later same-body `(await_all done)`
+drain before the nested repeat check can loop. Bind handoffs, domain metadata,
+`await_any` after the do, new spawn after the do before the drain,
+cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog. The next tracked leaf must select
+the next exact bounded subset before any further behavior-bearing
+implementation begins.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

@@ -1097,10 +1097,10 @@ later drain. The top-level `when` body and top-level `switch` branch plain
 generated-child do after prior multi-pending `await_any` subsets are shipped
 for this same pending-spawn lifetime proof. The top-level `when` body
 static-parameter generated do after prior multi-pending `await_any` subset is
-also shipped. Static-parameter generated `do` after prior `await_any` remains
-fail-closed for the switch-contained analogue, as do generated `do` forms with
-bind handoffs or domain metadata after prior `await_any`, `await_any` after
-the do, and a new nested spawn after the do before the drain.
+also shipped, and the top-level `switch` branch static-parameter analogue is
+shipped with the same later drain requirement. Generated `do` forms with bind
+handoffs or domain metadata after prior `await_any`, `await_any` after the do,
+and a new nested spawn after the do before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1318,7 +1318,7 @@ child before the nested repeat check. The top-level `when` body and top-level
 state shape, with `parent_worker_repeat_do_0` carrying the authored static
 parameter overrides in the generated top. The generated `do` still consumes
 only its own fresh done handoff and leaves the spawned child done handoff live
-for the later drain. In the top-level `when` body subset, this same
+for the later drain. In both top-level branch-contained subsets, this same
 static-parameter generated do shape may also follow a prior multi-pending
 `await_any` observation before the later `await_all` drain. The top-level
 `when` body and top-level `switch` branch
