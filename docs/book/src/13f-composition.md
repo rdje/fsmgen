@@ -467,19 +467,19 @@ ATL orchestration spellings are `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
 `(await actor.event)`, with only the bounded transaction-body trigger and
 event-wait parent-handoff subsets shipped today. Events are one-cycle control
-pulses with no payloads in ATL v0. Concurrent groups use
-`(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
-not a way to bypass fan-in, ordering, width, lifetime, or CDC safety. The
-first group implementation steps ship targeted fail-closed diagnostics and
-report-only metadata for verbose `(group ...)` declarations; compact
-`(concurrent ...)` aliases and broader scheduling behavior remain deferred.
+pulses with no payloads in ATL v0. Concurrent groups may still use
+`(group NAME (members ACTOR...) (mode concurrent))`, but that declaration is
+static review metadata, not a permanent runtime association and not a way to
+bypass fan-in, ordering, width, lifetime, or CDC safety. Compact
+`(concurrent ...)` aliases remain deferred.
 
-The first group-scheduling leaf is shipped as a same-cycle external trigger
-batch. It uses only existing transaction-body
-`(trigger actor.transaction)` clauses: a contiguous batch may target every
-member of one declared static group exactly once, lower to one parent state
-that pulses all selected trigger outputs, and report evidence through
-`actor_network.group_schedules[]`.
+The first multi-actor trigger scheduling leaf is shipped as a same-cycle
+external trigger batch. It uses only existing transaction-body
+`(trigger actor.transaction)` clauses: a contiguous batch may target distinct
+static actor instances, lower to one parent state that pulses all selected
+trigger outputs, and report evidence through
+`actor_network.group_schedules[]`. The association exists for that scheduled
+trigger state; it is not permanent group membership.
 
 Report-only static group metadata is now shipped for the verbose form:
 
@@ -498,22 +498,19 @@ Report-only static group metadata is now shipped for the verbose form:
 ```
 
 The group appears in `actor_network.groups[]` with `scheduling:
-"metadata_only"`. By itself, the declaration names intent; it does not run
-actors concurrently, infer dependencies, insert storage or muxes, emit child
-artifacts, cross clock domains, or accept compact `(concurrent ...)` aliases.
+"metadata_only"`. By itself, the declaration names a static review set; it
+does not run actors concurrently, infer dependencies, insert storage or muxes,
+emit child artifacts, cross clock domains, or accept compact
+`(concurrent ...)` aliases.
 
-The accepted group trigger batch keeps the group declaration separate from the
-scheduled use:
+The accepted temporary trigger batch does not require a group declaration:
 
 ```lisp
-(actor grouped_pipeline
+(actor trigger_batch_pipeline
   (clock clk)
   (interface (input start) (output done))
   (instance reader of packet_reader)
   (instance writer of packet_writer)
-  (group pipeline
-    (members reader writer)
-    (mode concurrent))
   (transaction run
     (on start)
     (trigger reader.capture)
@@ -521,22 +518,24 @@ scheduled use:
     (complete done)))
 ```
 
-FSMGen emits one grouped trigger state in the scheduled parent and pulses both
+FSMGen emits one trigger-batch state in the scheduled parent and pulses both
 generated outputs in the same cycle. The report keeps individual entries in
 `actor_network.transaction_triggers[]` and adds one
-`actor_network.group_schedules[]` entry with the group name, owner
-transaction, members, target transactions, generated signals, same-cycle
-schedule, no-storage policy, and external handoff boundary.
+`actor_network.group_schedules[]` entry with a transaction-scoped batch name
+such as `run_trigger_batch`, owner transaction, members, target transactions,
+generated signals, same-cycle schedule, no-storage policy, and external
+handoff boundary. If the same trigger set also matches one declared static
+group, the report may name that group instead.
 
 The first realistic ATL fixture selected for promotion is
-`isf/atl_group_trigger_pipeline.isf`. It uses only that shipped group-trigger
-surface: three direct static actor instances, one verbose static group, and
-one exact trigger batch. The selected fixture is meant to prove scheduled
-parent `.fsm`, strict schedule JSON, and HDL reachability for the bounded
-group orchestration surface. It is not a claim for peer event synchronization,
-endpoint data movement, generated ATL child `.fsm` artifacts, generated ATL
-tops, group endpoints, route mux/storage, CDC, payloads, or
-ready/backpressure.
+`isf/atl_trigger_batch_pipeline.isf`. It uses only that shipped temporary
+trigger-batch surface: three direct static actor instances and one contiguous
+transaction-body trigger batch. The selected fixture is meant to prove
+scheduled parent `.fsm`, strict schedule JSON, and HDL reachability for the
+bounded task-scoped orchestration surface. It is not a claim for peer event
+synchronization, endpoint data movement, generated ATL child `.fsm` artifacts,
+generated ATL tops, group endpoints, route mux/storage, CDC, payloads,
+ready/backpressure, or permanent actor grouping.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single
@@ -555,9 +554,10 @@ a local transaction. Dotted enum-looking names that do not name a static
 actor instance keep their prior diagnostics.
 
 The current qualified trigger behavior is the matching parent-handoff subset.
-One top-level transaction-body `(trigger actor.transaction)` may target the
-current single static actor instance. FSMGen lowers it to a generated
-one-cycle parent output named `actor_transaction_start`; for example,
+A top-level transaction-body `(trigger actor.transaction)` may target a
+static actor instance either as a single handoff or as part of the temporary
+trigger-batch subset. FSMGen lowers it to a generated one-cycle parent output
+named `actor_transaction_start`; for example,
 `reader.capture` becomes `reader_capture_start`. The scheduled parent `.fsm`
 exposes and pulses that output at the trigger point, and schedule JSON records
 the trigger under `actor_network.transaction_triggers[]`.
@@ -565,13 +565,13 @@ the trigger under `actor_network.transaction_triggers[]`.
 The trigger sink is external in this subset. FSMGen still does not resolve
 the actor type, emit an ATL child `.fsm`, generate an ATL top, connect the
 start pulse to an actor instance, add ready/backpressure, carry trigger
-payloads, or support rule-level qualified triggers, nested triggers, multiple
-triggers outside the exact group batch, generated handoff signal conflicts,
+payloads, or support rule-level qualified triggers, nested triggers, repeated
+triggers to the same actor instance, generated handoff signal conflicts,
 fan-in/fan-out, cross-clock actor triggers, or broader concurrent group
-triggers.
+behavior.
 
 Until those later leaves ship, `actor_network` remains discovery metadata
-plus selected event-wait, transaction-trigger, and exact group-trigger-batch
+plus selected event-wait, transaction-trigger, and exact trigger-batch
 handoff metadata. It does not imply generated ATL child artifacts, generated
 ATL top names, route muxes,
 internal handoff storage, or HDL event wiring.

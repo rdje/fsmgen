@@ -108,16 +108,16 @@ ATL v0 now has a selected public source direction:
 - Actor event synchronization uses `(await actor.event)`. The shipped subset
   is one top-level transaction-body wait for the current single static actor
   instance; event payloads are not part of ATL v0.
-- Concurrent actor groups use
+- Concurrent actor groups may still use
   `(group NAME (members ACTOR...) (mode concurrent))`. The shipped subset is
   report-only metadata for at least two declared direct static actor
-  instances in a single-clock actor. Groups express schedulable intent, not an
-  override for safety.
+  instances in a single-clock actor. Groups are static review metadata, not
+  permanent runtime associations and not an override for safety.
 
 The current generated-artifact contract is also explicit: FSMGen may add the
 selected one-bit actor-event handoff input, selected one-cycle
 actor-transaction trigger handoff output, selected one-cycle scalar
-data-movement handoff ports, and selected same-cycle group-trigger handoff
+data-movement handoff ports, and selected same-cycle trigger-batch handoff
 outputs to the parent scheduled `.fsm`; it reports those handoffs through
 `actor_network.event_waits[]`, `actor_network.transaction_triggers[]`,
 `actor_network.data_movements[]`, and `actor_network.group_schedules[]`.
@@ -204,10 +204,10 @@ yet. Schedule JSON records accepted triggers in
 `sink` value is `external_handoff`.
 
 The selected subset explicitly excludes rule-level qualified triggers, nested
-qualified triggers, multiple qualified triggers outside the exact group
-trigger batch, generated handoff signal conflicts, fan-in, fan-out, trigger
-payloads or bindings, ready/backpressure, cross-clock actor triggers,
-generated ATL child artifacts, generated ATL tops, and broader concurrent
+qualified triggers, repeated triggers to the same actor instance, generated
+handoff signal conflicts, fan-in, fan-out, trigger payloads or bindings,
+ready/backpressure, cross-clock actor triggers, generated ATL child artifacts,
+generated ATL tops, and broader concurrent
 group triggers. Those forms stay fail-closed until later leaves select their
 exact artifact and scheduling contracts.
 
@@ -278,11 +278,11 @@ task-tree leaves with their own artifact and report contracts.
 ## Selected First Realistic Fixture
 
 The first realistic ATL fixture is selected before code as
-`isf/atl_group_trigger_pipeline.isf`. It stays inside the shipped group
-scheduling subset:
+`isf/atl_trigger_batch_pipeline.isf`. It stays inside the shipped temporary
+trigger-batch subset:
 
 ```lisp
-(actor atl_group_trigger_pipeline
+(actor atl_trigger_batch_pipeline
   (clock clk)
   (reset (rst_n async active_low))
   (interface
@@ -291,9 +291,6 @@ scheduling subset:
   (instance reader of packet_reader)
   (instance filter of packet_filter)
   (instance writer of packet_writer)
-  (group pipeline
-    (members reader filter writer)
-    (mode concurrent))
   (transaction run
     (on start)
     (trigger reader.capture)
@@ -303,11 +300,12 @@ scheduling subset:
 ```
 
 The fixture is selected to prove parent scheduled `.fsm` emission, strict
-schedule JSON parity, and HDL reachability for the exact group-trigger batch.
-It will report three static instances, one static group, three per-target
-transaction triggers, and one `same_cycle_external_trigger_batch` group
-schedule. It deliberately does not claim peer event synchronization, endpoint
-data movement, generated ATL child `.fsm` artifacts, generated ATL tops, group
+schedule JSON parity, and HDL reachability for the exact temporary trigger
+batch. It will report three static instances, no static group, three
+per-target transaction triggers, and one `same_cycle_external_trigger_batch`
+schedule named `run_trigger_batch`. It deliberately does not claim peer event
+synchronization, endpoint data movement, generated ATL child `.fsm`
+artifacts, generated ATL tops, group
 endpoints, compact aliases, CDC, route mux/storage, payloads, or
 ready/backpressure.
 
@@ -600,15 +598,14 @@ artifacts, no route mux/storage, no CDC, and no scheduling overlap claims
 until separate leaves ship them. Compact `(concurrent NAME ACTOR...)` aliases
 remain reserved and fail closed.
 
-The shipped first behavior-bearing group scheduling subset is a same-cycle
+The shipped first behavior-bearing multi-actor trigger subset is a same-cycle
 external trigger batch. In one top-level transaction body, a contiguous run of
-`(trigger actor.transaction)` clauses may target every member of the same
-declared static group exactly once. The lowering emits every generated parent
-trigger output from one scheduled state and reports the inferred independence
-through `actor_network.group_schedules[]`. This subset does not add group
-endpoint syntax, generated children, event waits, data movement, storage/mux
-insertion, CDC, compact aliases, partial-group batches, or fan-in/fan-out
-behavior.
+`(trigger actor.transaction)` clauses may target distinct static actor
+instances. The lowering emits every generated parent trigger output from one
+scheduled state and reports the inferred temporary association through
+`actor_network.group_schedules[]`. This subset does not add group endpoint
+syntax, generated children, event waits, data movement, storage/mux insertion,
+CDC, compact aliases, repeated-instance batches, or fan-in/fan-out behavior.
 
 ## Scheduling Ownership
 
@@ -634,12 +631,14 @@ for at least two declared direct static actor instances in a single-clock
 actor and reports them under `actor_network.groups[]` with `scheduling:
 metadata_only`.
 
-The shipped first group scheduling implementation is a same-cycle external
-trigger batch for every member of one declared static group. It keeps
-the existing per-target `actor_network.transaction_triggers[]` entries and adds
-`actor_network.group_schedules[]` entries with `group`, `owner_transaction`,
-`context`, `members`, `target_transactions`, `signals`, `schedule`,
-`dependency_policy`, `storage`, `source`, and `sink` keys.
+The shipped first multi-actor trigger scheduling implementation is a
+same-cycle external trigger batch for distinct static actor instances. It
+keeps the existing per-target `actor_network.transaction_triggers[]` entries
+and adds `actor_network.group_schedules[]` entries with `group`,
+`owner_transaction`, `context`, `members`, `target_transactions`, `signals`,
+`schedule`, `dependency_policy`, `storage`, `source`, and `sink` keys. When no
+declared static group matches the trigger set, `group` is a synthetic
+transaction-scoped name such as `run_trigger_batch`.
 
 The shipped first behavior-bearing handoff subset accepts one top-level
 transaction-body `(await actor.event)` and one top-level transaction-body

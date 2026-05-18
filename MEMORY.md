@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL temporary trigger-batch fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` after clarifying that ATL
+  actor associations are task-scoped and must not be modeled as permanent
+  groups by default.
+- The fixture source is now `isf/atl_trigger_batch_pipeline.isf`, with three
+  direct static actor instances and no `(group ...)` declaration.
+- A contiguous top-level transaction-body trigger batch to distinct static
+  actors lowers as one `run_atl_trigger_batch_1` parent state that pulses
+  `reader_capture_start`, `filter_process_start`, and `writer_emit_start` in
+  the same cycle.
+- Schedule JSON keeps per-target `actor_network.transaction_triggers[]` and
+  reports the task-scoped batch through `actor_network.group_schedules[]` with
+  synthetic group label `run_trigger_batch`, dependency policy
+  `transaction_body_distinct_instances`, and empty `groups[]`.
+- Validation passed: syntax checks for changed parser/scheduler/contract
+  modules, `prove -Iperl t/1324-isf-atl-fixture-coverage.t
+  t/1322-isf-actor-network-static.t`, public contract/book audits,
+  `t/1255-isf-schedule-report-golden-matrix.t`, `mdbook build docs/book`,
+  broad `./bin/ci-regression isf --no-book` with `Files=230, Tests=1357`, and
+  `git diff --check`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` to select the next
+  temporary-association slice before code.
 ## 2026-05-18: ATL first realistic fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` before fixture source or
   code changes.

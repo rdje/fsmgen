@@ -102,6 +102,7 @@ my @required_examples = (
     'FIFO datapath fixture',
     'FIFO controller fixture',
     'FIFO library fixture',
+    'ATL temporary trigger-batch fixture',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',

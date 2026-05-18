@@ -106,6 +106,7 @@ Current checked-in ISF fixtures:
 | `isf/switch_test.isf` | Simple switch dispatch fixture. | Sampled selector capture, explicit switch branches, default fallthrough, named-drive branch starts, delayed completion pulse behavior. | `t/1097`; `t/1103`; `t/1205`; `t/1313-isf-switch-fixture-coverage.t`. | Promoted as a bounded switch-dispatch fixture with schedule-report, strict-mode, and HDL coverage. |
 | `isf/when_test.isf` | Simple conditional body fixture. | Entry drive setup, conditional decision states, multi-step true-body drives, false-path fallthrough, compatible named-drive fan-in, delayed completion pulse behavior. | `t/1097`; `t/1104`; `t/1107`; `t/1206`; `t/1314-isf-when-fixture-coverage.t`. | Promoted as a bounded `when` fixture with schedule-report, strict-mode, and HDL coverage. |
 | `isf/phase_test.isf` | Transaction phase pass-through fixture. | Transaction phase metadata/pass-through states, delayed completion pulse behavior. | `t/1179-isf-phase-stage-boundary.t`; `t/1312-isf-phase-fixture-coverage.t`. | Promoted as a bounded phase-metadata fixture with schedule-report, strict-mode, and HDL coverage. |
+| `isf/atl_trigger_batch_pipeline.isf` | ATL temporary trigger-batch fixture. | Static actor instances, task-scoped same-cycle trigger batch, generated parent trigger handoff pulses. | `t/1324-isf-atl-fixture-coverage.t`. | Promoted as a bounded ATL orchestration fixture with schedule-report, strict-mode, and HDL coverage; it deliberately avoids permanent `(group ...)` membership. |
 
 Current ISF regression tier:
 
@@ -113,8 +114,8 @@ Current ISF regression tier:
   `t/109[1-9]-isf*.t`, `t/11[0-9][0-9]-isf*.t`, and
   `t/12[0-9][0-9]-isf*.t`, and `t/13[0-9][0-9]-isf*.t`, sorted with
   unmatched future bands ignored by `nullglob`.
-- Current count: `223` ISF-tier tests: `9` in the `109x` band, `98` in the
-  `11xx` band, `98` in the `12xx` band, and `18` in the `13xx` band.
+- Current count: `224` ISF-tier tests: `9` in the `109x` band, `98` in the
+  `11xx` band, `98` in the `12xx` band, and `19` in the `13xx` band.
 - The tier covers parser/lowering smoke, public interface contract audits,
   malformed-boundary tests, feature-specific lowering/report tests, generated
   composition, arbitration, data widths, storage roles, and the explicit
@@ -178,22 +179,26 @@ Current strict-mode ISF coverage:
 - `t/1321-isf-fifo-library-fixture-coverage.t` proves strict schedule JSON
   parity, strict `--outdir` file emission, and plain plus strict generated-top
   HDL generation for the bounded fixed FIFO reusable-library fixture.
+- `t/1324-isf-atl-fixture-coverage.t` proves strict schedule JSON parity and
+  plain plus strict HDL generation for the bounded ATL temporary
+  trigger-batch fixture.
 
 Remaining inventory gaps after `ISF-FIXTURES.5`:
 
 - I2C, burst-reader, UART, phase, switch, when, generated composition,
   rule/resource arbitration, stage/contract, FIFO datapath, FIFO controller,
-  and FIFO library have
+  FIFO library, and ATL temporary trigger-batch fixtures have
   post-closure file-backed schedule JSON, strict-mode, and generated HDL
   assertions.
 - Quick/smoke currently exercises only APB for ISF; that is intentional for
   turnaround. The SPI-like, I2C-like, burst-reader, UART-like, phase, switch,
   when, generated-composition, rule/resource, stage/contract, FIFO datapath,
-  FIFO controller, and FIFO library fixtures stay in `isf`, not `quick`.
+  FIFO controller, FIFO library, and ATL temporary trigger-batch fixtures stay
+  in `isf`, not `quick`.
 - Strict-mode accepted-source fixture coverage is APB plus the bounded
   SPI-like, I2C-like, burst-reader, UART-like, phase, switch, when,
   generated-composition, rule/resource, stage/contract, FIFO datapath, FIFO
-  controller, and FIFO library fixtures.
+  controller, FIFO library, and ATL temporary trigger-batch fixtures.
 - No known fixture matrix candidate remains unpromoted. Future fixture work
   should open a new task tree when a shipped interaction needs a protocol-like
   owner.
@@ -229,6 +234,7 @@ Matrix rules:
 | `isf/fifo_controller.isf` | FIFO controller matrix fixture. | Depth-4 occupancy/full/empty update matrix, accepted push/pop pointer wrap, simultaneous push+pop controller behavior, no data-bank storage. | Actor-storage entries for pointers and occupancy, compatible fan-in groups, rule DT assignment counts, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION](ISF-FIFO-CONTROLLER-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/fifo_data_path.isf` | FIFO datapath bank-access fixture. | Actor-owned depth-4 bank store/load, pointer-selected accepted push/pop, scalarized storage entries, read-before-write same-cycle policy. | `bank_accesses`, actor-storage entries for `data_0` through `data_3`, rule DT assignment counts, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-FIFO-DATAPATH-FIXTURE-PROMOTION](ISF-FIFO-DATAPATH-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/fifo_library_use.isf` | Fixed FIFO reusable-library fixture. | Import/use binding for `common.fifo.fifo`, generated top wiring, fixed FIFO parameter overrides, scalarized child data entries, combined controller/datapath behavior. | `library_uses`, fixed parameter provenance, clock/reset/input/output bindings, strict schedule JSON CLI parity. | Importing actor, specialized child, and generated top scheduled `.fsm` artifacts; strict `--outdir`; plain and strict generated-top HDL reachability. | `isf`; not quick. | Promoted by [ISF-FIFO-LIBRARY-FIXTURE-PROMOTION](ISF-FIFO-LIBRARY-FIXTURE-PROMOTION.md) with bounded schedule/strict/outdir/HDL coverage. |
+| `isf/atl_trigger_batch_pipeline.isf` | ATL temporary trigger-batch fixture. | Static actor instances, task-scoped trigger association, same-cycle generated trigger pulses. | `actor_network.instances[]`, per-target `transaction_triggers[]`, synthetic `run_trigger_batch` schedule evidence in `group_schedules[]`, strict schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, one trigger-batch state, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` with bounded schedule/strict/HDL coverage. |
 | `isf/phase_test.isf` | Phase metadata/pass-through fixture. | Transaction phase pass-through states, delayed completion pulse behavior, no reusable `done` drive storage. | Transaction state order, completion-pulse storage, rdata drive storage, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-PHASE-FIXTURE-PROMOTION](ISF-PHASE-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/switch_test.isf` | Switch dispatch fixture. | Sampled selector capture, explicit branch dispatch, default fallthrough, named-drive branch starts, delayed completion pulse behavior. | Transaction state order, sampled selector storage, named-drive DT blocks, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-SWITCH-FIXTURE-PROMOTION](ISF-SWITCH-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
 | `isf/when_test.isf` | Conditional body fixture. | Entry drive setup, two conditional decision states, multi-step true-body drives, false-path fallthrough, compatible named-drive start fan-in, delayed completion pulse behavior. | Transaction state order, compatible fan-in group for `result_start`, result drive DT block, schedule JSON CLI parity. | File-backed scheduled `.fsm` structure, generated HDL reachability, strict-mode accepted-source path. | `isf`; not quick. | Promoted by [ISF-WHEN-FIXTURE-PROMOTION](ISF-WHEN-FIXTURE-PROMOTION.md) with bounded schedule/strict/HDL coverage. |
@@ -414,6 +420,22 @@ elaboration, nested imports, standalone transaction/drive exports,
 arbitrary-depth generated FIFOs, memory-array backend emission, or automatic
 non-zero reset values.
 
+## Post-Closure ATL Temporary Trigger-Batch Fixture Promotion
+
+`ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` promotes
+`isf/atl_trigger_batch_pipeline.isf` after this matrix tree closed. The
+file-backed regression `t/1324-isf-atl-fixture-coverage.t` covers strict
+schedule JSON parity, scheduled `.fsm` structure, one same-cycle
+trigger-batch state, generated `reader_capture_start`,
+`filter_process_start`, and `writer_emit_start` handoff pulses, static
+actor-network report metadata, and plain plus strict HDL generation. It
+remains in the `isf` regression tier, not `quick`, and remains a bounded
+temporary association fixture: it deliberately avoids a permanent
+`(group ...)` declaration and does not claim peer events, endpoint data
+movement, generated ATL children, generated ATL tops, group endpoints, route
+mux/storage, CDC, payloads, ready/backpressure, or trigger/data/event
+coupling.
+
 ## ISF-FIXTURES.4 Regression Tier Placement
 
 `ISF-FIXTURES.4` keeps the SPI-like fixture in the `isf` regression tier and
@@ -582,3 +604,7 @@ composition.
   strict schedule JSON, strict `--outdir`, generated importer/child/top
   scheduled `.fsm`, and plain/strict generated-top HDL coverage for the
   shipped fixed reusable FIFO subset.
+- `2026-05-19`: Recorded post-closure ATL temporary trigger-batch fixture
+  promotion through strict schedule JSON, scheduled `.fsm`, and plain/strict
+  HDL coverage for task-scoped actor trigger associations without permanent
+  `(group ...)` membership.

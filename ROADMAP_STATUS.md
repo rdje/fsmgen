@@ -115,7 +115,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   consecutive top-level transaction-body `(trigger actor.transaction)`
   clauses to every member of one declared static group exactly once.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` shipped that subset: the parser
-  rewrites the contiguous trigger run to one internal grouped trigger state,
+  rewrites the contiguous trigger run to one internal trigger-batch state,
   the scheduled parent pulses every generated external trigger output in the
   same cycle, and schedule JSON reports both per-target
   `actor_network.transaction_triggers[]` and batch-level
@@ -123,17 +123,24 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   remains fail-closed. The `.7` concurrent group sequence is complete and
   the `.8` realistic-fixture frontier is decomposed before code into
   `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` for fixture selection and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` for fixture promotion. The next ATL
-  frontier is `.8.1`. `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` selected
-  `isf/atl_group_trigger_pipeline.isf` as the first realistic ATL fixture
-  before code: three direct static actor instances, one verbose static
-  `pipeline` group, and one exact same-cycle external group-trigger batch.
-  The selected implementation leaf must emit only
-  `atl_group_trigger_pipeline.fsm`, prove strict schedule JSON plus HDL
-  reachability, and avoid claiming peer events, endpoint data movement,
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` for fixture promotion. `.8.1`
+  selected a static-group fixture first, then `.8.2` pivoted after the
+  temporary-association clarification: actor associations may form for a task
+  and dissolve when done, so the fixture is now
+  `isf/atl_trigger_batch_pipeline.isf` with three direct static actor
+  instances, no permanent `(group ...)` declaration, and one contiguous
+  same-cycle external trigger batch. The selected implementation leaf must
+  emit only `atl_trigger_batch_pipeline.fsm`, prove strict schedule JSON plus
+  HDL reachability, and avoid claiming peer events, endpoint data movement,
   generated ATL child artifacts, generated ATL tops, group endpoints, compact
-  aliases, CDC, payloads, ready/backpressure, or route mux/storage. The next
-  ATL frontier is `.8.2`.
+  aliases, CDC, payloads, ready/backpressure, route mux/storage, or permanent
+  actor grouping. `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` completed that pivot:
+  the parser accepts the task-scoped trigger batch without a permanent group,
+  the parent schedule emits one `run_atl_trigger_batch_1` state, schedule JSON
+  reports synthetic `run_trigger_batch` evidence, and the fixture proves
+  strict schedule JSON plus plain/strict HDL reachability. The next ATL
+  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, which must select the
+  next temporary-association behavior before code.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

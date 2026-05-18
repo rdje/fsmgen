@@ -1500,7 +1500,7 @@ Rules:
 FSMGen now accepts bounded Actor Transfer Level (`ATL`) source surfaces owned
 by the top-level actor: direct static actor declarations, report-only static
 groups, selected scalar handoffs, selected parent event/trigger handoffs, and
-the exact same-cycle group-trigger batch. The static declarations record
+the exact same-cycle temporary trigger batch. The static declarations record
 actor-network intent for downstream discovery; behavior-bearing leaves add
 only the explicitly documented parent handoff ports and scheduled states.
 FSMGen still does not resolve child actor types, instantiate ATL child
@@ -1604,10 +1604,11 @@ capability manifest and this handoff:
   top-level transaction-body wait for the current single static actor
   instance; events are one-cycle control pulses and event payloads are not
   supported.
-- Concurrent actor groups use
-  `(group NAME (members ACTOR...) (mode concurrent))`. A group is only
-  schedulable intent; it never overrides fan-in, lifetime, ordering, width, or
-  CDC safety.
+- Concurrent actor groups may still use
+  `(group NAME (members ACTOR...) (mode concurrent))`, but groups are static
+  review metadata only. They are not required for task-scoped ATL trigger
+  associations and never create permanent runtime associations or override
+  fan-in, lifetime, ordering, width, or CDC safety.
 - The concurrent-group implementation axis has shipped targeted diagnostics
   and report-only metadata. Downstream producers may emit direct actor-body
   `(group NAME (members ACTOR...) (mode concurrent))` declarations only for
@@ -1615,14 +1616,16 @@ capability manifest and this handoff:
   actor instances, single-clock actor scope, no dynamic membership, no nested
   groups, and no scheduling behavior. Compact `(concurrent NAME ACTOR...)`
   remains reserved and unsupported.
-- The first group-scheduling subset is now downstream-emittable. Downstream
-  producers may emit one contiguous top-level transaction-body batch of
-  `(trigger actor.transaction)` clauses targeting every member of one declared
-  static group exactly once. FSMGen lowers the batch as one same-cycle
-  external trigger state, preserves per-target
+- The first multi-actor trigger scheduling subset is now downstream-emittable.
+  Downstream producers may emit one contiguous top-level transaction-body
+  batch of `(trigger actor.transaction)` clauses targeting distinct static
+  actor instances. FSMGen lowers the batch as one same-cycle external
+  trigger-batch state, preserves per-target
   `actor_network.transaction_triggers[]`, and reports batch evidence through
-  `actor_network.group_schedules[]`. Downstream producers must still avoid
-  partial or mixed-group batches, noncontiguous batches, repeated members,
+  `actor_network.group_schedules[]`. If the trigger set matches one declared
+  static group, the `group` field names that group; otherwise it carries a
+  synthetic transaction-scoped name such as `run_trigger_batch`. Downstream
+  producers must still avoid repeated members, noncontiguous batches,
   generated child assumptions, group endpoints, event/data-movement coupling,
   storage/mux insertion, CDC, compact aliases, and broader fan-in/fan-out.
 
@@ -1650,11 +1653,12 @@ rule-level `(trigger transaction)` remains a local transaction trigger.
 Dotted enum-looking names that do not name a static actor instance keep their
 prior diagnostics.
 
-Current actor-transaction trigger handoff subset: outside the exact group
-trigger batch documented above, downstream producers may emit exactly one
-top-level transaction-body `(trigger actor.transaction)` against the current
-single declared static actor instance. The target transaction name must be a
-scalar HDL identifier. FSMGen maps each accepted trigger to a generated
+Current actor-transaction trigger handoff subset: downstream producers may
+emit a top-level transaction-body `(trigger actor.transaction)` against a
+static actor instance either as a single handoff or as part of the exact
+temporary trigger-batch subset documented above. The target transaction name
+must be a scalar HDL identifier. FSMGen maps each accepted trigger to a
+generated
 one-cycle parent output named `actor_transaction_start`; for example,
 `reader.capture` maps to `reader_capture_start`. The scheduled parent `.fsm`
 exposes and pulses that output at the trigger point, either in the
@@ -1667,18 +1671,17 @@ Schedule JSON reports accepted triggers under
 and `sink`; the current sink is `external_handoff`.
 
 Downstream producers must not emit rule-level qualified triggers, nested
-qualified triggers, multiple qualified triggers outside the exact group
-batch, fan-in/fan-out trigger
-structures, generated handoff signal conflicts, trigger payloads or bindings,
-ready/backpressure assumptions, cross-clock actor triggers, concurrent group
-triggers, or source that relies on generated ATL child artifacts or generated
-ATL top wiring until the corresponding support is documented here and
-advertised in the manifest.
+qualified triggers, repeated triggers to the same actor instance,
+fan-in/fan-out trigger structures, generated handoff signal conflicts, trigger
+payloads or bindings, ready/backpressure assumptions, cross-clock actor
+triggers, concurrent group endpoints, or source that relies on generated ATL
+child artifacts or generated ATL top wiring until the corresponding support is
+documented here and advertised in the manifest.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
 the selected one-bit actor-event handoff input, selected one-cycle
 actor-transaction trigger output, selected scalar data-movement handoff
-ports, and selected same-cycle group-trigger handoff outputs. FSMGen still
+ports, and selected same-cycle trigger-batch handoff outputs. FSMGen still
 emits no generated ATL child `.fsm`, no generated ATL top, no route mux, no
 internal handoff storage, and no HDL event wiring. Downstream consumers must
 treat `actor_network` as discovery/review metadata plus the explicitly
@@ -2013,6 +2016,7 @@ isf/common/fifo.isf
 isf/fifo_controller.isf
 isf/fifo_data_path.isf
 isf/fifo_library_use.isf
+isf/atl_trigger_batch_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2096,6 +2100,12 @@ JSON parity, generated importer/child/top scheduled `.fsm` artifacts, strict
 `--outdir` file emission, fixed parameter overrides, use-site bindings,
 scalarized FIFO data entries, plain and strict generated-top HDL generation,
 and generated top wiring for `isf/fifo_library_use.isf`.
+The ATL temporary trigger-batch fixture is covered by
+`t/1324-isf-atl-fixture-coverage.t`, which proves strict schedule JSON
+parity, scheduled `.fsm` structure, one same-cycle external trigger-batch
+state, per-target trigger handoffs, static actor-network report metadata, and
+plain plus strict HDL generation for `isf/atl_trigger_batch_pipeline.isf`.
+It intentionally does not declare a permanent `(group ...)` association.
 
 Recommended downstream smoke commands:
 
@@ -2113,6 +2123,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_controller.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_data_path.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_library_use.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf

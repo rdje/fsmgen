@@ -643,7 +643,7 @@ policy for the fully general case.
 ### Actor Network Orchestration
 
 Status: active ATL design tree; static metadata, scalar handoffs, and the
-first bounded group-trigger scheduling subset are shipped under the selected
+first bounded temporary trigger-batch scheduling subset are shipped under the selected
 ATL v0 public contract.
 Task-tree owner:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
@@ -725,25 +725,25 @@ group axis starts with shipped fail-closed diagnostics for direct `(group ...)`
 declarations and compact `(concurrent ...)` aliases. Report-only static group
 metadata is shipped for verbose `(group ...)`; scheduling behavior and compact
 aliases remain later leaves.
-The first group-scheduling leaf is shipped as a same-cycle external trigger
-batch over existing transaction-body `(trigger actor.transaction)` clauses:
-one contiguous batch, every member of one declared static group exactly once,
-generated external trigger outputs pulsed from one parent state, and
-`actor_network.group_schedules[]` report evidence. Partial or mixed-group
-batches, noncontiguous batches, repeated members, generated children, group
-endpoints, event/data-movement coupling, route mux/storage, CDC, and compact
-aliases remain later leaves.
+The first multi-actor trigger scheduling leaf is shipped as a same-cycle
+external trigger batch over existing transaction-body
+`(trigger actor.transaction)` clauses: one contiguous batch, distinct static
+actor instances, generated external trigger outputs pulsed from one parent
+state, and `actor_network.group_schedules[]` report evidence. Static
+`(group ...)` declarations are not required and remain review metadata only.
+Noncontiguous batches, repeated members, generated children, group endpoints,
+event/data-movement coupling, route mux/storage, CDC, and compact aliases
+remain later leaves.
 
 The first realistic ATL fixture is selected before code as
-`isf/atl_group_trigger_pipeline.isf`. It is deliberately bounded to already
-shipped surfaces: three direct static actor instances, one verbose static
-group named `pipeline`, and one contiguous transaction-body trigger batch to
-every group member exactly once. The next implementation leaf adds that
-fixture with scheduled `.fsm`, strict schedule JSON, and HDL reachability
-coverage. It will not claim peer event synchronization, endpoint data
-movement, generated ATL child artifacts, generated ATL tops, group endpoints,
-compact aliases, CDC, route mux/storage, payloads, ready/backpressure, or
-trigger/data/event coupling.
+`isf/atl_trigger_batch_pipeline.isf`. It is deliberately bounded to already
+shipped surfaces: three direct static actor instances and one contiguous
+transaction-body trigger batch. The next implementation leaf adds that fixture
+with scheduled `.fsm`, strict schedule JSON, and HDL reachability coverage. It
+will not claim peer event synchronization, endpoint data movement, generated
+ATL child artifacts, generated ATL tops, group endpoints, compact aliases,
+CDC, route mux/storage, payloads, ready/backpressure, trigger/data/event
+coupling, or permanent actor grouping.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -774,9 +774,9 @@ trigger under `actor_network.transaction_triggers[]`.
 
 The trigger sink remains external until later ATL leaves resolve actor types,
 generate child artifacts, emit ATL tops, and add ready/backpressure or payload
-semantics. Rule-level qualified triggers, nested triggers, multiple triggers,
-outside the exact group batch, generated handoff signal conflicts, fan-in,
-fan-out, cross-clock triggers, and broader concurrent group triggers stay
+semantics. Rule-level qualified triggers, nested triggers, repeated triggers
+to the same actor instance, generated handoff signal conflicts, fan-in,
+fan-out, cross-clock triggers, and broader concurrent group behavior stay
 fail-closed/deferred.
 
 Direct actor-body proposal:

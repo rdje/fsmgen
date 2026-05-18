@@ -222,8 +222,8 @@ ISF
         ['atl_group_trigger_batch.fsm'],
         'group trigger batch does not emit ATL child artifacts or a generated top',
     );
-    like($fsm, qr/run_atl_group_trigger_/, 'scheduled .fsm contains one grouped trigger state');
-    unlike($fsm, qr/run_atl_trigger_/, 'scheduled .fsm does not split the grouped trigger batch into per-trigger states');
+    like($fsm, qr/run_atl_trigger_batch_/, 'scheduled .fsm contains one grouped trigger state');
+    unlike($fsm, qr/run_atl_trigger_[0-9]/, 'scheduled .fsm does not split the grouped trigger batch into per-trigger states');
     like($fsm, qr/\(<1 \(reader_capture_start> 1\)\)/, 'scheduled .fsm pulses the reader trigger handoff');
     like($fsm, qr/\(<1 \(writer_emit_start> 1\)\)/, 'scheduled .fsm pulses the writer trigger handoff');
 
@@ -251,7 +251,7 @@ ISF
             transaction_triggers => $expected_triggers,
         },
         'group trigger batch report',
-    );
+    , 'group-transaction-trigger.isf');
 };
 
 subtest 'unsupported static graph shapes fail closed' => sub {
@@ -293,12 +293,11 @@ ISF
     (await reader.done)
     (complete done)))
 ISF
-        qr/ATL concurrent group metadata cannot be combined with actor event waits or actor transaction triggers/,
+        qr/ATL concurrent group metadata cannot be combined with actor event waits/,
         'static concurrent group metadata does not combine with actor event waits',
     );
 
-    parse_fails_like(
-        <<'ISF',
+    my $single_trigger_with_group = parse_source(<<'ISF', 'group-transaction-trigger.isf');
 (actor group_transaction_trigger
   (clock clk)
   (interface (input start) (output done))
@@ -310,8 +309,10 @@ ISF
     (trigger writer.capture)
     (complete done)))
 ISF
-        qr/ATL concurrent group trigger batch requires at least two actor transaction triggers/,
-        'static concurrent group trigger batches require at least two triggers',
+    is_deeply(
+        $single_trigger_with_group->{actor_network}{group_schedules},
+        [],
+        'a static group declaration does not force a temporary association for one trigger',
     );
 
     parse_fails_like(
@@ -1053,8 +1054,8 @@ ISF
     (trigger reader.flush)
     (complete done)))
 ISF
-        qr/exceeds the current one-trigger subset/,
-        'multiple qualified actor triggers fail closed until fan-in/fan-out policy ships',
+        qr/ATL temporary trigger batch requires each trigger to target a distinct actor instance/,
+        'multiple qualified actor triggers to the same instance fail closed until fan-in/fan-out policy ships',
     );
 
     parse_fails_like(

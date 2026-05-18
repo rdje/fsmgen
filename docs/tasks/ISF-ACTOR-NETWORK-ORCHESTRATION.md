@@ -6,7 +6,7 @@
 - Status: `active`
 - Roadmap lane: `R14`
 - Created: `2026-05-18`
-- Last updated: `2026-05-18`
+- Last updated: `2026-05-19`
 - Owner: repo-local workflow
 
 ## Goal
@@ -53,7 +53,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION`
   Status: `active`
   Goal: `Design and eventually ship static ISF Actor Transfer Level actor-network orchestration.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.8`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.1`
   Status: `completed`
@@ -258,12 +258,12 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.5: lower group trigger batch`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.8`
-  Status: `active`
+  Status: `completed`
   Goal: `Promote multi-actor orchestration fixtures.`
   Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`
-  Acceptance: `A fixture ladder promotes realistic multi-actor ATL examples without overclaiming unsupported combinations. The first fixture uses only already shipped ATL surfaces: direct static actor instances, a verbose static group declaration, and a same-cycle external group-trigger batch. Later fixture leaves may cover peer event synchronization, data movement, generated ATL child artifacts, generated ATL tops, and richer HDL wiring only after the corresponding behavior-bearing ATL leaves ship those combinations.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `A fixture ladder promotes realistic multi-actor ATL examples without overclaiming unsupported combinations. The first fixture uses only already shipped ATL surfaces after the temporary-association clarification: direct static actor instances and a same-cycle external trigger batch inferred from contiguous transaction-body '(trigger actor.transaction)' clauses. It deliberately avoids a permanent '(group ...)' declaration. Later fixture leaves may cover peer event synchronization, data movement, generated ATL child artifacts, generated ATL tops, and richer HDL wiring only after the corresponding behavior-bearing ATL leaves ship those combinations.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1322-isf-actor-network-static.t; prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.2: add ATL trigger fixture`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1`
   Status: `completed`
@@ -273,9 +273,24 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.1: select ATL fixture`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`
+  Status: `completed`
+  Goal: `Add the selected realistic ATL temporary trigger-batch fixture.`
+  Acceptance: `Pivot the '.8.1' fixture selection to honor the temporal-association clarification: add 'isf/atl_trigger_batch_pipeline.isf' with three direct static actor instances and no permanent '(group ...)' declaration. Lower a contiguous transaction-body trigger batch to distinct static actor instances as one temporary same-cycle trigger-batch state. Add a file-backed regression that proves the in-process lowerer emits only 'atl_trigger_batch_pipeline.fsm', the scheduled parent contains one 'run_atl_trigger_batch_1' state that pulses 'reader_capture_start', 'filter_process_start', and 'writer_emit_start' in the same cycle, strict CLI schedule JSON matches the in-process report, and plain plus strict HDL generation reach SystemVerilog without claiming generated ATL children, generated ATL tops, endpoint data movement, peer events, group endpoints, CDC, payloads, ready/backpressure, route mux/storage, trigger/data/event coupling, or permanent actor grouping. Sync the mdBook, live docs, and fixture-coverage/task evidence.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1322-isf-actor-network-static.t; prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book (Files=230, Tests=1357); git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.2: add ATL trigger fixture`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
-  Goal: `Add the selected realistic ATL group-trigger fixture.`
-  Acceptance: `Add 'isf/atl_group_trigger_pipeline.isf' using only the '.8.1' selected shipped ATL surface. Add a file-backed regression that proves the in-process lowerer emits only 'atl_group_trigger_pipeline.fsm', the scheduled parent contains one grouped trigger state that pulses 'reader_capture_start', 'filter_process_start', and 'writer_emit_start' in the same cycle, strict CLI schedule JSON matches the in-process report, and plain plus strict HDL generation reach SystemVerilog without widening ATL source or schedule behavior. Sync the mdBook, live docs, and fixture-coverage/task evidence while preserving all '.8.1' fail-closed boundaries.`
+  Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`
+  Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`
+  Status: `active`
+  Goal: `Choose the next bounded ATL temporary-association slice.`
+  Acceptance: `Review the shipped trigger, event, scalar data movement, pin movement, static group metadata, and temporary trigger-batch fixture surfaces; pick one next behavior-bearing ATL slice or one doc-only design clarification needed before code. Candidate directions include coupling a temporary trigger batch with peer event waits, adding a temporary data-movement association fixture, selecting generated child artifact boundaries, or refining report vocabulary away from the legacy group_schedules[] key family. No code changes may begin until this leaf records the selected source shape and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -283,22 +298,24 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` | `active` | `.8.1` selected the first realistic ATL fixture; the next step adds only that file-backed fixture and coverage. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` | `active` | `.8.2` promotes the first temporary trigger-batch fixture; the next step must select the next task-scoped ATL association behavior before code. |
 
 ## Selected First ATL Fixture
 
-`ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` selects the first realistic ATL
-fixture as a bounded group-trigger orchestration example, not as a claim for
-full actor-network execution.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` pivots the first realistic ATL fixture
+to a bounded temporary trigger-batch orchestration example, not as a claim for
+full actor-network execution. The pivot follows the clarified requirement
+that actor associations may form for a task and dissolve when the scheduled
+work is done; they must not be modeled as permanent groups by default.
 
 Selected file:
 
-- `isf/atl_group_trigger_pipeline.isf`
+- `isf/atl_trigger_batch_pipeline.isf`
 
 Selected source shape:
 
 ```lisp
-(actor atl_group_trigger_pipeline
+(actor atl_trigger_batch_pipeline
   (clock clk)
   (reset (rst_n async active_low))
   (interface
@@ -307,9 +324,6 @@ Selected source shape:
   (instance reader of packet_reader)
   (instance filter of packet_filter)
   (instance writer of packet_writer)
-  (group pipeline
-    (members reader filter writer)
-    (mode concurrent))
   (transaction run
     (on start)
     (trigger reader.capture)
@@ -321,13 +335,12 @@ Selected source shape:
 Selected shipped ATL surfaces:
 
 - direct actor-body static instances;
-- verbose static actor-body group metadata;
-- same-cycle external group-trigger scheduling from a contiguous
-  transaction-body trigger batch to every group member exactly once.
+- same-cycle external trigger-batch scheduling from a contiguous
+  transaction-body trigger batch to distinct actor instances.
 
 Selected generated artifact contract:
 
-- Lowering emits `atl_group_trigger_pipeline.fsm` only.
+- Lowering emits `atl_trigger_batch_pipeline.fsm` only.
 - The scheduled parent exposes `reader_capture_start`,
   `filter_process_start`, and `writer_emit_start` as generated trigger
   outputs.
@@ -337,14 +350,14 @@ Selected generated artifact contract:
 Selected report evidence:
 
 - `actor_network.instances[]` contains `reader`, `filter`, and `writer`.
-- `actor_network.groups[]` contains `pipeline` with those three members and
-  `scheduling: "metadata_only"`.
+- `actor_network.groups[]` is empty because the fixture does not declare a
+  permanent static group.
 - `actor_network.transaction_triggers[]` contains the three per-target
   external trigger handoffs.
 - `actor_network.group_schedules[]` contains one
-  `same_cycle_external_trigger_batch` entry with the same members, target
-  transactions, generated signals, `storage: "none"`, and
-  `sink: "external_handoff"`.
+  `same_cycle_external_trigger_batch` entry named `run_trigger_batch` with
+  the same members, target transactions, generated signals,
+  `storage: "none"`, and `sink: "external_handoff"`.
 - `actor_network.event_waits[]` and `actor_network.data_movements[]` remain
   empty.
 
@@ -362,9 +375,10 @@ Explicit non-claims:
 - no endpoint data movement in the fixture;
 - no generated ATL child `.fsm` artifacts;
 - no generated ATL top;
-- no group endpoints or compact `(concurrent ...)` aliases;
+- no permanent `(group ...)` association, group endpoints, or compact
+  `(concurrent ...)` aliases;
 - no CDC, payloads, ready/backpressure, storage, muxing, fan-in/fan-out, or
-  coupling between group triggers and event waits or data movement.
+  coupling between trigger batches and event waits or data movement.
 
 ## ATL v0 Proposal
 
@@ -555,6 +569,11 @@ Current proposal summary:
   orchestration surface through scheduled `.fsm`, strict schedule JSON, and
   HDL reachability without claiming event synchronization, endpoint data
   movement, generated ATL children, generated ATL tops, or route mux/storage.
+- `2026-05-19`: Pivoted `.8.2` after the temporary-association clarification:
+  actor associations can form for a task and dissolve when done, so the first
+  realistic ATL fixture is now `isf/atl_trigger_batch_pipeline.isf` with no
+  permanent `(group ...)` declaration. The contiguous trigger batch itself is
+  the scheduled temporary association.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
   design first treated `(network ...)` as a scoping candidate, not a
   requirement, while keeping flat top-level actor ATL clauses as an explicit
@@ -623,8 +642,9 @@ Current proposal summary:
 ## Blockers
 
 - No blocker for active `.8.2`. It must add only the selected
-  `isf/atl_group_trigger_pipeline.isf` fixture and must not widen syntax or
-  scheduling beyond already shipped ATL behavior.
+  `isf/atl_trigger_batch_pipeline.isf` fixture and must not widen syntax or
+  scheduling beyond the temporary trigger-batch behavior documented in this
+  leaf.
 
 ## Verification Log
 
@@ -660,6 +680,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected same-cycle group trigger batch lowers to one parent state and actor_network.group_schedules[] metadata; broad ISF gate passes with Files=229, Tests=1353` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.8` | `mdbook build docs/book`; `git diff --check` | `decomposed realistic multi-actor fixture promotion into selection and fixture leaves before code` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` | `mdbook build docs/book`; `git diff --check` | `selected isf/atl_group_trigger_pipeline.isf as the first realistic ATL fixture before code` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1322-isf-actor-network-static.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `temporary trigger-batch fixture promoted without permanent group membership; broad ISF gate passes with Files=230, Tests=1357` |
 
 ## Commit Log
 
@@ -694,6 +715,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.5: lower group trigger batch` | `lowers the selected same-cycle external group trigger batch and closes the first group scheduling sequence` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8: decompose ATL fixture frontier` | `splits realistic multi-actor fixture promotion into selection and implementation leaves` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.1: select ATL fixture` | `selects the first realistic ATL group-trigger fixture and exact .8.2 verification contract` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.2: add ATL trigger fixture` | `pivots the first ATL fixture to task-scoped temporary trigger batches and proves strict schedule JSON plus HDL reachability` |
 
 ## Changelog
 
@@ -844,3 +866,13 @@ Current proposal summary:
   triggers/group schedule evidence, and prove strict schedule JSON plus HDL
   reachability without claiming event/data/generated-child ATL behavior. The
   active frontier moves to `.8.2`.
+- `2026-05-19`: Completed `.8.2`: pivoted the first realistic ATL fixture to
+  `isf/atl_trigger_batch_pipeline.isf` after clarifying that actor
+  associations are task-scoped and should dissolve when the scheduled task is
+  done. The parser now accepts a contiguous top-level trigger batch to
+  distinct static actor instances without a permanent `(group ...)`
+  declaration, lowering emits one `run_atl_trigger_batch_1` state, schedule
+  JSON reports synthetic `run_trigger_batch` evidence, and the fixture proves
+  strict schedule JSON plus plain/strict HDL reachability. The active frontier
+  moves to `.9.1` to select the next ATL temporary-association slice before
+  code.

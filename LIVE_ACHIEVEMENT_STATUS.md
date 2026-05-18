@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL temporary trigger-batch fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` with the clarified ATL
+  model: actor associations are task-scoped and should not be represented as
+  permanent groups by default.
+- The fixture is now `isf/atl_trigger_batch_pipeline.isf`, with three static
+  actors and one contiguous trigger batch. It has no `(group ...)`
+  declaration.
+- The new regression proves scheduled `.fsm`, strict schedule JSON, and
+  plain/strict HDL reachability for the temporary trigger-batch fixture. Broad
+  ISF gate passed with `Files=230, Tests=1357`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` for selecting the next
+  temporary-association slice before code.
+
 ## 2026-05-18: R14 — ATL first realistic fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` before fixture
   implementation.

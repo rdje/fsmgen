@@ -804,7 +804,7 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         \@data_movements,
     );
 
-    _finalize_selected_atl_group_trigger_batches(
+    _finalize_selected_atl_trigger_batches(
         $actor,
         \@transaction_triggers,
         \@event_waits,
@@ -884,7 +884,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
         my $head = $clause->[0];
         next unless defined($head) && !ref($head);
 
-        if ($head eq 'atl_trigger' || $head eq 'atl_group_trigger') {
+        if ($head eq 'atl_trigger' || $head eq 'atl_trigger_batch') {
             confess "Error: $context '($head ...)' is reserved for FSMGen internal ATL lowering and is not source syntax\n";
         }
 
@@ -1213,19 +1213,16 @@ sub _validate_selected_atl_data_movement_drive_call {
     return 1;
 }
 
-sub _finalize_selected_atl_group_trigger_batches {
+sub _finalize_selected_atl_trigger_batches {
     my ($actor, $transaction_triggers, $event_waits, $data_movements) = @_;
     my @triggers = @{$transaction_triggers || []};
     return 1 unless @triggers;
 
     my @groups = @{(($actor->{actor_network} || {})->{groups}) || []};
     if (@triggers == 1) {
-        return 1 unless @groups;
-        confess "Error: actor '$actor->{actor_name}' ATL concurrent group trigger batch requires at least two actor transaction triggers in the current subset\n";
+        return 1;
     }
-    confess "Error: actor '$actor->{actor_name}' ATL actor transaction trigger exceeds the current one-trigger subset; fan-in, fan-out, and multiple actor transaction triggers remain deferred\n"
-        unless @groups;
-    confess "Error: actor '$actor->{actor_name}' ATL concurrent group trigger batch cannot be combined with actor event waits or scalar data movements in the current subset\n"
+    confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch cannot be combined with actor event waits or scalar data movements in the current subset\n"
         if @{$event_waits || []} || @{$data_movements || []};
 
     my @runs;
@@ -1259,7 +1256,7 @@ sub _finalize_selected_atl_group_trigger_batches {
 
     my $trigger_count = scalar(@triggers);
     my $run_count = scalar(@runs);
-    confess "Error: actor '$actor->{actor_name}' ATL concurrent group trigger batch requires one contiguous top-level transaction-body trigger run in the current subset\n"
+    confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch requires one contiguous top-level transaction-body trigger run in the current subset\n"
         unless $run_count == 1 && $runs[0]{length} == $trigger_count;
 
     my %triggers_by_signal;
@@ -1267,7 +1264,7 @@ sub _finalize_selected_atl_group_trigger_batches {
     my @run_triggers;
     for my $signal (@{$runs[0]{signals}}) {
         my $matches = $triggers_by_signal{$signal};
-        confess "Error: actor '$actor->{actor_name}' ATL concurrent group trigger batch lost trigger metadata for generated signal '$signal'\n"
+        confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch lost trigger metadata for generated signal '$signal'\n"
             unless ref($matches) eq 'ARRAY' && @$matches;
         push @run_triggers, shift @$matches;
     }
@@ -1275,29 +1272,34 @@ sub _finalize_selected_atl_group_trigger_batches {
     my %seen_instance;
     my @members = map { $_->{instance} } @run_triggers;
     for my $member (@members) {
-        confess "Error: actor '$actor->{actor_name}' ATL concurrent group trigger batch requires each trigger to target a distinct group member\n"
+        confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch requires each trigger to target a distinct actor instance\n"
             if $seen_instance{$member}++;
     }
 
     my @matching_groups = grep {
         _same_scalar_member_set($_->{members}, \@members)
     } @groups;
-    confess "Error: actor '$actor->{actor_name}' ATL concurrent group trigger batch must target every member of exactly one declared static group\n"
-        unless @matching_groups == 1;
+    confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch matches more than one declared static group\n"
+        if @matching_groups > 1;
 
-    my $group = $matching_groups[0];
+    my $group_name = @matching_groups
+        ? $matching_groups[0]{name}
+        : _atl_temporary_trigger_batch_name($runs[0]{transaction}{name});
+    my $dependency_policy = @matching_groups
+        ? 'declared_group_distinct_members'
+        : 'transaction_body_distinct_instances';
     my @target_transactions = map { $_->{target_transaction} } @run_triggers;
     my @signals = @{$runs[0]{signals}};
     $actor->{actor_network}{group_schedules} = [
         {
-            group               => $group->{name},
+            group               => $group_name,
             owner_transaction   => $runs[0]{transaction}{name},
             context             => 'transaction_body',
             members             => \@members,
             target_transactions => \@target_transactions,
             signals             => \@signals,
             schedule            => 'same_cycle_external_trigger_batch',
-            dependency_policy   => 'declared_group_distinct_members',
+            dependency_policy   => $dependency_policy,
             storage             => 'none',
             source              => 'parent_trigger_state',
             sink                => 'external_handoff',
@@ -1307,9 +1309,17 @@ sub _finalize_selected_atl_group_trigger_batches {
     splice @{$runs[0]{transaction}{clauses}},
         $runs[0]{start},
         $runs[0]{length},
-        [ 'atl_group_trigger', @signals ];
+        [ 'atl_trigger_batch', @signals ];
 
     return 1;
+}
+
+sub _atl_temporary_trigger_batch_name {
+    my ($transaction_name) = @_;
+    $transaction_name = defined($transaction_name) && !ref($transaction_name) && $transaction_name ne ''
+        ? $transaction_name
+        : 'transaction';
+    return "${transaction_name}_trigger_batch";
 }
 
 sub _same_scalar_member_set {
@@ -1331,11 +1341,11 @@ sub _finalize_selected_atl_data_movements {
     my $group_count = scalar(@{(($actor->{actor_network} || {})->{groups}) || []});
     my $group_schedule_count = scalar(@{(($actor->{actor_network} || {})->{group_schedules}) || []});
 
-    if ($instance_count > 1 && !@{$data_movements || []} && !$group_count) {
+    if ($instance_count > 1 && !@{$data_movements || []} && !$group_count && !$group_schedule_count) {
         confess "Error: actor '$actor->{actor_name}' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset is present; broader multiple-instance scheduling is deferred\n";
     }
-    confess "Error: actor '$actor->{actor_name}' ATL concurrent group metadata cannot be combined with actor event waits or actor transaction triggers in the current subset\n"
-        if $group_count && (@{$event_waits || []} || (@{$transaction_triggers || []} && !$group_schedule_count));
+    confess "Error: actor '$actor->{actor_name}' ATL concurrent group metadata cannot be combined with actor event waits in the current subset\n"
+        if $group_count && @{$event_waits || []};
     return 1 unless @{$data_movements || []};
 
     confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with actor event waits or actor transaction triggers in the current subset\n"

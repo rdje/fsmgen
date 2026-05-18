@@ -17,7 +17,7 @@ my %SUPPORTED_TRANSACTION_CLAUSES = (
             on drive await sample update phase shift_left shift_right assemble
             extract complete when switch repeat latency do spawn await_all
             await_any params stage contract store load wait while until set
-            atl_trigger atl_group_trigger
+            atl_trigger atl_trigger_batch
         )
     },
     when => {
@@ -2609,7 +2609,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
         }
         elsif ($k eq 'await')    { $ha=1; $wdc="${tn}_wd"; my $wd_override = _parse_await_wd($cl); push @st, _ir_await($cl, $tn, $si++, $wd_override || $wd, [splice @ps]); }
         elsif ($k eq 'atl_trigger') { push @st, _ir_atl_trigger($cl, $tn, $si++, [splice @ps]); }
-        elsif ($k eq 'atl_group_trigger') { push @st, _ir_atl_group_trigger($cl, $tn, $si++, [splice @ps]); }
+        elsif ($k eq 'atl_trigger_batch') { push @st, _ir_atl_trigger_batch($cl, $tn, $si++, [splice @ps]); }
         elsif ($k eq 'sample')   { push @ps, $cl; }
         elsif ($k eq 'wait') {
             my $wait = _wait_count_spec($cl, $tn, 'transaction body', $actor, $widths, 1);
@@ -4772,7 +4772,7 @@ sub _ir_atl_trigger {
         transitions => [],
     };
 }
-sub _ir_atl_group_trigger {
+sub _ir_atl_trigger_batch {
     my ($cl, $tn, $i, $pending_samples) = @_;
     my @assignments = _sample_assignments($pending_samples || []);
     for my $signal (@{$cl}[1 .. $#$cl]) {
@@ -4780,12 +4780,12 @@ sub _ir_atl_group_trigger {
             lhs         => $signal,
             rhs         => 1,
             op          => '<1',
-            source_kind => 'atl_group_actor_transaction_trigger',
+            source_kind => 'atl_actor_transaction_trigger_batch',
         };
     }
 
     return {
-        name        => "${tn}_atl_group_trigger_$i",
+        name        => "${tn}_atl_trigger_batch_$i",
         kind        => 'sequential',
         assignments => \@assignments,
         transitions => [],

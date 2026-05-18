@@ -1,5 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-19
+### R14 — ATL temporary trigger-batch fixture shipped
+- Pivoted `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` away from permanent static
+  group membership after clarifying that actor associations are task-scoped.
+- Added the selected fixture as `isf/atl_trigger_batch_pipeline.isf`: three
+  direct static actor instances and one contiguous transaction-body trigger
+  batch with no `(group ...)` declaration.
+- Lowering now accepts the exact temporary trigger batch for distinct static
+  actors, emits one `run_atl_trigger_batch_1` state, and reports a synthetic
+  `run_trigger_batch` schedule entry while preserving per-target trigger
+  metadata.
+- Synchronized the task tree, roadmap, ISF spec, downstream integration spec,
+  public contract, mdBook, fixture matrix, memory, live status, and
+  development notes.
+- Broad ISF gate passed with `Files=230, Tests=1357`. The active ATL frontier
+  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` for selecting the next
+  temporary-association slice before code.
+
 ## 2026-05-18
 ### R14 — ATL first realistic fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` before adding fixture
