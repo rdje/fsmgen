@@ -913,18 +913,13 @@ Rules:
   outstanding generated children before the nested repeat check can loop.
   Those branch-contained nested spawns reuse the static generated-child
   handoff model and preserve source-order samples before the nested spawn or
-  sync states. The top-level `when` body nested-repeat form may also run a
-  local plain `(do child)` while generated nested spawns remain pending either
-  before or after a prior multi-pending `(await_any done)` observation,
-  provided a later same-body `(await_all done)` drains every outstanding
-  generated child before the nested repeat check can loop. The top-level
-  `switch` branch nested-repeat form may run the same local plain `(do child)`
-  while generated nested spawns remain pending only when there was no prior
-  multi-pending `(await_any done)` observation and a later same-body
-  `(await_all done)` drains every outstanding generated child before the
-  nested repeat check can loop. That local do remains in the parent scheduled
-  module, waits for its own fresh local done pulse, and does not clear the
-  generated-spawn done set.
+  sync states. The top-level `when` body and top-level `switch` branch
+  nested-repeat forms may also run a local plain `(do child)` while generated
+  nested spawns remain pending either before or after a prior multi-pending
+  `(await_any done)` observation, provided a later same-body `(await_all done)`
+  drains every outstanding generated child before the nested repeat check can
+  loop. That local do remains in the parent scheduled module, waits for its
+  own fresh local done pulse, and does not clear the generated-spawn done set.
   The top-level `when` body and top-level `switch` branch nested-repeat
   subsets also accept a plain generated-child `(do child)` in that pending
   interval when the target child is already emitted as a generated child by
@@ -950,10 +945,9 @@ Rules:
   metadata only for the deterministic generated do instance; generated-
   composition/domain partition metadata and schedule JSON
   `clock_domains[].child_instances[]` retain that ownership without implying
-  CDC. Generated `do` after a prior multi-pending `await_any`, the
-  switch-contained local-do analogue after a prior multi-pending `await_any`,
-  new nested `spawn` after the do before the drain, `await_any` after the do,
-  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
+  CDC. Generated `do` after a prior multi-pending `await_any`, new nested
+  `spawn` after the do before the drain, `await_any` after the do, deeper
+  branch/loop nesting, and cross-domain activation remain fail-closed.
   Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,
   `contract`, deeper branch nesting, nested `while`, and nested `until` remain
@@ -1328,15 +1322,13 @@ Rules:
   the documented branch-contained nested subsets through multi-pending
   `await_any` followed by same-body `await_all`, before the repeat check can
   loop, preventing re-entry before fresh child completion.
-- In the documented top-level `when` body nested subset, a local plain
-  `(do child)` may run while generated nested spawns are pending before or
-  after a prior multi-pending `await_any` observation. In the documented
-  top-level `switch` branch nested subset, that local plain `(do child)` form
-  remains limited to cases with no prior multi-pending `await_any`
-  observation. In both cases, the local do consumes only the local child's fresh done pulse; it
-  does not clear pending generated child done handoffs, and a later same-body
-  `await_all` drain still gates nested repeat re-entry on every outstanding
-  generated child.
+- In the documented top-level `when` body and top-level `switch` branch
+  nested subsets, a local plain `(do child)` may run while generated nested
+  spawns are pending before or after a prior multi-pending `await_any`
+  observation. In both cases, the local do consumes only the local child's
+  fresh done pulse; it does not clear pending generated child done handoffs,
+  and a later same-body `await_all` drain still gates nested repeat re-entry
+  on every outstanding generated child.
 - In the documented top-level `when` body and top-level `switch` branch nested
   subsets, a plain generated-child `(do child)` may also run while generated
   nested spawns are pending when the target child has already been emitted as a

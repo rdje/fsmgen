@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained repeat local do after await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.80`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the selected top-level `switch` branch nested-repeat local
+  `(do child)` after a prior multi-pending `(await_any done)` observation.
+- The accepted source shape is a repeat directly inside a top-level `switch`
+  branch with multiple generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  `(await_any done)` as an observation point, local blocking `(do child)`,
+  and a later same-body `(await_all done)` drain before the nested repeat
+  check can loop.
+- Lowering keeps every generated-spawn done handoff live after `await_any` and
+  through the local do, waits for the local child's fresh done pulse, then
+  drains every pending generated child before nested repeat re-entry.
+- Generated `do` after prior multi-pending `await_any`, `await_any` after the
+  do, new spawn after the do before drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  fail-closed.
+- The mdBook, ISF spec, downstream integration spec, public contract, feature
+  matrix audits, task tree, roadmap board, and live docs now document this
+  subset as shipped.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=42), touched repeat/spawn/doc checks (Files=4, Tests=434), focused
+  activation/domain/doc suite (Files=13, Tests=476),
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book` (Files=227,
+  Tests=1247), and `git diff --check`.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.81`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: switch-contained repeat local do after await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`.
 - The active R14 task tree now selects the direct top-level `switch` branch

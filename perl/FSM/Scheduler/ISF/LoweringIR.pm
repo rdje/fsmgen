@@ -3925,7 +3925,9 @@ sub _validate_repeat_body_spawn_subset {
                 my $allowed_static_bound_generated_do = defined($pending_generated_do_label) && $static_bound_generated_do;
                 my $allowed_static_domain_generated_do = ($when_body_repeat || $switch_branch_repeat) && $static_domain_generated_do;
                 my $allowed_local_do_after_multi_pending_await_any =
-                    $when_body_repeat && $plain_local_do && $awaiting_multi_pending_drain;
+                    ($when_body_repeat || $switch_branch_repeat)
+                    && $plain_local_do
+                    && $awaiting_multi_pending_drain;
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
                     || $allowed_static_parameter_generated_do

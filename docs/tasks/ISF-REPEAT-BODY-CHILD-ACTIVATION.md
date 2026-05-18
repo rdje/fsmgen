@@ -42,7 +42,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION`
   Status: `active`
   Goal: `Ship remaining repeat-body child activation subsets safely.`
-  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.26`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.31`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.32`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.33`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.34`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.35`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.36`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.37`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.38`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.40`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.41`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.42`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.43`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.44`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.45`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.46`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.47`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.48`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.49`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.50`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.51`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.52`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.53`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.54`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.55`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.56`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.57`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.62`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.63`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.64`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.66`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.68`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.69`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.70`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.71`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.72`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.73`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.74`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.75`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.76`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.77`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.78`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.80`
+  Children: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.2`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.3`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.4`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.5`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.6`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.7`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.8`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.9`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.10`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.11`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.12`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.13`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.14`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.15`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.16`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.17`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.18`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.19`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.20`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.21`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.22`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.23`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.24`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.25`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.26`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.27`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.28`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.29`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.30`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.31`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.32`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.33`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.34`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.35`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.36`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.37`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.38`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.39`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.40`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.41`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.42`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.43`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.44`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.45`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.46`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.47`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.48`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.49`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.50`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.51`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.52`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.53`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.54`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.55`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.56`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.57`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.58`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.59`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.60`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.61`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.62`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.63`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.64`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.66`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.68`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.69`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.70`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.71`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.72`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.73`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.74`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.75`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.76`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.77`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.78`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.80`, `ISF-REPEAT-BODY-CHILD-ACTIVATION.81`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.1`
   Status: `done`
@@ -598,9 +598,16 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.79: select switch repeat local do after await_any`
 
 - ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.80`
-  Status: `pending`
+  Status: `done`
   Goal: `Ship switch-branch nested repeat local do after prior multi-pending await_any before mandatory await_all drain if selected.`
   Acceptance: `Top-level switch branches accept nested '(repeat COUNT ... (spawn child as a ...) (spawn child as b ...) (await_any done) (do local_child) (await_all done) ...)' only when the do target is local to the parent scheduled module and a later same-body await_all drains every outstanding generated nested spawn before the nested repeat check can loop; lowering keeps the generated-spawn done set live after await_any and through the local do, waits for the local child's fresh done pulse, preserves source-order samples around spawn/await_any/do/await_all, and keeps generated do after prior multi-pending await_any, await_any after the do, new spawn after the do before drain, cross-domain activation, deeper branch/loop nesting, and broader outstanding-child semantics fail-closed.`
+  Verification: `syntax checks; touched repeat/spawn test Files=1, Tests=42; touched repeat/spawn/doc checks Files=4, Tests=434; focused activation/domain/doc suite Files=13, Tests=476; mdbook build docs/book; ./bin/ci-regression isf --no-book Files=227, Tests=1247; git diff --check`
+  Commit: `ISF-REPEAT-BODY-CHILD-ACTIVATION.80: implement switch repeat local do after await_any`
+
+- ID: `ISF-REPEAT-BODY-CHILD-ACTIVATION.81`
+  Status: `pending`
+  Goal: `Select the next repeat-body child activation subset.`
+  Acceptance: `Task tree, roadmap, and book backlog identify the selected leaf, source shape, exclusions, and validation plan before any further repeat-body child activation code changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -687,7 +694,8 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | 77 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.77` | `done` | Selected when-contained local do after prior multi-pending await_any before mandatory await_all drain. |
 | 78 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.78` | `done` | Shipped the selected when-contained await_any-before-local-do subset. |
 | 79 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.79` | `done` | Selected switch-contained local do after prior multi-pending await_any before mandatory await_all drain. |
-| 80 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.80` | `pending` | Implements the selected switch-contained await_any-before-local-do subset. |
+| 80 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.80` | `done` | Shipped the selected switch-contained await_any-before-local-do subset. |
+| 81 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.81` | `pending` | Selects the next bounded repeat-body child activation subset. |
 
 ## Decisions
 
@@ -1496,11 +1504,19 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
   do, new nested spawn after the do before drain, cross-domain activation,
   deeper branch/loop nesting, and broader outstanding-child semantics
   fail-closed.
+- `2026-05-18`: Leaf `.80` shipped the selected switch-contained local do
+  after prior multi-pending `await_any` subset. The generated-spawn done set
+  remains live through the observation and local do, the local child waits on
+  its own fresh done pulse, and a later same-body `await_all` drains every
+  pending generated child before nested repeat re-entry.
+- `2026-05-18`: Leaf `.81` is the next selection frontier and must choose the
+  next bounded repeat-body child activation subset before any further code
+  changes.
 
 ## Open Questions
 
-- None for tracking. Leaf `.80` must implement only the selected
-  switch-contained await_any-before-local-do subset.
+- None for tracking. Leaf `.81` must select the next bounded subset before
+  any further repeat-body child activation implementation.
 
 ## Blockers
 
@@ -1591,6 +1607,7 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `2026-05-18` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.77` | `mdbook build docs/book`; `prove -l t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `git diff --check` | `book, book/doc audits (Files=2, Tests=242), and diff checks passed after selecting top-level when-body nested repeat local do after prior multi-pending await_any before mandatory await_all drain` |
 | `2026-05-18` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.78` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1304-isf-repeat-body-doc-truth-audit.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t`; `prove -l t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1103-isf-switch-branch-exits.t t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1247-isf-clock-domain-partition.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, touched repeat/spawn test (Files=1, Tests=41), touched repeat/spawn/doc checks (Files=4, Tests=428), focused activation/domain/doc suite (Files=13, Tests=470), book build, full ISF gate (Files=227, Tests=1241), and diff check passed` |
 | `2026-05-18` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.79` | `mdbook build docs/book`; `prove -l t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `git diff --check` | `book, book/doc audits (Files=2, Tests=247), and diff checks passed after selecting top-level switch-branch nested repeat local do after prior multi-pending await_any before mandatory await_all drain` |
+| `2026-05-18` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.80` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1215-isf-spawn-parameter-binding.t`; `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `perl -Iperl -c t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t`; `prove -l t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1215-isf-spawn-parameter-binding.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `prove -l t/1103-isf-switch-branch-exits.t t/1215-isf-spawn-parameter-binding.t t/1177-isf-do-child-done-pulse.t t/1184-isf-child-transaction-target-boundary.t t/1203-isf-await-sync-clause-boundary.t t/1204-isf-child-composition-clause-boundary.t t/1241-isf-transaction-port-bindings.t t/1242-isf-port-binding-conflict-semantics.t t/1243-isf-port-binding-schedule-report.t t/1247-isf-clock-domain-partition.t t/1304-isf-repeat-body-doc-truth-audit.t t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `syntax, touched repeat/spawn test (Files=1, Tests=42), touched repeat/spawn/doc checks (Files=4, Tests=434), focused activation/domain/doc suite (Files=13, Tests=476), book build, full ISF gate (Files=227, Tests=1247), and diff check passed` |
 
 ## Commit Log
 
@@ -1676,9 +1693,19 @@ closed plain-spawn and static-parameter repeat-spawn subsets.
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.77` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.77: select when repeat local do after await_any` | `selected when-contained local do after prior multi-pending await_any before mandatory await_all drain` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.78` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.78: implement when repeat local do after await_any` | `when-contained local do after prior multi-pending await_any before mandatory await_all drain shipped` |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION.79` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.79: select switch repeat local do after await_any` | `selected switch-contained local do after prior multi-pending await_any before mandatory await_all drain` |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION.80` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.80: implement switch repeat local do after await_any` | `switch-contained local do after prior multi-pending await_any before mandatory await_all drain shipped` |
 
 ## Changelog
 
+- `2026-05-18`: Shipped top-level switch-branch nested repeat local
+  `(do child)` after a prior multi-pending `(await_any done)` observation and
+  before a mandatory later same-body `(await_all done)` drain. Lowering now
+  keeps the generated-spawn done set live after `await_any` and through the
+  local do, waits for the local child's fresh done pulse, and drains every
+  pending generated child before nested repeat re-entry. Generated `do` after
+  prior multi-pending `await_any`, `await_any` after the do, new spawn after
+  the do before drain, cross-domain activation, deeper branch/loop nesting,
+  and broader outstanding-child semantics remain fail-closed.
 - `2026-05-18`: Selected top-level switch-branch nested repeat local
   `(do child)` after a prior multi-pending `(await_any done)` observation as
   the next bounded implementation subset. The selected shape mirrors the

@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF switch-contained repeat local do after await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.80`.
+- Top-level `switch` branches may now contain nested repeats with multiple
+  generated spawns, a multi-pending `(await_any done)` observation, local
+  blocking `(do child)` while those generated spawns remain pending, and a
+  later same-body `(await_all done)` drain before the nested repeat check can
+  loop.
+- Lowering keeps generated-spawn done handoffs live after `await_any` and
+  through the local do, waits for the local child's fresh done pulse, and then
+  drains every pending generated child before nested repeat re-entry.
+- Generated do after prior multi-pending `await_any`, `await_any` after the
+  do, spawn-after-do before the drain, cross-domain activation, deeper
+  nesting, and broader outstanding-child semantics remain fail-closed. The
+  active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.81`, which
+  must select the next bounded repeat-body child activation subset before
+  code.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=42), touched repeat/spawn/doc checks (Files=4, Tests=434), focused
+  activation/domain/doc suite (Files=13, Tests=476),
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book` (Files=227,
+  Tests=1247), and `git diff --check`.
+
 ## 2026-05-18: R14 — ISF switch-contained repeat local do after await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`.
 - Selected top-level `switch` branch nested repeats with multiple generated

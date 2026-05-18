@@ -1625,6 +1625,129 @@ ISF
     );
 };
 
+subtest 'switch branch nested repeat local do can run after multi-pending await_any before await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_local_do_after_await_any
+  (clock-domains
+    (domain core (clock clk) (reset rst_n)))
+  (interface
+    (input start (domain core))
+    (input mode (width 2) (domain core))
+    (input loops (width 3) (domain core))
+    (input payload0 (width 8) (domain core))
+    (input payload1 (width 8) (domain core))
+    (input status (domain core))
+    (output done (domain core))
+    (output worker_done (domain core))
+    (output local_done (domain core))
+    (output result0 (width 8) (domain core))
+    (output result1 (width 8) (domain core)))
+  (transaction parent
+    (domain core)
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0
+            (params
+              (WIDTH 16))
+            (bind
+              (input data payload0)
+              (output resp result0))
+            (domain core))
+          (spawn worker as w1
+            (params
+              (WIDTH 32))
+            (bind
+              (input data payload1)
+              (output resp result1))
+            (domain core))
+          (await_any done)
+          (sample status as after_any)
+          (do local_worker)
+          (sample status as after_do)
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (domain core)
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (update resp data)
+    (complete worker_done))
+  (transaction local_worker
+    (domain core)
+    (on start)
+    (complete local_done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is_deeply(
+        [ map { $_->{instance} } @{$ir->{spawn_instances}} ],
+        [qw(w0 w1)],
+        'switch-branch local do after await_any keeps both generated spawn instances');
+    is($ir->{counters}{local_worker_start}, 1,
+        'switch-branch local do after await_any registers the local child start handoff');
+    is($ir->{counters}{local_worker_done}, 1,
+        'switch-branch local do after await_any registers the local child done handoff');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_local_do_after_await_any.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_local_do_after_await_any_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch local do after await_any parent scheduled .fsm is emitted');
+    ok(defined($top_fsm), 'switch-branch local do after await_any generated top .fsm is emitted');
+    ok(!exists($lowered->{files}{'local_worker.fsm'}), 'switch-branch local do after await_any target remains in the parent scheduled module');
+    like($parent_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the local-do-after-await-any nested repeat region');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'first switch generated spawn still starts before the await_any observation');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'second switch generated spawn advances to the await_any observation');
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'multi-pending switch await_any observes either generated child before the sample after await_any');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'sample after switch multi-pending await_any materializes before the local do');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(local_worker_start 1\)\)[\s\S]*<local_worker_done\s+\(-> parent_sample_\d+\)/,
+        'switch local do after await_any waits for a fresh local child done pulse');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'sample after switch local do materializes before the mandatory generated-spawn drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+        'switch await_all after local do drains both generated spawns before nested repeat re-entry');
+    like($parent_fsm, qr/\(local_worker_idle_0[\s\S]*<local_worker_start[\s\S]*\(-> local_worker_done_1\)/,
+        'local child entry is rewired to the switch nested repeat local do start handoff');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top applies first switch local-do-after-await-any spawn parameter override once');
+    like($top_fsm, qr/\(\?fsmc:w1 worker\s+\(params\s+\(WIDTH 32\)\s+\)\s+\)/s,
+        'generated top applies second switch local-do-after-await-any spawn parameter override once');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:data',
+            'spawn:w0:resp',
+            'spawn:w1:data',
+            'spawn:w1:resp',
+        ],
+        'report exposes switch local-do-after-await-any generated spawn port-binding provenance',
+    );
+    is_deeply(
+        $report->{clock_domains}[0]{child_instances},
+        [
+            { kind => 'spawn', owner => 'parent', child => 'worker', instance => 'w0' },
+            { kind => 'spawn', owner => 'parent', child => 'worker', instance => 'w1' },
+        ],
+        'clock-domain report metadata keeps both switch generated spawns after local do follows await_any',
+    );
+};
+
 subtest 'switch branch nested repeat spawn drains through single-pending await_any' => sub {
     my $source = <<'ISF';
 (actor switch_repeat_spawn_await_any
@@ -3697,8 +3820,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat do after multi-pending await_any before drain', qr/switch-branch nested repeat local do while generated spawns are pending is supported only before a later same-body '\(await_all done\)' drain, with no prior multi-pending await_any observation/);
-(actor switch_nested_repeat_do_after_multi_pending_await_any
+    assert_lower_rejected(<<'ISF', 'switch nested repeat local do after multi-pending await_any without drain', qr/switch-branch nested repeat local do while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_local_do_after_multi_pending_await_any_without_drain
   (clock clk)
   (interface (input start) (input mode) (input loops (width 3)) (output done))
   (transaction parent
@@ -3709,8 +3832,7 @@ ISF
           (spawn worker as w0)
           (spawn worker as w1)
           (await_any done)
-          (do local_worker)
-          (await_all done))))
+          (do local_worker))))
     (complete done))
   (transaction worker
     (complete done))

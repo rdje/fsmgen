@@ -1579,19 +1579,15 @@ Current lowering:
   outstanding generated children before the nested repeat check can loop.
   Those branch-contained nested spawns reuse the static generated-child
   handoff model and preserve source-order samples before the nested spawn or
-  sync states. The top-level `when` body nested-repeat form may also run a
-  local plain `(do child)` while generated nested spawns remain pending either
-  before or after a prior multi-pending `(await_any done)` observation,
-  provided a later same-body `(await_all done)` drains every outstanding
-  generated child before the nested repeat check can loop. The top-level
-  `switch` branch nested-repeat form may run the same local plain `(do child)`
-  while generated nested spawns remain pending only when there was no prior
-  multi-pending `(await_any done)` observation and a later same-body
-  `(await_all done)` drains every outstanding generated child before the
-  nested repeat check can loop. That local do target remains in the parent
-  scheduled module, waits for its own fresh local done pulse, and does not
-  clear the generated-spawn done set. The top-level `when` body and top-level
-  `switch` branch nested-repeat subsets also accept a plain generated-child
+  sync states. The top-level `when` body and top-level `switch` branch
+  nested-repeat forms may also run a local plain `(do child)` while generated
+  nested spawns remain pending either before or after a prior multi-pending
+  `(await_any done)` observation, provided a later same-body `(await_all done)`
+  drains every outstanding generated child before the nested repeat check can
+  loop. That local do target remains in the parent scheduled module, waits for
+  its own fresh local done pulse, and does not clear the generated-spawn done
+  set. The top-level `when` body and top-level `switch` branch nested-repeat
+  subsets also accept a plain generated-child
   `(do child)` in
   that same pending-spawn interval when the target child is already emitted as
   a generated child by another activation site. The generated do site owns one deterministic
@@ -1619,10 +1615,9 @@ Current lowering:
   clock-domain summaries retain that ownership, and every pending
   generated-spawn done handoff remains live for the later same-body
   `(await_all done)` drain. Generated `do` after a prior multi-pending
-  `await_any`, the switch-contained local-do analogue after a prior
-  multi-pending `await_any`, new nested `spawn` after the do before the drain,
-  `await_any` after the do, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed.
+  `await_any`, new nested `spawn` after the do before the drain, `await_any`
+  after the do, deeper branch/loop nesting, and cross-domain activation
+  remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
