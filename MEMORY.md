@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained bound generated do before post-do await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.109`.
+- The active R14 task tree now selects top-level `when` body nested repeat
+  generated blocking `(do child (params ...) (bind ...))` followed by
+  post-do multi-pending `(await_any done)` as the next bounded subset.
+- The selected source shape is a repeat directly inside a top-level `when`
+  body with multiple generated spawns, a static-parameter generated blocking
+  do with input/output bind handoffs while those generated spawns remain
+  pending, `(await_any done)` as an observation point after that generated
+  do, and a later same-body `(await_all done)` drain before the nested repeat
+  check can loop.
+- The selected implementation must wait for the deterministic generated do
+  instance's fresh done handoff before the post-do `await_any`, wire
+  generated-top input/output binding handoffs for that generated do instance,
+  keep every generated-spawn done handoff live through the generated do and
+  await_any observation, and drain every pending generated child before
+  nested repeat re-entry.
+- Domain metadata, the switch-contained bound analogue, new spawn after the
+  do before drain, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child semantics remain deferred.
+- The mdBook feature backlog now documents the selected when-contained bound
+  generated-do post-do `await_any` subset as selected but not yet shipped.
+- Validation: `mdbook build docs/book`, `prove -l
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t` (Files=2, Tests=320), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`.
 ## 2026-05-18: switch-contained static-parameter generated do before post-do await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.108`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
