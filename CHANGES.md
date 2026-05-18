@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL actor-event wait handoff selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` as a task-tree
+  selection slice before implementation.
+- The next behavior-bearing event leaf is scoped to exactly one top-level
+  transaction-body `(await actor.event)` for the current single static actor
+  instance.
+- The selected lowering maps the wait to a deterministic one-bit parent event
+  handoff input named `actor_event`, such as `reader_done` for
+  `reader.done`.
+- Actor type resolution, ATL child generation, generated ATL tops, qualified
+  actor transaction triggers, fan-in/fan-out, multiple or nested event waits,
+  event payloads, cross-clock actor events, concurrent groups, data movement,
+  and HDL behavior remain deferred.
+- Synchronized the task tree, roadmap board, design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`.
 ### R14 — ATL reserved event/trigger forms fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`.
 - Qualified `(await actor.event)`, transaction-body

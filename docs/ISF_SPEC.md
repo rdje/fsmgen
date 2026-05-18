@@ -2856,6 +2856,19 @@ actor-event lowering, generated ATL child artifacts, generated ATL top names,
 route muxes, handoff storage, event fan-in/fan-out, event payloads, or
 schedule-report event keys.
 
+The next selected actor-event behavior is deliberately narrower than full
+child orchestration. The selected subset is one top-level transaction-body
+`(await actor.event)` against the current single declared static actor
+instance, with an event name that is a scalar HDL identifier. It lowers to a
+deterministic one-bit parent event handoff input named `actor_event`; for
+example, `(await reader.done)` lowers to an await on `reader_done`. The event
+source is externally supplied until actor type resolution, generated ATL child
+artifacts, generated ATL tops, and qualified actor-transaction triggers ship.
+Fan-in, fan-out, multiple actor-event waits, nested actor-event waits,
+event payloads, cross-clock actor events, concurrent group events, and
+qualified triggers remain deferred unless a later leaf explicitly widens this
+surface.
+
 The current generated-artifact contract is explicit: this metadata slice emits
 no ATL child `.fsm`, no generated ATL top, no generated route mux, no generated
 handoff storage, and no HDL behavior. Any later ATL implementation that emits

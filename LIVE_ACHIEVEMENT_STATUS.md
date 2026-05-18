@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL actor-event wait handoff selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1`.
+- The next generated actor-event wait behavior is scoped to one top-level
+  transaction-body `(await actor.event)` for the current single static actor
+  instance.
+- The selected lowering maps the wait to a deterministic one-bit parent event
+  handoff input named `actor_event`; for example, `reader.done` becomes
+  `reader_done`.
+- The event producer remains external. Actor type resolution, generated ATL
+  child `.fsm` files, generated ATL tops, qualified actor transaction
+  triggers, multiple or nested event waits, fan-in/fan-out, event payloads,
+  cross-clock actor events, concurrent groups, data movement, and HDL behavior
+  remain deferred or fail-closed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL reserved event/trigger forms fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`.
 - Reserved qualified `(await actor.event)`, transaction-body

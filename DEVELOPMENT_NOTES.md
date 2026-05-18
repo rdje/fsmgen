@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: First ATL event wait is a parent handoff
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` selects the first
+  behavior-bearing actor-event wait subset before code.
+- The selected subset deliberately treats `(await actor.event)` as a
+  parent-scheduler event input, not as proof that actor type resolution or
+  child generation exists. `actor.event` lowers to a deterministic one-bit
+  parent handoff input named `actor_event`, so the scheduled `.fsm` is
+  explicit and reviewable.
+- The one-wait limit is intentional. It avoids selecting fan-in, fan-out,
+  routing, ordering, or event lifetime semantics before there is generated
+  evidence for those contracts.
+- Keeping the event producer external lets ATL start carrying useful
+  orchestration intent while preserving truthfulness: no generated ATL child
+  `.fsm`, generated ATL top, qualified actor transaction trigger, event
+  payload, CDC path, or HDL wiring is claimed by this first event wait leaf.
 ## 2026-05-18: ATL reserved diagnostics are instance-aware
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` implements the first actor-event
   boundary as fail-closed diagnostics only.

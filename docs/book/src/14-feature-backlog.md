@@ -711,6 +711,16 @@ generated ATL top names, route muxes, handoff storage, event fan-in/fan-out,
 and schedule-report event keys remain deferred until a later leaf ships them
 explicitly.
 
+The next selected behavior-bearing event wait subset is one top-level
+transaction-body `(await actor.event)` against the current single declared
+static actor instance. That wait lowers to a deterministic one-bit parent
+handoff input named `actor_event`; for example, `reader.done` maps to
+`reader_done`. The producer of that pulse remains external until later ATL
+leaves resolve actor types, generate child artifacts, emit ATL tops, and
+support qualified actor transaction triggers. Multiple waits, nested waits,
+fan-in, fan-out, event payloads, cross-clock events, and concurrent group
+events stay deferred.
+
 Direct actor-body proposal:
 
 ```lisp

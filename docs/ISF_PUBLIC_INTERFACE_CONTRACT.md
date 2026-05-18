@@ -1586,6 +1586,14 @@ enum-looking names outside actor-network instances keep their prior
 diagnostics. The current artifact contract remains empty for ATL scheduling:
 no generated ATL child `.fsm`, generated ATL top, route mux, handoff storage,
 or HDL behavior is promised by `actor_network` metadata.
+The next selected actor-event wait subset is one top-level transaction-body
+`(await actor.event)` for the current single declared static actor instance,
+lowered to a generated one-bit parent event handoff input named
+`actor_event`. For example, `reader.done` lowers through `reader_done`. The
+event source is external until actor type resolution, ATL child generation,
+generated ATL tops, and qualified actor transaction triggers ship. Fan-in,
+fan-out, multiple event waits, nested event waits, event payloads,
+cross-clock actor events, and concurrent group events remain deferred.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`

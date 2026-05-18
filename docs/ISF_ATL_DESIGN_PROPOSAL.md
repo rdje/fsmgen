@@ -116,6 +116,43 @@ their generated artifact names, report keys, examples, and fail-closed
 diagnostics in the same slice that ships the behavior. Until then, downstream
 tools must treat `actor_network` as review/discovery metadata only.
 
+## First Actor-Event Wait Selection
+
+The first behavior-bearing event wait subset is selected before code:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (await reader.done)
+    (complete done)))
+```
+
+The selected lowering is intentionally narrow. A single top-level
+transaction-body `(await actor.event)` may target the current single declared
+static actor instance. The event name must be a scalar HDL identifier. The
+next implementation leaf lowers that wait to a deterministic one-bit parent
+handoff input named `actor_event`; for example, `reader.done` becomes
+`reader_done`. The parent scheduled `.fsm` waits on that input.
+
+The event producer is external in this subset. FSMGen does not resolve
+`packet_reader`, emit a child `.fsm`, generate an ATL top, trigger an actor
+transaction, or route event wiring yet. This subset only gives the parent
+schedule a reviewable one-cycle event input and records the wait in
+actor-network report metadata.
+
+The first subset explicitly excludes fan-in, fan-out, multiple actor-event
+waits, nested actor-event waits, rule-level or transaction-body qualified
+triggers, event payloads, cross-clock actor events, generated ATL child
+artifacts, generated ATL tops, and concurrent group events. Those forms stay
+fail-closed until later leaves select their exact artifact and scheduling
+contracts.
+
 ## Shipped Static Metadata Slice
 
 The first shipped slice accepts exactly one static actor instance:

@@ -30,25 +30,22 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   switch-contained bound analogue, spawn-after-do, cross-domain activation,
   deeper branch/loop nesting, and broader outstanding-child semantics remain
   unselected.
-- Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` now fails
-  closed reserved qualified actor-event and actor-transaction trigger forms
-  before scheduled `.fsm` emission. A top-level actor can declare exactly one
-  static child actor instance through `(instance NAME of ACTOR_TYPE)` directly
-  in the actor body; the enclosing actor is the network boundary, and
-  `(network ...)` fails closed. When the qualifier names that declared static
-  actor instance, `(await actor.event)`, transaction-body
-  `(trigger actor.transaction)`, and rule-level
-  `(trigger actor.transaction)` now produce ATL-specific "reserved but not
-  supported yet" diagnostics instead of generic enum/unknown-transaction
-  errors. Unqualified local `(await signal)` and rule-level
-  `(trigger transaction)` remain unchanged, and enum-looking dotted names that
-  do not name a static actor instance keep their prior diagnostics. This still
-  does not resolve actor types, emit generated child artifacts, generate an
-  ATL top, move data between actors, trigger actor transactions, wait on actor
-  events, or change HDL. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`, which must select real generated
-  actor-event behavior with event source/sink ownership, artifact names,
-  report keys, and fan-in/fan-out boundaries before code.
+- Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` selected the
+  first behavior-bearing actor-event wait subset after `.4.2` made reserved
+  qualified actor-event and actor-transaction trigger forms fail closed with
+  ATL-specific diagnostics. A top-level actor can declare exactly one static
+  child actor instance through `(instance NAME of ACTOR_TYPE)` directly in
+  the actor body; the enclosing actor is the network boundary, and
+  `(network ...)` fails closed. The selected next code leaf,
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`, accepts only one top-level
+  transaction-body `(await actor.event)` against that single static instance,
+  lowers it to a generated one-bit parent event handoff input named
+  `actor_event`, and reports the wait in actor-network metadata. The event
+  producer remains external until actor type resolution, generated ATL child
+  artifacts, generated ATL tops, and qualified actor transaction triggers
+  ship. Multiple waits, nested waits, fan-in, fan-out, event payloads,
+  cross-clock actor events, concurrent groups, endpoint data movement, and
+  HDL behavior remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

@@ -396,6 +396,15 @@ meaning: `(await signal)` waits on a local transaction signal, and rule-level
 `(trigger transaction)` triggers a local transaction. Dotted enum-looking
 names that do not name a static actor instance keep their prior diagnostics.
 
+The next selected actor-event subset is one top-level transaction-body
+`(await actor.event)` for the current single static actor instance. It lowers
+to a generated one-bit parent event input named `actor_event`; for example,
+`reader.done` becomes `reader_done`. The event producer is external in that
+subset. FSMGen still will not resolve the actor type, emit an ATL child
+`.fsm`, generate an ATL top, trigger actor transactions, carry event
+payloads, or support fan-in/fan-out, nested waits, cross-clock actor events,
+or concurrent group events.
+
 Until those later leaves ship, `actor_network` remains discovery metadata
 only. It does not imply generated ATL child artifacts, generated ATL top names,
 route muxes, handoff storage, or HDL behavior.

@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL event wait handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` as the selection leaf
+  before implementing generated actor-event wait behavior.
+- The selected first behavior-bearing subset is exactly one top-level
+  transaction-body `(await actor.event)` where `actor` names the current
+  single declared static actor instance and `event` is a scalar HDL
+  identifier.
+- The next code leaf, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`, must lower
+  that wait to a deterministic one-bit parent handoff input named
+  `actor_event`; for example, `(await reader.done)` becomes an await on
+  `reader_done`.
+- The event producer is external in this subset. Actor type resolution,
+  generated ATL child `.fsm` files, generated ATL tops, qualified actor
+  transaction triggers, data movement, fan-in/fan-out, multiple or nested
+  event waits, event payloads, cross-clock actor events, concurrent groups,
+  and HDL behavior remain deferred or fail-closed.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream integration handoff, public contract, mdBook, changes, and
+  development notes. Validation passed: `mdbook build docs/book` and
+  `git diff --check`.
 ## 2026-05-18: ATL reserved event/trigger forms fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`.
 - [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) now

@@ -1575,6 +1575,18 @@ local transaction wait, and rule-level `(trigger transaction)` remains a local
 transaction trigger. Dotted enum-looking names that do not name a static actor
 instance keep their prior diagnostics.
 
+Next selected event-wait handoff subset: downstream producers should prepare
+for exactly one top-level transaction-body `(await actor.event)` against the
+current single declared static actor instance. The event name must be a scalar
+HDL identifier. The selected lowering maps that wait to a generated one-bit
+parent event input named `actor_event`; for example, `reader.done` maps to
+`reader_done`. The producer of that event is external in this subset. Do not
+emit multiple actor-event waits, nested actor-event waits, fan-in/fan-out
+event structures, event payloads, cross-clock actor events, concurrent group
+events, qualified triggers, or source that relies on generated ATL child
+artifacts or generated ATL top wiring until the corresponding support is
+documented here and advertised in the manifest.
+
 Current generated-artifact contract: none. The shipped static metadata surface
 emits no generated ATL child `.fsm`, no generated ATL top, no route mux, no
 handoff storage, and no HDL behavior. Downstream consumers must treat
