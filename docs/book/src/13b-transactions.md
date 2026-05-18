@@ -487,13 +487,15 @@ outstanding generated children before the nested repeat check can loop. Those
 branch-contained nested spawns reuse the static generated-child handoff model,
 preserve source-order samples before the spawn or sync state, and keep the
 nested repeat check gated by the spawned child done handoffs. In the
-top-level `when` body and top-level `switch` branch forms, the same nested
-repeat body may also run a local plain `(do child)` while generated nested
-spawns are pending, provided there was no prior multi-pending
-`(await_any done)` observation and a later same-body `(await_all done)` drains
-every outstanding generated spawn before the nested repeat check can loop.
-That local do target remains in the parent scheduled module, waits for its
-own fresh local done pulse, and does not clear the generated-spawn done set.
+top-level `when` body form, the same nested repeat body may also run a local
+plain `(do child)` while generated nested spawns are pending either before or
+after a prior multi-pending `(await_any done)` observation, provided a later
+same-body `(await_all done)` drains every outstanding generated spawn before
+the nested repeat check can loop. In the top-level `switch` branch form, the
+same local plain `(do child)` surface remains limited to cases with no prior
+multi-pending `await_any` observation. That local do target remains in the parent
+scheduled module, waits for its own fresh local done pulse, and does not clear
+the generated-spawn done set.
 The top-level `when` body and top-level `switch` branch forms also support
 plain generated-child `(do child)` in that pending-spawn interval when the
 target child is already emitted as a generated child by another activation
@@ -707,12 +709,14 @@ The `await_any` state advances after either `w0_done` or `w1_done`, but the
 outstanding done set remains live until the mandatory `await_all` drain. The
 nested repeat check remains unreachable until both done handoffs have been
 observed. After a multi-pending `await_any` observation, a new nested `spawn`
-or any `do` before that drain remains fail-closed.
+or any generated `do` before that drain remains fail-closed. A local
+`(do child)` is shipped only for the top-level `when` body nested-repeat path
+when the later same-body `await_all` drain is still present.
 
-Without a prior multi-pending `await_any` observation, a repeat directly
-inside a top-level `when` body may run a local child while generated nested
-spawns remain pending, then drain those generated spawns through same-body
-`await_all`:
+A repeat directly inside a top-level `when` body may run a local child while
+generated nested spawns remain pending, then drain those generated spawns
+through same-body `await_all`. The local do may appear either before any
+multi-pending `await_any` observation or after that observation:
 
 ```lisp
 (transaction parent
@@ -736,10 +740,34 @@ module. The nested do state starts `local_worker`, waits for its fresh local
 done pulse, and then the `after_do` sample runs before the `await_all` state.
 The generated-spawn done set remains live across the local do, so the nested
 repeat check is still gated by `w0_done` at the same-body `await_all` drain.
+The same top-level `when` path may observe any one of multiple generated
+children first and still run a local child before the mandatory drain:
+
+```lisp
+(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (spawn worker as w0
+        (params (WIDTH 16)))
+      (spawn worker as w1
+        (params (WIDTH 32)))
+      (await_any done)
+      (do local_worker)
+      (await_all done)))
+  (complete done))
+```
+
+In this form `await_any` only observes `w0_done` or `w1_done`; it does not
+remove either generated child from the outstanding set. The local do waits for
+`local_worker_done`, then `await_all` still waits for both generated done
+handoffs before the nested repeat check can re-enter.
 Generated `do` forms with static parameters and optional binding handoffs are
 documented below as separate shipped subsets. Domain-qualified generated
-`do`, `await_any` before or after the do, and new nested `spawn` after the do
-before the drain remain outside this local do subset.
+`do`, generated `do` after prior multi-pending `await_any`, the
+switch-contained local-do analogue after prior multi-pending `await_any`,
+`await_any` after the do, and new nested `spawn` after the do before the
+drain remain outside this local do subset.
 
 The same top-level `when` body pending-spawn interval may run a plain
 generated-child `(do child)` when that child already has a generated instance
@@ -1008,12 +1036,14 @@ have multiple generated spawns on the same-body `await_all` path, and may
 observe multi-pending same-body `await_any` only when a later same-body
 `await_all` drains those same outstanding generated children. The direct
 single-pending same-body `await_any` path is still exactly one generated
-spawn. In the top-level `when` body and top-level `switch` branch
-nested-repeat subsets, local plain `(do child)` may appear while generated
-nested spawns are pending only before a later same-body `await_all` drain and
-only when no prior multi-pending `await_any` observation has occurred. The
-local do waits on the local child's fresh done pulse and leaves
-generated-spawn done handoffs pending for the later drain. Those same
+spawn. In the top-level `when` body nested-repeat subset, local plain
+`(do child)` may appear while generated nested spawns are pending before or
+after a prior multi-pending `await_any` observation, as long as a later
+same-body `await_all` drain still follows. In the top-level `switch` branch
+nested-repeat subset, local plain `(do child)` remains limited to the path
+with no prior multi-pending `await_any` observation. The local do waits on the
+local child's fresh done pulse and leaves generated-spawn done handoffs
+pending for the later drain. Those same
 branch-contained subsets may also run plain generated-child `(do child)` in
 that interval when the target is already generated elsewhere; that generated
 do waits on its generated do instance's fresh done handoff and still leaves
@@ -1163,7 +1193,8 @@ multi-pending `await_any` only as an observation point before a mandatory
 same-body `await_all` drain. The top-level `when` body and top-level `switch`
 branch forms also permit the documented local plain `(do child)` while
 generated nested spawns are pending before a later same-body `await_all`
-drain. Both branch-contained forms also permit the documented plain
+drain; the top-level `when` form also permits that local do after a prior
+multi-pending `await_any` observation. Both branch-contained forms also permit the documented plain
 generated-child `(do child)` while generated nested spawns are pending before
 that same later drain, and the top-level `when` form also permits documented
 static-parameter generated `(do child (params ...))` while generated nested

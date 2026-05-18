@@ -332,17 +332,20 @@ same-body `(await_all done)` drains the same outstanding generated children
 before the nested repeat check can loop. Those branch-contained nested spawn
 subsets reuse the static generated-child handoff model, preserve source-order
 samples before the nested spawn or sync states, and gate the nested repeat
-check on spawned child done handoffs. The top-level `when` body and top-level
-`switch` branch nested-repeat subsets now also allow a local plain
-`(do child)` while generated nested spawns remain pending, provided there was
-no prior multi-pending `(await_any done)` observation and a later same-body
-`(await_all done)` drains the outstanding generated children before the nested
-repeat check can loop. That local do target remains in the parent scheduled
-module, waits for the local child's fresh done pulse, and does not clear the
-pending generated-spawn done set. The top-level `when` body and top-level
-`switch` branch nested-repeat subsets also allow a plain generated-child
-`(do child)` in that same pending-spawn interval when the target child is
-already emitted as a generated child by another activation site. Those
+check on spawned child done handoffs. The top-level `when` body nested-repeat
+subset now also allows a local plain `(do child)` while generated nested
+spawns remain pending either before or after a prior multi-pending
+`(await_any done)` observation, provided a later same-body `(await_all done)`
+drains the outstanding generated children before the nested repeat check can
+loop. The top-level `switch` branch nested-repeat subset allows the same
+local plain `(do child)` pending-spawn form only when there was no prior
+multi-pending `(await_any done)` observation. That local do target remains in
+the parent scheduled module, waits for the local child's fresh done pulse, and
+does not clear the pending generated-spawn done set. The top-level `when`
+body and top-level `switch` branch nested-repeat subsets also allow a plain
+generated-child `(do child)` in that same pending-spawn interval when the
+target child is already emitted as a generated child by another activation
+site. Those
 generated do sites own one deterministic generated instance, wait for that
 instance's fresh done handoff, and leave the pending generated-spawn done set
 live for the later same-body `(await_all done)` drain. The same two
@@ -355,9 +358,10 @@ subsets also accept `(bind ...)` input/output port bindings when static
 deterministic generated do instance for that lexical site, wires
 generated-top binding handoffs once, waits for the instance's fresh done
 handoff before the branch-owned repeat check, and leaves the pending
-generated-spawn done set live for the later drain. Prior or later
-`await_any` around the do, new nested `spawn` after the do before the drain,
-cross-domain repeat-body `do`,
+generated-spawn done set live for the later drain. Generated `do` after a
+prior multi-pending `await_any`, the switch-contained local-do analogue after
+a prior multi-pending `await_any`, `await_any` after the do, new nested
+`spawn` after the do before the drain, cross-domain repeat-body `do`,
 generated/spawn nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained spawned cases, deeper branch
 repeat activation, loop-contained repeat activation, and broader
@@ -501,17 +505,17 @@ handoffs remain live until the later drain. Domain metadata on those generated
 the do before the drain, cross-domain activation, deeper branch/loop nesting,
 and broader outstanding-child semantics remain deferred.
 
-The next selected backlog leaf is the when-contained
-`await_any`-before-local-do subset for that pending-spawn interval. It covers a
-repeat directly inside a top-level `when` body with multiple generated spawns,
-a multi-pending `(await_any done)` observation, local blocking `(do child)`
-while those generated spawns remain pending, and a later same-body
-`(await_all done)` drain before the nested repeat check can loop. The local do
-target stays in the parent scheduled module. Generated do after prior
-`await_any`, the switch-contained analogue, `await_any` after the do, spawn
-after the do before the drain, cross-domain activation, deeper branch/loop
-nesting, and broader outstanding-child semantics remain backlog. This
-await-any-before-local-do subset is selected but not yet shipped.
+The when-contained `await_any`-before-local-do subset for that pending-spawn
+interval is shipped. It covers a repeat directly inside a top-level `when`
+body with multiple generated spawns, a multi-pending `(await_any done)`
+observation, local blocking `(do child)` while those generated spawns remain
+pending, and a later same-body `(await_all done)` drain before the nested
+repeat check can loop. The local do target stays in the parent scheduled
+module and the generated-spawn done handoffs stay live through the local do
+until the later drain. Generated do after prior `await_any`, the
+switch-contained local-do analogue after prior `await_any`, `await_any` after
+the do, spawn after the do before the drain, cross-domain activation, deeper
+branch/loop nesting, and broader outstanding-child semantics remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

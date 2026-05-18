@@ -1,6 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF when-contained repeat local do after await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.78`.
+- Top-level `when` bodies may now contain nested repeats with multiple
+  generated spawns, a multi-pending `(await_any done)` observation, local
+  blocking `(do child)` while those generated spawns remain pending, and a
+  later same-body `(await_all done)` drain before the nested repeat check can
+  loop.
+- Lowering keeps generated-spawn done handoffs live after `await_any` and
+  through the local do, waits for the local child's fresh done pulse, and then
+  drains every pending generated child before nested repeat re-entry.
+- Generated `do` after prior multi-pending `await_any`, the switch-contained
+  local-do analogue after prior multi-pending `await_any`, `await_any` after
+  the do, spawn-after-do before the drain, cross-domain activation, deeper
+  nesting, and broader outstanding-child semantics remain fail-closed.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  task tree, roadmap board, live docs, doc audits, and mdBook.
+- Opened `ISF-REPEAT-BODY-CHILD-ACTIVATION.79` as the next selection leaf
+  before any further repeat-body child activation implementation.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=41),
+  touched repeat/spawn/doc checks (Files=4, Tests=428), focused
+  activation/domain/doc suite (Files=13, Tests=470), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1241), and
+  `git diff --check` passed.
 ### R14 — ISF when-contained repeat local do after await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.77`.
 - Selected top-level `when` body nested repeats with multiple generated

@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained local do after await_any preserves generated-spawn lifetime
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.78` implements only the selected
+  top-level `when` body nested-repeat local-do-after-multi-pending-`await_any`
+  subset.
+- The implementation keeps the widening validator-local: local plain
+  `(do child)` may appear after a multi-pending `(await_any done)` observation
+  only for a repeat directly inside a top-level `when` body and only when a
+  later same-body `(await_all done)` still drains every pending generated
+  child before nested repeat re-entry.
+- The local do consumes only its parent-module local start/done handoff. It
+  does not clear generated-spawn done handoffs; the outstanding generated set
+  remains live after `await_any`, through the local do, and into the later
+  `await_all` drain.
+- Generated `do` after prior multi-pending `await_any`, the switch-contained
+  local-do analogue after prior multi-pending `await_any`, `await_any` after
+  the do, new spawn after the do before the drain, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  separate contracts.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`
+  must pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: when-contained local do after await_any is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.77` selects the first
   await-any-before-do widening after the pending-spawn generated-do domain

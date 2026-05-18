@@ -1,5 +1,35 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained repeat local do after await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.78`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the selected top-level `when` body nested-repeat local
+  `(do child)` after a prior multi-pending `(await_any done)` observation.
+- The accepted source shape is a repeat directly inside a top-level `when`
+  body with multiple generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  `(await_any done)` as an observation point, local blocking `(do child)`,
+  and a later same-body `(await_all done)` drain before the nested repeat
+  check can loop.
+- Lowering keeps every generated-spawn done handoff live after `await_any` and
+  through the local do, waits for the local child's fresh done pulse, then
+  drains every pending generated child before nested repeat re-entry.
+- Generated `do` after prior multi-pending `await_any`, the switch-contained
+  local-do analogue after prior multi-pending `await_any`, `await_any` after
+  the do, new spawn after the do before drain, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  fail-closed.
+- The mdBook, ISF spec, downstream integration spec, public contract, feature
+  matrix audits, task tree, roadmap board, and live docs now document this
+  subset as shipped.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=41),
+  touched repeat/spawn/doc checks (Files=4, Tests=428), focused
+  activation/domain/doc suite (Files=13, Tests=470), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1241), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: when-contained repeat local do after await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.77`.
 - The active R14 task tree now selects the first bounded
@@ -16,10 +46,11 @@ This is the live continuity document for fast session recovery after crashes, re
   analogue, `await_any` after the do, new spawn after the do before drain,
   cross-domain activation, deeper branch/loop nesting, and broader
   outstanding-child semantics remain deferred.
-- The mdBook feature backlog now documents the selected pending-spawn
-  `await_any`-before-local-do subset as selected but not yet shipped, and also
-  removes a stale note that still described shipped domain-qualified
-  pending-spawn generated `do` as backlog.
+- At selection time, the mdBook feature backlog documented the selected
+  pending-spawn `await_any`-before-local-do subset as not yet shipped and
+  removed a stale note that still described shipped domain-qualified
+  pending-spawn generated `do` as backlog; `.78` later shipped that selected
+  subset.
 - Validation: `mdbook build docs/book`, `prove -l
   t/1305-isf-book-feature-matrix-audit.t
   t/1307-isf-loop-body-doc-truth-audit.t` (Files=2, Tests=242), and
@@ -77,8 +108,9 @@ This is the live continuity document for fast session recovery after crashes, re
   cross-domain activation. `await_any` around the do, new spawn after the do
   before drain, cross-domain activation, deeper branch/loop nesting, and
   broader outstanding-child semantics remain deferred.
-- The mdBook feature backlog now documents the switch-contained
-  pending-spawn same-domain subset as selected but not yet shipped.
+- At selection time, the mdBook feature backlog documented the
+  switch-contained pending-spawn same-domain subset as not yet shipped; `.76`
+  later shipped that selected subset.
 - Validation: `mdbook build docs/book` and `git diff --check` passed.
 - The active R14 frontier advances to
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.76`.
@@ -134,8 +166,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - The switch-contained domain analogue, `await_any` around the do, new spawn
   after the do before drain, cross-domain activation, deeper branch/loop
   nesting, and broader outstanding-child semantics remain deferred.
-- The mdBook feature backlog now documents the selected pending-spawn
-  same-domain subset as selected but not yet shipped.
+- At selection time, the mdBook feature backlog documented the selected
+  pending-spawn same-domain subset as not yet shipped; `.74` later shipped
+  that selected subset.
 - Validation: `mdbook build docs/book` and `git diff --check` passed.
 - The active R14 frontier advances to
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.74`.
