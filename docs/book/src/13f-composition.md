@@ -381,10 +381,10 @@ stays `(actor ...)`, and future ATL declarations remain direct actor-body
 clauses rather than a `(network ...)` section. Actor-to-actor and
 pin-to-actor movement will reuse the existing drive-body pair shape in
 `(sink source)` order plus ordinary drive-call timing points. `connect`,
-`transfer`, and `move` are not part of ATL v0 movement syntax. The next
-endpoint-movement code leaf is selected as fail-closed reservation: qualified
+`transfer`, and `move` are not part of ATL v0 movement syntax. The first
+endpoint-movement code leaf is shipped as fail-closed reservation: qualified
 actor endpoint drive-body pairs that name a declared static actor instance
-should reject with ATL data-movement diagnostics until generated routing
+reject with ATL data-movement diagnostics until generated routing
 behavior is explicitly selected. Future
 orchestration spellings are reserved as `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and

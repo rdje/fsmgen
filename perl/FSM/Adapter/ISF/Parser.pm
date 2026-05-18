@@ -736,6 +736,14 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
     my @event_waits;
     my @transaction_triggers;
 
+    for my $drive_name (sort keys %{$actor->{drives} || {}}) {
+        _validate_atl_reserved_endpoint_drive_pairs(
+            ($actor->{drives}{$drive_name} || {})->{body},
+            "drive '$drive_name' body",
+            \%actor_instances,
+        );
+    }
+
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_atl_reserved_qualified_forms(
             $tx->{clauses},
@@ -744,6 +752,7 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
             \%declared_signals,
             \@event_waits,
             \@transaction_triggers,
+            $actor->{drives} || {},
             {
                 transaction         => $tx->{name},
                 allow_event_wait    => 1,
@@ -807,8 +816,9 @@ sub _validate_actor_atl_generated_handoff_signal_conflicts {
 }
 
 sub _validate_transaction_atl_reserved_qualified_forms {
-    my ($clauses, $context, $actor_instances, $declared_signals, $event_waits, $transaction_triggers, $options) = @_;
+    my ($clauses, $context, $actor_instances, $declared_signals, $event_waits, $transaction_triggers, $drives, $options) = @_;
     return 1 unless ref($clauses) eq 'ARRAY';
+    $drives ||= {};
     $options ||= {};
 
     for my $clause (@$clauses) {
@@ -852,6 +862,10 @@ sub _validate_transaction_atl_reserved_qualified_forms {
             confess "Error: $context ATL actor transaction trigger '(trigger $target)' is reserved for top-level transaction bodies only in the current subset; nested actor transaction triggers remain deferred\n";
         }
 
+        if ($head eq 'drive') {
+            _validate_atl_reserved_inline_drive_pairs($clause, $context, $actor_instances, $drives);
+        }
+
         if ($head eq 'on' || $head eq 'when' || $head eq 'repeat'
             || $head eq 'while' || $head eq 'until')
         {
@@ -862,6 +876,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                 $declared_signals,
                 $event_waits,
                 $transaction_triggers,
+                $drives,
                 {
                     transaction         => $options->{transaction},
                     allow_event_wait    => 0,
@@ -881,6 +896,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     $declared_signals,
                     $event_waits,
                     $transaction_triggers,
+                    $drives,
                     {
                         transaction         => $options->{transaction},
                         allow_event_wait    => 0,
@@ -888,6 +904,62 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     },
                 );
             }
+        }
+    }
+
+    return 1;
+}
+
+sub _validate_atl_reserved_inline_drive_pairs {
+    my ($clause, $context, $actor_instances, $drives) = @_;
+    return 1 unless ref($clause) eq 'ARRAY'
+        && @$clause >= 2
+        && defined($clause->[0])
+        && !ref($clause->[0])
+        && $clause->[0] eq 'drive';
+
+    my $spec = $clause->[1];
+    return 1 if defined($spec) && !ref($spec) && ($drives || {})->{$spec};
+
+    my $first = ref($spec) eq 'ARRAY' ? 1 : 2;
+    return 1 if $first > $#$clause;
+
+    return _validate_atl_reserved_endpoint_drive_pairs(
+        [ @{$clause}[$first .. $#$clause] ],
+        "$context inline drive",
+        $actor_instances,
+    );
+}
+
+sub _validate_atl_reserved_endpoint_drive_pairs {
+    my ($entries, $context, $actor_instances) = @_;
+    return 1 unless ref($entries) eq 'ARRAY';
+
+    for my $entry (@$entries) {
+        next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
+        my ($sink, $source) = @$entry[0, 1];
+        if (_is_qualified_atl_endpoint_token($sink, $actor_instances)) {
+            confess "Error: $context ATL actor data movement sink '$sink' is reserved but not supported yet; endpoint-aware drive-body movement remains deferred\n";
+        }
+        _validate_atl_reserved_endpoint_drive_source($source, "$context source", $actor_instances);
+    }
+
+    return 1;
+}
+
+sub _validate_atl_reserved_endpoint_drive_source {
+    my ($value, $context, $actor_instances) = @_;
+    return 1 unless defined($value);
+
+    if (!ref($value)) {
+        confess "Error: $context ATL actor data movement source '$value' is reserved but not supported yet; endpoint-aware drive-body movement remains deferred\n"
+            if _is_qualified_atl_endpoint_token($value, $actor_instances);
+        return 1;
+    }
+
+    if (ref($value) eq 'ARRAY') {
+        for my $item (@$value) {
+            _validate_atl_reserved_endpoint_drive_source($item, $context, $actor_instances);
         }
     }
 

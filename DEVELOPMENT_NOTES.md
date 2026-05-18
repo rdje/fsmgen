@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL endpoint movement diagnostics precede routing
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` implements the reserved endpoint-aware
+  drive-body boundary selected by `.5.1`.
+- The check runs in the parser after static actor instance metadata is known.
+  That lets FSMGen distinguish `reader.payload` as an ATL actor endpoint when
+  `reader` is a declared static instance, while preserving existing local
+  aggregate or enum-looking dotted-name behavior for non-actor qualifiers.
+- The implementation covers named drive bodies and inline transaction drive
+  assignments, because both are drive-body movement pairs. Named drive calls
+  are left alone in this leaf; drive-call actual endpoint semantics need a
+  later generated-routing contract.
 ## 2026-05-18: ATL data movement starts with reservation diagnostics
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` selects the first endpoint-aware actor
   data movement boundary before code.

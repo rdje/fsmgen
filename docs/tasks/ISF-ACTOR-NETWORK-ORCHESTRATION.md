@@ -158,14 +158,14 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.1: select ATL data movement boundary`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`
-  Status: `active`
+  Status: `completed`
   Goal: `Fail closed reserved endpoint-aware actor movement forms.`
   Acceptance: `Parser/lowering coverage rejects drive-body pairs whose sink or source is a qualified actor endpoint naming a declared static actor instance with targeted ATL data-movement diagnostics, while preserving existing local aggregate/enum dotted-name behavior when the qualifier is not a static actor instance. Multiple static instances remain rejected by the existing static-network boundary until a later leaf selects two-instance metadata/lowering.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.2: fail closed ATL data movement`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the first generated scalar actor-to-actor handoff subset.`
   Acceptance: `A selection leaf chooses the first behavior-bearing scalar actor endpoint movement subset only after defining whether two static instances are accepted in that leaf, source/sink endpoint ownership, generated parent ports or storage names, width evidence, fan-in/fan-out policy, route lifetime, schedule-report keys, generated artifact non-claims, and fail-closed boundaries.`
   Verification: `pending`
@@ -203,7 +203,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` | `active` | `.5.1` selected the first endpoint-aware actor data movement boundary as fail-closed reservation before generated routing. The next code leaf implements those targeted diagnostics only. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `active` | `.5.2` shipped targeted diagnostics for reserved qualified actor endpoint drive-body pairs. The next leaf selects the first generated scalar actor-to-actor handoff subset before more code. |
 
 ## ATL v0 Proposal
 
@@ -273,14 +273,13 @@ Current proposal summary:
   cross-clock actor triggers, generated ATL child `.fsm` files, generated ATL
   tops, HDL event wiring, and concurrent group triggers deferred or
   fail-closed.
-- The first `.5` data-movement implementation sequence is selected to start
-  with fail-closed reservation, not generated routing. Qualified actor
+- The first `.5` data-movement implementation sequence starts
+  with shipped fail-closed reservation, not generated routing. Qualified actor
   endpoint drive-body pairs such as `(consumer.payload producer.payload)` or
-  `(consumer.payload local_value)` can currently look like local dotted
-  aggregate or enum names; `.5.2` must reject endpoints that name declared
-  static actor instances with ATL-specific data-movement diagnostics before
-  later leaves widen instance counts, generate handoff storage, or emit route
-  artifacts.
+  `(consumer.payload local_value)` can look like local dotted aggregate or
+  enum names; `.5.2` rejects endpoints that name declared static actor
+  instances with ATL-specific data-movement diagnostics before later leaves
+  widen instance counts, generate handoff storage, or emit route artifacts.
 
 ## Decisions
 
@@ -435,6 +434,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` | `mdbook build docs/book`; `git diff --check` | `selected the first qualified actor-transaction trigger subset as a single parent output handoff; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected actor-transaction trigger lowers to a parent handoff output and report metadata; focused checks pass; broad ISF gate passes with Files=229, Tests=1347` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` | `mdbook build docs/book`; `git diff --check` | `selected the first actor data movement boundary as fail-closed endpoint drive reservation; book and diff checks passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `qualified actor endpoint sink/source drive-body forms fail closed with ATL diagnostics; focused checks pass; broad ISF gate passes with Files=229, Tests=1348` |
 
 ## Commit Log
 
@@ -455,6 +455,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1: select actor trigger handoff` | `selects the first qualified actor-transaction trigger subset as one top-level transaction trigger lowered to a parent output handoff` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2: lower actor triggers` | `lowers the selected single actor-transaction trigger to a generated parent handoff output and actor-network report metadata` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.1: select ATL data movement boundary` | `selects fail-closed reservation for qualified actor endpoint drive-body pairs as the first data movement boundary` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.2: fail closed ATL data movement` | `rejects reserved qualified actor endpoint sink/source drive-body pairs with ATL data-movement diagnostics` |
 
 ## Changelog
 
@@ -514,3 +515,8 @@ Current proposal summary:
   implementation boundary as fail-closed reservation for qualified actor
   endpoint drive-body pairs before generated routing. The active frontier
   moves to `.5.2` for targeted ATL data-movement diagnostics.
+- `2026-05-18`: Completed `.5.2`: named drive bodies and inline transaction
+  drive assignments now fail closed when a drive-body pair sink or source is a
+  qualified actor endpoint naming the current static actor instance. The
+  active frontier moves to `.5.3` to select the first generated scalar
+  actor-to-actor handoff subset.

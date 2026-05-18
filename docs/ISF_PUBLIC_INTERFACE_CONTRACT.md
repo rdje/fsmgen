@@ -1573,9 +1573,9 @@ behavior until advertised by capability metadata. Endpoint-aware movement
 will keep drive body pair order as `(sink source)` and may later admit
 qualified `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
 `group.name` endpoints. `connect`, `transfer`, and `move` are not public ATL
-v0 movement clauses. The next endpoint-movement code leaf is selected as
+v0 movement clauses. The first endpoint-movement code leaf is shipped as
 fail-closed reservation: qualified actor endpoint drive-body pairs naming a
-declared static actor instance must reject with ATL data-movement diagnostics
+declared static actor instance reject with ATL data-movement diagnostics
 until generated routing behavior is explicitly advertised. Future
 orchestration spellings are reserved as
 `(do actor.transaction)`, `(spawn actor.transaction as NAME)`, and

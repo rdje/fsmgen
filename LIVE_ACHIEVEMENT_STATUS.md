@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL data movement endpoint forms fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
+- Named drive bodies and inline transaction drive-body pairs now reject
+  qualified actor endpoint sinks or sources when the qualifier names the
+  current static actor instance.
+- The diagnostic names ATL actor data movement and whether the reserved
+  endpoint appeared as a sink or source.
+- Generated actor-to-actor movement, two-instance lowering, route muxes,
+  handoff storage, width inference across actor types, generated ATL children,
+  generated ATL tops, and HDL routing remain deferred.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
+- Validation passed: parser and public-contract syntax checks, focused
+  actor-network/public-contract/book audit tests, `mdbook build docs/book`,
+  the broad `./bin/ci-regression isf --no-book` gate with `Files=229,
+  Tests=1348`, and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL data movement boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1`.
 - The first actor data movement code leaf is fail-closed reservation for

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL data movement endpoint forms fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
+- Named drive body pairs and inline transaction drive-body pairs now reject
+  qualified actor endpoint sinks or sources when the qualifier names the
+  current static actor instance.
+- Diagnostics explicitly name ATL actor data movement and the offending
+  sink/source endpoint, preserving existing local dotted-name behavior for
+  non-actor qualifiers.
+- Generated actor-to-actor movement, two-instance lowering, route muxes,
+  handoff storage, width inference across actor types, generated ATL child
+  `.fsm` files, generated ATL tops, report keys, and HDL routing remain
+  deferred to later `.5` leaves.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
 ### R14 — ATL data movement boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` as a task-tree selection
   and decomposition slice before endpoint-aware actor data movement code.

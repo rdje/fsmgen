@@ -689,11 +689,11 @@ scheduling; the source does not add a new movement keyword.
 The rationale is uniform ISF syntax: ATL should not make downstream emitters
 or users learn a second data-movement form when existing drive bodies and
 drive calls can carry the same intent.
-The first `.5` data-movement code leaf is selected as fail-closed
+The first `.5` data-movement code leaf is shipped as fail-closed
 reservation. Qualified actor endpoint drive-body pairs that name a declared
-static actor instance must reject with ATL data-movement diagnostics until a
-later leaf selects generated routing, handoff storage, width evidence,
-two-instance lowering, and report keys.
+static actor instance reject with ATL data-movement diagnostics until a later
+leaf selects generated routing, handoff storage, width evidence, two-instance
+lowering, and report keys.
 The selected future orchestration vocabulary reuses existing ISF activation
 forms: `(do actor.transaction)` for blocking actor transaction activation,
 `(spawn actor.transaction as NAME)` for nonblocking activation,

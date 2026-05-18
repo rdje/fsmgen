@@ -269,6 +269,57 @@ ISF
     );
 };
 
+subtest 'reserved endpoint-aware drive movement forms fail closed with ATL diagnostics' => sub {
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_drive_sink
+  (clock clk)
+  (interface (input start) (input payload) (output done))
+  (instance reader of packet_reader)
+  (drive feed_reader
+    (reader.payload payload))
+  (transaction run
+    (on start)
+    (drive feed_reader)
+    (complete done)))
+ISF
+        qr/drive 'feed_reader' body ATL actor data movement sink 'reader\.payload' is reserved but not supported yet/,
+        'named drive body qualified actor sink fails closed before local dotted-name diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_drive_source
+  (clock clk)
+  (interface (input start) (output payload) (output done))
+  (instance reader of packet_reader)
+  (drive read_payload
+    (payload reader.payload))
+  (transaction run
+    (on start)
+    (drive read_payload)
+    (complete done)))
+ISF
+        qr/drive 'read_payload' body source ATL actor data movement source 'reader\.payload' is reserved but not supported yet/,
+        'named drive body qualified actor source fails closed before local dotted-name diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_inline_drive_source
+  (clock clk)
+  (interface (input start) (output payload) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (drive inline_payload (payload reader.payload))
+    (complete done)))
+ISF
+        qr/transaction 'run' inline drive source ATL actor data movement source 'reader\.payload' is reserved but not supported yet/,
+        'inline drive qualified actor source fails closed before local dotted-name diagnostics',
+    );
+};
+
 subtest 'unsupported qualified event and trigger forms fail closed with ATL diagnostics' => sub {
     parse_fails_like(
         <<'ISF',

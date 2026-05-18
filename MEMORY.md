@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL data movement endpoint forms fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
+- The parser now rejects named drive body and inline transaction drive-body
+  pairs whose sink or source is a qualified actor endpoint naming the current
+  static actor instance. Diagnostics name ATL actor data movement and the
+  offending sink/source endpoint instead of falling through as local dotted
+  aggregate or enum-looking names.
+- Existing local dotted-name behavior remains scoped to qualifiers that do not
+  name static actor instances. Generated actor-to-actor movement,
+  two-instance lowering, route muxes, handoff storage, width inference across
+  actor types, generated ATL children/tops, and HDL routing remain deferred.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
+- Validation passed: parser and public-contract syntax checks, focused
+  actor-network/public-contract/book audit tests, `mdbook build docs/book`,
+  the broad `./bin/ci-regression isf --no-book` gate with `Files=229,
+  Tests=1348`, and `git diff --check`.
 ## 2026-05-18: ATL data movement boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` as the selection and
   decomposition leaf before implementing endpoint-aware actor data movement.
