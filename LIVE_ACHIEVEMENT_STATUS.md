@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF when-contained repeat generated-child do after await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.82`.
+- Top-level `when` bodies may now contain nested repeats with multiple
+  generated spawns, a multi-pending `(await_any done)` observation, plain
+  generated-child blocking `(do child)` while those generated spawns remain
+  pending, and a later same-body `(await_all done)` drain before the nested
+  repeat check can loop.
+- Lowering keeps generated-spawn done handoffs live after `await_any` and
+  through the generated do instance, waits for that instance's fresh done
+  handoff, and then drains every pending generated child before nested repeat
+  re-entry.
+- Parameterized, bound, or domain-qualified generated `do` after prior
+  `await_any`, the switch-contained generated-child analogue, `await_any`
+  after the do, spawn-after-do before the drain, cross-domain activation,
+  deeper nesting, and broader outstanding-child semantics remain fail-closed.
+  The active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.83`,
+  which must select the next bounded repeat-body child activation subset
+  before code.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=43), touched repeat/spawn/doc checks (Files=4, Tests=440), focused
+  activation/domain/doc suite (Files=13, Tests=482),
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book` (Files=227,
+  Tests=1253), and `git diff --check`.
+
 ## 2026-05-18: R14 — ISF when-contained repeat generated-child do after await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.81`.
 - Selected top-level `when` body nested repeats with multiple generated

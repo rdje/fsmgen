@@ -1093,9 +1093,12 @@ repeats may also lower static-parameter same-domain generated
 `(do child (params ...) [(bind ...)] (domain NAME))` in that interval. The
 domain annotation is declared ownership metadata for the generated do
 instance; lowering keeps pending generated-spawn done handoffs live until the
-later drain. Generated `do` after prior multi-pending `await_any`, `await_any`
-after the do, and a new nested spawn after the do before the drain remain
-fail-closed.
+later drain. The top-level `when` body plain generated-child do after prior
+multi-pending `await_any` subset is shipped for this same pending-spawn
+lifetime proof. Parameterized, bound, or domain-qualified generated `do` after
+prior multi-pending `await_any`, the switch-contained generated-child analogue
+after prior `await_any`, `await_any` after the do, and a new nested spawn
+after the do before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1303,8 +1306,14 @@ The generated top instantiates both `w0` and
 `parent_worker_repeat_do_0`. The blocking generated-child `do` consumes only
 `parent_worker_repeat_do_0_done`; it does not clear `w0_done`, so the nested
 repeat check remains unreachable until the later `await_all` drain observes
-the spawned child. The top-level `when` body and top-level `switch` branch
-static-parameter generated pending-spawn subsets use the same state shape,
+the spawned child. The top-level `when` body generated-child subset may also
+place a multi-pending `await_any` observation before that generated-child
+`do`: the observation branches to the generated do state, the generated do
+waits only for its deterministic instance done handoff, and the later
+`await_all` drain still observes every pending spawned child before the nested
+repeat check. The switch-contained generated-child after-prior-`await_any`
+analogue remains fail-closed. The top-level `when` body and top-level
+`switch` branch static-parameter generated pending-spawn subsets use the same state shape,
 with `parent_worker_repeat_do_0` carrying the authored static parameter
 overrides in the generated top. The generated `do` still consumes only its own
 fresh done handoff and leaves the spawned child done handoff live for the
