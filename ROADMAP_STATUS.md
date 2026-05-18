@@ -2,17 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.95`.
-  Leaf `.94` shipped the top-level `when` body same-domain generated-do
-  analogue after a prior multi-pending `await_any` observation. The shipped
-  subset accepts a repeat directly inside a top-level `when` body with
-  multiple generated spawns, multi-pending `(await_any done)` as an
-  observation point, static-parameter generated blocking
-  `(do child (params ...) [(bind ...)] (domain NAME))` while those generated
-  spawns remain pending, and a later same-body `(await_all done)` drain before
-  the nested repeat check can loop. Leaf `.95` must select exactly one next
-  remaining fail-closed boundary before further implementation. The
-  switch-contained domain analogue, `await_any` after the do, spawn-after-do,
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.96`.
+  Leaf `.95` selected the top-level `switch` branch same-domain generated-do
+  analogue after a prior multi-pending `await_any` observation. Leaf `.96`
+  must implement only that selected subset: a repeat directly inside a
+  top-level `switch` branch with multiple generated spawns, multi-pending
+  `(await_any done)` as an observation point, static-parameter generated
+  blocking `(do child (params ...) [(bind ...)] (domain NAME))` while those
+  generated spawns remain pending, and a later same-body `(await_all done)`
+  drain before the nested repeat check can loop. The selected contract
+  records declared same-domain ownership metadata without implying CDC or
+  cross-domain activation. `await_any` after the do, spawn-after-do,
   cross-domain activation, deeper branch/loop nesting, and broader
   outstanding-child semantics remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
@@ -570,9 +570,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   that selected when-contained same-domain generated-do await-any-before-do
   subset with declared ownership metadata and the same generated-spawn
   lifetime proof. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.95`, which must select one remaining
-  fail-closed repeat-body child activation boundary before further
-  implementation.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.95`, which selected the direct
+  switch-contained same-domain generated-do analogue after a prior
+  multi-pending `await_any` observation and before the mandatory later
+  same-body `await_all` drain. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.96`, which implements only that selected
+  same-domain metadata subset.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
