@@ -890,10 +890,11 @@ with the same later same-body `await_all` drain requirement. The documented
 top-level `when` body nested subset additionally supports static-parameter
 generated `(do child (params ...) (bind ...))` after a prior multi-pending
 `await_any`, with generated-top input/output binding handoffs and the same
-later same-body `await_all` drain requirement. Switch-contained bound
-generated `do` after prior multi-pending `await_any`, domain-metadata
-generated `do` after prior multi-pending `await_any`, `await_any` after that
-do, and new nested `spawn` after that do before the drain remain fail-closed.
+later same-body `await_all` drain requirement; the documented top-level
+`switch` branch nested subset now supports the same bound generated-do
+after-`await_any` contract. Domain-metadata generated `do` after prior
+multi-pending `await_any`, `await_any` after that do, and new nested `spawn`
+after that do before the drain remain fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -944,7 +945,6 @@ forms with parameters, binding handoffs, or domain metadata are separate
 contracts from that local do subset; generated-child, static-parameter, and
 the documented top-level when-body bound generated `do` after prior multi-
 pending `await_any` are shipped through their own bounded contracts, while
-switch-contained bound generated `do` after prior multi-pending `await_any`,
 domain-qualified generated `do` after prior multi-pending `await_any`,
 `await_any` after the local do, and new spawn after the local do before the
 drain remain outside the public shipped subset.
@@ -968,10 +968,8 @@ leaves the generated spawn done set live until the later same-body
 are pending. The generated do wires generated-top input/output binding
 handoffs once, waits for its own fresh done handoff, and leaves the generated
 spawn done set live until the later same-body `await_all` drain. In the top-
-level `when` body subset, that bound generated do may also run after a prior
-multi-pending `await_any` observation; the top-level `switch` branch bound
-generated do after prior multi-pending `await_any` remains outside the public
-shipped subset.
+level `when` body and top-level `switch` branch subsets, that bound generated
+do may also run after a prior multi-pending `await_any` observation.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, static-parameter generated
 `(do child (params ...) [(bind ...)] (domain NAME))` may also run while

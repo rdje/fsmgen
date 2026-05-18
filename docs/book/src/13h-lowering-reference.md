@@ -1101,10 +1101,11 @@ also shipped, and the top-level `switch` branch static-parameter analogue is
 shipped with the same later drain requirement. The top-level `when` body
 static-parameter bound generated do after prior multi-pending `await_any`
 subset is shipped with the same later drain requirement and generated-top
-binding handoffs. Switch-contained bound generated `do` after prior
-multi-pending `await_any`, domain-metadata generated `do` after prior
-`await_any`, `await_any` after the do, and a new nested spawn after the do
-before the drain remain fail-closed.
+binding handoffs. The top-level `switch` branch static-parameter bound
+generated do after prior multi-pending `await_any` subset is shipped with the
+same later drain requirement and generated-top binding handoffs. Domain-
+metadata generated `do` after prior `await_any`, `await_any` after the do,
+and a new nested spawn after the do before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1328,10 +1329,9 @@ static-parameter generated do shape may also follow a prior multi-pending
 shape and adds generated-top input/output binding handoffs to
 `parent_worker_repeat_do_0`; those handoffs are consumed by the generated do
 instance only, while the spawned child done handoff remains live for the later
-drain. The top-level `when` body bound form may also follow a prior multi-
-pending `await_any` observation before the later `await_all` drain. The top-
-level `switch` branch static-parameter bound subset uses the same binding
-handoff shape only before any prior multi-pending `await_any` observation.
+drain. The top-level `when` body and top-level `switch` branch bound forms
+may also follow a prior multi-pending `await_any` observation before the later
+`await_all` drain.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:

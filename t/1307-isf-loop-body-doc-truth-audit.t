@@ -212,6 +212,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*bind.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any subset",
+    );
+    like(
+        $content,
         qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*bind.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do while generated spawn pending subset",
     );
