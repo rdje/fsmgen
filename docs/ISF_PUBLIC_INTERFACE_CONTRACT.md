@@ -954,8 +954,13 @@ the documented top-level when-body bound generated `do` after prior multi-
 pending `await_any` are shipped through their own bounded contracts, while
 domain-qualified generated `do` after prior multi-pending `await_any` is
 shipped for the documented top-level branch-contained same-domain subsets.
-Generated-do post-do `await_any` and new spawn after the local do before the
-drain remain outside the public shipped subset.
+In the top-level `when` body subset, plain generated-child `(do child)` may
+also run before a post-do multi-pending `await_any` observation when that
+later same-body `await_all` still drains every pending generated spawn before
+nested repeat re-entry. Static-parameter, bound, or domain-qualified
+generated-do post-do `await_any`, switch-contained generated-child post-do
+`await_any`, and new spawn after the do before the drain remain outside the
+public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level

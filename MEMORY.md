@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained generated-child do before post-do await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.102`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the selected top-level `when` body nested repeat plain
+  generated-child `(do child)` before post-do multi-pending `(await_any done)`.
+- The accepted source shape is a repeat directly inside a top-level `when`
+  body with multiple generated spawns, plain generated-child blocking `do`
+  while those generated spawns remain pending, `(await_any done)` as an
+  observation point after that generated-child do, and a later same-body
+  `(await_all done)` drain before the nested repeat check can loop.
+- Lowering waits for the generated do instance's fresh done handoff before
+  evaluating the post-do `await_any`, keeps every generated-spawn done handoff
+  live through the generated-child do and await_any observation, preserves
+  source-order samples, and drains every pending generated child before
+  nested repeat re-entry.
+- Static-parameter generated do, bind handoffs, domain metadata, the
+  switch-contained generated-child analogue, new spawn after the do before
+  drain, cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed.
+- The mdBook, ISF spec, downstream integration spec, public contract, feature
+  matrix audits, task tree, roadmap board, and live docs now document this
+  subset as shipped.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=53), focused repeat/spawn/doc checks (Files=3, Tests=358),
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=227, Tests=1311), and `git diff --check`.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.103`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: when-contained generated-child do before post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.101`.
 - The active R14 task tree now selects top-level `when` body nested repeat

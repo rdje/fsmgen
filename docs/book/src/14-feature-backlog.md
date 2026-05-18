@@ -589,17 +589,20 @@ same contract for a repeat directly inside a top-level `switch` branch while
 generated nested spawns remain pending before the same-body `await_all` drain:
 the local child still completes through the parent scheduled module, and the
 post-do `await_any` observes only the pending generated-spawn done set
-without clearing it. The next selected generated-do post-do `await_any`
-frontier is the top-level `when` body nested repeat plain generated-child
-`(do child)` analogue: a repeat directly inside a top-level `when` body with
+without clearing it. The top-level `when` body nested repeat plain
+generated-child `(do child)` before post-do multi-pending `await_any` subset
+is shipped as well: a repeat directly inside a top-level `when` body with
 multiple generated spawns, a plain generated-child blocking do while those
 generated spawns remain pending, post-do `(await_any done)` as an observation
 point, and a later same-body `(await_all done)` drain before the nested
-repeat check can loop. Static-parameter generated do, bind handoffs, domain
-metadata, the switch-contained generated-child analogue, new spawn after the
-do before the drain, cross-domain activation, deeper branch/loop nesting, and
-broader outstanding-child semantics remain backlog until their own leaves
-select and ship them.
+repeat check can loop. The generated-child do waits for its deterministic
+generated do instance's fresh done handoff, and the post-do `await_any`
+observes only the pending generated-spawn done set without clearing it.
+Static-parameter generated do, bind handoffs, domain metadata, the
+switch-contained generated-child analogue, new spawn after the do before the
+drain, cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog until their own leaves select and
+ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

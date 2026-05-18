@@ -4014,10 +4014,18 @@ sub _validate_repeat_body_spawn_subset {
                 && $keyword eq 'await_any'
                 && @pending_spawns > 1
                 && !$awaiting_multi_pending_drain;
+            my $allowed_when_generated_child_do_before_post_await_any =
+                $when_body_repeat
+                && !$pending_local_do_before_drain
+                && $pending_generated_do_before_drain
+                && ($pending_generated_do_kind_before_drain // '') eq 'generated-child do'
+                && $keyword eq 'await_any'
+                && @pending_spawns > 1
+                && !$awaiting_multi_pending_drain;
             confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
                 if defined $pending_local_do_label && $pending_local_do_before_drain && $keyword eq 'await_any' && !$allowed_branch_local_do_before_post_await_any;
             confess "Transaction '$tn': $pending_generated_do_label nested repeat $pending_generated_do_kind_before_drain while generated spawns are pending requires same-body '(await_all done)' drain; '(await_any done)' after the do remains deferred\n"
-                if defined $pending_generated_do_label && $pending_generated_do_before_drain && $keyword eq 'await_any';
+                if defined $pending_generated_do_label && $pending_generated_do_before_drain && $keyword eq 'await_any' && !$allowed_when_generated_child_do_before_post_await_any;
             if ($keyword eq 'await_any' && @pending_spawns > 1) {
                 $awaiting_multi_pending_drain = 1;
                 next;

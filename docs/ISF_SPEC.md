@@ -1635,9 +1635,15 @@ Current lowering:
   `switch` branch nested repeat local `(do child)` supports the same post-do
   multi-pending `(await_any done)` observation and later-drain contract while
   generated nested spawns remain pending before the same-body `await_all`
-  drain. Generated-do post-do `await_any`, new nested `spawn` after the do
-  before the drain, deeper branch/loop nesting, and cross-domain activation
-  remain fail-closed.
+  drain. Top-level `when` body nested repeat plain generated-child
+  `(do child)` supports the same post-do multi-pending `(await_any done)`
+  observation and later-drain contract while generated nested spawns remain
+  pending before the same-body `await_all` drain; the generated-child do
+  waits for its deterministic generated do instance's fresh done handoff.
+  Static-parameter, bound, or domain-qualified generated-do post-do
+  `await_any`, switch-contained generated-child post-do `await_any`, new
+  nested `spawn` after the do before the drain, deeper branch/loop nesting,
+  and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

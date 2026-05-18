@@ -1070,6 +1070,81 @@ ISF
         'generated top instantiates the generated-child do instance separately after await_any');
 };
 
+subtest 'when body nested repeat generated-child do can run before post-do multi-pending await_any before await_all' => sub {
+    my $source = <<'ISF';
+(actor when_repeat_generated_child_do_before_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input cond)
+    (input loops (width 3))
+    (input status)
+    (output done))
+  (transaction parent
+    (on start)
+    (when cond
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0)
+        (spawn worker as w1)
+        (do worker)
+        (sample status as after_do)
+        (await_any done)
+        (sample status as after_any)
+        (await_all done)))
+    (complete done))
+  (transaction worker
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 3,
+        'when-body generated-child do before post-do await_any records both spawns and the generated do instance');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'when-body generated-child do before post-do await_any preserves the first pending spawn');
+    ok($instances{w1}, 'when-body generated-child do before post-do await_any preserves the second pending spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'when-body generated-child do before post-do await_any records the generated do instance');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'when-body generated-child do before post-do await_any preserves do activation provenance');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [],
+        'when-body generated-child do before post-do await_any stays plain generated-child do');
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'when_repeat_generated_child_do_before_await_any.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'when_repeat_generated_child_do_before_await_any_top.fsm'};
+
+    ok(defined($parent_fsm), 'when-body generated-child do before post-do await_any parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once for pre-await_any generated-child do');
+    ok(defined($top_fsm), 'when-body generated-child do before post-do await_any generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_when_\d+[\s\S]*\(=1 \(-> parent_repeat_init_\d+\)\)/,
+        'when true path enters the generated-child-do-before-post-do-await_any nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before generated-child do before post-do await_any materializes before the first spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'first generated spawn starts before the second spawn in generated-child post-do await_any subset');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'second generated spawn advances to the generated-child do before post-do await_any');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'generated-child do completes before the post-do await_any observation can run');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'sample after generated-child do materializes before the post-do await_any observation');
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'post-do await_any observes either generated child without draining the generated-spawn set');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'sample after generated-child post-do await_any materializes before the mandatory drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+        'await_all after generated-child post-do await_any drains both generated spawns before nested repeat re-entry');
+    like($top_fsm, qr/\(\?fsmc:w0 worker(?:\s|\))/,
+        'generated top keeps the first pending spawn instance before generated-child post-do await_any');
+    like($top_fsm, qr/\(\?fsmc:w1 worker(?:\s|\))/,
+        'generated top keeps the second pending spawn instance before generated-child post-do await_any');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker(?:\s|\))/,
+        'generated top instantiates the generated-child do instance separately before post-do await_any');
+};
+
 subtest 'when body nested repeat parameterized generated do can run while generated spawn is pending before await_all' => sub {
     my $source = <<'ISF';
 (actor when_repeat_parameterized_do_while_spawn_pending
@@ -5541,24 +5616,6 @@ ISF
   (transaction worker
     (complete done))
   (transaction local_worker
-    (complete done)))
-ISF
-
-    assert_lower_rejected(<<'ISF', 'when nested repeat generated-child do before post-do await_any remains deferred', qr/when-body nested repeat generated-child do while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/);
-(actor when_nested_repeat_generated_child_do_before_post_await_any
-  (clock clk)
-  (interface (input start) (input cond) (input loops (width 3)) (output done))
-  (transaction parent
-    (on start)
-    (when cond
-      (repeat loops
-        (spawn worker as w0)
-        (spawn worker as w1)
-        (do worker)
-        (await_any done)
-        (await_all done)))
-    (complete done))
-  (transaction worker
     (complete done)))
 ISF
 
