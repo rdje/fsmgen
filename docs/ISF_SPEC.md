@@ -2716,8 +2716,11 @@ shipped transaction stages through `transaction_stages` entries containing the
 authored transaction and stage names, `kind = ready_valid_barrier`, generated
 state name, ready input, and valid output.
 
-Transaction-level `(contract name (eventually signal (within cycles)))` is the
-first shipped temporal-contract subset. It is supported only as a top-level
+Transaction-level `(contract name (eventually signal within cycles))` is the
+preferred spelling for the first shipped temporal-contract subset. FSMGen also
+accepts the older nested alias
+`(contract name (eventually signal (within cycles)))`; both forms lower to the
+same bounded-eventually monitor. The contract is supported only as a top-level
 transaction clause, with a unique contract name per transaction, `signal` bound
 to a scalar actor interface input or output, and `cycles` as a positive integer
 literal. Reaching the clause emits one arm state. The checked window starts on

@@ -90,6 +90,46 @@ FSM
     like($hdl, qr/\bmain_contract_1_fail\b/, 'generated HDL carries the sticky fail signal');
 };
 
+subtest 'flat downstream bounded eventual contract is accepted by strict JSON check' => sub {
+    my $source = <<'ISF';
+(actor contract_flat_within
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (transaction main
+    (on start)
+    (contract ack_seen (eventually ack within 4))
+    (complete done)))
+ISF
+
+    my $lowered = lower_source($source);
+    like(
+        $lowered->{files}{'contract_flat_within.fsm'},
+        qr/\(<- \(main_contract_1_fail 1\) <\(\| \(& main_contract_1_arm main_contract_1_pending\) \(& main_contract_1_pending \(! ack\) \(== main_contract_1_age 3\)\)\)\)/,
+        'flat within form lowers to the same bounded monitor semantics',
+    );
+
+    my $report = report_source($source);
+    is($report->{temporal_contracts}[0]{within_cycles}, 4, 'flat within form preserves the cycle bound in schedule JSON');
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $isf_path = File::Spec->catfile($tempdir, 'contract_flat_within.isf');
+    write_file($isf_path, $source);
+
+    my ($success, undef, undef, $stdout, $stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $isf_path],
+    );
+
+    ok($success, 'strict JSON check accepts the flat downstream within form');
+    is(join('', @{$stderr || []}), '', 'strict JSON check keeps stderr clean for the accepted flat within form');
+
+    my $payload = JSON::PP->new->decode(join('', @{$stdout || []}));
+    ok($payload->{success}, 'strict JSON payload reports success for the accepted flat within form');
+};
+
 subtest 'single-cycle bounded eventual contract omits unreachable age increment' => sub {
     my $lowered = lower_source(<<'ISF');
 (actor contract_single_cycle
@@ -223,7 +263,7 @@ ISF
     ok(!$ok_shape, 'unsupported contract body is rejected');
     like(
         $shape_diag,
-        qr/\ATransaction 'main': contract 'ack_seen' supports only '\(eventually signal \(within cycles\)\)'/,
+        qr/\ATransaction 'main': contract 'ack_seen' supports only '\(eventually signal within cycles\)' or '\(eventually signal \(within cycles\)\)'/,
         'unsupported body diagnostic is targeted',
     );
 

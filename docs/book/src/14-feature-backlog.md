@@ -1407,12 +1407,13 @@ Status: partially shipped; broader contract forms remain backlog.
 Goal: lower transaction `(contract ...)` temporal assertions into generated
 checks or equivalent scheduled artifacts.
 
-Shipped subset: a top-level transaction contract of the form
-`(contract name (eventually signal (within cycles)))`. Reaching the clause
-emits one arm state; the generated scheduled `.fsm` monitor tracks
-pending/age/fail storage, clears on actor reset, and sets a sticky fail bit if
-the signal is not seen within the window or if the same contract is armed
-again while pending.
+Shipped subset: a top-level transaction contract of the preferred form
+`(contract name (eventually signal within cycles))`. The older nested
+`(eventually signal (within cycles))` spelling remains accepted as an alias.
+Reaching the clause emits one arm state; the generated scheduled `.fsm`
+monitor tracks pending/age/fail storage, clears on actor reset, and sets a
+sticky fail bit if the signal is not seen within the window or if the same
+contract is armed again while pending.
 
 SystemVerilog generation now projects the sticky fail bit into a
 verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays

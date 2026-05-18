@@ -271,7 +271,15 @@ eventual check. It is intentionally smaller than a full temporal assertion
 language and is designed to lower into reviewable scheduled `.fsm` before any
 backend assertion emission happens.
 
-Supported source shape for the first implementation:
+Supported source shape for the first implementation. The downstream-facing
+preferred spelling is the flat `within` form:
+
+```lisp
+(contract name
+  (eventually signal within cycles))
+```
+
+The older nested spelling remains accepted as an equivalent alias:
 
 ```lisp
 (contract name
@@ -381,10 +389,11 @@ Shipped behavior:
 - `%SUPPORTED_TRANSACTION_CLAUSES` now accepts `contract` only in top-level
   transaction bodies. Nested contracts in `when`, `switch`, and `repeat`
   remain fail-closed with the dedicated top-level-only diagnostic.
-- The lowerer validates the first bounded source shape exactly as
-  `(contract name (eventually signal (within cycles)))`, with a unique
-  contract name per transaction, one scalar actor interface signal, and a
-  positive integer `cycles` bound.
+- The lowerer validates the first bounded source shape as
+  `(contract name (eventually signal within cycles))`, with the nested
+  `(eventually signal (within cycles))` spelling accepted as an alias, a
+  unique contract name per transaction, one scalar actor interface signal, and
+  a positive integer `cycles` bound.
 - The generated contract state is named `<transaction>_contract_<index>`.
   It drives an internal combinational arm request for the cycle in which that
   state is active, then falls through to the next scheduled transaction state.

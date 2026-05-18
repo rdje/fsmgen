@@ -1419,7 +1419,9 @@ Current shipped temporal contract kind is `bounded_eventually`. Reports expose
 contract monitor metadata. Assertion projection is currently
 `systemverilog_sticky_fail`: SystemVerilog HDL generation emits a
 verification-only assertion from the generated sticky fail bit under
-`` `ifndef SYNTHESIS``. Verilog output remains assertion-free.
+`` `ifndef SYNTHESIS``. Verilog output remains assertion-free. FSMGen also
+accepts the older nested alias `(eventually signal (within N))`; downstream
+emitters should prefer the flat `within N` form shown above.
 
 Latency:
 

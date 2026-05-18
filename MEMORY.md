@@ -1,17 +1,41 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: SPECFORGE flat eventual contract form fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the documented flat bounded-eventually contract spelling
+  `(contract name (eventually signal within cycles))`.
+- The older nested spelling
+  `(contract name (eventually signal (within cycles)))` remains accepted as a
+  compatibility alias; both forms lower to the same arm state and
+  pending/age/sticky-fail monitor semantics.
+- The minimized `sf-isf-contract-eventually-flat` bundle was reproduced
+  before the fix, then rerun from the FSMGen checkout after the fix using
+  `./bin/fsmgen --strict --check --json
+  $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-contract-eventually-flat/sources/fsmgen-input/f1-contract-eventually-flat.isf`;
+  it now exits successfully with `success: true`.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, owning task tree, roadmap board, and live notes. The active
+  downstream bug frontier advances to
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` for the ready/valid stage
+  report.
+- Validation passed: syntax check for the ISF lowerer, focused contract and
+  transaction-clause boundary tests, the real flat-contract SPECFORGE source
+  and baseline strict JSON checks, mdBook build, focused book/doc audits, and
+  `./bin/ci-regression isf --no-book` (Files=228, Tests=1341), and
+  `git diff --check`.
 ## 2026-05-18: SPECFORGE stage/contract reports reproduced
 - Created active R14 task tree
   [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md)
   before implementation.
 - Reproduced
-  `/Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-contract-eventually-flat`
+  `$SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-contract-eventually-flat`
   from the FSMGen checkout with
   `./bin/fsmgen --strict --check --json .../f1-contract-eventually-flat.isf`:
   it exits `255`, writes `0` stdout bytes despite `--json`, and reports
   `Transaction 'txn_demo': contract 'c_demo' supports only '(eventually signal (within cycles))'`.
 - Reproduced
-  `/Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-stage-ready-valid`
+  `$SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-stage-ready-valid`
   with `./bin/fsmgen --strict --check --json .../f2-stage-ready-valid.isf`:
   it exits `255`, writes `0` stdout bytes despite `--json`, and reports
   `Transaction 'txn_demo': stage 's_demo' has unsupported subclause 'ready'`.

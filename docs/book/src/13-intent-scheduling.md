@@ -560,7 +560,8 @@ current limitations are:
   remainders, or source/field width disagreement fail closed before scheduled
   `.fsm` emission.
 - The first `(contract ...)` temporal assertion subset is implemented for
-  top-level `(contract name (eventually signal (within cycles)))`. It lowers
-  to an arm state plus an always-on monitor DT with pending, age, and
-  sticky-fail storage. Nested contracts and richer temporal forms still fail
-  closed instead of being dropped from the scheduled `.fsm`.
+  top-level `(contract name (eventually signal within cycles))`. The older
+  nested `(eventually signal (within cycles))` spelling remains accepted as an
+  alias. Both forms lower to an arm state plus an always-on monitor DT with
+  pending, age, and sticky-fail storage. Nested contracts and richer temporal
+  forms still fail closed instead of being dropped from the scheduled `.fsm`.

@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — SPECFORGE flat eventual contract form fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`.
+- FSMGen now accepts the downstream-documented flat bounded-eventually
+  contract spelling `(contract name (eventually signal within cycles))`.
+- The older nested spelling
+  `(contract name (eventually signal (within cycles)))` remains accepted as a
+  compatibility alias, and both forms lower to the same arm state plus
+  pending/age/sticky-fail monitor.
+- The minimized `sf-isf-contract-eventually-flat` issue bundle was reproduced
+  before implementation and now passes
+  `./bin/fsmgen --strict --check --json` with `success: true`.
+- Docs are synchronized across the mdBook, ISF spec, downstream integration
+  spec, public contract, task tree, roadmap board, and live docs. The active
+  downstream bug frontier advances to
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
+- Validation passed: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`,
+  `prove -Iperl t/1175-isf-contract-fail-closed.t
+  t/1180-isf-unsupported-transaction-clause-boundary.t
+  t/1224-isf-contract-lowering.t`, the real
+  `sf-isf-contract-eventually-flat` source plus baseline strict JSON checks,
+  `mdbook build docs/book`, focused book/doc audits, and
+  `./bin/ci-regression isf --no-book` (Files=228, Tests=1341), and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — SPECFORGE stage/contract reports reproduced
 - Created active task tree
   [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md)

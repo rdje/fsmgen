@@ -61,17 +61,17 @@ public contract, mdBook, task tree, and regression tests synchronized.
   Children: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`, `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`, `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`
 
 - ID: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`
-  Status: `active`
+  Status: `done`
   Goal: `Resolve sf-isf-contract-eventually-flat.`
   Acceptance: `The minimized flat bounded-eventually bundle is reproduced locally, FSMGen behavior is aligned with the documented source contract, focused regression coverage locks the accepted or corrected surface, and ISF spec/downstream handoff/mdBook/public contract text stays truthful.`
-  Verification: `reproduced: ./bin/fsmgen --strict --check --json /Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-contract-eventually-flat/sources/fsmgen-input/f1-contract-eventually-flat.isf exits 255, writes 0 bytes stdout, and reports Transaction 'txn_demo': contract 'c_demo' supports only '(eventually signal (within cycles))' on stderr; baseline-good.isf passes strict JSON check`
-  Commit: `pending`
+  Verification: `reproduced first: ./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-contract-eventually-flat/sources/fsmgen-input/f1-contract-eventually-flat.isf exited 255, wrote 0 bytes stdout, and reported Transaction 'txn_demo': contract 'c_demo' supports only '(eventually signal (within cycles))' on stderr; after the fix the same command passes with success:true JSON; focused contract/boundary tests, mdBook build, doc audits, and the broad ISF gate pass`
+  Commit: `pending commit for .1 implementation slice`
 
 - ID: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Resolve sf-isf-stage-ready-valid.`
   Acceptance: `The minimized ready/valid stage bundle is reproduced locally, FSMGen behavior is aligned with the documented source contract, focused regression coverage locks the accepted or corrected surface, and ISF spec/downstream handoff/mdBook/public contract text stays truthful.`
-  Verification: `pending`
+  Verification: `reproduced before implementation: ./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-stage-ready-valid/sources/fsmgen-input/f2-stage-ready-valid.isf exits 255, writes 0 bytes stdout, and reports Transaction 'txn_demo': stage 's_demo' has unsupported subclause 'ready' on stderr; baseline-good.isf passes strict JSON check`
   Commit: `pending`
 
 - ID: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`
@@ -85,8 +85,8 @@ public contract, mdBook, task tree, and regression tests synchronized.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `active` | The flat bounded-eventually report has the smallest isolated syntax delta and will establish the reproduce-fix-doc-sync loop for this tree. |
-| 2 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `pending` | The ready/valid stage report is the second independent documented-form mismatch. |
+| 1 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `done` | The flat bounded-eventually report now passes strict JSON check with the documented flat `within` spelling while preserving the nested alias. |
+| 2 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `active` | The ready/valid stage report is the second independent documented-form mismatch. |
 | 3 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `pending` | Both reports expose the same downstream JSON failure-surface concern after the source-form mismatches are understood. |
 
 ## Decisions
@@ -106,12 +106,17 @@ public contract, mdBook, task tree, and regression tests synchronized.
   reported unsupported `ready` subclause diagnostic on stderr. Both
   `expected/baseline-good.isf` counterparts pass
   `./bin/fsmgen --strict --check --json` with `success: true`.
+- `2026-05-18`: Resolved the flat bounded-eventually report by accepting the
+  documented `(eventually signal within cycles)` spelling as the preferred
+  source form and retaining `(eventually signal (within cycles))` as a
+  compatibility alias. Both spellings lower to the same bounded monitor
+  semantics.
 
 ## Open Questions
 
-- None blocking the first leaf. The first implementation step must reproduce
-  `sf-isf-contract-eventually-flat` locally and inspect the current parser,
-  tests, and docs before choosing the exact code/doc correction.
+- None blocking the active `.2` leaf. The ready/valid stage implementation
+  must preserve the existing accepted stage surface and stay aligned with the
+  downstream handoff and mdBook.
 
 ## Blockers
 
@@ -122,15 +127,17 @@ public contract, mdBook, task tree, and regression tests synchronized.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `task-tree creation only` | `tracking owner created before code changes` |
-| `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `./bin/fsmgen --strict --check --json /Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-contract-eventually-flat/sources/fsmgen-input/f1-contract-eventually-flat.isf`; `./bin/fsmgen --strict --check --json /Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-contract-eventually-flat/expected/baseline-good.isf` | `reproduced: failing source exits 255 with 0 stdout bytes and the reported contract diagnostic; baseline passes with success:true JSON` |
-| `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `./bin/fsmgen --strict --check --json /Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-stage-ready-valid/sources/fsmgen-input/f2-stage-ready-valid.isf`; `./bin/fsmgen --strict --check --json /Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-stage-ready-valid/expected/baseline-good.isf` | `reproduced: failing source exits 255 with 0 stdout bytes and the reported stage diagnostic; baseline passes with success:true JSON` |
+| `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-contract-eventually-flat/sources/fsmgen-input/f1-contract-eventually-flat.isf`; `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-contract-eventually-flat/expected/baseline-good.isf` | `reproduced: failing source exits 255 with 0 stdout bytes and the reported contract diagnostic; baseline passes with success:true JSON` |
+| `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-stage-ready-valid/sources/fsmgen-input/f2-stage-ready-valid.isf`; `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-stage-ready-valid/expected/baseline-good.isf` | `reproduced: failing source exits 255 with 0 stdout bytes and the reported stage diagnostic; baseline passes with success:true JSON` |
+| `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1175-isf-contract-fail-closed.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1224-isf-contract-lowering.t`; `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-contract-eventually-flat/sources/fsmgen-input/f1-contract-eventually-flat.isf`; `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-contract-eventually-flat/expected/baseline-good.isf` | `fixed: syntax check passes; focused contract/boundary tests pass; minimized flat source and baseline both pass strict JSON check with success:true` |
+| `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `mdbook build docs/book`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `./bin/ci-regression isf --no-book`; `git diff --check` | `passed: book builds, focused doc audits pass, broad ISF gate passes with Files=228, Tests=1341, and diff whitespace check passes` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `pending commit for tracking/reproduction slice` | `created tracking tree and reproduced both reported failures before implementation` |
-| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `pending` | `pending` |
+| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS: track reproduced reports` | `created tracking tree and reproduced both reported failures before implementation` |
+| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `pending commit: ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1: accept flat eventual contracts` | `accepts the documented flat bounded-eventually source form and preserves the nested alias` |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `pending` | `pending` |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `pending` | `pending` |
 
@@ -138,3 +145,6 @@ public contract, mdBook, task tree, and regression tests synchronized.
 
 - `2026-05-18`: Created the tracking tree before implementation and
   reproduced both SPECFORGE reports locally.
+- `2026-05-18`: Completed `.1` by accepting the documented flat
+  bounded-eventually contract syntax, preserving the older nested alias, and
+  verifying the minimized downstream issue bundle now passes.

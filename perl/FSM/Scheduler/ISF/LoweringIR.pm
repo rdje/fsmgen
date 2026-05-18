@@ -2886,7 +2886,7 @@ sub _parse_stage_handshake_clause {
 sub _parse_bounded_eventual_contract_clause {
     my ($clause, $tn, $label) = @_;
 
-    confess "Transaction '$tn': contract requires '(contract name (eventually signal (within cycles)))' in $label\n"
+    confess "Transaction '$tn': contract requires '(contract name (eventually signal within cycles))' or '(contract name (eventually signal (within cycles)))' in $label\n"
         unless ref($clause) eq 'ARRAY'
             && @$clause == 3
             && defined($clause->[1])
@@ -2895,28 +2895,48 @@ sub _parse_bounded_eventual_contract_clause {
 
     my $name = $clause->[1];
     my $eventual = $clause->[2];
-    confess "Transaction '$tn': contract '$name' supports only '(eventually signal (within cycles))'\n"
+    confess "Transaction '$tn': contract '$name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n"
         unless ref($eventual) eq 'ARRAY'
-            && @$eventual == 3
             && defined($eventual->[0])
             && !ref($eventual->[0])
             && $eventual->[0] eq 'eventually'
             && defined($eventual->[1])
             && !ref($eventual->[1])
-            && length($eventual->[1])
-            && ref($eventual->[2]) eq 'ARRAY'
-            && @{$eventual->[2]} == 2
-            && defined($eventual->[2][0])
-            && !ref($eventual->[2][0])
-            && $eventual->[2][0] eq 'within'
-            && defined($eventual->[2][1])
-            && !ref($eventual->[2][1])
-            && $eventual->[2][1] =~ /\A[1-9][0-9]*\z/;
+            && length($eventual->[1]);
+
+    my $within_cycles;
+    if (
+        @$eventual == 4
+        && defined($eventual->[2])
+        && !ref($eventual->[2])
+        && $eventual->[2] eq 'within'
+        && defined($eventual->[3])
+        && !ref($eventual->[3])
+        && $eventual->[3] =~ /\A[1-9][0-9]*\z/
+    ) {
+        $within_cycles = $eventual->[3];
+    }
+    elsif (
+        @$eventual == 3
+        && ref($eventual->[2]) eq 'ARRAY'
+        && @{$eventual->[2]} == 2
+        && defined($eventual->[2][0])
+        && !ref($eventual->[2][0])
+        && $eventual->[2][0] eq 'within'
+        && defined($eventual->[2][1])
+        && !ref($eventual->[2][1])
+        && $eventual->[2][1] =~ /\A[1-9][0-9]*\z/
+    ) {
+        $within_cycles = $eventual->[2][1];
+    }
+    else {
+        confess "Transaction '$tn': contract '$name' supports only '(eventually signal within cycles)' or '(eventually signal (within cycles))'\n";
+    }
 
     return {
         name          => $name,
         signal        => $eventual->[1],
-        within_cycles => 0 + $eventual->[2][1],
+        within_cycles => 0 + $within_cycles,
     };
 }
 

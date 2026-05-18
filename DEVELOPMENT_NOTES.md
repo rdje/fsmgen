@@ -1,8 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: Flat bounded eventual contracts are the downstream spelling
+- `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` treats the downstream
+  integration handoff as authoritative for the flat
+  `(eventually SIGNAL within N)` contract form.
+- The parser/lowerer accepts the flat form as the preferred source spelling
+  and keeps `(eventually SIGNAL (within N))` as an alias so existing fixtures
+  and downstream emitters using the older nested spelling do not break.
+- The acceptance path is intentionally narrow: only positive integer cycle
+  bounds, scalar actor interface signals, and top-level transaction contract
+  clauses are accepted. Nested contracts and richer temporal operators still
+  fail closed.
+- The minimized `sf-isf-contract-eventually-flat` issue bundle now passes
+  `./bin/fsmgen --strict --check --json` after first being reproduced as a
+  failure. The ready/valid stage issue remains the active downstream bug
+  frontier.
 ## 2026-05-18: SPECFORGE reports must be fixed from reproduced bundles
 - SPECFORGE supplied two minimized downstream issue bundles under
-  `/Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/`.
+  `$SPECFORGE_ROOT/docs/fsmgen-issues/`.
 - Both reports reproduce locally from the FSMGen checkout before any
   implementation change:
   `sf-isf-contract-eventually-flat` rejects documented flat

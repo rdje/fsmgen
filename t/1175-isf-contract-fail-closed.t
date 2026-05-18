@@ -33,7 +33,7 @@ sub assert_contract_rejected {
 }
 
 subtest 'unsupported top-level contract shapes fail closed' => sub {
-    assert_contract_rejected(<<'ISF', 'top-level historical contract', qr/\ATransaction 'main': contract requires '\(contract name \(eventually signal \(within cycles\)\)\)' in transaction body/);
+    assert_contract_rejected(<<'ISF', 'top-level historical contract', qr/\ATransaction 'main': contract requires '\(contract name \(eventually signal within cycles\)\)' or '\(contract name \(eventually signal \(within cycles\)\)\)' in transaction body/);
 (actor contract_top
   (clock clk)
   (interface

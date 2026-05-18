@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — SPECFORGE flat eventual contract form fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`.
+- FSMGen now accepts the documented flat bounded-eventually contract spelling
+  `(contract name (eventually signal within cycles))`.
+- The older nested spelling
+  `(contract name (eventually signal (within cycles)))` remains accepted as a
+  compatibility alias; both forms lower to the same arm state and
+  pending/age/sticky-fail monitor.
+- Added focused regression coverage for the flat downstream source form,
+  strict JSON check acceptance, report `within_cycles` preservation, and the
+  updated fail-closed diagnostic text.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, roadmap board, live achievement status, and development
+  notes. The active downstream bug frontier advances to
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
 ### R14 — SPECFORGE stage/contract reports reproduced
 - Added active task tree
   [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md)

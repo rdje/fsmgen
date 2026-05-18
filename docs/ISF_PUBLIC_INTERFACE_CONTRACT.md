@@ -620,8 +620,10 @@ The temporal-contract lowering boundary is checked by
 [t/1175-isf-contract-fail-closed.t](../t/1175-isf-contract-fail-closed.t)
 and [t/1224-isf-contract-lowering.t](../t/1224-isf-contract-lowering.t).
 The shipped subset is the top-level transaction form
-`(contract name (eventually signal (within cycles)))`. It lowers to one arm
-state plus an always-on monitor DT with pending, age, and sticky-fail storage.
+`(contract name (eventually signal within cycles))`. The older nested
+`(contract name (eventually signal (within cycles)))` spelling remains an
+accepted alias; both lower to one arm state plus an always-on monitor DT with
+pending, age, and sticky-fail storage.
 Schedule reports classify that DT as `temporal_contract_monitor` and classify
 the generated pending/fail storage as registers and age storage as a counter.
 Those three monitor storage entries also carry the advertised
