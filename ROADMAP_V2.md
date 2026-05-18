@@ -683,6 +683,13 @@ Deliverable themes:
 - produce machine-readable schedule reports,
 - keep ambiguity explicit: if timing cannot be inferred safely, fail with
   an actionable report rather than choosing a hidden schedule.
+- explore static actor-network orchestration as an IAL1 extension: a
+  hierarchy or network of explicit ISF actors where one or more orchestrator
+  actors trigger peer/sub-actors, synchronize on one-cycle event pulses, and
+  move data through explicit scheduler-visible bindings. This remains IAL1
+  while authored as explicit `.isf`; it becomes IAL2 only if the source model
+  moves above explicit actor/network syntax into protocol/platform intent
+  inference.
 
 Initial sub-slices:
 1. Formalize the `.isf` format specification from the brainstorm log,
@@ -693,6 +700,11 @@ Initial sub-slices:
 3. Implement the first bounded scheduler for a single-transaction `.isf`
    source, producing valid `.fsm` output.
 4. Add regression coverage and schedule report validation.
+5. Clarify the proposed actor-network orchestration contract before
+   implementation: source shape, event pulse semantics, data movement,
+   scheduling ownership, generated artifact naming, report visibility, and
+   fail-closed boundaries are tracked in
+   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 
 Expected result:
 - a working `.isf` → `.fsm` lowering path that handles at least one realistic

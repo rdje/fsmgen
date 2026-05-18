@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF actor-network orchestration proposed
+- Added proposed task tree
+  [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+- The proposed axis covers explicit `.isf` actor networks: orchestrator
+  actors can eventually trigger peer/sub-actors, synchronize on named
+  one-cycle event pulses, and move data through scheduler-visible bindings
+  while FSMGen owns scheduling/lowering to explicit `.fsm`.
+- This is currently classified as likely IAL1 because the source remains
+  explicit ISF actor/network syntax. It becomes IAL2 only if the source moves
+  above explicit actor/network constructs into protocol/platform intent
+  inference.
+- The tree is proposed, not active implementation. The first leaf requires
+  user clarification before code.
+
 ## 2026-05-18: R14 — ISF when-contained bound generated do before post-do await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`.
 - Top-level `when` bodies may now contain nested repeats with multiple

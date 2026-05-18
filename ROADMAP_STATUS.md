@@ -14,6 +14,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   switch-contained bound analogue, spawn-after-do, cross-domain activation,
   deeper branch/loop nesting, and broader outstanding-child semantics remain
   unselected.
+- Proposed R14 axis: `ISF-ACTOR-NETWORK-ORCHESTRATION` now tracks the
+  brainstormed actor-network abstraction as likely IAL1 work: explicit `.isf`
+  actor hierarchies/networks where orchestrator actors trigger peer or
+  sub-actors, synchronize on named one-cycle event pulses, and move data
+  through scheduler-visible bindings. The tree is proposed, not PNT-active,
+  and its first leaf is a user-clarification/design-contract step before any
+  implementation.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

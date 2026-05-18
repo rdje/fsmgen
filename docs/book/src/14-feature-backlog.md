@@ -640,6 +640,31 @@ policy for the fully general case.
 
 ## Intent Scheduling Format
 
+### Actor Network Orchestration
+
+Status: proposed backlog; task-tree tracked, not implemented.
+Task-tree owner:
+[ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+
+Goal: move ISF up one abstraction level while staying in explicit `.isf`:
+let a system be described as a static hierarchy or network of actors where
+one or more orchestrator actors trigger peer/sub-actors, synchronize on
+named one-cycle event pulses, and move data through explicit bindings while
+FSMGen owns scheduling and lowering to explicit `.fsm`.
+
+Current boundary: ISF actors currently decompose into actor-local
+transactions, rules, stages, resources, storage, and generated child
+transaction activations. They do not yet define a public actor-network source
+surface where actors instantiate or orchestrate other actors as first-class
+peers. This proposed direction is still IAL1 if the source remains explicit
+actor/network `.isf` syntax with scheduler-visible events, bindings, and
+constraints. It becomes an IAL2 candidate only if the source model moves
+above explicit ISF actor/network syntax into protocol/platform intent
+inference. The first required leaf is clarification with the user: source
+shape, event pulse semantics, actor-to-actor data movement, global versus
+local scheduling ownership, generated artifact names, report visibility, and
+fail-closed boundaries must be agreed before implementation.
+
 ### IAL2 Protocol And Platform Intent Exploration
 
 Status: backlog.

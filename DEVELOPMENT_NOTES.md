@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: actor-network orchestration is likely IAL1 until proven otherwise
+- The proposed actor-network direction is useful, but it should not jump to
+  IAL2 just because it raises the modeling level. If users still author
+  explicit `.isf` actors, event pulses, bindings, resources, and constraints,
+  FSMGen is still scheduling IAL1 intent into explicit `.fsm`.
+- The abstraction becomes IAL2 only if the source stops being explicit
+  actor/network ISF and instead asks FSMGen to infer structure from
+  protocol/platform intent above the actor graph.
+- The first task-tree leaf is deliberately clarification-only. The project
+  needs the source surface, event model, data movement model, scheduling
+  ownership, generated artifact naming, schedule-report shape, and
+  fail-closed policy agreed before implementation.
 ## 2026-05-18: when-contained bound generated do before post-do await_any preserves binding handoffs and spawn lifetime
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.110` implements only the selected
   top-level `when` body nested-repeat static-parameter-bound-generated-do-

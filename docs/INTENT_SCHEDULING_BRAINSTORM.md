@@ -30,6 +30,33 @@ Core thesis:
 - Cycles would not disappear from the final semantics. They would become an
   inferred, scheduled, and reviewable compiler result.
 
+## Design Note: 2026-05-18 Actor Network Orchestration
+
+The actor-network direction is fruitful and should be tracked as proposed ISF
+work. The useful abstraction is a static hierarchy or graph of explicit actors
+where one or more actors orchestrate the larger system by triggering peer or
+sub-actors, synchronizing on named one-cycle event pulses, and moving data
+through scheduler-visible bindings.
+
+This remains IAL1 while it is authored as explicit `.isf`: actors, events,
+bindings, resources, and timing constraints are still present in source form,
+and FSMGen owns scheduling/lowering into explicit `.fsm`. It becomes an IAL2
+candidate only if the source model moves above explicit actor/network syntax,
+for example by asking FSMGen to infer the actor network from protocol or
+platform intent.
+
+The first design task is clarification, not implementation. The source shape
+needs to decide whether actor instances are expressed through nested actor
+declarations, top-level peer actors plus a `(network ...)` topology, reusable
+library actors, or a smaller first-slice construct. The event model also
+needs a crisp contract: whether orchestrator signals are transaction starts,
+actor-level starts, named one-cycle event outputs, event payloads, or some
+combination. The data movement model must likewise be explicit enough for
+schedule reports and generated-top wiring to remain reviewable.
+
+Tracked task tree:
+[docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+
 ## Design Note: 2026-05-13 Rule Trigger Fan-In
 
 ISF rule-trigger lowering now preserves rule-source provenance before driving

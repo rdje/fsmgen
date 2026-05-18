@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF actor-network orchestration proposed
+- Added proposed task tree
+  [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md)
+  for static actor-network orchestration.
+- Recorded the direction as likely IAL1 work while it remains explicit `.isf`
+  actor/network syntax: orchestrator actors, peer/sub-actor triggers, named
+  one-cycle event synchronization, actor-to-actor data movement, and
+  scheduler-owned lowering to explicit `.fsm`.
+- Marked implementation as blocked on a clarification leaf so source shape,
+  event semantics, data movement, local/global scheduling ownership,
+  generated artifact names, report visibility, and fail-closed boundaries are
+  agreed before code.
+- Synchronized `ROADMAP_V2.md`, `ROADMAP_STATUS.md`, `docs/TASK_TREE.md`,
+  `README.md`, `docs/INTENT_SCHEDULING_BRAINSTORM.md`, and the mdBook
+  feature backlog.
 ### R14 — ISF when-contained bound generated do before post-do await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`.
 - Top-level `when` bodies may now contain nested repeats with multiple

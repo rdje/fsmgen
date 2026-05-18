@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ISF actor-network orchestration proposed and task-tree tracked
+- Added proposed R14 task tree
+  [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+- The proposed direction is static actor-network orchestration in explicit
+  `.isf`: actors can eventually be organized as a hierarchy or network where
+  orchestrator actors trigger peer/sub-actors, synchronize on named one-cycle
+  event pulses, and move data through scheduler-visible bindings.
+- This is classified as likely IAL1 while the source remains explicit ISF
+  actor/network syntax. It becomes an IAL2 candidate only if FSMGen is asked
+  to infer the actor network from higher-level protocol/platform intent.
+- The tree is proposed, not active PNT implementation. Its first leaf is
+  user clarification of source shape, event semantics, data movement,
+  local-vs-global scheduling ownership, generated artifact names, report
+  visibility, and fail-closed boundaries.
+- Synchronized [ROADMAP_V2.md](ROADMAP_V2.md), [ROADMAP_STATUS.md](ROADMAP_STATUS.md),
+  [docs/TASK_TREE.md](docs/TASK_TREE.md), the brainstorm log, README, and
+  the mdBook feature backlog.
 ## 2026-05-18: when-contained bound generated do before post-do await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
