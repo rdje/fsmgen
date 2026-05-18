@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF switch-contained repeat parameterized do after await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.87`.
+- Selected top-level `switch` branch nested repeats with multiple generated
+  spawns, a multi-pending `(await_any done)` observation, static-parameter
+  generated `(do child (params ...))` while those generated spawns remain
+  pending, and a later same-body `(await_all done)` drain before the nested
+  repeat check can loop.
+- The selected implementation contract keeps generated-spawn done handoffs
+  live after `await_any` and through the generated do instance, applies the
+  generated do instance's static parameter overrides once in the generated
+  top, and then drains every pending generated child before nested repeat
+  re-entry.
+- Bind handoffs, domain metadata, `await_any` after the do, spawn-after-do
+  before the drain, cross-domain activation, deeper nesting, and broader
+  outstanding-child semantics remain deferred.
+- The mdBook feature backlog now documents this subset as selected but not yet
+  shipped. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.88`, which implements this selected
+  subset.
+- Validation passed: `mdbook build docs/book`,
+  `prove -l t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
+  (Files=2, Tests=267), and `git diff --check`.
+
 ## 2026-05-18: R14 — ISF when-contained repeat parameterized do after await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.86`.
 - Top-level `when` bodies may now contain nested repeats with multiple
