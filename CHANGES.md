@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL scalar handoff lowering shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`.
+- Parser validation now accepts exactly one selected scalar actor-to-actor
+  movement shape: two direct static actor instances, one named drive body with
+  one scalar endpoint pair, and one top-level transaction drive call.
+- Lowering rewrites the endpoint pair to generated parent handoff signals,
+  emits one-bit source input and sink output ports in the parent scheduled
+  `.fsm`, drives the sink from the source during the drive-call cycle, and
+  reports provenance through `actor_network.data_movements[]`.
+- Broader movement forms remain fail-closed: no actor type resolution,
+  generated child `.fsm`, ATL top, HDL child wiring, pin movement,
+  inline/expression movement, fan-in/fan-out, groups, CDC, or trigger/await
+  coupling is claimed.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6`.
+
 ### R14 — ATL scalar handoff subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
 - Selected the first generated scalar actor-to-actor handoff subset before

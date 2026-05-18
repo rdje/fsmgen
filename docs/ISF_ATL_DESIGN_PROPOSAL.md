@@ -485,18 +485,18 @@ This deliberately keeps ATL close to the rest of ISF: users already understand
 that drive bodies describe data movement and drive calls place that movement
 in the schedule.
 
-The first `.5` endpoint-movement implementation is shipped as fail-closed
-reservation before generated routing. Qualified actor endpoint
-drive-body pairs such as `(consumer.payload producer.payload)`,
-`(consumer.payload local_value)`, or `(local_value producer.payload)` must not
-fall through as local aggregate or enum-looking dotted tokens when the
-qualifier names a declared static actor instance. FSMGen rejects those forms
-with ATL data-movement diagnostics while preserving the existing local
-dotted-name behavior for qualifiers that are not actor instances. Generated
-actor-to-actor movement, route muxes, handoff storage, width inference across
-actor types, generated ATL child `.fsm` files, generated ATL tops, and HDL
-routing remain later leaves. The next selected data-movement subset widens to
-exactly two static instances only for one scalar external parent handoff route.
+The first `.5` endpoint-movement implementation sequence shipped targeted
+fail-closed reservation first, then the first generated scalar actor-to-actor
+handoff subset. Unsupported qualified actor endpoint drive-body pairs such as
+`(consumer.payload local_value)` or `(local_value producer.payload)` still
+must not fall through as local aggregate or enum-looking dotted tokens when
+the qualifier names a declared static actor instance. FSMGen rejects those
+forms with ATL data-movement diagnostics while preserving the existing local
+dotted-name behavior for qualifiers that are not actor instances. The shipped
+data-movement behavior widens to exactly two static instances only for one
+scalar external parent handoff route. Route muxes, handoff storage, width
+inference across actor types, generated ATL child `.fsm` files, generated ATL
+tops, and HDL routing remain later leaves.
 
 ## Concurrent Actor Groups
 
@@ -558,7 +558,7 @@ fail-closed. Existing unqualified local behavior is preserved:
 Enum-looking dotted names whose qualifier is not a declared static actor
 instance keep their prior diagnostics.
 
-The selected first generated data-movement subset is intentionally smaller
+The shipped first generated data-movement subset is intentionally smaller
 than full actor-to-actor routing:
 
 1. One top-level `(actor ...)` with direct actor-body ATL clauses.
@@ -574,8 +574,10 @@ than full actor-to-actor routing:
    `sink_actor_sink_endpoint` is a scalar external parent output.
 7. One-bit width evidence only. Bit-vectors, aggregates, inferred actor-type
    port widths, payload records, and expression movement remain deferred.
-8. One drive-call-cycle route lifetime. The first subset inserts no storage,
-   route mux, ready/backpressure, or persistent wire.
+8. One drive-call-cycle route lifetime. The first subset drives the sink
+   handoff output from the source handoff input through the named drive
+   request and inserts no storage, route mux, ready/backpressure, or
+   persistent wire.
 9. Schedule-report metadata under `actor_network.data_movements[]` with
    `kind`, `transaction`, `context`, `drive`, `source_instance`,
    `source_endpoint`, `source_signal`, `sink_instance`, `sink_endpoint`,

@@ -281,6 +281,16 @@ sub golden_matrix_cases {
                 )
             ],
         },
+        {
+            name => 'actor_network_data_movement',
+            filename => 'actor_network_data_movement_report.isf',
+            source => actor_network_data_movement_source(),
+            covers => [
+                qw(
+                  schedule_report_actor_network_data_movement_keys
+                )
+            ],
+        },
     );
 }
 
@@ -491,6 +501,10 @@ sub assert_key_branch {
     }
     if ($branch eq 'schedule_report_actor_network_event_wait_keys') {
         assert_entry_keys(first_entry($report->{actor_network}{event_waits}), $contract->{$branch}, "$label actor network event wait keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_actor_network_data_movement_keys') {
+        assert_entry_keys(first_entry($report->{actor_network}{data_movements}), $contract->{$branch}, "$label actor network data movement keys");
         return 1;
     }
     if ($branch eq 'schedule_report_actor_network_transaction_trigger_keys') {
@@ -1057,6 +1071,24 @@ sub actor_network_transaction_trigger_source {
   (transaction run
     (on start)
     (trigger reader.capture)
+    (complete done)))
+ISF
+}
+
+sub actor_network_data_movement_source {
+    return <<'ISF';
+(actor actor_network_data_movement_report
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
     (complete done)))
 ISF
 }

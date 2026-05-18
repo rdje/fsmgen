@@ -625,6 +625,28 @@ sub _actor_network_summary($self, $ir) {
                 }
             } @{$network->{transaction_triggers} || []}
         ],
+        data_movements => [
+            map {
+                {
+                    kind            => $_->{kind},
+                    transaction     => $_->{transaction},
+                    context         => $_->{context},
+                    drive           => $_->{drive},
+                    source_instance => $_->{source_instance},
+                    source_endpoint => $_->{source_endpoint},
+                    source_signal   => $_->{source_signal},
+                    sink_instance   => $_->{sink_instance},
+                    sink_endpoint   => $_->{sink_endpoint},
+                    sink_signal     => $_->{sink_signal},
+                    width           => $_->{width},
+                    width_source    => $_->{width_source},
+                    route_lifetime  => $_->{route_lifetime},
+                    storage         => $_->{storage},
+                    source          => $_->{source},
+                    sink            => $_->{sink},
+                }
+            } @{$network->{data_movements} || []}
+        ],
     };
 }
 

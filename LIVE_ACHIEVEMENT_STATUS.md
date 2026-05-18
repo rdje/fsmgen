@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL scalar handoff lowering shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` and closed the `.5`
+  actor-to-actor data-movement group.
+- The selected scalar actor-to-actor handoff subset now lowers from one named
+  drive body with one `(sink_actor.endpoint source_actor.endpoint)` pair and
+  one top-level transaction drive call.
+- The parent scheduled `.fsm` exposes the generated source handoff as a
+  one-bit external input and the generated sink handoff as a one-bit external
+  output, with route lifetime limited to the drive-call cycle.
+- Schedule JSON now reports the movement through
+  `actor_network.data_movements[]`.
+- Actor type resolution, generated child `.fsm` artifacts, generated ATL
+  tops, HDL child wiring, pin movement, inline/expression movement,
+  fan-in/fan-out, groups, CDC, and trigger/await coupling remain deferred or
+  fail-closed.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.6`.
+- Validation passed: parser/lowerer/JSON-emitter/public-contract syntax
+  checks, focused actor-network and schedule-report matrix tests,
+  public-contract/manifest/book audit tests, adjacent drive-boundary tests,
+  `mdbook build docs/book`, broad `./bin/ci-regression isf --no-book` with
+  `Files=229, Tests=1349`, and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL scalar handoff subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
 - Selected the first generated scalar actor-to-actor handoff subset before

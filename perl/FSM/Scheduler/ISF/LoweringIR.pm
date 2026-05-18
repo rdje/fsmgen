@@ -209,6 +209,14 @@ sub _build_parent_ir($self, $actor, $generated_children) {
     my %transaction_by_name = map { $_->{name} => $_ } @{$actor->{transactions} || []};
     my $ti = 0;
 
+    for my $movement (@{(($actor->{actor_network} || {})->{data_movements}) || []}) {
+        my $width = $movement->{width} || 1;
+        $signal_widths{$movement->{source_signal}} = $width
+            if defined($movement->{source_signal}) && !ref($movement->{source_signal});
+        $signal_widths{$movement->{sink_signal}} = $width
+            if defined($movement->{sink_signal}) && !ref($movement->{sink_signal});
+    }
+
     for my $tx (@{$actor->{transactions}}) {
         next if $generated_children->{$tx->{name}};
         my ($ss, $cs, $ds, $do, $sp, $contracts, $widths, $roles, $accesses) =
@@ -336,6 +344,26 @@ sub _actor_network_for_ir {
             sink               => $_->{sink},
         }
     } @{$network->{transaction_triggers} || []};
+    my @data_movements = map {
+        {
+            kind            => $_->{kind},
+            transaction     => $_->{transaction},
+            context         => $_->{context},
+            drive           => $_->{drive},
+            source_instance => $_->{source_instance},
+            source_endpoint => $_->{source_endpoint},
+            source_signal   => $_->{source_signal},
+            sink_instance   => $_->{sink_instance},
+            sink_endpoint   => $_->{sink_endpoint},
+            sink_signal     => $_->{sink_signal},
+            width           => $_->{width},
+            width_source    => $_->{width_source},
+            route_lifetime  => $_->{route_lifetime},
+            storage         => $_->{storage},
+            source          => $_->{source},
+            sink            => $_->{sink},
+        }
+    } @{$network->{data_movements} || []};
 
     return {
         kind      => $network->{kind} // 'static_declaration',
@@ -350,6 +378,7 @@ sub _actor_network_for_ir {
         ],
         event_waits => \@event_waits,
         transaction_triggers => \@transaction_triggers,
+        data_movements => \@data_movements,
     };
 }
 
@@ -1910,6 +1939,10 @@ sub _build_ports($self, $actor) {
     }
     for my $trigger (@{(($actor->{actor_network} || {})->{transaction_triggers}) || []}) {
         _push_port(\@p, \%seen, $trigger->{signal}, 'output', 1);
+    }
+    for my $movement (@{(($actor->{actor_network} || {})->{data_movements}) || []}) {
+        _push_port(\@p, \%seen, $movement->{source_signal}, 'input', $movement->{width} || 1);
+        _push_port(\@p, \%seen, $movement->{sink_signal}, 'output', $movement->{width} || 1);
     }
     return \@p;
 }

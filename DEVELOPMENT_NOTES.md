@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL scalar handoff lowering reuses named drives
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` implements the selected subset by
+  rewriting the accepted drive-body endpoint pair to generated parent handoff
+  signals before lowering. The existing named-drive lowering then emits the
+  guarded drive DT, so ATL movement uses the same drive-call timing machinery
+  as ordinary ISF data movement.
+- The subset intentionally exposes parent ports instead of generating child
+  actors. This keeps the first actor-to-actor data-movement behavior honest:
+  it proves scheduler-visible movement and report provenance without claiming
+  actor type resolution, child interface wiring, or an ATL top.
+- The parser remains the safety boundary for shape control. It accepts only
+  two direct static instances, one scalar endpoint pair, and one top-level
+  drive call; nested calls, missing calls, multi-pair bodies, parameters,
+  inline endpoint movement, and combinations with actor events/triggers stay
+  fail-closed until separately selected.
 ## 2026-05-18: ATL scalar handoff selection stays externally observable
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` intentionally selects an external
   parent-handoff subset before generated child artifacts. That keeps the first

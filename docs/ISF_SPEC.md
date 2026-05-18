@@ -2837,25 +2837,20 @@ and actor-transaction trigger handoff subsets implemented so far:
 - No top-level `connect`, `transfer`, or `move` movement clause is part of
   ATL v0. Movement remains temporal intent placed by drive-call timing, not a
   permanent actor-to-actor wire.
-- The first endpoint-movement code leaf is shipped as fail-closed
-  reservation: drive-body pairs whose sink or source is a qualified actor
-  endpoint naming a declared static actor instance reject with ATL
-  data-movement diagnostics instead of falling through as local aggregate or
-  enum-looking dotted tokens. Generated actor-to-actor routing behavior,
-  handoff storage, route muxes, two-instance lowering, generated ATL children,
-  generated ATL tops, and HDL routing remain deferred.
-- The first generated scalar actor-to-actor handoff subset is selected but not
-  shipped until the next implementation leaf. That subset is exactly two
-  direct static actor instances, one named drive body with one
-  `(sink_actor.endpoint source_actor.endpoint)` scalar pair, and one
-  top-level transaction drive call. The selected generated parent handoff
-  ports are scalar one-bit external ports named
+- The first endpoint-movement code leaf shipped fail-closed reservation for
+  unsupported qualified actor endpoint drive-body pairs, and the first
+  generated scalar actor-to-actor handoff subset is now shipped. The accepted
+  source shape is exactly two direct static actor instances, one named drive
+  body with one `(sink_actor.endpoint source_actor.endpoint)` scalar pair,
+  and one top-level transaction drive call. FSMGen rewrites the pair to
+  generated parent handoff signals, emits scalar one-bit external ports named
   `source_actor_source_endpoint` for the source input and
-  `sink_actor_sink_endpoint` for the sink output. The selected route lifetime
-  is the drive-call cycle only, with no storage, mux, generated child `.fsm`,
-  generated ATL top, HDL child wiring, type resolution, pin movement, inline
-  drive movement, expression movement, fan-in/fan-out, groups, CDC, or
-  trigger/await coupling. Selected report entries will use
+  `sink_actor_sink_endpoint` for the sink output, and drives the sink output
+  from the source input during the named drive-call cycle.
+- The scalar handoff inserts no storage, route mux, generated child `.fsm`,
+  generated ATL top, HDL child wiring, actor type resolution, pin movement,
+  inline drive movement, expression movement, fan-in/fan-out, groups, CDC, or
+  trigger/await coupling. Schedule reports expose accepted movements through
   `actor_network.data_movements[]` with `kind`, `transaction`, `context`,
   `drive`, `source_instance`, `source_endpoint`, `source_signal`,
   `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
@@ -3027,16 +3022,19 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 `temporal_contract_monitor`. The capability-manifest ISF public contract
 advertises this value family through `schedule_report_dt_kind_values`.
 `actor_network` is null for actors without a static ATL actor declaration, or
-an object with `kind`, `instances`, `event_waits`, and
-`transaction_triggers` for the current one-instance static actor-network
-subset. Each instance entry contains `name`, `actor_type`, and `declaration`.
+an object with `kind`, `instances`, `event_waits`, `transaction_triggers`,
+and `data_movements` for the current bounded static actor-network subset.
+Each instance entry contains `name`, `actor_type`, and `declaration`.
 Each event-wait entry contains `transaction`, `context`, `instance`, `event`,
 `signal`, and `source`. Each transaction-trigger entry contains
 `owner_transaction`, `context`, `instance`, `target_transaction`, `signal`,
-and `sink`. The capability-manifest ISF public contract advertises these
-families through
+and `sink`. Each scalar data-movement entry contains `kind`, `transaction`,
+`context`, `drive`, source/sink instance, endpoint, generated signal,
+`width`, `width_source`, `route_lifetime`, `storage`, `source`, and `sink`.
+The capability-manifest ISF public contract advertises these families through
 `schedule_report_actor_network_keys`,
 `schedule_report_actor_network_instance_keys`,
+`schedule_report_actor_network_data_movement_keys`,
 `schedule_report_actor_network_event_wait_keys`, and
 `schedule_report_actor_network_transaction_trigger_keys`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or

@@ -689,16 +689,15 @@ scheduling; the source does not add a new movement keyword.
 The rationale is uniform ISF syntax: ATL should not make downstream emitters
 or users learn a second data-movement form when existing drive bodies and
 drive calls can carry the same intent.
-The first `.5` data-movement code leaf is shipped as fail-closed
-reservation. Qualified actor endpoint drive-body pairs that name a declared
-static actor instance reject with ATL data-movement diagnostics until a later
-leaf ships generated routing behavior. The selected first generated scalar
-actor-to-actor handoff subset is exactly two direct static actor instances,
-one named drive body with one `(sink_actor.endpoint source_actor.endpoint)`
-pair, and one top-level transaction drive call. It selects one-bit external
-parent handoff ports named `source_actor_source_endpoint` and
-`sink_actor_sink_endpoint`, a one-cycle route lifetime, and
-`actor_network.data_movements[]` report keys, but does not yet ship behavior.
+The first `.5` data-movement implementation sequence shipped fail-closed
+reservation for unsupported endpoint drive-body pairs, then shipped the first
+generated scalar actor-to-actor handoff subset. The shipped subset is exactly
+two direct static actor instances, one named drive body with one
+`(sink_actor.endpoint source_actor.endpoint)` pair, and one top-level
+transaction drive call. It emits one-bit external parent handoff ports named
+`source_actor_source_endpoint` and `sink_actor_sink_endpoint`, uses a
+one-cycle route lifetime, and reports through
+`actor_network.data_movements[]`.
 Storage, muxing, generated child `.fsm` artifacts, generated ATL tops, HDL
 child wiring, pin movement, inline/expression movement, fan-in/fan-out,
 groups, CDC, and trigger/await coupling remain separate backlog leaves.

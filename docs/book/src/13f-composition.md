@@ -370,11 +370,10 @@ The report field is `actor_network`:
 ```
 
 This is not generated-child composition yet. FSMGen does not resolve
-`packet_reader`, emit a child `.fsm`, build an ATL top, route data between
-actors, or wire `reader` transactions/events to child artifacts in this
-slice. Multiple instances, groups, endpoint-aware drive-body movement, event
-fan-in/fan-out, trigger fan-in/fan-out, and generated ATL wiring remain
-backlog under the actor-network task tree.
+`packet_reader`, emit a child `.fsm`, build an ATL top, or wire `reader`
+transactions/events to child artifacts in this slice. Broader multiple
+instances, groups, pin movement, event fan-in/fan-out, trigger fan-in/fan-out,
+and generated ATL wiring remain backlog under the actor-network task tree.
 
 The broader ATL v0 contract is selected for later slices. The source root
 stays `(actor ...)`, and future ATL declarations remain direct actor-body
@@ -382,19 +381,42 @@ clauses rather than a `(network ...)` section. Actor-to-actor and
 pin-to-actor movement will reuse the existing drive-body pair shape in
 `(sink source)` order plus ordinary drive-call timing points. `connect`,
 `transfer`, and `move` are not part of ATL v0 movement syntax. The first
-endpoint-movement code leaf is shipped as fail-closed reservation: qualified
-actor endpoint drive-body pairs that name a declared static actor instance
-reject with ATL data-movement diagnostics until generated routing behavior is
-implemented. The selected first generated scalar actor-to-actor handoff subset
-is intentionally narrow: exactly two direct static actor instances, one named
+endpoint-movement implementation sequence first shipped fail-closed
+reservation for unsupported endpoint drive-body pairs, then shipped the first
+generated scalar actor-to-actor handoff subset. The accepted subset is
+intentionally narrow: exactly two direct static actor instances, one named
 drive body with one `(sink_actor.endpoint source_actor.endpoint)` scalar
 pair, and one top-level transaction drive call. The generated parent `.fsm`
-will expose a one-bit external source input named
+exposes a one-bit external source input named
 `source_actor_source_endpoint` and a one-bit external sink output named
 `sink_actor_sink_endpoint`; the route lasts for the drive-call cycle and
 does not imply storage, a mux, generated child `.fsm` artifacts, an ATL top,
 HDL child wiring, pin movement, fan-in/fan-out, groups, CDC, or trigger/await
-coupling. Future
+coupling.
+
+```lisp
+(actor atl_scalar_data_movement
+  (clock clk)
+  (interface (input start) (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+```
+
+FSMGen rewrites the drive body to generated parent handoff signals before
+lowering. The scheduled parent `.fsm` exposes `producer_payload` as the
+source input and `consumer_payload` as the sink output, then the named drive
+request drives `consumer_payload` from `producer_payload` for that call cycle.
+The schedule report records the movement in `actor_network.data_movements[]`
+with source/sink instance, endpoint, generated signal, width, route lifetime,
+and storage fields.
+
+Future
 orchestration spellings are reserved as `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
 `(await actor.event)`. Events are one-cycle control pulses with no payloads in

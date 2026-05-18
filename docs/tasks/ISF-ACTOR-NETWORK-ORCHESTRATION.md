@@ -143,12 +143,12 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2: lower actor triggers`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.5`
-  Status: `active`
+  Status: `completed`
   Goal: `Ship actor-to-actor data movement bindings.`
   Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`
   Acceptance: `Explicit data channels or port bindings move scalar payloads between actor instances under scheduler-visible timing rules, with storage/report provenance and fail-closed diagnostics for unsupported payload lifetimes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `completed through child leaves; latest behavior leaf validation: perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t; prove -Iperl t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t t/1198-isf-update-clause-boundary.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.4: lower scalar ATL handoff`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1`
   Status: `completed`
@@ -172,14 +172,14 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.3: select scalar ATL handoff`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`
-  Status: `active`
+  Status: `completed`
   Goal: `Lower the selected scalar actor-to-actor handoff subset.`
   Acceptance: `Parser/lowering accepts only the selected '.5.3' form: one top-level actor with exactly two direct static actor instances, one named drive body with one scalar actor-to-actor endpoint pair, and one top-level transaction drive call. Lowering emits the selected external parent handoff input/output ports, drives the sink handoff output from the source handoff input in the drive-call cycle, records the selected 'actor_network.data_movements[]' metadata, and keeps every unsupported endpoint movement variant fail-closed with targeted ATL diagnostics.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t; prove -Iperl t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t t/1198-isf-update-clause-boundary.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.4: lower scalar ATL handoff`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.6`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship top-level pin to actor-network data movement.`
   Acceptance: `Network-level input pins can feed selected actor inputs or data channels, actor outputs can drive selected top-level pins, and report metadata distinguishes external pin movement from actor-to-actor movement.`
   Verification: `pending`
@@ -203,7 +203,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` | `active` | `.5.3` selected the exact first generated scalar actor-to-actor handoff subset before code. The next leaf lowers only that selected subset and keeps all other endpoint movement fail-closed. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6` | `active` | `.5.4` shipped the selected scalar actor-to-actor handoff subset. The next leaf starts the top-level pin-to-actor data movement axis. |
 
 ## ATL v0 Proposal
 
@@ -283,14 +283,14 @@ Current proposal summary:
   enum names; `.5.2` rejects endpoints that name declared static actor
   instances with ATL-specific data-movement diagnostics before later leaves
   widen instance counts, generate handoff storage, or emit route artifacts.
-- The selected first generated scalar actor-to-actor handoff subset is one
+- The shipped first generated scalar actor-to-actor handoff subset is one
   named drive body with exactly one `(sink_actor.endpoint source_actor.endpoint)`
   pair, exactly two direct static actor instances, and one top-level
-  transaction drive call. The generated parent `.fsm` will expose a scalar
+  transaction drive call. The generated parent `.fsm` exposes a scalar
   external source handoff input named `source_actor_source_endpoint` and a
   scalar external sink handoff output named `sink_actor_sink_endpoint`; the
-  route is active only for the drive-call cycle and inserts no storage or mux
-  in this first subset.
+  route is active only for the drive-call cycle, inserts no storage or mux,
+  and reports through `actor_network.data_movements[]`.
 
 ## Decisions
 
@@ -447,6 +447,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` | `mdbook build docs/book`; `git diff --check` | `selected the first actor data movement boundary as fail-closed endpoint drive reservation; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `qualified actor endpoint sink/source drive-body forms fail closed with ATL diagnostics; focused checks pass; broad ISF gate passes with Files=229, Tests=1348` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `mdbook build docs/book`; `git diff --check` | `selected the first scalar actor-to-actor handoff subset, generated parent port names, one-bit width evidence, one-cycle lifetime, report keys, and fail-closed boundaries before code` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `prove -Iperl t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t t/1198-isf-update-clause-boundary.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected scalar actor-to-actor handoff lowers to one-cycle parent source/sink ports and actor_network.data_movements[] metadata; focused checks pass; broad ISF gate passes with Files=229, Tests=1349` |
 
 ## Commit Log
 
@@ -469,6 +470,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.1: select ATL data movement boundary` | `selects fail-closed reservation for qualified actor endpoint drive-body pairs as the first data movement boundary` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.2: fail closed ATL data movement` | `rejects reserved qualified actor endpoint sink/source drive-body pairs with ATL data-movement diagnostics` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.3: select scalar ATL handoff` | `selects the first generated scalar actor-to-actor handoff subset before behavior-bearing code` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.4: lower scalar ATL handoff` | `lowers the selected scalar actor-to-actor handoff subset to generated parent ports and data_movement report metadata` |
 
 ## Changelog
 
@@ -539,3 +541,12 @@ Current proposal summary:
   transaction drive call, one-cycle external parent handoff ports, explicit
   report keys, and fail-closed boundaries for every broader ATL movement form.
   The active frontier moves to `.5.4` for lowering only that selected subset.
+- `2026-05-18`: Completed `.5.4`: the selected scalar actor-to-actor handoff
+  now lowers. Parser validation accepts exactly two direct static actor
+  instances only for one named drive body with one scalar endpoint pair and
+  one top-level drive call, rewrites the pair to generated parent handoff
+  signals, emits one-bit source input and sink output ports in the parent
+  scheduled `.fsm`, records `actor_network.data_movements[]`, and keeps
+  broader movement forms fail-closed. The `.5` actor-to-actor data movement
+  group is complete; the active frontier moves to `.6` for top-level pin to
+  actor-network movement.

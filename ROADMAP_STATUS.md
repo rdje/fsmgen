@@ -51,15 +51,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pairs before generated routing behavior is claimed: named drive bodies and
   inline transaction drive assignments reject actor-qualified sink/source
   endpoints with ATL data-movement diagnostics when the qualifier names the
-  current static actor instance. `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`
-  selected the first generated scalar actor-to-actor handoff subset before
-  code: exactly two direct static actor instances, one named drive body with
-  one `(sink_actor.endpoint source_actor.endpoint)` pair, one top-level
-  transaction drive call, one-cycle scalar external parent handoff ports,
-  `actor_network.data_movements[]` report keys, and fail-closed boundaries
-  for broader movement. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`, which lowers only that selected
-  subset.
+  current static actor instance. `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`
+  completed the first actor-to-actor data-movement group by lowering the
+  selected scalar handoff subset: exactly two direct static actor instances,
+  one named drive body with one `(sink_actor.endpoint source_actor.endpoint)`
+  pair, and one top-level transaction drive call. The parser rewrites the
+  pair to generated one-bit parent handoff signals, the scheduled parent
+  `.fsm` exposes `source_actor_source_endpoint` as an external input and
+  `sink_actor_sink_endpoint` as an external output, the route is active for
+  the drive-call cycle through the named drive request, and schedule JSON
+  reports it under `actor_network.data_movements[]`. Actor type resolution,
+  generated child `.fsm` artifacts, generated ATL tops, HDL child wiring,
+  pin movement, inline/expression movement, fan-in/fan-out, groups, CDC, and
+  trigger/await coupling remain deferred or fail-closed. The next ATL
+  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.6`, which starts top-level
+  pin to actor-network movement.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

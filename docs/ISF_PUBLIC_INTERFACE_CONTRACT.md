@@ -1573,18 +1573,17 @@ behavior until advertised by capability metadata. Endpoint-aware movement
 will keep drive body pair order as `(sink source)` and may later admit
 qualified `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
 `group.name` endpoints. `connect`, `transfer`, and `move` are not public ATL
-v0 movement clauses. The first endpoint-movement code leaf is shipped as
-fail-closed reservation: qualified actor endpoint drive-body pairs naming a
-declared static actor instance reject with ATL data-movement diagnostics
-until generated routing behavior is explicitly advertised.
-The first generated scalar actor-to-actor handoff subset is selected but not
-yet implemented in the public API. That selected subset admits exactly two
-direct static actor instances, one named drive body with one
-`(sink_actor.endpoint source_actor.endpoint)` scalar pair, and one top-level
-transaction drive call. The selected parent handoff names are
+v0 movement clauses. Unsupported qualified actor endpoint drive-body pairs
+naming a declared static actor instance reject with ATL data-movement
+diagnostics unless they match the shipped scalar actor-to-actor subset.
+The first generated scalar actor-to-actor handoff subset is now implemented in
+the public API. That subset admits exactly two direct static actor instances,
+one named drive body with one `(sink_actor.endpoint source_actor.endpoint)`
+scalar pair, and one top-level transaction drive call. FSMGen rewrites the
+pair to generated parent handoff signals and emits
 `source_actor_source_endpoint` for the one-bit external source input and
-`sink_actor_sink_endpoint` for the one-bit external sink output. The selected
-future schedule-report surface is `actor_network.data_movements[]` with
+`sink_actor_sink_endpoint` for the one-bit external sink output. The
+schedule-report surface is `actor_network.data_movements[]` with
 `kind`, `transaction`, `context`, `drive`, `source_instance`,
 `source_endpoint`, `source_signal`, `sink_instance`, `sink_endpoint`,
 `sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,

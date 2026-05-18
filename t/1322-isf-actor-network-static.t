@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
+    isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
     isf_public_interface_schedule_report_actor_network_keys
@@ -34,6 +35,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                     declaration => 'actor',
                 },
             ],
+            data_movements => [],
             event_waits => [],
             transaction_triggers => [],
         },
@@ -60,6 +62,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                     declaration => 'actor',
                 },
             ],
+            data_movements => [],
             event_waits => [],
             transaction_triggers => [],
         },
@@ -186,6 +189,7 @@ ISF
                     declaration => 'actor',
                 },
             ],
+            data_movements => [],
             event_waits => [
                 {
                     transaction => 'run',
@@ -253,6 +257,7 @@ ISF
                     declaration => 'actor',
                 },
             ],
+            data_movements => [],
             event_waits => [],
             transaction_triggers => [
                 {
@@ -269,6 +274,97 @@ ISF
     );
 };
 
+subtest 'selected scalar actor-to-actor data movement lowers to parent handoff ports' => sub {
+    my $source = <<'ISF';
+(actor atl_scalar_data_movement
+  (clock clk)
+  (interface (input start) (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+ISF
+    my $actor = parse_source($source, 'atl-scalar-data-movement.isf');
+
+    my $expected_movement = {
+        kind            => 'scalar_actor_handoff',
+        transaction     => 'run',
+        context         => 'transaction_body',
+        drive           => 'feed_consumer',
+        source_instance => 'producer',
+        source_endpoint => 'payload',
+        source_signal   => 'producer_payload',
+        sink_instance   => 'consumer',
+        sink_endpoint   => 'payload',
+        sink_signal     => 'consumer_payload',
+        width           => 1,
+        width_source    => 'scalar_one_bit',
+        route_lifetime  => 'drive_call_cycle',
+        storage         => 'none',
+        source          => 'external_handoff',
+        sink            => 'external_handoff',
+    };
+
+    is_deeply(
+        $actor->{drives}{feed_consumer}{body},
+        [
+            [ 'consumer_payload', 'producer_payload' ],
+        ],
+        'parser rewrites the selected ATL endpoint pair to generated parent handoff signals',
+    );
+    is_deeply(
+        $actor->{actor_network}{data_movements},
+        [ $expected_movement ],
+        'parser records the selected scalar actor-to-actor data movement metadata',
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    my $fsm = $lowered->{files}{'atl_scalar_data_movement.fsm'};
+    ok($fsm, 'selected scalar data movement still emits the parent scheduled .fsm only');
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ['atl_scalar_data_movement.fsm'],
+        'selected scalar data movement does not emit ATL child artifacts or a generated top',
+    );
+    like($fsm, qr/\(producer_payload 1\)/, 'scheduled .fsm exposes generated source handoff input');
+    like($fsm, qr/\(consumer_payload 1\)/, 'scheduled .fsm exposes generated sink handoff output');
+    like($fsm, qr/\(<- \(consumer_payload>?\s+producer_payload\) <feed_consumer_start\)/,
+        'drive body lowers the selected scalar handoff through the named drive request');
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'producer',
+                    actor_type  => 'packet_reader',
+                    declaration => 'actor',
+                },
+                {
+                    name        => 'consumer',
+                    actor_type  => 'packet_writer',
+                    declaration => 'actor',
+                },
+            ],
+            data_movements => [ $expected_movement ],
+            event_waits => [],
+            transaction_triggers => [],
+        },
+        'actor scalar data movement report',
+    );
+
+    my $path = write_temp_isf($source);
+    my $cli_report = run_schedule_json($path, 'actor scalar data movement');
+    is_deeply($cli_report, $report, 'CLI schedule JSON matches in-process report for scalar data movement');
+};
+
 subtest 'reserved endpoint-aware drive movement forms fail closed with ATL diagnostics' => sub {
     parse_fails_like(
         <<'ISF',
@@ -283,7 +379,7 @@ subtest 'reserved endpoint-aware drive movement forms fail closed with ATL diagn
     (drive feed_reader)
     (complete done)))
 ISF
-        qr/drive 'feed_reader' body ATL actor data movement sink 'reader\.payload' is reserved but not supported yet/,
+        qr/drive 'feed_reader' body ATL scalar actor-to-actor data movement requires exactly two direct static actor instances/,
         'named drive body qualified actor sink fails closed before local dotted-name diagnostics',
     );
 
@@ -300,7 +396,7 @@ ISF
     (drive read_payload)
     (complete done)))
 ISF
-        qr/drive 'read_payload' body source ATL actor data movement source 'reader\.payload' is reserved but not supported yet/,
+        qr/drive 'read_payload' body ATL scalar actor-to-actor data movement requires exactly two direct static actor instances/,
         'named drive body qualified actor source fails closed before local dotted-name diagnostics',
     );
 
@@ -317,6 +413,61 @@ ISF
 ISF
         qr/transaction 'run' inline drive source ATL actor data movement source 'reader\.payload' is reserved but not supported yet/,
         'inline drive qualified actor source fails closed before local dotted-name diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_drive_without_call
+  (clock clk)
+  (interface (input start) (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (complete done)))
+ISF
+        qr/drive 'feed_consumer' ATL scalar actor-to-actor data movement requires exactly one top-level transaction drive call/,
+        'selected data movement drive requires one top-level drive call',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_drive_nested_call
+  (clock clk)
+  (interface (input start) (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (when start
+      (drive feed_consumer))
+    (complete done)))
+ISF
+        qr/transaction 'run' when body ATL scalar actor-to-actor data movement drive '\(drive feed_consumer\)' is reserved for top-level transaction bodies only/,
+        'selected data movement drive call remains top-level only',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_drive_multiple_pairs
+  (clock clk)
+  (interface (input start) (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload)
+    (consumer.valid producer.valid))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+ISF
+        qr/drive 'feed_consumer' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair/,
+        'selected data movement drive body remains one scalar pair only',
     );
 };
 
@@ -533,6 +684,13 @@ sub assert_actor_network_report {
             [sort keys %{$report->{actor_network}{event_waits}[0]}],
             [sort @{isf_public_interface_schedule_report_actor_network_event_wait_keys()}],
             "$label exposes advertised actor_network event_wait keys",
+        );
+    }
+    if (@{$report->{actor_network}{data_movements} || []}) {
+        is_deeply(
+            [sort keys %{$report->{actor_network}{data_movements}[0]}],
+            [sort @{isf_public_interface_schedule_report_actor_network_data_movement_keys()}],
+            "$label exposes advertised actor_network data_movement keys",
         );
     }
     if (@{$report->{actor_network}{transaction_triggers} || []}) {

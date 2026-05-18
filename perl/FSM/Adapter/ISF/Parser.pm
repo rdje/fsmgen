@@ -735,14 +735,25 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
     my %declared_signals = _actor_declared_signal_names($actor);
     my @event_waits;
     my @transaction_triggers;
+    my @data_movements;
+    my @data_movement_drive_calls;
 
     for my $drive_name (sort keys %{$actor->{drives} || {}}) {
-        _validate_atl_reserved_endpoint_drive_pairs(
-            ($actor->{drives}{$drive_name} || {})->{body},
-            "drive '$drive_name' body",
+        if (my $movement = _accept_selected_atl_data_movement_drive(
+            $actor->{actor_name},
+            $drive_name,
+            $actor->{drives}{$drive_name},
+            (($actor->{actor_network} || {})->{instances}) || [],
             \%actor_instances,
-        );
+            \%declared_signals,
+        )) {
+            confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement exceeds the current one-movement subset; fan-in, fan-out, route muxes, and multiple data movements remain deferred\n"
+                if @data_movements;
+            push @data_movements, $movement;
+        }
     }
+
+    my %data_movement_drives = map { $_->{drive} => $_ } @data_movements;
 
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_atl_reserved_qualified_forms(
@@ -753,10 +764,13 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
             \@event_waits,
             \@transaction_triggers,
             $actor->{drives} || {},
+            \%data_movement_drives,
+            \@data_movement_drive_calls,
             {
                 transaction         => $tx->{name},
                 allow_event_wait    => 1,
                 allow_actor_trigger => 1,
+                allow_data_movement_drive_call => 1,
             },
         );
     }
@@ -777,6 +791,16 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         $actor,
         \@event_waits,
         \@transaction_triggers,
+        \@data_movements,
+    );
+
+    _finalize_selected_atl_data_movements(
+        $actor,
+        (($actor->{actor_network} || {})->{instances}) || [],
+        \@data_movements,
+        \@data_movement_drive_calls,
+        \@event_waits,
+        \@transaction_triggers,
     );
 
     if (@event_waits) {
@@ -789,12 +813,17 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
             if ref($actor->{clock_domains}) eq 'HASH';
         $actor->{actor_network}{transaction_triggers} = \@transaction_triggers;
     }
+    if (@data_movements) {
+        confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement requires a single-clock actor in the current subset\n"
+            if ref($actor->{clock_domains}) eq 'HASH';
+        $actor->{actor_network}{data_movements} = \@data_movements;
+    }
 
     return 1;
 }
 
 sub _validate_actor_atl_generated_handoff_signal_conflicts {
-    my ($actor, $event_waits, $transaction_triggers) = @_;
+    my ($actor, $event_waits, $transaction_triggers, $data_movements) = @_;
     my %seen;
 
     for my $wait (@{$event_waits || []}) {
@@ -812,13 +841,25 @@ sub _validate_actor_atl_generated_handoff_signal_conflicts {
         $seen{$signal} = "actor transaction trigger '$trigger->{instance}.$trigger->{target_transaction}'";
     }
 
+    for my $movement (@{$data_movements || []}) {
+        for my $side (qw(source sink)) {
+            my $signal = $movement->{"${side}_signal"};
+            next unless defined($signal) && length($signal);
+            if (my $owner = $seen{$signal}) {
+                confess "Error: actor '$actor->{actor_name}' ATL generated handoff signal '$signal' is used by both $owner and actor data movement '$movement->{drive}'; rename the endpoint before using both handoffs\n";
+            }
+            $seen{$signal} = "actor data movement '$movement->{drive}' $side endpoint";
+        }
+    }
+
     return 1;
 }
 
 sub _validate_transaction_atl_reserved_qualified_forms {
-    my ($clauses, $context, $actor_instances, $declared_signals, $event_waits, $transaction_triggers, $drives, $options) = @_;
+    my ($clauses, $context, $actor_instances, $declared_signals, $event_waits, $transaction_triggers, $drives, $data_movement_drives, $data_movement_drive_calls, $options) = @_;
     return 1 unless ref($clauses) eq 'ARRAY';
     $drives ||= {};
+    $data_movement_drives ||= {};
     $options ||= {};
 
     for my $clause (@$clauses) {
@@ -863,6 +904,13 @@ sub _validate_transaction_atl_reserved_qualified_forms {
         }
 
         if ($head eq 'drive') {
+            _validate_selected_atl_data_movement_drive_call(
+                $clause,
+                $context,
+                $data_movement_drives,
+                $data_movement_drive_calls,
+                $options,
+            );
             _validate_atl_reserved_inline_drive_pairs($clause, $context, $actor_instances, $drives);
         }
 
@@ -877,10 +925,13 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                 $event_waits,
                 $transaction_triggers,
                 $drives,
+                $data_movement_drives,
+                $data_movement_drive_calls,
                 {
                     transaction         => $options->{transaction},
                     allow_event_wait    => 0,
                     allow_actor_trigger => 0,
+                    allow_data_movement_drive_call => 0,
                 },
             );
             next;
@@ -897,14 +948,139 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     $event_waits,
                     $transaction_triggers,
                     $drives,
+                    $data_movement_drives,
+                    $data_movement_drive_calls,
                     {
                         transaction         => $options->{transaction},
                         allow_event_wait    => 0,
                         allow_actor_trigger => 0,
+                        allow_data_movement_drive_call => 0,
                     },
                 );
             }
         }
+    }
+
+    return 1;
+}
+
+sub _accept_selected_atl_data_movement_drive {
+    my ($actor_name, $drive_name, $drive, $instances, $actor_instances, $declared_signals) = @_;
+    my $body = ($drive || {})->{body};
+    return undef unless ref($body) eq 'ARRAY';
+
+    my @endpoint_entries;
+    for my $entry (@$body) {
+        next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
+        my ($sink, $source) = @$entry[0, 1];
+        push @endpoint_entries, $entry
+            if _contains_qualified_atl_endpoint_token($sink, $actor_instances)
+                || _contains_qualified_atl_endpoint_token($source, $actor_instances);
+    }
+    return undef unless @endpoint_entries;
+
+    my $context = "drive '$drive_name' body";
+    confess "Error: $context ATL scalar actor-to-actor data movement requires exactly two direct static actor instances in the current subset\n"
+        unless ref($instances) eq 'ARRAY' && @$instances == 2;
+    confess "Error: $context ATL scalar actor-to-actor data movement does not accept drive parameters in the current subset\n"
+        if @{($drive || {})->{params} || []};
+    confess "Error: $context ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset\n"
+        unless @$body == 1 && @endpoint_entries == 1;
+
+    my ($sink, $source) = @{$endpoint_entries[0]}[0, 1];
+    my ($sink_instance, $sink_endpoint) = _parse_qualified_atl_endpoint_token($sink, $actor_instances);
+    confess "Error: $context ATL scalar actor-to-actor data movement sink '$sink' must be a qualified static actor endpoint\n"
+        unless defined($sink_instance) && defined($sink_endpoint);
+    confess "Error: $context ATL scalar actor-to-actor data movement source expressions remain deferred\n"
+        if ref($source);
+    my ($source_instance, $source_endpoint) = _parse_qualified_atl_endpoint_token($source, $actor_instances);
+    confess "Error: $context ATL scalar actor-to-actor data movement source '$source' must be a qualified static actor endpoint\n"
+        unless defined($source_instance) && defined($source_endpoint);
+    confess "Error: $context ATL scalar actor-to-actor data movement requires distinct source and sink actor instances\n"
+        if $source_instance eq $sink_instance;
+    confess "Error: $context ATL scalar actor-to-actor data movement sink endpoint '$sink_endpoint' must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($sink_endpoint);
+    confess "Error: $context ATL scalar actor-to-actor data movement source endpoint '$source_endpoint' must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($source_endpoint);
+
+    my $source_signal = _actor_atl_data_handoff_signal($source_instance, $source_endpoint);
+    my $sink_signal = _actor_atl_data_handoff_signal($sink_instance, $sink_endpoint);
+    for my $signal ($source_signal, $sink_signal) {
+        confess "Error: $context ATL scalar actor-to-actor data movement generated handoff signal '$signal' conflicts with a declared actor signal\n"
+            if $declared_signals->{$signal};
+        confess "Error: $context ATL scalar actor-to-actor data movement generated handoff signal '$signal' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
+            if $signal eq "${drive_name}_start";
+    }
+
+    $endpoint_entries[0][0] = $sink_signal;
+    $endpoint_entries[0][1] = $source_signal;
+
+    return {
+        kind            => 'scalar_actor_handoff',
+        transaction     => undef,
+        context         => undef,
+        drive           => $drive_name,
+        source_instance => $source_instance,
+        source_endpoint => $source_endpoint,
+        source_signal   => $source_signal,
+        sink_instance   => $sink_instance,
+        sink_endpoint   => $sink_endpoint,
+        sink_signal     => $sink_signal,
+        width           => 1,
+        width_source    => 'scalar_one_bit',
+        route_lifetime  => 'drive_call_cycle',
+        storage         => 'none',
+        source          => 'external_handoff',
+        sink            => 'external_handoff',
+    };
+}
+
+sub _validate_selected_atl_data_movement_drive_call {
+    my ($clause, $context, $data_movement_drives, $data_movement_drive_calls, $options) = @_;
+    return 1 unless ref($clause) eq 'ARRAY'
+        && @$clause >= 2
+        && defined($clause->[0])
+        && !ref($clause->[0])
+        && $clause->[0] eq 'drive'
+        && defined($clause->[1])
+        && !ref($clause->[1])
+        && $data_movement_drives->{$clause->[1]};
+
+    my $drive_name = $clause->[1];
+    confess "Error: $context ATL scalar actor-to-actor data movement drive '(drive $drive_name)' is reserved for top-level transaction bodies only in the current subset\n"
+        unless $options->{allow_data_movement_drive_call};
+    confess "Error: $context ATL scalar actor-to-actor data movement drive '(drive $drive_name)' does not accept actual arguments in the current subset\n"
+        unless @$clause == 2;
+    confess "Error: $context ATL scalar actor-to-actor data movement exceeds the current one-drive-call subset; fan-in, fan-out, and repeated movement remain deferred\n"
+        if @{$data_movement_drive_calls || []};
+
+    push @$data_movement_drive_calls, {
+        transaction => $options->{transaction},
+        context     => 'transaction_body',
+        drive       => $drive_name,
+    };
+
+    return 1;
+}
+
+sub _finalize_selected_atl_data_movements {
+    my ($actor, $instances, $data_movements, $data_movement_drive_calls, $event_waits, $transaction_triggers) = @_;
+    my $instance_count = ref($instances) eq 'ARRAY' ? scalar(@$instances) : 0;
+
+    if ($instance_count > 1 && !@{$data_movements || []}) {
+        confess "Error: actor '$actor->{actor_name}' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset is present; broader multiple-instance scheduling is deferred\n";
+    }
+    return 1 unless @{$data_movements || []};
+
+    confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with actor event waits or actor transaction triggers in the current subset\n"
+        if @{$event_waits || []} || @{$transaction_triggers || []};
+
+    for my $movement (@$data_movements) {
+        my @calls = grep { $_->{drive} eq $movement->{drive} } @{$data_movement_drive_calls || []};
+        confess "Error: drive '$movement->{drive}' ATL scalar actor-to-actor data movement requires exactly one top-level transaction drive call in the current subset\n"
+            unless @calls == 1;
+        $movement->{transaction} = $calls[0]{transaction};
+        $movement->{context} = $calls[0]{context};
     }
 
     return 1;
@@ -1029,6 +1205,18 @@ sub _is_qualified_atl_endpoint_token {
     return defined($instance) ? 1 : 0;
 }
 
+sub _contains_qualified_atl_endpoint_token {
+    my ($value, $actor_instances) = @_;
+    return _is_qualified_atl_endpoint_token($value, $actor_instances)
+        if defined($value) && !ref($value);
+    if (ref($value) eq 'ARRAY') {
+        for my $item (@$value) {
+            return 1 if _contains_qualified_atl_endpoint_token($item, $actor_instances);
+        }
+    }
+    return 0;
+}
+
 sub _parse_qualified_atl_endpoint_token {
     my ($token, $actor_instances) = @_;
     return unless defined($token) && !ref($token);
@@ -1045,6 +1233,11 @@ sub _actor_atl_event_handoff_signal {
 sub _actor_atl_transaction_trigger_handoff_signal {
     my ($instance, $transaction) = @_;
     return "${instance}_${transaction}_start";
+}
+
+sub _actor_atl_data_handoff_signal {
+    my ($instance, $endpoint) = @_;
+    return "${instance}_${endpoint}";
 }
 
 sub _actor_declared_signal_names {
@@ -4731,8 +4924,8 @@ sub _merge_actor_network($self, $actor, $incoming) {
         confess "Error: actor '$actor_name' static actor network has duplicate instance '$name'\n"
             if $seen{$name}++;
     }
-    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance; multiple-instance scheduling is deferred\n"
-        if @merged > 1;
+    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset uses exactly two; broader multiple-instance scheduling is deferred\n"
+        if @merged > 2;
 
     $actor->{actor_network} = _actor_network_from_instances($actor_name, \@merged);
     return 1;
@@ -4743,14 +4936,15 @@ sub _actor_network_from_instances {
     my @instances = @{$instances || []};
     confess "Error: actor '$actor_name' static actor network requires one actor instance in the current subset\n"
         unless @instances;
-    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance; multiple-instance scheduling is deferred\n"
-        if @instances > 1;
+    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset uses exactly two; broader multiple-instance scheduling is deferred\n"
+        if @instances > 2;
 
     return {
         kind      => 'static_declaration',
         instances => [ map { _clone_isf_value($_) } @instances ],
         event_waits => [],
         transaction_triggers => [],
+        data_movements => [],
     };
 }
 

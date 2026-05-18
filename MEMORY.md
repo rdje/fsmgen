@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL scalar handoff lowering shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` and closed the `.5`
+  actor-to-actor data-movement group.
+- FSMGen now accepts the selected scalar actor-to-actor handoff subset:
+  exactly two direct static actor instances, one named drive body with one
+  `(sink_actor.endpoint source_actor.endpoint)` pair, and one top-level
+  transaction drive call.
+- The parser rewrites the selected endpoint pair to generated one-bit parent
+  handoff signals. The scheduled parent `.fsm` exposes the source endpoint as
+  an external input named `source_actor_source_endpoint`, exposes the sink
+  endpoint as an external output named `sink_actor_sink_endpoint`, and drives
+  the sink output from the source input only during the named drive-call
+  cycle. Schedule JSON reports the movement under
+  `actor_network.data_movements[]`.
+- Actor type resolution, generated child `.fsm` artifacts, generated ATL
+  tops, HDL child wiring, pin movement, inline/expression movement,
+  fan-in/fan-out, groups, CDC, and trigger/await coupling remain deferred or
+  fail-closed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6`.
+- Validation passed: parser/lowerer/JSON-emitter/public-contract syntax
+  checks, focused actor-network and schedule-report matrix tests,
+  public-contract/manifest/book audit tests, adjacent drive-boundary tests,
+  `mdbook build docs/book`, broad `./bin/ci-regression isf --no-book` with
+  `Files=229, Tests=1349`, and `git diff --check`.
 ## 2026-05-18: ATL scalar handoff subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
 - The next generated ATL data-movement subset is selected before code:
