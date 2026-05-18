@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained repeat domain do after await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.93`.
+- The active R14 task tree now selects top-level `when` body nested repeat
+  generated blocking `(do child (params ...) [(bind ...)] (domain NAME))`
+  after a prior multi-pending `(await_any done)` observation.
+- The selected source shape is a repeat directly inside a top-level `when`
+  body with multiple generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  `(await_any done)` as an observation point, same-domain static-parameter
+  generated `do` with optional generated-top input/output binding handoffs
+  while those generated spawns remain pending, and a later same-body
+  `(await_all done)` drain before the nested repeat check can loop.
+- The selected implementation must keep every generated-spawn done handoff
+  live after the observation and through the same-domain generated do
+  instance, preserve generated-composition and schedule-report clock-domain
+  metadata for that generated do instance, then gate repeat re-entry on the
+  later `await_all` drain.
+- The switch-contained domain analogue, `await_any` after the do, new spawn
+  after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain deferred.
+- The mdBook feature backlog now documents the selected when-contained
+  same-domain generated-do `await_any`-before-do subset as selected but not
+  yet shipped.
+- Validation: `mdbook build docs/book`, `prove -l
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t` (Files=2, Tests=282), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.94`.
 ## 2026-05-18: switch-contained repeat bound do after await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.92`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

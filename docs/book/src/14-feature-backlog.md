@@ -561,8 +561,19 @@ generated-spawn done set that the later drain must consume. Domain metadata
 after a prior multi-pending `await_any`, `await_any` after the do, new spawn
 after the do before the drain, cross-domain activation, deeper branch/loop
 nesting, and broader outstanding-child semantics remain backlog. The next
-repeat-body child-activation leaf should select one of those remaining fail-
-closed boundaries before any implementation changes.
+repeat-body child-activation leaf now selects the when-contained same-domain
+metadata analogue for implementation: a repeat directly inside a top-level
+`when` body with multiple generated spawns, a prior multi-pending
+`(await_any done)` observation, static-parameter generated blocking
+`(do child (params ...) [(bind ...)] (domain NAME))` while those generated
+spawns remain pending, and a later same-body `(await_all done)` drain before
+the nested repeat check can loop. The selected contract records declared
+same-domain ownership metadata for the generated do instance and generated
+children without implying CDC or cross-domain activation. The switch-contained
+domain analogue, `await_any` after the do, new spawn after the do before the
+drain, cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog until their own leaves select and
+ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
