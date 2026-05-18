@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF switch-contained repeat local do after await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`.
+- Selected top-level `switch` branch nested repeats with multiple generated
+  spawns, a multi-pending `(await_any done)` observation, local blocking
+  `(do child)` while those generated spawns remain pending, and a later
+  same-body `(await_all done)` drain before the nested repeat check can loop.
+- The selected implementation contract mirrors the shipped when-contained
+  proof: generated-spawn done handoffs stay live after `await_any` and
+  through the local do. The local do target remains in the parent scheduled
+  module and must wait for its own fresh done pulse.
+- Generated do after prior multi-pending `await_any`, `await_any` after the
+  do, spawn-after-do before the drain, cross-domain activation, deeper
+  nesting, and broader outstanding-child semantics remain deferred. The
+  active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.80`, which
+  implements this selected subset.
+- Validation passed: `mdbook build docs/book`,
+  `prove -l t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
+  (Files=2, Tests=247), and `git diff --check`.
+
 ## 2026-05-18: R14 — ISF when-contained repeat local do after await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.78`.
 - Top-level `when` bodies may now contain nested repeats with multiple

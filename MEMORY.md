@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained repeat local do after await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.79`.
+- The active R14 task tree now selects the direct top-level `switch` branch
+  analogue of the shipped when-contained `await_any`-before-local-do subset.
+- The selected source shape is a repeat directly inside a top-level `switch`
+  branch with multiple generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  a multi-pending `(await_any done)` observation, local blocking
+  `(do child)`, and a later same-body `(await_all done)` drain before the
+  nested repeat check can loop.
+- The selected implementation must leave every generated-spawn done handoff
+  live after the observation and through the local do, then gate repeat
+  re-entry on the later `await_all` drain. The local do target remains in the
+  parent scheduled module and waits on its own fresh done pulse.
+- Generated `do` after prior multi-pending `await_any`, `await_any` after the
+  do, new spawn after the do before drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  deferred.
+- The mdBook feature backlog now documents the selected switch-contained
+  pending-spawn `await_any`-before-local-do subset as selected but not yet
+  shipped.
+- Validation: `mdbook build docs/book`, `prove -l
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t` (Files=2, Tests=247), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.80`.
 ## 2026-05-18: when-contained repeat local do after await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.78`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
