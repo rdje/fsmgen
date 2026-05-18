@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
+    isf_public_interface_schedule_report_actor_network_association_schedule_keys
     isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
     isf_public_interface_schedule_report_actor_network_group_schedule_keys
@@ -38,6 +39,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                 },
             ],
             groups => [],
+            association_schedules => [],
             group_schedules => [],
             data_movements => [],
             event_waits => [],
@@ -201,6 +203,21 @@ ISF
         source              => 'parent_trigger_state',
         sink                => 'external_handoff',
     };
+    my $expected_association_schedule = {
+        association         => 'run_trigger_batch',
+        kind                => 'temporary_trigger_batch',
+        lifetime            => 'task_scoped',
+        owner_transaction   => 'run',
+        context             => 'transaction_body',
+        members             => [qw(reader writer)],
+        target_transactions => [qw(capture emit)],
+        signals             => [qw(reader_capture_start writer_emit_start)],
+        schedule            => 'same_cycle_external_trigger_batch',
+        dependency_policy   => 'declared_group_distinct_members',
+        storage             => 'none',
+        source              => 'parent_trigger_state',
+        sink                => 'external_handoff',
+    };
 
     is_deeply(
         $actor->{actor_network}{transaction_triggers},
@@ -211,6 +228,11 @@ ISF
         $actor->{actor_network}{group_schedules},
         [ $expected_group_schedule ],
         'parser records the selected same-cycle group trigger schedule metadata',
+    );
+    is_deeply(
+        $actor->{actor_network}{association_schedules},
+        [ $expected_association_schedule ],
+        'parser records canonical temporary association schedule metadata',
     );
 
     my $scheduler = FSM::Scheduler::ISF->new();
@@ -245,6 +267,7 @@ ISF
                 },
             ],
             groups => [ $expected_group ],
+            association_schedules => [ $expected_association_schedule ],
             group_schedules => [ $expected_group_schedule ],
             data_movements => [],
             event_waits => [],
@@ -313,6 +336,11 @@ ISF
         $single_trigger_with_group->{actor_network}{group_schedules},
         [],
         'a static group declaration does not force a temporary association for one trigger',
+    );
+    is_deeply(
+        $single_trigger_with_group->{actor_network}{association_schedules},
+        [],
+        'a static group declaration does not force canonical association metadata for one trigger',
     );
 
     parse_fails_like(
@@ -1177,6 +1205,13 @@ sub assert_actor_network_report {
             "$label exposes advertised actor_network group_schedule keys",
         );
     }
+    if (@{$report->{actor_network}{association_schedules} || []}) {
+        is_deeply(
+            [sort keys %{$report->{actor_network}{association_schedules}[0]}],
+            [sort @{isf_public_interface_schedule_report_actor_network_association_schedule_keys()}],
+            "$label exposes advertised actor_network association_schedule keys",
+        );
+    }
     if (@{$report->{actor_network}{event_waits} || []}) {
         is_deeply(
             [sort keys %{$report->{actor_network}{event_waits}[0]}],
@@ -1198,6 +1233,8 @@ sub assert_actor_network_report {
             "$label exposes advertised actor_network transaction_trigger keys",
         );
     }
+    $expected->{association_schedules} = []
+        unless exists $expected->{association_schedules};
     is_deeply($report->{actor_network}, $expected, "$label preserves actor-network identity");
 }
 

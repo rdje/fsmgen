@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL association_schedules[] is the canonical temporary-association report
+- `actor_network.association_schedules[]` is now the forward schedule-report
+  vocabulary for task-scoped ATL associations.
+- The first shipped association kind is `temporary_trigger_batch`; its
+  lifetime is `task_scoped`, and the association name remains
+  transaction-scoped even if the actor set also matches a static review group.
+- `actor_network.group_schedules[]` stays in the schema-version-1 report as a
+  compatibility view. It should not be the teaching vocabulary for new
+  group-less ATL associations.
+- This is report-contract stabilization only: users still write existing
+  `(trigger actor.transaction)` clauses, and generated HDL behavior is
+  unchanged.
 ## 2026-05-19: ATL temporary associations need their own report family
 - `actor_network.group_schedules[]` was acceptable for the first grouped
   trigger-batch slice, but it becomes misleading once the preferred model is

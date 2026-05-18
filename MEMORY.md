@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL association schedule reports shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`.
+- Schedule JSON now exposes canonical
+  `actor_network.association_schedules[]` entries for task-scoped temporary
+  trigger batches, with `association`, `kind`, `lifetime`,
+  `owner_transaction`, `context`, `members`, `target_transactions`,
+  `signals`, `schedule`, `dependency_policy`, `storage`, `source`, and
+  `sink` keys.
+- The first shipped association kind is `temporary_trigger_batch`; lifetime is
+  `task_scoped`.
+- `actor_network.group_schedules[]` remains as a schema-version-1
+  compatibility view for current downstream consumers.
+- No source syntax or generated HDL behavior changed. The active ATL frontier
+  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`.
 ## 2026-05-19: ATL association schedule reports selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` as a doc-only selection
   leaf before code.

@@ -96,6 +96,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_state_count_shape
     isf_public_interface_schedule_report_actor_phase_keys
     isf_public_interface_schedule_report_actor_stage_keys
+    isf_public_interface_schedule_report_actor_network_association_schedule_keys
     isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
     isf_public_interface_schedule_report_actor_network_group_schedule_keys
@@ -226,6 +227,7 @@ sub build_isf_public_interface_contract {
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_group_keys => isf_public_interface_schedule_report_actor_network_group_keys(),
         schedule_report_actor_network_group_schedule_keys => isf_public_interface_schedule_report_actor_network_group_schedule_keys(),
+        schedule_report_actor_network_association_schedule_keys => isf_public_interface_schedule_report_actor_network_association_schedule_keys(),
         schedule_report_actor_network_data_movement_keys => isf_public_interface_schedule_report_actor_network_data_movement_keys(),
         schedule_report_actor_network_event_wait_keys => isf_public_interface_schedule_report_actor_network_event_wait_keys(),
         schedule_report_actor_network_transaction_trigger_keys => isf_public_interface_schedule_report_actor_network_transaction_trigger_keys(),
@@ -579,6 +581,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_actor_network_instance_keys
             schedule_report_actor_network_group_keys
             schedule_report_actor_network_group_schedule_keys
+            schedule_report_actor_network_association_schedule_keys
             schedule_report_actor_network_data_movement_keys
             schedule_report_actor_network_event_wait_keys
             schedule_report_actor_network_transaction_trigger_keys
@@ -1321,6 +1324,7 @@ sub isf_public_interface_schedule_report_actor_network_keys {
             data_movements
             event_waits
             groups
+            association_schedules
             group_schedules
             kind
             instances
@@ -1358,6 +1362,26 @@ sub isf_public_interface_schedule_report_actor_network_group_schedule_keys {
             context
             dependency_policy
             group
+            members
+            owner_transaction
+            schedule
+            signals
+            sink
+            source
+            storage
+            target_transactions
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_actor_network_association_schedule_keys {
+    return [
+        qw(
+            association
+            context
+            dependency_policy
+            kind
+            lifetime
             members
             owner_transaction
             schedule
@@ -1763,6 +1787,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_group_keys => isf_public_interface_schedule_report_actor_network_group_keys(),
         schedule_report_actor_network_group_schedule_keys => isf_public_interface_schedule_report_actor_network_group_schedule_keys(),
+        schedule_report_actor_network_association_schedule_keys => isf_public_interface_schedule_report_actor_network_association_schedule_keys(),
         schedule_report_actor_network_data_movement_keys => isf_public_interface_schedule_report_actor_network_data_movement_keys(),
         schedule_report_actor_network_event_wait_keys => isf_public_interface_schedule_report_actor_network_event_wait_keys(),
         schedule_report_actor_network_transaction_trigger_keys => isf_public_interface_schedule_report_actor_network_transaction_trigger_keys(),

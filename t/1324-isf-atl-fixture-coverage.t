@@ -189,6 +189,27 @@ sub assert_report_shape {
         ],
         'report records the temporary trigger-batch schedule evidence',
     );
+    is_deeply(
+        $actor_network->{association_schedules},
+        [
+            {
+                association         => 'run_trigger_batch',
+                kind                => 'temporary_trigger_batch',
+                lifetime            => 'task_scoped',
+                owner_transaction   => 'run',
+                context             => 'transaction_body',
+                members             => [qw(reader filter writer)],
+                target_transactions => [qw(capture process emit)],
+                signals             => [qw(reader_capture_start filter_process_start writer_emit_start)],
+                schedule            => 'same_cycle_external_trigger_batch',
+                dependency_policy   => 'transaction_body_distinct_instances',
+                storage             => 'none',
+                source              => 'parent_trigger_state',
+                sink                => 'external_handoff',
+            },
+        ],
+        'report records canonical task-scoped association schedule evidence',
+    );
 }
 
 sub generate_hdl {

@@ -389,6 +389,23 @@ sub _actor_network_for_ir {
             sink                => $_->{sink},
         }
     } @{$network->{group_schedules} || []};
+    my @association_schedules = map {
+        {
+            association         => $_->{association},
+            kind                => $_->{kind},
+            lifetime            => $_->{lifetime},
+            owner_transaction   => $_->{owner_transaction},
+            context             => $_->{context},
+            members             => [ @{$_->{members} || []} ],
+            target_transactions => [ @{$_->{target_transactions} || []} ],
+            signals             => [ @{$_->{signals} || []} ],
+            schedule            => $_->{schedule},
+            dependency_policy   => $_->{dependency_policy},
+            storage             => $_->{storage},
+            source              => $_->{source},
+            sink                => $_->{sink},
+        }
+    } @{$network->{association_schedules} || []};
 
     return {
         kind      => $network->{kind} // 'static_declaration',
@@ -402,6 +419,7 @@ sub _actor_network_for_ir {
             } @{$network->{instances}}
         ],
         groups => \@groups,
+        association_schedules => \@association_schedules,
         group_schedules => \@group_schedules,
         event_waits => \@event_waits,
         transaction_triggers => \@transaction_triggers,

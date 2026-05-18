@@ -585,9 +585,11 @@ The first realistic ATL trigger-batch fixture is shipped as
 It uses only the current static actor-network surface: three direct static
 actor instances and one contiguous transaction-body trigger batch that targets
 distinct actors. The fixture emits only `atl_trigger_batch_pipeline.fsm`,
-reports `actor_network.instances[]`, `transaction_triggers[]`, and
-`group_schedules[]` with a synthetic task-scoped `run_trigger_batch` name, and
-is backed by
+reports `actor_network.instances[]`, `transaction_triggers[]`, and canonical
+`association_schedules[]` with `kind: "temporary_trigger_batch"` and
+`lifetime: "task_scoped"`. It also keeps `group_schedules[]` as a
+schema-version-1 compatibility view with synthetic task-scoped
+`run_trigger_batch` evidence. The fixture is backed by
 [t/1324-isf-atl-fixture-coverage.t](../t/1324-isf-atl-fixture-coverage.t)
 for strict schedule JSON parity, scheduled `.fsm` structure, and plain plus
 strict HDL generation. It deliberately does not declare a permanent
@@ -2819,6 +2821,7 @@ parser/schedule-report metadata:
     }
   ],
   "groups": [],
+  "association_schedules": [],
   "group_schedules": [],
   "data_movements": [],
   "event_waits": [],
@@ -2925,21 +2928,20 @@ handoff, and report-only group metadata subsets implemented so far:
   contiguous batch may target distinct static actor instances and lowers as
   one same-cycle external trigger-batch state. The association is temporary
   and scoped to that transaction state; no static `(group ...)` declaration is
-  required. Schedule JSON reports scheduling evidence through
-  `actor_network.group_schedules[]` with `group`, `owner_transaction`,
-  `context`, `members`, `target_transactions`, `signals`, `schedule`,
-  `dependency_policy`, `storage`, `source`, and `sink` keys while preserving
-  per-target `actor_network.transaction_triggers[]` entries. If the trigger
-  set matches one declared static group, `group` names that group; otherwise
-  it uses a synthetic transaction-scoped name such as `run_trigger_batch`.
-  Generated children, group endpoints, event/data-movement coupling,
-  storage/mux insertion, CDC, compact aliases, repeated-instance batches, and
-  broader fan-in/fan-out remain fail-closed.
-- The next selected report-contract slice will add
-  `actor_network.association_schedules[]` as the canonical report family for
-  task-scoped ATL associations while preserving `group_schedules[]` as a
-  schema-version-1 compatibility view. That key is selected but not shipped
-  until the implementation and contract tests land.
+  required. Schedule JSON reports canonical scheduling evidence through
+  `actor_network.association_schedules[]` with `association`, `kind`,
+  `lifetime`, `owner_transaction`, `context`, `members`,
+  `target_transactions`, `signals`, `schedule`, `dependency_policy`,
+  `storage`, `source`, and `sink` keys while preserving per-target
+  `actor_network.transaction_triggers[]` entries. `kind` is
+  `temporary_trigger_batch`; `lifetime` is `task_scoped`.
+  `actor_network.group_schedules[]` remains a schema-version-1 compatibility
+  view. If the trigger set matches one declared static group, the
+  compatibility `group` field names that group; otherwise it uses a synthetic
+  transaction-scoped name such as `run_trigger_batch`. Generated children,
+  group endpoints, event/data-movement coupling, storage/mux insertion, CDC,
+  compact aliases, repeated-instance batches, and broader fan-in/fan-out
+  remain fail-closed.
 
 The current actor-event wait subset is deliberately narrower than full child
 orchestration. FSMGen accepts exactly one top-level transaction-body
@@ -3101,7 +3103,8 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 advertises this value family through `schedule_report_dt_kind_values`.
 `actor_network` is null for actors without a static ATL actor declaration, or
 an object with `kind`, `instances`, `event_waits`, `transaction_triggers`,
-and `data_movements` for the current bounded static actor-network subset.
+`association_schedules`, `group_schedules`, and `data_movements` for the
+current bounded static actor-network subset.
 Each instance entry contains `name`, `actor_type`, and `declaration`.
 Each event-wait entry contains `transaction`, `context`, `instance`, `event`,
 `signal`, and `source`. Each transaction-trigger entry contains
@@ -3109,10 +3112,15 @@ Each event-wait entry contains `transaction`, `context`, `instance`, `event`,
 and `sink`. Each scalar data-movement entry contains `kind`, `transaction`,
 `context`, `drive`, source/sink instance, endpoint, generated signal,
 `width`, `width_source`, `route_lifetime`, `storage`, `source`, and `sink`.
+Each association-schedule entry contains `association`, `kind`, `lifetime`,
+`owner_transaction`, `context`, `members`, `target_transactions`, `signals`,
+`schedule`, `dependency_policy`, `storage`, `source`, and `sink`.
 The capability-manifest ISF public contract advertises these families through
 `schedule_report_actor_network_keys`,
 `schedule_report_actor_network_instance_keys`,
 `schedule_report_actor_network_group_keys`,
+`schedule_report_actor_network_association_schedule_keys`,
+`schedule_report_actor_network_group_schedule_keys`,
 `schedule_report_actor_network_data_movement_keys`,
 `schedule_report_actor_network_event_wait_keys`, and
 `schedule_report_actor_network_transaction_trigger_keys`.
@@ -3421,8 +3429,10 @@ generated-top HDL reachability.
 The [isf/atl_trigger_batch_pipeline.isf](../isf/atl_trigger_batch_pipeline.isf)
 fixture now has file-backed ATL temporary trigger-batch coverage for static
 actor instances, per-target trigger handoffs, one scheduled same-cycle
-trigger-batch state, strict schedule JSON parity, scheduled `.fsm` structure,
-and plain plus strict HDL generation. It stays inside the shipped
+trigger-batch state, canonical `association_schedules[]` report evidence,
+compatibility `group_schedules[]` report evidence, strict schedule JSON
+parity, scheduled `.fsm` structure, and plain plus strict HDL generation. It
+stays inside the shipped
 external-handoff subset and does not claim generated ATL child artifacts,
 broader actor-network wiring, or permanent actor grouping.
 

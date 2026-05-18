@@ -1537,6 +1537,7 @@ The schedule report exposes this through top-level `actor_network`:
     }
   ],
   "groups": [],
+  "association_schedules": [],
   "group_schedules": [],
   "data_movements": [],
   "event_waits": [],
@@ -1621,19 +1622,15 @@ capability manifest and this handoff:
   batch of `(trigger actor.transaction)` clauses targeting distinct static
   actor instances. FSMGen lowers the batch as one same-cycle external
   trigger-batch state, preserves per-target
-  `actor_network.transaction_triggers[]`, and reports batch evidence through
-  `actor_network.group_schedules[]`. If the trigger set matches one declared
-  static group, the `group` field names that group; otherwise it carries a
+  `actor_network.transaction_triggers[]`, and reports canonical batch
+  evidence through `actor_network.association_schedules[]`.
+  `actor_network.group_schedules[]` remains a schema-version-1 compatibility
+  view. If the trigger set matches one declared static group, the
+  compatibility `group` field names that group; otherwise it carries a
   synthetic transaction-scoped name such as `run_trigger_batch`. Downstream
   producers must still avoid repeated members, noncontiguous batches,
   generated child assumptions, group endpoints, event/data-movement coupling,
   storage/mux insertion, CDC, compact aliases, and broader fan-in/fan-out.
-- The next selected additive report-contract slice will add canonical
-  `actor_network.association_schedules[]` entries for task-scoped ATL
-  associations while preserving `actor_network.group_schedules[]` as a
-  schema-version-1 compatibility view. Downstream consumers should not depend
-  on the new key until that implementation slice ships and the public
-  contract metadata advertises it.
 
 Current ATL event-wait handoff subset: downstream producers may emit exactly
 one top-level transaction-body `(await actor.event)` against the current
@@ -1691,8 +1688,9 @@ ports, and selected same-cycle trigger-batch handoff outputs. FSMGen still
 emits no generated ATL child `.fsm`, no generated ATL top, no route mux, no
 internal handoff storage, and no HDL event wiring. Downstream consumers must
 treat `actor_network` as discovery/review metadata plus the explicitly
-reported `event_waits[]`, `transaction_triggers[]`, `data_movements[]`, and
-`group_schedules[]` entries until a later task-tree leaf documents broader
+reported `event_waits[]`, `transaction_triggers[]`, `data_movements[]`,
+`association_schedules[]`, and compatibility `group_schedules[]` entries
+until a later task-tree leaf documents broader
 generated artifact names and report keys in this handoff.
 
 ## 13. Scheduled `.fsm` Review Artifact
@@ -1856,10 +1854,13 @@ transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
   role, port, actor_signal, actor_expression, width, instance, parent_port,
   child_port, start_signal, done_signal, trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
-actor_network: kind, instances, groups, group_schedules, data_movements,
-  event_waits, transaction_triggers
+actor_network: kind, instances, groups, association_schedules,
+  group_schedules, data_movements, event_waits, transaction_triggers
 actor_network.instances[]: name, actor_type, declaration
 actor_network.groups[]: name, members, mode, declaration, source, scheduling
+actor_network.association_schedules[]: association, kind, lifetime,
+  owner_transaction, context, members, target_transactions, signals, schedule,
+  dependency_policy, storage, source, sink
 actor_network.group_schedules[]: group, owner_transaction, context, members,
   target_transactions, signals, schedule, dependency_policy, storage, source,
   sink
@@ -2109,7 +2110,8 @@ and generated top wiring for `isf/fifo_library_use.isf`.
 The ATL temporary trigger-batch fixture is covered by
 `t/1324-isf-atl-fixture-coverage.t`, which proves strict schedule JSON
 parity, scheduled `.fsm` structure, one same-cycle external trigger-batch
-state, per-target trigger handoffs, static actor-network report metadata, and
+state, per-target trigger handoffs, canonical `association_schedules[]`,
+compatibility `group_schedules[]`, static actor-network report metadata, and
 plain plus strict HDL generation for `isf/atl_trigger_batch_pipeline.isf`.
 It intentionally does not declare a permanent `(group ...)` association.
 

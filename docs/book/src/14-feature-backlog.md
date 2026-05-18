@@ -729,16 +729,16 @@ The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch over existing transaction-body
 `(trigger actor.transaction)` clauses: one contiguous batch, distinct static
 actor instances, generated external trigger outputs pulsed from one parent
-state, and `actor_network.group_schedules[]` report evidence. Static
+state, and `actor_network.association_schedules[]` report evidence. Static
 `(group ...)` declarations are not required and remain review metadata only.
 Noncontiguous batches, repeated members, generated children, group endpoints,
 event/data-movement coupling, route mux/storage, CDC, and compact aliases
 remain later leaves.
 
-The next selected ATL report-contract leaf adds canonical
-`actor_network.association_schedules[]` entries for task-scoped associations
-while keeping `actor_network.group_schedules[]` as a schema-version-1
-compatibility view. It does not add source syntax or generated HDL behavior.
+The compatibility `actor_network.group_schedules[]` array remains for schedule
+JSON `schema_version: 1`. The canonical association entry uses
+`kind: "temporary_trigger_batch"` and `lifetime: "task_scoped"`. This report
+contract does not add source syntax or generated HDL behavior.
 
 The first realistic ATL fixture is shipped as
 `isf/atl_trigger_batch_pipeline.isf`. It is deliberately bounded to already

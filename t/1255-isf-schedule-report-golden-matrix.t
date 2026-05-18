@@ -277,6 +277,7 @@ sub golden_matrix_cases {
             source => actor_network_group_schedule_source(),
             covers => [
                 qw(
+                  schedule_report_actor_network_association_schedule_keys
                   schedule_report_actor_network_group_schedule_keys
                 )
             ],
@@ -525,6 +526,10 @@ sub assert_key_branch {
     }
     if ($branch eq 'schedule_report_actor_network_group_schedule_keys') {
         assert_entry_keys(first_entry($report->{actor_network}{group_schedules}), $contract->{$branch}, "$label actor network group schedule keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_actor_network_association_schedule_keys') {
+        assert_entry_keys(first_entry($report->{actor_network}{association_schedules}), $contract->{$branch}, "$label actor network association schedule keys");
         return 1;
     }
     if ($branch eq 'schedule_report_actor_network_event_wait_keys') {

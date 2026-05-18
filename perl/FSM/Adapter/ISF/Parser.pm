@@ -1282,9 +1282,10 @@ sub _finalize_selected_atl_trigger_batches {
     confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch matches more than one declared static group\n"
         if @matching_groups > 1;
 
+    my $association_name = _atl_temporary_trigger_batch_name($runs[0]{transaction}{name});
     my $group_name = @matching_groups
         ? $matching_groups[0]{name}
-        : _atl_temporary_trigger_batch_name($runs[0]{transaction}{name});
+        : $association_name;
     my $dependency_policy = @matching_groups
         ? 'declared_group_distinct_members'
         : 'transaction_body_distinct_instances';
@@ -1293,6 +1294,23 @@ sub _finalize_selected_atl_trigger_batches {
     $actor->{actor_network}{group_schedules} = [
         {
             group               => $group_name,
+            owner_transaction   => $runs[0]{transaction}{name},
+            context             => 'transaction_body',
+            members             => \@members,
+            target_transactions => \@target_transactions,
+            signals             => \@signals,
+            schedule            => 'same_cycle_external_trigger_batch',
+            dependency_policy   => $dependency_policy,
+            storage             => 'none',
+            source              => 'parent_trigger_state',
+            sink                => 'external_handoff',
+        },
+    ];
+    $actor->{actor_network}{association_schedules} = [
+        {
+            association         => $association_name,
+            kind                => 'temporary_trigger_batch',
+            lifetime            => 'task_scoped',
             owner_transaction   => $runs[0]{transaction}{name},
             context             => 'transaction_body',
             members             => \@members,
@@ -5338,6 +5356,7 @@ sub _actor_network_from_instances {
         event_waits => [],
         transaction_triggers => [],
         data_movements => [],
+        association_schedules => [],
         group_schedules => [],
     };
 }

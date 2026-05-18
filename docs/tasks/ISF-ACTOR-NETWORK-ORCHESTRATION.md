@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -295,9 +295,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.1: select ATL association reports`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`
-  Status: `active`
+  Status: `completed`
   Goal: `Add canonical task-scoped ATL association schedule report metadata.`
   Acceptance: `Without changing source syntax or generated HDL behavior, add an additive schedule-report family named actor_network.association_schedules[] for temporary task-scoped ATL associations. The first implementation covers the already shipped contiguous transaction-body '(trigger actor.transaction)' batch to distinct static actor instances. Each association_schedules[] entry must use a task-scoped association name, identify kind 'temporary_trigger_batch', lifetime 'task_scoped', owner_transaction, context, members, target_transactions, generated signals, schedule, dependency_policy, storage, source, and sink, and must make clear that a static '(group ...)' declaration is optional review metadata, not required membership. Preserve existing actor_network.group_schedules[] as a schema-version-1 compatibility view for current downstream consumers, with docs, public contract metadata, focused tests, strict CLI JSON parity, and mdBook updates in the same slice. Do not claim generated ATL children, generated ATL tops, peer event coupling, endpoint data movement coupling, route mux/storage, CDC, payloads, ready/backpressure, broader fan-in/fan-out, or permanent actor grouping.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t t/1324-isf-atl-fixture-coverage.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t; ./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_trigger_batch_pipeline.isf; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.2: add ATL association reports`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`
+  Status: `active`
+  Goal: `Select the next bounded ATL temporary-association behavior after canonical reports.`
+  Acceptance: `Review the now-shipped canonical association_schedules[] report family and choose the next behavior-bearing or design-clarification slice before code. Candidate directions include coupling temporary trigger batches with peer event waits, adding a temporary data-movement association fixture, selecting generated child artifact boundaries, or tightening compatibility/deprecation policy for group_schedules[]. No code changes may begin until this leaf records the selected source shape, report impact, fail-closed boundaries, mdBook impact, and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -305,17 +312,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` | `active` | `.9.1` selected canonical task-scoped association report metadata before implementation; the next slice adds it additively while preserving `group_schedules[]` compatibility. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` | `active` | `.9.2` shipped canonical `association_schedules[]` report metadata; the next slice must select the next temporary-association behavior before code. |
 
-## Selected Next ATL Report Vocabulary
+## Shipped ATL Association Report Vocabulary
 
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` selects report vocabulary cleanup as the
-next bounded ATL temporary-association slice. This is intentionally a report
-contract slice, not a new source syntax slice: users still write contiguous
-transaction-body `(trigger actor.transaction)` clauses to distinct static
-actor instances.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` ships the report vocabulary cleanup
+selected by `.9.1`. This is intentionally a report contract slice, not a new
+source syntax slice: users still write contiguous transaction-body
+`(trigger actor.transaction)` clauses to distinct static actor instances.
 
-Selected next implementation leaf:
+Implementation leaf:
 
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`
 
@@ -326,14 +332,14 @@ Selected source shape:
 - no required `(group ...)`;
 - no `connect`, `transfer`, or `move` syntax.
 
-Selected report contract:
+Shipped report contract:
 
-- Add `actor_network.association_schedules[]` as the canonical report family
+- `actor_network.association_schedules[]` is the canonical report family
   for task-scoped ATL associations.
 - Keep `actor_network.group_schedules[]` as a schema-version-1 compatibility
   view for current downstream consumers.
-- The first `association_schedules[]` entries cover the shipped
-  same-cycle external trigger batch and include:
+- The first `association_schedules[]` entries cover the same-cycle external
+  trigger batch and include:
   `association`, `kind`, `lifetime`, `owner_transaction`, `context`,
   `members`, `target_transactions`, `signals`, `schedule`,
   `dependency_policy`, `storage`, `source`, and `sink`.
@@ -343,7 +349,7 @@ Selected report contract:
   `run_trigger_batch`, even when the selected actors also match a static
   report-only group.
 
-Selected verification scope:
+Verification scope:
 
 - parser/lowerer/emitter/public-contract syntax checks;
 - focused ATL fixture tests for the shipped trigger batch;
@@ -749,6 +755,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` | `mdbook build docs/book`; `git diff --check` | `selected isf/atl_group_trigger_pipeline.isf as the first realistic ATL fixture before code` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1322-isf-actor-network-static.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `temporary trigger-batch fixture promoted without permanent group membership; broad ISF gate passes with Files=230, Tests=1357` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected additive actor_network.association_schedules[] report metadata for task-scoped ATL associations while preserving group_schedules[] compatibility` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t t/1324-isf-atl-fixture-coverage.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_trigger_batch_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `canonical actor_network.association_schedules[] report metadata shipped for temporary trigger batches while group_schedules[] remains a compatibility view` |
 
 ## Commit Log
 
@@ -785,6 +792,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.1: select ATL fixture` | `selects the first realistic ATL group-trigger fixture and exact .8.2 verification contract` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.2: add ATL trigger fixture` | `pivots the first ATL fixture to task-scoped temporary trigger batches and proves strict schedule JSON plus HDL reachability` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.1: select ATL association reports` | `selects canonical association_schedules[] report metadata as the next temporary-association slice` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.2: add ATL association reports` | `ships canonical association_schedules[] metadata while preserving group_schedules[] compatibility` |
 
 ## Changelog
 
@@ -951,3 +959,10 @@ Current proposal summary:
   associations, preserve `actor_network.group_schedules[]` as a
   schema-version-1 compatibility view, and avoid new source syntax or broader
   ATL behavior claims.
+- `2026-05-19`: Completed `.9.2`: canonical
+  `actor_network.association_schedules[]` metadata now reports task-scoped
+  temporary trigger batches with `kind: temporary_trigger_batch` and
+  `lifetime: task_scoped`. Existing `actor_network.group_schedules[]`
+  remains as a schema-version-1 compatibility view. The active frontier moves
+  to `.9.3` to select the next ATL temporary-association behavior before
+  code.

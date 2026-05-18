@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL association schedule reports shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`.
+- Added canonical `actor_network.association_schedules[]` report entries for
+  task-scoped temporary trigger batches.
+- Preserved `actor_network.group_schedules[]` as a schema-version-1
+  compatibility view for current downstream consumers.
+- Updated the public contract metadata, schedule-report golden matrix, ATL
+  fixture regression, downstream handoff, ISF spec, mdBook, live docs, and
+  fixture-coverage matrix.
+- No source syntax or generated HDL behavior changed. The active ATL frontier
+  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`.
+
 ### R14 — ATL association schedule reports selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` as a doc-only selection
   leaf before implementation.

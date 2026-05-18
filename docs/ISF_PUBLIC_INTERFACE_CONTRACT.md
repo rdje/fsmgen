@@ -1629,16 +1629,14 @@ external trigger batch over existing top-level transaction-body
 `(trigger actor.transaction)` clauses. The batch is a task-scoped temporary
 association: one contiguous trigger run may target distinct static actor
 instances, lowers to one trigger-batch state, and advertises scheduling
-evidence through `actor_network.group_schedules[]`. If the trigger set
-matches one declared static group, the `group` field names that group;
-otherwise the field carries a synthetic transaction-scoped name such as
-`run_trigger_batch`. Public reports therefore separate static membership
-(`groups[]`) from scheduled temporary associations (`group_schedules[]`).
-The next selected compatibility-preserving report slice will add canonical
-`actor_network.association_schedules[]` entries for those task-scoped
-associations while keeping `group_schedules[]` as a schema-version-1
-compatibility view. That selected key is not part of the currently shipped
-contract until the implementation and focused contract tests land.
+evidence through canonical `actor_network.association_schedules[]` entries.
+The existing `actor_network.group_schedules[]` array remains a
+schema-version-1 compatibility view for current downstream consumers. If the
+trigger set matches one declared static group, the compatibility `group` field
+names that group; otherwise it carries a synthetic transaction-scoped name
+such as `run_trigger_batch`. Public reports therefore separate static
+membership (`groups[]`) from scheduled temporary associations
+(`association_schedules[]`).
 The current shipped actor-event wait subset accepts exactly one top-level
 transaction-body `(await actor.event)` for the current single declared static
 actor instance, lowered to a generated one-bit parent event handoff input
@@ -1987,9 +1985,10 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
-actor_network: kind, instances, groups, group_schedules, data_movements, event_waits, transaction_triggers
+actor_network: kind, instances, groups, association_schedules, group_schedules, data_movements, event_waits, transaction_triggers
 actor_network instances entries: name, actor_type, declaration
 actor_network groups entries: name, members, mode, declaration, source, scheduling
+actor_network association_schedules entries: association, kind, lifetime, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network group_schedules entries: group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network event_waits entries: transaction, context, instance, event, signal, source
 actor_network transaction_triggers entries: owner_transaction, context, instance, target_transaction, signal, sink

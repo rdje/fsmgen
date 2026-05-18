@@ -630,6 +630,25 @@ sub _actor_network_summary($self, $ir) {
                 }
             } @{$network->{group_schedules} || []}
         ],
+        association_schedules => [
+            map {
+                {
+                    association         => $_->{association},
+                    kind                => $_->{kind},
+                    lifetime            => $_->{lifetime},
+                    owner_transaction   => $_->{owner_transaction},
+                    context             => $_->{context},
+                    members             => [ @{$_->{members} || []} ],
+                    target_transactions => [ @{$_->{target_transactions} || []} ],
+                    signals             => [ @{$_->{signals} || []} ],
+                    schedule            => $_->{schedule},
+                    dependency_policy   => $_->{dependency_policy},
+                    storage             => $_->{storage},
+                    source              => $_->{source},
+                    sink                => $_->{sink},
+                }
+            } @{$network->{association_schedules} || []}
+        ],
         event_waits => [
             map {
                 {

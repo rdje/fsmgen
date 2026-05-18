@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL association schedule reports shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`.
+- Schedule JSON now has canonical `actor_network.association_schedules[]`
+  entries for task-scoped temporary trigger batches. The shipped kind is
+  `temporary_trigger_batch`; lifetime is `task_scoped`.
+- Existing `actor_network.group_schedules[]` output remains available as a
+  schema-version-1 compatibility view.
+- No source syntax or generated HDL behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`.
+
 ## 2026-05-19: R14 — ATL association schedule reports selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` before implementation.
 - Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` as the next bounded ATL

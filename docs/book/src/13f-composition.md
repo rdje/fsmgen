@@ -365,6 +365,7 @@ The report field is `actor_network`:
     }
   ],
   "groups": [],
+  "association_schedules": [],
   "group_schedules": [],
   "data_movements": [],
   "event_waits": [],
@@ -477,9 +478,11 @@ The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch. It uses only existing transaction-body
 `(trigger actor.transaction)` clauses: a contiguous batch may target distinct
 static actor instances, lower to one parent state that pulses all selected
-trigger outputs, and report evidence through
-`actor_network.group_schedules[]`. The association exists for that scheduled
-trigger state; it is not permanent group membership.
+trigger outputs, and report canonical evidence through
+`actor_network.association_schedules[]`. The compatibility
+`actor_network.group_schedules[]` array remains present for schedule JSON
+`schema_version: 1`. The association exists for that scheduled trigger state;
+it is not permanent group membership.
 
 Report-only static group metadata is now shipped for the verbose form:
 
@@ -521,17 +524,14 @@ The accepted temporary trigger batch does not require a group declaration:
 FSMGen emits one trigger-batch state in the scheduled parent and pulses both
 generated outputs in the same cycle. The report keeps individual entries in
 `actor_network.transaction_triggers[]` and adds one
-`actor_network.group_schedules[]` entry with a transaction-scoped batch name
-such as `run_trigger_batch`, owner transaction, members, target transactions,
-generated signals, same-cycle schedule, no-storage policy, and external
-handoff boundary. If the same trigger set also matches one declared static
-group, the report may name that group instead.
-
-The next selected report slice keeps the source syntax unchanged and adds
-`actor_network.association_schedules[]` as the canonical report family for
-these task-scoped associations. `actor_network.group_schedules[]` remains a
-schema-version-1 compatibility view until a later schema migration says
-otherwise.
+`actor_network.association_schedules[]` entry with a transaction-scoped
+association name such as `run_trigger_batch`, kind
+`temporary_trigger_batch`, lifetime `task_scoped`, owner transaction,
+members, target transactions, generated signals, same-cycle schedule,
+no-storage policy, and external handoff boundary. The compatibility
+`actor_network.group_schedules[]` entry carries the same timing evidence for
+schema-version-1 consumers; if the same trigger set also matches one declared
+static group, that compatibility entry may name the group instead.
 
 The first realistic ATL fixture is shipped as
 `isf/atl_trigger_batch_pipeline.isf`. It uses only that shipped temporary
