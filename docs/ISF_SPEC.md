@@ -2844,6 +2844,22 @@ and actor-transaction trigger handoff subsets implemented so far:
   enum-looking dotted tokens. Generated actor-to-actor routing behavior,
   handoff storage, route muxes, two-instance lowering, generated ATL children,
   generated ATL tops, and HDL routing remain deferred.
+- The first generated scalar actor-to-actor handoff subset is selected but not
+  shipped until the next implementation leaf. That subset is exactly two
+  direct static actor instances, one named drive body with one
+  `(sink_actor.endpoint source_actor.endpoint)` scalar pair, and one
+  top-level transaction drive call. The selected generated parent handoff
+  ports are scalar one-bit external ports named
+  `source_actor_source_endpoint` for the source input and
+  `sink_actor_sink_endpoint` for the sink output. The selected route lifetime
+  is the drive-call cycle only, with no storage, mux, generated child `.fsm`,
+  generated ATL top, HDL child wiring, type resolution, pin movement, inline
+  drive movement, expression movement, fan-in/fan-out, groups, CDC, or
+  trigger/await coupling. Selected report entries will use
+  `actor_network.data_movements[]` with `kind`, `transaction`, `context`,
+  `drive`, `source_instance`, `source_endpoint`, `source_signal`,
+  `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
+  `route_lifetime`, `storage`, `source`, and `sink`.
 - Future blocking orchestration uses `(do actor.transaction)`, future
   nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
   future rule-level orchestration uses `(trigger actor.transaction)`.

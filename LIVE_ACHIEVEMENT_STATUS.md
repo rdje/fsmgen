@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL scalar handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
+- Selected the first generated scalar actor-to-actor handoff subset before
+  behavior-bearing code: exactly two direct static actor instances, one named
+  drive body with one scalar endpoint pair, and one top-level transaction
+  drive call.
+- Generated parent handoff ports are selected as a scalar external source
+  input named `source_actor_source_endpoint` and a scalar external sink output
+  named `sink_actor_sink_endpoint`.
+- The route lifetime is one drive-call cycle, width evidence is one bit, and
+  `actor_network.data_movements[]` report keys are selected.
+- Child actor type resolution, generated child `.fsm` artifacts, generated ATL
+  tops, HDL child wiring, pin movement, inline/expression movement,
+  fan-in/fan-out, groups, CDC, and trigger/await coupling remain deferred or
+  fail-closed.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL data movement endpoint forms fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
 - Named drive bodies and inline transaction drive-body pairs now reject

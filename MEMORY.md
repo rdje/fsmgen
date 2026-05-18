@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL scalar handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
+- The next generated ATL data-movement subset is selected before code:
+  exactly two direct static actor instances, one named drive body with one
+  scalar `(sink_actor.endpoint source_actor.endpoint)` pair, and one
+  top-level transaction drive call that activates it.
+- The selected lowering will expose scalar external parent handoff ports named
+  `source_actor_source_endpoint` for the source input and
+  `sink_actor_sink_endpoint` for the sink output, with one-bit width evidence,
+  drive-call-cycle route lifetime, no storage or mux, and schedule-report
+  metadata under `actor_network.data_movements[]`.
+- Actor type resolution, generated child `.fsm` artifacts, generated ATL
+  tops, HDL child wiring, pin movement, inline movement, expression movement,
+  fan-in/fan-out, groups, CDC, and trigger/await coupling remain deferred or
+  fail-closed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
 ## 2026-05-18: ATL data movement endpoint forms fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
 - The parser now rejects named drive body and inline transaction drive-body

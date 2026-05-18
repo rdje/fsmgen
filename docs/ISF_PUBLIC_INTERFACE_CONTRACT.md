@@ -1576,8 +1576,23 @@ qualified `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
 v0 movement clauses. The first endpoint-movement code leaf is shipped as
 fail-closed reservation: qualified actor endpoint drive-body pairs naming a
 declared static actor instance reject with ATL data-movement diagnostics
-until generated routing behavior is explicitly advertised. Future
-orchestration spellings are reserved as
+until generated routing behavior is explicitly advertised.
+The first generated scalar actor-to-actor handoff subset is selected but not
+yet implemented in the public API. That selected subset admits exactly two
+direct static actor instances, one named drive body with one
+`(sink_actor.endpoint source_actor.endpoint)` scalar pair, and one top-level
+transaction drive call. The selected parent handoff names are
+`source_actor_source_endpoint` for the one-bit external source input and
+`sink_actor_sink_endpoint` for the one-bit external sink output. The selected
+future schedule-report surface is `actor_network.data_movements[]` with
+`kind`, `transaction`, `context`, `drive`, `source_instance`,
+`source_endpoint`, `source_signal`, `sink_instance`, `sink_endpoint`,
+`sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,
+`source`, and `sink`. Storage, muxing, actor type resolution, generated child
+artifacts, generated ATL tops, HDL child wiring, pin movement,
+inline/expression movement, fan-in/fan-out, groups, CDC, and trigger/await
+coupling remain future public contracts.
+Future orchestration spellings are reserved as
 `(do actor.transaction)`, `(spawn actor.transaction as NAME)`, and
 `(trigger actor.transaction)`, with event payloads deferred. Future group
 syntax is reserved as

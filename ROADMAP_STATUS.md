@@ -51,9 +51,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pairs before generated routing behavior is claimed: named drive bodies and
   inline transaction drive assignments reject actor-qualified sink/source
   endpoints with ATL data-movement diagnostics when the qualifier names the
-  current static actor instance. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`, which selects the first generated
-  scalar actor-to-actor handoff subset before more code.
+  current static actor instance. `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`
+  selected the first generated scalar actor-to-actor handoff subset before
+  code: exactly two direct static actor instances, one named drive body with
+  one `(sink_actor.endpoint source_actor.endpoint)` pair, one top-level
+  transaction drive call, one-cycle scalar external parent handoff ports,
+  `actor_network.data_movements[]` report keys, and fail-closed boundaries
+  for broader movement. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`, which lowers only that selected
+  subset.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

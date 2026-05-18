@@ -384,8 +384,17 @@ pin-to-actor movement will reuse the existing drive-body pair shape in
 `transfer`, and `move` are not part of ATL v0 movement syntax. The first
 endpoint-movement code leaf is shipped as fail-closed reservation: qualified
 actor endpoint drive-body pairs that name a declared static actor instance
-reject with ATL data-movement diagnostics until generated routing
-behavior is explicitly selected. Future
+reject with ATL data-movement diagnostics until generated routing behavior is
+implemented. The selected first generated scalar actor-to-actor handoff subset
+is intentionally narrow: exactly two direct static actor instances, one named
+drive body with one `(sink_actor.endpoint source_actor.endpoint)` scalar
+pair, and one top-level transaction drive call. The generated parent `.fsm`
+will expose a one-bit external source input named
+`source_actor_source_endpoint` and a one-bit external sink output named
+`sink_actor_sink_endpoint`; the route lasts for the drive-call cycle and
+does not imply storage, a mux, generated child `.fsm` artifacts, an ATL top,
+HDL child wiring, pin movement, fan-in/fan-out, groups, CDC, or trigger/await
+coupling. Future
 orchestration spellings are reserved as `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
 `(await actor.event)`. Events are one-cycle control pulses with no payloads in

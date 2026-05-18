@@ -165,16 +165,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.2: fail closed ATL data movement`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the first generated scalar actor-to-actor handoff subset.`
-  Acceptance: `A selection leaf chooses the first behavior-bearing scalar actor endpoint movement subset only after defining whether two static instances are accepted in that leaf, source/sink endpoint ownership, generated parent ports or storage names, width evidence, fan-in/fan-out policy, route lifetime, schedule-report keys, generated artifact non-claims, and fail-closed boundaries.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `The selected next code subset accepts exactly two direct static actor instances only for one scalar actor-to-actor data movement: one named drive body with exactly one pair '(sink_actor.sink_endpoint source_actor.source_endpoint)' and one top-level transaction drive call that activates it. The sink and source instances must be distinct declared static actor instances; endpoint member names are scalar HDL identifiers; generated parent handoff ports are named 'source_actor_source_endpoint' for the external source input and 'sink_actor_sink_endpoint' for the external sink output; width is one scalar bit in this first subset; route lifetime is the drive-call cycle only; no mux, storage, child '.fsm', ATL top, HDL child wiring, type resolution, pin movement, inline drive movement, expression movement, fan-in, fan-out, groups, CDC, or trigger/await coupling is claimed. Schedule-report metadata is selected as 'actor_network.data_movements[]' with keys 'kind', 'transaction', 'context', 'drive', 'source_instance', 'source_endpoint', 'source_signal', 'sink_instance', 'sink_endpoint', 'sink_signal', 'width', 'width_source', 'route_lifetime', 'storage', 'source', and 'sink'.`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.3: select scalar ATL handoff`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Lower the selected scalar actor-to-actor handoff subset.`
-  Acceptance: `Parser/lowering accepts only the selected scalar endpoint movement form, emits the selected parent handoff/storage behavior, records movement provenance in schedule JSON actor-network metadata, and keeps unsupported endpoint movement variants fail-closed with targeted diagnostics.`
+  Acceptance: `Parser/lowering accepts only the selected '.5.3' form: one top-level actor with exactly two direct static actor instances, one named drive body with one scalar actor-to-actor endpoint pair, and one top-level transaction drive call. Lowering emits the selected external parent handoff input/output ports, drives the sink handoff output from the source handoff input in the drive-call cycle, records the selected 'actor_network.data_movements[]' metadata, and keeps every unsupported endpoint movement variant fail-closed with targeted ATL diagnostics.`
   Verification: `pending`
   Commit: `pending`
 
@@ -203,7 +203,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `active` | `.5.2` shipped targeted diagnostics for reserved qualified actor endpoint drive-body pairs. The next leaf selects the first generated scalar actor-to-actor handoff subset before more code. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` | `active` | `.5.3` selected the exact first generated scalar actor-to-actor handoff subset before code. The next leaf lowers only that selected subset and keeps all other endpoint movement fail-closed. |
 
 ## ATL v0 Proposal
 
@@ -259,6 +259,9 @@ Current proposal summary:
   ATL tops ship. Schedule JSON records accepted waits under
   `actor_network.event_waits[]`.
 - The shipped `.4.3.2` implementation keeps fan-in, fan-out, multiple
+  waits, nested waits, payloads, cross-clock actor events, generated ATL
+  child `.fsm` files, generated ATL tops, and HDL event wiring deferred or
+  fail-closed.
 - The first actor-transaction trigger subset mirrors the event wait
   handoff boundary. It accepts one top-level transaction-body
   `(trigger actor.transaction)` against the current single static actor
@@ -280,6 +283,14 @@ Current proposal summary:
   enum names; `.5.2` rejects endpoints that name declared static actor
   instances with ATL-specific data-movement diagnostics before later leaves
   widen instance counts, generate handoff storage, or emit route artifacts.
+- The selected first generated scalar actor-to-actor handoff subset is one
+  named drive body with exactly one `(sink_actor.endpoint source_actor.endpoint)`
+  pair, exactly two direct static actor instances, and one top-level
+  transaction drive call. The generated parent `.fsm` will expose a scalar
+  external source handoff input named `source_actor_source_endpoint` and a
+  scalar external sink handoff output named `sink_actor_sink_endpoint`; the
+  route is active only for the drive-call cycle and inserts no storage or mux
+  in this first subset.
 
 ## Decisions
 
@@ -435,6 +446,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected actor-transaction trigger lowers to a parent handoff output and report metadata; focused checks pass; broad ISF gate passes with Files=229, Tests=1347` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` | `mdbook build docs/book`; `git diff --check` | `selected the first actor data movement boundary as fail-closed endpoint drive reservation; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `qualified actor endpoint sink/source drive-body forms fail closed with ATL diagnostics; focused checks pass; broad ISF gate passes with Files=229, Tests=1348` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `mdbook build docs/book`; `git diff --check` | `selected the first scalar actor-to-actor handoff subset, generated parent port names, one-bit width evidence, one-cycle lifetime, report keys, and fail-closed boundaries before code` |
 
 ## Commit Log
 
@@ -456,6 +468,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2: lower actor triggers` | `lowers the selected single actor-transaction trigger to a generated parent handoff output and actor-network report metadata` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.1: select ATL data movement boundary` | `selects fail-closed reservation for qualified actor endpoint drive-body pairs as the first data movement boundary` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.2: fail closed ATL data movement` | `rejects reserved qualified actor endpoint sink/source drive-body pairs with ATL data-movement diagnostics` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.3: select scalar ATL handoff` | `selects the first generated scalar actor-to-actor handoff subset before behavior-bearing code` |
 
 ## Changelog
 
@@ -520,3 +533,9 @@ Current proposal summary:
   qualified actor endpoint naming the current static actor instance. The
   active frontier moves to `.5.3` to select the first generated scalar
   actor-to-actor handoff subset.
+- `2026-05-18`: Completed `.5.3`: selected the first generated scalar
+  actor-to-actor handoff subset as exactly two direct static actor instances,
+  one named drive body with one scalar endpoint pair, one top-level
+  transaction drive call, one-cycle external parent handoff ports, explicit
+  report keys, and fail-closed boundaries for every broader ATL movement form.
+  The active frontier moves to `.5.4` for lowering only that selected subset.

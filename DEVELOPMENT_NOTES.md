@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL scalar handoff selection stays externally observable
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` intentionally selects an external
+  parent-handoff subset before generated child artifacts. That keeps the first
+  behavior-bearing data-movement implementation reviewable and testable
+  without pretending actor type resolution or child HDL wiring exists.
+- The selected shape is exactly one named drive body with one
+  `(sink_actor.endpoint source_actor.endpoint)` scalar pair and one top-level
+  transaction drive call. The parent scheduled `.fsm` will expose one source
+  input and one sink output, both one-bit, with no storage or route mux in the
+  first implementation.
+- This preserves the user's ATL model of temporal movement rather than
+  permanent wiring: the route exists only at the drive-call cycle. Broader
+  movement lifetimes, multiple sources, fan-out, top-level pins, inline
+  expressions, groups, CDC, and generated child wiring remain separate leaves
+  with their own evidence.
 ## 2026-05-18: ATL endpoint movement diagnostics precede routing
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2` implements the reserved endpoint-aware
   drive-body boundary selected by `.5.1`.

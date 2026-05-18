@@ -493,9 +493,10 @@ fall through as local aggregate or enum-looking dotted tokens when the
 qualifier names a declared static actor instance. FSMGen rejects those forms
 with ATL data-movement diagnostics while preserving the existing local
 dotted-name behavior for qualifiers that are not actor instances. Generated
-actor-to-actor movement, two-instance lowering, route
-muxes, handoff storage, width inference across actor types, generated ATL
-child `.fsm` files, generated ATL tops, and HDL routing remain later leaves.
+actor-to-actor movement, route muxes, handoff storage, width inference across
+actor types, generated ATL child `.fsm` files, generated ATL tops, and HDL
+routing remain later leaves. The next selected data-movement subset widens to
+exactly two static instances only for one scalar external parent handoff route.
 
 ## Concurrent Actor Groups
 
@@ -557,18 +558,35 @@ fail-closed. Existing unqualified local behavior is preserved:
 Enum-looking dotted names whose qualifier is not a declared static actor
 instance keep their prior diagnostics.
 
-The smallest later data-movement ATL implementation should select explicit
-generated artifact names and report keys before accepting endpoint-aware drive
-movement. A likely useful next subset is:
+The selected first generated data-movement subset is intentionally smaller
+than full actor-to-actor routing:
 
 1. One top-level `(actor ...)` with direct actor-body ATL clauses.
 2. Single clock/reset only.
-3. Static `(instance name of actor_type)` declarations.
-4. One named drive body whose assignment pair references two qualified
-   endpoints, plus one transaction drive call that activates it.
-5. Schedule-report metadata for instance identity, event/endpoint bindings,
-   generated artifact names, and
-   generated mux/enable/handoff or connectivity artifacts.
+3. Exactly two static `(instance name of actor_type)` declarations for the
+   movement slice: one source actor and one sink actor.
+4. One named drive body with exactly one scalar endpoint pair in existing
+   `(sink source)` order:
+   `(sink_actor.sink_endpoint source_actor.source_endpoint)`.
+5. One top-level transaction drive call that activates that named drive.
+6. Generated parent handoff ports, not generated children:
+   `source_actor_source_endpoint` is a scalar external parent input, and
+   `sink_actor_sink_endpoint` is a scalar external parent output.
+7. One-bit width evidence only. Bit-vectors, aggregates, inferred actor-type
+   port widths, payload records, and expression movement remain deferred.
+8. One drive-call-cycle route lifetime. The first subset inserts no storage,
+   route mux, ready/backpressure, or persistent wire.
+9. Schedule-report metadata under `actor_network.data_movements[]` with
+   `kind`, `transaction`, `context`, `drive`, `source_instance`,
+   `source_endpoint`, `source_signal`, `sink_instance`, `sink_endpoint`,
+   `sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,
+   `source`, and `sink`.
+
+This subset still does not resolve actor types, emit child `.fsm` files,
+generate an ATL top, wire HDL child interfaces, move data to or from
+`pins.name`, support inline drive movement, support endpoint expressions,
+infer fan-in or fan-out, combine data movement with actor triggers/events, or
+cross clock domains.
 
 The next slices can add multiple sources feeding one sink, top-level pin
 movement in both directions, compact aliases, and concurrent groups.

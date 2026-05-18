@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL scalar handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3`.
+- Selected the first generated scalar actor-to-actor handoff subset before
+  code: exactly two direct static actor instances, one named drive body with
+  one scalar `(sink_actor.endpoint source_actor.endpoint)` pair, and one
+  top-level transaction drive call.
+- Selected generated parent handoff names, one-bit width evidence,
+  drive-call-cycle lifetime, `actor_network.data_movements[]` report keys,
+  and explicit non-claims for storage, muxes, generated child artifacts,
+  generated ATL tops, HDL child wiring, pin movement, inline/expression
+  movement, fan-in/fan-out, groups, CDC, and trigger/await coupling.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4`.
+
 ### R14 — ATL data movement endpoint forms fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
 - Named drive body pairs and inline transaction drive-body pairs now reject

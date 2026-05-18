@@ -1562,6 +1562,22 @@ capability manifest and this handoff:
   this handoff advertises generated routing behavior. FSMGen rejects those
   forms with ATL data-movement diagnostics before they can
   be mistaken for local aggregate or enum-looking dotted tokens.
+- The first generated scalar actor-to-actor handoff subset is selected but is
+  not a downstream-emittable contract until capability metadata advertises the
+  implementation leaf. The selected source form is exactly two direct static
+  actor instances, one named drive body with one
+  `(sink_actor.endpoint source_actor.endpoint)` scalar pair, and one
+  top-level transaction drive call. The selected generated parent handoff
+  ports are scalar one-bit external ports named
+  `source_actor_source_endpoint` for the source input and
+  `sink_actor_sink_endpoint` for the sink output. The selected
+  `actor_network.data_movements[]` report keys are `kind`, `transaction`,
+  `context`, `drive`, `source_instance`, `source_endpoint`, `source_signal`,
+  `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
+  `route_lifetime`, `storage`, `source`, and `sink`. Route lifetime is one
+  drive-call cycle, with no storage, mux, actor type resolution, child `.fsm`,
+  ATL top, HDL child wiring, pin movement, inline/expression movement,
+  fan-in/fan-out, groups, CDC, or trigger/await coupling in that first subset.
 - Blocking actor-transaction orchestration is reserved as
   `(do actor.transaction)`, nonblocking orchestration as
   `(spawn actor.transaction as NAME)`, and rule-level orchestration as
