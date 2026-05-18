@@ -883,10 +883,14 @@ do after a prior multi-pending `(await_any done)` observation. That generated
 do owns one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
 fresh done handoff, and leaves pending generated-spawn done handoffs live for
-the later same-body `await_all` drain. Parameterized, bound, or
-domain-qualified generated `do` after a prior multi-pending `await_any`,
-`await_any` after that do, and new nested `spawn` after that do before the
-drain remain fail-closed.
+the later same-body `await_all` drain. The documented top-level `when` body
+nested subset also supports static-parameter generated
+`(do child (params ...))` after a prior multi-pending `await_any`, with the
+same later same-body `await_all` drain requirement. Static-parameter
+generated `do` after prior multi-pending `await_any` remains fail-closed for
+the switch-contained analogue, as do generated `do` forms with bind handoffs
+or domain metadata after prior multi-pending `await_any`, `await_any` after
+that do, and new nested `spawn` after that do before the drain.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -896,6 +900,8 @@ including the documented top-level when-body and switch-branch nested
 generated-spawn subsets and the documented top-level when-body nested local
 `do` after a prior multi-pending `await_any`, top-level when-body nested
 plain generated-child `do` including after a prior multi-pending `await_any`,
+top-level when-body nested static-parameter generated `do` after a prior
+multi-pending `await_any`,
 plus top-level switch-branch nested local and plain generated-child `do`
 after a prior multi-pending `await_any` while generated nested spawns are
 pending before a same-body `await_all` drain.
@@ -945,10 +951,11 @@ deterministic generated do instance's start/done handoff and leaves the
 generated-spawn done set live until the later same-body `await_all` drain. In
 the documented top-level `when` body and top-level `switch` branch nested subsets,
 static-parameter generated `(do child (params ...))` may also run while
-generated nested spawns are pending. The generated do uses its deterministic
-generated do instance, preserves static generated-top parameter binding, and
-leaves the generated spawn done set live until the later same-body
-`await_all` drain. In the documented top-level `when` body and top-level
+generated nested spawns are pending. In the top-level `when` body subset,
+that static-parameter generated do may also run after a prior multi-pending
+`await_any` observation. The generated do uses its deterministic generated do
+instance, preserves static generated-top parameter binding, and leaves the
+generated spawn done set live until the later same-body `await_all` drain. In the documented top-level `when` body and top-level
 `switch` branch nested subsets, static-parameter generated
 `(do child (params ...) (bind ...))` may also run while generated nested spawns
 are pending. The generated do wires generated-top input/output binding
@@ -2211,7 +2218,9 @@ These are not stable public interfaces yet:
   before that same later drain. Both top-level branch subsets support
   static-parameter generated
   `(do child (params ...))` while generated nested spawns are pending before
-  that same later drain. Both
+  that same later drain, and the top-level when-body subset also supports that
+  static-parameter generated do after a prior multi-pending `await_any`
+  observation. Both
   top-level branch subsets additionally support static-parameter generated
   `(do child (params ...) (bind ...))` while generated nested spawns are
   pending before that same later drain.

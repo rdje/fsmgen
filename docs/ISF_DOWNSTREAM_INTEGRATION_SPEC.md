@@ -936,6 +936,9 @@ Rules:
   loop; that generated do site uses the same deterministic instance naming,
   records static generated-top parameter binding, waits for its own fresh done
   handoff, and leaves the generated spawn done set live for the later drain.
+  The top-level `when` body subset may also place that static-parameter
+  generated `do` after a prior multi-pending `(await_any done)` observation
+  while still requiring the same later same-body `(await_all done)` drain.
   Top-level `when` body and top-level `switch` branch nested-repeat generated
   `(do child (params ...) (bind ...))` may also run in that pending interval;
   that generated do site wires generated-top input/output binding handoffs
@@ -947,9 +950,12 @@ Rules:
   metadata only for the deterministic generated do instance; generated-
   composition/domain partition metadata and schedule JSON
   `clock_domains[].child_instances[]` retain that ownership without implying
-  CDC. Generated `do` after a prior multi-pending `await_any`, new nested
-  `spawn` after the do before the drain, `await_any` after the do, deeper
-  branch/loop nesting, and cross-domain activation remain fail-closed.
+  CDC. Static-parameter generated `do` after a prior multi-pending
+  `await_any` remains fail-closed for the switch-contained analogue, as do
+  generated `do` forms with bind handoffs or domain metadata after a prior
+  multi-pending `await_any`, new nested `spawn` after the do before the drain,
+  `await_any` after the do, deeper branch/loop nesting, and cross-domain
+  activation.
   Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,
   `contract`, deeper branch nesting, nested `while`, and nested `until` remain
@@ -1271,7 +1277,10 @@ Rules:
   generated `(do child (params ...))` in that pending interval; the generated
   do instance carries static parameter binding, waits for its own fresh done
   handoff, and leaves the pending generated-spawn done set live for the later
-  drain. Top-level `when` body and top-level `switch` branch nested repeats
+  drain. The top-level `when` body subset may also place that static-parameter
+  generated `do` after a prior multi-pending `(await_any done)` observation
+  while still requiring the later drain. Top-level `when` body and top-level
+  `switch` branch nested repeats
   may also run static-parameter generated
   `(do child (params ...) (bind ...))` in that pending interval; the generated
   do instance wires generated-top input/output binding handoffs once and
@@ -1343,11 +1352,12 @@ Rules:
   nested repeat re-entry on every outstanding generated child.
 - In the documented top-level `when` body nested subset, static-parameter
   generated `(do child (params ...))` may also run while generated nested
-  spawns are pending. That generated do carries static generated-top
-  parameter binding, consumes only its deterministic generated do instance's
-  fresh done handoff, does not clear pending generated spawn handoffs, and the
-  same later `await_all` drain still gates nested repeat re-entry on every
-  outstanding generated child.
+  spawns are pending, including after a prior multi-pending `await_any`
+  observation. That generated do carries static generated-top parameter
+  binding, consumes only its deterministic generated do instance's fresh done
+  handoff, does not clear pending generated spawn handoffs, and the same later
+  `await_all` drain still gates nested repeat re-entry on every outstanding
+  generated child.
 - Samples after repeat-body spawn lower before the same-body `await_all`,
   single-pending `await_any`, or multi-pending `await_any` drain sync state
   that keeps the repeat check unreachable until outstanding spawned children
