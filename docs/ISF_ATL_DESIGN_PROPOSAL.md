@@ -158,6 +158,47 @@ artifacts, generated ATL tops, and concurrent group events. Those forms stay
 fail-closed until later leaves select their exact artifact and scheduling
 contracts.
 
+## First Actor-Transaction Trigger Selection
+
+The next selected trigger subset mirrors the parent-handoff event boundary:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (await reader.done)
+    (complete done)))
+```
+
+The selected lowering is one top-level transaction-body
+`(trigger actor.transaction)` targeting the current single declared static
+actor instance. The target transaction name must be a scalar HDL identifier.
+The next implementation leaf lowers that trigger to a deterministic one-cycle
+parent output handoff named `actor_transaction_start`; for example,
+`reader.capture` becomes `reader_capture_start`. The scheduled parent `.fsm`
+pulses that output at the trigger point.
+
+The trigger sink is external in this subset. FSMGen does not resolve
+`packet_reader`, emit a child `.fsm`, generate an ATL top, connect the start
+pulse to an actor instance, add ready/backpressure, or carry trigger payloads
+yet. Schedule JSON will record accepted triggers in
+`actor_network.transaction_triggers[]` with `owner_transaction`, `context`,
+`instance`, `target_transaction`, `signal`, and `sink` keys. The selected
+`sink` value is `external_handoff`.
+
+The selected subset explicitly excludes rule-level qualified triggers, nested
+qualified triggers, multiple qualified triggers, fan-in, fan-out, trigger
+payloads or bindings, ready/backpressure, cross-clock actor triggers,
+generated ATL child artifacts, generated ATL tops, and concurrent group
+triggers. Those forms stay fail-closed until later leaves select their exact
+artifact and scheduling contracts.
+
 ## Shipped Static Metadata Slice
 
 The first shipped slice accepts exactly one static actor instance:

@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL actor trigger handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` as the selection leaf
+  before implementing qualified actor-transaction trigger behavior.
+- The selected first trigger subset is exactly one top-level transaction-body
+  `(trigger actor.transaction)` where `actor` names the current single
+  declared static actor instance and `transaction` is a scalar HDL identifier.
+- The next code leaf, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`, must lower
+  that trigger to a deterministic one-cycle parent output handoff named
+  `actor_transaction_start`; for example, `(trigger reader.capture)` becomes
+  a pulse on `reader_capture_start`.
+- The trigger sink is external in this subset. Actor type resolution,
+  generated ATL child `.fsm` files, generated ATL tops, rule-level qualified
+  triggers, nested triggers, multiple triggers, fan-in/fan-out, trigger
+  payloads or bindings, ready/backpressure, cross-clock actor triggers,
+  concurrent groups, and HDL wiring remain deferred or fail-closed.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream integration handoff, public contract, mdBook, changes, and
+  development notes. Validation passed: `mdbook build docs/book` and
+  `git diff --check`.
 ## 2026-05-18: ATL actor-event waits lower to parent handoff input
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`.
 - FSMGen now accepts exactly one top-level transaction-body

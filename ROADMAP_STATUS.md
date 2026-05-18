@@ -43,9 +43,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   until actor type resolution, generated ATL child artifacts, generated ATL
   tops, and qualified actor transaction triggers ship. Multiple waits, nested
   waits, fan-in, fan-out, event payloads, cross-clock actor events, concurrent
-  groups, endpoint data movement, and HDL behavior remain deferred. The next
-  ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1`, which must select
-  the first qualified actor-transaction trigger boundary before code.
+  groups, endpoint data movement, and HDL behavior remain deferred.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` selected the first qualified
+  actor-transaction trigger boundary: exactly one top-level transaction-body
+  `(trigger actor.transaction)` will lower to a one-cycle parent output
+  handoff named `actor_transaction_start`, with the trigger sink external
+  until actor type resolution and ATL child generation ship. The next ATL
+  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`, which implements only
+  that trigger handoff subset.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

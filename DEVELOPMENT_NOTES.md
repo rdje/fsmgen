@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: First ATL trigger mirrors event handoffs
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` selects the first
+  behavior-bearing qualified actor-transaction trigger subset before code.
+- The selected trigger is a top-level transaction-body action, not a
+  rule-level trigger. That keeps the first implementation aligned with the
+  shipped parent sequencer path: pulse `actor_transaction_start`, then an
+  author can wait on the already shipped `(await actor.event)` handoff.
+- The trigger sink is external for the same reason event sources are external:
+  FSMGen has not yet selected actor type resolution, generated ATL child
+  instances, generated ATL top wiring, ready/backpressure, or trigger payload
+  semantics.
+- The one-trigger limit avoids silently selecting fan-in, fan-out, priority,
+  ordering, or routing policy before a later ATL slice has generated evidence
+  for those contracts.
 ## 2026-05-18: ATL event waits are intentionally external handoffs
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2` implements the first
   behavior-bearing ATL actor-event wait without pretending child elaboration

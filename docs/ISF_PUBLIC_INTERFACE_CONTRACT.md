@@ -1591,6 +1591,16 @@ events, and concurrent group events remain fail-closed/deferred. Existing
 unqualified local `(await signal)` and rule-level `(trigger transaction)`
 behavior remains unchanged, and dotted enum-looking names outside
 actor-network instances keep their prior diagnostics.
+The next selected qualified actor-trigger subset is exactly one top-level
+transaction-body `(trigger actor.transaction)` for the current single declared
+static actor instance, lowered to a generated one-cycle parent output handoff
+named `actor_transaction_start`. For example, `reader.capture` will lower
+through `reader_capture_start`. The trigger sink is external until actor type
+resolution, ATL child generation, generated ATL tops, trigger payloads, and
+ready/backpressure semantics ship. Rule-level qualified triggers, nested
+triggers, multiple triggers, fan-in/fan-out, cross-clock actor triggers, and
+concurrent group triggers remain deferred. The selected future report surface
+is `actor_network.transaction_triggers[]`.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`

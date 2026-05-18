@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL actor trigger handoff selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` as a task-tree
+  selection slice before implementation.
+- The next behavior-bearing trigger leaf is scoped to exactly one top-level
+  transaction-body `(trigger actor.transaction)` for the current single static
+  actor instance.
+- The selected lowering maps the trigger to a deterministic one-cycle parent
+  output handoff named `actor_transaction_start`, such as
+  `reader_capture_start` for `reader.capture`.
+- Actor type resolution, ATL child generation, generated ATL tops, rule-level
+  qualified triggers, nested triggers, multiple triggers, fan-in/fan-out,
+  trigger payloads or bindings, ready/backpressure, cross-clock actor
+  triggers, concurrent groups, and HDL wiring remain deferred.
+- Synchronized the task tree, roadmap board, design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`.
 ### R14 — ATL actor-event waits lower to parent handoff input
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`.
 - FSMGen now accepts exactly one top-level transaction-body

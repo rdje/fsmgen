@@ -2873,6 +2873,20 @@ concurrent group events, generated ATL child artifacts, generated ATL tops,
 route muxes, and qualified actor transaction triggers remain deferred unless a
 later leaf explicitly widens this surface.
 
+The next selected actor-transaction trigger subset is also narrower than full
+child orchestration. It is exactly one top-level transaction-body
+`(trigger actor.transaction)` against the current single declared static actor
+instance, where `transaction` is a scalar HDL identifier. The selected lowering
+maps the trigger to a deterministic one-cycle parent output handoff named
+`actor_transaction_start`; for example, `(trigger reader.capture)` maps to
+`reader_capture_start`. The trigger sink is external until actor type
+resolution, generated ATL child artifacts, generated ATL tops, trigger
+payloads, and ready/backpressure semantics ship. Rule-level qualified
+triggers, nested triggers, multiple triggers, trigger fan-in/fan-out,
+cross-clock actor triggers, and concurrent group triggers remain deferred
+unless a later leaf explicitly widens this surface. Schedule JSON for that
+future trigger subset will use `actor_network.transaction_triggers[]`.
+
 The current generated-artifact contract is explicit: the parent scheduled
 `.fsm` may include the selected one-bit actor-event handoff input. FSMGen
 still emits no ATL child `.fsm`, no generated ATL top, no generated route mux,

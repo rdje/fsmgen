@@ -717,6 +717,17 @@ rule-level `(trigger transaction)` remains a local transaction trigger.
 Dotted enum-looking names that do not name a static actor instance keep their
 prior diagnostics.
 
+The next selected qualified actor-transaction trigger subset mirrors that
+handoff boundary. One top-level transaction-body
+`(trigger actor.transaction)` against the current single static actor instance
+will lower to a generated one-cycle parent output named
+`actor_transaction_start`; for example, `reader.capture` maps to
+`reader_capture_start`. The trigger sink remains external until later ATL
+leaves resolve actor types, generate child artifacts, emit ATL tops, and add
+ready/backpressure or payload semantics. Rule-level qualified triggers,
+nested triggers, multiple triggers, fan-in, fan-out, cross-clock triggers, and
+concurrent group triggers stay fail-closed/deferred.
+
 Direct actor-body proposal:
 
 ```lisp
