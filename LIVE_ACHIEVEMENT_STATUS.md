@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL event/trigger boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1`.
+- The actor-event frontier is now split into recoverable leaves. The next code
+  leaf, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`, must reject reserved
+  qualified `(await actor.event)`, transaction-body
+  `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)` with ATL-specific diagnostics before
+  scheduled `.fsm` emission.
+- Existing unqualified local forms remain unchanged: `(await signal)` still
+  waits on a local signal, and rule-level `(trigger transaction)` still
+  triggers a local transaction.
+- Generated actor-event behavior remains deferred. No generated ATL child
+  `.fsm`, generated ATL top, route mux, handoff storage, event fan-in/fan-out
+  contract, schedule-report event keys, or HDL behavior is promised by this
+  selection slice.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL v0 public contract settled
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.2`.
 - The ATL v0 public direction is now synchronized across the design proposal,

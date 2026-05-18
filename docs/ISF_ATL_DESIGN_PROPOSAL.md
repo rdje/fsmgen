@@ -437,21 +437,41 @@ Scheduling should split cleanly:
 
 ## First Implementation Subset
 
-The smallest useful implementation should be:
+The shipped first implementation is metadata-only: one direct actor-body
+`(instance name of actor_type)` clause is accepted and reported under
+`actor_network`. It does not schedule actor interactions yet.
+
+The first selected event/trigger implementation boundary is intentionally
+fail-closed. Before any generated actor-event behavior ships, FSMGen must
+recognize the reserved qualified forms and reject them with ATL-specific
+diagnostics instead of letting them fall through as enum-member, unknown
+transaction, or unsupported local-clause errors:
+
+- `(await actor.event)` in a transaction body;
+- `(trigger actor.transaction)` in a transaction body;
+- `(trigger actor.transaction)` in a rule body.
+
+That slice must preserve existing unqualified local behavior:
+`(await signal)` remains a local transaction wait, and rule-level
+`(trigger transaction)` remains the local transaction trigger surface.
+
+The smallest later behavior-bearing ATL implementation should then select
+explicit generated artifact names and report keys before accepting event
+waits or actor transaction triggers. A likely useful subset is:
 
 1. One top-level `(actor ...)` with direct actor-body ATL clauses.
 2. Single clock/reset only.
 3. Static `(instance name of actor_type)` declarations.
-4. One named drive body whose assignment pair references two qualified
+4. One explicit event source and one actor-event wait, or one explicit
+   blocking orchestration target and its completion event.
+5. One named drive body whose assignment pair references two qualified
    endpoints, plus one transaction drive call that activates it.
-5. Explicit blocking orchestration from a top-level transaction to one
-   qualified child transaction.
-6. Schedule-report metadata for instance identity, endpoint bindings, and
+6. Schedule-report metadata for instance identity, event/endpoint bindings,
+   generated artifact names, and
    generated mux/enable/handoff or connectivity artifacts.
 
-The next slices can add actor events, multiple sources feeding one sink,
-top-level pin movement in both directions, compact aliases, and concurrent
-groups.
+The next slices can add multiple sources feeding one sink, top-level pin
+movement in both directions, compact aliases, and concurrent groups.
 
 ## Fail-Closed Boundaries
 

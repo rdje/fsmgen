@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL event/trigger boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` as a documentation and
+  task-tree selection leaf before code.
+- Split the actor-event frontier into recoverable leaves: `.4.2` will fail
+  closed reserved qualified `(await actor.event)`,
+  transaction-body `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)` with ATL-specific diagnostics; `.4.3` remains
+  the future generated actor-event behavior leaf.
+- The selection preserves current shipped behavior: unqualified transaction
+  `(await signal)` and local rule `(trigger transaction)` remain unchanged,
+  and `actor_network` still promises no generated ATL artifacts or HDL
+  behavior.
 ### R14 — ATL v0 public contract settled
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.2` as a public-contract and
   documentation slice.

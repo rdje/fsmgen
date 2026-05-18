@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL event/trigger boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` as the selection leaf for
+  the actor-event/qualified-trigger frontier.
+- The first code leaf is deliberately fail-closed, not generated actor-event
+  behavior: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` must reject reserved
+  qualified `(await actor.event)`, transaction-body
+  `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)` with ATL-specific diagnostics before
+  scheduled `.fsm` emission.
+- Existing unqualified local behavior remains unchanged: `(await signal)` is
+  still a local transaction wait, and rule-level `(trigger transaction)` is
+  still the local transaction trigger surface.
+- Generated ATL child artifacts, generated ATL top names, route muxes,
+  handoff storage, event fan-in/fan-out policy, and schedule-report event keys
+  remain deferred until a later leaf ships them explicitly.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
 ## 2026-05-18: ATL v0 public contract settled
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.2` as a documentation/public
   contract slice after the one-instance static metadata implementation.

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL event syntax must fail closed before it ships
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` narrows the actor-event frontier
+  before implementation.
+- The first event/trigger code slice should not accept qualified ATL forms as
+  behavior yet. It should fail closed them with diagnostics that name the ATL
+  boundary so downstream emitters can distinguish "reserved but not shipped"
+  from generic enum-member, unsupported-clause, or unknown-transaction errors.
+- The reserved forms are `(await actor.event)`, transaction-body
+  `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)`. The later behavior leaf must choose generated
+  artifact names, report keys, fan-in/fan-out rules, and event source/sink
+  ownership before accepting them.
+- Existing local constructs remain the regression guardrail:
+  `(await signal)` and rule-level `(trigger transaction)` must keep their
+  current semantics while qualified ATL variants are still deferred.
 ## 2026-05-18: ATL v0 keeps one movement vocabulary
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.2` closes the public-contract
   clarification before the next actor-network implementation leaf.
