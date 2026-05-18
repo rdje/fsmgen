@@ -1,5 +1,34 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained local do before post-do await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.98`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the selected top-level `when` body nested repeat local
+  `(do child)` before post-do multi-pending `(await_any done)`.
+- The accepted source shape is a repeat directly inside a top-level `when`
+  body with multiple generated spawns, local blocking `do` while those
+  generated spawns remain pending, `(await_any done)` as an observation point
+  after the local do, and a later same-body `(await_all done)` drain before
+  the nested repeat check can loop.
+- Lowering waits for the local child's fresh done pulse before evaluating the
+  post-do `await_any`, keeps every generated-spawn done handoff live through
+  the local do and await_any observation, preserves source-order samples, and
+  drains every pending generated child before nested repeat re-entry.
+- Switch-contained post-do `await_any`, generated-do post-do `await_any`, new
+  spawn after the do before drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  fail-closed.
+- The mdBook, ISF spec, downstream integration spec, public contract, feature
+  matrix audits, task tree, roadmap board, and live docs now document this
+  subset as shipped.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=51), doc audits (Files=2, Tests=295), focused activation/domain/doc
+  suite (Files=13, Tests=528), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1299), and
+  `git diff --check`.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.99`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: when-contained local do before post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.97`.
 - The active R14 task tree now selects a narrow top-level `when` body nested

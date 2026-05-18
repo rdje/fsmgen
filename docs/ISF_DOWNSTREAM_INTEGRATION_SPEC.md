@@ -959,9 +959,13 @@ Rules:
   CDC. The top-level `when` body and top-level `switch` branch same-domain
   subsets may also run after a prior multi-pending `(await_any done)`
   observation, still requiring the later same-body `(await_all done)` drain
-  before nested repeat re-entry. New nested `spawn` after the do before the
-  drain, `await_any` after the do, deeper branch/loop nesting, and
-  cross-domain activation remain fail-closed.
+  before nested repeat re-entry. Top-level `when` body local `(do child)` may
+  also run before a post-do multi-pending `(await_any done)` observation when
+  a later same-body `(await_all done)` still drains the same generated-spawn
+  set before nested repeat re-entry. Switch-contained post-do `await_any`,
+  generated-do post-do `await_any`, new nested `spawn` after the do before the
+  drain, deeper branch/loop nesting, and cross-domain activation remain
+  fail-closed.
   Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,
   `contract`, deeper branch nesting, nested `while`, and nested `until` remain

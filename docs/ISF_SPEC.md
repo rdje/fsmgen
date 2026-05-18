@@ -1627,8 +1627,14 @@ Current lowering:
   `(await_all done)` drain. The top-level `when` body and top-level `switch`
   branch same-domain subsets may also run after a prior multi-pending
   `(await_any done)` observation, still requiring that later same-body drain.
-  New nested `spawn` after the do before the drain, `await_any` after the do,
-  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
+  Top-level `when` body nested repeat local `(do child)` may also be followed
+  by post-do multi-pending `(await_any done)` as an observation point while
+  generated nested spawns remain pending, provided the local child completes
+  before that observation and a later same-body `(await_all done)` drains
+  every pending generated spawn before nested repeat re-entry.
+  Switch-contained post-do `await_any`, generated-do post-do `await_any`, new
+  nested `spawn` after the do before the drain, deeper branch/loop nesting,
+  and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

@@ -944,14 +944,19 @@ subsets, local plain `(do child)` may run while generated nested spawns are
 pending before or after a prior multi-pending `await_any` observation. The
 local do uses only the parent-module local child start/done contract and
 leaves the generated-spawn done set live until the later same-body
-`await_all` drain. Generated `do`
+`await_all` drain. In the top-level `when` body subset, local plain
+`(do child)` may also run before a post-do multi-pending `await_any`
+observation when that later same-body `await_all` still drains every pending
+generated spawn before nested repeat re-entry. Generated `do`
 forms with parameters, binding handoffs, or domain metadata are separate
 contracts from that local do subset; generated-child, static-parameter, and
 the documented top-level when-body bound generated `do` after prior multi-
 pending `await_any` are shipped through their own bounded contracts, while
-domain-qualified generated `do` after prior multi-pending `await_any`,
-`await_any` after the local do, and new spawn after the local do before the
-drain remain outside the public shipped subset.
+domain-qualified generated `do` after prior multi-pending `await_any` is
+shipped for the documented top-level branch-contained same-domain subsets.
+Switch-contained post-do `await_any`, generated-do post-do `await_any`, and
+new spawn after the local do before the drain remain outside the public
+shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level
@@ -984,8 +989,9 @@ instance; generated-composition/domain partition metadata and schedule JSON
 CDC. In the top-level `when` body and top-level `switch` branch subsets, that
 same-domain generated do may also run after a prior multi-pending `await_any`
 observation, still requiring the later same-body `await_all` drain before
-nested repeat re-entry. Later `await_any` after the do and new spawn after
-that generated do before the drain remain outside the public shipped subset.
+nested repeat re-entry. Later `await_any` after generated `do` and new spawn
+after that generated do before the drain remain outside the public shipped
+subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent

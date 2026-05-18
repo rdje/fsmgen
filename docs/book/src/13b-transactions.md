@@ -508,9 +508,16 @@ and top-level `switch` branch forms also support static-parameter generated
 `(do child (params ...) (bind ...))` after a prior multi-pending
 `(await_any done)` observation in that interval; the generated do site wires
 generated-top input/output binding handoffs once and still leaves the pending
-generated-spawn done set live for the later drain. Domain-qualified generated
-`do` after prior multi-pending `await_any`, new nested `spawn` after the do
-before the drain, and `(await_any done)` after the do remain fail-closed.
+generated-spawn done set live for the later drain. The same branch-contained
+forms also support static-parameter same-domain generated
+`(do child (params ...) [(bind ...)] (domain NAME))` after a prior
+multi-pending `(await_any done)` observation, preserving declared ownership
+metadata without implying CDC. The top-level `when` body nested repeat local
+`(do child)` subset may also place `(await_any done)` after the local do as a
+post-do multi-pending observation while generated nested spawns remain pending
+before the mandatory later same-body `(await_all done)` drain.
+Switch-contained post-do `await_any`, generated-do post-do `await_any`, and
+new nested `spawn` after the do before the drain remain fail-closed.
 Cross-domain
 repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained

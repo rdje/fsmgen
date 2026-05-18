@@ -1107,9 +1107,14 @@ same later drain requirement and generated-top binding handoffs. The
 top-level `when` body and top-level `switch` branch same-domain generated do
 after prior multi-pending `await_any` subsets are shipped with the same later
 drain requirement and declared ownership metadata in generated-composition/
-domain partition and schedule-report clock-domain summaries. `await_any`
-after the do and a new nested spawn after the do before the drain remain
-fail-closed.
+domain partition and schedule-report clock-domain summaries. Top-level
+`when` body local `(do child)` may also lower before a post-do multi-pending
+`await_any` observation; lowering waits for the local child's fresh done
+pulse, emits the post-do `await_any` as an observation of the still-pending
+generated-spawn done set, and keeps the later same-body `await_all` as the
+drain before nested repeat re-entry. Switch-contained post-do `await_any`,
+generated-do post-do `await_any`, and a new nested spawn after the do before
+the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

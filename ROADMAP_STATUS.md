@@ -2,19 +2,20 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.98`.
-  Leaf `.97` selected top-level `when` body nested repeat local
-  `(do child)` followed by post-do multi-pending `(await_any done)` as the
-  next bounded subset. Leaf `.98` must implement only that selected shape: a
-  repeat directly inside a top-level `when` body with multiple generated
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.99`.
+  Leaf `.98` shipped top-level `when` body nested repeat local `(do child)`
+  before post-do multi-pending `(await_any done)`. The shipped subset accepts
+  a repeat directly inside a top-level `when` body with multiple generated
   spawns, local blocking `(do child)` while those generated spawns remain
   pending, post-do `(await_any done)` as an observation point, and a later
   same-body `(await_all done)` drain before the nested repeat check can loop.
-  The local child remains in the parent scheduled module, and the post-do
-  `await_any` observes only the pending generated spawns without clearing
-  them. Switch-contained post-do `await_any`, generated-do post-do
-  `await_any`, spawn-after-do, cross-domain activation, deeper branch/loop
-  nesting, and broader outstanding-child semantics remain deferred.
+  Lowering waits for the local child's fresh done pulse before that
+  observation, and the post-do `await_any` observes only the pending generated
+  spawns without clearing them. Leaf `.99` must select exactly one next
+  remaining fail-closed boundary before further implementation.
+  Switch-contained post-do `await_any`, generated-do post-do `await_any`,
+  spawn-after-do, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child semantics remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -580,9 +581,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   next active frontier, `ISF-REPEAT-BODY-CHILD-ACTIVATION.97`, selected
   top-level when-body nested repeat local do followed by post-do
   multi-pending `await_any` before a mandatory later same-body `await_all`
-  drain. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.98`, which implements only that selected
-  when-contained local-do-before-post-do-await_any subset.
+  drain. The next active frontier,
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.98`, then shipped that selected
+  when-contained local-do-before-post-do-await_any subset while preserving the
+  generated-spawn lifetime proof. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.99`, which must select exactly one
+  remaining fail-closed repeat-body child activation boundary before further
+  implementation.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
