@@ -884,12 +884,16 @@ do owns one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
 fresh done handoff, and leaves pending generated-spawn done handoffs live for
 the later same-body `await_all` drain. The documented top-level `when` body
-and top-level `switch` branch nested subsets also support static-parameter generated
-`(do child (params ...))` after a prior multi-pending `await_any`, with the
-same later same-body `await_all` drain requirement. Generated `do` forms with
-bind handoffs or domain metadata after prior multi-pending `await_any`,
-`await_any` after that do, and new nested `spawn` after that do before the
-drain remain fail-closed.
+and top-level `switch` branch nested subsets also support static-parameter
+generated `(do child (params ...))` after a prior multi-pending `await_any`,
+with the same later same-body `await_all` drain requirement. The documented
+top-level `when` body nested subset additionally supports static-parameter
+generated `(do child (params ...) (bind ...))` after a prior multi-pending
+`await_any`, with generated-top input/output binding handoffs and the same
+later same-body `await_all` drain requirement. Switch-contained bound
+generated `do` after prior multi-pending `await_any`, domain-metadata
+generated `do` after prior multi-pending `await_any`, `await_any` after that
+do, and new nested `spawn` after that do before the drain remain fail-closed.
 The shipped repeat-body child-activation subset is
 local `(do child)`, generated-child `(do child)`, generated
 `(do child (params ...) [(bind ...)] [(domain NAME)])`, plus
@@ -937,7 +941,10 @@ local do uses only the parent-module local child start/done contract and
 leaves the generated-spawn done set live until the later same-body
 `await_all` drain. Generated `do`
 forms with parameters, binding handoffs, or domain metadata are separate
-contracts from that local do subset; parameterized, bound, or
+contracts from that local do subset; generated-child, static-parameter, and
+the documented top-level when-body bound generated `do` after prior multi-
+pending `await_any` are shipped through their own bounded contracts, while
+switch-contained bound generated `do` after prior multi-pending `await_any`,
 domain-qualified generated `do` after prior multi-pending `await_any`,
 `await_any` after the local do, and new spawn after the local do before the
 drain remain outside the public shipped subset.
@@ -960,7 +967,11 @@ leaves the generated spawn done set live until the later same-body
 `(do child (params ...) (bind ...))` may also run while generated nested spawns
 are pending. The generated do wires generated-top input/output binding
 handoffs once, waits for its own fresh done handoff, and leaves the generated
-spawn done set live until the later same-body `await_all` drain.
+spawn done set live until the later same-body `await_all` drain. In the top-
+level `when` body subset, that bound generated do may also run after a prior
+multi-pending `await_any` observation; the top-level `switch` branch bound
+generated do after prior multi-pending `await_any` remains outside the public
+shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, static-parameter generated
 `(do child (params ...) [(bind ...)] (domain NAME))` may also run while
@@ -968,8 +979,9 @@ generated nested spawns are pending. The domain annotation is declared
 same-domain ownership metadata only for the deterministic generated do
 instance; generated-composition/domain partition metadata and schedule JSON
 `clock_domains[].child_instances[]` retain that ownership without implying
-CDC. Prior or later `await_any` around that generated do and new spawn after
-that generated do before the drain remain outside the public shipped subset.
+CDC. Prior or later `await_any` around that domain-qualified generated do and
+new spawn after that generated do before the drain remain outside the public
+shipped subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent

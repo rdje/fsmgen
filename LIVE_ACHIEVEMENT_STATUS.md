@@ -2,6 +2,33 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF when-contained repeat bound do after await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.90`.
+- Top-level `when` bodies may now contain nested repeats with multiple
+  generated spawns, a multi-pending `(await_any done)` observation,
+  static-parameter generated `(do child (params ...) (bind ...))` with
+  generated-top input/output binding handoffs while those generated spawns
+  remain pending, and a later same-body `(await_all done)` drain before the
+  nested repeat check can loop.
+- Lowering keeps generated-spawn done handoffs live after `await_any` and
+  through the bound generated do instance, applies that instance's static
+  parameter overrides and binding handoffs once in the generated top, waits
+  for its own fresh done handoff, and then drains every pending generated
+  child before nested repeat re-entry.
+- Domain metadata after prior `await_any`, the switch-contained bound
+  analogue after prior `await_any`, `await_any` after the do, spawn-after-do
+  before the drain, cross-domain activation, deeper nesting, and broader
+  outstanding-child semantics remain fail-closed.
+- Docs are synchronized across the mdBook, ISF spec, downstream integration
+  spec, public contract, task tree, roadmap board, and live docs. The active
+  frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.91`, which must
+  select the next bounded repeat-body child activation subset.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=47), touched repeat/spawn/doc checks (Files=4, Tests=464), focused
+  activation/domain/doc suite (Files=13, Tests=506),
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book` (Files=227,
+  Tests=1277), and `git diff --check`.
+
 ## 2026-05-18: R14 — ISF when-contained repeat bound do after await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.89`.
 - Selected top-level `when` body nested repeats with multiple generated

@@ -537,20 +537,23 @@ repeat directly inside a top-level `switch` branch may have multiple
 generated spawns, a multi-pending `(await_any done)` observation, generated
 blocking `(do child (params ...))` with static parameter overrides while those
 generated spawns remain pending, and a later same-body `(await_all done)`
-drain before the nested repeat check can loop. Bind handoffs, domain metadata,
-`await_any` after the do, new spawn after the do before the drain,
-cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain backlog. The next selected backlog leaf is
-the when-contained bound generated `await_any`-before-do analogue: a repeat
-directly inside a top-level `when` body with multiple generated spawns, a
-multi-pending `(await_any done)` observation, generated blocking
-`(do child (params ...) (bind ...))` with static parameter overrides and
-input/output binding handoffs, and a later same-body `(await_all done)` drain
-before the nested repeat check can loop. This when-contained bound generated-
-do await-any-before-do subset is selected but not yet shipped; domain
-metadata, the switch-contained bound analogue, `await_any` after the do, new
-spawn after the do before the drain, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics remain backlog.
+drain before the nested repeat check can loop.
+
+The when-contained bound generated `await_any`-before-do analogue is also
+shipped: a repeat directly inside a top-level `when` body may have multiple
+generated spawns, a multi-pending `(await_any done)` observation, generated
+blocking `(do child (params ...) (bind ...))` with static parameter overrides
+and input/output binding handoffs, and a later same-body `(await_all done)`
+drain before the nested repeat check can loop. The generated do instance wires
+its input/output handoff ports in the generated top, waits on its own fresh
+done handoff, and does not clear the pending generated-spawn done set that the
+later drain must consume. Domain metadata after a prior multi-pending
+`await_any`, the switch-contained bound analogue after a prior multi-pending
+`await_any`, `await_any` after the do, new spawn after the do before the
+drain, cross-domain activation, deeper branch/loop nesting, and broader
+outstanding-child semantics remain backlog. The next repeat-body child-
+activation leaf should select one of those remaining fail-closed boundaries
+before any implementation changes.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

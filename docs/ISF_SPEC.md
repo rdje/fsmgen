@@ -1607,13 +1607,16 @@ Current lowering:
   after a prior multi-pending `(await_any done)` observation, provided the
   later same-body `(await_all done)` drain still gates nested repeat re-entry.
   Top-level `when` body nested repeats also
-  accept static-parameter generated `(do child (params ...) (bind ...))` in
-  that same pending-spawn interval; the generated do site wires generated-top
-  input/output binding handoffs once, waits for its own fresh done handoff,
-  and leaves every pending generated-spawn done handoff live for the later
-  drain. Top-level `switch` branch nested repeats accept the same
-  static-parameter bound generated `do` in that pending interval, with the
-  same binding handoffs, fresh done wait, and later generated-spawn drain.
+  accept static-parameter generated `(do child (params ...) (bind ...))`
+  either before or after a prior multi-pending `(await_any done)` observation,
+  provided the later same-body `(await_all done)` drain still gates nested
+  repeat re-entry. The generated do site wires generated-top input/output
+  binding handoffs once, waits for its own fresh done handoff, and leaves
+  every pending generated-spawn done handoff live for the later drain. Top-
+  level `switch` branch nested repeats accept the same static-parameter bound
+  generated `do` only before any prior multi-pending `(await_any done)`
+  observation in that pending interval, with the same binding handoffs, fresh
+  done wait, and later generated-spawn drain.
   Top-level `when` body and top-level `switch` branch nested repeats also
   accept static-parameter same-domain generated
   `(do child (params ...) [(bind ...)] (domain NAME))` in that pending
@@ -1621,11 +1624,11 @@ Current lowering:
   only for the deterministic generated do instance, generated-composition and
   clock-domain summaries retain that ownership, and every pending
   generated-spawn done handoff remains live for the later same-body
-  `(await_all done)` drain. Generated `do` forms with bind handoffs or domain
-  metadata after a prior multi-pending `await_any`, new nested `spawn` after
-  the do before the drain, `await_any` after the do, deeper branch/loop
-  nesting, and cross-domain activation
-  remain fail-closed.
+  `(await_all done)` drain. Switch-contained bound generated `do` after a
+  prior multi-pending `await_any`, domain-metadata generated `do` after a
+  prior multi-pending `await_any`, new nested `spawn` after the do before the
+  drain, `await_any` after the do, deeper branch/loop nesting, and cross-
+  domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

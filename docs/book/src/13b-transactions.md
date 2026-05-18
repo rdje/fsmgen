@@ -487,15 +487,13 @@ outstanding generated children before the nested repeat check can loop. Those
 branch-contained nested spawns reuse the static generated-child handoff model,
 preserve source-order samples before the spawn or sync state, and keep the
 nested repeat check gated by the spawned child done handoffs. In the
-top-level `when` body form, the same nested repeat body may also run a local
-plain `(do child)` while generated nested spawns are pending either before or
-after a prior multi-pending `(await_any done)` observation, provided a later
-same-body `(await_all done)` drains every outstanding generated spawn before
-the nested repeat check can loop. In the top-level `switch` branch form, the
-same local plain `(do child)` surface remains limited to cases with no prior
-multi-pending `await_any` observation. That local do target remains in the parent
-scheduled module, waits for its own fresh local done pulse, and does not clear
-the generated-spawn done set.
+top-level `when` body and top-level `switch` branch forms, the same nested
+repeat body may also run a local plain `(do child)` while generated nested
+spawns are pending either before or after a prior multi-pending
+`(await_any done)` observation, provided a later same-body `(await_all done)`
+drains every outstanding generated spawn before the nested repeat check can
+loop. That local do target remains in the parent scheduled module, waits for
+its own fresh local done pulse, and does not clear the generated-spawn done set.
 The top-level `when` body and top-level `switch` branch forms also support
 plain generated-child `(do child)` in that pending-spawn interval when the
 target child is already emitted as a generated child by another activation
@@ -506,12 +504,16 @@ The same branch-contained forms support static-parameter generated
 `(do child (params ...))` in that pending-spawn interval; the generated do
 site keeps its authored static parameter binding and still leaves the pending
 generated-spawn done set live for the later drain. The top-level `when` body
-and top-level `switch` branch forms also support static-parameter generated
-`(do child (params ...) (bind ...))` in that interval; the generated do site
-wires generated-top input/output binding handoffs once and still leaves the
-pending generated-spawn done set live for the later drain. Domain-qualified
-generated `do` while a nested spawn is pending, new nested `spawn` after the
-do before the drain, and `(await_any done)` after the do remain fail-closed.
+form also supports static-parameter generated
+`(do child (params ...) (bind ...))` after a prior multi-pending
+`(await_any done)` observation in that interval; the generated do site wires
+generated-top input/output binding handoffs once and still leaves the pending
+generated-spawn done set live for the later drain. The top-level `switch`
+branch form supports that bound generated `do` only before any prior multi-
+pending `(await_any done)` observation. Switch-contained bound generated `do`
+after prior multi-pending `await_any`, domain-qualified generated `do` after
+prior multi-pending `await_any`, new nested `spawn` after the do before the
+drain, and `(await_any done)` after the do remain fail-closed.
 Cross-domain
 repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained
@@ -784,9 +786,12 @@ Generated `do` forms with static parameters, optional binding handoffs, and
 same-domain metadata are documented below as separate shipped subsets.
 Static-parameter generated `do` after prior multi-pending `await_any` is
 shipped only for the top-level `when` body and top-level `switch` branch
-nested subsets documented below; bind handoffs, domain metadata, `await_any`
-after the do, and new nested `spawn` after the do before the drain remain
-outside this local do subset.
+nested subsets documented below. Static-parameter generated `do` with bind
+handoffs after prior multi-pending `await_any` is shipped only for the top-
+level `when` body nested subset documented below; switch-contained bind
+handoffs after prior multi-pending `await_any`, domain metadata after prior
+multi-pending `await_any`, `await_any` after the do, and new nested `spawn`
+after the do before the drain remain outside this local do subset.
 
 The same top-level `when` body pending-spawn interval may run a plain
 generated-child `(do child)` when that child already has a generated instance
