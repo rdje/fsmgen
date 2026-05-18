@@ -1698,6 +1698,134 @@ ISF
         'generated top instantiates the switch parameterized do instance separately from the pending spawn');
 };
 
+subtest 'switch branch nested repeat bound generated do can run while generated spawn is pending before await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_bound_do_while_spawn_pending
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode (width 2))
+    (input loops (width 3))
+    (input payload (width 8))
+    (input req_addr (width 8))
+    (input status)
+    (output done)
+    (output spawn_resp (width 8))
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0
+            (params
+              (WIDTH 16))
+            (bind
+              (input addr payload)
+              (output data spawn_resp)))
+          (do worker
+            (params
+              (WIDTH 32))
+            (bind
+              (input addr req_addr)
+              (output data resp)))
+          (sample status as after_do)
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 2,
+        'switch-branch nested repeat bound do-while-spawn-pending records the spawn and generated do instances');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'switch-branch bound do-while-spawn-pending preserves the pending spawn instance');
+    ok($instances{parent_worker_repeat_do_0}, 'switch-branch bound do-while-spawn-pending records the generated do instance');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'switch-branch bound do-while-spawn-pending preserves do activation provenance');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [{ name => 'WIDTH', value => '32' }],
+        'switch-branch bound do-while-spawn-pending preserves static parameter overrides on the do instance');
+    is_deeply(
+        $instances{parent_worker_repeat_do_0}{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'parent_worker_repeat_do_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'parent_worker_repeat_do_0_data',
+                actor_signal     => 'resp',
+                actor_expr       => 'resp',
+                actor_expression => 'resp',
+                width            => 8,
+            },
+        ],
+        'switch-branch bound do-while-spawn-pending exposes do-site binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_bound_do_while_spawn_pending.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_bound_do_while_spawn_pending_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch bound do-while-spawn-pending parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once for switch pending-spawn bound do');
+    ok(defined($top_fsm), 'switch-branch bound do-while-spawn-pending generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the pending-spawn bound do nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before switch bound do-while-spawn-pending materializes before the spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'switch generated spawn starts before the bound generated do runs while pending');
+    like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'switch bound generated do keeps input and output binding handoffs reviewable while spawn is pending');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'switch bound generated do waits for its generated instance done while the spawn remains pending');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'sample after switch bound generated do materializes before the pending spawn drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <w0_done\)/,
+        'await_all drain gates the switch nested repeat check on the pending generated spawn after bound do');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top keeps the switch pending spawn instance for bound do');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 32\)\s+\)\s+\)/s,
+        'generated top instantiates the switch bound do instance separately from the pending spawn');
+    like($top_fsm, qr/\(switch_repeat_bound_do_while_spawn_pending\.parent_worker_repeat_do_0_addr parent_worker_repeat_do_0\.addr\)/,
+        'generated top wires switch bound do input handoff separately from the pending spawn');
+    like($top_fsm, qr/\(parent_worker_repeat_do_0\.data switch_repeat_bound_do_while_spawn_pending\.parent_worker_repeat_do_0_data\)/,
+        'generated top wires switch bound do output handoff separately from the pending spawn');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:addr',
+            'spawn:w0:data',
+            'do:parent_worker_repeat_do_0:addr',
+            'do:parent_worker_repeat_do_0:data',
+        ],
+        'report exposes switch pending spawn and bound do transaction port-binding provenance',
+    );
+};
+
 subtest 'repeat body await_any accepts exactly one pending static child' => sub {
     my $source = <<'ISF';
 (actor repeat_spawn_await_any
@@ -3686,15 +3814,19 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do while spawn pending', qr/switch-branch nested repeat do while generated spawns are pending supports only local plain '\(do child\)', plain generated-child '\(do child\)', or static generated '\(do child \(params \.\.\.\)\)' in the current subset/);
-(actor switch_nested_repeat_bound_generated_do_while_spawn_pending
+    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do after multi-pending await_any before drain', qr/switch-branch nested repeat generated do with static params and bindings while generated spawns are pending is supported only before a later same-body '\(await_all done\)' drain, with no prior multi-pending await_any observation/);
+(actor switch_nested_repeat_bound_generated_do_after_multi_pending_await_any
   (clock clk)
   (interface
     (input start)
     (input mode)
     (input loops (width 3))
-    (input payload (width 8))
-    (output result (width 8))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input req_addr (width 8))
+    (output result0 (width 8))
+    (output result1 (width 8))
+    (output resp (width 8))
     (output done))
   (transaction parent
     (on start)
@@ -3703,14 +3835,19 @@ ISF
         (repeat loops
           (spawn worker as w0
             (bind
-              (input data payload)
-              (output resp result)))
+              (input data payload0)
+              (output resp result0)))
+          (spawn worker as w1
+            (bind
+              (input data payload1)
+              (output resp result1)))
+          (await_any done)
           (do worker
             (params
               (WIDTH 16))
             (bind
-              (input data payload)
-              (output resp result)))
+              (input data req_addr)
+              (output resp resp)))
           (await_all done))))
     (complete done))
   (transaction worker
@@ -3722,7 +3859,7 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat domain generated do while spawn pending', qr/switch-branch nested repeat do while generated spawns are pending supports only local plain '\(do child\)', plain generated-child '\(do child\)', or static generated '\(do child \(params \.\.\.\)\)' in the current subset/);
+    assert_lower_rejected(<<'ISF', 'switch nested repeat domain generated do while spawn pending', qr/switch-branch nested repeat do while generated spawns are pending supports only local plain '\(do child\)', plain generated-child '\(do child\)', static generated '\(do child \(params \.\.\.\)\)', or static bound generated '\(do child \(params \.\.\.\) \(bind \.\.\.\)\)' in the current subset/);
 (actor switch_nested_repeat_domain_generated_do_while_spawn_pending
   (clock-domains
     (domain core (clock clk) (reset rst_n)))
@@ -3749,6 +3886,125 @@ ISF
     (domain core)
     (params
       (WIDTH 8))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do while spawn pending without drain', qr/switch-branch nested repeat generated do with static params and bindings while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_bound_generated_do_while_spawn_pending_without_drain
+  (clock clk)
+  (interface
+    (input start)
+    (input mode)
+    (input loops (width 3))
+    (input payload (width 8))
+    (input req_addr (width 8))
+    (output result (width 8))
+    (output resp (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0
+            (bind
+              (input data payload)
+              (output resp result)))
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data req_addr)
+              (output resp resp))))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do while spawn pending with await_any drain', qr/switch-branch nested repeat generated do with static params and bindings while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/);
+(actor switch_nested_repeat_bound_generated_do_while_spawn_pending_with_await_any
+  (clock clk)
+  (interface
+    (input start)
+    (input mode)
+    (input loops (width 3))
+    (input payload (width 8))
+    (input req_addr (width 8))
+    (output result (width 8))
+    (output resp (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0
+            (bind
+              (input data payload)
+              (output resp result)))
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data req_addr)
+              (output resp resp)))
+          (await_any done))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
+    (complete done)))
+ISF
+
+    assert_lower_rejected(<<'ISF', 'switch nested repeat spawn after bound generated do before drain', qr/switch-branch nested repeat spawn cannot follow generated do with static params and bindings while generated spawns are pending; drain with same-body '\(await_all done\)' before spawning again/);
+(actor switch_nested_repeat_spawn_after_bound_generated_do_before_drain
+  (clock clk)
+  (interface
+    (input start)
+    (input mode)
+    (input loops (width 3))
+    (input payload (width 8))
+    (input req_addr (width 8))
+    (input payload1 (width 8))
+    (output result (width 8))
+    (output resp (width 8))
+    (output result1 (width 8))
+    (output done))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (spawn worker as w0
+            (bind
+              (input data payload)
+              (output resp result)))
+          (do worker
+            (params
+              (WIDTH 16))
+            (bind
+              (input data req_addr)
+              (output resp resp)))
+          (spawn worker as w1
+            (bind
+              (input data payload1)
+              (output resp result1)))
+          (await_all done))))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input data (width 8))
+      (output resp (width 8)))
     (complete done)))
 ISF
 

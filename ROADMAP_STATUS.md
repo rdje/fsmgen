@@ -2,20 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.72`.
-  Leaf `.71` selected the direct top-level switch-branch analogue of the
-  shipped when-contained bound generated-do-while-spawn-pending subset. The
-  selected source shape is a repeat directly inside a top-level `switch`
-  branch with one or more generated
-  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
-  followed by generated blocking `(do child (params ...) (bind ...))` with
-  static parameter overrides and input/output port bindings while those
-  generated spawns remain pending, and a later same-body `(await_all done)`
-  drain before the nested repeat check can loop. Domain metadata on that do,
-  `await_any` around the do, new spawn after the do before drain, cross-domain
-  activation, deeper branch/loop nesting, and broader outstanding-child
-  semantics remain deferred. Leaf `.72` is the implementation frontier for
-  that selected subset.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.73`.
+  Leaf `.72` shipped top-level switch-branch nested repeat generated blocking
+  `(do child (params ...) (bind ...))` with static parameter overrides and
+  input/output port bindings while generated nested spawns are pending before
+  a later same-body `await_all` drain. The generated do site preserves static
+  generated-top parameter binding, wires generated-top binding handoffs for
+  that lexical do instance, waits for its fresh done handoff, and leaves
+  generated-spawn done handoffs live until the later drain. Domain metadata on
+  that do, `await_any` around the do, new spawn after the do before drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed. Leaf `.73` must select the
+  next bounded repeat-body child activation subset before any further
+  implementation.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -475,8 +474,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   outstanding-child semantics remain fail-closed. The next active frontier,
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.71`, selected the direct top-level
   switch-branch generated bound do while generated nested spawns are pending
-  as the next bounded subset. The next implementation frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.72`.
+  as the next bounded subset. `ISF-REPEAT-BODY-CHILD-ACTIVATION.72` then
+  shipped that selected subset: the generated do site preserves static
+  parameter binding, wires generated-top input/output binding handoffs once
+  for the lexical do instance, waits for its own fresh done handoff, and
+  leaves pending generated-spawn done handoffs live until the later same-body
+  `await_all` drain. Domain metadata on that do, `await_any` around the do,
+  new spawn after the do before drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  fail-closed. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.73`, which must select the next bounded
+  repeat-body child activation subset before code.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

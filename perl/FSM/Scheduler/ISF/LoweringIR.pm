@@ -3921,15 +3921,13 @@ sub _validate_repeat_body_spawn_subset {
                 my $static_parameter_generated_do = $uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
                 my $static_bound_generated_do = $uses_generated_params && $uses_bindings && !$uses_domain && $generated_do;
                 my $allowed_static_parameter_generated_do = defined($pending_generated_do_label) && $static_parameter_generated_do;
-                my $allowed_static_bound_generated_do = $when_body_repeat && $static_bound_generated_do;
+                my $allowed_static_bound_generated_do = defined($pending_generated_do_label) && $static_bound_generated_do;
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
                     || $allowed_static_parameter_generated_do
                     || $allowed_static_bound_generated_do;
-                my $supported_pending_do = $when_body_repeat
+                my $supported_pending_do = defined($pending_generated_do_label)
                     ? "local plain '(do child)', plain generated-child '(do child)', static generated '(do child (params ...))', or static bound generated '(do child (params ...) (bind ...))'"
-                    : defined($pending_generated_do_label)
-                    ? "local plain '(do child)', plain generated-child '(do child)', or static generated '(do child (params ...))'"
                     : "local plain '(do child)'";
                 confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if defined $pending_local_do_label && $plain_local_do && $awaiting_multi_pending_drain;

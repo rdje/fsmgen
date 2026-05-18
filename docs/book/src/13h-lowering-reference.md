@@ -1082,13 +1082,13 @@ nested-repeat forms may lower static-parameter generated
 `(do child (params ...))` in that interval; the generated do instance carries
 the authored parameter overrides in the generated top and still leaves
 pending generated-spawn done handoffs live until the later drain. Top-level
-`when` body nested-repeat forms may also lower static-parameter generated
-`(do child (params ...) (bind ...))` in that interval; the generated do
-instance wires generated-top input/output binding handoffs once and leaves
-pending generated-spawn done handoffs live until the later drain.
-Domain-qualified generated do while a nested spawn is pending, the
-switch-contained binding analogue, prior or later `await_any` around the do,
-and a new nested spawn after the do before the drain remain fail-closed.
+`when` body and top-level `switch` branch nested-repeat forms may also lower
+static-parameter generated `(do child (params ...) (bind ...))` in that
+interval; the generated do instance wires generated-top input/output binding
+handoffs once and leaves pending generated-spawn done handoffs live until the
+later drain. Domain-qualified generated do while a nested spawn is pending,
+prior or later `await_any` around the do, and a new nested spawn after the do
+before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1298,11 +1298,11 @@ static-parameter generated pending-spawn subsets use the same state shape,
 with `parent_worker_repeat_do_0` carrying the authored static parameter
 overrides in the generated top. The generated `do` still consumes only its own
 fresh done handoff and leaves the spawned child done handoff live for the
-later drain. The top-level `when` body static-parameter bound pending-spawn
-subset uses the same state shape and adds generated-top input/output binding
-handoffs to `parent_worker_repeat_do_0`; those handoffs are consumed by the
-generated do instance only, while the spawned child done handoff remains live
-for the later drain.
+later drain. The top-level `when` body and top-level `switch` branch
+static-parameter bound pending-spawn subsets use the same state shape and add
+generated-top input/output binding handoffs to `parent_worker_repeat_do_0`;
+those handoffs are consumed by the generated do instance only, while the
+spawned child done handoff remains live for the later drain.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:

@@ -199,14 +199,14 @@ branch nested repeats may also run static-parameter generated
 `(do child (params ...))` while generated nested spawns are pending; that
 generated do preserves static generated-top parameter binding, waits for its
 deterministic generated do instance's fresh done handoff, and leaves the
-generated-spawn done set live for the later drain. Top-level `when` body
-nested repeats may also run static-parameter generated
-`(do child (params ...) (bind ...))` while generated nested spawns are
-pending; that generated do wires generated-top input/output binding handoffs
-once and leaves the generated-spawn done set live for the later drain.
-Domain-qualified generated do while pending, the switch-contained binding
-analogue, new spawn after the generated do before the drain, and
-await-any-after-do forms remain fail-closed.
+generated-spawn done set live for the later drain. Top-level `when` body and
+top-level `switch` branch nested repeats may also run static-parameter
+generated `(do child (params ...) (bind ...))` while generated nested spawns
+are pending; that generated do wires generated-top input/output binding
+handoffs once and leaves the generated-spawn done set live for the later
+drain. Domain-qualified generated do while pending, new spawn after the
+generated do before the drain, and await-any-after-do forms remain
+fail-closed.
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and
 branch-contained spawned cases, `stage`, `contract`, nested `while`, and

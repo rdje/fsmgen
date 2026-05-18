@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: switch-contained bound do preserves pending generated spawns
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.72` implements only the selected
+  top-level `switch` branch nested-repeat static-parameter bound generated
+  do-while-spawn-pending subset.
+- The implementation intentionally keeps this as a branch-contained validator
+  widening. A generated do with static params and generated-top input/output
+  bindings may run while earlier generated nested spawns are pending only
+  when that repeat is directly under a top-level `switch` branch and a later
+  same-body `await_all` drains every pending generated child before loop
+  re-entry.
+- The generated do instance remains a separate child activation: it receives
+  its own deterministic generated instance name, static parameter binding
+  metadata, generated-top binding handoffs, and fresh done handoff. Earlier
+  generated-spawn done handoffs stay live until the later drain.
+- Domain metadata on that do, `await_any` before or after the do, new nested
+  spawn after the do before the drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  separate contracts.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.73`
+  must pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: switch-contained bound do while spawn pending is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.71` selects the switch-branch analogue of
   the shipped when-contained static-parameter bound pending-spawn generated do
