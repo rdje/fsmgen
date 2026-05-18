@@ -586,10 +586,11 @@ as an observation point, and a later same-body `(await_all done)` drain before
 the nested repeat check can loop. The local child still completes through the
 parent scheduled module, and the post-do `await_any` observes only the
 pending generated-spawn done set without clearing it. Switch-contained
-post-do `await_any`, generated-do post-do `await_any`, new spawn after the do
-before the drain, cross-domain activation, deeper branch/loop nesting, and
-broader outstanding-child semantics remain backlog until their own leaves
-select and ship them.
+post-do `await_any` is now selected for implementation with the same local-do
+and later-drain contract, but it is not shipped yet. Generated-do post-do
+`await_any`, new spawn after the do before the drain, cross-domain
+activation, deeper branch/loop nesting, and broader outstanding-child
+semantics remain backlog until their own leaves select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
