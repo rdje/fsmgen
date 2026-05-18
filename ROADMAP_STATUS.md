@@ -121,8 +121,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `actor_network.transaction_triggers[]` and batch-level
   `actor_network.group_schedules[]` evidence. Broader group scheduling
   remains fail-closed. The `.7` concurrent group sequence is complete and
-  the next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.8` for realistic
-  multi-actor orchestration fixtures.
+  the `.8` realistic-fixture frontier is decomposed before code into
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` for fixture selection and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` for fixture promotion. The next ATL
+  frontier is `.8.1`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

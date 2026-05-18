@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL realistic fixture frontier decomposed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8` decomposition before code.
+- The realistic multi-actor fixture frontier is now split into
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` for selecting the first realistic ATL
+  fixture and `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` for promoting that
+  fixture with regression and book coverage.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1`.
+- Validation passed: `mdbook build docs/book`; `git diff --check`.
 ## 2026-05-18: ATL group trigger batch lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` and closed the first
   concurrent group scheduling sequence.

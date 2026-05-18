@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL realistic fixture frontier decomposed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8` decomposition before code.
+- Split realistic multi-actor ATL fixture promotion into
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` for selecting the exact fixture
+  source/checks/book updates and `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` for
+  adding the fixture.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1`.
+
 ### R14 — ATL group trigger batch lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` and closed the first
   concurrent group scheduling sequence.

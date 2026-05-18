@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL realistic fixture frontier decomposed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8` decomposition before code.
+- The next realistic multi-actor ATL fixture work is split into
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` for fixture selection and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` for fixture promotion.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1`.
+- Validation passed: `mdbook build docs/book`; `git diff --check`.
+
 ## 2026-05-18: R14 — ATL group trigger batch lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` and closed the first
   concurrent group scheduling sequence.

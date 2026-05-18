@@ -733,6 +733,10 @@ batches, noncontiguous batches, repeated members, generated children, group
 endpoints, event/data-movement coupling, route mux/storage, CDC, and compact
 aliases remain later leaves.
 
+The next ATL fixture step is selection-only: choose one realistic multi-actor
+example that uses already shipped surfaces before adding fixture source,
+regression catalog coverage, or new book examples.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names the current

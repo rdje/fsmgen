@@ -260,7 +260,22 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.8`
   Status: `active`
   Goal: `Promote multi-actor orchestration fixtures.`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`
   Acceptance: `At least one realistic multi-actor fixture demonstrates orchestrator-driven behavior, peer event synchronization, data movement, generated `.fsm` artifacts, schedule reports, strict-mode validation, and HDL handoff.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1`
+  Status: `active`
+  Goal: `Select the first realistic multi-actor ATL fixture.`
+  Acceptance: `A selection leaf defines the exact fixture source, shipped ATL features it is allowed to use, generated files, report evidence, strict-mode expectations, and fail-closed boundaries before any fixture source or code changes are made.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`
+  Status: `pending`
+  Goal: `Add the selected realistic multi-actor ATL fixture.`
+  Acceptance: `The fixture uses only the '.8.1' selected shipped ATL surface, is covered by focused regression and any needed fixture-coverage catalog checks, documents exact user-visible behavior in the mdBook, and does not widen syntax or scheduler behavior beyond the selected contract.`
   Verification: `pending`
   Commit: `pending`
 
@@ -268,7 +283,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8` | `active` | `.7.5` shipped the selected same-cycle external group trigger batch; the next leaf promotes a realistic multi-actor orchestration fixture. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` | `active` | `.7.5` shipped the selected same-cycle external group trigger batch; the next step selects a realistic multi-actor fixture before code. |
 
 ## ATL v0 Proposal
 
@@ -448,6 +463,10 @@ Current proposal summary:
   top-level transaction-body qualified triggers to every member of one
   declared static group exactly once. The declaration remains metadata; the
   schedule evidence appears in `actor_network.group_schedules[]`.
+- `2026-05-18`: Decomposed the `.8` realistic-fixture frontier before code
+  into `.8.1` fixture selection and `.8.2` fixture promotion. This prevents a
+  broad fixture task from mixing source selection, regression coverage, and
+  documentation into one oversized implementation slice.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
   design first treated `(network ...)` as a scoping candidate, not a
   requirement, while keeping flat top-level actor ATL clauses as an explicit
@@ -550,6 +569,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `direct static concurrent groups report actor_network.groups[] metadata without scheduling behavior; broad ISF gate passes with Files=229, Tests=1352` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected same-cycle external group trigger batches and actor_network.group_schedules[] report evidence before code` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected same-cycle group trigger batch lowers to one parent state and actor_network.group_schedules[] metadata; broad ISF gate passes with Files=229, Tests=1353` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.8` | `mdbook build docs/book`; `git diff --check` | `decomposed realistic multi-actor fixture promotion into selection and fixture leaves before code` |
 
 ## Commit Log
 
@@ -582,6 +602,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.3: report static ATL groups` | `ships report-only static concurrent group metadata under actor_network.groups[]` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.4: select group trigger batch` | `selects same-cycle external trigger batches for every member of one declared static group` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.5: lower group trigger batch` | `lowers the selected same-cycle external group trigger batch and closes the first group scheduling sequence` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.8` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8: decompose ATL fixture frontier` | `splits realistic multi-actor fixture promotion into selection and implementation leaves` |
 
 ## Changelog
 
@@ -720,3 +741,7 @@ Current proposal summary:
   scheduling fail-closed. The `.7` concurrent group sequence is complete and
   the active frontier moves to `.8` for realistic multi-actor orchestration
   fixtures.
+- `2026-05-18`: Decomposed `.8` before code into `.8.1` fixture selection and
+  `.8.2` fixture promotion. The active frontier moves to `.8.1` so the first
+  realistic ATL fixture source, checks, and book updates are selected before
+  implementation.

@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL realistic fixtures need selection first
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.8` is intentionally decomposed before
+  fixture code because realistic ATL examples can otherwise mix source design,
+  regression cataloging, generated artifact expectations, and book narrative.
+- `.8.1` will select one fixture shape against already shipped ATL behavior;
+  `.8.2` will add only that selected fixture and its documentation.
 ## 2026-05-18: ATL group trigger batches are exact-member batches
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` implements only the exact-member
   same-cycle trigger batch selected in `.7.4`.
