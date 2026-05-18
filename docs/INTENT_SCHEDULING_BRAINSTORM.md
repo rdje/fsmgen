@@ -32,11 +32,25 @@ Core thesis:
 
 ## Design Note: 2026-05-18 Actor Network Orchestration
 
-The actor-network direction is fruitful and should be tracked as proposed ISF
-work. The useful abstraction is a static hierarchy or graph of explicit actors
-where one or more actors orchestrate the larger system by triggering peer or
-sub-actors, synchronizing on named one-cycle event pulses, and moving data
-through scheduler-visible bindings.
+The actor-network direction is fruitful and is now tracked as active ISF
+clarification work. The useful abstraction is a static hierarchy or graph of
+explicit actors where one or more actors orchestrate the larger system by
+triggering peer or sub-actors, synchronizing on named one-cycle event pulses,
+and moving data through scheduler-visible bindings.
+
+The refined mental model is Actor Transfer Level (`ATL`). RTL describes how
+data moves between flops/registers; ATL describes how data, information, and
+activation move between actors. The transfer endpoints are actors instead of
+flops. The whole network is itself a top-level actor whose structure/content
+is the actor network. Transactions and rules in that top-level actor can
+trigger actors or specific transactions inside the network, and data movement
+must cover actor-to-actor links, concurrent groups of actors, and movement
+between top-level pins and actors inside the network.
+
+This direction should stay intent-expressive while also offering a verbose
+variant for maximum readability. Compact forms can serve experienced authors,
+but the public contract must also expose a spelling that makes the
+orchestration, data movement, and scheduling evidence easy to review.
 
 This remains IAL1 while it is authored as explicit `.isf`: actors, events,
 bindings, resources, and timing constraints are still present in source form,
@@ -46,13 +60,15 @@ for example by asking FSMGen to infer the actor network from protocol or
 platform intent.
 
 The first design task is clarification, not implementation. The source shape
-needs to decide whether actor instances are expressed through nested actor
-declarations, top-level peer actors plus a `(network ...)` topology, reusable
-library actors, or a smaller first-slice construct. The event model also
-needs a crisp contract: whether orchestrator signals are transaction starts,
-actor-level starts, named one-cycle event outputs, event payloads, or some
-combination. The data movement model must likewise be explicit enough for
-schedule reports and generated-top wiring to remain reviewable.
+needs to decide how to spell the top-level actor-as-network model: nested
+actor declarations, a `(network ...)` body inside an actor, top-level peer
+actors plus explicit topology, reusable library actors, or a smaller
+first-slice construct. The event model also needs a crisp contract: whether
+orchestrator signals are transaction starts, actor-level starts, named
+one-cycle event outputs, event payloads, or some combination. The data
+movement model must likewise be explicit enough for concurrent group
+scheduling, schedule reports, top-level pin wiring, and generated-top wiring
+to remain reviewable.
 
 Tracked task tree:
 [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).

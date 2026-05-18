@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ISF Actor Transfer Level model captured
+- Activated the R14 actor-network clarification/design tree
+  [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md)
+  for the new Actor Transfer Level (`ATL`) direction.
+- The ATL mental model is now recorded: RTL moves values between
+  flops/registers; ATL moves data, information, and activation between actors.
+  Actors replace flops/registers as the named transfer endpoints.
+- The intended source model is a top-level actor whose structure/content is
+  the actor network. Transactions and rules in that top-level actor can
+  trigger actors or transactions inside the network. Data movement must cover
+  actor-to-actor links, concurrent groups of actors, and movement between
+  top-level pins and actors inside the network.
+- FSMGen remains responsible for inferring a reviewable schedule and lowering
+  to explicit `.fsm`; the direction remains IAL1 while the source is explicit
+  `.isf` actor/network syntax.
+- Implementation is still blocked until exact syntax, compact/verbose
+  spelling, event/data primitive names, first implementation subset, and
+  fail-closed boundaries are clarified.
 ## 2026-05-18: ISF actor-network orchestration proposed and task-tree tracked
 - Added proposed R14 task tree
   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).

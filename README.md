@@ -130,7 +130,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-SPAWN-IN-REPEAT.md` — completed `R14` task tree for static child spawn inside repeat bodies.
 - `docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md` — completed `R14` task tree for repeat-body spawn parameter overrides.
 - `docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md` — active `R14` task tree for remaining repeat-body child activation widening.
-- `docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md` — proposed `R14` task tree for static ISF actor-network orchestration.
+- `docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md` — active `R14` task tree for static ISF Actor Transfer Level actor-network orchestration.
 - `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md` — completed `R14` task tree for expression-valued activation input bindings.
 - `docs/tasks/ISF-SETTER-SYNTAX.md` — completed `R14` task tree for scalar setter syntax shared by rules and transactions.
 - `docs/tasks/ISF-TRANSACTION-ACTIVATION.md` — completed `R14` task tree for task-like transaction activation and parameter overrides.

@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF Actor Transfer Level model captured
+- Activated `ISF-ACTOR-NETWORK-ORCHESTRATION.1` as the current
+  actor-network clarification/design leaf.
+- Recorded Actor Transfer Level (`ATL`) as the working mental model: RTL moves
+  values between flops/registers; ATL moves data, information, and activation
+  between actors.
+- Captured the intended source shape: the whole network is a top-level actor,
+  that actor's transactions/rules can trigger actors or transactions inside
+  the network, and data movement must cover actor-to-actor links, concurrent
+  actor groups, and top-level pin boundaries.
+- FSMGen is expected to infer the needed schedule and lower to explicit
+  `.fsm`, so this remains IAL1 while the source is explicit `.isf`
+  actor/network syntax.
+- No implementation was started. Exact syntax, compact/verbose spelling,
+  event/data primitive names, first subset, and fail-closed boundaries remain
+  to clarify before code.
+
 ## 2026-05-18: R14 — ISF actor-network orchestration proposed
 - Added proposed task tree
   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).

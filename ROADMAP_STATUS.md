@@ -6318,6 +6318,17 @@ Done:
   `bin/fsmgen-issue-bundle` example for format-agnostic bug reports.
 - The ISF shipped feature matrix now includes copyable CLI examples for
   `--strict`, `--emit-schedule-json`, multi-file `--outdir`, and HDL handoff.
+- The actor-network orchestration axis is now active as a clarification/design
+  tree: Actor Transfer Level (`ATL`) treats actors, rather than
+  flops/registers, as the transfer endpoints; the intended model is a
+  top-level actor whose structure/content is a network of actors, where
+  top-level actor transactions/rules can trigger actors or transactions,
+  data/information can move between actors, concurrent actor groups, and
+  top-level pins, and FSMGen infers the reviewable schedule. Implementation
+  remains blocked until the exact source spelling, compact/verbose syntax
+  relationship, event/data primitives, first subset, and fail-closed boundary
+  are agreed in
+  [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 - `isf/spawn_parent.isf` now has file-backed strict generated-composition
   fixture coverage through
   [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t),
@@ -6707,12 +6718,13 @@ Left:
   limitations, starting with features that materially improve author-facing
   ISF expressiveness or generated scheduled `.fsm` usefulness.
 - Use the first feature-eligible tree in [docs/TASK_TREE.md](docs/TASK_TREE.md)
-  when selecting the next PNT slice. No active R14 task tree is currently open
-  after `ISF-PARAM-WAIT-COUNTS`, so the next ISF
-  implementation slice must either activate an existing proposed tree or create
-  a new feature tree before changing parser, scheduler, emitter, contract,
-  fixture, or book behavior. Keep `ISF-PUBLIC-CONTRACT` cross-cutting and
-  feature-driven.
+  when selecting the next PNT slice. Active R14 ownership currently includes
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION` for remaining repeat-body child
+  activation widening and `ISF-ACTOR-NETWORK-ORCHESTRATION` for ATL
+  actor-network clarification. Any future ISF implementation slice must stay
+  attached to an active tree or create a new task tree before changing parser,
+  scheduler, emitter, contract, fixture, or book behavior. Keep
+  `ISF-PUBLIC-CONTRACT` cross-cutting and feature-driven.
 - Keep public-facing ISF feature additions as the main focus; public contract
   synchronization should happen as part of each shipped feature slice rather
   than as a standalone stabilization lane.

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: Actor Transfer Level means actors replace flops as transfer endpoints
+- The actor-network idea is now framed as Actor Transfer Level (`ATL`): RTL
+  explains movement between flops/registers, while ATL explains movement of
+  data, information, and activation between actors.
+- The useful source shape is a top-level actor whose body contains the actor
+  network. That actor's transactions and rules are allowed, in principle, to
+  trigger actors or transactions inside the network.
+- Data movement must be first-class in the source contract. It has to cover
+  actor-to-actor transfer, transfer within concurrently active actor groups,
+  and transfer between top-level pins and actors inside the network.
+- The direction remains IAL1 while users author explicit `.isf` actor/network
+  syntax and FSMGen infers the schedule. It does not become IAL2 unless the
+  source asks FSMGen to infer actor structure from higher-level
+  protocol/platform intent.
+- Implementation must wait for exact syntax and semantic choices: compact vs.
+  verbose spellings, event/data primitive names, first subset, fan-in policy,
+  and fail-closed boundaries.
 ## 2026-05-18: actor-network orchestration is likely IAL1 until proven otherwise
 - The proposed actor-network direction is useful, but it should not jump to
   IAL2 just because it raises the modeling level. If users still author

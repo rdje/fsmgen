@@ -642,28 +642,42 @@ policy for the fully general case.
 
 ### Actor Network Orchestration
 
-Status: proposed backlog; task-tree tracked, not implemented.
+Status: active clarification/design tree; not implemented.
 Task-tree owner:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 
-Goal: move ISF up one abstraction level while staying in explicit `.isf`:
-let a system be described as a static hierarchy or network of actors where
-one or more orchestrator actors trigger peer/sub-actors, synchronize on
-named one-cycle event pulses, and move data through explicit bindings while
-FSMGen owns scheduling and lowering to explicit `.fsm`.
+Goal: move ISF up one abstraction level while staying in explicit `.isf`.
+The working name is Actor Transfer Level (`ATL`): where RTL describes data
+movement between flops/registers, ATL describes data, information, and
+activation movement between actors. The actor is the transfer endpoint.
+
+The intended source model is a top-level actor whose structure/content is a
+static actor network. Transactions and rules in the top-level actor can
+trigger actors or transactions inside the network. Actor instances can
+synchronize on scheduler-visible events, move data to other actors, move data
+within concurrent actor groups, and move data between actors and the
+top-level pins. FSMGen owns scheduling and lowering to explicit `.fsm`, with
+the inferred schedule remaining reviewable.
+
+The syntax should stay intent-expressive and should also have a verbose
+variant for maximum readability, so the network topology, orchestration,
+data movement, and generated schedule evidence can be reviewed without
+reading lowering code.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child
 transaction activations. They do not yet define a public actor-network source
-surface where actors instantiate or orchestrate other actors as first-class
-peers. This proposed direction is still IAL1 if the source remains explicit
+surface where a top-level actor owns a network of actors as first-class
+content. This direction is still IAL1 if the source remains explicit
 actor/network `.isf` syntax with scheduler-visible events, bindings, and
 constraints. It becomes an IAL2 candidate only if the source model moves
 above explicit ISF actor/network syntax into protocol/platform intent
-inference. The first required leaf is clarification with the user: source
-shape, event pulse semantics, actor-to-actor data movement, global versus
-local scheduling ownership, generated artifact names, report visibility, and
-fail-closed boundaries must be agreed before implementation.
+inference. The current required leaf is clarification with the user: source
+shape, event pulse semantics, actor-to-actor and pin-to-actor data movement,
+concurrent actor-group scheduling, global versus local scheduling ownership,
+generated artifact names, report visibility, compact/verbose syntax
+relationship, and fail-closed boundaries must be agreed before
+implementation.
 
 ### IAL2 Protocol And Platform Intent Exploration
 

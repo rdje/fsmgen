@@ -683,13 +683,16 @@ Deliverable themes:
 - produce machine-readable schedule reports,
 - keep ambiguity explicit: if timing cannot be inferred safely, fail with
   an actionable report rather than choosing a hidden schedule.
-- explore static actor-network orchestration as an IAL1 extension: a
-  hierarchy or network of explicit ISF actors where one or more orchestrator
-  actors trigger peer/sub-actors, synchronize on one-cycle event pulses, and
-  move data through explicit scheduler-visible bindings. This remains IAL1
-  while authored as explicit `.isf`; it becomes IAL2 only if the source model
-  moves above explicit actor/network syntax into protocol/platform intent
-  inference.
+- explore static Actor Transfer Level (`ATL`) actor-network orchestration as
+  an IAL1 extension: a top-level actor whose structure/content is a network
+  of explicit ISF actors, where actors replace flops/registers as the named
+  transfer endpoints. Top-level actor transactions and rules can trigger
+  actors or transactions inside the network; actors can synchronize on
+  scheduler-visible events; and data/information can move between actors,
+  between concurrent actor groups, and between the top-level pins and actors
+  through explicit scheduler-visible bindings. This remains IAL1 while
+  authored as explicit `.isf`; it becomes IAL2 only if the source model moves
+  above explicit actor/network syntax into protocol/platform intent inference.
 
 Initial sub-slices:
 1. Formalize the `.isf` format specification from the brainstorm log,
@@ -700,9 +703,10 @@ Initial sub-slices:
 3. Implement the first bounded scheduler for a single-transaction `.isf`
    source, producing valid `.fsm` output.
 4. Add regression coverage and schedule report validation.
-5. Clarify the proposed actor-network orchestration contract before
-   implementation: source shape, event pulse semantics, data movement,
-   scheduling ownership, generated artifact naming, report visibility, and
+5. Clarify the active actor-network/ATL orchestration contract before
+   implementation: source shape, compact plus verbose syntax, event pulse
+   semantics, actor-to-actor and pin-to-actor data movement, concurrent
+   actor-group scheduling, generated artifact naming, report visibility, and
    fail-closed boundaries are tracked in
    [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 

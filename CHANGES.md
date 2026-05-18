@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF Actor Transfer Level model captured
+- Activated `ISF-ACTOR-NETWORK-ORCHESTRATION.1` as the active clarification
+  leaf for the actor-network direction.
+- Recorded the Actor Transfer Level (`ATL`) model: where RTL describes data
+  movement between flops/registers, ATL describes data, information, and
+  activation movement between actors.
+- Captured the intended top-level actor-as-network shape: the network itself
+  is a top-level actor, top-level actor transactions/rules can trigger actors
+  or transactions inside the network, and data movement must cover
+  actor-to-actor links, concurrent actor groups, and top-level pin boundaries.
+- Extended the task tree with explicit leaves for top-level pin movement and
+  concurrent actor-group scheduling, and kept implementation blocked until
+  exact syntax, compact/verbose spelling, event/data primitive names, first
+  subset, and fail-closed boundaries are agreed.
+- Synchronized `ROADMAP_V2.md`, `ROADMAP_STATUS.md`, `docs/TASK_TREE.md`,
+  `README.md`, `docs/INTENT_SCHEDULING_BRAINSTORM.md`, and the mdBook
+  feature backlog.
 ### R14 — ISF actor-network orchestration proposed
 - Added proposed task tree
   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md)
