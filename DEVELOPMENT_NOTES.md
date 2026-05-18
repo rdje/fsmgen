@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL pin movement starts with input pin to actor
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.6.1` selects top-level input pin to actor
+  endpoint movement before code because it reuses the shipped named-drive
+  timing model with one existing parent input as the source and one generated
+  actor handoff output as the sink.
+- The first subset avoids actor-to-pin output publication, width inference,
+  storage, muxing, and generated child wiring. That keeps the implementation
+  close to the `.5.4` scalar handoff path while still proving the
+  `pins.name` endpoint vocabulary in one direction.
+- The selected report shape reuses `actor_network.data_movements[]` with a
+  distinct `kind` value and `source => top_level_pin`, so downstream consumers
+  can distinguish pin movement from actor-to-actor movement without a new
+  top-level report family.
 ## 2026-05-18: ATL scalar handoff lowering reuses named drives
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` implements the selected subset by
   rewriting the accepted drive-body endpoint pair to generated parent handoff

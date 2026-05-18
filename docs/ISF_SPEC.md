@@ -2855,6 +2855,17 @@ and actor-transaction trigger handoff subsets implemented so far:
   `drive`, `source_instance`, `source_endpoint`, `source_signal`,
   `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
   `route_lifetime`, `storage`, `source`, and `sink`.
+- The first top-level pin movement subset is selected but not shipped until
+  the next implementation leaf. That subset is one direct static actor
+  instance, one named drive body with one
+  `(actor.endpoint pins.input_pin)` scalar pair, and one top-level
+  transaction drive call. `pins.input_pin` must name a scalar one-bit
+  top-level actor input. The selected source is the existing top-level input
+  pin; the selected sink is a generated scalar external actor handoff output
+  named `actor_endpoint`; route lifetime is the drive-call cycle only. The
+  selected report entry reuses `actor_network.data_movements[]` with kind
+  `scalar_pin_to_actor_handoff`, `source => top_level_pin`, and
+  `sink => external_handoff`.
 - Future blocking orchestration uses `(do actor.transaction)`, future
   nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
   future rule-level orchestration uses `(trigger actor.transaction)`.

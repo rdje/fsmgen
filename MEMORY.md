@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL pin-to-actor handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.1`.
+- The first top-level pin movement subset is selected before code: exactly
+  one direct static actor instance, one named drive body with one scalar
+  `(actor.endpoint pins.input_pin)` pair, and one top-level transaction drive
+  call.
+- `pins.input_pin` must name a scalar one-bit top-level actor input. The
+  selected lowering will read that existing input pin directly and drive a
+  generated scalar external actor handoff output named `actor_endpoint` for
+  the drive-call cycle.
+- Actor-to-pin movement, wider pins, storage/muxing, generated children,
+  generated ATL tops, HDL child wiring, inline/expression movement,
+  fan-in/fan-out, groups, CDC, and trigger/await coupling remain deferred or
+  fail-closed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2`.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
 ## 2026-05-18: ATL scalar handoff lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` and closed the `.5`
   actor-to-actor data-movement group.

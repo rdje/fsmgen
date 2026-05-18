@@ -1591,6 +1591,11 @@ schedule-report surface is `actor_network.data_movements[]` with
 artifacts, generated ATL tops, HDL child wiring, pin movement,
 inline/expression movement, fan-in/fan-out, groups, CDC, and trigger/await
 coupling remain future public contracts.
+The first top-level pin movement public subset is selected but not yet
+implemented: one `(actor.endpoint pins.input_pin)` scalar pair in one named
+drive body, one direct static actor instance, and one top-level transaction
+drive call. The selected report kind is `scalar_pin_to_actor_handoff`, with
+`source => top_level_pin` and `sink => external_handoff`.
 Future orchestration spellings are reserved as
 `(do actor.transaction)`, `(spawn actor.transaction as NAME)`, and
 `(trigger actor.transaction)`, with event payloads deferred. Future group

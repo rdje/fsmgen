@@ -416,6 +416,28 @@ The schedule report records the movement in `actor_network.data_movements[]`
 with source/sink instance, endpoint, generated signal, width, route lifetime,
 and storage fields.
 
+The next selected ATL pin-movement subset reuses the same drive-body timing
+model for one top-level input pin feeding one actor endpoint:
+
+```lisp
+(actor pin_feed
+  (clock clk)
+  (interface (input start) (input in_bit) (output done))
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload pins.in_bit))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+```
+
+This pin-to-actor subset is selected but not yet implemented. The selected
+source is the existing one-bit top-level input pin, and the selected sink is
+a generated scalar external actor handoff output named `consumer_payload`.
+Actor-to-pin output movement, wider pins, storage, muxing, generated children,
+groups, CDC, and trigger/await coupling remain deferred.
+
 Future
 orchestration spellings are reserved as `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and

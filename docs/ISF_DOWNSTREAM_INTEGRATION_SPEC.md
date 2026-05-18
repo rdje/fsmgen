@@ -1573,6 +1573,14 @@ capability manifest and this handoff:
   drive-call cycle, with no storage, mux, actor type resolution, child `.fsm`,
   ATL top, HDL child wiring, pin movement, inline/expression movement,
   fan-in/fan-out, groups, CDC, or trigger/await coupling in that first subset.
+- The first top-level pin movement subset is selected but not
+  downstream-emittable until capability metadata advertises the implementation
+  leaf. The selected source form is exactly one direct static actor instance,
+  one named drive body with one `(actor.endpoint pins.input_pin)` scalar pair,
+  and one top-level transaction drive call. The source pin must be a scalar
+  one-bit top-level actor input. The selected generated sink handoff output is
+  `actor_endpoint`; the selected report kind is
+  `scalar_pin_to_actor_handoff` with `source => top_level_pin`.
 - Blocking actor-transaction orchestration is reserved as
   `(do actor.transaction)`, nonblocking orchestration as
   `(spawn actor.transaction as NAME)`, and rule-level orchestration as

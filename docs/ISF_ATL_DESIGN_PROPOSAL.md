@@ -590,8 +590,19 @@ generate an ATL top, wire HDL child interfaces, move data to or from
 infer fan-in or fan-out, combine data movement with actor triggers/events, or
 cross clock domains.
 
-The next slices can add multiple sources feeding one sink, top-level pin
-movement in both directions, compact aliases, and concurrent groups.
+The selected next pin-movement subset is pin-to-actor only:
+
+1. One direct static actor instance.
+2. One named drive body with one `(actor.endpoint pins.input_pin)` scalar pair.
+3. One top-level transaction drive call.
+4. `pins.input_pin` must name an existing scalar one-bit top-level input pin.
+5. The generated sink handoff is a scalar external parent output named
+   `actor_endpoint`; the source is the existing top-level input pin.
+6. The route lifetime is one drive-call cycle, with no storage, mux,
+   actor-to-pin output publication, generated children, groups, or CDC.
+
+The next slices can add top-level pin movement in the output direction,
+multiple sources feeding one sink, compact aliases, and concurrent groups.
 
 ## Fail-Closed Boundaries
 
