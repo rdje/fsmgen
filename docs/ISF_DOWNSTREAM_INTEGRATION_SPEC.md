@@ -1543,6 +1543,33 @@ multiple instances, `(network ...)`, `(group ...)`, dynamic/non-scalar names,
 direct recursive instantiation, actor-to-actor endpoint movement, qualified
 actor transaction triggers, and actor event waits.
 
+The broader ATL v0 contract is selected for future slices, but downstream
+producers must not emit it until the corresponding support appears in the
+capability manifest and this handoff:
+
+- Endpoint-aware movement reuses existing drive bodies and drive calls. A
+  drive body pair stays `(sink source)` while ATL widens each side to
+  `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, or
+  `group.name` where a later leaf explicitly permits that endpoint kind.
+- `connect`, `transfer`, and `move` are not public ATL v0 movement clauses.
+  Movement is temporal scheduling intent, not a permanent actor-to-actor wire.
+- Blocking actor-transaction orchestration is reserved as
+  `(do actor.transaction)`, nonblocking orchestration as
+  `(spawn actor.transaction as NAME)`, and rule-level orchestration as
+  `(trigger actor.transaction)`.
+- Actor event waits are reserved as `(await actor.event)`. Events are
+  one-cycle control pulses; event payloads are not supported.
+- Concurrent actor groups are reserved as
+  `(group NAME (members ACTOR...) (mode concurrent))`. A group is only
+  schedulable intent; it never overrides fan-in, lifetime, ordering, width, or
+  CDC safety.
+
+Current generated-artifact contract: none. The shipped static metadata surface
+emits no generated ATL child `.fsm`, no generated ATL top, no route mux, no
+handoff storage, and no HDL behavior. Downstream consumers must treat
+`actor_network` as discovery/review metadata until a later task-tree leaf
+documents generated artifact names and report keys in this handoff.
+
 ## 13. Scheduled `.fsm` Review Artifact
 
 Downstream tools should treat the scheduled `.fsm` files as review artifacts

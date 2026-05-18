@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL v0 public contract settled
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.2` as a documentation/public
+  contract slice after the one-instance static metadata implementation.
+- The selected ATL v0 source direction is now explicit across the design
+  proposal, ISF spec, downstream integration handoff, public contract, and
+  mdBook: direct actor-body ATL clauses, no `(network ...)`, endpoint-aware
+  drive-body `(sink source)` pairs plus drive calls for temporal movement, and
+  no `connect`/`transfer`/`move` movement clauses.
+- Future ATL orchestration vocabulary is reserved as
+  `(do actor.transaction)`, `(spawn actor.transaction as NAME)`,
+  `(trigger actor.transaction)`, and `(await actor.event)`. Events are
+  one-cycle control pulses with no payloads in ATL v0. Future groups use
+  `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
+  not a safety override.
+- The generated-artifact non-claim is now explicit: current `actor_network`
+  metadata emits no generated ATL child `.fsm`, generated ATL top, route mux,
+  handoff storage, or HDL behavior.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.4`,
+  which must select the first bounded actor-event trigger/sync subset before
+  behavior changes.
+- Validation passed: parser syntax check, focused actor-network/report/public
+  metadata/book tests (Files=7, Tests=186), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=229, Tests=1344), and
+  `git diff --check`.
 ## 2026-05-18: SPECFORGE strict-check JSON failure surface fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` and closed the
   SPECFORGE downstream stage/contract bug tree.

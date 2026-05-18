@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.2`.
+  activation `.111` and ATL actor-network orchestration `.4`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -30,19 +30,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   switch-contained bound analogue, spawn-after-do, cross-domain activation,
   deeper branch/loop nesting, and broader outstanding-child semantics remain
   unselected.
-- Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.2` selected the
-  direct actor-body static instance surface after the initial metadata slice.
-  A top-level actor can now declare exactly one static child actor instance
-  through `(instance NAME of ACTOR_TYPE)` directly in the actor body; the
-  enclosing actor is the network boundary, and `(network ...)` fails closed.
-  The parser shell plus schedule JSON preserve that identity through
-  `actor_network` with instance `declaration: "actor"`. This does not yet
+- Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.2` has settled the
+  ATL v0 public contract after the initial metadata slice. A top-level actor
+  can now declare exactly one static child actor instance through
+  `(instance NAME of ACTOR_TYPE)` directly in the actor body; the enclosing
+  actor is the network boundary, and `(network ...)` fails closed. The
+  selected future ATL vocabulary is direct actor-body groups, qualified
+  endpoints, existing drive-body `(sink source)` movement with drive-call
+  timing, `(do actor.transaction)`, `(spawn actor.transaction as NAME)`,
+  `(trigger actor.transaction)`, and `(await actor.event)`. `connect`,
+  `transfer`, and `move` are not ATL v0 movement syntax. This still does not
   resolve actor types, emit generated child artifacts, generate an ATL top,
-  move data between actors, trigger actor transactions, or wait on actor
-  events. The continuing ATL frontier remains
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.2`, the broader syntax/public-contract
-  leaf that must still settle event, trigger, group, and movement contracts
-  before the later implementation leaves.
+  move data between actors, trigger actor transactions, wait on actor events,
+  or change HDL. The continuing ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4`, which must select the first bounded
+  actor-event trigger/sync implementation subset.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

@@ -1564,6 +1564,21 @@ it through top-level `actor_network`. This slice is metadata-only: no child
 actor type resolution, generated child scheduled `.fsm`, generated ATL top,
 actor-to-actor movement, actor events, or HDL behavior is promised by this
 field.
+The selected broader ATL v0 public direction is direct actor-body syntax plus
+existing drive-body movement syntax, but those forms remain future behavior
+until advertised by capability metadata. Endpoint-aware movement will keep
+drive body pair order as `(sink source)` and may later admit qualified
+`pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
+`group.name` endpoints. `connect`, `transfer`, and `move` are not public ATL
+v0 movement clauses. Future orchestration spellings are reserved as
+`(do actor.transaction)`, `(spawn actor.transaction as NAME)`,
+`(trigger actor.transaction)`, and `(await actor.event)`, with event payloads
+deferred. Future group syntax is reserved as
+`(group NAME (members ACTOR...) (mode concurrent))`, but groups will be
+schedulable intent only and will not override safety checks. The current
+artifact contract remains empty for ATL scheduling: no generated ATL child
+`.fsm`, generated ATL top, route mux, handoff storage, or HDL behavior is
+promised by `actor_network` metadata.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`

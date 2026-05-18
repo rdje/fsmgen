@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL v0 public contract settled
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.2`.
+- The ATL v0 public direction is now synchronized across the design proposal,
+  ISF spec, downstream integration handoff, public contract, mdBook, roadmap,
+  and task tree.
+- The accepted shipped surface is still only one direct actor-body static
+  instance recorded as `actor_network` metadata. Future ATL syntax is reserved
+  but not implemented: endpoint-aware drive-body `(sink source)` movement,
+  `(do actor.transaction)`, `(spawn actor.transaction as NAME)`,
+  `(trigger actor.transaction)`, `(await actor.event)`, and direct actor-body
+  groups.
+- `connect`, `transfer`, and `move` are not ATL v0 movement syntax.
+- The current generated-artifact contract is explicit: no generated ATL child
+  `.fsm`, generated ATL top, route mux, handoff storage, event payload, group
+  schedule, or HDL behavior is promised until a later implementation leaf
+  ships it.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4` for the first bounded actor-event
+  trigger/sync subset selection.
+- Validation passed: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`,
+  focused actor-network/report/public metadata/book tests (Files=7,
+  Tests=186), `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=229, Tests=1344), and `git diff --check`.
+
 ## 2026-05-18: R14 — SPECFORGE strict-check JSON failure surface fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` and closed the
   downstream SPECFORGE stage/contract bug tree.

@@ -1,6 +1,6 @@
 # ISF Actor Transfer Level Design Proposal
 
-Status: active design proposal, partially implemented.
+Status: active ATL v0 public contract, partially implemented.
 
 Task-tree owner:
 [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
@@ -81,6 +81,41 @@ This keeps the model natural:
   classification is preferred over adding another author-facing movement
   syntax family.
 
+## ATL V0 Public Contract
+
+ATL v0 now has a selected public source direction:
+
+- The source root remains `(actor NAME ...)`.
+- The actor body is the network boundary; `(network ...)` is not accepted.
+- Static actor instances use direct actor-body
+  `(instance NAME of ACTOR_TYPE)` clauses.
+- Verbose source forms are normative. Compact forms are optional future
+  aliases only after they lower to the same ATL IR and diagnostics.
+- Endpoint-aware movement reuses existing drive-body assignment pairs in
+  `(sink source)` order and existing drive calls as timing points. ATL v0 does
+  not add `connect`, `transfer`, or `move` as the public movement surface.
+- Qualified endpoints use `pins.name`, `actor.port`, `actor.transaction`,
+  `actor.event`, and `group.name`.
+- Blocking actor-transaction orchestration uses
+  `(do actor.transaction)` when that future implementation ships.
+- Nonblocking actor-transaction orchestration uses
+  `(spawn actor.transaction as NAME)` when that future implementation ships.
+- Rule-level actor-transaction orchestration uses
+  `(trigger actor.transaction)` when that future implementation ships.
+- Actor event synchronization uses `(await actor.event)` when that future
+  implementation ships. Event payloads are not part of ATL v0.
+- Concurrent actor groups use
+  `(group NAME (members ACTOR...) (mode concurrent))` when that future
+  implementation ships. Groups express schedulable intent, not an override for
+  safety.
+
+The current generated-artifact contract is also explicit: the shipped
+metadata slice emits no generated ATL child `.fsm`, generated ATL top, route
+mux, handoff storage, child instance, or HDL behavior. Later leaves must add
+their generated artifact names, report keys, examples, and fail-closed
+diagnostics in the same slice that ships the behavior. Until then, downstream
+tools must treat `actor_network` as review/discovery metadata only.
+
 ## Shipped Static Metadata Slice
 
 The first shipped slice accepts exactly one static actor instance:
@@ -115,7 +150,8 @@ The direct actor-body form preserves schedule-report metadata:
 This slice is intentionally not ATL scheduling. It does not resolve
 `packet_reader`, emit a child `.fsm`, build a generated ATL top, move data
 between actors, trigger `reader` transactions, or wait on `reader` events.
-Those behaviors remain separate task-tree leaves.
+Those behaviors remain separate task-tree leaves with their own artifact and
+report contracts.
 
 ## Endpoints
 
@@ -281,13 +317,16 @@ Verbose candidate:
   (complete done))
 ```
 
-Existing ISF activation vocabulary should be reused where possible:
+Existing ISF activation vocabulary is the selected ATL v0 direction:
 
-- `(do actor.transaction)` can mean blocking activation.
-- `(spawn actor.transaction as name)` can mean nonblocking activation.
-- `(await actor.event)` can wait for a named actor event.
-- `(trigger actor.transaction)` can be the verbose orchestration form in
-  rules, matching the existing rule-trigger mental model.
+- `(do actor.transaction)` means blocking activation once qualified
+  transaction targets ship.
+- `(spawn actor.transaction as name)` means nonblocking activation once
+  qualified transaction targets ship.
+- `(await actor.event)` waits for a named actor event once actor events ship.
+- `(trigger actor.transaction)` is the verbose orchestration form in rules,
+  matching the existing rule-trigger mental model once qualified rule triggers
+  ship.
 - `(drive name)` keeps the existing named drive-call shape. ATL movement is
   recorded by endpoint-aware assignment pairs inside the called drive body,
   without exposing the generated mux/connectivity plan in source.
@@ -437,12 +476,10 @@ ATL v0 should reject:
 
 ## Open Decisions
 
-- Whether the final verbose trigger spelling should be `(trigger ...)`,
-  `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`.
 - Whether later ergonomic sugar above endpoint-aware drive-body pairs is worth
   adding after the v0 drive-body reuse path is implemented and reviewed.
 - Directional symbolic aliases such as `=>` should stay deferred unless they
-  prove clearer than the simple two-operand word form.
-- Whether concurrent groups need a stronger contract for expected overlap,
-  or whether they should initially be report-only scheduling hints.
+  prove clearer than the selected drive-body source form.
+- Whether concurrent groups need a stronger contract for expected overlap
+  after the first conservative group scheduler ships.
 - Which realistic fixture should prove the first end-to-end ATL value.

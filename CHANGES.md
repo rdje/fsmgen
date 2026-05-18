@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL v0 public contract settled
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.2` as a public-contract and
+  documentation slice.
+- The selected ATL v0 source contract is direct actor-body ATL declarations,
+  no `(network ...)` wrapper, endpoint-aware drive-body `(sink source)` pairs
+  plus drive-call timing for temporal movement, and no
+  `connect`/`transfer`/`move` movement clauses.
+- Reserved future orchestration forms are `(do actor.transaction)`,
+  `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
+  `(await actor.event)`. Event payloads remain unsupported; concurrent groups
+  are schedulable intent only.
+- The current `actor_network` metadata non-claim is explicit: no generated ATL
+  child `.fsm`, generated ATL top, route mux, handoff storage, or HDL behavior
+  is promised until a later implementation leaf ships it.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.4`.
 ### R14 — SPECFORGE strict-check JSON failure surface fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` and closed the
   SPECFORGE downstream stage/contract report tree.

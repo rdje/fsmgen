@@ -374,6 +374,23 @@ slice. Multiple instances, groups, endpoint-aware drive-body movement, actor
 events, qualified transaction triggers, and generated ATL wiring remain
 backlog under the actor-network task tree.
 
+The broader ATL v0 contract is selected for later slices. The source root
+stays `(actor ...)`, and future ATL declarations remain direct actor-body
+clauses rather than a `(network ...)` section. Actor-to-actor and
+pin-to-actor movement will reuse the existing drive-body pair shape in
+`(sink source)` order plus ordinary drive-call timing points. `connect`,
+`transfer`, and `move` are not part of ATL v0 movement syntax. Future
+orchestration spellings are reserved as `(do actor.transaction)`,
+`(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
+`(await actor.event)`. Events are one-cycle control pulses with no payloads in
+ATL v0. Future concurrent groups use
+`(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
+not a way to bypass fan-in, ordering, width, lifetime, or CDC safety.
+
+Until those later leaves ship, `actor_network` remains discovery metadata
+only. It does not imply generated ATL child artifacts, generated ATL top names,
+route muxes, handoff storage, or HDL behavior.
+
 ## Schedule Report Projection
 
 The generated-composition schedule-report projection is a live bounded

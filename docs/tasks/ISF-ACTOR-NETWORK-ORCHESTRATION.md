@@ -63,11 +63,11 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `ISF-ACTOR-NETWORK-ORCHESTRATION.1: draft ATL v0 proposal`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.2`
-  Status: `active`
+  Status: `done`
   Goal: `Specify the static actor-network/ATL syntax and public contract.`
   Acceptance: `The ISF spec, downstream integration handoff, public contract, and mdBook define the accepted direct actor-body static instance source form, the rejected network-wrapper boundary, the eventual compact and verbose source forms, event/data binding vocabulary, schedule-report shape, generated artifact names, and explicit non-claims.`
-  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; mdbook build docs/book; git diff --check; ./bin/ci-regression isf --no-book`
-  Commit: `pending commit for direct static instance surface`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; prove -Iperl t/1322-isf-actor-network-static.t t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.2: settle ATL v0 public contract`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.3`
   Status: `completed`
@@ -77,9 +77,9 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `ISF-ACTOR-NETWORK-ORCHESTRATION.3: ship static actor-network metadata`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship actor event trigger and sync semantics.`
-  Acceptance: `One actor can emit a named one-cycle event pulse that another actor can use as an activation/sync source through explicit network wiring, with fan-in/fan-out and same-cycle ambiguity policies documented and tested.`
+  Acceptance: `Select and then ship the first bounded actor-event subset using the reserved ATL v0 event vocabulary. Actor event waits use '(await actor.event)'; events are one-cycle control pulses with no payloads; fan-in, fan-out, same-cycle ambiguity, generated artifact names, report keys, and fail-closed boundaries are documented and tested before behavior ships.`
   Verification: `pending`
   Commit: `pending`
 
@@ -115,7 +115,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `active` | Static one-instance parsing/reporting shipped first; this leaf has now selected direct actor-body static instances and rejected `(network ...)`, but it still needs to settle the next event, trigger, group, and movement contracts before those implementation leaves. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4` | `active` | ATL v0 public syntax is now selected; the next bounded implementation frontier is actor event trigger/sync semantics using the reserved `(await actor.event)` vocabulary. |
 
 ## ATL v0 Proposal
 
@@ -136,7 +136,7 @@ Current proposal summary:
 - Verbose syntax is the normative authoring and downstream-emission target.
 - Compact syntax is proposed only as a semantics-preserving alias over the
   verbose ATL IR.
-- Top-level `connect` is no longer the preferred ATL v0 movement syntax.
+- Top-level `connect` is not part of the ATL v0 movement syntax.
 - Actor-to-actor and pin-to-actor movement should be captured as
   existing drive-body assignment pairs plus existing drive-call timing points,
   not as a new `(drive source sink)` action.
@@ -152,8 +152,9 @@ Current proposal summary:
   movement forms where possible instead of adding another movement vocabulary.
 - Events are one-cycle scheduler-visible control pulses in the first ATL
   subset; event payloads remain deferred.
-- Top-level transactions/rules can orchestrate actor transactions through
-  qualified targets such as `reader.capture`.
+- Top-level transactions and rules reserve the existing activation vocabulary
+  for qualified targets: `(do actor.transaction)`,
+  `(spawn actor.transaction as NAME)`, and `(trigger actor.transaction)`.
 - Concurrent groups express intended parallel actor activity but do not
   override safety; FSMGen may schedule, serialize, insert handoff storage, or
   reject unsafe overlap.
@@ -238,15 +239,18 @@ Current proposal summary:
   generating ATL tops, moving data, triggering actor transactions, or waiting
   on actor events. The earlier `(network ...)` wrapper was removed from the
   shipped source surface and now fails closed.
+- `2026-05-18`: Closed the ATL v0 public-contract clarification. The selected
+  public direction is direct actor-body ATL clauses, endpoint-aware drive-body
+  `(sink source)` pairs plus drive calls for temporal movement, no
+  `connect`/`transfer`/`move` movement clauses, reserved
+  `(do actor.transaction)`, `(spawn actor.transaction as NAME)`,
+  `(trigger actor.transaction)`, and `(await actor.event)` orchestration
+  forms, one-cycle payload-free events, and conservative concurrent groups as
+  schedulable intent only. The current generated-artifact contract remains
+  empty for ATL scheduling.
 
 ## Open Questions
 
-- Should broader ATL declarations beyond the one-instance metadata slice keep
-  direct actor-body clauses for `group` and later ATL declarations, or should
-  some future grouping construct be added only after there is a concrete
-  semantic need?
-- Should the final verbose trigger spelling be `(trigger ...)`,
-  `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`?
 - After ATL v0 ships and is reviewed, is ergonomic sugar above endpoint-aware
   drive-body pairs worth adding, or should drive-body reuse remain the only
   public movement surface?
@@ -258,10 +262,10 @@ Current proposal summary:
 
 ## Blockers
 
-- No blocker for the shipped one-instance metadata slice. Event trigger naming,
-  multi-orchestrator fan-in policy, first realistic fixture, and endpoint
-  movement lowering still need bounded task-tree selection before those later
-  leaves move to implementation.
+- No blocker for the completed ATL v0 public-contract slice. The active `.4`
+  frontier still must select a bounded event subset before behavior changes:
+  event emission source, event wait ownership, fan-in/fan-out policy,
+  generated artifact names, and report keys must be pinned down before code.
 
 ## Verification Log
 
@@ -275,6 +279,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `scheduler-owned dynamic routing clarification captured; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `static actor-network parser/report slice shipped; focused checks and ISF regression gate passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `direct actor-body static instance surface selected; network wrapper rejection and docs/contracts passed focused checks plus ISF regression gate` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `ATL v0 public contract selected across spec, downstream handoff, public contract, mdBook, and design proposal; focused checks pass; broad ISF gate passes with Files=229, Tests=1344` |
 
 ## Commit Log
 
@@ -287,6 +292,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: select ATL drive-body movement` | `selects existing drive-body pairs and drive calls as the ATL v0 movement surface` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: clarify ATL scheduler routing` | `records scheduler-owned dynamic route control` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.3` | `ISF-ACTOR-NETWORK-ORCHESTRATION.3: ship static actor-network metadata` | `ships one-instance static actor-network parsing/reporting metadata` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.2: settle ATL v0 public contract` | `selects the reserved ATL v0 source, movement, event, trigger, group, and artifact contracts before further implementation leaves` |
 
 ## Changelog
 
@@ -309,3 +315,8 @@ Current proposal summary:
   metadata with the direct actor-body source form, public schedule-report
   keys, contract/docs/book synchronization, and fail-closed unsupported graph
   diagnostics.
+- `2026-05-18`: Settled the ATL v0 public contract before the next
+  implementation leaf: direct actor-body declarations, endpoint-aware
+  drive-body movement reuse, reserved qualified activation/event/group
+  vocabulary, explicit no-`connect`/`transfer`/`move` boundary, and no
+  generated ATL artifacts until a later leaf ships them.

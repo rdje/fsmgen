@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL v0 keeps one movement vocabulary
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.2` closes the public-contract
+  clarification before the next actor-network implementation leaf.
+- ATL v0 deliberately reuses existing drive-body pairs and drive calls for
+  data/information movement. The pair order remains `(sink source)` because
+  that is already the shipped drive-body contract; ATL widens the endpoint
+  vocabulary later instead of introducing a second movement syntax.
+- `connect`, `transfer`, and `move` remain outside ATL v0. They either read
+  like permanent wiring or add vocabulary that does not buy enough clarity
+  before endpoint-aware drive movement is proven.
+- The reserved activation vocabulary also reuses existing ISF forms:
+  `(do actor.transaction)`, `(spawn actor.transaction as NAME)`,
+  `(trigger actor.transaction)`, and `(await actor.event)`. This keeps ATL
+  actor orchestration aligned with local transactions, generated-child
+  activation, and rule trigger semantics.
+- `actor_network` remains metadata only until later leaves ship generated
+  artifacts. This avoids downstream consumers mistaking a static declaration
+  for an instantiated child schedule or HDL structure.
 ## 2026-05-18: Check JSON is part of the ISF downstream contract
 - `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` treats empty stdout under
   `--check --json` as a downstream contract bug for existing `.isf` inputs,

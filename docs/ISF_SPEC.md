@@ -2767,6 +2767,12 @@ actor-network declaration. It lets a top-level actor record one child actor
 instance while FSMGen preserves that identity in the parser shell and schedule
 JSON report.
 
+The selected ATL v0 source contract keeps the existing `(actor NAME ...)` root.
+The actor body is the network boundary; there is no accepted `(network ...)`
+wrapper. The current shipped syntax is the direct actor-body
+`(instance NAME of ACTOR_TYPE)` form below. Future ATL leaves must keep the
+same boundary unless a task-tree leaf explicitly changes the public contract.
+
 Accepted form:
 
 ```lisp
@@ -2817,6 +2823,31 @@ The following remain fail-closed/deferred:
 - static actor type resolution, generated child artifacts, and generated
   top-level ATL wiring;
 - recursive actor-network declarations.
+
+The broader ATL v0 vocabulary is selected but not implemented yet:
+
+- Endpoint-aware movement will reuse existing drive bodies and drive calls.
+  Drive body pairs keep the existing `(sink source)` order. The widened
+  endpoint names are `pins.name`, `actor.port`, `actor.transaction`,
+  `actor.event`, and `group.name`.
+- No top-level `connect`, `transfer`, or `move` movement clause is part of
+  ATL v0. Movement remains temporal intent placed by drive-call timing, not a
+  permanent actor-to-actor wire.
+- Future blocking orchestration uses `(do actor.transaction)`, future
+  nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
+  future rule-level orchestration uses `(trigger actor.transaction)`.
+- Future actor event synchronization uses `(await actor.event)`. Events are
+  scheduler-visible one-cycle control pulses; event payloads remain deferred.
+- Future concurrent groups use
+  `(group NAME (members ACTOR...) (mode concurrent))`; groups express
+  schedulable intent and do not override fan-in, ordering, lifetime, or CDC
+  safety checks.
+
+The current generated-artifact contract is explicit: this metadata slice emits
+no ATL child `.fsm`, no generated ATL top, no generated route mux, no generated
+handoff storage, and no HDL behavior. Any later ATL implementation that emits
+artifacts must document their names, report keys, and review surfaces in the
+same slice that ships them.
 
 ## 10. Schedule JSON Report
 
