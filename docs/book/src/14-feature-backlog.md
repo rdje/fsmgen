@@ -461,12 +461,11 @@ nested repeat check can loop. The generated do site owns one deterministic
 generated instance, records static generated-top parameter binding, waits for
 that instance's fresh done handoff, and leaves the pending generated-spawn
 done set live for the later drain.
-The next selected implementation leaf is the top-level `when` body binding
-analogue: generated `(do child (params ...) (bind ...))` may run while
-generated nested spawns are pending when a later same-body `(await_all done)`
-still drains every outstanding generated child before the nested repeat check
-can loop. That selected when-contained leaf is not shipped yet. Its intended
-proof mirrors the shipped static-parameter pending-spawn leaf, with
+The top-level `when` body binding analogue is also shipped: generated
+`(do child (params ...) (bind ...))` may run while generated nested spawns are
+pending when a later same-body `(await_all done)` still drains every
+outstanding generated child before the nested repeat check can loop. This
+subset mirrors the shipped static-parameter pending-spawn leaf, with
 generated-top input/output binding handoffs added once for the generated do
 instance while pending generated-spawn done handoffs remain live until the
 later drain. Domain metadata on that generated `do`, the switch-contained

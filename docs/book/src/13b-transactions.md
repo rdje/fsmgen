@@ -503,9 +503,14 @@ fresh done handoff, and does not clear the pending generated-spawn done set.
 The same branch-contained forms support static-parameter generated
 `(do child (params ...))` in that pending-spawn interval; the generated do
 site keeps its authored static parameter binding and still leaves the pending
-generated-spawn done set live for the later drain. Bound or domain-qualified
-generated `do` while a nested spawn is pending, new nested `spawn` after the
-do before the drain, and `(await_any done)` after the do remain fail-closed.
+generated-spawn done set live for the later drain. The top-level `when` body
+form also supports static-parameter generated
+`(do child (params ...) (bind ...))` in that interval; the generated do site
+wires generated-top input/output binding handoffs once and still leaves the
+pending generated-spawn done set live for the later drain. Domain-qualified
+generated `do` while a nested spawn is pending, the switch-contained binding
+analogue, new nested `spawn` after the do before the drain, and
+`(await_any done)` after the do remain fail-closed.
 Cross-domain
 repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained
@@ -764,8 +769,41 @@ state. The nested repeat check is still gated on `w0_done`, so the spawned
 child cannot be restarted by the loop until the same-body drain observes its
 fresh done handoff. Static `(params ...)` overrides on that pending generated
 do are shipped for both top-level `when` and top-level `switch` branch nested
-repeats; adding `(bind ...)` or `(domain NAME)` to the pending generated do
-site remains fail-closed until a separate contract ships.
+repeats. Static `(params ...)` plus `(bind ...)` handoffs on the pending
+generated do are shipped for the top-level `when` body subset; adding
+`(domain NAME)` there, or adding `(bind ...)` to the top-level `switch` branch
+pending generated do, remains fail-closed until separate contracts ship.
+
+The bound when-contained form keeps the pending generated spawn and the
+blocking generated `do` as separate generated instances:
+
+```lisp
+(transaction parent
+  (on start)
+  (when cond
+    (repeat loops
+      (sample status as before)
+      (spawn worker as w0
+        (params
+          (WIDTH 16))
+        (bind
+          (input addr payload)
+          (output data spawn_resp)))
+      (do worker
+        (params
+          (WIDTH 32))
+        (bind
+          (input addr req_addr)
+          (output data resp)))
+      (sample status as after_do)
+      (await_all done)))
+  (complete done))
+```
+
+Lowering emits `w0` for the spawn and `parent_worker_repeat_do_0` for the
+blocking `do`. The generated top applies `(WIDTH 32)` and the `addr`/`data`
+binding handoffs to `parent_worker_repeat_do_0` only; `w0_done` remains live
+until the later same-body `await_all` drain.
 
 The direct switch-branch analogue is also shipped. A selected branch may run a
 local plain `(do child)` while one or more generated nested spawns remain
@@ -957,8 +995,13 @@ additionally run static-parameter generated `(do child (params ...))` in that
 interval; that generated do preserves static generated-top parameter binding,
 waits on its generated do instance's fresh done handoff, and still leaves
 spawned done handoffs pending for the later drain.
-Bound/domain-qualified generated do, new spawn after that do before the
-drain, and await-any-after-do forms remain rejected.
+The top-level `when` body nested subset may additionally run
+static-parameter generated `(do child (params ...) (bind ...))` in that
+interval; that generated do wires generated-top input/output binding handoffs
+once and still leaves spawned done handoffs pending for the later drain.
+Domain-qualified generated do, the switch-contained binding analogue, new
+spawn after that do before the drain, and await-any-after-do forms remain
+rejected.
 For the shipped repeat-body local `do` subset, `(do child)` remains a local
 child activation when the target child remains in the parent scheduled module.
 If the same target child is already emitted as a generated child by another

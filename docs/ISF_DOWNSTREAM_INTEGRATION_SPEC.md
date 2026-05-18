@@ -934,9 +934,14 @@ Rules:
   loop; that generated do site uses the same deterministic instance naming,
   records static generated-top parameter binding, waits for its own fresh done
   handoff, and leaves the generated spawn done set live for the later drain.
-  Bound or domain-qualified generated `do` while a nested spawn is pending,
-  new nested `spawn` after the do before the drain, `await_any` after the do,
-  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
+  Top-level `when` body nested-repeat generated
+  `(do child (params ...) (bind ...))` may also run in that pending interval;
+  that generated do site wires generated-top input/output binding handoffs
+  once, waits for its own fresh done handoff, and leaves the generated spawn
+  done set live for the later drain. Domain-qualified generated `do` while a
+  nested spawn is pending, the switch-contained binding analogue, new nested
+  `spawn` after the do before the drain, `await_any` after the do, deeper
+  branch/loop nesting, and cross-domain activation remain fail-closed.
   Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,
   `contract`, deeper branch nesting, nested `while`, and nested `until` remain
@@ -1255,9 +1260,13 @@ Rules:
   generated `(do child (params ...))` in that pending interval; the generated
   do instance carries static parameter binding, waits for its own fresh done
   handoff, and leaves the pending generated-spawn done set live for the later
-  drain. No deeper branch repeat, bound/domain-qualified generated do while
-  pending, or loop-contained repeat is included in those shipped nested
-  subsets.
+  drain. Top-level `when` body nested repeats may also run static-parameter
+  generated `(do child (params ...) (bind ...))` in that pending interval; the
+  generated do instance wires generated-top input/output binding handoffs once
+  and leaves the pending generated-spawn done set live for the later drain. No
+  deeper branch repeat, domain-qualified generated do while pending, the
+  switch-contained binding analogue, or loop-contained repeat is included in
+  those shipped nested subsets.
   Top-level
   repeat bodies
   may also use
