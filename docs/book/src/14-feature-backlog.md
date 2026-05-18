@@ -589,8 +589,15 @@ same contract for a repeat directly inside a top-level `switch` branch while
 generated nested spawns remain pending before the same-body `await_all` drain:
 the local child still completes through the parent scheduled module, and the
 post-do `await_any` observes only the pending generated-spawn done set
-without clearing it. Generated-do post-do `await_any`, new spawn after the do
-before the drain, cross-domain activation, deeper branch/loop nesting, and
+without clearing it. The next selected generated-do post-do `await_any`
+frontier is the top-level `when` body nested repeat plain generated-child
+`(do child)` analogue: a repeat directly inside a top-level `when` body with
+multiple generated spawns, a plain generated-child blocking do while those
+generated spawns remain pending, post-do `(await_any done)` as an observation
+point, and a later same-body `(await_all done)` drain before the nested
+repeat check can loop. Static-parameter generated do, bind handoffs, domain
+metadata, the switch-contained generated-child analogue, new spawn after the
+do before the drain, cross-domain activation, deeper branch/loop nesting, and
 broader outstanding-child semantics remain backlog until their own leaves
 select and ship them.
 

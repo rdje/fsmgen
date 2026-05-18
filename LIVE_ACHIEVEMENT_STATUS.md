@@ -2,6 +2,29 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF when-contained generated-child do before post-do await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.101`.
+- Selected top-level `when` body nested repeats with multiple generated
+  spawns, plain generated-child blocking `(do child)` while those generated
+  spawns remain pending, `(await_any done)` as an observation point after
+  that generated-child do, and a later same-body `(await_all done)` drain
+  before the nested repeat check can loop.
+- The selected implementation contract waits for the generated do instance's
+  fresh done handoff before the post-do `await_any`, keeps generated-spawn
+  done handoffs live through that observation, and drains every pending
+  generated child before nested repeat re-entry.
+- Static-parameter generated do, bind handoffs, domain metadata, the
+  switch-contained generated-child analogue, spawn-after-do before the drain,
+  cross-domain activation, deeper nesting, and broader outstanding-child
+  semantics remain deferred.
+- The mdBook feature backlog now documents this subset as selected but not
+  yet shipped. The active frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.102`, which implements this selected
+  subset.
+- Validation passed: `mdbook build docs/book`,
+  `prove -l t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
+  (Files=2, Tests=300), and `git diff --check`.
+
 ## 2026-05-18: R14 — ISF switch-contained local do before post-do await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.100`.
 - Top-level `switch` branches may now contain nested repeats with multiple
