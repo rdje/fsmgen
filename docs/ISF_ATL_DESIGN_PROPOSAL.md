@@ -202,11 +202,12 @@ yet. Schedule JSON records accepted triggers in
 `sink` value is `external_handoff`.
 
 The selected subset explicitly excludes rule-level qualified triggers, nested
-qualified triggers, multiple qualified triggers, generated handoff signal
-conflicts, fan-in, fan-out, trigger payloads or bindings, ready/backpressure,
-cross-clock actor triggers, generated ATL child artifacts, generated ATL tops,
-and concurrent group triggers. Those forms stay fail-closed until later leaves
-select their exact artifact and scheduling contracts.
+qualified triggers, multiple qualified triggers outside the exact group
+trigger batch, generated handoff signal conflicts, fan-in, fan-out, trigger
+payloads or bindings, ready/backpressure, cross-clock actor triggers,
+generated ATL child artifacts, generated ATL tops, and broader concurrent
+group triggers. Those forms stay fail-closed until later leaves select their
+exact artifact and scheduling contracts.
 
 ## Shipped Static Metadata Surfaces
 
@@ -561,14 +562,15 @@ artifacts, no route mux/storage, no CDC, and no scheduling overlap claims
 until separate leaves ship them. Compact `(concurrent NAME ACTOR...)` aliases
 remain reserved and fail closed.
 
-The selected first behavior-bearing group scheduling subset is a same-cycle
+The shipped first behavior-bearing group scheduling subset is a same-cycle
 external trigger batch. In one top-level transaction body, a contiguous run of
-`(trigger actor.transaction)` clauses may target distinct members of the same
-declared static group. The selected lowering will emit every generated parent
-trigger output from one scheduled state and report the inferred independence
-through `actor_network.group_schedules[]`. This selection does not add group
+`(trigger actor.transaction)` clauses may target every member of the same
+declared static group exactly once. The lowering emits every generated parent
+trigger output from one scheduled state and reports the inferred independence
+through `actor_network.group_schedules[]`. This subset does not add group
 endpoint syntax, generated children, event waits, data movement, storage/mux
-insertion, CDC, compact aliases, or fan-in/fan-out behavior.
+insertion, CDC, compact aliases, partial-group batches, or fan-in/fan-out
+behavior.
 
 ## Scheduling Ownership
 
@@ -594,9 +596,9 @@ for at least two declared direct static actor instances in a single-clock
 actor and reports them under `actor_network.groups[]` with `scheduling:
 metadata_only`.
 
-The next selected group scheduling implementation is a same-cycle external
-trigger batch for distinct members of one declared static group. It will keep
-the existing per-target `actor_network.transaction_triggers[]` entries and add
+The shipped first group scheduling implementation is a same-cycle external
+trigger batch for every member of one declared static group. It keeps
+the existing per-target `actor_network.transaction_triggers[]` entries and adds
 `actor_network.group_schedules[]` entries with `group`, `owner_transaction`,
 `context`, `members`, `target_transactions`, `signals`, `schedule`,
 `dependency_policy`, `storage`, `source`, and `sink` keys.

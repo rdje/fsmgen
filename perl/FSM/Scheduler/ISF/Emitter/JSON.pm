@@ -356,7 +356,7 @@ sub _transaction_summary($self, $ir) {
 
     # Group states by transaction prefix
     for my $s (@{$ir->{states}}) {
-        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|atl_trigger|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/);
+        my ($tx_name) = ($s->{name} =~ /^(\w+?)_(?:idle|drive|await|atl_trigger|atl_group_trigger|done|repeat|sample|max_chk|when|switch|update|set|shift|asm|ext|extract|store|load|do|spawn|phase|stage|contract|wait|while|until)_/);
         ($tx_name) = ($s->{name} =~ /^(\w+)_timeout$/) unless $tx_name;
         push @{$tx_states{$tx_name}}, $s->{name};
     }
@@ -612,6 +612,23 @@ sub _actor_network_summary($self, $ir) {
                     scheduling  => $_->{scheduling},
                 }
             } @{$network->{groups} || []}
+        ],
+        group_schedules => [
+            map {
+                {
+                    group               => $_->{group},
+                    owner_transaction   => $_->{owner_transaction},
+                    context             => $_->{context},
+                    members             => [ @{$_->{members} || []} ],
+                    target_transactions => [ @{$_->{target_transactions} || []} ],
+                    signals             => [ @{$_->{signals} || []} ],
+                    schedule            => $_->{schedule},
+                    dependency_policy   => $_->{dependency_policy},
+                    storage             => $_->{storage},
+                    source              => $_->{source},
+                    sink                => $_->{sink},
+                }
+            } @{$network->{group_schedules} || []}
         ],
         event_waits => [
             map {

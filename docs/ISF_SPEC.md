@@ -2902,14 +2902,17 @@ handoff, and report-only group metadata subsets implemented so far:
   `metadata_only`. Compact `(concurrent NAME ACTOR...)` aliases, group
   endpoints, concurrent execution, storage/mux insertion, generated child
   artifacts, and CDC behavior remain deferred.
-- The selected next group-scheduling subset is not shipped yet. It will use
-  existing top-level transaction-body `(trigger actor.transaction)` clauses:
-  a contiguous batch may target distinct members of one declared static group
-  and lower as one same-cycle external trigger state. That future leaf must
-  report scheduling evidence through `actor_network.group_schedules[]` while
-  keeping generated children, group endpoints, event/data-movement coupling,
-  storage/mux insertion, CDC, compact aliases, and broader fan-in/fan-out
-  fail-closed.
+- The shipped first group-scheduling subset uses existing top-level
+  transaction-body `(trigger actor.transaction)` clauses: one contiguous batch
+  may target every member of one declared static group exactly once and lowers
+  as one same-cycle external trigger state. Schedule JSON reports scheduling
+  evidence through `actor_network.group_schedules[]` with `group`,
+  `owner_transaction`, `context`, `members`, `target_transactions`, `signals`,
+  `schedule`, `dependency_policy`, `storage`, `source`, and `sink` keys while
+  preserving per-target `actor_network.transaction_triggers[]` entries.
+  Generated children, group endpoints, event/data-movement coupling,
+  storage/mux insertion, CDC, compact aliases, partial or mixed-group
+  batches, and broader fan-in/fan-out remain fail-closed.
 
 The current actor-event wait subset is deliberately narrower than full child
 orchestration. FSMGen accepts exactly one top-level transaction-body
@@ -2939,19 +2942,21 @@ ATL child artifacts, generated ATL tops, and route muxes remain deferred
 unless a later leaf explicitly widens this surface.
 
 The current actor-transaction trigger subset is also narrower than full child
-orchestration. It accepts exactly one top-level transaction-body
-`(trigger actor.transaction)` against the current single declared static actor
-instance, where `transaction` is a scalar HDL identifier. FSMGen maps the
-trigger to a deterministic one-cycle parent output handoff named
-`actor_transaction_start`; for example, `(trigger reader.capture)` maps to
-`reader_capture_start`. The scheduled parent `.fsm` exposes and pulses that
-output at the trigger point. The trigger sink is external until actor type
-resolution, generated ATL child artifacts, generated ATL tops, trigger
-payloads, and ready/backpressure semantics ship. Rule-level qualified
-triggers, nested triggers, multiple triggers, generated handoff signal
-conflicts, trigger fan-in/fan-out, cross-clock actor triggers, and concurrent
-group triggers remain deferred unless a later leaf explicitly widens this
-surface. Schedule JSON reports the shipped trigger through
+orchestration. Outside the group trigger-batch subset above, it accepts
+exactly one top-level transaction-body `(trigger actor.transaction)` against
+the current single declared static actor instance, where `transaction` is a
+scalar HDL identifier. FSMGen maps each accepted trigger to a deterministic
+one-cycle parent output handoff named `actor_transaction_start`; for example,
+`(trigger reader.capture)` maps to `reader_capture_start`. The scheduled
+parent `.fsm` exposes and pulses that output at the trigger point, either in
+the single-trigger state or in the accepted grouped trigger state. The trigger
+sink is external until actor type resolution, generated ATL child artifacts,
+generated ATL tops, trigger payloads, and ready/backpressure semantics ship.
+Rule-level qualified triggers, nested triggers, multiple triggers outside the
+exact group batch, generated handoff signal conflicts, trigger fan-in/fan-out,
+cross-clock actor triggers, partial or mixed-group batches, and broader
+concurrent group triggers remain deferred unless a later leaf explicitly
+widens this surface. Schedule JSON reports accepted triggers through
 `actor_network.transaction_triggers[]`.
 
 The current generated-artifact contract is explicit: the parent scheduled

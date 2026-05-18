@@ -113,11 +113,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   scheduling behavior before code. `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`
   selected that first behavior as a same-cycle external trigger batch:
   consecutive top-level transaction-body `(trigger actor.transaction)`
-  clauses to distinct members of one declared static group, lowered later as
-  one scheduled parent state with per-target trigger outputs and
-  `actor_network.group_schedules[]` evidence. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`, which implements only that selected
-  subset and keeps broader group scheduling fail-closed.
+  clauses to every member of one declared static group exactly once.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` shipped that subset: the parser
+  rewrites the contiguous trigger run to one internal grouped trigger state,
+  the scheduled parent pulses every generated external trigger output in the
+  same cycle, and schedule JSON reports both per-target
+  `actor_network.transaction_triggers[]` and batch-level
+  `actor_network.group_schedules[]` evidence. Broader group scheduling
+  remains fail-closed. The `.7` concurrent group sequence is complete and
+  the next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.8` for realistic
+  multi-actor orchestration fixtures.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

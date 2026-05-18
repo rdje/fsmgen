@@ -15,6 +15,7 @@ use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
+    isf_public_interface_schedule_report_actor_network_group_schedule_keys
     isf_public_interface_schedule_report_actor_network_group_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
     isf_public_interface_schedule_report_actor_network_keys
@@ -37,6 +38,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                 },
             ],
             groups => [],
+            group_schedules => [],
             data_movements => [],
             event_waits => [],
             transaction_triggers => [],
@@ -65,6 +67,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                 },
             ],
             groups => [],
+            group_schedules => [],
             data_movements => [],
             event_waits => [],
             transaction_triggers => [],
@@ -133,11 +136,121 @@ ISF
                 },
             ],
             groups => [ $expected_group ],
+            group_schedules => [],
             data_movements => [],
             event_waits => [],
             transaction_triggers => [],
         },
         'static concurrent group report',
+    );
+};
+
+subtest 'selected concurrent group trigger batch lowers to one parent state' => sub {
+    my $source = <<'ISF';
+(actor atl_group_trigger_batch
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader writer)
+    (mode concurrent))
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger writer.emit)
+    (complete done)))
+ISF
+    my $actor = parse_source($source, 'atl-group-trigger-batch.isf');
+    my $expected_group = {
+        name        => 'pipeline',
+        members     => [qw(reader writer)],
+        mode        => 'concurrent',
+        declaration => 'group',
+        source      => 'actor_body',
+        scheduling  => 'metadata_only',
+    };
+    my $expected_triggers = [
+        {
+            owner_transaction  => 'run',
+            context            => 'transaction_body',
+            instance           => 'reader',
+            target_transaction => 'capture',
+            signal             => 'reader_capture_start',
+            sink               => 'external_handoff',
+        },
+        {
+            owner_transaction  => 'run',
+            context            => 'transaction_body',
+            instance           => 'writer',
+            target_transaction => 'emit',
+            signal             => 'writer_emit_start',
+            sink               => 'external_handoff',
+        },
+    ];
+    my $expected_group_schedule = {
+        group               => 'pipeline',
+        owner_transaction   => 'run',
+        context             => 'transaction_body',
+        members             => [qw(reader writer)],
+        target_transactions => [qw(capture emit)],
+        signals             => [qw(reader_capture_start writer_emit_start)],
+        schedule            => 'same_cycle_external_trigger_batch',
+        dependency_policy   => 'declared_group_distinct_members',
+        storage             => 'none',
+        source              => 'parent_trigger_state',
+        sink                => 'external_handoff',
+    };
+
+    is_deeply(
+        $actor->{actor_network}{transaction_triggers},
+        $expected_triggers,
+        'parser preserves per-target actor transaction trigger metadata for the group batch',
+    );
+    is_deeply(
+        $actor->{actor_network}{group_schedules},
+        [ $expected_group_schedule ],
+        'parser records the selected same-cycle group trigger schedule metadata',
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    my $fsm = $lowered->{files}{'atl_group_trigger_batch.fsm'};
+    ok($fsm, 'group trigger batch emits the parent scheduled .fsm');
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ['atl_group_trigger_batch.fsm'],
+        'group trigger batch does not emit ATL child artifacts or a generated top',
+    );
+    like($fsm, qr/run_atl_group_trigger_/, 'scheduled .fsm contains one grouped trigger state');
+    unlike($fsm, qr/run_atl_trigger_/, 'scheduled .fsm does not split the grouped trigger batch into per-trigger states');
+    like($fsm, qr/\(<1 \(reader_capture_start> 1\)\)/, 'scheduled .fsm pulses the reader trigger handoff');
+    like($fsm, qr/\(<1 \(writer_emit_start> 1\)\)/, 'scheduled .fsm pulses the writer trigger handoff');
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'reader',
+                    actor_type  => 'packet_reader',
+                    declaration => 'actor',
+                },
+                {
+                    name        => 'writer',
+                    actor_type  => 'packet_writer',
+                    declaration => 'actor',
+                },
+            ],
+            groups => [ $expected_group ],
+            group_schedules => [ $expected_group_schedule ],
+            data_movements => [],
+            event_waits => [],
+            transaction_triggers => $expected_triggers,
+        },
+        'group trigger batch report',
     );
 };
 
@@ -197,8 +310,8 @@ ISF
     (trigger writer.capture)
     (complete done)))
 ISF
-        qr/ATL concurrent group metadata cannot be combined with actor event waits or actor transaction triggers/,
-        'static concurrent group metadata does not combine with actor transaction triggers',
+        qr/ATL concurrent group trigger batch requires at least two actor transaction triggers/,
+        'static concurrent group trigger batches require at least two triggers',
     );
 
     parse_fails_like(
@@ -303,6 +416,7 @@ ISF
                 },
             ],
             groups => [],
+            group_schedules => [],
             data_movements => [],
             event_waits => [
                 {
@@ -372,6 +486,7 @@ ISF
                 },
             ],
             groups => [],
+            group_schedules => [],
             data_movements => [],
             event_waits => [],
             transaction_triggers => [
@@ -469,6 +584,7 @@ ISF
                 },
             ],
             groups => [],
+            group_schedules => [],
             data_movements => [ $expected_movement ],
             event_waits => [],
             transaction_triggers => [],
@@ -555,6 +671,7 @@ ISF
                 },
             ],
             groups => [],
+            group_schedules => [],
             data_movements => [ $expected_movement ],
             event_waits => [],
             transaction_triggers => [],
@@ -637,6 +754,7 @@ ISF
                 },
             ],
             groups => [],
+            group_schedules => [],
             data_movements => [ $expected_movement ],
             event_waits => [],
             transaction_triggers => [],
@@ -1049,6 +1167,13 @@ sub assert_actor_network_report {
             [sort keys %{$report->{actor_network}{groups}[0]}],
             [sort @{isf_public_interface_schedule_report_actor_network_group_keys()}],
             "$label exposes advertised actor_network group keys",
+        );
+    }
+    if (@{$report->{actor_network}{group_schedules} || []}) {
+        is_deeply(
+            [sort keys %{$report->{actor_network}{group_schedules}[0]}],
+            [sort @{isf_public_interface_schedule_report_actor_network_group_schedule_keys()}],
+            "$label exposes advertised actor_network group_schedule keys",
         );
     }
     if (@{$report->{actor_network}{event_waits} || []}) {

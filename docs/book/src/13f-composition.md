@@ -468,15 +468,14 @@ pulses with no payloads in ATL v0. Concurrent groups use
 not a way to bypass fan-in, ordering, width, lifetime, or CDC safety. The
 first group implementation steps ship targeted fail-closed diagnostics and
 report-only metadata for verbose `(group ...)` declarations; compact
-`(concurrent ...)` aliases and scheduling behavior remain deferred.
+`(concurrent ...)` aliases and broader scheduling behavior remain deferred.
 
-The next selected group-scheduling leaf is a same-cycle external trigger
-batch. It will use only existing transaction-body
-`(trigger actor.transaction)` clauses: a contiguous batch may target distinct
-members of one declared static group, lower to one parent state that pulses
-all selected trigger outputs, and report evidence through
-`actor_network.group_schedules[]`. That behavior is selected but not shipped
-yet.
+The first group-scheduling leaf is shipped as a same-cycle external trigger
+batch. It uses only existing transaction-body
+`(trigger actor.transaction)` clauses: a contiguous batch may target every
+member of one declared static group exactly once, lower to one parent state
+that pulses all selected trigger outputs, and report evidence through
+`actor_network.group_schedules[]`.
 
 Report-only static group metadata is now shipped for the verbose form:
 
@@ -495,10 +494,35 @@ Report-only static group metadata is now shipped for the verbose form:
 ```
 
 The group appears in `actor_network.groups[]` with `scheduling:
-"metadata_only"`. It names intent for later scheduling leaves; it does not
-run actors concurrently, infer dependencies, insert storage or muxes, emit
-child artifacts, cross clock domains, or accept compact `(concurrent ...)`
-aliases.
+"metadata_only"`. By itself, the declaration names intent; it does not run
+actors concurrently, infer dependencies, insert storage or muxes, emit child
+artifacts, cross clock domains, or accept compact `(concurrent ...)` aliases.
+
+The accepted group trigger batch keeps the group declaration separate from the
+scheduled use:
+
+```lisp
+(actor grouped_pipeline
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader writer)
+    (mode concurrent))
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger writer.emit)
+    (complete done)))
+```
+
+FSMGen emits one grouped trigger state in the scheduled parent and pulses both
+generated outputs in the same cycle. The report keeps individual entries in
+`actor_network.transaction_triggers[]` and adds one
+`actor_network.group_schedules[]` entry with the group name, owner
+transaction, members, target transactions, generated signals, same-cycle
+schedule, no-storage policy, and external handoff boundary.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single
@@ -528,12 +552,14 @@ The trigger sink is external in this subset. FSMGen still does not resolve
 the actor type, emit an ATL child `.fsm`, generate an ATL top, connect the
 start pulse to an actor instance, add ready/backpressure, carry trigger
 payloads, or support rule-level qualified triggers, nested triggers, multiple
-triggers, generated handoff signal conflicts, fan-in/fan-out, cross-clock
-actor triggers, or concurrent group triggers.
+triggers outside the exact group batch, generated handoff signal conflicts,
+fan-in/fan-out, cross-clock actor triggers, or broader concurrent group
+triggers.
 
 Until those later leaves ship, `actor_network` remains discovery metadata
-plus selected event-wait and transaction-trigger handoff metadata. It does not
-imply generated ATL child artifacts, generated ATL top names, route muxes,
+plus selected event-wait, transaction-trigger, and exact group-trigger-batch
+handoff metadata. It does not imply generated ATL child artifacts, generated
+ATL top names, route muxes,
 internal handoff storage, or HDL event wiring.
 
 ## Schedule Report Projection

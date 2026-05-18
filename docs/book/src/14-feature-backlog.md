@@ -724,12 +724,14 @@ group axis starts with shipped fail-closed diagnostics for direct `(group ...)`
 declarations and compact `(concurrent ...)` aliases. Report-only static group
 metadata is shipped for verbose `(group ...)`; scheduling behavior and compact
 aliases remain later leaves.
-The selected first group-scheduling leaf is a same-cycle external trigger
+The first group-scheduling leaf is shipped as a same-cycle external trigger
 batch over existing transaction-body `(trigger actor.transaction)` clauses:
-one contiguous batch, distinct actors, one declared static group, generated
-external trigger outputs pulsed from one parent state, and
-`actor_network.group_schedules[]` report evidence. That lowering is selected
-but not shipped yet.
+one contiguous batch, every member of one declared static group exactly once,
+generated external trigger outputs pulsed from one parent state, and
+`actor_network.group_schedules[]` report evidence. Partial or mixed-group
+batches, noncontiguous batches, repeated members, generated children, group
+endpoints, event/data-movement coupling, route mux/storage, CDC, and compact
+aliases remain later leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -761,8 +763,9 @@ trigger under `actor_network.transaction_triggers[]`.
 The trigger sink remains external until later ATL leaves resolve actor types,
 generate child artifacts, emit ATL tops, and add ready/backpressure or payload
 semantics. Rule-level qualified triggers, nested triggers, multiple triggers,
-generated handoff signal conflicts, fan-in, fan-out, cross-clock triggers,
-and concurrent group triggers stay fail-closed/deferred.
+outside the exact group batch, generated handoff signal conflicts, fan-in,
+fan-out, cross-clock triggers, and broader concurrent group triggers stay
+fail-closed/deferred.
 
 Direct actor-body proposal:
 

@@ -1,13 +1,32 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL group trigger batch lowering shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` and closed the first
+  concurrent group scheduling sequence.
+- Parser validation now accepts one selected group scheduling form: a
+  contiguous top-level transaction-body batch of
+  `(trigger actor.transaction)` clauses that targets every member of one
+  declared static group exactly once.
+- Lowering rewrites the batch to one internal grouped trigger state and emits
+  one scheduled parent state that pulses every generated external
+  actor-transaction trigger output in the same cycle.
+- Schedule JSON now reports batch evidence through
+  `actor_network.group_schedules[]` while preserving the existing per-target
+  `actor_network.transaction_triggers[]` entries.
+- Compact aliases, group endpoints, generated child wiring, event/data
+  coupling, route mux/storage, CDC, partial or mixed-group batches,
+  noncontiguous batches, repeated members, and broader fan-in/fan-out remain
+  fail-closed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8`.
+
 ### R14 — ATL group trigger batch selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
 - Selected the first behavior-bearing group scheduling subset before code:
   a contiguous top-level transaction-body batch of
-  `(trigger actor.transaction)` clauses may target distinct members of one
-  declared static group and lower as a same-cycle external trigger batch in
-  the next leaf.
+  `(trigger actor.transaction)` clauses may target every member of one
+  declared static group exactly once and lower as a same-cycle external
+  trigger batch in the next leaf.
 - Selected future report evidence under `actor_network.group_schedules[]`
   with group, owner transaction, members, target transaction names, generated
   trigger signals, schedule, dependency policy, storage, source, and sink

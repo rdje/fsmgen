@@ -1547,7 +1547,8 @@ multiple instances outside the shipped actor-to-actor handoff or report-only
 group metadata subsets, `(network ...)`, dynamic/non-scalar names, direct
 recursive instantiation, qualified actor/event behavior beyond the selected
 single parent-handoff event wait and single parent-handoff transaction trigger
-subsets, and group scheduling behavior.
+subsets, and group scheduling behavior beyond the exact same-cycle trigger
+batch subset documented below.
 
 The broader ATL v0 contract is selected for future slices, but downstream
 producers must not emit it until the corresponding support appears in the
@@ -1611,15 +1612,16 @@ capability manifest and this handoff:
   actor instances, single-clock actor scope, no dynamic membership, no nested
   groups, and no scheduling behavior. Compact `(concurrent NAME ACTOR...)`
   remains reserved and unsupported.
-- The selected next group-scheduling subset is not downstream-emittable yet.
-  When that leaf ships, downstream producers will be able to emit a
-  contiguous top-level transaction-body batch of
-  `(trigger actor.transaction)` clauses targeting distinct members of one
-  declared static group. FSMGen will lower the batch as one same-cycle
-  external trigger state and report evidence through
-  `actor_network.group_schedules[]`. Until that support is documented and
-  advertised, downstream producers must keep group declarations metadata-only
-  and must not rely on concurrent group scheduling.
+- The first group-scheduling subset is now downstream-emittable. Downstream
+  producers may emit one contiguous top-level transaction-body batch of
+  `(trigger actor.transaction)` clauses targeting every member of one declared
+  static group exactly once. FSMGen lowers the batch as one same-cycle
+  external trigger state, preserves per-target
+  `actor_network.transaction_triggers[]`, and reports batch evidence through
+  `actor_network.group_schedules[]`. Downstream producers must still avoid
+  partial or mixed-group batches, noncontiguous batches, repeated members,
+  generated child assumptions, group endpoints, event/data-movement coupling,
+  storage/mux insertion, CDC, compact aliases, and broader fan-in/fan-out.
 
 Current ATL event-wait handoff subset: downstream producers may emit exactly
 one top-level transaction-body `(await actor.event)` against the current
@@ -1645,14 +1647,16 @@ rule-level `(trigger transaction)` remains a local transaction trigger.
 Dotted enum-looking names that do not name a static actor instance keep their
 prior diagnostics.
 
-Current actor-transaction trigger handoff subset: downstream producers may
-emit exactly one top-level transaction-body `(trigger actor.transaction)`
-against the current single declared static actor instance. The target
-transaction name must be a scalar HDL identifier. FSMGen maps that trigger to
-a generated one-cycle parent output named `actor_transaction_start`; for
-example, `reader.capture` maps to `reader_capture_start`. The scheduled
-parent `.fsm` exposes and pulses that output at the trigger point. The sink of
-that trigger is external in this subset.
+Current actor-transaction trigger handoff subset: outside the exact group
+trigger batch documented above, downstream producers may emit exactly one
+top-level transaction-body `(trigger actor.transaction)` against the current
+single declared static actor instance. The target transaction name must be a
+scalar HDL identifier. FSMGen maps each accepted trigger to a generated
+one-cycle parent output named `actor_transaction_start`; for example,
+`reader.capture` maps to `reader_capture_start`. The scheduled parent `.fsm`
+exposes and pulses that output at the trigger point, either in the
+single-trigger state or the accepted grouped trigger state. The sink of that
+trigger is external in this subset.
 
 Schedule JSON reports accepted triggers under
 `actor_network.transaction_triggers[]`. Each entry exposes
@@ -1660,7 +1664,8 @@ Schedule JSON reports accepted triggers under
 and `sink`; the current sink is `external_handoff`.
 
 Downstream producers must not emit rule-level qualified triggers, nested
-qualified triggers, multiple qualified triggers, fan-in/fan-out trigger
+qualified triggers, multiple qualified triggers outside the exact group
+batch, fan-in/fan-out trigger
 structures, generated handoff signal conflicts, trigger payloads or bindings,
 ready/backpressure assumptions, cross-clock actor triggers, concurrent group
 triggers, or source that relies on generated ATL child artifacts or generated
@@ -1837,10 +1842,13 @@ transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
   role, port, actor_signal, actor_expression, width, instance, parent_port,
   child_port, start_signal, done_signal, trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
-actor_network: kind, instances, groups, data_movements, event_waits,
-  transaction_triggers
+actor_network: kind, instances, groups, group_schedules, data_movements,
+  event_waits, transaction_triggers
 actor_network.instances[]: name, actor_type, declaration
 actor_network.groups[]: name, members, mode, declaration, source, scheduling
+actor_network.group_schedules[]: group, owner_transaction, context, members,
+  target_transactions, signals, schedule, dependency_policy, storage, source,
+  sink
 actor_network.event_waits[]: transaction, context, instance, event, signal,
   source
 actor_network.transaction_triggers[]: owner_transaction, context, instance,

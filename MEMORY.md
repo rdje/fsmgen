@@ -1,11 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL group trigger batch lowering shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` and closed the first
+  concurrent group scheduling sequence.
+- FSMGen now accepts a same-cycle external group trigger batch: one
+  contiguous top-level transaction-body run of
+  `(trigger actor.transaction)` clauses that targets every member of one
+  declared static group exactly once.
+- The parser rewrites the run to one internal grouped trigger state, the
+  scheduled parent pulses every generated external actor-transaction trigger
+  output in the same cycle, and schedule JSON reports both per-target
+  `actor_network.transaction_triggers[]` and batch-level
+  `actor_network.group_schedules[]`.
+- Generated children, group endpoints, event/data-movement coupling,
+  route mux/storage, CDC, partial or mixed-group batches, noncontiguous
+  batches, repeated members, compact aliases, and fan-in/fan-out remain
+  deferred or fail-closed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8`.
+- Validation passed: syntax checks, focused actor-network, schedule-report
+  matrix, and public-contract audits, `mdbook build docs/book`, broad
+  `./bin/ci-regression isf --no-book` with `Files=229, Tests=1353`, and
+  `git diff --check`.
 ## 2026-05-18: ATL group trigger batch selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
 - The first behavior-bearing group scheduling subset is selected before code:
   a top-level transaction body may use a contiguous batch of
-  `(trigger actor.transaction)` clauses to distinct members of one declared
-  static concurrent group.
+  `(trigger actor.transaction)` clauses to every member of one declared
+  static concurrent group exactly once.
 - The selected lowering for `.7.5` will pulse every generated external
   actor-transaction trigger output in one scheduled parent state and report
   inferred independence through `actor_network.group_schedules[]`.

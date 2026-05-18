@@ -2,6 +2,28 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL group trigger batch lowering shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` and closed the first
+  concurrent group scheduling sequence.
+- The selected same-cycle group trigger batch now lowers from existing
+  top-level transaction-body `(trigger actor.transaction)` clauses when the
+  contiguous batch targets every member of one declared static group exactly
+  once.
+- The scheduled parent emits one grouped trigger state that pulses all
+  generated external actor-transaction trigger outputs in the same cycle.
+  Schedule JSON preserves per-target `actor_network.transaction_triggers[]`
+  and adds batch-level `actor_network.group_schedules[]` evidence.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.8`
+  for realistic multi-actor orchestration fixtures.
+- Generated children, group endpoints, event/data-movement coupling,
+  route mux/storage, CDC, compact aliases, partial/mixed/noncontiguous
+  batches, repeated members, and fan-in/fan-out remain deferred or
+  fail-closed.
+- Validation passed: syntax checks, focused actor-network, schedule-report
+  matrix, and public-contract audits, `mdbook build docs/book`, broad
+  `./bin/ci-regression isf --no-book` with `Files=229, Tests=1353`, and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — ATL group trigger batch selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
 - Selected the first concurrent-group scheduling behavior before code:

@@ -1559,12 +1559,12 @@ metadata through a direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
 The enclosing actor is the network boundary; `(network ...)` wrappers are not
 part of the shipped source surface. That field is not a required actor shell
 key. When present, `actor_network` is a `static_declaration` hash with direct
-static instance metadata, optional report-only group metadata, and the shipped
-event, trigger, and data movement metadata families. Schedule reports project
-it through top-level `actor_network`. No child actor type resolution,
-generated child scheduled `.fsm`, generated ATL top, generated child trigger
-wiring, group scheduling behavior, or HDL event wiring is promised by this
-field.
+static instance metadata, optional report-only group metadata, shipped event,
+trigger, data movement, and exact group trigger-batch metadata families.
+Schedule reports project it through top-level `actor_network`. No child actor
+type resolution, generated child scheduled `.fsm`, generated ATL top,
+generated child trigger wiring, group scheduling beyond the exact trigger
+batch subset, or HDL event wiring is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
 behavior until advertised by capability metadata. Endpoint-aware movement
@@ -1612,14 +1612,15 @@ direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
 declarations now report static `actor_network.groups[]` metadata when every
 member names an already declared direct static actor instance. Compact
 `(concurrent NAME ACTOR...)` aliases remain reserved and unsupported. No
-public group scheduling behavior is implemented yet.
-The selected next public group-scheduling contract, when implemented, is a
-same-cycle external trigger batch over existing top-level transaction-body
-`(trigger actor.transaction)` clauses. The batch must target distinct members
-of one declared static group and will advertise scheduling evidence through a
-new `actor_network.group_schedules[]` report family. Until that implementation
-lands, public reports expose only group membership metadata, not group
-scheduling behavior.
+public group scheduling behavior beyond the exact trigger-batch subset is
+implemented yet.
+The first public group-scheduling contract is a same-cycle external trigger
+batch over existing top-level transaction-body `(trigger actor.transaction)`
+clauses. The batch must target every member of one declared static group
+exactly once and advertises scheduling evidence through
+`actor_network.group_schedules[]`. Public reports therefore separate static
+membership (`groups[]`) from a scheduled use of that membership
+(`group_schedules[]`).
 The current shipped actor-event wait subset accepts exactly one top-level
 transaction-body `(await actor.event)` for the current single declared static
 actor instance, lowered to a generated one-bit parent event handoff input
@@ -1636,15 +1637,16 @@ behavior remains unchanged, and dotted enum-looking names outside
 actor-network instances keep their prior diagnostics.
 The current qualified actor-trigger subset is exactly one top-level
 transaction-body `(trigger actor.transaction)` for the current single declared
-static actor instance, lowered to a generated one-cycle parent output handoff
+static actor instance, plus the exact same-cycle group trigger batch described
+above. Each trigger lowers to a generated one-cycle parent output handoff
 named `actor_transaction_start`. For example, `reader.capture` lowers through
 `reader_capture_start`, and the scheduled parent `.fsm` pulses that output at
 the trigger point. The trigger sink is external until actor type resolution,
 ATL child generation, generated ATL tops, trigger payloads, and
 ready/backpressure semantics ship. Rule-level qualified triggers, nested
-triggers, multiple triggers, generated handoff signal conflicts,
-fan-in/fan-out, cross-clock actor triggers, and concurrent group triggers
-remain deferred. Schedule reports expose this through
+triggers, multiple triggers outside the exact group batch, generated handoff
+signal conflicts, fan-in/fan-out, cross-clock actor triggers, and broader
+concurrent group triggers remain deferred. Schedule reports expose this through
 `actor_network.transaction_triggers[]` entries with `owner_transaction`,
 `context`, `instance`, `target_transaction`, `signal`, and `sink` keys, where
 `sink` is currently `external_handoff`.
@@ -1967,9 +1969,10 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
-actor_network: kind, instances, groups, data_movements, event_waits, transaction_triggers
+actor_network: kind, instances, groups, group_schedules, data_movements, event_waits, transaction_triggers
 actor_network instances entries: name, actor_type, declaration
 actor_network groups entries: name, members, mode, declaration, source, scheduling
+actor_network group_schedules entries: group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network event_waits entries: transaction, context, instance, event, signal, source
 actor_network transaction_triggers entries: owner_transaction, context, instance, target_transaction, signal, sink
 inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width
