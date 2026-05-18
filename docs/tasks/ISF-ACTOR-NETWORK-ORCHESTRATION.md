@@ -244,16 +244,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.3: report static ATL groups`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the first group scheduling behavior subset.`
-  Acceptance: `A selection leaf defines exactly which static group metadata may affect scheduling, report keys for inferred dependencies/independence, and the fail-closed boundaries for fan-in, fan-out, route lifetime overlap, CDC, storage insertion, and generated child wiring before behavior code starts.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `The first behavior-bearing group scheduling subset is selected as one same-cycle external trigger batch in one top-level transaction body: a direct static group with at least two members may own a contiguous run of '(trigger actor.transaction)' clauses where every actor is a distinct member of that same group, every target transaction name is scalar, there are no payloads/binds/awaits/drives interleaved in the batch, and no generated child wiring, event waits, data movement, storage/mux insertion, CDC, compact aliases, or group endpoints are claimed. The next lowering leaf must emit all generated parent trigger outputs from one state, keep the existing per-trigger transaction_triggers[] report entries, add a group_schedules[] report entry with group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, and sink keys, and fail closed every broader group-scheduling form.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.4: select group trigger batch`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`
-  Status: `pending`
-  Goal: `Lower the selected first concurrent group scheduling behavior.`
-  Acceptance: `Lowering implements only the selected '.7.4' group scheduling subset, emits deterministic schedule/report evidence, and rejects unsafe ambiguity with targeted diagnostics.`
+  Status: `active`
+  Goal: `Lower the selected same-cycle group trigger batch.`
+  Acceptance: `Lowering implements only the selected '.7.4' subset: a contiguous top-level transaction-body batch of qualified triggers to distinct members of one declared static group lowers to one scheduled parent state that pulses every selected external actor-transaction trigger output in the same cycle; actor_network.group_schedules[] reports the inferred independence evidence; existing transaction_triggers[] entries remain per target; nested, repeated, mixed-group, noncontiguous, payload-bearing, event/data-movement-coupled, CDC, compact alias, group endpoint, generated-child, storage/mux, and fan-in/fan-out variants fail closed with targeted ATL diagnostics.`
   Verification: `pending`
   Commit: `pending`
 
@@ -268,7 +268,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4` | `active` | `.7.3` shipped report-only static group metadata. The next leaf selects the first scheduling behavior before code. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5` | `active` | `.7.4` selected the first behavior-bearing group scheduling subset as a same-cycle external trigger batch for distinct members of one declared static group. |
 
 ## ATL v0 Proposal
 
@@ -362,8 +362,23 @@ Current proposal summary:
   is the existing one-bit top-level input pin; the sink is a generated scalar
   external actor handoff output named `actor_endpoint`. It reports through
   `actor_network.data_movements[]` with kind
-  `scalar_pin_to_actor_handoff`. Actor-to-pin movement, wider pins,
-  storage/muxing, generated children, groups, and CDC remain deferred.
+  `scalar_pin_to_actor_handoff`.
+- The shipped inverse top-level pin movement subset is one named drive body
+  with exactly one `(pins.output_pin actor.endpoint)` pair, exactly one direct
+  static actor instance, and one top-level transaction drive call. The source
+  is a generated scalar external actor handoff input named `actor_endpoint`;
+  the sink is the existing one-bit top-level output pin. It reports through
+  `actor_network.data_movements[]` with kind
+  `scalar_actor_to_pin_handoff`. Wider pins, storage/muxing, generated
+  children, group scheduling, and CDC remain deferred.
+- The first selected group scheduling behavior is a same-cycle external
+  trigger batch: a contiguous run of top-level transaction-body
+  `(trigger actor.transaction)` clauses may target distinct members of one
+  declared static group. The selected lowering will pulse every generated
+  parent trigger output from one scheduled state and report inferred
+  independence through `actor_network.group_schedules[]`; it still emits no
+  generated children, group endpoints, route mux/storage, event/data coupling,
+  CDC, or compact `(concurrent ...)` aliases.
 
 ## Decisions
 
@@ -428,6 +443,11 @@ Current proposal summary:
   information routing between actors so authors do not have to think much
   about route wiring. The design now records that FSMGen owns runtime
   route-select control, mux/enables, handoffs, and generated connectivity.
+- `2026-05-18`: Selected the first group scheduling behavior before code.
+  `.7.5` will lower only a same-cycle external trigger batch: consecutive
+  top-level transaction-body qualified triggers to distinct members of one
+  declared static group. The declaration remains metadata; the schedule
+  evidence appears in a new `actor_network.group_schedules[]` report family.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
   design first treated `(network ...)` as a scoping candidate, not a
   requirement, while keeping flat top-level actor ATL clauses as an explicit
@@ -494,9 +514,9 @@ Current proposal summary:
 
 ## Blockers
 
-- No blocker for the active `.7.4` group-scheduling selection leaf. It must
-  select the first scheduling behavior and report keys before any scheduling
-  code starts.
+- No blocker for the active `.7.5` group-trigger-batch lowering leaf. It must
+  implement only the selected same-cycle external trigger batch and keep every
+  broader group scheduling form fail-closed.
 
 ## Verification Log
 
@@ -528,6 +548,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `decomposed concurrent actor groups and selected targeted fail-closed group diagnostics as the next code leaf` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `reserved group declarations and compact aliases fail closed with ATL diagnostics; broad ISF gate passes with Files=229, Tests=1351` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `direct static concurrent groups report actor_network.groups[] metadata without scheduling behavior; broad ISF gate passes with Files=229, Tests=1352` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected same-cycle external group trigger batches and actor_network.group_schedules[] report evidence before code` |
 
 ## Commit Log
 
@@ -558,6 +579,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.1: select group boundary` | `decomposes concurrent actor groups and selects fail-closed group diagnostics before metadata or scheduling behavior` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.2: fail closed ATL groups` | `rejects reserved verbose and compact actor-group forms with targeted ATL diagnostics` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.3: report static ATL groups` | `ships report-only static concurrent group metadata under actor_network.groups[]` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.4: select group trigger batch` | `selects same-cycle external trigger batches for distinct members of one declared static group` |
 
 ## Changelog
 
@@ -678,3 +700,11 @@ Current proposal summary:
   scheduling overlap, generated child artifacts, route mux/storage, CDC, or
   compact aliases are claimed. The active frontier moves to `.7.4` to select
   the first group scheduling behavior before code.
+- `2026-05-18`: Completed `.7.4`: selected the first group scheduling
+  behavior as one same-cycle external trigger batch in a top-level
+  transaction body. The selected source remains existing
+  `(trigger actor.transaction)` clauses, requires distinct actors in one
+  declared static group, emits no child/group endpoint/mux/storage/CDC
+  behavior, and will report scheduling evidence through
+  `actor_network.group_schedules[]`. The active frontier moves to `.7.5`
+  for lowering only this selected subset.

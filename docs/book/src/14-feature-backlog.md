@@ -724,6 +724,12 @@ group axis starts with shipped fail-closed diagnostics for direct `(group ...)`
 declarations and compact `(concurrent ...)` aliases. Report-only static group
 metadata is shipped for verbose `(group ...)`; scheduling behavior and compact
 aliases remain later leaves.
+The selected first group-scheduling leaf is a same-cycle external trigger
+batch over existing transaction-body `(trigger actor.transaction)` clauses:
+one contiguous batch, distinct actors, one declared static group, generated
+external trigger outputs pulsed from one parent state, and
+`actor_network.group_schedules[]` report evidence. That lowering is selected
+but not shipped yet.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

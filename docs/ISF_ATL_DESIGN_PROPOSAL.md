@@ -561,6 +561,15 @@ artifacts, no route mux/storage, no CDC, and no scheduling overlap claims
 until separate leaves ship them. Compact `(concurrent NAME ACTOR...)` aliases
 remain reserved and fail closed.
 
+The selected first behavior-bearing group scheduling subset is a same-cycle
+external trigger batch. In one top-level transaction body, a contiguous run of
+`(trigger actor.transaction)` clauses may target distinct members of the same
+declared static group. The selected lowering will emit every generated parent
+trigger output from one scheduled state and report the inferred independence
+through `actor_network.group_schedules[]`. This selection does not add group
+endpoint syntax, generated children, event waits, data movement, storage/mux
+insertion, CDC, compact aliases, or fan-in/fan-out behavior.
+
 ## Scheduling Ownership
 
 Scheduling should split cleanly:
@@ -584,6 +593,13 @@ actor-body `(group NAME (members ACTOR...) (mode concurrent))` declarations
 for at least two declared direct static actor instances in a single-clock
 actor and reports them under `actor_network.groups[]` with `scheduling:
 metadata_only`.
+
+The next selected group scheduling implementation is a same-cycle external
+trigger batch for distinct members of one declared static group. It will keep
+the existing per-target `actor_network.transaction_triggers[]` entries and add
+`actor_network.group_schedules[]` entries with `group`, `owner_transaction`,
+`context`, `members`, `target_transactions`, `signals`, `schedule`,
+`dependency_policy`, `storage`, `source`, and `sink` keys.
 
 The shipped first behavior-bearing handoff subset accepts one top-level
 transaction-body `(await actor.event)` and one top-level transaction-body

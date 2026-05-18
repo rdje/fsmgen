@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL group trigger batch selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
+- Selected the first behavior-bearing group scheduling subset before code:
+  a contiguous top-level transaction-body batch of
+  `(trigger actor.transaction)` clauses may target distinct members of one
+  declared static group and lower as a same-cycle external trigger batch in
+  the next leaf.
+- Selected future report evidence under `actor_network.group_schedules[]`
+  with group, owner transaction, members, target transaction names, generated
+  trigger signals, schedule, dependency policy, storage, source, and sink
+  fields.
+- Kept group declarations as metadata and left compact aliases, generated
+  child wiring, group endpoints, event/data-movement coupling, route
+  mux/storage, CDC, fan-in/fan-out, and noncontiguous or mixed-group trigger
+  batches deferred or fail-closed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`.
+
 ### R14 — ATL static group metadata shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`.
 - Parser/reporting now accepts the selected direct actor-body group metadata

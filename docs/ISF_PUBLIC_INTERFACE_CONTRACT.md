@@ -1613,6 +1613,13 @@ declarations now report static `actor_network.groups[]` metadata when every
 member names an already declared direct static actor instance. Compact
 `(concurrent NAME ACTOR...)` aliases remain reserved and unsupported. No
 public group scheduling behavior is implemented yet.
+The selected next public group-scheduling contract, when implemented, is a
+same-cycle external trigger batch over existing top-level transaction-body
+`(trigger actor.transaction)` clauses. The batch must target distinct members
+of one declared static group and will advertise scheduling evidence through a
+new `actor_network.group_schedules[]` report family. Until that implementation
+lands, public reports expose only group membership metadata, not group
+scheduling behavior.
 The current shipped actor-event wait subset accepts exactly one top-level
 transaction-body `(await actor.event)` for the current single declared static
 actor instance, lowered to a generated one-bit parent event handoff input

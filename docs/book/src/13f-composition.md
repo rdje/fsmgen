@@ -457,7 +457,7 @@ FSMGen exposes `producer.payload` as a generated scalar external parent input
 named `producer_payload`, drives the existing one-bit top-level output pin
 `out_bit` for the drive-call cycle, and reports kind
 `scalar_actor_to_pin_handoff`. Wider pins, storage, muxing, generated
-children, groups, CDC, and trigger/await coupling remain deferred.
+children, group scheduling, CDC, and trigger/await coupling remain deferred.
 
 ATL orchestration spellings are `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
@@ -469,6 +469,14 @@ not a way to bypass fan-in, ordering, width, lifetime, or CDC safety. The
 first group implementation steps ship targeted fail-closed diagnostics and
 report-only metadata for verbose `(group ...)` declarations; compact
 `(concurrent ...)` aliases and scheduling behavior remain deferred.
+
+The next selected group-scheduling leaf is a same-cycle external trigger
+batch. It will use only existing transaction-body
+`(trigger actor.transaction)` clauses: a contiguous batch may target distinct
+members of one declared static group, lower to one parent state that pulses
+all selected trigger outputs, and report evidence through
+`actor_network.group_schedules[]`. That behavior is selected but not shipped
+yet.
 
 Report-only static group metadata is now shipped for the verbose form:
 

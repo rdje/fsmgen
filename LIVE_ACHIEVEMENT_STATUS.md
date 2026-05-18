@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL group trigger batch selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
+- Selected the first concurrent-group scheduling behavior before code:
+  contiguous top-level transaction-body `(trigger actor.transaction)` clauses
+  may form a same-cycle external trigger batch only when every actor is a
+  distinct member of one declared static group.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`
+  for lowering only that selected subset and reporting
+  `actor_network.group_schedules[]` evidence.
+- No behavior is implemented by this selection leaf; generated children,
+  group endpoints, storage/mux insertion, event/data-movement coupling, CDC,
+  compact aliases, and broader fan-in/fan-out remain deferred or fail-closed.
+- Validation passed: `mdbook build docs/book`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`.
+
 ## 2026-05-18: R14 — ATL static group metadata shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`.
 - Direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`

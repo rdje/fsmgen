@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL group scheduling starts with trigger batches
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4` selects a same-cycle external trigger
+  batch as the first behavior-bearing concurrent-group scheduling subset.
+- The selected source uses existing transaction-body
+  `(trigger actor.transaction)` clauses so ATL does not add a group endpoint
+  or new scheduling keyword before the uniform syntax path is proven.
+- Keeping the batch contiguous and limited to distinct members of one static
+  group gives the scheduler a simple independence proof: no payloads, no
+  waits, no data movement, no storage/mux insertion, no generated children,
+  and no CDC in the first lowering leaf.
+- The declaration remains metadata. Runtime evidence belongs in the selected
+  `actor_network.group_schedules[]` report entry so downstream consumers can
+  distinguish group membership from a specific scheduled use of that group.
 ## 2026-05-18: ATL group metadata is report-only
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` adds `actor_network.groups[]` metadata
   without changing scheduling. The group declaration is accepted so authors

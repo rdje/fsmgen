@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL group trigger batch selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
+- The first behavior-bearing group scheduling subset is selected before code:
+  a top-level transaction body may use a contiguous batch of
+  `(trigger actor.transaction)` clauses to distinct members of one declared
+  static concurrent group.
+- The selected lowering for `.7.5` will pulse every generated external
+  actor-transaction trigger output in one scheduled parent state and report
+  inferred independence through `actor_network.group_schedules[]`.
+- No source syntax is added. Group declarations remain metadata, compact
+  `(concurrent ...)` aliases remain unsupported, and generated children,
+  group endpoints, event/data-movement coupling, storage/mux insertion, CDC,
+  and fan-in/fan-out remain deferred or fail-closed.
+- Validation passed: `mdbook build docs/book`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`.
 ## 2026-05-18: ATL static group metadata shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`.
 - FSMGen now accepts direct actor-body

@@ -1611,6 +1611,15 @@ capability manifest and this handoff:
   actor instances, single-clock actor scope, no dynamic membership, no nested
   groups, and no scheduling behavior. Compact `(concurrent NAME ACTOR...)`
   remains reserved and unsupported.
+- The selected next group-scheduling subset is not downstream-emittable yet.
+  When that leaf ships, downstream producers will be able to emit a
+  contiguous top-level transaction-body batch of
+  `(trigger actor.transaction)` clauses targeting distinct members of one
+  declared static group. FSMGen will lower the batch as one same-cycle
+  external trigger state and report evidence through
+  `actor_network.group_schedules[]`. Until that support is documented and
+  advertised, downstream producers must keep group declarations metadata-only
+  and must not rely on concurrent group scheduling.
 
 Current ATL event-wait handoff subset: downstream producers may emit exactly
 one top-level transaction-body `(await actor.event)` against the current

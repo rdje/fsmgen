@@ -110,7 +110,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   group endpoints, emit child artifacts, cross clock domains, or accept
   compact aliases. The next ATL frontier is
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`, which selects the first group
-  scheduling behavior before code.
+  scheduling behavior before code. `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`
+  selected that first behavior as a same-cycle external trigger batch:
+  consecutive top-level transaction-body `(trigger actor.transaction)`
+  clauses to distinct members of one declared static group, lowered later as
+  one scheduled parent state with per-target trigger outputs and
+  `actor_network.group_schedules[]` evidence. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`, which implements only that selected
+  subset and keeps broader group scheduling fail-closed.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

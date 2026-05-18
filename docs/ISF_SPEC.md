@@ -2902,6 +2902,14 @@ handoff, and report-only group metadata subsets implemented so far:
   `metadata_only`. Compact `(concurrent NAME ACTOR...)` aliases, group
   endpoints, concurrent execution, storage/mux insertion, generated child
   artifacts, and CDC behavior remain deferred.
+- The selected next group-scheduling subset is not shipped yet. It will use
+  existing top-level transaction-body `(trigger actor.transaction)` clauses:
+  a contiguous batch may target distinct members of one declared static group
+  and lower as one same-cycle external trigger state. That future leaf must
+  report scheduling evidence through `actor_network.group_schedules[]` while
+  keeping generated children, group endpoints, event/data-movement coupling,
+  storage/mux insertion, CDC, compact aliases, and broader fan-in/fan-out
+  fail-closed.
 
 The current actor-event wait subset is deliberately narrower than full child
 orchestration. FSMGen accepts exactly one top-level transaction-body
