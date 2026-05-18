@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL actor-event waits lower to parent handoff input
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`.
+- FSMGen now accepts exactly one top-level transaction-body
+  `(await actor.event)` when `actor` names the current single declared static
+  actor instance. The parser normalizes the wait to a deterministic one-bit
+  parent handoff input named `actor_event`; for example, `reader.done` lowers
+  to `reader_done`.
+- The scheduled parent `.fsm` exposes the generated event input and waits on
+  it. Schedule JSON reports accepted waits under
+  `actor_network.event_waits[]` with `transaction`, `context`, `instance`,
+  `event`, `signal`, and `source` keys. The current source is
+  `external_handoff`.
+- The event producer remains external. Actor type resolution, generated ATL
+  child `.fsm` files, generated ATL tops, qualified actor transaction
+  triggers, data movement, fan-in/fan-out, multiple or nested event waits,
+  event payloads, cross-clock actor events, concurrent groups, and HDL
+  behavior remain deferred or fail-closed.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, roadmap board, changes, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1`.
+- Validation passed: focused syntax and actor-network/report/public-contract
+  tests, `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=229, Tests=1346), and `git diff --check`.
 ## 2026-05-18: ATL event wait handoff subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` as the selection leaf
   before implementing generated actor-event wait behavior.

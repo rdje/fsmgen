@@ -363,7 +363,8 @@ The report field is `actor_network`:
       "actor_type": "packet_reader",
       "declaration": "actor"
     }
-  ]
+  ],
+  "event_waits": []
 }
 ```
 
@@ -387,27 +388,27 @@ ATL v0. Future concurrent groups use
 `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
 not a way to bypass fan-in, ordering, width, lifetime, or CDC safety.
 
-The current qualified event/trigger behavior is fail-closed only. Reserved
-`(await actor.event)`, transaction-body `(trigger actor.transaction)`, and
-rule-level `(trigger actor.transaction)` forms now reject with ATL-specific
-diagnostics before scheduled `.fsm` emission when the qualifier names a
-declared static actor instance. Unqualified local forms keep their existing
+The current actor-event wait behavior is a narrow parent-handoff subset. One
+top-level transaction-body `(await actor.event)` may target the current single
+static actor instance. FSMGen lowers it to a generated one-bit parent event
+input named `actor_event`; for example, `reader.done` becomes `reader_done`.
+The scheduled parent `.fsm` exposes and waits on that input, and schedule JSON
+records the wait under `actor_network.event_waits[]`.
+
+The event producer is external in this subset. FSMGen still does not resolve
+the actor type, emit an ATL child `.fsm`, generate an ATL top, trigger actor
+transactions, carry event payloads, or support fan-in/fan-out, multiple waits,
+nested waits, cross-clock actor events, or concurrent group events.
+Transaction-body and rule-level `(trigger actor.transaction)` still reject
+with ATL-specific diagnostics. Unqualified local forms keep their existing
 meaning: `(await signal)` waits on a local transaction signal, and rule-level
 `(trigger transaction)` triggers a local transaction. Dotted enum-looking
 names that do not name a static actor instance keep their prior diagnostics.
 
-The next selected actor-event subset is one top-level transaction-body
-`(await actor.event)` for the current single static actor instance. It lowers
-to a generated one-bit parent event input named `actor_event`; for example,
-`reader.done` becomes `reader_done`. The event producer is external in that
-subset. FSMGen still will not resolve the actor type, emit an ATL child
-`.fsm`, generate an ATL top, trigger actor transactions, carry event
-payloads, or support fan-in/fan-out, nested waits, cross-clock actor events,
-or concurrent group events.
-
 Until those later leaves ship, `actor_network` remains discovery metadata
-only. It does not imply generated ATL child artifacts, generated ATL top names,
-route muxes, handoff storage, or HDL behavior.
+plus selected event-wait metadata. It does not imply generated ATL child
+artifacts, generated ATL top names, route muxes, handoff storage, or HDL
+behavior.
 
 ## Schedule Report Projection
 

@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL actor-event waits lower to parent handoff input
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`.
+- Exactly one top-level transaction-body `(await actor.event)` may now target
+  the current single static actor instance.
+- FSMGen lowers the wait to a generated one-bit parent event input named
+  `actor_event`; for example, `reader.done` becomes `reader_done`.
+- The scheduled parent `.fsm` exposes and waits on that input. Schedule JSON
+  reports the wait in `actor_network.event_waits[]`.
+- The event source is `external_handoff`. Actor type resolution, generated
+  ATL child `.fsm` files, generated ATL tops, qualified actor transaction
+  triggers, multiple/nested waits, fan-in/fan-out, event payloads,
+  cross-clock actor events, concurrent groups, data movement, and HDL behavior
+  remain deferred or fail-closed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1`.
+- Validation passed: focused syntax and actor-network/report/public-contract
+  tests, `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=229, Tests=1346), and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL actor-event wait handoff selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1`.
 - The next generated actor-event wait behavior is scoped to one top-level

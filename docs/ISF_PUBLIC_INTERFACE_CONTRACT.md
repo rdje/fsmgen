@@ -1560,40 +1560,37 @@ The enclosing actor is the network boundary; `(network ...)` wrappers are not
 part of the shipped source surface. That field is not a required actor shell
 key. When present, `actor_network` is a `static_declaration` hash with
 exactly one instance entry in the current subset, and schedule reports project
-it through top-level `actor_network`. This slice is metadata-only: no child
-actor type resolution, generated child scheduled `.fsm`, generated ATL top,
-actor-to-actor movement, actor events, or HDL behavior is promised by this
-field.
+it through top-level `actor_network`. The shipped event-wait subset may also
+add `event_waits[]` entries for generated parent-handoff waits. No child actor
+type resolution, generated child scheduled `.fsm`, generated ATL top,
+actor-to-actor movement, qualified actor trigger behavior, or HDL event
+wiring is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
-existing drive-body movement syntax, but those forms remain future behavior
-until advertised by capability metadata. Endpoint-aware movement will keep
-drive body pair order as `(sink source)` and may later admit qualified
-`pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
+existing drive-body movement syntax, but most of those forms remain future
+behavior until advertised by capability metadata. Endpoint-aware movement
+will keep drive body pair order as `(sink source)` and may later admit
+qualified `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
 `group.name` endpoints. `connect`, `transfer`, and `move` are not public ATL
 v0 movement clauses. Future orchestration spellings are reserved as
-`(do actor.transaction)`, `(spawn actor.transaction as NAME)`,
-`(trigger actor.transaction)`, and `(await actor.event)`, with event payloads
-deferred. Future group syntax is reserved as
+`(do actor.transaction)`, `(spawn actor.transaction as NAME)`, and
+`(trigger actor.transaction)`, with event payloads deferred. Future group
+syntax is reserved as
 `(group NAME (members ACTOR...) (mode concurrent))`, but groups will be
-schedulable intent only and will not override safety checks. The current
-qualified event/trigger boundary is diagnostic-only: reserved
-`(await actor.event)`, transaction-body `(trigger actor.transaction)`, and
-rule-level `(trigger actor.transaction)` forms fail closed with ATL-specific
-diagnostics before scheduled `.fsm` emission when the qualifier names a
-declared static actor instance; existing unqualified local `(await signal)`
-and rule-level `(trigger transaction)` behavior remains unchanged, and dotted
-enum-looking names outside actor-network instances keep their prior
-diagnostics. The current artifact contract remains empty for ATL scheduling:
-no generated ATL child `.fsm`, generated ATL top, route mux, handoff storage,
-or HDL behavior is promised by `actor_network` metadata.
-The next selected actor-event wait subset is one top-level transaction-body
-`(await actor.event)` for the current single declared static actor instance,
-lowered to a generated one-bit parent event handoff input named
-`actor_event`. For example, `reader.done` lowers through `reader_done`. The
-event source is external until actor type resolution, ATL child generation,
-generated ATL tops, and qualified actor transaction triggers ship. Fan-in,
-fan-out, multiple event waits, nested event waits, event payloads,
-cross-clock actor events, and concurrent group events remain deferred.
+schedulable intent only and will not override safety checks.
+The current shipped actor-event wait subset accepts exactly one top-level
+transaction-body `(await actor.event)` for the current single declared static
+actor instance, lowered to a generated one-bit parent event handoff input
+named `actor_event`. For example, `reader.done` lowers through `reader_done`.
+Schedule reports expose this through `actor_network.event_waits[]` entries
+with `transaction`, `context`, `instance`, `event`, `signal`, and `source`
+keys, where `source` is currently `external_handoff`. The event source is
+external; actor type resolution, ATL child generation, generated ATL tops,
+and qualified actor transaction triggers are still deferred. Multiple event
+waits, nested event waits, fan-in, fan-out, event payloads, cross-clock actor
+events, and concurrent group events remain fail-closed/deferred. Existing
+unqualified local `(await signal)` and rule-level `(trigger transaction)`
+behavior remains unchanged, and dotted enum-looking names outside
+actor-network instances keep their prior diagnostics.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`
@@ -1913,8 +1910,9 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
-actor_network: kind, instances
+actor_network: kind, instances, event_waits
 actor_network instances entries: name, actor_type, declaration
+actor_network event_waits entries: transaction, context, instance, event, signal, source
 inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width

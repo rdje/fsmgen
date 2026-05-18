@@ -13,6 +13,7 @@ use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 use FSM::Adapter::ISF;
 use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
+    isf_public_interface_schedule_report_actor_network_event_wait_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
     isf_public_interface_schedule_report_actor_network_keys
 );
@@ -32,6 +33,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                     declaration => 'actor',
                 },
             ],
+            event_waits => [],
         },
         'parser preserves actor-body static actor-network instance identity',
     );
@@ -56,6 +58,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                     declaration => 'actor',
                 },
             ],
+            event_waits => [],
         },
         'actor-body network report',
     );
@@ -129,10 +132,9 @@ ISF
     );
 };
 
-subtest 'reserved qualified event and trigger forms fail closed with ATL diagnostics' => sub {
-    parse_fails_like(
-        <<'ISF',
-(actor qualified_event_wait
+subtest 'selected qualified event wait lowers to parent handoff input' => sub {
+    my $actor = parse_source(<<'ISF', 'atl-event-wait.isf');
+(actor atl_event_wait
   (clock clk)
   (interface (input start) (output done))
   (instance reader of packet_reader)
@@ -141,8 +143,130 @@ subtest 'reserved qualified event and trigger forms fail closed with ATL diagnos
     (await reader.done)
     (complete done)))
 ISF
-        qr/ATL actor event wait '\(await reader\.done\)' is reserved but not supported yet/,
-        'qualified actor event wait fails closed before generic enum diagnostics',
+
+    is_deeply(
+        $actor->{actor_network}{event_waits},
+        [
+            {
+                transaction => 'run',
+                context     => 'transaction_body',
+                instance    => 'reader',
+                event       => 'done',
+                signal      => 'reader_done',
+                source      => 'external_handoff',
+            },
+        ],
+        'parser records the selected actor-event wait handoff metadata',
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    my $fsm = $lowered->{files}{'atl_event_wait.fsm'};
+    ok($fsm, 'selected actor-event wait still emits the parent scheduled .fsm only');
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ['atl_event_wait.fsm'],
+        'selected actor-event wait does not emit ATL child artifacts or a generated top',
+    );
+    like($fsm, qr/\(reader_done 1\)/, 'scheduled .fsm exposes generated event handoff input');
+    like($fsm, qr/<reader_done\s+\(\-> run_done_2\)/, 'scheduled .fsm awaits the generated event handoff input');
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'reader',
+                    actor_type  => 'packet_reader',
+                    declaration => 'actor',
+                },
+            ],
+            event_waits => [
+                {
+                    transaction => 'run',
+                    context     => 'transaction_body',
+                    instance    => 'reader',
+                    event       => 'done',
+                    signal      => 'reader_done',
+                    source      => 'external_handoff',
+                },
+            ],
+        },
+        'actor-event wait report',
+    );
+};
+
+subtest 'unsupported qualified event and trigger forms fail closed with ATL diagnostics' => sub {
+    parse_fails_like(
+        <<'ISF',
+(actor nested_qualified_event_wait
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (when start
+      (await reader.done))
+    (complete done)))
+ISF
+        qr/ATL actor event wait '\(await reader\.done\)' is reserved for top-level transaction bodies only/,
+        'nested qualified actor event wait fails closed before generic enum diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor multiple_qualified_event_waits
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (await reader.done)
+    (await reader.ready)
+    (complete done)))
+ISF
+        qr/exceeds the current one-event-wait subset/,
+        'multiple qualified actor event waits fail closed until fan-in/fan-out policy ships',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_event_wait_signal_conflict
+  (clock clk)
+  (interface
+    (input start)
+    (input reader_done)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (await reader.done)
+    (complete done)))
+ISF
+        qr/generated handoff signal 'reader_done' conflicts with a declared actor signal/,
+        'generated actor event handoff names fail closed on actor signal conflicts',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_event_wait_multi_domain
+  (clock-domains
+    (domain core (clock clk_a) :default)
+    (domain io (clock clk_b)))
+  (interface
+    (input start (domain core))
+    (output done (domain core)))
+  (instance reader of packet_reader)
+  (transaction run
+    (domain core)
+    (on start)
+    (await reader.done)
+    (complete done)))
+ISF
+        qr/ATL actor event waits require a single-clock actor in the current subset/,
+        'actor event waits fail closed for multi-domain actors until cross-clock ATL events ship',
     );
 
     parse_fails_like(
@@ -211,6 +335,13 @@ sub assert_actor_network_report {
         [sort @{isf_public_interface_schedule_report_actor_network_instance_keys()}],
         "$label exposes advertised actor_network instance keys",
     );
+    if (@{$report->{actor_network}{event_waits} || []}) {
+        is_deeply(
+            [sort keys %{$report->{actor_network}{event_waits}[0]}],
+            [sort @{isf_public_interface_schedule_report_actor_network_event_wait_keys()}],
+            "$label exposes advertised actor_network event_wait keys",
+        );
+    }
     is_deeply($report->{actor_network}, $expected, "$label preserves actor-network identity");
 }
 

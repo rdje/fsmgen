@@ -732,12 +732,20 @@ sub _validate_actor_aggregate_storage_paths($self, $actor) {
 sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
     my %actor_instances = map { $_->{name} => 1 }
         @{(($actor->{actor_network} || {})->{instances}) || []};
+    my %declared_signals = _actor_declared_signal_names($actor);
+    my @event_waits;
 
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_atl_reserved_qualified_forms(
             $tx->{clauses},
             "transaction '$tx->{name}'",
             \%actor_instances,
+            \%declared_signals,
+            \@event_waits,
+            {
+                transaction      => $tx->{name},
+                allow_event_wait => 1,
+            },
         );
     }
 
@@ -753,12 +761,19 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         }
     }
 
+    if (@event_waits) {
+        confess "Error: actor '$actor->{actor_name}' ATL actor event waits require a single-clock actor in the current subset\n"
+            if ref($actor->{clock_domains}) eq 'HASH';
+        $actor->{actor_network}{event_waits} = \@event_waits;
+    }
+
     return 1;
 }
 
 sub _validate_transaction_atl_reserved_qualified_forms {
-    my ($clauses, $context, $actor_instances) = @_;
+    my ($clauses, $context, $actor_instances, $declared_signals, $event_waits, $options) = @_;
     return 1 unless ref($clauses) eq 'ARRAY';
+    $options ||= {};
 
     for my $clause (@$clauses) {
         next unless ref($clause) eq 'ARRAY' && @$clause;
@@ -767,7 +782,18 @@ sub _validate_transaction_atl_reserved_qualified_forms {
 
         if ($head eq 'await' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
             my $target = $clause->[1];
-            confess "Error: $context ATL actor event wait '(await $target)' is reserved but not supported yet; unqualified '(await signal)' remains the local transaction wait surface\n";
+            if ($options->{allow_event_wait}) {
+                _accept_top_level_atl_event_wait(
+                    $clause,
+                    $context,
+                    $actor_instances,
+                    $declared_signals,
+                    $event_waits,
+                    $options->{transaction},
+                );
+                next;
+            }
+            confess "Error: $context ATL actor event wait '(await $target)' is reserved for top-level transaction bodies only in the current subset; nested actor-event waits remain deferred\n";
         }
 
         if ($head eq 'trigger' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
@@ -782,6 +808,12 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                 [ @{$clause}[2 .. $#$clause] ],
                 "$context $head body",
                 $actor_instances,
+                $declared_signals,
+                $event_waits,
+                {
+                    transaction      => $options->{transaction},
+                    allow_event_wait => 0,
+                },
             );
             next;
         }
@@ -793,6 +825,12 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     [ @{$branch}[1 .. $#$branch] ],
                     "$context switch branch",
                     $actor_instances,
+                    $declared_signals,
+                    $event_waits,
+                    {
+                        transaction      => $options->{transaction},
+                        allow_event_wait => 0,
+                    },
                 );
             }
         }
@@ -801,12 +839,75 @@ sub _validate_transaction_atl_reserved_qualified_forms {
     return 1;
 }
 
+sub _accept_top_level_atl_event_wait {
+    my ($clause, $context, $actor_instances, $declared_signals, $event_waits, $transaction_name) = @_;
+    my $target = $clause->[1];
+    my ($instance, $event) = _parse_qualified_atl_endpoint_token($target, $actor_instances);
+    confess "Error: $context ATL actor event wait '(await $target)' is not a declared static actor endpoint\n"
+        unless defined($instance) && defined($event);
+    confess "Error: $context ATL actor event wait '(await $target)' event name must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($event);
+    confess "Error: $context ATL actor event wait '(await $target)' exceeds the current one-event-wait subset; fan-in, fan-out, and multiple event waits remain deferred\n"
+        if @$event_waits;
+
+    my $signal = _actor_atl_event_handoff_signal($instance, $event);
+    confess "Error: $context ATL actor event wait '(await $target)' generated handoff signal '$signal' conflicts with a declared actor signal\n"
+        if $declared_signals->{$signal};
+
+    $clause->[1] = $signal;
+    push @$event_waits, {
+        transaction => $transaction_name,
+        context     => 'transaction_body',
+        instance    => $instance,
+        event       => $event,
+        signal      => $signal,
+        source      => 'external_handoff',
+    };
+
+    return 1;
+}
+
 sub _is_qualified_atl_endpoint_token {
     my ($token, $actor_instances) = @_;
-    return 0 unless defined($token) && !ref($token);
-    return 0 unless $token =~ /\A([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\z/;
-    return 0 unless ref($actor_instances) eq 'HASH' && $actor_instances->{$1};
-    return 1;
+    my ($instance) = _parse_qualified_atl_endpoint_token($token, $actor_instances);
+    return defined($instance) ? 1 : 0;
+}
+
+sub _parse_qualified_atl_endpoint_token {
+    my ($token, $actor_instances) = @_;
+    return unless defined($token) && !ref($token);
+    return unless $token =~ /\A([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\z/;
+    return unless ref($actor_instances) eq 'HASH' && $actor_instances->{$1};
+    return ($1, $2);
+}
+
+sub _actor_atl_event_handoff_signal {
+    my ($instance, $event) = @_;
+    return "${instance}_${event}";
+}
+
+sub _actor_declared_signal_names {
+    my ($actor) = @_;
+    my %names;
+
+    for my $port (@{$actor->{interface}{inputs} || []}, @{$actor->{interface}{outputs} || []}) {
+        $names{$port->{name}} = 1
+            if defined($port->{name}) && !ref($port->{name});
+    }
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            $names{$signal->{name}} = 1
+                if defined($signal->{name}) && !ref($signal->{name});
+        }
+    }
+    $names{$actor->{clock}} = 1
+        if defined($actor->{clock}) && !ref($actor->{clock});
+    $names{$actor->{reset}{name}} = 1
+        if ref($actor->{reset}) eq 'HASH'
+            && defined($actor->{reset}{name})
+            && !ref($actor->{reset}{name});
+
+    return %names;
 }
 
 sub _validate_actor_enum_member_value_contexts($self, $actor) {
@@ -4487,6 +4588,7 @@ sub _actor_network_from_instances {
     return {
         kind      => 'static_declaration',
         instances => [ map { _clone_isf_value($_) } @instances ],
+        event_waits => [],
     };
 }
 

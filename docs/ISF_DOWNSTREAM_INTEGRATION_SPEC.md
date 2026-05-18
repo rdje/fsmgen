@@ -1533,7 +1533,8 @@ The schedule report exposes this through top-level `actor_network`:
       "actor_type": "packet_reader",
       "declaration": "actor"
     }
-  ]
+  ],
+  "event_waits": []
 }
 ```
 
@@ -1564,34 +1565,38 @@ capability manifest and this handoff:
   schedulable intent; it never overrides fan-in, lifetime, ordering, width, or
   CDC safety.
 
-Current diagnostic-only ATL boundary: downstream producers must still not emit
-qualified event or actor-transaction trigger forms as supported behavior.
-FSMGen now rejects reserved qualified `(await actor.event)`,
-transaction-body `(trigger actor.transaction)`, and rule-level
-`(trigger actor.transaction)` with ATL-specific diagnostics before scheduled
-`.fsm` emission when the qualifier names a declared static actor instance.
-Existing unqualified local forms are unchanged: `(await signal)` remains a
-local transaction wait, and rule-level `(trigger transaction)` remains a local
+Current ATL event-wait handoff subset: downstream producers may emit exactly
+one top-level transaction-body `(await actor.event)` against the current
+single declared static actor instance. The event name must be a scalar HDL
+identifier. FSMGen maps that wait to a generated one-bit parent event input
+named `actor_event`; for example, `reader.done` maps to `reader_done`. The
+scheduled parent `.fsm` exposes that input and waits on it. The producer of
+that event is external in this subset: no actor type resolution, generated
+ATL child `.fsm`, generated ATL top, or event wiring is emitted.
+
+Schedule JSON reports accepted waits under `actor_network.event_waits[]`.
+Each entry exposes `transaction`, `context`, `instance`, `event`, `signal`,
+and `source`; the current source is `external_handoff`.
+
+The rest of the ATL event/trigger boundary remains fail-closed. Downstream
+producers must not emit multiple actor-event waits, nested actor-event waits,
+fan-in/fan-out event structures, event payloads, cross-clock actor events,
+concurrent group events, transaction-body `(trigger actor.transaction)`,
+rule-level `(trigger actor.transaction)`, or source that relies on generated
+ATL child artifacts or generated ATL top wiring until the corresponding
+support is documented here and advertised in the manifest. Existing
+unqualified local forms are unchanged: `(await signal)` remains a local
+transaction wait, and rule-level `(trigger transaction)` remains a local
 transaction trigger. Dotted enum-looking names that do not name a static actor
 instance keep their prior diagnostics.
 
-Next selected event-wait handoff subset: downstream producers should prepare
-for exactly one top-level transaction-body `(await actor.event)` against the
-current single declared static actor instance. The event name must be a scalar
-HDL identifier. The selected lowering maps that wait to a generated one-bit
-parent event input named `actor_event`; for example, `reader.done` maps to
-`reader_done`. The producer of that event is external in this subset. Do not
-emit multiple actor-event waits, nested actor-event waits, fan-in/fan-out
-event structures, event payloads, cross-clock actor events, concurrent group
-events, qualified triggers, or source that relies on generated ATL child
-artifacts or generated ATL top wiring until the corresponding support is
-documented here and advertised in the manifest.
-
-Current generated-artifact contract: none. The shipped static metadata surface
-emits no generated ATL child `.fsm`, no generated ATL top, no route mux, no
-handoff storage, and no HDL behavior. Downstream consumers must treat
-`actor_network` as discovery/review metadata until a later task-tree leaf
-documents generated artifact names and report keys in this handoff.
+Current generated-artifact contract: the parent scheduled `.fsm` may include
+the selected one-bit actor-event handoff input. FSMGen still emits no
+generated ATL child `.fsm`, no generated ATL top, no route mux, no internal
+handoff storage, and no HDL event wiring. Downstream consumers must treat
+`actor_network` as discovery/review metadata plus the explicitly reported
+`event_waits[]` entries until a later task-tree leaf documents broader
+generated artifact names and report keys in this handoff.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -1754,8 +1759,10 @@ transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
   role, port, actor_signal, actor_expression, width, instance, parent_port,
   child_port, start_signal, done_signal, trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
-actor_network: kind, instances
+actor_network: kind, instances, event_waits
 actor_network.instances[]: name, actor_type, declaration
+actor_network.event_waits[]: transaction, context, instance, event, signal,
+  source
 library_uses[]: library, alias, export, kind, instance, module,
   scheduled_fsm, parameters, bindings
 clock_domains[]: name, default, clock, reset, scheduled_fsm, ports, storage,

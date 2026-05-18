@@ -315,6 +315,17 @@ sub _actor_network_for_ir {
         && ref($network->{instances}) eq 'ARRAY'
         && @{$network->{instances}};
 
+    my @event_waits = map {
+        {
+            transaction => $_->{transaction},
+            context     => $_->{context},
+            instance    => $_->{instance},
+            event       => $_->{event},
+            signal      => $_->{signal},
+            source      => $_->{source},
+        }
+    } @{$network->{event_waits} || []};
+
     return {
         kind      => $network->{kind} // 'static_declaration',
         instances => [
@@ -326,6 +337,7 @@ sub _actor_network_for_ir {
                 }
             } @{$network->{instances}}
         ],
+        event_waits => \@event_waits,
     };
 }
 
@@ -1879,6 +1891,10 @@ sub _build_ports($self, $actor) {
         my %port = ( name => $o->{name}, direction => 'output', width => $o->{width} // 1 );
         $port{type} = $o->{type} if exists $o->{type};
         push @p, \%port;
+    }
+    my %seen = map { $_->{name} => 1 } @p;
+    for my $wait (@{(($actor->{actor_network} || {})->{event_waits}) || []}) {
+        _push_port(\@p, \%seen, $wait->{signal}, 'input', 1);
     }
     return \@p;
 }

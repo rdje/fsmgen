@@ -2800,7 +2800,8 @@ parser/schedule-report metadata:
       "actor_type": "packet_reader",
       "declaration": "actor"
     }
-  ]
+  ],
+  "event_waits": []
 }
 ```
 
@@ -2843,37 +2844,41 @@ The broader ATL v0 vocabulary is selected but not implemented yet:
   schedulable intent and do not override fan-in, ordering, lifetime, or CDC
   safety checks.
 
-The current event/trigger boundary is fail-closed and diagnostic-only. FSMGen
-rejects reserved qualified `(await actor.event)`, transaction-body
-`(trigger actor.transaction)`, and rule-level
-`(trigger actor.transaction)` with ATL-specific diagnostics before scheduled
-`.fsm` emission when the qualifier names a declared static actor instance.
-Existing unqualified local behavior remains unchanged: `(await signal)` is
-still a local transaction wait, and rule-level `(trigger transaction)` still
-targets a local transaction. Dotted enum-looking names that do not name a
-static actor instance keep their prior diagnostics. This boundary does not add
-actor-event lowering, generated ATL child artifacts, generated ATL top names,
-route muxes, handoff storage, event fan-in/fan-out, event payloads, or
-schedule-report event keys.
-
-The next selected actor-event behavior is deliberately narrower than full
-child orchestration. The selected subset is one top-level transaction-body
-`(await actor.event)` against the current single declared static actor
-instance, with an event name that is a scalar HDL identifier. It lowers to a
+The current actor-event wait subset is deliberately narrower than full child
+orchestration. FSMGen accepts exactly one top-level transaction-body
+`(await actor.event)` when `actor` names the current single declared static
+actor instance and `event` is a scalar HDL identifier. The wait lowers to a
 deterministic one-bit parent event handoff input named `actor_event`; for
-example, `(await reader.done)` lowers to an await on `reader_done`. The event
-source is externally supplied until actor type resolution, generated ATL child
-artifacts, generated ATL tops, and qualified actor-transaction triggers ship.
-Fan-in, fan-out, multiple actor-event waits, nested actor-event waits,
-event payloads, cross-clock actor events, concurrent group events, and
-qualified triggers remain deferred unless a later leaf explicitly widens this
-surface.
+example, `(await reader.done)` lowers to an await on `reader_done` and the
+scheduled parent `.fsm` exposes `reader_done` as a one-bit input. The event
+source is external in this subset. FSMGen does not resolve the actor type,
+emit a generated ATL child `.fsm`, generate an ATL top, or wire the event
+producer.
 
-The current generated-artifact contract is explicit: this metadata slice emits
-no ATL child `.fsm`, no generated ATL top, no generated route mux, no generated
-handoff storage, and no HDL behavior. Any later ATL implementation that emits
-artifacts must document their names, report keys, and review surfaces in the
-same slice that ships them.
+Schedule JSON reports the shipped wait under `actor_network.event_waits[]`.
+Each entry has `transaction`, `context`, `instance`, `event`, `signal`, and
+`source`; the current `source` value is `external_handoff`.
+
+The rest of the event/trigger boundary remains fail-closed. FSMGen rejects
+multiple actor-event waits, nested actor-event waits, event handoff signal
+conflicts, actor-event waits on `(clock-domains ...)` actors, transaction-body
+`(trigger actor.transaction)`, and rule-level
+`(trigger actor.transaction)` with ATL-specific diagnostics when the qualifier
+names a declared static actor instance. Existing unqualified local behavior
+remains unchanged: `(await signal)` is still a local transaction wait, and
+rule-level `(trigger transaction)` still targets a local transaction. Dotted
+enum-looking names that do not name a static actor instance keep their prior
+diagnostics. Event fan-in/fan-out, event payloads, cross-clock actor events,
+concurrent group events, generated ATL child artifacts, generated ATL tops,
+route muxes, and qualified actor transaction triggers remain deferred unless a
+later leaf explicitly widens this surface.
+
+The current generated-artifact contract is explicit: the parent scheduled
+`.fsm` may include the selected one-bit actor-event handoff input. FSMGen
+still emits no ATL child `.fsm`, no generated ATL top, no generated route mux,
+no generated internal handoff storage, and no HDL event wiring. Any later ATL
+implementation that emits broader artifacts must document their names, report
+keys, and review surfaces in the same slice that ships them.
 
 ## 10. Schedule JSON Report
 
@@ -2979,11 +2984,14 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 `temporal_contract_monitor`. The capability-manifest ISF public contract
 advertises this value family through `schedule_report_dt_kind_values`.
 `actor_network` is null for actors without a static ATL actor declaration, or
-an object with `kind` and `instances` for the current one-instance static
-actor-network subset. Each instance entry contains `name`, `actor_type`, and
-`declaration`. The capability-manifest ISF public contract advertises these
-families through `schedule_report_actor_network_keys` and
-`schedule_report_actor_network_instance_keys`.
+an object with `kind`, `instances`, and `event_waits` for the current
+one-instance static actor-network subset. Each instance entry contains
+`name`, `actor_type`, and `declaration`. Each event-wait entry contains
+`transaction`, `context`, `instance`, `event`, `signal`, and `source`. The
+capability-manifest ISF public contract advertises these families through
+`schedule_report_actor_network_keys`,
+`schedule_report_actor_network_instance_keys`, and
+`schedule_report_actor_network_event_wait_keys`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
 lowerer has direct evidence: `activation_done_handoff`,

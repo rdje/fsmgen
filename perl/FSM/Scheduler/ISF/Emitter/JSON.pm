@@ -601,6 +601,18 @@ sub _actor_network_summary($self, $ir) {
                 }
             } @{$network->{instances}}
         ],
+        event_waits => [
+            map {
+                {
+                    transaction => $_->{transaction},
+                    context     => $_->{context},
+                    instance    => $_->{instance},
+                    event       => $_->{event},
+                    signal      => $_->{signal},
+                    source      => $_->{source},
+                }
+            } @{$network->{event_waits} || []}
+        ],
     };
 }
 

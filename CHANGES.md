@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL actor-event waits lower to parent handoff input
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`.
+- FSMGen now accepts exactly one top-level transaction-body
+  `(await actor.event)` for the current single static actor instance and
+  lowers it to a generated one-bit parent event input named `actor_event`.
+- The scheduled parent `.fsm` exposes the generated event input and waits on
+  it; schedule JSON reports the wait under `actor_network.event_waits[]`.
+- The event producer remains external. Actor type resolution, generated ATL
+  child artifacts, ATL tops, qualified actor transaction triggers, multiple
+  or nested waits, fan-in/fan-out, payloads, cross-clock events, concurrent
+  groups, endpoint data movement, and HDL behavior remain deferred.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook,
+  task tree, roadmap board, live achievement status, and development notes.
+  The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1`.
 ### R14 — ATL actor-event wait handoff selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` as a task-tree
   selection slice before implementation.

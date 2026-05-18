@@ -79,7 +79,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4`
   Status: `active`
   Goal: `Ship actor event trigger and sync semantics.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4`
   Acceptance: `Select and then ship bounded actor-event slices using the reserved ATL v0 event vocabulary. Actor event waits use '(await actor.event)'; events are one-cycle control pulses with no payloads; fan-in, fan-out, same-cycle ambiguity, generated artifact names, report keys, and fail-closed boundaries are documented and tested before behavior ships.`
   Verification: `pending`
   Commit: `pending`
@@ -99,12 +99,12 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.2: fail closed ATL events`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`
-  Status: `active`
+  Status: `completed`
   Goal: `Ship the first generated actor-event wait subset.`
   Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`
-  Acceptance: `A later slice selects one explicit event source, sink wait, fan-in/fan-out policy, generated artifact naming scheme, and schedule-report key family before accepting any qualified actor event as behavior. Event payloads, data movement through events, multiple static instances, cross-clock actor events, and concurrent group events remain deferred unless that leaf explicitly widens them.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `The selected first generated actor-event wait subset accepts exactly one top-level transaction-body '(await actor.event)' against the current single static actor instance, lowers it to a deterministic one-bit parent handoff input named 'actor_event', records the wait in schedule JSON actor_network.event_waits[], and keeps fan-in, fan-out, multiple waits, nested waits, event payloads, cross-clock actor events, generated ATL child artifacts, generated ATL tops, qualified actor transaction triggers, data movement through events, multiple static instances, and concurrent group events fail-closed/deferred.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2: lower actor event waits`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1`
   Status: `completed`
@@ -114,9 +114,24 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1: select event wait handoff`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2`
-  Status: `active`
+  Status: `completed`
   Goal: `Lower the selected single actor-event wait to a generated parent handoff input.`
   Acceptance: `Parser/lowering accepts exactly one top-level transaction-body '(await actor.event)' when 'actor' names the current single static actor instance, normalizes it to the generated one-bit input 'actor_event', emits scheduled '.fsm' await behavior against that input, records the event wait in schedule JSON actor-network metadata, and keeps unsupported ATL event/trigger variants fail-closed with targeted diagnostics. Specs, downstream handoff, public contract, mdBook, task tree, tests, and manifest/audit expectations are synchronized.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2: lower actor event waits`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4`
+  Status: `active`
+  Goal: `Select and ship the first qualified actor-transaction trigger subset.`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1`
+  Acceptance: `A selection leaf chooses the first bounded '(trigger actor.transaction)' behavior only after defining source/sink ownership, generated artifact names, report keys, fan-in/fan-out policy, interaction with parent event waits, and fail-closed boundaries.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1`
+  Status: `active`
+  Goal: `Select the first qualified actor-transaction trigger subset.`
+  Acceptance: `Task tree, roadmap, design proposal, spec/downstream/public-contract docs, and mdBook record the first implementation boundary for '(trigger actor.transaction)' before code. The selection must state whether the trigger targets an external parent handoff, a resolved generated child, or a later actor-type resolution path, and must keep unsupported trigger shapes fail-closed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -152,7 +167,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2` | `active` | `.4.3.1` selected the first behavior-bearing event wait as a single top-level transaction-body `(await actor.event)` lowered to a one-bit parent handoff input. The next leaf implements only that selected subset and keeps broader ATL event/trigger behavior fail-closed. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.1` | `active` | `.4.3.2` shipped the first generated actor-event wait subset as a single parent-handoff input. The next leaf must select the first qualified actor-transaction trigger boundary before any trigger behavior ships. |
 
 ## ATL v0 Proposal
 
@@ -195,20 +210,19 @@ Current proposal summary:
 - Concurrent groups express intended parallel actor activity but do not
   override safety; FSMGen may schedule, serialize, insert handoff storage, or
   reject unsafe overlap.
-- The first selected `.4` implementation will fail closed qualified
-  event/trigger syntax before accepting it as behavior. That protects
-  downstream emitters from receiving generic enum-member, unsupported-clause,
-  or unknown-transaction diagnostics for reserved ATL forms and keeps the
-  generated ATL artifact contract empty until event lowering has explicit
-  names and report keys.
-- The first selected generated actor-event wait subset is intentionally
-  smaller than full child orchestration. It accepts one top-level
-  transaction-body `(await actor.event)` against the current single static
-  actor instance and lowers it to a deterministic one-bit parent handoff input
-  named `actor_event`. The event source is external to the parent scheduled
-  `.fsm` until actor type resolution, generated ATL child artifacts, and
-  qualified actor transaction triggers ship.
-- The selected `.4.3.2` implementation must keep fan-in, fan-out, multiple
+- The first `.4` implementation failed closed qualified event/trigger syntax
+  before accepting behavior. That protects downstream emitters from receiving
+  generic enum-member, unsupported-clause, or unknown-transaction diagnostics
+  for reserved ATL forms.
+- The first generated actor-event wait subset is intentionally smaller than
+  full child orchestration. It accepts one top-level transaction-body
+  `(await actor.event)` against the current single static actor instance and
+  lowers it to a deterministic one-bit parent handoff input named
+  `actor_event`. The event source is external to the parent scheduled `.fsm`
+  until actor type resolution, generated ATL child artifacts, and qualified
+  actor transaction triggers ship. Schedule JSON records accepted waits under
+  `actor_network.event_waits[]`.
+- The shipped `.4.3.2` implementation keeps fan-in, fan-out, multiple
   event waits, nested event waits, rule-level or transaction-body qualified
   triggers, generated ATL child `.fsm` files, generated ATL tops, event
   payloads, cross-clock actor events, and concurrent group events deferred or
@@ -315,6 +329,13 @@ Current proposal summary:
   named `actor_event`. The event producer is external until later ATL actor
   type resolution, child generation, and qualified transaction trigger leaves
   ship.
+- `2026-05-18`: Shipped the first behavior-bearing actor-event wait subset:
+  exactly one top-level transaction-body `(await actor.event)` now lowers to a
+  generated one-bit parent handoff input named `actor_event` and reports
+  through `actor_network.event_waits[]`. Multiple waits, nested waits,
+  multi-domain actor events, handoff name conflicts, event payloads,
+  fan-in/fan-out, qualified transaction triggers, generated ATL children, and
+  generated ATL tops remain deferred or fail-closed.
 
 ## Open Questions
 
@@ -329,10 +350,9 @@ Current proposal summary:
 
 ## Blockers
 
-- No blocker for the selected `.4.1` slice. The first code leaf is `.4.2`,
-  which must fail closed reserved qualified event/trigger syntax with
-  targeted ATL diagnostics before any later leaf accepts generated actor-event
-  behavior.
+- No blocker for the active `.4.4.1` selection leaf. Qualified
+  actor-transaction trigger behavior must still be selected before any trigger
+  code ships.
 
 ## Verification Log
 
@@ -350,6 +370,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` | `mdbook build docs/book`; `git diff --check` | `selected the first event/trigger boundary as targeted fail-closed diagnostics before generated ATL event behavior; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t t/1271-isf-enum-member-activation-params.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `reserved qualified ATL event/trigger forms fail closed with instance-aware diagnostics; focused checks pass; broad ISF gate passes with Files=229, Tests=1345` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` | `mdbook build docs/book`; `git diff --check` | `selected the first generated actor-event wait subset as a single parent-handoff input wait; book and diff checks passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected actor-event wait lowers to a parent handoff input and report metadata; focused checks pass; broad ISF gate passes with Files=229, Tests=1346` |
 
 ## Commit Log
 
@@ -366,6 +387,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.1: select event boundary` | `selects targeted fail-closed diagnostics as the first actor-event and qualified-trigger boundary slice` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.2: fail closed ATL events` | `ships instance-aware targeted diagnostics for reserved qualified event waits and actor transaction triggers` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1: select event wait handoff` | `selects the first generated actor-event wait subset as one top-level transaction wait lowered to a parent handoff input` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2: lower actor event waits` | `lowers the selected single actor-event wait to a generated parent handoff input and actor-network report metadata` |
 
 ## Changelog
 
@@ -406,3 +428,8 @@ Current proposal summary:
   transaction-body `(await actor.event)` to a deterministic one-bit parent
   handoff input and records it in actor-network report metadata while keeping
   broader ATL event and trigger behavior deferred.
+- `2026-05-18`: Completed `.4.3.2`: one top-level transaction-body
+  `(await actor.event)` now lowers to a generated parent handoff input and
+  schedule-report `actor_network.event_waits[]` metadata. The active frontier
+  moves to `.4.4.1` to select the first qualified actor-transaction trigger
+  boundary.

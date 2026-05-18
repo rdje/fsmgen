@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL event waits are intentionally external handoffs
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.2` implements the first
+  behavior-bearing ATL actor-event wait without pretending child elaboration
+  exists.
+- The parser rewrites the selected top-level `(await actor.event)` to a
+  generated parent input named `actor_event` and records the original actor
+  endpoint in `actor_network.event_waits[]`. Lowering can then reuse the
+  existing transaction await machinery, keeping the scheduled `.fsm`
+  reviewable and explicit.
+- The current one-wait limit is a safety boundary, not a convenience limit.
+  It avoids silently selecting fan-in, fan-out, lifetime, priority, or route
+  semantics before a later ATL slice has generated evidence for them.
+- Keeping the source as `external_handoff` preserves truthfulness. This slice
+  proves the parent can synchronize on an actor-named one-cycle pulse, but it
+  does not resolve actor types, emit child artifacts, build a generated ATL
+  top, trigger child transactions, or wire HDL event routes.
 ## 2026-05-18: First ATL event wait is a parent handoff
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3.1` selects the first
   behavior-bearing actor-event wait subset before code.
@@ -59,9 +75,9 @@ This document captures engineering rationale, design constraints, and working de
   `(trigger actor.transaction)`, and `(await actor.event)`. This keeps ATL
   actor orchestration aligned with local transactions, generated-child
   activation, and rule trigger semantics.
-- `actor_network` remains metadata only until later leaves ship generated
-  artifacts. This avoids downstream consumers mistaking a static declaration
-  for an instantiated child schedule or HDL structure.
+- `actor_network` now carries static declaration metadata and the shipped
+  parent-handoff `event_waits[]` metadata. It still does not imply an
+  instantiated child schedule, generated ATL top, route mux, or HDL wiring.
 ## 2026-05-18: Check JSON is part of the ISF downstream contract
 - `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` treats empty stdout under
   `--check --json` as a downstream contract bug for existing `.isf` inputs,
