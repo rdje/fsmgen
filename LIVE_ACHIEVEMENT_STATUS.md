@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF when-contained repeat domain do while spawn pending selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.73`.
+- Selected top-level `when` bodies containing nested repeats with one or more
+  generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
+  sites, followed by generated blocking
+  `(do child (params ...) [(bind ...)] (domain NAME))` with static parameter
+  overrides, optional input/output port bindings, and declared same-domain
+  ownership metadata while those generated spawns remain pending, and a later
+  same-body `(await_all done)` drain before the nested repeat check can loop.
+- The selected contract preserves static generated-top parameter binding,
+  optional generated-top binding handoffs, generated-composition and
+  clock-domain report ownership metadata on the deterministic generated do
+  instance, and the pending generated-spawn done set until the later drain.
+- The switch-contained domain analogue, `await_any` around the do, new spawn
+  after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain deferred. The
+  active frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.74`.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+
 ## 2026-05-18: R14 — ISF switch-contained repeat bound do while spawn pending shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.72`.
 - Top-level `switch` branches may now contain nested repeats with one or more

@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained domain do while spawn pending is the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.73` selects the when-branch same-domain
+  metadata analogue of the shipped static-parameter bound pending-spawn
+  generated do subset.
+- The selected surface is intentionally narrow: only
+  `(do child (params ...) [(bind ...)] (domain NAME))`, only inside a repeat
+  directly under a top-level `when` body, and only when a later same-body
+  `(await_all done)` still drains all pending generated nested spawns before
+  the nested repeat check can loop.
+- The domain annotation is declared same-domain ownership metadata for the
+  deterministic generated do instance. It should preserve generated-
+  composition and schedule-report clock-domain metadata without implying CDC,
+  relaxing cross-domain activation, or changing the pending generated-spawn
+  lifetime.
+- The switch-contained domain analogue, `await_any` before or after the do,
+  new nested spawn after the do before the drain, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  separate contracts.
 ## 2026-05-18: switch-contained bound do preserves pending generated spawns
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.72` implements only the selected
   top-level `switch` branch nested-repeat static-parameter bound generated

@@ -736,10 +736,10 @@ module. The nested do state starts `local_worker`, waits for its fresh local
 done pulse, and then the `after_do` sample runs before the `await_all` state.
 The generated-spawn done set remains live across the local do, so the nested
 repeat check is still gated by `w0_done` at the same-body `await_all` drain.
-Bound or domain-qualified generated `do`, `await_any` before or after the do,
-and new nested `spawn` after the do before the drain remain outside this local
-do subset. Branch-contained generated-child and static-parameter generated
-`do` while pending are documented below as separate shipped subsets.
+Generated `do` forms with static parameters and optional binding handoffs are
+documented below as separate shipped subsets. Domain-qualified generated
+`do`, `await_any` before or after the do, and new nested `spawn` after the do
+before the drain remain outside this local do subset.
 
 The same top-level `when` body pending-spawn interval may run a plain
 generated-child `(do child)` when that child already has a generated instance

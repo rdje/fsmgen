@@ -349,28 +349,37 @@ live for the later same-body `(await_all done)` drain. The same two
 branch-contained subsets also ship static-parameter generated
 `(do child (params ...))` in that pending-spawn interval, preserving generated
 top parameter binding on the generated do instance while still requiring the
-later same-body drain. Bound/domain-qualified generated `do` while pending,
-prior or later `await_any` around the do, new nested `spawn` after the do
-before the drain, cross-domain repeat-body `do`, generated/spawn nested
-activation beyond the documented branch-contained generated `do` cases and
-the branch-contained spawned cases, deeper branch repeat activation,
-loop-contained repeat activation, and broader outstanding-child lifetime
-semantics beyond the mandatory-drain subset remain backlog. The shipped
-branch-contained generated nested do subsets still keep unsupported activation
-subclauses, spawn nesting, deeper branch/loop nesting, cross-domain
-activation, and broader outstanding-child semantics out of scope.
+later same-body drain. The same branch-contained pending-spawn generated do
+subsets also accept `(bind ...)` input/output port bindings when static
+`(params ...)` overrides are present. The nested do site reuses the
+deterministic generated do instance for that lexical site, wires
+generated-top binding handoffs once, waits for the instance's fresh done
+handoff before the branch-owned repeat check, and leaves the pending
+generated-spawn done set live for the later drain. Domain-qualified generated
+`do` while pending, prior or later `await_any` around the do, new nested
+`spawn` after the do before the drain, cross-domain repeat-body `do`,
+generated/spawn nested activation beyond the documented branch-contained
+generated `do` cases and the branch-contained spawned cases, deeper branch
+repeat activation, loop-contained repeat activation, and broader
+outstanding-child lifetime semantics beyond the mandatory-drain subset remain
+backlog. The shipped branch-contained generated nested do subsets still keep
+unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
+cross-domain activation, and broader outstanding-child semantics out of scope.
 
-The switch-contained static-parameter generated nested `do` subset also
-accepts `(bind ...)` input/output port bindings. The nested do site mirrors
-the shipped when-contained binding subset, reuses the same deterministic
-generated do instance as the switch-contained static-parameter subset, wires
-generated-top binding handoffs once for that lexical site, waits for the
-instance's fresh done handoff before the switch-branch repeat check, and keeps
-`(domain NAME)`, spawn nesting, deeper branch/loop nesting, cross-domain
-activation, and broader outstanding-child semantics out of scope.
+The next selected backlog leaf is the when-contained same-domain metadata
+analogue for that pending-spawn interval. It covers a repeat directly inside a
+top-level `when` body with one or more generated spawns, generated blocking
+`(do child (params ...) [(bind ...)] (domain NAME))`, and a later same-body
+`(await_all done)` drain before the nested repeat check can loop. The selected
+domain annotation is declared same-domain ownership metadata only for the
+deterministic generated do instance; it should preserve generated-composition
+and schedule-report clock-domain metadata without implying CDC or
+cross-domain activation. That pending-spawn same-domain subset is selected but
+not yet shipped.
 
-The when-contained nested generated-do domain leaf covers a repeat directly
-inside a top-level `when` body with generated blocking
+Outside the pending-spawn interval, the when-contained nested generated-do
+domain leaf covers a repeat directly inside a top-level `when` body with
+generated blocking
 `(do child (params ...) [(bind ...)] (domain NAME))`: declared same-domain
 ownership metadata only. This subset is shipped. The nested do site records
 ownership for the deterministic generated do instance at that lexical site,
@@ -378,8 +387,9 @@ preserves generated-composition and schedule-report clock-domain metadata,
 and keeps spawn nesting, cross-domain activation, deeper branch/loop nesting,
 and broader outstanding-child semantics out of scope.
 
-The switch-contained nested generated-do domain leaf covers a repeat directly
-inside a top-level `switch` branch with generated blocking
+Outside the pending-spawn interval, the switch-contained nested generated-do
+domain leaf covers a repeat directly inside a top-level `switch` branch with
+generated blocking
 `(do child (params ...) [(bind ...)] (domain NAME))`: declared same-domain
 ownership metadata only. This subset is shipped. The deterministic generated
 do instance at that lexical site records ownership in generated-composition

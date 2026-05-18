@@ -924,10 +924,10 @@ In the documented top-level `when` body and top-level `switch` branch nested
 subsets, local plain `(do child)` may run while generated nested spawns are
 pending. The local do uses only the parent-module local child start/done
 contract and leaves the generated-spawn done set live until the later
-same-body `await_all` drain. Parameterized/bound/domain-qualified generated
-do, prior or later `await_any` around that local do, and new spawn after the
-local do before the drain remain
-outside the public shipped subset.
+same-body `await_all` drain. Generated `do` forms with parameters, binding
+handoffs, or domain metadata are separate contracts from that local do subset;
+prior or later `await_any` around the local do and new spawn after the local
+do before the drain remain outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. The generated do uses only its deterministic
