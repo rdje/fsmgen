@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained static-parameter do before post-do await_any preserves generated-spawn lifetime
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.106` implements only the selected
+  top-level `when` body nested-repeat static-parameter-generated-do-before-
+  post-do-`await_any` subset.
+- The widening is validator-local: `(do child (params ...))` may precede a
+  multi-pending `(await_any done)` observation only for a repeat directly
+  inside a top-level `when` body, only while generated nested spawns remain
+  pending, and only when a later same-body `(await_all done)` drains every
+  pending generated child before nested repeat re-entry.
+- The generated do consumes only its deterministic generated do instance's
+  start/done handoff and static generated-top parameter binding. Its fresh
+  done pulse is required before the post-do `await_any`; that await_any
+  observes the generated-spawn done set without clearing it.
+- Bind handoffs, domain metadata, the switch-contained static-parameter
+  analogue, new spawn after the do before drain, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  separate contracts.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.107`
+  must pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: when-contained static-parameter generated do before post-do await_any is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.105` selects the first static-parameter
   generated-do post-do `await_any` widening, limited to a generated blocking

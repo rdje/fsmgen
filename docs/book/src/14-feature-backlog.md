@@ -598,24 +598,24 @@ point, and a later same-body `(await_all done)` drain before the nested
 repeat check can loop. The generated-child do waits for its deterministic
 generated do instance's fresh done handoff, and the post-do `await_any`
 observes only the pending generated-spawn done set without clearing it.
-Static-parameter generated do, bind handoffs, domain metadata, new spawn
-after the do before the drain, cross-domain activation, deeper branch/loop
-nesting, and broader outstanding-child semantics remain backlog until their
-own leaves select and ship them. The switch-contained generated-child
-post-do `await_any` analogue is now shipped with the same generated-child and
-later-drain contract: a repeat directly inside a top-level `switch` branch
-may run a plain generated-child blocking do while multiple generated spawns
-remain pending, then use post-do `(await_any done)` as an observation point
-before the later same-body `(await_all done)` drain. The next selected
-frontier is the top-level `when` body static-parameter generated-do analogue:
-a repeat directly inside a top-level `when` body may run
-`(do child (params ...))` while multiple generated spawns remain pending,
-then use post-do `(await_any done)` as an observation point before the later
-same-body `(await_all done)` drain. That static-parameter post-do
-`await_any` subset is selected for the next implementation leaf but is not
-shipped yet; bind handoffs, domain metadata, the switch-contained analogue,
+The switch-contained generated-child post-do `await_any` analogue is now
+shipped with the same generated-child and later-drain contract: a repeat
+directly inside a top-level `switch` branch may run a plain generated-child
+blocking do while multiple generated spawns remain pending, then use post-do
+`(await_any done)` as an observation point before the later same-body
+`(await_all done)` drain. The top-level `when` body static-parameter
+generated-do post-do `await_any` analogue is also shipped: a repeat directly
+inside a top-level `when` body may run `(do child (params ...))` while
+multiple generated spawns remain pending, then use post-do
+`(await_any done)` as an observation point before the later same-body
+`(await_all done)` drain. The generated do preserves static generated-top
+parameter binding, waits for its deterministic generated do instance's fresh
+done handoff before that observation, and leaves the pending generated-spawn
+done set live for the later drain. Bind handoffs, domain metadata, the
+switch-contained static-parameter generated-do post-do `await_any` analogue,
 new spawn after the do before the drain, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics remain backlog.
+branch/loop nesting, and broader outstanding-child semantics remain backlog
+until their own leaves select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
