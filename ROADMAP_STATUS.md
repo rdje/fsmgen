@@ -2,17 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.75`.
-  Leaf `.74` shipped top-level when-body nested repeat generated blocking
-  `(do child (params ...) [(bind ...)] (domain NAME))` with static parameter
-  overrides, optional input/output port bindings, and declared same-domain
-  metadata while generated nested spawns are pending before a later same-body
-  `await_all` drain. The shipped implementation preserves static generated-top
-  parameter binding, optional generated-top binding handoffs, generated-
-  composition and clock-domain report ownership metadata, and the pending
-  generated-spawn done set until the later drain without implying CDC or
-  cross-domain activation. Leaf `.75` must select the next bounded repeat-body
-  child activation subset before any further implementation.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.76`.
+  Leaf `.75` selected the top-level switch-branch nested repeat analogue of
+  the shipped when-body same-domain pending-spawn generated do subset:
+  generated blocking `(do child (params ...) [(bind ...)] (domain NAME))`
+  with static parameter overrides, optional input/output port bindings, and
+  declared same-domain metadata while generated nested spawns are pending
+  before a later same-body `await_all` drain. Leaf `.76` must implement only
+  that selected subset, preserving generated-top parameter/binding handoffs,
+  generated-composition and clock-domain report ownership metadata, and the
+  pending generated-spawn done set without implying CDC or cross-domain
+  activation.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -492,9 +492,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   generated-composition and schedule-report clock-domain child-instance
   metadata while preserving static parameter binding, optional binding
   handoffs, and pending generated-spawn done handoffs until the later drain.
-  The next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.75`, which
-  must select the next bounded repeat-body child activation subset before any
-  further implementation.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.75` then selected the direct top-level
+  switch-branch same-domain analogue as the next bounded subset, with the
+  same generated-top parameter/binding handoff, ownership-metadata-only, and
+  later same-body `await_all` drain requirements. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.76`, which implements only that selected
+  switch-contained same-domain pending-spawn generated do subset.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
