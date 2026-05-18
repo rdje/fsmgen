@@ -1,5 +1,32 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained generated-child do before post-do await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.103`.
+- The active R14 task tree now selects the direct top-level `switch` branch
+  analogue of the shipped when-contained generated-child-do-before-post-do-
+  `await_any` subset.
+- The selected source shape is a repeat directly inside a top-level `switch`
+  branch with multiple generated spawns, plain generated-child blocking
+  `(do child)` while those generated spawns remain pending,
+  `(await_any done)` as an observation point after that generated-child do,
+  and a later same-body `(await_all done)` drain before the nested repeat
+  check can loop.
+- The selected implementation must wait for the deterministic generated do
+  instance's fresh done handoff before the post-do `await_any`, keep every
+  generated-spawn done handoff live through the generated-child do and
+  await_any observation, and drain every pending generated child before
+  nested repeat re-entry.
+- Static-parameter generated do, bind handoffs, domain metadata, new spawn
+  after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain deferred.
+- The mdBook feature backlog now documents the selected switch-contained
+  generated-child post-do `await_any` subset as selected but not yet shipped.
+- Validation: `mdbook build docs/book`, `prove -l
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t` (Files=2, Tests=305), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.104`.
 ## 2026-05-18: when-contained generated-child do before post-do await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.102`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

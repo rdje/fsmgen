@@ -602,7 +602,9 @@ Static-parameter generated do, bind handoffs, domain metadata, the
 switch-contained generated-child analogue, new spawn after the do before the
 drain, cross-domain activation, deeper branch/loop nesting, and broader
 outstanding-child semantics remain backlog until their own leaves select and
-ship them.
+ship them. The switch-contained generated-child post-do `await_any` analogue
+is now selected next with the same generated-child and later-drain contract,
+but it is not shipped yet.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
