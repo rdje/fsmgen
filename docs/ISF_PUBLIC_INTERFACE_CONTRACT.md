@@ -1609,9 +1609,9 @@ syntax is reserved as
 schedulable intent only and will not override safety checks.
 The concurrent-group implementation axis starts with targeted diagnostics:
 direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
-declarations and compact `(concurrent NAME ACTOR...)` aliases remain reserved
-and unsupported until the diagnostic and later metadata leaves ship. No public
-group metadata or scheduling behavior is implemented yet.
+declarations and compact `(concurrent NAME ACTOR...)` aliases are reserved,
+unsupported, and fail closed with ATL group diagnostics. No public group
+metadata or scheduling behavior is implemented yet.
 The current shipped actor-event wait subset accepts exactly one top-level
 transaction-body `(await actor.event)` for the current single declared static
 actor instance, lowered to a generated one-bit parent event handoff input

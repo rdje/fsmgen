@@ -93,11 +93,23 @@ ISF
 (actor unsupported_group
   (clock clk)
   (interface (input start) (output done))
-  (group pipeline (members reader))
+  (group pipeline (members reader writer) (mode concurrent))
   (transaction run (on start) (complete done)))
 ISF
-        qr/ATL group clauses are not supported yet/,
-        'unsupported network group fails closed',
+        qr/ATL concurrent group declaration '\(group \.\.\.\)' is reserved but not supported yet/,
+        'unsupported network group declaration fails closed with ATL diagnostic',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor unsupported_concurrent_alias
+  (clock clk)
+  (interface (input start) (output done))
+  (concurrent pipeline reader writer)
+  (transaction run (on start) (complete done)))
+ISF
+        qr/ATL compact concurrent group alias '\(concurrent \.\.\.\)' is reserved but not supported yet/,
+        'unsupported compact concurrent group alias fails closed with ATL diagnostic',
     );
 
     parse_fails_like(

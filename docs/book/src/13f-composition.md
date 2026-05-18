@@ -464,9 +464,9 @@ orchestration spellings are reserved as `(do actor.transaction)`,
 ATL v0. Future concurrent groups use
 `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
 not a way to bypass fan-in, ordering, width, lifetime, or CDC safety. The
-first group implementation step is selected as targeted fail-closed
-diagnostics for `(group ...)` and compact `(concurrent ...)` forms; no group
-metadata or scheduling behavior is shipped yet.
+first group implementation step ships targeted fail-closed diagnostics for
+`(group ...)` and compact `(concurrent ...)` forms; no group metadata or
+scheduling behavior is shipped yet.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single

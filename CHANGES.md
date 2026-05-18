@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL group declarations fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
+- Parser validation now rejects reserved direct actor-body `(group ...)`
+  declarations and compact `(concurrent ...)` aliases with targeted ATL group
+  diagnostics.
+- No group metadata or scheduling behavior is claimed by this leaf; the next
+  active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` for static
+  group metadata.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes.
+
 ### R14 — ATL concurrent group boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`.
 - Decomposed concurrent actor-group scheduling into targeted fail-closed

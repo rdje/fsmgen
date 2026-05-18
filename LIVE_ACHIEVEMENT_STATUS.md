@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL group declarations fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
+- Direct actor-body `(group ...)` declarations and compact
+  `(concurrent ...)` aliases now fail closed with targeted ATL group
+  diagnostics.
+- This is diagnostics only: no group metadata, group endpoints, scheduling
+  overlap, generated child artifacts, route mux/storage, CDC, or concurrent
+  actor execution is implemented yet.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`.
+- Validation passed: parser syntax check, focused actor-network regression,
+  `mdbook build docs/book`, broad `./bin/ci-regression isf --no-book` with
+  `Files=229, Tests=1351`, and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL concurrent group boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`.
 - Decomposed concurrent actor-group scheduling before code into targeted

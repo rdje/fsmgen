@@ -254,7 +254,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 );
             }
             when ('group') {
-                confess "Error: actor '$actor_name' ATL group clauses are not supported yet\n";
+                confess "Error: actor '$actor_name' ATL concurrent group declaration '(group ...)' is reserved but not supported yet; group metadata and scheduling remain deferred\n";
+            }
+            when ('concurrent') {
+                confess "Error: actor '$actor_name' ATL compact concurrent group alias '(concurrent ...)' is reserved but not supported yet; compact aliases remain deferred until the verbose group contract ships\n";
             }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }

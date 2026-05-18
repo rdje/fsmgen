@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL group declarations fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
+- Direct actor-body `(group ...)` declarations and compact
+  `(concurrent ...)` aliases now fail closed with targeted ATL group
+  diagnostics instead of falling through to a generic unknown actor-clause
+  error.
+- No group metadata, group endpoints, group scheduling, concurrent actor
+  execution, generated child artifacts, route mux/storage, or CDC behavior is
+  claimed by this leaf. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` for static group metadata.
+- Validation passed: parser syntax check, focused actor-network regression,
+  `mdbook build docs/book`, broad `./bin/ci-regression isf --no-book` with
+  `Files=229, Tests=1351`, and `git diff --check`.
 ## 2026-05-18: ATL concurrent group boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`.
 - The concurrent actor-group axis is decomposed before code. The next

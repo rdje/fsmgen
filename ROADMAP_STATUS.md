@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.7.2`.
+  activation `.111` and ATL actor-network orchestration `.7.3`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -96,6 +96,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
   declarations and compact `(concurrent NAME ACTOR...)` aliases with targeted
   ATL diagnostics before any group metadata or scheduling behavior is claimed.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` shipped those targeted diagnostics:
+  verbose and compact group forms now fail closed without claiming group
+  metadata, scheduling overlap, generated child artifacts, route mux/storage,
+  CDC, or concurrent actor execution. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`, which ships report-only static group
+  metadata.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

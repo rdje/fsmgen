@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL group diagnostics stay behavior-free
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` intentionally changes only the parser
+  failure surface for reserved group syntax.
+- The verbose `(group ...)` form and compact `(concurrent ...)` alias now
+  identify the ATL group boundary directly, but no group metadata is attached
+  to `actor_network` and no scheduling behavior changes.
+- The next leaf can add report-only group metadata against this fail-closed
+  boundary without mixing diagnostics, metadata, and scheduling semantics in
+  one review slice.
 ## 2026-05-18: ATL groups start with fail-closed diagnostics
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` selects diagnostics before metadata
   or scheduling because group syntax creates a new actor-body clause family.

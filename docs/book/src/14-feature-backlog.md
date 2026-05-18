@@ -717,9 +717,9 @@ forms: `(do actor.transaction)` for blocking actor transaction activation,
 payloads are not part of ATL v0. Future concurrent groups use
 `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
 not as a bypass for ordering, fan-in, width, lifetime, or CDC safety. The
-group axis now starts with a selected fail-closed diagnostics leaf for direct
-`(group ...)` declarations and compact `(concurrent ...)` aliases; group
-metadata and scheduling behavior remain later leaves.
+group axis starts with shipped fail-closed diagnostics for direct `(group ...)`
+declarations and compact `(concurrent ...)` aliases; group metadata and
+scheduling behavior remain later leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
