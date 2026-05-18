@@ -1564,6 +1564,17 @@ capability manifest and this handoff:
   schedulable intent; it never overrides fan-in, lifetime, ordering, width, or
   CDC safety.
 
+Current diagnostic-only ATL boundary: downstream producers must still not emit
+qualified event or actor-transaction trigger forms as supported behavior.
+FSMGen now rejects reserved qualified `(await actor.event)`,
+transaction-body `(trigger actor.transaction)`, and rule-level
+`(trigger actor.transaction)` with ATL-specific diagnostics before scheduled
+`.fsm` emission when the qualifier names a declared static actor instance.
+Existing unqualified local forms are unchanged: `(await signal)` remains a
+local transaction wait, and rule-level `(trigger transaction)` remains a local
+transaction trigger. Dotted enum-looking names that do not name a static actor
+instance keep their prior diagnostics.
+
 Current generated-artifact contract: none. The shipped static metadata surface
 emits no generated ATL child `.fsm`, no generated ATL top, no route mux, no
 handoff storage, and no HDL behavior. Downstream consumers must treat

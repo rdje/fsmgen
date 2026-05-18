@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL reserved event/trigger forms fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`.
+- Qualified `(await actor.event)`, transaction-body
+  `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)` now fail closed with ATL-specific diagnostics
+  when the qualifier names a declared static actor-network instance.
+- The parser guard is instance-aware, preserving the previous diagnostics for
+  enum-looking dotted names that do not name a static actor instance.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, roadmap board, live achievement status, and development
+  notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`.
 ### R14 — ATL event/trigger boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` as a documentation and
   task-tree selection leaf before code.

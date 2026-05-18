@@ -1576,9 +1576,16 @@ v0 movement clauses. Future orchestration spellings are reserved as
 deferred. Future group syntax is reserved as
 `(group NAME (members ACTOR...) (mode concurrent))`, but groups will be
 schedulable intent only and will not override safety checks. The current
-artifact contract remains empty for ATL scheduling: no generated ATL child
-`.fsm`, generated ATL top, route mux, handoff storage, or HDL behavior is
-promised by `actor_network` metadata.
+qualified event/trigger boundary is diagnostic-only: reserved
+`(await actor.event)`, transaction-body `(trigger actor.transaction)`, and
+rule-level `(trigger actor.transaction)` forms fail closed with ATL-specific
+diagnostics before scheduled `.fsm` emission when the qualifier names a
+declared static actor instance; existing unqualified local `(await signal)`
+and rule-level `(trigger transaction)` behavior remains unchanged, and dotted
+enum-looking names outside actor-network instances keep their prior
+diagnostics. The current artifact contract remains empty for ATL scheduling:
+no generated ATL child `.fsm`, generated ATL top, route mux, handoff storage,
+or HDL behavior is promised by `actor_network` metadata.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`

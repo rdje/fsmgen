@@ -92,14 +92,14 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.1: select event boundary`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`
-  Status: `active`
+  Status: `completed`
   Goal: `Fail closed reserved qualified actor-event and actor-transaction trigger forms.`
   Acceptance: `Parser/lowering coverage rejects '(await actor.event)', transaction-body '(trigger actor.transaction)', and rule-level '(trigger actor.transaction)' with targeted ATL diagnostics before scheduled '.fsm' emission or generic enum/unknown-transaction diagnostics. Existing unqualified '(await signal)' and local rule '(trigger transaction)' behavior is unchanged. Specs, downstream handoff, public contract, mdBook, tests, and manifest/audit expectations are synchronized with the precise non-claim.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t t/1271-isf-enum-member-activation-params.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.2: fail closed ATL events`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Ship the first generated actor-event wait subset.`
   Acceptance: `A later slice selects one explicit event source, sink wait, fan-in/fan-out policy, generated artifact naming scheme, and schedule-report key family before accepting any qualified actor event as behavior. Event payloads, data movement through events, multiple static instances, cross-clock actor events, and concurrent group events remain deferred unless that leaf explicitly widens them.`
   Verification: `pending`
@@ -137,7 +137,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` | `active` | `.4.1` selected targeted fail-closed diagnostics as the first event/trigger boundary. The next code leaf implements that boundary before any generated actor-event behavior ships. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3` | `active` | `.4.2` now rejects reserved qualified event/trigger forms with ATL-specific diagnostics. The next leaf must select real generated actor-event behavior, including event source/sink ownership, artifact names, report keys, and fan-in/fan-out boundaries. |
 
 ## ATL v0 Proposal
 
@@ -315,6 +315,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `direct actor-body static instance surface selected; network wrapper rejection and docs/contracts passed focused checks plus ISF regression gate` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `ATL v0 public contract selected across spec, downstream handoff, public contract, mdBook, and design proposal; focused checks pass; broad ISF gate passes with Files=229, Tests=1344` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` | `mdbook build docs/book`; `git diff --check` | `selected the first event/trigger boundary as targeted fail-closed diagnostics before generated ATL event behavior; book and diff checks passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t t/1271-isf-enum-member-activation-params.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `reserved qualified ATL event/trigger forms fail closed with instance-aware diagnostics; focused checks pass; broad ISF gate passes with Files=229, Tests=1345` |
 
 ## Commit Log
 
@@ -329,6 +330,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.3` | `ISF-ACTOR-NETWORK-ORCHESTRATION.3: ship static actor-network metadata` | `ships one-instance static actor-network parsing/reporting metadata` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.2: settle ATL v0 public contract` | `selects the reserved ATL v0 source, movement, event, trigger, group, and artifact contracts before further implementation leaves` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.1: select event boundary` | `selects targeted fail-closed diagnostics as the first actor-event and qualified-trigger boundary slice` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.4.2: fail closed ATL events` | `ships instance-aware targeted diagnostics for reserved qualified event waits and actor transaction triggers` |
 
 ## Changelog
 
@@ -359,3 +361,8 @@ Current proposal summary:
 - `2026-05-18`: Selected the first `.4` event/trigger boundary slice:
   targeted fail-closed diagnostics for reserved qualified event and trigger
   forms before any generated actor-event scheduling behavior ships.
+- `2026-05-18`: Shipped `.4.2`: qualified `(await actor.event)`,
+  transaction-body `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)` now fail closed with ATL-specific diagnostics
+  only when the qualifier names a declared static actor instance. Enum-looking
+  dotted names outside actor-network instances keep their prior diagnostics.

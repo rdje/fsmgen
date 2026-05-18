@@ -2843,6 +2843,19 @@ The broader ATL v0 vocabulary is selected but not implemented yet:
   schedulable intent and do not override fan-in, ordering, lifetime, or CDC
   safety checks.
 
+The current event/trigger boundary is fail-closed and diagnostic-only. FSMGen
+rejects reserved qualified `(await actor.event)`, transaction-body
+`(trigger actor.transaction)`, and rule-level
+`(trigger actor.transaction)` with ATL-specific diagnostics before scheduled
+`.fsm` emission when the qualifier names a declared static actor instance.
+Existing unqualified local behavior remains unchanged: `(await signal)` is
+still a local transaction wait, and rule-level `(trigger transaction)` still
+targets a local transaction. Dotted enum-looking names that do not name a
+static actor instance keep their prior diagnostics. This boundary does not add
+actor-event lowering, generated ATL child artifacts, generated ATL top names,
+route muxes, handoff storage, event fan-in/fan-out, event payloads, or
+schedule-report event keys.
+
 The current generated-artifact contract is explicit: this metadata slice emits
 no ATL child `.fsm`, no generated ATL top, no generated route mux, no generated
 handoff storage, and no HDL behavior. Any later ATL implementation that emits

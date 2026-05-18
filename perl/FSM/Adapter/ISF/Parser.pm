@@ -281,6 +281,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_param_values($result);
     $self->_finalize_actor_type_references($result);
     $self->_validate_actor_aggregate_storage_paths($result);
+    $self->_validate_actor_atl_reserved_qualified_forms($result);
     $self->_validate_actor_enum_member_value_contexts($result);
     $self->_validate_actor_literal_zero_divisors($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
@@ -725,6 +726,86 @@ sub _validate_actor_aggregate_storage_paths($self, $actor) {
         );
     }
 
+    return 1;
+}
+
+sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
+    my %actor_instances = map { $_->{name} => 1 }
+        @{(($actor->{actor_network} || {})->{instances}) || []};
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        _validate_transaction_atl_reserved_qualified_forms(
+            $tx->{clauses},
+            "transaction '$tx->{name}'",
+            \%actor_instances,
+        );
+    }
+
+    for my $rule (@{$actor->{rules} || []}) {
+        my $rule_name = $rule->{name};
+        for my $action (@{$rule->{actions} || []}) {
+            next unless ref($action) eq 'ARRAY' && @$action >= 2;
+            my $head = $action->[0];
+            next unless defined($head) && !ref($head) && $head eq 'trigger';
+            my $target = $action->[1];
+            next unless _is_qualified_atl_endpoint_token($target, \%actor_instances);
+            confess "Error: rule '$rule_name' ATL actor transaction trigger '(trigger $target)' is reserved but not supported yet; unqualified '(trigger transaction)' remains the local transaction trigger surface\n";
+        }
+    }
+
+    return 1;
+}
+
+sub _validate_transaction_atl_reserved_qualified_forms {
+    my ($clauses, $context, $actor_instances) = @_;
+    return 1 unless ref($clauses) eq 'ARRAY';
+
+    for my $clause (@$clauses) {
+        next unless ref($clause) eq 'ARRAY' && @$clause;
+        my $head = $clause->[0];
+        next unless defined($head) && !ref($head);
+
+        if ($head eq 'await' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
+            my $target = $clause->[1];
+            confess "Error: $context ATL actor event wait '(await $target)' is reserved but not supported yet; unqualified '(await signal)' remains the local transaction wait surface\n";
+        }
+
+        if ($head eq 'trigger' && _is_qualified_atl_endpoint_token($clause->[1], $actor_instances)) {
+            my $target = $clause->[1];
+            confess "Error: $context ATL actor transaction trigger '(trigger $target)' is reserved but not supported yet; transaction-body qualified actor triggers remain deferred\n";
+        }
+
+        if ($head eq 'on' || $head eq 'when' || $head eq 'repeat'
+            || $head eq 'while' || $head eq 'until')
+        {
+            _validate_transaction_atl_reserved_qualified_forms(
+                [ @{$clause}[2 .. $#$clause] ],
+                "$context $head body",
+                $actor_instances,
+            );
+            next;
+        }
+
+        if ($head eq 'switch') {
+            for my $branch (@{$clause}[2 .. $#$clause]) {
+                next unless ref($branch) eq 'ARRAY';
+                _validate_transaction_atl_reserved_qualified_forms(
+                    [ @{$branch}[1 .. $#$branch] ],
+                    "$context switch branch",
+                    $actor_instances,
+                );
+            }
+        }
+    }
+
+    return 1;
+}
+
+sub _is_qualified_atl_endpoint_token {
+    my ($token, $actor_instances) = @_;
+    return 0 unless defined($token) && !ref($token);
+    return 0 unless $token =~ /\A([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\z/;
+    return 0 unless ref($actor_instances) eq 'HASH' && $actor_instances->{$1};
     return 1;
 }
 

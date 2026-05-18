@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL reserved diagnostics are instance-aware
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2` implements the first actor-event
+  boundary as fail-closed diagnostics only.
+- The parser recognizes reserved qualified forms only when the qualifier is a
+  declared static actor instance. This avoids stealing existing diagnostics
+  from enum-looking dotted names such as `mode.BUSY`, which are not ATL actor
+  endpoints unless `mode` is an actor-network instance.
+- The code runs before enum-member and local trigger-target validation so true
+  actor-instance-qualified `(await actor.event)` and
+  `(trigger actor.transaction)` forms receive the targeted ATL diagnostic
+  instead of leaking into generic parser errors.
+- Generated actor-event behavior remains a later leaf because accepting these
+  forms as behavior requires event source/sink ownership, generated artifact
+  names, schedule-report keys, and fan-in/fan-out policy.
 ## 2026-05-18: ATL event syntax must fail closed before it ships
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` narrows the actor-event frontier
   before implementation.

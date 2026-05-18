@@ -129,6 +129,73 @@ ISF
     );
 };
 
+subtest 'reserved qualified event and trigger forms fail closed with ATL diagnostics' => sub {
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_event_wait
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (await reader.done)
+    (complete done)))
+ISF
+        qr/ATL actor event wait '\(await reader\.done\)' is reserved but not supported yet/,
+        'qualified actor event wait fails closed before generic enum diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_transaction_trigger
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (complete done)))
+ISF
+        qr/ATL actor transaction trigger '\(trigger reader\.capture\)' is reserved but not supported yet/,
+        'transaction-body qualified actor trigger fails closed before generic unsupported-clause diagnostics',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor qualified_rule_trigger
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (transaction local
+    (complete done))
+  (rule kick start
+    (trigger reader.capture)))
+ISF
+        qr/ATL actor transaction trigger '\(trigger reader\.capture\)' is reserved but not supported yet/,
+        'rule-level qualified actor trigger fails closed before unknown-transaction diagnostics',
+    );
+
+    my $actor = parse_source(<<'ISF', 'local-await-trigger.isf');
+(actor local_await_trigger
+  (clock clk)
+  (interface
+    (input start)
+    (input ack)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction child
+    (complete done))
+  (transaction run
+    (on start)
+    (await ack)
+    (complete done))
+  (rule kick start
+    (trigger child)))
+ISF
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    ok($lowered->{files}{'local_await_trigger.fsm'}, 'unqualified local await and rule trigger still lower');
+};
+
 done_testing();
 
 sub assert_actor_network_report {

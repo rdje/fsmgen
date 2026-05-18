@@ -442,18 +442,21 @@ The shipped first implementation is metadata-only: one direct actor-body
 `actor_network`. It does not schedule actor interactions yet.
 
 The first selected event/trigger implementation boundary is intentionally
-fail-closed. Before any generated actor-event behavior ships, FSMGen must
-recognize the reserved qualified forms and reject them with ATL-specific
+fail-closed. Before any generated actor-event behavior ships, FSMGen
+recognizes the reserved qualified forms and rejects them with ATL-specific
 diagnostics instead of letting them fall through as enum-member, unknown
-transaction, or unsupported local-clause errors:
+transaction, or unsupported local-clause errors when the qualifier names a
+declared static actor instance:
 
 - `(await actor.event)` in a transaction body;
 - `(trigger actor.transaction)` in a transaction body;
 - `(trigger actor.transaction)` in a rule body.
 
-That slice must preserve existing unqualified local behavior:
+This boundary preserves existing unqualified local behavior:
 `(await signal)` remains a local transaction wait, and rule-level
 `(trigger transaction)` remains the local transaction trigger surface.
+Enum-looking dotted names whose qualifier is not a declared static actor
+instance keep their prior diagnostics.
 
 The smallest later behavior-bearing ATL implementation should then select
 explicit generated artifact names and report keys before accepting event

@@ -387,6 +387,15 @@ ATL v0. Future concurrent groups use
 `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
 not a way to bypass fan-in, ordering, width, lifetime, or CDC safety.
 
+The current qualified event/trigger behavior is fail-closed only. Reserved
+`(await actor.event)`, transaction-body `(trigger actor.transaction)`, and
+rule-level `(trigger actor.transaction)` forms now reject with ATL-specific
+diagnostics before scheduled `.fsm` emission when the qualifier names a
+declared static actor instance. Unqualified local forms keep their existing
+meaning: `(await signal)` waits on a local transaction signal, and rule-level
+`(trigger transaction)` triggers a local transaction. Dotted enum-looking
+names that do not name a static actor instance keep their prior diagnostics.
+
 Until those later leaves ship, `actor_network` remains discovery metadata
 only. It does not imply generated ATL child artifacts, generated ATL top names,
 route muxes, handoff storage, or HDL behavior.

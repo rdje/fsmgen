@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL reserved event/trigger forms fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`.
+- [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) now
+  rejects reserved qualified `(await actor.event)`, transaction-body
+  `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)` with ATL-specific diagnostics before generic
+  enum-member, unsupported-clause, or unknown-transaction diagnostics.
+- The guard is instance-aware: it fires only when the qualifier names a
+  declared static actor instance, so enum-looking dotted names outside
+  `actor_network` keep their prior diagnostics.
+- Existing local unqualified behavior is unchanged: `(await signal)` remains
+  a local transaction wait, and rule-level `(trigger transaction)` remains a
+  local transaction trigger.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, roadmap board, and live notes. The active ATL frontier
+  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`, which must select real
+  generated actor-event behavior before implementation.
+- Validation passed: parser and public-contract syntax checks, focused
+  actor-network and enum-member regression tests, public contract/manifest
+  audits, schedule-report/spec/book audits, `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=229, Tests=1345), and
+  `git diff --check`.
 ## 2026-05-18: ATL event/trigger boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1` as the selection leaf for
   the actor-event/qualified-trigger frontier.

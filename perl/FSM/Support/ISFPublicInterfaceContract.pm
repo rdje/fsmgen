@@ -819,7 +819,7 @@ sub isf_public_interface_actor_shell_required_keys {
 }
 
 sub isf_public_interface_actor_shell_value_shape {
-    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current one-instance ATL subset';
+    return 'actor_name is scalar; transactions is an array reference; interface is a hash reference; storage is an optional array reference for authored scalar storage and bank declarations when actor-owned storage is declared; constants is an optional array reference for actor-local compile-time integer constants; clock_domains is null for legacy one-clock actors or an optional live metadata hash for accepted clock-domain declarations; crossings is an optional array reference for accepted clock-domain event crossing declarations; actor_network is null when omitted or a bounded static_declaration metadata hash for the current one-instance ATL subset; reserved qualified ATL event/trigger forms fail closed before scheduled emission when the qualifier names a static actor instance';
 }
 
 sub isf_public_interface_actor_shell_actor_name_shape {
@@ -1390,7 +1390,7 @@ sub isf_public_interface_schedule_report_crossing_keys {
 }
 
 sub isf_public_interface_schedule_report_multi_file_scope {
-    return 'single-clock multi-file report transaction/state/dt/storage summaries describe the parent module; actor_network summarizes static ATL actor declarations without embedding child reports or generated artifacts; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; multi-domain reports describe the generated top at the top level and expose per-domain scheduled artifacts plus crossing metadata through clock_domains and crossings; child and domain scheduled .fsm text remains available through lower_result files';
+    return 'single-clock multi-file report transaction/state/dt/storage summaries describe the parent module; actor_network summarizes static ATL actor declarations without embedding child reports, generated artifacts, actor-event behavior, or qualified actor-trigger behavior; generated_composition summarizes generated top, child files, spawned instances, handoffs, and bindings; library_uses summarizes resolved reusable library actor instances and their child scheduled .fsm artifacts; multi-domain reports describe the generated top at the top level and expose per-domain scheduled artifacts plus crossing metadata through clock_domains and crossings; child and domain scheduled .fsm text remains available through lower_result files';
 }
 
 sub isf_public_interface_schedule_report_interface_count_shape {

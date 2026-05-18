@@ -697,17 +697,19 @@ payloads are not part of ATL v0. Future concurrent groups use
 `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
 not as a bypass for ordering, fan-in, width, lifetime, or CDC safety.
 
-The first selected actor-event implementation boundary is deliberately a
-fail-closed slice, not generated actor-event behavior. It will make the
-reserved qualified forms `(await actor.event)`, transaction-body
+The first actor-event implementation boundary is deliberately a fail-closed
+slice, not generated actor-event behavior. FSMGen rejects the reserved
+qualified forms `(await actor.event)`, transaction-body
 `(trigger actor.transaction)`, and rule-level
-`(trigger actor.transaction)` reject with ATL-specific diagnostics before
-scheduled `.fsm` emission. Existing unqualified local forms stay unchanged:
-`(await signal)` remains a transaction wait, and rule-level
-`(trigger transaction)` remains a local transaction trigger. Generated ATL
-child artifacts, generated ATL top names, route muxes, handoff storage,
-event fan-in/fan-out, and schedule-report event keys remain deferred until a
-later leaf ships them explicitly.
+`(trigger actor.transaction)` with ATL-specific diagnostics before
+scheduled `.fsm` emission when the qualifier names a declared static actor
+instance. Existing unqualified local forms stay unchanged: `(await signal)`
+remains a transaction wait, and rule-level `(trigger transaction)` remains a
+local transaction trigger. Dotted enum-looking names that do not name a static
+actor instance keep their prior diagnostics. Generated ATL child artifacts,
+generated ATL top names, route muxes, handoff storage, event fan-in/fan-out,
+and schedule-report event keys remain deferred until a later leaf ships them
+explicitly.
 
 Direct actor-body proposal:
 

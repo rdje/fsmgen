@@ -2,6 +2,26 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL reserved event/trigger forms fail closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.2`.
+- Reserved qualified `(await actor.event)`, transaction-body
+  `(trigger actor.transaction)`, and rule-level
+  `(trigger actor.transaction)` now fail closed with ATL-specific diagnostics
+  before scheduled `.fsm` emission when the qualifier names a declared static
+  actor instance.
+- The guard is instance-aware. Dotted enum-looking names that do not name a
+  static actor instance keep their prior diagnostics.
+- Existing unqualified local behavior remains unchanged: `(await signal)`
+  still waits on a local signal, and rule-level `(trigger transaction)` still
+  triggers a local transaction.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.4.3`, which must select real generated
+  actor-event behavior before code.
+- Validation passed: parser and public-contract syntax checks, focused tests,
+  public contract/manifest audits, schedule-report/spec/book audits,
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=229, Tests=1345), and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL event/trigger boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.1`.
 - The actor-event frontier is now split into recoverable leaves. The next code
