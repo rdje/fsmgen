@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL concurrent group boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`.
+- Decomposed concurrent actor-group scheduling into targeted fail-closed
+  group diagnostics, static group metadata, first scheduling selection, and
+  first scheduling lowering leaves.
+- Selected the next code leaf as conservative diagnostics only: direct
+  actor-body `(group NAME (members ACTOR...) (mode concurrent))` declarations
+  and compact `(concurrent NAME ACTOR...)` aliases remain unsupported until
+  they fail closed with ATL-specific messages.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
+
 ### R14 — ATL actor-to-pin handoff lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4`.
 - Parser validation now accepts exactly one selected actor-to-pin movement

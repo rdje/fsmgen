@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL groups start with fail-closed diagnostics
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` selects diagnostics before metadata
+  or scheduling because group syntax creates a new actor-body clause family.
+  A targeted fail-closed leaf prevents `(group ...)` from being mistaken for
+  ordinary unsupported source while the report contract is still being
+  selected.
+- The later metadata subset stays deliberately static: named direct
+  actor-body groups, at least two already declared direct static actor
+  members, explicit concurrent mode, and no generated child wiring or runtime
+  overlap semantics.
+- Scheduling behavior is split into separate selection and lowering leaves so
+  dependency inference, fan-in/fan-out, mux/storage insertion, CDC, and route
+  lifetime overlap can be reviewed before code.
 ## 2026-05-18: ATL actor-to-pin lowering keeps output pins as real sinks
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` implements the selected
   `(pins.output actor.endpoint)` form by preserving the existing actor

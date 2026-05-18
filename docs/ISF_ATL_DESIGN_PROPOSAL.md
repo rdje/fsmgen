@@ -519,6 +519,16 @@ The first group implementation can be conservative. It can accept only
 single-clock actor instances with explicit endpoint-aware drive body pairs and
 no dynamic membership.
 
+The selected first group boundary is diagnostic-only. Before group metadata or
+scheduling behavior is accepted, FSMGen should reject direct actor-body
+`(group NAME (members ACTOR...) (mode concurrent))` declarations and compact
+`(concurrent NAME ACTOR...)` aliases with targeted ATL group diagnostics. The
+later metadata subset is direct actor-body groups only: HDL identifier group
+names, at least two already declared direct static actor members, explicit
+`(mode concurrent)`, no dynamic membership, no nested groups, no group
+endpoints, no generated child artifacts, no route mux/storage, no CDC, and no
+scheduling overlap claims until separate leaves ship them.
+
 ## Scheduling Ownership
 
 Scheduling should split cleanly:

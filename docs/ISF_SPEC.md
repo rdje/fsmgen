@@ -2887,6 +2887,13 @@ and actor-transaction trigger handoff subsets implemented so far:
   `(group NAME (members ACTOR...) (mode concurrent))`; groups express
   schedulable intent and do not override fan-in, ordering, lifetime, or CDC
   safety checks.
+- The concurrent-group implementation axis starts with targeted diagnostics,
+  not scheduling behavior. The next selected implementation leaf rejects
+  direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
+  declarations and compact `(concurrent NAME ACTOR...)` aliases with
+  ATL-specific messages. No group metadata, group endpoints, concurrent
+  execution, storage/mux insertion, generated child artifacts, or CDC behavior
+  is shipped yet.
 
 The current actor-event wait subset is deliberately narrower than full child
 orchestration. FSMGen accepts exactly one top-level transaction-body

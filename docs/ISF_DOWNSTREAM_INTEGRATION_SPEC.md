@@ -1599,6 +1599,11 @@ capability manifest and this handoff:
   `(group NAME (members ACTOR...) (mode concurrent))`. A group is only
   schedulable intent; it never overrides fan-in, lifetime, ordering, width, or
   CDC safety.
+- The concurrent-group implementation axis starts with targeted diagnostics,
+  not a downstream-emittable group surface. Until the selected diagnostic leaf
+  and later metadata leaf ship, downstream producers must not emit
+  `(group NAME (members ACTOR...) (mode concurrent))` or compact
+  `(concurrent NAME ACTOR...)`; those forms are reserved and unsupported.
 
 Current ATL event-wait handoff subset: downstream producers may emit exactly
 one top-level transaction-body `(await actor.event)` against the current

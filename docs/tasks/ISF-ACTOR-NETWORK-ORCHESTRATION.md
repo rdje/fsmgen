@@ -217,7 +217,43 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7`
   Status: `active`
   Goal: `Ship concurrent actor-group scheduling semantics.`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`
   Acceptance: `The scheduler can infer a bounded schedule for multiple actor groups that move data/information concurrently, while rejecting ambiguous ordering, unsafe fan-in, or unsupported lifetime overlap with actionable diagnostics.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`
+  Status: `completed`
+  Goal: `Decompose concurrent actor-group scheduling and select the first group boundary.`
+  Acceptance: `The task tree, roadmap, ATL design proposal, spec, downstream handoff, public contract, and mdBook record that '.7' starts conservatively. The selected first code leaf will reserve/fail closed direct actor-body '(group NAME (members ACTOR...) (mode concurrent))' declarations and compact '(concurrent NAME ACTOR...)' aliases with targeted ATL diagnostics before group metadata or scheduling behavior is claimed. The selected later metadata subset is direct actor-body group declarations only, with HDL identifier group names, at least two declared direct static actor members, explicit '(mode concurrent)', no dynamic membership, no nested groups, no group endpoints, no generated child artifacts, no route mux/storage, no CDC, and no scheduling overlap claims until separate leaves ship them.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.1: select group boundary`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`
+  Status: `active`
+  Goal: `Fail closed reserved actor-group declarations and compact aliases.`
+  Acceptance: `Parser coverage rejects direct actor-body '(group ...)' and '(concurrent ...)' forms with targeted ATL group diagnostics while preserving existing actor-local behavior. Specs, downstream handoff, public contract, mdBook, tests, and live docs stay transparent that no group metadata or scheduling is implemented by this fail-closed leaf.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`
+  Status: `pending`
+  Goal: `Ship static concurrent group metadata.`
+  Acceptance: `Parser/reporting accepts the selected direct actor-body group declaration against already declared direct static actor instances, records group membership and mode in actor_network group metadata, and keeps group endpoints, generated children, scheduling overlap, storage/mux insertion, CDC, dynamic membership, nested groups, and compact aliases fail-closed.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`
+  Status: `pending`
+  Goal: `Select the first group scheduling behavior subset.`
+  Acceptance: `A selection leaf defines exactly which static group metadata may affect scheduling, report keys for inferred dependencies/independence, and the fail-closed boundaries for fan-in, fan-out, route lifetime overlap, CDC, storage insertion, and generated child wiring before behavior code starts.`
+  Verification: `pending`
+  Commit: `pending`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.5`
+  Status: `pending`
+  Goal: `Lower the selected first concurrent group scheduling behavior.`
+  Acceptance: `Lowering implements only the selected '.7.4' group scheduling subset, emits deterministic schedule/report evidence, and rejects unsafe ambiguity with targeted diagnostics.`
   Verification: `pending`
   Commit: `pending`
 
@@ -232,7 +268,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7` | `active` | `.6.4` completed the selected scalar actor endpoint to top-level output pin handoff and closed the top-level pin movement group. The next leaf starts concurrent actor-group scheduling selection/decomposition. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` | `active` | `.7.1` selected targeted fail-closed actor-group diagnostics as the next code leaf before any group metadata or scheduling behavior is claimed. |
 
 ## ATL v0 Proposal
 
@@ -458,9 +494,9 @@ Current proposal summary:
 
 ## Blockers
 
-- No blocker for the active `.7` concurrent actor-group scheduling activity.
-  The next slice must select/decompose a bounded group-scheduling subset
-  before any behavior-bearing code.
+- No blocker for the active `.7.2` group-boundary diagnostic leaf. It must
+  fail closed reserved group declarations before any metadata or scheduling
+  behavior is claimed.
 
 ## Verification Log
 
@@ -489,6 +525,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected scalar top-level input pin to actor handoff lowers to one-cycle parent input-to-actor-output route and data_movements[] metadata; broad ISF gate passes with Files=229, Tests=1350` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected the first scalar actor endpoint to top-level output pin handoff subset before code` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected scalar actor endpoint to top-level output pin handoff lowers to one-cycle parent input-to-pin route and data_movements[] metadata; broad ISF gate passes with Files=229, Tests=1351` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `decomposed concurrent actor groups and selected targeted fail-closed group diagnostics as the next code leaf` |
 
 ## Commit Log
 
@@ -516,6 +553,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.2: lower pin-to-actor handoff` | `lowers the selected scalar top-level input pin to actor handoff subset` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.3: select actor-to-pin handoff` | `selects the first scalar actor endpoint to top-level output pin handoff subset before behavior-bearing code` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.4: lower actor-to-pin handoff` | `lowers the selected scalar actor endpoint to top-level output pin handoff subset and closes top-level pin movement` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.1: select group boundary` | `decomposes concurrent actor groups and selects fail-closed group diagnostics before metadata or scheduling behavior` |
 
 ## Changelog
 
@@ -619,3 +657,9 @@ Current proposal summary:
   sink and records `scalar_actor_to_pin_handoff` metadata. The `.6` top-level
   pin movement group is complete; the active frontier moves to `.7` for
   concurrent actor-group scheduling selection/decomposition.
+- `2026-05-18`: Completed `.7.1`: decomposed concurrent actor-group
+  scheduling into targeted fail-closed group diagnostics, static group
+  metadata, first scheduling selection, and first scheduling lowering leaves.
+  The active frontier moves to `.7.2` to reject reserved group declarations
+  and compact aliases with targeted ATL diagnostics before group metadata or
+  scheduling behavior is claimed.

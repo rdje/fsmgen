@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL concurrent group boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`.
+- The concurrent actor-group axis is decomposed before code. The next
+  behavior-bearing leaf is intentionally fail-closed: direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations and compact
+  `(concurrent NAME ACTOR...)` aliases must receive targeted ATL group
+  diagnostics before group metadata or scheduling behavior is claimed.
+- The later selected metadata subset is direct actor-body groups only, with
+  HDL identifier group names, at least two declared direct static actor
+  members, explicit `(mode concurrent)`, no dynamic membership, no nested
+  groups, no group endpoints, no generated child artifacts, no route
+  mux/storage, no CDC, and no scheduling overlap claims until separate leaves
+  ship them. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
+- Validation passed: `mdbook build docs/book`, spec/book audits, and
+  `git diff --check`.
 ## 2026-05-18: ATL actor-to-pin handoff lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` and closed the `.6`
   top-level pin movement group.

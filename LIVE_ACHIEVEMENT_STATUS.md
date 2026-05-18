@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL concurrent group boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1`.
+- Decomposed concurrent actor-group scheduling before code into targeted
+  fail-closed group diagnostics, static group metadata, first scheduling
+  selection, and first scheduling lowering leaves.
+- The next code leaf, `.7.2`, must reject reserved direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations and compact
+  `(concurrent NAME ACTOR...)` aliases with ATL-specific diagnostics.
+- No group metadata, group endpoints, scheduling overlap, generated child
+  artifacts, route mux/storage, CDC, or concurrent actor execution is claimed
+  yet.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
+- Validation passed: `mdbook build docs/book`, spec/book audits, and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — ATL actor-to-pin handoff lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` and closed the `.6`
   top-level pin movement group.
