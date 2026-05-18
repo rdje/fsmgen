@@ -1,5 +1,37 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained repeat domain do after await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.96`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the selected top-level `switch` branch nested-repeat generated
+  blocking `(do child (params ...) [(bind ...)] (domain NAME))` after a prior
+  multi-pending `(await_any done)` observation.
+- The accepted source shape is a repeat directly inside a top-level `switch`
+  branch with multiple generated spawns, `await_any` as an observation point,
+  same-domain static-parameter generated blocking `do` with optional
+  generated-top input/output binding handoffs, and a later same-body
+  `(await_all done)` drain before the nested repeat check can loop.
+- Lowering keeps every generated-spawn done handoff live after `await_any`
+  and through the same-domain generated do instance, applies the generated do
+  instance's static parameter overrides and optional binding handoffs once in
+  the generated top, waits for that generated do instance's fresh done
+  handoff, records declared ownership metadata in generated-composition/domain
+  partition and schedule-report clock-domain summaries, then drains every
+  pending generated child before nested repeat re-entry.
+- `await_any` after the do, new spawn after the do before drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain fail-closed.
+- The mdBook, ISF spec, downstream integration spec, public contract, feature
+  matrix audits, task tree, roadmap board, and live docs now document this
+  subset as shipped.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=50), touched repeat/spawn/doc checks (Files=4, Tests=480), focused
+  activation/domain/doc suite (Files=13, Tests=522),
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book` (Files=227,
+  Tests=1293), and `git diff --check`.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.97`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: switch-contained repeat domain do after await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.95`.
 - The active R14 task tree now selects the direct top-level `switch` branch

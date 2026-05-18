@@ -567,13 +567,15 @@ generated spawns, a prior multi-pending
 spawns remain pending, and a later same-body `(await_all done)` drain before
 the nested repeat check can loop. The shipped contract records declared
 same-domain ownership metadata for the generated do instance and generated
-children without implying CDC or cross-domain activation. The switch-contained
-domain analogue is now selected for implementation: a repeat directly inside
-a top-level `switch` branch with multiple generated spawns, a prior
+children without implying CDC or cross-domain activation.
+
+The switch-contained same-domain metadata `await_any`-before-do analogue is
+also shipped: a repeat directly inside a top-level `switch` branch with
+multiple generated spawns, a prior
 multi-pending `(await_any done)` observation, static-parameter generated
 blocking `(do child (params ...) [(bind ...)] (domain NAME))` while those
 generated spawns remain pending, and a later same-body `(await_all done)`
-drain before the nested repeat check can loop. The selected contract mirrors
+drain before the nested repeat check can loop. The shipped contract mirrors
 the shipped when-contained domain proof and records declared same-domain
 ownership metadata without implying CDC or cross-domain activation.
 `await_any` after the do, new spawn after the do before the drain,

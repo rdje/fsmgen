@@ -146,6 +146,7 @@ my @required_examples = (
     'top-level switch-branch nested repeat generated do with static params and bind handoffs after multi-pending await_any while generated nested spawn pending before same-body await_all drain',
     'top-level switch-branch nested repeat generated do with static params and bind handoffs while generated nested spawn pending before same-body await_all drain',
     'top-level switch-branch nested repeat generated do with static params, optional bind handoffs, and same-domain metadata while generated nested spawn pending before same-body await_all drain',
+    'top-level switch-branch nested repeat generated do with static params, optional bind handoffs, and same-domain metadata after multi-pending await_any while generated nested spawn pending before same-body await_all drain',
     'top-level repeat-body generated-child blocking do',
     'top-level repeat-body generated blocking do with static params, bind handoffs, and same-domain domain metadata',
     'samples before or after spawn before same-body sync',

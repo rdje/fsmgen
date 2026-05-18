@@ -1624,12 +1624,11 @@ Current lowering:
   only for the deterministic generated do instance, generated-composition and
   clock-domain summaries retain that ownership, and every pending
   generated-spawn done handoff remains live for the later same-body
-  `(await_all done)` drain. The top-level `when` body same-domain subset may
-  also run after a prior multi-pending `(await_any done)` observation, still
-  requiring that later same-body drain. The switch-branch domain-metadata
-  generated `do` after a prior multi-pending `await_any`, new nested `spawn`
-  after the do before the drain, `await_any` after the do, deeper branch/loop
-  nesting, and cross-domain activation remain fail-closed.
+  `(await_all done)` drain. The top-level `when` body and top-level `switch`
+  branch same-domain subsets may also run after a prior multi-pending
+  `(await_any done)` observation, still requiring that later same-body drain.
+  New nested `spawn` after the do before the drain, `await_any` after the do,
+  deeper branch/loop nesting, and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
@@ -2058,7 +2057,10 @@ generated `(do child (params ...) [(bind ...)] (domain NAME))` while
 generated nested spawns are pending, or top-level when-body static-parameter
 same-domain generated `(do child (params ...) [(bind ...)] (domain NAME))`
 after a prior multi-pending `await_any` observation while generated nested
-spawns are pending, before a later same-body `await_all` drain,
+spawns are pending, or top-level switch-branch static-parameter same-domain
+generated `(do child (params ...) [(bind ...)] (domain NAME))` after a prior
+multi-pending `await_any` observation while generated nested spawns are
+pending, before a later same-body `await_all` drain,
 repeat-body
 generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]
