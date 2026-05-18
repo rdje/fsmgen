@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL data movement boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` as a task-tree selection
+  and decomposition slice before endpoint-aware actor data movement code.
+- The first `.5` code leaf will reserve and fail closed qualified actor
+  endpoint drive-body pairs whose qualifier names a declared static actor
+  instance, preserving existing local aggregate/enum dotted-name behavior for
+  non-actor qualifiers.
+- Generated actor-to-actor movement, two-instance lowering, route muxes,
+  handoff storage, width inference across actor types, generated ATL child
+  `.fsm` files, generated ATL tops, report keys, and HDL routing remain
+  deferred to later `.5` leaves.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
 ### R14 — ATL actor triggers lower to parent handoff output
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`.
 - FSMGen now accepts exactly one top-level transaction-body

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL data movement boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1`.
+- The first actor data movement code leaf is fail-closed reservation for
+  qualified actor endpoint drive-body pairs, not generated routing.
+- Qualified actor endpoints in drive-body sink/source positions will reject
+  with ATL data-movement diagnostics when the qualifier names a declared
+  static actor instance.
+- Generated actor-to-actor movement, two-instance lowering, route muxes,
+  handoff storage, width inference across actor types, generated ATL children,
+  generated ATL tops, and HDL routing remain deferred.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL actor triggers lower to parent handoff output
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`.
 - Exactly one top-level transaction-body `(trigger actor.transaction)` may

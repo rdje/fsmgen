@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL data movement starts with reservation diagnostics
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` selects the first endpoint-aware actor
+  data movement boundary before code.
+- The first implementation leaf is fail-closed reservation rather than
+  generated movement because qualified actor endpoints reuse the same dotted
+  token shape as existing aggregate and enum-looking names. When the qualifier
+  names a declared static actor instance, the parser should report an ATL
+  data-movement diagnostic instead of allowing a misleading local-name error.
+- Generated routing is deliberately deferred. Two-instance widening, actor
+  type resolution, endpoint width evidence, route muxes, handoff storage,
+  generated ATL child artifacts, generated ATL tops, and schedule-report
+  movement provenance need their own selected contracts before code.
 ## 2026-05-18: ATL trigger lowering stays a parent handoff
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` implements the selected
   behavior-bearing qualified actor-transaction trigger subset.

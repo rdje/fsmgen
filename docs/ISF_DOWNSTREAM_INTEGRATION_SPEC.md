@@ -1556,6 +1556,12 @@ capability manifest and this handoff:
   `group.name` where a later leaf explicitly permits that endpoint kind.
 - `connect`, `transfer`, and `move` are not public ATL v0 movement clauses.
   Movement is temporal scheduling intent, not a permanent actor-to-actor wire.
+- The next endpoint-movement code leaf is selected as fail-closed
+  reservation. Downstream producers must not emit drive-body pairs whose sink
+  or source is a qualified actor endpoint naming a declared static actor
+  instance until this handoff advertises generated routing behavior. FSMGen
+  will reject those forms with ATL data-movement diagnostics before they can
+  be mistaken for local aggregate or enum-looking dotted tokens.
 - Blocking actor-transaction orchestration is reserved as
   `(do actor.transaction)`, nonblocking orchestration as
   `(spawn actor.transaction as NAME)`, and rule-level orchestration as

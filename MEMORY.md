@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL data movement boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1` as the selection and
+  decomposition leaf before implementing endpoint-aware actor data movement.
+- The first `.5` code leaf is intentionally fail-closed reservation, not
+  generated routing: drive-body pairs whose sink or source is a qualified
+  actor endpoint naming a declared static actor instance must reject with ATL
+  data-movement diagnostics before those tokens can be mistaken for local
+  aggregate or enum-looking dotted names.
+- Generated actor-to-actor movement, two-instance lowering, route muxes,
+  handoff storage, width inference across actor types, generated ATL child
+  `.fsm` files, generated ATL tops, and HDL routing remain deferred until
+  later `.5` leaves select exact generated artifacts and report keys.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`.
+- Validation passed: `mdbook build docs/book` and `git diff --check`.
 ## 2026-05-18: ATL actor triggers lower to parent handoff output
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2`.
 - FSMGen now accepts exactly one top-level transaction-body

@@ -2837,6 +2837,13 @@ and actor-transaction trigger handoff subsets implemented so far:
 - No top-level `connect`, `transfer`, or `move` movement clause is part of
   ATL v0. Movement remains temporal intent placed by drive-call timing, not a
   permanent actor-to-actor wire.
+- The next endpoint-movement code leaf is selected as fail-closed
+  reservation: drive-body pairs whose sink or source is a qualified actor
+  endpoint naming a declared static actor instance must reject with ATL
+  data-movement diagnostics instead of falling through as local aggregate or
+  enum-looking dotted tokens. Generated actor-to-actor routing behavior,
+  handoff storage, route muxes, two-instance lowering, generated ATL children,
+  generated ATL tops, and HDL routing remain deferred.
 - Future blocking orchestration uses `(do actor.transaction)`, future
   nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
   future rule-level orchestration uses `(trigger actor.transaction)`.

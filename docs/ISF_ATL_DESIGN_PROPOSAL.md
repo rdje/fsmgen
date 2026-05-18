@@ -485,6 +485,18 @@ This deliberately keeps ATL close to the rest of ISF: users already understand
 that drive bodies describe data movement and drive calls place that movement
 in the schedule.
 
+The first `.5` endpoint-movement implementation is selected to be
+fail-closed reservation before generated routing. Qualified actor endpoint
+drive-body pairs such as `(consumer.payload producer.payload)`,
+`(consumer.payload local_value)`, or `(local_value producer.payload)` must not
+fall through as local aggregate or enum-looking dotted tokens when the
+qualifier names a declared static actor instance. The next code leaf should
+reject those forms with ATL data-movement diagnostics while preserving the
+existing local dotted-name behavior for qualifiers that are not actor
+instances. Generated actor-to-actor movement, two-instance lowering, route
+muxes, handoff storage, width inference across actor types, generated ATL
+child `.fsm` files, generated ATL tops, and HDL routing remain later leaves.
+
 ## Concurrent Actor Groups
 
 Concurrent groups express author intent that actors may operate together.

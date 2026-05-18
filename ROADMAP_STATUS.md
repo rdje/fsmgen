@@ -46,9 +46,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   tops, and HDL event/trigger wiring ship. Multiple/nested waits or triggers,
   fan-in, fan-out, payloads/bindings, ready/backpressure, cross-clock
   actor events/triggers, concurrent groups, endpoint data movement, and broader
-  HDL behavior remain deferred. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.5`, which must decompose/select the first
-  actor-to-actor data movement slice before behavior-bearing code.
+  HDL behavior remain deferred. `ISF-ACTOR-NETWORK-ORCHESTRATION.5.1`
+  selected/decomposed the first actor-to-actor data movement boundary before
+  behavior-bearing code. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.5.2`, which implements conservative
+  fail-closed reservation for qualified actor endpoint drive-body pairs before
+  generated routing behavior is claimed.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
