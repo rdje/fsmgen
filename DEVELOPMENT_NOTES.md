@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained generated-child do preserves pending generated spawns
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.62` implements only the selected
+  top-level `when` body nested-repeat generated-child do-while-spawn-pending
+  subset.
+- The generated-top model did not need a new lifetime family. The existing
+  generated-child blocking do path already creates a deterministic generated
+  do instance for a lexical do site, and the existing nested spawn drain path
+  already keeps generated spawn done handoffs pending until same-body
+  `await_all`.
+- The implementation therefore widens validation only for plain generated-child
+  `(do child)` in a repeat directly under a top-level `when` body when the
+  target child is already emitted as a generated child elsewhere. The do
+  consumes only its generated do instance's fresh done handoff; it does not
+  mark pending spawned children complete.
+- The validator remains deliberately narrow: parameterized, bound, or
+  domain-qualified generated do while pending, the switch-contained
+  generated-child analogue, `await_any` before or after the do, new nested
+  spawn after the do before the drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain separate
+  contracts.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.63` must
+  pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: when-contained generated-child do while spawn pending is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.61` selects the first generated-do form
   allowed to run while generated nested spawns are still pending.

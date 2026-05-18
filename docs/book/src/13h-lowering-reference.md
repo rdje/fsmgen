@@ -1071,9 +1071,16 @@ may also lower a local plain `(do child)` while generated nested spawns are
 pending, before a later same-body `await_all` drain. That local do uses the
 parent-module start/done contract and does not consume the generated-spawn
 done set; the later `await_all` still gates the nested repeat check on every
-outstanding generated child. Generated do while a nested spawn is pending,
-prior or later `await_any` around that local do, and a new nested spawn after
-the local do before the drain remain fail-closed.
+outstanding generated child. The top-level `when` body nested-repeat form may
+also lower a plain generated-child `(do child)` in that pending-spawn interval
+when the target is already generated elsewhere. That generated do starts its
+own deterministic `{parent}_{child}_repeat_do_{ordinal}` instance, waits for
+that instance's fresh done handoff, and leaves pending generated-spawn done
+handoffs live until the later `await_all` drain. Parameterized, bound, or
+domain-qualified generated do while a nested spawn is pending, the
+switch-contained generated-child analogue, prior or later `await_any` around
+the do, and a new nested spawn after the do before the drain remain
+fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
@@ -1247,9 +1254,38 @@ local do state:
 ```
 
 That shape is limited to local plain do targets in the parent scheduled module
-and to a later same-body `await_all` drain. It is not the generated-do path
-and it is not enabled for switch branches or for bodies that observed
-multi-pending `await_any` before the local do.
+and to a later same-body `await_all` drain. It is enabled only for repeats
+directly inside top-level `when` bodies or top-level `switch` branches, and it
+is not enabled for bodies that observed multi-pending `await_any` before the
+local do.
+
+When a top-level `when` body nested repeat runs a generated-child `do` while a
+generated nested spawn is still pending, lowering keeps the two child
+lifetimes separate:
+
+```lisp
+(parent_spawn_2
+  (= (w0_start> 1))
+  (-> parent_do_3))
+
+(parent_do_3
+  (= (parent_worker_repeat_do_0_start> 1))
+  (<parent_worker_repeat_do_0_done
+    (-> parent_sample_4)))
+
+(parent_sample_4
+  (<= (after_do status))
+  (-> parent_await_all_5))
+
+(parent_await_all_5
+  (-> parent_repeat_check_6 <w0_done))
+```
+
+The generated top instantiates both `w0` and
+`parent_worker_repeat_do_0`. The blocking generated-child `do` consumes only
+`parent_worker_repeat_do_0_done`; it does not clear `w0_done`, so the nested
+repeat check remains unreachable until the later `await_all` drain observes
+the spawned child.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports
 live until a later same-body `await_all` drain:

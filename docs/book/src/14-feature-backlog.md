@@ -339,7 +339,13 @@ no prior multi-pending `(await_any done)` observation and a later same-body
 `(await_all done)` drains the outstanding generated children before the nested
 repeat check can loop. That local do target remains in the parent scheduled
 module, waits for the local child's fresh done pulse, and does not clear the
-pending generated-spawn done set.
+pending generated-spawn done set. The top-level `when` body nested-repeat
+subset also allows a plain generated-child `(do child)` in that same
+pending-spawn interval when the target child is already emitted as a generated
+child by another activation site. That generated do site owns one
+deterministic generated instance, waits for that instance's fresh done
+handoff, and leaves the pending generated-spawn done set live for the later
+same-body `(await_all done)` drain.
 Cross-domain
 repeat-body `do`,
 generated/spawn nested activation beyond the documented branch-contained
@@ -432,13 +438,12 @@ analogue is also shipped: a repeat directly inside a top-level `switch` branch
 may run a local `(do child)` while generated nested spawns remain pending,
 with the same later same-body `(await_all done)` drain requirement and the
 same local start/done proof.
-The next selected implementation leaf is the top-level `when` body
-generated-child analogue: plain `(do child)` while generated nested spawns are
-pending, where `child` is already emitted as a generated child by another
-activation site. That selected leaf is not shipped yet. Its intended proof is
-that the generated do site owns one deterministic generated instance, waits
-for that instance's fresh done handoff, and leaves the pending generated-spawn
-done set live for the later same-body `(await_all done)` drain.
+The top-level `when` body generated-child analogue is also shipped: plain
+`(do child)` may run while generated nested spawns are pending when `child` is
+already emitted as a generated child by another activation site. The generated
+do site owns one deterministic generated instance, waits for that instance's
+fresh done handoff, and leaves the pending generated-spawn done set live for
+the later same-body `(await_all done)` drain.
 Parameterized/bound/domain-qualified generated `do` while spawn pending, the
 switch-contained generated-child analogue, `await_any` observation before or
 after the do, new spawn after the do before the drain, cross-domain
