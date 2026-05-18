@@ -2847,10 +2847,11 @@ and actor-transaction trigger handoff subsets implemented so far:
   `source_actor_source_endpoint` for the source input and
   `sink_actor_sink_endpoint` for the sink output, and drives the sink output
   from the source input during the named drive-call cycle.
-- The scalar handoff inserts no storage, route mux, generated child `.fsm`,
-  generated ATL top, HDL child wiring, actor type resolution, pin movement,
-  inline drive movement, expression movement, fan-in/fan-out, groups, CDC, or
-  trigger/await coupling. Schedule reports expose accepted movements through
+- The scalar actor-to-actor handoff inserts no storage, route mux, generated
+  child `.fsm`, generated ATL top, HDL child wiring, actor type resolution,
+  pin movement in that actor-to-actor route, inline drive movement,
+  expression movement, fan-in/fan-out, groups, CDC, or trigger/await
+  coupling. Schedule reports expose accepted movements through
   `actor_network.data_movements[]` with `kind`, `transaction`, `context`,
   `drive`, `source_instance`, `source_endpoint`, `source_signal`,
   `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
@@ -2866,16 +2867,15 @@ and actor-transaction trigger handoff subsets implemented so far:
   `actor_network.data_movements[]` with kind
   `scalar_pin_to_actor_handoff`, `source => top_level_pin`, and
   `sink => external_handoff`.
-- The inverse actor-to-top-level output pin subset is selected for the next
-  implementation leaf but is not yet accepted by the current parser/lowering
-  surface. The selected source form is one direct static actor instance, one
-  named drive body with one `(pins.output_pin actor.endpoint)` scalar pair,
-  and one top-level transaction drive call. `pins.output_pin` must name a
-  scalar one-bit top-level actor output. The selected lowering will expose
-  the actor endpoint as generated scalar external parent input
-  `actor_endpoint`, drive the existing top-level output pin for the
-  drive-call cycle, and report kind `scalar_actor_to_pin_handoff` with
-  `source => external_handoff` and `sink => top_level_pin`.
+- The inverse actor-to-top-level output pin subset is shipped. It accepts one
+  direct static actor instance, one named drive body with one
+  `(pins.output_pin actor.endpoint)` scalar pair, and one top-level
+  transaction drive call. `pins.output_pin` must name a scalar one-bit
+  top-level actor output. FSMGen exposes the actor endpoint as generated
+  scalar external parent input `actor_endpoint`, drives the existing
+  top-level output pin for the drive-call cycle, and reports kind
+  `scalar_actor_to_pin_handoff` with `source => external_handoff` and
+  `sink => top_level_pin`.
 - Future blocking orchestration uses `(do actor.transaction)`, future
   nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
   future rule-level orchestration uses `(trigger actor.transaction)`.

@@ -601,8 +601,7 @@ The shipped first pin-movement subset is pin-to-actor:
 6. The route lifetime is one drive-call cycle, with no storage, mux,
    actor-to-pin output publication, generated children, groups, or CDC.
 
-The selected next pin-movement subset is actor-to-top-level output pin, but
-it remains fail-closed until the `.6.4` lowering leaf ships:
+The shipped inverse pin-movement subset is actor-to-top-level output pin:
 
 1. One direct static actor instance.
 2. One named drive body with one `(pins.output_pin actor.endpoint)` scalar
@@ -615,8 +614,7 @@ it remains fail-closed until the `.6.4` lowering leaf ships:
 6. The route lifetime is one drive-call cycle, with no storage, mux,
    pin-to-actor movement in the same drive, generated children, groups, or
    CDC.
-7. Schedule-report metadata will use
-   `actor_network.data_movements[]` with kind
+7. Schedule-report metadata uses `actor_network.data_movements[]` with kind
    `scalar_actor_to_pin_handoff`, `source => external_handoff`, and
    `sink => top_level_pin`.
 

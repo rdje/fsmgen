@@ -746,6 +746,7 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
             (($actor->{actor_network} || {})->{instances}) || [],
             \%actor_instances,
             _actor_interface_input_widths($actor),
+            _actor_interface_output_widths($actor),
             \%declared_signals,
         )) {
             confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement exceeds the current one-movement subset; fan-in, fan-out, route muxes, and multiple data movements remain deferred\n"
@@ -966,7 +967,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
 }
 
 sub _accept_selected_atl_data_movement_drive {
-    my ($actor_name, $drive_name, $drive, $instances, $actor_instances, $input_widths, $declared_signals) = @_;
+    my ($actor_name, $drive_name, $drive, $instances, $actor_instances, $input_widths, $output_widths, $declared_signals) = @_;
     my $body = ($drive || {})->{body};
     return undef unless ref($body) eq 'ARRAY';
 
@@ -990,39 +991,56 @@ sub _accept_selected_atl_data_movement_drive {
     my ($sink_instance, $sink_endpoint) = _parse_qualified_atl_endpoint_token($sink, $actor_instances);
     my ($sink_pin) = _parse_qualified_atl_pin_endpoint_token($sink);
     my ($source_pin) = _parse_qualified_atl_pin_endpoint_token($source);
-    confess "Error: $context ATL scalar actor-to-actor data movement sink '$sink' must be a qualified static actor endpoint\n"
-        unless defined($sink_instance) && defined($sink_endpoint) && !defined($sink_pin);
     confess "Error: $context ATL scalar actor-to-actor data movement source expressions remain deferred\n"
         if ref($source);
     my ($source_instance, $source_endpoint) = _parse_qualified_atl_endpoint_token($source, $actor_instances);
-    confess "Error: $context ATL scalar actor-to-actor data movement sink endpoint '$sink_endpoint' must be a scalar HDL identifier\n"
-        unless _is_hdl_identifier($sink_endpoint);
+    confess "Error: $context ATL scalar actor-to-actor data movement sink '$sink' must be a qualified static actor endpoint or selected 'pins.output_pin' sink\n"
+        unless (defined($sink_instance) && defined($sink_endpoint)) || defined($sink_pin);
 
-    return _accept_selected_atl_actor_to_actor_data_movement(
+    if (defined($sink_instance) && defined($sink_endpoint)) {
+        confess "Error: $context ATL scalar actor-to-actor data movement sink endpoint '$sink_endpoint' must be a scalar HDL identifier\n"
+            unless _is_hdl_identifier($sink_endpoint);
+
+        return _accept_selected_atl_actor_to_actor_data_movement(
+            $context,
+            $drive_name,
+            $instances,
+            $sink_instance,
+            $sink_endpoint,
+            $source_instance,
+            $source_endpoint,
+            $endpoint_entries[0],
+            $declared_signals,
+        ) if defined($source_instance) && defined($source_endpoint);
+
+        return _accept_selected_atl_pin_to_actor_data_movement(
+            $context,
+            $drive_name,
+            $instances,
+            $sink_instance,
+            $sink_endpoint,
+            $source_pin,
+            $endpoint_entries[0],
+            $input_widths,
+            $declared_signals,
+        ) if defined($source_pin);
+
+        confess "Error: $context ATL scalar actor-to-actor data movement source '$source' must be a qualified static actor endpoint or selected 'pins.input_pin' source\n";
+    }
+
+    return _accept_selected_atl_actor_to_pin_data_movement(
         $context,
         $drive_name,
         $instances,
-        $sink_instance,
-        $sink_endpoint,
+        $sink_pin,
         $source_instance,
         $source_endpoint,
         $endpoint_entries[0],
+        $output_widths,
         $declared_signals,
-    ) if defined($source_instance) && defined($source_endpoint);
+    ) if defined($sink_pin) && defined($source_instance) && defined($source_endpoint);
 
-    return _accept_selected_atl_pin_to_actor_data_movement(
-        $context,
-        $drive_name,
-        $instances,
-        $sink_instance,
-        $sink_endpoint,
-        $source_pin,
-        $endpoint_entries[0],
-        $input_widths,
-        $declared_signals,
-    ) if defined($source_pin);
-
-    confess "Error: $context ATL scalar actor-to-actor data movement source '$source' must be a qualified static actor endpoint or selected 'pins.input_pin' source\n";
+    confess "Error: $context ATL scalar actor-to-pin data movement source '$source' must be a qualified static actor endpoint in the current subset\n";
 }
 
 sub _accept_selected_atl_actor_to_actor_data_movement {
@@ -1105,6 +1123,50 @@ sub _accept_selected_atl_pin_to_actor_data_movement {
         storage         => 'none',
         source          => 'top_level_pin',
         sink            => 'external_handoff',
+    };
+}
+
+sub _accept_selected_atl_actor_to_pin_data_movement {
+    my ($context, $drive_name, $instances, $sink_pin, $source_instance, $source_endpoint, $entry, $output_widths, $declared_signals) = @_;
+    confess "Error: $context ATL scalar actor-to-pin data movement requires exactly one direct static actor instance in the current subset\n"
+        unless ref($instances) eq 'ARRAY' && @$instances == 1;
+    confess "Error: $context ATL scalar actor-to-pin data movement sink must be 'pins.output_pin'\n"
+        unless defined($sink_pin) && _is_hdl_identifier($sink_pin);
+    confess "Error: $context ATL scalar actor-to-pin data movement sink pin 'pins.$sink_pin' is not a declared top-level output pin\n"
+        unless ref($output_widths) eq 'HASH' && exists $output_widths->{$sink_pin};
+    confess "Error: $context ATL scalar actor-to-pin data movement sink pin 'pins.$sink_pin' must be one bit in the current subset\n"
+        unless ($output_widths->{$sink_pin} || 1) == 1;
+    confess "Error: $context ATL scalar actor-to-pin data movement source endpoint '$source_endpoint' must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($source_endpoint);
+
+    my $source_signal = _actor_atl_data_handoff_signal($source_instance, $source_endpoint);
+    confess "Error: $context ATL scalar actor-to-pin data movement generated handoff signal '$source_signal' conflicts with a declared actor signal\n"
+        if $declared_signals->{$source_signal};
+    confess "Error: $context ATL scalar actor-to-pin data movement generated handoff signal '$source_signal' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
+        if $source_signal eq "${drive_name}_start";
+    confess "Error: $context ATL scalar actor-to-pin data movement sink pin 'pins.$sink_pin' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
+        if $sink_pin eq "${drive_name}_start";
+
+    $entry->[0] = $sink_pin;
+    $entry->[1] = $source_signal;
+
+    return {
+        kind            => 'scalar_actor_to_pin_handoff',
+        transaction     => undef,
+        context         => undef,
+        drive           => $drive_name,
+        source_instance => $source_instance,
+        source_endpoint => $source_endpoint,
+        source_signal   => $source_signal,
+        sink_instance   => 'pins',
+        sink_endpoint   => $sink_pin,
+        sink_signal     => $sink_pin,
+        width           => 1,
+        width_source    => 'top_level_output_pin_scalar_one_bit',
+        route_lifetime  => 'drive_call_cycle',
+        storage         => 'none',
+        source          => 'external_handoff',
+        sink            => 'top_level_pin',
     };
 }
 
@@ -1373,6 +1435,16 @@ sub _actor_interface_input_widths {
     for my $input (@{($actor || {})->{interface}{inputs} || []}) {
         $widths{$input->{name}} = $input->{width} // 1
             if defined($input->{name}) && !ref($input->{name});
+    }
+    return \%widths;
+}
+
+sub _actor_interface_output_widths {
+    my ($actor) = @_;
+    my %widths;
+    for my $output (@{($actor || {})->{interface}{outputs} || []}) {
+        $widths{$output->{name}} = $output->{width} // 1
+            if defined($output->{name}) && !ref($output->{name});
     }
     return \%widths;
 }

@@ -699,17 +699,16 @@ transaction drive call. It emits one-bit external parent handoff ports named
 one-cycle route lifetime, and reports through
 `actor_network.data_movements[]`.
 Storage, muxing, generated child `.fsm` artifacts, generated ATL tops, HDL
-child wiring, pin movement, inline/expression movement, fan-in/fan-out,
-groups, CDC, and trigger/await coupling remain separate backlog leaves.
-The first pin-movement subset is shipped: one scalar top-level input pin to
-one actor endpoint, written as `(actor.endpoint pins.input_pin)` in a named
-drive body with one direct static actor instance and one top-level transaction
-drive call. The inverse output direction is selected for the next
-implementation leaf: one scalar actor endpoint to one top-level output pin,
-written as `(pins.output_pin actor.endpoint)` in a named drive body with one
-direct static actor instance and one top-level transaction drive call. That
-actor-to-pin form remains fail-closed until its lowering leaf ships. Wider pin
-payloads remain later leaves.
+child wiring, broader pin movement, inline/expression movement,
+fan-in/fan-out, groups, CDC, and trigger/await coupling remain separate
+backlog leaves.
+The first pin-movement subsets are shipped in both scalar directions:
+top-level input pin to actor endpoint as `(actor.endpoint pins.input_pin)`,
+and actor endpoint to top-level output pin as
+`(pins.output_pin actor.endpoint)`. Each shipped direction accepts one named
+drive body, one direct static actor instance, one top-level transaction drive
+call, and one-bit top-level pins only. Wider pin payloads and mixed
+pin/actor movement in one drive remain later leaves.
 The selected future orchestration vocabulary reuses existing ISF activation
 forms: `(do actor.transaction)` for blocking actor transaction activation,
 `(spawn actor.transaction as NAME)` for nonblocking activation,

@@ -1571,8 +1571,9 @@ capability manifest and this handoff:
   `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
   `route_lifetime`, `storage`, `source`, and `sink`. Route lifetime is one
   drive-call cycle, with no storage, mux, actor type resolution, child `.fsm`,
-  ATL top, HDL child wiring, pin movement, inline/expression movement,
-  fan-in/fan-out, groups, CDC, or trigger/await coupling in that first subset.
+  ATL top, HDL child wiring, pin movement in that actor-to-actor route,
+  inline/expression movement, fan-in/fan-out, groups, CDC, or trigger/await
+  coupling in that first subset.
 - The first top-level pin movement subset is now downstream-emittable. The
   accepted source form is exactly one direct static actor instance, one named
   drive body with one `(actor.endpoint pins.input_pin)` scalar pair, and one
@@ -1580,14 +1581,13 @@ capability manifest and this handoff:
   top-level actor input. FSMGen reads that input pin directly, rewrites the
   actor sink to generated handoff output `actor_endpoint`, and reports kind
   `scalar_pin_to_actor_handoff` with `source => top_level_pin`.
-- The actor-to-top-level output pin direction is selected but not yet
-  downstream-emittable until the `.6.4` lowering leaf ships. The selected form
-  is exactly one direct static actor instance, one named drive body with one
-  `(pins.output_pin actor.endpoint)` scalar pair, and one top-level
-  transaction drive call. The output pin must be a scalar one-bit top-level
-  actor output. The selected lowering will expose the actor endpoint as
-  generated input `actor_endpoint`, drive the existing top-level output pin,
-  and report kind `scalar_actor_to_pin_handoff` with
+- The actor-to-top-level output pin direction is now downstream-emittable.
+  The accepted form is exactly one direct static actor instance, one named
+  drive body with one `(pins.output_pin actor.endpoint)` scalar pair, and one
+  top-level transaction drive call. The output pin must be a scalar one-bit
+  top-level actor output. FSMGen exposes the actor endpoint as generated
+  input `actor_endpoint`, drives the existing top-level output pin, and
+  reports kind `scalar_actor_to_pin_handoff` with
   `sink => top_level_pin`.
 - Blocking actor-transaction orchestration is reserved as
   `(do actor.transaction)`, nonblocking orchestration as

@@ -1588,7 +1588,7 @@ schedule-report surface is `actor_network.data_movements[]` with
 `source_endpoint`, `source_signal`, `sink_instance`, `sink_endpoint`,
 `sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,
 `source`, and `sink`. Storage, muxing, actor type resolution, generated child
-artifacts, generated ATL tops, HDL child wiring, pin movement,
+artifacts, generated ATL tops, HDL child wiring, broader pin movement,
 inline/expression movement, fan-in/fan-out, groups, CDC, and trigger/await
 coupling remain future public contracts.
 The first top-level pin movement public subset is implemented: one
@@ -1596,12 +1596,11 @@ The first top-level pin movement public subset is implemented: one
 direct static actor instance, and one top-level transaction drive call. The
 report kind is `scalar_pin_to_actor_handoff`, with
 `source => top_level_pin` and `sink => external_handoff`.
-The inverse actor-to-top-level output pin subset is selected but not yet
-implemented: one `(pins.output_pin actor.endpoint)` scalar pair in one named
-drive body, one direct static actor instance, and one top-level transaction
-drive call. Its selected future report kind is
-`scalar_actor_to_pin_handoff`, with `source => external_handoff` and
-`sink => top_level_pin`.
+The inverse actor-to-top-level output pin public subset is implemented: one
+`(pins.output_pin actor.endpoint)` scalar pair in one named drive body, one
+direct static actor instance, and one top-level transaction drive call. The
+report kind is `scalar_actor_to_pin_handoff`, with
+`source => external_handoff` and `sink => top_level_pin`.
 Future orchestration spellings are reserved as
 `(do actor.transaction)`, `(spawn actor.transaction as NAME)`, and
 `(trigger actor.transaction)`, with event payloads deferred. Future group

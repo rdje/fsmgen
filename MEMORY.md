@@ -1,5 +1,27 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL actor-to-pin handoff lowering shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` and closed the `.6`
+  top-level pin movement group.
+- FSMGen now accepts the selected scalar actor endpoint to top-level output
+  pin handoff subset: exactly one direct static actor instance, one named
+  drive body with one `(pins.output_pin actor.endpoint)` pair, and one
+  top-level transaction drive call.
+- The parser rewrites the actor source endpoint to a generated one-bit parent
+  handoff input named `actor_endpoint` while driving the existing one-bit
+  top-level output pin directly. The scheduled parent `.fsm` drives that
+  output pin from the generated source input during the drive-call cycle, and
+  schedule JSON reports kind `scalar_actor_to_pin_handoff` under
+  `actor_network.data_movements[]`.
+- Wider pins, storage/muxing, generated children, generated ATL tops, HDL
+  child wiring, inline/expression movement, fan-in/fan-out, groups, CDC,
+  mixed pin/actor movement in one drive, and trigger/await coupling remain
+  deferred or fail-closed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7`.
+- Validation passed: parser syntax check, focused actor-network regression,
+  schedule/drive boundary regressions, public-contract/report audits,
+  `mdbook build docs/book`, broad `./bin/ci-regression isf --no-book` with
+  `Files=229, Tests=1351`, and `git diff --check`.
 ## 2026-05-18: ATL actor-to-pin handoff subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3`.
 - The inverse top-level pin movement subset is selected before code: exactly

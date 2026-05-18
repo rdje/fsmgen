@@ -377,8 +377,8 @@ and generated ATL wiring remain backlog under the actor-network task tree.
 
 The broader ATL v0 contract is selected for later slices. The source root
 stays `(actor ...)`, and future ATL declarations remain direct actor-body
-clauses rather than a `(network ...)` section. Actor-to-actor and
-pin-to-actor movement will reuse the existing drive-body pair shape in
+clauses rather than a `(network ...)` section. Actor-to-actor and scalar
+top-level pin movement reuse the existing drive-body pair shape in
 `(sink source)` order plus ordinary drive-call timing points. `connect`,
 `transfer`, and `move` are not part of ATL v0 movement syntax. The first
 endpoint-movement implementation sequence first shipped fail-closed
@@ -391,8 +391,8 @@ exposes a one-bit external source input named
 `source_actor_source_endpoint` and a one-bit external sink output named
 `sink_actor_sink_endpoint`; the route lasts for the drive-call cycle and
 does not imply storage, a mux, generated child `.fsm` artifacts, an ATL top,
-HDL child wiring, pin movement, fan-in/fan-out, groups, CDC, or trigger/await
-coupling.
+HDL child wiring, pin movement in that actor-to-actor route, fan-in/fan-out,
+groups, CDC, or trigger/await coupling.
 
 ```lisp
 (actor atl_scalar_data_movement
@@ -436,8 +436,7 @@ This pin-to-actor subset is shipped. The source is the existing one-bit
 top-level input pin, and the sink is a generated scalar external actor
 handoff output named `consumer_payload`.
 
-The inverse actor-to-top-level output pin direction is selected for the next
-implementation leaf, but is not accepted yet:
+The inverse actor-to-top-level output pin direction is also shipped:
 
 ```lisp
 (actor pin_publish
@@ -452,9 +451,9 @@ implementation leaf, but is not accepted yet:
     (complete done)))
 ```
 
-The selected lowering will expose `producer.payload` as a generated scalar
-external parent input named `producer_payload`, drive the existing one-bit
-top-level output pin `out_bit` for the drive-call cycle, and report kind
+FSMGen exposes `producer.payload` as a generated scalar external parent input
+named `producer_payload`, drives the existing one-bit top-level output pin
+`out_bit` for the drive-call cycle, and reports kind
 `scalar_actor_to_pin_handoff`. Wider pins, storage, muxing, generated
 children, groups, CDC, and trigger/await coupling remain deferred.
 

@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.6.4`.
+  activation `.111` and ATL actor-network orchestration `.7`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -62,8 +62,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the drive-call cycle through the named drive request, and schedule JSON
   reports it under `actor_network.data_movements[]`. Actor type resolution,
   generated child `.fsm` artifacts, generated ATL tops, HDL child wiring,
-  pin movement, inline/expression movement, fan-in/fan-out, groups, CDC, and
-  trigger/await coupling remain deferred or fail-closed.
+  pin movement in that actor-to-actor route, inline/expression movement,
+  fan-in/fan-out, groups, CDC, and trigger/await coupling remain deferred or
+  fail-closed.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` shipped the first top-level pin
   movement subset: one direct static actor instance, one named drive body with
   one scalar `(actor.endpoint pins.input_pin)` pair, and one top-level
@@ -79,9 +80,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   actor endpoint as generated parent input `actor_endpoint`, drive the
   existing one-bit top-level output pin for the drive-call cycle, and report
   kind `scalar_actor_to_pin_handoff` under
-  `actor_network.data_movements[]`. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4`, which lowers only that selected
-  actor-to-top-level output pin subset.
+  `actor_network.data_movements[]`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` completed that selected lowering:
+  the parser rewrites the actor source endpoint to a generated one-bit parent
+  handoff input, the scheduled parent `.fsm` drives the existing top-level
+  output pin for the named drive-call cycle, and schedule JSON reports
+  `scalar_actor_to_pin_handoff` provenance. The `.6` top-level pin movement
+  group is complete. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7`, which starts concurrent actor-group
+  scheduling selection/decomposition before behavior-bearing code.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
