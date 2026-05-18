@@ -126,8 +126,8 @@ Current proposal summary:
 
 - The source root remains `(actor top_name ...)`.
 - The actor network container spelling remains open: Candidate A scopes ATL
-  clauses inside `(network ...)`; Candidate B places `instance`, `connect`,
-  `transfer`, and `group` directly under the top-level `(actor ...)`.
+  declarations inside `(network ...)`; Candidate B places `instance` and
+  `group` directly under the top-level `(actor ...)`.
 - The top-level actor's `interface` declares the external pins, referenced as
   `pins.name`.
 - Actor instances are static, named, and explicit.
@@ -136,10 +136,17 @@ Current proposal summary:
 - Verbose syntax is the normative authoring and downstream-emission target.
 - Compact syntax is proposed only as a semantics-preserving alias over the
   verbose ATL IR.
-- `connect` is only a provisional name for a scheduler-visible temporal route;
-  it must not imply permanent actor-to-actor wiring.
-- `transfer` means scheduler-owned temporal movement of data/information
-  between actors, potentially through generated mux/enable/handoff storage.
+- Top-level `connect` is no longer the preferred ATL v0 movement syntax.
+- Actor-to-actor and pin-to-actor movement should be captured as
+  existing drive-body assignment pairs plus existing drive-call timing points,
+  not as a new `(drive source sink)` action.
+- The selected ATL v0 movement source shape keeps the shipped drive-body pair
+  order `(sink source)`, where ATL widens `sink` and `source` to include
+  qualified actor endpoints and top-level pins.
+- FSMGen's scheduler, not a new source keyword, discriminates whether each
+  pair side is an actor endpoint, top-level pin, or local value.
+- The rationale is low-friction, uniform ISF syntax: reuse current data
+  movement forms where possible instead of adding another movement vocabulary.
 - Events are one-cycle scheduler-visible control pulses in the first ATL
   subset; event payloads remain deferred.
 - Top-level transactions/rules can orchestrate actor transactions through
@@ -181,6 +188,32 @@ Current proposal summary:
   feed one flop at different times. The scheduler must select or reject those
   movements based on triggers, sink-valid conditions, disjoint timing, and
   generated mux/enable/handoff evidence.
+- `2026-05-18`: User pushed the analogy further: the sink actor is like the
+  flop/register D input, source actors are like mux data inputs, and selectors
+  are scheduler-derived. ATL source should capture movement intent through
+  scheduler-visible source/sink relationships, while the scheduler derives
+  the needed connectivity/mux/enable/handoff plan. Therefore a top-level
+  `connect` movement clause is no longer preferred for ATL v0.
+- `2026-05-18`: User considered simpler two-operand movement spellings such
+  as `transfer` or `move`, then clarified that the better direction is to
+  avoid new user-surface syntax when existing ISF data-movement syntax can
+  carry the intent.
+- `2026-05-18`: User clarified that the reuse target is the existing drive
+  body assignment-pair shape, not a new transaction-local `(drive source
+  sink)` action. The proposal keeps drive body pairs as `(sink source)`,
+  matching shipped drive semantics, and lets FSMGen infer whether the source,
+  sink, or both are anchored at actor interfaces or top-level pins.
+- `2026-05-18`: User briefly questioned whether `(sink source)` is too
+  RTL-shaped for ATL, then resolved the direction by asking to keep the ISF
+  syntax uniform and let the scheduler discriminate endpoint roles.
+- `2026-05-18`: User asked to pick one while avoiding a new user-surface
+  movement syntax. ATL v0 now selects existing drive-body assignment pairs in
+  `(sink source)` order, plus existing drive calls as timing points. The
+  scheduler owns endpoint discrimination for actor endpoints, top-level pins,
+  and local values. `transfer`/`move` are not planned for ATL v0.
+- `2026-05-18`: User emphasized that the reason is to avoid friction in ISF
+  and preserve uniform syntax. The design now records uniform ISF movement
+  vocabulary as the reason for selecting drive-body reuse.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
   design now treats `(network ...)` as a scoping candidate, not a requirement;
   flat top-level actor ATL clauses remain an explicit alternative.
@@ -191,10 +224,9 @@ Current proposal summary:
   clauses, or both as equivalent spellings lowered to the same ATL IR?
 - Should the final verbose trigger spelling be `(trigger ...)`,
   `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`?
-- Is `connect` too permanent-sounding for temporal ATL movement, and should
-  the public syntax use `route`, `move`, or another word instead?
-- Should compact `->` mean temporal route and compact `=>` mean explicit
-  scheduler-owned transfer, or does that distinction invite confusion?
+- After ATL v0 ships and is reviewed, is ergonomic sugar above endpoint-aware
+  drive-body pairs worth adding, or should drive-body reuse remain the only
+  public movement surface?
 - Can multiple actors orchestrate the same child/peer actor in the same
   cycle, and if so does the scheduler OR requests, arbitrate them, or reject
   ambiguous fan-in?
@@ -203,9 +235,10 @@ Current proposal summary:
 
 ## Blockers
 
-- Additional user review is required before implementation: the ATL v0
-  proposal is concrete enough to discuss, but final syntax, first-slice scope,
-  event/data primitive names, and fail-closed boundaries remain unresolved.
+- Additional user review is required before implementation: the movement
+  surface is now selected for ATL v0, but container spelling, trigger naming,
+  multi-orchestrator fan-in policy, first fixture, and first-slice boundary
+  still need to be resolved before code.
 
 ## Verification Log
 
@@ -215,6 +248,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL/top-level actor clarification captured; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL v0 concrete proposal drafted; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL temporal route and RTL mux analogy captured; book and diff checks passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `selected existing drive-body movement reuse; book and diff checks passed` |
 
 ## Commit Log
 
@@ -223,7 +257,8 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `ISF-ACTOR-NETWORK-ORCHESTRATION: propose actor network orchestration` | `proposed tracking tree only` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: capture ATL model` | `activated clarification leaf and captured ATL mental model` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: draft ATL v0 proposal` | `drafted scoped/flat source-shape candidates and endpoint vocabulary` |
-| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `pending commit for ATL temporal-route refinement` | `captures RTL mux analogy and non-permanent movement semantics` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: capture ATL temporal routes` | `captures RTL mux analogy and non-permanent movement semantics` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `pending commit for ATL drive-body reuse refinement` | `selects existing drive-body pairs and drive calls as the ATL v0 movement surface` |
 
 ## Changelog
 
@@ -234,3 +269,6 @@ Current proposal summary:
 - `2026-05-18`: Drafted the concrete ATL v0 source/semantic proposal.
 - `2026-05-18`: Refined ATL data/information movement as temporal
   scheduler-selected routes rather than permanent actor-to-actor wires.
+- `2026-05-18`: Selected existing drive-body `(sink source)` pairs plus
+  existing drive calls as the ATL v0 movement surface, with the scheduler
+  discriminating actor endpoints, top-level pins, and local values.

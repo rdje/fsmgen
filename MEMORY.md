@@ -8,9 +8,15 @@ This is the live continuity document for fast session recovery after crashes, re
   semantics if lowered to the same ATL IR.
 - The proposal defines qualified endpoints (`pins.name`, `actor.port`,
   `actor.transaction`, `actor.event`, `group.name`), verbose syntax as the
-  normative spelling, compact syntax as a possible alias, `connect` only as a
-  provisional route spelling, and `transfer` as scheduler-owned
-  data/information movement.
+  normative spelling, compact syntax as a possible alias, and scheduler-owned
+  data/information movement through existing drive bodies and drive calls.
+- Top-level `connect` is no longer the preferred ATL v0 movement syntax.
+  The selected ATL v0 movement source shape is endpoint-aware drive body
+  pairs in existing `(sink source)` order, with drive calls supplying the
+  timing point.
+- The rationale is uniform, low-friction ISF syntax. The scheduler owns
+  endpoint discrimination for actor endpoints, top-level pins, and local
+  values; ATL v0 does not add `transfer` or `move` as new movement syntax.
 - User refined the RTL mux analogy: ATL movement declarations must not mean
   permanent actor-to-actor wires. They describe temporal movement
   possibilities that become active only when triggers, sink-valid conditions,

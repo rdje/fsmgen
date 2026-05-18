@@ -14,14 +14,13 @@ This is the persistent technical change history for FSMGen.
 - Proposed verbose syntax as the normative form, with compact syntax only as
   a semantics-preserving alias after it maps to the same ATL IR and
   diagnostics.
-- Distinguished provisional temporal route spelling from explicit `transfer`
-  scheduler-owned data/information movement, and recorded one-cycle events,
-  top-level transaction/rule orchestration, concurrent groups, first
-  implementation subset, and fail-closed boundaries.
-- Refined that distinction after user review: ATL `connect` is only a
-  provisional temporal route name, not permanent wiring. Actor-to-actor and
-  pin-to-actor movement is selected by scheduling, triggers, sink-valid
-  conditions, disjoint timing, and generated mux/enable/handoff evidence.
+- Revised the ATL movement syntax away from top-level `connect` and selected
+  existing drive-body assignment pairs in `(sink source)` order, activated by
+  existing drive calls, as the ATL v0 movement source shape.
+- Captured that actor-to-actor and pin-to-actor movement is selected by
+  scheduling, triggers, sink-valid conditions, disjoint timing, and generated
+  mux/enable/handoff evidence; the scheduler derives connectivity and
+  discriminates endpoint roles without a new movement keyword.
 - Recorded that `(network ...)` is not a semantic requirement. It is a
   scoping candidate, with flat top-level actor ATL clauses kept as an explicit
   alternative.

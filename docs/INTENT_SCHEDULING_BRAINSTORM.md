@@ -83,13 +83,21 @@ clauses if that proves cleaner. The proposed endpoint vocabulary is
 `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
 `group.name`. The verbose syntax is the normative target; compact syntax is a
 semantics-preserving alias only after it maps to the same ATL IR and
-diagnostics. The proposal now treats `connect` as a provisional name only,
-because it may sound too permanent for ATL. Movement clauses should describe
-temporal route capabilities: source actors, top-level pins, or actor outputs
+diagnostics. The proposal now removes top-level `connect` from the preferred
+ATL v0 movement model. Movement should be expressed through existing drive
+definitions and drive calls where possible, not through a new
+`(drive source sink)` action. The selected ATL v0 movement path widens the
+shipped drive-body pair `(sink source)` so `sink` and `source` may name actor
+endpoints and top-level pins. Source actors, top-level pins, or actor outputs
 can provide information to sink actors at selected points in time, much like
 mux inputs can feed one flop in different cycles. FSMGen must infer the
-selected route from triggers, sink-valid conditions, disjoint timing, and
-generated mux/enable/handoff evidence, or reject the case.
+selected route, mux/enable, handoff storage, and generated connectivity from
+the drive body pair, drive-call timing point, triggers, sink-valid conditions,
+disjoint timing, and generated evidence, or reject the case. The scheduler,
+not a new user-surface movement keyword, discriminates which side is an actor
+endpoint, top-level pin, or local value. This keeps ISF uniform and low
+friction: ATL adds actor-network endpoint resolution to an existing movement
+surface instead of asking users or downstream emitters to learn another one.
 
 ## Design Note: 2026-05-13 Rule Trigger Fan-In
 

@@ -670,9 +670,17 @@ Current ATL v0 proposal, still unimplemented:
 
 The top-level root remains `(actor name ...)`. The container spelling is not
 settled. One candidate scopes ATL clauses inside `(network ...)`; the other
-places `instance`, `connect`, `transfer`, and `group` directly under the
-top-level actor. Both spellings would have to lower to the same ATL semantics
-if both are accepted.
+places `instance` and `group` directly under the top-level actor. Both
+spellings would have to lower to the same ATL semantics if both are accepted.
+Actor-to-actor and pin-to-actor movement is not expressed as top-level
+`connect` clauses. The selected ATL v0 proposal reuses existing drive
+definitions and drive calls: a drive body keeps its shipped `(sink source)`
+assignment-pair order, while ATL widens `sink` and `source` to qualified actor
+endpoints and top-level pins. FSMGen discriminates endpoint roles during
+scheduling; the source does not add a new movement keyword.
+The rationale is uniform ISF syntax: ATL should not make downstream emitters
+or users learn a second data-movement form when existing drive bodies and
+drive calls can carry the same intent.
 
 Scoped candidate:
 
@@ -692,23 +700,35 @@ Scoped candidate:
     (instance crc    of crc32_unit)
     (instance writer of packet_writer)
 
-    (connect (from pins.start)   (to reader.start))
-    (connect (from pins.in_data) (to reader.data_i))
-    (connect (from writer.data_o) (to pins.out_data))
-    (connect (from writer.done)   (to pins.done))
-
-    (transfer reader.payload to crc.payload)
-    (transfer crc.result     to writer.crc)
-
-    (event reader_done (from reader.done))
-    (event crc_done    (from crc.done))
-
-    (trigger (from reader_done) (to crc.compute))
-    (trigger (from crc_done)    (to writer.emit))
-
     (group pipeline
       (members reader crc writer)
-      (mode concurrent))))
+      (mode concurrent)))
+
+  (drive feed_reader
+    (reader.data_i pins.in_data))
+
+  (drive feed_crc
+    (crc.payload reader.payload))
+
+  (drive feed_writer
+    (writer.crc crc.result))
+
+  (drive publish_output
+    (pins.out_data writer.data_o))
+
+  (transaction run_packet
+    (on start)
+    (drive feed_reader)
+    (trigger reader.capture)
+    (await reader.done)
+    (drive feed_crc)
+    (trigger crc.compute)
+    (await crc.done)
+    (drive feed_writer)
+    (trigger writer.emit)
+    (await writer.done)
+    (drive publish_output)
+    (complete done)))
 ```
 
 Flat candidate:
@@ -728,23 +748,35 @@ Flat candidate:
   (instance crc    of crc32_unit)
   (instance writer of packet_writer)
 
-  (connect (from pins.start)   (to reader.start))
-  (connect (from pins.in_data) (to reader.data_i))
-  (connect (from writer.data_o) (to pins.out_data))
-  (connect (from writer.done)   (to pins.done))
-
-  (transfer reader.payload to crc.payload)
-  (transfer crc.result     to writer.crc)
-
-  (event reader_done (from reader.done))
-  (event crc_done    (from crc.done))
-
-  (trigger (from reader_done) (to crc.compute))
-  (trigger (from crc_done)    (to writer.emit))
-
   (group pipeline
     (members reader crc writer)
-    (mode concurrent)))
+    (mode concurrent))
+
+  (drive feed_reader
+    (reader.data_i pins.in_data))
+
+  (drive feed_crc
+    (crc.payload reader.payload))
+
+  (drive feed_writer
+    (writer.crc crc.result))
+
+  (drive publish_output
+    (pins.out_data writer.data_o))
+
+  (transaction run_packet
+    (on start)
+    (drive feed_reader)
+    (trigger reader.capture)
+    (await reader.done)
+    (drive feed_crc)
+    (trigger crc.compute)
+    (await crc.done)
+    (drive feed_writer)
+    (trigger writer.emit)
+    (await writer.done)
+    (drive publish_output)
+    (complete done)))
 ```
 
 Proposed endpoint vocabulary:
@@ -761,26 +793,30 @@ Proposed semantic split:
 
 | Form | Meaning |
 | --- | --- |
-| `connect` | Provisional name for a scheduler-visible temporal route; not permanent wiring. |
-| `transfer` | Explicit scheduler-owned temporal data/information movement. |
+| Drive body pair `(sink source)` | Selected ATL v0 movement source shape: existing drive-body assignment order with widened endpoint names. |
+| Drive call `(drive name args...)` | Existing timing point that activates the drive body. |
+| `transfer source sink` / `move source sink` | Not planned for ATL v0; possible later ergonomic sugar only if drive-body reuse proves inadequate. |
 | `event` | Named one-cycle control pulse; payloads remain deferred. |
 | `trigger` | Activation of a qualified actor transaction. |
 | `group` | Intentional concurrent actor group for scheduling analysis/reporting. |
 
-Compact syntax is also proposed, but only as an alias over the verbose
-contract. For example, `(reader.payload => crc.payload)` would mean
-`(transfer reader.payload to crc.payload)`, while `(pins.start -> reader.start)`
-would mean the selected temporal route spelling if `->` is not too
-wire-like.
+The ATL v0 movement proposal reuses existing drive bodies, for example
+`(drive feed_crc (crc.payload reader.payload))`, where `crc.payload` is the
+sink and `reader.payload` is the source. The scheduler knows whether the
+source, the sink, or both are actor-interface endpoints or top-level pins, and
+it derives the required routing/handoff plan. Directional symbolic aliases
+such as `=>` are not preferred because they can look like physical routing
+instead of intent-level movement.
 
-The movement clauses are not intended to mean permanent actor-to-actor wires.
-The RTL analogy is a mux feeding a flop: several sources may be physically
-available, but only the selected source moves data into the flop on a given
-cycle. ATL should capture the same idea one level higher. Several source
-actors may be allowed to provide the same information to a sink actor at
-different scheduled moments, but FSMGen must infer or reject the actual
-movement based on triggers, sink-valid conditions, disjoint timing, and any
-generated mux/enable/handoff plan.
+The movement action is not intended to mean permanent actor-to-actor wiring.
+The RTL analogy is a mux feeding a flop: the sink actor is like the flop D
+input, and source actors are like mux data inputs. Several source actors may
+be allowed to provide the same information to a sink actor at different
+scheduled moments, but FSMGen must infer or reject the actual movement based
+on the drive body's `(sink source)` pair, the drive-call timing point,
+triggers, sink-valid conditions, disjoint timing, and any generated
+mux/enable/handoff plan. The scheduler derives the connectivity; the source
+does not need a separate `connect` clause for actor-to-actor movement.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child

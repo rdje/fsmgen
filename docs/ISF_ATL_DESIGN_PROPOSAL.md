@@ -13,10 +13,11 @@ actors instead of flops/registers.
 
 - RTL describes how values move between registers and logic.
 - ATL describes how data, information, and activation move between actors.
-- ATL movement clauses are temporal route/capability declarations, not
-  permanent actor-to-actor wires. Like RTL mux inputs feeding one flop at
-  different cycles, multiple source actors may feed one sink actor only when
-  the scheduler can prove the selected source and cycle.
+- ATL movement uses the existing drive-body assignment-pair shape widened to
+  actor endpoints, not a new permanent actor-to-actor wire construct. Like RTL
+  mux inputs feeding one flop at different cycles, multiple source actors may
+  feed one sink actor only when the scheduler can prove the selected source
+  and cycle.
 - FSMGen still owns scheduling and lowers the result to explicit scheduled
   `.fsm`.
 - The generated schedule remains reviewable; ATL does not hide cycles.
@@ -32,12 +33,14 @@ The proposed root stays the existing ISF actor root:
 ```lisp
 (actor top_name
   actor_clause...
-  atl_clause...)
+  atl_declaration...)
 ```
 
 The top-level actor is the network boundary. Its `interface` declares the
 top-level pins. Its `transaction` and `rule` clauses can orchestrate the actor
-network. The exact container spelling for ATL clauses is still open.
+network. Static actor declarations may be scoped or flat. Data/information
+movement should reuse existing drive bodies and drive calls by allowing drive
+body assignment pairs to reference actor endpoints and top-level pins.
 
 There are two viable source-shape candidates.
 
@@ -55,8 +58,7 @@ is not a second semantic root. The whole system is still the enclosing actor.
 
 Benefits:
 
-- keeps instance/route/transfer/group clauses separate from existing actor
-  clauses;
+- keeps instance/group declarations separate from existing actor clauses;
 - gives diagnostics a clear "inside network" context;
 - leaves room for future actor-local clauses without name collisions.
 
@@ -71,8 +73,6 @@ Costs:
 (actor top_name
   actor_clause...
   (instance instance_name of actor_type)
-  (connect (from endpoint) (to endpoint))
-  (transfer source to destination)
   (group group_name group_clause...))
 ```
 
@@ -101,11 +101,16 @@ to the same ATL IR.
 This keeps the model natural:
 
 - the whole system is still an actor;
-- the actor's content is a static actor network;
-- top-level transactions/rules are allowed to sequence network behavior;
+- the actor's content includes a static actor network;
+- top-level transactions/rules sequence network behavior and express
+  actor-to-actor movement by activating existing drive bodies;
 - actors inside the network remain reusable ISF actors with local schedules;
 - FSMGen builds the network schedule from explicit triggers, waits, events,
-  temporal movement routes, transfers, and constraints.
+  drive body endpoint pairs, and constraints.
+- ATL v0 should minimize friction in the ISF format by reusing the current
+  data-movement vocabulary wherever the semantics fit. Scheduler-side endpoint
+  classification is preferred over adding another author-facing movement
+  syntax family.
 
 ## Endpoints
 
@@ -126,8 +131,8 @@ implicit default transactions, and dynamic instance names.
 
 The verbose syntax should be the normative form because it is easiest to audit
 and easiest for downstream tools to emit. The example below uses Candidate A
-only to show the scoped form. Candidate B would place the same ATL clauses
-directly under `(actor packet_pipe ...)`.
+only to show scoped static actor declarations. Candidate B would place
+`instance` and `group` directly under `(actor packet_pipe ...)`.
 
 ```lisp
 (actor packet_pipe
@@ -145,44 +150,59 @@ directly under `(actor packet_pipe ...)`.
     (instance crc    of crc32_unit)
     (instance writer of packet_writer)
 
-    (connect (from pins.start)   (to reader.start))
-    (connect (from pins.in_data) (to reader.data_i))
-    (connect (from writer.data_o) (to pins.out_data))
-    (connect (from writer.done)   (to pins.done))
-
-    (transfer reader.payload to crc.payload)
-    (transfer crc.result     to writer.crc)
-
-    (event reader_done (from reader.done))
-    (event crc_done    (from crc.done))
-
-    (trigger (from reader_done) (to crc.compute))
-    (trigger (from crc_done)    (to writer.emit))
-
     (group pipeline
       (members reader crc writer)
-      (mode concurrent))))
+      (mode concurrent)))
+
+  (drive feed_reader
+    (reader.data_i pins.in_data))
+
+  (drive feed_crc
+    (crc.payload reader.payload))
+
+  (drive feed_writer
+    (writer.crc crc.result))
+
+  (drive publish_output
+    (pins.out_data writer.data_o))
+
+  (transaction run_packet
+    (on start)
+    (drive feed_reader)
+    (trigger reader.capture)
+    (await reader.done)
+    (drive feed_crc)
+    (trigger crc.compute)
+    (await crc.done)
+    (drive feed_writer)
+    (trigger writer.emit)
+    (await writer.done)
+    (drive publish_output)
+    (complete done)))
 ```
 
 Proposed clause meanings:
 
 - `(instance name of actor_type ...)` statically instantiates a reusable actor.
-- `(connect (from endpoint) (to endpoint))` is a provisional spelling for a
-  scheduler-visible route between pin/port endpoints. It must not mean a
-  permanent continuous actor-to-actor wire. The route is active only when the
-  inferred schedule, trigger, or sink-valid condition selects it.
-- `(transfer source to destination)` describes scheduler-owned data/information
-  movement. FSMGen may allocate a mux input, handoff storage, activation
-  binding, or scheduled transfer state when the producer and consumer cannot
-  safely share the same cycle.
-- `(event name (from actor.event))` names a one-cycle scheduler-visible event.
-  Initial ATL events should carry no payload; payloads move through
-  `transfer`.
-- `(trigger (from event_or_guard) (to actor.transaction))` activates a
-  transaction from an event or guard.
+- `(drive name (sink source) ...)` keeps the existing drive-body assignment
+  pair shape. ATL widens what `sink` and `source` may name: actor endpoints,
+  top-level pins, and compatible local values become legal candidates in
+  addition to today's actor-local drive targets and values. The first position
+  remains the driven target/sink, matching shipped drive-body semantics; the
+  second position remains the value/source.
+- `(drive name args...)` in a transaction keeps its existing drive-call
+  meaning. The call site gives the scheduler the timing point for the
+  endpoint movement recorded in the drive body.
+- `(trigger actor.transaction)` activates a qualified actor transaction.
+- `(await actor.event)` waits for a scheduler-visible actor event.
 - `(group name ...)` declares an intentional concurrent actor group. It does
   not force unsafe concurrency; it gives the scheduler an explicit group to
   analyze, schedule, report, or reject.
+
+There is no preferred top-level `connect` clause in this v0 proposal. If a
+later slice needs an explicit physical/static pin binding, it should be a
+separate construct with a different contract from actor-to-actor temporal
+movement.
 
 ## Compact Syntax Candidate
 
@@ -196,18 +216,26 @@ source-shape decision.
   (crc    : crc32_unit)
   (writer : packet_writer)
 
-  (pins.start   -> reader.start)
-  (pins.in_data -> reader.data_i)
-  (writer.data_o -> pins.out_data)
-  (writer.done   -> pins.done)
-
-  (reader.payload => crc.payload)
-  (crc.result     => writer.crc)
-
-  (reader.done -> crc.compute)
-  (crc.done    -> writer.emit)
-
   (concurrent pipeline reader crc writer))
+
+(drive feed_reader (reader.data_i pins.in_data))
+(drive feed_crc (crc.payload reader.payload))
+(drive feed_writer (writer.crc crc.result))
+(drive publish_output (pins.out_data writer.data_o))
+
+(transaction run_packet
+  (on start)
+  (drive feed_reader)
+  (trigger reader.capture)
+  (await reader.done)
+  (drive feed_crc)
+  (trigger crc.compute)
+  (await crc.done)
+  (drive feed_writer)
+  (trigger writer.emit)
+  (await writer.done)
+  (drive publish_output)
+  (complete done))
 ```
 
 Candidate compact aliases:
@@ -215,14 +243,18 @@ Candidate compact aliases:
 | Compact form | Verbose meaning |
 | --- | --- |
 | `(inst : actor_type)` | `(instance inst of actor_type)` |
-| `(a -> b)` where both sides are ports/pins | provisional route spelling, equivalent to `(connect (from a) (to b))` if `connect` remains the chosen verbose name |
-| `(a => b)` | `(transfer a to b)` |
-| `(event -> actor.transaction)` | `(trigger (from event) (to actor.transaction))` |
 | `(concurrent name actor...)` | `(group name (members actor...) (mode concurrent))` |
 
 The verbose form should be accepted first if implementation risk requires
 phasing. The compact form should only ship once it is proven to lower to the
 same internal ATL IR and diagnostics.
+
+No new compact movement spelling is planned for ATL v0. The movement surface
+is the existing drive definition and drive-call surface with endpoint-aware
+body pairs.
+
+The compact `->` operator is intentionally not part of the preferred v0
+proposal because it reads too much like a permanent wire or static route.
 
 ## Top-Level Orchestration
 
@@ -234,12 +266,16 @@ Verbose candidate:
 ```lisp
 (transaction run_packet
   (on start)
+  (drive feed_reader)
   (trigger reader.capture)
   (await reader.done)
+  (drive feed_crc)
   (trigger crc.compute)
   (await crc.done)
+  (drive feed_writer)
   (trigger writer.emit)
   (await writer.done)
+  (drive publish_output)
   (complete done))
 ```
 
@@ -250,6 +286,9 @@ Existing ISF activation vocabulary should be reused where possible:
 - `(await actor.event)` can wait for a named actor event.
 - `(trigger actor.transaction)` can be the verbose orchestration form in
   rules, matching the existing rule-trigger mental model.
+- `(drive name)` keeps the existing named drive-call shape. ATL movement is
+  recorded by endpoint-aware assignment pairs inside the called drive body,
+  without exposing the generated mux/connectivity plan in source.
 
 The first ATL implementation should require explicit transaction targets such
 as `reader.capture`. Actor-level default activation should remain deferred
@@ -257,58 +296,64 @@ until there is a declared default transaction or entry transaction contract.
 
 ## Data Movement Semantics
 
-ATL should not model actor-to-actor data movement as permanent wiring. It
-should model movement as temporal routes that the scheduler may activate at
-specific points in the inferred schedule.
+ATL should not model actor-to-actor data movement as permanent wiring, or even
+as a separate top-level connectivity clause in the preferred v0 model. It
+should model movement as endpoint-aware assignment pairs inside existing drive
+bodies. Transaction drive calls, inline drive clauses, or later rule-level
+activation sites provide the timing intent.
 
-The RTL analogy is a mux feeding a flop. The mux input wires may exist in HDL,
-but the semantic movement happens only when the selected input and write
-enable are active for that cycle. ATL should capture the same intent one level
-up: source actor `A` may move a value to sink actor `B`, but the actual
-movement is selected by scheduling, activation, valid conditions, and
-dependency analysis.
+The RTL analogy is a mux feeding a flop. The sink actor is like the flop D
+input. Source actors are like the mux data inputs. Over time, several source
+actors may be eligible to move data/information to the same sink actor. On any
+given cycle, mux selectors decide which source reaches the D input. ATL should
+capture the same intent one level higher without asking the author to spell
+out the mux or physical route.
+
+In ATL source, a drive-body endpoint pair plus its activation site says only:
+
+```text
+when this drive body is activated, this source endpoint or value may drive
+this sink endpoint
+```
+
+That is already the highest timing precision ATL should require. The scheduler
+then derives the actual connectivity, mux input, enable, handoff storage, and
+selected cycle when it lowers to explicit `.fsm` and HDL.
 
 This matters most when several source actors can provide the same information
 to one sink actor. ATL should treat that as a normal design shape only when
 FSMGen can infer a reviewable mux/enable/handoff plan, or prove the sources
 are active in disjoint cycles.
 
-`connect`:
+An endpoint-aware drive-body assignment pair:
 
-- is a provisional name for a scheduler-visible route capability between
-  top-level pins and actor ports, actor ports and top-level pins, or compatible
-  actor ports;
-- is not permanent continuous wiring in ATL semantics;
-- becomes active only when the schedule selects the route, for example because
-  the source and sink actors are both active, because the sink actor is active
-  and the route's valid condition is true, or because an explicit trigger/event
-  establishes the dependency;
-- may lower to mux input selection, enable gating, temporary storage, or an
-  activation binding depending on timing;
-- must reject multiple possible writers unless the scheduler can prove
-  disjoint timing or emit a documented mux/arbitration plan;
-- must preserve width/type evidence in diagnostics and schedule reports.
-
-`transfer`:
-
-- is a more explicit spelling for scheduler-owned data/information movement;
-- is also temporal, not permanent;
-- can allocate temporary storage, handoff registers, mux/enable selection, or
-  generated activation bindings when producer and consumer schedules require
-  it;
-- must report source endpoint, destination endpoint, storage/lifetime class,
-- selected cycle or dependency, valid/trigger evidence, and any generated mux
-  or handoff plan;
+- is temporal, not permanent;
+- records sink endpoint, source endpoint or value, and the drive activation
+  site that gives the pair timing;
+- can move data when both source and sink actors are active, or when the sink
+  actor is active and the relevant input/data-valid condition is true;
+- can cause FSMGen to derive temporary storage, handoff registers, mux/enable
+  selection, generated activation bindings, or generated top connectivity;
+- must report source endpoint, sink endpoint, storage/lifetime class, selected
+  cycle or dependency, valid/trigger evidence, and any generated mux or handoff
+  plan;
 - must reject unsupported lifetimes, ambiguous ordering, missing width
   evidence, and unsafe same-cycle assumptions.
 
-Initial ATL transfers should be scalar or bit-vector only. Aggregates,
+Initial ATL endpoint drives should be scalar or bit-vector only. Aggregates,
 payload-carrying events, streaming channels, queues, and backpressure
 protocols should be later leaves.
 
-The final syntax may decide that `connect` is the wrong word because it sounds
-too permanent. If so, a name such as `route`, `move`, or `flow` may better
-express the temporal route semantics while preserving the same ATL IR.
+The selected ATL v0 movement source shape is not a new `(drive source sink)`
+syntax. It is the existing drive body/call syntax with a wider endpoint
+vocabulary in drive body pairs. FSMGen can infer whether the source, the sink,
+or both are anchored at actor interfaces or top-level pins. The grammar must
+remain fail-closed: existing named drive calls and inline drive assignments
+keep their shipped meaning, the pair ordering stays target/sink first and
+value/source second, and ambiguous endpoint references must be rejected.
+This deliberately keeps ATL close to the rest of ISF: users already understand
+that drive bodies describe data movement and drive calls place that movement
+in the schedule.
 
 ## Concurrent Actor Groups
 
@@ -328,8 +373,8 @@ FSMGen should:
   rejected ambiguity.
 
 The first group implementation can be conservative. It can accept only
-single-clock actor instances with explicit transfer edges and no dynamic
-membership.
+single-clock actor instances with explicit endpoint-aware drive body pairs and
+no dynamic membership.
 
 ## Scheduling Ownership
 
@@ -337,8 +382,8 @@ Scheduling should split cleanly:
 
 - Each actor owns its local transaction/rule schedule.
 - The ATL network scheduler owns instance elaboration, activation handoffs,
-  actor-to-actor temporal route selection, mux/enable/handoff insertion, pin
-  boundary movement, event fan-out/fan-in policy, and generated top
+  drive-body endpoint dependency analysis, derived mux/enable/handoff insertion,
+  pin boundary movement, event fan-out/fan-in policy, and generated top
   scheduling.
 - The generated `.fsm` remains the audit artifact for the inferred global
   schedule.
@@ -353,15 +398,16 @@ The smallest useful implementation should be:
    scoped `(network ...)` form or the selected flat actor-clause form.
 2. Single clock/reset only.
 3. Static `(instance name of actor_type)` declarations.
-4. One explicit temporal route between top-level pins and one actor instance,
-   using the selected spelling (`connect`, `route`, or another agreed name).
+4. One named drive body whose assignment pair references two qualified
+   endpoints, plus one transaction drive call that activates it.
 5. Explicit blocking orchestration from a top-level transaction to one
    qualified child transaction.
 6. Schedule-report metadata for instance identity, endpoint bindings, and
-   generated artifact names.
+   generated mux/enable/handoff or connectivity artifacts.
 
-The next slices can add actor events, actor-to-actor `transfer`, top-level pin
-movement in both directions, compact aliases, and concurrent groups.
+The next slices can add actor events, multiple sources feeding one sink,
+top-level pin movement in both directions, compact aliases, and concurrent
+groups.
 
 ## Fail-Closed Boundaries
 
@@ -371,6 +417,7 @@ ATL v0 should reject:
 - unresolved actor, transaction, event, port, pin, or group endpoints;
 - actor-level activation without an explicit transaction target;
 - permanent continuous actor-to-actor movement assumptions;
+- top-level `connect` clauses as actor-to-actor movement syntax in ATL v0;
 - multiple writers to one endpoint without provably disjoint timing or a
   shipped mux/arbitration contract;
 - event payloads;
@@ -380,7 +427,8 @@ ATL v0 should reject:
 - combinational dependency cycles without storage;
 - compact aliases before they are mapped to the same IR as verbose forms;
 - mixed scoped and flat ATL clauses unless that mixture is explicitly shipped;
-- any transfer whose width, lifetime, or ordering cannot be proven.
+- any endpoint-aware drive-body pair whose width, lifetime, endpoint
+  direction, or ordering cannot be proven.
 
 ## Open Decisions
 
@@ -388,11 +436,10 @@ ATL v0 should reject:
   ATL clauses, or both as equivalent spellings.
 - Whether the final verbose trigger spelling should be `(trigger ...)`,
   `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`.
-- Whether `connect` is too permanent-sounding for temporal ATL movement, and
-  whether `route`, `move`, or another word should be used instead.
-- Whether compact `->` should mean a temporal route, while `=>` means an
-  explicit scheduler-owned transfer, or whether that distinction is too subtle.
-- Whether `->` should be avoided entirely if it suggests permanent wiring.
+- Whether later ergonomic sugar above endpoint-aware drive-body pairs is worth
+  adding after the v0 drive-body reuse path is implemented and reviewed.
+- Directional symbolic aliases such as `=>` should stay deferred unless they
+  prove clearer than the simple two-operand word form.
 - Whether concurrent groups need a stronger contract for expected overlap,
   or whether they should initially be report-only scheduling hints.
 - Which realistic fixture should prove the first end-to-end ATL value.

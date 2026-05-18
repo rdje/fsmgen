@@ -6335,14 +6335,14 @@ Done:
   clause and flat top-level actor ATL clauses, endpoints are `pins.name`,
   `actor.port`, `actor.transaction`, `actor.event`, and `group.name`, verbose
   syntax is normative, compact syntax is proposed as a semantics-preserving
-  alias, movement clauses are temporal route/capability declarations rather
-  than permanent actor-to-actor wires, `connect` is only a provisional name,
-  `transfer` is scheduler-owned data/information movement, and
-  first-slice/fail-closed boundaries are explicit. The RTL analogy is mux
-  inputs feeding one flop at different cycles: ATL must let multiple source
-  actors feed one sink actor only when triggers, sink-valid conditions,
-  disjoint timing, or generated mux/enable/handoff evidence make the movement
-  reviewable.
+  alias, and movement uses endpoint-aware drive-body pairs in existing
+  `(sink source)` order plus existing drive-call timing points, rather than
+  top-level `connect` clauses, permanent actor-to-actor wires, or new
+  `transfer`/`move` syntax. The RTL analogy is mux inputs feeding one flop at
+  different cycles: ATL must let multiple source actors feed one sink actor
+  only when triggers, sink-valid conditions, disjoint timing, or generated
+  mux/enable/handoff evidence make the movement reviewable; the scheduler
+  derives the needed connectivity and discriminates endpoint roles.
 - `isf/spawn_parent.isf` now has file-backed strict generated-composition
   fixture coverage through
   [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t),
