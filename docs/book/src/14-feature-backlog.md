@@ -355,9 +355,9 @@ subsets also accept `(bind ...)` input/output port bindings when static
 deterministic generated do instance for that lexical site, wires
 generated-top binding handoffs once, waits for the instance's fresh done
 handoff before the branch-owned repeat check, and leaves the pending
-generated-spawn done set live for the later drain. Domain-qualified generated
-`do` while pending, prior or later `await_any` around the do, new nested
-`spawn` after the do before the drain, cross-domain repeat-body `do`,
+generated-spawn done set live for the later drain. Prior or later
+`await_any` around the do, new nested `spawn` after the do before the drain,
+cross-domain repeat-body `do`,
 generated/spawn nested activation beyond the documented branch-contained
 generated `do` cases and the branch-contained spawned cases, deeper branch
 repeat activation, loop-contained repeat activation, and broader
@@ -500,6 +500,18 @@ handoffs remain live until the later drain. Domain metadata on those generated
 `do` sites, `await_any` observation before or after the do, new spawn after
 the do before the drain, cross-domain activation, deeper branch/loop nesting,
 and broader outstanding-child semantics remain deferred.
+
+The next selected backlog leaf is the when-contained
+`await_any`-before-local-do subset for that pending-spawn interval. It covers a
+repeat directly inside a top-level `when` body with multiple generated spawns,
+a multi-pending `(await_any done)` observation, local blocking `(do child)`
+while those generated spawns remain pending, and a later same-body
+`(await_all done)` drain before the nested repeat check can loop. The local do
+target stays in the parent scheduled module. Generated do after prior
+`await_any`, the switch-contained analogue, `await_any` after the do, spawn
+after the do before the drain, cross-domain activation, deeper branch/loop
+nesting, and broader outstanding-child semantics remain backlog. This
+await-any-before-local-do subset is selected but not yet shipped.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
