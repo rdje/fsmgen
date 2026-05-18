@@ -2,6 +2,32 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — SPECFORGE ready/valid stage form fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
+- FSMGen now accepts the downstream-documented transaction-stage spelling
+  `(stage name (ready ready_signal) (valid valid_signal))`.
+- The older `(stage name (input ready_signal) (output valid_signal))`
+  spelling remains accepted as a compatibility alias. Alias mixtures for the
+  same endpoint fail closed as duplicate ready or valid endpoints.
+- The exact `sf-isf-stage-ready-valid` artifact was reproduced before
+  implementation with the unsupported `ready` diagnostic. After the fix it no
+  longer fails on the source spelling; it reaches the existing
+  `isf_priority_mixed_timing_conflict` diagnostic because `rule_7` and the
+  stage valid endpoint both write `ADDRESS`.
+- Docs are synchronized across the mdBook, ISF spec, downstream integration
+  spec, public contract, task tree, roadmap board, and live docs. The active
+  downstream bug frontier advances to
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`.
+- Validation passed: `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`,
+  `prove -Iperl t/1179-isf-phase-stage-boundary.t
+  t/1180-isf-unsupported-transaction-clause-boundary.t
+  t/1223-isf-stage-lowering.t
+  t/1225-isf-stage-contract-schedule-report.t`, the exact
+  `sf-isf-stage-ready-valid` source and baseline strict checks,
+  `mdbook build docs/book`, focused book/doc audits, and
+  `./bin/ci-regression isf --no-book` (Files=228, Tests=1342), and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — SPECFORGE flat eventual contract form fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`.
 - FSMGen now accepts the downstream-documented flat bounded-eventually

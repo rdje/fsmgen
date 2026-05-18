@@ -2699,19 +2699,24 @@ only for bounded public report projection: schedule JSON exposes
 composition tops, and HDL do not consume that actor-level metadata today.
 Transaction-level `(phase name property...)` remains the
 current pass-through state marker lowering. Transaction-level
-`(stage name (input ready_signal) (output valid_signal))` is the first shipped
-stage-lowering subset. It is supported only as a top-level transaction clause,
-with `ready_signal` bound to an actor input and `valid_signal` bound to an
-actor output. It lowers to one transaction state that drives
-`valid_signal = 1` while the state is active and advances only when
-`ready_signal` is true in that same cycle. Pending samples immediately before
-the stage materialize before the stage so a stall does not resample every
-cycle. Pending samples before a runtime wait whose zero-count successor is a
-stage materialize in a sample-preserving stage clone; the clone still drives
-`valid_signal` and advances only under `ready_signal`, matching the original
-stage state. Nested stages, stage-local `(latency ...)`, `(compute ...)`, arbitrary
-stage body actions, multiple ready/valid endpoints, registered-valid variants,
-and skid-buffer behavior remain fail-closed/deferred. Schedule reports expose
+`(stage name (ready ready_signal) (valid valid_signal))` is the preferred
+spelling for the first shipped stage-lowering subset. FSMGen also accepts the
+older `(stage name (input ready_signal) (output valid_signal))` spelling as a
+compatibility alias; `ready` and `input` bind the same ready endpoint, while
+`valid` and `output` bind the same valid endpoint. The stage is supported only
+as a top-level transaction clause, with `ready_signal` bound to an actor input
+and `valid_signal` bound to an actor output. It lowers to one transaction
+state that drives `valid_signal = 1` while the state is active and advances
+only when `ready_signal` is true in that same cycle. The valid drive is a
+normal transaction combinational assignment and remains subject to existing
+same-target conflict checks. Pending samples immediately before the stage
+materialize before the stage so a stall does not resample every cycle. Pending
+samples before a runtime wait whose zero-count successor is a stage materialize
+in a sample-preserving stage clone; the clone still drives `valid_signal` and
+advances only under `ready_signal`, matching the original stage state. Nested
+stages, stage-local `(latency ...)`, `(compute ...)`, arbitrary stage body
+actions, multiple ready/valid endpoints, registered-valid variants, and
+skid-buffer behavior remain fail-closed/deferred. Schedule reports expose
 shipped transaction stages through `transaction_stages` entries containing the
 authored transaction and stage names, `kind = ready_valid_barrier`, generated
 state name, ready input, and valid output.

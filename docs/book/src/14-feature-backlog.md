@@ -1076,14 +1076,17 @@ Status: partially shipped.
 Goal: lower transaction `(stage ...)` clauses into valid/ready pipeline-stage
 logic.
 
-Shipped subset: a top-level transaction stage of the form
-`(stage name (input ready_signal) (output valid_signal))`. It lowers to one
-state that drives `valid_signal = 1` while active and advances only when
-`ready_signal` is true. Actor-level phase/stage metadata is now
-parser-carried and schedule-report visible through `actor_phases[]` and
-`actor_stages[]`, preserving each authored metadata name and list-form body.
-It still has no runtime scheduler semantics and does not reach scheduled
-`.fsm`, generated composition tops, or HDL.
+Shipped subset: a top-level transaction stage of the preferred form
+`(stage name (ready ready_signal) (valid valid_signal))`. The older
+`(input ready_signal)`/`(output valid_signal)` spelling remains accepted as an
+alias. It lowers to one state that drives `valid_signal = 1` while active and
+advances only when `ready_signal` is true. The valid endpoint is still a normal
+transaction drive and participates in existing same-target conflict checks.
+Actor-level phase/stage metadata is now parser-carried and schedule-report
+visible through `actor_phases[]` and `actor_stages[]`, preserving each
+authored metadata name and list-form body. It still has no runtime scheduler
+semantics and does not reach scheduled `.fsm`, generated composition tops, or
+HDL.
 
 Remaining backlog: nested stages, stage-local latency, compute/action bodies,
 multiple ready/valid endpoints, registered-valid variants, skid-buffer
@@ -1441,8 +1444,9 @@ Policy: keep well-formed legacy handshakes accepted and ignored for
 compatibility, and do not lower them into scheduled `.fsm`, schedule JSON, or
 HDL. Accepted legacy forms now require one `valid` and one `ready` property
 with no duplicate handshake names. Use `(on ...)` for activation and
-transaction `(stage name (input ready_signal) (output valid_signal))` for
-ready/valid barriers.
+transaction `(stage name (ready ready_signal) (valid valid_signal))` for
+ready/valid barriers. The older `(input ready_signal)`/`(output valid_signal)`
+stage spelling remains accepted as an alias.
 
 ### Removed Assign Keyword
 

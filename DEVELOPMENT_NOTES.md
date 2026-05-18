@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: Ready/valid stages are the downstream spelling
+- `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` treats the downstream
+  integration handoff as authoritative for the
+  `(stage NAME (ready READY) (valid VALID))` transaction-stage form.
+- The lowerer accepts `ready`/`valid` as the preferred spelling and keeps the
+  older `input`/`output` spelling as an alias over the same ready and valid
+  endpoint roles. Mixing aliases for the same endpoint remains an error so a
+  stage cannot accidentally bind two ready or two valid signals.
+- Accepting the source spelling does not weaken conflict safety. The stage
+  valid endpoint is still lowered as a transaction combinational assignment,
+  so rule/transaction same-target checks still reject mixed timing operators.
+- The exact SPECFORGE stage artifact demonstrates that distinction after the
+  syntax fix: it no longer fails on unsupported `ready`, but it does fail on
+  `isf_priority_mixed_timing_conflict` because `rule_7` and the stage valid
+  endpoint both write `ADDRESS`. The empty-stdout `--json` behavior for that
+  failure is tracked by the active `.3` leaf.
 ## 2026-05-18: Flat bounded eventual contracts are the downstream spelling
 - `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` treats the downstream
   integration handoff as authoritative for the flat

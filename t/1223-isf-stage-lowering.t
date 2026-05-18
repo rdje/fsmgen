@@ -5,6 +5,8 @@ use Test::More;
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
+use IPC::Cmd qw(run);
+use JSON::PP ();
 
 use lib File::Spec->catdir($FindBin::Bin, '..', 'perl');
 
@@ -67,6 +69,44 @@ ISF
 
     my $hdl = FSM::HDL::FlattenedDT->new(debug => 0)->generate_systemverilog($fsm_module);
     like($hdl, qr/\bmodule\s+stage_lowering\b/, 'stage lowering reaches SystemVerilog generation');
+};
+
+subtest 'flat downstream ready-valid stage is accepted by strict JSON check' => sub {
+    my $source = <<'ISF';
+(actor stage_flat_ready_valid
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input ready)
+    (output valid)
+    (output done))
+  (transaction main
+    (on start)
+    (stage accept (ready ready) (valid valid))
+    (complete done)))
+ISF
+
+    my $lowered = lower_source($source);
+    like(
+        $lowered->{files}{'stage_flat_ready_valid.fsm'},
+        qr/\(main_stage_1\n\s+\(= \(valid> 1\)\)\n\s+\(<ready\n\s+\(-> main_done_2\)\n\s+\)\n\s+\)/,
+        'ready/valid form lowers to the same ready-gated state semantics',
+    );
+
+    my $tempdir = tempdir(CLEANUP => 1);
+    my $isf_path = File::Spec->catfile($tempdir, 'stage_flat_ready_valid.isf');
+    write_file($isf_path, $source);
+
+    my ($success, undef, undef, $stdout, $stderr) = run(
+        command => ['./bin/fsmgen', '--strict', '--check', '--json', $isf_path],
+    );
+
+    ok($success, 'strict JSON check accepts the downstream ready/valid stage form');
+    is(join('', @{$stderr || []}), '', 'strict JSON check keeps stderr clean for the accepted ready/valid form');
+
+    my $payload = JSON::PP->new->decode(join('', @{$stdout || []}));
+    ok($payload->{success}, 'strict JSON payload reports success for the accepted ready/valid form');
 };
 
 subtest 'pending samples materialize before a stalled stage' => sub {
@@ -162,6 +202,51 @@ ISF
         $valid_diag,
         qr/\ATransaction 'main': stage 'accept' output 'valid' is not an actor output/,
         'valid endpoint diagnostic is targeted',
+    );
+
+    my ($ok_duplicate_ready, $duplicate_ready_diag) = lower_rejected(<<'ISF');
+(actor duplicate_stage_ready
+  (clock clk)
+  (interface
+    (input start)
+    (input ready)
+    (input ready_alt)
+    (output valid)
+    (output done))
+  (transaction main
+    (on start)
+    (stage accept (ready ready) (input ready_alt) (valid valid))
+    (complete done)))
+ISF
+
+    ok(!$ok_duplicate_ready, 'stage ready/input aliases cannot both bind the ready endpoint');
+    like(
+        $duplicate_ready_diag,
+        qr/\ATransaction 'main': duplicate stage 'accept' ready endpoint/,
+        'duplicate ready endpoint diagnostic is targeted',
+    );
+
+    my ($ok_conflict, $conflict_diag) = lower_rejected(<<'ISF');
+(actor stage_valid_conflict
+  (clock clk)
+  (interface
+    (input start)
+    (input ready)
+    (output valid)
+    (output done))
+  (rule force_valid
+    (valid 1))
+  (transaction main
+    (on start)
+    (stage accept (ready ready) (valid valid))
+    (complete done)))
+ISF
+
+    ok(!$ok_conflict, 'ready/valid stage output remains subject to existing conflict checks');
+    like(
+        $conflict_diag,
+        qr/ISF conflict 'isf_priority_mixed_timing_conflict' on target 'valid'.*rule 'force_valid'.*transaction 'main' \(stage_valid, = 1\)/s,
+        'stage valid conflict diagnostic proves the ready/valid form reached semantic conflict checking',
     );
 };
 

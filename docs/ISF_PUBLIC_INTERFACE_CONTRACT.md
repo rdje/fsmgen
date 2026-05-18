@@ -706,12 +706,16 @@ The phase/stage boundary is checked by
 so actor-level phase/stage metadata and transaction phase/stage clauses have
 scalar names plus list-form body entries before an actor shell is returned.
 Transaction `(phase ...)` remains a pass-through state marker; transaction
-`(stage name (input ready_signal) (output valid_signal))` has its first
+`(stage name (ready ready_signal) (valid valid_signal))` has its first
 bounded lowering path checked by
 [t/1223-isf-stage-lowering.t](../t/1223-isf-stage-lowering.t): it emits one
 ready-gated state that drives `valid_signal = 1` while active, parses through
-the normal `.fsm` frontend, and reaches SystemVerilog generation. Actor-level
-phase/stage metadata is also checked by
+the normal `.fsm` frontend, and reaches SystemVerilog generation. The older
+`(stage name (input ready_signal) (output valid_signal))` spelling remains an
+accepted alias for the same public schedule-report projection. The generated
+valid drive remains a transaction assignment, so the existing same-target
+conflict diagnostics still apply when another owner writes that signal.
+Actor-level phase/stage metadata is also checked by
 [t/1252-isf-actor-phase-stage-report.t](../t/1252-isf-actor-phase-stage-report.t):
 it is copied into `LoweringIR` only for bounded `actor_phases[]` and
 `actor_stages[]` schedule-report projection, and it still does not create

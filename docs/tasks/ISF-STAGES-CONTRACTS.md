@@ -199,13 +199,17 @@ barrier, not a general pipeline language. It gives authors a reviewable way to
 hold a transaction at a protocol boundary until a downstream ready signal
 accepts the stage.
 
-Supported source shape for the first implementation:
+Supported source shape for the first implementation. The downstream-facing
+preferred spelling is:
 
 ```lisp
 (stage name
-  (input ready_signal)
-  (output valid_signal))
+  (ready ready_signal)
+  (valid valid_signal))
 ```
+
+The older `(input ready_signal)`/`(output valid_signal)` spelling remains
+accepted as an equivalent alias.
 
 Rules:
 
@@ -215,11 +219,16 @@ Rules:
 - `name` must be the existing non-empty scalar stage name. The generated state
   name should use the transaction/state index, while schedule-report metadata
   preserves the authored stage name.
-- Exactly one `(input ready_signal)` subclause is required. `ready_signal`
-  must name a scalar actor input in the first implementation.
-- Exactly one `(output valid_signal)` subclause is required. `valid_signal`
-  must name a scalar actor output in the first implementation.
-- Duplicate `input` or `output` subclauses are rejected.
+- Exactly one ready endpoint is required. The preferred spelling is
+  `(ready ready_signal)`; the older `(input ready_signal)` spelling remains
+  accepted as an alias. `ready_signal` must name a scalar actor input in the
+  first implementation.
+- Exactly one valid endpoint is required. The preferred spelling is
+  `(valid valid_signal)`; the older `(output valid_signal)` spelling remains
+  accepted as an alias. `valid_signal` must name a scalar actor output in the
+  first implementation.
+- Duplicate ready endpoints or duplicate valid endpoints are rejected,
+  including alias mixtures such as both `(ready r)` and `(input r2)`.
 - Unknown stage subclauses, including `(latency ...)`, `(compute ...)`,
   embedded transaction actions, or arbitrary property entries, are rejected for
   the first implementation even though the historical parser preserved them as
@@ -362,12 +371,15 @@ Shipped behavior:
 
 - `%SUPPORTED_TRANSACTION_CLAUSES` now accepts `stage` only in top-level
   transaction bodies.
-- The lowerer validates the first bounded source shape exactly as
-  `(stage name (input ready_signal) (output valid_signal))`, with one scalar
-  actor input and one scalar actor output.
+- The lowerer validates the first bounded source shape as
+  `(stage name (ready ready_signal) (valid valid_signal))`, with
+  `(input ready_signal)`/`(output valid_signal)` accepted as older aliases,
+  one scalar actor input, and one scalar actor output.
 - The generated stage state is named `<transaction>_stage_<index>`, drives
   `valid_signal = 1` with a combinational `=` assignment while active, and
   transitions to the next state only under `<ready_signal`.
+- The valid endpoint remains a normal transaction assignment and continues to
+  participate in existing same-target conflict checks.
 - Pending samples immediately before a stage are flushed to a separate sample
   state before the stage, so a stalled stage does not recapture source ports.
 - Nested stages in `when`, `switch`, and `repeat`, unsupported stage body

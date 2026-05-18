@@ -136,7 +136,7 @@ sub stage_contract_source {
     (output done))
   (transaction main
     (on start)
-    (stage accept (input ready) (output valid))
+    (stage accept (ready ready) (valid valid))
     (contract ack_seen (eventually ack (within 3)))
     (complete done)))
 ISF

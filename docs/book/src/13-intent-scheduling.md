@@ -531,7 +531,10 @@ current limitations are:
   `actor_stages[]`, but it is not executable scheduler behavior. Transaction
   `(phase ...)` lowers as a pass-through marker state. The first transaction
   `(stage ...)` subset now lowers as a top-level ready/valid barrier:
-  `(stage name (input ready_signal) (output valid_signal))`.
+  `(stage name (ready ready_signal) (valid valid_signal))`. The older
+  `(input ready_signal)`/`(output valid_signal)` spelling remains accepted as
+  an alias. The valid endpoint is still a normal transaction drive, so
+  existing same-target conflict checks apply if another owner writes it.
   Broader stage forms still fail closed until their runtime semantics are
   specified.
 - Unsupported transaction clause heads now fail closed during lowering instead

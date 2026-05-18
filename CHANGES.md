@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — SPECFORGE ready/valid stage form fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
+- FSMGen now accepts the documented transaction-stage spelling
+  `(stage name (ready ready_signal) (valid valid_signal))`.
+- The older `(stage name (input ready_signal) (output valid_signal))`
+  spelling remains accepted as a compatibility alias. Alias mixtures for the
+  same endpoint fail closed as duplicate ready or valid endpoints.
+- Added focused regression coverage for strict JSON acceptance of the
+  ready/valid spelling, schedule-report endpoint preservation, and the fact
+  that a stage valid endpoint still participates in same-target conflict
+  checks.
+- The exact `sf-isf-stage-ready-valid` artifact no longer fails on
+  unsupported `ready`; it now reaches the existing
+  `isf_priority_mixed_timing_conflict` diagnostic because its `valid` endpoint
+  and `rule_7` both write `ADDRESS`.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, task tree, roadmap board, live achievement status, and development
+  notes. The active downstream bug frontier advances to
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`.
 ### R14 — SPECFORGE flat eventual contract form fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`.
 - FSMGen now accepts the documented flat bounded-eventually contract spelling

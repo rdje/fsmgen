@@ -760,7 +760,7 @@ advance condition is explicit in the scheduler IR:
 - After `(await ready)`, the ready edge is split into `ready && cycles` and
   `ready && cycles == 0`; the watchdog timeout transition remains in the await
   state.
-- After `(stage name (input ready) (output valid))`, the stage state continues
+- After `(stage name (ready ready) (valid valid))`, the stage state continues
   driving `valid`, and only the ready edge is split.
 - After a top-level `repeat`, the repeat-check exit edge `counter == 0` is
   split, while the loop-back edge remains available.
@@ -1818,7 +1818,7 @@ conditional entry points. Needs more design discussion.
 ### Stages
 
 ```lisp
-(stage pass_through (input ready) (output valid) (latency (max 3))
+(stage pass_through (ready ready) (valid valid) (latency (max 3))
   (compute (valid ready)))
 ```
 
@@ -1839,8 +1839,8 @@ consume actor-level phase/stage metadata today.
 
 ```lisp
 (stage accept
-  (input ready)
-  (output valid))
+  (ready ready)
+  (valid valid))
 ```
 
 That stage lowers to one transaction state. While the state is active, `valid`
@@ -1851,6 +1851,9 @@ stage materialize before the stage so a stall does not resample every cycle.
 When a runtime wait with pending samples has a zero-count path into the stage,
 the generated stage clone materializes the sample, drives `valid`, and keeps
 the same ready-gated transition as the original stage.
+The older `(input ready)`/`(output valid)` spelling is accepted as an alias.
+The valid endpoint remains a normal transaction combinational assignment, so
+same-target rule/transaction conflict checks still apply.
 Schedule reports expose this shipped subset through `transaction_stages`
 entries with the authored transaction/stage names, `kind =
 ready_valid_barrier`, generated state, ready input, and valid output.
@@ -1873,7 +1876,7 @@ shipped contract model is a transaction-local bounded eventual check:
 
 ```lisp
 (contract response_seen
-  (eventually done (within 8)))
+  (eventually done within 8))
 ```
 
 When the transaction reaches the contract clause, lowering emits one arm state

@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: SPECFORGE ready/valid stage form fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the documented transaction-stage spelling
+  `(stage name (ready ready_signal) (valid valid_signal))`.
+- The older `(stage name (input ready_signal) (output valid_signal))`
+  spelling remains accepted as a compatibility alias. `ready`/`input` bind the
+  same ready endpoint, `valid`/`output` bind the same valid endpoint, and
+  duplicate alias mixtures fail closed.
+- The exact `sf-isf-stage-ready-valid` artifact was reproduced before the fix
+  with the unsupported `ready` diagnostic. After the fix it advances past that
+  source-form mismatch and reaches the existing
+  `isf_priority_mixed_timing_conflict` diagnostic on `ADDRESS`, because
+  `rule_7` and the stage valid endpoint both write `ADDRESS` with different
+  timing operators. The shared empty-stdout `--json` behavior for failures is
+  now the active `.3` leaf.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook, owning task tree, roadmap board, and live notes. The active
+  downstream bug frontier advances to
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`.
+- Validation passed: ISF lowerer syntax check, focused stage/boundary tests,
+  exact SPECFORGE stage source and baseline strict checks, mdBook build,
+  focused book/doc audits, and `./bin/ci-regression isf --no-book`
+  (Files=228, Tests=1342), and `git diff --check`.
 ## 2026-05-18: SPECFORGE flat eventual contract form fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

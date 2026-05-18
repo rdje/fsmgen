@@ -1407,6 +1407,11 @@ Stage:
 ```
 
 Current shipped stage kind is `ready_valid_barrier`.
+FSMGen also accepts the older `(stage name (input ready_signal) (output
+valid_signal))` spelling as a compatibility alias. Downstream emitters should
+prefer the `ready`/`valid` form shown above. The `valid_signal` endpoint is a
+normal transaction combinational drive, so it remains subject to the existing
+same-target conflict checks if another rule or transaction writes that signal.
 
 Temporal contract:
 

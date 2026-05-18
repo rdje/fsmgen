@@ -2845,7 +2845,7 @@ sub _validate_contract_clause {
 sub _parse_stage_handshake_clause {
     my ($clause, $tn, $label) = @_;
 
-    confess "Transaction '$tn': stage requires '(stage name (input ready_signal) (output valid_signal))' in $label\n"
+    confess "Transaction '$tn': stage requires '(stage name (ready ready_signal) (valid valid_signal))' or '(stage name (input ready_signal) (output valid_signal))' in $label\n"
         unless ref($clause) eq 'ARRAY'
             && @$clause >= 2
             && defined($clause->[1])
@@ -2853,10 +2853,16 @@ sub _parse_stage_handshake_clause {
             && length($clause->[1]);
 
     my %seen;
+    my %role_for = (
+        input  => 'ready',
+        ready  => 'ready',
+        output => 'valid',
+        valid  => 'valid',
+    );
     my %parsed = (name => $clause->[1]);
 
     for my $subclause (@{$clause}[2 .. $#$clause]) {
-        confess "Transaction '$tn': stage '$parsed{name}' subclauses must be '(input ready_signal)' or '(output valid_signal)' in $label\n"
+        confess "Transaction '$tn': stage '$parsed{name}' subclauses must be '(ready ready_signal)'/'(valid valid_signal)' or '(input ready_signal)'/'(output valid_signal)' in $label\n"
             unless ref($subclause) eq 'ARRAY'
                 && @$subclause == 2
                 && defined($subclause->[0])
@@ -2865,19 +2871,19 @@ sub _parse_stage_handshake_clause {
 
         my ($head, $signal) = @$subclause;
         confess "Transaction '$tn': stage '$parsed{name}' has unsupported subclause '$head'\n"
-            unless $head eq 'input' || $head eq 'output';
-        confess "Transaction '$tn': duplicate stage '$parsed{name}' subclause '$head'\n"
-            if $seen{$head}++;
+            unless exists $role_for{$head};
+        my $role = $role_for{$head};
+        confess "Transaction '$tn': duplicate stage '$parsed{name}' $role endpoint\n"
+            if $seen{$role}++;
         confess "Transaction '$tn': stage '$parsed{name}' $head signal must be scalar\n"
             unless defined($signal) && !ref($signal) && length($signal);
 
-        $parsed{ready} = $signal if $head eq 'input';
-        $parsed{valid} = $signal if $head eq 'output';
+        $parsed{$role} = $signal;
     }
 
-    confess "Transaction '$tn': stage '$parsed{name}' requires '(input ready_signal)'\n"
+    confess "Transaction '$tn': stage '$parsed{name}' requires '(ready ready_signal)' or '(input ready_signal)'\n"
         unless defined($parsed{ready});
-    confess "Transaction '$tn': stage '$parsed{name}' requires '(output valid_signal)'\n"
+    confess "Transaction '$tn': stage '$parsed{name}' requires '(valid valid_signal)' or '(output valid_signal)'\n"
         unless defined($parsed{valid});
 
     return \%parsed;
