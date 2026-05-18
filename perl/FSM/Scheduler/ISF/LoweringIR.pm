@@ -4022,8 +4022,8 @@ sub _validate_repeat_body_spawn_subset {
                 && $keyword eq 'await_any'
                 && @pending_spawns > 1
                 && !$awaiting_multi_pending_drain;
-            my $allowed_when_static_parameter_generated_do_before_post_await_any =
-                $when_body_repeat
+            my $allowed_branch_static_parameter_generated_do_before_post_await_any =
+                ($when_body_repeat || $switch_branch_repeat)
                 && !$pending_local_do_before_drain
                 && $pending_generated_do_before_drain
                 && ($pending_generated_do_kind_before_drain // '') eq 'generated do with static params'
@@ -4037,7 +4037,7 @@ sub _validate_repeat_body_spawn_subset {
                     && $pending_generated_do_before_drain
                     && $keyword eq 'await_any'
                     && !$allowed_branch_generated_child_do_before_post_await_any
-                    && !$allowed_when_static_parameter_generated_do_before_post_await_any;
+                    && !$allowed_branch_static_parameter_generated_do_before_post_await_any;
             if ($keyword eq 'await_any' && @pending_spawns > 1) {
                 $awaiting_multi_pending_drain = 1;
                 next;

@@ -611,17 +611,19 @@ multiple generated spawns remain pending, then use post-do
 `(await_all done)` drain. The generated do preserves static generated-top
 parameter binding, waits for its deterministic generated do instance's fresh
 done handoff before that observation, and leaves the pending generated-spawn
-done set live for the later drain. The next selected frontier is the
-switch-contained static-parameter generated-do post-do `await_any` analogue:
+done set live for the later drain. The direct switch-contained
+static-parameter generated-do post-do `await_any` analogue is also shipped:
 a repeat directly inside a top-level `switch` branch may run
 `(do child (params ...))` while multiple generated spawns remain pending,
 then use post-do `(await_any done)` as an observation point before the later
-same-body `(await_all done)` drain. That switch-contained static-parameter
-post-do `await_any` subset is selected for the next implementation leaf but
-is not shipped yet; bind handoffs, domain metadata, new spawn after the do
-before the drain, cross-domain activation, deeper branch/loop nesting, and
-broader outstanding-child semantics remain backlog until their own leaves
-select and ship them.
+same-body `(await_all done)` drain. It uses the same deterministic generated
+do instance, preserves the static generated-top parameter binding, waits for
+that generated do instance's fresh done handoff before the observation, and
+leaves the pending generated-spawn done set live for the later drain. Bind
+handoffs or domain metadata on generated-do post-do `await_any`, new spawn
+after the do before the drain, cross-domain activation, deeper branch/loop
+nesting, and broader outstanding-child semantics remain backlog until their
+own leaves select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

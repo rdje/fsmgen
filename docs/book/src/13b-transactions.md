@@ -523,15 +523,15 @@ The top-level `when` body nested repeat plain generated-child `(do child)`
 subset supports the same post-do multi-pending observation and later-drain
 contract while generated nested spawns remain pending before the same-body
 `await_all` drain; it waits for the deterministic generated do instance's
-fresh done handoff before the observation. The top-level `when` body nested
-repeat static-parameter generated `(do child (params ...))` subset supports
+fresh done handoff before the observation. The top-level `when` body and
+top-level `switch` branch nested repeat static-parameter generated
+`(do child (params ...))` subsets support
 the same post-do multi-pending observation and later-drain contract while
 generated nested spawns remain pending before the same-body `await_all`
-drain; it waits for the deterministic generated do instance's fresh done
-handoff before the observation and preserves the static generated-top
+drain; the generated do waits for the deterministic generated do instance's
+fresh done handoff before the observation and preserves the static generated-top
 parameter override. Bound or domain-qualified generated-do post-do
-`await_any`, switch-contained static-parameter generated-do post-do
-`await_any`, and new nested `spawn` after the do before the drain remain
+`await_any` and new nested `spawn` after the do before the drain remain
 fail-closed. The top-level `switch`
 branch nested repeat plain generated-child `(do child)` subset supports the
 same post-do multi-pending observation and later-drain contract while
@@ -1261,9 +1261,9 @@ still gates nested repeat re-entry on every outstanding generated child. Both
 branch-contained forms also permit plain generated-child `(do child)` before
 a post-do multi-pending `await_any` observation while generated nested spawns
 remain pending, provided that the later same-body `await_all` drain still
-gates nested repeat re-entry on every outstanding generated child. The
-top-level `when` body nested repeat static-parameter generated
-`(do child (params ...))` subset also permits that generated do before a
+gates nested repeat re-entry on every outstanding generated child. Both
+branch-contained static-parameter generated `(do child (params ...))`
+subsets also permit that generated do before a
 post-do multi-pending `await_any` observation while generated nested spawns
 remain pending, provided that the generated do instance completes before the
 observation and the later same-body `await_all` drain still gates nested

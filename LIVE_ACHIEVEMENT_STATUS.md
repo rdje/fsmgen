@@ -2,6 +2,31 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF switch-contained static-parameter generated do before post-do await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.108`.
+- Top-level `switch` branches may now contain nested repeats with multiple
+  generated spawns, static-parameter generated blocking
+  `(do child (params ...))` while those generated spawns remain pending,
+  `(await_any done)` as an observation point after that generated do, and a
+  later same-body `(await_all done)` drain before the nested repeat check can
+  loop.
+- Lowering waits for the generated do instance's fresh done handoff before
+  evaluating the post-do `await_any`, preserves static generated-top
+  parameter binding, keeps generated-spawn done handoffs live through the
+  observation, and drains every pending generated child before nested repeat
+  re-entry.
+- Bind handoffs, domain metadata, spawn-after-do before the drain,
+  cross-domain activation, deeper nesting, and broader outstanding-child
+  semantics remain fail-closed.
+- Docs are synchronized across the mdBook, ISF spec, downstream integration
+  spec, public contract, task tree, roadmap board, and live docs. The active
+  frontier advances to `ISF-REPEAT-BODY-CHILD-ACTIVATION.109`, which must
+  select the next bounded subset before implementation.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=56), focused repeat/spawn/doc checks (Files=3, Tests=376), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1329), and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — ISF switch-contained static-parameter generated do before post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.107`.
 - Selected top-level `switch` branch nested repeats with multiple generated

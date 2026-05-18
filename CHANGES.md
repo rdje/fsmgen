@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF switch-contained static-parameter generated do before post-do await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.108`.
+- Top-level `switch` branches may now contain nested repeats with multiple
+  generated spawns, static-parameter generated blocking
+  `(do child (params ...))` while those generated spawns remain pending,
+  `(await_any done)` as an observation point after that generated do, and a
+  later same-body `(await_all done)` drain before the nested repeat check can
+  loop.
+- Lowering waits for the generated do instance's fresh done handoff before
+  evaluating the post-do `await_any`, preserves generated-top static
+  parameter binding, keeps the pending generated-spawn done set live through
+  the observation, preserves source-order samples around
+  spawn/do/await_any/await_all, and drains every generated spawn before
+  nested repeat re-entry.
+- Bind handoffs, domain metadata, spawn-after-do before the drain,
+  cross-domain activation, deeper nesting, and broader outstanding-child
+  semantics remain fail-closed.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  task tree, roadmap board, live docs, doc audits, and mdBook.
+- Opened `ISF-REPEAT-BODY-CHILD-ACTIVATION.109` as the next selection leaf
+  before any further repeat-body child activation implementation.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=56),
+  focused repeat/spawn/doc checks (Files=3, Tests=376), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1329), and
+  `git diff --check` passed.
 ### R14 — ISF switch-contained static-parameter generated do before post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.107`.
 - Selected top-level `switch` branch nested repeats with multiple generated

@@ -247,6 +247,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/top-level\s+`?switch`?\s+branch(?=[\s\S]{0,1800}static(?:[-\s]+parameter| params))(?=[\s\S]{0,1800}generated)(?=[\s\S]{0,1800}do)(?=[\s\S]{0,1800}post-do[\s\S]{0,300}await_any)(?=[\s\S]{0,2200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,500}pending)(?=[\s\S]{0,2600}await_all[\s\S]{0,300}drain)/i,
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do before post-do multi-pending await_any subset",
+    );
+    like(
+        $content,
         qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*bind.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any subset",
     );
