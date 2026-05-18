@@ -2,6 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL actor-to-pin handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3`.
+- Selected the first actor endpoint to top-level output pin subset before
+  behavior-bearing code: one scalar `(pins.output_pin actor.endpoint)` pair
+  in one named drive body, exactly one direct static actor instance, and one
+  top-level transaction drive call.
+- The selected source is a generated scalar external actor handoff input named
+  `actor_endpoint`; the sink is the existing one-bit top-level output pin.
+- The selected report kind is `scalar_actor_to_pin_handoff` under
+  `actor_network.data_movements[]`, with `source => external_handoff` and
+  `sink => top_level_pin`.
+- Wider pins, storage/muxing, generated child `.fsm` artifacts, generated ATL
+  tops, HDL child wiring, inline/expression movement, fan-in/fan-out, groups,
+  CDC, mixed pin/actor movement in one drive, and trigger/await coupling
+  remain deferred or fail-closed.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4`.
+- Validation passed: `mdbook build docs/book`, spec/book audits, and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — ATL pin-to-actor handoff lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2`.
 - The selected scalar top-level input pin to actor handoff subset now lowers

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL actor-to-pin handoff subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3`.
+- Selected the inverse top-level pin movement subset before code: one direct
+  static actor instance, one named drive body with one scalar
+  `(pins.output_pin actor.endpoint)` pair, and one top-level transaction drive
+  call.
+- The selected lowering will expose the actor source endpoint as a generated
+  scalar external parent input named `actor_endpoint`, drive the existing
+  scalar one-bit top-level output pin for the drive-call cycle, and report
+  through `actor_network.data_movements[]` with kind
+  `scalar_actor_to_pin_handoff`.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4`.
+
 ### R14 — ATL pin-to-actor handoff lowering shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2`.
 - Parser validation now accepts exactly one selected pin-to-actor movement

@@ -1580,6 +1580,15 @@ capability manifest and this handoff:
   top-level actor input. FSMGen reads that input pin directly, rewrites the
   actor sink to generated handoff output `actor_endpoint`, and reports kind
   `scalar_pin_to_actor_handoff` with `source => top_level_pin`.
+- The actor-to-top-level output pin direction is selected but not yet
+  downstream-emittable until the `.6.4` lowering leaf ships. The selected form
+  is exactly one direct static actor instance, one named drive body with one
+  `(pins.output_pin actor.endpoint)` scalar pair, and one top-level
+  transaction drive call. The output pin must be a scalar one-bit top-level
+  actor output. The selected lowering will expose the actor endpoint as
+  generated input `actor_endpoint`, drive the existing top-level output pin,
+  and report kind `scalar_actor_to_pin_handoff` with
+  `sink => top_level_pin`.
 - Blocking actor-transaction orchestration is reserved as
   `(do actor.transaction)`, nonblocking orchestration as
   `(spawn actor.transaction as NAME)`, and rule-level orchestration as

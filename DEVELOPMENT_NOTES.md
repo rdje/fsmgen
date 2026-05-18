@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL actor-to-pin selection mirrors input pin movement
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3` selects the inverse top-level pin
+  direction without adding behavior in the same slice.
+- The selected shape keeps the existing drive-body `(sink source)` ordering:
+  `(pins.output_pin actor.endpoint)` reads as "drive this top-level output pin
+  from that actor endpoint" while preserving the ATL rule that routes are
+  active only during the named drive-call cycle.
+- Width evidence comes from the declared one-bit top-level output pin. Actor
+  type resolution and endpoint widths remain deferred, so the source endpoint
+  is exposed as a generated external parent input named `actor_endpoint` until
+  child `.fsm` artifacts and HDL wiring ship.
 ## 2026-05-18: ATL pin-to-actor lowering keeps pins as real parent inputs
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` implements the selected
   `pins.input` source form by preserving the existing actor interface input as

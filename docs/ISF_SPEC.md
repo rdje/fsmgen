@@ -2866,6 +2866,16 @@ and actor-transaction trigger handoff subsets implemented so far:
   `actor_network.data_movements[]` with kind
   `scalar_pin_to_actor_handoff`, `source => top_level_pin`, and
   `sink => external_handoff`.
+- The inverse actor-to-top-level output pin subset is selected for the next
+  implementation leaf but is not yet accepted by the current parser/lowering
+  surface. The selected source form is one direct static actor instance, one
+  named drive body with one `(pins.output_pin actor.endpoint)` scalar pair,
+  and one top-level transaction drive call. `pins.output_pin` must name a
+  scalar one-bit top-level actor output. The selected lowering will expose
+  the actor endpoint as generated scalar external parent input
+  `actor_endpoint`, drive the existing top-level output pin for the
+  drive-call cycle, and report kind `scalar_actor_to_pin_handoff` with
+  `source => external_handoff` and `sink => top_level_pin`.
 - Future blocking orchestration uses `(do actor.transaction)`, future
   nonblocking orchestration uses `(spawn actor.transaction as NAME)`, and
   future rule-level orchestration uses `(trigger actor.transaction)`.

@@ -435,8 +435,28 @@ model for one top-level input pin feeding one actor endpoint:
 This pin-to-actor subset is shipped. The source is the existing one-bit
 top-level input pin, and the sink is a generated scalar external actor
 handoff output named `consumer_payload`.
-Actor-to-pin output movement, wider pins, storage, muxing, generated children,
-groups, CDC, and trigger/await coupling remain deferred.
+
+The inverse actor-to-top-level output pin direction is selected for the next
+implementation leaf, but is not accepted yet:
+
+```lisp
+(actor pin_publish
+  (clock clk)
+  (interface (input start) (output out_bit) (output done))
+  (instance producer of packet_reader)
+  (drive publish_result
+    (pins.out_bit producer.payload))
+  (transaction run
+    (on start)
+    (drive publish_result)
+    (complete done)))
+```
+
+The selected lowering will expose `producer.payload` as a generated scalar
+external parent input named `producer_payload`, drive the existing one-bit
+top-level output pin `out_bit` for the drive-call cycle, and report kind
+`scalar_actor_to_pin_handoff`. Wider pins, storage, muxing, generated
+children, groups, CDC, and trigger/await coupling remain deferred.
 
 Future
 orchestration spellings are reserved as `(do actor.transaction)`,

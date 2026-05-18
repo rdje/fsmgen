@@ -1596,6 +1596,12 @@ The first top-level pin movement public subset is implemented: one
 direct static actor instance, and one top-level transaction drive call. The
 report kind is `scalar_pin_to_actor_handoff`, with
 `source => top_level_pin` and `sink => external_handoff`.
+The inverse actor-to-top-level output pin subset is selected but not yet
+implemented: one `(pins.output_pin actor.endpoint)` scalar pair in one named
+drive body, one direct static actor instance, and one top-level transaction
+drive call. Its selected future report kind is
+`scalar_actor_to_pin_handoff`, with `source => external_handoff` and
+`sink => top_level_pin`.
 Future orchestration spellings are reserved as
 `(do actor.transaction)`, `(spawn actor.transaction as NAME)`, and
 `(trigger actor.transaction)`, with event payloads deferred. Future group

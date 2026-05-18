@@ -590,7 +590,7 @@ generate an ATL top, wire HDL child interfaces, move data to or from
 infer fan-in or fan-out, combine data movement with actor triggers/events, or
 cross clock domains.
 
-The shipped first pin-movement subset is pin-to-actor only:
+The shipped first pin-movement subset is pin-to-actor:
 
 1. One direct static actor instance.
 2. One named drive body with one `(actor.endpoint pins.input_pin)` scalar pair.
@@ -601,8 +601,27 @@ The shipped first pin-movement subset is pin-to-actor only:
 6. The route lifetime is one drive-call cycle, with no storage, mux,
    actor-to-pin output publication, generated children, groups, or CDC.
 
-The next slices can add top-level pin movement in the output direction,
-multiple sources feeding one sink, compact aliases, and concurrent groups.
+The selected next pin-movement subset is actor-to-top-level output pin, but
+it remains fail-closed until the `.6.4` lowering leaf ships:
+
+1. One direct static actor instance.
+2. One named drive body with one `(pins.output_pin actor.endpoint)` scalar
+   pair.
+3. One top-level transaction drive call.
+4. `pins.output_pin` must name an existing scalar one-bit top-level output
+   pin.
+5. The generated source handoff is a scalar external parent input named
+   `actor_endpoint`; the sink is the existing top-level output pin.
+6. The route lifetime is one drive-call cycle, with no storage, mux,
+   pin-to-actor movement in the same drive, generated children, groups, or
+   CDC.
+7. Schedule-report metadata will use
+   `actor_network.data_movements[]` with kind
+   `scalar_actor_to_pin_handoff`, `source => external_handoff`, and
+   `sink => top_level_pin`.
+
+Later slices can add multiple sources feeding one sink, compact aliases, and
+concurrent groups.
 
 ## Fail-Closed Boundaries
 

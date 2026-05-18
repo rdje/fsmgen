@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.4`.
+  activation `.111` and ATL actor-network orchestration `.6.4`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -71,9 +71,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   pin, the sink is a generated scalar actor handoff output named
   `actor_endpoint`, the route lifetime is the drive-call cycle, and schedule
   JSON reports kind `scalar_pin_to_actor_handoff` under
+  `actor_network.data_movements[]`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3` selected the inverse output
+  direction before code: exactly one direct static actor instance, one named
+  drive body with one scalar `(pins.output_pin actor.endpoint)` pair, and one
+  top-level transaction drive call. The selected lowering will expose the
+  actor endpoint as generated parent input `actor_endpoint`, drive the
+  existing one-bit top-level output pin for the drive-call cycle, and report
+  kind `scalar_actor_to_pin_handoff` under
   `actor_network.data_movements[]`. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3`, which selects the actor-to-top-level
-  output pin direction before code.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4`, which lowers only that selected
+  actor-to-top-level output pin subset.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
