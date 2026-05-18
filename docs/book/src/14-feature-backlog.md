@@ -450,10 +450,19 @@ plain `(do child)` may run while generated nested spawns are pending when
 The generated do site owns one deterministic generated instance, waits for
 that instance's fresh done handoff, and leaves the pending generated-spawn
 done set live for the later same-body `(await_all done)` drain.
-Parameterized/bound/domain-qualified generated `do` while spawn pending, the
-`await_any` observation before or after the do, new spawn after the do before
-the drain, cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain deferred.
+The next selected implementation leaf is the top-level `when` body
+static-parameter generated `do` analogue: `(do child (params ...))` may run
+while generated nested spawns are pending when a later same-body
+`(await_all done)` still drains every outstanding generated child before the
+nested repeat check can loop. That selected when-contained leaf is not shipped
+yet. Its intended proof extends the shipped generated-child pending-spawn
+path with static generated-top parameter binding for the deterministic
+generated do instance, while leaving the pending generated-spawn done set live
+for the later drain.
+Bind/domain subclauses on that generated `do`, the switch-contained
+static-parameter analogue, `await_any` observation before or after the do, new
+spawn after the do before the drain, cross-domain activation, deeper
+branch/loop nesting, and broader outstanding-child semantics remain deferred.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained static-parameter do while spawn pending is the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.65` selects the first parameterized
+  generated-do form allowed to run while generated nested spawns are still
+  pending.
+- The selected surface is intentionally narrower than the already-shipped
+  when-contained generated-do family: only `(do child (params ...))` with
+  static parameter overrides, only inside a repeat directly under a top-level
+  `when` body, and only when a later same-body `(await_all done)` still drains
+  all pending generated nested spawns before the nested repeat check can loop.
+- The proof should extend leaf `.62`: the generated do instance waits for its
+  own fresh done handoff and carries static parameter binding metadata, while
+  earlier generated spawn handoffs remain pending until the later drain.
+- Bind/domain subclauses on that do, the switch-contained analogue,
+  `await_any` around the do, new spawn after the do before drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain separate contracts.
 ## 2026-05-18: switch-contained generated-child do preserves pending generated spawns
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.64` implements only the selected
   top-level `switch` branch nested-repeat generated-child

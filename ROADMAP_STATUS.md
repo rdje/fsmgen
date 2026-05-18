@@ -2,14 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`.
-  Leaf `.64` shipped top-level switch-branch nested repeat generated-child
-  plain `do` while generated nested spawns are pending before a later
-  same-body `await_all` drain. The generated do site owns one deterministic
-  generated instance, waits for that instance's fresh done handoff, leaves the
-  pending generated-spawn done set live, and still requires the later drain
-  before nested repeat re-entry. Leaf `.65` must select the next bounded
-  repeat-body child activation subset before any further implementation.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.66`.
+  Leaf `.65` selected top-level when-body nested repeat generated blocking
+  `(do child (params ...))` with static parameter overrides while generated
+  nested spawns are pending before a later same-body `await_all` drain. The
+  selected proof extends the shipped generated-child pending-spawn do path
+  with static generated-top parameter binding while keeping pending generated
+  spawn handoffs live until the later drain. Leaf `.66` is the implementation
+  frontier for that selected subset.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -429,8 +429,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `await_any` around the do, new nested spawn after the do before the drain,
   cross-domain activation, deeper branch/loop nesting, and broader
   outstanding-child semantics remain fail-closed. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`, which must select the next bounded
-  repeat-body child activation subset before code.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`, which selected top-level when-body
+  nested repeat generated blocking `(do child (params ...))` with static
+  parameter overrides while generated nested spawns are pending before a later
+  same-body `(await_all done)` drain. The selected implementation must keep
+  generated-spawn done handoffs live until that later drain and reject
+  bind/domain subclauses on the do, the switch-contained analogue,
+  `await_any` around the do, new spawn after the do before drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics. The next implementation frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.66`.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
