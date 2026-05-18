@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL data-route fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`.
+- Selected `isf/atl_data_route_pipeline.isf` for the next fixture slice,
+  using two static actors, one scalar actor-to-actor drive-body route, and one
+  transaction drive call.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`.
+
 ## 2026-05-19: R14 — ATL association schedule reports shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`.
 - Schedule JSON now has canonical `actor_network.association_schedules[]`

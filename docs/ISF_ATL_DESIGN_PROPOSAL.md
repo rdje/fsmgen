@@ -301,15 +301,25 @@ trigger-batch subset:
     (complete done)))
 ```
 
-The fixture is selected to prove parent scheduled `.fsm` emission, strict
-schedule JSON parity, and HDL reachability for the exact temporary trigger
-batch. It will report three static instances, no static group, three
-per-target transaction triggers, and one `same_cycle_external_trigger_batch`
-schedule named `run_trigger_batch`. It deliberately does not claim peer event
-synchronization, endpoint data movement, generated ATL child `.fsm`
-artifacts, generated ATL tops, group
+The fixture proves parent scheduled `.fsm` emission, strict schedule JSON
+parity, and HDL reachability for the exact temporary trigger batch. It reports
+three static instances, no static group, three per-target transaction
+triggers, one canonical `association_schedules[]` entry, and one
+compatibility `group_schedules[]` entry named `run_trigger_batch`. It
+deliberately does not claim peer event synchronization, endpoint data
+movement, generated ATL child `.fsm` artifacts, generated ATL tops, group
 endpoints, compact aliases, CDC, route mux/storage, payloads, or
 ready/backpressure.
+
+The next selected realistic fixture is `isf/atl_data_route_pipeline.isf`.
+It stays inside the shipped scalar actor-to-actor data movement subset:
+two direct static actor instances, one named drive body with
+`(consumer.payload producer.payload)`, and one top-level transaction drive
+call. The fixture is selected to prove generated parent handoff ports,
+`actor_network.data_movements[]` route metadata, strict schedule JSON parity,
+and plain/strict HDL reachability without claiming generated ATL children,
+generated ATL tops, route mux/storage, trigger/data coupling, wider payloads,
+fan-in/fan-out, CDC, or permanent actor grouping.
 
 ## Endpoints
 
@@ -323,10 +333,13 @@ ATL needs a reviewable endpoint vocabulary:
 | `actor.event` | A named scheduler-visible event emitted by an actor instance. |
 | `group.name` | A named concurrent group, used only where group-level semantics are explicit. |
 
-The first implementation rejects unresolved endpoint movement by not accepting
-qualified endpoint drive lowering yet. It also rejects ambiguous or dynamic
-instance declarations, multiple instances, recursive self-instantiation,
-groups, implicit default transactions, and dynamic instance names.
+The current shipped subsets accept only bounded qualified endpoint movement:
+one scalar actor-to-actor data route, one scalar top-level pin-to-actor route,
+and one scalar actor-to-top-level pin route. Ambiguous or dynamic instance
+declarations, recursive self-instantiation, implicit default transactions,
+dynamic instance names, wider endpoint routes, fan-in/fan-out routes, route
+mux/storage insertion, and endpoint movement coupled to trigger batches or
+event waits remain deferred or fail closed.
 
 ## Verbose Syntax Candidate
 

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL next fixture should show data movement
+- After stabilizing trigger-batch association reports, the next fixture should
+  exercise data/information movement rather than another trigger-only path.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` is selected as a fixture promotion
+  slice around the already shipped scalar actor-to-actor data movement subset.
+- The selected source intentionally reuses existing drive-body `(sink source)`
+  syntax and one transaction drive call. That keeps the ATL user surface
+  uniform while showing the scheduler-owned route lifetime through
+  `actor_network.data_movements[]`.
 ## 2026-05-19: ATL association_schedules[] is the canonical temporary-association report
 - `actor_network.association_schedules[]` is now the forward schedule-report
   vocabulary for task-scoped ATL associations.

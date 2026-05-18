@@ -750,6 +750,16 @@ generated ATL tops, group endpoints, compact aliases, CDC, route mux/storage,
 payloads, ready/backpressure, trigger/data/event coupling, or permanent actor
 grouping.
 
+The next selected ATL fixture is `isf/atl_data_route_pipeline.isf`. It will
+use the already shipped scalar actor-to-actor data movement surface: two
+direct static actors, one named drive body with
+`(consumer.payload producer.payload)`, and one transaction drive call. The
+fixture is selected to prove generated parent handoff ports,
+`actor_network.data_movements[]` route metadata, strict schedule JSON, and
+plain plus strict HDL reachability without claiming generated children,
+route mux/storage, trigger/data coupling, wider payloads, or permanent
+grouping.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names the current

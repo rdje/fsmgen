@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -302,9 +302,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.2: add ATL association reports`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the next bounded ATL temporary-association behavior after canonical reports.`
   Acceptance: `Review the now-shipped canonical association_schedules[] report family and choose the next behavior-bearing or design-clarification slice before code. Candidate directions include coupling temporary trigger batches with peer event waits, adding a temporary data-movement association fixture, selecting generated child artifact boundaries, or tightening compatibility/deprecation policy for group_schedules[]. No code changes may begin until this leaf records the selected source shape, report impact, fail-closed boundaries, mdBook impact, and verification scope.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.3: select ATL data-route fixture`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`
+  Status: `active`
+  Goal: `Promote a realistic ATL scalar data-route fixture.`
+  Acceptance: `Add isf/atl_data_route_pipeline.isf as a bounded data-movement fixture using already shipped ATL source syntax: two direct static actor instances, one named drive body with exactly one '(consumer.payload producer.payload)' scalar actor-to-actor endpoint pair, and one top-level transaction drive call. The fixture must emit only atl_data_route_pipeline.fsm, preserve the generated parent handoff ports producer_payload and consumer_payload, report one actor_network.data_movements[] entry with route_lifetime drive_call_cycle and no storage, keep actor_network.association_schedules[] and group_schedules[] empty because this is a drive-activated data route rather than a trigger-batch association, and prove strict schedule JSON parity plus plain/strict HDL reachability. Do not claim generated ATL child artifacts, generated ATL tops, route mux/storage, peer events, trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor grouping.`
   Verification: `pending`
   Commit: `pending`
 
@@ -312,7 +319,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` | `active` | `.9.2` shipped canonical `association_schedules[]` report metadata; the next slice must select the next temporary-association behavior before code. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` | `active` | `.9.3` selected a realistic scalar data-route fixture using shipped ATL data movement before adding fixture source or tests. |
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -367,6 +374,60 @@ Explicit non-claims:
 - no route mux/storage insertion;
 - no CDC, payload, ready/backpressure, broader fan-in/fan-out, or permanent
   actor grouping behavior.
+
+## Selected Next ATL Data-Route Fixture
+
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` selects the next fixture leaf as a
+data-movement fixture rather than another trigger-batch fixture. The goal is
+to keep moving toward the user's ATL data/information movement model while
+staying inside already shipped scalar actor-to-actor handoff semantics.
+
+Selected next implementation leaf:
+
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`
+
+Selected file:
+
+- `isf/atl_data_route_pipeline.isf`
+
+Selected source shape:
+
+```lisp
+(actor atl_data_route_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+```
+
+Selected report evidence:
+
+- `actor_network.instances[]` contains `producer` and `consumer`.
+- `actor_network.data_movements[]` contains one `scalar_actor_handoff` route
+  from `producer.payload` to `consumer.payload`.
+- The generated parent handoff signals are `producer_payload` and
+  `consumer_payload`.
+- `route_lifetime` is `drive_call_cycle`; `storage` is `none`.
+- `actor_network.association_schedules[]` and `group_schedules[]` remain
+  empty because this fixture uses a drive-activated data route, not a
+  trigger-batch association.
+
+Explicit non-claims:
+
+- no generated ATL child `.fsm`;
+- no generated ATL top;
+- no route mux or inserted storage;
+- no peer events, trigger/data coupling, fan-in/fan-out, wider payloads, CDC,
+  ready/backpressure, compact aliases, or permanent actor grouping.
 
 ## Selected First ATL Fixture
 
@@ -647,6 +708,10 @@ Current proposal summary:
   `actor_network.association_schedules[]` entries; the existing
   `actor_network.group_schedules[]` key remains a schema-version-1
   compatibility view until a later schema migration removes or narrows it.
+- `2026-05-19`: Selected `.9.4` as a realistic scalar data-route fixture
+  using the already shipped actor-to-actor data movement source shape:
+  `(consumer.payload producer.payload)` inside a named drive body activated by
+  one top-level transaction drive call.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
   design first treated `(network ...)` as a scoping candidate, not a
   requirement, while keeping flat top-level actor ATL clauses as an explicit
@@ -756,6 +821,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1324-isf-atl-fixture-coverage.t t/1322-isf-actor-network-static.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `temporary trigger-batch fixture promoted without permanent group membership; broad ISF gate passes with Files=230, Tests=1357` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected additive actor_network.association_schedules[] report metadata for task-scoped ATL associations while preserving group_schedules[] compatibility` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t t/1324-isf-atl-fixture-coverage.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_trigger_batch_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `canonical actor_network.association_schedules[] report metadata shipped for temporary trigger batches while group_schedules[] remains a compatibility view` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a realistic scalar actor-to-actor data-route fixture before source/test implementation` |
 
 ## Commit Log
 
@@ -793,6 +859,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.8.2: add ATL trigger fixture` | `pivots the first ATL fixture to task-scoped temporary trigger batches and proves strict schedule JSON plus HDL reachability` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.1: select ATL association reports` | `selects canonical association_schedules[] report metadata as the next temporary-association slice` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.2: add ATL association reports` | `ships canonical association_schedules[] metadata while preserving group_schedules[] compatibility` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.3: select ATL data-route fixture` | `selects a scalar actor-to-actor data-route fixture using shipped drive-body movement syntax` |
 
 ## Changelog
 
@@ -966,3 +1033,10 @@ Current proposal summary:
   remains as a schema-version-1 compatibility view. The active frontier moves
   to `.9.3` to select the next ATL temporary-association behavior before
   code.
+- `2026-05-19`: Completed `.9.3`: selected `.9.4` to promote
+  `isf/atl_data_route_pipeline.isf`, a realistic scalar actor-to-actor
+  data-route fixture using a named drive body and one transaction drive call.
+  The fixture will prove generated parent handoff ports, `data_movements[]`
+  metadata, strict schedule JSON, and plain/strict HDL reachability without
+  claiming generated ATL children, ATL tops, route mux/storage, trigger/data
+  coupling, or permanent grouping.

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL data-route fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` as a selection leaf before
+  fixture source/test changes.
+- The next active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`,
+  which will promote `isf/atl_data_route_pipeline.isf`.
+- Selected source shape: two direct static actor instances, one named drive
+  body with `(consumer.payload producer.payload)`, and one top-level
+  transaction drive call.
+- The selected fixture will prove generated parent handoff ports
+  `producer_payload` and `consumer_payload`, `actor_network.data_movements[]`
+  route metadata, strict schedule JSON parity, and plain/strict HDL
+  reachability.
 ## 2026-05-19: ATL association schedule reports shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`.
 - Schedule JSON now exposes canonical

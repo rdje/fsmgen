@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.3`.
+  activation `.111` and ATL actor-network orchestration `.9.4`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -151,6 +151,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `group_schedules[]` remains as compatibility output. The next ATL frontier
   is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, which must select the next
   temporary-association behavior before code.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` selected the next fixture as
+  `isf/atl_data_route_pipeline.isf`: two direct static actors, one scalar
+  actor-to-actor drive-body route `(consumer.payload producer.payload)`, and
+  one transaction drive call. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, which must add that fixture and prove
+  strict schedule JSON plus HDL reachability without widening ATL behavior.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
