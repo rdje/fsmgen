@@ -619,23 +619,19 @@ then use post-do `(await_any done)` as an observation point before the later
 same-body `(await_all done)` drain. It uses the same deterministic generated
 do instance, preserves the static generated-top parameter binding, waits for
 that generated do instance's fresh done handoff before the observation, and
-leaves the pending generated-spawn done set live for the later drain. Bind
-handoffs or domain metadata on generated-do post-do `await_any`, new spawn
-after the do before the drain, cross-domain activation, deeper branch/loop
-nesting, and broader outstanding-child semantics remain backlog until their
-own leaves select and ship them. The next selected frontier is the
-when-contained bound generated-do post-do `await_any` subset: a repeat
-directly inside a top-level `when` body may run
+leaves the pending generated-spawn done set live for the later drain. The
+when-contained bound generated-do post-do `await_any` subset is now shipped:
+a repeat directly inside a top-level `when` body may run
 `(do child (params ...) (bind ...))` while multiple generated spawns remain
 pending, then use post-do `(await_any done)` as an observation point before
-the later same-body `(await_all done)` drain. That selected subset must wire
-the generated-top input/output binding handoffs for the generated do
-instance, require that instance's fresh done handoff before the observation,
-and leave the pending generated-spawn done set live for the later drain. It
-is selected for the next implementation leaf but is not shipped yet; domain
-metadata, the switch-contained bound analogue, new spawn after the do before
-the drain, cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain backlog.
+the later same-body `(await_all done)` drain. That subset wires the
+generated-top input/output binding handoffs for the generated do instance,
+requires that instance's fresh done handoff before the observation, and
+leaves the pending generated-spawn done set live for the later drain. Domain
+metadata on generated-do post-do `await_any`, the switch-contained bound
+analogue, new spawn after the do before the drain, cross-domain activation,
+deeper branch/loop nesting, and broader outstanding-child semantics remain
+backlog until their own leaves select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

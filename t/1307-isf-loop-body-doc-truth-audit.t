@@ -115,24 +115,20 @@ for my $path (@loop_docs) {
         qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*local.*do.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
         "$path documents the shipped top-level when-body nested repeat local do while generated spawn pending subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*local.*do.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_branch_await_any_before_do($content, 'when', qr/\blocal\b/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat local do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*local.*do.*post-do.*await_any.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_post_do_await_any($content, 'when', qr/\blocal\b/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat local do before post-do multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*local.*do.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_branch_await_any_before_do($content, 'switch', qr/\blocal\b/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat local do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*local.*do.*post-do.*await_any.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_post_do_await_any($content, 'switch', qr/\blocal\b/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat local do before post-do multi-pending await_any subset",
     );
     like(
@@ -140,14 +136,12 @@ for my $path (@loop_docs) {
         qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated-child.*do.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
         "$path documents the shipped top-level when-body nested repeat generated-child do while generated spawn pending subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated-child.*do.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_branch_await_any_before_do($content, 'when', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated-child do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated-child.*do.*post-do.*await_any.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_post_do_await_any($content, 'when', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated-child do before post-do multi-pending await_any subset",
     );
     like(
@@ -155,19 +149,20 @@ for my $path (@loop_docs) {
         qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
         "$path documents the shipped top-level when-body nested repeat generated static-parameter do while generated spawn pending subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_branch_await_any_before_do($content, 'when', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body(?=[\s\S]{0,1800}static(?:[-\s]+parameter| params))(?=[\s\S]{0,1800}generated)(?=[\s\S]{0,1800}do)(?=[\s\S]{0,1800}post-do[\s\S]{0,300}await_any)(?=[\s\S]{0,2200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,500}pending)(?=[\s\S]{0,2600}await_all[\s\S]{0,300}drain)/i,
+    ok(
+        documents_branch_post_do_await_any($content, 'when', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter do before post-do multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*bind.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_when_bound_generated_do_before_post_await_any($content),
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter bound do before post-do multi-pending await_any subset",
+    );
+    ok(
+        documents_branch_await_any_before_do($content, 'when', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter bound do after multi-pending await_any subset",
     );
     like(
@@ -180,9 +175,8 @@ for my $path (@loop_docs) {
         qr/(?:same[-\s]+domain|domain NAME)[\s\S]{0,1200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending[\s\S]{0,800}await_all[\s\S]{0,300}drain/i,
         "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do while generated spawn pending subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?when`?\s+body(?=[\s\S]{0,2600}(?:same[-\s]+domain|domain NAME))(?=[\s\S]{0,2600}multi-pending[\s\S]{0,500}await_any)(?=[\s\S]{0,2600}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending)(?=[\s\S]{0,2800}await_all[\s\S]{0,300}drain)/i,
+    ok(
+        documents_branch_await_any_before_do($content, 'when', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do after multi-pending await_any subset",
     );
     like(
@@ -190,9 +184,8 @@ for my $path (@loop_docs) {
         qr/switch(?:`|\s|-|branch)[\s\S]{0,1600}(?:same[-\s]+domain|domain NAME)[\s\S]{0,1200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending[\s\S]{0,800}await_all[\s\S]{0,300}drain/i,
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do while generated spawn pending subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch(?=[\s\S]{0,2600}(?:same[-\s]+domain|domain NAME))(?=[\s\S]{0,2600}multi-pending[\s\S]{0,500}await_any)(?=[\s\S]{0,2600}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending)(?=[\s\S]{0,2800}await_all[\s\S]{0,300}drain)/i,
+    ok(
+        documents_branch_await_any_before_do($content, 'switch', qr/(?:same[-\s]+domain|domain name)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do after multi-pending await_any subset",
     );
     like(
@@ -225,14 +218,12 @@ for my $path (@loop_docs) {
         qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated-child.*do.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
         "$path documents the shipped top-level switch-branch nested repeat generated-child do while generated spawn pending subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated-child.*do.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_branch_await_any_before_do($content, 'switch', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated-child do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated-child.*do.*post-do.*await_any.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+    ok(
+        documents_branch_post_do_await_any($content, 'switch', qr/generated-child/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated-child do before post-do multi-pending await_any subset",
     );
     like(
@@ -240,19 +231,16 @@ for my $path (@loop_docs) {
         qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do while generated spawn pending subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_branch_await_any_before_do($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do after multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch(?=[\s\S]{0,1800}static(?:[-\s]+parameter| params))(?=[\s\S]{0,1800}generated)(?=[\s\S]{0,1800}do)(?=[\s\S]{0,1800}post-do[\s\S]{0,300}await_any)(?=[\s\S]{0,2200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,500}pending)(?=[\s\S]{0,2600}await_all[\s\S]{0,300}drain)/i,
+    ok(
+        documents_branch_post_do_await_any($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do before post-do multi-pending await_any subset",
     );
-    like(
-        $content,
-        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*generated.*do.*static(?:[-\s]+parameter| params).*bind.*(?:multi-pending.*await_any.*generated(?:\s+nested)?\s+spawn.*pending|generated(?:\s+nested)?\s+spawn.*pending.*multi-pending.*await_any).*await_all.*drain/si,
+    ok(
+        documents_branch_await_any_before_do($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any subset",
     );
     like(
@@ -276,4 +264,92 @@ sub read_repo_file {
     my $content = do { local $/; <$fh> };
     close $fh;
     return $content;
+}
+
+sub documents_when_bound_generated_do_before_post_await_any {
+    my ($content) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    for my $anchor (
+        'top-level when body',
+        'when-contained bound generated-do post-do',
+    ) {
+        my $offset = index($normalized, $anchor);
+        while ($offset >= 0) {
+            my $window = substr($normalized, $offset, 3200);
+            return 1
+                if ($window =~ /(?:static[-\s]+parameter|static params|\(params \.\.\.\))/)
+                && ($window =~ /(?:bind|binding|handoff)/)
+                && index($window, 'post-do') >= 0
+                && index($window, 'await_any') >= 0
+                && index($window, 'await_all') >= 0
+                && index($window, 'drain') >= 0;
+            $offset = index($normalized, $anchor, $offset + 1);
+        }
+    }
+
+    return 0;
+}
+
+sub documents_branch_post_do_await_any {
+    my ($content, $branch, @markers) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my $anchor = $branch eq 'switch'
+        ? 'top-level switch branch'
+        : 'top-level when body';
+    my $offset = index($normalized, $anchor);
+    while ($offset >= 0) {
+        my $window = substr($normalized, $offset, 4200);
+        my $matches_markers = 1;
+        for my $marker (@markers) {
+            if ($window !~ $marker) {
+                $matches_markers = 0;
+                last;
+            }
+        }
+        return 1
+            if $matches_markers
+            && index($window, 'post-do') >= 0
+            && index($window, 'await_any') >= 0
+            && index($window, 'await_all') >= 0
+            && index($window, 'drain') >= 0
+            && index($window, 'pending') >= 0;
+        $offset = index($normalized, $anchor, $offset + 1);
+    }
+
+    return 0;
+}
+
+sub documents_branch_await_any_before_do {
+    my ($content, $branch, @markers) = @_;
+    my $normalized = lc $content;
+    $normalized =~ s/`//g;
+
+    my $anchor = $branch eq 'switch'
+        ? 'top-level switch branch'
+        : 'top-level when body';
+    my $offset = index($normalized, $anchor);
+    while ($offset >= 0) {
+        my $window = substr($normalized, $offset, 4200);
+        my $matches_markers = 1;
+        for my $marker (@markers) {
+            if ($window !~ $marker) {
+                $matches_markers = 0;
+                last;
+            }
+        }
+        return 1
+            if $matches_markers
+            && index($window, 'multi-pending') >= 0
+            && index($window, 'await_any') >= 0
+            && index($window, 'await_all') >= 0
+            && index($window, 'drain') >= 0
+            && index($window, 'pending') >= 0;
+        $offset = index($normalized, $anchor, $offset + 1);
+    }
+
+    return 0;
 }

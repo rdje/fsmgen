@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained bound generated do before post-do await_any preserves binding handoffs and spawn lifetime
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.110` implements only the selected
+  top-level `when` body nested-repeat static-parameter-bound-generated-do-
+  before-post-do-`await_any` subset.
+- The widening remains validator-local: `(do child (params ...) (bind ...))`
+  may precede a multi-pending `(await_any done)` observation only for a
+  repeat directly inside a top-level `when` body, only while generated nested
+  spawns remain pending, and only when a later same-body `(await_all done)`
+  drains every pending generated child before nested repeat re-entry.
+- The generated do consumes its deterministic generated instance's
+  start/done handoff and generated-top input/output binding handoffs. Its
+  fresh done pulse is required before the post-do `await_any`; that
+  `await_any` observes the generated-spawn done set without clearing it.
+- Domain metadata on generated-do post-do `await_any`, the switch-contained
+  bound analogue, new spawn after the do before drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain separate contracts.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`
+  must pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: when-contained bound generated do before post-do await_any is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.109` selects the first bound generated-do
   post-do `await_any` widening, limited to a generated blocking do inside a

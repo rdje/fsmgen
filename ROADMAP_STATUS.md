@@ -2,18 +2,18 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`.
-  Leaf `.109` selected top-level `when` body nested repeat generated
-  blocking `(do child (params ...) (bind ...))` before post-do multi-pending
-  `(await_any done)` as the next bounded subset. Leaf `.110` must implement
-  only that selected shape: a repeat directly inside a top-level `when` body
-  with multiple generated spawns, a static-parameter generated do with
-  input/output bind handoffs while those generated spawns remain pending,
-  post-do `(await_any done)` as an observation point, and a later same-body
-  `(await_all done)` drain before nested repeat re-entry. Domain metadata,
-  the switch-contained bound analogue, spawn-after-do, cross-domain
-  activation, deeper branch/loop nesting, and broader outstanding-child
-  semantics remain deferred.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
+  Leaf `.110` shipped top-level `when` body nested repeat generated blocking
+  `(do child (params ...) (bind ...))` before post-do multi-pending
+  `(await_any done)`: the generated do instance completes before the
+  observation, generated-top input/output binding handoffs are wired for that
+  lexical generated do site, and the pending generated-spawn done set remains
+  live for the later same-body `(await_all done)` drain before nested repeat
+  re-entry. Leaf `.111` must select the next bounded subset before further
+  implementation. Domain metadata on generated-do post-do `await_any`, the
+  switch-contained bound analogue, spawn-after-do, cross-domain activation,
+  deeper branch/loop nesting, and broader outstanding-child semantics remain
+  unselected.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -615,8 +615,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   generated-spawn lifetime proof. The next active frontier,
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.109`, selected the when-contained bound
   generated-do-before-post-do-await_any subset. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`, which implements only that selected
-  when-contained bound subset.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`, which shipped that selected
+  when-contained bound subset while wiring generated-top input/output binding
+  handoffs and preserving the generated-spawn lifetime proof. The next active
+  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`, which selects the next
+  bounded subset before further implementation.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

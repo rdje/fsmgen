@@ -1651,10 +1651,15 @@ Current lowering:
   `(await_any done)` observation and later-drain contract while generated
   nested spawns remain pending before the same-body `await_all` drain; the
   generated do waits for its deterministic generated do instance's fresh done
-  handoff and preserves static generated-top parameter binding. Bound or
-  domain-qualified generated-do post-do `await_any`, new nested `spawn` after
-  the do before the drain, deeper branch/loop nesting, and cross-domain
-  activation remain fail-closed.
+  handoff and preserves static generated-top parameter binding. Top-level
+  `when` body nested repeat static-parameter bound generated
+  `(do child (params ...) (bind ...))` supports the same post-do
+  multi-pending observation and later-drain contract while also wiring the
+  generated-top input/output binding handoffs for the generated do instance.
+  Domain-qualified generated-do post-do `await_any`, switch-contained bound
+  generated-do post-do `await_any`, new nested `spawn` after the do before
+  the drain, deeper branch/loop nesting, and cross-domain activation remain
+  fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

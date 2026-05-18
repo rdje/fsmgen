@@ -966,9 +966,14 @@ waits for its deterministic generated do instance's fresh done handoff and
 the later same-body `await_all` still drains every pending generated spawn
 before nested repeat re-entry. The top-level `switch` branch subset supports
 the same static-parameter generated-do post-do `await_any` observation and
-later same-body `await_all` drain contract. Bound or domain-qualified
-generated-do post-do `await_any` and new spawn after the do before the drain
-remain outside the public shipped subset.
+later same-body `await_all` drain contract. The top-level `when` body subset
+also supports static-parameter bound generated
+`(do child (params ...) (bind ...))` before post-do `await_any`, wiring the
+generated-top input/output binding handoffs for that generated do instance
+while preserving the same later-drain contract. Domain-qualified generated-do
+post-do `await_any`, switch-contained bound generated-do post-do `await_any`,
+and new spawn after the do before the drain remain outside the public shipped
+subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level

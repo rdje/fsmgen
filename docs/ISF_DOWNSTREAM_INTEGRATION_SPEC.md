@@ -978,9 +978,13 @@ Rules:
   `(await_any done)` observation and later-drain contract while generated
   nested spawns remain pending before that drain; the generated do waits for
   its deterministic generated do instance's fresh done handoff and preserves
-  static generated-top parameter binding. Bound or domain-qualified
-  generated-do post-do `await_any`, new nested `spawn` after the do before the
-  drain, deeper branch/loop nesting, and cross-domain activation remain
+  static generated-top parameter binding. Top-level `when` body static-
+  parameter bound generated `(do child (params ...) (bind ...))` supports
+  the same post-do observation and later-drain contract while also wiring the
+  generated-top input/output binding handoffs for the generated do instance.
+  Domain-qualified generated-do post-do `await_any`, switch-contained bound
+  generated-do post-do `await_any`, new nested `spawn` after the do before
+  the drain, deeper branch/loop nesting, and cross-domain activation remain
   fail-closed.
   Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,

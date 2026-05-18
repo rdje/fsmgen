@@ -1,6 +1,31 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF when-contained bound generated do before post-do await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`.
+- Top-level `when` bodies may now contain nested repeats with multiple
+  generated spawns, static-parameter generated blocking
+  `(do child (params ...) (bind ...))` while those generated spawns remain
+  pending, `(await_any done)` as an observation point after that generated
+  do, and a later same-body `(await_all done)` drain before the nested repeat
+  check can loop.
+- Lowering waits for the generated do instance's fresh done handoff before
+  evaluating the post-do `await_any`, wires generated-top input/output
+  binding handoffs for the lexical generated do site, keeps the pending
+  generated-spawn done set live through the observation, preserves
+  source-order samples around spawn/do/await_any/await_all, and drains every
+  generated spawn before nested repeat re-entry.
+- Domain metadata on generated-do post-do `await_any`, the switch-contained
+  bound analogue, spawn-after-do before the drain, cross-domain activation,
+  deeper nesting, and broader outstanding-child semantics remain fail-closed.
+- Synchronized the ISF spec, downstream integration spec, public contract,
+  task tree, roadmap board, live docs, doc audits, and mdBook.
+- Opened `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` as the next selection leaf
+  before any further repeat-body child activation implementation.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=57),
+  focused repeat/spawn/doc checks (Files=3, Tests=385), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1338), and
+  `git diff --check` passed.
 ### R14 — ISF when-contained bound generated do before post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.109`.
 - Selected top-level `when` body nested repeats with multiple generated
