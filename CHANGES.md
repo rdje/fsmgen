@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL static group metadata shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`.
+- Parser/reporting now accepts the selected direct actor-body group metadata
+  form: `(group NAME (members ACTOR...) (mode concurrent))` against at least
+  two already declared direct static actor instances.
+- Schedule JSON reports the group through `actor_network.groups[]` with
+  `name`, `members`, `mode`, `declaration`, `source`, and `scheduling`;
+  `scheduling` is `metadata_only` in this subset.
+- Compact aliases, group endpoints, generated child artifacts, generated ATL
+  tops, scheduling overlap, route mux/storage, CDC, nested groups, dynamic
+  membership, and combinations with actor events/triggers/data movements
+  remain deferred or fail-closed.
+- Synchronized the task tree, roadmap board, ATL design proposal, ISF spec,
+  downstream handoff, public contract, mdBook, live achievement status, and
+  development notes. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
+
 ### R14 — ATL group declarations fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
 - Parser validation now rejects reserved direct actor-body `(group ...)`

@@ -254,7 +254,10 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 );
             }
             when ('group') {
-                confess "Error: actor '$actor_name' ATL concurrent group declaration '(group ...)' is reserved but not supported yet; group metadata and scheduling remain deferred\n";
+                $self->_merge_actor_network(
+                    $result,
+                    $self->_parse_actor_network_group($clause, $actor_name),
+                );
             }
             when ('concurrent') {
                 confess "Error: actor '$actor_name' ATL compact concurrent group alias '(concurrent ...)' is reserved but not supported yet; compact aliases remain deferred until the verbose group contract ships\n";
@@ -741,6 +744,8 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
     my @data_movements;
     my @data_movement_drive_calls;
 
+    _validate_actor_network_groups($actor, \%actor_instances);
+
     for my $drive_name (sort keys %{$actor->{drives} || {}}) {
         if (my $movement = _accept_selected_atl_data_movement_drive(
             $actor->{actor_name},
@@ -1204,14 +1209,19 @@ sub _validate_selected_atl_data_movement_drive_call {
 sub _finalize_selected_atl_data_movements {
     my ($actor, $instances, $data_movements, $data_movement_drive_calls, $event_waits, $transaction_triggers) = @_;
     my $instance_count = ref($instances) eq 'ARRAY' ? scalar(@$instances) : 0;
+    my $group_count = scalar(@{(($actor->{actor_network} || {})->{groups}) || []});
 
-    if ($instance_count > 1 && !@{$data_movements || []}) {
+    if ($instance_count > 1 && !@{$data_movements || []} && !$group_count) {
         confess "Error: actor '$actor->{actor_name}' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset is present; broader multiple-instance scheduling is deferred\n";
     }
+    confess "Error: actor '$actor->{actor_name}' ATL concurrent group metadata cannot be combined with actor event waits or actor transaction triggers in the current subset\n"
+        if $group_count && (@{$event_waits || []} || @{$transaction_triggers || []});
     return 1 unless @{$data_movements || []};
 
     confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with actor event waits or actor transaction triggers in the current subset\n"
         if @{$event_waits || []} || @{$transaction_triggers || []};
+    confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with concurrent group metadata in the current subset\n"
+        if $group_count;
 
     for my $movement (@$data_movements) {
         my @calls = grep { $_->{drive} eq $movement->{drive} } @{$data_movement_drive_calls || []};
@@ -5093,6 +5103,64 @@ sub _parse_actor_network_instance($self, $clause, $actor_name) {
                 declaration => 'actor',
             },
         ],
+        [],
+    );
+}
+
+sub _parse_actor_network_group($self, $clause, $actor_name) {
+    confess "Error: actor '$actor_name' ATL concurrent group requires '(group name (members actor...) (mode concurrent))'\n"
+        unless @$clause == 4;
+
+    my $name = $clause->[1];
+    confess "Error: actor '$actor_name' ATL concurrent group name must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($name);
+
+    my ($members, $mode);
+    my %seen_clause;
+    for my $part (@{$clause}[2, 3]) {
+        confess "Error: actor '$actor_name' ATL concurrent group '$name' entries must be '(members ...)' or '(mode concurrent)'\n"
+            unless ref($part) eq 'ARRAY' && @$part;
+        my $head = $part->[0];
+        confess "Error: actor '$actor_name' ATL concurrent group '$name' entry heads must be scalar\n"
+            unless defined($head) && !ref($head);
+        confess "Error: actor '$actor_name' ATL concurrent group '$name' has duplicate '$head' clause\n"
+            if $seen_clause{$head}++;
+
+        if ($head eq 'members') {
+            confess "Error: actor '$actor_name' ATL concurrent group '$name' members require '(members actor actor...)'\n"
+                unless @$part >= 3;
+            $members = [ @{$part}[1 .. $#$part] ];
+            next;
+        }
+
+        if ($head eq 'mode') {
+            confess "Error: actor '$actor_name' ATL concurrent group '$name' mode requires '(mode concurrent)'\n"
+                unless @$part == 2 && defined($part->[1]) && !ref($part->[1]);
+            confess "Error: actor '$actor_name' ATL concurrent group '$name' only supports '(mode concurrent)' in the current subset\n"
+                unless $part->[1] eq 'concurrent';
+            $mode = $part->[1];
+            next;
+        }
+
+        confess "Error: actor '$actor_name' ATL concurrent group '$name' has unsupported clause '$head'\n";
+    }
+
+    confess "Error: actor '$actor_name' ATL concurrent group '$name' requires '(members ...)' and '(mode concurrent)'\n"
+        unless defined($members) && defined($mode);
+
+    return _actor_network_from_instances(
+        $actor_name,
+        [],
+        [
+            {
+                name        => $name,
+                members     => $members,
+                mode        => $mode,
+                declaration => 'group',
+                source      => 'actor_body',
+                scheduling  => 'metadata_only',
+            },
+        ],
     );
 }
 
@@ -5103,8 +5171,11 @@ sub _merge_actor_network($self, $actor, $incoming) {
     my @existing = @{($actor->{actor_network} || {})->{instances} || []};
     my @incoming = @{$incoming->{instances} || []};
     my @merged = (@existing, @incoming);
+    my @existing_groups = @{($actor->{actor_network} || {})->{groups} || []};
+    my @incoming_groups = @{$incoming->{groups} || []};
+    my @merged_groups = (@existing_groups, @incoming_groups);
 
-    return 1 unless @merged;
+    return 1 unless @merged || @merged_groups;
 
     my %seen;
     for my $instance (@merged) {
@@ -5112,28 +5183,59 @@ sub _merge_actor_network($self, $actor, $incoming) {
         confess "Error: actor '$actor_name' static actor network has duplicate instance '$name'\n"
             if $seen{$name}++;
     }
-    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset uses exactly two; broader multiple-instance scheduling is deferred\n"
-        if @merged > 2;
+    my %seen_group;
+    for my $group (@merged_groups) {
+        my $name = $group->{name};
+        confess "Error: actor '$actor_name' static actor network has duplicate group '$name'\n"
+            if $seen_group{$name}++;
+    }
 
-    $actor->{actor_network} = _actor_network_from_instances($actor_name, \@merged);
+    $actor->{actor_network} = _actor_network_from_instances($actor_name, \@merged, \@merged_groups);
     return 1;
 }
 
 sub _actor_network_from_instances {
-    my ($actor_name, $instances) = @_;
+    my ($actor_name, $instances, $groups) = @_;
     my @instances = @{$instances || []};
-    confess "Error: actor '$actor_name' static actor network requires one actor instance in the current subset\n"
-        unless @instances;
-    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset uses exactly two; broader multiple-instance scheduling is deferred\n"
-        if @instances > 2;
+    my @groups = @{$groups || []};
+    confess "Error: actor '$actor_name' static actor network requires one actor instance or group in the current subset\n"
+        unless @instances || @groups;
 
     return {
         kind      => 'static_declaration',
         instances => [ map { _clone_isf_value($_) } @instances ],
+        groups => [ map { _clone_isf_value($_) } @groups ],
         event_waits => [],
         transaction_triggers => [],
         data_movements => [],
     };
+}
+
+sub _validate_actor_network_groups {
+    my ($actor, $actor_instances) = @_;
+    my @groups = @{(($actor->{actor_network} || {})->{groups}) || []};
+    return 1 unless @groups;
+
+    confess "Error: actor '$actor->{actor_name}' ATL concurrent groups require a single-clock actor in the current subset\n"
+        if ref($actor->{clock_domains}) eq 'HASH';
+
+    for my $group (@groups) {
+        my $name = $group->{name};
+        my @members = @{$group->{members} || []};
+        confess "Error: actor '$actor->{actor_name}' ATL concurrent group '$name' requires at least two members\n"
+            unless @members >= 2;
+        my %seen_member;
+        for my $member (@members) {
+            confess "Error: actor '$actor->{actor_name}' ATL concurrent group '$name' member names must be scalar HDL identifiers\n"
+                unless _is_hdl_identifier($member);
+            confess "Error: actor '$actor->{actor_name}' ATL concurrent group '$name' references unknown static actor instance '$member'\n"
+                unless ref($actor_instances) eq 'HASH' && $actor_instances->{$member};
+            confess "Error: actor '$actor->{actor_name}' ATL concurrent group '$name' has duplicate member '$member'\n"
+                if $seen_member{$member}++;
+        }
+    }
+
+    return 1;
 }
 
 sub _parse_phase($self, $clause) {

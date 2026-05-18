@@ -262,6 +262,16 @@ sub golden_matrix_cases {
             ],
         },
         {
+            name => 'actor_network_group',
+            filename => 'actor_network_group_report.isf',
+            source => actor_network_group_source(),
+            covers => [
+                qw(
+                  schedule_report_actor_network_group_keys
+                )
+            ],
+        },
+        {
             name => 'actor_network_event_wait',
             filename => 'actor_network_event_wait_report.isf',
             source => actor_network_event_wait_source(),
@@ -497,6 +507,10 @@ sub assert_key_branch {
     }
     if ($branch eq 'schedule_report_actor_network_instance_keys') {
         assert_entry_keys(first_entry($report->{actor_network}{instances}), $contract->{$branch}, "$label actor network instance keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_actor_network_group_keys') {
+        assert_entry_keys(first_entry($report->{actor_network}{groups}), $contract->{$branch}, "$label actor network group keys");
         return 1;
     }
     if ($branch eq 'schedule_report_actor_network_event_wait_keys') {
@@ -1039,6 +1053,24 @@ sub actor_network_static_source {
     (input start)
     (output done))
   (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+ISF
+}
+
+sub actor_network_group_source {
+    return <<'ISF';
+(actor actor_network_group_report
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader writer)
+    (mode concurrent))
   (transaction run
     (on start)
     (complete done)))

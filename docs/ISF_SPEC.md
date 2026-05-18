@@ -2762,16 +2762,17 @@ fail-closed/deferred.
 
 ## 9.5. Actor Network Static Declarations
 
-The first shipped Actor Transfer Level (`ATL`) slice is a metadata-only static
-actor-network declaration. It lets a top-level actor record one child actor
-instance while FSMGen preserves that identity in the parser shell and schedule
-JSON report.
+The shipped Actor Transfer Level (`ATL`) static surfaces let a top-level actor
+record direct child actor instances and report-only static actor groups while
+FSMGen preserves that identity in the parser shell and schedule JSON report.
 
 The selected ATL v0 source contract keeps the existing `(actor NAME ...)` root.
 The actor body is the network boundary; there is no accepted `(network ...)`
-wrapper. The current shipped syntax is the direct actor-body
-`(instance NAME of ACTOR_TYPE)` form below. Future ATL leaves must keep the
-same boundary unless a task-tree leaf explicitly changes the public contract.
+wrapper. The current shipped static instance syntax is the direct actor-body
+`(instance NAME of ACTOR_TYPE)` form below. Report-only static groups use
+direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
+declarations. Future ATL leaves must keep the same boundary unless a
+task-tree leaf explicitly changes the public contract.
 
 Accepted form:
 
@@ -2801,6 +2802,8 @@ parser/schedule-report metadata:
       "declaration": "actor"
     }
   ],
+  "groups": [],
+  "data_movements": [],
   "event_waits": [],
   "transaction_triggers": []
 }
@@ -2808,27 +2811,29 @@ parser/schedule-report metadata:
 
 `declaration` is `actor` in the current subset because static actor instances
 are direct clauses of the enclosing actor. Instance names and actor types must
-be scalar HDL identifiers. The current shipped subset accepts exactly one
-static actor instance per top-level actor. It does not instantiate or resolve
-that actor type, does not emit a generated child `.fsm`, does not create a
-generated composition top, and does not change HDL generation. It is
-report-visible design intent for the upcoming ATL scheduler slices.
+be scalar HDL identifiers. Multiple direct static instances are accepted only
+by shipped bounded subsets: the scalar actor-to-actor handoff route and
+report-only static group metadata. Static instance metadata does not
+instantiate or resolve actor types, emit generated child `.fsm`, create a
+generated composition top, or change HDL generation. It is report-visible
+design intent for the upcoming ATL scheduler slices.
 
 The following remain fail-closed/deferred:
 
-- multiple static actor instances;
-- `(group ...)` declarations;
+- multiple static actor instances outside the shipped scalar handoff and
+  report-only group metadata subsets;
 - `(network ...)` wrappers;
-- actor-to-actor endpoint movement through widened drive-body `(sink source)`
-  pairs;
+- broader actor-to-actor endpoint movement through widened drive-body
+  `(sink source)` pairs outside the shipped scalar one-cycle handoff subset;
 - broader qualified actor transaction/event behavior beyond the selected
   parent-handoff subsets;
-- static actor type resolution, generated child artifacts, and generated
-  top-level ATL wiring;
+- static actor type resolution, generated child artifacts, generated
+  top-level ATL wiring, and group scheduling;
 - recursive actor-network declarations.
 
-The broader ATL v0 vocabulary is selected, with only the bounded event-wait
-and actor-transaction trigger handoff subsets implemented so far:
+The broader ATL v0 vocabulary is selected, with only the bounded event-wait,
+actor-transaction trigger, scalar data-movement handoff, top-level pin
+handoff, and report-only group metadata subsets implemented so far:
 
 - Endpoint-aware movement will reuse existing drive bodies and drive calls.
   Drive body pairs keep the existing `(sink source)` order. The widened
@@ -2883,16 +2888,20 @@ and actor-transaction trigger handoff subsets implemented so far:
   `(await actor.event)` and `(trigger actor.transaction)`. Events and trigger
   handoffs are scheduler-visible one-cycle control pulses; event and trigger
   payloads remain deferred.
-- Future concurrent groups use
+- Concurrent groups use
   `(group NAME (members ACTOR...) (mode concurrent))`; groups express
   schedulable intent and do not override fan-in, ordering, lifetime, or CDC
   safety checks.
-- The concurrent-group implementation axis starts with targeted diagnostics,
-  not scheduling behavior. FSMGen rejects direct actor-body
-  `(group NAME (members ACTOR...) (mode concurrent))` declarations and compact
-  `(concurrent NAME ACTOR...)` aliases with ATL-specific messages. No group
-  metadata, group endpoints, concurrent execution, storage/mux insertion,
-  generated child artifacts, or CDC behavior is shipped yet.
+- The concurrent-group implementation axis has shipped targeted diagnostics
+  and report-only metadata. FSMGen accepts direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations when every
+  member names an already declared direct static actor instance, at least two
+  members are present, and the actor is single-clock. Schedule JSON reports
+  each group through `actor_network.groups[]` with `name`, `members`, `mode`,
+  `declaration`, `source`, and `scheduling`; the current `scheduling` value is
+  `metadata_only`. Compact `(concurrent NAME ACTOR...)` aliases, group
+  endpoints, concurrent execution, storage/mux insertion, generated child
+  artifacts, and CDC behavior remain deferred.
 
 The current actor-event wait subset is deliberately narrower than full child
 orchestration. FSMGen accepts exactly one top-level transaction-body
@@ -3061,6 +3070,7 @@ and `sink`. Each scalar data-movement entry contains `kind`, `transaction`,
 The capability-manifest ISF public contract advertises these families through
 `schedule_report_actor_network_keys`,
 `schedule_report_actor_network_instance_keys`,
+`schedule_report_actor_network_group_keys`,
 `schedule_report_actor_network_data_movement_keys`,
 `schedule_report_actor_network_event_wait_keys`, and
 `schedule_report_actor_network_transaction_trigger_keys`.

@@ -364,6 +364,16 @@ sub _actor_network_for_ir {
             sink            => $_->{sink},
         }
     } @{$network->{data_movements} || []};
+    my @groups = map {
+        {
+            name        => $_->{name},
+            members     => [ @{$_->{members} || []} ],
+            mode        => $_->{mode},
+            declaration => $_->{declaration},
+            source      => $_->{source},
+            scheduling  => $_->{scheduling},
+        }
+    } @{$network->{groups} || []};
 
     return {
         kind      => $network->{kind} // 'static_declaration',
@@ -376,6 +386,7 @@ sub _actor_network_for_ir {
                 }
             } @{$network->{instances}}
         ],
+        groups => \@groups,
         event_waits => \@event_waits,
         transaction_triggers => \@transaction_triggers,
         data_movements => \@data_movements,

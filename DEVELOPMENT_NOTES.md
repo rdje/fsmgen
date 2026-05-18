@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL group metadata is report-only
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` adds `actor_network.groups[]` metadata
+  without changing scheduling. The group declaration is accepted so authors
+  and downstream tools can name an intended concurrent set, but the scheduler
+  still treats it as `metadata_only`.
+- The parser validates the selected static shape in one place: group name,
+  explicit concurrent mode, at least two declared direct static actor members,
+  duplicate members, and single-clock scope.
+- Keeping compact aliases, group endpoints, event/trigger/data-movement
+  combinations, mux/storage insertion, and CDC deferred prevents metadata from
+  being mistaken for execution semantics.
 ## 2026-05-18: ATL group diagnostics stay behavior-free
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` intentionally changes only the parser
   failure surface for reserved group syntax.

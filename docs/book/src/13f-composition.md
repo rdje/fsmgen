@@ -364,6 +364,8 @@ The report field is `actor_network`:
       "declaration": "actor"
     }
   ],
+  "groups": [],
+  "data_movements": [],
   "event_waits": [],
   "transaction_triggers": []
 }
@@ -457,16 +459,38 @@ named `producer_payload`, drives the existing one-bit top-level output pin
 `scalar_actor_to_pin_handoff`. Wider pins, storage, muxing, generated
 children, groups, CDC, and trigger/await coupling remain deferred.
 
-Future
-orchestration spellings are reserved as `(do actor.transaction)`,
+ATL orchestration spellings are `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
-`(await actor.event)`. Events are one-cycle control pulses with no payloads in
-ATL v0. Future concurrent groups use
+`(await actor.event)`, with only the bounded transaction-body trigger and
+event-wait parent-handoff subsets shipped today. Events are one-cycle control
+pulses with no payloads in ATL v0. Concurrent groups use
 `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
 not a way to bypass fan-in, ordering, width, lifetime, or CDC safety. The
-first group implementation step ships targeted fail-closed diagnostics for
-`(group ...)` and compact `(concurrent ...)` forms; no group metadata or
-scheduling behavior is shipped yet.
+first group implementation steps ship targeted fail-closed diagnostics and
+report-only metadata for verbose `(group ...)` declarations; compact
+`(concurrent ...)` aliases and scheduling behavior remain deferred.
+
+Report-only static group metadata is now shipped for the verbose form:
+
+```lisp
+(actor grouped_pipeline
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader writer)
+    (mode concurrent))
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+The group appears in `actor_network.groups[]` with `scheduling:
+"metadata_only"`. It names intent for later scheduling leaves; it does not
+run actors concurrently, infer dependencies, insert storage or muxes, emit
+child artifacts, cross clock domains, or accept compact `(concurrent ...)`
+aliases.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single

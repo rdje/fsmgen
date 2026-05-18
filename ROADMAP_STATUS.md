@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.7.3`.
+  activation `.111` and ATL actor-network orchestration `.7.4`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -101,7 +101,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   metadata, scheduling overlap, generated child artifacts, route mux/storage,
   CDC, or concurrent actor execution. The next ATL frontier is
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`, which ships report-only static group
-  metadata.
+  metadata. `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` now accepts direct
+  actor-body `(group NAME (members ACTOR...) (mode concurrent))`
+  declarations for at least two already declared direct static actor
+  instances and reports them under `actor_network.groups[]` with
+  `scheduling => metadata_only`. The group metadata does not schedule
+  concurrent execution, infer dependencies, insert route mux/storage, create
+  group endpoints, emit child artifacts, cross clock domains, or accept
+  compact aliases. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`, which selects the first group
+  scheduling behavior before code.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

@@ -62,10 +62,13 @@ selected source shape because it:
   one unified ATL surface;
 - avoids a second lexical section that could be mistaken for a semantic root.
 
-The first metadata-only implementation slice accepts this direct
-`(instance ...)` form for one static actor instance and lowers it to
-`actor_network` report metadata. `(network ...)`, broader `group` placement,
-and multi-instance scheduling are still deferred.
+The shipped metadata surfaces accept direct `(instance ...)` clauses and the
+direct verbose `(group NAME (members ACTOR...) (mode concurrent))` group
+form. Instances lower to `actor_network.instances[]`; groups lower to
+report-only `actor_network.groups[]` entries with `scheduling:
+metadata_only`. `(network ...)`, compact `(concurrent ...)` aliases, broader
+group placement, generated children, group endpoints, and multi-instance
+scheduling are still deferred unless a later leaf advertises them explicitly.
 
 This keeps the model natural:
 
@@ -102,21 +105,26 @@ ATL v0 now has a selected public source direction:
   `(spawn actor.transaction as NAME)` when that future implementation ships.
 - Rule-level actor-transaction orchestration uses
   `(trigger actor.transaction)` when that future implementation ships.
-- Actor event synchronization uses `(await actor.event)` when that future
-  implementation ships. Event payloads are not part of ATL v0.
+- Actor event synchronization uses `(await actor.event)`. The shipped subset
+  is one top-level transaction-body wait for the current single static actor
+  instance; event payloads are not part of ATL v0.
 - Concurrent actor groups use
-  `(group NAME (members ACTOR...) (mode concurrent))` when that future
-  implementation ships. Groups express schedulable intent, not an override for
-  safety.
+  `(group NAME (members ACTOR...) (mode concurrent))`. The shipped subset is
+  report-only metadata for at least two declared direct static actor
+  instances in a single-clock actor. Groups express schedulable intent, not an
+  override for safety.
 
 The current generated-artifact contract is also explicit: FSMGen may add the
-selected one-bit actor-event handoff input to the parent scheduled `.fsm`,
-may add the selected one-cycle actor-transaction trigger handoff output to
-the parent scheduled `.fsm`, and reports those handoffs through
-`actor_network.event_waits[]` and `actor_network.transaction_triggers[]`. It
-still emits no generated ATL child `.fsm`, generated ATL top, route mux,
-internal handoff storage, child instance, or HDL event wiring. Later leaves
-must add their generated artifact names, report keys, examples, and
+selected one-bit actor-event handoff input, selected one-cycle
+actor-transaction trigger handoff output, and selected one-cycle scalar
+data-movement handoff ports to the parent scheduled `.fsm`; it reports those
+handoffs through `actor_network.event_waits[]`,
+`actor_network.transaction_triggers[]`, and
+`actor_network.data_movements[]`. Static group declarations report only
+`actor_network.groups[]` metadata and add no generated artifacts. FSMGen still
+emits no generated ATL child `.fsm`, generated ATL top, route mux, internal
+handoff storage, child instance, group scheduler, or HDL event wiring. Later
+leaves must add their generated artifact names, report keys, examples, and
 fail-closed diagnostics in the same slice that ships the behavior.
 
 ## Shipped First Actor-Event Wait Subset
@@ -200,9 +208,10 @@ cross-clock actor triggers, generated ATL child artifacts, generated ATL tops,
 and concurrent group triggers. Those forms stay fail-closed until later leaves
 select their exact artifact and scheduling contracts.
 
-## Shipped Static Metadata Slice
+## Shipped Static Metadata Surfaces
 
-The first shipped slice accepts exactly one static actor instance:
+The first shipped static actor-network surface accepts direct actor-body
+static actor instances:
 
 ```lisp
 (actor packet_pipe
@@ -228,15 +237,40 @@ The direct actor-body form preserves schedule-report metadata:
       "declaration": "actor"
     }
   ],
-  "event_waits": []
+  "groups": [],
+  "data_movements": [],
+  "event_waits": [],
+  "transaction_triggers": []
 }
 ```
 
-This slice is intentionally not ATL scheduling. It does not resolve
-`packet_reader`, emit a child `.fsm`, build a generated ATL top, move data
-between actors, trigger `reader` transactions, or wait on `reader` events.
-Those behaviors remain separate task-tree leaves with their own artifact and
-report contracts.
+Direct actor-body static groups are also accepted as report-only metadata:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader writer)
+    (mode concurrent))
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+The group is reported under `actor_network.groups[]` with `name`, `members`,
+`mode`, `declaration`, `source`, and `scheduling`. The current `scheduling`
+value is `metadata_only`.
+
+These static surfaces are intentionally not ATL scheduling. They do not
+resolve actor types, emit child `.fsm` files, build a generated ATL top,
+schedule concurrent execution, create group endpoints, insert route
+mux/storage, or cross clock domains. Those behaviors remain separate
+task-tree leaves with their own artifact and report contracts.
 
 ## Endpoints
 
@@ -519,15 +553,13 @@ The first group implementation can be conservative. It can accept only
 single-clock actor instances with explicit endpoint-aware drive body pairs and
 no dynamic membership.
 
-The shipped first group boundary is diagnostic-only. Before group metadata or
-scheduling behavior is accepted, FSMGen rejects direct actor-body
-`(group NAME (members ACTOR...) (mode concurrent))` declarations and compact
-`(concurrent NAME ACTOR...)` aliases with targeted ATL group diagnostics. The
-later metadata subset is direct actor-body groups only: HDL identifier group
-names, at least two already declared direct static actor members, explicit
-`(mode concurrent)`, no dynamic membership, no nested groups, no group
-endpoints, no generated child artifacts, no route mux/storage, no CDC, and no
-scheduling overlap claims until separate leaves ship them.
+The shipped group metadata subset is direct actor-body groups only: HDL
+identifier group names, at least two already declared direct static actor
+members, explicit `(mode concurrent)`, single-clock actor scope, no dynamic
+membership, no nested groups, no group endpoints, no generated child
+artifacts, no route mux/storage, no CDC, and no scheduling overlap claims
+until separate leaves ship them. Compact `(concurrent NAME ACTOR...)` aliases
+remain reserved and fail closed.
 
 ## Scheduling Ownership
 
@@ -545,8 +577,13 @@ Scheduling should split cleanly:
 
 ## Current Implementation Subset
 
-The shipped first static implementation accepts one direct actor-body
-`(instance name of actor_type)` clause and reports it under `actor_network`.
+The shipped static implementation accepts direct actor-body
+`(instance name of actor_type)` clauses and reports them under
+`actor_network.instances[]`. The report-only group subset accepts direct
+actor-body `(group NAME (members ACTOR...) (mode concurrent))` declarations
+for at least two declared direct static actor instances in a single-clock
+actor and reports them under `actor_network.groups[]` with `scheduling:
+metadata_only`.
 
 The shipped first behavior-bearing handoff subset accepts one top-level
 transaction-body `(await actor.event)` and one top-level transaction-body

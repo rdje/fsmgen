@@ -1558,15 +1558,13 @@ Actor roots may also carry the first bounded ATL static actor-network
 metadata through a direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
 The enclosing actor is the network boundary; `(network ...)` wrappers are not
 part of the shipped source surface. That field is not a required actor shell
-key. When present, `actor_network` is a `static_declaration` hash with
-exactly one instance entry in the current subset, and schedule reports project
-it through top-level `actor_network`. The shipped event-wait subset may also
-add `event_waits[]` entries for generated parent-handoff waits, and the
-shipped actor-transaction trigger subset may add `transaction_triggers[]`
-entries for generated parent-handoff trigger pulses. No child actor type
-resolution, generated child scheduled `.fsm`, generated ATL top,
-actor-to-actor movement, generated child trigger wiring, or HDL event wiring
-is promised by this field.
+key. When present, `actor_network` is a `static_declaration` hash with direct
+static instance metadata, optional report-only group metadata, and the shipped
+event, trigger, and data movement metadata families. Schedule reports project
+it through top-level `actor_network`. No child actor type resolution,
+generated child scheduled `.fsm`, generated ATL top, generated child trigger
+wiring, group scheduling behavior, or HDL event wiring is promised by this
+field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
 behavior until advertised by capability metadata. Endpoint-aware movement
@@ -1589,8 +1587,8 @@ schedule-report surface is `actor_network.data_movements[]` with
 `sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,
 `source`, and `sink`. Storage, muxing, actor type resolution, generated child
 artifacts, generated ATL tops, HDL child wiring, broader pin movement,
-inline/expression movement, fan-in/fan-out, groups, CDC, and trigger/await
-coupling remain future public contracts.
+inline/expression movement, fan-in/fan-out, group scheduling, CDC, and
+trigger/await coupling remain future public contracts.
 The first top-level pin movement public subset is implemented: one
 `(actor.endpoint pins.input_pin)` scalar pair in one named drive body, one
 direct static actor instance, and one top-level transaction drive call. The
@@ -1601,17 +1599,20 @@ The inverse actor-to-top-level output pin public subset is implemented: one
 direct static actor instance, and one top-level transaction drive call. The
 report kind is `scalar_actor_to_pin_handoff`, with
 `source => external_handoff` and `sink => top_level_pin`.
-Future orchestration spellings are reserved as
-`(do actor.transaction)`, `(spawn actor.transaction as NAME)`, and
-`(trigger actor.transaction)`, with event payloads deferred. Future group
-syntax is reserved as
-`(group NAME (members ACTOR...) (mode concurrent))`, but groups will be
-schedulable intent only and will not override safety checks.
-The concurrent-group implementation axis starts with targeted diagnostics:
+Future blocking and nonblocking orchestration spellings are reserved as
+`(do actor.transaction)` and `(spawn actor.transaction as NAME)`, with event
+payloads deferred. Transaction-body `(trigger actor.transaction)` has a
+bounded parent-handoff subset; rule-level qualified triggers remain future.
+Concurrent groups use
+`(group NAME (members ACTOR...) (mode concurrent))`, but groups are
+schedulable intent only and do not override safety checks.
+The concurrent-group implementation axis has shipped targeted diagnostics and
+report-only metadata:
 direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
-declarations and compact `(concurrent NAME ACTOR...)` aliases are reserved,
-unsupported, and fail closed with ATL group diagnostics. No public group
-metadata or scheduling behavior is implemented yet.
+declarations now report static `actor_network.groups[]` metadata when every
+member names an already declared direct static actor instance. Compact
+`(concurrent NAME ACTOR...)` aliases remain reserved and unsupported. No
+public group scheduling behavior is implemented yet.
 The current shipped actor-event wait subset accepts exactly one top-level
 transaction-body `(await actor.event)` for the current single declared static
 actor instance, lowered to a generated one-bit parent event handoff input
@@ -1959,8 +1960,9 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
-actor_network: kind, instances, event_waits, transaction_triggers
+actor_network: kind, instances, groups, data_movements, event_waits, transaction_triggers
 actor_network instances entries: name, actor_type, declaration
+actor_network groups entries: name, members, mode, declaration, source, scheduling
 actor_network event_waits entries: transaction, context, instance, event, signal, source
 actor_network transaction_triggers entries: owner_transaction, context, instance, target_transaction, signal, sink
 inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width

@@ -1534,6 +1534,8 @@ The schedule report exposes this through top-level `actor_network`:
       "declaration": "actor"
     }
   ],
+  "groups": [],
+  "data_movements": [],
   "event_waits": [],
   "transaction_triggers": []
 }
@@ -1541,10 +1543,11 @@ The schedule report exposes this through top-level `actor_network`:
 
 `declaration` is always `actor` in this subset because the static instance is
 a direct actor-body declaration. Current fail-closed boundaries include
-multiple instances, `(network ...)`, `(group ...)`, dynamic/non-scalar names,
-direct recursive instantiation, actor-to-actor endpoint movement, qualified
-actor/event behavior beyond the selected single parent-handoff event wait and
-single parent-handoff transaction trigger subsets.
+multiple instances outside the shipped actor-to-actor handoff or report-only
+group metadata subsets, `(network ...)`, dynamic/non-scalar names, direct
+recursive instantiation, qualified actor/event behavior beyond the selected
+single parent-handoff event wait and single parent-handoff transaction trigger
+subsets, and group scheduling behavior.
 
 The broader ATL v0 contract is selected for future slices, but downstream
 producers must not emit it until the corresponding support appears in the
@@ -1593,17 +1596,21 @@ capability manifest and this handoff:
   `(do actor.transaction)`, nonblocking orchestration as
   `(spawn actor.transaction as NAME)`, and rule-level orchestration as
   `(trigger actor.transaction)`.
-- Actor event waits are reserved as `(await actor.event)`. Events are
-  one-cycle control pulses; event payloads are not supported.
-- Concurrent actor groups are reserved as
+- Actor event waits use `(await actor.event)`. The shipped subset is one
+  top-level transaction-body wait for the current single static actor
+  instance; events are one-cycle control pulses and event payloads are not
+  supported.
+- Concurrent actor groups use
   `(group NAME (members ACTOR...) (mode concurrent))`. A group is only
   schedulable intent; it never overrides fan-in, lifetime, ordering, width, or
   CDC safety.
-- The concurrent-group implementation axis starts with targeted diagnostics,
-  not a downstream-emittable group surface. Downstream producers must not emit
-  `(group NAME (members ACTOR...) (mode concurrent))` or compact
-  `(concurrent NAME ACTOR...)`; those forms are reserved, unsupported, and now
-  fail closed with ATL group diagnostics.
+- The concurrent-group implementation axis has shipped targeted diagnostics
+  and report-only metadata. Downstream producers may emit direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations only for
+  the shipped metadata subset: at least two already declared direct static
+  actor instances, single-clock actor scope, no dynamic membership, no nested
+  groups, and no scheduling behavior. Compact `(concurrent NAME ACTOR...)`
+  remains reserved and unsupported.
 
 Current ATL event-wait handoff subset: downstream producers may emit exactly
 one top-level transaction-body `(await actor.event)` against the current
@@ -1821,8 +1828,10 @@ transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
   role, port, actor_signal, actor_expression, width, instance, parent_port,
   child_port, start_signal, done_signal, trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
-actor_network: kind, instances, event_waits, transaction_triggers
+actor_network: kind, instances, groups, data_movements, event_waits,
+  transaction_triggers
 actor_network.instances[]: name, actor_type, declaration
+actor_network.groups[]: name, members, mode, declaration, source, scheduling
 actor_network.event_waits[]: transaction, context, instance, event, signal,
   source
 actor_network.transaction_triggers[]: owner_transaction, context, instance,

@@ -670,16 +670,18 @@ reading lowering code.
 Current ATL v0 proposal:
 
 The top-level root remains `(actor name ...)`. The first metadata-only
-implementation slice is shipped: exactly one static actor instance may be
-declared with the direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
+implementation slices are shipped: static actor instances may be declared with
+the direct actor-level `(instance NAME of ACTOR_TYPE)` clause, and static
+concurrent groups may be declared with direct actor-level
+`(group NAME (members ACTOR...) (mode concurrent))` clauses.
 The enclosing actor is the network boundary; `(network ...)` is not part of
 the shipped source surface. The accepted form lowers to parser shell and
 schedule-report metadata under `actor_network` with `declaration: "actor"`.
-The current shipped ATL surface does not resolve the actor type, instantiate
-a child, emit a generated ATL top, move data between actors, or wire HDL.
-Multiple instances, groups, broader event/trigger behavior beyond the single
-parent-handoff subsets, and widened drive-body endpoint movement remain
-backlog.
+The static metadata surface does not resolve actor types, instantiate
+children, emit a generated ATL top, schedule groups, or wire HDL. Multiple
+instances outside the shipped scalar handoff and report-only group metadata
+subsets, broader event/trigger behavior beyond the single parent-handoff
+subsets, and wider endpoint movement remain backlog.
 Actor-to-actor and pin-to-actor movement is not expressed as top-level
 `connect` clauses. The selected ATL v0 proposal reuses existing drive
 definitions and drive calls: a drive body keeps its shipped `(sink source)`
@@ -709,17 +711,19 @@ and actor endpoint to top-level output pin as
 drive body, one direct static actor instance, one top-level transaction drive
 call, and one-bit top-level pins only. Wider pin payloads and mixed
 pin/actor movement in one drive remain later leaves.
-The selected future orchestration vocabulary reuses existing ISF activation
-forms: `(do actor.transaction)` for blocking actor transaction activation,
+The selected orchestration vocabulary reuses existing ISF activation forms:
+`(do actor.transaction)` for blocking actor transaction activation,
 `(spawn actor.transaction as NAME)` for nonblocking activation,
-`(trigger actor.transaction)` for rule-level activation, and
-`(await actor.event)` for one-cycle actor event synchronization. Event
-payloads are not part of ATL v0. Future concurrent groups use
+`(trigger actor.transaction)` for rule-level or transaction-body activation,
+and `(await actor.event)` for one-cycle actor event synchronization. Only the
+bounded transaction-body trigger and event-wait parent-handoff subsets are
+shipped today. Event payloads are not part of ATL v0. Concurrent groups use
 `(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
 not as a bypass for ordering, fan-in, width, lifetime, or CDC safety. The
 group axis starts with shipped fail-closed diagnostics for direct `(group ...)`
-declarations and compact `(concurrent ...)` aliases; group metadata and
-scheduling behavior remain later leaves.
+declarations and compact `(concurrent ...)` aliases. Report-only static group
+metadata is shipped for verbose `(group ...)`; scheduling behavior and compact
+aliases remain later leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -846,9 +850,10 @@ information between actors once the scheduled interaction is inferred.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child
-transaction activations. They now define only the first public actor-network
-source surface: one static actor instance declaration recorded as
-`actor_network` metadata. That is not scheduling yet. The generated-artifact
+transaction activations. They now define the first public actor-network source
+surfaces: static actor instance declarations and report-only static group
+declarations recorded as `actor_network` metadata. That is not scheduling yet.
+The generated-artifact
 contract is empty for ATL scheduling today: no generated ATL child `.fsm`, no
 generated ATL top, no route mux, no handoff storage, and no HDL behavior are
 promised by the metadata field. Event pulse semantics, actor-to-actor and

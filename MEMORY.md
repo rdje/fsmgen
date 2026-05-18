@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL static group metadata shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`.
+- FSMGen now accepts direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations for at
+  least two already declared direct static actor instances in a single-clock
+  actor.
+- The schedule report exposes report-only `actor_network.groups[]` entries
+  with `name`, `members`, `mode`, `declaration`, `source`, and `scheduling`.
+  The selected `scheduling` value is `metadata_only`.
+- Compact `(concurrent ...)` aliases, group endpoints, generated child
+  artifacts, generated ATL tops, scheduling overlap, route mux/storage, CDC,
+  nested groups, dynamic membership, and combinations with actor events,
+  triggers, or data movements remain deferred or fail-closed. The active ATL
+  frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
+- Validation passed: parser/lowerer/JSON-emitter/public-contract syntax
+  checks, focused actor-network, schedule-report matrix, and public-contract
+  audits, `mdbook build docs/book`, broad `./bin/ci-regression isf --no-book`
+  with `Files=229, Tests=1352`, and `git diff --check`.
 ## 2026-05-18: ATL group declarations fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
 - Direct actor-body `(group ...)` declarations and compact

@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL static group metadata shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`.
+- Direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
+  declarations now report static `actor_network.groups[]` metadata for at
+  least two already declared direct static actor instances.
+- The group metadata is report-only. It does not schedule concurrent
+  execution, infer dependencies, insert route mux/storage, emit generated
+  child artifacts, create group endpoints, cross clock domains, or accept
+  compact `(concurrent ...)` aliases.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`.
+- Validation passed: parser/lowerer/JSON-emitter/public-contract syntax
+  checks, focused actor-network, schedule-report matrix, and public-contract
+  audits, `mdbook build docs/book`, broad `./bin/ci-regression isf --no-book`
+  with `Files=229, Tests=1352`, and `git diff --check`.
+
 ## 2026-05-18: R14 — ATL group declarations fail closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`.
 - Direct actor-body `(group ...)` declarations and compact

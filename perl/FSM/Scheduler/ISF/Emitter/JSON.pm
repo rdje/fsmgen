@@ -601,6 +601,18 @@ sub _actor_network_summary($self, $ir) {
                 }
             } @{$network->{instances}}
         ],
+        groups => [
+            map {
+                {
+                    name        => $_->{name},
+                    members     => [ @{$_->{members} || []} ],
+                    mode        => $_->{mode},
+                    declaration => $_->{declaration},
+                    source      => $_->{source},
+                    scheduling  => $_->{scheduling},
+                }
+            } @{$network->{groups} || []}
+        ],
         event_waits => [
             map {
                 {

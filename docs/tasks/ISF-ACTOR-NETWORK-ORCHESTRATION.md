@@ -237,14 +237,14 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.2: fail closed ATL groups`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`
-  Status: `active`
+  Status: `completed`
   Goal: `Ship static concurrent group metadata.`
   Acceptance: `Parser/reporting accepts the selected direct actor-body group declaration against already declared direct static actor instances, records group membership and mode in actor_network group metadata, and keeps group endpoints, generated children, scheduling overlap, storage/mux insertion, CDC, dynamic membership, nested groups, and compact aliases fail-closed.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.3: report static ATL groups`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the first group scheduling behavior subset.`
   Acceptance: `A selection leaf defines exactly which static group metadata may affect scheduling, report keys for inferred dependencies/independence, and the fail-closed boundaries for fan-in, fan-out, route lifetime overlap, CDC, storage insertion, and generated child wiring before behavior code starts.`
   Verification: `pending`
@@ -268,7 +268,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` | `active` | `.7.2` shipped targeted fail-closed actor-group diagnostics. The next leaf ships report-only static group metadata. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.4` | `active` | `.7.3` shipped report-only static group metadata. The next leaf selects the first scheduling behavior before code. |
 
 ## ATL v0 Proposal
 
@@ -494,9 +494,9 @@ Current proposal summary:
 
 ## Blockers
 
-- No blocker for the active `.7.3` group-metadata leaf. It must stay
-  report-only and must not claim scheduling overlap, generated child wiring,
-  route muxes, storage insertion, CDC, or compact aliases.
+- No blocker for the active `.7.4` group-scheduling selection leaf. It must
+  select the first scheduling behavior and report keys before any scheduling
+  code starts.
 
 ## Verification Log
 
@@ -527,6 +527,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected scalar actor endpoint to top-level output pin handoff lowers to one-cycle parent input-to-pin route and data_movements[] metadata; broad ISF gate passes with Files=229, Tests=1351` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `decomposed concurrent actor groups and selected targeted fail-closed group diagnostics as the next code leaf` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `reserved group declarations and compact aliases fail closed with ATL diagnostics; broad ISF gate passes with Files=229, Tests=1351` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `direct static concurrent groups report actor_network.groups[] metadata without scheduling behavior; broad ISF gate passes with Files=229, Tests=1352` |
 
 ## Commit Log
 
@@ -556,6 +557,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.4: lower actor-to-pin handoff` | `lowers the selected scalar actor endpoint to top-level output pin handoff subset and closes top-level pin movement` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.1: select group boundary` | `decomposes concurrent actor groups and selects fail-closed group diagnostics before metadata or scheduling behavior` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.2: fail closed ATL groups` | `rejects reserved verbose and compact actor-group forms with targeted ATL diagnostics` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.7.3: report static ATL groups` | `ships report-only static concurrent group metadata under actor_network.groups[]` |
 
 ## Changelog
 
@@ -669,3 +671,10 @@ Current proposal summary:
   declarations and compact `(concurrent ...)` aliases now fail closed with
   targeted ATL group diagnostics. No group metadata or scheduling behavior is
   claimed. The active frontier moves to `.7.3` for static group metadata.
+- `2026-05-18`: Completed `.7.3`: direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations now report
+  static `actor_network.groups[]` metadata for already declared direct static
+  actor instances. The metadata is report-only: no group endpoints,
+  scheduling overlap, generated child artifacts, route mux/storage, CDC, or
+  compact aliases are claimed. The active frontier moves to `.7.4` to select
+  the first group scheduling behavior before code.

@@ -15,6 +15,7 @@ use FSM::Scheduler::ISF;
 use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
+    isf_public_interface_schedule_report_actor_network_group_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
     isf_public_interface_schedule_report_actor_network_keys
     isf_public_interface_schedule_report_actor_network_transaction_trigger_keys
@@ -35,6 +36,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                     declaration => 'actor',
                 },
             ],
+            groups => [],
             data_movements => [],
             event_waits => [],
             transaction_triggers => [],
@@ -62,6 +64,7 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
                     declaration => 'actor',
                 },
             ],
+            groups => [],
             data_movements => [],
             event_waits => [],
             transaction_triggers => [],
@@ -72,6 +75,70 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
     my $path = write_temp_isf($source);
     my $cli_report = run_schedule_json($path, 'actor-body static actor network');
     is_deeply($cli_report, $report, 'CLI schedule JSON matches in-process report for actor-body static actor network');
+};
+
+subtest 'static concurrent group metadata is parsed, lowered, and reported' => sub {
+    my $source = <<'ISF';
+(actor atl_static_group
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader writer)
+    (mode concurrent))
+  (transaction run
+    (on start)
+    (complete done)))
+ISF
+    my $actor = parse_source($source, 'atl-static-group.isf');
+    my $expected_group = {
+        name        => 'pipeline',
+        members     => [qw(reader writer)],
+        mode        => 'concurrent',
+        declaration => 'group',
+        source      => 'actor_body',
+        scheduling  => 'metadata_only',
+    };
+
+    is_deeply(
+        $actor->{actor_network}{groups},
+        [ $expected_group ],
+        'parser records the selected static concurrent group metadata',
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ['atl_static_group.fsm'],
+        'static group metadata is report-only and emits no child artifacts or ATL top',
+    );
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'reader',
+                    actor_type  => 'packet_reader',
+                    declaration => 'actor',
+                },
+                {
+                    name        => 'writer',
+                    actor_type  => 'packet_writer',
+                    declaration => 'actor',
+                },
+            ],
+            groups => [ $expected_group ],
+            data_movements => [],
+            event_waits => [],
+            transaction_triggers => [],
+        },
+        'static concurrent group report',
+    );
 };
 
 subtest 'unsupported static graph shapes fail closed' => sub {
@@ -90,14 +157,48 @@ ISF
 
     parse_fails_like(
         <<'ISF',
-(actor unsupported_group
+(actor group_single_member
   (clock clk)
   (interface (input start) (output done))
-  (group pipeline (members reader writer) (mode concurrent))
+  (group pipeline (members reader) (mode concurrent))
   (transaction run (on start) (complete done)))
 ISF
-        qr/ATL concurrent group declaration '\(group \.\.\.\)' is reserved but not supported yet/,
-        'unsupported network group declaration fails closed with ATL diagnostic',
+        qr/ATL concurrent group 'pipeline' requires at least two members/,
+        'static concurrent groups require at least two members',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor group_event_wait
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline (members reader writer) (mode concurrent))
+  (transaction run
+    (on start)
+    (await reader.done)
+    (complete done)))
+ISF
+        qr/ATL concurrent group metadata cannot be combined with actor event waits or actor transaction triggers/,
+        'static concurrent group metadata does not combine with actor event waits',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor group_transaction_trigger
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
+  (group pipeline (members reader writer) (mode concurrent))
+  (transaction run
+    (on start)
+    (trigger writer.capture)
+    (complete done)))
+ISF
+        qr/ATL concurrent group metadata cannot be combined with actor event waits or actor transaction triggers/,
+        'static concurrent group metadata does not combine with actor transaction triggers',
     );
 
     parse_fails_like(
@@ -201,6 +302,7 @@ ISF
                     declaration => 'actor',
                 },
             ],
+            groups => [],
             data_movements => [],
             event_waits => [
                 {
@@ -269,6 +371,7 @@ ISF
                     declaration => 'actor',
                 },
             ],
+            groups => [],
             data_movements => [],
             event_waits => [],
             transaction_triggers => [
@@ -365,6 +468,7 @@ ISF
                     declaration => 'actor',
                 },
             ],
+            groups => [],
             data_movements => [ $expected_movement ],
             event_waits => [],
             transaction_triggers => [],
@@ -450,6 +554,7 @@ ISF
                     declaration => 'actor',
                 },
             ],
+            groups => [],
             data_movements => [ $expected_movement ],
             event_waits => [],
             transaction_triggers => [],
@@ -531,6 +636,7 @@ ISF
                     declaration => 'actor',
                 },
             ],
+            groups => [],
             data_movements => [ $expected_movement ],
             event_waits => [],
             transaction_triggers => [],
@@ -938,6 +1044,13 @@ sub assert_actor_network_report {
         [sort @{isf_public_interface_schedule_report_actor_network_instance_keys()}],
         "$label exposes advertised actor_network instance keys",
     );
+    if (@{$report->{actor_network}{groups} || []}) {
+        is_deeply(
+            [sort keys %{$report->{actor_network}{groups}[0]}],
+            [sort @{isf_public_interface_schedule_report_actor_network_group_keys()}],
+            "$label exposes advertised actor_network group keys",
+        );
+    }
     if (@{$report->{actor_network}{event_waits} || []}) {
         is_deeply(
             [sort keys %{$report->{actor_network}{event_waits}[0]}],
