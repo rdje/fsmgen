@@ -1071,15 +1071,15 @@ may also lower a local plain `(do child)` while generated nested spawns are
 pending, before a later same-body `await_all` drain. That local do uses the
 parent-module start/done contract and does not consume the generated-spawn
 done set; the later `await_all` still gates the nested repeat check on every
-outstanding generated child. The top-level `when` body nested-repeat form may
-also lower a plain generated-child `(do child)` in that pending-spawn interval
-when the target is already generated elsewhere. That generated do starts its
-own deterministic `{parent}_{child}_repeat_do_{ordinal}` instance, waits for
-that instance's fresh done handoff, and leaves pending generated-spawn done
-handoffs live until the later `await_all` drain. Parameterized, bound, or
-domain-qualified generated do while a nested spawn is pending, the
-switch-contained generated-child analogue, prior or later `await_any` around
-the do, and a new nested spawn after the do before the drain remain
+outstanding generated child. The top-level `when` body and top-level `switch`
+branch nested-repeat forms may also lower a plain generated-child `(do child)`
+in that pending-spawn interval when the target is already generated
+elsewhere. That generated do starts its own deterministic
+`{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
+fresh done handoff, and leaves pending generated-spawn done handoffs live
+until the later `await_all` drain. Parameterized, bound, or domain-qualified
+generated do while a nested spawn is pending, prior or later `await_any`
+around the do, and a new nested spawn after the do before the drain remain
 fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
@@ -1259,9 +1259,9 @@ directly inside top-level `when` bodies or top-level `switch` branches, and it
 is not enabled for bodies that observed multi-pending `await_any` before the
 local do.
 
-When a top-level `when` body nested repeat runs a generated-child `do` while a
-generated nested spawn is still pending, lowering keeps the two child
-lifetimes separate:
+When a top-level `when` body or top-level `switch` branch nested repeat runs a
+generated-child `do` while a generated nested spawn is still pending, lowering
+keeps the two child lifetimes separate:
 
 ```lisp
 (parent_spawn_2

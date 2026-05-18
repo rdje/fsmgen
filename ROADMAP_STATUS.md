@@ -2,15 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.64`.
-  Leaf `.63` selected top-level switch-branch nested repeat generated-child
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`.
+  Leaf `.64` shipped top-level switch-branch nested repeat generated-child
   plain `do` while generated nested spawns are pending before a later
-  same-body `await_all` drain. The selected proof mirrors the shipped
-  when-contained generated-child pending-spawn do subset: the generated do
-  site owns one deterministic generated instance, waits for that instance's
-  fresh done handoff, leaves the pending generated-spawn done set live, and
-  still requires the later drain before nested repeat re-entry. This selection
-  changes no shipped compiler behavior yet.
+  same-body `await_all` drain. The generated do site owns one deterministic
+  generated instance, waits for that instance's fresh done handoff, leaves the
+  pending generated-spawn done set live, and still requires the later drain
+  before nested repeat re-entry. Leaf `.65` must select the next bounded
+  repeat-body child activation subset before any further implementation.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -421,8 +420,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   one or more generated nested spawns, generated-child plain `(do child)`
   while those generated spawns remain pending, and a later same-body
   `(await_all done)` drain before the switch-branch nested repeat check can
-  loop. The next implementation frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.64`.
+  loop. `ISF-REPEAT-BODY-CHILD-ACTIVATION.64` then shipped that selected
+  subset: the generated do site emits one deterministic generated instance,
+  waits for that instance's fresh done handoff without clearing the pending
+  generated-spawn done set, preserves source-order samples, and requires a
+  later same-body `(await_all done)` drain before nested repeat re-entry.
+  Parameterized/bound/domain-qualified generated do while pending,
+  `await_any` around the do, new nested spawn after the do before the drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain fail-closed. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.65`, which must select the next bounded
+  repeat-body child activation subset before code.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

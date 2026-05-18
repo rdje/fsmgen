@@ -1586,17 +1586,17 @@ Current lowering:
   drains every outstanding generated child before the nested repeat check can
   loop. That local do target remains in the parent scheduled module, waits
   for its own fresh local done pulse, and does not clear the generated-spawn
-  done set. The top-level `when` body nested-repeat subset also accepts a
-  plain generated-child `(do child)` in that same pending-spawn interval when
-  the target child is already emitted as a generated child by another
-  activation site. The generated do site owns one deterministic
+  done set. The top-level `when` body and top-level `switch` branch
+  nested-repeat subsets also accept a plain generated-child `(do child)` in
+  that same pending-spawn interval when the target child is already emitted as
+  a generated child by another activation site. The generated do site owns one deterministic
   `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
   fresh done handoff, and still leaves every pending generated-spawn done
   handoff live for the later same-body `(await_all done)` drain. Parameterized,
   bound, or domain-qualified generated `do` while a nested spawn is pending,
-  the switch-contained generated-child analogue, new nested `spawn` after
-  either do before the drain, `await_any` after either do, deeper branch/loop
-  nesting, and cross-domain activation remain fail-closed.
+  new nested `spawn` after either do before the drain, `await_any` after
+  either do, deeper branch/loop nesting, and cross-domain activation remain
+  fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
@@ -2005,8 +2005,8 @@ pending, or multi-pending same-body `await_any` followed by a mandatory
 same-body `await_all` drain, top-level when-body nested repeat local
 or plain generated-child `(do child)` while generated nested spawns are
 pending before a later same-body `await_all` drain, top-level switch-branch
-nested repeat local `(do child)` while generated nested spawns are pending
-before a later same-body `await_all` drain,
+nested repeat local or plain generated-child `(do child)` while generated
+nested spawns are pending before a later same-body `await_all` drain,
 repeat-body
 generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]
@@ -3350,9 +3350,9 @@ Focused tests:
   optional declared same-domain `(domain NAME)` metadata, plus the top-level
   when-body nested repeat local or plain generated-child `(do child)` while
   generated nested spawns are pending before a later same-body `await_all`
-  drain subset and the top-level switch-branch nested repeat local
-  `(do child)` while generated nested spawns are pending before a later
-  same-body `await_all` drain subset: nested loops, loops under
+  drain subset and the top-level switch-branch nested repeat local or plain
+  generated-child `(do child)` while generated nested spawns are pending
+  before a later same-body `await_all` drain subset: nested loops, loops under
   `when`/`switch`/`repeat`, cross-domain repeat-body `do`, and
   `while`/`until` loop bodies containing `do`,
   `spawn`, `await_all`, `await_any`, `stage`, or `contract` remain deferred
