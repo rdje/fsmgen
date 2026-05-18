@@ -2,6 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
+- Active R14 downstream bug frontier:
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`. SPECFORGE reported two
+  minimized stage/contract conformance bugs against the downstream integration
+  handoff: flat bounded-eventually contract syntax and ready/valid stage
+  syntax. Both issue bundles have been reproduced locally before
+  implementation: the failing cases exit `255`, emit no JSON stdout despite
+  `--json`, and write the reported diagnostics to stderr; both
+  `expected/baseline-good.isf` counterparts pass strict JSON check with
+  `success: true`. The first fix frontier is the flat bounded-eventually
+  mismatch, then the ready/valid stage mismatch, then the shared strict-check
+  JSON failure surface.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending

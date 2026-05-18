@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: SPECFORGE stage/contract reports reproduced
+- Created active R14 task tree
+  [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md)
+  before implementation.
+- Reproduced
+  `/Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-contract-eventually-flat`
+  from the FSMGen checkout with
+  `./bin/fsmgen --strict --check --json .../f1-contract-eventually-flat.isf`:
+  it exits `255`, writes `0` stdout bytes despite `--json`, and reports
+  `Transaction 'txn_demo': contract 'c_demo' supports only '(eventually signal (within cycles))'`.
+- Reproduced
+  `/Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/sf-isf-stage-ready-valid`
+  with `./bin/fsmgen --strict --check --json .../f2-stage-ready-valid.isf`:
+  it exits `255`, writes `0` stdout bytes despite `--json`, and reports
+  `Transaction 'txn_demo': stage 's_demo' has unsupported subclause 'ready'`.
+- Both issue-bundle `expected/baseline-good.isf` files pass strict JSON check
+  with `success: true`, confirming the minimized deltas described by
+  SPECFORGE.
+- No implementation has started yet. The first active fix leaf is
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` for the flat
+  bounded-eventually mismatch.
 ## 2026-05-18: ATL static instance syntax narrowed to direct actor-body form
 - Updated the shipped Actor Transfer Level static-instance source surface to
   use only direct actor-body `(instance NAME of ACTOR_TYPE)` clauses. The

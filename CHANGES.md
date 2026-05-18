@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — SPECFORGE stage/contract reports reproduced
+- Added active task tree
+  [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md)
+  before implementation.
+- Reproduced `sf-isf-contract-eventually-flat`: the minimized source exits
+  `255`, writes no JSON stdout despite `--json`, and reports that the
+  contract supports only nested `(eventually signal (within cycles))`.
+- Reproduced `sf-isf-stage-ready-valid`: the minimized source exits `255`,
+  writes no JSON stdout despite `--json`, and reports unsupported stage
+  subclause `ready`.
+- Confirmed both issue-bundle `expected/baseline-good.isf` counterparts pass
+  `./bin/fsmgen --strict --check --json` with `success: true`.
+- No implementation fix is included in this tracking/reproduction slice.
 ### R14 — ISF ATL static instance syntax narrowed
 - Removed the shipped `(network ...)` wrapper from the static actor-network
   metadata source surface.

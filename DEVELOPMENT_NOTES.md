@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: SPECFORGE reports must be fixed from reproduced bundles
+- SPECFORGE supplied two minimized downstream issue bundles under
+  `/Users/richarddje/Documents/github/specforge/docs/fsmgen-issues/`.
+- Both reports reproduce locally from the FSMGen checkout before any
+  implementation change:
+  `sf-isf-contract-eventually-flat` rejects documented flat
+  `(eventually SIGNAL within N)` syntax, and `sf-isf-stage-ready-valid`
+  rejects documented `(ready ...)/(valid ...)` stage syntax.
+- Both failures also expose that `--strict --check --json` currently exits
+  before writing JSON for these parser/strict-check failures. That shared
+  downstream surface is tracked as its own leaf after the two source-form
+  mismatches are resolved.
+- The fix path must preserve the strict issue-bundle reproduction loop:
+  reproduce first, implement a narrow parser/lowering/doc correction, add
+  focused regression coverage, sync the integration handoff and mdBook, then
+  commit before moving to the next leaf.
 ## 2026-05-18: ATL uses direct actor-body static instances
 - The shipped ATL static-instance source surface is now only
   `(instance NAME of ACTOR_TYPE)` directly in the enclosing actor body.

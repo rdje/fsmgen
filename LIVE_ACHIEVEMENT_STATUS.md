@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — SPECFORGE stage/contract reports reproduced
+- Created active task tree
+  [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md)
+  before implementation.
+- Reproduced `sf-isf-contract-eventually-flat`: the minimized flat
+  bounded-eventually source exits `255`, emits zero JSON stdout bytes despite
+  `--json`, and writes the reported contract diagnostic to stderr.
+- Reproduced `sf-isf-stage-ready-valid`: the minimized ready/valid stage
+  source exits `255`, emits zero JSON stdout bytes despite `--json`, and
+  writes the reported unsupported `ready` diagnostic to stderr.
+- Both issue-bundle `expected/baseline-good.isf` files pass strict JSON check
+  with `success: true`.
+- No implementation fix is included in this slice. The active fix frontier is
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`.
+
 ## 2026-05-18: R14 — ISF ATL static instance syntax narrowed
 - Advanced `ISF-ACTOR-NETWORK-ORCHESTRATION.2` with the source-shape
   correction requested during review.
