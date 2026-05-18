@@ -98,6 +98,10 @@ not a new user-surface movement keyword, discriminates which side is an actor
 endpoint, top-level pin, or local value. This keeps ISF uniform and low
 friction: ATL adds actor-network endpoint resolution to an existing movement
 surface instead of asking users or downstream emitters to learn another one.
+The scheduler also owns the dynamic runtime routing control. Authors describe
+movement intent; FSMGen derives the route selects, mux inputs, enables,
+handoffs, and generated connectivity needed to move information between
+actors without hand-authored route clauses.
 
 ## Design Note: 2026-05-13 Rule Trigger Fan-In
 

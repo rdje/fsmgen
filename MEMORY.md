@@ -17,6 +17,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - The rationale is uniform, low-friction ISF syntax. The scheduler owns
   endpoint discrimination for actor endpoints, top-level pins, and local
   values; ATL v0 does not add `transfer` or `move` as new movement syntax.
+- Scheduler-owned dynamic route control is part of the ATL v0 intent: authors
+  describe movement intent, while FSMGen derives route selects, mux/enables,
+  handoffs, and generated connectivity between actors.
 - User refined the RTL mux analogy: ATL movement declarations must not mean
   permanent actor-to-actor wires. They describe temporal movement
   possibilities that become active only when triggers, sink-valid conditions,

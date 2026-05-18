@@ -20,6 +20,9 @@ This document captures engineering rationale, design constraints, and working de
 - This is now the selected ATL v0 source shape because it keeps ISF uniform
   and low friction. The scheduler should discriminate endpoint roles instead
   of requiring a new author-facing movement keyword.
+- The scheduler also owns the dynamic runtime route control. The author names
+  movement intent; FSMGen derives route selects, mux inputs, enables, handoff
+  storage, and generated connectivity as part of lowering.
 - Verbose syntax should be the normative contract for review and downstream
   emission. Compact syntax should only ship as a proven alias over the same
   ATL IR and diagnostics.

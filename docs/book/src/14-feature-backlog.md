@@ -817,6 +817,9 @@ on the drive body's `(sink source)` pair, the drive-call timing point,
 triggers, sink-valid conditions, disjoint timing, and any generated
 mux/enable/handoff plan. The scheduler derives the connectivity; the source
 does not need a separate `connect` clause for actor-to-actor movement.
+The author should not have to hand-author routing. FSMGen owns the runtime
+route-select control, mux selects, enables, and handoffs that dynamically move
+information between actors once the scheduled interaction is inferred.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child

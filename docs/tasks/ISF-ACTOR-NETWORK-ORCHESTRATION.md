@@ -145,6 +145,9 @@ Current proposal summary:
   qualified actor endpoints and top-level pins.
 - FSMGen's scheduler, not a new source keyword, discriminates whether each
   pair side is an actor endpoint, top-level pin, or local value.
+- The scheduler also owns dynamic runtime route control: mux selects, enables,
+  handoffs, and generated connectivity are inferred from movement intent, not
+  hand-authored as routes.
 - The rationale is low-friction, uniform ISF syntax: reuse current data
   movement forms where possible instead of adding another movement vocabulary.
 - Events are one-cycle scheduler-visible control pulses in the first ATL
@@ -214,6 +217,10 @@ Current proposal summary:
 - `2026-05-18`: User emphasized that the reason is to avoid friction in ISF
   and preserve uniform syntax. The design now records uniform ISF movement
   vocabulary as the reason for selecting drive-body reuse.
+- `2026-05-18`: User clarified that the scheduler should dynamically control
+  information routing between actors so authors do not have to think much
+  about route wiring. The design now records that FSMGen owns runtime
+  route-select control, mux/enables, handoffs, and generated connectivity.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
   design now treats `(network ...)` as a scoping candidate, not a requirement;
   flat top-level actor ATL clauses remain an explicit alternative.
@@ -249,6 +256,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL v0 concrete proposal drafted; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL temporal route and RTL mux analogy captured; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `selected existing drive-body movement reuse; book and diff checks passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `scheduler-owned dynamic routing clarification captured; book and diff checks passed` |
 
 ## Commit Log
 
@@ -258,7 +266,8 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: capture ATL model` | `activated clarification leaf and captured ATL mental model` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: draft ATL v0 proposal` | `drafted scoped/flat source-shape candidates and endpoint vocabulary` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: capture ATL temporal routes` | `captures RTL mux analogy and non-permanent movement semantics` |
-| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `pending commit for ATL drive-body reuse refinement` | `selects existing drive-body pairs and drive calls as the ATL v0 movement surface` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: select ATL drive-body movement` | `selects existing drive-body pairs and drive calls as the ATL v0 movement surface` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `pending commit for ATL scheduler-owned routing refinement` | `records scheduler-owned dynamic route control` |
 
 ## Changelog
 
@@ -272,3 +281,6 @@ Current proposal summary:
 - `2026-05-18`: Selected existing drive-body `(sink source)` pairs plus
   existing drive calls as the ATL v0 movement surface, with the scheduler
   discriminating actor endpoints, top-level pins, and local values.
+- `2026-05-18`: Clarified that FSMGen owns dynamic runtime routing control
+  between actors, including route selects, mux/enables, handoffs, and
+  generated connectivity.

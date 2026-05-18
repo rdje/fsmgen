@@ -16,6 +16,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   drive body pairs plus drive-call timing points.
 - This choice keeps ISF uniform and low friction: the scheduler discriminates
   endpoint roles instead of requiring a new movement keyword.
+- The scheduler also owns dynamic runtime routing between actors. FSMGen
+  derives route selects, mux/enables, handoffs, and generated connectivity
+  from movement intent.
 - The RTL mux analogy is now explicit: ATL movement clauses are not permanent
   wires. Multiple source actors may feed one sink actor at different scheduled
   moments only when FSMGen can prove disjoint timing or emit a reviewable

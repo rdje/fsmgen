@@ -6342,7 +6342,8 @@ Done:
   different cycles: ATL must let multiple source actors feed one sink actor
   only when triggers, sink-valid conditions, disjoint timing, or generated
   mux/enable/handoff evidence make the movement reviewable; the scheduler
-  derives the needed connectivity and discriminates endpoint roles.
+  derives the needed connectivity, discriminates endpoint roles, and owns the
+  dynamic runtime route-select/mux/enable/handoff control.
 - `isf/spawn_parent.isf` now has file-backed strict generated-composition
   fixture coverage through
   [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t),

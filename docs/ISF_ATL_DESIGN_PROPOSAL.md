@@ -319,6 +319,10 @@ this sink endpoint
 That is already the highest timing precision ATL should require. The scheduler
 then derives the actual connectivity, mux input, enable, handoff storage, and
 selected cycle when it lowers to explicit `.fsm` and HDL.
+In practice, the author should not have to think much about routing. The
+author names movement intent through existing drive-body pairs; FSMGen owns
+the dynamic runtime routing control that selects the route, mux input, enable,
+or handoff needed for the scheduled actor interaction.
 
 This matters most when several source actors can provide the same information
 to one sink actor. ATL should treat that as a normal design shape only when
@@ -383,8 +387,8 @@ Scheduling should split cleanly:
 - Each actor owns its local transaction/rule schedule.
 - The ATL network scheduler owns instance elaboration, activation handoffs,
   drive-body endpoint dependency analysis, derived mux/enable/handoff insertion,
-  pin boundary movement, event fan-out/fan-in policy, and generated top
-  scheduling.
+  runtime route-select control, pin boundary movement, event fan-out/fan-in
+  policy, and generated top scheduling.
 - The generated `.fsm` remains the audit artifact for the inferred global
   schedule.
 - The schedule report should expose `actor_network` metadata without requiring

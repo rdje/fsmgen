@@ -21,6 +21,9 @@ This is the persistent technical change history for FSMGen.
   scheduling, triggers, sink-valid conditions, disjoint timing, and generated
   mux/enable/handoff evidence; the scheduler derives connectivity and
   discriminates endpoint roles without a new movement keyword.
+- Clarified that FSMGen owns dynamic runtime routing control between actors:
+  route selects, mux inputs, enables, handoffs, and generated connectivity are
+  inferred from movement intent rather than hand-authored as routes.
 - Recorded that `(network ...)` is not a semantic requirement. It is a
   scoping candidate, with flat top-level actor ATL clauses kept as an explicit
   alternative.
