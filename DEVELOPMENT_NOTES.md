@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: switch-contained generated-child do while spawn pending is the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.63` selects the switch-branch analogue of
+  the shipped when-contained generated-child pending-spawn do subset.
+- The selected surface is intentionally narrow: only plain `(do child)` inside
+  a repeat directly under a top-level `switch` branch, only when `child` is
+  already emitted as a generated child by another activation site, and only
+  when a later same-body `(await_all done)` still drains all pending generated
+  nested spawns before the switch-branch nested repeat check can loop.
+- The proof should mirror leaf `.62`: the generated do instance waits for its
+  own fresh done handoff, while the earlier generated spawn handoffs remain
+  pending until the later drain.
+- Parameterized, bound, or domain-qualified generated do while spawn pending,
+  `await_any` around the do, new spawn after the do before drain,
+  cross-domain activation, deeper branch/loop nesting, and broader
+  outstanding-child semantics remain separate contracts.
 ## 2026-05-18: when-contained generated-child do preserves pending generated spawns
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.62` implements only the selected
   top-level `when` body nested-repeat generated-child do-while-spawn-pending

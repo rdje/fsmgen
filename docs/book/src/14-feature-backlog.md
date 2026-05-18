@@ -444,11 +444,19 @@ already emitted as a generated child by another activation site. The generated
 do site owns one deterministic generated instance, waits for that instance's
 fresh done handoff, and leaves the pending generated-spawn done set live for
 the later same-body `(await_all done)` drain.
+The next selected implementation leaf is the direct top-level `switch` branch
+generated-child analogue: plain `(do child)` while generated nested spawns are
+pending, where `child` is already emitted as a generated child by another
+activation site. That selected switch-contained leaf is not shipped yet. Its
+intended proof mirrors the when-contained leaf: the generated do site owns one
+deterministic generated instance, waits for that instance's fresh done
+handoff, and leaves the pending generated-spawn done set live for the later
+same-body `(await_all done)` drain.
 Parameterized/bound/domain-qualified generated `do` while spawn pending, the
-switch-contained generated-child analogue, `await_any` observation before or
-after the do, new spawn after the do before the drain, cross-domain
-activation, deeper branch/loop nesting, and broader outstanding-child
-semantics remain deferred.
+not-yet-shipped switch implementation, `await_any` observation before or after
+the do, new spawn after the do before the drain, cross-domain activation,
+deeper branch/loop nesting, and broader outstanding-child semantics remain
+deferred.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
