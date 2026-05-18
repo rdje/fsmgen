@@ -2,18 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.105`.
-  Leaf `.104` shipped the selected top-level `switch` branch nested repeat
-  plain generated-child `(do child)` before post-do multi-pending
-  `(await_any done)`: lowering waits for the deterministic generated do
-  instance's fresh done handoff, leaves the pending generated-spawn done set
-  live through the post-do observation, and requires a later same-body
-  `(await_all done)` drain before nested repeat re-entry. Leaf `.105` must
-  select one next bounded repeat-body child activation subset before any
-  additional implementation. Static-parameter generated-do post-do
-  `await_any`, bind handoffs, domain metadata, spawn-after-do, cross-domain
-  activation, deeper branch/loop nesting, and broader outstanding-child
-  semantics remain deferred unless selected by a future leaf.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.106`.
+  Leaf `.105` selected top-level `when` body nested repeat generated blocking
+  `(do child (params ...))` before post-do multi-pending `(await_any done)`
+  as the next bounded subset. Leaf `.106` must implement only that selected
+  shape: a repeat directly inside a top-level `when` body with multiple
+  generated spawns, a static-parameter generated do while those generated
+  spawns remain pending, post-do `(await_any done)` as an observation point,
+  and a later same-body `(await_all done)` drain before nested repeat
+  re-entry. Bind handoffs, domain metadata, the switch-contained analogue,
+  spawn-after-do, cross-domain activation, deeper branch/loop nesting, and
+  broader outstanding-child semantics remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
