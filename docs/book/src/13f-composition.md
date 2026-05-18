@@ -365,6 +365,7 @@ The report field is `actor_network`:
     }
   ],
   "groups": [],
+  "group_schedules": [],
   "data_movements": [],
   "event_waits": [],
   "transaction_triggers": []
@@ -374,8 +375,10 @@ The report field is `actor_network`:
 This is not generated-child composition yet. FSMGen does not resolve
 `packet_reader`, emit a child `.fsm`, build an ATL top, or wire `reader`
 transactions/events to child artifacts in this slice. Broader multiple
-instances, groups, pin movement, event fan-in/fan-out, trigger fan-in/fan-out,
-and generated ATL wiring remain backlog under the actor-network task tree.
+instances outside the shipped scalar handoff and group metadata subsets,
+broader group scheduling outside the exact trigger-batch subset, pin
+movement, event fan-in/fan-out, trigger fan-in/fan-out, and generated ATL
+wiring remain backlog under the actor-network task tree.
 
 The broader ATL v0 contract is selected for later slices. The source root
 stays `(actor ...)`, and future ATL declarations remain direct actor-body
@@ -457,7 +460,8 @@ FSMGen exposes `producer.payload` as a generated scalar external parent input
 named `producer_payload`, drives the existing one-bit top-level output pin
 `out_bit` for the drive-call cycle, and reports kind
 `scalar_actor_to_pin_handoff`. Wider pins, storage, muxing, generated
-children, group scheduling, CDC, and trigger/await coupling remain deferred.
+children, group scheduling combined with pin movement, CDC, and
+trigger/await coupling remain deferred.
 
 ATL orchestration spellings are `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
@@ -523,6 +527,16 @@ generated outputs in the same cycle. The report keeps individual entries in
 `actor_network.group_schedules[]` entry with the group name, owner
 transaction, members, target transactions, generated signals, same-cycle
 schedule, no-storage policy, and external handoff boundary.
+
+The first realistic ATL fixture selected for promotion is
+`isf/atl_group_trigger_pipeline.isf`. It uses only that shipped group-trigger
+surface: three direct static actor instances, one verbose static group, and
+one exact trigger batch. The selected fixture is meant to prove scheduled
+parent `.fsm`, strict schedule JSON, and HDL reachability for the bounded
+group orchestration surface. It is not a claim for peer event synchronization,
+endpoint data movement, generated ATL child `.fsm` artifacts, generated ATL
+tops, group endpoints, route mux/storage, CDC, payloads, or
+ready/backpressure.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single

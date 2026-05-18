@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL first realistic fixture stays inside shipped semantics
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` selects a group-trigger fixture
+  instead of a richer packet-flow fixture because the shipped ATL surface does
+  not yet allow group scheduling to couple with endpoint data movement or
+  actor-event waits in one transaction.
+- The selected fixture is still useful: it proves that a top-level actor can
+  orchestrate a static multi-actor group by issuing an exact same-cycle
+  trigger batch and that the generated parent schedule exposes reviewable
+  external trigger handoffs.
+- Richer ATL examples should wait until later behavior-bearing leaves ship
+  the missing combinations. That keeps the fixture honest and prevents a
+  documentation example from becoming a hidden language-design promise.
 ## 2026-05-18: ATL realistic fixtures need selection first
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.8` is intentionally decomposed before
   fixture code because realistic ATL examples can otherwise mix source design,

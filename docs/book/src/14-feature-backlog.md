@@ -642,8 +642,9 @@ policy for the fully general case.
 
 ### Actor Network Orchestration
 
-Status: active ATL design tree; static metadata is shipped and the ATL v0
-public contract is selected, but ATL scheduling is not implemented.
+Status: active ATL design tree; static metadata, scalar handoffs, and the
+first bounded group-trigger scheduling subset are shipped under the selected
+ATL v0 public contract.
 Task-tree owner:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 Concrete design proposal:
@@ -733,9 +734,16 @@ batches, noncontiguous batches, repeated members, generated children, group
 endpoints, event/data-movement coupling, route mux/storage, CDC, and compact
 aliases remain later leaves.
 
-The next ATL fixture step is selection-only: choose one realistic multi-actor
-example that uses already shipped surfaces before adding fixture source,
-regression catalog coverage, or new book examples.
+The first realistic ATL fixture is selected before code as
+`isf/atl_group_trigger_pipeline.isf`. It is deliberately bounded to already
+shipped surfaces: three direct static actor instances, one verbose static
+group named `pipeline`, and one contiguous transaction-body trigger batch to
+every group member exactly once. The next implementation leaf adds that
+fixture with scheduled `.fsm`, strict schedule JSON, and HDL reachability
+coverage. It will not claim peer event synchronization, endpoint data
+movement, generated ATL child artifacts, generated ATL tops, group endpoints,
+compact aliases, CDC, route mux/storage, payloads, ready/backpressure, or
+trigger/data/event coupling.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

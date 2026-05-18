@@ -1587,8 +1587,9 @@ schedule-report surface is `actor_network.data_movements[]` with
 `sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,
 `source`, and `sink`. Storage, muxing, actor type resolution, generated child
 artifacts, generated ATL tops, HDL child wiring, broader pin movement,
-inline/expression movement, fan-in/fan-out, group scheduling, CDC, and
-trigger/await coupling remain future public contracts.
+inline/expression movement, fan-in/fan-out, broader group scheduling outside
+the exact trigger-batch subset, CDC, and trigger/await coupling remain future
+public contracts.
 The first top-level pin movement public subset is implemented: one
 `(actor.endpoint pins.input_pin)` scalar pair in one named drive body, one
 direct static actor instance, and one top-level transaction drive call. The

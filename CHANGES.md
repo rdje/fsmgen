@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ATL first realistic fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` before adding fixture
+  source or tests.
+- Selected `isf/atl_group_trigger_pipeline.isf` as the first realistic ATL
+  fixture: three direct static actor instances, one verbose static group, and
+  one same-cycle external trigger batch that targets every group member
+  exactly once.
+- Selected the `.8.2` verification contract: in-process scheduled `.fsm`
+  structure, strict schedule JSON parity, plain HDL generation, strict HDL
+  generation, mdBook/live-doc synchronization, and no behavior widening
+  beyond the shipped group-trigger surface.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`.
+
 ### R14 — ATL realistic fixture frontier decomposed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8` decomposition before code.
 - Split realistic multi-actor ATL fixture promotion into

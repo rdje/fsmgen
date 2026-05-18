@@ -2803,6 +2803,7 @@ parser/schedule-report metadata:
     }
   ],
   "groups": [],
+  "group_schedules": [],
   "data_movements": [],
   "event_waits": [],
   "transaction_triggers": []
@@ -2828,7 +2829,8 @@ The following remain fail-closed/deferred:
 - broader qualified actor transaction/event behavior beyond the selected
   parent-handoff subsets;
 - static actor type resolution, generated child artifacts, generated
-  top-level ATL wiring, and group scheduling;
+  top-level ATL wiring, and group scheduling outside the exact shipped
+  trigger-batch subset;
 - recursive actor-network declarations.
 
 The broader ATL v0 vocabulary is selected, with only the bounded event-wait,
@@ -2960,10 +2962,11 @@ widens this surface. Schedule JSON reports accepted triggers through
 `actor_network.transaction_triggers[]`.
 
 The current generated-artifact contract is explicit: the parent scheduled
-`.fsm` may include the selected one-bit actor-event handoff input and the
-selected one-cycle actor-transaction trigger output. FSMGen still emits no ATL
-child `.fsm`, no generated ATL top, no generated route mux, no generated
-internal handoff storage, and no HDL event wiring. Any later ATL
+`.fsm` may include the selected one-bit actor-event handoff input, selected
+one-cycle actor-transaction trigger output, selected scalar data-movement
+handoff ports, and selected same-cycle group-trigger handoff outputs. FSMGen
+still emits no ATL child `.fsm`, no generated ATL top, no generated route mux,
+no generated internal handoff storage, and no HDL event wiring. Any later ATL
 implementation that emits broader artifacts must document their names, report
 keys, and review surfaces in the same slice that ships them.
 

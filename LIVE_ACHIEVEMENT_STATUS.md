@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ATL first realistic fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` before fixture
+  implementation.
+- Selected `isf/atl_group_trigger_pipeline.isf` as the first realistic ATL
+  fixture: three direct static actor instances, one verbose static group, and
+  one exact same-cycle external group-trigger batch.
+- The next leaf, `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`, must add that
+  fixture with scheduled `.fsm`, strict schedule JSON, and plain/strict HDL
+  coverage while preserving the current fail-closed boundaries.
+- The selected fixture does not claim peer event synchronization, endpoint
+  data movement, generated ATL child `.fsm` artifacts, generated ATL tops,
+  group endpoints, compact aliases, CDC, route mux/storage, payloads, or
+  ready/backpressure.
+- Validation passed: `mdbook build docs/book`; `git diff --check`.
+
 ## 2026-05-18: R14 — ATL realistic fixture frontier decomposed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8` decomposition before code.
 - The next realistic multi-actor ATL fixture work is split into

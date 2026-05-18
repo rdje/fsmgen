@@ -1,7 +1,7 @@
 # ISF Downstream Integration Specification
 
 Status: `bounded_public`
-Document version: `2026-05-16`
+Document version: `2026-05-18`
 ISF source specification: `.isf` specification v0.6
 Primary audience: SPECFORGE and other tools that emit, validate, inspect, or
 consume FSMGen Intent Scheduling Format sources and reports.
@@ -1497,12 +1497,14 @@ Rules:
 
 ## 12.5. Static Actor Network Metadata
 
-FSMGen now accepts the first bounded Actor Transfer Level (`ATL`) source
-surface: one static actor instance declaration owned by the top-level actor.
-This slice is metadata-only. It records the actor-network intent for
-downstream discovery and later scheduler work; it does not resolve the child
-actor type, instantiate a child scheduled `.fsm`, generate an ATL top, or
-change HDL behavior.
+FSMGen now accepts bounded Actor Transfer Level (`ATL`) source surfaces owned
+by the top-level actor: direct static actor declarations, report-only static
+groups, selected scalar handoffs, selected parent event/trigger handoffs, and
+the exact same-cycle group-trigger batch. The static declarations record
+actor-network intent for downstream discovery; behavior-bearing leaves add
+only the explicitly documented parent handoff ports and scheduled states.
+FSMGen still does not resolve child actor types, instantiate ATL child
+scheduled `.fsm` artifacts, generate an ATL top, or wire child HDL behavior.
 
 Accepted form:
 
@@ -1535,6 +1537,7 @@ The schedule report exposes this through top-level `actor_network`:
     }
   ],
   "groups": [],
+  "group_schedules": [],
   "data_movements": [],
   "event_waits": [],
   "transaction_triggers": []
@@ -1673,13 +1676,15 @@ ATL top wiring until the corresponding support is documented here and
 advertised in the manifest.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
-the selected one-bit actor-event handoff input and selected one-cycle
-actor-transaction trigger output. FSMGen still emits no generated ATL child
-`.fsm`, no generated ATL top, no route mux, no internal handoff storage, and
-no HDL event wiring. Downstream consumers must treat `actor_network` as
-discovery/review metadata plus the explicitly reported `event_waits[]` and
-`transaction_triggers[]` entries until a later task-tree leaf documents
-broader generated artifact names and report keys in this handoff.
+the selected one-bit actor-event handoff input, selected one-cycle
+actor-transaction trigger output, selected scalar data-movement handoff
+ports, and selected same-cycle group-trigger handoff outputs. FSMGen still
+emits no generated ATL child `.fsm`, no generated ATL top, no route mux, no
+internal handoff storage, and no HDL event wiring. Downstream consumers must
+treat `actor_network` as discovery/review metadata plus the explicitly
+reported `event_waits[]`, `transaction_triggers[]`, `data_movements[]`, and
+`group_schedules[]` entries until a later task-tree leaf documents broader
+generated artifact names and report keys in this handoff.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

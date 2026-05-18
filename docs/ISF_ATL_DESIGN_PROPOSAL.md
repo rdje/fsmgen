@@ -116,16 +116,18 @@ ATL v0 now has a selected public source direction:
 
 The current generated-artifact contract is also explicit: FSMGen may add the
 selected one-bit actor-event handoff input, selected one-cycle
-actor-transaction trigger handoff output, and selected one-cycle scalar
-data-movement handoff ports to the parent scheduled `.fsm`; it reports those
-handoffs through `actor_network.event_waits[]`,
-`actor_network.transaction_triggers[]`, and
-`actor_network.data_movements[]`. Static group declarations report only
-`actor_network.groups[]` metadata and add no generated artifacts. FSMGen still
-emits no generated ATL child `.fsm`, generated ATL top, route mux, internal
-handoff storage, child instance, group scheduler, or HDL event wiring. Later
-leaves must add their generated artifact names, report keys, examples, and
-fail-closed diagnostics in the same slice that ships the behavior.
+actor-transaction trigger handoff output, selected one-cycle scalar
+data-movement handoff ports, and selected same-cycle group-trigger handoff
+outputs to the parent scheduled `.fsm`; it reports those handoffs through
+`actor_network.event_waits[]`, `actor_network.transaction_triggers[]`,
+`actor_network.data_movements[]`, and `actor_network.group_schedules[]`.
+Static group declarations still report `actor_network.groups[]` metadata with
+`scheduling: "metadata_only"`; runtime group evidence appears only for an
+accepted trigger batch. FSMGen still emits no generated ATL child `.fsm`,
+generated ATL top, route mux, internal handoff storage, child instance, or HDL
+event wiring. Later leaves must add their generated artifact names, report
+keys, examples, and fail-closed diagnostics in the same slice that ships the
+behavior.
 
 ## Shipped First Actor-Event Wait Subset
 
@@ -272,6 +274,42 @@ resolve actor types, emit child `.fsm` files, build a generated ATL top,
 schedule concurrent execution, create group endpoints, insert route
 mux/storage, or cross clock domains. Those behaviors remain separate
 task-tree leaves with their own artifact and report contracts.
+
+## Selected First Realistic Fixture
+
+The first realistic ATL fixture is selected before code as
+`isf/atl_group_trigger_pipeline.isf`. It stays inside the shipped group
+scheduling subset:
+
+```lisp
+(actor atl_group_trigger_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (instance filter of packet_filter)
+  (instance writer of packet_writer)
+  (group pipeline
+    (members reader filter writer)
+    (mode concurrent))
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger filter.process)
+    (trigger writer.emit)
+    (complete done)))
+```
+
+The fixture is selected to prove parent scheduled `.fsm` emission, strict
+schedule JSON parity, and HDL reachability for the exact group-trigger batch.
+It will report three static instances, one static group, three per-target
+transaction triggers, and one `same_cycle_external_trigger_batch` group
+schedule. It deliberately does not claim peer event synchronization, endpoint
+data movement, generated ATL child `.fsm` artifacts, generated ATL tops, group
+endpoints, compact aliases, CDC, route mux/storage, payloads, or
+ready/backpressure.
 
 ## Endpoints
 

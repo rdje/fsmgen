@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.7.4`.
+  activation `.111` and ATL actor-network orchestration `.8.2`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -124,7 +124,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the `.8` realistic-fixture frontier is decomposed before code into
   `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` for fixture selection and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` for fixture promotion. The next ATL
-  frontier is `.8.1`.
+  frontier is `.8.1`. `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` selected
+  `isf/atl_group_trigger_pipeline.isf` as the first realistic ATL fixture
+  before code: three direct static actor instances, one verbose static
+  `pipeline` group, and one exact same-cycle external group-trigger batch.
+  The selected implementation leaf must emit only
+  `atl_group_trigger_pipeline.fsm`, prove strict schedule JSON plus HDL
+  reachability, and avoid claiming peer events, endpoint data movement,
+  generated ATL child artifacts, generated ATL tops, group endpoints, compact
+  aliases, CDC, payloads, ready/backpressure, or route mux/storage. The next
+  ATL frontier is `.8.2`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

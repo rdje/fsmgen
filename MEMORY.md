@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL first realistic fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.1` before fixture source or
+  code changes.
+- The first realistic ATL fixture is selected as
+  `isf/atl_group_trigger_pipeline.isf`: a single-clock top-level actor with
+  three direct static actor instances, one verbose static `pipeline` group,
+  and one contiguous transaction-body trigger batch that targets every group
+  member exactly once.
+- The selected `.8.2` implementation must emit only
+  `atl_group_trigger_pipeline.fsm`, prove the grouped trigger state and the
+  generated `reader_capture_start`, `filter_process_start`, and
+  `writer_emit_start` handoff pulses, and cover strict schedule JSON parity
+  plus plain/strict HDL generation.
+- The selected fixture explicitly does not claim peer event synchronization,
+  endpoint data movement, generated ATL child artifacts, generated ATL tops,
+  group endpoints, compact aliases, CDC, payloads, ready/backpressure,
+  route mux/storage, or trigger/data/event coupling. The active ATL frontier
+  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2`.
+- Validation passed: `mdbook build docs/book`; `git diff --check`.
 ## 2026-05-18: ATL realistic fixture frontier decomposed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8` decomposition before code.
 - The realistic multi-actor fixture frontier is now split into
