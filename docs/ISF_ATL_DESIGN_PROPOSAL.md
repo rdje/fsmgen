@@ -38,36 +38,11 @@ The proposed root stays the existing ISF actor root:
 
 The top-level actor is the network boundary. Its `interface` declares the
 top-level pins. Its `transaction` and `rule` clauses can orchestrate the actor
-network. Static actor declarations may be scoped or flat. Data/information
+network. Static actor declarations are direct actor clauses. Data/information
 movement should reuse existing drive bodies and drive calls by allowing drive
 body assignment pairs to reference actor endpoints and top-level pins.
 
-There are two viable source-shape candidates.
-
-### Candidate A: Scoped Network Clause
-
-```lisp
-(actor top_name
-  actor_clause...
-  (network
-    network_clause...))
-```
-
-In this spelling, `(network ...)` is only a lexical scope for ATL clauses. It
-is not a second semantic root. The whole system is still the enclosing actor.
-
-Benefits:
-
-- keeps instance/group declarations separate from existing actor clauses;
-- gives diagnostics a clear "inside network" context;
-- leaves room for future actor-local clauses without name collisions.
-
-Costs:
-
-- adds a wrapper even though the enclosing actor is already the network;
-- may make simple systems look heavier than needed.
-
-### Candidate B: Flat Actor Clauses
+### Actor-Body ATL Clauses
 
 ```lisp
 (actor top_name
@@ -76,28 +51,21 @@ Costs:
   (group group_name group_clause...))
 ```
 
-In this spelling, ATL clauses are direct clauses of the top-level actor. There
-is no `(network ...)` wrapper. The actor body itself is the network.
-
-Benefits:
+ATL clauses are direct clauses of the top-level actor. There is no
+`(network ...)` wrapper. The actor body itself is the network. This is the
+selected source shape because it:
 
 - matches the user's mental model most directly: the actor content is the
   actor network;
 - removes one nesting level;
 - makes top-level actor transactions/rules and actor-network clauses feel like
-  one unified ATL surface.
+  one unified ATL surface;
+- avoids a second lexical section that could be mistaken for a semantic root.
 
-Costs:
-
-- requires the parser and diagnostics to distinguish actor-local clauses from
-  ATL clauses at the same level;
-- raises name-collision questions sooner if future actor clauses use similar
-  names.
-
-The first metadata-only implementation slice explicitly supports both
-spellings for one static actor instance and lowers both to the same
-`actor_network` report metadata. Broader `group` placement and multi-instance
-scheduling are still deferred.
+The first metadata-only implementation slice accepts this direct
+`(instance ...)` form for one static actor instance and lowers it to
+`actor_network` report metadata. `(network ...)`, broader `group` placement,
+and multi-instance scheduling are still deferred.
 
 This keeps the model natural:
 
@@ -123,28 +91,13 @@ The first shipped slice accepts exactly one static actor instance:
   (interface
     (input start)
     (output done))
-  (network
-    (instance reader of packet_reader))
-  (transaction run
-    (on start)
-    (complete done)))
-```
-
-or the flat alias:
-
-```lisp
-(actor packet_pipe
-  (clock clk)
-  (interface
-    (input start)
-    (output done))
   (instance reader of packet_reader)
   (transaction run
     (on start)
     (complete done)))
 ```
 
-Both forms preserve schedule-report metadata:
+The direct actor-body form preserves schedule-report metadata:
 
 ```json
 {
@@ -153,7 +106,7 @@ Both forms preserve schedule-report metadata:
     {
       "name": "reader",
       "actor_type": "packet_reader",
-      "declaration": "network"
+      "declaration": "actor"
     }
   ]
 }
@@ -184,9 +137,7 @@ groups, implicit default transactions, and dynamic instance names.
 ## Verbose Syntax Candidate
 
 The verbose syntax should be the normative form because it is easiest to audit
-and easiest for downstream tools to emit. The example below uses Candidate A
-only to show scoped static actor declarations. Candidate B would place
-`instance` and `group` directly under `(actor packet_pipe ...)`.
+and easiest for downstream tools to emit.
 
 ```lisp
 (actor packet_pipe
@@ -199,14 +150,13 @@ only to show scoped static actor declarations. Candidate B would place
     (output out_data (width 32))
     (output done))
 
-  (network
-    (instance reader of packet_reader)
-    (instance crc    of crc32_unit)
-    (instance writer of packet_writer)
+  (instance reader of packet_reader)
+  (instance crc    of crc32_unit)
+  (instance writer of packet_writer)
 
-    (group pipeline
-      (members reader crc writer)
-      (mode concurrent)))
+  (group pipeline
+    (members reader crc writer)
+    (mode concurrent))
 
   (drive feed_reader
     (reader.data_i pins.in_data))
@@ -261,16 +211,14 @@ movement.
 ## Compact Syntax Candidate
 
 Compact syntax should be a readability alias for the verbose form, not a
-different semantic surface. It can also be scoped or flat, depending on the
-source-shape decision.
+different semantic surface.
 
 ```lisp
-(network
-  (reader : packet_reader)
-  (crc    : crc32_unit)
-  (writer : packet_writer)
+(reader : packet_reader)
+(crc    : crc32_unit)
+(writer : packet_writer)
 
-  (concurrent pipeline reader crc writer))
+(concurrent pipeline reader crc writer)
 
 (drive feed_reader (reader.data_i pins.in_data))
 (drive feed_crc (crc.payload reader.payload))
@@ -452,8 +400,7 @@ Scheduling should split cleanly:
 
 The smallest useful implementation should be:
 
-1. One top-level `(actor ...)` with ATL clauses, using either the selected
-   scoped `(network ...)` form or the selected flat actor-clause form.
+1. One top-level `(actor ...)` with direct actor-body ATL clauses.
 2. Single clock/reset only.
 3. Static `(instance name of actor_type)` declarations.
 4. One named drive body whose assignment pair references two qualified
@@ -484,14 +431,12 @@ ATL v0 should reject:
 - recursive actor-network instantiation;
 - combinational dependency cycles without storage;
 - compact aliases before they are mapped to the same IR as verbose forms;
-- mixed scoped and flat ATL clauses unless that mixture is explicitly shipped;
+- `(network ...)` wrappers;
 - any endpoint-aware drive-body pair whose width, lifetime, endpoint
   direction, or ordering cannot be proven.
 
 ## Open Decisions
 
-- Whether ATL v0 should use a scoped `(network ...)` clause, flat actor-level
-  ATL clauses, or both as equivalent spellings.
 - Whether the final verbose trigger spelling should be `(trigger ...)`,
   `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`.
 - Whether later ergonomic sugar above endpoint-aware drive-body pairs is worth

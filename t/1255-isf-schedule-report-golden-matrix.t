@@ -996,8 +996,7 @@ sub actor_network_static_source {
   (interface
     (input start)
     (output done))
-  (network
-    (instance reader of packet_reader))
+  (instance reader of packet_reader)
   (transaction run
     (on start)
     (complete done)))

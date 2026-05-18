@@ -58,16 +58,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.1`
   Status: `completed`
   Goal: `Clarify the actor-network source contract with the user.`
-  Acceptance: `A design note records whether actors are declared as nested actors, imported/library actors, peer actors in a scoped network clause, or flat top-level ATL clauses; how the whole network acts as a top-level actor; how top-level actor transactions/rules trigger actors or transactions; how one-cycle events are named and synchronized; how data moves between actors, concurrent actor groups, and top-level pins; how scheduling responsibility is split between local actor schedules and network-level orchestration; how compact and verbose syntax variants relate; and which forms must fail closed in the first implementation slice.`
+  Acceptance: `A design note records that static actor instances are direct top-level actor-body ATL clauses, how the whole network acts as a top-level actor, how top-level actor transactions/rules trigger actors or transactions, how one-cycle events are named and synchronized, how data moves between actors, concurrent actor groups, and top-level pins, how scheduling responsibility is split between local actor schedules and network-level orchestration, how compact and verbose syntax variants relate, and which forms must fail closed in the first implementation slice.`
   Verification: `mdbook build docs/book; git diff --check`
-  Commit: `pending commit for ATL clarification slice`
+  Commit: `ISF-ACTOR-NETWORK-ORCHESTRATION.1: draft ATL v0 proposal`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.2`
-  Status: `pending`
+  Status: `active`
   Goal: `Specify the static actor-network/ATL syntax and public contract.`
-  Acceptance: `The ISF spec, downstream integration handoff, public contract, and mdBook define the accepted compact and verbose source forms, event/data binding vocabulary, schedule-report shape, generated artifact names, and explicit non-claims.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `The ISF spec, downstream integration handoff, public contract, and mdBook define the accepted direct actor-body static instance source form, the rejected network-wrapper boundary, the eventual compact and verbose source forms, event/data binding vocabulary, schedule-report shape, generated artifact names, and explicit non-claims.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t; prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; mdbook build docs/book; git diff --check; ./bin/ci-regression isf --no-book`
+  Commit: `pending commit for direct static instance surface`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.3`
   Status: `completed`
@@ -115,7 +115,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `pending` | Static one-instance parsing/reporting shipped first; the broader ATL syntax/public-contract leaf still needs to settle the next event, trigger, group, and movement contracts before those implementation leaves. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `active` | Static one-instance parsing/reporting shipped first; this leaf has now selected direct actor-body static instances and rejected `(network ...)`, but it still needs to settle the next event, trigger, group, and movement contracts before those implementation leaves. |
 
 ## ATL v0 Proposal
 
@@ -125,9 +125,9 @@ The current concrete proposal is tracked in
 Current proposal summary:
 
 - The source root remains `(actor top_name ...)`.
-- The actor network container spelling remains open: Candidate A scopes ATL
-  declarations inside `(network ...)`; Candidate B places `instance` and
-  `group` directly under the top-level `(actor ...)`.
+- The top-level actor body is the actor-network boundary. Static ATL
+  declarations are direct actor clauses; `(network ...)` is not part of the
+  shipped source surface.
 - The top-level actor's `interface` declares the external pins, referenced as
   `pins.name`.
 - Actor instances are static, named, and explicit.
@@ -179,12 +179,12 @@ Current proposal summary:
   compact and verbose forms.
 - `2026-05-18`: Drafted a concrete ATL v0 proposal in
   [docs/ISF_ATL_DESIGN_PROPOSAL.md](../ISF_ATL_DESIGN_PROPOSAL.md): top-level
-  actor root, open container spelling between a scoped `(network ...)` clause
-  and flat top-level actor ATL clauses, static instances, qualified endpoints,
+  actor root, static direct actor-body ATL clauses, qualified endpoints,
   verbose and compact syntax candidates, temporal route semantics for
-  actor-to-actor and pin-to-actor movement, `transfer` for scheduler-owned
-  data movement, one-cycle events, top-level transaction/rule orchestration,
-  concurrent groups, first implementation subset, and fail-closed boundaries.
+  actor-to-actor and pin-to-actor movement, scheduler-owned data movement
+  through existing drive bodies/calls, one-cycle events, top-level
+  transaction/rule orchestration, concurrent groups, first implementation
+  subset, and fail-closed boundaries.
 - `2026-05-18`: User clarified the RTL mux analogy: ATL movement declarations
   must not be permanent wires. Multiple source actors may be able to provide
   information to one sink actor at different cycles, just as mux inputs can
@@ -222,27 +222,29 @@ Current proposal summary:
   about route wiring. The design now records that FSMGen owns runtime
   route-select control, mux/enables, handoffs, and generated connectivity.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
-  design now treats `(network ...)` as a scoping candidate, not a requirement;
-  flat top-level actor ATL clauses remain an explicit alternative.
+  design first treated `(network ...)` as a scoping candidate, not a
+  requirement, while keeping flat top-level actor ATL clauses as an explicit
+  alternative.
 - `2026-05-18`: User authorized starting coding with the selected movement
   direction and accepted that later slices can adjust the design if code or
   review exposes a mismatch. The active frontier moved to
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.3`, scoped first to static network
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.3`, bounded first to static network
   parsing/reporting while endpoint-aware movement lowering remains a following
   slice.
 - `2026-05-18`: Shipped the first metadata-only static actor-network slice:
-  one actor instance can be declared as scoped
-  `(network (instance NAME of ACTOR_TYPE))` or flat
+  one actor instance can be declared as direct actor-body
   `(instance NAME of ACTOR_TYPE)`, and parser/report metadata preserves
   instance identity without resolving actor types, emitting child artifacts,
   generating ATL tops, moving data, triggering actor transactions, or waiting
-  on actor events.
+  on actor events. The earlier `(network ...)` wrapper was removed from the
+  shipped source surface and now fails closed.
 
 ## Open Questions
 
 - Should broader ATL declarations beyond the one-instance metadata slice keep
-  supporting both scoped `(network ...)` and flat top-level actor clauses, or
-  should one spelling become normative after scheduler lowering exists?
+  direct actor-body clauses for `group` and later ATL declarations, or should
+  some future grouping construct be added only after there is a concrete
+  semantic need?
 - Should the final verbose trigger spelling be `(trigger ...)`,
   `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`?
 - After ATL v0 ships and is reviewed, is ergonomic sugar above endpoint-aware
@@ -272,6 +274,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `selected existing drive-body movement reuse; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `scheduler-owned dynamic routing clarification captured; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.3` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `static actor-network parser/report slice shipped; focused checks and ISF regression gate passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `git diff --check`; `./bin/ci-regression isf --no-book` | `direct actor-body static instance surface selected; network wrapper rejection and docs/contracts passed focused checks plus ISF regression gate` |
 
 ## Commit Log
 
@@ -279,7 +282,7 @@ Current proposal summary:
 | --- | --- | --- |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `ISF-ACTOR-NETWORK-ORCHESTRATION: propose actor network orchestration` | `proposed tracking tree only` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: capture ATL model` | `activated clarification leaf and captured ATL mental model` |
-| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: draft ATL v0 proposal` | `drafted scoped/flat source-shape candidates and endpoint vocabulary` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: draft ATL v0 proposal` | `drafted the direct actor-body source shape and endpoint vocabulary` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: capture ATL temporal routes` | `captures RTL mux analogy and non-permanent movement semantics` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: select ATL drive-body movement` | `selects existing drive-body pairs and drive calls as the ATL v0 movement surface` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: clarify ATL scheduler routing` | `records scheduler-owned dynamic route control` |
@@ -303,6 +306,6 @@ Current proposal summary:
 - `2026-05-18`: Activated the first implementation leaf for static
   actor-network parsing/reporting.
 - `2026-05-18`: Shipped one-instance static actor-network parsing/reporting
-  metadata with scoped and flat source forms, public schedule-report keys,
-  contract/docs/book synchronization, and fail-closed unsupported graph
+  metadata with the direct actor-body source form, public schedule-report
+  keys, contract/docs/book synchronization, and fail-closed unsupported graph
   diagnostics.

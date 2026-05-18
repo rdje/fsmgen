@@ -1,18 +1,29 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF ATL static instance syntax narrowed
+- Removed the shipped `(network ...)` wrapper from the static actor-network
+  metadata source surface.
+- The accepted ATL static-instance form is now the direct actor-body
+  `(instance NAME of ACTOR_TYPE)` clause; the enclosing actor is the network
+  boundary.
+- The parser now rejects `(network ...)` with a bounded diagnostic, keeps
+  `(group ...)` fail-closed, and reports static instances with
+  `declaration: "actor"` in `actor_network`.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook,
+  ATL design proposal, task tree, roadmap board, live achievement status, and
+  development notes.
 ### R14 — ISF static actor-network metadata shipped
 - Added the first bounded Actor Transfer Level implementation slice:
-  top-level actors may declare one static child actor instance with scoped
-  `(network (instance NAME of ACTOR_TYPE))` or flat
-  `(instance NAME of ACTOR_TYPE)` syntax.
+  top-level actors may declare one static child actor instance with direct
+  actor-body `(instance NAME of ACTOR_TYPE)` syntax.
 - The ISF parser now stores `actor_network` metadata, `LoweringIR` carries it
   into report generation, and schedule JSON exposes the advertised
   `actor_network` key family.
 - Added public contract metadata and golden-matrix ownership for
   `schedule_report_actor_network_keys` and
   `schedule_report_actor_network_instance_keys`.
-- Added focused regression coverage for scoped and flat accepted forms,
+- Added focused regression coverage for the accepted actor-body form,
   CLI/in-process schedule JSON parity, report shape, no generated child
   artifacts, and fail-closed unsupported static graph shapes.
 - Synchronized the ISF spec, downstream handoff, public contract, mdBook, ATL
@@ -22,10 +33,8 @@ This is the persistent technical change history for FSMGen.
 - Added [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
   as the concrete design proposal for Actor Transfer Level actor-network
   orchestration.
-- Proposed keeping `(actor top_name ...)` as the source root and adding a
-  concrete but undecided ATL container shape: either a scoped `(network ...)`
-  body inside the top-level actor or flat ATL clauses directly under the
-  top-level actor.
+- Proposed keeping `(actor top_name ...)` as the source root and selected
+  direct ATL clauses in the top-level actor body.
 - Defined proposed ATL endpoints: `pins.name`, `actor.port`,
   `actor.transaction`, `actor.event`, and `group.name`.
 - Proposed verbose syntax as the normative form, with compact syntax only as

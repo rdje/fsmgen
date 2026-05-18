@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: ATL static instance syntax narrowed to direct actor-body form
+- Updated the shipped Actor Transfer Level static-instance source surface to
+  use only direct actor-body `(instance NAME of ACTOR_TYPE)` clauses. The
+  enclosing actor is the actor-network boundary; `(network ...)` is no longer
+  accepted by the parser.
+- The schedule-report shape remains `actor_network`, but the only shipped
+  instance declaration spelling is now `declaration: "actor"`.
+- Synchronized the ISF spec, downstream integration handoff, public contract,
+  mdBook composition section, feature matrix, ATL design proposal, roadmap,
+  task tree, and live notes so downstream users do not see `(network ...)` as
+  an accepted form.
+- This is still metadata-only ATL. Actor type resolution, generated child
+  artifacts, generated ATL tops, endpoint-aware drive movement, actor
+  transaction triggers, actor events, groups, and multi-instance scheduling
+  remain deferred.
 ## 2026-05-18: ISF Actor Transfer Level model captured
 - Drafted [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
   as the concrete ATL v0 proposal. The source root remains `(actor ...)`.
@@ -26897,8 +26912,7 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   the identity and summary source-info key families from one place instead of
   collecting those key lists separately.
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.3` is now shipped. The first ATL
-  implementation slice accepts one static actor instance as either
-  `(network (instance NAME of ACTOR_TYPE))` or flat
+  implementation slice accepts one static actor instance as direct actor-body
   `(instance NAME of ACTOR_TYPE)`, stores it as parser `actor_network`
   metadata, and exposes it through schedule JSON `actor_network`.
 - That ATL slice is metadata-only. It does not resolve the actor type, emit a

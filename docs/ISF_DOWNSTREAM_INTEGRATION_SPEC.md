@@ -1497,22 +1497,7 @@ downstream discovery and later scheduler work; it does not resolve the child
 actor type, instantiate a child scheduled `.fsm`, generate an ATL top, or
 change HDL behavior.
 
-Accepted scoped form:
-
-```lisp
-(actor packet_pipe
-  (clock clk)
-  (interface
-    (input start)
-    (output done))
-  (network
-    (instance reader of packet_reader))
-  (transaction run
-    (on start)
-    (complete done)))
-```
-
-Accepted flat alias:
+Accepted form:
 
 ```lisp
 (actor packet_pipe
@@ -1526,6 +1511,10 @@ Accepted flat alias:
     (complete done)))
 ```
 
+The enclosing actor is the network boundary. Downstream emitters must not wrap
+static ATL declarations in `(network ...)`; that spelling fails closed in the
+current shipped surface.
+
 The schedule report exposes this through top-level `actor_network`:
 
 ```json
@@ -1535,17 +1524,17 @@ The schedule report exposes this through top-level `actor_network`:
     {
       "name": "reader",
       "actor_type": "packet_reader",
-      "declaration": "network"
+      "declaration": "actor"
     }
   ]
 }
 ```
 
-`declaration` is `network` for scoped `(network ...)` entries and `actor` for
-flat `(instance ...)` entries. Current fail-closed boundaries include multiple
-instances, `(group ...)`, dynamic/non-scalar names, direct recursive
-instantiation, actor-to-actor endpoint movement, qualified actor transaction
-triggers, and actor event waits.
+`declaration` is always `actor` in this subset because the static instance is
+a direct actor-body declaration. Current fail-closed boundaries include
+multiple instances, `(network ...)`, `(group ...)`, dynamic/non-scalar names,
+direct recursive instantiation, actor-to-actor endpoint movement, qualified
+actor transaction triggers, and actor event waits.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

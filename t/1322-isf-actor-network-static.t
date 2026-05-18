@@ -17,8 +17,8 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_actor_network_keys
 );
 
-subtest 'scoped network static instance is parsed, lowered, and reported' => sub {
-    my $source = scoped_network_source('atl_static_network');
+subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
+    my $source = actor_body_network_source('atl_static_network');
     my $actor = parse_source($source, 'atl-static-network.isf');
 
     is_deeply(
@@ -29,11 +29,11 @@ subtest 'scoped network static instance is parsed, lowered, and reported' => sub
                 {
                     name        => 'reader',
                     actor_type  => 'packet_reader',
-                    declaration => 'network',
+                    declaration => 'actor',
                 },
             ],
         },
-        'parser preserves scoped static actor-network instance identity',
+        'parser preserves actor-body static actor-network instance identity',
     );
 
     my $scheduler = FSM::Scheduler::ISF->new();
@@ -53,50 +53,16 @@ subtest 'scoped network static instance is parsed, lowered, and reported' => sub
                 {
                     name        => 'reader',
                     actor_type  => 'packet_reader',
-                    declaration => 'network',
-                },
-            ],
-        },
-        'scoped network report',
-    );
-
-    my $path = write_temp_isf($source);
-    my $cli_report = run_schedule_json($path, 'scoped static actor network');
-    is_deeply($cli_report, $report, 'CLI schedule JSON matches in-process report for scoped static actor network');
-};
-
-subtest 'flat instance clause is accepted as the same static ATL metadata' => sub {
-    my $source = <<'ISF';
-(actor atl_flat_network
-  (clock clk)
-  (reset (rst_n async active_low))
-  (interface
-    (input start)
-    (output done))
-  (instance reader of packet_reader)
-  (transaction run
-    (on start)
-    (complete done)))
-ISF
-
-    my $actor = parse_source($source, 'atl-flat-network.isf');
-    is_deeply(
-        $actor->{actor_network},
-        {
-            kind      => 'static_declaration',
-            instances => [
-                {
-                    name        => 'reader',
-                    actor_type  => 'packet_reader',
                     declaration => 'actor',
                 },
             ],
         },
-        'parser preserves flat static actor-network instance identity',
+        'actor-body network report',
     );
 
-    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
-    assert_actor_network_report($report, $actor->{actor_network}, 'flat network report');
+    my $path = write_temp_isf($source);
+    my $cli_report = run_schedule_json($path, 'actor-body static actor network');
+    is_deeply($cli_report, $report, 'CLI schedule JSON matches in-process report for actor-body static actor network');
 };
 
 subtest 'unsupported static graph shapes fail closed' => sub {
@@ -105,9 +71,8 @@ subtest 'unsupported static graph shapes fail closed' => sub {
 (actor two_instances
   (clock clk)
   (interface (input start) (output done))
-  (network
-    (instance reader of packet_reader)
-    (instance writer of packet_writer))
+  (instance reader of packet_reader)
+  (instance writer of packet_writer)
   (transaction run (on start) (complete done)))
 ISF
         qr/currently accepts exactly one actor instance/,
@@ -119,11 +84,10 @@ ISF
 (actor unsupported_group
   (clock clk)
   (interface (input start) (output done))
-  (network
-    (group pipeline (members reader)))
+  (group pipeline (members reader))
   (transaction run (on start) (complete done)))
 ISF
-        qr/currently supports only static '\(instance name of actor_type\)'/,
+        qr/ATL group clauses are not supported yet/,
         'unsupported network group fails closed',
     );
 
@@ -132,8 +96,7 @@ ISF
 (actor dynamic_instance
   (clock clk)
   (interface (input start) (output done))
-  (network
-    (instance (select reader writer) of packet_reader))
+  (instance (select reader writer) of packet_reader)
   (transaction run (on start) (complete done)))
 ISF
         qr/static actor instance name must be a scalar HDL identifier/,
@@ -145,12 +108,24 @@ ISF
 (actor recursive_network
   (clock clk)
   (interface (input start) (output done))
-  (network
-    (instance self of recursive_network))
+  (instance self of recursive_network)
   (transaction run (on start) (complete done)))
 ISF
         qr/cannot instantiate its own enclosing actor type/,
         'direct recursive static actor instance fails closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor scoped_network_rejected
+  (clock clk)
+  (interface (input start) (output done))
+  (network
+    (instance reader of packet_reader))
+  (transaction run (on start) (complete done)))
+ISF
+        qr/direct '\(instance name of actor_type\)' actor clauses; '\(network \.\.\.\)' is not supported/,
+        'scoped network wrapper is rejected',
     );
 };
 
@@ -208,7 +183,7 @@ sub write_temp_isf {
     return $path;
 }
 
-sub scoped_network_source {
+sub actor_body_network_source {
     my ($actor_name) = @_;
     return <<"ISF";
 (actor $actor_name
@@ -217,8 +192,7 @@ sub scoped_network_source {
   (interface
     (input start)
     (output done))
-  (network
-    (instance reader of packet_reader))
+  (instance reader of packet_reader)
   (transaction run
     (on start)
     (complete done)))

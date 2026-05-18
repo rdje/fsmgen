@@ -1549,14 +1549,15 @@ singleton `(constants ...)` clause. That field is not a required actor shell
 key, but the advertised value-shape string records that `constants` is an
 optional array reference when present.
 Actor roots may also carry the first bounded ATL static actor-network
-metadata through either `(network (instance NAME of ACTOR_TYPE))` or the flat
-actor-level `(instance NAME of ACTOR_TYPE)` alias. That field is not a
-required actor shell key. When present, `actor_network` is a
-`static_declaration` hash with exactly one instance entry in the current
-subset, and schedule reports project it through top-level `actor_network`.
-This slice is metadata-only: no child actor type resolution, generated child
-scheduled `.fsm`, generated ATL top, actor-to-actor movement, actor events,
-or HDL behavior is promised by this field.
+metadata through a direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
+The enclosing actor is the network boundary; `(network ...)` wrappers are not
+part of the shipped source surface. That field is not a required actor shell
+key. When present, `actor_network` is a `static_declaration` hash with
+exactly one instance entry in the current subset, and schedule reports project
+it through top-level `actor_network`. This slice is metadata-only: no child
+actor type resolution, generated child scheduled `.fsm`, generated ATL top,
+actor-to-actor movement, actor events, or HDL behavior is promised by this
+field.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`

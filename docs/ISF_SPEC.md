@@ -2754,23 +2754,7 @@ actor-network declaration. It lets a top-level actor record one child actor
 instance while FSMGen preserves that identity in the parser shell and schedule
 JSON report.
 
-Scoped form:
-
-```lisp
-(actor packet_pipe
-  (clock clk)
-  (reset (rst_n async active_low))
-  (interface
-    (input start)
-    (output done))
-  (network
-    (instance reader of packet_reader))
-  (transaction run
-    (on start)
-    (complete done)))
-```
-
-Flat form:
+Accepted form:
 
 ```lisp
 (actor packet_pipe
@@ -2784,7 +2768,9 @@ Flat form:
     (complete done)))
 ```
 
-Both accepted forms lower to the same parser/schedule-report metadata:
+The enclosing actor is the network boundary; there is no `(network ...)`
+wrapper in the shipped ATL surface. The accepted form lowers to this
+parser/schedule-report metadata:
 
 ```json
 "actor_network": {
@@ -2793,24 +2779,25 @@ Both accepted forms lower to the same parser/schedule-report metadata:
     {
       "name": "reader",
       "actor_type": "packet_reader",
-      "declaration": "network"
+      "declaration": "actor"
     }
   ]
 }
 ```
 
-`declaration` is `network` for the scoped form and `actor` for the flat
-form. Instance names and actor types must be scalar HDL identifiers. The
-current shipped subset accepts exactly one static actor instance per top-level
-actor. It does not instantiate or resolve that actor type, does not emit a
-generated child `.fsm`, does not create a generated composition top, and does
-not change HDL generation. It is report-visible design intent for the
-upcoming ATL scheduler slices.
+`declaration` is `actor` in the current subset because static actor instances
+are direct clauses of the enclosing actor. Instance names and actor types must
+be scalar HDL identifiers. The current shipped subset accepts exactly one
+static actor instance per top-level actor. It does not instantiate or resolve
+that actor type, does not emit a generated child `.fsm`, does not create a
+generated composition top, and does not change HDL generation. It is
+report-visible design intent for the upcoming ATL scheduler slices.
 
 The following remain fail-closed/deferred:
 
 - multiple static actor instances;
 - `(group ...)` declarations;
+- `(network ...)` wrappers;
 - actor-to-actor endpoint movement through widened drive-body `(sink source)`
   pairs;
 - qualified actor transaction triggers and actor event waits;

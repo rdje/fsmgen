@@ -670,11 +670,12 @@ Current ATL v0 proposal:
 
 The top-level root remains `(actor name ...)`. The first metadata-only
 implementation slice is shipped: exactly one static actor instance may be
-declared as either `(network (instance NAME of ACTOR_TYPE))` or the flat
-actor-level `(instance NAME of ACTOR_TYPE)` alias. Both spellings lower to the
-same parser shell and schedule-report metadata under `actor_network`. The
-current slice does not resolve the actor type, instantiate a child, emit a
-generated ATL top, move data between actors, or change HDL. Multiple
+declared with the direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
+The enclosing actor is the network boundary; `(network ...)` is not part of
+the shipped source surface. The accepted form lowers to parser shell and
+schedule-report metadata under `actor_network` with `declaration: "actor"`.
+The current slice does not resolve the actor type, instantiate a child, emit
+a generated ATL top, move data between actors, or change HDL. Multiple
 instances, groups, events, qualified actor transaction triggers, and widened
 drive-body endpoint movement remain backlog.
 Actor-to-actor and pin-to-actor movement is not expressed as top-level
@@ -687,56 +688,7 @@ The rationale is uniform ISF syntax: ATL should not make downstream emitters
 or users learn a second data-movement form when existing drive bodies and
 drive calls can carry the same intent.
 
-Scoped candidate:
-
-```lisp
-(actor packet_pipe
-  (clock clk)
-  (reset (rst_n async active_low))
-
-  (interface
-    (input  start)
-    (input  in_data  (width 32))
-    (output out_data (width 32))
-    (output done))
-
-  (network
-    (instance reader of packet_reader)
-    (instance crc    of crc32_unit)
-    (instance writer of packet_writer)
-
-    (group pipeline
-      (members reader crc writer)
-      (mode concurrent)))
-
-  (drive feed_reader
-    (reader.data_i pins.in_data))
-
-  (drive feed_crc
-    (crc.payload reader.payload))
-
-  (drive feed_writer
-    (writer.crc crc.result))
-
-  (drive publish_output
-    (pins.out_data writer.data_o))
-
-  (transaction run_packet
-    (on start)
-    (drive feed_reader)
-    (trigger reader.capture)
-    (await reader.done)
-    (drive feed_crc)
-    (trigger crc.compute)
-    (await crc.done)
-    (drive feed_writer)
-    (trigger writer.emit)
-    (await writer.done)
-    (drive publish_output)
-    (complete done)))
-```
-
-Flat candidate:
+Direct actor-body proposal:
 
 ```lisp
 (actor packet_pipe

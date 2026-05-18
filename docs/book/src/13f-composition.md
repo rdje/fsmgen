@@ -335,22 +335,7 @@ The first Actor Transfer Level (`ATL`) implementation slice is intentionally
 small: a top-level actor may declare one static actor instance, and FSMGen
 preserves that declaration in the parser shell and schedule report.
 
-Scoped form:
-
-```lisp
-(actor packet_pipe
-  (clock clk)
-  (interface
-    (input start)
-    (output done))
-  (network
-    (instance reader of packet_reader))
-  (transaction run
-    (on start)
-    (complete done)))
-```
-
-Flat form:
+Accepted form:
 
 ```lisp
 (actor packet_pipe
@@ -364,6 +349,9 @@ Flat form:
     (complete done)))
 ```
 
+The enclosing actor is the network boundary; there is no `(network ...)`
+wrapper in the shipped ATL static-instance surface.
+
 The report field is `actor_network`:
 
 ```json
@@ -373,7 +361,7 @@ The report field is `actor_network`:
     {
       "name": "reader",
       "actor_type": "packet_reader",
-      "declaration": "network"
+      "declaration": "actor"
     }
   ]
 }

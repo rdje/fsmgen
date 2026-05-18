@@ -1,15 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL uses direct actor-body static instances
+- The shipped ATL static-instance source surface is now only
+  `(instance NAME of ACTOR_TYPE)` directly in the enclosing actor body.
+- The enclosing actor is already the actor-network boundary, so a `(network
+  ...)` wrapper would add syntax without carrying a distinct semantic
+  responsibility in the current model.
+- The parser rejects `(network ...)` instead of preserving it as an alias.
+  This keeps downstream emitters, examples, and future scheduler work aligned
+  on one surface before multi-instance, group, event, and endpoint-movement
+  semantics harden.
+- The schedule-report key remains `actor_network` because it describes the
+  meaning of the metadata, not a source wrapper. Instance entries keep the
+  public `declaration` key, but the only shipped value is now `actor`.
 ## 2026-05-18: Static actor-network metadata ships before ATL scheduling
 - The first ATL implementation slice deliberately stops at static metadata:
   it accepts one actor instance declaration and projects it into
   `actor_network` without attempting actor type resolution, child artifact
   generation, generated ATL top emission, endpoint routing, transaction
   triggering, or event waiting.
-- The parser accepts both scoped `(network (instance NAME of ACTOR_TYPE))`
-  and flat `(instance NAME of ACTOR_TYPE)` forms. Supporting both at this
-  metadata layer keeps the syntax discussion reversible while avoiding drift:
-  both spellings lower to the same schedule-report shape.
+- The parser accepts direct actor-body `(instance NAME of ACTOR_TYPE)` forms.
+  The earlier `(network ...)` wrapper is rejected so the shipped source
+  surface stays aligned on the actor body as the network boundary.
 - The one-instance limit is intentional. Multi-instance graphs immediately
   raise scheduling, fan-in, grouping, and generated-top questions that belong
   to later task-tree leaves with their own tests and documentation.

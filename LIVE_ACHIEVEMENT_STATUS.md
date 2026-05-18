@@ -2,11 +2,34 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF ATL static instance syntax narrowed
+- Advanced `ISF-ACTOR-NETWORK-ORCHESTRATION.2` with the source-shape
+  correction requested during review.
+- A top-level actor now declares the shipped static ATL child actor instance
+  only through direct actor-body `(instance NAME of ACTOR_TYPE)` syntax.
+  `(network ...)` is not an accepted wrapper and now fails closed.
+- The parser shell still preserves `actor_network.kind` plus instance `name`,
+  `actor_type`, and `declaration`, and schedule JSON exposes the same
+  metadata through top-level `actor_network`; the only shipped declaration
+  value is now `actor`.
+- This remains metadata-only ATL: no actor type resolution, child
+  instantiation, generated child `.fsm` artifacts, generated ATL top,
+  actor-to-actor movement, qualified actor transaction triggers, actor events,
+  groups, or multi-instance scheduling.
+- Docs are synchronized across the mdBook, ISF spec, downstream integration
+  handoff, public contract, ATL design proposal, task tree, roadmap board, and
+  live docs.
+- Validation passed: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`,
+  `t/1322-isf-actor-network-static.t`,
+  `t/1255-isf-schedule-report-golden-matrix.t`, public schedule-report
+  metadata audits, spec/book audits, `mdbook build docs/book`,
+  `git diff --check`, and `./bin/ci-regression isf --no-book`
+  (Files=228, Tests=1340).
+
 ## 2026-05-18: R14 — ISF static actor-network metadata shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.3`.
-- A top-level actor can now declare exactly one static actor instance either
-  inside `(network (instance NAME of ACTOR_TYPE))` or as the flat actor-level
-  `(instance NAME of ACTOR_TYPE)` alias.
+- A top-level actor can now declare exactly one static actor instance through
+  the direct actor-level `(instance NAME of ACTOR_TYPE)` clause.
 - The parser shell preserves `actor_network.kind` plus instance `name`,
   `actor_type`, and declaration spelling, and schedule JSON exposes the same
   metadata through top-level `actor_network`.
@@ -32,9 +55,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-18: R14 — ISF Actor Transfer Level model captured
 - Added [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
-  as the concrete ATL v0 proposal. It keeps `(actor ...)` as the root and
-  leaves the container spelling open between scoped `(network ...)` and flat
-  top-level actor ATL clauses.
+  as the concrete ATL v0 proposal. It keeps `(actor ...)` as the root and now
+  selects direct top-level actor-body ATL clauses instead of a `(network ...)`
+  wrapper.
 - The proposal defines qualified endpoints, verbose and compact syntax
   candidates, endpoint-aware drive-body pairs in existing `(sink source)`
   order, one-cycle events, top-level orchestration, concurrent groups,

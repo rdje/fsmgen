@@ -244,17 +244,17 @@ sub _build_actor($self, $actor_ast, $source_label) {
                 $result->{crossings} = $self->_parse_crossings($clause, $actor_name);
             }
             when ('network') {
-                $self->_claim_singleton_actor_clause($actor_name, 'network', \%singleton_actor_clauses);
-                $self->_merge_actor_network(
-                    $result,
-                    $self->_parse_actor_network($clause, $actor_name, 'network'),
-                );
+                confess "Error: actor '$actor_name' ATL declarations use direct "
+                    . "'(instance name of actor_type)' actor clauses; '(network ...)' is not supported\n";
             }
             when ('instance') {
                 $self->_merge_actor_network(
                     $result,
-                    $self->_parse_actor_network_instance($clause, $actor_name, 'actor'),
+                    $self->_parse_actor_network_instance($clause, $actor_name),
                 );
+            }
+            when ('group') {
+                confess "Error: actor '$actor_name' ATL group clauses are not supported yet\n";
             }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
@@ -4345,36 +4345,7 @@ sub _parse_drive_def($self, $clause, $drives) {
     $drives->{$name} = { body => \@body, params => \@params };
 }
 
-sub _parse_actor_network($self, $clause, $actor_name, $declaration) {
-    confess "Error: actor '$actor_name' network requires '(network (instance name of actor_type))'\n"
-        unless @$clause >= 2;
-
-    my @instances;
-    for my $entry (@{$clause}[1 .. $#$clause]) {
-        confess "Error: actor '$actor_name' network entries must be list forms\n"
-            unless ref($entry) eq 'ARRAY' && @$entry;
-
-        my $keyword = $entry->[0];
-        confess "Error: actor '$actor_name' network entry heads must be scalar\n"
-            unless defined($keyword) && !ref($keyword) && length($keyword);
-
-        if ($keyword eq 'instance') {
-            my $network = $self->_parse_actor_network_instance(
-                $entry,
-                $actor_name,
-                $declaration,
-            );
-            push @instances, @{$network->{instances}};
-            next;
-        }
-
-        confess "Error: actor '$actor_name' network currently supports only static '(instance name of actor_type)' entries; '$keyword' is not supported yet\n";
-    }
-
-    return _actor_network_from_instances($actor_name, \@instances);
-}
-
-sub _parse_actor_network_instance($self, $clause, $actor_name, $declaration) {
+sub _parse_actor_network_instance($self, $clause, $actor_name) {
     confess "Error: actor '$actor_name' static actor instance requires '(instance name of actor_type)'\n"
         unless @$clause == 4
             && defined($clause->[2])
@@ -4395,7 +4366,7 @@ sub _parse_actor_network_instance($self, $clause, $actor_name, $declaration) {
             {
                 name        => $name,
                 actor_type  => $actor_type,
-                declaration => $declaration,
+                declaration => 'actor',
             },
         ],
     );
