@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.8.2`.
+  activation `.111` and ATL actor-network orchestration `.9.2`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -138,9 +138,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the parser accepts the task-scoped trigger batch without a permanent group,
   the parent schedule emits one `run_atl_trigger_batch_1` state, schedule JSON
   reports synthetic `run_trigger_batch` evidence, and the fixture proves
-  strict schedule JSON plus plain/strict HDL reachability. The next ATL
-  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, which must select the
-  next temporary-association behavior before code.
+  strict schedule JSON plus plain/strict HDL reachability.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` then selected report vocabulary
+  cleanup as the next temporary-association slice: add canonical
+  `actor_network.association_schedules[]` entries for task-scoped ATL
+  associations while preserving `actor_network.group_schedules[]` as a
+  schema-version-1 compatibility view. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, which implements that additive report
+  family without changing ATL source syntax or generated HDL behavior.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

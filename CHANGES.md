@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL association schedule reports selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` as a doc-only selection
+  leaf before implementation.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` to add canonical
+  `actor_network.association_schedules[]` report entries for task-scoped ATL
+  associations.
+- The selected source surface stays unchanged: contiguous transaction-body
+  `(trigger actor.transaction)` clauses to distinct static actor instances.
+  No required `(group ...)`, `(network ...)`, `connect`, `transfer`, or
+  `move` syntax is introduced.
+- The existing `actor_network.group_schedules[]` key stays documented as a
+  schema-version-1 compatibility view for downstream consumers.
+- No compiler behavior changed in this selection slice. The active ATL
+  frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`.
+
 ### R14 — ATL temporary trigger-batch fixture shipped
 - Pivoted `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` away from permanent static
   group membership after clarifying that actor associations are task-scoped.

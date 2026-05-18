@@ -275,9 +275,9 @@ schedule concurrent execution, create group endpoints, insert route
 mux/storage, or cross clock domains. Those behaviors remain separate
 task-tree leaves with their own artifact and report contracts.
 
-## Selected First Realistic Fixture
+## Shipped First Realistic Fixture
 
-The first realistic ATL fixture is selected before code as
+The first realistic ATL fixture is shipped as
 `isf/atl_trigger_batch_pipeline.isf`. It stays inside the shipped temporary
 trigger-batch subset:
 
@@ -607,6 +607,13 @@ scheduled state and reports the inferred temporary association through
 syntax, generated children, event waits, data movement, storage/mux insertion,
 CDC, compact aliases, repeated-instance batches, or fan-in/fan-out behavior.
 
+The next selected report-vocabulary slice will add
+`actor_network.association_schedules[]` as the canonical schedule-report
+family for task-scoped ATL associations. The existing
+`actor_network.group_schedules[]` key remains as a schema-version-1
+compatibility view; it should no longer be treated as the semantic name for
+group-less temporary associations.
+
 ## Scheduling Ownership
 
 Scheduling should split cleanly:
@@ -639,6 +646,14 @@ and adds `actor_network.group_schedules[]` entries with `group`,
 `schedule`, `dependency_policy`, `storage`, `source`, and `sink` keys. When no
 declared static group matches the trigger set, `group` is a synthetic
 transaction-scoped name such as `run_trigger_batch`.
+
+The selected next implementation leaf will add canonical
+`actor_network.association_schedules[]` entries for the same scheduled
+temporary association without changing source syntax or generated HDL
+behavior. The first entry shape uses `association`, `kind`, `lifetime`,
+`owner_transaction`, `context`, `members`, `target_transactions`, `signals`,
+`schedule`, `dependency_policy`, `storage`, `source`, and `sink`; `kind` is
+`temporary_trigger_batch`, and `lifetime` is `task_scoped`.
 
 The shipped first behavior-bearing handoff subset accepts one top-level
 transaction-body `(await actor.event)` and one top-level transaction-body

@@ -1634,6 +1634,11 @@ matches one declared static group, the `group` field names that group;
 otherwise the field carries a synthetic transaction-scoped name such as
 `run_trigger_batch`. Public reports therefore separate static membership
 (`groups[]`) from scheduled temporary associations (`group_schedules[]`).
+The next selected compatibility-preserving report slice will add canonical
+`actor_network.association_schedules[]` entries for those task-scoped
+associations while keeping `group_schedules[]` as a schema-version-1
+compatibility view. That selected key is not part of the currently shipped
+contract until the implementation and focused contract tests land.
 The current shipped actor-event wait subset accepts exactly one top-level
 transaction-body `(await actor.event)` for the current single declared static
 actor instance, lowered to a generated one-bit parent event handoff input

@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL association schedule reports selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` before implementation.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` as the next bounded ATL
+  slice: add canonical `actor_network.association_schedules[]` report
+  metadata for task-scoped temporary associations.
+- The selected implementation will preserve existing
+  `actor_network.group_schedules[]` output as a schema-version-1
+  compatibility view and will not change source syntax or generated HDL
+  behavior.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`.
+- Validation passed: `mdbook build docs/book`; `prove -Iperl
+  t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`.
+
 ## 2026-05-19: R14 — ATL temporary trigger-batch fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` with the clarified ATL
   model: actor associations are task-scoped and should not be represented as

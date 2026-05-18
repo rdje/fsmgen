@@ -2935,6 +2935,11 @@ handoff, and report-only group metadata subsets implemented so far:
   Generated children, group endpoints, event/data-movement coupling,
   storage/mux insertion, CDC, compact aliases, repeated-instance batches, and
   broader fan-in/fan-out remain fail-closed.
+- The next selected report-contract slice will add
+  `actor_network.association_schedules[]` as the canonical report family for
+  task-scoped ATL associations while preserving `group_schedules[]` as a
+  schema-version-1 compatibility view. That key is selected but not shipped
+  until the implementation and contract tests land.
 
 The current actor-event wait subset is deliberately narrower than full child
 orchestration. FSMGen accepts exactly one top-level transaction-body

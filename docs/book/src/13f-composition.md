@@ -527,12 +527,18 @@ generated signals, same-cycle schedule, no-storage policy, and external
 handoff boundary. If the same trigger set also matches one declared static
 group, the report may name that group instead.
 
-The first realistic ATL fixture selected for promotion is
+The next selected report slice keeps the source syntax unchanged and adds
+`actor_network.association_schedules[]` as the canonical report family for
+these task-scoped associations. `actor_network.group_schedules[]` remains a
+schema-version-1 compatibility view until a later schema migration says
+otherwise.
+
+The first realistic ATL fixture is shipped as
 `isf/atl_trigger_batch_pipeline.isf`. It uses only that shipped temporary
 trigger-batch surface: three direct static actor instances and one contiguous
-transaction-body trigger batch. The selected fixture is meant to prove
-scheduled parent `.fsm`, strict schedule JSON, and HDL reachability for the
-bounded task-scoped orchestration surface. It is not a claim for peer event
+transaction-body trigger batch. The fixture proves scheduled parent `.fsm`,
+strict schedule JSON, and HDL reachability for the bounded task-scoped
+orchestration surface. It is not a claim for peer event
 synchronization, endpoint data movement, generated ATL child `.fsm` artifacts,
 generated ATL tops, group endpoints, route mux/storage, CDC, payloads,
 ready/backpressure, or permanent actor grouping.

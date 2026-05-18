@@ -735,15 +735,20 @@ Noncontiguous batches, repeated members, generated children, group endpoints,
 event/data-movement coupling, route mux/storage, CDC, and compact aliases
 remain later leaves.
 
-The first realistic ATL fixture is selected before code as
+The next selected ATL report-contract leaf adds canonical
+`actor_network.association_schedules[]` entries for task-scoped associations
+while keeping `actor_network.group_schedules[]` as a schema-version-1
+compatibility view. It does not add source syntax or generated HDL behavior.
+
+The first realistic ATL fixture is shipped as
 `isf/atl_trigger_batch_pipeline.isf`. It is deliberately bounded to already
 shipped surfaces: three direct static actor instances and one contiguous
-transaction-body trigger batch. The next implementation leaf adds that fixture
-with scheduled `.fsm`, strict schedule JSON, and HDL reachability coverage. It
-will not claim peer event synchronization, endpoint data movement, generated
-ATL child artifacts, generated ATL tops, group endpoints, compact aliases,
-CDC, route mux/storage, payloads, ready/backpressure, trigger/data/event
-coupling, or permanent actor grouping.
+transaction-body trigger batch. It proves scheduled `.fsm`, strict schedule
+JSON, and HDL reachability coverage. It does not claim peer event
+synchronization, endpoint data movement, generated ATL child artifacts,
+generated ATL tops, group endpoints, compact aliases, CDC, route mux/storage,
+payloads, ready/backpressure, trigger/data/event coupling, or permanent actor
+grouping.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

@@ -1628,6 +1628,12 @@ capability manifest and this handoff:
   producers must still avoid repeated members, noncontiguous batches,
   generated child assumptions, group endpoints, event/data-movement coupling,
   storage/mux insertion, CDC, compact aliases, and broader fan-in/fan-out.
+- The next selected additive report-contract slice will add canonical
+  `actor_network.association_schedules[]` entries for task-scoped ATL
+  associations while preserving `actor_network.group_schedules[]` as a
+  schema-version-1 compatibility view. Downstream consumers should not depend
+  on the new key until that implementation slice ships and the public
+  contract metadata advertises it.
 
 Current ATL event-wait handoff subset: downstream producers may emit exactly
 one top-level transaction-body `(await actor.event)` against the current

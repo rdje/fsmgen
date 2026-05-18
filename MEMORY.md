@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL association schedule reports selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1` as a doc-only selection
+  leaf before code.
+- The next implementation frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`: add canonical
+  `actor_network.association_schedules[]` entries for task-scoped ATL
+  associations.
+- The selected `.9.2` source shape is unchanged: contiguous
+  transaction-body `(trigger actor.transaction)` clauses to distinct static
+  actor instances. No `(group ...)`, `(network ...)`, `connect`, `transfer`,
+  or `move` syntax is required or added.
+- The existing `actor_network.group_schedules[]` key remains as a
+  schema-version-1 compatibility view for downstream consumers; it is not the
+  canonical long-term vocabulary for group-less temporary associations.
+- Validation passed for this selection leaf: `mdbook build docs/book`;
+  `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t
+  t/1305-isf-book-feature-matrix-audit.t`; `git diff --check`.
 ## 2026-05-19: ATL temporary trigger-batch fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` after clarifying that ATL
   actor associations are task-scoped and must not be modeled as permanent

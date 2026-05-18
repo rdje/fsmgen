@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL temporary associations need their own report family
+- `actor_network.group_schedules[]` was acceptable for the first grouped
+  trigger-batch slice, but it becomes misleading once the preferred model is
+  task-scoped associations that do not require permanent group declarations.
+- The selected next code leaf will add
+  `actor_network.association_schedules[]` as the canonical report family for
+  temporary ATL associations, starting with the shipped same-cycle external
+  trigger batch.
+- The change is selected as additive for `schema_version: 1`: keep
+  `group_schedules[]` as a compatibility view for current downstream users
+  while documenting `association_schedules[]` as the forward report
+  vocabulary.
+- No source syntax changes are selected. Users keep writing existing
+  transaction-body `(trigger actor.transaction)` clauses; report vocabulary
+  should follow the clarified semantics rather than force a new user surface.
 ## 2026-05-19: ATL associations are task-scoped
 - The permanent static `(group ...)` shape is not the right default teaching
   model for ATL. It remains review metadata, but the first realistic fixture
