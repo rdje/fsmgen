@@ -1,6 +1,6 @@
 # ISF Actor Transfer Level Design Proposal
 
-Status: active design proposal, not implemented.
+Status: active design proposal, partially implemented.
 
 Task-tree owner:
 [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
@@ -94,9 +94,10 @@ Costs:
 - raises name-collision questions sooner if future actor clauses use similar
   names.
 
-The semantics below do not depend on either spelling. The first specification
-slice should choose one spelling, or explicitly support both by lowering them
-to the same ATL IR.
+The first metadata-only implementation slice explicitly supports both
+spellings for one static actor instance and lowers both to the same
+`actor_network` report metadata. Broader `group` placement and multi-instance
+scheduling are still deferred.
 
 This keeps the model natural:
 
@@ -112,6 +113,57 @@ This keeps the model natural:
   classification is preferred over adding another author-facing movement
   syntax family.
 
+## Shipped Static Metadata Slice
+
+The first shipped slice accepts exactly one static actor instance:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (network
+    (instance reader of packet_reader))
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+or the flat alias:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+Both forms preserve schedule-report metadata:
+
+```json
+{
+  "kind": "static_declaration",
+  "instances": [
+    {
+      "name": "reader",
+      "actor_type": "packet_reader",
+      "declaration": "network"
+    }
+  ]
+}
+```
+
+This slice is intentionally not ATL scheduling. It does not resolve
+`packet_reader`, emit a child `.fsm`, build a generated ATL top, move data
+between actors, trigger `reader` transactions, or wait on `reader` events.
+Those behaviors remain separate task-tree leaves.
+
 ## Endpoints
 
 ATL needs a reviewable endpoint vocabulary:
@@ -124,8 +176,10 @@ ATL needs a reviewable endpoint vocabulary:
 | `actor.event` | A named scheduler-visible event emitted by an actor instance. |
 | `group.name` | A named concurrent group, used only where group-level semantics are explicit. |
 
-The first implementation should reject unresolved endpoints, ambiguous names,
-implicit default transactions, and dynamic instance names.
+The first implementation rejects unresolved endpoint movement by not accepting
+qualified endpoint drive lowering yet. It also rejects ambiguous or dynamic
+instance declarations, multiple instances, recursive self-instantiation,
+groups, implicit default transactions, and dynamic instance names.
 
 ## Verbose Syntax Candidate
 

@@ -250,6 +250,17 @@ sub golden_matrix_cases {
                 )
             ],
         },
+        {
+            name => 'actor_network_static',
+            filename => 'actor_network_static_report.isf',
+            source => actor_network_static_source(),
+            covers => [
+                qw(
+                  schedule_report_actor_network_keys
+                  schedule_report_actor_network_instance_keys
+                )
+            ],
+        },
     );
 }
 
@@ -448,6 +459,14 @@ sub assert_key_branch {
     }
     if ($branch eq 'schedule_report_generated_composition_required_keys') {
         assert_entry_keys($report->{generated_composition}, $contract->{$branch}, "$label generated composition keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_actor_network_keys') {
+        assert_entry_keys($report->{actor_network}, $contract->{$branch}, "$label actor network keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_actor_network_instance_keys') {
+        assert_entry_keys(first_entry($report->{actor_network}{instances}), $contract->{$branch}, "$label actor network instance keys");
         return 1;
     }
     if ($branch eq 'schedule_report_generated_composition_parent_keys') {
@@ -966,5 +985,21 @@ sub port_binding_source {
     (trigger work
       (bind
         (input addr req_addr)))))
+ISF
+}
+
+sub actor_network_static_source {
+    return <<'ISF';
+(actor actor_network_static_report
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (network
+    (instance reader of packet_reader))
+  (transaction run
+    (on start)
+    (complete done)))
 ISF
 }

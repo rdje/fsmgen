@@ -26896,3 +26896,17 @@ Behavior-preserving extraction from `FlattenedDT` into `EnableGraph` is active a
   `FSM::Support::HDLGeneratorSourceInfoContract`, so embedders can discover
   the identity and summary source-info key families from one place instead of
   collecting those key lists separately.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.3` is now shipped. The first ATL
+  implementation slice accepts one static actor instance as either
+  `(network (instance NAME of ACTOR_TYPE))` or flat
+  `(instance NAME of ACTOR_TYPE)`, stores it as parser `actor_network`
+  metadata, and exposes it through schedule JSON `actor_network`.
+- That ATL slice is metadata-only. It does not resolve the actor type, emit a
+  child `.fsm`, generate an ATL top, perform endpoint-aware drive movement,
+  trigger actor transactions, or wait on actor events. Those remain later
+  actor-network leaves.
+- Validation for that slice covered parser/lowerer/report/contract syntax,
+  `t/1322-isf-actor-network-static.t`, the schedule-report golden matrix,
+  public schedule-report metadata audits, `mdbook build docs/book`, and
+  `git diff --check`, plus `./bin/ci-regression isf --no-book` (Files=228,
+  Tests=1341).

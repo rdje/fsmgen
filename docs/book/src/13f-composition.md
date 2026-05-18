@@ -329,6 +329,63 @@ entries through `shipped_library_definitions`. Parameter-driven interface or
 storage elaboration, memory-array backend emission, standalone transaction or
 drive exports, and nested library imports remain future work.
 
+## Static Actor-Network Metadata
+
+The first Actor Transfer Level (`ATL`) implementation slice is intentionally
+small: a top-level actor may declare one static actor instance, and FSMGen
+preserves that declaration in the parser shell and schedule report.
+
+Scoped form:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (network
+    (instance reader of packet_reader))
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+Flat form:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+The report field is `actor_network`:
+
+```json
+{
+  "kind": "static_declaration",
+  "instances": [
+    {
+      "name": "reader",
+      "actor_type": "packet_reader",
+      "declaration": "network"
+    }
+  ]
+}
+```
+
+This is not generated-child composition yet. FSMGen does not resolve
+`packet_reader`, emit a child `.fsm`, build an ATL top, route data between
+actors, trigger `reader` transactions, or wait on `reader` events in this
+slice. Multiple instances, groups, endpoint-aware drive-body movement, actor
+events, qualified transaction triggers, and generated ATL wiring remain
+backlog under the actor-network task tree.
+
 ## Schedule Report Projection
 
 The generated-composition schedule-report projection is a live bounded

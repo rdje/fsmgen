@@ -216,8 +216,8 @@ aggregate access summaries such as `bank_accesses[]`, and counts such as
 `dt_blocks[].assignments`; the report does not serialize raw assignment lists.
 Parent schedule reports also do not embed recursive child reports. Multi-file
 review stays bounded to the lower-result `files` map, the named generated
-artifacts, `generated_composition`, `library_uses[]`, and `clock_domains[]` /
-`crossings[]`. Shipped transaction
+artifacts, `actor_network`, `generated_composition`, `library_uses[]`, and
+`clock_domains[]` / `crossings[]`. Shipped transaction
 stages now project into `transaction_stages` with authored names, generated
 state, and ready/valid endpoints. Shipped bounded eventual contracts project
 into `temporal_contracts` with trigger state, observed signal, cycle bound,

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: Static actor-network metadata ships before ATL scheduling
+- The first ATL implementation slice deliberately stops at static metadata:
+  it accepts one actor instance declaration and projects it into
+  `actor_network` without attempting actor type resolution, child artifact
+  generation, generated ATL top emission, endpoint routing, transaction
+  triggering, or event waiting.
+- The parser accepts both scoped `(network (instance NAME of ACTOR_TYPE))`
+  and flat `(instance NAME of ACTOR_TYPE)` forms. Supporting both at this
+  metadata layer keeps the syntax discussion reversible while avoiding drift:
+  both spellings lower to the same schedule-report shape.
+- The one-instance limit is intentional. Multi-instance graphs immediately
+  raise scheduling, fan-in, grouping, and generated-top questions that belong
+  to later task-tree leaves with their own tests and documentation.
+- `actor_network` is a public schedule-report key family, not a raw IR dump.
+  Its instance entries expose only `name`, `actor_type`, and declaration
+  spelling. Downstream tools should not infer generated artifacts or runtime
+  connectivity from this field.
 ## 2026-05-18: ATL v0 should prefer scheduled drive-body movement over connect clauses
 - The concrete ATL v0 proposal lives in
   [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md).

@@ -67,6 +67,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     imports       => [ ... ], # ISF library imports
 #     package_imports => [ ... ], # .fsm package imports used by typed declarations
 #     library_uses  => [ ... ],
+#     actor_network => undef, # or { kind => "static_declaration", instances => [...] }
 #   }
 
 sub new($class, %args) {
@@ -154,6 +155,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         package_roots => [],
         uses         => [],
         library_uses => [],
+        actor_network => undef,
     };
     my %actor_phase_names;
     my %actor_stage_names;
@@ -240,6 +242,19 @@ sub _build_actor($self, $actor_ast, $source_label) {
             when ('crossings') {
                 $self->_claim_singleton_actor_clause($actor_name, 'crossings', \%singleton_actor_clauses);
                 $result->{crossings} = $self->_parse_crossings($clause, $actor_name);
+            }
+            when ('network') {
+                $self->_claim_singleton_actor_clause($actor_name, 'network', \%singleton_actor_clauses);
+                $self->_merge_actor_network(
+                    $result,
+                    $self->_parse_actor_network($clause, $actor_name, 'network'),
+                );
+            }
+            when ('instance') {
+                $self->_merge_actor_network(
+                    $result,
+                    $self->_parse_actor_network_instance($clause, $actor_name, 'actor'),
+                );
             }
             when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
             when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
@@ -4328,6 +4343,99 @@ sub _parse_drive_def($self, $clause, $drives) {
                 && (!ref($entry->[1]) || ref($entry->[1]) eq 'ARRAY');
     }
     $drives->{$name} = { body => \@body, params => \@params };
+}
+
+sub _parse_actor_network($self, $clause, $actor_name, $declaration) {
+    confess "Error: actor '$actor_name' network requires '(network (instance name of actor_type))'\n"
+        unless @$clause >= 2;
+
+    my @instances;
+    for my $entry (@{$clause}[1 .. $#$clause]) {
+        confess "Error: actor '$actor_name' network entries must be list forms\n"
+            unless ref($entry) eq 'ARRAY' && @$entry;
+
+        my $keyword = $entry->[0];
+        confess "Error: actor '$actor_name' network entry heads must be scalar\n"
+            unless defined($keyword) && !ref($keyword) && length($keyword);
+
+        if ($keyword eq 'instance') {
+            my $network = $self->_parse_actor_network_instance(
+                $entry,
+                $actor_name,
+                $declaration,
+            );
+            push @instances, @{$network->{instances}};
+            next;
+        }
+
+        confess "Error: actor '$actor_name' network currently supports only static '(instance name of actor_type)' entries; '$keyword' is not supported yet\n";
+    }
+
+    return _actor_network_from_instances($actor_name, \@instances);
+}
+
+sub _parse_actor_network_instance($self, $clause, $actor_name, $declaration) {
+    confess "Error: actor '$actor_name' static actor instance requires '(instance name of actor_type)'\n"
+        unless @$clause == 4
+            && defined($clause->[2])
+            && !ref($clause->[2])
+            && $clause->[2] eq 'of';
+
+    my ($name, $actor_type) = ($clause->[1], $clause->[3]);
+    confess "Error: actor '$actor_name' static actor instance name must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($name);
+    confess "Error: actor '$actor_name' static actor instance '$name' type must be a scalar HDL identifier\n"
+        unless _is_hdl_identifier($actor_type);
+    confess "Error: actor '$actor_name' static actor instance '$name' cannot instantiate its own enclosing actor type '$actor_type'\n"
+        if $actor_type eq $actor_name;
+
+    return _actor_network_from_instances(
+        $actor_name,
+        [
+            {
+                name        => $name,
+                actor_type  => $actor_type,
+                declaration => $declaration,
+            },
+        ],
+    );
+}
+
+sub _merge_actor_network($self, $actor, $incoming) {
+    return 1 unless ref($incoming) eq 'HASH';
+
+    my $actor_name = $actor->{actor_name} // 'unknown';
+    my @existing = @{($actor->{actor_network} || {})->{instances} || []};
+    my @incoming = @{$incoming->{instances} || []};
+    my @merged = (@existing, @incoming);
+
+    return 1 unless @merged;
+
+    my %seen;
+    for my $instance (@merged) {
+        my $name = $instance->{name};
+        confess "Error: actor '$actor_name' static actor network has duplicate instance '$name'\n"
+            if $seen{$name}++;
+    }
+    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance; multiple-instance scheduling is deferred\n"
+        if @merged > 1;
+
+    $actor->{actor_network} = _actor_network_from_instances($actor_name, \@merged);
+    return 1;
+}
+
+sub _actor_network_from_instances {
+    my ($actor_name, $instances) = @_;
+    my @instances = @{$instances || []};
+    confess "Error: actor '$actor_name' static actor network requires one actor instance in the current subset\n"
+        unless @instances;
+    confess "Error: actor '$actor_name' static actor network currently accepts exactly one actor instance; multiple-instance scheduling is deferred\n"
+        if @instances > 1;
+
+    return {
+        kind      => 'static_declaration',
+        instances => [ map { _clone_isf_value($_) } @instances ],
+    };
 }
 
 sub _parse_phase($self, $clause) {

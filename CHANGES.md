@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF static actor-network metadata shipped
+- Added the first bounded Actor Transfer Level implementation slice:
+  top-level actors may declare one static child actor instance with scoped
+  `(network (instance NAME of ACTOR_TYPE))` or flat
+  `(instance NAME of ACTOR_TYPE)` syntax.
+- The ISF parser now stores `actor_network` metadata, `LoweringIR` carries it
+  into report generation, and schedule JSON exposes the advertised
+  `actor_network` key family.
+- Added public contract metadata and golden-matrix ownership for
+  `schedule_report_actor_network_keys` and
+  `schedule_report_actor_network_instance_keys`.
+- Added focused regression coverage for scoped and flat accepted forms,
+  CLI/in-process schedule JSON parity, report shape, no generated child
+  artifacts, and fail-closed unsupported static graph shapes.
+- Synchronized the ISF spec, downstream handoff, public contract, mdBook, ATL
+  design proposal, task tree, roadmap board, live achievement status, and
+  development notes.
 ### R14 — ISF ATL v0 concrete proposal drafted
 - Added [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
   as the concrete design proposal for Actor Transfer Level actor-network

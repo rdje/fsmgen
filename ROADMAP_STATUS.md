@@ -14,13 +14,17 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   switch-contained bound analogue, spawn-after-do, cross-domain activation,
   deeper branch/loop nesting, and broader outstanding-child semantics remain
   unselected.
-- Proposed R14 axis: `ISF-ACTOR-NETWORK-ORCHESTRATION` now tracks the
-  brainstormed actor-network abstraction as likely IAL1 work: explicit `.isf`
-  actor hierarchies/networks where orchestrator actors trigger peer or
-  sub-actors, synchronize on named one-cycle event pulses, and move data
-  through scheduler-visible bindings. The tree is proposed, not PNT-active,
-  and its first leaf is a user-clarification/design-contract step before any
-  implementation.
+- Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.3` shipped the first
+  metadata-only actor-network implementation slice. A top-level actor can now
+  declare exactly one static child actor instance through either scoped
+  `(network (instance NAME of ACTOR_TYPE))` or flat
+  `(instance NAME of ACTOR_TYPE)`, and the parser shell plus schedule JSON
+  preserve that identity through `actor_network`. This does not yet resolve
+  actor types, emit generated child artifacts, generate an ATL top, move data
+  between actors, trigger actor transactions, or wait on actor events. The
+  next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.2`, the broader
+  syntax/public-contract leaf that must settle event, trigger, group, and
+  movement contracts before the later implementation leaves.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

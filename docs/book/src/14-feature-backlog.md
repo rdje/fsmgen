@@ -666,12 +666,17 @@ variant for maximum readability, so the network topology, orchestration,
 data movement, and generated schedule evidence can be reviewed without
 reading lowering code.
 
-Current ATL v0 proposal, still unimplemented:
+Current ATL v0 proposal:
 
-The top-level root remains `(actor name ...)`. The container spelling is not
-settled. One candidate scopes ATL clauses inside `(network ...)`; the other
-places `instance` and `group` directly under the top-level actor. Both
-spellings would have to lower to the same ATL semantics if both are accepted.
+The top-level root remains `(actor name ...)`. The first metadata-only
+implementation slice is shipped: exactly one static actor instance may be
+declared as either `(network (instance NAME of ACTOR_TYPE))` or the flat
+actor-level `(instance NAME of ACTOR_TYPE)` alias. Both spellings lower to the
+same parser shell and schedule-report metadata under `actor_network`. The
+current slice does not resolve the actor type, instantiate a child, emit a
+generated ATL top, move data between actors, or change HDL. Multiple
+instances, groups, events, qualified actor transaction triggers, and widened
+drive-body endpoint movement remain backlog.
 Actor-to-actor and pin-to-actor movement is not expressed as top-level
 `connect` clauses. The selected ATL v0 proposal reuses existing drive
 definitions and drive calls: a drive body keeps its shipped `(sink source)`
@@ -823,18 +828,18 @@ information between actors once the scheduled interaction is inferred.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child
-transaction activations. They do not yet define a public actor-network source
-surface where a top-level actor owns a network of actors as first-class
-content. This direction is still IAL1 if the source remains explicit
-actor/network `.isf` syntax with scheduler-visible events, bindings, and
-constraints. It becomes an IAL2 candidate only if the source model moves
+transaction activations. They now define only the first public actor-network
+source surface: one static actor instance declaration recorded as
+`actor_network` metadata. That is not scheduling yet. Event pulse semantics,
+actor-to-actor and pin-to-actor data movement, concurrent actor-group
+scheduling, global versus local scheduling ownership, generated artifact
+names, report visibility beyond the one-instance metadata, compact/verbose
+syntax relationship, and broader fail-closed boundaries remain under
+task-tree ownership. This direction is still IAL1 if the source remains
+explicit actor/network `.isf` syntax with scheduler-visible events, bindings,
+and constraints. It becomes an IAL2 candidate only if the source model moves
 above explicit ISF actor/network syntax into protocol/platform intent
-inference. The current required leaf is clarification with the user: source
-shape, event pulse semantics, actor-to-actor and pin-to-actor data movement,
-concurrent actor-group scheduling, global versus local scheduling ownership,
-generated artifact names, report visibility, compact/verbose syntax
-relationship, and fail-closed boundaries must be agreed before
-implementation.
+inference.
 
 ### IAL2 Protocol And Platform Intent Exploration
 

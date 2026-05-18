@@ -2,6 +2,34 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — ISF static actor-network metadata shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.3`.
+- A top-level actor can now declare exactly one static actor instance either
+  inside `(network (instance NAME of ACTOR_TYPE))` or as the flat actor-level
+  `(instance NAME of ACTOR_TYPE)` alias.
+- The parser shell preserves `actor_network.kind` plus instance `name`,
+  `actor_type`, and declaration spelling, and schedule JSON exposes the same
+  metadata through top-level `actor_network`.
+- This slice is metadata-only: it does not resolve actor types, instantiate
+  child actors, emit generated child `.fsm` artifacts, generate an ATL top,
+  move data between actors, trigger qualified actor transactions, or wait on
+  actor events.
+- Multiple static instances, groups, dynamic/non-scalar instance names,
+  direct recursive instances, endpoint-aware drive movement, actor events, and
+  qualified actor transaction triggers remain deferred to later ATL leaves.
+- Docs are synchronized across the mdBook, ISF spec, downstream integration
+  handoff, public contract, ATL design proposal, task tree, roadmap board, and
+  live docs. The actor-network frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.2`, the broader ATL syntax/public-contract
+  leaf needed before event, trigger, group, and movement implementation
+  leaves.
+- Validation passed: parser/lowerer/report/contract syntax checks,
+  `t/1322-isf-actor-network-static.t`,
+  `t/1255-isf-schedule-report-golden-matrix.t`,
+  public schedule-report metadata audits, spec/book audits,
+  `mdbook build docs/book`, `git diff --check`, and
+  `./bin/ci-regression isf --no-book` (Files=228, Tests=1341).
+
 ## 2026-05-18: R14 — ISF Actor Transfer Level model captured
 - Added [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
   as the concrete ATL v0 proposal. It keeps `(actor ...)` as the root and

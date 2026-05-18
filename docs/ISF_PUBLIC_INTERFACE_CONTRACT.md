@@ -1548,6 +1548,15 @@ Actor roots may also carry parser-validated actor-local constants through a
 singleton `(constants ...)` clause. That field is not a required actor shell
 key, but the advertised value-shape string records that `constants` is an
 optional array reference when present.
+Actor roots may also carry the first bounded ATL static actor-network
+metadata through either `(network (instance NAME of ACTOR_TYPE))` or the flat
+actor-level `(instance NAME of ACTOR_TYPE)` alias. That field is not a
+required actor shell key. When present, `actor_network` is a
+`static_declaration` hash with exactly one instance entry in the current
+subset, and schedule reports project it through top-level `actor_network`.
+This slice is metadata-only: no child actor type resolution, generated child
+scheduled `.fsm`, generated ATL top, actor-to-actor movement, actor events,
+or HDL behavior is promised by this field.
 Actor roots may also carry parser-validated clock-domain declarations through
 a singleton `(clock-domains ...)` clause. That field is not a required actor
 shell key, but the advertised value-shape string records that `clock_domains`
@@ -1843,6 +1852,7 @@ temporal_contracts
 bank_accesses
 transaction_port_bindings
 dt_blocks
+actor_network
 generated_composition
 library_uses
 compatible_fanin_groups
@@ -1861,6 +1871,8 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
+actor_network: kind, instances
+actor_network instances entries: name, actor_type, declaration
 inferred_storage entries: name, kind, optional role, optional type, optional type_kind, optional width
 transactions entries: name, states, count
 transaction_waits entries: transaction, cycles, count_kind, count_source, entry_state, exit_state, counter_signal, counter_width
@@ -2199,16 +2211,16 @@ Stable, versioned evolution:
   `resource_arbitration[]`, `actor_constants[]`, `actor_phases[]`,
   `actor_stages[]`, `actor_params[]`, `transaction_waits[]`,
   `transaction_stages[]`, `transaction_loops[]`, `temporal_contracts[]`,
-  `transaction_port_bindings[]`, `library_uses[]`, and
+  `transaction_port_bindings[]`, `actor_network`, `library_uses[]`, and
   `generated_composition` are bounded summaries, not raw IR exports.
 - Raw assignment provenance, private assignment indexes, and activation proof
   internals remain private. Public substitutes are the bounded summary arrays
   advertised above plus aggregate fields such as `dt_blocks[].assignments`,
   which is a count rather than a serialized assignment list.
 - Parent schedule reports do not recursively embed child schedule reports.
-  Multi-file public detail is bounded to `generated_composition`,
-  `library_uses[]`, `clock_domains[]` / `crossings[]`, and the public
-  `lower(...)` files map.
+  Multi-file public detail is bounded to `actor_network`,
+  `generated_composition`, `library_uses[]`, `clock_domains[]` /
+  `crossings[]`, and the public `lower(...)` files map.
 
 - Breaking schedule-report changes require a `schema_version` bump plus
   migration or deprecation documentation. The executable golden matrix in

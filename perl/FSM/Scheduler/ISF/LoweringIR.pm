@@ -284,6 +284,7 @@ sub _build_parent_ir($self, $actor, $generated_children) {
         enum_declarations => _actor_enum_declarations($actor),
         constants  => _actor_constant_declarations($actor),
         params     => _actor_param_declarations($actor),
+        actor_network => _actor_network_for_ir($actor),
         ports      => \@ports,
         states     => \@states,
         dt_blocks  => \@dts,
@@ -305,6 +306,27 @@ sub _build_parent_ir($self, $actor, $generated_children) {
     );
     _finalize_ir($ir);
     return $ir;
+}
+
+sub _actor_network_for_ir {
+    my ($actor) = @_;
+    my $network = $actor->{actor_network};
+    return undef unless ref($network) eq 'HASH'
+        && ref($network->{instances}) eq 'ARRAY'
+        && @{$network->{instances}};
+
+    return {
+        kind      => $network->{kind} // 'static_declaration',
+        instances => [
+            map {
+                {
+                    name        => $_->{name},
+                    actor_type  => $_->{actor_type},
+                    declaration => $_->{declaration},
+                }
+            } @{$network->{instances}}
+        ],
+    };
 }
 
 sub _register_generated_activation_instance {

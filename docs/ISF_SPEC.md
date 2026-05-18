@@ -2747,6 +2747,77 @@ min/max windows, dynamic bounds, same-cycle checks, nested contracts,
 expression operands, and multiple outstanding obligations remain
 fail-closed/deferred.
 
+## 9.5. Actor Network Static Declarations
+
+The first shipped Actor Transfer Level (`ATL`) slice is a metadata-only static
+actor-network declaration. It lets a top-level actor record one child actor
+instance while FSMGen preserves that identity in the parser shell and schedule
+JSON report.
+
+Scoped form:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (network
+    (instance reader of packet_reader))
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+Flat form:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+Both accepted forms lower to the same parser/schedule-report metadata:
+
+```json
+"actor_network": {
+  "kind": "static_declaration",
+  "instances": [
+    {
+      "name": "reader",
+      "actor_type": "packet_reader",
+      "declaration": "network"
+    }
+  ]
+}
+```
+
+`declaration` is `network` for the scoped form and `actor` for the flat
+form. Instance names and actor types must be scalar HDL identifiers. The
+current shipped subset accepts exactly one static actor instance per top-level
+actor. It does not instantiate or resolve that actor type, does not emit a
+generated child `.fsm`, does not create a generated composition top, and does
+not change HDL generation. It is report-visible design intent for the
+upcoming ATL scheduler slices.
+
+The following remain fail-closed/deferred:
+
+- multiple static actor instances;
+- `(group ...)` declarations;
+- actor-to-actor endpoint movement through widened drive-body `(sink source)`
+  pairs;
+- qualified actor transaction triggers and actor event waits;
+- static actor type resolution, generated child artifacts, and generated
+  top-level ATL wiring;
+- recursive actor-network declarations.
+
 ## 10. Schedule JSON Report
 
 `--emit-schedule-json` emits the current `Emitter::JSON` surface:
@@ -2780,6 +2851,7 @@ fail-closed/deferred.
   "bank_accesses": [],
   "transaction_port_bindings": [],
   "dt_blocks": [],
+  "actor_network": null,
   "generated_composition": null,
   "library_uses": [],
   "compatible_fanin_groups": [],
@@ -2849,6 +2921,12 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 `latency_counter`, `rule`, `rule_trigger_fanin`, or
 `temporal_contract_monitor`. The capability-manifest ISF public contract
 advertises this value family through `schedule_report_dt_kind_values`.
+`actor_network` is null for actors without a static ATL actor declaration, or
+an object with `kind` and `instances` for the current one-instance static
+actor-network subset. Each instance entry contains `name`, `actor_type`, and
+`declaration`. The capability-manifest ISF public contract advertises these
+families through `schedule_report_actor_network_keys` and
+`schedule_report_actor_network_instance_keys`.
 Each `inferred_storage` entry's `kind` value is currently `counter` or
 `register`. Optional `role` values describe stable scheduler purpose when the
 lowerer has direct evidence: `activation_done_handoff`,
@@ -3038,8 +3116,8 @@ generated top and projects bounded per-domain/crossing summaries.
 Parent reports do not recursively embed child schedule reports. Public
 multi-file review surfaces are the `lower(...)` files map, the emitted
 scheduled `.fsm`/generated-top artifacts, and bounded report summaries such as
-`generated_composition`, `library_uses[]`, and `clock_domains[]` /
-`crossings[]`. A downstream consumer that needs child detail should inspect the
+`actor_network`, `generated_composition`, `library_uses[]`, and
+`clock_domains[]` / `crossings[]`. A downstream consumer that needs child detail should inspect the
 named generated artifact or the explicit bounded summary field rather than a
 raw child `LoweringIR` or recursive child report dump.
 
@@ -3394,6 +3472,7 @@ Focused tests:
 - [t/1319-isf-fifo-datapath-fixture-coverage.t](../t/1319-isf-fifo-datapath-fixture-coverage.t)
 - [t/1320-isf-fifo-controller-fixture-coverage.t](../t/1320-isf-fifo-controller-fixture-coverage.t)
 - [t/1321-isf-fifo-library-fixture-coverage.t](../t/1321-isf-fifo-library-fixture-coverage.t)
+- [t/1322-isf-actor-network-static.t](../t/1322-isf-actor-network-static.t)
 
 ## 12. Explicitly Deferred
 

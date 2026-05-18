@@ -1488,6 +1488,65 @@ Rules:
 - Additional resource kinds may be cataloged as backlog but are not enforced
   unless listed as enforced by the public contract.
 
+## 12.5. Static Actor Network Metadata
+
+FSMGen now accepts the first bounded Actor Transfer Level (`ATL`) source
+surface: one static actor instance declaration owned by the top-level actor.
+This slice is metadata-only. It records the actor-network intent for
+downstream discovery and later scheduler work; it does not resolve the child
+actor type, instantiate a child scheduled `.fsm`, generate an ATL top, or
+change HDL behavior.
+
+Accepted scoped form:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (network
+    (instance reader of packet_reader))
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+Accepted flat alias:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (transaction run
+    (on start)
+    (complete done)))
+```
+
+The schedule report exposes this through top-level `actor_network`:
+
+```json
+{
+  "kind": "static_declaration",
+  "instances": [
+    {
+      "name": "reader",
+      "actor_type": "packet_reader",
+      "declaration": "network"
+    }
+  ]
+}
+```
+
+`declaration` is `network` for scoped `(network ...)` entries and `actor` for
+flat `(instance ...)` entries. Current fail-closed boundaries include multiple
+instances, `(group ...)`, dynamic/non-scalar names, direct recursive
+instantiation, actor-to-actor endpoint movement, qualified actor transaction
+triggers, and actor event waits.
+
 ## 13. Scheduled `.fsm` Review Artifact
 
 Downstream tools should treat the scheduled `.fsm` files as review artifacts
@@ -1546,6 +1605,7 @@ temporal_contracts
 bank_accesses
 transaction_port_bindings
 dt_blocks
+actor_network
 generated_composition
 library_uses
 compatible_fanin_groups
@@ -1600,8 +1660,8 @@ Assignment and child-summary boundary:
   and aggregate counts such as `dt_blocks[].assignments`.
 - Parent reports do not embed recursive child schedule reports. Public
   multi-file detail is the `lower(...)` files map, generated `.fsm` artifacts,
-  `generated_composition`, `library_uses[]`, and `clock_domains[]` /
-  `crossings[]`.
+  `actor_network`, `generated_composition`, `library_uses[]`, and
+  `clock_domains[]` / `crossings[]`.
 - SPECFORGE-style integrations should report bugs with the runnable source,
   command, bundle, and observed output. They do not need to classify whether a
   failure belongs to `.fsm`, `.isf`, private provenance, or generated child
@@ -1648,6 +1708,8 @@ transaction_port_bindings[]: site_kind, owner, owner_kind, target_transaction,
   role, port, actor_signal, actor_expression, width, instance, parent_port,
   child_port, start_signal, done_signal, trigger_source, payload_source
 dt_blocks[]: name, kind, assignments
+actor_network: kind, instances
+actor_network.instances[]: name, actor_type, declaration
 library_uses[]: library, alias, export, kind, instance, module,
   scheduled_fsm, parameters, bindings
 clock_domains[]: name, default, clock, reset, scheduled_fsm, ports, storage,

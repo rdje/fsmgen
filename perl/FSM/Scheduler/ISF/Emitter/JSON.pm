@@ -47,6 +47,7 @@ sub report_hash($self, $ir) {
         bank_accesses  => $self->_bank_access_summary($ir),
         transaction_port_bindings => $self->_transaction_port_binding_summary($ir),
         dt_blocks      => $self->_dt_summary($ir),
+        actor_network  => $self->_actor_network_summary($ir),
         generated_composition => $self->_generated_composition_summary($ir),
         library_uses   => $self->_library_use_summary($ir),
         compatible_fanin_groups => $self->_compatible_fanin_group_summary($ir),
@@ -79,6 +80,7 @@ sub multi_domain_report_hash($self, $ir, $domain_report_by_name) {
     $report->{bank_accesses} = [];
     $report->{transaction_port_bindings} = [];
     $report->{dt_blocks} = [];
+    $report->{actor_network} = undef;
     $report->{generated_composition} = undef;
     $report->{library_uses} = [];
     $report->{compatible_fanin_groups} = [];
@@ -580,6 +582,26 @@ sub _dt_summary($self, $ir) {
         };
     }
     return \@dts;
+}
+
+sub _actor_network_summary($self, $ir) {
+    my $network = $ir->{actor_network};
+    return undef unless ref($network) eq 'HASH'
+        && ref($network->{instances}) eq 'ARRAY'
+        && @{$network->{instances}};
+
+    return {
+        kind      => $network->{kind} // 'static_declaration',
+        instances => [
+            map {
+                {
+                    name        => $_->{name},
+                    actor_type  => $_->{actor_type},
+                    declaration => $_->{declaration},
+                }
+            } @{$network->{instances}}
+        ],
+    };
 }
 
 sub _generated_composition_summary($self, $ir) {
