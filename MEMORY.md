@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: when-contained repeat bound do after await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.89`.
+- The active R14 task tree now selects top-level `when` body nested repeat
+  generated blocking `(do child (params ...) (bind ...))` after a prior
+  multi-pending `(await_any done)` observation.
+- The selected source shape is a repeat directly inside a top-level `when`
+  body with multiple generated
+  `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites,
+  `(await_any done)` as an observation point, static-parameter generated
+  `(do child (params ...) (bind ...))`, and a later same-body
+  `(await_all done)` drain before the nested repeat check can loop.
+- The selected implementation must leave every generated-spawn done handoff
+  live after the observation and through the generated do instance, apply the
+  generated do instance's static parameter overrides and input/output binding
+  handoffs once in the generated top, then gate repeat re-entry on the later
+  `await_all` drain.
+- Domain metadata, the switch-contained bound analogue, `await_any` after the
+  do, new spawn after the do before drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  deferred.
+- The mdBook feature backlog now documents the selected when-contained bound
+  generated-do `await_any`-before-do subset as selected but not yet shipped.
+- Validation: `mdbook build docs/book`, `prove -l
+  t/1305-isf-book-feature-matrix-audit.t
+  t/1307-isf-loop-body-doc-truth-audit.t` (Files=2, Tests=272), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.90`.
 ## 2026-05-18: switch-contained repeat parameterized do after await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.88`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

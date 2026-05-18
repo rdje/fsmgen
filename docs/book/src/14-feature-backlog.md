@@ -540,9 +540,17 @@ generated spawns remain pending, and a later same-body `(await_all done)`
 drain before the nested repeat check can loop. Bind handoffs, domain metadata,
 `await_any` after the do, new spawn after the do before the drain,
 cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain backlog. The next tracked leaf must select
-the next exact bounded subset before any further behavior-bearing
-implementation begins.
+outstanding-child semantics remain backlog. The next selected backlog leaf is
+the when-contained bound generated `await_any`-before-do analogue: a repeat
+directly inside a top-level `when` body with multiple generated spawns, a
+multi-pending `(await_any done)` observation, generated blocking
+`(do child (params ...) (bind ...))` with static parameter overrides and
+input/output binding handoffs, and a later same-body `(await_all done)` drain
+before the nested repeat check can loop. This when-contained bound generated-
+do await-any-before-do subset is selected but not yet shipped; domain
+metadata, the switch-contained bound analogue, `await_any` after the do, new
+spawn after the do before the drain, cross-domain activation, deeper
+branch/loop nesting, and broader outstanding-child semantics remain backlog.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
