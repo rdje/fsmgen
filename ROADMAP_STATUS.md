@@ -2,7 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.68`.
+  Leaf `.67` selected the direct top-level switch-branch analogue of the
+  shipped when-contained static-parameter generated do while generated nested
+  spawns are pending. The selected source shape is a repeat directly inside a
+  top-level `switch` branch with one or more generated nested spawns,
+  generated blocking `(do child (params ...))` with static parameter
+  overrides while those generated spawns remain pending, and a later same-body
+  `await_all` drain before the nested repeat check can loop. Leaf `.68` is the
+  implementation frontier for that selected subset.
   Leaf `.66` shipped top-level when-body nested repeat generated blocking
   `(do child (params ...))` with static parameter overrides while generated
   nested spawns are pending before a later same-body `await_all` drain. The
@@ -448,8 +456,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `await_any` around the do, new nested spawn after the do before the drain,
   cross-domain activation, deeper branch/loop nesting, and broader
   outstanding-child semantics remain fail-closed. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`, which must select the next bounded
-  repeat-body child activation subset before code.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`, which selected the direct
+  top-level switch-branch static-parameter analogue as the next bounded
+  implementation subset. The next implementation frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.68`.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

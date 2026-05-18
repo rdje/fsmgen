@@ -457,10 +457,20 @@ outstanding generated child before the nested repeat check can loop. The
 generated do site owns one deterministic generated instance, records static
 generated-top parameter binding, waits for that instance's fresh done handoff,
 and leaves the pending generated-spawn done set live for the later drain.
-Bind/domain subclauses on that generated `do`, the switch-contained
-static-parameter analogue, `await_any` observation before or after the do, new
-spawn after the do before the drain, cross-domain activation, deeper
-branch/loop nesting, and broader outstanding-child semantics remain deferred.
+The next selected implementation leaf is the direct top-level `switch` branch
+static-parameter generated `do` analogue: `(do child (params ...))` may run
+while generated nested spawns are pending when a later same-body
+`(await_all done)` still drains every outstanding generated child before the
+nested repeat check can loop. That selected switch-contained leaf is not
+shipped yet. Its intended proof mirrors the when-contained static-parameter
+leaf: the generated do site owns one deterministic generated instance,
+records static generated-top parameter binding, waits for that instance's
+fresh done handoff, and leaves the pending generated-spawn done set live for
+the later drain.
+Bind/domain subclauses on that generated `do`, `await_any` observation before
+or after the do, new spawn after the do before the drain, cross-domain
+activation, deeper branch/loop nesting, and broader outstanding-child
+semantics remain deferred.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
