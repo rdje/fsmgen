@@ -515,9 +515,12 @@ multi-pending `(await_any done)` observation, preserving declared ownership
 metadata without implying CDC. The top-level `when` body nested repeat local
 `(do child)` subset may also place `(await_any done)` after the local do as a
 post-do multi-pending observation while generated nested spawns remain pending
-before the mandatory later same-body `(await_all done)` drain.
-Switch-contained post-do `await_any`, generated-do post-do `await_any`, and
-new nested `spawn` after the do before the drain remain fail-closed.
+before the mandatory later same-body `(await_all done)` drain. The top-level
+`switch` branch nested repeat local `(do child)` subset supports the same
+post-do multi-pending observation and later-drain contract while generated
+nested spawns remain pending before the same-body `await_all` drain.
+Generated-do post-do `await_any` and new nested `spawn` after the do before
+the drain remain fail-closed.
 Cross-domain
 repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained
@@ -1100,8 +1103,8 @@ metadata on that generated do:
 `(do child (params ...) [(bind ...)] (domain NAME))`. The domain annotation is
 metadata for the deterministic generated do instance; it does not imply CDC,
 does not clear pending generated-spawn done handoffs, and still requires the
-later same-body `await_all` drain. New spawn after that do before the drain
-and await-any-after-do forms remain rejected.
+later same-body `await_all` drain. New spawn after that generated do before
+the drain and generated-do await-any-after-do forms remain rejected.
 
 Example:
 

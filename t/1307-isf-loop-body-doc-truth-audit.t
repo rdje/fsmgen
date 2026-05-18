@@ -132,6 +132,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/top-level\s+`?switch`?\s+branch.*nested[-\s]+repeats?.*local.*do.*post-do.*await_any.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
+        "$path documents the shipped top-level switch-branch nested repeat local do before post-do multi-pending await_any subset",
+    );
+    like(
+        $content,
         qr/top-level\s+`?when`?\s+body.*nested[-\s]+repeats?.*generated-child.*do.*generated(?:\s+nested)?\s+spawn.*pending.*await_all.*drain/si,
         "$path documents the shipped top-level when-body nested repeat generated-child do while generated spawn pending subset",
     );

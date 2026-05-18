@@ -1112,9 +1112,10 @@ domain partition and schedule-report clock-domain summaries. Top-level
 `await_any` observation; lowering waits for the local child's fresh done
 pulse, emits the post-do `await_any` as an observation of the still-pending
 generated-spawn done set, and keeps the later same-body `await_all` as the
-drain before nested repeat re-entry. Switch-contained post-do `await_any`,
-generated-do post-do `await_any`, and a new nested spawn after the do before
-the drain remain fail-closed.
+drain before nested repeat re-entry. Top-level `switch` branch local
+`(do child)` now shares that post-do `await_any` observation and later-drain
+contract. Generated-do post-do `await_any` and a new nested spawn after the
+do before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
