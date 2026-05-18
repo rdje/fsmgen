@@ -3940,6 +3940,10 @@ sub _validate_repeat_body_spawn_subset {
                     ($when_body_repeat || $switch_branch_repeat)
                     && $static_bound_generated_do
                     && $awaiting_multi_pending_drain;
+                my $allowed_static_domain_generated_do_after_multi_pending_await_any =
+                    $when_body_repeat
+                    && $static_domain_generated_do
+                    && $awaiting_multi_pending_drain;
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
                     || $allowed_static_parameter_generated_do
@@ -3969,7 +3973,9 @@ sub _validate_repeat_body_spawn_subset {
                         && $awaiting_multi_pending_drain
                         && !$allowed_static_bound_generated_do_after_multi_pending_await_any;
                 confess "Transaction '$tn': $pending_generated_do_label nested repeat generated do with static params and same-domain metadata while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
-                    if $allowed_static_domain_generated_do && $awaiting_multi_pending_drain;
+                    if $allowed_static_domain_generated_do
+                        && $awaiting_multi_pending_drain
+                        && !$allowed_static_domain_generated_do_after_multi_pending_await_any;
                 confess "Transaction '$tn': $pending_generated_do_label nested repeat do while generated spawns are pending supports only $supported_pending_do in the current subset\n"
                     if defined $pending_generated_do_label && !$awaiting_multi_pending_drain && !$allowed_pending_do;
                 confess "Transaction '$tn': $pending_local_do_label nested repeat do while generated spawns are pending supports only local plain '(do child)' in the current subset\n"
@@ -3981,7 +3987,8 @@ sub _validate_repeat_body_spawn_subset {
                             || $allowed_local_do_after_multi_pending_await_any
                             || $allowed_generated_child_do_after_multi_pending_await_any
                             || $allowed_static_parameter_generated_do_after_multi_pending_await_any
-                            || $allowed_static_bound_generated_do_after_multi_pending_await_any);
+                            || $allowed_static_bound_generated_do_after_multi_pending_await_any
+                            || $allowed_static_domain_generated_do_after_multi_pending_await_any);
                 $pending_local_do_before_drain = 1 if $plain_local_do;
                 if ($plain_generated_child_do || $allowed_static_parameter_generated_do || $allowed_static_bound_generated_do || $allowed_static_domain_generated_do) {
                     $pending_generated_do_before_drain = 1;

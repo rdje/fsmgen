@@ -1,5 +1,26 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained domain do after await_any preserves ownership metadata and generated-spawn lifetime
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.94` implements only the selected
+  top-level `when` body nested-repeat generated-do-after-multi-pending-
+  `await_any` subset with static parameter overrides, optional binding
+  handoffs, and declared same-domain metadata.
+- The widening is validator-local: `(do child (params ...) [(bind ...)]
+  (domain NAME))` may appear after a multi-pending `(await_any done)`
+  observation only for a repeat directly inside a top-level `when` body, only
+  when NAME is the declared same-domain owner, and only when a later same-body
+  `(await_all done)` drains every pending generated child before nested repeat
+  re-entry.
+- The same-domain generated do consumes only its deterministic generated do
+  instance's start/done handoff plus optional generated-top input/output
+  binding handoffs. It does not clear generated-spawn done handoffs; the
+  outstanding generated set remains live after `await_any`, through the
+  generated do, and into the later `await_all` drain.
+- Domain metadata remains ownership metadata only. This leaf records it in
+  generated-composition/domain partition and schedule-report clock-domain
+  summaries without adding CDC or cross-domain activation behavior.
+- The next leaf is selection-only: `ISF-REPEAT-BODY-CHILD-ACTIVATION.95`
+  must pick one bounded frontier before any additional behavior change.
 ## 2026-05-18: when-contained domain do after await_any is the next subset
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.93` selects the first same-domain
   generated-do await-any-before-do widening after the static-parameter and

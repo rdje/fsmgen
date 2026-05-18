@@ -162,6 +162,11 @@ for my $path (@loop_docs) {
     );
     like(
         $content,
+        qr/top-level\s+`?when`?\s+body(?=[\s\S]{0,2600}(?:same[-\s]+domain|domain NAME))(?=[\s\S]{0,2600}multi-pending[\s\S]{0,500}await_any)(?=[\s\S]{0,2600}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending)(?=[\s\S]{0,2800}await_all[\s\S]{0,300}drain)/i,
+        "$path documents the shipped top-level when-body nested repeat generated static-parameter same-domain do after multi-pending await_any subset",
+    );
+    like(
+        $content,
         qr/switch(?:`|\s|-|branch)[\s\S]{0,1600}(?:same[-\s]+domain|domain NAME)[\s\S]{0,1200}generated(?:\s+nested)?\s+spawns?[\s\S]{0,800}pending[\s\S]{0,800}await_all[\s\S]{0,300}drain/i,
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter same-domain do while generated spawn pending subset",
     );

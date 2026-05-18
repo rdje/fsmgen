@@ -1103,9 +1103,13 @@ static-parameter bound generated do after prior multi-pending `await_any`
 subset is shipped with the same later drain requirement and generated-top
 binding handoffs. The top-level `switch` branch static-parameter bound
 generated do after prior multi-pending `await_any` subset is shipped with the
-same later drain requirement and generated-top binding handoffs. Domain-
-metadata generated `do` after prior `await_any`, `await_any` after the do,
-and a new nested spawn after the do before the drain remain fail-closed.
+same later drain requirement and generated-top binding handoffs. The
+top-level `when` body same-domain generated do after prior multi-pending
+`await_any` subset is shipped with the same later drain requirement and
+declared ownership metadata in generated-composition/domain partition and
+schedule-report clock-domain summaries. The switch-branch domain-metadata
+generated `do` after prior `await_any`, `await_any` after the do, and a new
+nested spawn after the do before the drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches
