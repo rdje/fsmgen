@@ -194,14 +194,14 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.1: select pin-to-actor handoff`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2`
-  Status: `active`
+  Status: `completed`
   Goal: `Lower the selected scalar top-level input pin to actor handoff subset.`
   Acceptance: `Parser/lowering accepts only the selected '.6.1' form, rewrites the actor sink endpoint to the generated parent handoff output, reads the existing scalar top-level input pin as the source, records the selected actor_network.data_movements[] metadata, and keeps every unsupported pin/actor movement variant fail-closed with targeted ATL diagnostics.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; prove -Iperl t/1322-isf-actor-network-static.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.2: lower pin-to-actor handoff`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3`
-  Status: `pending`
+  Status: `active`
   Goal: `Select the first actor to top-level output pin handoff subset.`
   Acceptance: `A selection leaf chooses the first '(pins.output_pin actor.endpoint)' subset only after defining generated source/sink names, width evidence, route lifetime, report keys, and fail-closed boundaries.`
   Verification: `pending`
@@ -232,7 +232,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` | `active` | `.6.1` selected the first scalar top-level input pin to actor handoff subset before code. The next leaf lowers only that selected subset and keeps broader pin movement fail-closed. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3` | `active` | `.6.2` shipped the selected scalar top-level input pin to actor handoff subset. The next leaf selects the actor-to-top-level output pin direction before code. |
 
 ## ATL v0 Proposal
 
@@ -320,13 +320,14 @@ Current proposal summary:
   scalar external sink handoff output named `sink_actor_sink_endpoint`; the
   route is active only for the drive-call cycle, inserts no storage or mux,
   and reports through `actor_network.data_movements[]`.
-- The selected first top-level pin movement subset is one named drive body
+- The shipped first top-level pin movement subset is one named drive body
   with exactly one `(actor.endpoint pins.input_pin)` pair, exactly one direct
   static actor instance, and one top-level transaction drive call. The source
   is the existing one-bit top-level input pin; the sink is a generated scalar
-  external actor handoff output named `actor_endpoint`. Actor-to-pin movement,
-  wider pins, storage/muxing, generated children, groups, and CDC remain
-  deferred.
+  external actor handoff output named `actor_endpoint`. It reports through
+  `actor_network.data_movements[]` with kind
+  `scalar_pin_to_actor_handoff`. Actor-to-pin movement, wider pins,
+  storage/muxing, generated children, groups, and CDC remain deferred.
 
 ## Decisions
 
@@ -485,6 +486,7 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `mdbook build docs/book`; `git diff --check` | `selected the first scalar actor-to-actor handoff subset, generated parent port names, one-bit width evidence, one-cycle lifetime, report keys, and fail-closed boundaries before code` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1115-isf-public-interface-cli-manifest-audit.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1305-isf-book-feature-matrix-audit.t t/1250-isf-spec-focused-test-index-audit.t`; `prove -Iperl t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t t/1198-isf-update-clause-boundary.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected scalar actor-to-actor handoff lowers to one-cycle parent source/sink ports and actor_network.data_movements[] metadata; focused checks pass; broad ISF gate passes with Files=229, Tests=1349` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.1` | `mdbook build docs/book`; `git diff --check` | `selected the first scalar top-level input pin to actor handoff subset before code` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1193-isf-drive-call-arity-boundary.t t/1194-isf-drive-body-boundary.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `selected scalar top-level input pin to actor handoff lowers to one-cycle parent input-to-actor-output route and data_movements[] metadata; broad ISF gate passes with Files=229, Tests=1350` |
 
 ## Commit Log
 
@@ -509,6 +511,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.3: select scalar ATL handoff` | `selects the first generated scalar actor-to-actor handoff subset before behavior-bearing code` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.5.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.5.4: lower scalar ATL handoff` | `lowers the selected scalar actor-to-actor handoff subset to generated parent ports and data_movement report metadata` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.6.1` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.1: select pin-to-actor handoff` | `selects the first scalar top-level input pin to actor handoff subset before behavior-bearing code` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.6.2: lower pin-to-actor handoff` | `lowers the selected scalar top-level input pin to actor handoff subset` |
 
 ## Changelog
 
@@ -592,3 +595,10 @@ Current proposal summary:
   actor handoff as the first pin movement subset. The next leaf, `.6.2`,
   lowers only one `(actor.endpoint pins.input_pin)` drive-body pair activated
   by one top-level drive call while broader pin movement remains deferred.
+- `2026-05-18`: Completed `.6.2`: the selected pin-to-actor handoff now
+  lowers. Parser validation accepts one direct static actor instance, one
+  named drive body with one `(actor.endpoint pins.input_pin)` scalar pair,
+  and one top-level drive call; lowering rewrites the sink to a generated
+  actor handoff output while reading the existing top-level input pin as the
+  source and records `scalar_pin_to_actor_handoff` metadata. The active
+  frontier moves to `.6.3` to select actor-to-pin output movement.

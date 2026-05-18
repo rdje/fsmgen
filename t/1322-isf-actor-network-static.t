@@ -365,6 +365,87 @@ ISF
     is_deeply($cli_report, $report, 'CLI schedule JSON matches in-process report for scalar data movement');
 };
 
+subtest 'selected scalar top-level pin to actor data movement lowers to parent handoff output' => sub {
+    my $source = <<'ISF';
+(actor atl_pin_to_actor_movement
+  (clock clk)
+  (interface (input start) (input in_bit) (output done))
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload pins.in_bit))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+ISF
+    my $actor = parse_source($source, 'atl-pin-to-actor-movement.isf');
+
+    my $expected_movement = {
+        kind            => 'scalar_pin_to_actor_handoff',
+        transaction     => 'run',
+        context         => 'transaction_body',
+        drive           => 'feed_consumer',
+        source_instance => 'pins',
+        source_endpoint => 'in_bit',
+        source_signal   => 'in_bit',
+        sink_instance   => 'consumer',
+        sink_endpoint   => 'payload',
+        sink_signal     => 'consumer_payload',
+        width           => 1,
+        width_source    => 'top_level_pin_scalar_one_bit',
+        route_lifetime  => 'drive_call_cycle',
+        storage         => 'none',
+        source          => 'top_level_pin',
+        sink            => 'external_handoff',
+    };
+
+    is_deeply(
+        $actor->{drives}{feed_consumer}{body},
+        [
+            [ 'consumer_payload', 'in_bit' ],
+        ],
+        'parser rewrites the selected pin-to-actor pair to generated sink handoff and existing input pin',
+    );
+    is_deeply(
+        $actor->{actor_network}{data_movements},
+        [ $expected_movement ],
+        'parser records the selected scalar pin-to-actor movement metadata',
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    my $fsm = $lowered->{files}{'atl_pin_to_actor_movement.fsm'};
+    ok($fsm, 'selected pin-to-actor movement still emits the parent scheduled .fsm only');
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ['atl_pin_to_actor_movement.fsm'],
+        'selected pin-to-actor movement does not emit ATL child artifacts or a generated top',
+    );
+    like($fsm, qr/\(in_bit 1\)/, 'scheduled .fsm keeps the top-level input pin');
+    like($fsm, qr/\(consumer_payload 1\)/, 'scheduled .fsm exposes generated actor sink handoff output');
+    like($fsm, qr/\(<- \(consumer_payload>?\s+in_bit\) <feed_consumer_start\)/,
+        'drive body lowers the selected pin-to-actor handoff through the named drive request');
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [
+                {
+                    name        => 'consumer',
+                    actor_type  => 'packet_writer',
+                    declaration => 'actor',
+                },
+            ],
+            data_movements => [ $expected_movement ],
+            event_waits => [],
+            transaction_triggers => [],
+        },
+        'pin-to-actor scalar data movement report',
+    );
+};
+
 subtest 'reserved endpoint-aware drive movement forms fail closed with ATL diagnostics' => sub {
     parse_fails_like(
         <<'ISF',
@@ -379,7 +460,7 @@ subtest 'reserved endpoint-aware drive movement forms fail closed with ATL diagn
     (drive feed_reader)
     (complete done)))
 ISF
-        qr/drive 'feed_reader' body ATL scalar actor-to-actor data movement requires exactly two direct static actor instances/,
+        qr/drive 'feed_reader' body ATL scalar actor-to-actor data movement source 'payload' must be a qualified static actor endpoint or selected 'pins\.input_pin' source/,
         'named drive body qualified actor sink fails closed before local dotted-name diagnostics',
     );
 
@@ -396,7 +477,7 @@ ISF
     (drive read_payload)
     (complete done)))
 ISF
-        qr/drive 'read_payload' body ATL scalar actor-to-actor data movement requires exactly two direct static actor instances/,
+        qr/drive 'read_payload' body ATL scalar actor-to-actor data movement sink 'payload' must be a qualified static actor endpoint/,
         'named drive body qualified actor source fails closed before local dotted-name diagnostics',
     );
 
@@ -468,6 +549,57 @@ ISF
 ISF
         qr/drive 'feed_consumer' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair/,
         'selected data movement drive body remains one scalar pair only',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor pin_to_actor_wide_source
+  (clock clk)
+  (interface (input start) (input in_data (width 8)) (output done))
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload pins.in_data))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+ISF
+        qr/source pin 'pins\.in_data' must be one bit/,
+        'pin-to-actor movement rejects wider top-level pins in the first subset',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor actor_to_pin_deferred
+  (clock clk)
+  (interface (input start) (output out_bit) (output done))
+  (instance producer of packet_reader)
+  (drive publish
+    (pins.out_bit producer.payload))
+  (transaction run
+    (on start)
+    (drive publish)
+    (complete done)))
+ISF
+        qr/sink 'pins\.out_bit' must be a qualified static actor endpoint/,
+        'actor-to-pin movement remains deferred',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor pin_to_actor_missing_pin
+  (clock clk)
+  (interface (input start) (output done))
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload pins.in_bit))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+ISF
+        qr/source pin 'pins\.in_bit' is not a declared top-level input pin/,
+        'pin-to-actor movement requires an existing input pin',
     );
 };
 

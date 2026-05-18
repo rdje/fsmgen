@@ -432,9 +432,9 @@ model for one top-level input pin feeding one actor endpoint:
     (complete done)))
 ```
 
-This pin-to-actor subset is selected but not yet implemented. The selected
-source is the existing one-bit top-level input pin, and the selected sink is
-a generated scalar external actor handoff output named `consumer_payload`.
+This pin-to-actor subset is shipped. The source is the existing one-bit
+top-level input pin, and the sink is a generated scalar external actor
+handoff output named `consumer_payload`.
 Actor-to-pin output movement, wider pins, storage, muxing, generated children,
 groups, CDC, and trigger/await coupling remain deferred.
 

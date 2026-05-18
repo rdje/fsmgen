@@ -745,6 +745,7 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
             $actor->{drives}{$drive_name},
             (($actor->{actor_network} || {})->{instances}) || [],
             \%actor_instances,
+            _actor_interface_input_widths($actor),
             \%declared_signals,
         )) {
             confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement exceeds the current one-movement subset; fan-in, fan-out, route muxes, and multiple data movements remain deferred\n"
@@ -965,7 +966,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
 }
 
 sub _accept_selected_atl_data_movement_drive {
-    my ($actor_name, $drive_name, $drive, $instances, $actor_instances, $declared_signals) = @_;
+    my ($actor_name, $drive_name, $drive, $instances, $actor_instances, $input_widths, $declared_signals) = @_;
     my $body = ($drive || {})->{body};
     return undef unless ref($body) eq 'ARRAY';
 
@@ -974,14 +975,12 @@ sub _accept_selected_atl_data_movement_drive {
         next unless ref($entry) eq 'ARRAY' && @$entry >= 2;
         my ($sink, $source) = @$entry[0, 1];
         push @endpoint_entries, $entry
-            if _contains_qualified_atl_endpoint_token($sink, $actor_instances)
-                || _contains_qualified_atl_endpoint_token($source, $actor_instances);
+            if _contains_atl_data_movement_endpoint_token($sink, $actor_instances)
+                || _contains_atl_data_movement_endpoint_token($source, $actor_instances);
     }
     return undef unless @endpoint_entries;
 
     my $context = "drive '$drive_name' body";
-    confess "Error: $context ATL scalar actor-to-actor data movement requires exactly two direct static actor instances in the current subset\n"
-        unless ref($instances) eq 'ARRAY' && @$instances == 2;
     confess "Error: $context ATL scalar actor-to-actor data movement does not accept drive parameters in the current subset\n"
         if @{($drive || {})->{params} || []};
     confess "Error: $context ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset\n"
@@ -989,17 +988,49 @@ sub _accept_selected_atl_data_movement_drive {
 
     my ($sink, $source) = @{$endpoint_entries[0]}[0, 1];
     my ($sink_instance, $sink_endpoint) = _parse_qualified_atl_endpoint_token($sink, $actor_instances);
+    my ($sink_pin) = _parse_qualified_atl_pin_endpoint_token($sink);
+    my ($source_pin) = _parse_qualified_atl_pin_endpoint_token($source);
     confess "Error: $context ATL scalar actor-to-actor data movement sink '$sink' must be a qualified static actor endpoint\n"
-        unless defined($sink_instance) && defined($sink_endpoint);
+        unless defined($sink_instance) && defined($sink_endpoint) && !defined($sink_pin);
     confess "Error: $context ATL scalar actor-to-actor data movement source expressions remain deferred\n"
         if ref($source);
     my ($source_instance, $source_endpoint) = _parse_qualified_atl_endpoint_token($source, $actor_instances);
-    confess "Error: $context ATL scalar actor-to-actor data movement source '$source' must be a qualified static actor endpoint\n"
-        unless defined($source_instance) && defined($source_endpoint);
-    confess "Error: $context ATL scalar actor-to-actor data movement requires distinct source and sink actor instances\n"
-        if $source_instance eq $sink_instance;
     confess "Error: $context ATL scalar actor-to-actor data movement sink endpoint '$sink_endpoint' must be a scalar HDL identifier\n"
         unless _is_hdl_identifier($sink_endpoint);
+
+    return _accept_selected_atl_actor_to_actor_data_movement(
+        $context,
+        $drive_name,
+        $instances,
+        $sink_instance,
+        $sink_endpoint,
+        $source_instance,
+        $source_endpoint,
+        $endpoint_entries[0],
+        $declared_signals,
+    ) if defined($source_instance) && defined($source_endpoint);
+
+    return _accept_selected_atl_pin_to_actor_data_movement(
+        $context,
+        $drive_name,
+        $instances,
+        $sink_instance,
+        $sink_endpoint,
+        $source_pin,
+        $endpoint_entries[0],
+        $input_widths,
+        $declared_signals,
+    ) if defined($source_pin);
+
+    confess "Error: $context ATL scalar actor-to-actor data movement source '$source' must be a qualified static actor endpoint or selected 'pins.input_pin' source\n";
+}
+
+sub _accept_selected_atl_actor_to_actor_data_movement {
+    my ($context, $drive_name, $instances, $sink_instance, $sink_endpoint, $source_instance, $source_endpoint, $entry, $declared_signals) = @_;
+    confess "Error: $context ATL scalar actor-to-actor data movement requires exactly two direct static actor instances in the current subset\n"
+        unless ref($instances) eq 'ARRAY' && @$instances == 2;
+    confess "Error: $context ATL scalar actor-to-actor data movement requires distinct source and sink actor instances\n"
+        if $source_instance eq $sink_instance;
     confess "Error: $context ATL scalar actor-to-actor data movement source endpoint '$source_endpoint' must be a scalar HDL identifier\n"
         unless _is_hdl_identifier($source_endpoint);
 
@@ -1012,8 +1043,8 @@ sub _accept_selected_atl_data_movement_drive {
             if $signal eq "${drive_name}_start";
     }
 
-    $endpoint_entries[0][0] = $sink_signal;
-    $endpoint_entries[0][1] = $source_signal;
+    $entry->[0] = $sink_signal;
+    $entry->[1] = $source_signal;
 
     return {
         kind            => 'scalar_actor_handoff',
@@ -1031,6 +1062,48 @@ sub _accept_selected_atl_data_movement_drive {
         route_lifetime  => 'drive_call_cycle',
         storage         => 'none',
         source          => 'external_handoff',
+        sink            => 'external_handoff',
+    };
+}
+
+sub _accept_selected_atl_pin_to_actor_data_movement {
+    my ($context, $drive_name, $instances, $sink_instance, $sink_endpoint, $source_pin, $entry, $input_widths, $declared_signals) = @_;
+    confess "Error: $context ATL scalar pin-to-actor data movement requires exactly one direct static actor instance in the current subset\n"
+        unless ref($instances) eq 'ARRAY' && @$instances == 1;
+    confess "Error: $context ATL scalar pin-to-actor data movement source must be 'pins.input_pin'\n"
+        unless defined($source_pin) && _is_hdl_identifier($source_pin);
+    confess "Error: $context ATL scalar pin-to-actor data movement source pin 'pins.$source_pin' is not a declared top-level input pin\n"
+        unless ref($input_widths) eq 'HASH' && exists $input_widths->{$source_pin};
+    confess "Error: $context ATL scalar pin-to-actor data movement source pin 'pins.$source_pin' must be one bit in the current subset\n"
+        unless ($input_widths->{$source_pin} || 1) == 1;
+
+    my $sink_signal = _actor_atl_data_handoff_signal($sink_instance, $sink_endpoint);
+    confess "Error: $context ATL scalar pin-to-actor data movement generated handoff signal '$sink_signal' conflicts with a declared actor signal\n"
+        if $declared_signals->{$sink_signal};
+    confess "Error: $context ATL scalar pin-to-actor data movement source pin 'pins.$source_pin' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
+        if $source_pin eq "${drive_name}_start";
+    confess "Error: $context ATL scalar pin-to-actor data movement generated handoff signal '$sink_signal' conflicts with drive '$drive_name' request signal '${drive_name}_start'\n"
+        if $sink_signal eq "${drive_name}_start";
+
+    $entry->[0] = $sink_signal;
+    $entry->[1] = $source_pin;
+
+    return {
+        kind            => 'scalar_pin_to_actor_handoff',
+        transaction     => undef,
+        context         => undef,
+        drive           => $drive_name,
+        source_instance => 'pins',
+        source_endpoint => $source_pin,
+        source_signal   => $source_pin,
+        sink_instance   => $sink_instance,
+        sink_endpoint   => $sink_endpoint,
+        sink_signal     => $sink_signal,
+        width           => 1,
+        width_source    => 'top_level_pin_scalar_one_bit',
+        route_lifetime  => 'drive_call_cycle',
+        storage         => 'none',
+        source          => 'top_level_pin',
         sink            => 'external_handoff',
     };
 }
@@ -1117,6 +1190,9 @@ sub _validate_atl_reserved_endpoint_drive_pairs {
         if (_is_qualified_atl_endpoint_token($sink, $actor_instances)) {
             confess "Error: $context ATL actor data movement sink '$sink' is reserved but not supported yet; endpoint-aware drive-body movement remains deferred\n";
         }
+        if (_is_qualified_atl_pin_endpoint_token($sink)) {
+            confess "Error: $context ATL top-level pin data movement sink '$sink' is reserved but not supported yet; endpoint-aware drive-body movement remains deferred\n";
+        }
         _validate_atl_reserved_endpoint_drive_source($source, "$context source", $actor_instances);
     }
 
@@ -1130,6 +1206,8 @@ sub _validate_atl_reserved_endpoint_drive_source {
     if (!ref($value)) {
         confess "Error: $context ATL actor data movement source '$value' is reserved but not supported yet; endpoint-aware drive-body movement remains deferred\n"
             if _is_qualified_atl_endpoint_token($value, $actor_instances);
+        confess "Error: $context ATL top-level pin data movement source '$value' is reserved but not supported yet; endpoint-aware drive-body movement remains deferred\n"
+            if _is_qualified_atl_pin_endpoint_token($value);
         return 1;
     }
 
@@ -1217,12 +1295,37 @@ sub _contains_qualified_atl_endpoint_token {
     return 0;
 }
 
+sub _contains_atl_data_movement_endpoint_token {
+    my ($value, $actor_instances) = @_;
+    return (_is_qualified_atl_endpoint_token($value, $actor_instances) || _is_qualified_atl_pin_endpoint_token($value))
+        if defined($value) && !ref($value);
+    if (ref($value) eq 'ARRAY') {
+        for my $item (@$value) {
+            return 1 if _contains_atl_data_movement_endpoint_token($item, $actor_instances);
+        }
+    }
+    return 0;
+}
+
 sub _parse_qualified_atl_endpoint_token {
     my ($token, $actor_instances) = @_;
     return unless defined($token) && !ref($token);
     return unless $token =~ /\A([A-Za-z_][A-Za-z0-9_]*)\.([A-Za-z_][A-Za-z0-9_]*)\z/;
     return unless ref($actor_instances) eq 'HASH' && $actor_instances->{$1};
     return ($1, $2);
+}
+
+sub _parse_qualified_atl_pin_endpoint_token {
+    my ($token) = @_;
+    return unless defined($token) && !ref($token);
+    return unless $token =~ /\Apins\.([A-Za-z_][A-Za-z0-9_]*)\z/;
+    return ($1);
+}
+
+sub _is_qualified_atl_pin_endpoint_token {
+    my ($token) = @_;
+    my ($pin) = _parse_qualified_atl_pin_endpoint_token($token);
+    return defined($pin) ? 1 : 0;
 }
 
 sub _actor_atl_event_handoff_signal {
@@ -1262,6 +1365,16 @@ sub _actor_declared_signal_names {
             && !ref($actor->{reset}{name});
 
     return %names;
+}
+
+sub _actor_interface_input_widths {
+    my ($actor) = @_;
+    my %widths;
+    for my $input (@{($actor || {})->{interface}{inputs} || []}) {
+        $widths{$input->{name}} = $input->{width} // 1
+            if defined($input->{name}) && !ref($input->{name});
+    }
+    return \%widths;
 }
 
 sub _validate_actor_enum_member_value_contexts($self, $actor) {

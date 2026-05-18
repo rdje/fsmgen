@@ -701,11 +701,11 @@ one-cycle route lifetime, and reports through
 Storage, muxing, generated child `.fsm` artifacts, generated ATL tops, HDL
 child wiring, pin movement, inline/expression movement, fan-in/fan-out,
 groups, CDC, and trigger/await coupling remain separate backlog leaves.
-The next selected pin-movement subset is one scalar top-level input pin to one
-actor endpoint: `(actor.endpoint pins.input_pin)` in a named drive body, one
-direct static actor instance, and one top-level transaction drive call. It is
-selected but not yet implemented; actor-to-pin output movement and wider pin
-payloads remain later leaves.
+The first pin-movement subset is shipped: one scalar top-level input pin to
+one actor endpoint, written as `(actor.endpoint pins.input_pin)` in a named
+drive body with one direct static actor instance and one top-level transaction
+drive call. Actor-to-pin output movement and wider pin payloads remain later
+leaves.
 The selected future orchestration vocabulary reuses existing ISF activation
 forms: `(do actor.transaction)` for blocking actor transaction activation,
 `(spawn actor.transaction as NAME)` for nonblocking activation,

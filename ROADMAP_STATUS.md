@@ -64,15 +64,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   generated child `.fsm` artifacts, generated ATL tops, HDL child wiring,
   pin movement, inline/expression movement, fan-in/fan-out, groups, CDC, and
   trigger/await coupling remain deferred or fail-closed.
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.1` selected the first top-level pin
-  movement subset before code: one direct static actor instance, one named
-  drive body with one scalar `(actor.endpoint pins.input_pin)` pair, and one
-  top-level transaction drive call. The selected source is the existing
-  one-bit top-level input pin, the selected sink is a generated scalar actor
-  handoff output named `actor_endpoint`, and the route lifetime is the
-  drive-call cycle. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2`, which lowers only that selected
-  pin-to-actor subset.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` shipped the first top-level pin
+  movement subset: one direct static actor instance, one named drive body with
+  one scalar `(actor.endpoint pins.input_pin)` pair, and one top-level
+  transaction drive call. The source is the existing one-bit top-level input
+  pin, the sink is a generated scalar actor handoff output named
+  `actor_endpoint`, the route lifetime is the drive-call cycle, and schedule
+  JSON reports kind `scalar_pin_to_actor_handoff` under
+  `actor_network.data_movements[]`. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.6.3`, which selects the actor-to-top-level
+  output pin direction before code.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

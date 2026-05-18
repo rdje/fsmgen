@@ -2855,15 +2855,15 @@ and actor-transaction trigger handoff subsets implemented so far:
   `drive`, `source_instance`, `source_endpoint`, `source_signal`,
   `sink_instance`, `sink_endpoint`, `sink_signal`, `width`, `width_source`,
   `route_lifetime`, `storage`, `source`, and `sink`.
-- The first top-level pin movement subset is selected but not shipped until
-  the next implementation leaf. That subset is one direct static actor
-  instance, one named drive body with one
+- The first top-level pin movement subset is shipped. It accepts one direct
+  static actor instance, one named drive body with one
   `(actor.endpoint pins.input_pin)` scalar pair, and one top-level
   transaction drive call. `pins.input_pin` must name a scalar one-bit
-  top-level actor input. The selected source is the existing top-level input
-  pin; the selected sink is a generated scalar external actor handoff output
-  named `actor_endpoint`; route lifetime is the drive-call cycle only. The
-  selected report entry reuses `actor_network.data_movements[]` with kind
+  top-level actor input. FSMGen reads that existing input pin directly,
+  rewrites the actor sink endpoint to a generated scalar external handoff
+  output named `actor_endpoint`, and drives that output from the input pin for
+  the drive-call cycle. The report entry reuses
+  `actor_network.data_movements[]` with kind
   `scalar_pin_to_actor_handoff`, `source => top_level_pin`, and
   `sink => external_handoff`.
 - Future blocking orchestration uses `(do actor.transaction)`, future

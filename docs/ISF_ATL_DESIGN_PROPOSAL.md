@@ -590,7 +590,7 @@ generate an ATL top, wire HDL child interfaces, move data to or from
 infer fan-in or fan-out, combine data movement with actor triggers/events, or
 cross clock domains.
 
-The selected next pin-movement subset is pin-to-actor only:
+The shipped first pin-movement subset is pin-to-actor only:
 
 1. One direct static actor instance.
 2. One named drive body with one `(actor.endpoint pins.input_pin)` scalar pair.

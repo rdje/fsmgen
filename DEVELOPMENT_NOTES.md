@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL pin-to-actor lowering keeps pins as real parent inputs
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.6.2` implements the selected
+  `pins.input` source form by preserving the existing actor interface input as
+  the source signal and rewriting only the actor sink endpoint to a generated
+  parent handoff output.
+- This keeps top-level pin movement distinct from actor-to-actor movement in
+  both source semantics and report metadata: `source => top_level_pin`,
+  `source_instance => pins`, and kind `scalar_pin_to_actor_handoff`.
+- Unsupported nearby shapes remain parser-owned fail-closed boundaries:
+  actor-to-pin sinks, missing pins, wider pins, inline pin movement, nested or
+  repeated movement calls, storage/mux lifetimes, generated child wiring, and
+  CDC are not inferred by this slice.
 ## 2026-05-18: ATL pin movement starts with input pin to actor
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.6.1` selects top-level input pin to actor
   endpoint movement before code because it reuses the shipped named-drive
