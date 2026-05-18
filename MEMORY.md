@@ -1,6 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
 ## 2026-05-18: ISF Actor Transfer Level model captured
+- Drafted [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
+  as the concrete ATL v0 proposal. The source root remains `(actor ...)`.
+  The actor-network container spelling is deliberately open: either scoped
+  `(network ...)` or flat top-level actor ATL clauses can express the same
+  semantics if lowered to the same ATL IR.
+- The proposal defines qualified endpoints (`pins.name`, `actor.port`,
+  `actor.transaction`, `actor.event`, `group.name`), verbose syntax as the
+  normative spelling, compact syntax as a possible alias, `connect` as
+  structural binding, and `transfer` as scheduler-owned data/information
+  movement.
+- User challenged whether `(network ...)` is needed. Do not treat it as
+  settled syntax; it is only a scoping candidate.
 - Activated the R14 actor-network clarification/design tree
   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md)
   for the new Actor Transfer Level (`ATL`) direction.

@@ -73,6 +73,20 @@ to remain reviewable.
 Tracked task tree:
 [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 
+Concrete ATL v0 proposal:
+[docs/ISF_ATL_DESIGN_PROPOSAL.md](ISF_ATL_DESIGN_PROPOSAL.md).
+
+The current proposal keeps `(actor top_name ...)` as the source root. The
+container spelling is intentionally open: ATL clauses may be scoped inside a
+`(network ...)` clause, or they may appear directly as flat top-level actor
+clauses if that proves cleaner. The proposed endpoint vocabulary is
+`pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
+`group.name`. The verbose syntax is the normative target; compact syntax is a
+semantics-preserving alias only after it maps to the same ATL IR and
+diagnostics. The proposal separates `connect`, meaning structural pin/port
+binding, from `transfer`, meaning scheduler-owned movement of
+data/information between actors.
+
 ## Design Note: 2026-05-13 Rule Trigger Fan-In
 
 ISF rule-trigger lowering now preserves rule-source provenance before driving

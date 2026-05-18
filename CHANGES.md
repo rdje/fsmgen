@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF ATL v0 concrete proposal drafted
+- Added [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
+  as the concrete design proposal for Actor Transfer Level actor-network
+  orchestration.
+- Proposed keeping `(actor top_name ...)` as the source root and adding a
+  concrete but undecided ATL container shape: either a scoped `(network ...)`
+  body inside the top-level actor or flat ATL clauses directly under the
+  top-level actor.
+- Defined proposed ATL endpoints: `pins.name`, `actor.port`,
+  `actor.transaction`, `actor.event`, and `group.name`.
+- Proposed verbose syntax as the normative form, with compact syntax only as
+  a semantics-preserving alias after it maps to the same ATL IR and
+  diagnostics.
+- Distinguished `connect` structural pin/port binding from `transfer`
+  scheduler-owned data/information movement, and recorded one-cycle events,
+  top-level transaction/rule orchestration, concurrent groups, first
+  implementation subset, and fail-closed boundaries.
+- Recorded that `(network ...)` is not a semantic requirement. It is a
+  scoping candidate, with flat top-level actor ATL clauses kept as an explicit
+  alternative.
+- Synchronized the task tree, brainstorm log, roadmap status, README, live
+  docs, and mdBook feature backlog.
 ### R14 — ISF Actor Transfer Level model captured
 - Activated `ISF-ACTOR-NETWORK-ORCHESTRATION.1` as the active clarification
   leaf for the actor-network direction.

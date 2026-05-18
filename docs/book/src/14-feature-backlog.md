@@ -645,6 +645,8 @@ policy for the fully general case.
 Status: active clarification/design tree; not implemented.
 Task-tree owner:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+Concrete design proposal:
+[ISF_ATL_DESIGN_PROPOSAL](../../ISF_ATL_DESIGN_PROPOSAL.md).
 
 Goal: move ISF up one abstraction level while staying in explicit `.isf`.
 The working name is Actor Transfer Level (`ATL`): where RTL describes data
@@ -663,6 +665,112 @@ The syntax should stay intent-expressive and should also have a verbose
 variant for maximum readability, so the network topology, orchestration,
 data movement, and generated schedule evidence can be reviewed without
 reading lowering code.
+
+Current ATL v0 proposal, still unimplemented:
+
+The top-level root remains `(actor name ...)`. The container spelling is not
+settled. One candidate scopes ATL clauses inside `(network ...)`; the other
+places `instance`, `connect`, `transfer`, and `group` directly under the
+top-level actor. Both spellings would have to lower to the same ATL semantics
+if both are accepted.
+
+Scoped candidate:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (reset (rst_n async active_low))
+
+  (interface
+    (input  start)
+    (input  in_data  (width 32))
+    (output out_data (width 32))
+    (output done))
+
+  (network
+    (instance reader of packet_reader)
+    (instance crc    of crc32_unit)
+    (instance writer of packet_writer)
+
+    (connect (from pins.start)   (to reader.start))
+    (connect (from pins.in_data) (to reader.data_i))
+    (connect (from writer.data_o) (to pins.out_data))
+    (connect (from writer.done)   (to pins.done))
+
+    (transfer reader.payload to crc.payload)
+    (transfer crc.result     to writer.crc)
+
+    (event reader_done (from reader.done))
+    (event crc_done    (from crc.done))
+
+    (trigger (from reader_done) (to crc.compute))
+    (trigger (from crc_done)    (to writer.emit))
+
+    (group pipeline
+      (members reader crc writer)
+      (mode concurrent))))
+```
+
+Flat candidate:
+
+```lisp
+(actor packet_pipe
+  (clock clk)
+  (reset (rst_n async active_low))
+
+  (interface
+    (input  start)
+    (input  in_data  (width 32))
+    (output out_data (width 32))
+    (output done))
+
+  (instance reader of packet_reader)
+  (instance crc    of crc32_unit)
+  (instance writer of packet_writer)
+
+  (connect (from pins.start)   (to reader.start))
+  (connect (from pins.in_data) (to reader.data_i))
+  (connect (from writer.data_o) (to pins.out_data))
+  (connect (from writer.done)   (to pins.done))
+
+  (transfer reader.payload to crc.payload)
+  (transfer crc.result     to writer.crc)
+
+  (event reader_done (from reader.done))
+  (event crc_done    (from crc.done))
+
+  (trigger (from reader_done) (to crc.compute))
+  (trigger (from crc_done)    (to writer.emit))
+
+  (group pipeline
+    (members reader crc writer)
+    (mode concurrent)))
+```
+
+Proposed endpoint vocabulary:
+
+| Endpoint | Meaning |
+| --- | --- |
+| `pins.name` | Top-level actor interface pin. |
+| `actor.port` | Interface port on an actor instance. |
+| `actor.transaction` | Transaction on an actor instance. |
+| `actor.event` | Scheduler-visible one-cycle event from an actor instance. |
+| `group.name` | Explicit concurrent group. |
+
+Proposed semantic split:
+
+| Form | Meaning |
+| --- | --- |
+| `connect` | Structural pin/port binding. |
+| `transfer` | Scheduler-owned data/information movement. |
+| `event` | Named one-cycle control pulse; payloads remain deferred. |
+| `trigger` | Activation of a qualified actor transaction. |
+| `group` | Intentional concurrent actor group for scheduling analysis/reporting. |
+
+Compact syntax is also proposed, but only as an alias over the verbose
+contract. For example, `(reader.payload => crc.payload)` would mean
+`(transfer reader.payload to crc.payload)`, while `(pins.start -> reader.start)`
+would mean structural `connect`.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child

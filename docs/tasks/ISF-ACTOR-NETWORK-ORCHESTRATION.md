@@ -58,7 +58,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.1`
   Status: `in_progress`
   Goal: `Clarify the actor-network source contract with the user.`
-  Acceptance: `A design note records whether actors are declared as nested actors, imported/library actors, or peer actors in a network clause; how the whole network acts as a top-level actor; how top-level actor transactions/rules trigger actors or transactions; how one-cycle events are named and synchronized; how data moves between actors, concurrent actor groups, and top-level pins; how scheduling responsibility is split between local actor schedules and network-level orchestration; how compact and verbose syntax variants relate; and which forms must fail closed in the first implementation slice.`
+  Acceptance: `A design note records whether actors are declared as nested actors, imported/library actors, peer actors in a scoped network clause, or flat top-level ATL clauses; how the whole network acts as a top-level actor; how top-level actor transactions/rules trigger actors or transactions; how one-cycle events are named and synchronized; how data moves between actors, concurrent actor groups, and top-level pins; how scheduling responsibility is split between local actor schedules and network-level orchestration; how compact and verbose syntax variants relate; and which forms must fail closed in the first implementation slice.`
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `pending commit for ATL clarification slice`
 
@@ -72,7 +72,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.3`
   Status: `pending`
   Goal: `Ship the smallest top-level actor-as-network elaboration slice.`
-  Acceptance: `A top-level actor can own a static network body with one child actor instance, explicit static bindings, generated artifacts remain reviewable, and unsupported dynamic or ambiguous actor graphs fail closed.`
+  Acceptance: `A top-level actor can own a static ATL body with one child actor instance, explicit static bindings, generated artifacts remain reviewable, and unsupported dynamic or ambiguous actor graphs fail closed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -117,6 +117,36 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 | --- | --- | --- | --- |
 | 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `in_progress` | Clarification is required before any syntax or implementation is safe. |
 
+## ATL v0 Proposal
+
+The current concrete proposal is tracked in
+[docs/ISF_ATL_DESIGN_PROPOSAL.md](../ISF_ATL_DESIGN_PROPOSAL.md).
+
+Current proposal summary:
+
+- The source root remains `(actor top_name ...)`.
+- The actor network container spelling remains open: Candidate A scopes ATL
+  clauses inside `(network ...)`; Candidate B places `instance`, `connect`,
+  `transfer`, and `group` directly under the top-level `(actor ...)`.
+- The top-level actor's `interface` declares the external pins, referenced as
+  `pins.name`.
+- Actor instances are static, named, and explicit.
+- Qualified endpoints identify `actor.port`, `actor.transaction`,
+  `actor.event`, and `pins.name`.
+- Verbose syntax is the normative authoring and downstream-emission target.
+- Compact syntax is proposed only as a semantics-preserving alias over the
+  verbose ATL IR.
+- `connect` means structural pin/port binding.
+- `transfer` means scheduler-owned movement of data/information between
+  actors.
+- Events are one-cycle scheduler-visible control pulses in the first ATL
+  subset; event payloads remain deferred.
+- Top-level transactions/rules can orchestrate actor transactions through
+  qualified targets such as `reader.capture`.
+- Concurrent groups express intended parallel actor activity but do not
+  override safety; FSMGen may schedule, serialize, insert handoff storage, or
+  reject unsafe overlap.
+
 ## Decisions
 
 - `2026-05-18`: Created as a proposed R14 task tree after user
@@ -136,31 +166,39 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   groups, and movement between the top-level pins and actors in the network.
   FSMGen should infer the needed scheduling from intent-expressive syntax with
   compact and verbose forms.
+- `2026-05-18`: Drafted a concrete ATL v0 proposal in
+  [docs/ISF_ATL_DESIGN_PROPOSAL.md](../ISF_ATL_DESIGN_PROPOSAL.md): top-level
+  actor root, open container spelling between a scoped `(network ...)` clause
+  and flat top-level actor ATL clauses, static instances, qualified endpoints,
+  verbose and compact syntax candidates, `connect` for structural movement,
+  `transfer` for scheduler-owned data movement, one-cycle events, top-level
+  transaction/rule orchestration, concurrent groups, first implementation
+  subset, and fail-closed boundaries.
+- `2026-05-18`: User challenged whether `(network ...)` is necessary. The
+  design now treats `(network ...)` as a scoping candidate, not a requirement;
+  flat top-level actor ATL clauses remain an explicit alternative.
 
 ## Open Questions
 
-- What exact source spelling should express the top-level actor-as-network
-  shape: nested actor declarations, a `(network ...)` body inside an actor,
-  reusable-library actor instances, peer actors connected by explicit
-  topology, or a combination?
-- Are orchestrator triggers just named one-cycle event pulses, transaction
-  activations, actor-level activations, or a new event abstraction?
-- Should actor-to-actor and pin-to-actor data movement be modeled as port
-  bindings, channels, named event payloads, storage references, or a narrower
-  first-slice subset?
+- Should ATL v0 use a scoped `(network ...)` clause, flat top-level actor ATL
+  clauses, or both as equivalent spellings lowered to the same ATL IR?
+- Should the final verbose trigger spelling be `(trigger ...)`,
+  `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`?
+- Are `connect` and `transfer` the right public names for structural movement
+  and scheduler-owned data/information movement?
+- Should compact `->` mean only structural `connect`, while compact `=>`
+  means scheduled `transfer`?
 - Can multiple actors orchestrate the same child/peer actor in the same
   cycle, and if so does the scheduler OR requests, arbitrate them, or reject
   ambiguous fan-in?
-- How much scheduling is local to each actor versus global across the actor
-  network?
 - What is the first realistic fixture that proves the abstraction is useful
   without overfitting the syntax?
 
 ## Blockers
 
-- Additional user clarification is required before implementation: exact
-  source spelling, first-slice feature subset, event/data primitive names,
-  and fail-closed boundaries remain unresolved.
+- Additional user review is required before implementation: the ATL v0
+  proposal is concrete enough to discuss, but final syntax, first-slice scope,
+  event/data primitive names, and fail-closed boundaries remain unresolved.
 
 ## Verification Log
 
@@ -168,6 +206,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 | --- | --- | --- | --- |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed for proposed actor-network orchestration tracking` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL/top-level actor clarification captured; book and diff checks passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL v0 concrete proposal drafted; book and diff checks passed` |
 
 ## Commit Log
 
@@ -181,3 +220,4 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - `2026-05-18`: Activated the clarification leaf and recorded the Actor
   Transfer Level model where actors replace flops/registers as the transfer
   endpoints.
+- `2026-05-18`: Drafted the concrete ATL v0 source/semantic proposal.

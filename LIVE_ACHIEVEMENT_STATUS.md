@@ -3,6 +3,16 @@
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-18: R14 — ISF Actor Transfer Level model captured
+- Added [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md)
+  as the concrete ATL v0 proposal. It keeps `(actor ...)` as the root and
+  leaves the container spelling open between scoped `(network ...)` and flat
+  top-level actor ATL clauses.
+- The proposal defines qualified endpoints, verbose and compact syntax
+  candidates, `connect` for structural binding, `transfer` for
+  scheduler-owned movement, one-cycle events, top-level orchestration,
+  concurrent groups, first-slice scope, and fail-closed boundaries.
+- `(network ...)` is not treated as required syntax; it is only one candidate
+  scoping form pending review.
 - Activated `ISF-ACTOR-NETWORK-ORCHESTRATION.1` as the current
   actor-network clarification/design leaf.
 - Recorded Actor Transfer Level (`ATL`) as the working mental model: RTL moves

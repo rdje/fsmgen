@@ -1,5 +1,27 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: ATL v0 should separate structural binding from scheduled transfer
+- The concrete ATL v0 proposal lives in
+  [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md).
+- Keeping `(actor top_name ...)` as the root avoids creating a second source
+  root and preserves the user model that the whole network is itself an actor.
+- A `(network ...)` actor clause is one possible place for static instances,
+  endpoint wiring, event naming, scheduled transfers, and concurrent group
+  declarations, but it is not a semantic requirement. Flat ATL clauses
+  directly under the top-level actor may better match the mental model that
+  the actor body itself is the network.
+- The design deliberately separates `connect` from `transfer`. `connect` is
+  structural pin/port binding. `transfer` is scheduler-owned movement of
+  data/information where FSMGen may need to allocate storage or schedule a
+  handoff.
+- Verbose syntax should be the normative contract for review and downstream
+  emission. Compact syntax should only ship as a proven alias over the same
+  ATL IR and diagnostics.
+- The first specification slice must decide whether ATL v0 uses scoped
+  `(network ...)`, flat top-level ATL clauses, or both as equivalent spellings.
+- The first implementation should be intentionally small: one top-level actor,
+  same clock/reset, static instance declarations, explicit pin-to-instance
+  `connect`, qualified blocking orchestration, and schedule-report metadata.
 ## 2026-05-18: Actor Transfer Level means actors replace flops as transfer endpoints
 - The actor-network idea is now framed as Actor Transfer Level (`ATL`): RTL
   explains movement between flops/registers, while ATL explains movement of

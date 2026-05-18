@@ -706,9 +706,12 @@ Initial sub-slices:
 5. Clarify the active actor-network/ATL orchestration contract before
    implementation: source shape, compact plus verbose syntax, event pulse
    semantics, actor-to-actor and pin-to-actor data movement, concurrent
-   actor-group scheduling, generated artifact naming, report visibility, and
-   fail-closed boundaries are tracked in
-   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+   actor-group scheduling, generated artifact naming, report visibility,
+   whether ATL clauses should be scoped by `(network ...)` or live flat under
+   the top-level actor, and fail-closed boundaries are tracked in
+   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md)
+   and the concrete ATL v0 proposal in
+   [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md).
 
 Expected result:
 - a working `.isf` → `.fsm` lowering path that handles at least one realistic

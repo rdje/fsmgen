@@ -55,21 +55,22 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 12. `docs/EXTENSION_MODEL.md`: active `R7` typed extension boundary replacing legacy `.plg` / `PPlugin` as architecture direction.
 13. `docs/SPECFORGE_FEEDBACK_RESPONSE.md`: FSMGen's tracked response and alignment plan for SPECFORGE adapter feedback.
 14. `docs/INTENT_SCHEDULING_BRAINSTORM.md`: living brainstorm log for an intent-scheduling layer above explicit cycle-authored `.fsm`.
-15. `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`: single self-contained downstream `.isf` integration handoff.
-16. `docs/DOWNSTREAM_ISSUE_REPORTING.md`: strict downstream issue-reporting protocol for local FSMGen reproduction.
-17. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
-18. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
-19. `docs/ISF_LIBRARY_CATALOG.md`: live catalog of shipped reusable ISF library definitions.
-20. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
-21. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
-22. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
-23. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
-24. `CHANGES.md`: chronological technical changes.
-25. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
-26. `MEMORY.md`: continuity/handoff state.
-27. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
-28. `WARP.md`: repository-specific agent/development guidance.
-29. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
+15. `docs/ISF_ATL_DESIGN_PROPOSAL.md`: active design proposal for ISF Actor Transfer Level actor-network orchestration.
+16. `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md`: single self-contained downstream `.isf` integration handoff.
+17. `docs/DOWNSTREAM_ISSUE_REPORTING.md`: strict downstream issue-reporting protocol for local FSMGen reproduction.
+18. `docs/ISF_SPEC.md`: active R14 `.isf` Intent Scheduling Format specification.
+19. `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md`: live downstream-consumer API contract for ISF parser/scheduler surfaces.
+20. `docs/ISF_LIBRARY_CATALOG.md`: live catalog of shipped reusable ISF library definitions.
+21. `docs/BIN_FSMGEN_IMPORT_TREE.md`: live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
+22. `docs/REGRESSION_CORPUS.md`: human-readable regression/support-accounting corpus companion.
+23. `docs/INTENT_CAPTURE_AXI_CASE_STUDY.md`: AXI intent-capture case-study notes for future high-level synthesis work.
+24. `docs/FEATURE_BACKLOG.md`: pointer to the canonical mdBook feature backlog for deferred/not-fully-shipped user-visible work.
+25. `CHANGES.md`: chronological technical changes.
+26. `DEVELOPMENT_NOTES.md`: design rationale and decisions.
+27. `MEMORY.md`: continuity/handoff state.
+28. `LIVE_ACHIEVEMENT_STATUS.md`: latest completed roadmap-aligned slice.
+29. `WARP.md`: repository-specific agent/development guidance.
+30. `.agents/workflows/commit.md`: automation-oriented commit workflow description.
 
 ## Documentation index (all `.md` files in this repo)
 - `README.md` — single entry point and navigation hub.
@@ -187,6 +188,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/SPECFORGE_FEEDBACK_RESPONSE.md` — tracked FSMGen response to SPECFORGE adapter/tool-integration feedback.
 - `docs/DOWNSTREAM_ISSUE_REPORTING.md` — strict downstream issue-reporting protocol for locally reproducible FSMGen bug reports.
 - `docs/INTENT_SCHEDULING_BRAINSTORM.md` — living brainstorm log for inferring/scheduling cycles from a hardware-native intent layer above explicit `.fsm`.
+- `docs/ISF_ATL_DESIGN_PROPOSAL.md` — active design proposal for ISF Actor Transfer Level actor-network orchestration.
 - `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` — single self-contained downstream `.isf` integration handoff that must stay synchronized with the live spec, book, public contract, manifest metadata, tests, and code.
 - `docs/ISF_SPEC.md` — active R14 `.isf` Intent Scheduling Format specification.
 - `docs/ISF_PUBLIC_INTERFACE_CONTRACT.md` — live downstream-consumer API contract for ISF parser/scheduler surfaces.

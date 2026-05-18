@@ -6329,6 +6329,15 @@ Done:
   relationship, event/data primitives, first subset, and fail-closed boundary
   are agreed in
   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+- [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md) now
+  carries the concrete ATL v0 proposal: `(actor ...)` remains the root, the
+  actor-network container spelling is open between a scoped `(network ...)`
+  clause and flat top-level actor ATL clauses, endpoints are `pins.name`,
+  `actor.port`, `actor.transaction`, `actor.event`, and `group.name`, verbose
+  syntax is normative, compact syntax is proposed as a semantics-preserving
+  alias, `connect` is structural binding, `transfer` is scheduler-owned
+  data/information movement, and first-slice/fail-closed boundaries are
+  explicit.
 - `isf/spawn_parent.isf` now has file-backed strict generated-composition
   fixture coverage through
   [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t),
