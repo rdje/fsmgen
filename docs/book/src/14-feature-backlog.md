@@ -366,16 +366,17 @@ backlog. The shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
 cross-domain activation, and broader outstanding-child semantics out of scope.
 
-The next selected backlog leaf is the when-contained same-domain metadata
-analogue for that pending-spawn interval. It covers a repeat directly inside a
-top-level `when` body with one or more generated spawns, generated blocking
-`(do child (params ...) [(bind ...)] (domain NAME))`, and a later same-body
-`(await_all done)` drain before the nested repeat check can loop. The selected
-domain annotation is declared same-domain ownership metadata only for the
-deterministic generated do instance; it should preserve generated-composition
-and schedule-report clock-domain metadata without implying CDC or
-cross-domain activation. That pending-spawn same-domain subset is selected but
-not yet shipped.
+The when-contained same-domain metadata analogue for that pending-spawn
+interval is shipped. It covers a repeat directly inside a top-level `when`
+body with one or more generated spawns, generated blocking
+`(do child (params ...) [(bind ...)] (domain NAME))` while those generated
+nested spawns are pending, and a later same-body `(await_all done)` drain
+before the nested repeat check can loop. The domain
+annotation is declared same-domain ownership metadata only for the
+deterministic generated do instance; it preserves generated-composition/domain
+partition metadata and schedule-report clock-domain child-instance summaries
+without implying CDC or cross-domain activation. The switch-contained
+same-domain analogue remains backlog.
 
 Outside the pending-spawn interval, the when-contained nested generated-do
 domain leaf covers a repeat directly inside a top-level `when` body with

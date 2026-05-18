@@ -1606,9 +1606,18 @@ Current lowering:
   drain. Top-level `switch` branch nested repeats accept the same
   static-parameter bound generated `do` in that pending interval, with the
   same binding handoffs, fresh done wait, and later generated-spawn drain.
-  Domain-qualified generated `do` while a nested spawn is pending, new nested
-  `spawn` after the do before the drain, `await_any` after the do, deeper
-  branch/loop nesting, and cross-domain activation remain fail-closed.
+  Top-level `when` body nested repeats also accept static-parameter
+  same-domain generated
+  `(do child (params ...) [(bind ...)] (domain NAME))` in that pending
+  interval; the domain annotation is declared same-domain ownership metadata
+  only for the deterministic generated do instance, generated-composition and
+  clock-domain summaries retain that ownership, and every pending
+  generated-spawn done handoff remains live for the later same-body
+  `(await_all done)` drain. The
+  switch-branch domain-qualified generated `do` analogue while a nested spawn
+  is pending, new nested `spawn` after the do before the drain, `await_any`
+  after the do, deeper branch/loop nesting, and cross-domain activation
+  remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
@@ -2019,7 +2028,9 @@ or plain generated-child `(do child)` while generated nested spawns are
 pending, or static-parameter generated `(do child (params ...))` while
 generated nested spawns are pending, or static-parameter generated
 `(do child (params ...) (bind ...))` while generated nested spawns are pending,
-before a later same-body `await_all` drain, top-level switch-branch nested repeat local or plain generated-child
+or static-parameter same-domain generated
+`(do child (params ...) [(bind ...)] (domain NAME))` while generated nested
+spawns are pending, before a later same-body `await_all` drain, top-level switch-branch nested repeat local or plain generated-child
 `(do child)` while generated nested spawns are pending, or static-parameter
 generated `(do child (params ...))` while generated nested spawns are pending,
 or static-parameter generated `(do child (params ...) (bind ...))` while
@@ -3370,6 +3381,8 @@ Focused tests:
   generated nested spawns are pending, or static-parameter generated
   `(do child (params ...))` while generated nested spawns are pending, or
   static-parameter generated `(do child (params ...) (bind ...))` while
+  generated nested spawns are pending, or static-parameter same-domain
+  generated `(do child (params ...) [(bind ...)] (domain NAME))` while
   generated nested spawns are pending, before a later same-body `await_all`
   drain subset and the top-level switch-branch
   nested repeat local or plain generated-child `(do child)` while generated

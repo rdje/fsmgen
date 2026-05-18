@@ -3920,14 +3920,19 @@ sub _validate_repeat_body_spawn_subset {
                 my $plain_generated_child_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
                 my $static_parameter_generated_do = $uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
                 my $static_bound_generated_do = $uses_generated_params && $uses_bindings && !$uses_domain && $generated_do;
+                my $static_domain_generated_do = $uses_generated_params && $uses_domain && $generated_do;
                 my $allowed_static_parameter_generated_do = defined($pending_generated_do_label) && $static_parameter_generated_do;
                 my $allowed_static_bound_generated_do = defined($pending_generated_do_label) && $static_bound_generated_do;
+                my $allowed_static_domain_generated_do = $when_body_repeat && $static_domain_generated_do;
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
                     || $allowed_static_parameter_generated_do
-                    || $allowed_static_bound_generated_do;
-                my $supported_pending_do = defined($pending_generated_do_label)
-                    ? "local plain '(do child)', plain generated-child '(do child)', static generated '(do child (params ...))', or static bound generated '(do child (params ...) (bind ...))'"
+                    || $allowed_static_bound_generated_do
+                    || $allowed_static_domain_generated_do;
+                my $supported_pending_do = $when_body_repeat
+                    ? "local plain '(do child)', plain generated-child '(do child)', static generated '(do child (params ...))', static bound generated '(do child (params ...) (bind ...))', or static same-domain generated '(do child (params ...) [(bind ...)] (domain ...))'"
+                    : defined($pending_generated_do_label)
+                        ? "local plain '(do child)', plain generated-child '(do child)', static generated '(do child (params ...))', or static bound generated '(do child (params ...) (bind ...))'"
                     : "local plain '(do child)'";
                 confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if defined $pending_local_do_label && $plain_local_do && $awaiting_multi_pending_drain;
@@ -3937,6 +3942,8 @@ sub _validate_repeat_body_spawn_subset {
                     if $allowed_static_parameter_generated_do && $awaiting_multi_pending_drain;
                 confess "Transaction '$tn': $pending_generated_do_label nested repeat generated do with static params and bindings while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if $allowed_static_bound_generated_do && $awaiting_multi_pending_drain;
+                confess "Transaction '$tn': $pending_generated_do_label nested repeat generated do with static params and same-domain metadata while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
+                    if $allowed_static_domain_generated_do && $awaiting_multi_pending_drain;
                 confess "Transaction '$tn': $pending_generated_do_label nested repeat do while generated spawns are pending supports only $supported_pending_do in the current subset\n"
                     if defined $pending_generated_do_label && !$awaiting_multi_pending_drain && !$allowed_pending_do;
                 confess "Transaction '$tn': $pending_local_do_label nested repeat do while generated spawns are pending supports only local plain '(do child)' in the current subset\n"
@@ -3944,13 +3951,15 @@ sub _validate_repeat_body_spawn_subset {
                 confess "Transaction '$tn': repeat-body do cannot appear while repeat-body spawn clauses are pending; wait for spawned children before blocking do\n"
                     unless defined $pending_local_do_label && !$awaiting_multi_pending_drain && $allowed_pending_do;
                 $pending_local_do_before_drain = 1 if $plain_local_do;
-                if ($plain_generated_child_do || $allowed_static_parameter_generated_do || $allowed_static_bound_generated_do) {
+                if ($plain_generated_child_do || $allowed_static_parameter_generated_do || $allowed_static_bound_generated_do || $allowed_static_domain_generated_do) {
                     $pending_generated_do_before_drain = 1;
                     $pending_generated_do_kind_before_drain = $plain_generated_child_do
                         ? 'generated-child do'
-                        : $allowed_static_bound_generated_do
-                            ? 'generated do with static params and bindings'
-                            : 'generated do with static params';
+                        : $allowed_static_domain_generated_do
+                            ? 'generated do with static params and same-domain metadata'
+                            : $allowed_static_bound_generated_do
+                                ? 'generated do with static params and bindings'
+                                : 'generated do with static params';
                 }
             }
             next;

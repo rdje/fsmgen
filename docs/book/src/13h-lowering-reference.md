@@ -1086,9 +1086,14 @@ pending generated-spawn done handoffs live until the later drain. Top-level
 static-parameter generated `(do child (params ...) (bind ...))` in that
 interval; the generated do instance wires generated-top input/output binding
 handoffs once and leaves pending generated-spawn done handoffs live until the
-later drain. Domain-qualified generated do while a nested spawn is pending,
-prior or later `await_any` around the do, and a new nested spawn after the do
-before the drain remain fail-closed.
+later drain. Top-level `when` body nested repeats may also lower
+static-parameter same-domain generated
+`(do child (params ...) [(bind ...)] (domain NAME))` in that interval. The
+domain annotation is declared ownership metadata for the generated do
+instance; lowering keeps pending generated-spawn done handoffs live until the
+later drain. The switch-branch same-domain analogue, prior or later
+`await_any` around the do, and a new nested spawn after the do before the
+drain remain fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

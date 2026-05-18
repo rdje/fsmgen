@@ -938,7 +938,13 @@ Rules:
   `(do child (params ...) (bind ...))` may also run in that pending interval;
   that generated do site wires generated-top input/output binding handoffs
   once, waits for its own fresh done handoff, and leaves the generated spawn
-  done set live for the later drain. Domain-qualified generated `do` while a
+  done set live for the later drain. Top-level `when` body nested-repeat
+  generated `(do child (params ...) [(bind ...)] (domain NAME))` may also run
+  in that pending interval. The domain annotation is declared same-domain
+  ownership metadata only for the deterministic generated do instance;
+  generated-composition/domain partition metadata and schedule JSON
+  `clock_domains[].child_instances[]` retain that ownership without implying
+  CDC. The switch-branch domain-qualified generated `do` analogue while a
   nested spawn is pending, new nested `spawn` after the do before the drain,
   `await_any` after the do, deeper branch/loop nesting, and cross-domain
   activation remain fail-closed.
@@ -1264,9 +1270,13 @@ Rules:
   may also run static-parameter generated
   `(do child (params ...) (bind ...))` in that pending interval; the generated
   do instance wires generated-top input/output binding handoffs once and
-  leaves the pending generated-spawn done set live for the later drain. No
-  deeper branch repeat, domain-qualified generated do while pending, or
-  loop-contained repeat is included in those shipped nested subsets.
+  leaves the pending generated-spawn done set live for the later drain.
+  Top-level `when` body nested repeats may also run static-parameter
+  same-domain generated
+  `(do child (params ...) [(bind ...)] (domain NAME))` in that pending
+  interval. No deeper branch repeat, switch-branch domain-qualified generated
+  do while pending, or loop-contained repeat is included in those shipped
+  nested subsets.
   Top-level
   repeat bodies
   may also use
