@@ -816,12 +816,12 @@ do are shipped for both top-level `when` and top-level `switch` branch nested
 repeats. Static `(params ...)` plus `(bind ...)` handoffs on the pending
 generated do are shipped for both top-level branch-contained subsets, and
 same-domain `(domain NAME)` metadata on those static generated do sites is
-also shipped. The top-level `when` body form may place the plain
-generated-child `(do child)` after a prior multi-pending `await_any`
-observation while generated nested spawns remain pending; the generated do
-still waits only for `parent_worker_repeat_do_0_done`, and the later
-same-body `await_all` still drains every pending generated spawn before nested
-repeat re-entry.
+also shipped. The top-level `when` body and top-level `switch` branch forms
+may place the plain generated-child `(do child)` after a prior multi-pending
+`await_any` observation while generated nested spawns remain pending; the
+generated do still waits only for `parent_worker_repeat_do_0_done`, and the
+later same-body `await_all` still drains every pending generated spawn before
+nested repeat re-entry.
 
 The bound when-contained form keeps the pending generated spawn and the
 blocking generated `do` as separate generated instances:
@@ -1214,15 +1214,15 @@ multi-pending `await_any` only as an observation point before a mandatory
 same-body `await_all` drain. The top-level `when` body and top-level `switch`
 branch forms also permit the documented local plain `(do child)` while
 generated nested spawns are pending before a later same-body `await_all`
-drain; the top-level `when` form also permits that local do after a prior
+drain; both branch-contained forms also permit that local do after a prior
 multi-pending `await_any` observation. Both branch-contained forms also permit
 the documented plain generated-child `(do child)` while generated nested
-spawns are pending before that same later drain. The top-level `when` body
-nested repeat generated-child `(do child)` subset also permits a prior
-multi-pending `await_any` observation while generated nested spawns remain
-pending, provided the later same-body `await_all` drain still gates nested
-repeat re-entry on every outstanding generated child. The top-level `when`
-form also permits documented static-parameter generated
+spawns are pending before that same later drain. The top-level `when` body and
+top-level `switch` branch nested repeat generated-child `(do child)` subsets
+also permit a prior multi-pending `await_any` observation while generated
+nested spawns remain pending, provided the later same-body `await_all` drain
+still gates nested repeat re-entry on every outstanding generated child. Both
+branch-contained forms also permit documented static-parameter generated
 `(do child (params ...))` while generated nested spawns are pending before
 that same later drain. The shipped
 repeat-body local `(do child)` subset and the

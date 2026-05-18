@@ -338,17 +338,18 @@ spawns remain pending either before or after a prior multi-pending
 `(await_any done)` observation, provided a later same-body `(await_all done)`
 drains the outstanding generated children before the nested repeat check can
 loop. The top-level `switch` branch nested-repeat subset allows the same
-local plain `(do child)` pending-spawn form only when there was no prior
+local plain `(do child)` pending-spawn form before or after a prior
 multi-pending `(await_any done)` observation. That local do target remains in
 the parent scheduled module, waits for the local child's fresh done pulse, and
 does not clear the pending generated-spawn done set. The top-level `when`
 body and top-level `switch` branch nested-repeat subsets also allow a plain
 generated-child `(do child)` in that same pending-spawn interval when the
 target child is already emitted as a generated child by another activation
-site. Those
-generated do sites own one deterministic generated instance, wait for that
-instance's fresh done handoff, and leave the pending generated-spawn done set
-live for the later same-body `(await_all done)` drain. The same two
+site. Both branch-contained generated-child subsets may place that do before
+or after a prior multi-pending `(await_any done)` observation. Those generated
+do sites own one deterministic generated instance, wait for that instance's
+fresh done handoff, and leave the pending generated-spawn done set live for
+the later same-body `(await_all done)` drain. The same two
 branch-contained subsets also ship static-parameter generated
 `(do child (params ...))` in that pending-spawn interval, preserving generated
 top parameter binding on the generated do instance while still requiring the
@@ -522,14 +523,16 @@ done handoff while the pending generated-spawn done set remains live for the
 later drain. Parameterized, bound, or domain-qualified generated do after
 prior `await_any`, `await_any` after the do, spawn after the do before the
 drain, cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain backlog. The next selected backlog leaf is
-the switch-contained generated-child `await_any`-before-do analogue: a repeat
+outstanding-child semantics remain backlog. The switch-contained
+generated-child `await_any`-before-do analogue is also shipped: a repeat
 directly inside a top-level `switch` branch with multiple generated spawns, a
 multi-pending `(await_any done)` observation, a plain generated-child
 `(do child)` whose target is already emitted by another activation site, and a
 later same-body `(await_all done)` drain before the nested repeat check can
-loop. This switch-contained generated-child await-any-before-do subset is
-selected but not yet shipped.
+loop. The generated do instance keeps its own fresh done handoff while the
+pending generated-spawn done set remains live for the later drain. The next
+tracked leaf must select the next exact repeat-body child-activation subset
+before any further behavior-bearing implementation.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

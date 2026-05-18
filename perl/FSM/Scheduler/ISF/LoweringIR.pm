@@ -3929,7 +3929,7 @@ sub _validate_repeat_body_spawn_subset {
                     && $plain_local_do
                     && $awaiting_multi_pending_drain;
                 my $allowed_generated_child_do_after_multi_pending_await_any =
-                    $when_body_repeat
+                    ($when_body_repeat || $switch_branch_repeat)
                     && $plain_generated_child_do
                     && $awaiting_multi_pending_drain;
                 my $allowed_pending_do = $plain_local_do

@@ -2,14 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.84`.
-  Leaf `.83` selected top-level `switch` branch nested repeat plain
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.85`.
+  Leaf `.84` shipped top-level `switch` branch nested repeat plain
   generated-child `(do child)` after a prior multi-pending `(await_any done)`
-  observation and before a mandatory later same-body `await_all` drain. Leaf
-  `.84` must implement only that selected subset, leaving parameterized,
-  bound, or domain-qualified generated `do` after prior `await_any`,
-  `await_any` after the do, spawn-after-do, cross-domain activation, deeper
-  branch/loop nesting, and broader outstanding-child semantics deferred.
+  observation and before a mandatory later same-body `await_all` drain. The
+  next leaf `.85` must select the next exact bounded repeat-body child
+  activation subset before any further behavior-bearing implementation,
+  leaving parameterized, bound, or domain-qualified generated `do` after prior
+  `await_any`, `await_any` after the do, spawn-after-do, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics deferred until separately selected.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -523,9 +525,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.83`, then selected the direct top-level
   switch-branch generated-child analogue after a prior multi-pending
   `await_any` observation and before a mandatory later same-body `await_all`
-  drain. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.84`, which implements only that selected
-  switch-contained generated-child await-any-before-do subset.
+  drain. `ISF-REPEAT-BODY-CHILD-ACTIVATION.84` then shipped that selected
+  switch-contained generated-child await-any-before-do subset with the same
+  generated-spawn lifetime proof. The next active frontier is
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.85`, which selects the next exact bounded
+  repeat-body child activation subset before any further behavior-bearing
+  implementation.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

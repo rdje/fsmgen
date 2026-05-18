@@ -923,13 +923,13 @@ Rules:
   The top-level `when` body and top-level `switch` branch nested-repeat
   subsets also accept a plain generated-child `(do child)` in that pending
   interval when the target child is already emitted as a generated child by
-  another activation site. The top-level `when` body subset may also place
-  that generated-child do after a prior multi-pending `(await_any done)`
-  observation. The generated do site owns one deterministic
-  `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
-  fresh done handoff, and leaves the generated-spawn done set live for the
-  later same-body `(await_all done)` drain. Top-level `when` body and
-  top-level `switch` branch nested-repeat generated
+  another activation site. The top-level `when` body and top-level `switch`
+  branch subsets may also place that generated-child do after a prior
+  multi-pending `(await_any done)` observation. The generated do site owns one
+  deterministic `{parent}_{child}_repeat_do_{ordinal}` instance, waits for
+  that instance's fresh done handoff, and leaves the generated-spawn done set
+  live for the later same-body `(await_all done)` drain. Top-level `when` body
+  and top-level `switch` branch nested-repeat generated
   `(do child (params ...))` may also run in that pending interval when the
   parameter overrides are static and a later same-body `(await_all done)`
   drains every outstanding generated child before the nested repeat check can
@@ -1262,8 +1262,9 @@ Rules:
   body and top-level `switch` branch nested repeats may additionally run a
   plain generated-child `(do child)` in that pending interval when the target
   is already emitted as a generated child elsewhere. The top-level `when` body
-  generated-child subset may also place that plain generated-child `do` after
-  a prior multi-pending `(await_any done)` observation. The generated do
+  and top-level `switch` branch generated-child subsets may also place that
+  plain generated-child `do` after a prior multi-pending `(await_any done)`
+  observation. The generated do
   instance waits for its own fresh done handoff and leaves the pending
   generated-spawn done set live for the later drain. Top-level `when` body
   and top-level `switch` branch nested repeats may also run static-parameter
@@ -1334,12 +1335,12 @@ Rules:
 - In the documented top-level `when` body and top-level `switch` branch nested
   subsets, a plain generated-child `(do child)` may also run while generated
   nested spawns are pending when the target child has already been emitted as a
-  generated child. In the top-level `when` body subset, that generated-child
-  do may also run after a prior multi-pending `await_any` observation. That
-  generated do consumes only its deterministic generated do instance's fresh
-  done handoff; it does not clear pending generated spawn handoffs, and the
-  same later `await_all` drain still gates nested repeat re-entry on every
-  outstanding generated child.
+  generated child. In the top-level `when` body and top-level `switch` branch
+  subsets, that generated-child do may also run after a prior multi-pending
+  `await_any` observation. That generated do consumes only its deterministic
+  generated do instance's fresh done handoff; it does not clear pending
+  generated spawn handoffs, and the same later `await_all` drain still gates
+  nested repeat re-entry on every outstanding generated child.
 - In the documented top-level `when` body nested subset, static-parameter
   generated `(do child (params ...))` may also run while generated nested
   spawns are pending. That generated do carries static generated-top
