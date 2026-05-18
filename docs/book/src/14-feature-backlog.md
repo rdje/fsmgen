@@ -578,10 +578,16 @@ generated spawns remain pending, and a later same-body `(await_all done)`
 drain before the nested repeat check can loop. The shipped contract mirrors
 the shipped when-contained domain proof and records declared same-domain
 ownership metadata without implying CDC or cross-domain activation.
-`await_any` after the do, new spawn after the do before the drain,
-cross-domain activation, deeper branch/loop nesting, and broader
-outstanding-child semantics remain backlog until their own leaves select and
-ship them.
+The next selected backlog leaf is a narrow post-do `await_any` observation
+for top-level `when` bodies: a repeat directly inside a top-level `when` body
+with multiple generated spawns, local blocking `(do child)` while those
+generated spawns remain pending, `(await_any done)` after the local do as an
+observation point, and a later same-body `(await_all done)` drain before the
+nested repeat check can loop. This selected subset is not shipped yet.
+Switch-contained post-do `await_any`, generated-do post-do `await_any`, new
+spawn after the do before the drain, cross-domain activation, deeper
+branch/loop nesting, and broader outstanding-child semantics remain backlog
+until their own leaves select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

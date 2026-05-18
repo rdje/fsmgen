@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — ISF when-contained local do before post-do await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.97`.
+- Selected top-level `when` body nested repeats with multiple generated
+  spawns, local blocking `(do child)` while those generated spawns remain
+  pending, `(await_any done)` as an observation point after the local do, and
+  a later same-body `(await_all done)` drain before the nested repeat check
+  can loop.
+- The selected contract keeps the local child in the parent scheduled module,
+  waits for that local child's fresh done pulse before evaluating the post-do
+  `await_any`, keeps the pending generated-spawn done set live through the
+  observation, and drains every generated spawn before nested repeat re-entry.
+- Switch-contained post-do `await_any`, generated-do post-do `await_any`,
+  spawn-after-do before the drain, cross-domain activation, deeper nesting,
+  and broader outstanding-child semantics remain deferred.
+- Synchronized the task tree, roadmap board, live docs, and mdBook backlog.
+- Validation: `mdbook build docs/book`,
+  `prove -l t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`
+  (Files=2, Tests=290), and `git diff --check` passed.
 ### R14 — ISF switch-contained repeat domain do after await_any shipped
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.96`.
 - Top-level `switch` branches may now contain nested repeats with multiple

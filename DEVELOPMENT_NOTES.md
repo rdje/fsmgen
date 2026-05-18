@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: when-contained local do before post-do await_any is the next subset
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.97` selects the first post-do
+  `await_any` widening, limited to a local blocking do inside a repeat that is
+  directly in a top-level `when` body.
+- The selected source shape is intentionally narrow: multiple generated
+  nested spawns, a local `(do child)` while those generated spawns remain
+  pending, a post-do multi-pending `(await_any done)` observation, and a
+  later same-body `(await_all done)` drain before nested repeat re-entry.
+- The intended implementation model waits for the local child's fresh done
+  pulse before evaluating the post-do `await_any`. That await_any observes
+  only the generated-spawn done set, does not clear it, and leaves the later
+  same-body `await_all` as the only drain before the nested repeat check can
+  loop.
+- Switch-contained post-do `await_any`, generated-do post-do `await_any`, new
+  spawn after the do before drain, cross-domain activation, deeper
+  branch/loop nesting, and broader outstanding-child semantics remain
+  separate contracts.
 ## 2026-05-18: switch-contained domain do after await_any preserves ownership metadata and generated-spawn lifetime
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.96` implements only the selected
   top-level `switch` branch nested-repeat generated-do-after-multi-pending-
