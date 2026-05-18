@@ -524,9 +524,13 @@ subset supports the same post-do multi-pending observation and later-drain
 contract while generated nested spawns remain pending before the same-body
 `await_all` drain; it waits for the deterministic generated do instance's
 fresh done handoff before the observation. Static-parameter, bound, or
-domain-qualified generated-do post-do `await_any`, switch-contained
-generated-child post-do `await_any`, and new nested `spawn` after the do
-before the drain remain fail-closed.
+domain-qualified generated-do post-do `await_any` and new nested `spawn`
+after the do before the drain remain fail-closed. The top-level `switch`
+branch nested repeat plain generated-child `(do child)` subset supports the
+same post-do multi-pending observation and later-drain contract while
+generated nested spawns remain pending before the same-body `await_all`
+drain; it waits for the deterministic generated do instance's fresh done
+handoff before the observation.
 Cross-domain
 repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained
@@ -1247,6 +1251,10 @@ top-level `switch` branch nested repeat generated-child `(do child)` subsets
 also permit a prior multi-pending `await_any` observation while generated
 nested spawns remain pending, provided the later same-body `await_all` drain
 still gates nested repeat re-entry on every outstanding generated child. Both
+branch-contained forms also permit plain generated-child `(do child)` before
+a post-do multi-pending `await_any` observation while generated nested spawns
+remain pending, provided that the later same-body `await_all` drain still
+gates nested repeat re-entry on every outstanding generated child. Both
 branch-contained forms also permit documented static-parameter generated
 `(do child (params ...))` while generated nested spawns are pending before
 that same later drain. Both branch-contained static-parameter generated

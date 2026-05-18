@@ -1117,9 +1117,11 @@ drain before nested repeat re-entry. Top-level `switch` branch local
 contract. Top-level `when` body plain generated-child `(do child)` also
 shares that post-do `await_any` observation and later-drain contract; lowering
 waits for the deterministic generated do instance's fresh done handoff before
-the observation. Static-parameter, bound, or domain-qualified generated-do
-post-do `await_any`, switch-contained generated-child post-do `await_any`,
-and a new nested spawn after the do before the drain remain fail-closed.
+the observation. Top-level `switch` branch plain generated-child `(do child)`
+shares the same post-do `await_any` observation and later-drain contract.
+Static-parameter, bound, or domain-qualified generated-do post-do
+`await_any` and a new nested spawn after the do before the drain remain
+fail-closed.
 
 Repeat-body local `do` does not emit a child file or generated top; it reuses
 the same local start/done pulse contract as top-level local `do` and reaches

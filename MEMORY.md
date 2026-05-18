@@ -1,5 +1,33 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained generated-child do before post-do await_any shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.104`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts the selected top-level `switch` branch nested repeat plain
+  generated-child `(do child)` before post-do multi-pending `(await_any done)`.
+- The accepted source shape is a repeat directly inside a top-level `switch`
+  branch with multiple generated spawns, plain generated-child blocking `do`
+  while those generated spawns remain pending, `(await_any done)` as an
+  observation point after that generated-child do, and a later same-body
+  `(await_all done)` drain before the nested repeat check can loop.
+- Lowering waits for the generated do instance's fresh done handoff before
+  evaluating the post-do `await_any`, keeps every generated-spawn done
+  handoff live through the generated-child do and await_any observation,
+  preserves source-order samples, and drains every pending generated child
+  before nested repeat re-entry.
+- Static-parameter generated do, bind handoffs, domain metadata, new spawn
+  after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain fail-closed.
+- The mdBook, ISF spec, downstream integration spec, public contract, feature
+  matrix audits, task tree, roadmap board, and live docs now document this
+  subset as shipped.
+- Validation passed: syntax checks, touched repeat/spawn test (Files=1,
+  Tests=54), focused repeat/spawn/doc checks (Files=3, Tests=364),
+  `mdbook build docs/book`, `./bin/ci-regression isf --no-book`
+  (Files=227, Tests=1317), and `git diff --check`.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.105`, a selection-only leaf for the next
+  bounded repeat-body child activation subset.
 ## 2026-05-18: switch-contained generated-child do before post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.103`.
 - The active R14 task tree now selects the direct top-level `switch` branch

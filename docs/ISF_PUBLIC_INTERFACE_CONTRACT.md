@@ -957,10 +957,11 @@ shipped for the documented top-level branch-contained same-domain subsets.
 In the top-level `when` body subset, plain generated-child `(do child)` may
 also run before a post-do multi-pending `await_any` observation when that
 later same-body `await_all` still drains every pending generated spawn before
-nested repeat re-entry. Static-parameter, bound, or domain-qualified
-generated-do post-do `await_any`, switch-contained generated-child post-do
-`await_any`, and new spawn after the do before the drain remain outside the
-public shipped subset.
+nested repeat re-entry. The top-level `switch` branch plain generated-child
+subset supports the same post-do multi-pending `await_any` observation and
+later same-body `await_all` drain contract. Static-parameter, bound, or
+domain-qualified generated-do post-do `await_any` and new spawn after the do
+before the drain remain outside the public shipped subset.
 In the documented top-level `when` body and top-level `switch` branch nested
 subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. In the top-level `when` body and top-level

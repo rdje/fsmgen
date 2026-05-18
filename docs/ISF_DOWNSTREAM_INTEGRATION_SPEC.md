@@ -969,10 +969,13 @@ Rules:
   `(do child)` supports the same post-do multi-pending `(await_any done)`
   observation and later-drain contract while generated nested spawns remain
   pending before that drain. The generated-child do waits for its
-  deterministic generated do instance's fresh done handoff. Static-parameter,
-  bound, or domain-qualified generated-do post-do `await_any`, switch-
-  contained generated-child post-do `await_any`, new nested `spawn` after the
-  do before the drain, deeper branch/loop nesting, and cross-domain
+  deterministic generated do instance's fresh done handoff. Top-level
+  `switch` branch plain generated-child `(do child)` supports the same
+  post-do multi-pending `(await_any done)` observation and later-drain
+  contract while generated nested spawns remain pending before that drain.
+  Static-parameter, bound, or domain-qualified generated-do post-do
+  `await_any`, new nested `spawn` after the do before the drain, deeper
+  branch/loop nesting, and cross-domain
   activation remain fail-closed.
   Cross-domain repeat-body `do`,
   broader outstanding-child semantics, `stage`,
