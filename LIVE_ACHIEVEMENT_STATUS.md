@@ -8,9 +8,14 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   leaves the container spelling open between scoped `(network ...)` and flat
   top-level actor ATL clauses.
 - The proposal defines qualified endpoints, verbose and compact syntax
-  candidates, `connect` for structural binding, `transfer` for
-  scheduler-owned movement, one-cycle events, top-level orchestration,
-  concurrent groups, first-slice scope, and fail-closed boundaries.
+  candidates, `connect` only as a provisional temporal route spelling,
+  `transfer` for scheduler-owned movement, one-cycle events, top-level
+  orchestration, concurrent groups, first-slice scope, and fail-closed
+  boundaries.
+- The RTL mux analogy is now explicit: ATL movement clauses are not permanent
+  wires. Multiple source actors may feed one sink actor at different scheduled
+  moments only when FSMGen can prove disjoint timing or emit a reviewable
+  mux/enable/handoff plan.
 - `(network ...)` is not treated as required syntax; it is only one candidate
   scoping form pending review.
 - Activated `ISF-ACTOR-NETWORK-ORCHESTRATION.1` as the current

@@ -13,6 +13,10 @@ actors instead of flops/registers.
 
 - RTL describes how values move between registers and logic.
 - ATL describes how data, information, and activation move between actors.
+- ATL movement clauses are temporal route/capability declarations, not
+  permanent actor-to-actor wires. Like RTL mux inputs feeding one flop at
+  different cycles, multiple source actors may feed one sink actor only when
+  the scheduler can prove the selected source and cycle.
 - FSMGen still owns scheduling and lowers the result to explicit scheduled
   `.fsm`.
 - The generated schedule remains reviewable; ATL does not hide cycles.
@@ -51,7 +55,7 @@ is not a second semantic root. The whole system is still the enclosing actor.
 
 Benefits:
 
-- keeps instance/connect/transfer/group clauses separate from existing actor
+- keeps instance/route/transfer/group clauses separate from existing actor
   clauses;
 - gives diagnostics a clear "inside network" context;
 - leaves room for future actor-local clauses without name collisions.
@@ -101,7 +105,7 @@ This keeps the model natural:
 - top-level transactions/rules are allowed to sequence network behavior;
 - actors inside the network remain reusable ISF actors with local schedules;
 - FSMGen builds the network schedule from explicit triggers, waits, events,
-  transfers, and constraints.
+  temporal movement routes, transfers, and constraints.
 
 ## Endpoints
 
@@ -163,11 +167,14 @@ directly under `(actor packet_pipe ...)`.
 Proposed clause meanings:
 
 - `(instance name of actor_type ...)` statically instantiates a reusable actor.
-- `(connect (from endpoint) (to endpoint))` describes structural pin/port
-  binding. It is not an independent scheduled value move.
-- `(transfer source to destination)` describes scheduler-owned data movement.
-  FSMGen may allocate handoff storage or a scheduled transfer state when the
-  producer and consumer cannot safely share the same cycle.
+- `(connect (from endpoint) (to endpoint))` is a provisional spelling for a
+  scheduler-visible route between pin/port endpoints. It must not mean a
+  permanent continuous actor-to-actor wire. The route is active only when the
+  inferred schedule, trigger, or sink-valid condition selects it.
+- `(transfer source to destination)` describes scheduler-owned data/information
+  movement. FSMGen may allocate a mux input, handoff storage, activation
+  binding, or scheduled transfer state when the producer and consumer cannot
+  safely share the same cycle.
 - `(event name (from actor.event))` names a one-cycle scheduler-visible event.
   Initial ATL events should carry no payload; payloads move through
   `transfer`.
@@ -208,7 +215,7 @@ Candidate compact aliases:
 | Compact form | Verbose meaning |
 | --- | --- |
 | `(inst : actor_type)` | `(instance inst of actor_type)` |
-| `(a -> b)` where both sides are ports/pins | `(connect (from a) (to b))` |
+| `(a -> b)` where both sides are ports/pins | provisional route spelling, equivalent to `(connect (from a) (to b))` if `connect` remains the chosen verbose name |
 | `(a => b)` | `(transfer a to b)` |
 | `(event -> actor.transaction)` | `(trigger (from event) (to actor.transaction))` |
 | `(concurrent name actor...)` | `(group name (members actor...) (mode concurrent))` |
@@ -250,30 +257,58 @@ until there is a declared default transaction or entry transaction contract.
 
 ## Data Movement Semantics
 
-ATL should distinguish structural connections from scheduled transfers.
+ATL should not model actor-to-actor data movement as permanent wiring. It
+should model movement as temporal routes that the scheduler may activate at
+specific points in the inferred schedule.
+
+The RTL analogy is a mux feeding a flop. The mux input wires may exist in HDL,
+but the semantic movement happens only when the selected input and write
+enable are active for that cycle. ATL should capture the same intent one level
+up: source actor `A` may move a value to sink actor `B`, but the actual
+movement is selected by scheduling, activation, valid conditions, and
+dependency analysis.
+
+This matters most when several source actors can provide the same information
+to one sink actor. ATL should treat that as a normal design shape only when
+FSMGen can infer a reviewable mux/enable/handoff plan, or prove the sources
+are active in disjoint cycles.
 
 `connect`:
 
-- binds top-level pins to actor ports, actor ports to top-level pins, or
-  compatible actor ports where the connection is structural;
-- has no independent lifetime;
-- must reject multiple writers unless the conflict policy is explicit and
-  regression-backed;
+- is a provisional name for a scheduler-visible route capability between
+  top-level pins and actor ports, actor ports and top-level pins, or compatible
+  actor ports;
+- is not permanent continuous wiring in ATL semantics;
+- becomes active only when the schedule selects the route, for example because
+  the source and sink actors are both active, because the sink actor is active
+  and the route's valid condition is true, or because an explicit trigger/event
+  establishes the dependency;
+- may lower to mux input selection, enable gating, temporary storage, or an
+  activation binding depending on timing;
+- must reject multiple possible writers unless the scheduler can prove
+  disjoint timing or emit a documented mux/arbitration plan;
 - must preserve width/type evidence in diagnostics and schedule reports.
 
 `transfer`:
 
-- moves data/information between actors under scheduler control;
-- can allocate temporary storage, handoff registers, or generated activation
-  bindings when producer and consumer schedules require it;
+- is a more explicit spelling for scheduler-owned data/information movement;
+- is also temporal, not permanent;
+- can allocate temporary storage, handoff registers, mux/enable selection, or
+  generated activation bindings when producer and consumer schedules require
+  it;
 - must report source endpoint, destination endpoint, storage/lifetime class,
-  and scheduled point or dependency;
+- selected cycle or dependency, valid/trigger evidence, and any generated mux
+  or handoff plan;
 - must reject unsupported lifetimes, ambiguous ordering, missing width
   evidence, and unsafe same-cycle assumptions.
 
 Initial ATL transfers should be scalar or bit-vector only. Aggregates,
 payload-carrying events, streaming channels, queues, and backpressure
 protocols should be later leaves.
+
+The final syntax may decide that `connect` is the wrong word because it sounds
+too permanent. If so, a name such as `route`, `move`, or `flow` may better
+express the temporal route semantics while preserving the same ATL IR.
 
 ## Concurrent Actor Groups
 
@@ -285,6 +320,8 @@ FSMGen should:
 - infer data and event dependencies inside the group;
 - allow independent actors to run concurrently when dependencies permit;
 - serialize or insert handoff storage when required by explicit dependencies;
+- emit mux/enable plans when multiple sources can feed one sink at distinct
+  scheduled moments;
 - reject cycles with no storage, ambiguous fan-in, and unsupported lifetime
   overlap;
 - report group membership, inferred dependencies, inserted storage, and any
@@ -300,8 +337,9 @@ Scheduling should split cleanly:
 
 - Each actor owns its local transaction/rule schedule.
 - The ATL network scheduler owns instance elaboration, activation handoffs,
-  actor-to-actor transfer storage, pin boundary wiring, event fan-out/fan-in
-  policy, and generated top scheduling.
+  actor-to-actor temporal route selection, mux/enable/handoff insertion, pin
+  boundary movement, event fan-out/fan-in policy, and generated top
+  scheduling.
 - The generated `.fsm` remains the audit artifact for the inferred global
   schedule.
 - The schedule report should expose `actor_network` metadata without requiring
@@ -315,7 +353,8 @@ The smallest useful implementation should be:
    scoped `(network ...)` form or the selected flat actor-clause form.
 2. Single clock/reset only.
 3. Static `(instance name of actor_type)` declarations.
-4. Explicit `connect` between top-level pins and one actor instance.
+4. One explicit temporal route between top-level pins and one actor instance,
+   using the selected spelling (`connect`, `route`, or another agreed name).
 5. Explicit blocking orchestration from a top-level transaction to one
    qualified child transaction.
 6. Schedule-report metadata for instance identity, endpoint bindings, and
@@ -331,7 +370,9 @@ ATL v0 should reject:
 - dynamic actor creation or runtime instance names;
 - unresolved actor, transaction, event, port, pin, or group endpoints;
 - actor-level activation without an explicit transaction target;
-- multiple writers to one endpoint without a shipped conflict contract;
+- permanent continuous actor-to-actor movement assumptions;
+- multiple writers to one endpoint without provably disjoint timing or a
+  shipped mux/arbitration contract;
 - event payloads;
 - implicit data movement through events;
 - cross-clock actor-network movement without explicit CDC syntax;
@@ -347,10 +388,11 @@ ATL v0 should reject:
   ATL clauses, or both as equivalent spellings.
 - Whether the final verbose trigger spelling should be `(trigger ...)`,
   `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`.
-- Whether `connect` and `transfer` are the right names, or whether the public
-  syntax should use more hardware-native words.
-- Whether compact `->` should mean only structural `connect`, while `=>`
-  means scheduled `transfer`.
+- Whether `connect` is too permanent-sounding for temporal ATL movement, and
+  whether `route`, `move`, or another word should be used instead.
+- Whether compact `->` should mean a temporal route, while `=>` means an
+  explicit scheduler-owned transfer, or whether that distinction is too subtle.
+- Whether `->` should be avoided entirely if it suggests permanent wiring.
 - Whether concurrent groups need a stronger contract for expected overlap,
   or whether they should initially be report-only scheduling hints.
 - Which realistic fixture should prove the first end-to-end ATL value.

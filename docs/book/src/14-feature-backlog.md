@@ -761,8 +761,8 @@ Proposed semantic split:
 
 | Form | Meaning |
 | --- | --- |
-| `connect` | Structural pin/port binding. |
-| `transfer` | Scheduler-owned data/information movement. |
+| `connect` | Provisional name for a scheduler-visible temporal route; not permanent wiring. |
+| `transfer` | Explicit scheduler-owned temporal data/information movement. |
 | `event` | Named one-cycle control pulse; payloads remain deferred. |
 | `trigger` | Activation of a qualified actor transaction. |
 | `group` | Intentional concurrent actor group for scheduling analysis/reporting. |
@@ -770,7 +770,17 @@ Proposed semantic split:
 Compact syntax is also proposed, but only as an alias over the verbose
 contract. For example, `(reader.payload => crc.payload)` would mean
 `(transfer reader.payload to crc.payload)`, while `(pins.start -> reader.start)`
-would mean structural `connect`.
+would mean the selected temporal route spelling if `->` is not too
+wire-like.
+
+The movement clauses are not intended to mean permanent actor-to-actor wires.
+The RTL analogy is a mux feeding a flop: several sources may be physically
+available, but only the selected source moves data into the flop on a given
+cycle. ATL should capture the same idea one level higher. Several source
+actors may be allowed to provide the same information to a sink actor at
+different scheduled moments, but FSMGen must infer or reject the actual
+movement based on triggers, sink-valid conditions, disjoint timing, and any
+generated mux/enable/handoff plan.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child

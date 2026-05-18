@@ -83,9 +83,13 @@ clauses if that proves cleaner. The proposed endpoint vocabulary is
 `pins.name`, `actor.port`, `actor.transaction`, `actor.event`, and
 `group.name`. The verbose syntax is the normative target; compact syntax is a
 semantics-preserving alias only after it maps to the same ATL IR and
-diagnostics. The proposal separates `connect`, meaning structural pin/port
-binding, from `transfer`, meaning scheduler-owned movement of
-data/information between actors.
+diagnostics. The proposal now treats `connect` as a provisional name only,
+because it may sound too permanent for ATL. Movement clauses should describe
+temporal route capabilities: source actors, top-level pins, or actor outputs
+can provide information to sink actors at selected points in time, much like
+mux inputs can feed one flop in different cycles. FSMGen must infer the
+selected route from triggers, sink-valid conditions, disjoint timing, and
+generated mux/enable/handoff evidence, or reject the case.
 
 ## Design Note: 2026-05-13 Rule Trigger Fan-In
 

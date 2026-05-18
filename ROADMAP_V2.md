@@ -705,7 +705,8 @@ Initial sub-slices:
 4. Add regression coverage and schedule report validation.
 5. Clarify the active actor-network/ATL orchestration contract before
    implementation: source shape, compact plus verbose syntax, event pulse
-   semantics, actor-to-actor and pin-to-actor data movement, concurrent
+   semantics, temporal actor-to-actor and pin-to-actor data movement,
+   mux/enable/handoff inference for multiple source actors, concurrent
    actor-group scheduling, generated artifact naming, report visibility,
    whether ATL clauses should be scoped by `(network ...)` or live flat under
    the top-level actor, and fail-closed boundaries are tracked in

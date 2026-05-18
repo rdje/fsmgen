@@ -1,6 +1,6 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
-## 2026-05-18: ATL v0 should separate structural binding from scheduled transfer
+## 2026-05-18: ATL v0 should separate route naming from scheduled transfer
 - The concrete ATL v0 proposal lives in
   [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md).
 - Keeping `(actor top_name ...)` as the root avoids creating a second source
@@ -10,18 +10,35 @@ This document captures engineering rationale, design constraints, and working de
   declarations, but it is not a semantic requirement. Flat ATL clauses
   directly under the top-level actor may better match the mental model that
   the actor body itself is the network.
-- The design deliberately separates `connect` from `transfer`. `connect` is
-  structural pin/port binding. `transfer` is scheduler-owned movement of
-  data/information where FSMGen may need to allocate storage or schedule a
-  handoff.
+- The design deliberately separates possible route naming from explicit
+  scheduler-owned transfer. `connect` is currently only a provisional route
+  word and must not imply permanent wiring. `transfer` is the explicit
+  scheduler-owned movement form where FSMGen may need to allocate a mux input,
+  storage, or scheduled handoff.
 - Verbose syntax should be the normative contract for review and downstream
   emission. Compact syntax should only ship as a proven alias over the same
   ATL IR and diagnostics.
 - The first specification slice must decide whether ATL v0 uses scoped
   `(network ...)`, flat top-level ATL clauses, or both as equivalent spellings.
 - The first implementation should be intentionally small: one top-level actor,
-  same clock/reset, static instance declarations, explicit pin-to-instance
-  `connect`, qualified blocking orchestration, and schedule-report metadata.
+  same clock/reset, static instance declarations, one explicit temporal route
+  between pins and an instance, qualified blocking orchestration, and
+  schedule-report metadata.
+## 2026-05-18: ATL movement is temporal, not permanent wiring
+- The user clarified the RTL mux analogy: at RTL, multiple sources can feed a
+  flop through mux selection at different cycles. ATL needs the same semantic
+  shape one level higher, with actors as the transfer endpoints.
+- Actor-to-actor and pin-to-actor movement clauses should describe possible
+  temporal routes, not permanent continuous wires.
+- A movement may occur when source and sink actors are both active, when the
+  sink actor is active and the relevant input/data valid condition is true, or
+  when an explicit event/trigger establishes the dependency.
+- Multiple source actors feeding one sink actor are acceptable only if FSMGen
+  can prove disjoint timing or emit a reviewable mux/enable/handoff plan.
+  Otherwise the ATL scheduler must reject the case.
+- Because this is a new level, syntax names such as `connect` are provisional;
+  if they imply permanent wiring, `route`, `move`, or another temporal word may
+  be better.
 ## 2026-05-18: Actor Transfer Level means actors replace flops as transfer endpoints
 - The actor-network idea is now framed as Actor Transfer Level (`ATL`): RTL
   explains movement between flops/registers, while ATL explains movement of

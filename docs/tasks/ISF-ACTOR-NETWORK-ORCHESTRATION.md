@@ -136,9 +136,10 @@ Current proposal summary:
 - Verbose syntax is the normative authoring and downstream-emission target.
 - Compact syntax is proposed only as a semantics-preserving alias over the
   verbose ATL IR.
-- `connect` means structural pin/port binding.
-- `transfer` means scheduler-owned movement of data/information between
-  actors.
+- `connect` is only a provisional name for a scheduler-visible temporal route;
+  it must not imply permanent actor-to-actor wiring.
+- `transfer` means scheduler-owned temporal movement of data/information
+  between actors, potentially through generated mux/enable/handoff storage.
 - Events are one-cycle scheduler-visible control pulses in the first ATL
   subset; event payloads remain deferred.
 - Top-level transactions/rules can orchestrate actor transactions through
@@ -170,10 +171,16 @@ Current proposal summary:
   [docs/ISF_ATL_DESIGN_PROPOSAL.md](../ISF_ATL_DESIGN_PROPOSAL.md): top-level
   actor root, open container spelling between a scoped `(network ...)` clause
   and flat top-level actor ATL clauses, static instances, qualified endpoints,
-  verbose and compact syntax candidates, `connect` for structural movement,
-  `transfer` for scheduler-owned data movement, one-cycle events, top-level
-  transaction/rule orchestration, concurrent groups, first implementation
-  subset, and fail-closed boundaries.
+  verbose and compact syntax candidates, temporal route semantics for
+  actor-to-actor and pin-to-actor movement, `transfer` for scheduler-owned
+  data movement, one-cycle events, top-level transaction/rule orchestration,
+  concurrent groups, first implementation subset, and fail-closed boundaries.
+- `2026-05-18`: User clarified the RTL mux analogy: ATL movement declarations
+  must not be permanent wires. Multiple source actors may be able to provide
+  information to one sink actor at different cycles, just as mux inputs can
+  feed one flop at different times. The scheduler must select or reject those
+  movements based on triggers, sink-valid conditions, disjoint timing, and
+  generated mux/enable/handoff evidence.
 - `2026-05-18`: User challenged whether `(network ...)` is necessary. The
   design now treats `(network ...)` as a scoping candidate, not a requirement;
   flat top-level actor ATL clauses remain an explicit alternative.
@@ -184,10 +191,10 @@ Current proposal summary:
   clauses, or both as equivalent spellings lowered to the same ATL IR?
 - Should the final verbose trigger spelling be `(trigger ...)`,
   `(activate ...)`, or an extension of existing `(do ...)` / `(spawn ...)`?
-- Are `connect` and `transfer` the right public names for structural movement
-  and scheduler-owned data/information movement?
-- Should compact `->` mean only structural `connect`, while compact `=>`
-  means scheduled `transfer`?
+- Is `connect` too permanent-sounding for temporal ATL movement, and should
+  the public syntax use `route`, `move`, or another word instead?
+- Should compact `->` mean temporal route and compact `=>` mean explicit
+  scheduler-owned transfer, or does that distinction invite confusion?
 - Can multiple actors orchestrate the same child/peer actor in the same
   cycle, and if so does the scheduler OR requests, arbitrate them, or reject
   ambiguous fan-in?
@@ -207,12 +214,16 @@ Current proposal summary:
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `mdbook build docs/book`; `git diff --check` | `book and diff checks passed for proposed actor-network orchestration tracking` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL/top-level actor clarification captured; book and diff checks passed` |
 | `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL v0 concrete proposal drafted; book and diff checks passed` |
+| `2026-05-18` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `mdbook build docs/book`; `git diff --check` | `ATL temporal route and RTL mux analogy captured; book and diff checks passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `ISF-ACTOR-NETWORK-ORCHESTRATION: propose actor network orchestration` | `proposed tracking tree only` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: capture ATL model` | `activated clarification leaf and captured ATL mental model` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `ISF-ACTOR-NETWORK-ORCHESTRATION.1: draft ATL v0 proposal` | `drafted scoped/flat source-shape candidates and endpoint vocabulary` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.1` | `pending commit for ATL temporal-route refinement` | `captures RTL mux analogy and non-permanent movement semantics` |
 
 ## Changelog
 
@@ -221,3 +232,5 @@ Current proposal summary:
   Transfer Level model where actors replace flops/registers as the transfer
   endpoints.
 - `2026-05-18`: Drafted the concrete ATL v0 source/semantic proposal.
+- `2026-05-18`: Refined ATL data/information movement as temporal
+  scheduler-selected routes rather than permanent actor-to-actor wires.

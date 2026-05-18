@@ -8,9 +8,14 @@ This is the live continuity document for fast session recovery after crashes, re
   semantics if lowered to the same ATL IR.
 - The proposal defines qualified endpoints (`pins.name`, `actor.port`,
   `actor.transaction`, `actor.event`, `group.name`), verbose syntax as the
-  normative spelling, compact syntax as a possible alias, `connect` as
-  structural binding, and `transfer` as scheduler-owned data/information
-  movement.
+  normative spelling, compact syntax as a possible alias, `connect` only as a
+  provisional route spelling, and `transfer` as scheduler-owned
+  data/information movement.
+- User refined the RTL mux analogy: ATL movement declarations must not mean
+  permanent actor-to-actor wires. They describe temporal movement
+  possibilities that become active only when triggers, sink-valid conditions,
+  disjoint timing, or generated mux/enable/handoff evidence make the movement
+  schedulable and reviewable.
 - User challenged whether `(network ...)` is needed. Do not treat it as
   settled syntax; it is only a scoping candidate.
 - Activated the R14 actor-network clarification/design tree
