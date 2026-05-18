@@ -181,6 +181,36 @@ sub format_cli_artifact_error {
     return $prefix . $text;
 }
 
+sub emit_machine_failure_if_requested {
+    my (%args) = @_;
+
+    my $display_error = normalize_cli_error_text($args{message});
+    if ($args{emit_semantic_json}) {
+        my $report = build_normalized_semantic_failure_report(
+            input => $args{input},
+            source_file => $args{source_file},
+            target_language => $args{target_language},
+            strict_mode => $args{strict_mode},
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+    if ($args{check_json_mode}) {
+        my $report = build_check_failure_report(
+            input => $args{input},
+            source_file => $args{source_file},
+            target_language => $args{target_language},
+            strict_mode => $args{strict_mode},
+            message => $display_error,
+        );
+        print JSON::PP->new->ascii->canonical->pretty->encode($report);
+        exit 1;
+    }
+
+    return $display_error;
+}
+
 # Command line options
 my $debug_level = 0;  # Numeric compatibility mode (0..4)
 my $help = 0;
@@ -547,11 +577,29 @@ if ($fsm_file =~ /\.isf$/i) {
 
     my $result = eval { $scheduler->lower($actor); };
     if ($@) {
-        die normalize_cli_error_text($@);
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $fsm_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => $@,
+        );
+        die $display_error;
     }
     $isf_schedule_report = eval { JSON::PP->new->decode($scheduler->report($actor)); };
     if ($@) {
-        die normalize_cli_error_text($@);
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $fsm_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => $@,
+        );
+        die $display_error;
     }
 
     my $files = $result->{files};
@@ -562,10 +610,17 @@ if ($fsm_file =~ /\.isf$/i) {
             : undef;
 
     if (!defined $entry_basename) {
-        die normalize_cli_error_text(
-            "ISF multi-domain lowering emitted domain scheduled .fsm artifacts, "
-            . "but generated top/HDL entry emission is not implemented yet\n",
+        my $display_error = emit_machine_failure_if_requested(
+            input => $fsm_input,
+            source_file => $fsm_file,
+            target_language => $target_language,
+            strict_mode => $strict_mode,
+            emit_semantic_json => $emit_semantic_json,
+            check_json_mode => $check_json_mode,
+            message => "ISF multi-domain lowering emitted domain scheduled .fsm artifacts, "
+                . "but generated top/HDL entry emission is not implemented yet\n",
         );
+        die $display_error;
     }
 
     my $dir = $outdir || undef;

@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-18
+### R14 — SPECFORGE strict-check JSON failure surface fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` and closed the
+  SPECFORGE downstream stage/contract report tree.
+- `.isf` parser, lowering, schedule-report, and downstream semantic check
+  failures now preserve the machine-readable check contract: `--check --json`
+  / `--check-json` exits nonzero, writes `success: false` JSON to stdout,
+  keeps stderr clean, and carries the normalized diagnostic text in
+  `diagnostics[0].message`.
+- Added regression coverage for an ISF lowering failure and an ISF semantic
+  conflict so the failure surface cannot regress to empty stdout.
+- The exact `sf-isf-stage-ready-valid` artifact now reports the residual
+  `isf_priority_mixed_timing_conflict` as JSON instead of stderr-only text.
+- Synchronized README, ISF spec, downstream integration handoff, public
+  contract, mdBook, task tree, roadmap board, live achievement status, and
+  development notes. No active downstream bug frontier remains.
 ### R14 — SPECFORGE ready/valid stage form fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
 - FSMGen now accepts the documented transaction-stage spelling

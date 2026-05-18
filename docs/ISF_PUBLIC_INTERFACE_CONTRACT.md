@@ -1730,6 +1730,11 @@ scheduled `.fsm` clock/reset HDL contract.
 The strict CLI success-shape field advertises that accepted `--strict
 file.isf` generation follows the public HDL-generation success shape and keeps
 stderr empty on success.
+For `.isf` inputs, `--check --json` and `--check-json` now preserve the public
+check JSON failure surface for parser, lowering, schedule-report, and
+downstream semantic check failures. These failures exit nonzero, write
+`success: false` JSON to stdout, keep stderr clean for the machine-readable
+mode, and preserve the normalized diagnostic text in `diagnostics[0].message`.
 
 ## Lower Result
 

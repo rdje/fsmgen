@@ -2,20 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Active R14 downstream bug frontier:
-  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`. SPECFORGE reported two
-  minimized stage/contract conformance bugs against the downstream integration
-  handoff. Leaf `.1` is complete: FSMGen accepts the documented flat
-  bounded-eventually contract spelling while preserving the older nested alias,
-  and the minimized `sf-isf-contract-eventually-flat` bundle now passes strict
-  JSON check with `success: true`. Leaf `.2` is complete for the source-form
-  mismatch: FSMGen accepts the documented
+- Recent R14 downstream bug tree:
+  `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
+  the documented flat bounded-eventually contract spelling while preserving
+  the older nested alias, and the minimized
+  `sf-isf-contract-eventually-flat` bundle now passes strict JSON check with
+  `success: true`. Leaf `.2` accepts the documented
   `(stage name (ready ready_signal) (valid valid_signal))` stage spelling
   while preserving the older `(input ...)/(output ...)` alias. The exact
   `sf-isf-stage-ready-valid` artifact now reaches the existing
   `isf_priority_mixed_timing_conflict` checker because its `valid` endpoint
-  and `rule_7` both write `ADDRESS`. Leaf `.3` is active for the shared
-  strict-check JSON failure surface.
+  and `rule_7` both write `ADDRESS`. Leaf `.3` fixes the shared strict-check
+  JSON failure surface: ISF parser, lowering, report-building, and downstream
+  semantic check failures now emit `success: false` JSON in `--check --json`
+  / `--check-json` mode instead of empty stdout. No active downstream bug
+  frontier remains; the current active R14 frontiers are repeat-body child
+  activation `.111` and ATL actor-network orchestration `.2`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending

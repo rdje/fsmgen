@@ -370,6 +370,9 @@ cd docs/book && mdbook serve
 Inputs ending in `.isf` are parsed by the intent scheduler, lowered to one or
 more explicit `.fsm` sources, and then fed through the normal `.fsm` pipeline
 unless `--emit-schedule-json` is requested.
+For `.isf` inputs, `--check --json` and `--check-json` emit structured
+`success: false` JSON for parser, lowering, report-building, and downstream
+semantic check failures instead of leaving stdout empty.
 
 The bounded machine-readable surfaces are backed by support accounting:
 `--check --json` is corpus-covered across supported, strict-supported, and

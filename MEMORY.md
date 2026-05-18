@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: SPECFORGE strict-check JSON failure surface fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` and closed the
+  SPECFORGE downstream stage/contract bug tree.
+- [bin/fsmgen](bin/fsmgen) now routes `.isf` parser, lowering,
+  schedule-report, and downstream semantic check failures through the same
+  machine-readable failure builders used by check JSON mode. `--check --json`
+  and `--check-json` now exit nonzero with `success: false` JSON on stdout
+  and clean stderr instead of leaving downstream consumers with empty stdout.
+- The exact `sf-isf-stage-ready-valid` issue artifact now emits a structured
+  JSON diagnostic for the residual `isf_priority_mixed_timing_conflict` on
+  `ADDRESS`, preserving the message that explains the conflict between
+  `rule_7` and the stage valid endpoint.
+- Added focused regression coverage in
+  [t/1323-isf-check-json-failure-surface.t](t/1323-isf-check-json-failure-surface.t)
+  for an ISF lowering failure and an ISF semantic conflict under
+  `--check-json`.
+- Synchronized README, the ISF spec focused-test index and CLI contract, the
+  downstream integration spec, public interface contract, mdBook
+  troubleshooting/feature-matrix text, task tree, roadmap board, and live
+  notes. The active R14 frontiers are now repeat-body child activation `.111`
+  and ATL actor-network orchestration `.2`.
+- Validation passed after repairing the focused-test index: syntax check,
+  focused check/stage/contract tests, exact SPECFORGE source and baseline
+  checks, mdBook build, focused book/doc audits, spec focused-test index
+  audit, `./bin/ci-regression isf --no-book` (Files=229, Tests=1344), and
+  `git diff --check`.
 ## 2026-05-18: SPECFORGE ready/valid stage form fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
 - [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

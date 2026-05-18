@@ -1883,7 +1883,9 @@ expected-failure diagnostics include the stable `FSMGEN_*` code and the matched
 support-accounting entry. The nested `support_accounting` object is the
 preferred machine-readable bridge back to corpus truth. Unclassified failures
 keep a `null` code until their family is deliberately promoted into the stable
-registry. Accepted corpus entries are covered too: supported-smoke entries must
+registry. `.isf` parser, lowering, schedule-report, and semantic check
+failures use the same `success:false` JSON path rather than empty stdout.
+Accepted corpus entries are covered too: supported-smoke entries must
 succeed through `--check-json`, and strict-supported entries must succeed
 through `--strict --check-json`. When a successful check matches a non-failure
 corpus entry by resolved source path, the report-level `support_accounting`

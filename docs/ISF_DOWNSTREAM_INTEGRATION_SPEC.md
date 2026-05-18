@@ -2108,6 +2108,11 @@ For a SPECFORGE-style producer:
   wait-count symbols.
 - Treat every fail-closed diagnostic as a source-generation bug.
 - Use `--emit-schedule-json` in tests to confirm schedule/report shape.
+- Use `--check --json` or `--check-json` when a downstream workflow needs a
+  machine-readable pass/fail result. For `.isf` inputs, parser, lowering,
+  schedule-report, and downstream semantic check failures exit nonzero while
+  still emitting `success: false` JSON to stdout with the diagnostic message in
+  `diagnostics[0].message`.
 - Use generated `.fsm` as the human review artifact before HDL.
 - Use `--capability-manifest` to check the current bounded public contract.
 
@@ -2119,7 +2124,8 @@ For a downstream analyzer:
 - Do not infer support from parser-carried private clause payloads.
 - Treat `compile_issues[]` as nonfatal warnings on successful reports.
 - Treat missing artifacts or diagnostics as integration failures, not partial
-  success.
+  success. Empty stdout from `--check --json` for an existing `.isf` input is
+  a reportable FSMGen bug, not an expected downstream contract.
 
 ## 20. Source Of Truth And Evolution
 

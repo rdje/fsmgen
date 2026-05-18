@@ -154,9 +154,10 @@ check-only JSON path emits those codes on matched expected failures:
 ./bin/fsmgen --strict --check --json path/to/file.fsm
 ```
 
-That command writes no HDL. Unknown failure families still get JSON, but their
-code is `null` until FSMGen deliberately promotes that family into the stable
-diagnostic registry. Matched failures also include a nested
+That command writes no HDL. Unknown failure families still get JSON, including
+`.isf` parser, lowering, schedule-report, and semantic check failures, but
+their code is `null` until FSMGen deliberately promotes that family into the
+stable diagnostic registry. Matched failures also include a nested
 `support_accounting` object that points back to the matched corpus entry,
 coverage bucket, classification, corpus family, diagnostic code, and
 migration-hint availability. The classifier prefers the most specific matching

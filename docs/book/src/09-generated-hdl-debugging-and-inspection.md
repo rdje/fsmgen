@@ -208,7 +208,9 @@ matches a support-accounting expected-failure entry, that diagnostic includes
 the stable `FSMGEN_*` code, severity, stability, family, source file, matched
 corpus entry, and migration-hint availability. Failures outside the current
 classifier still return JSON with a `null` code rather than pretending a stable
-diagnostic identity exists.
+diagnostic identity exists. For `.isf` inputs, parser, lowering,
+schedule-report, and semantic check failures also use this JSON failure path
+instead of leaving stdout empty.
 
 The first bounded normalized semantic JSON surface is:
 

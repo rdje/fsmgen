@@ -2,6 +2,30 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-18: R14 — SPECFORGE strict-check JSON failure surface fixed
+- Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` and closed the
+  downstream SPECFORGE stage/contract bug tree.
+- `.isf` parser, lowering, schedule-report, and downstream semantic check
+  failures now emit structured `success: false` JSON under `--check --json`
+  and `--check-json`, exit nonzero, and keep stderr clean.
+- The exact `sf-isf-stage-ready-valid` artifact now reports its residual
+  `isf_priority_mixed_timing_conflict` in JSON instead of returning empty
+  stdout with stderr-only diagnostics.
+- Added focused regression coverage for an ISF lowering failure and an ISF
+  semantic conflict in check JSON mode.
+- Docs are synchronized across README, the ISF spec, mdBook, downstream
+  integration spec, public contract, task tree, roadmap board, and live docs.
+  The active R14 frontiers are now
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.2`; no active downstream bug frontier
+  remains.
+- Validation passed after the focused-test index was updated:
+  `perl -c bin/fsmgen`, focused check/stage/contract tests, exact SPECFORGE
+  source and baseline checks, `mdbook build docs/book`, focused book/doc
+  audits, `t/1250-isf-spec-focused-test-index-audit.t`,
+  `./bin/ci-regression isf --no-book` (Files=229, Tests=1344), and
+  `git diff --check`.
+
 ## 2026-05-18: R14 — SPECFORGE ready/valid stage form fixed
 - Completed `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`.
 - FSMGen now accepts the downstream-documented transaction-stage spelling

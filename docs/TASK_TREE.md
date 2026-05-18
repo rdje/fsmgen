@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `active` | `R14` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md) |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `active` | `R14` | `ISF-ACTOR-NETWORK-ORCHESTRATION.2` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `active` | `R14` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
 
@@ -61,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md) |
 | `GITHUB-PUBLIC-AUTOMATION-REENABLE` | `done` | `project operations` | `closed` | [docs/tasks/GITHUB-PUBLIC-AUTOMATION-REENABLE.md](docs/tasks/GITHUB-PUBLIC-AUTOMATION-REENABLE.md) |
 | `ISF-REPEAT-SPAWN-PARAMS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md) |
 | `ISF-SPAWN-IN-REPEAT` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPAWN-IN-REPEAT.md](docs/tasks/ISF-SPAWN-IN-REPEAT.md) |

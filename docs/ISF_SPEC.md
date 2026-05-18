@@ -99,6 +99,11 @@ Current CLI behavior:
   HDL contract.
 - `--strict` is accepted on the plain `file.isf` path and still routes through
   scheduled `.fsm` generation before HDL output.
+- `--check --json` and `--check-json` preserve the machine-readable check
+  contract for `.isf` inputs. Parser, lowering, schedule-report, and
+  downstream semantic check failures exit nonzero with `success: false` JSON
+  on stdout, keep stderr clean, and carry the normalized diagnostic text in
+  `diagnostics[0].message`.
 - If lowering produces multiple `.fsm` files, `--outdir DIR` writes every file
   there and the parent actor file is fed into the normal pipeline.
 - The public `--outdir` path is expected to write scheduled `.fsm` file content
@@ -3468,6 +3473,7 @@ Focused tests:
 - [t/1320-isf-fifo-controller-fixture-coverage.t](../t/1320-isf-fifo-controller-fixture-coverage.t)
 - [t/1321-isf-fifo-library-fixture-coverage.t](../t/1321-isf-fifo-library-fixture-coverage.t)
 - [t/1322-isf-actor-network-static.t](../t/1322-isf-actor-network-static.t)
+- [t/1323-isf-check-json-failure-surface.t](../t/1323-isf-check-json-failure-surface.t)
 
 ## 12. Explicitly Deferred
 

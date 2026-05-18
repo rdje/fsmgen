@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R14`
 - Created: `2026-05-18`
 - Last updated: `2026-05-18`
@@ -60,7 +60,7 @@ public contract, mdBook, task tree, and regression tests synchronized.
 ## Task Tree
 
 - ID: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS`
-  Status: `active`
+  Status: `done`
   Goal: `Fix or explicitly reconcile SPECFORGE's two minimized ISF stage/contract reports.`
   Children: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1`, `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2`, `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`
 
@@ -76,14 +76,14 @@ public contract, mdBook, task tree, and regression tests synchronized.
   Goal: `Resolve sf-isf-stage-ready-valid.`
   Acceptance: `The minimized ready/valid stage bundle is reproduced locally, FSMGen behavior is aligned with the documented source contract, focused regression coverage locks the accepted or corrected surface, and ISF spec/downstream handoff/mdBook/public contract text stays truthful.`
   Verification: `reproduced before implementation: ./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-stage-ready-valid/sources/fsmgen-input/f2-stage-ready-valid.isf exited 255, wrote 0 bytes stdout, and reported Transaction 'txn_demo': stage 's_demo' has unsupported subclause 'ready' on stderr; after the syntax fix the documented ready/valid form is accepted by focused strict JSON tests, and the exact bundle advances to the existing isf_priority_mixed_timing_conflict on ADDRESS because rule_7 and the stage valid endpoint both write ADDRESS`
-  Commit: `pending commit for .2 implementation slice`
+  Commit: `d4d6dfab ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2: accept ready-valid stages`
 
 - ID: `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3`
-  Status: `active`
+  Status: `done`
   Goal: `Triage the shared strict-check JSON failure surface.`
   Acceptance: `For parser/strict-check failures reached through --strict --check --json, FSMGen either emits a documented JSON failure payload with regression coverage or the live docs explicitly mark the current empty-stdout behavior as unsupported with rationale.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `fixed: ISF parser/lowering/report/semantic check failures under --check --json emit success:false JSON on stdout, keep stderr clean, and preserve diagnostic text; exact sf-isf-stage-ready-valid now emits JSON failure for the mixed-timing conflict`
+  Commit: `this commit: ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3: emit ISF check JSON failures`
 
 ## Current Frontier
 
@@ -91,7 +91,9 @@ public contract, mdBook, task tree, and regression tests synchronized.
 | --- | --- | --- | --- |
 | 1 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `done` | The flat bounded-eventually report now passes strict JSON check with the documented flat `within` spelling while preserving the nested alias. |
 | 2 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `done` | The ready/valid stage report now accepts the documented `ready`/`valid` spelling while preserving the older `input`/`output` alias. |
-| 3 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `active` | The exact stage bundle now reaches a documented mixed-timing conflict and still exposes the shared empty-stdout `--json` failure surface. |
+| 3 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `done` | Strict check JSON now emits `success:false` failure payloads for ISF lowering/report/semantic failures instead of empty stdout. |
+
+Current frontier: `closed`.
 
 ## Decisions
 
@@ -122,12 +124,14 @@ public contract, mdBook, task tree, and regression tests synchronized.
   reaches the existing mixed-timing conflict checker because its `valid`
   endpoint and `rule_7` both write `ADDRESS`; that residual failure belongs
   to the shared strict JSON/failure-surface leaf, not the syntax leaf.
+- `2026-05-18`: Resolved the shared strict-check JSON failure surface for the
+  ISF path. `.isf` parser, lowering, schedule-report, and downstream semantic
+  check failures now emit bounded `success:false` check JSON to stdout in
+  `--check --json` / `--check-json` mode and keep stderr clean.
 
 ## Open Questions
 
-- None blocking the active `.3` leaf. The next step is to make strict-check
-  failure reporting truthful for downstream consumers when parser/lowering or
-  semantic failures occur under `--json`.
+- None. This task tree is closed.
 
 ## Blockers
 
@@ -144,6 +148,7 @@ public contract, mdBook, task tree, and regression tests synchronized.
 | `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `mdbook build docs/book`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `./bin/ci-regression isf --no-book`; `git diff --check` | `passed: book builds, focused doc audits pass, broad ISF gate passes with Files=228, Tests=1341, and diff whitespace check passes` |
 | `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `prove -Iperl t/1179-isf-phase-stage-boundary.t t/1180-isf-unsupported-transaction-clause-boundary.t t/1223-isf-stage-lowering.t t/1225-isf-stage-contract-schedule-report.t`; `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-stage-ready-valid/sources/fsmgen-input/f2-stage-ready-valid.isf`; `./bin/fsmgen --strict --check --json $SPECFORGE_ROOT/docs/fsmgen-issues/sf-isf-stage-ready-valid/expected/baseline-good.isf` | `fixed source-form mismatch: focused ready/valid strict JSON and report tests pass; baseline passes; exact bundle no longer reports unsupported ready and now reaches isf_priority_mixed_timing_conflict on ADDRESS, preserving existing conflict safety` |
 | `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `mdbook build docs/book`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `./bin/ci-regression isf --no-book`; `git diff --check` | `passed: book builds, focused doc audits pass, broad ISF gate passes with Files=228, Tests=1342, and diff whitespace check passes` |
+| `2026-05-18` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `perl -c bin/fsmgen`; `prove -Iperl t/1323-isf-check-json-failure-surface.t t/1223-isf-stage-lowering.t t/1224-isf-contract-lowering.t`; exact `sf-isf-contract-eventually-flat` source and baseline strict JSON checks; exact `sf-isf-stage-ready-valid` source and baseline strict JSON checks; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t`; `mdbook build docs/book`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t t/1307-isf-loop-body-doc-truth-audit.t`; `./bin/ci-regression isf --no-book`; `git diff --check` | `passed after adding the new focused test to the ISF spec index: focused tests pass; flat-contract source and baselines pass; exact stage bundle exits nonzero with success:false JSON on stdout, one diagnostic, and the mixed-timing message; broad ISF gate passes with Files=229, Tests=1344` |
 
 ## Commit Log
 
@@ -151,8 +156,8 @@ public contract, mdBook, task tree, and regression tests synchronized.
 | --- | --- | --- |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS: track reproduced reports` | `created tracking tree and reproduced both reported failures before implementation` |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1` | `610cb26e ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.1: accept flat eventual contracts` | `accepts the documented flat bounded-eventually source form and preserves the nested alias` |
-| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `pending commit: ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2: accept ready-valid stages` | `accepts the documented ready/valid stage source form, preserves the older input/output alias, and records the exact bundle's residual mixed-timing conflict` |
-| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `pending` | `pending` |
+| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` | `d4d6dfab ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2: accept ready-valid stages` | `accepts the documented ready/valid stage source form, preserves the older input/output alias, and records the exact bundle's residual mixed-timing conflict` |
+| `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` | `this commit: ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3: emit ISF check JSON failures` | `emits structured check JSON for ISF lowering/report/semantic failures` |
 
 ## Changelog
 
@@ -165,3 +170,6 @@ public contract, mdBook, task tree, and regression tests synchronized.
   syntax, preserving the older input/output alias, and recording that the
   exact reported artifact now reaches the existing mixed-timing conflict
   checker instead of failing on the `ready` subclause.
+- `2026-05-18`: Completed `.3` by emitting structured check JSON for ISF
+  lowering/report/semantic failures and closing the SPECFORGE stage/contract
+  report tree.

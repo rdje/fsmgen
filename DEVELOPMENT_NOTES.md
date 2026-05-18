@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-18: Check JSON is part of the ISF downstream contract
+- `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.3` treats empty stdout under
+  `--check --json` as a downstream contract bug for existing `.isf` inputs,
+  not as an acceptable diagnostic mode.
+- The CLI now centralizes ISF machine-readable failure emission for parser,
+  lowerer, schedule-report, and downstream semantic failures. When
+  `--check-json` or `--check --json` is active, those paths emit the normal
+  check failure payload and exit `1`; when semantic JSON mode is active, they
+  emit the normalized semantic failure payload. Human-readable modes still die
+  with the normalized diagnostic text.
+- The fix is deliberately CLI-scoped. It does not loosen ISF semantic checks:
+  the exact SPECFORGE ready/valid artifact still fails on the existing
+  `isf_priority_mixed_timing_conflict`, but that failure is now consumable by
+  downstream automation as JSON.
+- This closes the SPECFORGE stage/contract report tree. Future ISF diagnostics
+  should preserve this rule unless a task-tree leaf explicitly changes the
+  public contract and updates the downstream handoff plus mdBook.
 ## 2026-05-18: Ready/valid stages are the downstream spelling
 - `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.2` treats the downstream
   integration handoff as authoritative for the
