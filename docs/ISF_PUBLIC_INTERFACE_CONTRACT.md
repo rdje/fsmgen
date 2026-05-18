@@ -933,15 +933,14 @@ subsets, plain generated-child `(do child)` may also run while generated
 nested spawns are pending. The generated do uses only its deterministic
 generated do instance's start/done handoff and leaves the generated-spawn done
 set live until the later same-body `await_all` drain. In the documented
-top-level `when` body nested subset, static-parameter generated
-`(do child (params ...))` may also run while generated nested spawns are
-pending. The generated do uses its deterministic generated do instance,
-preserves static generated-top parameter binding, and leaves the generated
-spawn done set live until the later same-body `await_all` drain.
-Bound/domain-qualified generated do while pending, the switch-contained
-static-parameter analogue, prior or later `await_any` around that generated
-do, and new spawn after that generated do before the drain remain
-outside the public shipped subset.
+top-level `when` body and top-level `switch` branch nested subsets,
+static-parameter generated `(do child (params ...))` may also run while
+generated nested spawns are pending. The generated do uses its deterministic
+generated do instance, preserves static generated-top parameter binding, and
+leaves the generated spawn done set live until the later same-body
+`await_all` drain. Bound/domain-qualified generated do while pending, prior
+or later `await_any` around that generated do, and new spawn after that
+generated do before the drain remain outside the public shipped subset.
 The count is a runtime counter load value, not a hardware-elaboration count:
 literal counts provide fixed loop bounds, while named scalar counts may be
 dynamic when their width is known. Dynamic counts make latency data-dependent
@@ -2183,10 +2182,9 @@ These are not stable public interfaces yet:
   `await_any` followed by a mandatory same-body `await_all` drain. Top-level
   when-body and switch-branch nested repeats also support local or plain
   generated-child `(do child)` while generated nested spawns are pending
-  before a later same-body `await_all` drain, and top-level when-body nested
-  repeats additionally support static-parameter generated
-  `(do child (params ...))` while generated nested spawns are pending before
-  that same later drain.
+  before a later same-body `await_all` drain, and both top-level branch
+  subsets support static-parameter generated `(do child (params ...))` while
+  generated nested spawns are pending before that same later drain.
   Unsupported transaction parameter wait counts, non-scalar actor parameter
   wait counts, sample-incompatible runtime wait successors, nested loops, and
   loop bodies containing broader child activation, stages, or contracts need

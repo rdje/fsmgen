@@ -1,5 +1,31 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-18: switch-contained repeat parameterized do while spawn pending shipped
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.68`.
+- [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  now accepts static-parameter generated `(do child (params ...))` inside a
+  repeat directly under a top-level `switch` branch while one or more
+  generated nested spawns remain pending, only when a later same-body
+  `(await_all done)` drains every outstanding generated child before the
+  nested repeat check can loop.
+- The generated do site owns one deterministic generated do instance,
+  preserves static generated-top parameter binding, waits for that instance's
+  fresh done handoff, preserves source-order samples around spawn/do/sync, and
+  leaves pending generated-spawn done handoffs live for the later drain.
+- Bind/domain subclauses on that do, `await_any` around the do, new spawn
+  after the do before drain, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain fail-closed.
+- The ISF spec, downstream integration handoff, public contract, mdBook, doc
+  audits, task tree, roadmap board, and live docs now describe the switch
+  static-parameter pending-spawn generated do subset as shipped.
+- Validation: syntax checks, touched repeat/spawn test (Files=1, Tests=36),
+  touched repeat/spawn/doc checks (Files=4, Tests=398), focused
+  activation/domain/doc suite (Files=13, Tests=440), `mdbook build docs/book`,
+  `./bin/ci-regression isf --no-book` (Files=227, Tests=1211), and
+  `git diff --check` passed.
+- The active R14 frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.69`, which must select the next bounded
+  repeat-body child activation subset before further implementation.
 ## 2026-05-18: switch-contained repeat parameterized do while spawn pending selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.67`.
 - The active R14 task tree now selects the direct top-level `switch` branch

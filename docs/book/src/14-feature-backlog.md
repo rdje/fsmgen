@@ -339,23 +339,26 @@ no prior multi-pending `(await_any done)` observation and a later same-body
 `(await_all done)` drains the outstanding generated children before the nested
 repeat check can loop. That local do target remains in the parent scheduled
 module, waits for the local child's fresh done pulse, and does not clear the
-pending generated-spawn done set. The top-level `when` body nested-repeat
-subset also allows a plain generated-child `(do child)` in that same
-pending-spawn interval when the target child is already emitted as a generated
-child by another activation site. That generated do site owns one
-deterministic generated instance, waits for that instance's fresh done
-handoff, and leaves the pending generated-spawn done set live for the later
-same-body `(await_all done)` drain.
-Cross-domain
-repeat-body `do`,
-generated/spawn nested activation beyond the documented branch-contained
-generated `do` cases and the branch-contained spawned cases, deeper branch
-repeat activation, loop-contained repeat activation, and broader
-outstanding-child lifetime semantics beyond the mandatory-drain subset remain
-backlog. The
-shipped branch-contained generated nested do subsets still keep
-unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
-cross-domain activation, and broader outstanding-child semantics out of scope.
+pending generated-spawn done set. The top-level `when` body and top-level
+`switch` branch nested-repeat subsets also allow a plain generated-child
+`(do child)` in that same pending-spawn interval when the target child is
+already emitted as a generated child by another activation site. Those
+generated do sites own one deterministic generated instance, wait for that
+instance's fresh done handoff, and leave the pending generated-spawn done set
+live for the later same-body `(await_all done)` drain. The same two
+branch-contained subsets also ship static-parameter generated
+`(do child (params ...))` in that pending-spawn interval, preserving generated
+top parameter binding on the generated do instance while still requiring the
+later same-body drain. Bound/domain-qualified generated `do` while pending,
+prior or later `await_any` around the do, new nested `spawn` after the do
+before the drain, cross-domain repeat-body `do`, generated/spawn nested
+activation beyond the documented branch-contained generated `do` cases and
+the branch-contained spawned cases, deeper branch repeat activation,
+loop-contained repeat activation, and broader outstanding-child lifetime
+semantics beyond the mandatory-drain subset remain backlog. The shipped
+branch-contained generated nested do subsets still keep unsupported activation
+subclauses, spawn nesting, deeper branch/loop nesting, cross-domain
+activation, and broader outstanding-child semantics out of scope.
 
 The switch-contained static-parameter generated nested `do` subset also
 accepts `(bind ...)` input/output port bindings. The nested do site mirrors
@@ -450,23 +453,14 @@ plain `(do child)` may run while generated nested spawns are pending when
 The generated do site owns one deterministic generated instance, waits for
 that instance's fresh done handoff, and leaves the pending generated-spawn
 done set live for the later same-body `(await_all done)` drain.
-The top-level `when` body static-parameter generated `do` analogue is also
-shipped: `(do child (params ...))` may run while generated nested spawns are
-pending when a later same-body `(await_all done)` still drains every
-outstanding generated child before the nested repeat check can loop. The
-generated do site owns one deterministic generated instance, records static
-generated-top parameter binding, waits for that instance's fresh done handoff,
-and leaves the pending generated-spawn done set live for the later drain.
-The next selected implementation leaf is the direct top-level `switch` branch
-static-parameter generated `do` analogue: `(do child (params ...))` may run
+The top-level `when` body and top-level `switch` branch static-parameter
+generated `do` analogues are also shipped: `(do child (params ...))` may run
 while generated nested spawns are pending when a later same-body
 `(await_all done)` still drains every outstanding generated child before the
-nested repeat check can loop. That selected switch-contained leaf is not
-shipped yet. Its intended proof mirrors the when-contained static-parameter
-leaf: the generated do site owns one deterministic generated instance,
-records static generated-top parameter binding, waits for that instance's
-fresh done handoff, and leaves the pending generated-spawn done set live for
-the later drain.
+nested repeat check can loop. The generated do site owns one deterministic
+generated instance, records static generated-top parameter binding, waits for
+that instance's fresh done handoff, and leaves the pending generated-spawn
+done set live for the later drain.
 Bind/domain subclauses on that generated `do`, `await_any` observation before
 or after the do, new spawn after the do before the drain, cross-domain
 activation, deeper branch/loop nesting, and broader outstanding-child

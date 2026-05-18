@@ -3919,18 +3919,18 @@ sub _validate_repeat_body_spawn_subset {
                 my $plain_local_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && !$generated_do;
                 my $plain_generated_child_do = !$uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
                 my $static_parameter_generated_do = $uses_generated_params && !$uses_bindings && !$uses_domain && $generated_do;
-                my $allowed_static_parameter_generated_do = $when_body_repeat && $static_parameter_generated_do;
+                my $allowed_static_parameter_generated_do = defined($pending_generated_do_label) && $static_parameter_generated_do;
                 my $allowed_pending_do = $plain_local_do
                     || (defined $pending_generated_do_label && $plain_generated_child_do)
                     || $allowed_static_parameter_generated_do;
-                my $supported_pending_do = $when_body_repeat
+                my $supported_pending_do = defined($pending_generated_do_label)
                     ? "local plain '(do child)', plain generated-child '(do child)', or static generated '(do child (params ...))'"
-                    : "local plain '(do child)' or plain generated-child '(do child)'";
+                    : "local plain '(do child)'";
                 confess "Transaction '$tn': $pending_local_do_label nested repeat local do while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if defined $pending_local_do_label && $plain_local_do && $awaiting_multi_pending_drain;
                 confess "Transaction '$tn': $pending_generated_do_label nested repeat generated-child do while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if defined $pending_generated_do_label && $plain_generated_child_do && $awaiting_multi_pending_drain;
-                confess "Transaction '$tn': when-body nested repeat generated do with static params while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
+                confess "Transaction '$tn': $pending_generated_do_label nested repeat generated do with static params while generated spawns are pending is supported only before a later same-body '(await_all done)' drain, with no prior multi-pending await_any observation\n"
                     if $allowed_static_parameter_generated_do && $awaiting_multi_pending_drain;
                 confess "Transaction '$tn': $pending_generated_do_label nested repeat do while generated spawns are pending supports only $supported_pending_do in the current subset\n"
                     if defined $pending_generated_do_label && !$awaiting_multi_pending_drain && !$allowed_pending_do;

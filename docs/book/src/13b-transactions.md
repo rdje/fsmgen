@@ -500,9 +500,12 @@ target child is already emitted as a generated child by another activation
 site. That generated do site owns one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
 fresh done handoff, and does not clear the pending generated-spawn done set.
-Parameterized, bound, or domain-qualified generated `do` while a nested spawn
-is pending, new nested `spawn` after either do before the drain, and
-`(await_any done)` after either do remain fail-closed.
+The same branch-contained forms support static-parameter generated
+`(do child (params ...))` in that pending-spawn interval; the generated do
+site keeps its authored static parameter binding and still leaves the pending
+generated-spawn done set live for the later drain. Bound or domain-qualified
+generated `do` while a nested spawn is pending, new nested `spawn` after the
+do before the drain, and `(await_any done)` after the do remain fail-closed.
 Cross-domain
 repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained
@@ -729,9 +732,10 @@ module. The nested do state starts `local_worker`, waits for its fresh local
 done pulse, and then the `after_do` sample runs before the `await_all` state.
 The generated-spawn done set remains live across the local do, so the nested
 repeat check is still gated by `w0_done` at the same-body `await_all` drain.
-Parameterized, bound, or domain-qualified generated `do`, switch-contained
-generated-child `do`, `await_any` before or after the do, and new nested
-`spawn` after the do before the drain remain outside this shipped subset.
+Bound or domain-qualified generated `do`, `await_any` before or after the do,
+and new nested `spawn` after the do before the drain remain outside this local
+do subset. Branch-contained generated-child and static-parameter generated
+`do` while pending are documented below as separate shipped subsets.
 
 The same top-level `when` body pending-spawn interval may run a plain
 generated-child `(do child)` when that child already has a generated instance
@@ -758,9 +762,10 @@ state starts `parent_worker_repeat_do_0_start>`, waits for
 `parent_worker_repeat_do_0_done`, then runs `after_do` before the `await_all`
 state. The nested repeat check is still gated on `w0_done`, so the spawned
 child cannot be restarted by the loop until the same-body drain observes its
-fresh done handoff. Adding `(params ...)`, `(bind ...)`, or `(domain NAME)` to
-that pending generated-child do site remains fail-closed until a separate
-contract ships.
+fresh done handoff. Static `(params ...)` overrides on that pending generated
+do are shipped for both top-level `when` and top-level `switch` branch nested
+repeats; adding `(bind ...)` or `(domain NAME)` to the pending generated do
+site remains fail-closed until a separate contract ships.
 
 The direct switch-branch analogue is also shipped. A selected branch may run a
 local plain `(do child)` while one or more generated nested spawns remain
@@ -821,6 +826,35 @@ Lowering emits `w0` for the pending spawn and
 state waits for `parent_worker_repeat_do_0_done` only; `w0_done` remains
 pending until the later `await_all` drain gates the switch-branch nested
 repeat check.
+
+The same selected branch may use static parameter overrides on that generated
+`do` while the earlier generated spawn remains pending:
+
+```lisp
+(transaction parent
+  (on start)
+  (switch mode
+    (0
+      (repeat loops
+        (sample status as before)
+        (spawn worker as w0)
+        (do worker
+          (params
+            (WIDTH 16)))
+        (sample status as after_do)
+        (await_all done)))
+    (1
+      (sample status as other)))
+  (complete done))
+```
+
+The generated top instantiates `w0` for the spawn and
+`parent_worker_repeat_do_0` for the blocking `do`, applying `(WIDTH 16)` only
+to the generated `do` instance. The `do` consumes only
+`parent_worker_repeat_do_0_done`; `w0_done` remains live until the later
+same-body `await_all` drain. Binding or domain subclauses on that pending
+generated `do`, `await_any` before or after it, and a new nested `spawn` after
+it before the drain remain fail-closed.
 
 When a switch branch contains two generated spawns, `await_all` is the shipped
 drain. The same mandatory-drain rule also allows multi-pending `await_any`
@@ -918,14 +952,13 @@ branch-contained subsets may also run plain generated-child `(do child)` in
 that interval when the target is already generated elsewhere; that generated
 do waits on its generated do instance's fresh done handoff and still leaves
 spawned done handoffs pending for the later drain.
-The top-level `when` body nested subset may additionally run
-static-parameter generated `(do child (params ...))` in that interval; that
-generated do preserves static generated-top parameter binding, waits on its
-generated do instance's fresh done handoff, and still leaves spawned done
-handoffs pending for the later drain.
-Bound/domain-qualified generated do, the switch-contained static-parameter
-analogue, new spawn after that do before the drain, and await-any-after-do
-forms remain rejected.
+The top-level `when` body and top-level `switch` branch nested subsets may
+additionally run static-parameter generated `(do child (params ...))` in that
+interval; that generated do preserves static generated-top parameter binding,
+waits on its generated do instance's fresh done handoff, and still leaves
+spawned done handoffs pending for the later drain.
+Bound/domain-qualified generated do, new spawn after that do before the
+drain, and await-any-after-do forms remain rejected.
 For the shipped repeat-body local `do` subset, `(do child)` remains a local
 child activation when the target child remains in the parent scheduled module.
 If the same target child is already emitted as a generated child by another

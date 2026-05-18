@@ -1593,15 +1593,15 @@ Current lowering:
   `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
   fresh done handoff, and still leaves every pending generated-spawn done
   handoff live for the later same-body `(await_all done)` drain. Top-level
-  `when` body nested repeats also accept static-parameter generated
-  `(do child (params ...))` in that same pending-spawn interval; the generated
-  do site owns one deterministic instance, preserves static generated-top
-  parameter binding, waits for its own fresh done handoff, and leaves every
-  pending generated-spawn done handoff live for the later drain. Bound or
-  domain-qualified generated `do` while a nested spawn is pending, the
-  switch-contained static-parameter analogue, new nested `spawn` after either
-  do before the drain, `await_any` after either do, deeper branch/loop
-  nesting, and cross-domain activation remain fail-closed.
+  `when` body and top-level `switch` branch nested repeats also accept
+  static-parameter generated `(do child (params ...))` in that same
+  pending-spawn interval; the generated do site owns one deterministic
+  instance, preserves static generated-top parameter binding, waits for its
+  own fresh done handoff, and leaves every pending generated-spawn done
+  handoff live for the later drain. Bound or domain-qualified generated `do`
+  while a nested spawn is pending, new nested `spawn` after the do before the
+  drain, `await_any` after the do, deeper branch/loop nesting, and
+  cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a
@@ -2012,8 +2012,9 @@ or plain generated-child `(do child)` while generated nested spawns are
 pending, or static-parameter generated `(do child (params ...))` while
 generated nested spawns are pending, before a later same-body `await_all`
 drain, top-level switch-branch nested repeat local or plain generated-child
-`(do child)` while generated nested spawns are pending before a later
-same-body `await_all` drain,
+`(do child)` while generated nested spawns are pending, or static-parameter
+generated `(do child (params ...))` while generated nested spawns are pending,
+before a later same-body `await_all` drain,
 repeat-body
 generated blocking `(do child)` for
 already generated child targets, `(do child (params ...) [(bind ...)]
@@ -3359,9 +3360,10 @@ Focused tests:
   generated nested spawns are pending, or static-parameter generated
   `(do child (params ...))` while generated nested spawns are pending, before
   a later same-body `await_all` drain subset and the top-level switch-branch
-  nested repeat local or plain
-  generated-child `(do child)` while generated nested spawns are pending
-  before a later same-body `await_all` drain subset: nested loops, loops under
+  nested repeat local or plain generated-child `(do child)` while generated
+  nested spawns are pending, or static-parameter generated
+  `(do child (params ...))` while generated nested spawns are pending, before
+  a later same-body `await_all` drain subset: nested loops, loops under
   `when`/`switch`/`repeat`, cross-domain repeat-body `do`, and
   `while`/`until` loop bodies containing `do`,
   `spawn`, `await_all`, `await_any`, `stage`, or `contract` remain deferred
