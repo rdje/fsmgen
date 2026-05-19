@@ -887,6 +887,14 @@ records the generated-top child wiring under
 `actor_network.generated_tops[].children[]`. Generated-child data movement
 between the children remains backlog.
 
+The next selected ATL implementation frontier narrows that backlog to one
+scalar child-to-child route through the two-child top. The selected source
+uses `(writer.payload reader.payload)` in a named drive body, called after
+`reader.done` and before `writer.emit`. Positive support is not shipped yet;
+multi-route data wiring, mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, and permanent actor grouping remain
+backlog.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared

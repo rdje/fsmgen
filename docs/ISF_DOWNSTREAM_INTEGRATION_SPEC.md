@@ -1787,6 +1787,16 @@ route shape with a drive-body pair such as `(writer.payload reader.payload)`
 plus qualified actor trigger/event handoffs, they should expect a targeted
 fail-closed diagnostic rather than generated child-to-child wiring.
 
+The next selected ATL implementation frontier is that first scalar
+generated-child actor-to-actor route, but it is not downstream-emittable until
+the implementation leaf lands and this handoff is updated again. The selected
+future source shape is one drive body pair `(writer.payload reader.payload)`
+between two resolved children, called after `reader.done` and before
+`writer.emit`. The planned report contract reuses `actor_network.data_movements[]`
+for route provenance and `actor_network.generated_tops[]` for generated-top
+discovery; no new report family is selected. Until that support ships,
+downstream producers must keep treating the shape as deferred/fail-closed.
+
 ## 13. Scheduled `.fsm` Review Artifact
 
 Downstream tools should treat the scheduled `.fsm` files as review artifacts

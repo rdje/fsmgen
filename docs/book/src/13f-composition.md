@@ -751,6 +751,15 @@ wiring records. Data movement between generated children, fan-in/fan-out,
 route mux/storage, CDC/reset remapping, ready/backpressure, and payload
 protocols remain unavailable.
 
+The next selected ATL implementation frontier is the first positive
+generated-child actor-to-actor scalar route through that two-child top. The
+selected source reuses a named drive body with `(writer.payload
+reader.payload)` and calls it after `reader.done` and before
+`writer.emit`. Until that implementation leaf ships, this remains selected
+backlog rather than supported behavior: current released behavior still fails
+closed for the generated-child actor-to-actor data route coupled to child
+trigger/event handoffs.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
 static actor instance. The wait may stand alone for a single static actor, or

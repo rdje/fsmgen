@@ -864,6 +864,26 @@ to `writer_done`. Schedule JSON keeps the existing actor-network families and
 uses `actor_network.generated_tops[].children[]` for the per-child generated
 top wiring records.
 
+The next selected ATL implementation leaf is the first positive
+generated-child actor-to-actor scalar data route through that two-child top.
+The selected source shape reuses the existing drive-body `(sink source)`
+order:
+
+```lisp
+(drive forward_payload
+  (writer.payload reader.payload))
+```
+
+inside a parent transaction ordered as trigger `reader.capture`, await
+`reader.done`, drive `forward_payload`, trigger `writer.emit`, await
+`writer.done`, then complete. The selected generated top will wire
+`reader.payload` to the parent `reader_payload` handoff and parent
+`writer_payload` to `writer.payload`, while the scheduled parent owns the
+one-cycle route activation. This is selected backlog until the implementation
+leaf ships; route mux/storage, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, wider payload protocols, and permanent actor grouping
+remain deferred.
+
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape
@@ -3905,6 +3925,11 @@ targeted fail-closed coverage in
 the reserved `(writer.payload reader.payload)` route is rejected when it is
 coupled to qualified actor trigger/event handoffs because multi-child ATL top
 scheduling remains deferred.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` selects that same source shape as the
+next implementation frontier now that the control-only two-child generated
+top is shipped. Positive support is still not claimed until `.9.38` lands;
+downstream producers should continue to treat generated-child actor-to-actor
+routes as deferred in released behavior.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

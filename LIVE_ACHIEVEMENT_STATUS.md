@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child actor-to-actor route selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`.
+- `.9.38` is selected to lower one scalar generated-child actor-to-actor
+  route through the existing two-child generated ATL top.
+- Selected source shape: resolved `reader` and `writer` children, one drive
+  body `(writer.payload reader.payload)`, and a transaction ordered as
+  `trigger reader.capture`, `await reader.done`, `drive forward_payload`,
+  `trigger writer.emit`, `await writer.done`, then `complete`.
+- The selected implementation will reuse `actor_network.data_movements[]` and
+  `actor_network.generated_tops[]`; broader multi-route data wiring,
+  route mux/storage, CDC/reset remapping, ready/backpressure, payload
+  protocols, recursive actor networks, and permanent actor grouping remain
+  deferred.
+
 ## 2026-05-19: Project operations — hosted ISF parser warning cascade repaired
 - Completed `CI-HOSTED-ISF-REGRESSION-CASCADE.1`.
 - The GitHub `Perl FSM Regression` run `26091311743` for `de04debd` failed

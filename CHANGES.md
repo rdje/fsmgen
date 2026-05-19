@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child actor-to-actor route selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38` to lower one scalar
+  generated-child actor-to-actor data route through the shipped two-child
+  generated ATL top.
+- The selected source shape uses resolved `reader` and `writer` children, one
+  named drive body containing `(writer.payload reader.payload)`, and a parent
+  transaction ordered as trigger reader, await reader done, drive payload,
+  trigger writer, await writer done, then complete.
+- The next implementation must preserve existing report ownership:
+  `actor_network.data_movements[]` for route provenance and
+  `actor_network.generated_tops[]` for generated-top discovery. No new public
+  report family, storage, mux, CDC, ready/backpressure, payload protocol, or
+  permanent actor grouping behavior is selected.
+
 ### Project operations — hosted ISF parser warning cascade
 - Completed `CI-HOSTED-ISF-REGRESSION-CASCADE.1`.
 - Root-caused GitHub `Perl FSM Regression` run `26091311743`: the later ISF

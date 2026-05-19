@@ -1040,6 +1040,29 @@ generated ATL top with two resolved children and sequential trigger/event
 handoffs, but no data movement. That slice grows the top representation
 before attempting child-to-child payload routing.
 
+The next selected ATL widening is the first positive child-to-child payload
+route through that generated top. The selected source shape has two resolved
+children, one drive body pair `(writer.payload reader.payload)`, and one
+parent transaction ordered as:
+
+```lisp
+(trigger reader.capture)
+(await reader.done)
+(drive forward_payload)
+(trigger writer.emit)
+(await writer.done)
+```
+
+The generated top should wire the reader child output `payload` into the
+parent handoff input `reader_payload`, wire the parent handoff output
+`writer_payload` into the writer child input `payload`, and keep the existing
+reader/writer trigger and event links internal. The scheduled parent remains
+the timing owner for the route: it drives `writer_payload` from
+`reader_payload` only for the selected drive-call cycle. This does not select
+route storage, route muxes, ready/backpressure, CDC/reset remapping,
+multi-route fan-in/fan-out, wider payload protocols, recursive actor
+networks, or permanent actor grouping.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

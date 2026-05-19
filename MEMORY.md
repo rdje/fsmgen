@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child actor-to-actor route selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`.
+- `.9.38` will implement exactly one scalar generated-child actor-to-actor
+  data route through the shipped two-child generated top: trigger
+  `reader.capture`, await `reader.done`, drive
+  `(writer.payload reader.payload)`, trigger `writer.emit`, await
+  `writer.done`, then complete.
+- The selected route reuses existing `actor_network.data_movements[]`
+  `scalar_actor_handoff` evidence and existing `actor_network.generated_tops[]`
+  discovery; no new public report family or route storage/mux contract is
+  selected.
+- Multi-route data wiring, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocols, recursive actor networks, and
+  permanent actor grouping remain deferred.
+
 ## 2026-05-19: Hosted ISF parser warning cascade repaired
 - Completed `CI-HOSTED-ISF-REGRESSION-CASCADE.1`.
 - The hosted GitHub run `26091311743` for commit `de04debd` failed after the

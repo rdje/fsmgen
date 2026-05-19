@@ -1,5 +1,25 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-to-child data should reuse parent-scheduled routing first
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` selects the first positive
+  generated-child actor-to-actor route now that `.9.36` has proved a
+  two-child generated top without data movement.
+- The next slice deliberately routes through parent handoff ports instead of
+  inventing a direct permanent child-to-child wire. The parent schedule owns
+  the drive-call cycle, so the generated top only wires child ports to the
+  parent handoffs and lets the scheduled parent express when the route is
+  active.
+- The selected order is trigger source child, await its event, drive the
+  payload route, then trigger and await the sink child. That avoids claiming
+  speculative pre-event data capture, storage insertion, or concurrent
+  source/sink activation semantics before there is a reviewed mux/storage or
+  ready/backpressure contract.
+- Keeping the report surface on existing `data_movements[]` and
+  `generated_tops[]` avoids a schema fork for the first child-to-child route.
+  Broader multi-route, fan-in/fan-out, CDC, payload protocol, and route
+  storage work can still add explicit evidence later when those contracts are
+  selected.
+
 ## 2026-05-19: Hosted ISF warning fixes should remove the deprecated construct
 - `CI-HOSTED-ISF-REGRESSION-CASCADE.1` fixes the hosted ISF regression
   cascade by removing the parser construct that generated the warning instead
