@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL trigger-wait fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
+- Added `isf/atl_trigger_wait_pipeline.isf` as the bounded single-actor ATL
+  trigger/event round-trip fixture: one direct static actor, one
+  `(trigger worker.process)` parent output pulse, one `(await worker.done)`
+  parent event input wait, and one completion pulse.
+- The new regression `t/1328-isf-atl-trigger-wait-fixture-coverage.t` proves
+  scheduled parent `.fsm` structure including the default await timeout state,
+  strict schedule JSON parity, generated trigger/event handoff ports,
+  `transaction_triggers[]` and `event_waits[]` metadata, empty
+  association/group/data-movement arrays, and plain/strict HDL reachability.
+- Broad ISF gate passed with `Files=234, Tests=1369`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` to select the next ATL behavior
+  after the single-actor trigger/event wait fixture before code.
 ## 2026-05-19: ATL trigger-wait fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` as a selection leaf before
   fixture source/test changes.

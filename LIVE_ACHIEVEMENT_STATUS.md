@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL trigger-wait fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
+- Added the file-backed `isf/atl_trigger_wait_pipeline.isf` fixture and
+  `t/1328-isf-atl-trigger-wait-fixture-coverage.t`.
+- The fixture proves single-actor parent trigger/event orchestration through
+  scheduled `.fsm` structure, strict schedule JSON parity, generated
+  trigger/event handoff ports, `actor_network.transaction_triggers[]` and
+  `actor_network.event_waits[]` metadata, empty association/group/data
+  movement arrays, and plain/strict HDL generation.
+- Broad ISF gate passed with `Files=234, Tests=1369`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`.
+
 ## 2026-05-19: R14 — ATL trigger-wait fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`.
 - Selected `isf/atl_trigger_wait_pipeline.isf` for the next fixture slice,

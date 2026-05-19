@@ -673,6 +673,35 @@ artifacts, generated ATL tops, bidirectional pin movement, route mux/storage,
 peer events, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
 ready/backpressure, compact aliases, or permanent actor grouping.
 
+The ATL trigger-wait fixture is shipped as
+[isf/atl_trigger_wait_pipeline.isf](../isf/atl_trigger_wait_pipeline.isf). It
+uses one direct static actor instance and one transaction that triggers the
+actor, waits for its event, and completes:
+
+```lisp
+(transaction run
+  (on start)
+  (trigger worker.process)
+  (await worker.done)
+  (complete done))
+```
+
+The fixture emits only `atl_trigger_wait_pipeline.fsm`, exposes the generated
+one-cycle parent trigger output `worker_process_start`, exposes the generated
+parent event input `worker_done`, and reports one
+`actor_network.transaction_triggers[]` entry plus one
+`actor_network.event_waits[]` entry. It keeps
+`actor_network.association_schedules[]`, `group_schedules[]`, `groups[]`, and
+`data_movements[]` empty because this is a single-actor parent-handoff round
+trip, not a temporary trigger batch or a data route. The fixture is backed by
+[t/1328-isf-atl-trigger-wait-fixture-coverage.t](../t/1328-isf-atl-trigger-wait-fixture-coverage.t)
+for strict schedule JSON parity, scheduled `.fsm` structure, and plain plus
+strict HDL generation. It deliberately does not claim temporary trigger-batch
+plus event coupling, multiple waits or triggers, generated ATL child
+artifacts, generated ATL tops, actor type resolution, HDL child wiring, event
+payloads, data movement coupling, route mux/storage, fan-in/fan-out, CDC,
+ready/backpressure, compact aliases, or permanent actor grouping.
+
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape
@@ -3432,6 +3461,7 @@ Representative shipped fixtures:
 - [isf/atl_data_route_pipeline.isf](../isf/atl_data_route_pipeline.isf)
 - [isf/atl_pin_ingress_pipeline.isf](../isf/atl_pin_ingress_pipeline.isf)
 - [isf/atl_pin_egress_pipeline.isf](../isf/atl_pin_egress_pipeline.isf)
+- [isf/atl_trigger_wait_pipeline.isf](../isf/atl_trigger_wait_pipeline.isf)
 
 The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
@@ -3545,6 +3575,18 @@ inside the shipped scalar actor-to-pin subset and does not claim generated ATL
 child artifacts, generated ATL tops, bidirectional pin movement, route
 mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC, or
 permanent actor grouping.
+The [isf/atl_trigger_wait_pipeline.isf](../isf/atl_trigger_wait_pipeline.isf)
+fixture now has file-backed ATL trigger-wait coverage for one direct static
+actor instance, one `(trigger worker.process)` parent output pulse, one
+`(await worker.done)` parent event input wait, one
+`actor_network.transaction_triggers[]` entry, one
+`actor_network.event_waits[]` entry, empty association/group/data-movement
+arrays, strict schedule JSON parity, scheduled `.fsm` structure including the
+default await timeout state, and plain plus strict HDL generation. It stays
+inside the shipped parent-handoff subset and does not claim generated ATL
+child artifacts, generated ATL tops, actor type resolution, HDL child wiring,
+temporary trigger-batch plus event coupling, data movement coupling,
+fan-in/fan-out, CDC, or permanent actor grouping.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a
@@ -3795,6 +3837,7 @@ Focused tests:
 - [t/1325-isf-atl-data-route-fixture-coverage.t](../t/1325-isf-atl-data-route-fixture-coverage.t)
 - [t/1326-isf-atl-pin-ingress-fixture-coverage.t](../t/1326-isf-atl-pin-ingress-fixture-coverage.t)
 - [t/1327-isf-atl-pin-egress-fixture-coverage.t](../t/1327-isf-atl-pin-egress-fixture-coverage.t)
+- [t/1328-isf-atl-trigger-wait-fixture-coverage.t](../t/1328-isf-atl-trigger-wait-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

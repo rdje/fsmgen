@@ -2027,6 +2027,7 @@ isf/atl_trigger_batch_pipeline.isf
 isf/atl_data_route_pipeline.isf
 isf/atl_pin_ingress_pipeline.isf
 isf/atl_pin_egress_pipeline.isf
+isf/atl_trigger_wait_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2149,6 +2150,17 @@ intentionally does not claim generated ATL children, generated ATL tops,
 bidirectional pin movement, route mux/storage, trigger/data coupling, wider
 payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent actor
 grouping.
+The ATL trigger-wait fixture is covered by
+`t/1328-isf-atl-trigger-wait-fixture-coverage.t`, which proves strict schedule
+JSON parity, scheduled `.fsm` structure, one `(trigger worker.process)`
+parent output pulse, one `(await worker.done)` parent event input wait, one
+`actor_network.transaction_triggers[]` entry, one
+`actor_network.event_waits[]` entry, empty association/group/data-movement
+arrays, and plain plus strict HDL generation for
+`isf/atl_trigger_wait_pipeline.isf`. It intentionally does not claim generated
+ATL children, generated ATL tops, actor type resolution, HDL child wiring,
+temporary trigger-batch plus event coupling, data movement coupling,
+fan-in/fan-out, CDC, ready/backpressure, or permanent actor grouping.
 
 Recommended downstream smoke commands:
 
@@ -2170,6 +2182,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_data_route_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_pin_egress_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_wait_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf

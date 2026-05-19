@@ -349,16 +349,18 @@ bidirectional pin movement, route mux/storage, trigger/data coupling, wider
 payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or
 permanent actor grouping.
 
-The next selected ATL fixture is
+The ATL trigger-wait fixture is shipped as
 `isf/atl_trigger_wait_pipeline.isf`. It stays inside the shipped parent
 handoff subsets by using one direct static actor `worker`, one top-level
 transaction-body `(trigger worker.process)` one-cycle output handoff, one
 following `(await worker.done)` input handoff wait, and one completion pulse.
-The selected fixture will prove single-actor orchestration sequencing without
-claiming temporary trigger-batch plus event coupling, generated ATL children,
-generated ATL tops, actor type resolution, HDL child wiring, event payloads,
-data movement coupling, route mux/storage, fan-in/fan-out, CDC,
-ready/backpressure, compact aliases, or permanent actor grouping.
+The fixture proves single-actor orchestration sequencing, including
+`worker_process_start`, `worker_done`, `transaction_triggers[]`, and
+`event_waits[]`, without claiming temporary trigger-batch plus event coupling,
+generated ATL children, generated ATL tops, actor type resolution, HDL child
+wiring, event payloads, data movement coupling, route mux/storage,
+fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
+grouping.
 
 ## Endpoints
 

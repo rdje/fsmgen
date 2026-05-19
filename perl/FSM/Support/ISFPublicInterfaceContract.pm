@@ -505,6 +505,7 @@ sub build_isf_public_interface_contract {
             't/1325-isf-atl-data-route-fixture-coverage.t',
             't/1326-isf-atl-pin-ingress-fixture-coverage.t',
             't/1327-isf-atl-pin-egress-fixture-coverage.t',
+            't/1328-isf-atl-trigger-wait-fixture-coverage.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',

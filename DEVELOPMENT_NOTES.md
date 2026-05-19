@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL trigger-wait fixture is parent orchestration only
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10` promotes a fixture around behavior
+  already shipped by the individual parent-handoff trigger and event-wait
+  subsets.
+- The important coverage point is sequencing: the parent emits
+  `worker_process_start`, waits on `worker_done`, and only then completes,
+  while the default await timeout state remains visible in the scheduled
+  artifact.
+- This is not generated child execution. The actor remains an external
+  handoff endpoint until a later leaf selects actor type resolution, child
+  artifacts, and HDL child wiring.
 ## 2026-05-19: ATL next fixture should prove trigger/event orchestration
 - After closing the scalar data and pin movement fixture ladder, the next
   useful ATL proof point is a single actor trigger/event round trip.

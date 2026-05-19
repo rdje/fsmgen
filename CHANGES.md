@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL trigger-wait fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
+- Added `isf/atl_trigger_wait_pipeline.isf` and
+  `t/1328-isf-atl-trigger-wait-fixture-coverage.t`.
+- The fixture proves one bounded single-actor trigger/event orchestration
+  round trip using existing `(trigger actor.transaction)` and
+  `(await actor.event)` syntax: generated parent trigger output
+  `worker_process_start`, generated parent event input `worker_done`, strict
+  schedule JSON parity, scheduled `.fsm` structure with the default await
+  timeout state, and plain/strict HDL reachability.
+- Broad ISF gate passed with `Files=234, Tests=1369`.
+- Synchronized the public contract tested-by metadata, CI tier audit, ISF
+  spec, downstream handoff, fixture matrix, mdBook, roadmap board, task tree,
+  memory, live achievement status, and development notes.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`
+  for selecting the next bounded ATL behavior after the trigger-wait fixture
+  before code.
+
 ### R14 — ATL trigger-wait fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` before adding fixture
   source or tests.

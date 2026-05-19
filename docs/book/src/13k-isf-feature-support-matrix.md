@@ -219,6 +219,19 @@ plus strict HDL generation without claiming generated ATL children, generated
 ATL tops, bidirectional pin movement, route mux/storage, fan-in/fan-out, CDC,
 ready/backpressure, or permanent actor grouping.
 
+The ATL trigger-wait fixture is file-backed in the `isf` regression tier for
+single-actor parent orchestration. It uses
+`isf/atl_trigger_wait_pipeline.isf` to declare one static worker actor, emit
+one `(trigger worker.process)` parent output pulse, wait on one
+`(await worker.done)` parent event input, and complete. It proves the
+generated trigger/event handoff ports, `actor_network.transaction_triggers[]`,
+`actor_network.event_waits[]`, empty association/group/data-movement arrays,
+strict schedule JSON parity, scheduled `.fsm` structure including the default
+await timeout state, and plain plus strict HDL generation without claiming
+generated ATL children, generated ATL tops, actor type resolution, HDL child
+wiring, trigger-batch/event coupling, data movement coupling, fan-in/fan-out,
+CDC, ready/backpressure, or permanent actor grouping.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp
