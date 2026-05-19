@@ -353,6 +353,8 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
                 my $clauses = $transaction->{clauses};
                 my $first_route_index = $route_indices[0];
                 my $last_route_index = $route_indices[-1];
+                my $start_boundary_count = 0;
+                my $completion_boundary_count = 0;
                 for my $clause_idx (0 .. $#$clauses) {
                     next if $clause_idx >= $first_route_index && $clause_idx <= $last_route_index;
                     my $clause = $clauses->[$clause_idx];
@@ -361,13 +363,18 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
                             unless ref($clause) eq 'ARRAY'
                                 && @$clause == 2
                                 && ($clause->[0] // '') eq 'on';
+                        ++$start_boundary_count;
                         next;
                     }
                     confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
                         unless ref($clause) eq 'ARRAY'
                             && @$clause == 2
                             && ($clause->[0] // '') eq 'complete';
+                    ++$completion_boundary_count;
                 }
+                confess "$context two-child data route requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred\n"
+                    unless $start_boundary_count == 1
+                        && $completion_boundary_count == 1;
             }
         }
 

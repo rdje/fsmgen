@@ -928,6 +928,18 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ extra_start_boundary => 1 }),
+        qr/generated-child actor-to-actor data movement requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred/,
+        'generated-child actor-to-actor data route fails closed when an extra start boundary appears before the route segment',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ extra_completion_boundary => 1 }),
+        qr/generated-child actor-to-actor data movement requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred/,
+        'generated-child actor-to-actor data route fails closed when an extra completion boundary appears after the route segment',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the sink child is triggered before the drive call',
@@ -2107,6 +2119,16 @@ ISF
     my $interface_extra = $options->{split_sink_transaction}
         ? "    (input continue)\n    (output staged)\n"
         : '';
+    $interface_extra .= "    (input alt_start)\n"
+        if $options->{extra_start_boundary};
+    $interface_extra .= "    (output extra_done)\n"
+        if $options->{extra_completion_boundary};
+    my $extra_start_boundary = $options->{extra_start_boundary}
+        ? "    (on alt_start)\n"
+        : '';
+    my $extra_completion_boundary = $options->{extra_completion_boundary}
+        ? "    (complete extra_done)\n"
+        : '';
     my $run_complete = $options->{split_sink_transaction} ? 'staged' : 'done';
     my $split_sink_transaction = $options->{split_sink_transaction}
         ? <<'ISF'
@@ -2143,8 +2165,10 @@ ISF
   (transaction run
     (on start)
 ISF
+    $actor .= $extra_start_boundary;
     $actor .= $clauses;
     $actor .= $repeated_drive_call;
+    $actor .= $extra_completion_boundary;
     $actor .= "    (complete $run_complete))\n";
     $actor .= $split_sink_transaction;
     $actor .= ")\n\n";

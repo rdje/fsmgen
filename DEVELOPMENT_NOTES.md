@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route-boundary cardinality is now parser-owned
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.64` adds focused coverage for
+  generated-child actor-to-actor route transactions that contain multiple
+  simple start or completion boundaries around the isolated route segment.
+- The parser now checks the owning parent transaction after route ownership,
+  order, contiguity, and isolation pass. It accepts exactly one simple
+  `(on ...)` before the route and exactly one simple `(complete ...)` after
+  it, then rejects extra boundary clauses with a targeted diagnostic.
+- The lowerer mirrors that count when route-clause and transaction-clause
+  evidence are present, preserving fail-closed behavior if malformed data
+  reaches generated-top construction.
+- This keeps activation fan-in, completion fan-out, start-condition
+  arbitration, local setup/cleanup, route continuation, storage, muxing,
+  backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL route boundaries should stay single-source for now
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63` selects route-boundary cardinality
   hardening as the next generated-child route boundary.

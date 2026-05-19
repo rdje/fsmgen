@@ -820,7 +820,7 @@ condition and completion. Parent-local clauses before the source trigger or
 after the sink event wait stay fail-closed until a later contract selects
 pre-route setup, post-route sampling, local side effects, cleanup work, route
 continuation, storage, muxing, backpressure, or payload behavior.
-The selected route-boundary cardinality hardening keeps that isolated route
+The shipped route-boundary cardinality hardening keeps that isolated route
 bounded by exactly one simple start condition and one simple completion
 pulse. Extra start or completion boundaries stay fail-closed until a later
 contract selects activation fan-in, completion fan-out, start-condition

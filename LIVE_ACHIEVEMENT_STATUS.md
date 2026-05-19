@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route-boundary cardinality hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.64`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  transactions with an extra simple start boundary before the route segment
+  or an extra simple completion boundary after it.
+- The parser emits a targeted route-boundary cardinality diagnostic; the
+  lowerer keeps a defensive boundary-count backstop.
+- Activation fan-in, completion fan-out, start-condition arbitration, local
+  setup/cleanup, route continuation, pending handoff storage,
+  route mux/storage, ready/backpressure, payload protocols, recursive actor
+  networks, and permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child route-boundary cardinality selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63`.
 - The active ATL frontier advances to

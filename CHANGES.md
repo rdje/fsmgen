@@ -1,6 +1,30 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child route-boundary cardinality hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.64`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for route transactions with an extra simple `(on ...)` start boundary
+  before the route segment or an extra simple `(complete ...)` completion
+  boundary after it.
+- The parser now emits a targeted route-boundary cardinality diagnostic after
+  route ownership, ordering, contiguity, and isolation pass; the lowerer keeps
+  a defensive boundary-count backstop.
+- Existing positive generated-child actor-to-actor, control-only two-child,
+  pin-ingress, pin-egress, parent-handoff data-route, repeated-trigger,
+  repeated-wait, same-parent-transaction, route-order, route-contiguity,
+  route-isolation, and extra-boundary fixtures remain in the focused
+  regression set.
+- No ATL source syntax, report key, generated artifact shape, activation
+  fan-in, completion fan-out, start-condition arbitration, local
+  setup/cleanup, route continuation, pending handoff storage,
+  route mux/storage, CDC/reset remapping, ready/backpressure, payload
+  protocol, recursive actor network, or permanent actor grouping behavior
+  changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65` to select the next bounded widening
+  or hardening slice before code.
+
 ### R14 — ATL generated-child route-boundary cardinality selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63` as a doc-only selection
   leaf.
