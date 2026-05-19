@@ -862,6 +862,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ same_child_route => 1 }),
+        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement requires distinct source and sink actor instances/,
+        'generated-child actor-to-actor data route fails closed when source and sink name the same child',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
@@ -1931,9 +1937,14 @@ CLAUSES
     my $reader_payload_port = $options->{omit_reader_payload}
         ? ''
         : _interface_port_decl('output', 'payload', $reader_payload_width);
-    my $drive_body = $options->{extra_drive_pair}
-        ? "    (writer.payload reader.payload)\n    (writer.sideband reader.sideband)"
-        : "    (writer.payload reader.payload)";
+    my $drive_body = $options->{same_child_route}
+        ? "    (reader.payload_in reader.payload_out)"
+        : $options->{extra_drive_pair}
+            ? "    (writer.payload reader.payload)\n    (writer.sideband reader.sideband)"
+            : "    (writer.payload reader.payload)";
+    my $reader_self_route_ports = $options->{same_child_route}
+        ? "      (input payload_in)\n      (output payload_out)\n"
+        : '';
     my $second_route_drive = $options->{second_route_drive}
         ? <<'ISF'
   (drive forward_sideband
@@ -1986,6 +1997,7 @@ ISF
       (input capture_start)
 ISF
     $library .= $reader_payload_port;
+    $library .= $reader_self_route_ports;
     $library .= <<'ISF';
       (output done))
     (transaction capture

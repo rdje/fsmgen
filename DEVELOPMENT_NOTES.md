@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-route distinct-instance checks were already in the parser
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46` added regression coverage for a
+  generated-child actor-to-actor route whose source and sink actor qualifiers
+  name the same resolved child.
+- The parser already rejects this shape before lowering with
+  `requires distinct source and sink actor instances`. The new coverage keeps
+  that early source-level boundary explicit for the generated-child route
+  fixture.
+- Keeping this as coverage-only is intentional: no self-route, loopback,
+  child-internal bypass, route storage, mux, fan-in/fan-out, backpressure, or
+  payload policy has been selected.
+
 ## 2026-05-19: ATL child routes should stay between distinct children
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45` selects distinct source/sink child
   hardening as the next generated-child route boundary.
