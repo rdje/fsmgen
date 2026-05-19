@@ -389,6 +389,50 @@ for my $marker (@required_atl_concept_markers) {
     );
 }
 
+my $downstream_atl_section = markdown_heading_section(
+    $downstream,
+    '## 12.5. Static Actor Network Metadata',
+);
+
+ok(
+    length($downstream_atl_section),
+    'downstream handoff keeps a dedicated ATL actor-network section',
+);
+
+my @required_downstream_atl_markers = (
+    '### 12.5.1. Actor-As-Network Boundary And Direct Instances',
+    '### 12.5.2. Drive-Body Data Movement And Endpoint Vocabulary',
+    '### 12.5.3. Static Groups Versus Task-Scoped Associations',
+    '### 12.5.4. Trigger And Event Pulses',
+    '### 12.5.5. Generated-Child Route Terms And Boundaries',
+    '### 12.5.6. Generated Child Artifacts And Top Data Routes',
+    'The enclosing actor is the network boundary',
+    'static ATL declarations in `(network ...)`',
+    'drive body pair stays `(sink source)`',
+    '`connect`, `transfer`, and `move` are not public ATL v0 movement clauses',
+    'scheduling: "metadata_only"',
+    'lifetime: "task_scoped"',
+    'events are one-cycle control pulses',
+    'one-cycle parent output named `actor_transaction_start`',
+    'Route lifetime is one named drive-call cycle',
+    'Generated handoffs are deterministic',
+    'Handoff remapping is not shipped',
+    'Route muxing and route storage are not shipped',
+    'Fan-in and fan-out are not shipped',
+    'Ready/backpressure is not shipped',
+    'Payload protocols are not shipped',
+    'selected one scalar two-child route',
+    'broader actor-to-actor generated-child',
+);
+
+for my $marker (@required_downstream_atl_markers) {
+    like(
+        $downstream_atl_section,
+        qr{\Q$marker\E},
+        "downstream ATL section keeps concept marker: $marker",
+    );
+}
+
 my $route_terms_section = markdown_heading_section(
     $composition,
     '#### Generated-Child Route Terms',

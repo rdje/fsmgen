@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL downstream handoff concept coverage synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`.
+- Synchronized the downstream ISF integration handoff with the dedicated
+  mdBook ATL concept coverage.
+- The handoff now has dedicated ATL subsections for actor-as-network boundary
+  and direct instances, drive-body movement and endpoint vocabulary, static
+  groups versus task-scoped associations, trigger/event pulses,
+  generated-child route terms and boundaries, and generated child
+  artifacts/top data routes.
+- The mdBook audit now checks the downstream handoff ATL section directly.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, or route capability changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`.
+
 ### R14 — ATL downstream handoff concept sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88` as a doc-only selection
   leaf.

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL handoff mirrors the book concept anchors
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89` keeps the downstream handoff
+  self-contained after the book concept-section sync.
+- The handoff now has explicit ATL subsections matching the book's concept
+  split, plus route-term bullets for the generated-child actor-to-actor
+  route boundary.
+- The mdBook feature-matrix audit reads the handoff section directly, so the
+  SPECFORGE-facing handoff and user-facing book have a mechanical drift
+  guard for these ATL terms.
+
 ## 2026-05-19: ATL handoff needs the same concept anchors as the book
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88` selects downstream handoff
   synchronization after the book gained dedicated ATL concept subsections.

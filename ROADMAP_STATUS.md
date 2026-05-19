@@ -454,8 +454,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   actor-as-network boundary, movement, pulses, static groups, task-scoped
   associations, and generated-child routes. `.9.88` selected downstream
   handoff synchronization so the SPECFORGE-facing integration document stays
-  self-contained and aligned with those book concepts. The active ATL frontier
-  is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`.
+  self-contained and aligned with those book concepts. `.9.89` completed that
+  handoff sync and audit coverage. The active ATL frontier is now
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

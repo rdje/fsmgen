@@ -1669,6 +1669,8 @@ also has exactly one matching parent trigger/event pair, it emits the
 matching `<parent>_top.fsm` and reports it through
 `actor_network.generated_tops[]`.
 
+### 12.5.1. Actor-As-Network Boundary And Direct Instances
+
 Accepted form:
 
 ```lisp
@@ -1716,6 +1718,8 @@ recursive instantiation, qualified actor/event behavior beyond the selected
 single parent-handoff event wait and single parent-handoff transaction trigger
 subsets, and group scheduling behavior beyond the exact same-cycle trigger
 batch subset documented below.
+
+### 12.5.2. Drive-Body Data Movement And Endpoint Vocabulary
 
 The broader ATL v0 contract is selected for future slices, but downstream
 producers must not emit it until the corresponding support appears in the
@@ -1811,6 +1815,24 @@ capability manifest and this handoff:
   coupling, multi-event fan-in, storage/mux insertion, CDC, compact aliases,
   and broader fan-in/fan-out.
 
+### 12.5.3. Static Groups Versus Task-Scoped Associations
+
+Static group declarations are review metadata unless a later leaf explicitly
+selects scheduling behavior. A `(group NAME (members ACTOR...) (mode
+concurrent))` declaration alone reports `actor_network.groups[]` with
+`scheduling: "metadata_only"` and does not run actors concurrently, create a
+permanent association, infer dependencies, insert storage, or bypass CDC,
+width, ordering, or lifetime checks.
+
+Task-scoped associations are scheduled evidence created by accepted behavior,
+not permanent membership. The shipped temporary trigger-batch subset reports
+`actor_network.association_schedules[]` with `lifetime: "task_scoped"` for
+the one parent state that pulses the selected actor triggers in the same
+cycle. `actor_network.group_schedules[]` remains a schema-version-1
+compatibility view of that same timing evidence.
+
+### 12.5.4. Trigger And Event Pulses
+
 Current ATL event-wait handoff subset: downstream producers may emit exactly
 one top-level transaction-body `(await actor.event)` against a declared direct
 static actor instance. The event name must be a scalar HDL identifier. The
@@ -1886,6 +1908,8 @@ cannot reuse, suppress, or shadow those same handoff names if metadata
 bypasses normal parser finalization. This is a safety backstop only, not a
 new source or report feature.
 
+### 12.5.5. Generated-Child Route Terms And Boundaries
+
 The mdBook has an audit-backed dedicated generated-child route terminology
 section for these terms. Downstream consumers should treat that book section
 and this handoff as the truth sources for current route support and explicit
@@ -1894,6 +1918,25 @@ non-support.
 The documentation precision slice now makes that book section a term-by-term
 support boundary. It does not change the downstream source surface,
 schedule-report contract, generated artifact shape, or shipped ATL behavior.
+
+For downstream implementation, the current route terms mean:
+
+- Route lifetime is one named drive-call cycle.
+- Generated handoffs are deterministic parent-visible signals such as
+  `reader_payload`, `writer_payload`, `reader_capture_start`, `writer_emit_start`,
+  `reader_done`, `writer_done`, and `forward_payload_start`.
+- Handoff remapping is not shipped; collisions with authored parent interface
+  or actor-owned storage names fail closed.
+- Route muxing and route storage are not shipped; the selected route has one
+  source child, one sink child, one named drive call, no route-local selector,
+  and no route-local storage.
+- Fan-in and fan-out are not shipped for route triggers, events, or data.
+- Ready/backpressure is not shipped; there is no ready signal, retry,
+  buffering, or replay contract.
+- Payload protocols are not shipped beyond the current one-bit scalar
+  drive-call-cycle value.
+
+### 12.5.6. Generated Child Artifacts And Top Data Routes
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
 the selected one-bit actor-event handoff input, selected one-cycle
