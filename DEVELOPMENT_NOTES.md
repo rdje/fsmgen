@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL next fixture should show network egress
+- After promoting top-level pin ingress coverage, the next fixture should
+  prove the inverse boundary movement: actor endpoint information driving a
+  top-level output pin.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8` is selected as a fixture promotion
+  slice around the already shipped scalar actor-to-top-level output pin
+  handoff subset.
+- The selected source intentionally uses `(pins.result producer.payload)`,
+  preserving the drive-body `(sink source)` order while making
+  `source: external_handoff` and `sink: top_level_pin` visible in
+  `actor_network.data_movements[]`.
 ## 2026-05-19: ATL pin-ingress fixture is coverage, not new routing semantics
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6` promotes a fixture around behavior
   already shipped by the top-level input-pin to actor handoff subset.

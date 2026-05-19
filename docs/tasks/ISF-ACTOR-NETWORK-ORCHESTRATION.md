@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -330,9 +330,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.6: add ATL pin ingress fixture`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the next ATL network-boundary fixture after pin ingress.`
   Acceptance: `Review the shipped pin-ingress fixture and choose the next bounded ATL network-boundary or association slice before code. Candidate directions include selecting the inverse actor-to-top-level output pin egress fixture, coupling trigger batches with event waits, selecting generated child artifact boundaries, or tightening group_schedules[] compatibility/deprecation policy. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.7: select ATL pin egress fixture`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`
+  Status: `active`
+  Goal: `Promote a realistic ATL actor to top-level output-pin fixture.`
+  Acceptance: `Add isf/atl_pin_egress_pipeline.isf as a bounded network-boundary data-movement fixture using already shipped ATL source syntax: one direct static actor instance, one scalar top-level output pin named result, one named drive body with exactly one '(pins.result producer.payload)' actor-to-pin endpoint pair, and one top-level transaction drive call. The fixture must emit only atl_pin_egress_pipeline.fsm, expose the generated actor source handoff input producer_payload, preserve result as the existing top-level output sink, report one actor_network.data_movements[] entry with kind scalar_actor_to_pin_handoff, source external_handoff, sink top_level_pin, route_lifetime drive_call_cycle, and storage none, keep actor_network.association_schedules[] and group_schedules[] empty, and prove strict schedule JSON parity plus plain/strict HDL reachability. Do not claim generated ATL child artifacts, generated ATL tops, bidirectional pin movement, route mux/storage, peer events, trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor grouping.`
   Verification: `pending`
   Commit: `pending`
 
@@ -340,7 +347,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7` | `active` | `.9.6` promoted the selected pin-ingress fixture; the next ATL network-boundary or association behavior must be selected before further implementation. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8` | `active` | `.9.7` selected the inverse actor-to-top-level output pin egress fixture using already shipped ATL pin movement. |
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -527,6 +534,61 @@ Explicit non-claims:
 - no generated ATL child `.fsm`;
 - no generated ATL top;
 - no actor-to-pin egress or bidirectional pin movement in this fixture;
+- no route mux/storage, peer event, trigger/data coupling, wider payload,
+  fan-in/fan-out, CDC, ready/backpressure, compact alias, or permanent actor
+  grouping behavior.
+
+## Selected Next ATL Pin-Egress Fixture
+
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.7` selects the next fixture leaf as the
+inverse network-boundary movement fixture. The goal is to demonstrate movement
+from an actor in the network to a top-level actor output pin while staying
+inside the already shipped scalar actor-to-pin handoff subset.
+
+Selected next implementation leaf:
+
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`
+
+Selected file:
+
+- `isf/atl_pin_egress_pipeline.isf`
+
+Selected source shape:
+
+```lisp
+(actor atl_pin_egress_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output result)
+    (output done))
+  (instance producer of packet_reader)
+  (drive publish_result
+    (pins.result producer.payload))
+  (transaction run
+    (on start)
+    (drive publish_result)
+    (complete done)))
+```
+
+Selected coverage:
+
+- one scheduled parent artifact: `atl_pin_egress_pipeline.fsm`;
+- generated actor source handoff input: `producer_payload`;
+- existing top-level output sink pin: `result`;
+- one `actor_network.data_movements[]` route with kind
+  `scalar_actor_to_pin_handoff`, `source: external_handoff`, `sink:
+  top_level_pin`, `route_lifetime: drive_call_cycle`, and `storage: none`;
+- empty `actor_network.association_schedules[]` and `group_schedules[]`
+  because this route is drive-activated, not a trigger-batch association;
+- strict schedule JSON parity plus plain and strict HDL reachability.
+
+Explicit non-claims:
+
+- no generated ATL child `.fsm`;
+- no generated ATL top;
+- no bidirectional pin movement in this fixture;
 - no route mux/storage, peer event, trigger/data coupling, wider payload,
   fan-in/fan-out, CDC, ready/backpressure, compact alias, or permanent actor
   grouping behavior.
@@ -927,6 +989,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1325-isf-atl-data-route-fixture-coverage.t`; `prove -Iperl t/1325-isf-atl-data-route-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_data_route_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `realistic scalar actor-to-actor data-route fixture promoted; strict schedule JSON plus HDL coverage prove generated parent handoff ports and data_movements[] metadata; broad ISF gate passes with Files=231, Tests=1360` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a top-level input-pin to actor ingress fixture before source/test implementation` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1326-isf-atl-pin-ingress-fixture-coverage.t`; `prove -Iperl t/1326-isf-atl-pin-ingress-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_pin_ingress_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `realistic scalar pin-ingress fixture promoted; strict schedule JSON plus HDL coverage prove top-level pin source and scalar_pin_to_actor_handoff metadata; broad ISF gate passes with Files=232, Tests=1363` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a scalar actor-to-top-level output pin egress fixture before source/test implementation` |
 
 ## Commit Log
 
@@ -968,6 +1031,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.4: add ATL data-route fixture` | `promotes the scalar actor-to-actor data-route fixture with strict schedule JSON and HDL coverage` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.5: select ATL pin ingress fixture` | `selects the top-level input-pin to actor ingress fixture using shipped pin movement syntax` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.6: add ATL pin ingress fixture` | `promotes the scalar top-level input-pin to actor fixture with strict schedule JSON and HDL coverage` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.7: select ATL pin egress fixture` | `selects the actor-to-top-level output pin egress fixture using shipped pin movement syntax` |
 
 ## Changelog
 
@@ -1171,3 +1235,11 @@ Current proposal summary:
   arrays, and plain/strict HDL reachability. The broad ISF gate passed with
   `Files=232, Tests=1363`. The active frontier moves to `.9.7` to select the
   next ATL network-boundary or association behavior before code.
+- `2026-05-19`: Completed `.9.7`: selected `.9.8` to promote
+  `isf/atl_pin_egress_pipeline.isf`, a realistic actor-to-top-level output
+  pin egress fixture using a named drive body and one transaction drive call.
+  The selected fixture will prove generated actor source handoff input
+  `producer_payload`, existing top-level output sink `result`,
+  `scalar_actor_to_pin_handoff` metadata, strict schedule JSON, and
+  plain/strict HDL reachability without claiming generated ATL children, ATL
+  tops, bidirectional pin movement, route mux/storage, or broader pin routing.

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL pin egress fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7` as a selection leaf before
+  fixture source/test changes.
+- The next active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`,
+  which will promote `isf/atl_pin_egress_pipeline.isf`.
+- Selected source shape: one direct static actor instance, one existing
+  top-level output pin `result`, one named drive body with
+  `(pins.result producer.payload)`, and one top-level transaction drive call.
+- The selected fixture will prove generated actor source handoff input
+  `producer_payload`, existing top-level output sink `result`,
+  `scalar_actor_to_pin_handoff` metadata, strict schedule JSON parity, and
+  plain/strict HDL reachability.
 ## 2026-05-19: ATL pin ingress fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`.
 - Added `isf/atl_pin_ingress_pipeline.isf` as the bounded scalar ATL
