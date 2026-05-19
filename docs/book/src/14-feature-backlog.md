@@ -814,6 +814,11 @@ remains outside the shipped subset; the second wait fails before scheduled
 emission with the current one-event-wait diagnostic, and production behavior
 is not widened.
 
+The next selected ATL boundary is source-root safety before generated child
+resolution. A sibling top-level `(actor ...)` root in the same `.isf` source
+must fail closed until FSMGen has an explicit actor type-resolution and
+generated child artifact contract.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared

@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -386,9 +386,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.14: prove ATL multi-wait boundary`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the next ATL generated-child or actor type-resolution boundary.`
   Acceptance: `Review the shipped parent-handoff ATL ladder and the now-regression-backed multi-event boundary; choose the next bounded behavior-bearing or design-clarification slice before code. Candidate directions include generated ATL child artifact naming, actor type resolution prerequisites, generated ATL top boundaries, generated child event wiring, or richer scheduled data-route association policy. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.15: select ATL actor-root boundary`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`
+  Status: `active`
+  Goal: `Fail closed multiple top-level actor roots before ATL type resolution.`
+  Acceptance: `Parser coverage rejects sources with more than one top-level '(actor ...)' root using a targeted diagnostic that explains FSMGen currently accepts one compile/report entry actor and that sibling actor roots are not ATL child type definitions until actor type resolution is explicitly selected. Valid one-actor sources and one actor plus '(library ...)' roots remain accepted. Specs, downstream handoff, public contract, mdBook, task tree, tests, and live docs stay synchronized. No generated ATL child '.fsm', generated ATL top, actor type resolution, HDL child wiring, or source lookup behavior is claimed.`
   Verification: `pending`
   Commit: `pending`
 
@@ -396,7 +403,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` | `active` | `.9.14` proved the deferred multi-event fan-in boundary; the next generated-child or actor type-resolution boundary must be selected before further behavior-bearing code. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` | `active` | `.9.15` selected source-root safety before generated ATL child type resolution; sibling actor roots must fail closed before code claims child artifacts. |
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -817,6 +824,48 @@ Shipped behavior:
   route mux/storage, CDC, or permanent actor grouping behavior is claimed.
 - coverage lives in `t/1322-isf-actor-network-static.t`.
 
+## Selected ATL Actor-Root Boundary
+
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` selects a source-root safety boundary
+before generated ATL child artifacts or actor type resolution. Current ISF
+compiles one entry actor. A sibling top-level actor root must not be silently
+treated as an inline type definition for `(instance NAME of ACTOR_TYPE)`.
+
+Selected implementation leaf:
+
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`
+
+Selected rejected source shape:
+
+```lisp
+(actor atl_parent
+  (clock clk)
+  (interface
+    (input start)
+    (output done))
+  (instance worker of packet_worker)
+  (transaction run
+    (on start)
+    (trigger worker.process)
+    (complete done)))
+
+(actor packet_worker
+  (clock clk)
+  (interface
+    (input process_start)
+    (output done))
+  (transaction process
+    (on process_start)
+    (complete done)))
+```
+
+Selected expected behavior:
+
+- parsing fails with a targeted multiple-actor-root diagnostic;
+- one actor root plus `(library ...)` roots remains accepted;
+- no generated ATL child `.fsm`, generated ATL top, actor type resolution,
+  HDL child wiring, route mux/storage, or source lookup behavior is claimed.
+
 ## Selected First ATL Fixture
 
 `ISF-ACTOR-NETWORK-ORCHESTRATION.8.2` pivots the first realistic ATL fixture
@@ -1221,6 +1270,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `realistic trigger-batch wait fixture promoted; strict schedule JSON plus HDL coverage prove temporary association metadata, compatibility schedule metadata, and one event wait; broad ISF gate passes with Files=235, Tests=1372` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected negative coverage for the deferred multi-event fan-in boundary after trigger-batch/event wait coupling` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` | `perl -Iperl -c t/1322-isf-actor-network-static.t`; `prove -Iperl t/1322-isf-actor-network-static.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book (Files=235, Tests=1372)`; `git diff --check` | `proved one temporary trigger batch followed by two actor event waits remains fail-closed with the one-event-wait diagnostic` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected multiple actor-root fail-closed coverage before ATL actor type resolution or generated child artifacts` |
 
 ## Commit Log
 
@@ -1270,6 +1320,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.12: add ATL trigger-batch wait fixture` | `promotes the temporary trigger-batch plus single event-wait fixture with strict schedule JSON and HDL coverage` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.13: select ATL multi-wait boundary` | `selects negative coverage proving multi-event waits after one temporary trigger batch remain outside the shipped subset` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.14: prove ATL multi-wait boundary` | `adds focused negative coverage for temporary trigger-batch plus multiple event waits and advances to generated-child boundary selection` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.15: select ATL actor-root boundary` | `selects multiple actor-root fail-closed coverage as the next source-resolution prerequisite` |
 
 ## Changelog
 
@@ -1535,3 +1586,8 @@ Current proposal summary:
   Tests=1372`. No production behavior changed. The active frontier moves to
   `.9.15` to select generated-child artifact or actor type-resolution
   boundaries before code.
+- `2026-05-19`: Completed `.9.15`: selected `.9.16` to fail closed multiple
+  top-level `(actor ...)` roots before sibling actor roots can be mistaken for
+  resolved ATL child type definitions. The next code leaf will preserve one
+  actor root plus `(library ...)` roots and will not claim generated child
+  artifacts, generated ATL tops, actor type resolution, or HDL child wiring.

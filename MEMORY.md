@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL actor-root boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` as a selection leaf before
+  source-root parser changes.
+- The next active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`,
+  which must make multiple top-level `(actor ...)` roots fail closed with a
+  targeted diagnostic.
+- The selected rejected shape is one parent actor with `(instance worker of
+  packet_worker)` plus a second sibling `(actor packet_worker ...)` root in the
+  same `.isf` source.
+- The purpose is to prevent accidental silent child-type definitions before
+  ATL actor type resolution, generated child `.fsm` artifacts, and generated
+  ATL top packaging are explicitly selected.
 ## 2026-05-19: ATL multi-event fan-in boundary proof shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
 - Added focused negative regression coverage in

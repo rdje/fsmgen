@@ -640,6 +640,12 @@ one-event-wait diagnostic. That regression keeps trigger-batch/event
 sequencing separate from future actor-event fan-in or generated child
 completion joins.
 
+The next selected ATL prerequisite is source-root safety. A second top-level
+`(actor ...)` root in the same `.isf` file is not yet a resolved actor type for
+`(instance name of ActorType)`. The next implementation slice will make that
+shape fail closed with a targeted diagnostic before generated child `.fsm`
+artifacts, generated ATL tops, or HDL child wiring are claimed.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
 static actor instance. The wait may stand alone for a single static actor, or

@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL actor-root boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` before changing parser
+  behavior.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` to fail closed multiple
+  top-level `(actor ...)` roots with a targeted diagnostic.
+- The rejected source shape is a parent ATL actor with a static instance plus
+  a sibling actor root that could be mistaken for an inline actor type
+  definition.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
+
 ### R14 — ATL multi-event fan-in boundary proof
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
 - Added focused negative coverage in

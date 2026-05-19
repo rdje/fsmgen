@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL actor-root boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` to make multiple top-level
+  `(actor ...)` roots fail closed before generated ATL child type resolution
+  is claimed.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
+
 ## 2026-05-19: R14 — ATL multi-event fan-in boundary proof
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
 - Added focused negative coverage in

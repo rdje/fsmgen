@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child generation needs a source-root boundary first
+- Current ISF parsing compiles one actor root as the entry actor. Before ATL
+  generated child artifacts can use sibling actor definitions, that packaging
+  contract must be explicit.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` is selected to fail closed multiple
+  top-level `(actor ...)` roots instead of letting a second actor look like an
+  inline child type definition.
+- This keeps generated child `.fsm` naming, actor type lookup, generated ATL
+  top emission, and HDL child wiring deferred until their source-resolution
+  contract is selected deliberately.
 ## 2026-05-19: ATL multi-event proof keeps the parent-handoff line
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` intentionally adds only negative
   coverage. It does not widen parser or scheduler behavior.
