@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route drive argument hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
+- `.9.80` will add focused fail-closed coverage for generated-child
+  actor-to-actor route drive definitions with formal parameters and route
+  drive calls with actual arguments.
+- The selected hardening protects the current one-bit drive-call-cycle route
+  before drive actual binding, expression movement, payload protocols, route
+  mux/storage, fan-in/fan-out, ready/backpressure, or remapping behavior is
+  inferred.
+
 ## 2026-05-19: ATL design proposal sync shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79`.

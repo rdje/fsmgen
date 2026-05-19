@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL route drive argument hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80` to add focused
+  fail-closed coverage for generated-child actor-to-actor route drive
+  definitions with formal parameters and route drive calls with actual
+  arguments.
+- The selected hardening protects the current one-bit drive-call-cycle route
+  before drive actual binding, expression movement, payload protocols, route
+  mux/storage, fan-in/fan-out, ready/backpressure, or remapping behavior is
+  inferred.
+- No source syntax, public report key, generated artifact shape, runtime
+  behavior, drive actual binding, payload protocol, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor
+  network, or permanent actor grouping behavior is selected.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
+
 ### R14 — ATL design proposal sync shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`.
 - Synchronized `docs/ISF_ATL_DESIGN_PROPOSAL.md` with the latest

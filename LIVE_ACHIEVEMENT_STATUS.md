@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route drive argument hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
+- `.9.80` is selected to add focused coverage for generated-child route drive
+  definitions with formal parameters and route drive calls with actual
+  arguments.
+- No source syntax, report shape, generated artifact shape, runtime behavior,
+  drive actual binding, expression movement, payload protocol,
+  mux/storage, fan-in/fan-out, ready/backpressure, recursive actor network, or
+  permanent actor grouping behavior is selected.
+
 ## 2026-05-19: R14 — ATL design proposal sync shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`.
 - The active ATL frontier advances to

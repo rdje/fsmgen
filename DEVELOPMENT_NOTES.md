@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route drives need argument-boundary coverage
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79` selects focused hardening for route
+  drive parameters and route drive-call actual arguments.
+- The selected generated-child route deliberately uses one named drive call
+  with no formals and no actuals. Parameterized drives and actual expressions
+  are valid elsewhere in ISF, but on this route they would imply payload or
+  expression movement beyond the current one-bit drive-call-cycle boundary.
+- The next leaf should add coverage for the existing fail-closed diagnostics
+  and avoid production changes unless the tests expose a real gap.
+
 ## 2026-05-19: ATL design proposal route truth is synchronized
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78` updates
   `docs/ISF_ATL_DESIGN_PROPOSAL.md` with the generated-child
