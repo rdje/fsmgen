@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: Project operations — hosted ISF parser warning cascade repaired
+- Completed `CI-HOSTED-ISF-REGRESSION-CASCADE.1`.
+- The GitHub `Perl FSM Regression` run `26091311743` for `de04debd` failed
+  in the later ISF regression band because hosted Perl emitted deprecated
+  `given` / `when` warnings from `FSM::Adapter::ISF::Parser`.
+- The parser actor-body dispatch now uses explicit keyword equality checks,
+  and the smartmatch warning suppression was removed because that feature is
+  no longer used.
+- No ISF syntax, lowering, schedule JSON, or HDL semantics changed in this
+  slice; the fix preserves clean-stderr behavior across hosted/system Perl
+  versions.
+- Local validation passed: parser syntax check, static no-`given`/`when`
+  grep, focused hosted-failure ISF cluster, `./bin/ci-regression quick
+  --no-book`, `./bin/ci-regression isf --no-book`, and
+  `./bin/ci-regression full --no-book`.
+
 ## 2026-05-19: Project operations — hosted full regression gate repaired
 - Completed `CI-FULL-REGRESSION-GREEN.1`.
 - The stale five-test full-regression failures exposed after the Perl 5.32

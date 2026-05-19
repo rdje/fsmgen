@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: Hosted ISF warning fixes should remove the deprecated construct
+- `CI-HOSTED-ISF-REGRESSION-CASCADE.1` fixes the hosted ISF regression
+  cascade by removing the parser construct that generated the warning instead
+  of relaxing clean-stderr assertions or adding more warning suppression.
+- The old actor-body dispatch used Perl smartmatch `given` / `when`, which is
+  version-sensitive and deprecated on the hosted Perl used by GitHub Actions.
+  Every ISF source that parsed an actor body could therefore leak warnings to
+  stderr before any semantic assertion was evaluated.
+- Explicit `if` / `elsif` keyword checks are clearer for this closed set of
+  actor clauses, avoid smartmatch semantics entirely, and preserve the
+  existing parse destinations and diagnostics.
+- This keeps the CI contract strict: stderr remains available for real
+  diagnostics, and hosted Perl version drift should not force downstream
+  users or tests to special-case harmless parser warnings.
+
 ## 2026-05-19: Full-regression CI repair should preserve shipped behavior
 - `CI-FULL-REGRESSION-GREEN.1` repaired the full-regression gate by updating
   stale regression expectations, not by changing shipped compiler behavior or

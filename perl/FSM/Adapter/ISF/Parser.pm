@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Carp qw(confess);
 use feature qw(signatures postderef);
-no warnings qw(experimental::signatures experimental::smartmatch);
+no warnings qw(experimental::signatures);
 
 use Lispish;
 use Cwd qw(abs_path);
@@ -179,117 +179,96 @@ sub _build_actor($self, $actor_ast, $source_label) {
         confess "Error: expected list, got " . (ref($clause) || 'scalar') . " in actor body\n"
             unless ref($clause) eq 'ARRAY';
 
-        my $keyword = $clause->[0];
-        given ($keyword) {
-            when ('clock')     {
-                $self->_claim_singleton_actor_clause($actor_name, 'clock', \%singleton_actor_clauses);
-                $result->{clock} = $self->_parse_clock($clause);
-            }
-            when ('clock-domains') {
-                $self->_claim_singleton_actor_clause($actor_name, 'clock-domains', \%singleton_actor_clauses);
-                $result->{clock_domains} = $self->_parse_clock_domains($clause, $actor_name);
-            }
-            when ('reset')     {
-                $self->_claim_singleton_actor_clause($actor_name, 'reset', \%singleton_actor_clauses);
-                $result->{reset} = $self->_parse_reset($clause);
-            }
-            when ('watchdog')  {
-                $self->_claim_singleton_actor_clause($actor_name, 'watchdog', \%singleton_actor_clauses);
-                $result->{watchdog} = $self->_parse_watchdog($clause);
-            }
-            when ('interface') {
-                $self->_claim_singleton_actor_clause($actor_name, 'interface', \%singleton_actor_clauses);
-                $result->{interface} = $self->_parse_interface($clause);
-            }
-            when ('params') {
-                $self->_claim_singleton_actor_clause($actor_name, 'params', \%singleton_actor_clauses);
-                $result->{params} = $self->_parse_actor_params($clause, $actor_name);
-            }
-            when ('imports') {
-                $self->_claim_singleton_actor_clause($actor_name, 'imports', \%singleton_actor_clauses);
-                my $imports = $self->_parse_imports($clause, $actor_name);
-                $result->{imports} = $imports->{libraries};
-                $result->{package_imports} = $imports->{packages};
-            }
-            when ('types') {
-                $self->_claim_singleton_actor_clause($actor_name, 'types', \%singleton_actor_clauses);
-                $result->{type_declarations} = $self->_parse_actor_types($clause, $actor_name);
-            }
-            when ('enums') {
-                $self->_claim_singleton_actor_clause($actor_name, 'enums', \%singleton_actor_clauses);
-                $result->{enum_declarations} = $self->_parse_actor_enums($clause, $actor_name);
-            }
-            when ('use')       { push @{$result->{uses}}, $self->_parse_use($clause, $actor_name); }
-            when ('handshake') {
-                my $handshake_name = $self->_parse_handshake($clause);  # deprecated, validated then ignored
-                confess "Error: duplicate handshake '$handshake_name' in actor '$actor_name'; "
-                    . "legacy handshakes are ignored compatibility input\n"
-                    if $handshake_names{$handshake_name}++;
-            }
-            when ('transaction') {
-                my $transaction = $self->_parse_transaction($clause);
-                confess "Error: duplicate transaction '$transaction->{name}' in actor '$actor_name'\n"
-                    if $transaction_names{$transaction->{name}}++;
-                push @{$result->{transactions}}, $transaction;
-            }
-            when ('rule')      {
-                my $rule = $self->_parse_rule($clause);
-                confess "Error: duplicate rule '$rule->{name}' in actor '$actor_name'\n"
-                    if $rule_names{$rule->{name}}++;
-                push @{$result->{rules}}, $rule;
-            }
-            when ('resources') {
-                $self->_claim_singleton_actor_clause($actor_name, 'resources', \%singleton_actor_clauses);
-                $result->{resources} = $self->_parse_resources($clause);
-            }
-            when ('storage') {
-                $self->_claim_singleton_actor_clause($actor_name, 'storage', \%singleton_actor_clauses);
-                $result->{storage} = $self->_parse_storage($clause, $actor_name);
-            }
-            when ('constants') {
-                $self->_claim_singleton_actor_clause($actor_name, 'constants', \%singleton_actor_clauses);
-                $result->{constants} = $self->_parse_actor_constants($clause, $actor_name);
-            }
-            when ('crossings') {
-                $self->_claim_singleton_actor_clause($actor_name, 'crossings', \%singleton_actor_clauses);
-                $result->{crossings} = $self->_parse_crossings($clause, $actor_name);
-            }
-            when ('network') {
-                confess "Error: actor '$actor_name' ATL declarations use direct "
-                    . "'(instance name of actor_type)' actor clauses; '(network ...)' is not supported\n";
-            }
-            when ('instance') {
-                $self->_merge_actor_network(
-                    $result,
-                    $self->_parse_actor_network_instance($clause, $actor_name),
-                );
-            }
-            when ('group') {
-                $self->_merge_actor_network(
-                    $result,
-                    $self->_parse_actor_network_group($clause, $actor_name),
-                );
-            }
-            when ('concurrent') {
-                confess "Error: actor '$actor_name' ATL compact concurrent group alias '(concurrent ...)' is reserved but not supported yet; compact aliases remain deferred until the verbose group contract ships\n";
-            }
-            when ('priority')  { push @{$result->{priorities}}, $self->_parse_priority($clause); }
-            when ('drive')     { $self->_parse_drive_def($clause, $result->{drives}); }
-            when ('phase')     {
-                my $phase = $self->_parse_phase($clause);
-                confess "Error: duplicate actor phase '$phase->{name}'\n"
-                    if $actor_phase_names{$phase->{name}}++;
-                push @{$result->{phases}}, $phase;
-            }
-            when ('stage')     {
-                my $stage = $self->_parse_stage($clause);
-                confess "Error: duplicate actor stage '$stage->{name}'\n"
-                    if $actor_stage_names{$stage->{name}}++;
-                push @{$result->{stages}}, $stage;
-            }
-            default {
-                confess "Error: unknown actor clause '$keyword' in actor '$actor_name'\n";
-            }
+        my $keyword = defined($clause->[0]) && !ref($clause->[0]) ? $clause->[0] : '';
+        if ($keyword eq 'clock') {
+            $self->_claim_singleton_actor_clause($actor_name, 'clock', \%singleton_actor_clauses);
+            $result->{clock} = $self->_parse_clock($clause);
+        } elsif ($keyword eq 'clock-domains') {
+            $self->_claim_singleton_actor_clause($actor_name, 'clock-domains', \%singleton_actor_clauses);
+            $result->{clock_domains} = $self->_parse_clock_domains($clause, $actor_name);
+        } elsif ($keyword eq 'reset') {
+            $self->_claim_singleton_actor_clause($actor_name, 'reset', \%singleton_actor_clauses);
+            $result->{reset} = $self->_parse_reset($clause);
+        } elsif ($keyword eq 'watchdog') {
+            $self->_claim_singleton_actor_clause($actor_name, 'watchdog', \%singleton_actor_clauses);
+            $result->{watchdog} = $self->_parse_watchdog($clause);
+        } elsif ($keyword eq 'interface') {
+            $self->_claim_singleton_actor_clause($actor_name, 'interface', \%singleton_actor_clauses);
+            $result->{interface} = $self->_parse_interface($clause);
+        } elsif ($keyword eq 'params') {
+            $self->_claim_singleton_actor_clause($actor_name, 'params', \%singleton_actor_clauses);
+            $result->{params} = $self->_parse_actor_params($clause, $actor_name);
+        } elsif ($keyword eq 'imports') {
+            $self->_claim_singleton_actor_clause($actor_name, 'imports', \%singleton_actor_clauses);
+            my $imports = $self->_parse_imports($clause, $actor_name);
+            $result->{imports} = $imports->{libraries};
+            $result->{package_imports} = $imports->{packages};
+        } elsif ($keyword eq 'types') {
+            $self->_claim_singleton_actor_clause($actor_name, 'types', \%singleton_actor_clauses);
+            $result->{type_declarations} = $self->_parse_actor_types($clause, $actor_name);
+        } elsif ($keyword eq 'enums') {
+            $self->_claim_singleton_actor_clause($actor_name, 'enums', \%singleton_actor_clauses);
+            $result->{enum_declarations} = $self->_parse_actor_enums($clause, $actor_name);
+        } elsif ($keyword eq 'use') {
+            push @{$result->{uses}}, $self->_parse_use($clause, $actor_name);
+        } elsif ($keyword eq 'handshake') {
+            my $handshake_name = $self->_parse_handshake($clause);  # deprecated, validated then ignored
+            confess "Error: duplicate handshake '$handshake_name' in actor '$actor_name'; "
+                . "legacy handshakes are ignored compatibility input\n"
+                if $handshake_names{$handshake_name}++;
+        } elsif ($keyword eq 'transaction') {
+            my $transaction = $self->_parse_transaction($clause);
+            confess "Error: duplicate transaction '$transaction->{name}' in actor '$actor_name'\n"
+                if $transaction_names{$transaction->{name}}++;
+            push @{$result->{transactions}}, $transaction;
+        } elsif ($keyword eq 'rule') {
+            my $rule = $self->_parse_rule($clause);
+            confess "Error: duplicate rule '$rule->{name}' in actor '$actor_name'\n"
+                if $rule_names{$rule->{name}}++;
+            push @{$result->{rules}}, $rule;
+        } elsif ($keyword eq 'resources') {
+            $self->_claim_singleton_actor_clause($actor_name, 'resources', \%singleton_actor_clauses);
+            $result->{resources} = $self->_parse_resources($clause);
+        } elsif ($keyword eq 'storage') {
+            $self->_claim_singleton_actor_clause($actor_name, 'storage', \%singleton_actor_clauses);
+            $result->{storage} = $self->_parse_storage($clause, $actor_name);
+        } elsif ($keyword eq 'constants') {
+            $self->_claim_singleton_actor_clause($actor_name, 'constants', \%singleton_actor_clauses);
+            $result->{constants} = $self->_parse_actor_constants($clause, $actor_name);
+        } elsif ($keyword eq 'crossings') {
+            $self->_claim_singleton_actor_clause($actor_name, 'crossings', \%singleton_actor_clauses);
+            $result->{crossings} = $self->_parse_crossings($clause, $actor_name);
+        } elsif ($keyword eq 'network') {
+            confess "Error: actor '$actor_name' ATL declarations use direct "
+                . "'(instance name of actor_type)' actor clauses; '(network ...)' is not supported\n";
+        } elsif ($keyword eq 'instance') {
+            $self->_merge_actor_network(
+                $result,
+                $self->_parse_actor_network_instance($clause, $actor_name),
+            );
+        } elsif ($keyword eq 'group') {
+            $self->_merge_actor_network(
+                $result,
+                $self->_parse_actor_network_group($clause, $actor_name),
+            );
+        } elsif ($keyword eq 'concurrent') {
+            confess "Error: actor '$actor_name' ATL compact concurrent group alias '(concurrent ...)' is reserved but not supported yet; compact aliases remain deferred until the verbose group contract ships\n";
+        } elsif ($keyword eq 'priority') {
+            push @{$result->{priorities}}, $self->_parse_priority($clause);
+        } elsif ($keyword eq 'drive') {
+            $self->_parse_drive_def($clause, $result->{drives});
+        } elsif ($keyword eq 'phase') {
+            my $phase = $self->_parse_phase($clause);
+            confess "Error: duplicate actor phase '$phase->{name}'\n"
+                if $actor_phase_names{$phase->{name}}++;
+            push @{$result->{phases}}, $phase;
+        } elsif ($keyword eq 'stage') {
+            my $stage = $self->_parse_stage($clause);
+            confess "Error: duplicate actor stage '$stage->{name}'\n"
+                if $actor_stage_names{$stage->{name}}++;
+            push @{$result->{stages}}, $stage;
+        } else {
+            confess "Error: unknown actor clause '$keyword' in actor '$actor_name'\n";
         }
     }
 

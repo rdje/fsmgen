@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### Project operations — hosted ISF parser warning cascade
+- Completed `CI-HOSTED-ISF-REGRESSION-CASCADE.1`.
+- Root-caused GitHub `Perl FSM Regression` run `26091311743`: the later ISF
+  regression band was failing clean-stderr checks because hosted Perl emitted
+  deprecated `given` / `when` warnings from
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm).
+- Replaced the ISF actor-body smartmatch dispatch with explicit keyword
+  equality checks and removed the now-unused smartmatch warning suppression.
+- Preserved ISF syntax, lowering, schedule JSON, HDL behavior, and public
+  downstream contracts; this is a portability and clean-stderr repair.
+- Local validation passed: parser syntax, no remaining `given(`/`when(`
+  dispatch grep, focused hosted-failure ISF cluster,
+  `./bin/ci-regression quick --no-book`, `./bin/ci-regression isf
+  --no-book`, and `./bin/ci-regression full --no-book`.
+
 ### Project operations — hosted full regression gate repaired
 - Completed `CI-FULL-REGRESSION-GREEN.1`.
 - Aligned five stale regression contracts with current shipped behavior

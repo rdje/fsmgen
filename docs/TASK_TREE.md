@@ -60,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `CI-HOSTED-ISF-REGRESSION-CASCADE` | `done` | `project operations` | `closed` | [docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md](docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md) |
 | `CI-FULL-REGRESSION-GREEN` | `done` | `project operations` | `closed` | [docs/tasks/CI-FULL-REGRESSION-GREEN.md](docs/tasks/CI-FULL-REGRESSION-GREEN.md) |
 | `CI-PERL-532-REGRESSION-COMPAT` | `done` | `project operations` | `closed` | [docs/tasks/CI-PERL-532-REGRESSION-COMPAT.md](docs/tasks/CI-PERL-532-REGRESSION-COMPAT.md) |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md) |

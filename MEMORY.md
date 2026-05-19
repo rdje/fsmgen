@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: Hosted ISF parser warning cascade repaired
+- Completed `CI-HOSTED-ISF-REGRESSION-CASCADE.1`.
+- The hosted GitHub run `26091311743` for commit `de04debd` failed after the
+  full-regression repair reached the later ISF regression band. The shared
+  failure signature was not an ISF semantic mismatch: Perl emitted
+  deprecated `given` / `when` warnings from `FSM::Adapter::ISF::Parser`,
+  which polluted CLI stderr for tests that require clean output.
+- The actor-body parser dispatch now uses explicit `if` / `elsif` keyword
+  checks instead of smartmatch `given` / `when`, and the smartmatch warning
+  suppression was removed because the code path no longer needs it.
+- Parser behavior is intended to remain unchanged; the repair only removes
+  version-sensitive warning output from hosted/system Perl.
+- Local validation passed: parser syntax check, no remaining `given(`/`when(`
+  dispatch, the focused hosted-failure ISF cluster, `./bin/ci-regression quick
+  --no-book`, `./bin/ci-regression isf --no-book`, and
+  `./bin/ci-regression full --no-book`.
+
 ## 2026-05-19: Hosted full regression gate repaired
 - Completed `CI-FULL-REGRESSION-GREEN.1`.
 - The GitHub run from `0319406a` reached the shared full regression entrypoint
