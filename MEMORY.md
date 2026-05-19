@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child route-boundary cardinality selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.64`.
+- `.9.64` will add focused fail-closed coverage for extra simple `(on ...)`
+  start boundaries before the selected generated-child actor-to-actor route
+  segment and extra simple `(complete ...)` completion boundaries after it.
+- No activation fan-in, completion fan-out, start-condition arbitration,
+  local setup/cleanup, route continuation, pending handoff storage, route
+  mux/storage, ready/backpressure, payload protocol, recursive actor network,
+  or permanent actor grouping behavior is selected.
+
 ## 2026-05-19: ATL generated-child route-isolation hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63`.

@@ -1156,6 +1156,14 @@ wait before any pre-route setup, post-route sampling, local side effects,
 cleanup work, route continuation, storage, muxing, ready/backpressure, or
 payload behavior is claimed.
 
+The selected route-boundary cardinality hardening keeps that isolated route
+bounded by one simple start condition and one simple completion pulse.
+Focused coverage must reject extra `(on ...)` boundaries before the source
+trigger and extra `(complete ...)` boundaries after the sink event wait
+before any activation fan-in, completion fan-out, start-condition
+arbitration, local setup/cleanup, route continuation, storage, muxing,
+ready/backpressure, or payload behavior is claimed.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

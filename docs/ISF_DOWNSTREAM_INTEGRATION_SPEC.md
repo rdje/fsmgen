@@ -1874,6 +1874,14 @@ clauses before the source trigger or after the sink event wait, or assume
 pre-route setup, post-route sampling, local side effects, cleanup work, route
 continuation, pending handoff storage, muxing, backpressure, or payload
 insertion until FSMGen publishes an explicit contract for those behaviors.
+The selected route-boundary cardinality hardening keeps that isolated route
+bounded by exactly one simple `(on ...)` start condition and exactly one
+simple `(complete ...)` completion pulse. Downstream producers should not
+emit extra start boundaries or extra completion boundaries around the route,
+or assume activation fan-in, completion fan-out, start-condition arbitration,
+local setup/cleanup, route continuation, pending handoff storage, muxing,
+backpressure, or payload insertion until FSMGen publishes an explicit
+contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

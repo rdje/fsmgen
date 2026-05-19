@@ -379,6 +379,12 @@ as the only executable parent transaction-body work between the transaction
 start condition and completion: pre-route and post-route parent clauses
 remain fail-closed before any local side effects, setup/cleanup work,
 continuation, storage, muxing, backpressure, or payload contract.
+The selected route-boundary cardinality hardening keeps that isolated route
+bounded by one simple start boundary and one simple completion boundary:
+extra start or completion boundaries remain fail-closed before any
+activation fan-in, completion fan-out, start-condition arbitration,
+setup/cleanup work, continuation, storage, muxing, backpressure, or payload
+contract.
 
 ### Actor, Interface, Storage, And Timing
 

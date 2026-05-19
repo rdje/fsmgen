@@ -952,6 +952,13 @@ source trigger or after the sink event wait fail closed before FSMGen claims
 pre-route setup, post-route sampling, local side effects, cleanup work, route
 continuation, pending handoff storage, muxing, ready/backpressure, or payload
 protocol behavior.
+The selected route-boundary cardinality hardening keeps that isolated route
+bounded by exactly one simple `(on ...)` start condition and exactly one
+simple `(complete ...)` completion pulse. Extra start or completion
+boundaries remain fail-closed before FSMGen claims activation fan-in,
+completion fan-out, start-condition arbitration, local setup/cleanup, route
+continuation, pending handoff storage, muxing, ready/backpressure, or payload
+protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

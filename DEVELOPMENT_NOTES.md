@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route boundaries should stay single-source for now
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63` selects route-boundary cardinality
+  hardening as the next generated-child route boundary.
+- The current route is a single task-scoped path with one parent start
+  condition and one completion pulse. Multiple `(on ...)` boundaries would
+  imply activation fan-in or start-condition arbitration; multiple
+  `(complete ...)` boundaries would imply completion fan-out.
+- The next code leaf should lock extra start and completion boundary clauses
+  as diagnostics while leaving local setup/cleanup, route continuation,
+  storage, muxing, backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL route isolation is now parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62` adds focused coverage for
   generated-child actor-to-actor route transactions that contain parent-local

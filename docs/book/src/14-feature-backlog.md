@@ -958,6 +958,13 @@ executable parent transaction-body work between start and completion; parent
 clauses before the source trigger or after the sink event wait remain
 fail-closed until explicit setup, cleanup, local side effects, continuation,
 storage, muxing, ready/backpressure, or payload semantics are selected.
+The selected route-boundary cardinality hardening narrows the activation and
+completion boundary backlog by requiring that isolated route to stay bounded
+by exactly one simple start boundary and one simple completion boundary;
+extra start or completion clauses remain fail-closed until explicit
+activation fan-in, completion fan-out, start arbitration, setup/cleanup,
+continuation, storage, muxing, ready/backpressure, or payload semantics are
+selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
