@@ -1,0 +1,27 @@
+(actor atl_resolved_child_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (trigger worker.process)
+    (await worker.done)
+    (complete done)))
+
+(library common.packet
+  (exports
+    (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input process_start)
+      (output done))
+    (transaction process
+      (on process_start)
+      (complete done))))

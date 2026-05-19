@@ -755,6 +755,40 @@ also proves that one temporary trigger batch followed by two actor event waits
 still fails before scheduled `.fsm` emission with the one-event-wait
 diagnostic.
 
+The ATL resolved-child fixture is shipped as
+[isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf).
+It uses one top-level actor, one same-source library actor export, one
+library-qualified static actor instance, one parent trigger handoff, one
+parent event wait, and one completion pulse:
+
+```lisp
+(actor atl_resolved_child_pipeline
+  (imports
+    (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (trigger worker.process)
+    (await worker.done)
+    (complete done)))
+```
+
+The fixture emits exactly `atl_resolved_child_pipeline.fsm` and
+`atl_resolved_child_pipeline__worker.fsm`; it emits no
+`atl_resolved_child_pipeline_top.fsm`. The parent artifact exposes
+`worker_process_start` and `worker_done` as external handoff ports, while the
+resolved child artifact keeps its authored `process_start` input and `done`
+output. Schedule JSON reports the resolved `worker` entry in
+`actor_network.instances[]` with `type_resolution: library_actor_export`,
+`library`, `alias`, `export`, `module`, and `scheduled_fsm`, plus one
+`transaction_triggers[]` entry and one `event_waits[]` entry. The fixture is
+backed by
+[t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
+for strict schedule JSON parity and parent/child scheduled `.fsm` structure.
+It deliberately does not claim generated ATL tops, HDL child wiring, inferred
+interface binding, route mux/storage, actor-event fan-in, CDC,
+ready/backpressure, recursive actor networks, or permanent actor grouping.
+
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape
@@ -3036,10 +3070,10 @@ entries with `type_resolution`, `library`, `alias`, `export`, `module`, and
 artifacts while still emitting no ATL top, and trigger/event/data handoffs
 remain external parent handoffs until interface binding and HDL wiring are
 explicitly selected.
-The next selected fixture leaf is
-`isf/atl_resolved_child_pipeline.isf`, which will combine one resolved child
-artifact with one parent trigger handoff and one parent event wait while
-preserving the no-top/no-child-wiring boundary.
+The shipped resolved-child fixture
+`isf/atl_resolved_child_pipeline.isf` combines one resolved child artifact
+with one parent trigger handoff and one parent event wait while preserving the
+no-top/no-child-wiring boundary.
 
 The following remain fail-closed/deferred:
 
@@ -3143,7 +3177,7 @@ handoff, and report-only group metadata subsets implemented so far:
   compatibility `group` field names that group; otherwise it uses a synthetic
   transaction-scoped name such as `run_trigger_batch`. The selected coupling
   subset permits one actor event wait after that temporary trigger batch.
-  Generated children, group endpoints, data-movement coupling, multi-event
+  Generated child wiring, group endpoints, data-movement coupling, multi-event
   fan-in, storage/mux insertion, CDC, compact aliases, repeated-instance
   batches, and broader fan-in/fan-out remain fail-closed.
 
@@ -3172,7 +3206,7 @@ still a local transaction wait, and rule-level `(trigger transaction)` still
 targets a local transaction. Dotted enum-looking names that do not name a
 static actor instance keep their prior diagnostics. Event fan-in/fan-out,
 event payloads, cross-clock actor events, concurrent group events, generated
-ATL child artifacts, generated ATL tops, and route muxes remain deferred
+ATL top wiring, child event-source wiring, and route muxes remain deferred
 unless a later leaf explicitly widens this surface.
 
 The current actor-transaction trigger subset is also narrower than full child
@@ -3185,8 +3219,9 @@ one-cycle parent output handoff named `actor_transaction_start`; for example,
 `(trigger reader.capture)` maps to `reader_capture_start`. The scheduled
 parent `.fsm` exposes and pulses that output at the trigger point, either in
 the single-trigger state or in the accepted trigger-batch state. The trigger
-sink is external until actor type resolution, generated ATL child artifacts,
-generated ATL tops, trigger payloads, and ready/backpressure semantics ship.
+sink is external even when the target actor type resolves and a child `.fsm`
+artifact is emitted; generated ATL top wiring, trigger payloads, and
+ready/backpressure semantics remain unshipped.
 Rule-level qualified triggers, nested triggers, repeated triggers to the same
 actor instance, generated handoff signal conflicts, trigger fan-in/fan-out,
 cross-clock actor triggers, and broader concurrent group behavior remain
@@ -3198,8 +3233,10 @@ The current generated-artifact contract is explicit: the parent scheduled
 `.fsm` may include the selected one-bit actor-event handoff input, selected
 one-cycle actor-transaction trigger output, selected scalar data-movement
 handoff ports, and selected same-cycle trigger-batch handoff outputs. FSMGen
-still emits no ATL child `.fsm`, no generated ATL top, no generated route mux,
-no generated internal handoff storage, and no HDL event wiring. Any later ATL
+also emits resolved ATL child scheduled `.fsm` artifacts for valid
+`(instance NAME of ALIAS.EXPORT)` entries. It still emits no generated ATL
+top, no generated route mux, no generated internal handoff storage, no HDL
+event wiring, and no inferred parent-to-child handoff wiring. Any later ATL
 implementation that emits broader artifacts must document their names, report
 keys, and review surfaces in the same slice that ships them.
 
@@ -3567,6 +3604,7 @@ Representative shipped fixtures:
 - [isf/atl_pin_egress_pipeline.isf](../isf/atl_pin_egress_pipeline.isf)
 - [isf/atl_trigger_wait_pipeline.isf](../isf/atl_trigger_wait_pipeline.isf)
 - [isf/atl_trigger_batch_wait_pipeline.isf](../isf/atl_trigger_batch_wait_pipeline.isf)
+- [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf)
 
 The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
@@ -3703,6 +3741,20 @@ plain plus strict HDL generation. It stays inside the shipped parent-handoff
 subset and does not claim generated ATL child artifacts, generated ATL tops,
 actor type resolution, HDL child wiring, multi-event fan-in, data movement
 coupling, CDC, or permanent actor grouping.
+The [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf)
+fixture now has file-backed ATL resolved-child coverage for one same-source
+library actor export, one resolved `(instance worker of
+pkt_lib.packet_worker)`, one parent `(trigger worker.process)`, one parent
+`(await worker.done)`, exactly two lower-result artifacts
+`atl_resolved_child_pipeline.fsm` and
+`atl_resolved_child_pipeline__worker.fsm`, strict schedule JSON parity,
+resolved `actor_network.instances[]` metadata, one
+`transaction_triggers[]` entry, one `event_waits[]` entry, and empty
+data/association/group schedule arrays. It stays inside the shipped
+resolved-child artifact subset and does not claim generated ATL tops, HDL
+child wiring, inferred interface binding, route mux/storage, actor-event
+fan-in, CDC, ready/backpressure, recursive actor networks, or permanent actor
+grouping.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a
@@ -3955,6 +4007,7 @@ Focused tests:
 - [t/1327-isf-atl-pin-egress-fixture-coverage.t](../t/1327-isf-atl-pin-egress-fixture-coverage.t)
 - [t/1328-isf-atl-trigger-wait-fixture-coverage.t](../t/1328-isf-atl-trigger-wait-fixture-coverage.t)
 - [t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t](../t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t)
+- [t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

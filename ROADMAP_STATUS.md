@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.24`.
+  activation `.111` and ATL actor-network orchestration `.9.25`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -264,14 +264,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `library_uses[]` entry is created for ATL `(instance ...)` children. The
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` selected the next step as a
   realistic emitted-child fixture rather than generated-top or interface
-  wiring. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, which will add
-  `isf/atl_resolved_child_pipeline.isf` to prove parent plus resolved child
-  `.fsm` emission, strict schedule JSON parity, and the continued no-top /
-  no-child-wiring boundary. Generated-top packaging, HDL child wiring,
-  inferred interface binding, event fan-in, route mux/storage,
-  ready/backpressure, CDC, recursive actor networks, and permanent actor
-  grouping remain deferred.
+  wiring. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` promoted
+  `isf/atl_resolved_child_pipeline.isf`: lowering emits exactly the parent
+  `atl_resolved_child_pipeline.fsm` plus resolved child
+  `atl_resolved_child_pipeline__worker.fsm`, strict schedule JSON matches the
+  in-process report, and actor-network metadata exposes the resolved child,
+  one transaction trigger, and one event wait while data movement and
+  association/group schedules remain empty. No generated ATL top is emitted
+  and trigger/event handoffs remain external parent ports. The next ATL
+  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, which must select
+  generated-top packaging, interface binding inference, or a fail-closed
+  boundary before code. Generated-top packaging, HDL child wiring, inferred
+  interface binding, event fan-in, route mux/storage, ready/backpressure, CDC,
+  recursive actor networks, and permanent actor grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

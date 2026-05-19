@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-ACTOR-NETWORK-ORCHESTRATION` | `active` | `R14` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION` | `active` | `R14` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `active` | `R14` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
 
 ## Proposed Task Trees

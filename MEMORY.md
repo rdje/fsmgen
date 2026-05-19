@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL resolved-child fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`.
+- Added `isf/atl_resolved_child_pipeline.isf` as a self-contained
+  same-source library fixture for resolved ATL child emission.
+- The lower result now has exactly two artifacts for the fixture:
+  `atl_resolved_child_pipeline.fsm` and
+  `atl_resolved_child_pipeline__worker.fsm`; no ATL top is emitted.
+- `t/1330-isf-atl-resolved-child-fixture-coverage.t` proves parent and child
+  `.fsm` structure, strict CLI schedule JSON parity, resolved
+  `actor_network.instances[]` metadata, one trigger handoff, one event wait,
+  and empty data/association/group schedule arrays.
+- Public tested-by metadata, the ISF spec, downstream integration handoff,
+  ATL design proposal, public contract docs, mdBook, task tree, and roadmap
+  status were synchronized with the shipped fixture.
+- The next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, which must
+  select generated ATL top packaging, interface binding, or a fail-closed
+  boundary before code.
 ## 2026-05-19: ATL resolved-child fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` as a doc-only selection
   leaf.

@@ -141,7 +141,7 @@ trigger/event/data handoff wiring, route mux/storage, ready/backpressure, CDC,
 actor-event fan-in, recursive actor networks, and permanent actor grouping
 remain separate future selections.
 
-The next selected fixture leaf will make that boundary reviewable through
+The shipped resolved-child fixture makes that boundary reviewable through
 `isf/atl_resolved_child_pipeline.isf`: one resolved child actor artifact plus
 parent trigger/event handoffs, with no generated ATL top and no inferred child
 wiring.
@@ -389,6 +389,19 @@ claiming multiple event waits, actor-event fan-in, generated ATL children,
 generated ATL tops, actor type resolution, HDL child wiring, data movement
 coupling, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
+
+The ATL resolved-child fixture is shipped as
+`isf/atl_resolved_child_pipeline.isf`. It uses one same-source library actor
+export, one resolved `(instance worker of pkt_lib.packet_worker)`, one parent
+`(trigger worker.process)`, and one parent `(await worker.done)`. Lowering
+emits exactly the parent `atl_resolved_child_pipeline.fsm` plus resolved
+child `atl_resolved_child_pipeline__worker.fsm`; it emits no
+`atl_resolved_child_pipeline_top.fsm`. The fixture proves strict schedule JSON
+parity, resolved `actor_network.instances[]` metadata, one trigger handoff,
+one event wait, and empty data/association/group schedule arrays without
+claiming generated ATL tops, HDL child wiring, inferred interface binding,
+route mux/storage, actor-event fan-in, CDC, ready/backpressure, recursive
+actor networks, or permanent actor grouping.
 
 The shipped multi-event boundary proof is negative: a transaction that emits
 one temporary trigger batch and then attempts two actor event waits, such as

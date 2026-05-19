@@ -642,9 +642,10 @@ policy for the fully general case.
 
 ### Actor Network Orchestration
 
-Status: active ATL design tree; static metadata, scalar handoffs, and the
-first bounded temporary trigger-batch scheduling subset are shipped under the selected
-ATL v0 public contract.
+Status: active ATL design tree; static metadata, scalar handoffs, bounded
+temporary trigger-batch scheduling, parent trigger/event handoffs, and
+resolved child `.fsm` artifact emission are shipped under the selected ATL v0
+public contract.
 Task-tree owner:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 Concrete design proposal:
@@ -679,9 +680,10 @@ The enclosing actor is the network boundary; `(network ...)` is not part of
 the shipped source surface. The accepted form lowers to parser shell and
 schedule-report metadata under `actor_network` with `declaration: "actor"`.
 Unqualified static instances remain metadata-only external intent.
-Library-qualified static instances now resolve to report metadata and reserved
-child names only; they still do not instantiate children, emit a generated ATL
-top, schedule groups, or wire HDL. Multiple instances outside the shipped
+Library-qualified static instances now resolve to report metadata and emit
+their resolved child scheduled `.fsm` artifacts; they still do not emit a
+generated ATL top, infer parent/child handoff wiring, schedule groups, or wire
+HDL. Multiple instances outside the shipped
 scalar handoff and report-only group metadata subsets, broader event/trigger
 behavior beyond the single parent-handoff subsets, and wider endpoint movement
 remain backlog.
@@ -838,9 +840,12 @@ and now emit their child `.fsm` files without an ATL top and without handoff
 wiring. ATL top emission, HDL child wiring, interface binding inference,
 event fan-in, route mux/storage, CDC, recursive actor networks, and
 ready/backpressure remain later leaves.
-The next selected fixture,
-`isf/atl_resolved_child_pipeline.isf`, will prove that emitted-child boundary
-with one parent trigger handoff and one parent event wait.
+The resolved-child fixture is now shipped as
+`isf/atl_resolved_child_pipeline.isf`. It proves the emitted-child boundary
+with one same-source library actor export, one resolved child instance, one
+parent trigger handoff, one parent event wait, exactly two lower-result
+artifacts, strict schedule JSON parity, and no generated ATL top or inferred
+child handoff wiring.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -1878,6 +1883,15 @@ single-actor `isf/atl_pin_egress_pipeline.isf` egress fixture, not a claim for
 generated ATL children, generated ATL tops, bidirectional pin movement, route
 mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
 ready/backpressure, or permanent actor grouping.
+The ATL resolved-child fixture is now promoted in the `isf` tier for
+file-backed strict schedule JSON parity, parent plus resolved child scheduled
+`.fsm` structure, resolved actor-network instance metadata, one parent
+transaction-trigger handoff, one parent event-wait handoff, and empty
+data/association/group schedule arrays. It is the bounded
+`isf/atl_resolved_child_pipeline.isf` emitted-child fixture, not a claim for
+generated ATL tops, HDL child wiring, inferred interface binding, route
+mux/storage, actor-event fan-in, CDC, ready/backpressure, recursive actor
+networks, or permanent actor grouping.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

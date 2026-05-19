@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL resolved-child fixtures lock the no-top boundary
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` adds a file-backed fixture before
+  selecting generated ATL top packaging or inferred handoff binding.
+- The fixture deliberately combines one resolved child artifact with parent
+  trigger/event handoffs, then asserts that those handoffs remain external
+  parent ports. This prevents child `.fsm` emission from being mistaken for
+  child wiring.
+- The next ATL decision should be made explicitly: generated top packaging,
+  interface binding inference, or a fail-closed wiring boundary. It should not
+  be smuggled in through fixture promotion.
 ## 2026-05-19: ATL emitted children need fixture coverage before wiring
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` selects a realistic fixture as the
   next slice instead of moving directly into ATL top generation.

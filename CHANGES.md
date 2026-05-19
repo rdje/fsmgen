@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL resolved-child fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`.
+- Added [isf/atl_resolved_child_pipeline.isf](isf/atl_resolved_child_pipeline.isf)
+  as a realistic resolved-child fixture using a same-source library actor
+  export and `(instance worker of pkt_lib.packet_worker)`.
+- Added [t/1330-isf-atl-resolved-child-fixture-coverage.t](t/1330-isf-atl-resolved-child-fixture-coverage.t)
+  to prove parent plus child `.fsm` emission, strict schedule JSON parity,
+  resolved `actor_network.instances[]` metadata, one actor transaction
+  trigger, one actor event wait, and no generated ATL top.
+- Updated the ISF public contract tested-by metadata and `ci-regression isf`
+  tier expectations so the fixture is part of the advertised ISF regression
+  surface.
+- Synced the task tree, roadmap, live docs, ISF spec, downstream integration
+  handoff, ATL design proposal, public contract docs, and mdBook. The active
+  ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`.
+
 ### R14 — ATL resolved-child fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` before adding another ATL
   fixture.

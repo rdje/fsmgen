@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL resolved-child fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`.
+- Added `isf/atl_resolved_child_pipeline.isf` as the reviewable fixture for
+  resolved ATL child artifact emission.
+- The fixture lowers to exactly `atl_resolved_child_pipeline.fsm` and
+  `atl_resolved_child_pipeline__worker.fsm`, emits no
+  `atl_resolved_child_pipeline_top.fsm`, and proves strict schedule JSON
+  parity through `t/1330-isf-atl-resolved-child-fixture-coverage.t`.
+- Schedule JSON reports the resolved `worker` instance plus one
+  `transaction_triggers[]` entry and one `event_waits[]` entry; data
+  movement, association schedule, and group schedule arrays remain empty.
+- Generated ATL tops, HDL child wiring, inferred interface binding,
+  actor-event fan-in, route mux/storage, CDC, ready/backpressure, recursive
+  actor networks, and permanent actor grouping remain deferred.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`.
+
 ## 2026-05-19: R14 — ATL resolved-child fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`.
 - The next active ATL slice is

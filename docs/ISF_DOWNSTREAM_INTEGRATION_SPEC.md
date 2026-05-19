@@ -186,8 +186,8 @@ provenance on `actor_network.instances[]` and now emit child scheduled `.fsm`
 artifacts named by their `scheduled_fsm` fields. FSMGen still emits no
 generated ATL top and no child wiring, so downstream producers must treat ATL
 top emission, interface binding, and HDL child wiring as unshipped.
-The next selected ATL fixture is `isf/atl_resolved_child_pipeline.isf`, which
-will lock this emitted-child/no-top boundary in a file-backed example.
+The emitted-child/no-top boundary is locked by
+`isf/atl_resolved_child_pipeline.isf`.
 
 Imported files may also contain library roots:
 
@@ -2068,6 +2068,7 @@ isf/atl_pin_ingress_pipeline.isf
 isf/atl_pin_egress_pipeline.isf
 isf/atl_trigger_wait_pipeline.isf
 isf/atl_trigger_batch_wait_pipeline.isf
+isf/atl_resolved_child_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2212,6 +2213,19 @@ strict HDL generation for `isf/atl_trigger_batch_wait_pipeline.isf`. It
 intentionally does not claim generated ATL children, generated ATL tops, actor
 type resolution, HDL child wiring, multi-event fan-in, data movement coupling,
 CDC, ready/backpressure, or permanent actor grouping.
+The ATL resolved-child fixture is covered by
+`t/1330-isf-atl-resolved-child-fixture-coverage.t`, which proves strict
+schedule JSON parity, exactly two lower-result artifacts
+`atl_resolved_child_pipeline.fsm` and
+`atl_resolved_child_pipeline__worker.fsm`, no generated
+`atl_resolved_child_pipeline_top.fsm`, resolved
+`actor_network.instances[]` metadata for `worker`, one
+`actor_network.transaction_triggers[]` entry, one
+`actor_network.event_waits[]` entry, and empty data/association/group
+schedule arrays for `isf/atl_resolved_child_pipeline.isf`. It intentionally
+does not claim generated ATL tops, HDL child wiring, inferred interface
+binding, route mux/storage, actor-event fan-in, CDC, ready/backpressure,
+recursive actor networks, or permanent actor grouping.
 
 Recommended downstream smoke commands:
 
@@ -2235,6 +2249,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf

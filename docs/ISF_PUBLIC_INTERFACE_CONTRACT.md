@@ -182,6 +182,12 @@ scheduled `.fsm` structure, and plain plus strict HDL generation covered
 without claiming peer events, endpoint data movement, generated ATL child
 artifacts, generated ATL tops, group endpoints, compact aliases, CDC,
 payloads, ready/backpressure, route mux/storage, or permanent actor grouping.
+The ATL resolved-child fixture is checked by
+[t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
+to keep file-backed resolved child artifact emission, strict schedule JSON
+parity, parent and child scheduled `.fsm` structure, resolved
+`actor_network.instances[]` metadata, one actor-transaction trigger handoff,
+one actor-event wait handoff, and no generated ATL top covered.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -1588,11 +1594,13 @@ The enclosing actor is the network boundary; `(network ...)` wrappers are not
 part of the shipped source surface. That field is not a required actor shell
 key. When present, `actor_network` is a `static_declaration` hash with direct
 static instance metadata, optional report-only group metadata, shipped event,
-trigger, data movement, and exact temporary trigger-batch metadata families.
-Schedule reports project it through top-level `actor_network`. No child actor
-type resolution, generated child scheduled `.fsm`, generated ATL top,
-generated child trigger wiring, group endpoints, route mux/storage, or HDL
-event wiring is promised by this field.
+trigger, data movement, exact temporary trigger-batch metadata, and resolved
+library-qualified child artifact metadata families. Schedule reports project
+it through top-level `actor_network`. Resolved instance entries report actor
+type provenance and child artifact names, and lowering emits those child
+scheduled `.fsm` files without wiring them to the parent. No generated ATL
+top, generated child trigger wiring, group endpoints, route mux/storage, or
+HDL event wiring is promised by this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
 behavior until advertised by capability metadata. Endpoint-aware movement
