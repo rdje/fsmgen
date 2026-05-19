@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -589,9 +589,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.43: select ATL clock boundary`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`
-  Status: `active`
+  Status: `completed`
   Goal: `Harden same-clock/reset-policy diagnostics for generated-child actor-to-actor route wiring.`
   Acceptance: `Implement only fail-closed coverage around the shipped 'atl_two_child_data_pipeline' generated-child actor-to-actor route: a source child with a clock different from the parent, a sink child with a clock different from the parent, a source child with a reset signature different from the parent, and a sink child with a reset signature different from the parent must fail closed before any CDC, reset remapping, generated-top system-port remapping, async bridge, storage, mux, ready/backpressure, or payload protocol behavior is claimed. Existing positive generated-child actor-to-actor, control-only two-child, pin-ingress, pin-egress, and parent-handoff data-route fixtures must remain accepted. No source syntax, report key, generated artifact shape, route mux/storage, fan-in/fan-out, wider payload, recursive actor network, or permanent actor grouping behavior may be widened.`
+  Verification: `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book (Files=236, Tests=1395); git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.44: harden ATL clock boundary`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`
+  Status: `active`
+  Goal: `Select the next bounded ATL widening or hardening slice after same-clock/reset-policy route hardening.`
+  Acceptance: `Review the shipped two-child generated top, positive generated-child actor-to-actor data route, source/sink role hardening, route-cardinality hardening, scalar endpoint-width hardening, same-clock/reset-policy hardening, remaining multi-route/fan-in/fan-out/mux/storage deferrals, trigger-batch/group boundaries, repeated-trigger limits, CDC/reset-remap limits, and downstream/mdBook truth. Choose exactly one next behavior-bearing or hardening slice before code, with source shape, report impact, generated artifact expectations, fail-closed boundaries, documentation impact, and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -599,7 +606,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44` | `active` | `.9.43` selected generated-child actor-to-actor same-clock/reset-policy hardening before any CDC or reset-remap behavior. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45` | `active` | `.9.44` hardened same-clock/reset-policy coverage for the generated-child actor-to-actor route; the next leaf must select the next bounded ATL widening or hardening slice before code. |
 
 ## Selected Two-Child Generated Data Route
 
@@ -772,6 +779,24 @@ Selected hardening for `.9.44`:
 - Preserve the existing generated-top system-port contract: matching
   clock/reset names and policies only, with no CDC bridge, reset remapping,
   storage, mux, ready/backpressure, payload, or report schema change selected.
+
+Implementation outcome for `.9.44`:
+
+- Focused coverage now rejects a generated-child actor-to-actor route when
+  the source child clock differs from the parent clock.
+- Focused coverage now rejects the same route when the sink child clock
+  differs from the parent clock.
+- Focused coverage now rejects the same route when the source child reset
+  signature differs from the parent reset signature.
+- Focused coverage now rejects the same route when the sink child reset
+  signature differs from the parent reset signature.
+- No production code change was required: the generated-top lowerer already
+  enforced parent/child clock and reset policy parity before ATL child
+  wiring.
+- No source syntax, public report key, generated artifact shape, CDC bridge,
+  reset remapping, system-port remapping, route mux/storage, fan-in/fan-out,
+  ready/backpressure, payload protocol, recursive actor network, or permanent
+  actor grouping behavior changed.
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -2291,10 +2316,8 @@ Current proposal summary:
 
 ## Blockers
 
-- No blocker for active `.9.44`. It must add only the selected
-  same-clock/reset-policy hardening coverage around the shipped
-  generated-child actor-to-actor route and must not widen CDC or reset-remap
-  behavior.
+- No blocker for active `.9.45`. It is a selection leaf and must pick exactly
+  one next bounded ATL widening or hardening slice before any further code.
 
 ## Verification Log
 
@@ -2374,6 +2397,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `selected scalar endpoint-width fail-closed hardening before wider generated-child payload behavior` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42` | `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book` (Files=236, Tests=1395); `git diff --check` | `hardened generated-child actor-to-actor scalar endpoint-width diagnostics without production code changes` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `selected same-clock/reset-policy fail-closed hardening for generated-child actor-to-actor route wiring before CDC or reset remapping` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44` | `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book` (Files=236, Tests=1395); `git diff --check` | `hardened generated-child actor-to-actor same-clock/reset-policy diagnostics without production code changes` |
 
 ## Commit Log
 
@@ -2452,9 +2476,18 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.41: select ATL width boundary` | `selects scalar-width fail-closed coverage as the next generated-child route boundary` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.42: harden ATL width boundary` | `adds focused scalar endpoint-width rejection coverage around the generated-child actor-to-actor route without widening behavior` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.43: select ATL clock boundary` | `selects same-clock/reset-policy hardening as the next generated-child route boundary before CDC or reset remapping` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.44: harden ATL clock boundary` | `adds focused source/sink child clock and reset mismatch rejection coverage around the generated-child actor-to-actor route without widening behavior` |
 
 ## Changelog
 
+- `2026-05-19`: Completed `.9.44`: added focused fail-closed coverage for
+  source child clock mismatch, sink child clock mismatch, source child reset
+  signature mismatch, and sink child reset signature mismatch in the
+  generated-child actor-to-actor route. No production code change was
+  required, and no CDC bridge, reset remapping, generated-top system-port
+  remapping, route mux/storage, ready/backpressure, payload protocol, or
+  report key behavior widened. The active frontier moves to `.9.45` to
+  select the next bounded ATL slice before code.
 - `2026-05-19`: Completed `.9.43`: selected `.9.44` as same-clock/reset
   policy hardening for the generated-child actor-to-actor data route. The
   next leaf must reject source and sink children whose clock or reset

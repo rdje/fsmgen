@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-route clock/reset checks were already in the lowerer
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44` added regression coverage for
+  generated-child actor-to-actor source/sink clock and reset mismatches
+  without changing production lowering.
+- The existing generated-top child-entry check already requires each resolved
+  child actor to share the parent clock and reset signature before wiring.
+  The new tests make that boundary explicit for both sides of the child route.
+- Keeping this as coverage-only is intentional: no CDC bridge, reset remap,
+  system-port remap, route storage, mux, backpressure, or payload policy has
+  been selected.
+
 ## 2026-05-19: ATL child-route clock/reset parity precedes CDC
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43` selects same-clock/reset-policy
   hardening as the next generated-child route boundary.

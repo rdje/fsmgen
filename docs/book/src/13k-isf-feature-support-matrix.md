@@ -335,9 +335,9 @@ validation, and the one-drive/one-pair/one-call cardinality boundary.
 The shipped width hardening keeps generated-child actor-to-actor endpoints
 scalar one-bit and targets wider source/sink child payload ports as
 fail-closed coverage, without payload conversion semantics.
-The next selected hardening keeps that route same-domain only: source or
-sink child clock/reset mismatches remain fail-closed before any CDC bridge,
-reset remap, generated-top system-port remap, storage, mux, or backpressure
+The shipped clock/reset hardening keeps that route same-domain only: source
+or sink child clock/reset mismatches fail closed before any CDC bridge, reset
+remap, generated-top system-port remap, storage, mux, or backpressure
 contract.
 
 ### Actor, Interface, Storage, And Timing

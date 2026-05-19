@@ -1092,13 +1092,11 @@ wider than one bit fails closed until a later slice selects a real
 payload-width protocol, including any packing, truncation, extension, or
 storage semantics.
 
-The next selected route-boundary hardening is clock/reset parity for that
-same generated-child actor-to-actor route. `.9.44` must add focused
-fail-closed coverage for source or sink children whose clock or reset
-signature differs from the parent. That keeps the generated top a same-domain
-wiring artifact only; CDC bridge insertion, reset remapping, generated-top
-system-port remapping, route mux/storage, ready/backpressure, and payload
-protocols remain deferred.
+The shipped route-boundary clock/reset hardening keeps the same generated
+top a same-domain wiring artifact only. Focused coverage rejects source or
+sink children whose clock or reset signature differs from the parent; CDC
+bridge insertion, reset remapping, generated-top system-port remapping, route
+mux/storage, ready/backpressure, and payload protocols remain deferred.
 
 ## Fail-Closed Boundaries
 

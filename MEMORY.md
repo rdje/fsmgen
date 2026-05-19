@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child route clock/reset hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`.
+- Focused coverage now rejects generated-child actor-to-actor routes when
+  the source or sink child clock differs from the parent or when the source
+  or sink child reset signature differs from the parent reset signature.
+- No production code change was required; the generated-top lowerer already
+  enforced parent/child clock and reset policy parity before ATL child
+  wiring.
+- No CDC bridge, reset remapping, generated-top system-port remapping,
+  route mux/storage, fan-in/fan-out, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child route clock/reset hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43` as a doc-only selection
   leaf.

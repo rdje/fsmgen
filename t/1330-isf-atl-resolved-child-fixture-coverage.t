@@ -838,6 +838,30 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ reader_clock => 'reader_clk' }),
+        qr/requires parent and child clocks to match before ATL child wiring; parent 'clk' child 'reader_clk'/,
+        'generated-child actor-to-actor data route fails closed when the source child clock differs from the parent',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ writer_clock => 'writer_clk' }),
+        qr/requires parent and child clocks to match before ATL child wiring; parent 'clk' child 'writer_clk'/,
+        'generated-child actor-to-actor data route fails closed when the sink child clock differs from the parent',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ reader_reset => '(reader_rst_n async active_low)' }),
+        qr/requires parent and child reset policy to match before ATL child wiring/,
+        'generated-child actor-to-actor data route fails closed when the source child reset differs from the parent',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ writer_reset => '(writer_rst_n async active_low)' }),
+        qr/requires parent and child reset policy to match before ATL child wiring/,
+        'generated-child actor-to-actor data route fails closed when the sink child reset differs from the parent',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
@@ -1897,6 +1921,10 @@ CLAUSES
 CLAUSES
     my $writer_payload_width = $options->{writer_payload_width} || 1;
     my $reader_payload_width = $options->{reader_payload_width} || 1;
+    my $reader_clock = $options->{reader_clock} || 'clk';
+    my $writer_clock = $options->{writer_clock} || 'clk';
+    my $reader_reset = $options->{reader_reset} || '(rst_n async active_low)';
+    my $writer_reset = $options->{writer_reset} || '(rst_n async active_low)';
     my $writer_payload_port = $options->{omit_writer_payload}
         ? ''
         : _interface_port_decl('input', 'payload', $writer_payload_width);
@@ -1950,8 +1978,10 @@ ISF
     (actor packet_reader)
     (actor packet_writer))
   (actor packet_reader
-    (clock clk)
-    (reset (rst_n async active_low))
+ISF
+    $library .= "    (clock $reader_clock)\n";
+    $library .= "    (reset $reader_reset)\n";
+    $library .= <<'ISF';
     (interface
       (input capture_start)
 ISF
@@ -1963,8 +1993,10 @@ ISF
       (set payload capture_start)
       (complete done)))
   (actor packet_writer
-    (clock clk)
-    (reset (rst_n async active_low))
+ISF
+    $library .= "    (clock $writer_clock)\n";
+    $library .= "    (reset $writer_reset)\n";
+    $library .= <<'ISF';
     (interface
       (input emit_start)
 ISF

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route clock/reset hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`.
+- Focused coverage now rejects generated-child actor-to-actor route source
+  and sink children whose clock or reset signature differs from the parent.
+- No production code change was required; the generated-top lowerer already
+  enforced same-clock/reset-policy child wiring.
+- CDC bridge insertion, reset remapping, generated-top system-port remapping,
+  route mux/storage, fan-in/fan-out, ready/backpressure, payload protocols,
+  recursive actor networks, and permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child route clock/reset hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`.
 - The active ATL frontier advances to

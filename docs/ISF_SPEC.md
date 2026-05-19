@@ -899,10 +899,10 @@ The shipped width hardening keeps the route scalar one-bit only and adds
 focused rejection coverage for wider source child outputs and wider sink
 child inputs. No packing, truncation, extension, payload protocol, or storage
 semantics are selected for wider generated-child route endpoints.
-The next selected hardening keeps the same route in one parent clock/reset
-policy. Source or sink children whose clock or reset signature differs from
-the parent must fail closed before FSMGen claims any CDC bridge, reset
-remapping, generated-top system-port remapping, route mux/storage,
+The shipped clock/reset hardening keeps the same route in one parent
+clock/reset policy. Source or sink children whose clock or reset signature
+differs from the parent fail closed before FSMGen claims any CDC bridge,
+reset remapping, generated-top system-port remapping, route mux/storage,
 ready/backpressure, or payload protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a

@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child route clock/reset hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for source child clock mismatches, sink child clock mismatches, source child
+  reset-signature mismatches, and sink child reset-signature mismatches.
+- No production code change was required; the existing generated-top lowerer
+  already enforced parent/child clock and reset policy parity before ATL child
+  wiring.
+- Existing positive generated-child actor-to-actor, control-only two-child,
+  pin-ingress, pin-egress, and parent-handoff data-route fixtures remain in
+  the focused regression set.
+- No ATL source syntax, report key, generated artifact shape, CDC bridge,
+  reset remapping, system-port remapping, route mux/storage, fan-in/fan-out,
+  ready/backpressure, payload protocol, recursive actor network, or permanent
+  actor grouping behavior changed.
+
 ### R14 — ATL generated-child route clock/reset hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43` as a doc-only selection
   leaf.
