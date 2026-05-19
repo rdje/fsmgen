@@ -99,7 +99,9 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_actor_network_association_schedule_keys
     isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
+    isf_public_interface_schedule_report_actor_network_generated_top_child_keys
     isf_public_interface_schedule_report_actor_network_generated_top_keys
+    isf_public_interface_schedule_report_actor_network_generated_top_multi_child_keys
     isf_public_interface_schedule_report_actor_network_group_schedule_keys
     isf_public_interface_schedule_report_actor_network_group_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
@@ -230,6 +232,8 @@ sub build_isf_public_interface_contract {
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),
         schedule_report_actor_network_group_keys => isf_public_interface_schedule_report_actor_network_group_keys(),
         schedule_report_actor_network_generated_top_keys => isf_public_interface_schedule_report_actor_network_generated_top_keys(),
+        schedule_report_actor_network_generated_top_multi_child_keys => isf_public_interface_schedule_report_actor_network_generated_top_multi_child_keys(),
+        schedule_report_actor_network_generated_top_child_keys => isf_public_interface_schedule_report_actor_network_generated_top_child_keys(),
         schedule_report_actor_network_group_schedule_keys => isf_public_interface_schedule_report_actor_network_group_schedule_keys(),
         schedule_report_actor_network_association_schedule_keys => isf_public_interface_schedule_report_actor_network_association_schedule_keys(),
         schedule_report_actor_network_data_movement_keys => isf_public_interface_schedule_report_actor_network_data_movement_keys(),
@@ -592,6 +596,8 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_actor_network_resolved_instance_keys
             schedule_report_actor_network_group_keys
             schedule_report_actor_network_generated_top_keys
+            schedule_report_actor_network_generated_top_multi_child_keys
+            schedule_report_actor_network_generated_top_child_keys
             schedule_report_actor_network_group_schedule_keys
             schedule_report_actor_network_association_schedule_keys
             schedule_report_actor_network_data_movement_keys
@@ -1406,6 +1412,37 @@ sub isf_public_interface_schedule_report_actor_network_generated_top_keys {
     ];
 }
 
+sub isf_public_interface_schedule_report_actor_network_generated_top_multi_child_keys {
+    return [
+        qw(
+            children
+            clock
+            kind
+            parent_module
+            parent_scheduled_fsm
+            reset
+            top_fsm
+            top_module
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_actor_network_generated_top_child_keys {
+    return [
+        qw(
+            child_module
+            child_scheduled_fsm
+            event
+            event_child_port
+            event_parent_port
+            instance
+            target_transaction
+            trigger_child_port
+            trigger_parent_port
+        ),
+    ];
+}
+
 sub isf_public_interface_schedule_report_actor_network_group_schedule_keys {
     return [
         qw(
@@ -1838,6 +1875,8 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),
         schedule_report_actor_network_group_keys => isf_public_interface_schedule_report_actor_network_group_keys(),
         schedule_report_actor_network_generated_top_keys => isf_public_interface_schedule_report_actor_network_generated_top_keys(),
+        schedule_report_actor_network_generated_top_multi_child_keys => isf_public_interface_schedule_report_actor_network_generated_top_multi_child_keys(),
+        schedule_report_actor_network_generated_top_child_keys => isf_public_interface_schedule_report_actor_network_generated_top_child_keys(),
         schedule_report_actor_network_group_schedule_keys => isf_public_interface_schedule_report_actor_network_group_schedule_keys(),
         schedule_report_actor_network_association_schedule_keys => isf_public_interface_schedule_report_actor_network_association_schedule_keys(),
         schedule_report_actor_network_data_movement_keys => isf_public_interface_schedule_report_actor_network_data_movement_keys(),

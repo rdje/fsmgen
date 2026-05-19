@@ -45,6 +45,8 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_library_use_keys
     isf_public_interface_schedule_report_library_use_parameter_keys
     isf_public_interface_schedule_report_multi_file_scope
+    isf_public_interface_schedule_report_actor_network_generated_top_child_keys
+    isf_public_interface_schedule_report_actor_network_generated_top_multi_child_keys
     isf_public_interface_schedule_report_actor_phase_keys
     isf_public_interface_schedule_report_actor_stage_keys
     isf_public_interface_schedule_report_actor_param_keys
@@ -123,6 +125,14 @@ sub assert_schedule_report_metadata {
         [
             schedule_report_actor_stage_keys =>
                 isf_public_interface_schedule_report_actor_stage_keys(),
+        ],
+        [
+            schedule_report_actor_network_generated_top_child_keys =>
+                isf_public_interface_schedule_report_actor_network_generated_top_child_keys(),
+        ],
+        [
+            schedule_report_actor_network_generated_top_multi_child_keys =>
+                isf_public_interface_schedule_report_actor_network_generated_top_multi_child_keys(),
         ],
         [
             schedule_report_actor_param_keys =>

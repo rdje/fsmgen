@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.36`.
+  activation `.111` and ATL actor-network orchestration `.9.37`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -304,14 +304,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   selected the next ATL frontier as
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, which now fails closed the reserved
   generated-child actor-to-actor data-route shape before multi-child ATL top
-  scheduling is widened. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35` selected the
-  first positive multi-child generated-top slice as
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`: two resolved children, sequential
-  trigger/event handoffs, and no ATL data movement. Broader generated-top
-  packaging, positive actor-to-actor generated-child data routes,
-  multi-child data wiring, event fan-in, route mux/storage, ready/backpressure,
-  CDC, recursive actor networks, and permanent actor grouping remain
-  deferred.
+  scheduling is widened. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` shipped the
+  first positive multi-child generated-top slice through
+  `isf/atl_two_child_pipeline.isf`: two resolved children, sequential
+  trigger/event handoffs, one generated top, no ATL data movement, and
+  `actor_network.generated_tops[].children[]` child wiring metadata.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` is the active ATL selection leaf.
+  Broader generated-top packaging, positive actor-to-actor generated-child
+  data routes, multi-child data wiring, event fan-in, route mux/storage,
+  ready/backpressure, CDC, recursive actor networks, and permanent actor
+  grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -6643,9 +6645,10 @@ Done:
   to child `process_start`, wires child `done` to parent `worker_done`,
   reports `actor_network.generated_tops[]`, and fails closed for missing child
   transactions, non-scalar child activation, missing child event outputs, and
-  parent/child clock mismatches. Broader multi-child ATL tops, generated-child
-  data routes, route mux/storage, payload or ready/backpressure binding, CDC,
-  recursive actor networks, and permanent actor grouping remain deferred.
+  parent/child clock mismatches. Broader multi-child ATL data wiring,
+  generated-child data routes, route mux/storage, payload or
+  ready/backpressure binding, CDC, recursive actor networks, and permanent
+  actor grouping remain deferred.
 - `isf/spawn_parent.isf` now has file-backed strict generated-composition
   fixture coverage through
   [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t),

@@ -2,15 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
-## 2026-05-19: R14 — ATL two-child generated top selected
-- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`.
-- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` as the active ATL frontier.
-- `.9.36` will emit one generated ATL top for two resolved children with
-  sequential trigger/event handoffs and no ATL data movement.
-- Selected source shape: `reader.capture`, `await reader.done`,
-  `writer.emit`, `await writer.done`, then complete.
-- Report evidence must stay in existing `actor_network.instances[]`,
-  `transaction_triggers[]`, `event_waits[]`, and `generated_tops[]` surfaces.
+## 2026-05-19: R14 — ATL two-child generated top shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` is the active ATL frontier and must
+  select the next bounded widening before code.
+- Added `isf/atl_two_child_pipeline.isf` for two resolved children with
+  sequential `reader.capture`/`reader.done` then
+  `writer.emit`/`writer.done` handoffs and no ATL data movement.
+- Lowering emits parent, both children, and one generated top. The top wires
+  each parent trigger handoff to the matching child start input and each
+  child event output back to the parent event handoff.
+- Report evidence stays in existing actor-network families, with
+  `actor_network.generated_tops[].children[]` carrying per-child generated
+  top wiring metadata for the multi-child shape.
 
 ## 2026-05-19: R14 — ATL multi-child route diagnostic shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
@@ -65,7 +69,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `(pins.result worker.payload)` after the parent has triggered
   `worker.process` and awaited `worker.done`.
 - No compiler behavior changed in the selection slice.
-- Actor-to-actor generated-child routes, multi-child tops, route mux/storage,
+- Actor-to-actor generated-child routes, multi-child data wiring, route mux/storage,
   CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
   networks, and permanent actor grouping remain deferred.
 
@@ -84,7 +88,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   metadata for selected ATL child input ports so HDL generation preserves
   those ports.
 - Broader generated-child actor-to-actor routes, actor-to-pin routes,
-  multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
+  multi-child data wiring, route mux/storage, CDC/reset remapping, ready/backpressure,
   payload protocols, recursive actor networks, and permanent actor grouping
   remain deferred or fail-closed.
 - The active ATL frontier advances to
@@ -100,7 +104,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   and `worker.done` event wait.
 - No compiler behavior changed in the selection slice.
 - Actor-to-actor generated-child routes, actor-to-pin generated-child routes,
-  multi-child ATL tops, route mux/storage, CDC, ready/backpressure, payload
+  multi-child ATL data wiring, route mux/storage, CDC, ready/backpressure, payload
   protocol, recursive actor networks, and permanent actor grouping remain
   deferred.
 
@@ -140,7 +144,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   `done` to parent `worker_done`.
 - Schedule JSON reports this through `actor_network.generated_tops[]`; the
   public ISF contract advertises the key family.
-- Broader multi-child ATL tops, generated-child data routes, trigger batches,
+- Broader multi-child ATL data wiring, generated-child data routes, trigger batches,
   CDC, ready/backpressure, payload binding, route mux/storage, recursive actor
   networks, and permanent actor grouping remain deferred or fail-closed.
 - The active ATL frontier advances to

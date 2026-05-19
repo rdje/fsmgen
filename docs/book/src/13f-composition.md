@@ -711,9 +711,9 @@ parent `worker_payload` to child input `payload`, parent
 `worker_process_start` to child `process_start`, and child `done` to parent
 `worker_done`. The child `.fsm` includes generated `+interface` role metadata
 for the selected child input so the HDL backend preserves `payload` as a
-child module port. Actor-to-actor generated-child routes, multi-child tops,
-route mux/storage, CDC/reset remapping, ready/backpressure, and payload
-protocols remain unavailable.
+child module port. Actor-to-actor generated-child routes, multi-child data
+wiring, route mux/storage, CDC/reset remapping, ready/backpressure, and
+payload protocols remain unavailable.
 
 The inverse generated-child data route is also shipped for one scalar
 resolved-child output route to one top-level output pin through that generated
@@ -726,18 +726,30 @@ triggers `worker.process` and awaits `worker.done`. The fixture
 `worker_process_start` to child `process_start`, and child `done` to parent
 `worker_done`. The child `.fsm` includes generated `+interface` role metadata
 for the selected child output so the HDL backend preserves `payload` as a
-child module port. Actor-to-actor generated-child routes, multi-child tops,
-route mux/storage, CDC/reset remapping, ready/backpressure, and payload
-protocols remain unavailable.
+child module port. Actor-to-actor generated-child routes, multi-child data
+wiring, route mux/storage, CDC/reset remapping, ready/backpressure, and
+payload protocols remain unavailable.
 
 FSMGen now fails closed the reserved generated-child actor-to-actor
 data-route shape across two resolved children when it is coupled to qualified
 actor trigger/event handoffs. That shape reuses the existing `(sink source)`
 drive-body movement surface, but positive behavior waits for multi-child top
 scheduling rather than claiming a permanent route or inserted storage.
-The next selected ATL implementation step is a control-only two-child
-generated top: sequential trigger/event handoffs for `reader` then `writer`,
-with no data movement yet.
+
+The first control-only two-child generated top is now shipped. The fixture
+`isf/atl_two_child_pipeline.isf` declares resolved `reader` and `writer`
+children, triggers `reader.capture`, waits on `reader.done`, triggers
+`writer.emit`, waits on `writer.done`, and completes. Lowering emits parent,
+reader, writer, and generated top `.fsm` artifacts. The generated top
+instantiates all three modules, exposes only the parent public pins plus
+clock/reset, wires `reader_capture_start` to `reader.capture_start`,
+`reader.done` to `reader_done`, `writer_emit_start` to
+`writer.emit_start`, and `writer.done` to `writer_done`. Schedule JSON keeps
+the same actor-network families and uses
+`actor_network.generated_tops[].children[]` for the per-child generated-top
+wiring records. Data movement between generated children, fan-in/fan-out,
+route mux/storage, CDC/reset remapping, ready/backpressure, and payload
+protocols remain unavailable.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

@@ -824,8 +824,17 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
 
     _finalize_selected_atl_trigger_batches(
         $actor,
+        (($actor->{actor_network} || {})->{instances}) || [],
         \@transaction_triggers,
         \@event_waits,
+        \@data_movements,
+    );
+
+    _validate_selected_atl_event_wait_count(
+        $actor,
+        (($actor->{actor_network} || {})->{instances}) || [],
+        \@event_waits,
+        \@transaction_triggers,
         \@data_movements,
     );
 
@@ -1289,7 +1298,7 @@ sub _validate_selected_atl_data_movement_drive_call {
 }
 
 sub _finalize_selected_atl_trigger_batches {
-    my ($actor, $transaction_triggers, $event_waits, $data_movements) = @_;
+    my ($actor, $instances, $transaction_triggers, $event_waits, $data_movements) = @_;
     my @triggers = @{$transaction_triggers || []};
     return 1 unless @triggers;
 
@@ -1297,6 +1306,12 @@ sub _finalize_selected_atl_trigger_batches {
     if (@triggers == 1) {
         return 1;
     }
+    return 1 if _selected_atl_two_child_generated_top_candidate(
+        $instances,
+        $event_waits,
+        $transaction_triggers,
+        $data_movements,
+    );
     confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch cannot be combined with scalar data movements in the current subset\n"
         if @{$data_movements || []};
 
@@ -1407,6 +1422,66 @@ sub _finalize_selected_atl_trigger_batches {
     return 1;
 }
 
+sub _validate_selected_atl_event_wait_count {
+    my ($actor, $instances, $event_waits, $transaction_triggers, $data_movements) = @_;
+    my @waits = @{$event_waits || []};
+    return 1 unless @waits > 1;
+    return 1 if _selected_atl_two_child_generated_top_candidate(
+        $instances,
+        $event_waits,
+        $transaction_triggers,
+        $data_movements,
+    );
+
+    my $wait = $waits[1];
+    my $transaction = $wait->{transaction} // 'unknown';
+    my $target = $wait->{target} // (($wait->{instance} // 'actor') . '.' . ($wait->{event} // 'event'));
+    confess "Error: transaction '$transaction' ATL actor event wait '(await $target)' exceeds the current one-event-wait subset; fan-in, fan-out, and multiple event waits remain deferred\n";
+}
+
+sub _selected_atl_two_child_generated_top_candidate {
+    my ($instances, $event_waits, $transaction_triggers, $data_movements) = @_;
+    my @instances = @{$instances || []};
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+
+    return 0 unless @instances == 2
+        && @waits == 2
+        && @triggers == 2
+        && !@{$data_movements || []};
+
+    my $transaction = $triggers[0]{owner_transaction};
+    return 0 unless defined($transaction) && !ref($transaction) && length($transaction);
+    for my $entry (@triggers, @waits) {
+        my $entry_transaction = exists($entry->{owner_transaction})
+            ? $entry->{owner_transaction}
+            : $entry->{transaction};
+        return 0 unless ($entry_transaction // '') eq $transaction;
+    }
+
+    my @ordered = sort {
+        ($a->{index} // -1) <=> ($b->{index} // -1)
+    } (
+        { kind => 'trigger', instance => $triggers[0]{instance}, index => $triggers[0]{_clause_index} },
+        { kind => 'trigger', instance => $triggers[1]{instance}, index => $triggers[1]{_clause_index} },
+        { kind => 'wait',    instance => $waits[0]{instance},    index => $waits[0]{_clause_index} },
+        { kind => 'wait',    instance => $waits[1]{instance},    index => $waits[1]{_clause_index} },
+    );
+    return 0 if grep { !defined($_->{index}) } @ordered;
+    return 0 unless $ordered[0]{kind} eq 'trigger'
+        && $ordered[1]{kind} eq 'wait'
+        && $ordered[2]{kind} eq 'trigger'
+        && $ordered[3]{kind} eq 'wait';
+    return 0 unless $ordered[0]{instance} eq $ordered[1]{instance}
+        && $ordered[2]{instance} eq $ordered[3]{instance}
+        && $ordered[0]{instance} ne $ordered[2]{instance};
+
+    my %declared = map { $_->{name} => 1 } @instances;
+    return 0 unless $declared{$ordered[0]{instance}} && $declared{$ordered[2]{instance}};
+
+    return 1;
+}
+
 sub _atl_temporary_trigger_batch_name {
     my ($transaction_name) = @_;
     $transaction_name = defined($transaction_name) && !ref($transaction_name) && $transaction_name ne ''
@@ -1433,6 +1508,13 @@ sub _finalize_selected_atl_data_movements {
     my $instance_count = ref($instances) eq 'ARRAY' ? scalar(@$instances) : 0;
     my $group_count = scalar(@{(($actor->{actor_network} || {})->{groups}) || []});
     my $group_schedule_count = scalar(@{(($actor->{actor_network} || {})->{group_schedules}) || []});
+
+    return 1 if _selected_atl_two_child_generated_top_candidate(
+        $instances,
+        $event_waits,
+        $transaction_triggers,
+        $data_movements,
+    );
 
     if ($instance_count > 1 && !@{$data_movements || []} && !$group_count && !$group_schedule_count) {
         confess "Error: actor '$actor->{actor_name}' static actor network currently accepts exactly one actor instance unless the selected scalar actor-to-actor data movement subset is present; broader multiple-instance scheduling is deferred\n";
@@ -1471,6 +1553,7 @@ sub _finalize_selected_atl_data_movements {
 sub _strip_private_atl_metadata {
     my ($entry) = @_;
     return unless ref($entry) eq 'HASH';
+    delete $entry->{target};
     for my $key (keys %$entry) {
         delete $entry->{$key} if $key =~ /\A_/;
     }
@@ -1662,8 +1745,6 @@ sub _accept_top_level_atl_event_wait {
         unless defined($instance) && defined($event);
     confess "Error: $context ATL actor event wait '(await $target)' event name must be a scalar HDL identifier\n"
         unless _is_hdl_identifier($event);
-    confess "Error: $context ATL actor event wait '(await $target)' exceeds the current one-event-wait subset; fan-in, fan-out, and multiple event waits remain deferred\n"
-        if @$event_waits;
 
     my $signal = _actor_atl_event_handoff_signal($instance, $event);
     confess "Error: $context ATL actor event wait '(await $target)' generated handoff signal '$signal' conflicts with a declared actor signal\n"
@@ -1675,6 +1756,7 @@ sub _accept_top_level_atl_event_wait {
         context     => 'transaction_body',
         instance    => $instance,
         event       => $event,
+        target      => $target,
         signal      => $signal,
         source      => 'external_handoff',
         _clause_index => $clause_index,

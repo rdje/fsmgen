@@ -859,8 +859,9 @@ input-pin route into one resolved child through the generated top, written as
 `isf/atl_resolved_child_pin_ingress_pipeline.isf` proves parent/child/top
 artifacts, generated-top wiring, route metadata, child input port
 preservation, and plain plus strict HDL generation. Actor-to-actor
-generated-child routes, multi-child tops, route mux/storage, CDC/reset
-remapping, ready/backpressure, and payload protocols remain deferred.
+generated-child routes, multi-child data wiring, route mux/storage,
+CDC/reset remapping, ready/backpressure, and payload protocols remain
+deferred.
 
 The inverse generated-child data-route slice is now shipped as one scalar
 resolved-child output route to one top-level output through the generated top,
@@ -870,17 +871,21 @@ parent triggers `worker.process` and awaits `worker.done`. The fixture
 artifacts, generated-top wiring, route metadata, child output port
 preservation, plain plus strict HDL generation, missing child output failure,
 and pre-event drive-order failure. Actor-to-actor generated-child routes,
-multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
-and payload protocols remain deferred.
+multi-child data wiring, route mux/storage, CDC/reset remapping,
+ready/backpressure, and payload protocols remain deferred.
 
 FSMGen now fails closed reserved generated-child actor-to-actor data movement
 across two resolved children when it is coupled to qualified actor
 trigger/event handoffs. The source shape reuses the existing `(sink source)`
 drive-body pair, but positive behavior waits for multi-child top scheduling
 rather than implying a permanent route or inserted storage.
-The next selected positive slice is a control-only two-child generated top:
-sequential trigger/event handoffs for `reader` and then `writer`, with no
-data movement yet.
+The first positive two-child generated top is now shipped for the control-only
+case: `isf/atl_two_child_pipeline.isf` triggers `reader.capture`, waits on
+`reader.done`, triggers `writer.emit`, waits on `writer.done`, and completes.
+Lowering emits parent, both children, and one generated top; schedule JSON
+records the generated-top child wiring under
+`actor_network.generated_tops[].children[]`. Generated-child data movement
+between the children remains backlog.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -1924,7 +1929,7 @@ file-backed strict schedule JSON parity, parent plus resolved child scheduled
 transaction-trigger handoff, one parent event-wait handoff, and empty
 data/association/group schedule arrays. It is the bounded
 `isf/atl_resolved_child_pipeline.isf` emitted-child/generated-top fixture, not
-a claim for multi-child ATL tops, broader HDL child wiring, inferred
+a claim for multi-child data wiring, broader HDL child wiring, inferred
 interface binding, route mux/storage, actor-event fan-in, CDC,
 ready/backpressure, recursive actor networks, or permanent actor grouping.
 The follow-on `isf/atl_resolved_child_pin_ingress_pipeline.isf` fixture is now

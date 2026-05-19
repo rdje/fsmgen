@@ -241,14 +241,58 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     my $actor_name = $actor->{actor_name};
     my $context = "ATL generated top for actor '$actor_name'";
 
-    confess "$context requires exactly one resolved ATL static actor instance in the current subset\n"
-        unless @resolutions == 1;
-    confess "$context requires exactly one transaction trigger and exactly one event wait in the current subset\n"
-        unless @triggers == 1 && @event_waits == 1;
     confess "$context cannot combine generated child wiring with static group metadata in the current subset\n"
         if @{$network->{groups} || []};
     confess "$context cannot combine generated child wiring with temporary association or group schedules in the current subset\n"
         if @{$network->{association_schedules} || []} || @{$network->{group_schedules} || []};
+
+    my $top_module = "${actor_name}_top";
+    confess "$context generated top module '$top_module' conflicts with a generated child module\n"
+        if exists $child_irs->{$top_module};
+
+    if (@resolutions == 2 && @triggers == 2 && @event_waits == 2 && !@data_movements) {
+        my %resolution_by_instance = map { $_->{instance} => $_ } @resolutions;
+        my %seen_instance;
+        my @children;
+        for my $index (0 .. 1) {
+            my $trigger = $triggers[$index];
+            my $event_wait = $event_waits[$index];
+            my $instance = $trigger->{instance};
+            confess "$context two-child handoff pair requires trigger and event to target the same resolved actor instance\n"
+                unless defined($instance)
+                    && length($instance)
+                    && ($event_wait->{instance} // '') eq $instance;
+            confess "$context two-child handoff sequence targets instance '$instance' more than once in the current subset\n"
+                if $seen_instance{$instance}++;
+            confess "$context cannot find resolved actor metadata for child instance '$instance'\n"
+                unless exists $resolution_by_instance{$instance};
+            push @children, _atl_generated_top_child_entry(
+                $context,
+                $actor,
+                $child_irs,
+                $resolution_by_instance{$instance},
+                $trigger,
+                $event_wait,
+                [],
+            );
+        }
+
+        return ({
+            kind                 => 'resolved_children_trigger_event_sequence',
+            top_module           => $top_module,
+            top_fsm              => "$top_module.fsm",
+            parent_module        => $actor_name,
+            parent_scheduled_fsm => "$actor_name.fsm",
+            children             => \@children,
+            clock                => $actor->{clock},
+            reset                => ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{name} : undef,
+        });
+    }
+
+    confess "$context requires exactly one resolved ATL static actor instance in the current subset\n"
+        unless @resolutions == 1;
+    confess "$context requires exactly one transaction trigger and exactly one event wait in the current subset\n"
+        unless @triggers == 1 && @event_waits == 1;
 
     my $resolution = $resolutions[0];
     my $instance = $resolution->{instance};
@@ -266,9 +310,42 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     confess "$context expects the selected event source to be an external handoff before top wiring\n"
         unless ($event_wait->{source} // '') eq 'external_handoff';
 
-    my $top_module = "${actor_name}_top";
-    confess "$context generated top module '$top_module' conflicts with a generated child module\n"
-        if exists $child_irs->{$top_module};
+    my $child = _atl_generated_top_child_entry(
+        $context,
+        $actor,
+        $child_irs,
+        $resolution,
+        $trigger,
+        $event_wait,
+        \@data_movements,
+    );
+
+    return ({
+        kind                 => 'resolved_child_trigger_event_handoff',
+        top_module           => $top_module,
+        top_fsm              => "$top_module.fsm",
+        parent_module        => $actor_name,
+        parent_scheduled_fsm => "$actor_name.fsm",
+        instance             => $child->{instance},
+        child_module         => $child->{child_module},
+        child_scheduled_fsm  => $child->{child_scheduled_fsm},
+        target_transaction   => $child->{target_transaction},
+        trigger_parent_port  => $child->{trigger_parent_port},
+        trigger_child_port   => $child->{trigger_child_port},
+        event                => $child->{event},
+        event_parent_port    => $child->{event_parent_port},
+        event_child_port     => $child->{event_child_port},
+        data_links           => $child->{data_links},
+        clock                => $actor->{clock},
+        reset                => ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{name} : undef,
+    });
+}
+
+sub _atl_generated_top_child_entry {
+    my ($context, $actor, $child_irs, $resolution, $trigger, $event_wait, $data_movements) = @_;
+    my $instance = $resolution->{instance};
+    my $module = $resolution->{module};
+
     confess "$context cannot find resolved child module '$module'\n"
         unless exists $child_irs->{$module};
 
@@ -295,7 +372,7 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         $instance,
         $child_ir,
         $child_actor,
-        \@data_movements,
+        $data_movements,
     );
     my %child_ports = map { $_->{name} => $_ } @{$child_ir->{ports} || []};
     confess "$context child transaction '$target_transaction' scalar on signal '$child_start_port' is not a scalar child input port\n"
@@ -314,16 +391,11 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         $instance,
         $trigger,
         $event_wait,
-        \@data_movements,
+        $data_movements,
         \%child_ports,
     );
 
-    return ({
-        kind                 => 'resolved_child_trigger_event_handoff',
-        top_module           => $top_module,
-        top_fsm              => "$top_module.fsm",
-        parent_module        => $actor_name,
-        parent_scheduled_fsm => "$actor_name.fsm",
+    return {
         instance             => $instance,
         child_module         => $module,
         child_scheduled_fsm  => "$module.fsm",
@@ -334,19 +406,42 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         event_parent_port    => $event_wait->{signal},
         event_child_port     => $event_port,
         data_links           => \@data_links,
-        clock                => $actor->{clock},
-        reset                => ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{name} : undef,
-    });
+    };
 }
 
 sub _atl_generated_top_report_entry {
     my ($top) = @_;
-    return {
+    my $entry = {
         kind                 => $top->{kind},
         top_module           => $top->{top_module},
         top_fsm              => $top->{top_fsm},
         parent_module        => $top->{parent_module},
         parent_scheduled_fsm => $top->{parent_scheduled_fsm},
+        clock                => $top->{clock},
+        reset                => $top->{reset},
+    };
+
+    if (ref($top->{children}) eq 'ARRAY' && @{$top->{children}}) {
+        $entry->{children} = [
+            map {
+                {
+                    instance             => $_->{instance},
+                    child_module         => $_->{child_module},
+                    child_scheduled_fsm  => $_->{child_scheduled_fsm},
+                    target_transaction   => $_->{target_transaction},
+                    trigger_parent_port  => $_->{trigger_parent_port},
+                    trigger_child_port   => $_->{trigger_child_port},
+                    event                => $_->{event},
+                    event_parent_port    => $_->{event_parent_port},
+                    event_child_port     => $_->{event_child_port},
+                }
+            } @{$top->{children}}
+        ];
+        return $entry;
+    }
+
+    return {
+        %$entry,
         instance             => $top->{instance},
         child_module         => $top->{child_module},
         child_scheduled_fsm  => $top->{child_scheduled_fsm},
@@ -356,8 +451,6 @@ sub _atl_generated_top_report_entry {
         event                => $top->{event},
         event_parent_port    => $top->{event_parent_port},
         event_child_port     => $top->{event_child_port},
-        clock                => $top->{clock},
-        reset                => $top->{reset},
     };
 }
 
@@ -367,25 +460,31 @@ sub _mark_atl_data_link_child_interface_ports {
 
     for my $top (@$atl_top_instances) {
         next unless ref($top) eq 'HASH';
-        my $child_module = $top->{child_module};
-        my $child_ir = $child_irs->{$child_module};
-        next unless ref($child_ir) eq 'HASH';
+        my @children = ref($top->{children}) eq 'ARRAY' && @{$top->{children}}
+            ? @{$top->{children}}
+            : ($top);
 
-        my %port_by_name = map { $_->{name} => $_ } @{$child_ir->{ports} || []};
-        my %already = map { $_->{name} => 1 } @{$child_ir->{explicit_interface_ports} || []};
-        for my $data_link (@{$top->{data_links} || []}) {
-            for my $child_endpoint (qw(child_sink_port child_source_port)) {
-                my $child_port = $data_link->{$child_endpoint};
-                next unless defined($child_port) && !ref($child_port) && length($child_port);
-                next if $already{$child_port}++;
+        for my $child (@children) {
+            my $child_module = $child->{child_module};
+            my $child_ir = $child_irs->{$child_module};
+            next unless ref($child_ir) eq 'HASH';
 
-                my $port = $port_by_name{$child_port};
-                next unless ref($port) eq 'HASH';
-                push @{$child_ir->{explicit_interface_ports}}, {
-                    name      => $port->{name},
-                    direction => $port->{direction},
-                    width     => $port->{width} || 1,
-                };
+            my %port_by_name = map { $_->{name} => $_ } @{$child_ir->{ports} || []};
+            my %already = map { $_->{name} => 1 } @{$child_ir->{explicit_interface_ports} || []};
+            for my $data_link (@{$child->{data_links} || []}) {
+                for my $child_endpoint (qw(child_sink_port child_source_port)) {
+                    my $child_port = $data_link->{$child_endpoint};
+                    next unless defined($child_port) && !ref($child_port) && length($child_port);
+                    next if $already{$child_port}++;
+
+                    my $port = $port_by_name{$child_port};
+                    next unless ref($port) eq 'HASH';
+                    push @{$child_ir->{explicit_interface_ports}}, {
+                        name      => $port->{name},
+                        direction => $port->{direction},
+                        width     => $port->{width} || 1,
+                    };
+                }
             }
         }
     }

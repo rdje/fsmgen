@@ -1,15 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL two-child generated top shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
+- Added [isf/atl_two_child_pipeline.isf](isf/atl_two_child_pipeline.isf)
+  for two resolved library-backed children with sequential trigger/event
+  handoffs and no ATL data movement.
+- Lowering now emits the parent, both resolved child `.fsm` artifacts, and
+  one generated top that instantiates the parent, `reader`, and `writer`.
+- The generated top wires `reader_capture_start` to `reader.capture_start`,
+  `reader.done` to `reader_done`, `writer_emit_start` to
+  `writer.emit_start`, and `writer.done` to `writer_done`.
+- Schedule JSON keeps the existing actor-network report families and adds
+  nested `children[]` wiring records to the multi-child
+  `actor_network.generated_tops[]` entry.
+
 ### R14 — ATL two-child generated top selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35` as a doc-only selection
   leaf.
-- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` to emit one generated ATL
-  top for two resolved children with sequential trigger/event handoffs and no
-  ATL data movement.
-- The selected source shape triggers `reader.capture`, awaits `reader.done`,
-  triggers `writer.emit`, awaits `writer.done`, then completes.
-- No compiler behavior changed in this selection slice.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`, which has now shipped, to
+  emit one generated ATL top for two resolved children with sequential
+  trigger/event handoffs and no ATL data movement.
 
 ### R14 — ATL multi-child route diagnostic shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.

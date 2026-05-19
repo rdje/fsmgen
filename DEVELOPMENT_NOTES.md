@@ -1,6 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
 ## 2026-05-19: ATL multi-child top should grow before actor-to-actor data routes
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` now ships that boundary for the
+  control-only case: two resolved children, sequential trigger/event
+  handoffs, one generated top, and no data route.
+- The multi-child generated-top report entry remains under
+  `actor_network.generated_tops[]`; per-child wiring metadata is nested under
+  `children[]` so downstream readers do not need a new top-level report
+  family to discover the generated top.
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35` selects a positive two-child
   trigger/event generated-top slice before attempting generated-child
   actor-to-actor data movement.

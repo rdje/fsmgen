@@ -1,17 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
-## 2026-05-19: ATL two-child generated top selected
-- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35` as a doc-only selection
-  leaf.
-- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
-- `.9.36` must emit one generated ATL top for two resolved children with
+## 2026-05-19: ATL two-child generated top shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
+- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, a
+  selection leaf for the next bounded ATL widening before code.
+- Added `isf/atl_two_child_pipeline.isf` for two resolved children with
   sequential trigger/event handoffs and no data movement.
-- Selected source shape: `reader.capture`, `await reader.done`,
-  `writer.emit`, `await writer.done`, then complete.
-- The selected slice must keep report evidence in existing
-  `actor_network.instances[]`, `transaction_triggers[]`, `event_waits[]`,
-  and `generated_tops[]` surfaces while leaving data movement, mux/storage,
-  CDC, ready/backpressure, and permanent grouping deferred.
+- Lowering emits parent, `reader`, `writer`, and generated top `.fsm`
+  artifacts. The top wires each parent trigger handoff to the matching child
+  transaction start input and each child `done` output back to the parent
+  event handoff input.
+- Schedule JSON keeps the existing actor-network report families and uses
+  `actor_network.generated_tops[].children[]` for per-child generated-top
+  wiring metadata. Data movement, mux/storage, CDC, ready/backpressure, and
+  permanent grouping remain deferred.
 
 ## 2026-05-19: ATL multi-child route diagnostic shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
@@ -78,7 +80,7 @@ This is the live continuity document for fast session recovery after crashes, re
   `process_start`, and child `done` to parent `worker_done`.
 - `actor_network.data_movements[]` remains the route metadata owner and
   `actor_network.generated_tops[]` remains generated-top discovery metadata.
-- Actor-to-actor generated-child routes, multi-child tops, route mux/storage,
+- Actor-to-actor generated-child routes, multi-child data wiring, route mux/storage,
   CDC/reset remapping, ready/backpressure, payload protocols, recursive
   networks, and permanent grouping remain deferred.
 ## 2026-05-19: ATL resolved-child pin ingress top wiring shipped

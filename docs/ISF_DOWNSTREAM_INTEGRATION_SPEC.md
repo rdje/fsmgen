@@ -1733,13 +1733,15 @@ the selected one-bit actor-event handoff input, selected one-cycle
 actor-transaction trigger output, selected scalar data-movement handoff
 ports, and selected same-cycle trigger-batch handoff outputs. Resolved
 library-qualified ATL instances also emit child scheduled `.fsm` artifacts.
-FSMGen now emits one generated ATL top for the selected resolved-child
-trigger/event subset and reports it through `actor_network.generated_tops[]`.
-FSMGen still emits no generated ATL route mux, data-route storage,
-multi-child ATL top, CDC child wiring, payload/ready/backpressure binding, or
-broader HDL event wiring. The reserved generated-child actor-to-actor
-data-route shape now fails closed with a targeted multi-child ATL top
-diagnostic when it is coupled to qualified actor trigger/event handoffs.
+FSMGen now emits generated ATL tops for the selected one-resolved-child
+trigger/event subset and the selected two-resolved-child control-only
+trigger/event subset, reporting them through
+`actor_network.generated_tops[]`. FSMGen still emits no generated ATL route
+mux, data-route storage, generated-child data wiring between children, CDC
+child wiring, payload/ready/backpressure binding, or broader HDL event
+wiring. The reserved generated-child actor-to-actor data-route shape now
+fails closed with a targeted multi-child ATL top diagnostic when it is
+coupled to qualified actor trigger/event handoffs.
 Downstream consumers must treat
 `actor_network` as discovery/review metadata plus the explicitly
 reported `event_waits[]`, `transaction_triggers[]`, `data_movements[]`,
@@ -1769,13 +1771,21 @@ generated-top discovery evidence from `actor_network.generated_tops[]`; no
 new public report family is exposed. The generated child `.fsm` carries
 generated `+interface` role metadata for the selected child output so HDL
 generation preserves the child `payload` port.
+The first two-child generated-top data-free slice is also shipped:
+`isf/atl_two_child_pipeline.isf` emits parent, reader, writer, and generated
+top `.fsm` artifacts for sequential `reader.capture`/`reader.done` then
+`writer.emit`/`writer.done` handoffs. Downstream consumers should read the
+resolved child metadata from `actor_network.instances[]`, trigger evidence
+from `actor_network.transaction_triggers[]`, event evidence from
+`actor_network.event_waits[]`, and the generated-top discovery plus
+per-child wiring metadata from `actor_network.generated_tops[].children[]`.
 Downstream producers must still treat actor-to-actor generated-child routes,
-multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
-payload protocols, recursive actor networks, and permanent actor grouping as
-deferred. If they emit the reserved two-child route shape with a drive-body
-pair such as `(writer.payload reader.payload)` plus qualified actor
-trigger/event handoffs, they should expect a targeted fail-closed diagnostic
-rather than generated child-to-child wiring.
+multi-child data wiring, route mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, recursive actor networks, and
+permanent actor grouping as deferred. If they emit the reserved two-child
+route shape with a drive-body pair such as `(writer.payload reader.payload)`
+plus qualified actor trigger/event handoffs, they should expect a targeted
+fail-closed diagnostic rather than generated child-to-child wiring.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2303,6 +2313,11 @@ actor-to-actor data-route diagnostic: the two-resolved-child
 `(writer.payload reader.payload)` shape fails closed when paired with
 qualified actor trigger/event handoffs because multi-child ATL top scheduling
 is still deferred.
+The same focused regression also covers
+`isf/atl_two_child_pipeline.isf`: parent/reader/writer/top `.fsm` artifacts,
+strict schedule JSON parity, nested generated-top `children[]` metadata,
+generated-top wiring, and plain plus strict CLI HDL generation for the
+data-free two-child trigger/event subset.
 
 Recommended downstream smoke commands:
 

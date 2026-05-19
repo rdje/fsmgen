@@ -618,26 +618,7 @@ sub _actor_network_summary($self, $ir) {
             } @{$network->{groups} || []}
         ],
         generated_tops => [
-            map {
-                {
-                    kind                 => $_->{kind},
-                    top_module           => $_->{top_module},
-                    top_fsm              => $_->{top_fsm},
-                    parent_module        => $_->{parent_module},
-                    parent_scheduled_fsm => $_->{parent_scheduled_fsm},
-                    instance             => $_->{instance},
-                    child_module         => $_->{child_module},
-                    child_scheduled_fsm  => $_->{child_scheduled_fsm},
-                    target_transaction   => $_->{target_transaction},
-                    trigger_parent_port  => $_->{trigger_parent_port},
-                    trigger_child_port   => $_->{trigger_child_port},
-                    event                => $_->{event},
-                    event_parent_port    => $_->{event_parent_port},
-                    event_child_port     => $_->{event_child_port},
-                    clock                => $_->{clock},
-                    reset                => $_->{reset},
-                }
-            } @{$network->{generated_tops} || []}
+            map { _actor_network_generated_top_summary($_) } @{$network->{generated_tops} || []}
         ],
         group_schedules => [
             map {
@@ -721,6 +702,50 @@ sub _actor_network_summary($self, $ir) {
                 }
             } @{$network->{data_movements} || []}
         ],
+    };
+}
+
+sub _actor_network_generated_top_summary($top) {
+    my $entry = {
+        kind                 => $top->{kind},
+        top_module           => $top->{top_module},
+        top_fsm              => $top->{top_fsm},
+        parent_module        => $top->{parent_module},
+        parent_scheduled_fsm => $top->{parent_scheduled_fsm},
+        clock                => $top->{clock},
+        reset                => $top->{reset},
+    };
+
+    if (ref($top->{children}) eq 'ARRAY' && @{$top->{children}}) {
+        $entry->{children} = [
+            map {
+                {
+                    instance             => $_->{instance},
+                    child_module         => $_->{child_module},
+                    child_scheduled_fsm  => $_->{child_scheduled_fsm},
+                    target_transaction   => $_->{target_transaction},
+                    trigger_parent_port  => $_->{trigger_parent_port},
+                    trigger_child_port   => $_->{trigger_child_port},
+                    event                => $_->{event},
+                    event_parent_port    => $_->{event_parent_port},
+                    event_child_port     => $_->{event_child_port},
+                }
+            } @{$top->{children}}
+        ];
+        return $entry;
+    }
+
+    return {
+        %$entry,
+        instance             => $top->{instance},
+        child_module         => $top->{child_module},
+        child_scheduled_fsm  => $top->{child_scheduled_fsm},
+        target_transaction   => $top->{target_transaction},
+        trigger_parent_port  => $top->{trigger_parent_port},
+        trigger_child_port   => $top->{trigger_child_port},
+        event                => $top->{event},
+        event_parent_port    => $top->{event_parent_port},
+        event_child_port     => $top->{event_child_port},
     };
 }
 

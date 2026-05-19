@@ -199,6 +199,12 @@ should read the route from `actor_network.data_movements[]`, discover the top
 from `actor_network.generated_tops[]`, and treat the generated-top data-link
 plumbing as private implementation detail. Broader generated-child data-route
 top wiring remains deferred.
+The same focused coverage also covers
+[isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf), the
+first data-free two-child generated-top subset. It proves parent, reader,
+writer, and generated top `.fsm` artifacts, strict schedule JSON parity,
+plain plus strict HDL generation, and per-child generated-top wiring metadata
+under `actor_network.generated_tops[].children[]`.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -567,10 +573,15 @@ matching parent/child clock and reset policy; its report entry is advertised
 through `schedule_report_actor_network_generated_top_keys` under
 `actor_network.generated_tops[]`. The bounded scalar top-level input-pin to
 resolved-child input route and resolved-child output to top-level output
-route described below are also shipped for that same one-child top. Broader
-generated ATL tops, multi-child HDL child wiring, broader data-route
-coupling, and inferred payload/ready/backpressure binding remain unshipped
-behavior. Unqualified
+route described below are also shipped for that same one-child top. The first
+control-only two-child generated top is shipped for sequential trigger/event
+handoffs with no data movement; its generated-top entry uses `children[]`
+records advertised through
+`schedule_report_actor_network_generated_top_multi_child_keys` and
+`schedule_report_actor_network_generated_top_child_keys`. Broader
+generated ATL tops, multi-child data wiring, broader data-route coupling, and
+inferred payload/ready/backpressure binding remain unshipped behavior.
+Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
 The HDL coverage promotion for that same resolved-child generated-top fixture
@@ -2064,6 +2075,8 @@ actor_network: kind, instances, groups, generated_tops, association_schedules, g
 actor_network instances entries: name, actor_type, declaration
 actor_network groups entries: name, members, mode, declaration, source, scheduling
 actor_network generated_tops entries: kind, top_module, top_fsm, parent_module, parent_scheduled_fsm, instance, child_module, child_scheduled_fsm, target_transaction, trigger_parent_port, trigger_child_port, event, event_parent_port, event_child_port, clock, reset
+actor_network generated_tops multi-child entries: kind, top_module, top_fsm, parent_module, parent_scheduled_fsm, children, clock, reset
+actor_network generated_tops child entries: instance, child_module, child_scheduled_fsm, target_transaction, trigger_parent_port, trigger_child_port, event, event_parent_port, event_child_port
 actor_network association_schedules entries: association, kind, lifetime, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network group_schedules entries: group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network event_waits entries: transaction, context, instance, event, signal, source
