@@ -868,6 +868,18 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ extra_reader_trigger => 1 }),
+        qr/generated-child actor-to-actor data route requires exactly one transaction trigger per source and sink child in the current subset; repeated activation remains deferred/,
+        'generated-child actor-to-actor data route fails closed when the source child is triggered twice',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ extra_writer_trigger => 1 }),
+        qr/generated-child actor-to-actor data route requires exactly one transaction trigger per source and sink child in the current subset; repeated activation remains deferred/,
+        'generated-child actor-to-actor data route fails closed when the sink child is triggered twice',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
@@ -1918,13 +1930,22 @@ sub generated_child_actor_route_fixture {
     (trigger writer.emit)
     (await writer.done)
 CLAUSES
-        : <<'CLAUSES';
-    (trigger reader.capture)
-    (await reader.done)
-    (drive forward_payload)
-    (trigger writer.emit)
-    (await writer.done)
-CLAUSES
+        : undef;
+    if (!defined $clauses) {
+        my $extra_reader_trigger = $options->{extra_reader_trigger}
+            ? "    (trigger reader.flush)\n"
+            : '';
+        my $extra_writer_trigger = $options->{extra_writer_trigger}
+            ? "    (trigger writer.prime)\n"
+            : '';
+        $clauses = "    (trigger reader.capture)\n"
+            . "    (await reader.done)\n"
+            . $extra_reader_trigger
+            . "    (drive forward_payload)\n"
+            . "    (trigger writer.emit)\n"
+            . $extra_writer_trigger
+            . "    (await writer.done)\n";
+    }
     my $writer_payload_width = $options->{writer_payload_width} || 1;
     my $reader_payload_width = $options->{reader_payload_width} || 1;
     my $reader_clock = $options->{reader_clock} || 'clk';
@@ -1944,6 +1965,26 @@ CLAUSES
             : "    (writer.payload reader.payload)";
     my $reader_self_route_ports = $options->{same_child_route}
         ? "      (input payload_in)\n      (output payload_out)\n"
+        : '';
+    my $reader_extra_trigger_ports = $options->{extra_reader_trigger}
+        ? "      (input flush_start)\n      (output flush_done)\n"
+        : '';
+    my $reader_extra_transaction = $options->{extra_reader_trigger}
+        ? <<'ISF'
+    (transaction flush
+      (on flush_start)
+      (complete flush_done))
+ISF
+        : '';
+    my $writer_extra_trigger_ports = $options->{extra_writer_trigger}
+        ? "      (input prime_start)\n      (output prime_done)\n"
+        : '';
+    my $writer_extra_transaction = $options->{extra_writer_trigger}
+        ? <<'ISF'
+    (transaction prime
+      (on prime_start)
+      (complete prime_done))
+ISF
         : '';
     my $second_route_drive = $options->{second_route_drive}
         ? <<'ISF'
@@ -1998,12 +2039,17 @@ ISF
 ISF
     $library .= $reader_payload_port;
     $library .= $reader_self_route_ports;
+    $library .= $reader_extra_trigger_ports;
     $library .= <<'ISF';
       (output done))
     (transaction capture
       (on capture_start)
       (set payload capture_start)
-      (complete done)))
+      (complete done))
+ISF
+    $library .= $reader_extra_transaction;
+    $library .= <<'ISF';
+  )
   (actor packet_writer
 ISF
     $library .= "    (clock $writer_clock)\n";
@@ -2013,11 +2059,16 @@ ISF
       (input emit_start)
 ISF
     $library .= $writer_payload_port;
+    $library .= $writer_extra_trigger_ports;
     $library .= <<'ISF';
       (output done))
     (transaction emit
       (on emit_start)
-      (complete done))))
+      (complete done))
+ISF
+    $library .= $writer_extra_transaction;
+    $library .= <<'ISF';
+  ))
 ISF
     return $actor . $library;
 }

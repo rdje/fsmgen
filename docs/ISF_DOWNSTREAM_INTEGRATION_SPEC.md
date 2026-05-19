@@ -1825,10 +1825,10 @@ pairs fail closed; downstream producers should not assume self-route,
 loopback, child-internal bypass, storage, muxing, fan-in/fan-out,
 backpressure, or payload insertion until FSMGen publishes an explicit
 contract for those behaviors.
-The next selected hardening keeps the route sequence to one source-child
-trigger and one sink-child trigger. Downstream producers should not emit
-extra route-child triggers or assume repeated activation, restart,
-pending-request merging, trigger fan-in/fan-out, or multi-activation
+The shipped repeated-trigger hardening keeps the route sequence to one
+source-child trigger and one sink-child trigger. Extra route-child triggers
+fail closed; downstream producers should not assume repeated activation,
+restart, pending-request merging, trigger fan-in/fan-out, or multi-activation
 scheduling until FSMGen publishes an explicit contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact

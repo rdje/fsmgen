@@ -1104,11 +1104,10 @@ rejects same-child source/sink route pairs before any self-route, loopback,
 child-internal bypass, storage, mux, fan-in/fan-out, ready/backpressure, or
 payload behavior is claimed.
 
-The next selected route-boundary hardening keeps the sequence to one trigger
-per route child. `.9.48` must add focused fail-closed coverage for extra
-source-child or sink-child triggers before any repeated activation, restart,
-pending-request merging, trigger fan-in/fan-out, or multi-activation
-scheduling behavior is claimed.
+The shipped repeated-trigger hardening keeps the sequence to one trigger per
+route child. Focused coverage rejects extra source-child or sink-child
+triggers before any repeated activation, restart, pending-request merging,
+trigger fan-in/fan-out, or multi-activation scheduling behavior is claimed.
 
 ## Fail-Closed Boundaries
 

@@ -226,10 +226,10 @@ The shipped self-route hardening keeps the public surface unchanged:
 generated-child actor-to-actor routes remain between two distinct resolved
 children, and same-child source/sink route pairs fail closed until a later
 contract explicitly adds loopback, storage, or bypass metadata.
-The next selected repeated-trigger hardening also keeps the public surface
+The shipped repeated-trigger hardening also keeps the public surface
 unchanged: generated-child actor-to-actor routes remain one source trigger
 and one sink trigger per selected sequence, and extra route-child triggers
-stay fail-closed until a later contract explicitly adds repeated-activation
+fail closed until a later contract explicitly adds repeated-activation
 metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)

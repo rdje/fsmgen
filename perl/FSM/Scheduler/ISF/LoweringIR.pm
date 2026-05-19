@@ -290,11 +290,13 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     }
 
     if (@resolutions == 2
-        && @triggers == 2
         && @event_waits == 2
         && @data_movements == 1
         && ($data_movements[0]{kind} // '') eq 'scalar_actor_handoff')
     {
+        confess "$context two-child data route requires exactly one transaction trigger per source and sink child in the current subset; repeated activation remains deferred\n"
+            unless @triggers == 2;
+
         my $movement = $data_movements[0];
         my @ordered_instances = ($movement->{source_instance}, $movement->{sink_instance});
         my %resolution_by_instance = map { $_->{instance} => $_ } @resolutions;

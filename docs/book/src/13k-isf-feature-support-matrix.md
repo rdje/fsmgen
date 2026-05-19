@@ -343,9 +343,9 @@ The shipped self-route hardening keeps that route between two distinct
 resolved children: same-child source/sink route pairs fail closed before any
 self-route, loopback, child-internal bypass, storage, mux, fan-in/fan-out, or
 payload contract.
-The next selected hardening keeps the route to one source-child trigger and
-one sink-child trigger: extra route-child triggers remain fail-closed before
-any repeated activation, restart, pending-request merging, trigger
+The shipped repeated-trigger hardening keeps the route to one source-child
+trigger and one sink-child trigger: extra route-child triggers fail closed
+before any repeated activation, restart, pending-request merging, trigger
 fan-in/fan-out, or multi-activation scheduling contract.
 
 ### Actor, Interface, Storage, And Timing

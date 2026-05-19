@@ -909,10 +909,10 @@ resolved children. A route pair whose source and sink actor qualifiers name
 the same child fails closed before FSMGen claims self-route, loopback,
 child-internal bypass, storage, mux, fan-in/fan-out, ready/backpressure, or
 payload protocol behavior.
-The next selected hardening keeps the route sequence to one source-child
-trigger and one sink-child trigger. Extra triggers targeting either route
-child must fail closed before FSMGen claims repeated activation, restart,
-pending-request merging, trigger fan-in/fan-out, or multi-activation
+The shipped repeated-trigger hardening keeps the route sequence to one
+source-child trigger and one sink-child trigger. Extra triggers targeting
+either route child fail closed before FSMGen claims repeated activation,
+restart, pending-request merging, trigger fan-in/fan-out, or multi-activation
 scheduling behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a

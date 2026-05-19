@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child repeated-trigger hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for extra source-child triggers and extra sink-child triggers in the same
+  route sequence.
+- Added a targeted parser diagnostic for this repeated-trigger route shape
+  before it falls into the broader temporary-trigger-batch plus data-movement
+  rejection; the lowerer keeps a defensive repeated-activation backstop for
+  malformed route metadata.
+- Existing positive generated-child actor-to-actor, control-only two-child,
+  pin-ingress, pin-egress, and parent-handoff data-route fixtures remain in
+  the focused regression set.
+- No ATL source syntax, report key, generated artifact shape, repeated
+  activation, restart, pending-request merging, trigger fan-in/fan-out,
+  multi-activation scheduling, route mux/storage, ready/backpressure, payload
+  protocol, recursive actor network, or permanent actor grouping behavior
+  changed.
+
 ### R14 — ATL generated-child repeated-trigger hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.47` as a doc-only selection
   leaf.
