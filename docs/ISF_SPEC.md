@@ -939,12 +939,12 @@ event wait after the source child trigger. A wait on the source child event
 before the source trigger fails closed before FSMGen claims pre-trigger
 acknowledgement, sticky event sampling, event replay, route storage, muxing,
 ready/backpressure, or payload protocol behavior.
-The selected route-contiguity hardening keeps that same route as one
+The shipped route-contiguity hardening keeps that same route as one
 contiguous transaction-body segment. Interleaved parent clauses between the
 source trigger, source event wait, data drive call, sink trigger, and sink
-event wait remain fail-closed before FSMGen claims interleaved parent work,
-local side effects, pre/post route sampling, route continuation, pending
-handoff storage, muxing, ready/backpressure, or payload protocol behavior.
+event wait fail closed before FSMGen claims interleaved parent work, local
+side effects, pre/post route sampling, route continuation, pending handoff
+storage, muxing, ready/backpressure, or payload protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

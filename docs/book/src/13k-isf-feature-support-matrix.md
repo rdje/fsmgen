@@ -369,7 +369,7 @@ event wait after the source child trigger: source-wait-before-trigger route
 clauses remain fail-closed before any pre-trigger acknowledgement, sticky
 event sampling, event replay, route storage, muxing, backpressure, or payload
 contract.
-The selected route-contiguity hardening keeps that same route as one
+The shipped route-contiguity hardening keeps that same route as one
 contiguous transaction-body segment: interleaved parent clauses remain
 fail-closed before any interleaved parent work, local side effects,
 pre/post route sampling, route continuation, storage, muxing, backpressure,

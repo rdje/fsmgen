@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child route-contiguity hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61`.
+- Focused coverage now rejects generated-child actor-to-actor routes whose
+  source trigger, source event wait, data drive call, sink trigger, and sink
+  event wait are ordered but not contiguous.
+- The parser now emits a targeted route-contiguity diagnostic for this shape,
+  and the lowerer keeps a defensive clause-index backstop.
+- No interleaved parent work, local side effects, pre/post route sampling,
+  route continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocol, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child route-contiguity hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59` as a doc-only selection
   leaf.

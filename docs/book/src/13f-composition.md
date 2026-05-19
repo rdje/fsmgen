@@ -808,7 +808,7 @@ event wait after the source child trigger. Source-wait-before-trigger route
 sequences stay fail-closed until a later contract selects pre-trigger
 acknowledgement, sticky event sampling, event replay, route storage, muxing,
 backpressure, or payload behavior.
-The selected route-contiguity hardening keeps that route as one contiguous
+The shipped route-contiguity hardening keeps that route as one contiguous
 transaction-body segment. Interleaved parent clauses between the source
 trigger, source event wait, data drive call, sink trigger, and sink event
 wait stay fail-closed until a later contract selects interleaved parent work,

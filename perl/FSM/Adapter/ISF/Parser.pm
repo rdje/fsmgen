@@ -1439,30 +1439,72 @@ sub _selected_atl_two_child_generated_top_candidate {
 
 sub _selected_atl_generated_top_actor_route_candidate {
     my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
-    return 0 unless _selected_atl_generated_top_actor_route_shape(
+    return _selected_atl_generated_top_actor_route_contiguous_shape(
         $instances,
         $data_movements,
         $event_waits,
         $transaction_triggers,
     );
+}
 
+sub _selected_atl_generated_top_actor_route_ordered_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    my @indices = _selected_atl_generated_top_actor_route_clause_indices(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+    return 0 unless @indices == 5;
+
+    for my $idx (1 .. $#indices) {
+        return 0 unless $indices[$idx - 1] < $indices[$idx];
+    }
+    return 1;
+}
+
+sub _selected_atl_generated_top_actor_route_contiguous_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    my @indices = _selected_atl_generated_top_actor_route_clause_indices(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+    return 0 unless @indices == 5;
+
+    for my $idx (1 .. $#indices) {
+        return 0 unless $indices[$idx] == $indices[$idx - 1] + 1;
+    }
+    return 1;
+}
+
+sub _selected_atl_generated_top_actor_route_clause_indices {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    return unless _selected_atl_generated_top_actor_route_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
     my $movement = $data_movements->[0];
     my ($source_trigger, $source_wait, $sink_trigger, $sink_wait) =
         _selected_atl_generated_top_actor_route_sequence($movement, $event_waits, $transaction_triggers);
 
     my $drive_index = $movement->{_drive_clause_index};
-    return 0 unless defined($source_trigger->{_clause_index})
+    return unless defined($source_trigger->{_clause_index})
         && defined($source_wait->{_clause_index})
         && defined($drive_index)
         && defined($sink_trigger->{_clause_index})
         && defined($sink_wait->{_clause_index});
 
-    return $source_trigger->{_clause_index} < $source_wait->{_clause_index}
-        && $source_wait->{_clause_index} < $drive_index
-        && $drive_index < $sink_trigger->{_clause_index}
-        && $sink_trigger->{_clause_index} < $sink_wait->{_clause_index}
-        ? 1
-        : 0;
+    return (
+        $source_trigger->{_clause_index},
+        $source_wait->{_clause_index},
+        $drive_index,
+        $sink_trigger->{_clause_index},
+        $sink_wait->{_clause_index},
+    );
 }
 
 sub _selected_atl_generated_top_actor_route_shape {
@@ -1736,6 +1778,9 @@ sub _finalize_selected_atl_data_movements {
     confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-egress data movement requires trigger before event wait and drive call after event wait in the current subset\n"
         if !$generated_top_pin_egress_candidate
             && _selected_atl_generated_top_pin_egress_shape($instances, $data_movements, $event_waits, $transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to be contiguous in the current subset; interleaved parent work remains deferred\n"
+        if !$generated_top_actor_route_candidate
+            && _selected_atl_generated_top_actor_route_ordered_shape($instances, $data_movements, $event_waits, $transaction_triggers);
     confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order\n"
         if !$generated_top_actor_route_candidate
             && _selected_atl_generated_top_actor_route_shape($instances, $data_movements, $event_waits, $transaction_triggers);

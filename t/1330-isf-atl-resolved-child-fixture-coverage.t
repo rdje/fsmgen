@@ -910,6 +910,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ interleaved_sample_before_drive => 1 }),
+        qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to be contiguous in the current subset; interleaved parent work remains deferred/,
+        'generated-child actor-to-actor data route fails closed when parent work is interleaved before the drive call',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the sink child is triggered before the drive call',
@@ -1976,6 +1982,15 @@ CLAUSES
         ? <<'CLAUSES'
     (await reader.done)
     (trigger reader.capture)
+    (drive forward_payload)
+    (trigger writer.emit)
+    (await writer.done)
+CLAUSES
+        : $options->{interleaved_sample_before_drive}
+        ? <<'CLAUSES'
+    (trigger reader.capture)
+    (await reader.done)
+    (sample start as observed)
     (drive forward_payload)
     (trigger writer.emit)
     (await writer.done)

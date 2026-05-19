@@ -1140,10 +1140,10 @@ before any pre-trigger acknowledgement, sticky event sampling, event replay,
 route storage, muxing, ready/backpressure, or payload protocol behavior is
 claimed.
 
-The selected route-contiguity hardening keeps that same generated-child
-route as one contiguous parent transaction-body segment. The next leaf must
-reject unrelated parent clauses interleaved between source trigger, source
-event wait, data drive call, sink trigger, and sink event wait before any
+The shipped route-contiguity hardening keeps that same generated-child route
+as one contiguous parent transaction-body segment. Focused coverage rejects
+unrelated parent clauses interleaved between source trigger, source event
+wait, data drive call, sink trigger, and sink event wait before any
 interleaved parent work, local side effects, pre/post route sampling, route
 continuation, storage, muxing, ready/backpressure, or payload behavior is
 claimed.

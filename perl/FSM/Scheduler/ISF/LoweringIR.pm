@@ -330,6 +330,24 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to belong to one parent transaction in the current subset; cross-transaction route continuation remains deferred\n"
             if keys(%route_owners) > 1;
 
+        my @route_indices = (
+            $child_specs[0][1]{_clause_index},
+            $child_specs[0][2]{_clause_index},
+            $movement->{_drive_clause_index},
+            $child_specs[1][1]{_clause_index},
+            $child_specs[1][2]{_clause_index},
+        );
+        if (!grep { !defined($_) } @route_indices) {
+            for my $idx (1 .. $#route_indices) {
+                confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order\n"
+                    unless $route_indices[$idx - 1] < $route_indices[$idx];
+            }
+            for my $idx (1 .. $#route_indices) {
+                confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to be contiguous in the current subset; interleaved parent work remains deferred\n"
+                    unless $route_indices[$idx] == $route_indices[$idx - 1] + 1;
+            }
+        }
+
         for my $child_spec (@child_specs) {
             push @children, _atl_generated_top_child_entry(
                 $context,

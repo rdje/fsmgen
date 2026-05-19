@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child route-contiguity hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for a route sequence whose source trigger, source event wait, data drive
+  call, sink trigger, and sink event wait are ordered but not contiguous.
+- The parser now emits a targeted route-contiguity diagnostic for
+  ordered-but-noncontiguous generated-child actor-to-actor routes; the
+  lowerer keeps a defensive clause-index backstop for the same boundary.
+- Existing positive generated-child actor-to-actor, control-only two-child,
+  pin-ingress, pin-egress, parent-handoff data-route, repeated-trigger,
+  repeated-wait, same-parent-transaction, drive-before-source-wait,
+  source-wait-before-trigger, sink-before-drive, sink-wait-before-trigger,
+  and interleaved-parent-clause fixtures remain in the focused regression set.
+- No ATL source syntax, report key, generated artifact shape, interleaved
+  parent work, local side effects, pre/post route sampling, route
+  continuation, pending handoff storage, route mux/storage, CDC/reset
+  remapping, ready/backpressure, payload protocol, recursive actor network,
+  or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61` to select the next bounded widening
+  or hardening slice before code.
+
 ### R14 — ATL generated-child route-contiguity hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59` as a doc-only selection
   leaf.

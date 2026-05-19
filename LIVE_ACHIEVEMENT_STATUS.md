@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route-contiguity hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  sequences whose route clauses are ordered but interrupted by parent-local
+  work before the data drive call.
+- The parser emits a targeted route-contiguity diagnostic; the lowerer keeps
+  a defensive clause-index backstop for generated-top construction.
+- Interleaved parent work, local side effects, pre/post route sampling,
+  route continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocols, recursive actor networks, and
+  permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child route-contiguity hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59`.
 - The active ATL frontier advances to

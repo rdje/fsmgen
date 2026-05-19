@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route contiguity is now parser-owned
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60` adds focused coverage for the
+  generated-child actor-to-actor route sequence where otherwise ordered
+  route clauses are interrupted by parent-local work.
+- The parser now separates ordered-but-noncontiguous route clauses from
+  genuinely out-of-order route clauses, producing a targeted diagnostic that
+  keeps interleaved parent behavior deferred.
+- The lowerer also checks clause-index contiguity when that evidence is
+  present, so generated-top construction does not silently accept a route
+  that bypassed parser finalization.
+- This keeps parent side effects, pre/post route sampling, route
+  continuation, storage, muxing, backpressure, and payload protocols
+  deferred.
+
 ## 2026-05-19: ATL generated-child routes must stay contiguous for now
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59` selects route-contiguity hardening
   as the next generated-child route boundary.
