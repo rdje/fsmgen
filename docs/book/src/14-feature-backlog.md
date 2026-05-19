@@ -750,14 +750,15 @@ generated ATL tops, group endpoints, compact aliases, CDC, route mux/storage,
 payloads, ready/backpressure, trigger/data/event coupling, or permanent actor
 grouping.
 
-The next selected ATL fixture is `isf/atl_data_route_pipeline.isf`. It will
-use the already shipped scalar actor-to-actor data movement surface: two
-direct static actors, one named drive body with
-`(consumer.payload producer.payload)`, and one transaction drive call. The
-fixture is selected to prove generated parent handoff ports,
-`actor_network.data_movements[]` route metadata, strict schedule JSON, and
-plain plus strict HDL reachability without claiming generated children,
-route mux/storage, trigger/data coupling, wider payloads, or permanent
+The scalar data-route ATL fixture is now shipped as
+`isf/atl_data_route_pipeline.isf`. It uses the already shipped scalar
+actor-to-actor data movement surface: two direct static actors, one named
+drive body with `(consumer.payload producer.payload)`, and one transaction
+drive call. The fixture proves generated parent handoff ports,
+`actor_network.data_movements[]` route metadata, empty association/group
+schedule arrays, strict schedule JSON, and plain plus strict HDL reachability
+without claiming generated children, route mux/storage, trigger/data coupling,
+wider payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent
 grouping.
 
 The first actor-event implementation boundary is a generated parent-handoff
@@ -1767,6 +1768,15 @@ fixture, not a claim for parameter-driven interface/storage elaboration,
 nested imports, standalone transaction/drive exports, arbitrary-depth
 generated FIFOs, memory-array backend emission, or automatic non-zero reset
 values.
+
+The ATL scalar data-route fixture is now promoted in the `isf` tier for
+file-backed strict schedule JSON parity, scheduled `.fsm` structure, generated
+parent source/sink handoff ports, `actor_network.data_movements[]` route
+metadata, empty association/group schedule arrays, and plain plus strict HDL
+generation. It is the bounded two-actor `isf/atl_data_route_pipeline.isf`
+handoff fixture, not a claim for generated ATL children, generated ATL tops,
+route mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
+ready/backpressure, or permanent actor grouping.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

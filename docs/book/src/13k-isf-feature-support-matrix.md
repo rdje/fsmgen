@@ -184,6 +184,17 @@ and `writer_emit_start` from one scheduled trigger-batch state. It proves
 strict schedule JSON parity, scheduled `.fsm` structure, and plain plus strict
 HDL generation without declaring a permanent `(group ...)` association.
 
+The ATL scalar data-route fixture is file-backed in the `isf` regression tier
+for drive-activated actor-to-actor information movement. It uses
+`isf/atl_data_route_pipeline.isf` to declare producer and consumer actors, a
+named drive body with `(consumer.payload producer.payload)`, and one
+transaction drive call. It proves generated parent handoff ports,
+`actor_network.data_movements[]` metadata, empty association/group schedule
+arrays, strict schedule JSON parity, scheduled `.fsm` structure, and plain
+plus strict HDL generation without claiming generated ATL children, generated
+ATL tops, route mux/storage, wider payloads, fan-in/fan-out, CDC,
+ready/backpressure, or permanent actor grouping.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

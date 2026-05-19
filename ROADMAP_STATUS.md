@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.4`.
+  activation `.111` and ATL actor-network orchestration `.9.5`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -154,9 +154,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` selected the next fixture as
   `isf/atl_data_route_pipeline.isf`: two direct static actors, one scalar
   actor-to-actor drive-body route `(consumer.payload producer.payload)`, and
-  one transaction drive call. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, which must add that fixture and prove
-  strict schedule JSON plus HDL reachability without widening ATL behavior.
+  one transaction drive call. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` promoted
+  that fixture with one scheduled parent artifact, generated parent handoff
+  ports `producer_payload` and `consumer_payload`, one
+  `actor_network.data_movements[]` entry with `route_lifetime:
+  drive_call_cycle` and `storage: none`, empty association/group schedule
+  arrays, strict schedule JSON parity, and plain plus strict HDL reachability.
+  This remains a bounded scalar data-route fixture; generated ATL children,
+  generated ATL tops, route mux/storage, peer events, trigger/data coupling,
+  wider payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases,
+  and permanent actor grouping remain deferred. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, which must select the next bounded
+  ATL behavior before code.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

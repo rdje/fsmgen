@@ -2024,6 +2024,7 @@ isf/fifo_controller.isf
 isf/fifo_data_path.isf
 isf/fifo_library_use.isf
 isf/atl_trigger_batch_pipeline.isf
+isf/atl_data_route_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2114,6 +2115,16 @@ state, per-target trigger handoffs, canonical `association_schedules[]`,
 compatibility `group_schedules[]`, static actor-network report metadata, and
 plain plus strict HDL generation for `isf/atl_trigger_batch_pipeline.isf`.
 It intentionally does not declare a permanent `(group ...)` association.
+The ATL scalar data-route fixture is covered by
+`t/1325-isf-atl-data-route-fixture-coverage.t`, which proves strict schedule
+JSON parity, scheduled `.fsm` structure, generated parent handoff ports
+`producer_payload` and `consumer_payload`, one
+`actor_network.data_movements[]` entry with route lifetime
+`drive_call_cycle`, empty association/group schedule arrays, and plain plus
+strict HDL generation for `isf/atl_data_route_pipeline.isf`. It intentionally
+does not claim generated ATL children, generated ATL tops, route mux/storage,
+trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
+ready/backpressure, or permanent actor grouping.
 
 Recommended downstream smoke commands:
 
@@ -2132,6 +2143,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_data_path.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_library_use.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_data_route_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf

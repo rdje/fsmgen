@@ -1,0 +1,14 @@
+(actor atl_data_route_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (instance producer of packet_reader)
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload producer.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))

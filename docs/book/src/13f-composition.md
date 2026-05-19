@@ -543,6 +543,26 @@ synchronization, endpoint data movement, generated ATL child `.fsm` artifacts,
 generated ATL tops, group endpoints, route mux/storage, CDC, payloads,
 ready/backpressure, or permanent actor grouping.
 
+The scalar data-route ATL fixture is shipped as
+`isf/atl_data_route_pipeline.isf`. It uses the existing drive-body
+`(sink source)` movement syntax with two direct static actors:
+
+```lisp
+(drive feed_consumer
+  (consumer.payload producer.payload))
+```
+
+One transaction drive call activates the route for that drive-call cycle. The
+scheduled parent exposes `producer_payload` as the generated source handoff
+input and `consumer_payload` as the generated sink handoff output. Schedule
+JSON reports the route in `actor_network.data_movements[]` with
+`route_lifetime: "drive_call_cycle"` and `storage: "none"`. The fixture keeps
+`association_schedules[]` and `group_schedules[]` empty because it is a
+drive-activated data route, not a trigger-batch association. It does not claim
+generated ATL child `.fsm` artifacts, generated ATL tops, route mux/storage,
+trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
+compact aliases, or permanent actor grouping.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single
 static actor instance. FSMGen lowers it to a generated one-bit parent event

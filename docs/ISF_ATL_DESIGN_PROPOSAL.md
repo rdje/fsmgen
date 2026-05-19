@@ -311,15 +311,16 @@ movement, generated ATL child `.fsm` artifacts, generated ATL tops, group
 endpoints, compact aliases, CDC, route mux/storage, payloads, or
 ready/backpressure.
 
-The next selected realistic fixture is `isf/atl_data_route_pipeline.isf`.
-It stays inside the shipped scalar actor-to-actor data movement subset:
-two direct static actor instances, one named drive body with
-`(consumer.payload producer.payload)`, and one top-level transaction drive
-call. The fixture is selected to prove generated parent handoff ports,
+The scalar data-route ATL fixture is shipped as
+`isf/atl_data_route_pipeline.isf`. It stays inside the shipped scalar
+actor-to-actor data movement subset: two direct static actor instances, one
+named drive body with `(consumer.payload producer.payload)`, and one top-level
+transaction drive call. The fixture proves generated parent handoff ports,
 `actor_network.data_movements[]` route metadata, strict schedule JSON parity,
 and plain/strict HDL reachability without claiming generated ATL children,
 generated ATL tops, route mux/storage, trigger/data coupling, wider payloads,
-fan-in/fan-out, CDC, or permanent actor grouping.
+fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
+grouping.
 
 ## Endpoints
 

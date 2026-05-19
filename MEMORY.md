@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL data-route fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`.
+- Added `isf/atl_data_route_pipeline.isf` as the bounded scalar ATL
+  data-route fixture: two direct static actors, one named drive body with
+  `(consumer.payload producer.payload)`, and one transaction drive call.
+- The new regression `t/1325-isf-atl-data-route-fixture-coverage.t` proves
+  scheduled parent `.fsm` structure, strict schedule JSON parity, generated
+  parent handoff ports `producer_payload` and `consumer_payload`,
+  `actor_network.data_movements[]` metadata, empty association/group schedule
+  arrays, and plain/strict HDL reachability.
+- Broad ISF gate passed with `Files=231, Tests=1360`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` to select the next ATL behavior
+  before code.
 ## 2026-05-19: ATL data-route fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` as a selection leaf before
   fixture source/test changes.

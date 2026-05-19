@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL data-route fixture is coverage, not a syntax expansion
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` promotes a fixture around behavior
+  that was already shipped by the scalar actor-to-actor data movement subset.
+- The fixture intentionally adds no `transfer`, `move`, `connect`, or
+  `(network ...)` syntax. It demonstrates the uniform drive-body `(sink
+  source)` movement model and lets the scheduler/report own route lifetime
+  evidence.
+- `association_schedules[]` and `group_schedules[]` stay empty for this
+  fixture because no trigger-batch association forms. The public route
+  evidence is only `actor_network.data_movements[]`.
 ## 2026-05-19: ATL next fixture should show data movement
 - After stabilizing trigger-batch association reports, the next fixture should
   exercise data/information movement rather than another trigger-only path.
