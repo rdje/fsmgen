@@ -126,17 +126,17 @@ outputs to the parent scheduled `.fsm`; it reports those handoffs through
 `actor_network.group_schedules[]`.
 Static group declarations still report `actor_network.groups[]` metadata with
 `scheduling: "metadata_only"`; runtime group evidence appears only for an
-accepted trigger batch. FSMGen still emits no generated ATL child `.fsm`,
-generated ATL top, route mux, internal handoff storage, child instance, or HDL
-event wiring. Later leaves must add their generated artifact names, report
-keys, examples, and fail-closed diagnostics in the same slice that ships the
-behavior.
+accepted trigger batch. Resolved library-qualified ATL instances now emit
+their reported child scheduled `.fsm` artifacts, but FSMGen still emits no
+generated ATL top, route mux, internal handoff storage, child instance wiring,
+or HDL event wiring. Later leaves must add their generated artifact names,
+report keys, examples, and fail-closed diagnostics in the same slice that
+ships the behavior.
 
-The next selected generated-artifact boundary is child emission only. Resolved
-library-qualified ATL instances already report deterministic
-`<parent_actor>__<instance>.fsm` names; the next implementation leaf is scoped
-to emitting those child scheduled `.fsm` files while keeping the parent
-scheduled `.fsm` unchanged and still emitting no ATL top. Interface binding,
+The shipped child-artifact boundary is deliberately child emission only.
+Resolved library-qualified ATL instances report and emit deterministic
+`<parent_actor>__<instance>.fsm` files while keeping the parent scheduled
+`.fsm` unchanged and still emitting no ATL top. Interface binding,
 trigger/event/data handoff wiring, route mux/storage, ready/backpressure, CDC,
 actor-event fan-in, recursive actor networks, and permanent actor grouping
 remain separate future selections.
@@ -427,22 +427,20 @@ imports, non-explicit import aliases, unknown aliases, unknown actor exports,
 and, in the `.9.18` reservation leaf, known actor exports failed before
 scheduled `.fsm` emission with ATL-specific messages explaining that actor
 type resolution was selected but generated child emission was not supported
-yet. `.9.20` keeps the invalid-source diagnostics and replaces the known
-export failure with metadata-only resolution.
+yet. `.9.20` kept the invalid-source diagnostics and replaced the known
+export failure with metadata resolution; `.9.22` adds child artifact emission
+for those resolved entries.
 
-The shipped metadata-only type-resolution subset accepts the same
+The shipped type-resolution subset accepts the same
 `(instance NAME of ALIAS.EXPORT)` source shape only when `ALIAS` is an
 explicit import alias and `EXPORT` names a library actor export, then widens
 the resolved `actor_network.instances[]` entry with
 `type_resolution`, `library`, `alias`, `export`, `module`, and
 `scheduled_fsm`. `type_resolution` is `library_actor_export`; `module` and
-`scheduled_fsm` reserve the deterministic future child names
-`<parent_actor>__<instance>` and `<parent_actor>__<instance>.fsm`. The subset
-still emits only the parent scheduled `.fsm`: it does not emit a child
-`.fsm`, generate an ATL top, infer interface bindings, or wire
-trigger/event/data handoffs. `.9.21` selects the next implementation boundary
-as child-artifact emission only: emit the reserved child `.fsm` files while
-still emitting no ATL top and still leaving handoffs external.
+`scheduled_fsm` name the deterministic child artifacts
+`<parent_actor>__<instance>` and `<parent_actor>__<instance>.fsm`. `.9.22`
+now emits those reserved child `.fsm` files. It still does not generate an
+ATL top, infer interface bindings, or wire trigger/event/data handoffs.
 `<parent_actor>_top.fsm` remains reserved for a later leaf that selects ATL
 generated-top composition.
 

@@ -130,7 +130,7 @@ ISF
     is($actor->{actor_name}, 'one_actor_with_library_root', 'one actor root plus library root remains accepted');
 };
 
-subtest 'library-qualified ATL actor type syntax resolves to metadata without child emission' => sub {
+subtest 'library-qualified ATL actor type syntax emits child artifacts without an ATL top' => sub {
     parse_fails_like(
         <<'ISF',
 (actor atl_parent
@@ -141,7 +141,7 @@ subtest 'library-qualified ATL actor type syntax resolves to metadata without ch
     (on start)
     (complete done)))
 ISF
-        qr/ATL library-qualified static actor instance type 'pkt_lib\.packet_worker' requires an '\(imports \(library \.\.\. as alias\)\)' clause.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        qr/ATL library-qualified static actor instance type 'pkt_lib\.packet_worker' requires an '\(imports \(library \.\.\. as alias\)\)' clause.*valid ATL actor type resolution is required before generated child emission/s,
         'library-qualified actor type without imports fails closed',
     );
 
@@ -165,7 +165,7 @@ ISF
       (on start)
       (complete done))))
 ISF
-        qr/ATL static actor instance 'worker' type 'other_lib\.packet_worker' must use '\(instance worker of ALIAS\.EXPORT\)' where ALIAS is an imported library alias.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        qr/ATL static actor instance 'worker' type 'other_lib\.packet_worker' must use '\(instance worker of ALIAS\.EXPORT\)' where ALIAS is an imported library alias.*valid ATL actor type resolution is required before generated child emission/s,
         'unknown library-qualified actor type alias fails closed',
     );
 
@@ -189,7 +189,7 @@ ISF
       (on start)
       (complete done))))
 ISF
-        qr/ATL static actor instance 'worker' type 'common\.packet\.packet_worker' must use an explicit HDL identifier library alias from '\(imports \(library common\.packet as ALIAS\)\)'.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        qr/ATL static actor instance 'worker' type 'common\.packet\.packet_worker' must use an explicit HDL identifier library alias from '\(imports \(library common\.packet as ALIAS\)\)'.*valid ATL actor type resolution is required before generated child emission/s,
         'library-qualified actor type requires explicit HDL import alias',
     );
 
@@ -213,7 +213,7 @@ ISF
       (on start)
       (complete done))))
 ISF
-        qr/ATL static actor instance 'worker' type 'pkt_lib\.packet_writer' references missing actor export 'packet_writer' from library 'common\.packet'.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        qr/ATL static actor instance 'worker' type 'pkt_lib\.packet_writer' references missing actor export 'packet_writer' from library 'common\.packet'.*valid ATL actor type resolution is required before generated child emission/s,
         'unknown library actor export fails closed',
     );
 
@@ -258,6 +258,35 @@ ISF
         FSM::Adapter::ISF->new()->parse_file($top),
         'external library file',
         'external_atl_parent',
+    );
+
+    lower_fails_like(
+        <<'ISF',
+(actor atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (imports (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction atl_parent__worker
+    (on start)
+    (complete done))
+  (transaction run
+    (on start)
+    (spawn atl_parent__worker as w0)
+    (await_all done)
+    (complete done)))
+
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
+ISF
+        qr/ATL static actor instance 'worker' generated module 'atl_parent__worker' conflicts with another generated child/,
+        'resolved ATL child artifact name conflicts with generated transaction child',
     );
 };
 
@@ -1463,10 +1492,14 @@ sub assert_resolved_actor_type_metadata {
     my $lowered = $scheduler->lower($actor);
     is_deeply(
         [sort keys %{$lowered->{files}}],
-        ["$actor_name.fsm"],
-        "$label emits only the parent scheduled .fsm",
+        ["$actor_name.fsm", "${actor_name}__worker.fsm"],
+        "$label emits parent and resolved ATL child scheduled .fsm artifacts",
     );
-    ok(!exists $lowered->{files}{"${actor_name}__worker.fsm"}, "$label emits no generated ATL child .fsm");
+    like(
+        $lowered->{files}{"${actor_name}__worker.fsm"},
+        qr/\A\(\?fsm:${actor_name}__worker\b/,
+        "$label emitted ATL child .fsm uses the reserved module name",
+    );
     ok(!exists $lowered->{files}{"${actor_name}_top.fsm"}, "$label emits no generated ATL top");
 
     my $report = decode_json($scheduler->report($actor));
@@ -1506,6 +1539,17 @@ sub parse_fails_like {
         1;
     };
     ok(!$ok, "$label rejects source");
+    like($@, $pattern, "$label reports the bounded diagnostic");
+}
+
+sub lower_fails_like {
+    my ($source, $pattern, $label) = @_;
+    my $ok = eval {
+        my $actor = parse_source($source, 'actor-network-lower-negative.isf');
+        FSM::Scheduler::ISF->new()->lower($actor);
+        1;
+    };
+    ok(!$ok, "$label rejects during lowering");
     like($@, $pattern, "$label reports the bounded diagnostic");
 }
 

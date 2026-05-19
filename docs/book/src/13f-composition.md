@@ -671,18 +671,15 @@ Existing `(use alias.actor as instance ...)` remains the separate reusable
 library generated-top path with explicit bindings. The targeted fail-closed
 reservation for this qualified ATL syntax is shipped: missing imports,
 non-explicit import aliases, unknown aliases, and unknown actor exports still
-fail before scheduled `.fsm` emission with ATL-specific diagnostics. The
-first resolution leaf is shipped as metadata-only behavior: accepted
-qualified entries add `type_resolution`, `library`, `alias`, `export`,
+fail before scheduled `.fsm` emission with ATL-specific diagnostics.
+Resolved qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm`, with
-`type_resolution: "library_actor_export"` and deterministic reserved child
+`type_resolution: "library_actor_export"` and deterministic child
 names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm` under
-`actor_network.instances[]`. That subset still emits only the parent scheduled
-`.fsm`. The next selected implementation boundary is child-artifact emission
-only: emit those resolved child `.fsm` files while keeping the parent `.fsm`
-unchanged and still emitting no ATL top. Generated ATL tops, HDL child
-wiring, interface binding inference, and event/trigger/data handoff wiring
-remain later leaves.
+`actor_network.instances[]`. Lowering now emits those resolved child `.fsm`
+files while keeping the parent `.fsm` unchanged and still emitting no ATL top.
+Generated ATL tops, HDL child wiring, interface binding inference, and
+event/trigger/data handoff wiring remain later leaves.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

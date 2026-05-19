@@ -535,17 +535,17 @@ explicitly selected. One actor root plus `(library ...)` roots remains part of
 the supported reusable-library source model.
 The shipped ATL actor type-resolution spelling is library-qualified
 `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is an explicit library import
-alias and `EXPORT` is a library actor export. The shipped resolution is
-metadata-only: `actor_network.instances[]` adds `type_resolution`, `library`,
+alias and `EXPORT` is a library actor export. The shipped resolution reports
+metadata and emits child artifacts: `actor_network.instances[]` adds
+`type_resolution`, `library`,
 `alias`, `export`, `module`, and `scheduled_fsm` only for resolved
-`ALIAS.EXPORT` actor types, and the lowerer still emits only the parent
-scheduled `.fsm`. The machine-readable contract advertises those keys through
+`ALIAS.EXPORT` actor types, and the lowerer emits the child scheduled `.fsm`
+named by `scheduled_fsm` while keeping the parent scheduled `.fsm` unchanged.
+The machine-readable contract advertises those keys through
 `schedule_report_actor_network_resolved_instance_keys` while preserving
 `schedule_report_actor_network_instance_keys` for unqualified metadata-only
-instances. The next selected ATL boundary is child-artifact emission only:
-resolved instances will emit their reserved child scheduled `.fsm` files
-without changing this report key family. Generated ATL tops, HDL child wiring,
-and inferred handoff binding remain unshipped behavior. Unqualified
+instances. Generated ATL tops, HDL child wiring, and inferred handoff binding
+remain unshipped behavior. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
 The actor-shell timing shape is checked by

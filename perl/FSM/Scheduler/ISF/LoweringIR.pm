@@ -87,6 +87,20 @@ sub build_module($self, $actor) {
         push @library_instances, _library_instance_metadata($use);
     }
 
+    for my $resolution (_resolved_atl_actor_type_resolutions($actor)) {
+        my $instance = $resolution->{instance};
+        confess "ATL static actor instance resolution is missing an instance name\n"
+            unless defined($instance) && !ref($instance) && length($instance);
+
+        my $module = $resolution->{module};
+        confess "ATL static actor instance '$instance' is missing a generated module name\n"
+            unless defined($module) && !ref($module) && length($module);
+        confess "ATL static actor instance '$instance' generated module '$module' conflicts with another generated child\n"
+            if exists $child_irs{$module};
+
+        $child_irs{$module} = $self->_build_resolved_atl_child_ir($resolution, $actor);
+    }
+
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children);
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;
@@ -183,6 +197,24 @@ sub _build_library_child_ir($self, $use, $parent_actor) {
         export         => $use->{export},
         instance       => $use->{instance},
         library_source => $use->{library_source},
+    };
+    return $ir;
+}
+
+sub _build_resolved_atl_child_ir($self, $resolution, $parent_actor) {
+    my $child_actor = _clone_isf_value($resolution->{actor});
+    confess "ATL static actor instance '$resolution->{instance}' does not carry a resolved actor shell\n"
+        unless ref($child_actor) eq 'HASH';
+
+    $child_actor->{actor_name} = $resolution->{module};
+    my $ir = $self->_build_parent_ir($child_actor, {});
+    $ir->{library_origin} = {
+        parent_actor   => $parent_actor->{actor_name},
+        library        => $resolution->{library},
+        export         => $resolution->{export},
+        instance       => $resolution->{instance},
+        library_source => $resolution->{library_source},
+        usage          => 'atl_static_instance',
     };
     return $ir;
 }
@@ -1968,6 +2000,13 @@ sub _library_instance_metadata {
         child_clock   => ($use->{actor} || {})->{clock},
         child_reset   => (($use->{actor} || {})->{reset} || {})->{name},
     };
+}
+
+sub _resolved_atl_actor_type_resolutions {
+    my ($actor) = @_;
+    my $resolutions = $actor->{_atl_actor_type_resolutions};
+    return () unless ref($resolutions) eq 'HASH';
+    return map { $resolutions->{$_} } sort keys %$resolutions;
 }
 
 sub _build_ports($self, $actor) {

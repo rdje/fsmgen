@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL child artifacts shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
+- Resolved `(instance NAME of ALIAS.EXPORT)` ATL static actor instances now
+  emit child scheduled `.fsm` artifacts named
+  `<parent_actor>__<instance>.fsm` in addition to the parent scheduled `.fsm`.
+- Schedule JSON continues to advertise those child names through the resolved
+  `actor_network.instances[]` `module` and `scheduled_fsm` fields; no new
+  report family was added.
+- No generated ATL top is emitted, no HDL child wiring is inferred, and
+  trigger/event/data handoffs remain external parent ports.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`.
+
 ## 2026-05-19: R14 — ATL child-artifact boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`.
 - The next active ATL implementation leaf is

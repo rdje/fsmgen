@@ -831,15 +831,13 @@ roots remain rejected. Existing `(use alias.actor as instance ...)` remains
 the separate reusable-library generated-top surface with explicit bindings.
 The targeted fail-closed reservation for the qualified ATL syntax is now
 shipped: missing imports, non-explicit import aliases, unknown aliases,
-and unknown exports still fail before scheduled `.fsm` emission. The first
-resolution behavior leaf is now shipped as metadata-only resolution: accepted
+and unknown exports still fail before scheduled `.fsm` emission. Resolved
 qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
-while still emitting only the parent scheduled `.fsm`. Generated child
-emission is selected as the next boundary: emit the reserved child `.fsm`
-files without an ATL top and without handoff wiring. ATL top emission, HDL
-child wiring, interface binding inference, event fan-in, route mux/storage,
-CDC, recursive actor networks, and ready/backpressure remain later leaves.
+and now emit their child `.fsm` files without an ATL top and without handoff
+wiring. ATL top emission, HDL child wiring, interface binding inference,
+event fan-in, route mux/storage, CDC, recursive actor networks, and
+ready/backpressure remain later leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -968,16 +966,16 @@ information between actors once the scheduled interaction is inferred.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child
-transaction activations. They now define the first public actor-network source
-surfaces: static actor instance declarations and report-only static group
-declarations recorded as `actor_network` metadata. That is not scheduling yet.
-The generated-artifact
-contract is empty for ATL scheduling today: no generated ATL child `.fsm`, no
-generated ATL top, no route mux, no handoff storage, and no HDL behavior are
-promised by the metadata field. Event pulse semantics, actor-to-actor and
-pin-to-actor data movement, concurrent actor-group scheduling, global versus
-local scheduling ownership, generated artifact names, report visibility beyond
-the one-instance metadata, compact aliases, and broader fail-closed
+transaction activations. They now define public actor-network source surfaces:
+static actor instance declarations, library-qualified resolved child
+artifacts, and report-only static group declarations recorded as
+`actor_network` metadata. Resolved ATL child `.fsm` files are emitted, but the
+ATL generated-artifact contract still excludes generated ATL tops, route
+muxes, handoff storage, child HDL wiring, and inferred child interface
+bindings. Event pulse semantics, actor-to-actor and pin-to-actor data
+movement, concurrent actor-group scheduling, global versus local scheduling
+ownership, generated top names, report visibility beyond the shipped
+actor-network metadata, compact aliases, and broader fail-closed
 boundaries remain under task-tree ownership. This direction is still IAL1 if
 the source remains explicit actor/network `.isf` syntax with
 scheduler-visible events, bindings, and constraints. It becomes an IAL2

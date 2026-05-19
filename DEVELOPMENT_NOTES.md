@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child artifacts are emitted before ATL wiring
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22` now emits resolved child scheduled
+  `.fsm` files for library-qualified ATL instances, but it deliberately stops
+  before generated ATL top packaging.
+- The parser stores the resolved actor shell in private scheduler metadata
+  rather than widening `actor_network.instances[]`; the public report entry
+  remains the discovery point through `module` and `scheduled_fsm`.
+- The lowerer reuses the same parent-IR path used for reusable-library child
+  actors, but keeps ATL instances out of `library_uses[]` so downstream tools
+  can distinguish declarative ATL instances from explicit bound
+  `(use ...)` composition.
+- This keeps the next decision crisp: either select ATL top packaging, select
+  handoff/interface binding, promote an emitted-child fixture, or add more
+  fail-closed coverage before wiring generated children.
 ## 2026-05-19: ATL child emission should precede ATL top wiring
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` selects child scheduled `.fsm`
   emission as the next step after metadata-only type resolution.

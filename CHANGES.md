@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL child artifacts shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
+- Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so resolved library-qualified ATL instances carry the exported actor shell
+  in private scheduler metadata while preserving the public
+  `actor_network.instances[]` shape.
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  so lowering emits one child scheduled `.fsm` artifact per resolved ATL
+  static actor instance using the reserved `<parent_actor>__<instance>.fsm`
+  name.
+- The parent scheduled `.fsm` remains unchanged, no generated ATL top is
+  emitted, trigger/event/data handoffs remain external parent ports, and
+  `(use alias.actor as instance ...)` reusable-library generated-top behavior
+  remains separate.
+- Extended `t/1322-isf-actor-network-static.t` to prove same-source and
+  external-library child artifact emission, no-top behavior, resolved report
+  metadata, preservation of library-use generation, and conflict rejection
+  against an existing generated transaction child namespace.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`.
+
 ### R14 — ATL child-artifact boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` before changing lowering
   behavior again.

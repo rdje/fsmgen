@@ -224,10 +224,9 @@ actor's library imports and `EXPORT` names a library actor export. That
 qualified spelling now resolves to metadata only when the alias is an explicit
 import and the export exists. Accepted qualified instances add
 library/export provenance to their `actor_network.instances[]` report entry
-and reserve deterministic future child names while still emitting only the
-parent scheduled `.fsm`. The next selected behavior-bearing boundary is
-child-artifact emission only: a future leaf will emit those reserved child
-scheduled `.fsm` files without an ATL top or child wiring.
+and reserve deterministic child names. Lowering now emits the parent scheduled
+`.fsm` plus those resolved child scheduled `.fsm` files. It still emits no
+ATL top and performs no child wiring.
 Accepted parser output preserves `name` as the public actor-shell
 `actor_name`; nested or otherwise non-scalar actor names are rejected before
 the parser returns an actor shell.
@@ -3033,12 +3032,10 @@ entries with `type_resolution`, `library`, `alias`, `export`, `module`, and
 `scheduled_fsm`. The selected `type_resolution` value is
 `library_actor_export`; `module` and
 `scheduled_fsm` reserve `<parent_actor>__<instance>` and
-`<parent_actor>__<instance>.fsm` for future child emission. The lowerer still
-emits no child `.fsm` and no ATL top in that subset, and trigger/event/data
-handoffs remain external parent handoffs until interface binding and HDL
-wiring are explicitly selected. The next selected implementation boundary is
-to emit only those resolved child `.fsm` artifacts while still emitting no ATL
-top and still leaving trigger/event/data handoffs as external parent ports.
+`<parent_actor>__<instance>.fsm`. The lowerer now emits those child `.fsm`
+artifacts while still emitting no ATL top, and trigger/event/data handoffs
+remain external parent handoffs until interface binding and HDL wiring are
+explicitly selected.
 
 The following remain fail-closed/deferred:
 
@@ -3049,9 +3046,9 @@ The following remain fail-closed/deferred:
   `(sink source)` pairs outside the shipped scalar one-cycle handoff subset;
 - broader qualified actor transaction/event behavior beyond the selected
   parent-handoff subsets;
-- static actor type resolution, generated child artifacts, generated
-  top-level ATL wiring, and group scheduling outside the exact shipped
-  trigger-batch subset;
+- generated top-level ATL wiring, interface binding, generated child HDL
+  wiring, and group scheduling outside the exact shipped trigger-batch
+  subset;
 - recursive actor-network declarations.
 
 The broader ATL v0 vocabulary is selected, with only the bounded event-wait,
@@ -3154,9 +3151,9 @@ a single static actor, or follow one selected same-cycle temporary trigger
 batch. The wait lowers to a deterministic one-bit parent event handoff input
 named `actor_event`; for example, `(await reader.done)` lowers to an await on
 `reader_done` and the scheduled parent `.fsm` exposes `reader_done` as a
-one-bit input. The event source is external in this subset. FSMGen does not
-resolve the actor type, emit a generated ATL child `.fsm`, generate an ATL
-top, or wire the event producer.
+one-bit input. The event source is external in this subset even when the
+target actor type resolves and a child `.fsm` artifact is emitted. FSMGen
+does not generate an ATL top or wire the event producer.
 
 Schedule JSON reports the shipped wait under `actor_network.event_waits[]`.
 Each entry has `transaction`, `context`, `instance`, `event`, `signal`, and

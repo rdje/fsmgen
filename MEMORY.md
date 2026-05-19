@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL child artifacts shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
+- Parser resolution now keeps the exported library actor shell in private
+  scheduler metadata for valid `(instance NAME of ALIAS.EXPORT)` ATL static
+  actor instances.
+- Lowering emits the parent scheduled `.fsm` plus one resolved child
+  scheduled `.fsm` named `<parent_actor>__<instance>.fsm` for each resolved
+  ATL instance.
+- No generated ATL top is emitted, and trigger/event/data handoffs remain
+  external parent ports. `library_uses[]` remains reserved for
+  `(use alias.actor as instance ...)`.
+- Focused coverage proves same-source and external library child artifacts,
+  no-top behavior, preservation of reusable-library generated tops, and a
+  conflict against an existing generated transaction child namespace.
+- The next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, which must
+  select the next generated-top, interface-binding, emitted-child fixture, or
+  fail-closed boundary before code.
 ## 2026-05-19: ATL child-artifact boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` as a doc-only selection
   leaf.

@@ -3723,7 +3723,7 @@ sub _resolve_atl_actor_type_metadata($self, $actor, $forms, $source_label) {
     my @imports = @{$actor->{imports} || []};
     confess "Error: actor '$actor->{actor_name}' ATL library-qualified static actor instance type"
         . " '$qualified_instances[0]->{actor_type}' requires an '(imports (library ... as alias))' clause;"
-        . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
+        . " valid ATL actor type resolution is required before generated child emission\n"
         unless @imports;
 
     my %same_source_libraries = $self->_same_source_libraries($forms, $source_label);
@@ -3750,19 +3750,20 @@ sub _resolve_atl_actor_type_metadata($self, $actor, $forms, $source_label) {
 
         confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
             . " must use '(instance $name of ALIAS.EXPORT)' where ALIAS is an imported library alias and EXPORT is a scalar actor export;"
-            . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
+            . " valid ATL actor type resolution is required before generated child emission\n"
             unless defined $alias;
 
         my $library = $resolved_by_alias{$alias};
         confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
             . " must use an explicit HDL identifier library alias from '(imports (library $library->{name} as ALIAS))';"
-            . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
+            . " valid ATL actor type resolution is required before generated child emission\n"
             unless _is_hdl_identifier($alias);
 
+        my $exported_actor = $library->{exports}{actor}{$export};
         confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
             . " references missing actor export '$export' from library '$library->{name}';"
-            . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
-            unless $library->{exports}{actor}{$export};
+            . " valid ATL actor type resolution is required before generated child emission\n"
+            unless $exported_actor;
 
         my $module = _specialized_library_module_name($actor->{actor_name}, $name);
         $instance->{type_resolution} = 'library_actor_export';
@@ -3771,6 +3772,18 @@ sub _resolve_atl_actor_type_metadata($self, $actor, $forms, $source_label) {
         $instance->{export}          = $export;
         $instance->{module}          = $module;
         $instance->{scheduled_fsm}   = "$module.fsm";
+
+        $actor->{_atl_actor_type_resolutions}{$name} = {
+            library        => $library->{name},
+            library_source => $library->{source},
+            alias          => $alias,
+            export         => $export,
+            kind           => 'actor',
+            instance       => $name,
+            module         => $module,
+            scheduled_fsm  => "$module.fsm",
+            actor          => _clone_isf_value($exported_actor),
+        };
     }
 
     return 1;

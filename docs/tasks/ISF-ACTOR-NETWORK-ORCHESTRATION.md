@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -435,9 +435,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.21: select ATL child artifacts`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`
-  Status: `active`
+  Status: `completed`
   Goal: `Emit resolved ATL child scheduled artifacts without generating an ATL top.`
   Acceptance: `Parser/lowering accepts the already shipped '(instance NAME of ALIAS.EXPORT)' metadata-resolution shape, carries the exported actor shell into lowering, and emits one child scheduled '.fsm' artifact for each resolved ATL static actor instance using the reserved '<parent_actor>__<instance>.fsm' name. The parent scheduled '.fsm' remains unchanged, no generated ATL top is emitted, and existing trigger/event/data handoffs remain external parent handoffs. Existing '(use alias.actor as instance ...)' reusable-library generated-top behavior stays unchanged and remains separate from ATL '(instance ...)' type resolution. The slice must reject or fail closed duplicate generated child names that would collide with generated transaction children, reusable-library uses, or another resolved ATL instance. Schedule JSON keeps the existing resolved actor_network.instances[] metadata without adding a new report family unless the public contract is updated in the same slice. Generated ATL top packaging, HDL child wiring, inferred interface binding, event/trigger/data handoff binding, route mux/storage, ready/backpressure, actor-event fan-in, CDC, recursive actor networks, and permanent actor grouping remain deferred.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c t/1322-isf-actor-network-static.t; prove -Iperl t/1322-isf-actor-network-static.t t/1230-isf-library-import-resolution.t t/1231-isf-library-generated-top.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.22: emit ATL child artifacts`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`
+  Status: `active`
+  Goal: `Select the next ATL generated-top, interface-binding, or emitted-child fixture boundary.`
+  Acceptance: `Review the shipped resolved child artifact emission, existing parent trigger/event/data handoff surfaces, reusable-library generated-top machinery, and current report contract; choose the next bounded slice before code. Candidate directions include selecting generated ATL top packaging, selecting interface binding inference from current parent handoffs, promoting a realistic emitted-child fixture, or proving a fail-closed boundary around attempted handoff wiring before an ATL top exists. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -445,7 +452,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22` | `active` | `.9.21` selected the child-artifact-only boundary; emit resolved ATL child '.fsm' files without ATL top packaging or handoff wiring. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` | `active` | `.9.22` shipped resolved ATL child '.fsm' artifacts; select the next generated-top, interface-binding, fixture, or fail-closed boundary before code. |
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -623,11 +630,12 @@ Shipped verification coverage:
 - public-contract, downstream handoff, ISF spec, mdBook, manifest/audit, and
   focused-test index synchronization.
 
-## Selected ATL Child Artifact Boundary
+## Shipped ATL Child Artifact Boundary
 
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` selects the next code slice as
 child-artifact emission only. The next implementation leaf is
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, and that implementation is now
+shipped.
 
 Selected source shape:
 
@@ -637,10 +645,11 @@ Selected source shape:
 - `EXPORT` must still name an actor export from the resolved same-source or
   external library.
 
-Selected artifact impact:
+Shipped artifact impact:
 
-- Lowering will emit the parent scheduled `.fsm` exactly as it does today.
-- Lowering will additionally emit one resolved ATL child scheduled `.fsm` per
+- Lowering emits the parent scheduled `.fsm` exactly as it did before child
+  artifact emission.
+- Lowering now additionally emits one resolved ATL child scheduled `.fsm` per
   resolved static actor instance.
 - The child file/module name is the already reported reserved name:
   `<parent_actor>__<instance>.fsm` / `<parent_actor>__<instance>`.
@@ -648,7 +657,7 @@ Selected artifact impact:
 - No parent handoff endpoint is rewired to the child artifact in this slice.
   Trigger, event, and scalar data handoffs remain external parent ports.
 
-Selected report impact:
+Shipped report impact:
 
 - No new schedule-report family is selected.
 - `actor_network.instances[]` remains the report owner for resolved ATL
@@ -656,7 +665,7 @@ Selected report impact:
 - Existing `library_uses[]` remains reserved for `(use alias.actor as
   instance ...)` and must not report ATL `(instance ...)` children.
 
-Selected fail-closed boundaries:
+Shipped fail-closed boundaries:
 
 - duplicate generated child basenames must fail closed before emission if a
   resolved ATL instance collides with another resolved ATL instance, a
@@ -668,13 +677,13 @@ Selected fail-closed boundaries:
   ready/backpressure, CDC, recursive actor networks, and permanent actor
   grouping remain deferred.
 
-Selected verification scope:
+Shipped verification coverage:
 
 - parser/lowering coverage for child artifact emission from a same-source
   library export and an external library file;
 - no-top/no-wiring assertions for the emitted file set and generated parent;
-- conflict coverage for duplicate resolved ATL child names against at least
-  one existing generated-child namespace;
+- conflict coverage for a resolved ATL child name against an existing
+  generated transaction child namespace;
 - preservation coverage for unqualified metadata-only instances and existing
   `(use alias.actor as instance ...)` reusable-library generated-top behavior;
 - schedule-report contract coverage showing the resolved instance metadata is
