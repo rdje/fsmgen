@@ -851,6 +851,12 @@ HDL promotion for that resolved-child shape is shipped. It keeps the source
 and report schema unchanged and proves plain plus strict CLI SystemVerilog
 generation contains the generated top, scheduled parent, resolved child, and
 selected internal trigger/event links.
+The next selected ATL slice is one scalar top-level input-pin route into one
+resolved child through the generated top, written as
+`(worker.payload pins.payload)` in a named drive body. That route is selected
+but not shipped yet; actor-to-actor generated-child routes, actor-to-pin
+routes, multi-child tops, route mux/storage, CDC/reset remapping,
+ready/backpressure, and payload protocols remain deferred.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

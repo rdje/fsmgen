@@ -807,6 +807,16 @@ generation contains the generated ATL top, scheduled parent, resolved child,
 and the selected internal trigger/event links. Broader generated ATL top
 inference remains unshipped until a later task-tree leaf documents it here.
 
+The next selected generated-child data slice keeps the same one-child
+trigger/event top and adds one scalar pin-ingress route:
+`(worker.payload pins.payload)` in a named drive body activated by the same
+parent transaction. The selected top will wire the real top input pin to the
+parent, the parent generated handoff `worker_payload` to the child scalar
+input `payload`, and the existing trigger/event links unchanged. This is not
+yet shipped; actor-to-actor generated-child routes, actor-to-pin routes,
+multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols, and permanent actor grouping remain deferred.
+
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape

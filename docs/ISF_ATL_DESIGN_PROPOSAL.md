@@ -160,6 +160,17 @@ links. It does not widen ATL source syntax, infer additional interface
 bindings, add route mux/storage, or claim multi-child, CDC, payload,
 ready/backpressure, recursive-network, or permanent-group behavior.
 
+The next selected generated-child data step is one scalar top-level input-pin
+route into the same resolved child through the generated ATL top. The source
+shape reuses the existing drive-body pair syntax:
+`(worker.payload pins.payload)`, activated by a named drive call in the same
+transaction that triggers `worker.process` and awaits `worker.done`. The
+selected top wiring links the real top input to the parent, the parent
+generated sink handoff `worker_payload` to child input `payload`, and the
+existing trigger/event handoffs as before. Actor-to-actor generated-child
+routes, actor-to-pin routes, route mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, and multi-child tops remain deferred.
+
 ## Shipped First Actor-Event Wait Subset
 
 The first behavior-bearing event wait subset is shipped:

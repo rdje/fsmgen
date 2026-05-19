@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL resolved-child pin ingress selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
+- `.9.30` is selected to wire one scalar top-level input pin into one resolved
+  child through the generated ATL top, using the source shape
+  `(worker.payload pins.payload)` plus the existing `worker.process` trigger
+  and `worker.done` event wait.
+- No compiler behavior changed in the selection slice.
+- Actor-to-actor generated-child routes, actor-to-pin generated-child routes,
+  multi-child ATL tops, route mux/storage, CDC, ready/backpressure, payload
+  protocol, recursive actor networks, and permanent actor grouping remain
+  deferred.
+
 ## 2026-05-19: R14 — ATL generated-top HDL promotion shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`.
 - The resolved-child generated-top fixture now has plain and strict CLI HDL

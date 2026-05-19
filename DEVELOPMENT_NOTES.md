@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL data wiring should start at the top boundary
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` selects one top-level input pin to
+  one resolved child input as the first generated-child data movement slice.
+- This keeps the next implementation smaller than actor-to-actor generated
+  child routing: the parent already knows the real top-level input pin and the
+  generated actor sink handoff, and the child actor shell can prove the scalar
+  input endpoint exists.
+- The selected slice should reuse existing `actor_network.data_movements[]`
+  metadata instead of adding a new report family. The generated-top entry
+  remains the structural discovery point; the data movement entry remains the
+  route provenance point.
 ## 2026-05-19: ATL HDL promotion can be a coverage slice
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28` proved the first generated ATL top
   through plain and strict CLI SystemVerilog without production code changes.

@@ -1749,6 +1749,12 @@ requirements: the already shipped
 CLI SystemVerilog coverage proving the generated top, parent, child, and
 selected internal trigger/event links. Downstream producers should not infer
 any broader ATL HDL wiring from that coverage.
+The next selected ATL data slice is not shipped yet: one scalar
+`(worker.payload pins.payload)` route may be wired into one resolved child
+through the generated top, using `actor_network.data_movements[]` for route
+metadata and `actor_network.generated_tops[]` for top discovery. Until that
+slice lands, downstream producers must not rely on generated-child data-route
+top wiring.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2254,6 +2260,10 @@ The HDL promotion leaf keeps the same source and report contract and proves
 this fixture through plain and strict CLI HDL generation, requiring the
 emitted SystemVerilog to contain the generated top, scheduled parent, resolved
 child, and selected internal trigger/event links.
+The next selected generated-child data route is one top-level input pin to one
+resolved child input through the generated top. It is selected for future
+implementation only and is not part of the current shipped downstream
+contract.
 
 Recommended downstream smoke commands:
 

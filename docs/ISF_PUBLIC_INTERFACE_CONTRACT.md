@@ -193,6 +193,10 @@ covered.
 The same ATL fixture now has plain plus strict CLI HDL generation coverage,
 asserting the generated top, parent, child, and selected internal
 trigger/event links in SystemVerilog without widening the report schema.
+The next selected ATL coverage/behavior leaf is a not-yet-shipped scalar
+pin-ingress route into the resolved child through the generated top; until it
+lands, public consumers should treat generated-child data-route top wiring as
+deferred.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -568,6 +572,11 @@ The HDL coverage promotion for that same resolved-child generated-top fixture
 is shipped: no new report keys were selected, and the proof asserts that plain
 and strict CLI SystemVerilog contains the generated top, scheduled parent,
 resolved child, and selected internal trigger/event links.
+The next selected public-contract update is one scalar top-level input-pin to
+resolved-child input route through the generated top, using the existing
+`actor_network.data_movements[]` route metadata and
+`actor_network.generated_tops[]` top discovery metadata. That route is not
+shipped until the next implementation leaf lands.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

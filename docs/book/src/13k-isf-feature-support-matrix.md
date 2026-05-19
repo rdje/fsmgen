@@ -276,6 +276,9 @@ The generated-top HDL promotion fixture extension is shipped for the same
 source: plain and strict CLI SystemVerilog includes the generated top,
 scheduled parent, resolved child, and selected internal trigger/event links
 without adding new ATL syntax or report keys.
+The next selected generated-child data-route slice is a scalar top-level
+input pin to resolved-child input route through the generated top, using a
+named drive body with `(worker.payload pins.payload)`. It is not shipped yet.
 
 ### Actor, Interface, Storage, And Timing
 

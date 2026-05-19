@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL resolved-child pin ingress selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` before adding generated
+  ATL top data-route wiring.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` to wire one scalar
+  top-level input-pin route into one resolved child through the generated ATL
+  top.
+- The selected source shape adds one `(worker.payload pins.payload)` drive to
+  the existing resolved-child trigger/event fixture shape and keeps
+  `actor_network.data_movements[]` plus `actor_network.generated_tops[]` as
+  the existing report surfaces.
+- No compiler behavior changed in this selection slice.
+
 ### R14 — ATL generated-top HDL promotion shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`.
 - Extended [t/1330-isf-atl-resolved-child-fixture-coverage.t](t/1330-isf-atl-resolved-child-fixture-coverage.t)
