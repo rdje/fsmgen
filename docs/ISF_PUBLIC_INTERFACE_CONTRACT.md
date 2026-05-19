@@ -211,6 +211,10 @@ two-child top. Public consumers should read the route from
 `actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
 discover parent/reader/writer/top wiring from `actor_network.generated_tops[]`
 with `children[]`; no public `data_links` key is exposed.
+The next selected hardening around that route keeps the same public surface:
+it adds focused fail-closed coverage for source child output validation, sink
+child input validation, one route drive body, one endpoint pair, and one
+top-level drive call, without adding report keys or widening ATL syntax.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -590,9 +594,11 @@ shipped for `(writer.payload reader.payload)` when the parent transaction is
 ordered as source trigger, source event wait, drive call, sink trigger, and
 sink event wait. The route uses existing
 `schedule_report_actor_network_data_movement_keys`; no new report family is
-introduced. Broader generated ATL tops, multi-route data wiring, broader
-data-route coupling, route mux/storage, and inferred payload/ready/backpressure
-binding remain unshipped behavior.
+introduced. The next hardening slice locks nearby fail-closed diagnostics for
+missing or wrong-direction child payload ports and route cardinality, but
+still does not expose new public keys. Broader generated ATL tops,
+multi-route data wiring, broader data-route coupling, route mux/storage, and
+inferred payload/ready/backpressure binding remain unshipped behavior.
 Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-route hardening should precede wider routing
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39` selects fail-closed hardening before
+  widening the generated-child data-route model beyond one scalar route.
+- The shipped `.9.38` path deliberately relies on a source child output, a
+  parent-scheduled one-cycle handoff, and a sink child input. The next slice
+  should lock those source/sink port roles and route-cardinality limits with
+  focused regressions before any mux, storage, fan-in/fan-out, or payload
+  protocol work is attempted.
+- This keeps downstream behavior honest: consumers can rely on the one-route
+  subset and actionable diagnostics for nearby unsupported shapes, while the
+  public report surface remains the existing `data_movements[]` plus
+  `generated_tops[]` pair.
+
 ## 2026-05-19: ATL child-to-child data route remains parent-scheduled
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38` implements the selected
   generated-child actor-to-actor route without adding a permanent direct

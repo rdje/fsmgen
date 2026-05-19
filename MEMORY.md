@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child data-route hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`.
+- `.9.40` will harden the shipped
+  `isf/atl_two_child_data_pipeline.isf` route boundaries with focused
+  fail-closed coverage for source child output ports and route cardinality.
+- The positive route remains exactly one scalar
+  `(writer.payload reader.payload)` drive body and one top-level drive call
+  between `reader.done` and `writer.emit`.
+- No route mux/storage, multi-route wiring, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, payload protocol, recursive actor
+  network, or permanent actor grouping behavior is selected.
+
 ## 2026-05-19: ATL generated-child actor-to-actor route shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`.

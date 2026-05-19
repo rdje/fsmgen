@@ -329,6 +329,9 @@ discovers the parent/reader/writer/top wiring through
 multi-route data wiring, route mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, repeated triggers, trigger batches,
 groups, and permanent actor grouping remain deferred.
+The next selected hardening leaf keeps that surface unchanged and adds
+focused fail-closed coverage for source child output validation, sink child
+input validation, and the one-drive/one-pair/one-call cardinality boundary.
 
 ### Actor, Interface, Storage, And Timing
 

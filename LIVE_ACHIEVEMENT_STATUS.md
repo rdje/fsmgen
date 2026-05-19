@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child data-route hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`.
+- `.9.40` is selected as a hardening slice for the just-shipped
+  `isf/atl_two_child_data_pipeline.isf` generated-child actor-to-actor route.
+- The selected next work locks the source child output requirement, sink
+  child input requirement, one drive body, one endpoint pair, and one
+  top-level drive call.
+- Broader route mux/storage, multi-route wiring, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, payload protocols, repeated
+  triggers, trigger batches, groups, recursive actor networks, and permanent
+  actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child actor-to-actor route shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`.
 - The active ATL frontier advances to

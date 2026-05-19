@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. The active R14
   frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -29,7 +29,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.39`.
+  activation `.111` and ATL actor-network orchestration `.9.40`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -329,11 +329,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   completes. The generated top wires `reader.payload` to parent
   `reader_payload` and parent `writer_payload` to `writer.payload`, while
   schedule JSON reuses `actor_network.data_movements[]` and
-  `actor_network.generated_tops[]`. The active ATL frontier is now
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`, a selection leaf for the next
-  bounded widening or hardening slice. Broader generated-top packaging,
-  multi-route data wiring, event fan-in, route mux/storage, ready/backpressure,
-  CDC, recursive actor networks, and permanent actor grouping remain deferred.
+  `actor_network.generated_tops[]`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39` then selected `.9.40` as a
+  hardening slice for that route: lock source child output validation, sink
+  child input validation, one data-route drive body, one endpoint pair, and
+  one top-level drive call before any wider routing is attempted. Broader
+  generated-top packaging, multi-route data wiring, event fan-in,
+  route mux/storage, ready/backpressure, CDC, recursive actor networks, and
+  permanent actor grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

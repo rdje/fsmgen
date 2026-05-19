@@ -762,6 +762,11 @@ handoff output, drives `writer_payload` from `reader_payload` only for the
 fan-in/fan-out, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols, repeated triggers, trigger batches, groups, recursive
 actor networks, and permanent actor grouping remain unavailable.
+The next selected hardening keeps this one-route surface unchanged and locks
+the nearby fail-closed rules: the source endpoint must be a scalar output on
+the source child, the sink endpoint must be a scalar input on the sink child,
+and only one route drive body, one endpoint pair, and one top-level drive call
+may participate.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

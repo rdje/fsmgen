@@ -1077,6 +1077,15 @@ route storage, route muxes, ready/backpressure, CDC/reset remapping,
 multi-route fan-in/fan-out, wider payload protocols, recursive actor
 networks, or permanent actor grouping.
 
+The next selected hardening slice is deliberately not a wider routing
+feature. It locks the nearby fail-closed boundary for this same generated
+child route: the source endpoint must be a scalar output of the source child,
+the sink endpoint must be a scalar input of the sink child, only one selected
+ATL data-route drive body with one endpoint pair may participate, and only
+one top-level transaction drive call may activate it. If those invalid shapes
+already fail, the slice adds focused regression coverage and keeps the
+diagnostics stable before any future mux/storage or fan-in/fan-out design.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

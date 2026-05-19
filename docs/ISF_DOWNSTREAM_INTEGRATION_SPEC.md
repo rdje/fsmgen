@@ -1800,6 +1800,15 @@ networks, repeated triggers, trigger batches, groups, and permanent actor
 grouping as deferred. The shipped route fails closed if the drive call does
 not follow the source event wait and precede the sink trigger.
 
+The next selected FSMGen hardening frontier does not widen this downstream
+surface. It adds focused fail-closed coverage for adjacent invalid shapes:
+the source endpoint must be a scalar output on the source child, the sink
+endpoint must be a scalar input on the sink child, exactly one selected
+route drive body may participate, that drive body must contain exactly one
+endpoint pair, and the route must be activated by exactly one top-level drive
+call. Downstream producers should keep emitting only the shipped one-route
+shape until a later spec update explicitly widens the contract.
+
 ## 13. Scheduled `.fsm` Review Artifact
 
 Downstream tools should treat the scheduled `.fsm` files as review artifacts
