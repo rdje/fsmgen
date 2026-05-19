@@ -4059,6 +4059,11 @@ boundary. The selected work is documentation-only and does not claim new ATL
 source syntax, reports, generated artifacts, mux/storage, fan-in/fan-out,
 ready/backpressure, payload protocols, remapping, CDC behavior, recursive
 actor networks, or permanent actor grouping.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.76` shipped that precision pass: the
+mdBook now gives route lifetime/value boundary, generated handoffs, handoff
+remapping, diagnostic ownership, route muxing/storage, fan-in/fan-out,
+ready/backpressure, and payload protocols their own generated-child route
+term subsections.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

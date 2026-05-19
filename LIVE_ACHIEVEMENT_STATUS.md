@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route-term precision docs shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.76`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77`.
+- The mdBook `Generated-Child Route Terms` section now has separate
+  subsections for route lifetime/value boundary, generated handoffs, handoff
+  remapping, diagnostic ownership, route muxing/storage, fan-in/fan-out,
+  ready/backpressure, and payload protocols.
+- The mdBook audit now requires those subsection headings and preserves the
+  existing generated-child route support/non-support markers.
+- No source syntax, parser/lowerer behavior, report shape, generated artifact
+  shape, runtime behavior, remapping, mux/storage, fan-in/fan-out, CDC/reset
+  remapping, ready/backpressure, payload protocol, recursive actor network,
+  or permanent actor grouping behavior changed.
+
 ## 2026-05-19: R14 — ATL route-term precision docs selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75`.
 - The active ATL frontier advances to

@@ -255,6 +255,14 @@ ok(
 );
 
 my @required_route_term_markers = (
+    '##### Route Lifetime And Value Boundary',
+    '##### Generated Handoffs',
+    '##### Handoff Remapping',
+    '##### Diagnostic Ownership',
+    '##### Route Muxing And Route Storage',
+    '##### Fan-In And Fan-Out',
+    '##### Ready/Backpressure',
+    '##### Payload Protocols',
     'one scalar child output reaches one scalar child input',
     'named drive-call cycle',
     'Generated handoffs are',
@@ -292,6 +300,10 @@ sub read_repo_file {
 
 sub markdown_heading_section {
     my ($content, $heading) = @_;
-    return $1 if $content =~ /^ \Q$heading\E \s* \n (.*?)(?=^ \#{1,6} \s+ \S|\z)/msx;
+    my ($marks) = $heading =~ /^([#]+)\s+\S/;
+    return '' unless defined $marks;
+    my $level = length $marks;
+    my $closing_heading = qr/^ [#]{1,$level} \s+ \S/msx;
+    return $1 if $content =~ /^ \Q$heading\E \s* \n (.*?)(?=$closing_heading|\z)/msx;
     return '';
 }

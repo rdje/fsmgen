@@ -1891,10 +1891,9 @@ section for these terms. Downstream consumers should treat that book section
 and this handoff as the truth sources for current route support and explicit
 non-support.
 
-The next selected documentation slice makes that book section more precise as
-a term-by-term support boundary. It does not change the downstream source
-surface, schedule-report contract, generated artifact shape, or shipped ATL
-behavior.
+The documentation precision slice now makes that book section a term-by-term
+support boundary. It does not change the downstream source surface,
+schedule-report contract, generated artifact shape, or shipped ATL behavior.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
 the selected one-bit actor-event handoff input, selected one-cycle

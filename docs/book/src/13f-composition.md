@@ -918,48 +918,107 @@ This terminology is part of the user-facing contract and is kept in this
 dedicated section so route support, explicit non-support, and diagnostic
 ownership stay reviewable in the book.
 
+##### Route Lifetime And Value Boundary
+
+The shipped route lifetime is one named drive-call cycle. In
+`atl_two_child_data_pipeline`, that cycle is the parent transaction's
+`(drive forward_payload)` clause between `await reader.done` and
+`trigger writer.emit`.
+
+The shipped data value is exactly one scalar bit. The generated top presents
+the value as `reader.payload` to parent handoff `reader_payload`, then parent
+handoff `writer_payload` to `writer.payload`. FSMGen transfers a one-bit value during the `forward_payload` drive-call
+cycle and does not define a multi-cycle route lifetime.
+
+Wider payloads, structured payloads, replayed payloads, or delayed delivery
+remain deferred until a later task tree selects and verifies a wider
+protocol.
+
+##### Generated Handoffs
+
 Generated handoffs are the parent-visible signals that FSMGen creates for
-the route. In the shipped fixture, `reader_payload` carries the source child
-payload into the parent, `writer_payload` carries the parent value out to the
-sink child, `reader_capture_start` and `writer_emit_start` are one-cycle
+the route.
+
+In the shipped fixture, `reader_payload` carries the source child payload
+into the parent, `writer_payload` carries the parent value out to the sink
+child, `reader_capture_start` and `writer_emit_start` are one-cycle
 child-start pulses, `reader_done` and `writer_done` are child completion
 event inputs, and `forward_payload_start` is the named-drive request signal.
 
+These generated names are deterministic. They are part of the current
+support boundary and can be inspected in the scheduled `.fsm`, generated top
+artifact, and schedule JSON route evidence.
+
+##### Handoff Remapping
+
 Handoff remapping would let the author choose different generated parent
-handoff names or map the generated handoffs onto existing parent signals.
+handoff names or map the generated handoffs onto existing parent interface
+or storage signals.
+
 That is not shipped for this route. The current contract uses deterministic
 generated names and rejects collisions with authored parent interface or
-storage names.
+actor-owned storage names before generated-top wiring.
 
-Collision handling has two layers. Parser-owned diagnostics reject normal
-`.isf` source that declares parent interface or storage names matching the
-generated handoffs. The lowerer repeats the safety check for
-scheduler-facing metadata and also rejects already registered generated
-handoff duplicates before generated-top wiring.
+Downstream producers should not rely on aliasing, overriding, suppressing,
+or reusing generated handoff names until an explicit remapping contract is
+published.
+
+##### Diagnostic Ownership
+
+Parser-owned diagnostics reject normal `.isf` source that declares parent
+interface or storage names matching the generated handoffs. This is the
+normal downstream failure surface for authored source.
+
+The lowerer repeats the safety check for scheduler-facing metadata and also
+rejects already registered generated handoff duplicates before generated-top
+wiring. That lowerer check is a defensive backstop for malformed or mutated
+metadata, not a new author-facing feature.
+
+##### Route Muxing And Route Storage
 
 Route muxing would let several possible sources feed the same sink endpoint,
-with a selector deciding which source is active in a given cycle. Route
-storage would hold route data across cycles before the sink consumes it. The
-current route has neither: it transfers one one-bit value during the
-`forward_payload` drive-call cycle and does not allocate route-local data
-storage.
+with a selector deciding which source is active in a given cycle.
 
-Fan-in would let multiple triggers, events, or data sources converge onto
-one generated handoff or child endpoint. Fan-out would let one trigger,
-event, or data source drive multiple generated handoffs or child endpoints.
+Route storage would hold route data across cycles before the sink consumes
+it.
+
+The current route has neither. It has one source child, one sink child, one
+named drive call, no route-local storage, and no route-local selector.
+
+##### Fan-In And Fan-Out
+
+Fan-in would let multiple triggers, events, or data sources converge onto one
+generated handoff or child endpoint.
+
+Fan-out would let one trigger, event, or data source drive multiple generated
+handoffs or child endpoints.
+
 The current route has one source child, one sink child, one trigger and event
-per child, and one data movement.
+per child, and one data movement. Multi-source, multi-sink, multi-event, and
+multi-trigger route structures remain fail-closed or deferred according to
+the surrounding diagnostics.
+
+##### Ready/Backpressure
 
 Ready/backpressure would let the sink child or generated top say "not ready"
-so the parent stalls, retries, buffers, or replays the transfer. The current
-route has no ready signal and no retry contract; the source event wait,
-drive-call cycle, sink trigger, and sink event wait are fixed in order.
+so the parent stalls, retries, buffers, or replays the transfer.
+
+The current route has no ready signal and no retry contract. The source
+event wait, drive-call cycle, sink trigger, and sink event wait are fixed in
+order.
+
+Ready/valid-style route transfer, stall insertion, retry, buffering, and
+replay are not part of this route.
+
+##### Payload Protocols
 
 Payload protocols would define data movement richer than the current one-bit
 scalar drive-call-cycle value, such as multi-bit payloads, structured
-payloads, valid/ready payload transfer, or multi-cycle packet movement. The
-current route deliberately stays at one scalar bit until a later task tree
-selects and proves a wider protocol.
+payloads, valid/ready payload transfer, or multi-cycle packet movement.
+
+The current route deliberately stays at one scalar bit until a later task
+tree selects and proves a wider protocol. FSMGen does not truncate, extend,
+pack, unpack, buffer, or handshake route payloads in this subset.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

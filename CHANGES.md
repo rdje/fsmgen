@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL route-term precision docs shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.76`.
+- Expanded the mdBook `Generated-Child Route Terms` section into explicit
+  term-by-term subsections covering route lifetime/value boundary, generated
+  handoffs, handoff remapping, diagnostic ownership, route muxing/storage,
+  fan-in/fan-out, ready/backpressure, and payload protocols.
+- Updated the mdBook feature-matrix audit so nested route-term subsections
+  stay inside the audited generated-child route section and the new term
+  headings remain present.
+- No ATL source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, remapping, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77`.
+
 ### R14 — ATL route-term precision docs selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75` as a doc-only selection
   leaf.
