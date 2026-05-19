@@ -1757,17 +1757,19 @@ generated top. Downstream consumers should read the public route evidence from
 `actor_network.generated_tops[]`; no new public report family is exposed. The
 generated child `.fsm` carries generated `+interface` role metadata for the
 selected child input so HDL generation preserves the child `payload` port.
+The inverse generated-child data slice is also shipped:
+`isf/atl_resolved_child_pin_egress_pipeline.isf` wires one scalar
+`(pins.result worker.payload)` route from one resolved child output through
+the generated top to one top-level output. Downstream consumers should read
+the public route evidence from `actor_network.data_movements[]` and the
+generated-top discovery evidence from `actor_network.generated_tops[]`; no
+new public report family is exposed. The generated child `.fsm` carries
+generated `+interface` role metadata for the selected child output so HDL
+generation preserves the child `payload` port.
 Downstream producers must still treat actor-to-actor generated-child routes,
-actor-to-pin generated-child routes, multi-child tops, route mux/storage,
-CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
-networks, and permanent actor grouping as deferred.
-
-The next selected generated-child data route is the inverse scalar path from
-one resolved child output to one top-level output through the generated ATL
-top. The selected source shape is `(pins.result worker.payload)` after the
-parent triggers `worker.process` and awaits `worker.done`. This is a future
-implementation selection only, not part of the current shipped downstream
-contract.
+multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols, recursive actor networks, and permanent actor grouping as
+deferred.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2109,6 +2111,7 @@ isf/atl_trigger_wait_pipeline.isf
 isf/atl_trigger_batch_wait_pipeline.isf
 isf/atl_resolved_child_pipeline.isf
 isf/atl_resolved_child_pin_ingress_pipeline.isf
+isf/atl_resolved_child_pin_egress_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2281,6 +2284,14 @@ pin to one resolved child input through the generated top. The same
 schedule JSON parity, parent/child/top `.fsm` artifacts, generated child
 input role preservation, plain and strict CLI HDL generation, and a
 fail-closed missing child input diagnostic for that route.
+The generated-child pin-egress leaf extends the same downstream contract:
+`isf/atl_resolved_child_pin_egress_pipeline.isf` proves one resolved child
+output to one top-level output pin through the generated top. The same
+`t/1330-isf-atl-resolved-child-fixture-coverage.t` regression proves strict
+schedule JSON parity, parent/child/top `.fsm` artifacts, generated child
+output role preservation, plain and strict CLI HDL generation, a fail-closed
+missing child output diagnostic, and a fail-closed pre-event drive-order
+diagnostic for that route.
 
 Recommended downstream smoke commands:
 
@@ -2306,11 +2317,13 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest

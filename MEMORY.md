@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL resolved-child pin egress top wiring shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`.
+- Added `isf/atl_resolved_child_pin_egress_pipeline.isf` as the reviewable
+  fixture for one scalar resolved-child output to one top-level output
+  through the generated ATL top.
+- The selected parent transaction triggers `worker.process`, awaits
+  `worker.done`, then drives `(pins.result worker.payload)` through
+  `publish_result`.
+- Lowering emits parent, resolved child, and generated top `.fsm` artifacts.
+  The generated top wires child `payload` to parent `worker_payload`, parent
+  `result` to top `result`, parent `worker_process_start` to child
+  `process_start`, and child `done` to parent `worker_done`.
+- `t/1330-isf-atl-resolved-child-fixture-coverage.t` now proves strict
+  schedule JSON parity, parent/child/top artifact shape, plain and strict HDL
+  generation, missing child output failure, and pre-event drive-order failure.
+- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, a
+  selection leaf for the next generated-child integration or fail-closed
+  boundary before code.
+
 ## 2026-05-19: ATL resolved-child pin egress top wiring selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` as a doc-only selection
   leaf.

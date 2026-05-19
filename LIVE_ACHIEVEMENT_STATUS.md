@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL resolved-child pin egress top wiring shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`.
+- Added `isf/atl_resolved_child_pin_egress_pipeline.isf`.
+- FSMGen now wires one scalar resolved-child output route to one top-level
+  output pin through the generated ATL top for the selected shape
+  `(pins.result worker.payload)` after `worker.done`.
+- The generated top wires child `payload` to parent `worker_payload`, parent
+  `result` to top `result`, parent trigger to child `process_start`, and
+  child `done` to the parent event handoff.
+- Public report surfaces remain `actor_network.data_movements[]` and
+  `actor_network.generated_tops[]`; private top data-link plumbing is not a
+  new public report family.
+- The active ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`.
+
 ## 2026-05-19: R14 — ATL resolved-child pin egress top wiring selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`.
 - The next active ATL implementation leaf is

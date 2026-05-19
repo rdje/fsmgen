@@ -298,17 +298,37 @@ sub _emit_wiring_block {
         push @links, _link($instance . ".$event_child", $actor_name . ".$event_parent");
 
         for my $data_link (@data_links) {
-            my $parent_sink = $data_link->{parent_sink_port};
-            my $child_sink = $data_link->{child_sink_port};
+            if (($data_link->{kind} // '') eq 'scalar_pin_to_resolved_child_handoff') {
+                my $parent_sink = $data_link->{parent_sink_port};
+                my $child_sink = $data_link->{child_sink_port};
 
-            confess "CompositionTop emitter ATL parent data handoff port '$parent_sink' is not present on parent '$actor_name'\n"
-                unless exists $parent_port{$parent_sink};
-            confess "CompositionTop emitter ATL child data input '$child_sink' is not present on module '$module'\n"
-                unless exists $child_ports->{$child_sink};
-            confess "CompositionTop emitter ATL child data endpoint '$child_sink' must be an input on module '$module'\n"
-                unless ($child_ports->{$child_sink}{direction} || '') eq 'input';
+                confess "CompositionTop emitter ATL parent data handoff port '$parent_sink' is not present on parent '$actor_name'\n"
+                    unless exists $parent_port{$parent_sink};
+                confess "CompositionTop emitter ATL child data input '$child_sink' is not present on module '$module'\n"
+                    unless exists $child_ports->{$child_sink};
+                confess "CompositionTop emitter ATL child data endpoint '$child_sink' must be an input on module '$module'\n"
+                    unless ($child_ports->{$child_sink}{direction} || '') eq 'input';
 
-            push @links, _link($actor_name . ".$parent_sink", $instance . ".$child_sink");
+                push @links, _link($actor_name . ".$parent_sink", $instance . ".$child_sink");
+                next;
+            }
+
+            if (($data_link->{kind} // '') eq 'scalar_resolved_child_to_pin_handoff') {
+                my $parent_source = $data_link->{parent_source_port};
+                my $child_source = $data_link->{child_source_port};
+
+                confess "CompositionTop emitter ATL parent data handoff port '$parent_source' is not present on parent '$actor_name'\n"
+                    unless exists $parent_port{$parent_source};
+                confess "CompositionTop emitter ATL child data output '$child_source' is not present on module '$module'\n"
+                    unless exists $child_ports->{$child_source};
+                confess "CompositionTop emitter ATL child data endpoint '$child_source' must be an output on module '$module'\n"
+                    unless ($child_ports->{$child_source}{direction} || '') eq 'output';
+
+                push @links, _link($instance . ".$child_source", $actor_name . ".$parent_source");
+                next;
+            }
+
+            confess "CompositionTop emitter ATL data link has unsupported kind '$data_link->{kind}'\n";
         }
     }
 
@@ -404,6 +424,8 @@ sub _atl_internal_parent_port_map {
         for my $data_link (@{$top->{data_links} || []}) {
             $ports{$data_link->{parent_sink_port}} = 1
                 if defined($data_link->{parent_sink_port}) && length($data_link->{parent_sink_port});
+            $ports{$data_link->{parent_source_port}} = 1
+                if defined($data_link->{parent_source_port}) && length($data_link->{parent_source_port});
         }
     }
 

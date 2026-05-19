@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL resolved-child pin egress top wiring shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`.
+- Added [isf/atl_resolved_child_pin_egress_pipeline.isf](isf/atl_resolved_child_pin_egress_pipeline.isf)
+  for one scalar resolved-child output route to one top-level output pin
+  through the generated ATL top.
+- Extended the ATL generated-top data-link lowering and composition-top
+  wiring to carry child `payload` into parent `worker_payload`, then parent
+  `result` to the generated top `result` output.
+- Kept public report surfaces unchanged:
+  `actor_network.data_movements[]` records
+  `scalar_actor_to_pin_handoff`, and `actor_network.generated_tops[]`
+  records generated-top discovery.
+- Added focused coverage for strict schedule JSON parity, parent/child/top
+  artifacts, plain and strict HDL generation, missing child output failure,
+  and pre-event drive-order failure.
+
 ### R14 — ATL resolved-child pin egress top wiring selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` as a doc-only selection
   leaf.

@@ -711,16 +711,24 @@ parent `worker_payload` to child input `payload`, parent
 `worker_process_start` to child `process_start`, and child `done` to parent
 `worker_done`. The child `.fsm` includes generated `+interface` role metadata
 for the selected child input so the HDL backend preserves `payload` as a
-child module port. Actor-to-actor generated-child routes, actor-to-pin routes,
-multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
-and payload protocols remain unavailable.
+child module port. Actor-to-actor generated-child routes, multi-child tops,
+route mux/storage, CDC/reset remapping, ready/backpressure, and payload
+protocols remain unavailable.
 
-The next selected ATL generated-child data slice is the inverse route from
-one resolved child output to one top-level output pin. It uses a named drive
-body with `(pins.result worker.payload)` after the parent triggers
-`worker.process` and awaits `worker.done`. This is selected for the next
-implementation leaf but is not shipped yet; actor-to-pin generated-top data
-wiring remains unavailable until that leaf lands.
+The inverse generated-child data route is also shipped for one scalar
+resolved-child output route to one top-level output pin through that generated
+top. The source shape is a named drive body with
+`(pins.result worker.payload)`, activated after the parent transaction
+triggers `worker.process` and awaits `worker.done`. The fixture
+`isf/atl_resolved_child_pin_egress_pipeline.isf` emits parent, child, and top
+`.fsm` artifacts; the generated top wires child `payload` to parent
+`worker_payload`, parent `result` to top `result`, parent
+`worker_process_start` to child `process_start`, and child `done` to parent
+`worker_done`. The child `.fsm` includes generated `+interface` role metadata
+for the selected child output so the HDL backend preserves `payload` as a
+child module port. Actor-to-actor generated-child routes, multi-child tops,
+route mux/storage, CDC/reset remapping, ready/backpressure, and payload
+protocols remain unavailable.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

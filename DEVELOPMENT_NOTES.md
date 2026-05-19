@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-to-pin wiring stays a private generated-top data link
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32` ships the inverse generated-child
+  scalar data route: one resolved child output to one top-level output pin
+  through the generated ATL top.
+- The parser uses private clause-order metadata only long enough to require
+  trigger, event wait, then drive order for the first pin-egress top subset.
+  That metadata is stripped before `actor_network` is exposed, so the public
+  schedule JSON keys remain unchanged.
+- The composition top treats child-to-parent payload wiring as private link
+  plumbing. Downstream consumers continue to read route intent from
+  `actor_network.data_movements[]` and top discovery from
+  `actor_network.generated_tops[]`.
+
 ## 2026-05-19: ATL child-to-pin wiring should follow child completion
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` selects the inverse generated-child
   data route after pin ingress: one resolved child output to one top-level

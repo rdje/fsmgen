@@ -859,15 +859,19 @@ input-pin route into one resolved child through the generated top, written as
 `isf/atl_resolved_child_pin_ingress_pipeline.isf` proves parent/child/top
 artifacts, generated-top wiring, route metadata, child input port
 preservation, and plain plus strict HDL generation. Actor-to-actor
-generated-child routes, actor-to-pin routes, multi-child tops,
-route mux/storage, CDC/reset remapping, ready/backpressure, and payload
-protocols remain deferred.
+generated-child routes, multi-child tops, route mux/storage, CDC/reset
+remapping, ready/backpressure, and payload protocols remain deferred.
 
-The next selected generated-child data route is the inverse path from one
-resolved child output to one top-level output through the generated top. It
-uses `(pins.result worker.payload)` in a named drive body after the parent
-triggers `worker.process` and awaits `worker.done`. It remains backlog until
-the implementation leaf ships.
+The inverse generated-child data-route slice is now shipped as one scalar
+resolved-child output route to one top-level output through the generated top,
+written as `(pins.result worker.payload)` in a named drive body after the
+parent triggers `worker.process` and awaits `worker.done`. The fixture
+`isf/atl_resolved_child_pin_egress_pipeline.isf` proves parent/child/top
+artifacts, generated-top wiring, route metadata, child output port
+preservation, plain plus strict HDL generation, missing child output failure,
+and pre-event drive-order failure. Actor-to-actor generated-child routes,
+multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
+and payload protocols remain deferred.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -1916,8 +1920,11 @@ interface binding, route mux/storage, actor-event fan-in, CDC,
 ready/backpressure, recursive actor networks, or permanent actor grouping.
 The follow-on `isf/atl_resolved_child_pin_ingress_pipeline.isf` fixture is now
 promoted for one generated-top scalar pin-ingress route into that resolved
-child, using `(worker.payload pins.payload)`, while broader generated-child
-data routes remain backlog.
+child, using `(worker.payload pins.payload)`. The follow-on
+`isf/atl_resolved_child_pin_egress_pipeline.isf` fixture is now promoted for
+one generated-top scalar pin-egress route from that resolved child to a
+top-level output, using `(pins.result worker.payload)` after the child event
+wait, while broader generated-child data routes remain backlog.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

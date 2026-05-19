@@ -290,6 +290,13 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     my $child_start_port = _atl_transaction_scalar_on_signal($child_tx, $context);
 
     my $child_ir = $child_irs->{$module};
+    _ensure_atl_child_data_source_ports(
+        $context,
+        $instance,
+        $child_ir,
+        $child_actor,
+        \@data_movements,
+    );
     my %child_ports = map { $_->{name} => $_ } @{$child_ir->{ports} || []};
     confess "$context child transaction '$target_transaction' scalar on signal '$child_start_port' is not a scalar child input port\n"
         unless exists($child_ports{$child_start_port})
@@ -367,18 +374,48 @@ sub _mark_atl_data_link_child_interface_ports {
         my %port_by_name = map { $_->{name} => $_ } @{$child_ir->{ports} || []};
         my %already = map { $_->{name} => 1 } @{$child_ir->{explicit_interface_ports} || []};
         for my $data_link (@{$top->{data_links} || []}) {
-            my $child_sink = $data_link->{child_sink_port};
-            next unless defined($child_sink) && !ref($child_sink) && length($child_sink);
-            next if $already{$child_sink}++;
+            for my $child_endpoint (qw(child_sink_port child_source_port)) {
+                my $child_port = $data_link->{$child_endpoint};
+                next unless defined($child_port) && !ref($child_port) && length($child_port);
+                next if $already{$child_port}++;
 
-            my $port = $port_by_name{$child_sink};
-            next unless ref($port) eq 'HASH';
-            push @{$child_ir->{explicit_interface_ports}}, {
-                name      => $port->{name},
-                direction => $port->{direction},
-                width     => $port->{width} || 1,
-            };
+                my $port = $port_by_name{$child_port};
+                next unless ref($port) eq 'HASH';
+                push @{$child_ir->{explicit_interface_ports}}, {
+                    name      => $port->{name},
+                    direction => $port->{direction},
+                    width     => $port->{width} || 1,
+                };
+            }
         }
+    }
+}
+
+sub _ensure_atl_child_data_source_ports {
+    my ($context, $instance, $child_ir, $child_actor, $data_movements) = @_;
+    return unless ref($child_ir) eq 'HASH' && ref($child_actor) eq 'HASH';
+
+    my %declared_outputs = map {
+        $_->{name} => $_
+    } @{($child_actor->{interface} || {})->{outputs} || []};
+    my %seen = map { $_->{name} => 1 } @{$child_ir->{ports} || []};
+
+    for my $movement (@{$data_movements || []}) {
+        next unless ($movement->{kind} // '') eq 'scalar_actor_to_pin_handoff'
+            && ($movement->{source_instance} // '') eq $instance;
+
+        my $port_name = $movement->{source_endpoint};
+        my $width = $movement->{width} || 1;
+        my $declared = defined($port_name) && !ref($port_name)
+            ? $declared_outputs{$port_name}
+            : undef;
+        confess "$context data movement '$movement->{drive}' requires a scalar child output port '$port_name' on instance '$instance'\n"
+            unless ref($declared) eq 'HASH'
+                && ($declared->{width} || 1) == $width
+                && $width == 1;
+
+        _push_port($child_ir->{ports}, \%seen, $port_name, 'output', $width)
+            unless $seen{$port_name};
     }
 }
 
@@ -386,18 +423,10 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
     my @movements = @{$data_movements || []};
     return () unless @movements;
 
-    confess "$context supports at most one scalar pin-to-resolved-child data movement in the current subset\n"
+    confess "$context supports at most one scalar pin-to/from-resolved-child data movement in the current subset\n"
         unless @movements == 1;
 
     my $movement = $movements[0];
-    confess "$context can only wire scalar top-level input pin to resolved child input data movement in the current subset\n"
-        unless ($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff'
-            && ($movement->{source} // '') eq 'top_level_pin'
-            && ($movement->{sink} // '') eq 'external_handoff'
-            && ($movement->{source_instance} // '') eq 'pins';
-
-    confess "$context data movement must target resolved actor instance '$instance'\n"
-        unless ($movement->{sink_instance} // '') eq $instance;
     confess "$context data movement must belong to the same parent transaction as the trigger/event handoffs\n"
         unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
             && ($movement->{transaction} // '') eq ($event_wait->{transaction} // '');
@@ -413,32 +442,74 @@ sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $d
     confess "$context data movement '$movement->{drive}' must be scalar width 1 in the current subset\n"
         unless $width == 1;
 
-    my $child_port = $movement->{sink_endpoint};
-    confess "$context data movement '$movement->{drive}' requires a scalar child input port '$child_port' on instance '$instance'\n"
-        unless defined($child_port)
-            && !ref($child_port)
-            && exists($child_ports->{$child_port})
-            && ($child_ports->{$child_port}{direction} || '') eq 'input'
-            && ($child_ports->{$child_port}{width} || 1) == $width;
+    if (($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff') {
+        confess "$context can only wire scalar top-level input pin to resolved child input data movement when source is a top-level pin\n"
+            unless ($movement->{source} // '') eq 'top_level_pin'
+                && ($movement->{sink} // '') eq 'external_handoff'
+                && ($movement->{source_instance} // '') eq 'pins';
+        confess "$context data movement must target resolved actor instance '$instance'\n"
+            unless ($movement->{sink_instance} // '') eq $instance;
 
-    my $parent_port = $movement->{sink_signal};
-    my $top_port = $movement->{source_signal};
-    confess "$context data movement '$movement->{drive}' requires generated parent sink handoff and top source pin signals\n"
-        unless defined($parent_port)
-            && !ref($parent_port)
-            && length($parent_port)
-            && defined($top_port)
-            && !ref($top_port)
-            && length($top_port);
+        my $child_port = $movement->{sink_endpoint};
+        confess "$context data movement '$movement->{drive}' requires a scalar child input port '$child_port' on instance '$instance'\n"
+            unless defined($child_port)
+                && !ref($child_port)
+                && exists($child_ports->{$child_port})
+                && ($child_ports->{$child_port}{direction} || '') eq 'input'
+                && ($child_ports->{$child_port}{width} || 1) == $width;
 
-    return ({
-        kind             => 'scalar_pin_to_resolved_child_handoff',
-        drive            => $movement->{drive},
-        top_source_port  => $top_port,
-        parent_sink_port => $parent_port,
-        child_sink_port  => $child_port,
-        width            => $width,
-    });
+        my $parent_port = $movement->{sink_signal};
+        my $top_port = $movement->{source_signal};
+        confess "$context data movement '$movement->{drive}' requires generated parent sink handoff and top source pin signals\n"
+            unless _non_empty_scalar($parent_port) && _non_empty_scalar($top_port);
+
+        return ({
+            kind             => 'scalar_pin_to_resolved_child_handoff',
+            drive            => $movement->{drive},
+            top_source_port  => $top_port,
+            parent_sink_port => $parent_port,
+            child_sink_port  => $child_port,
+            width            => $width,
+        });
+    }
+
+    if (($movement->{kind} // '') eq 'scalar_actor_to_pin_handoff') {
+        confess "$context can only wire scalar resolved child output to top-level output pin data movement when sink is a top-level pin\n"
+            unless ($movement->{source} // '') eq 'external_handoff'
+                && ($movement->{sink} // '') eq 'top_level_pin'
+                && ($movement->{sink_instance} // '') eq 'pins';
+        confess "$context data movement must source from resolved actor instance '$instance'\n"
+            unless ($movement->{source_instance} // '') eq $instance;
+
+        my $child_port = $movement->{source_endpoint};
+        confess "$context data movement '$movement->{drive}' requires a scalar child output port '$child_port' on instance '$instance'\n"
+            unless defined($child_port)
+                && !ref($child_port)
+                && exists($child_ports->{$child_port})
+                && ($child_ports->{$child_port}{direction} || '') eq 'output'
+                && ($child_ports->{$child_port}{width} || 1) == $width;
+
+        my $parent_port = $movement->{source_signal};
+        my $top_port = $movement->{sink_signal};
+        confess "$context data movement '$movement->{drive}' requires generated parent source handoff and top sink pin signals\n"
+            unless _non_empty_scalar($parent_port) && _non_empty_scalar($top_port);
+
+        return ({
+            kind               => 'scalar_resolved_child_to_pin_handoff',
+            drive              => $movement->{drive},
+            child_source_port  => $child_port,
+            parent_source_port => $parent_port,
+            top_sink_port      => $top_port,
+            width              => $width,
+        });
+    }
+
+    confess "$context can only wire scalar top-level input pin to resolved child input or resolved child output to top-level output data movement in the current subset\n";
+}
+
+sub _non_empty_scalar {
+    my ($value) = @_;
+    return defined($value) && !ref($value) && length($value);
 }
 
 sub _atl_transaction_scalar_on_signal {

@@ -566,10 +566,11 @@ resolved child, one parent trigger handoff, and one parent event wait with
 matching parent/child clock and reset policy; its report entry is advertised
 through `schedule_report_actor_network_generated_top_keys` under
 `actor_network.generated_tops[]`. The bounded scalar top-level input-pin to
-resolved-child input route described below is also shipped for that same
-one-child top. Broader generated ATL tops, multi-child HDL child wiring,
-broader data-route coupling, and inferred payload/ready/backpressure binding
-remain unshipped behavior. Unqualified
+resolved-child input route and resolved-child output to top-level output
+route described below are also shipped for that same one-child top. Broader
+generated ATL tops, multi-child HDL child wiring, broader data-route
+coupling, and inferred payload/ready/backpressure binding remain unshipped
+behavior. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
 The HDL coverage promotion for that same resolved-child generated-top fixture
@@ -583,12 +584,14 @@ uses the existing `actor_network.data_movements[]` route metadata and
 family or public `data_links` key is exposed. The generated child `.fsm` may
 include generated `+interface` role metadata for the selected child input so
 the HDL backend preserves that child input as a module port.
-The next selected public-contract update is the inverse scalar generated-top
-route from one resolved child output to one top-level output, using
-`(pins.result worker.payload)` and the existing
-`actor_network.data_movements[]` plus `actor_network.generated_tops[]`
-surfaces. That route is selected only; it is not shipped contract behavior
-until the implementation leaf lands.
+The inverse generated-child scalar pin-egress route is also shipped for one
+resolved-child output to one top-level output through the generated top. It
+uses `(pins.result worker.payload)` and the existing
+`actor_network.data_movements[]` route metadata plus
+`actor_network.generated_tops[]` top discovery metadata; no new public report
+family or public `data_links` key is exposed. The generated child `.fsm` may
+include generated `+interface` role metadata for the selected child output so
+the HDL backend preserves that child output as a module port.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

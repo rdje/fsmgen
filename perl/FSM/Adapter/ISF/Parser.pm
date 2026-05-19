@@ -832,6 +832,8 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         \@transaction_triggers,
     );
 
+    _strip_private_atl_metadata($_) for @event_waits, @transaction_triggers, @data_movements;
+
     if (@event_waits) {
         confess "Error: actor '$actor->{actor_name}' ATL actor event waits require a single-clock actor in the current subset\n"
             if ref($actor->{clock_domains}) eq 'HASH';
@@ -891,7 +893,8 @@ sub _validate_transaction_atl_reserved_qualified_forms {
     $data_movement_drives ||= {};
     $options ||= {};
 
-    for my $clause (@$clauses) {
+    for my $clause_index (0 .. $#$clauses) {
+        my $clause = $clauses->[$clause_index];
         next unless ref($clause) eq 'ARRAY' && @$clause;
         my $head = $clause->[0];
         next unless defined($head) && !ref($head);
@@ -910,6 +913,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     $declared_signals,
                     $event_waits,
                     $options->{transaction},
+                    $clause_index,
                 );
                 next;
             }
@@ -926,6 +930,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                     $declared_signals,
                     $transaction_triggers,
                     $options->{transaction},
+                    $clause_index,
                 );
                 next;
             }
@@ -939,6 +944,7 @@ sub _validate_transaction_atl_reserved_qualified_forms {
                 $data_movement_drives,
                 $data_movement_drive_calls,
                 $options,
+                $clause_index,
             );
             _validate_atl_reserved_inline_drive_pairs($clause, $context, $actor_instances, $drives);
         }
@@ -1198,7 +1204,7 @@ sub _accept_selected_atl_actor_to_pin_data_movement {
 }
 
 sub _validate_selected_atl_data_movement_drive_call {
-    my ($clause, $context, $data_movement_drives, $data_movement_drive_calls, $options) = @_;
+    my ($clause, $context, $data_movement_drives, $data_movement_drive_calls, $options, $clause_index) = @_;
     return 1 unless ref($clause) eq 'ARRAY'
         && @$clause >= 2
         && defined($clause->[0])
@@ -1220,6 +1226,7 @@ sub _validate_selected_atl_data_movement_drive_call {
         transaction => $options->{transaction},
         context     => 'transaction_body',
         drive       => $drive_name,
+        _clause_index => $clause_index,
     };
 
     return 1;
@@ -1384,17 +1391,33 @@ sub _finalize_selected_atl_data_movements {
             unless @calls == 1;
         $movement->{transaction} = $calls[0]{transaction};
         $movement->{context} = $calls[0]{context};
+        $movement->{_drive_clause_index} = $calls[0]{_clause_index}
+            if exists $calls[0]{_clause_index};
     }
 
     my $generated_top_pin_ingress_candidate =
         _selected_atl_generated_top_pin_ingress_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
-    confess "Error: actor '$actor->{actor_name}' ATL scalar actor data movement cannot be combined with actor event waits or actor transaction triggers except for the selected single resolved-child pin-ingress generated-top subset\n"
+    my $generated_top_pin_egress_candidate =
+        _selected_atl_generated_top_pin_egress_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-egress data movement requires trigger before event wait and drive call after event wait in the current subset\n"
+        if !$generated_top_pin_egress_candidate
+            && _selected_atl_generated_top_pin_egress_shape($instances, $data_movements, $event_waits, $transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL scalar actor data movement cannot be combined with actor event waits or actor transaction triggers except for the selected single resolved-child pin-ingress or pin-egress generated-top subsets\n"
         if (@{$event_waits || []} || @{$transaction_triggers || []})
-            && !$generated_top_pin_ingress_candidate;
+            && !$generated_top_pin_ingress_candidate
+            && !$generated_top_pin_egress_candidate;
     confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with concurrent group metadata in the current subset\n"
         if $group_count;
 
     return 1;
+}
+
+sub _strip_private_atl_metadata {
+    my ($entry) = @_;
+    return unless ref($entry) eq 'HASH';
+    for my $key (keys %$entry) {
+        delete $entry->{$key} if $key =~ /\A_/;
+    }
 }
 
 sub _selected_atl_generated_top_pin_ingress_candidate {
@@ -1420,6 +1443,62 @@ sub _selected_atl_generated_top_pin_ingress_candidate {
         && ($movement->{sink} // '') eq 'external_handoff'
         && ($movement->{source_instance} // '') eq 'pins'
         && ($movement->{sink_instance} // '') eq $instance;
+    return 0 unless ($wait->{instance} // '') eq $instance
+        && ($trigger->{instance} // '') eq $instance;
+    return 0 unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
+        && ($movement->{transaction} // '') eq ($wait->{transaction} // '');
+
+    return 1;
+}
+
+sub _selected_atl_generated_top_pin_egress_candidate {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    return 0 unless _selected_atl_generated_top_pin_egress_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+
+    my $movement = $data_movements->[0];
+    my $wait = $event_waits->[0];
+    my $trigger = $transaction_triggers->[0];
+
+    my $trigger_index = $trigger->{_clause_index};
+    my $wait_index = $wait->{_clause_index};
+    my $drive_index = $movement->{_drive_clause_index};
+    return 0 unless defined($trigger_index)
+        && defined($wait_index)
+        && defined($drive_index)
+        && $trigger_index < $wait_index
+        && $wait_index < $drive_index;
+
+    return 1;
+}
+
+sub _selected_atl_generated_top_pin_egress_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    my @instances = @{$instances || []};
+    my @movements = @{$data_movements || []};
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+
+    return 0 unless @instances == 1
+        && @movements == 1
+        && @waits == 1
+        && @triggers == 1;
+
+    my $instance = $instances[0]{name};
+    my $movement = $movements[0];
+    my $wait = $waits[0];
+    my $trigger = $triggers[0];
+
+    return 0 unless defined($instance) && !ref($instance) && length($instance);
+    return 0 unless ($movement->{kind} // '') eq 'scalar_actor_to_pin_handoff'
+        && ($movement->{source} // '') eq 'external_handoff'
+        && ($movement->{sink} // '') eq 'top_level_pin'
+        && ($movement->{source_instance} // '') eq $instance
+        && ($movement->{sink_instance} // '') eq 'pins';
     return 0 unless ($wait->{instance} // '') eq $instance
         && ($trigger->{instance} // '') eq $instance;
     return 0 unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
@@ -1490,7 +1569,7 @@ sub _validate_atl_reserved_endpoint_drive_source {
 }
 
 sub _accept_top_level_atl_transaction_trigger {
-    my ($clause, $context, $actor_instances, $declared_signals, $transaction_triggers, $owner_transaction) = @_;
+    my ($clause, $context, $actor_instances, $declared_signals, $transaction_triggers, $owner_transaction, $clause_index) = @_;
     my $target = $clause->[1];
     my ($instance, $transaction) = _parse_qualified_atl_endpoint_token($target, $actor_instances);
     confess "Error: $context ATL actor transaction trigger '(trigger $target)' is not a declared static actor endpoint\n"
@@ -1513,13 +1592,14 @@ sub _accept_top_level_atl_transaction_trigger {
         target_transaction => $transaction,
         signal            => $signal,
         sink              => 'external_handoff',
+        _clause_index     => $clause_index,
     };
 
     return 1;
 }
 
 sub _accept_top_level_atl_event_wait {
-    my ($clause, $context, $actor_instances, $declared_signals, $event_waits, $transaction_name) = @_;
+    my ($clause, $context, $actor_instances, $declared_signals, $event_waits, $transaction_name, $clause_index) = @_;
     my $target = $clause->[1];
     my ($instance, $event) = _parse_qualified_atl_endpoint_token($target, $actor_instances);
     confess "Error: $context ATL actor event wait '(await $target)' is not a declared static actor endpoint\n"
@@ -1541,6 +1621,7 @@ sub _accept_top_level_atl_event_wait {
         event       => $event,
         signal      => $signal,
         source      => 'external_handoff',
+        _clause_index => $clause_index,
     };
 
     return 1;
