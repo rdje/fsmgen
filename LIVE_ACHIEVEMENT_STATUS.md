@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL actor-root boundary shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
+- Multiple top-level `(actor ...)` roots now fail closed with a targeted
+  diagnostic before ATL actor type resolution or generated child artifacts are
+  claimed.
+- The focused regression also proves one actor root plus a same-source
+  `(library ...)` root remains accepted.
+- Broad ISF gate passed with `Files=235, Tests=1373`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`.
+
 ## 2026-05-19: R14 — ATL actor-root boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`.
 - Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` to make multiple top-level

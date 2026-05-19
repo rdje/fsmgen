@@ -383,12 +383,12 @@ scheduled `.fsm` emission with the current one-event-wait diagnostic. This
 keeps `.9.12` transparent as a single-event parent-handoff subset, not
 actor-event fan-in or generated child completion joining.
 
-The next selected generated-child prerequisite is a source-root boundary.
-Until ATL actor type resolution is explicitly selected, a second top-level
-`(actor ...)` root in the same `.isf` source is not an inline child type
-definition. The next implementation leaf must fail that shape closed with a
-targeted diagnostic before generated child `.fsm` naming, generated ATL top
-packaging, or HDL child wiring is claimed.
+The shipped generated-child prerequisite is a source-root boundary. Until ATL
+actor type resolution is explicitly selected, a second top-level `(actor ...)`
+root in the same `.isf` source is not an inline child type definition and
+fails closed with a targeted diagnostic. One actor root plus `(library ...)`
+roots remains accepted. Generated child `.fsm` naming, generated ATL top
+packaging, and HDL child wiring remain deferred.
 
 ## Endpoints
 

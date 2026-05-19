@@ -172,6 +172,12 @@ actor:
   actor_clause...)
 ```
 
+FSMGen rejects sources with multiple top-level `(actor ...)` roots. A sibling
+actor root is not an ATL child type definition; downstream producers must keep
+one compile/report entry actor until FSMGen publishes an explicit actor
+type-resolution contract. Additional `(library ...)` roots remain the
+accepted same-source reusable actor packaging surface.
+
 Imported files may also contain library roots:
 
 ```lisp

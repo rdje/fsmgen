@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL actor-root boundary shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
+- `perl/FSM/Adapter/ISF/Parser.pm` now rejects sources with more than one
+  top-level `(actor ...)` root instead of silently compiling the first actor.
+- `t/1322-isf-actor-network-static.t` covers the rejected ATL-looking sibling
+  actor type shape and confirms one actor root plus a same-source `(library
+  ...)` root still parses.
+- Broad ISF gate passed with `Files=235, Tests=1373`.
+- No generated ATL child `.fsm`, generated ATL top, actor type resolution, HDL
+  child wiring, or source lookup behavior is claimed. The active ATL frontier
+  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` to select the explicit
+  actor type-resolution source contract before code.
 ## 2026-05-19: ATL actor-root boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` as a selection leaf before
   source-root parser changes.

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL actor-root boundary prevents accidental child definitions
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` makes the existing one-entry-actor
+  source model executable: a second top-level `(actor ...)` root is now a
+  targeted parse error.
+- The accepted extension point for reusable actor definitions remains
+  `(library ...)` roots and imports, not sibling actor roots. ATL generated
+  child type resolution still needs its own selected source contract.
+- This avoids silent behavior where a source file appears to define a child
+  actor type, but the parser only compiled the first actor.
 ## 2026-05-19: ATL child generation needs a source-root boundary first
 - Current ISF parsing compiles one actor root as the entry actor. Before ATL
   generated child artifacts can use sibling actor definitions, that packaging

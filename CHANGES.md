@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL actor-root boundary shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
+- Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so
+  `.isf` sources with multiple top-level `(actor ...)` roots fail closed with
+  a targeted diagnostic.
+- Extended `t/1322-isf-actor-network-static.t` to cover the ATL-looking
+  sibling actor type shape and the still-accepted one-actor-plus-library-root
+  source model.
+- Broad ISF gate passed with `Files=235, Tests=1373`.
+- No generated ATL child artifacts, generated ATL tops, actor type resolution,
+  HDL child wiring, or source lookup behavior is claimed. The active ATL
+  frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`.
+
 ### R14 — ATL actor-root boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` before changing parser
   behavior.

@@ -82,6 +82,52 @@ subtest 'actor-body static instance is parsed, lowered, and reported' => sub {
     is_deeply($cli_report, $report, 'CLI schedule JSON matches in-process report for actor-body static actor network');
 };
 
+subtest 'multiple top-level actor roots fail closed before ATL child type resolution' => sub {
+    parse_fails_like(
+        <<'ISF',
+(actor atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (instance worker of packet_worker)
+  (transaction run
+    (on start)
+    (trigger worker.process)
+    (complete done)))
+
+(actor packet_worker
+  (clock clk)
+  (interface (input process_start) (output done))
+  (transaction process
+    (on process_start)
+    (complete done)))
+ISF
+        qr/multiple top-level \(actor \.\.\.\) roots: atl_parent, packet_worker.*sibling actor roots are not ATL child type definitions/s,
+        'sibling actor roots are rejected before generated ATL child type resolution',
+    );
+
+    my $actor = parse_source(
+        <<'ISF',
+(actor one_actor_with_library_root
+  (clock clk)
+  (interface (input start) (output done))
+  (transaction run
+    (on start)
+    (complete done)))
+
+(library atl.helper
+  (exports (actor helper))
+  (actor helper
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction run
+      (on start)
+      (complete done))))
+ISF
+        'one-actor-plus-library-root.isf',
+    );
+    is($actor->{actor_name}, 'one_actor_with_library_root', 'one actor root plus library root remains accepted');
+};
+
 subtest 'static concurrent group metadata is parsed, lowered, and reported' => sub {
     my $source = <<'ISF';
 (actor atl_static_group

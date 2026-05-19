@@ -210,13 +210,16 @@ The public compile/report entry root is:
   actor_clause...)
 ```
 
-The active parser accepts one actor root from the Lispish source for the
-compile/report entry actor and normalizes the Lispish nested-head shape into
-canonical `(actor name ...)`. Imported sources may additionally provide
+The active parser accepts exactly one actor root from the Lispish source for
+the compile/report entry actor and normalizes the Lispish nested-head shape
+into canonical `(actor name ...)`. A source with multiple top-level
+`(actor ...)` roots fails closed with a targeted diagnostic; sibling actor
+roots are not ATL child type definitions until actor type resolution is
+explicitly selected. Imported sources may additionally provide
 `(library name ...)` roots as described in [3.1](#31-reusable-library-imports).
 Accepted parser output preserves `name` as the public actor-shell
-`actor_name`; nested or otherwise non-scalar actor names are rejected before the
-parser returns an actor shell.
+`actor_name`; nested or otherwise non-scalar actor names are rejected before
+the parser returns an actor shell.
 
 Supported actor clauses:
 - `(clock name)`

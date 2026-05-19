@@ -528,6 +528,11 @@ The actor-shell actor-name shape is checked by
 [t/1164-isf-public-actor-shell-actor-name-shape-audit.t](../t/1164-isf-public-actor-shell-actor-name-shape-audit.t)
 to keep parser-returned `actor_name` discoverable as the non-empty scalar
 identifier preserved from the ISF actor root.
+The parser accepts exactly one top-level compile/report actor root. Multiple
+top-level `(actor ...)` roots fail closed with a targeted diagnostic; sibling
+actor roots are not ATL child type definitions until actor type resolution is
+explicitly selected. One actor root plus `(library ...)` roots remains part of
+the supported reusable-library source model.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

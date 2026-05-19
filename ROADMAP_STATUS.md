@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.16`.
+  activation `.111` and ATL actor-network orchestration `.9.17`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -223,12 +223,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   coverage, and the second wait fails before scheduled emission with the
   one-event-wait diagnostic. The next ATL frontier is
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` selected the next prerequisite as an
-  actor-root boundary: multiple top-level `(actor ...)` roots must fail closed
-  before sibling actor roots can be mistaken for resolved ATL child types. The
-  next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, which
-  implements that targeted diagnostic without claiming generated ATL child
-  artifacts, generated ATL tops, actor type resolution, HDL child wiring,
-  actor-event fan-in, route mux/storage, or permanent actor grouping.
+  actor-root boundary. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` shipped that
+  targeted diagnostic: multiple top-level `(actor ...)` roots now fail closed
+  before sibling actor roots can be mistaken for resolved ATL child types, and
+  one actor root plus `(library ...)` roots remains accepted. The next ATL
+  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, which must select the
+  explicit actor type-resolution source contract before code claims generated
+  ATL child artifacts, generated ATL tops, HDL child wiring, actor-event
+  fan-in, route mux/storage, or permanent actor grouping.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

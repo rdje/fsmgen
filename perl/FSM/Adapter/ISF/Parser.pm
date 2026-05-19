@@ -97,9 +97,20 @@ sub parse_source($self, $source_text, $source_label) {
 
     # Stage 2: normalize through the Lispish adapter
     my $forms = $self->{adapter}->normalize_multi($raw);
-    my $actor_ast = _first_form_by_head($forms, 'actor');
+    my @actor_roots = _forms_by_head($forms, 'actor');
     confess "Error: no (actor ...) root found in '$source_label'\n"
-        unless $actor_ast;
+        unless @actor_roots;
+    if (@actor_roots > 1) {
+        my @actor_names = map {
+            defined($_->[1]) && !ref($_->[1]) && length($_->[1])
+                ? $_->[1]
+                : '<invalid>'
+        } @actor_roots;
+        confess "Error: .isf source '$source_label' contains multiple top-level (actor ...) roots: "
+            . join(', ', @actor_names)
+            . "; FSMGen currently accepts exactly one compile/report entry actor, and sibling actor roots are not ATL child type definitions until actor type resolution is selected\n";
+    }
+    my $actor_ast = $actor_roots[0];
 
     # Stage 3: validate and build typed AST
     fsm_debug("Building typed actor AST", 3);
