@@ -4040,6 +4040,14 @@ named-drive request handoffs now fail closed before generated-handoff
 remapping, route mux/storage, fan-in/fan-out, ready/backpressure, or payload
 protocols are claimed.
 
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.71` selects the matching lowerer
+defensive backstop for malformed or mutated scheduler-facing actor metadata.
+Normal `.isf` source remains parser-diagnosed; the selected backstop only
+prevents generated-top wiring from reusing, suppressing, or shadowing those
+handoff names if metadata reaches lowering outside the normal parser path.
+It does not select new syntax, generated-handoff remapping, route
+mux/storage, fan-in/fan-out, ready/backpressure, or payload protocols.
+
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a
 language-expressiveness signal: either rewrite the fixture with a documented

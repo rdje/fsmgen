@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL collision checks need a lowerer backstop
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71` selects a defensive lowerer
+  backstop after the parser-owned generated-handoff collision hardening.
+- Normal `.isf` source now fails in the parser when authored parent signals
+  collide with selected ATL generated handoffs. Programmatic or mutated actor
+  metadata can still reach the scheduler after parsing, so generated-top
+  construction should revalidate that it will not suppress, reuse, or shadow
+  selected trigger, event, data, or named-drive request handoff names.
+- The next code leaf should be a backstop only; it must not introduce
+  handoff remapping, route mux/storage, fan-in/fan-out, ready/backpressure,
+  or payload protocols.
+
 ## 2026-05-19: ATL generated handoff collision checks are complete for the selected route
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70` adds focused generated-child
   actor-to-actor route coverage for parent interface and actor-owned storage

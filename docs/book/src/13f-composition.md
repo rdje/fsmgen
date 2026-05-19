@@ -901,6 +901,13 @@ or suppress those ports. This does not select handoff remapping, route
 muxing, route storage, fan-in/fan-out, ready/backpressure, or payload
 behavior.
 
+The next selected hardening is a lowerer defensive backstop for the same
+generated-handoff names. Normal `.isf` source still fails in the parser, but
+programmatic or mutated actor metadata must also fail closed in lowering
+before generated-top wiring can reuse, suppress, or shadow those handoffs.
+This selection does not add syntax, remapping, muxing, storage,
+ready/backpressure, fan-in/fan-out, or payload behavior.
+
 #### Generated-Child Route Terms
 
 The current generated-child actor-to-actor route is intentionally small. It

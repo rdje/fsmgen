@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL lowerer collision backstop selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72` to add a defensive lowerer
+  backstop for generated-child actor-to-actor route handoff collisions when
+  malformed or mutated lowerer-facing actor metadata bypasses normal parser
+  finalization.
+- Normal `.isf` source still receives the parser-owned diagnostics shipped in
+  `.9.70`; the selected backstop is for scheduler-facing metadata safety
+  before generated-top wiring can reuse, suppress, or shadow selected
+  trigger, event, data, or named-drive request handoff names.
+- No ATL source syntax, report key, generated artifact shape,
+  generated-handoff remapping, route mux/storage, fan-in/fan-out, interface
+  remapping, CDC/reset remapping, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior is selected.
+
 ### R14 — ATL generated-handoff collision hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70`.
 - Added focused generated-child actor-to-actor data-route coverage for
