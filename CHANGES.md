@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL actor type-resolution source contract selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` before changing parser
+  behavior.
+- Selected explicit library-qualified actor type syntax for future ATL
+  resolution: `(instance NAME of ALIAS.EXPORT)` with `ALIAS` supplied by the
+  enclosing actor's `(imports (library ... as ALIAS))` clause and `EXPORT`
+  naming a library actor export.
+- Unqualified `(instance NAME of ACTOR_TYPE)` remains metadata-only external
+  intent, and sibling top-level `(actor ...)` roots remain fail-closed.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18` to reserve the selected qualified
+  syntax with targeted diagnostics before generated ATL child artifacts or
+  report schema changes are claimed.
+
 ### R14 — ATL actor-root boundary shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
 - Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so

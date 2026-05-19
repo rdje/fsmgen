@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL type resolution should be library-qualified
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` selects the source contract before
+  any child-generation code: resolved ATL actor types will use
+  `(instance NAME of ALIAS.EXPORT)`.
+- The explicit library alias keeps the source auditable and avoids guessing
+  whether an unqualified actor type is a local name, package symbol, external
+  file stem, or future inline child definition.
+- Existing `(use alias.actor as instance ...)` remains the explicit
+  reusable-library generated-top path. ATL `(instance ...)` type resolution is
+  a separate actor-network path that can later wire the already shipped
+  trigger/event/data handoffs to generated child artifacts.
 ## 2026-05-19: ATL actor-root boundary prevents accidental child definitions
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16` makes the existing one-entry-actor
   source model executable: a second top-level `(actor ...)` root is now a

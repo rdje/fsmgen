@@ -217,6 +217,12 @@ into canonical `(actor name ...)`. A source with multiple top-level
 roots are not ATL child type definitions until actor type resolution is
 explicitly selected. Imported sources may additionally provide
 `(library name ...)` roots as described in [3.1](#31-reusable-library-imports).
+The selected future ATL actor type-resolution source is not a sibling actor
+root; it is a library-qualified static instance type,
+`(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is declared by the enclosing
+actor's library imports and `EXPORT` names a library actor export. That
+qualified spelling is selected for later ATL resolution but is not generated
+child behavior until the corresponding implementation leaf ships.
 Accepted parser output preserves `name` as the public actor-shell
 `actor_name`; nested or otherwise non-scalar actor names are rejected before
 the parser returns an actor shell.
@@ -2984,6 +2990,36 @@ report-only static group metadata. Static instance metadata does not
 instantiate or resolve actor types, emit generated child `.fsm`, create a
 generated composition top, or change HDL generation. It is report-visible
 design intent for the upcoming ATL scheduler slices.
+
+The selected source contract for future ATL actor type resolution is the
+qualified library-backed form:
+
+```lisp
+(actor packet_system
+  (clock clk)
+  (interface (input start) (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance reader of pkt_lib.packet_reader)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (await reader.done)
+    (complete done)))
+```
+
+In that future surface, `ALIAS` must come from the enclosing actor's explicit
+`(imports (library LIBRARY as ALIAS))` clause, and `EXPORT` must name an actor
+export from that imported library. Same-source `(library ...)` roots and
+external library files are the selected resolver inputs, reusing the existing
+library import model. Unqualified `(instance NAME of ACTOR_TYPE)` remains
+metadata-only external intent until a later leaf explicitly changes it.
+Existing `(use alias.actor as instance ...)` remains the shipped reusable
+library path with explicit bindings and generated-top behavior; ATL
+`(instance ...)` type resolution is a separate actor-network path. The next
+ATL implementation leaf reserves the qualified syntax with targeted
+fail-closed diagnostics before any generated child `.fsm`, ATL top, or report
+schema change is claimed.
 
 The following remain fail-closed/deferred:
 

@@ -178,6 +178,14 @@ one compile/report entry actor until FSMGen publishes an explicit actor
 type-resolution contract. Additional `(library ...)` roots remain the
 accepted same-source reusable actor packaging surface.
 
+The selected future ATL actor type-resolution source is library-qualified:
+`(instance NAME of ALIAS.EXPORT)`, where `ALIAS` comes from the enclosing
+actor's `(imports (library ... as ALIAS))` clause and `EXPORT` is an actor
+export from that library. That spelling is selected for a future
+actor-network resolution path; downstream producers must still treat it as
+unshipped until the corresponding fail-closed/resolution leaf appears in this
+handoff and the public contract.
+
 Imported files may also contain library roots:
 
 ```lisp
@@ -1511,6 +1519,9 @@ actor-network intent for downstream discovery; behavior-bearing leaves add
 only the explicitly documented parent handoff ports and scheduled states.
 FSMGen still does not resolve child actor types, instantiate ATL child
 scheduled `.fsm` artifacts, generate an ATL top, or wire child HDL behavior.
+The selected source contract for future ATL actor type resolution is explicit
+library qualification in `(instance NAME of ALIAS.EXPORT)`, not sibling actor
+roots and not implicit lookup of unqualified `ACTOR_TYPE` names.
 
 Accepted form:
 
@@ -1570,6 +1581,10 @@ capability manifest and this handoff:
   `group.name` where a later leaf explicitly permits that endpoint kind.
 - `connect`, `transfer`, and `move` are not public ATL v0 movement clauses.
   Movement is temporal scheduling intent, not a permanent actor-to-actor wire.
+- Future resolved actor types use `(instance NAME of ALIAS.EXPORT)`, where
+  `ALIAS` names an imported library and `EXPORT` names a library actor export.
+  Unqualified `(instance NAME of ACTOR_TYPE)` stays metadata-only until a
+  later leaf explicitly widens it.
 - The first endpoint-movement code leaf shipped fail-closed reservation for
   unsupported qualified actor endpoint drive-body pairs, and the first
   generated scalar actor-to-actor handoff subset is now downstream-emittable.

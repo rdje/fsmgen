@@ -533,6 +533,13 @@ top-level `(actor ...)` roots fail closed with a targeted diagnostic; sibling
 actor roots are not ATL child type definitions until actor type resolution is
 explicitly selected. One actor root plus `(library ...)` roots remains part of
 the supported reusable-library source model.
+The selected future ATL actor type-resolution spelling is library-qualified
+`(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is an explicit library import
+alias and `EXPORT` is a library actor export. That spelling is selected for a
+future actor-network resolution path but remains unshipped behavior until the
+corresponding task-tree leaf updates this contract and its tests. Unqualified
+`(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
+intent surface.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

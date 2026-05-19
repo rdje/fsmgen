@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL actor type-resolution source contract selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`.
+- Future ATL actor type resolution is selected as explicit
+  `(instance NAME of ALIAS.EXPORT)` syntax backed by the enclosing actor's
+  library imports and actor exports.
+- Unqualified static actor types remain metadata-only, and sibling actor roots
+  remain fail-closed instead of acting as child definitions.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`.
+
 ## 2026-05-19: R14 — ATL actor-root boundary shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
 - Multiple top-level `(actor ...)` roots now fail closed with a targeted

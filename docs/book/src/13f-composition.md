@@ -646,6 +646,32 @@ resolved actor type for `(instance name of ActorType)`. One actor root plus
 `(library ...)` roots remains accepted. Generated child `.fsm` artifacts,
 generated ATL tops, and HDL child wiring remain deferred.
 
+The selected future source contract for ATL actor type resolution is explicit
+library qualification:
+
+```lisp
+(actor packet_system
+  (clock clk)
+  (interface (input start) (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance reader of pkt_lib.packet_reader)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (await reader.done)
+    (complete done)))
+```
+
+The alias before the dot must come from the enclosing actor's explicit library
+imports, and the name after the dot must be an actor export from that library.
+Unqualified `(instance name of ActorType)` remains metadata-only external
+intent for now, not an implicit search through sibling actor roots or files.
+Existing `(use alias.actor as instance ...)` remains the separate reusable
+library generated-top path with explicit bindings. The next implementation
+step is a targeted fail-closed reservation for this qualified ATL syntax, not
+generated child emission.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
 static actor instance. The wait may stand alone for a single static actor, or

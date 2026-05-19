@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL actor type-resolution source contract selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` as a doc-only selection
+  leaf.
+- Future ATL actor type resolution is selected to use explicit
+  library-qualified instance types: `(instance NAME of ALIAS.EXPORT)`, where
+  `ALIAS` is declared by the enclosing actor's `(imports (library ... as
+  ALIAS))` clause and `EXPORT` is an actor export from that library.
+- Unqualified `(instance NAME of ACTOR_TYPE)` remains metadata-only external
+  intent, and sibling top-level `(actor ...)` roots remain rejected rather
+  than acting as child type definitions.
+- The next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, which must
+  reserve the selected qualified syntax with targeted fail-closed diagnostics
+  before any generated ATL child `.fsm`, generated ATL top, HDL child wiring,
+  report schema change, event fan-in, route mux/storage, or ready/backpressure
+  behavior is claimed.
 ## 2026-05-19: ATL actor-root boundary shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`.
 - `perl/FSM/Adapter/ISF/Parser.pm` now rejects sources with more than one

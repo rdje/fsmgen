@@ -819,6 +819,17 @@ sibling top-level `(actor ...)` root in the same `.isf` source fails closed
 until FSMGen has an explicit actor type-resolution and generated child
 artifact contract. Same-source `(library ...)` roots remain accepted.
 
+The explicit actor type-resolution source contract is now selected for future
+ATL leaves. Resolved static actor types use the library-qualified form
+`(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is declared by the enclosing
+actor's `(imports (library ... as ALIAS))` clause and `EXPORT` is an actor
+export from that library. Unqualified `(instance NAME of ACTOR_TYPE)` remains
+metadata-only external intent until a later leaf widens it, and sibling actor
+roots remain rejected. Existing `(use alias.actor as instance ...)` remains
+the separate reusable-library generated-top surface with explicit bindings.
+The next implementation leaf is a targeted fail-closed reservation for the
+qualified ATL syntax, not generated child emission.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared
