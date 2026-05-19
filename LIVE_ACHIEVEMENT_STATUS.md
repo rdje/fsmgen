@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL design proposal route status synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
+- The ATL design proposal now distinguishes one-child pin-route scope from
+  the shipped two-child scalar actor-to-actor route.
+- The mdBook audit now covers the proposal route-boundary wording. No
+  compiler behavior changed.
+
 ## 2026-05-19: R14 — ATL design proposal route sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85`.
 - The active ATL frontier advances to

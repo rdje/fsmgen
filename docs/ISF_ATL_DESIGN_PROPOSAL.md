@@ -143,8 +143,8 @@ deterministic `<parent_actor>__<instance>.fsm` files while keeping the parent
 scheduled `.fsm` unchanged. The first generated ATL top is available when one
 resolved child is paired with one parent trigger handoff and one parent event
 wait. That same one-child top can also carry the shipped scalar pin-ingress
-data route described below. Interface binding beyond that selected
-trigger/event pair plus one scalar input-pin route, broader data handoff
+or pin-egress data route described below. Interface binding beyond that
+selected trigger/event pair plus one scalar pin route, broader data handoff
 wiring, route mux/storage, ready/backpressure, CDC, actor-event fan-in,
 recursive actor networks, and permanent actor grouping remain separate future
 selections.
@@ -172,9 +172,10 @@ The generated top wiring links the real top input to the parent, the parent
 generated sink handoff `worker_payload` to child input `payload`, and the
 existing trigger/event handoffs as before. The generated child `.fsm` carries
 generated `+interface` role metadata for the selected child input so HDL
-generation preserves the child `payload` port. Actor-to-actor generated-child
-routes, multi-child data wiring, route mux/storage, CDC/reset remapping,
-ready/backpressure, and payload protocols remain deferred.
+generation preserves the child `payload` port. This one-child pin-ingress
+route does not include actor-to-actor generated-child routing, multi-child
+data wiring, route mux/storage, CDC/reset remapping, ready/backpressure, or
+payload protocols.
 
 The inverse generated-child data step is also shipped as one scalar resolved
 child output route to one top-level output through the generated ATL top. The
@@ -184,9 +185,18 @@ called after the parent transaction triggers `worker.process` and awaits
 reviewable fixture. The generated top wiring links child `payload` to parent
 handoff input `worker_payload`, parent `result` to top output `result`, and
 the existing trigger/event links as in the resolved-child one-top fixture.
-Actor-to-actor generated-child routes, multi-child data wiring,
-route mux/storage, CDC/reset remapping, ready/backpressure, and payload
-protocols remain deferred.
+This one-child pin-egress route does not include actor-to-actor
+generated-child routing, multi-child data wiring, route mux/storage,
+CDC/reset remapping, ready/backpressure, or payload protocols.
+
+The selected generated-child actor-to-actor data-route shape across two
+resolved children is shipped through the two-child generated ATL top. It
+reuses the existing `(sink source)` drive-body movement surface, for example
+`(writer.payload reader.payload)`, and is active only in the named
+drive-call cycle selected by the parent transaction. Broader multi-route
+generated-child data wiring, route mux/storage, fan-in/fan-out, CDC/reset
+remapping, ready/backpressure, payload protocols, recursive actor networks,
+and permanent actor grouping remain deferred.
 
 ## Shipped First Actor-Event Wait Subset
 

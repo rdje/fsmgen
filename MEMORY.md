@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL design proposal route status synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
+- The ATL design proposal no longer uses blanket wording that actor-to-actor
+  generated-child routes remain deferred in the one-child pin-ingress and
+  pin-egress route summaries.
+- The proposal now distinguishes one-child pin-route scope from the selected
+  two-child scalar actor-to-actor route, which is shipped through the
+  two-child generated ATL top.
+- The mdBook audit now reads the ATL design proposal and requires the current
+  shipped/deferred route-boundary markers.
+- `.9.87` is selected to audit and synchronize dedicated mdBook coverage for
+  ATL actor-network concepts and route terms.
+
 ## 2026-05-19: ATL design proposal route sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85` as a documentation
   truth-sync selection leaf.

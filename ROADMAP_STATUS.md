@@ -445,8 +445,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   docs now state the selected two-child scalar route is shipped while wider
   or malformed routes still fail closed. `.9.85` selected an ATL design
   proposal truth-sync leaf for the remaining one-child pin-route wording that
-  still treats actor-to-actor generated-child routes as wholly deferred. The
-  active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
+  still treats actor-to-actor generated-child routes as wholly deferred.
+  `.9.86` synchronized that proposal wording and extended the mdBook audit to
+  read the proposal directly: one-child pin routes do not include
+  actor-to-actor routing, the selected two-child scalar route is shipped, and
+  broader route features remain deferred. The active ATL frontier is now
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

@@ -16,10 +16,12 @@ my $matrix_path = 'docs/book/src/13k-isf-feature-support-matrix.md';
 my $composition_path = 'docs/book/src/13f-composition.md';
 my $backlog_path = 'docs/book/src/14-feature-backlog.md';
 my $downstream_path = 'docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md';
+my $design_path = 'docs/ISF_ATL_DESIGN_PROPOSAL.md';
 my $matrix = read_repo_file($matrix_path);
 my $composition = read_repo_file($composition_path);
 my $backlog = read_repo_file($backlog_path);
 my $downstream = read_repo_file($downstream_path);
+my $design = read_repo_file($design_path);
 my $summary = read_repo_file('docs/book/src/SUMMARY.md');
 
 like(
@@ -281,6 +283,7 @@ for my $doc (
     ['composition chapter', $composition],
     ['feature backlog',     $backlog],
     ['downstream handoff',  $downstream],
+    ['ATL design proposal', $design],
 ) {
     my ($label, $content) = @{$doc};
     unlike(
@@ -294,6 +297,12 @@ for my $doc (
         "$label no longer uses stale reserved-route fail-closed wording",
     );
 }
+
+unlike(
+    $design,
+    qr{Actor-to-actor generated-child routes,\s+multi-child data wiring,\s+route mux/storage,\s+CDC/reset remapping,\s+ready/backpressure,\s+and payload protocols remain deferred\.},
+    'ATL design proposal no longer uses blanket generated-child actor-to-actor route deferral for one-child pin routes',
+);
 
 like(
     $composition,
@@ -311,6 +320,30 @@ like(
     $backlog,
     qr{The selected generated-child actor-to-actor data movement across two resolved\s+children is shipped only for the one scalar two-child route},
     'feature backlog states selected generated-child actor-to-actor route is shipped narrowly',
+);
+
+like(
+    $design,
+    qr{This one-child pin-ingress\s+route does not include actor-to-actor generated-child routing},
+    'ATL design proposal distinguishes one-child pin-ingress route scope from actor-to-actor routing',
+);
+
+like(
+    $design,
+    qr{This one-child pin-egress route does not include actor-to-actor\s+generated-child routing},
+    'ATL design proposal distinguishes one-child pin-egress route scope from actor-to-actor routing',
+);
+
+like(
+    $design,
+    qr{The selected generated-child actor-to-actor data-route shape across two\s+resolved children is shipped through the two-child generated ATL top},
+    'ATL design proposal states the selected generated-child actor-to-actor route is shipped',
+);
+
+like(
+    $design,
+    qr{Broader multi-route\s+generated-child data wiring, route mux/storage, fan-in/fan-out, CDC/reset\s+remapping, ready/backpressure, payload protocols, recursive actor networks,\s+and permanent actor grouping remain deferred},
+    'ATL design proposal keeps broader generated-child route features deferred',
 );
 
 my $route_terms_section = markdown_heading_section(

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route availability wording is proposal-audited
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86` fixes the ATL design proposal's
+  remaining broad generated-child route deferral wording.
+- The proposal now uses the same model as the book and downstream handoff:
+  the one-child pin-ingress and pin-egress routes do not include
+  actor-to-actor generated-child routing, while the selected two-child scalar
+  actor-to-actor route is shipped.
+- The mdBook feature-matrix audit now reads the proposal directly, which
+  gives this cross-document truth boundary regression coverage.
+
 ## 2026-05-19: ATL design proposal needs route availability sync
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85` selects a documentation/audit slice
   because the ATL design proposal still has one-child pin-route paragraphs

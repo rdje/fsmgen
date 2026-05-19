@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL design proposal route status synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
+- Synchronized the ATL design proposal with the shipped generated-child
+  actor-to-actor route boundary.
+- The proposal now states that one-child generated-top pin-ingress and
+  pin-egress routes do not include actor-to-actor generated-child routing.
+- It also states that the selected two-child scalar actor-to-actor data route
+  is shipped through the two-child generated ATL top, while broader
+  multi-route data wiring, route mux/storage, fan-in/fan-out, CDC/reset
+  remapping, ready/backpressure, payload protocols, recursive actor networks,
+  and permanent actor grouping remain deferred.
+- The mdBook feature-matrix audit now reads the ATL design proposal and
+  rejects the stale blanket deferral wording.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, or route capability changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
+
 ### R14 — ATL design proposal route sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85` as a doc-only selection
   leaf.
