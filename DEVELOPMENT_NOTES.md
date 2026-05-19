@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL pin-ingress fixture is coverage, not new routing semantics
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6` promotes a fixture around behavior
+  already shipped by the top-level input-pin to actor handoff subset.
+- The fixture intentionally keeps the real top-level input pin as the source
+  instead of inventing a generated source handoff, and exposes only the actor
+  endpoint as the generated output handoff.
+- `association_schedules[]` and `group_schedules[]` stay empty because no
+  temporary trigger association forms. The public route evidence is
+  `actor_network.data_movements[]` with kind `scalar_pin_to_actor_handoff`.
 ## 2026-05-19: ATL next fixture should show network ingress
 - After promoting actor-to-actor scalar data-route coverage, the next fixture
   should prove that the enclosing actor/network boundary can feed data into a

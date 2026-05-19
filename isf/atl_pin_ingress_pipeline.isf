@@ -1,0 +1,14 @@
+(actor atl_pin_ingress_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input payload)
+    (output done))
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload pins.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))

@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.6`.
+  activation `.111` and ATL actor-network orchestration `.9.7`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -167,10 +167,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` selected the next fixture as
   `isf/atl_pin_ingress_pipeline.isf`: one direct static actor, one existing
   top-level input pin `payload`, one scalar pin-to-actor drive-body route
-  `(consumer.payload pins.payload)`, and one transaction drive call. The next
-  ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, which must add that
-  fixture and prove strict schedule JSON plus HDL reachability without
-  widening ATL behavior.
+  `(consumer.payload pins.payload)`, and one transaction drive call.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6` promoted that fixture with one
+  scheduled parent artifact, the existing top-level input source `payload`,
+  generated actor handoff output `consumer_payload`, one
+  `actor_network.data_movements[]` entry with kind
+  `scalar_pin_to_actor_handoff`, empty association/group schedule arrays,
+  strict schedule JSON parity, and plain plus strict HDL reachability. This
+  remains a bounded scalar pin-ingress fixture; generated ATL children,
+  generated ATL tops, actor-to-pin egress, bidirectional pin movement, route
+  mux/storage, peer events, trigger/data coupling, wider payloads,
+  fan-in/fan-out, CDC, ready/backpressure, compact aliases, and permanent
+  actor grouping remain deferred. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, which must select the next bounded
+  ATL network-boundary or association behavior before code.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

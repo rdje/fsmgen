@@ -563,6 +563,28 @@ generated ATL child `.fsm` artifacts, generated ATL tops, route mux/storage,
 trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
 compact aliases, or permanent actor grouping.
 
+The scalar pin-ingress ATL fixture is shipped as
+`isf/atl_pin_ingress_pipeline.isf`. It uses the same drive-body movement
+syntax to move a top-level actor input into an actor in the network:
+
+```lisp
+(drive feed_consumer
+  (consumer.payload pins.payload))
+```
+
+One transaction drive call activates the route for that drive-call cycle. The
+scheduled parent preserves `payload` as the existing top-level input source and
+exposes `consumer_payload` as the generated actor handoff output. Schedule
+JSON reports the route in `actor_network.data_movements[]` with kind
+`scalar_pin_to_actor_handoff`, `source: "top_level_pin"`, `sink:
+"external_handoff"`, `route_lifetime: "drive_call_cycle"`, and `storage:
+"none"`. The fixture keeps `association_schedules[]` and `group_schedules[]`
+empty because it is a drive-activated data route, not a trigger-batch
+association. It does not claim generated ATL child `.fsm` artifacts, generated
+ATL tops, actor-to-pin egress, bidirectional pin movement, route mux/storage,
+trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure,
+compact aliases, or permanent actor grouping.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single
 static actor instance. FSMGen lowers it to a generated one-bit parent event

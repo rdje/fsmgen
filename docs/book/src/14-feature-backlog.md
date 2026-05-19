@@ -761,17 +761,18 @@ without claiming generated children, route mux/storage, trigger/data coupling,
 wider payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent
 grouping.
 
-The next selected ATL fixture is `isf/atl_pin_ingress_pipeline.isf`. It will
-use the already shipped scalar top-level input-pin to actor movement surface:
-one direct static actor, one top-level input pin `payload`, one named drive
-body with `(consumer.payload pins.payload)`, and one transaction drive call.
-The fixture is selected to prove the existing top-level pin as the source,
-generated actor handoff output `consumer_payload`,
-`actor_network.data_movements[]` route metadata with kind
-`scalar_pin_to_actor_handoff`, strict schedule JSON, and plain plus strict HDL
-reachability without claiming actor-to-pin egress, bidirectional pin movement,
-generated children, route mux/storage, trigger/data coupling, wider payloads,
-fan-in/fan-out, CDC, ready/backpressure, or permanent grouping.
+The scalar pin-ingress ATL fixture is now shipped as
+`isf/atl_pin_ingress_pipeline.isf`. It uses the already shipped scalar
+top-level input-pin to actor movement surface: one direct static actor, one
+top-level input pin `payload`, one named drive body with
+`(consumer.payload pins.payload)`, and one transaction drive call. The fixture
+proves the existing top-level pin as the source, generated actor handoff
+output `consumer_payload`, `actor_network.data_movements[]` route metadata
+with kind `scalar_pin_to_actor_handoff`, strict schedule JSON, and plain plus
+strict HDL reachability without claiming actor-to-pin egress, bidirectional
+pin movement, generated children, route mux/storage, trigger/data coupling,
+wider payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent
+grouping.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -1789,6 +1790,16 @@ generation. It is the bounded two-actor `isf/atl_data_route_pipeline.isf`
 handoff fixture, not a claim for generated ATL children, generated ATL tops,
 route mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
 ready/backpressure, or permanent actor grouping.
+The ATL scalar pin-ingress fixture is now promoted in the `isf` tier for
+file-backed strict schedule JSON parity, scheduled `.fsm` structure, an
+existing top-level source input pin, generated actor handoff output,
+`actor_network.data_movements[]` route metadata, empty association/group
+schedule arrays, and plain plus strict HDL generation. It is the bounded
+single-actor `isf/atl_pin_ingress_pipeline.isf` ingress fixture, not a claim
+for generated ATL children, generated ATL tops, actor-to-pin egress,
+bidirectional pin movement, route mux/storage, trigger/data coupling, wider
+payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent actor
+grouping.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

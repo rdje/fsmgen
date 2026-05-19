@@ -2025,6 +2025,7 @@ isf/fifo_data_path.isf
 isf/fifo_library_use.isf
 isf/atl_trigger_batch_pipeline.isf
 isf/atl_data_route_pipeline.isf
+isf/atl_pin_ingress_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2125,6 +2126,17 @@ strict HDL generation for `isf/atl_data_route_pipeline.isf`. It intentionally
 does not claim generated ATL children, generated ATL tops, route mux/storage,
 trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
 ready/backpressure, or permanent actor grouping.
+The ATL scalar pin-ingress fixture is covered by
+`t/1326-isf-atl-pin-ingress-fixture-coverage.t`, which proves strict schedule
+JSON parity, scheduled `.fsm` structure, the existing top-level input source
+pin `payload`, generated actor handoff output `consumer_payload`, one
+`actor_network.data_movements[]` entry with kind
+`scalar_pin_to_actor_handoff`, empty association/group schedule arrays, and
+plain plus strict HDL generation for `isf/atl_pin_ingress_pipeline.isf`. It
+intentionally does not claim generated ATL children, generated ATL tops,
+actor-to-pin egress, bidirectional pin movement, route mux/storage,
+trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
+ready/backpressure, or permanent actor grouping.
 
 Recommended downstream smoke commands:
 
@@ -2144,6 +2156,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/fifo_library_use.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_data_route_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
