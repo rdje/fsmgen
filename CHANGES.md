@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL multi-child route diagnostic shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
+- Added a targeted parser diagnostic for the reserved generated-child
+  actor-to-actor data-route shape when an actor-to-actor drive-body movement
+  is combined with qualified actor trigger/event handoffs.
+- Extended `t/1330-isf-atl-resolved-child-fixture-coverage.t` with the
+  two-resolved-child source shape using `(writer.payload reader.payload)`.
+- Preserved the shipped parent-handoff actor-to-actor route and the one-child
+  generated-top trigger/event, pin-ingress, and pin-egress fixtures.
+
 ### R14 — ATL multi-child route boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33` as a doc-only selection
   leaf.

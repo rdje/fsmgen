@@ -2,9 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL multi-child route diagnostic shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
+- FSMGen now fails closed the reserved generated-child actor-to-actor
+  data-route shape when a drive-body actor-to-actor movement is coupled to
+  qualified actor trigger/event handoffs.
+- The diagnostic states that generated-child actor-to-actor data movement
+  cannot be combined with actor trigger/event handoffs while multi-child ATL
+  top scheduling remains deferred.
+- Focused coverage preserves the shipped parent-handoff actor-to-actor route
+  and the one-child generated-top trigger/event, pin-ingress, and pin-egress
+  fixtures.
+- The active ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`.
+
 ## 2026-05-19: R14 — ATL multi-child route boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`.
-- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34` as the active ATL frontier.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34` as the then-active ATL
+  frontier.
 - `.9.34` will fail closed the reserved generated-child actor-to-actor
   data-route shape before multi-child ATL top scheduling is widened.
 - Selected reserved shape: two resolved child instances, one existing

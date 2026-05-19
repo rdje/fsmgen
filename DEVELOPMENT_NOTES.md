@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL multi-child route requests fail before generic event limits
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34` adds an explicit parser preflight
+  for the reserved generated-child actor-to-actor data-route shape.
+- Without this preflight, the selected source can hit older generic limits
+  such as multiple actor-event waits or trigger-batch/data-route mixing before
+  FSMGen explains that the real missing feature is multi-child ATL top
+  scheduling.
+- The preflight is intentionally narrow: it only applies to shipped
+  `scalar_actor_handoff` drive-body routes when a transaction also uses
+  qualified actor trigger/event handoffs for one of the route instances. Plain
+  parent-handoff actor-to-actor routes and the one-child generated-top
+  pin-ingress/pin-egress routes stay on their existing paths.
+
 ## 2026-05-19: ATL generated-child actor-to-actor routing needs a multi-child top boundary
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33` selects fail-closed coverage before
   positive generated-child actor-to-actor data movement.

@@ -873,11 +873,11 @@ and pre-event drive-order failure. Actor-to-actor generated-child routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 and payload protocols remain deferred.
 
-The next selected ATL boundary is fail-closed coverage for reserved
-generated-child actor-to-actor data movement across two resolved children.
-The source shape reuses the existing `(sink source)` drive-body pair, but
-positive behavior waits for multi-child top scheduling rather than implying a
-permanent route or inserted storage.
+FSMGen now fails closed reserved generated-child actor-to-actor data movement
+across two resolved children when it is coupled to qualified actor
+trigger/event handoffs. The source shape reuses the existing `(sink source)`
+drive-body pair, but positive behavior waits for multi-child top scheduling
+rather than implying a permanent route or inserted storage.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

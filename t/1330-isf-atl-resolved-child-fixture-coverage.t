@@ -510,6 +510,12 @@ LIBRARY
         qr/requires trigger before event wait and drive call after event wait/,
         'pin-egress data route fails closed when the drive call precedes the child event wait',
     );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture(),
+        qr/generated-child actor-to-actor data movement drive 'feed_writer' cannot be combined with actor trigger\/event handoffs.*multi-child ATL top scheduling remains deferred/,
+        'generated-child actor-to-actor data route fails closed before multi-child top scheduling',
+    );
 };
 
 done_testing();
@@ -1105,6 +1111,57 @@ ISF
 
 ISF
     return $actor . $library;
+}
+
+sub generated_child_actor_route_fixture {
+    return <<'ISF';
+(actor atl_resolved_child_data_route_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance reader of pkt_lib.packet_reader)
+  (instance writer of pkt_lib.packet_writer)
+  (drive feed_writer
+    (writer.payload reader.payload))
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (await reader.done)
+    (drive feed_writer)
+    (trigger writer.consume)
+    (await writer.done)
+    (complete done)))
+
+(library common.packet
+  (exports
+    (actor packet_reader)
+    (actor packet_writer))
+  (actor packet_reader
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input capture_start)
+      (output payload)
+      (output done))
+    (transaction capture
+      (on capture_start)
+      (set payload capture_start)
+      (complete done)))
+  (actor packet_writer
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input consume_start)
+      (input payload)
+      (output done))
+    (transaction consume
+      (on consume_start)
+      (complete done))))
+ISF
 }
 
 sub fsm_basenames_in {

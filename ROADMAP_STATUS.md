@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.34`.
+  activation `.111` and ATL actor-network orchestration `.9.35`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -302,12 +302,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   parent `worker_payload`, parent `result` to top `result`, and keeps the
   existing trigger/event links internal. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`
   selected the next ATL frontier as
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, which must fail closed the reserved
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, which now fails closed the reserved
   generated-child actor-to-actor data-route shape before multi-child ATL top
-  scheduling is widened. Broader generated-top packaging, actor-to-actor
-  generated-child routes, multi-child HDL child wiring, event fan-in, route
-  mux/storage, ready/backpressure, CDC, recursive actor networks, and
-  permanent actor grouping remain deferred.
+  scheduling is widened. The active ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, which must select the next bounded
+  multi-child generated-top design or fail-closed boundary before code.
+  Broader generated-top packaging, positive actor-to-actor generated-child
+  routes, multi-child HDL child wiring, event fan-in, route mux/storage,
+  ready/backpressure, CDC, recursive actor networks, and permanent actor
+  grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

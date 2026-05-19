@@ -1006,9 +1006,9 @@ This subset still does not ship actor-to-actor generated-child routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols, or recursive actor networks.
 
-The next selected generated-child boundary is intentionally negative: reserve
-and fail closed the actor-to-actor data-route shape across two resolved
-children before multi-child ATL top scheduling is implemented. The selected
+The generated-child actor-to-actor boundary is intentionally negative today:
+FSMGen fails closed the actor-to-actor data-route shape across two resolved
+children when it is coupled to qualified actor trigger/event handoffs. The
 reserved shape reuses the existing `(sink source)` drive-body pair, such as
 `(writer.payload reader.payload)`, but must not imply a permanent route,
 inserted storage, or child-to-child wiring until the scheduler can represent

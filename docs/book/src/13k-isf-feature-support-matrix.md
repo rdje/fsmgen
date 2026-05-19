@@ -78,7 +78,9 @@ ATL top, using `(pins.result worker.payload)` in
 `actor_network.data_movements[]`; generated-top discovery remains in
 `actor_network.generated_tops[]`. Actor-to-actor generated-child routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
-and payload protocols remain backlog.
+and payload protocols remain backlog. The reserved generated-child
+actor-to-actor route shape now fails closed with a targeted diagnostic when
+it is coupled to qualified actor trigger/event handoffs.
 
 ## Examples By Family
 
@@ -304,6 +306,10 @@ wait. The same focused coverage proves route metadata, child output port
 preservation, generated top wiring, plain plus strict HDL generation, missing
 child output failure, and pre-event drive-order failure for that bounded
 shape.
+Generated-child actor-to-actor data movement across two resolved children now
+fails closed with a targeted diagnostic when the parent transaction also uses
+qualified actor trigger/event handoffs; positive multi-child ATL top
+scheduling remains backlog.
 
 ### Actor, Interface, Storage, And Timing
 

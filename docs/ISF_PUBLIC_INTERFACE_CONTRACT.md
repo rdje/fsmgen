@@ -592,6 +592,11 @@ uses `(pins.result worker.payload)` and the existing
 family or public `data_links` key is exposed. The generated child `.fsm` may
 include generated `+interface` role metadata for the selected child output so
 the HDL backend preserves that child output as a module port.
+Generated-child actor-to-actor data movement across two resolved children is
+still outside the public generated-top contract. When that reserved shape is
+combined with qualified actor trigger/event handoffs, FSMGen fails closed with
+a targeted diagnostic; no public report family, generated-top schema, or
+public data-link key is added for it.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

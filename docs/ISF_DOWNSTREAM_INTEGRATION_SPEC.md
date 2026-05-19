@@ -1737,7 +1737,10 @@ FSMGen now emits one generated ATL top for the selected resolved-child
 trigger/event subset and reports it through `actor_network.generated_tops[]`.
 FSMGen still emits no generated ATL route mux, data-route storage,
 multi-child ATL top, CDC child wiring, payload/ready/backpressure binding, or
-broader HDL event wiring. Downstream consumers must treat
+broader HDL event wiring. The reserved generated-child actor-to-actor
+data-route shape now fails closed with a targeted multi-child ATL top
+diagnostic when it is coupled to qualified actor trigger/event handoffs.
+Downstream consumers must treat
 `actor_network` as discovery/review metadata plus the explicitly
 reported `event_waits[]`, `transaction_triggers[]`, `data_movements[]`,
 `association_schedules[]`, `group_schedules[]`, and `generated_tops[]`
@@ -1769,7 +1772,10 @@ generation preserves the child `payload` port.
 Downstream producers must still treat actor-to-actor generated-child routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols, recursive actor networks, and permanent actor grouping as
-deferred.
+deferred. If they emit the reserved two-child route shape with a drive-body
+pair such as `(writer.payload reader.payload)` plus qualified actor
+trigger/event handoffs, they should expect a targeted fail-closed diagnostic
+rather than generated child-to-child wiring.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2292,6 +2298,11 @@ schedule JSON parity, parent/child/top `.fsm` artifacts, generated child
 output role preservation, plain and strict CLI HDL generation, a fail-closed
 missing child output diagnostic, and a fail-closed pre-event drive-order
 diagnostic for that route.
+The same focused regression now also covers the reserved generated-child
+actor-to-actor data-route diagnostic: the two-resolved-child
+`(writer.payload reader.payload)` shape fails closed when paired with
+qualified actor trigger/event handoffs because multi-child ATL top scheduling
+is still deferred.
 
 Recommended downstream smoke commands:
 

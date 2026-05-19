@@ -1,9 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL multi-child route diagnostic shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
+- FSMGen now fails closed the reserved generated-child actor-to-actor data
+  route when an actor-to-actor drive-body movement is coupled to qualified
+  actor trigger/event handoffs.
+- The targeted diagnostic says the generated-child actor-to-actor data
+  movement drive cannot be combined with actor trigger/event handoffs because
+  multi-child ATL top scheduling remains deferred.
+- `t/1330-isf-atl-resolved-child-fixture-coverage.t` now includes the
+  two-resolved-child source shape with `(writer.payload reader.payload)`,
+  producer trigger/event sequencing, and attempted sink trigger/event
+  sequencing.
+- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, a
+  selection leaf for the next bounded multi-child generated-top design or
+  fail-closed boundary.
+
 ## 2026-05-19: ATL multi-child route boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33` as a doc-only selection
   leaf.
-- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
+- This slice advanced the ATL frontier to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, which has since completed.
 - `.9.34` must fail closed the reserved generated-child actor-to-actor data
   route before positive multi-child ATL top scheduling is widened.
 - Selected reserved shape: two resolved child instances, one existing

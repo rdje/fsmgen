@@ -844,7 +844,11 @@ fail-closed pre-event drive-order diagnostics for this fixture.
 
 Actor-to-actor generated-child routes, multi-child tops, route mux/storage,
 CDC/reset remapping, ready/backpressure, payload protocols, and permanent
-actor grouping remain deferred.
+actor grouping remain deferred. When a generated-child actor-to-actor route
+shape reuses the existing `(sink source)` drive-body pair across two resolved
+children and also uses qualified actor trigger/event handoffs, FSMGen now
+fails closed with a targeted multi-child ATL top diagnostic instead of
+claiming generated child-to-child wiring.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
@@ -3156,8 +3160,8 @@ The following remain fail-closed/deferred:
   parent-handoff subsets;
 - generated top-level ATL wiring, interface binding, generated child HDL
   wiring, and group scheduling outside the exact shipped trigger/event top,
-  scalar pin-ingress and pin-egress generated-child routes, and trigger-batch
-  subsets;
+  scalar pin-ingress and pin-egress generated-child routes, the targeted
+  generated-child actor-to-actor route diagnostic, and trigger-batch subsets;
 - recursive actor-network declarations.
 
 The broader ATL v0 vocabulary is selected, with only the bounded event-wait,
@@ -3875,6 +3879,12 @@ one-child scalar pin-egress generated-top subset and does not claim
 actor-to-actor generated-child routes, multi-child tops, route mux/storage,
 CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
 networks, or permanent actor grouping.
+Generated-child actor-to-actor movement across two resolved children now has
+targeted fail-closed coverage in
+[t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t):
+the reserved `(writer.payload reader.payload)` route is rejected when it is
+coupled to qualified actor trigger/event handoffs because multi-child ATL top
+scheduling remains deferred.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

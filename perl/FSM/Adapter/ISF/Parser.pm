@@ -777,6 +777,12 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
 
     my %data_movement_drives = map { $_->{drive} => $_ } @data_movements;
 
+    _validate_atl_generated_child_actor_route_boundary(
+        $actor,
+        \@data_movements,
+        \%actor_instances,
+    );
+
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_atl_reserved_qualified_forms(
             $tx->{clauses},
@@ -848,6 +854,56 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement requires a single-clock actor in the current subset\n"
             if ref($actor->{clock_domains}) eq 'HASH';
         $actor->{actor_network}{data_movements} = \@data_movements;
+    }
+
+    return 1;
+}
+
+sub _validate_atl_generated_child_actor_route_boundary {
+    my ($actor, $data_movements, $actor_instances) = @_;
+    my @actor_routes = grep { ($_->{kind} // '') eq 'scalar_actor_handoff' }
+        @{$data_movements || []};
+    return 1 unless @actor_routes;
+
+    my %actor_route_by_drive = map { $_->{drive} => $_ } @actor_routes;
+    my %route_instance;
+    for my $movement (@actor_routes) {
+        $route_instance{$movement->{source_instance}} = 1
+            if defined($movement->{source_instance}) && !ref($movement->{source_instance});
+        $route_instance{$movement->{sink_instance}} = 1
+            if defined($movement->{sink_instance}) && !ref($movement->{sink_instance});
+    }
+
+    for my $tx (@{$actor->{transactions} || []}) {
+        my $clauses = $tx->{clauses};
+        next unless ref($clauses) eq 'ARRAY';
+
+        my @transaction_actor_route_drives = grep { defined($_) && exists $actor_route_by_drive{$_} }
+            map {
+                ref($_) eq 'ARRAY'
+                    && (@$_ >= 2)
+                    && defined($_->[0])
+                    && !ref($_->[0])
+                    && $_->[0] eq 'drive'
+                    && defined($_->[1])
+                    && !ref($_->[1])
+                    ? $_->[1]
+                    : undef
+            } @$clauses;
+        next unless @transaction_actor_route_drives;
+
+        for my $clause (@$clauses) {
+            next unless ref($clause) eq 'ARRAY' && @$clause >= 2;
+            my $head = $clause->[0];
+            next unless defined($head) && !ref($head)
+                && ($head eq 'trigger' || $head eq 'await');
+
+            my ($instance) = _parse_qualified_atl_endpoint_token($clause->[1], $actor_instances);
+            next unless defined($instance) && $route_instance{$instance};
+
+            my $drive = $transaction_actor_route_drives[0];
+            confess "Error: transaction '$tx->{name}' ATL generated-child actor-to-actor data movement drive '$drive' cannot be combined with actor trigger/event handoffs in the current subset; multi-child ATL top scheduling remains deferred\n";
+        }
     }
 
     return 1;
