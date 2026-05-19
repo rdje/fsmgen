@@ -914,6 +914,11 @@ requiring source and sink actor qualifiers in the generated-child
 actor-to-actor route to name distinct resolved children; same-child pairs
 fail closed until explicit self-route, bypass, storage, mux, or fan-in/fan-out
 semantics are selected.
+The next selected hardening narrows the repeated-activation backlog by
+requiring the generated-child actor-to-actor route sequence to contain only
+one source-child trigger and one sink-child trigger; extra route-child
+triggers remain fail-closed until explicit restart, pending-request, trigger
+fan-in/fan-out, or multi-activation scheduling semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

@@ -779,6 +779,11 @@ The shipped self-route hardening keeps the route between two distinct
 resolved children. Same-child source/sink route pairs fail closed until a
 later contract selects self-route, loopback, child-internal bypass, storage,
 muxing, fan-in/fan-out, or payload behavior.
+The next selected hardening keeps the route sequence to one source-child
+trigger and one sink-child trigger. Extra route-child triggers must stay
+fail-closed until a later contract selects repeated activation, restart,
+pending-request merging, trigger fan-in/fan-out, or multi-activation
+scheduling.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

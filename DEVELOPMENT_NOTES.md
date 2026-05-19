@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child routes should not repeat child triggers yet
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.47` selects repeated child-trigger
+  hardening as the next generated-child route boundary.
+- Extra triggers to the source or sink child in the same route sequence would
+  imply restart, repeated activation, pending-request merging, or trigger
+  fan-in/fan-out semantics. None of those has been selected for ATL
+  generated-child wiring.
+- The next code leaf should therefore lock extra source/sink child triggers
+  as diagnostics while leaving multi-activation scheduling deferred.
+
 ## 2026-05-19: ATL child-route distinct-instance checks were already in the parser
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46` added regression coverage for a
   generated-child actor-to-actor route whose source and sink actor qualifiers
