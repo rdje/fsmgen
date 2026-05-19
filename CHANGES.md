@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL multi-child route boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34` to fail closed the reserved
+  generated-child actor-to-actor data-route shape before multi-child ATL top
+  scheduling is widened.
+- The selected reserved shape uses two resolved child instances, one existing
+  `(sink source)` drive pair such as `(writer.payload reader.payload)`,
+  producer trigger/event sequencing, a drive call, and attempted sink
+  trigger/event sequencing.
+- No compiler behavior changed in this selection slice.
+
 ### R14 — ATL resolved-child pin egress top wiring shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`.
 - Added [isf/atl_resolved_child_pin_egress_pipeline.isf](isf/atl_resolved_child_pin_egress_pipeline.isf)

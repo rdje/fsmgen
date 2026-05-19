@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL multi-child route boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34` as the active ATL frontier.
+- `.9.34` will fail closed the reserved generated-child actor-to-actor
+  data-route shape before multi-child ATL top scheduling is widened.
+- Selected reserved shape: two resolved child instances, one existing
+  `(sink source)` drive pair such as `(writer.payload reader.payload)`,
+  producer trigger/event sequencing, the drive call, then attempted sink
+  trigger/event sequencing.
+- Shipped parent-handoff actor-to-actor routes and one-child generated-top
+  trigger/event, pin-ingress, and pin-egress fixtures must remain accepted.
+
 ## 2026-05-19: R14 — ATL resolved-child pin egress top wiring shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`.
 - Added `isf/atl_resolved_child_pin_egress_pipeline.isf`.
@@ -14,8 +26,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Public report surfaces remain `actor_network.data_movements[]` and
   `actor_network.generated_tops[]`; private top data-link plumbing is not a
   new public report family.
-- The active ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`.
+- This slice advanced the ATL frontier to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, the selection leaf that has since
+  completed.
 
 ## 2026-05-19: R14 — ATL resolved-child pin egress top wiring selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`.

@@ -730,6 +730,12 @@ child module port. Actor-to-actor generated-child routes, multi-child tops,
 route mux/storage, CDC/reset remapping, ready/backpressure, and payload
 protocols remain unavailable.
 
+The next selected ATL boundary is fail-closed coverage for the reserved
+generated-child actor-to-actor data-route shape across two resolved children.
+That shape reuses the existing `(sink source)` drive-body movement surface,
+but positive behavior waits for multi-child top scheduling rather than
+claiming a permanent route or inserted storage.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
 static actor instance. The wait may stand alone for a single static actor, or

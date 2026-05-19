@@ -838,11 +838,11 @@ qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
 and now emit their child `.fsm` files. The first generated ATL top is shipped
 for one resolved child plus one trigger/event handoff pair, and the scalar
-pin-ingress route below is shipped for that same one-child top. Broader
-generated ATL tops, HDL child wiring outside that selected pair plus scalar
-pin-ingress route, interface binding inference, event fan-in,
-route mux/storage, CDC, recursive actor networks, and ready/backpressure
-remain later leaves.
+pin-ingress and pin-egress routes below are shipped for that same one-child
+top. Broader generated ATL tops, HDL child wiring outside that selected pair
+plus scalar pin-ingress/pin-egress routes, interface binding inference, event
+fan-in, route mux/storage, CDC, recursive actor networks, and
+ready/backpressure remain later leaves.
 The resolved-child fixture is now shipped as
 `isf/atl_resolved_child_pipeline.isf`. It proves the generated-top boundary
 with one same-source library actor export, one resolved child instance, one
@@ -872,6 +872,12 @@ preservation, plain plus strict HDL generation, missing child output failure,
 and pre-event drive-order failure. Actor-to-actor generated-child routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 and payload protocols remain deferred.
+
+The next selected ATL boundary is fail-closed coverage for reserved
+generated-child actor-to-actor data movement across two resolved children.
+The source shape reuses the existing `(sink source)` drive-body pair, but
+positive behavior waits for multi-child top scheduling rather than implying a
+permanent route or inserted storage.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

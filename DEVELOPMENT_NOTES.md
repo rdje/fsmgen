@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL generated-child actor-to-actor routing needs a multi-child top boundary
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33` selects fail-closed coverage before
+  positive generated-child actor-to-actor data movement.
+- The reserved shape reuses the existing drive-body `(sink source)` movement
+  surface, but adds two resolved child instances and ordered trigger/data/event
+  coupling. That is a different implementation problem than the shipped
+  one-child trigger/event, pin-ingress, and pin-egress generated top.
+- The next code slice should reject that shape with a targeted ATL diagnostic
+  until the scheduler and composition top can represent multiple child
+  instances, ordered child activations, and private child-to-child data links
+  without implying permanent wires or inserted route storage.
+
 ## 2026-05-19: ATL child-to-pin wiring stays a private generated-top data link
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32` ships the inverse generated-child
   scalar data route: one resolved child output to one top-level output pin

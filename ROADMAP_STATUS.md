@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.33`.
+  activation `.111` and ATL actor-network orchestration `.9.34`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -300,13 +300,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `result` through the generated top after the parent has triggered the child
   and awaited `worker.done`. The generated top wires child `payload` to
   parent `worker_payload`, parent `result` to top `result`, and keeps the
-  existing trigger/event links internal. The active ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, which must select the next bounded
-  generated-child integration or fail-closed boundary before code. Broader
-  generated-top packaging, actor-to-actor generated-child routes,
-  multi-child HDL child wiring, event fan-in, route mux/storage,
-  ready/backpressure, CDC, recursive actor networks, and permanent actor
-  grouping remain deferred.
+  existing trigger/event links internal. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`
+  selected the next ATL frontier as
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, which must fail closed the reserved
+  generated-child actor-to-actor data-route shape before multi-child ATL top
+  scheduling is widened. Broader generated-top packaging, actor-to-actor
+  generated-child routes, multi-child HDL child wiring, event fan-in, route
+  mux/storage, ready/backpressure, CDC, recursive actor networks, and
+  permanent actor grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

@@ -1006,6 +1006,14 @@ This subset still does not ship actor-to-actor generated-child routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols, or recursive actor networks.
 
+The next selected generated-child boundary is intentionally negative: reserve
+and fail closed the actor-to-actor data-route shape across two resolved
+children before multi-child ATL top scheduling is implemented. The selected
+reserved shape reuses the existing `(sink source)` drive-body pair, such as
+`(writer.payload reader.payload)`, but must not imply a permanent route,
+inserted storage, or child-to-child wiring until the scheduler can represent
+the multi-child top explicitly.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

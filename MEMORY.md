@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL multi-child route boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33` as a doc-only selection
+  leaf.
+- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
+- `.9.34` must fail closed the reserved generated-child actor-to-actor data
+  route before positive multi-child ATL top scheduling is widened.
+- Selected reserved shape: two resolved child instances, one existing
+  `(sink source)` drive pair such as `(writer.payload reader.payload)`,
+  producer trigger/event sequencing, the drive call, then an attempted sink
+  trigger/event sequence.
+- The next code slice must preserve shipped parent-handoff actor-to-actor
+  routes and the one-child generated-top trigger/event, pin-ingress, and
+  pin-egress fixtures.
+
 ## 2026-05-19: ATL resolved-child pin egress top wiring shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`.
 - Added `isf/atl_resolved_child_pin_egress_pipeline.isf` as the reviewable
@@ -15,9 +29,9 @@ This is the live continuity document for fast session recovery after crashes, re
 - `t/1330-isf-atl-resolved-child-fixture-coverage.t` now proves strict
   schedule JSON parity, parent/child/top artifact shape, plain and strict HDL
   generation, missing child output failure, and pre-event drive-order failure.
-- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, a
-  selection leaf for the next generated-child integration or fail-closed
-  boundary before code.
+- This slice advanced the ATL frontier to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, the selection leaf that has since
+  completed.
 
 ## 2026-05-19: ATL resolved-child pin egress top wiring selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` as a doc-only selection
