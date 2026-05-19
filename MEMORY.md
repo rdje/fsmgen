@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child boundary-role hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
+- `.9.68` will add focused fail-closed coverage so the selected
+  generated-child actor-to-actor route starts only from a scalar parent input
+  boundary and completes only to a scalar parent output boundary.
+- While running the documented gate, the mdBook feature-matrix audit exposed
+  missing contiguous repeat-body audit marker phrases; the matrix now keeps
+  those shipped repeat subsets visible in a collapsible marker block.
+- No activation fan-in, completion fan-out, interface remapping, boundary
+  expressions, local setup/cleanup, route continuation, pending handoff
+  storage, route mux/storage, ready/backpressure, payload protocol, recursive
+  actor network, or permanent actor grouping behavior is selected.
+
 ## 2026-05-19: mdBook rendered prose-blob cleanup shipped
 - Completed `MDBOOK-PARAGRAPH-SPACING.4` and closed the
   `MDBOOK-PARAGRAPH-SPACING` task tree.

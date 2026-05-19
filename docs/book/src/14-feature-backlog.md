@@ -1135,6 +1135,15 @@ fail-closed until explicit activation-body sampling, completion payload,
 setup/cleanup, continuation, storage, muxing, ready/backpressure, or payload
 semantics are selected.
 
+The next selected hardening narrows the parent-interface boundary backlog.
+For the generated-child actor-to-actor route, the start boundary will remain
+a scalar top-level input pin, and the completion boundary will remain a
+scalar top-level output pin. Output-as-start, input-as-completion,
+undeclared, and wider boundary pins stay fail-closed until explicit
+interface remapping, activation fan-in, completion fan-out, boundary
+expressions, storage, muxing, ready/backpressure, or payload semantics are
+selected.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared

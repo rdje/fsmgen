@@ -1,5 +1,23 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route boundaries should name parent pins by role
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` selects parent interface-role
+  hardening as the next generated-child route boundary.
+- The current generated-child actor-to-actor route is activated by a parent
+  input boundary and completed by a parent output boundary. Letting the start
+  boundary name an output, the completion boundary name an input, an
+  undeclared pin, or a wider pin would imply interface remapping, boundary
+  expressions, activation arbitration, or completion fan-out semantics that
+  have not been selected.
+- The next code leaf should add focused diagnostics for those boundary-role
+  shapes while leaving activation fan-in, completion fan-out, setup/cleanup,
+  route continuation, storage, muxing, ready/backpressure, and payload
+  protocols deferred.
+- The same gate also exposed that some long repeat-body support phrases were
+  present only in wrapped prose, which made the feature-matrix audit miss
+  them. The matrix now keeps those exact phrases in a collapsible marker block
+  while leaving the readable prose intact.
+
 ## 2026-05-19: rendered prose audit is the book readability gate
 - `MDBOOK-PARAGRAPH-SPACING.4` closes the gap between Markdown readability
   and rendered HTML readability by checking the built book for long paragraph

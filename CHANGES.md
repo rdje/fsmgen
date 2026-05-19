@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child boundary-role hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68` to harden the parent
+  interface roles around the shipped generated-child actor-to-actor data
+  route.
+- The next slice will require the route start boundary to name a declared
+  scalar top-level input pin and the route completion boundary to name a
+  declared scalar top-level output pin, rejecting output-as-start,
+  input-as-completion, undeclared, and wider boundary pins.
+- Restored the feature-matrix repeat-body audit markers uncovered by the
+  documented gate so the book remains auditable for the latest shipped nested
+  repeat activation subsets.
+- No new ATL syntax, report key, generated artifact shape, interface
+  remapping, activation fan-in, completion fan-out, route storage, muxing,
+  CDC/reset remapping, ready/backpressure, payload protocol, recursive actor
+  network, or permanent actor grouping behavior is selected.
+
 ### Project documentation — mdBook rendered prose-blob cleanup shipped
 - Completed `MDBOOK-PARAGRAPH-SPACING.4` and closed the task tree.
 - Split long rendered prose blocks across the mdBook sources and the included

@@ -481,6 +481,13 @@ activation-body samples in `(on ...)` and extra payload operands in
 completion payload/fan-out, setup/cleanup work, continuation, storage,
 muxing, backpressure, or payload contract.
 
+The next selected hardening keeps those boundaries tied to parent interface
+roles: the route start boundary remains a scalar top-level input, and the
+route completion boundary remains a scalar top-level output. Output-as-start,
+input-as-completion, undeclared, and wider boundary pins stay fail-closed
+before any interface remapping, activation fan-in, completion fan-out,
+boundary expression, storage, muxing, backpressure, or payload contract.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp
@@ -611,6 +618,30 @@ wait contract as literals and actor constants.
 Generated or spawned nested child activation, cross-domain repeat-body `do`,
 deeper branch repeat activation, loop-contained repeat activation, and nested
 `stage` or `contract` clauses remain outside the shipped repeat-body subset.
+
+<details>
+<summary>Repeat-body audit markers</summary>
+
+These phrases are intentionally kept verbatim so the feature-matrix audit can
+detect the shipped branch-contained repeat/activation subsets without relying
+on prose wrapping:
+
+```text
+top-level when-body nested repeat local do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain
+top-level when-body nested repeat generated-child do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain
+top-level when-body nested repeat generated do with static params and bind handoffs after multi-pending await_any while generated nested spawn pending before same-body await_all drain
+top-level when-body nested repeat generated do with static params, optional bind handoffs, and same-domain metadata after multi-pending await_any while generated nested spawn pending before same-body await_all drain
+top-level switch-branch nested repeat local do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain
+top-level switch-branch nested repeat generated do with static params and bind handoffs after multi-pending await_any while generated nested spawn pending before same-body await_all drain
+top-level switch-branch nested repeat generated do with static params, optional bind handoffs, and same-domain metadata after multi-pending await_any while generated nested spawn pending before same-body await_all drain
+top-level when-body nested repeat local do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset
+top-level when-body nested repeat generated-child do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset
+top-level when-body nested repeat generated do with static params and bind handoffs after multi-pending await_any while generated nested spawn pending before same-body await_all drain subset
+top-level switch-branch nested repeat local do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset
+top-level switch-branch nested repeat generated do with static params and bind handoffs after multi-pending await_any while generated nested spawn pending before same-body await_all drain subset
+```
+
+</details>
 
 ### Types, Enums, And Aggregate Leaves
 

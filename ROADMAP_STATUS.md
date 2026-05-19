@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. The active R14
   frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -29,7 +29,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.67`.
+  activation `.111` and ATL actor-network orchestration `.9.68`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -389,8 +389,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   selected boundary-body simplicity hardening before activation-body samples
   or completion payload behavior is claimed. `.9.66` shipped that hardening
   with a targeted parser diagnostic plus a defensive lowerer boundary-shape
-  backstop. The active ATL frontier is now
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`.
+  backstop. `.9.67` selected parent interface-role hardening next: the
+  generated-child route start boundary must name a scalar top-level input
+  pin, and the completion boundary must name a scalar top-level output pin,
+  before interface remapping, activation fan-in, completion fan-out, or
+  boundary expressions are claimed. The active ATL frontier is now
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

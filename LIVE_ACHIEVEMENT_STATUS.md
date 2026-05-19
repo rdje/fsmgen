@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child boundary-role hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
+- `.9.68` is selected to keep the generated-child actor-to-actor route
+  boundary pins directionally tied to the parent interface: start from a
+  scalar top-level input and complete to a scalar top-level output.
+- The mdBook feature matrix also now keeps the latest repeat-body audit
+  marker phrases in a visible collapsible block so the documented gate can
+  verify the shipped nested repeat activation subsets.
+- Output-as-start, input-as-completion, undeclared, and wider boundary pins
+  remain deferred fail-closed cases before interface remapping, activation
+  fan-in, completion fan-out, route storage, muxing, ready/backpressure,
+  payload protocols, recursive actor networks, or permanent actor grouping
+  are claimed.
+
 ## 2026-05-19: Project documentation — mdBook rendered prose-blob cleanup shipped
 - Completed `MDBOOK-PARAGRAPH-SPACING.4`.
 - Closed the `MDBOOK-PARAGRAPH-SPACING` task tree.

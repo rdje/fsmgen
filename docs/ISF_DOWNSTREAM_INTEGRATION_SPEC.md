@@ -1886,12 +1886,21 @@ trigger/event subset, reporting them through
 `actor_network.generated_tops[]`.
 
 FSMGen still emits no generated ATL route mux, data-route storage,
-generated-child data wiring between children, CDC child wiring,
-payload/ready/backpressure binding, or broader HDL event wiring.
+generated-child data wiring beyond the selected one scalar two-child route,
+CDC child wiring, payload/ready/backpressure binding, or broader HDL event
+wiring.
 
 The reserved generated-child actor-to-actor data-route shape now fails closed
 with a targeted multi-child ATL top diagnostic when it is coupled to
 qualified actor trigger/event handoffs.
+
+The selected generated-child actor-to-actor data route remains bounded by a
+simple parent input start boundary and a simple parent output completion
+boundary. The next hardening leaf will make output-as-start,
+input-as-completion, undeclared, and wider boundary pins targeted
+fail-closed cases before downstream producers can rely on interface
+remapping, activation fan-in, completion fan-out, boundary expressions,
+route storage, route muxing, ready/backpressure, or payload protocols.
 
 Downstream consumers must treat `actor_network` as discovery/review metadata
 plus the explicitly reported `event_waits[]`, `transaction_triggers[]`,
