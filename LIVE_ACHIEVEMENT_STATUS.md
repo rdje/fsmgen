@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL resolved-child pin egress top wiring selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`.
+- `.9.32` is selected to wire one scalar resolved-child output route to one
+  top-level output pin through the generated ATL top, using the source shape
+  `(pins.result worker.payload)` after the parent has triggered
+  `worker.process` and awaited `worker.done`.
+- No compiler behavior changed in the selection slice.
+- Actor-to-actor generated-child routes, multi-child tops, route mux/storage,
+  CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
+  networks, and permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL resolved-child pin ingress top wiring shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
 - Added `isf/atl_resolved_child_pin_ingress_pipeline.isf` for one scalar

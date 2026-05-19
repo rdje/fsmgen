@@ -1762,6 +1762,13 @@ actor-to-pin generated-child routes, multi-child tops, route mux/storage,
 CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
 networks, and permanent actor grouping as deferred.
 
+The next selected generated-child data route is the inverse scalar path from
+one resolved child output to one top-level output through the generated ATL
+top. The selected source shape is `(pins.result worker.payload)` after the
+parent triggers `worker.process` and awaits `worker.done`. This is a future
+implementation selection only, not part of the current shipped downstream
+contract.
+
 ## 13. Scheduled `.fsm` Review Artifact
 
 Downstream tools should treat the scheduled `.fsm` files as review artifacts

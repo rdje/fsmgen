@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL resolved-child pin egress top wiring selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32` to wire one scalar
+  resolved-child output route to one top-level output pin through the
+  generated ATL top.
+- The selected source shape adds one `(pins.result worker.payload)` drive to
+  the one-child trigger/event top, with the drive call after
+  `(await worker.done)`.
+- No compiler behavior changed in this selection slice.
+
 ### R14 — ATL resolved-child pin ingress top wiring shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
 - Added [isf/atl_resolved_child_pin_ingress_pipeline.isf](isf/atl_resolved_child_pin_ingress_pipeline.isf)

@@ -583,6 +583,12 @@ uses the existing `actor_network.data_movements[]` route metadata and
 family or public `data_links` key is exposed. The generated child `.fsm` may
 include generated `+interface` role metadata for the selected child input so
 the HDL backend preserves that child input as a module port.
+The next selected public-contract update is the inverse scalar generated-top
+route from one resolved child output to one top-level output, using
+`(pins.result worker.payload)` and the existing
+`actor_network.data_movements[]` plus `actor_network.generated_tops[]`
+surfaces. That route is selected only; it is not shipped contract behavior
+until the implementation leaf lands.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

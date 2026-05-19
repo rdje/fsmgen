@@ -863,6 +863,12 @@ generated-child routes, actor-to-pin routes, multi-child tops,
 route mux/storage, CDC/reset remapping, ready/backpressure, and payload
 protocols remain deferred.
 
+The next selected generated-child data route is the inverse path from one
+resolved child output to one top-level output through the generated top. It
+uses `(pins.result worker.payload)` in a named drive body after the parent
+triggers `worker.process` and awaits `worker.done`. It remains backlog until
+the implementation leaf ships.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared

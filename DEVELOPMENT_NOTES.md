@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-to-pin wiring should follow child completion
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` selects the inverse generated-child
+  data route after pin ingress: one resolved child output to one top-level
+  output pin through the generated ATL top.
+- The selected transaction order deliberately triggers the child, awaits the
+  child event, then calls the drive body. That keeps the first egress subset
+  from implying speculative pre-event publication or storage/mux insertion.
+- The public report surfaces stay unchanged: route provenance remains
+  `actor_network.data_movements[]`, and top discovery remains
+  `actor_network.generated_tops[]`.
 ## 2026-05-19: ATL generated-child data wiring needs explicit child ports
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` ships the first generated-top data
   route by wiring one top-level input pin through the scheduled parent into

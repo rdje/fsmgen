@@ -293,6 +293,9 @@ pin routes to one resolved child input through the generated top, using a
 named drive body with `(worker.payload pins.payload)`. The same focused
 coverage proves route metadata, child input port preservation, generated top
 wiring, and plain plus strict HDL generation for that bounded shape.
+The inverse resolved-child output to top-level output route is selected as
+the next implementation shape, using `(pins.result worker.payload)` after the
+child event wait. It is not shipped behavior yet.
 
 ### Actor, Interface, Storage, And Timing
 

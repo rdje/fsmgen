@@ -176,6 +176,18 @@ generation preserves the child `payload` port. Actor-to-actor generated-child
 routes, actor-to-pin routes, route mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, and multi-child tops remain deferred.
 
+The next selected generated-child data step is the inverse scalar route: one
+resolved child output to one top-level output through the generated ATL top.
+The selected source shape is a named drive body with
+`(pins.result worker.payload)`, called after the parent transaction triggers
+`worker.process` and awaits `worker.done`. The intended generated top wiring
+links child `payload` to parent handoff input `worker_payload`, parent
+`result` to top output `result`, and the existing trigger/event links as in
+the resolved-child one-top fixture. This is selected for implementation but
+not yet shipped; actor-to-actor generated-child routes, multi-child tops,
+route mux/storage, CDC/reset remapping, ready/backpressure, and payload
+protocols remain deferred.
+
 ## Shipped First Actor-Event Wait Subset
 
 The first behavior-bearing event wait subset is shipped:

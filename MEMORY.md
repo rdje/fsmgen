@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL resolved-child pin egress top wiring selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` as a doc-only selection
+  leaf.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`: wire one scalar resolved-child
+  output route to one top-level output pin through the generated ATL top.
+- Selected source shape: one resolved `worker` child, one top-level scalar
+  output pin `result`, one drive body `(pins.result worker.payload)`, one
+  transaction that triggers `worker.process`, awaits `worker.done`, drives
+  `publish_result` after the event wait, and completes.
+- Expected top wiring: child `payload` output to parent `worker_payload`,
+  parent `result` to top `result`, parent `worker_process_start` to child
+  `process_start`, and child `done` to parent `worker_done`.
+- `actor_network.data_movements[]` remains the route metadata owner and
+  `actor_network.generated_tops[]` remains generated-top discovery metadata.
+- Actor-to-actor generated-child routes, multi-child tops, route mux/storage,
+  CDC/reset remapping, ready/backpressure, payload protocols, recursive
+  networks, and permanent grouping remain deferred.
 ## 2026-05-19: ATL resolved-child pin ingress top wiring shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
 - Added `isf/atl_resolved_child_pin_ingress_pipeline.isf` as the reviewable

@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.31`.
+  activation `.111` and ATL actor-network orchestration `.9.32`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -293,13 +293,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   child input `payload`, and keeps the existing parent/child trigger and event
   links internal to the generated top. The generated child `.fsm` carries
   generated `+interface` metadata for that selected child input so HDL
-  generation preserves it as a child module port. The active ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, which must select the next
-  generated-child integration or fail-closed boundary before code. Broader
+  generation preserves it as a child module port.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` selected the inverse generated-child
+  boundary before code: one resolved child scalar output routed to one
+  top-level output pin through the generated top. The active ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`, which must implement that selected
+  `(pins.result worker.payload)` route after the child event wait. Broader
   generated-top packaging, actor-to-actor generated-child routes,
-  actor-to-pin generated child routes, multi-child HDL child wiring, event
-  fan-in, route mux/storage, ready/backpressure, CDC, recursive actor
-  networks, and permanent actor grouping remain deferred.
+  multi-child HDL child wiring, event fan-in, route mux/storage,
+  ready/backpressure, CDC, recursive actor networks, and permanent actor
+  grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

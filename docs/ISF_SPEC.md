@@ -826,6 +826,14 @@ this fixture. Actor-to-actor generated-child routes, actor-to-pin routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols, and permanent actor grouping remain deferred.
 
+The next selected generated-child data slice is the inverse scalar route:
+one resolved child output to one top-level output through the generated ATL
+top. The selected source shape is `(pins.result worker.payload)` in a named
+drive body, called after the parent transaction triggers `worker.process` and
+awaits `worker.done`. This selection is not shipped behavior yet; resolved
+child actor-to-pin generated-top wiring remains deferred until the
+implementation leaf lands.
+
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape

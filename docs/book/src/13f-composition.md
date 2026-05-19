@@ -715,6 +715,13 @@ child module port. Actor-to-actor generated-child routes, actor-to-pin routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 and payload protocols remain unavailable.
 
+The next selected ATL generated-child data slice is the inverse route from
+one resolved child output to one top-level output pin. It uses a named drive
+body with `(pins.result worker.payload)` after the parent triggers
+`worker.process` and awaits `worker.done`. This is selected for the next
+implementation leaf but is not shipped yet; actor-to-pin generated-top data
+wiring remains unavailable until that leaf lands.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
 static actor instance. The wait may stand alone for a single static actor, or
