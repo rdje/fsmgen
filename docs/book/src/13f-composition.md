@@ -826,7 +826,7 @@ pulse. Extra start or completion boundaries stay fail-closed until a later
 contract selects activation fan-in, completion fan-out, start-condition
 arbitration, setup/cleanup, continuation, storage, muxing, backpressure, or
 payload behavior.
-The selected boundary-simplicity hardening keeps those boundaries body-free.
+The shipped boundary-simplicity hardening keeps those boundaries body-free.
 Activation-body samples in `(on ...)` and extra payload operands in
 `(complete ...)` stay fail-closed until a later contract selects
 activation-body sampling, completion payload/fan-out, setup/cleanup,

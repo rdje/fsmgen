@@ -940,6 +940,18 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ start_boundary_sample => 1 }),
+        qr/generated-child actor-to-actor data movement requires simple '\(on PORT\)' and '\(complete PORT\)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the start boundary carries an activation-body sample',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ completion_payload_operand => 1 }),
+        qr/generated-child actor-to-actor data movement requires simple '\(on PORT\)' and '\(complete PORT\)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the completion boundary carries an extra payload operand',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the sink child is triggered before the drive call',
@@ -2130,6 +2142,12 @@ ISF
         ? "    (complete extra_done)\n"
         : '';
     my $run_complete = $options->{split_sink_transaction} ? 'staged' : 'done';
+    my $start_boundary = $options->{start_boundary_sample}
+        ? "    (on start (sample start as observed))\n"
+        : "    (on start)\n";
+    my $completion_boundary = $options->{completion_payload_operand}
+        ? "    (complete $run_complete payload)\n"
+        : "    (complete $run_complete)\n";
     my $split_sink_transaction = $options->{split_sink_transaction}
         ? <<'ISF'
   (transaction finish
@@ -2163,13 +2181,14 @@ ISF
     $actor .= $second_route_drive;
     $actor .= <<'ISF';
   (transaction run
-    (on start)
 ISF
+    $actor .= $start_boundary;
     $actor .= $extra_start_boundary;
     $actor .= $clauses;
     $actor .= $repeated_drive_call;
     $actor .= $extra_completion_boundary;
-    $actor .= "    (complete $run_complete))\n";
+    $actor .= $completion_boundary;
+    $actor .= "  )\n";
     $actor .= $split_sink_transaction;
     $actor .= ")\n\n";
     my $library = <<'ISF';

@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child boundary-simplicity hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  transactions whose start boundary carries an activation-body sample or
+  whose completion boundary carries an extra payload operand.
+- The parser now emits a targeted boundary-simplicity diagnostic, and the
+  lowerer keeps a defensive boundary-shape backstop.
+- No activation-body sampling, completion payload/fan-out, local
+  setup/cleanup, route continuation, pending handoff storage,
+  route mux/storage, ready/backpressure, payload protocol, recursive actor
+  network, or permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child boundary-simplicity hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65` as a doc-only selection
   leaf.

@@ -1164,8 +1164,8 @@ before any activation fan-in, completion fan-out, start-condition
 arbitration, local setup/cleanup, route continuation, storage, muxing,
 ready/backpressure, or payload behavior is claimed.
 
-The selected boundary-simplicity hardening keeps those route boundaries
-body-free. Focused coverage must reject activation-body samples in
+The shipped boundary-simplicity hardening keeps those route boundaries
+body-free. Focused coverage rejects activation-body samples in
 `(on ...)` and extra payload operands in `(complete ...)` before any
 activation-body sampling, completion payload/fan-out, local setup/cleanup,
 route continuation, storage, muxing, ready/backpressure, or payload behavior

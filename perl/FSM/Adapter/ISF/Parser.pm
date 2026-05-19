@@ -1541,13 +1541,62 @@ sub _selected_atl_generated_top_actor_route_isolated_shape {
     return 1;
 }
 
+sub _selected_atl_generated_top_actor_route_boundary_non_simple_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers, $actor) = @_;
+    return 0 unless _selected_atl_generated_top_actor_route_contiguous_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+
+    my @indices = _selected_atl_generated_top_actor_route_clause_indices(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+    return 0 unless @indices == 5;
+
+    my $transaction_name = $data_movements->[0]{transaction};
+    return 0 unless defined($transaction_name) && !ref($transaction_name) && length($transaction_name);
+    return 0 unless ref($actor) eq 'HASH';
+
+    my ($transaction) = grep { ($_->{name} // '') eq $transaction_name }
+        @{$actor->{transactions} || []};
+    return 0 unless ref($transaction) eq 'HASH'
+        && ref($transaction->{clauses}) eq 'ARRAY';
+
+    my $first_route_index = $indices[0];
+    my $last_route_index = $indices[-1];
+    my $clauses = $transaction->{clauses};
+    for my $idx (0 .. $#$clauses) {
+        next if $idx >= $first_route_index && $idx <= $last_route_index;
+        my $clause = $clauses->[$idx];
+        next unless ref($clause) eq 'ARRAY'
+            && @$clause
+            && defined($clause->[0])
+            && !ref($clause->[0]);
+        return 1 if $idx < $first_route_index
+            && $clause->[0] eq 'on'
+            && !_selected_atl_generated_top_actor_route_start_boundary_clause($clause);
+        return 1 if $idx > $last_route_index
+            && $clause->[0] eq 'complete'
+            && !_selected_atl_generated_top_actor_route_completion_boundary_clause($clause);
+    }
+    return 0;
+}
+
 sub _selected_atl_generated_top_actor_route_start_boundary_clause {
     my ($clause) = @_;
     return ref($clause) eq 'ARRAY'
         && @$clause == 2
         && defined($clause->[0])
         && !ref($clause->[0])
-        && $clause->[0] eq 'on';
+        && $clause->[0] eq 'on'
+        && defined($clause->[1])
+        && !ref($clause->[1])
+        && length($clause->[1]);
 }
 
 sub _selected_atl_generated_top_actor_route_completion_boundary_clause {
@@ -1556,7 +1605,10 @@ sub _selected_atl_generated_top_actor_route_completion_boundary_clause {
         && @$clause == 2
         && defined($clause->[0])
         && !ref($clause->[0])
-        && $clause->[0] eq 'complete';
+        && $clause->[0] eq 'complete'
+        && defined($clause->[1])
+        && !ref($clause->[1])
+        && length($clause->[1]);
 }
 
 sub _selected_atl_generated_top_actor_route_ordered_shape {
@@ -1893,6 +1945,9 @@ sub _finalize_selected_atl_data_movements {
     confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred\n"
         if !$generated_top_actor_route_candidate
             && _selected_atl_generated_top_actor_route_isolated_shape($instances, $data_movements, $event_waits, $transaction_triggers, $actor);
+    confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
+        if !$generated_top_actor_route_candidate
+            && _selected_atl_generated_top_actor_route_boundary_non_simple_shape($instances, $data_movements, $event_waits, $transaction_triggers, $actor);
     confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
         if !$generated_top_actor_route_candidate
             && _selected_atl_generated_top_actor_route_contiguous_shape($instances, $data_movements, $event_waits, $transaction_triggers);

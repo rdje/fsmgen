@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL boundary simplicity is now parser-owned
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66` adds focused coverage for
+  generated-child actor-to-actor route transactions whose route-adjacent
+  start or completion boundary has a body or extra operand.
+- The parser now distinguishes malformed route boundary heads from generic
+  pre/post route parent work once route ownership, order, contiguity,
+  isolation, and cardinality evidence is present.
+- The lowerer mirrors that check when route-clause and transaction-clause
+  evidence are available, keeping generated-top construction fail-closed if
+  parser-finalized metadata is malformed.
+- This keeps activation-body sampling, completion payload/fan-out, local
+  setup/cleanup, route continuation, storage, muxing, backpressure, and
+  payload protocols deferred.
+
 ## 2026-05-19: ATL route boundaries should stay body-free for now
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65` selects boundary-body simplicity as
   the next generated-child route boundary.

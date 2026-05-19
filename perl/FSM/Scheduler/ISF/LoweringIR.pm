@@ -359,17 +359,39 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
                     next if $clause_idx >= $first_route_index && $clause_idx <= $last_route_index;
                     my $clause = $clauses->[$clause_idx];
                     if ($clause_idx < $first_route_index) {
+                        confess "$context two-child data route requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
+                            if ref($clause) eq 'ARRAY'
+                                && @$clause
+                                && ($clause->[0] // '') eq 'on'
+                                && !(@$clause == 2
+                                    && defined($clause->[1])
+                                    && !ref($clause->[1])
+                                    && length($clause->[1]));
                         confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
                             unless ref($clause) eq 'ARRAY'
                                 && @$clause == 2
-                                && ($clause->[0] // '') eq 'on';
+                                && ($clause->[0] // '') eq 'on'
+                                && defined($clause->[1])
+                                && !ref($clause->[1])
+                                && length($clause->[1]);
                         ++$start_boundary_count;
                         next;
                     }
+                    confess "$context two-child data route requires simple '(on PORT)' and '(complete PORT)' boundaries around the route in the current subset; activation-body samples and completion payloads remain deferred\n"
+                        if ref($clause) eq 'ARRAY'
+                            && @$clause
+                            && ($clause->[0] // '') eq 'complete'
+                            && !(@$clause == 2
+                                && defined($clause->[1])
+                                && !ref($clause->[1])
+                                && length($clause->[1]));
                     confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
                         unless ref($clause) eq 'ARRAY'
                             && @$clause == 2
-                            && ($clause->[0] // '') eq 'complete';
+                            && ($clause->[0] // '') eq 'complete'
+                            && defined($clause->[1])
+                            && !ref($clause->[1])
+                            && length($clause->[1]);
                     ++$completion_boundary_count;
                 }
                 confess "$context two-child data route requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred\n"

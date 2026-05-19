@@ -959,7 +959,7 @@ boundaries remain fail-closed before FSMGen claims activation fan-in,
 completion fan-out, start-condition arbitration, local setup/cleanup, route
 continuation, pending handoff storage, muxing, ready/backpressure, or payload
 protocol behavior.
-The selected boundary-simplicity hardening keeps those two route boundaries
+The shipped boundary-simplicity hardening keeps those two route boundaries
 body-free. `(on ...)` activation-body samples and `(complete ...)` extra
 payload operands remain fail-closed before FSMGen claims activation-body
 sampling, completion payload/fan-out, local setup/cleanup, route

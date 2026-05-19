@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child boundary-simplicity hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  transactions whose start boundary carries an activation-body sample or
+  whose completion boundary carries an extra payload operand.
+- The parser emits a targeted boundary-simplicity diagnostic; the lowerer
+  keeps a defensive boundary-shape backstop.
+- Activation-body sampling, completion payload/fan-out, local setup/cleanup,
+  route continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocols, recursive actor networks, and
+  permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child boundary-simplicity hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65`.
 - The active ATL frontier advances to
