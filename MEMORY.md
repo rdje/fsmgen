@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL design proposal sync shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79`.
+- `docs/ISF_ATL_DESIGN_PROPOSAL.md` now records the latest generated-child
+  route parent interface-role boundary, generated-handoff collision
+  hardening, lowerer defensive collision backstop, and mdBook route-term
+  support boundary.
+- The sync is documentation-only; no source syntax, parser/lowerer behavior,
+  report key, generated artifact shape, runtime behavior, remapping,
+  mux/storage, fan-in/fan-out, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL design proposal sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77` as a doc-only selection
   leaf.

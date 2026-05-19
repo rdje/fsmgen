@@ -1171,6 +1171,38 @@ activation-body sampling, completion payload/fan-out, local setup/cleanup,
 route continuation, storage, muxing, ready/backpressure, or payload behavior
 is claimed.
 
+The shipped parent interface-role hardening keeps those simple route
+boundaries tied to the parent actor interface. The start boundary must name a
+scalar top-level input pin and the completion boundary must name a scalar
+top-level output pin. Focused coverage rejects output-as-start,
+input-as-completion, undeclared boundary pins, and wider boundary pins before
+any interface remapping, activation fan-in, completion fan-out, boundary
+expressions, storage, muxing, ready/backpressure, or payload behavior is
+claimed.
+
+The shipped generated-handoff collision hardening keeps the selected route's
+generated parent handoff names exclusive. Parent-declared interface or
+actor-owned storage names that collide with generated source/sink trigger,
+event, data, or named-drive request handoffs fail closed before generated-top
+wiring can silently reuse, suppress, or shadow those ports. This does not
+select generated-handoff remapping, route mux/storage, fan-in/fan-out,
+ready/backpressure, or payload protocols.
+
+The shipped lowerer defensive backstop repeats that generated-handoff
+collision safety check for malformed or mutated scheduler-facing metadata.
+Normal `.isf` source remains parser-diagnosed, while the lowerer rejects
+metadata that collides with parent interface ports, actor-owned storage, or
+already registered generated handoffs before generated-top construction. The
+backstop is not a new source surface.
+
+The mdBook now carries a dedicated generated-child route-term support
+boundary for the shipped route. That section defines route lifetime and the
+one-bit drive-call-cycle value boundary, generated handoffs,
+generated-handoff remapping, diagnostic ownership, route muxing/storage,
+fan-in/fan-out, ready/backpressure, and payload protocols. It is
+audit-backed so the user-facing book remains synchronized with this design
+proposal, the ISF spec, and the downstream integration handoff.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

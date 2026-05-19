@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL design proposal sync shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`.
+- Synchronized `docs/ISF_ATL_DESIGN_PROPOSAL.md` with the latest
+  generated-child actor-to-actor route hardening and documentation facts.
+- The design proposal now records the parent interface-role boundary,
+  generated-handoff collision hardening, lowerer defensive collision
+  backstop, and audit-backed mdBook route-term support boundary.
+- The proposal keeps generated-handoff remapping, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  recursive actor networks, and permanent actor grouping explicitly deferred.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, or test expectation changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79`.
+
 ### R14 — ATL design proposal sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77` as a doc-only selection
   leaf.

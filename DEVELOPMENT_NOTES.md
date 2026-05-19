@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL design proposal route truth is synchronized
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78` updates
+  `docs/ISF_ATL_DESIGN_PROPOSAL.md` with the generated-child
+  actor-to-actor route hardening that shipped after the earlier
+  boundary-simplicity text.
+- The proposal now calls out parent interface-role boundaries,
+  generated-handoff collision hardening, the lowerer defensive backstop, and
+  the audit-backed mdBook route-term support boundary.
+- This keeps the design proposal aligned with the book, spec, downstream
+  handoff, and task-tree record without changing ATL behavior.
+
 ## 2026-05-19: ATL design proposal needs latest route-boundary sync
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77` selects a documentation truth-sync
   leaf for `docs/ISF_ATL_DESIGN_PROPOSAL.md`.
