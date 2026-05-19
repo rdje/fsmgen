@@ -916,6 +916,18 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ pre_route_sample => 1 }),
+        qr/generated-child actor-to-actor data movement requires the route segment to be the only executable parent transaction-body work in the current subset; pre\/post route parent work remains deferred/,
+        'generated-child actor-to-actor data route fails closed when parent work appears before the route segment',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ post_route_sample => 1 }),
+        qr/generated-child actor-to-actor data movement requires the route segment to be the only executable parent transaction-body work in the current subset; pre\/post route parent work remains deferred/,
+        'generated-child actor-to-actor data route fails closed when parent work appears after the route segment',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the sink child is triggered before the drive call',
@@ -2013,6 +2025,12 @@ CLAUSES
 CLAUSES
         : undef;
     if (!defined $clauses) {
+        my $pre_route_sample = $options->{pre_route_sample}
+            ? "    (sample start as observed)\n"
+            : '';
+        my $post_route_sample = $options->{post_route_sample}
+            ? "    (sample start as observed)\n"
+            : '';
         my $extra_reader_trigger = $options->{extra_reader_trigger}
             ? "    (trigger reader.flush)\n"
             : '';
@@ -2025,7 +2043,8 @@ CLAUSES
         my $extra_writer_wait = $options->{extra_writer_wait}
             ? "    (await writer.done)\n"
             : '';
-        $clauses = "    (trigger reader.capture)\n"
+        $clauses = $pre_route_sample
+            . "    (trigger reader.capture)\n"
             . "    (await reader.done)\n"
             . $extra_reader_wait
             . $extra_reader_trigger
@@ -2033,7 +2052,8 @@ CLAUSES
             . "    (trigger writer.emit)\n"
             . $extra_writer_trigger
             . "    (await writer.done)\n"
-            . $extra_writer_wait;
+            . $extra_writer_wait
+            . $post_route_sample;
     }
     my $writer_payload_width = $options->{writer_payload_width} || 1;
     my $reader_payload_width = $options->{reader_payload_width} || 1;

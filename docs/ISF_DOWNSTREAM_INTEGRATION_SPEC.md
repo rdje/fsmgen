@@ -1867,14 +1867,13 @@ wait, data drive call, sink trigger, and sink event wait or assume
 interleaved parent work, local side effects, pre/post route sampling, route
 continuation, pending handoff storage, muxing, backpressure, or payload
 insertion until FSMGen publishes an explicit contract for those behaviors.
-The selected route-isolation hardening keeps that contiguous segment as the
+The shipped route-isolation hardening keeps that contiguous segment as the
 only executable parent transaction-body work between the transaction start
-condition and completion. Downstream producers should not emit unrelated
-parent clauses before the source trigger or after the sink event wait, or
-assume pre-route setup, post-route sampling, local side effects, cleanup
-work, route continuation, pending handoff storage, muxing, backpressure, or
-payload insertion until FSMGen publishes an explicit contract for those
-behaviors.
+condition and completion. Downstream producers must not emit unrelated parent
+clauses before the source trigger or after the sink event wait, or assume
+pre-route setup, post-route sampling, local side effects, cleanup work, route
+continuation, pending handoff storage, muxing, backpressure, or payload
+insertion until FSMGen publishes an explicit contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

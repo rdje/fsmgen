@@ -260,7 +260,7 @@ trigger, and sink event wait must remain one contiguous transaction-body
 segment until a later contract explicitly adds interleaved parent work, local
 side-effect, pre/post route sampling, continuation, storage, muxing,
 backpressure, or payload metadata.
-The selected route-isolation hardening keeps the same public surface
+The shipped route-isolation hardening keeps the same public surface
 unchanged: the contiguous route segment must remain the only executable
 parent transaction-body work between the transaction start condition and
 completion until a later contract explicitly adds pre-route setup,

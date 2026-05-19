@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route isolation is now parser-owned
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62` adds focused coverage for
+  generated-child actor-to-actor route transactions that contain parent-local
+  work before or after the route segment.
+- The parser now checks the owning parent transaction clauses once the route
+  has passed source/sink ownership, order, and contiguity checks. It allows
+  the transaction start condition and completion clause, but rejects other
+  executable parent clauses outside the route segment.
+- The lowerer mirrors that boundary when clause-index and transaction-clause
+  evidence are present, preserving fail-closed behavior if parser-finalized
+  data reaches generated-top construction.
+- This keeps setup/cleanup effects, pre/post route sampling, route
+  continuation, storage, muxing, backpressure, and payload protocols
+  deferred.
+
 ## 2026-05-19: ATL route transactions should stay isolated for now
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61` selects parent-work isolation as
   the next generated-child route boundary.

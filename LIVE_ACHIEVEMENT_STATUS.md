@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route-isolation hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  transactions with parent-local work before the source trigger or after the
+  sink event wait.
+- The parser emits a targeted route-isolation diagnostic; the lowerer keeps
+  a defensive clause-index and parent-transaction-clause backstop.
+- Pre-route setup, post-route sampling, local side effects, cleanup work,
+  route continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocols, recursive actor networks, and
+  permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child route-isolation hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61`.
 - The active ATL frontier advances to

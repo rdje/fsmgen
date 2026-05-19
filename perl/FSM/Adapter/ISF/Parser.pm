@@ -1438,13 +1438,73 @@ sub _selected_atl_two_child_generated_top_candidate {
 }
 
 sub _selected_atl_generated_top_actor_route_candidate {
-    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
-    return _selected_atl_generated_top_actor_route_contiguous_shape(
+    my ($instances, $data_movements, $event_waits, $transaction_triggers, $actor) = @_;
+    return _selected_atl_generated_top_actor_route_isolated_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+        $actor,
+    );
+}
+
+sub _selected_atl_generated_top_actor_route_isolated_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers, $actor) = @_;
+    return 0 unless _selected_atl_generated_top_actor_route_contiguous_shape(
         $instances,
         $data_movements,
         $event_waits,
         $transaction_triggers,
     );
+
+    my @indices = _selected_atl_generated_top_actor_route_clause_indices(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+    return 0 unless @indices == 5;
+
+    my $transaction_name = $data_movements->[0]{transaction};
+    return 0 unless defined($transaction_name) && !ref($transaction_name) && length($transaction_name);
+    return 1 unless ref($actor) eq 'HASH';
+
+    my ($transaction) = grep { ($_->{name} // '') eq $transaction_name }
+        @{$actor->{transactions} || []};
+    return 0 unless ref($transaction) eq 'HASH'
+        && ref($transaction->{clauses}) eq 'ARRAY';
+
+    my $first_route_index = $indices[0];
+    my $last_route_index = $indices[-1];
+    my $clauses = $transaction->{clauses};
+    for my $idx (0 .. $#$clauses) {
+        next if $idx >= $first_route_index && $idx <= $last_route_index;
+        my $clause = $clauses->[$idx];
+        if ($idx < $first_route_index) {
+            return 0 unless _selected_atl_generated_top_actor_route_start_boundary_clause($clause);
+            next;
+        }
+        return 0 unless _selected_atl_generated_top_actor_route_completion_boundary_clause($clause);
+    }
+    return 1;
+}
+
+sub _selected_atl_generated_top_actor_route_start_boundary_clause {
+    my ($clause) = @_;
+    return ref($clause) eq 'ARRAY'
+        && @$clause == 2
+        && defined($clause->[0])
+        && !ref($clause->[0])
+        && $clause->[0] eq 'on';
+}
+
+sub _selected_atl_generated_top_actor_route_completion_boundary_clause {
+    my ($clause) = @_;
+    return ref($clause) eq 'ARRAY'
+        && @$clause == 2
+        && defined($clause->[0])
+        && !ref($clause->[0])
+        && $clause->[0] eq 'complete';
 }
 
 sub _selected_atl_generated_top_actor_route_ordered_shape {
@@ -1774,10 +1834,13 @@ sub _finalize_selected_atl_data_movements {
     my $generated_top_pin_egress_candidate =
         _selected_atl_generated_top_pin_egress_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
     my $generated_top_actor_route_candidate =
-        _selected_atl_generated_top_actor_route_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
+        _selected_atl_generated_top_actor_route_candidate($instances, $data_movements, $event_waits, $transaction_triggers, $actor);
     confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-egress data movement requires trigger before event wait and drive call after event wait in the current subset\n"
         if !$generated_top_pin_egress_candidate
             && _selected_atl_generated_top_pin_egress_shape($instances, $data_movements, $event_waits, $transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
+        if !$generated_top_actor_route_candidate
+            && _selected_atl_generated_top_actor_route_contiguous_shape($instances, $data_movements, $event_waits, $transaction_triggers);
     confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to be contiguous in the current subset; interleaved parent work remains deferred\n"
         if !$generated_top_actor_route_candidate
             && _selected_atl_generated_top_actor_route_ordered_shape($instances, $data_movements, $event_waits, $transaction_triggers);

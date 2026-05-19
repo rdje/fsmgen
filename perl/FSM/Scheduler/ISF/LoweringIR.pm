@@ -346,6 +346,29 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
                 confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to be contiguous in the current subset; interleaved parent work remains deferred\n"
                     unless $route_indices[$idx] == $route_indices[$idx - 1] + 1;
             }
+
+            my ($transaction) = grep { ($_->{name} // '') eq ($movement->{transaction} // '') }
+                @{$actor->{transactions} || []};
+            if (ref($transaction) eq 'HASH' && ref($transaction->{clauses}) eq 'ARRAY') {
+                my $clauses = $transaction->{clauses};
+                my $first_route_index = $route_indices[0];
+                my $last_route_index = $route_indices[-1];
+                for my $clause_idx (0 .. $#$clauses) {
+                    next if $clause_idx >= $first_route_index && $clause_idx <= $last_route_index;
+                    my $clause = $clauses->[$clause_idx];
+                    if ($clause_idx < $first_route_index) {
+                        confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
+                            unless ref($clause) eq 'ARRAY'
+                                && @$clause == 2
+                                && ($clause->[0] // '') eq 'on';
+                        next;
+                    }
+                    confess "$context two-child data route requires the route segment to be the only executable parent transaction-body work in the current subset; pre/post route parent work remains deferred\n"
+                        unless ref($clause) eq 'ARRAY'
+                            && @$clause == 2
+                            && ($clause->[0] // '') eq 'complete';
+                }
+            }
         }
 
         for my $child_spec (@child_specs) {

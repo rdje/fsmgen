@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child route-isolation hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  transactions with parent-local work before the source trigger or after the
+  sink event wait.
+- The parser now emits a targeted route-isolation diagnostic for this shape,
+  and the lowerer keeps a defensive clause-index plus transaction-clause
+  backstop.
+- No pre-route setup, post-route sampling, local side effects, cleanup work,
+  route continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocol, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child route-isolation hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61` as a doc-only selection
   leaf.

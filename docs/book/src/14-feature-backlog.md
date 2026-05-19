@@ -952,7 +952,7 @@ transaction-body segment; unrelated parent clauses interleaved between route
 clauses remain fail-closed until explicit interleaved parent work, local side
 effects, pre/post route sampling, route continuation, storage, muxing,
 ready/backpressure, or payload semantics are selected.
-The selected route-isolation hardening narrows the pre/post-route side-effect
+The shipped route-isolation hardening narrows the pre/post-route side-effect
 backlog by requiring the contiguous route segment to remain the only
 executable parent transaction-body work between start and completion; parent
 clauses before the source trigger or after the sink event wait remain
