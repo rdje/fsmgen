@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child route transaction-owner hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for a route sequence whose source trigger, source event wait, and data
+  drive call are in one parent transaction while the sink trigger and sink
+  event wait are split into another parent transaction.
+- Added a targeted parser diagnostic for this same-parent-transaction route
+  shape before route continuation or cross-transaction scheduling can be
+  inferred; the lowerer keeps the same check as a defensive metadata
+  backstop.
+- Existing positive generated-child actor-to-actor, control-only two-child,
+  pin-ingress, pin-egress, and parent-handoff data-route fixtures remain in
+  the focused regression set.
+- No ATL source syntax, report key, generated artifact shape, route
+  continuation, pending handoff storage, transaction rendezvous,
+  cross-transaction scheduling, route mux/storage, CDC/reset remapping,
+  ready/backpressure, payload protocol, recursive actor network, or
+  permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53` to select the next bounded widening
+  or hardening slice before code.
+
 ### R14 — ATL generated-child route transaction-owner hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51` as a doc-only selection
   leaf.

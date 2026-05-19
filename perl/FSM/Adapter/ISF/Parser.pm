@@ -1254,6 +1254,13 @@ sub _finalize_selected_atl_trigger_batches {
             $event_waits,
             $transaction_triggers,
         );
+    confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to belong to one parent transaction in the current subset; cross-transaction route continuation remains deferred\n"
+        if _selected_atl_generated_top_actor_route_split_transaction_shape(
+            $instances,
+            $data_movements,
+            $event_waits,
+            $transaction_triggers,
+        );
     confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch cannot be combined with scalar data movements in the current subset\n"
         if @{$data_movements || []};
 
@@ -1460,6 +1467,39 @@ sub _selected_atl_generated_top_actor_route_candidate {
 
 sub _selected_atl_generated_top_actor_route_shape {
     my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    return 0 unless _selected_atl_generated_top_actor_route_basic_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+    my $movement = $data_movements->[0];
+    my ($source_trigger, $source_wait, $sink_trigger, $sink_wait) =
+        _selected_atl_generated_top_actor_route_sequence($movement, \@waits, \@triggers);
+    return 0 unless ref($source_trigger) eq 'HASH'
+        && ref($source_wait) eq 'HASH'
+        && ref($sink_trigger) eq 'HASH'
+        && ref($sink_wait) eq 'HASH';
+
+    my $transaction = $movement->{transaction};
+    $transaction = $source_trigger->{owner_transaction}
+        unless defined($transaction) && !ref($transaction) && length($transaction);
+    return 0 unless defined($transaction) && !ref($transaction) && length($transaction);
+
+    return 0 unless ($movement->{transaction} // $transaction) eq $transaction
+        && ($source_trigger->{owner_transaction} // '') eq $transaction
+        && ($sink_trigger->{owner_transaction} // '') eq $transaction
+        && ($source_wait->{transaction} // '') eq $transaction
+        && ($sink_wait->{transaction} // '') eq $transaction;
+
+    return 1;
+}
+
+sub _selected_atl_generated_top_actor_route_basic_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
     my @instances = @{$instances || []};
     my @movements = @{$data_movements || []};
     my @waits = @{$event_waits || []};
@@ -1487,24 +1527,6 @@ sub _selected_atl_generated_top_actor_route_shape {
 
     my %declared = map { $_->{name} => 1 } @instances;
     return 0 unless $declared{$source_instance} && $declared{$sink_instance};
-
-    my ($source_trigger, $source_wait, $sink_trigger, $sink_wait) =
-        _selected_atl_generated_top_actor_route_sequence($movement, \@waits, \@triggers);
-    return 0 unless ref($source_trigger) eq 'HASH'
-        && ref($source_wait) eq 'HASH'
-        && ref($sink_trigger) eq 'HASH'
-        && ref($sink_wait) eq 'HASH';
-
-    my $transaction = $movement->{transaction};
-    $transaction = $source_trigger->{owner_transaction}
-        unless defined($transaction) && !ref($transaction) && length($transaction);
-    return 0 unless defined($transaction) && !ref($transaction) && length($transaction);
-
-    return 0 unless ($movement->{transaction} // $transaction) eq $transaction
-        && ($source_trigger->{owner_transaction} // '') eq $transaction
-        && ($sink_trigger->{owner_transaction} // '') eq $transaction
-        && ($source_wait->{transaction} // '') eq $transaction
-        && ($sink_wait->{transaction} // '') eq $transaction;
 
     return 1;
 }
@@ -1599,6 +1621,36 @@ sub _selected_atl_generated_top_actor_route_repeated_wait_shape {
     }
 
     return @source_waits != 1 || @sink_waits != 1 ? 1 : 0;
+}
+
+sub _selected_atl_generated_top_actor_route_split_transaction_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    return 0 unless _selected_atl_generated_top_actor_route_basic_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+
+    my $movement = $data_movements->[0];
+    my ($source_trigger, $source_wait, $sink_trigger, $sink_wait) =
+        _selected_atl_generated_top_actor_route_sequence($movement, $event_waits, $transaction_triggers);
+    return 0 unless ref($source_trigger) eq 'HASH'
+        && ref($source_wait) eq 'HASH'
+        && ref($sink_trigger) eq 'HASH'
+        && ref($sink_wait) eq 'HASH';
+
+    my @owners = (
+        $movement->{transaction},
+        $source_trigger->{owner_transaction},
+        $source_wait->{transaction},
+        $sink_trigger->{owner_transaction},
+        $sink_wait->{transaction},
+    );
+    my %owners = map { $_ => 1 }
+        grep { defined($_) && !ref($_) && length($_) } @owners;
+
+    return keys(%owners) > 1 ? 1 : 0;
 }
 
 sub _selected_atl_generated_top_actor_route_sequence {

@@ -303,6 +303,8 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         my @ordered_instances = ($movement->{source_instance}, $movement->{sink_instance});
         my %resolution_by_instance = map { $_->{instance} => $_ } @resolutions;
         my %seen_instance;
+        my @child_specs;
+        my @route_owners = ($movement->{transaction});
         my @children;
 
         for my $instance (@ordered_instances) {
@@ -315,13 +317,27 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
 
             my $trigger = _single_atl_entry_for_instance($context, \@triggers, $instance, 'transaction trigger');
             my $event_wait = _single_atl_entry_for_instance($context, \@event_waits, $instance, 'event wait');
+            push @route_owners, $trigger->{owner_transaction}, $event_wait->{transaction};
+            push @child_specs, [
+                $resolution_by_instance{$instance},
+                $trigger,
+                $event_wait,
+            ];
+        }
+
+        my %route_owners = map { $_ => 1 }
+            grep { defined($_) && !ref($_) && length($_) } @route_owners;
+        confess "$context two-child data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to belong to one parent transaction in the current subset; cross-transaction route continuation remains deferred\n"
+            if keys(%route_owners) > 1;
+
+        for my $child_spec (@child_specs) {
             push @children, _atl_generated_top_child_entry(
                 $context,
                 $actor,
                 $child_irs,
-                $resolution_by_instance{$instance},
-                $trigger,
-                $event_wait,
+                $child_spec->[0],
+                $child_spec->[1],
+                $child_spec->[2],
                 \@data_movements,
             );
         }

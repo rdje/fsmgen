@@ -236,9 +236,9 @@ unchanged: generated-child actor-to-actor routes remain one source event wait
 and one sink event wait per selected sequence, and extra route-child waits
 fail closed until a later contract explicitly adds event fan-in/fan-out or
 repeated wait sequencing metadata.
-The next selected same-parent-transaction hardening also keeps the public
-surface unchanged: the selected route sequence must remain inside one parent
-transaction, and split route clauses stay fail-closed until a later contract
+The shipped same-parent-transaction hardening also keeps the public surface
+unchanged: the selected route sequence must remain inside one parent
+transaction, and split route clauses fail closed until a later contract
 explicitly adds continuation or cross-transaction route scheduling metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)

@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route transaction-owner hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53`.
+- Focused coverage now rejects generated-child actor-to-actor route clauses
+  split across multiple parent transactions: source trigger, source event
+  wait, data drive call, sink trigger, and sink event wait must share one
+  parent transaction.
+- The parser now emits a targeted route-owner diagnostic, and the lowerer
+  keeps the same check as a defensive backstop.
+- Route continuation, pending handoff storage, transaction rendezvous,
+  cross-transaction route scheduling, route mux/storage, ready/backpressure,
+  payload protocols, recursive actor networks, and permanent actor grouping
+  remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child route transaction-owner hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51`.
 - The active ATL frontier advances to

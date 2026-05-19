@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL split parent-transaction routes fail before continuation semantics
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52` turns the selected
+  same-parent-transaction boundary into parser and lowerer checks for the
+  generated-child actor-to-actor route.
+- The shipped route remains an intra-transaction sequence: source trigger,
+  source event wait, data drive call, sink trigger, and sink event wait must
+  share one parent transaction.
+- Splitting the sink side into another parent transaction now receives a
+  targeted generated-child actor-to-actor route diagnostic instead of being
+  interpreted as implicit continuation, rendezvous, pending handoff storage,
+  or cross-transaction route scheduling.
+- This is intentionally a hardening slice. Route muxing, storage,
+  ready/backpressure, payload protocols, and cross-transaction scheduling
+  remain deferred.
+
 ## 2026-05-19: ATL child routes should stay in one parent transaction
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51` selects same-parent-transaction
   hardening as the next generated-child route boundary.

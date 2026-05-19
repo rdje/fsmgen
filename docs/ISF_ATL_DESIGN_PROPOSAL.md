@@ -1115,12 +1115,11 @@ event waits before any event fan-in/fan-out, repeated wait sequencing, child
 replay, route-level wait storage, muxing, ready/backpressure, or payload
 behavior is claimed.
 
-The next selected route-boundary hardening keeps the same route inside one
-parent transaction. `.9.52` must add focused fail-closed coverage for route
-clauses split across multiple parent transactions before any route
-continuation, pending handoff storage, transaction rendezvous,
-cross-transaction scheduling, muxing, ready/backpressure, or payload behavior
-is claimed.
+The shipped same-parent-transaction hardening keeps the same route inside
+one parent transaction. Focused coverage rejects route clauses split across
+multiple parent transactions before any route continuation, pending handoff
+storage, transaction rendezvous, cross-transaction scheduling, muxing,
+ready/backpressure, or payload behavior is claimed.
 
 ## Fail-Closed Boundaries
 

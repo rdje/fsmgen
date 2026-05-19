@@ -351,9 +351,9 @@ The shipped repeated-wait hardening keeps the same route to one source-child
 event wait and one sink-child event wait: extra route-child waits fail closed
 before any event fan-in/fan-out, repeated wait sequencing, route-level wait
 storage, muxing, backpressure, or payload contract.
-The next selected same-parent-transaction hardening keeps that route inside
-one parent transaction: split route clauses remain fail-closed before any
-route continuation, pending handoff storage, transaction rendezvous,
+The shipped same-parent-transaction hardening keeps that route inside one
+parent transaction: split route clauses remain fail-closed before any route
+continuation, pending handoff storage, transaction rendezvous,
 cross-transaction scheduling, muxing, backpressure, or payload contract.
 
 ### Actor, Interface, Storage, And Timing

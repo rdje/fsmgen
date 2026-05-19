@@ -919,11 +919,11 @@ source-child event wait and one sink-child event wait. Extra waits targeting
 either route child fail closed before FSMGen claims event fan-in/fan-out,
 repeated wait sequencing, child replay, route-level wait storage, muxing,
 ready/backpressure, or payload behavior.
-The next selected hardening keeps the same route sequence inside one parent
-transaction. Route clauses split across multiple parent transactions must
-fail closed before FSMGen claims route continuation, pending handoff storage,
-transaction rendezvous, cross-transaction scheduling, muxing,
-ready/backpressure, or payload behavior.
+The shipped same-parent-transaction hardening keeps the same route sequence
+inside one parent transaction. Route clauses split across multiple parent
+transactions fail closed before FSMGen claims route continuation, pending
+handoff storage, transaction rendezvous, cross-transaction scheduling,
+muxing, ready/backpressure, or payload behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

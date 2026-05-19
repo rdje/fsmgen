@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child route transaction-owner hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53`.
+- Focused coverage now rejects generated-child actor-to-actor route clauses
+  split across multiple parent transactions.
+- The parser now emits a targeted route-owner diagnostic when the source
+  trigger, source event wait, data drive call, sink trigger, and sink event
+  wait do not share one parent transaction; the lowerer keeps the same
+  defensive backstop.
+- No route continuation, pending handoff storage, transaction rendezvous,
+  cross-transaction route scheduling, route mux/storage, ready/backpressure,
+  payload protocol, recursive actor network, or permanent actor grouping
+  behavior changed.
+
 ## 2026-05-19: ATL generated-child route transaction-owner hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51` as a doc-only selection
   leaf.

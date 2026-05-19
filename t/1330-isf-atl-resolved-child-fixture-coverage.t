@@ -892,6 +892,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ split_sink_transaction => 1 }),
+        qr/generated-child actor-to-actor data route requires source trigger, source event wait, data drive call, sink trigger, and sink event wait to belong to one parent transaction in the current subset; cross-transaction route continuation remains deferred/,
+        'generated-child actor-to-actor data route fails closed when the sink side is split into another parent transaction',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
@@ -1934,7 +1940,13 @@ ISF
 sub generated_child_actor_route_fixture {
     my ($options) = @_;
     $options ||= {};
-    my $clauses = $options->{drive_before_reader_done}
+    my $clauses = $options->{split_sink_transaction}
+        ? <<'CLAUSES'
+    (trigger reader.capture)
+    (await reader.done)
+    (drive forward_payload)
+CLAUSES
+        : $options->{drive_before_reader_done}
         ? <<'CLAUSES'
     (trigger reader.capture)
     (drive forward_payload)
@@ -2015,6 +2027,19 @@ ISF
     my $repeated_drive_call = $options->{repeated_drive_call}
         ? "    (drive forward_payload)\n"
         : '';
+    my $interface_extra = $options->{split_sink_transaction}
+        ? "    (input continue)\n    (output staged)\n"
+        : '';
+    my $run_complete = $options->{split_sink_transaction} ? 'staged' : 'done';
+    my $split_sink_transaction = $options->{split_sink_transaction}
+        ? <<'ISF'
+  (transaction finish
+    (on continue)
+    (trigger writer.emit)
+    (await writer.done)
+    (complete done))
+ISF
+        : '';
 
     my $actor = <<'ISF';
 (actor atl_two_child_data_pipeline
@@ -2022,6 +2047,9 @@ ISF
   (reset (rst_n async active_low))
   (interface
     (input start)
+ISF
+    $actor .= $interface_extra;
+    $actor .= <<'ISF';
     (output done))
   (imports
     (library common.packet as pkt_lib))
@@ -2040,10 +2068,9 @@ ISF
 ISF
     $actor .= $clauses;
     $actor .= $repeated_drive_call;
-    $actor .= <<'ISF';
-    (complete done)))
-
-ISF
+    $actor .= "    (complete $run_complete))\n";
+    $actor .= $split_sink_transaction;
+    $actor .= ")\n\n";
     my $library = <<'ISF';
 (library common.packet
   (exports

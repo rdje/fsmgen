@@ -789,9 +789,9 @@ source-child event wait and one sink-child event wait. Extra route-child
 waits fail closed until a later contract selects event fan-in/fan-out,
 repeated wait sequencing, route-level wait storage, muxing, backpressure, or
 payload behavior.
-The next selected same-parent-transaction hardening keeps that same route
-inside one parent transaction. Route clauses split across multiple parent
-transactions must stay fail-closed until a later contract selects route
+The shipped same-parent-transaction hardening keeps that same route inside
+one parent transaction. Route clauses split across multiple parent
+transactions stay fail-closed until a later contract selects route
 continuation, pending handoff storage, transaction rendezvous,
 cross-transaction scheduling, muxing, backpressure, or payload behavior.
 

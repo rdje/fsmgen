@@ -1836,12 +1836,12 @@ waits fail closed; downstream producers should not assume event fan-in/fan-out,
 repeated wait sequencing, child replay, route-level wait storage, muxing,
 backpressure, or payload insertion until FSMGen publishes an explicit
 contract for those behaviors.
-The next selected same-parent-transaction hardening keeps the entire route
-sequence inside one parent transaction. Downstream producers should not split
+The shipped same-parent-transaction hardening keeps the entire route
+sequence inside one parent transaction. Downstream producers must not split
 the source trigger, source wait, data drive call, sink trigger, and sink wait
 across multiple parent transactions or assume route continuation, pending
-handoff storage, transaction rendezvous, cross-transaction scheduling, muxing,
-backpressure, or payload insertion until FSMGen publishes an explicit
+handoff storage, transaction rendezvous, cross-transaction scheduling,
+muxing, backpressure, or payload insertion until FSMGen publishes an explicit
 contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact

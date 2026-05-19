@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.47`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.47`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -645,9 +645,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.51: select ATL route-owner boundary`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`
-  Status: `active`
+  Status: `completed`
   Goal: `Harden same-parent-transaction ownership for generated-child actor-to-actor route wiring.`
   Acceptance: `Implement only fail-closed coverage around the shipped 'atl_two_child_data_pipeline' generated-child actor-to-actor route: the source trigger, source event wait, data drive call, sink trigger, and sink event wait must all belong to the same parent transaction. Any route sequence split across multiple parent transactions must fail closed before any route continuation, pending handoff storage, transaction rendezvous, cross-transaction scheduling, route muxing, ready/backpressure, or payload protocol behavior is claimed. Existing positive generated-child actor-to-actor, control-only two-child, pin-ingress, pin-egress, and parent-handoff data-route fixtures must remain accepted. No source syntax, report key, generated artifact shape, CDC/reset remapping, route mux/storage, fan-in/fan-out, wider payload, recursive actor network, or permanent actor grouping behavior may be widened.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book (Files=236, Tests=1395); git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.52: harden ATL route-owner boundary`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53`
+  Status: `active`
+  Goal: `Select the next bounded ATL widening or hardening slice after same-parent-transaction route hardening.`
+  Acceptance: `Review the shipped two-child generated top, positive generated-child actor-to-actor data route, source/sink role hardening, route-cardinality hardening, scalar endpoint-width hardening, same-clock/reset-policy hardening, same-child source/sink hardening, repeated-child-trigger hardening, repeated-child-event-wait hardening, same-parent-transaction route-owner hardening, remaining multi-route/fan-in/fan-out/mux/storage deferrals, trigger-batch/group boundaries, CDC/reset-remap limits, and downstream/mdBook truth. Choose exactly one next behavior-bearing or hardening slice before code, with source shape, report impact, generated artifact expectations, fail-closed boundaries, documentation impact, and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -655,7 +662,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52` | `active` | `.9.51` selected same-parent-transaction route hardening before route continuation or cross-transaction scheduling behavior. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53` | `active` | `.9.52` hardened same-parent-transaction route ownership; the next leaf must select one bounded ATL widening or hardening slice before code. |
 
 ## Selected Two-Child Generated Data Route
 
@@ -937,6 +944,23 @@ Selected hardening for `.9.52`:
   pending handoff storage, transaction rendezvous, cross-transaction
   scheduling, route muxing, ready/backpressure, payload protocol, or report
   schema change is selected.
+
+Implementation outcome for `.9.52`:
+
+- Focused coverage now rejects a generated-child actor-to-actor route whose
+  source trigger, source event wait, and data drive call are in one parent
+  transaction while the sink trigger and sink event wait are split into
+  another parent transaction.
+- The parser now emits a targeted generated-child actor-to-actor data-route
+  diagnostic when the source trigger, source event wait, data drive call,
+  sink trigger, and sink event wait do not share one parent transaction.
+- The lowerer keeps the same same-parent-transaction check as a defensive
+  backstop for malformed route metadata that bypasses source parsing.
+- No source syntax, public report key, generated artifact shape, route
+  continuation, pending handoff storage, transaction rendezvous,
+  cross-transaction scheduling, route mux/storage, ready/backpressure,
+  payload protocol, recursive actor network, or permanent actor grouping
+  behavior changed.
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -2456,10 +2480,9 @@ Current proposal summary:
 
 ## Blockers
 
-- No blocker for active `.9.52`. It must add only the selected
-  same-parent-transaction hardening coverage around the shipped
-  generated-child actor-to-actor route and must not widen route continuation
-  or cross-transaction scheduling behavior.
+- No blocker for active `.9.53`. It must select exactly one next bounded ATL
+  widening or hardening slice after the shipped same-parent-transaction
+  generated-child route-owner boundary.
 
 ## Verification Log
 
@@ -2547,6 +2570,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `selected repeated route-child event-wait hardening before event fan-in/fan-out or repeated wait sequencing behavior` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book` (Files=236, Tests=1395); `git diff --check` | `hardened generated-child actor-to-actor repeated-wait diagnostics` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `selected same-parent-transaction route hardening before route continuation or cross-transaction scheduling behavior` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1325-isf-atl-data-route-fixture-coverage.t t/1327-isf-atl-pin-egress-fixture-coverage.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book` (Files=236, Tests=1395); `git diff --check` | `hardened generated-child actor-to-actor same-parent-transaction route ownership diagnostics` |
 
 ## Commit Log
 
@@ -2633,9 +2657,18 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.49: select ATL repeated-wait boundary` | `selects repeated route-child event-wait hardening before event fan-in/fan-out or repeated wait sequencing behavior` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.50: harden ATL repeated-wait boundary` | `adds focused source/sink child repeated-wait rejection coverage around the generated-child actor-to-actor route` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.51: select ATL route-owner boundary` | `selects same-parent-transaction route hardening before route continuation or cross-transaction scheduling behavior` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.52: harden ATL route-owner boundary` | `adds focused split-parent-transaction rejection coverage around the generated-child actor-to-actor route` |
 
 ## Changelog
 
+- `2026-05-19`: Completed `.9.52`: added focused fail-closed coverage for a
+  generated-child actor-to-actor route whose source trigger, source wait, and
+  data drive call are in one parent transaction while the sink trigger and
+  sink wait are split into another parent transaction. The parser now emits a
+  targeted generated-child actor-to-actor route-owner diagnostic, and the
+  lowerer keeps a defensive same-parent-transaction backstop. The active ATL
+  frontier advances to `.9.53` to select the next bounded widening or
+  hardening slice.
 - `2026-05-19`: Completed `.9.51`: selected `.9.52` as
   same-parent-transaction hardening for the generated-child actor-to-actor
   data route.
