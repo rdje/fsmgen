@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL downstream handoff concept sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88` as a documentation
+  truth-sync selection leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`.
+- `.9.89` will synchronize `docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md` with the
+  dedicated mdBook ATL concept coverage.
+- The downstream handoff must stay self-contained for SPECFORGE-style
+  consumers and mirror the book's actor-as-network, instance, task-scoped
+  association, static group, one-cycle pulse, `(sink source)` movement, pin
+  route, generated-child route, generated handoff, route lifetime,
+  mux/storage, fan-in/fan-out, ready/backpressure, payload, recursive
+  network, and permanent grouping boundaries.
+- The selected slice is documentation and audit only; no compiler behavior is
+  selected.
+
 ## 2026-05-19: ATL mdBook concept sections synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88`.

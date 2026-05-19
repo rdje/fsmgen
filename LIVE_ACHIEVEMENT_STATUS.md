@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL downstream handoff concept sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`.
+- `.9.89` is selected to keep the downstream ISF handoff self-contained and
+  synchronized with the new mdBook ATL concept sections.
+- This is documentation and audit only; no compiler behavior is selected.
+
 ## 2026-05-19: R14 — ATL mdBook concept sections synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
 - The active ATL frontier advances to

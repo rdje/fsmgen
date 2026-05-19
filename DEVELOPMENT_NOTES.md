@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL handoff needs the same concept anchors as the book
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88` selects downstream handoff
+  synchronization after the book gained dedicated ATL concept subsections.
+- The reason is operational: SPECFORGE-style consumers should be able to read
+  the handoff as a self-contained integration document, while the book remains
+  the reviewable user-facing surface.
+- The next leaf should align the handoff wording with the book-supported ATL
+  concepts and add audit coverage so the two documents do not diverge.
+
 ## 2026-05-19: ATL concepts have dedicated book anchors
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87` responds to the need for the
   user-facing book to explain ATL concepts as first-class topics, not only as
