@@ -914,6 +914,10 @@ The current generated-child actor-to-actor route is intentionally small. It
 means one scalar child output reaches one scalar child input through fixed
 generated parent handoffs for exactly the named drive-call cycle.
 
+This terminology is part of the user-facing contract and is kept in this
+dedicated section so route support, explicit non-support, and diagnostic
+ownership stay reviewable in the book.
+
 Generated handoffs are the parent-visible signals that FSMGen creates for
 the route. In the shipped fixture, `reader_payload` carries the source child
 payload into the parent, `writer_payload` carries the parent value out to the

@@ -4047,6 +4047,12 @@ generated-top wiring from reusing, suppressing, or shadowing those handoff
 names if metadata reaches lowering outside the normal parser path. It does
 not select new syntax, generated-handoff remapping, route mux/storage,
 fan-in/fan-out, ready/backpressure, or payload protocols.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.73` selects an mdBook audit so the
+dedicated generated-child route terminology section remains present and
+complete for generated handoffs, remapping, route mux/storage, fan-in/fan-out,
+ready/backpressure, payload protocols, parser/lowerer collision ownership,
+and the current one-bit drive-call-cycle boundary. This is documentation
+truth hardening only.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

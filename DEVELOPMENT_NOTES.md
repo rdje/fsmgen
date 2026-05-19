@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route terminology needs an mdBook audit
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73` selects a documentation-audit
+  hardening leaf after the lowerer collision backstop.
+- The generated-child route terms are user-facing concepts, not just task
+  notes: generated handoffs, handoff remapping, route muxing/storage,
+  fan-in/fan-out, ready/backpressure, payload protocols, parser/lowerer
+  collision ownership, and the current one-bit drive-call-cycle boundary must
+  remain in the mdBook dedicated section.
+- The next code leaf should add an audit only; it must not change ATL
+  behavior or source syntax.
+
 ## 2026-05-19: ATL lowerer now owns a defensive handoff collision backstop
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72` adds lowerer validation for the
   shipped generated-child actor-to-actor data route.

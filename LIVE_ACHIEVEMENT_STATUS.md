@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route-term book audit selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.74`.
+- `.9.74` is selected to add an mdBook audit for the dedicated
+  `Generated-Child Route Terms` section.
+- The audit must keep handoff remapping, route muxing/storage,
+  fan-in/fan-out, ready/backpressure, payload protocols, parser/lowerer
+  collision ownership, generated handoffs, and the current one-bit
+  drive-call-cycle boundary visible in the book.
+- No source syntax, runtime behavior, report shape, generated artifact shape,
+  remapping, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocol, recursive actor network, or permanent
+  actor grouping behavior is selected.
+
 ## 2026-05-19: R14 — ATL lowerer collision backstop shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72`.
 - The active ATL frontier advances to

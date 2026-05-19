@@ -1157,6 +1157,12 @@ wiring. This did not select a new authoring surface, generated-handoff
 remapping, route mux/storage, fan-in/fan-out, ready/backpressure, or payload
 semantics.
 
+The next documentation hardening slice keeps the dedicated generated-child
+route terminology section audit-backed in the mdBook. It is a documentation
+truth guard for handoff remapping, route mux/storage, fan-in/fan-out,
+ready/backpressure, payload protocols, parser/lowerer collision ownership,
+and the current one-bit drive-call-cycle boundary, not a behavior widening.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared
