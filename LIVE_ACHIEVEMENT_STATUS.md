@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL book matrix truth sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`.
+- `.9.82` is selected to synchronize the mdBook feature-support matrix with
+  the shipped generated-child actor-to-actor route status.
+- The slice must be documentation and audit only. No source syntax,
+  parser/lowerer behavior, report shape, generated artifact shape, runtime
+  behavior, or route capability is selected.
+
 ## 2026-05-19: R14 — ATL route drive argument hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
 - The active ATL frontier advances to

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL book matrix needs generated-child route truth sync
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81` selects a documentation/audit slice
+  because the dedicated composition chapter is accurate, but the mdBook
+  feature-support matrix still contains older backlog-only wording for
+  actor-to-actor generated-child routes.
+- The next leaf must correct the matrix without changing behavior: it should
+  state the exact shipped one-scalar-route subset and keep every deferred
+  route feature explicit.
+- The audit should cover the corrected matrix wording so future book drift is
+  caught by regression tests, not manual memory.
+
 ## 2026-05-19: ATL route drive arguments are coverage-locked
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80` adds focused regression coverage for
   generated-child actor-to-actor route drives with formal parameters and

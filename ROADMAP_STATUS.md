@@ -432,8 +432,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   fan-in/fan-out, ready/backpressure, or remapping behavior can be inferred.
   `.9.80` shipped that focused coverage without production code changes and
   synchronized the book, spec, downstream handoff, design proposal, and
-  backlog with the fail-closed route drive argument boundary. The active ATL
-  frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`.
+  backlog with the fail-closed route drive argument boundary. `.9.81`
+  selected the next documentation truth sync after finding older mdBook
+  feature-support matrix wording that still treated actor-to-actor
+  generated-child routes as entirely backlog. The active ATL frontier is now
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
