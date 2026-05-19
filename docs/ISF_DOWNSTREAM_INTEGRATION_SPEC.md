@@ -1749,12 +1749,18 @@ requirements: the already shipped
 CLI SystemVerilog coverage proving the generated top, parent, child, and
 selected internal trigger/event links. Downstream producers should not infer
 any broader ATL HDL wiring from that coverage.
-The next selected ATL data slice is not shipped yet: one scalar
-`(worker.payload pins.payload)` route may be wired into one resolved child
-through the generated top, using `actor_network.data_movements[]` for route
-metadata and `actor_network.generated_tops[]` for top discovery. Until that
-slice lands, downstream producers must not rely on generated-child data-route
-top wiring.
+The first generated-child data slice is now shipped:
+`isf/atl_resolved_child_pin_ingress_pipeline.isf` wires one scalar
+`(worker.payload pins.payload)` route into one resolved child through the
+generated top. Downstream consumers should read the public route evidence from
+`actor_network.data_movements[]` and the generated-top discovery evidence from
+`actor_network.generated_tops[]`; no new public report family is exposed. The
+generated child `.fsm` carries generated `+interface` role metadata for the
+selected child input so HDL generation preserves the child `payload` port.
+Downstream producers must still treat actor-to-actor generated-child routes,
+actor-to-pin generated-child routes, multi-child tops, route mux/storage,
+CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
+networks, and permanent actor grouping as deferred.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2095,6 +2101,7 @@ isf/atl_pin_egress_pipeline.isf
 isf/atl_trigger_wait_pipeline.isf
 isf/atl_trigger_batch_wait_pipeline.isf
 isf/atl_resolved_child_pipeline.isf
+isf/atl_resolved_child_pin_ingress_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2260,10 +2267,13 @@ The HDL promotion leaf keeps the same source and report contract and proves
 this fixture through plain and strict CLI HDL generation, requiring the
 emitted SystemVerilog to contain the generated top, scheduled parent, resolved
 child, and selected internal trigger/event links.
-The next selected generated-child data route is one top-level input pin to one
-resolved child input through the generated top. It is selected for future
-implementation only and is not part of the current shipped downstream
-contract.
+The generated-child pin-ingress leaf extends that shipped downstream contract:
+`isf/atl_resolved_child_pin_ingress_pipeline.isf` proves one top-level input
+pin to one resolved child input through the generated top. The same
+`t/1330-isf-atl-resolved-child-fixture-coverage.t` regression proves strict
+schedule JSON parity, parent/child/top `.fsm` artifacts, generated child
+input role preservation, plain and strict CLI HDL generation, and a
+fail-closed missing child input diagnostic for that route.
 
 Recommended downstream smoke commands:
 
@@ -2288,10 +2298,12 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest

@@ -35,7 +35,8 @@ sub analyze_signal_roles($self, $fsm_module) {
         my $usage = $usage_map->{$signal_name};
         my $signal = $registry->{$signal_name};
         
-        my $role = $self->_classify_signal_role($fsm_module, $signal_name, $usage);
+        my $role = $self->_explicit_port_role($signal)
+            // $self->_classify_signal_role($fsm_module, $signal_name, $usage);
         $signal->set_attribute('signal_role', $role);
         
         my $contexts_str = join(',', @{$usage->{contexts} || []});
@@ -218,6 +219,17 @@ sub _analyze_signal_ref_usage($self, $signal, $context) {
     if ($signal->can('driving_ast') && $signal->driving_ast) {
         $self->_analyze_expression_references($signal->driving_ast, "$context.driving_ast");
     }
+}
+
+sub _explicit_port_role($self, $signal) {
+    return undef unless $signal && $signal->can('get_attribute');
+
+    my $role = $signal->get_attribute('explicit_port_role');
+    return undef unless defined($role) && !ref($role);
+
+    return 'INPUT'  if $role eq 'INPUT';
+    return 'OUTPUT' if $role eq 'OUTPUT';
+    return undef;
 }
 
 sub _classify_signal_role($self, $fsm_module, $signal_name, $usage) {

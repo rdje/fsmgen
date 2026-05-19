@@ -146,6 +146,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
     my @pending_constant_entries;
     my @pending_enum_entries;
     my @pending_type_entries;
+    my @pending_interface_sections;
 
     for my $element (@$fsm_contents) {
         Carp::confess
@@ -165,6 +166,9 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         } elsif ($element_name eq '+size') {
             fsm_debug("Collecting +size block", 3);
             push @pending_size_sections, $element;
+        } elsif ($element_name eq '+interface') {
+            fsm_debug("Collecting +interface block", 3);
+            push @pending_interface_sections, $element;
         } elsif ($element_name eq '+constants') {
             fsm_debug("Collecting constants section", 3);
             push @pending_constant_entries, @{ $self->parse_constants_section($element) };
@@ -214,6 +218,10 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
         $self->parse_size_section($size_ast);
     }
 
+    for my $interface_ast (@pending_interface_sections) {
+        $self->parse_interface_section($interface_ast);
+    }
+
     for my $element (@$fsm_contents) {
         next unless ref($element) eq 'ARRAY';
         my $element_name = $element->[0];
@@ -225,6 +233,7 @@ sub parse_fsm_module($self, $fsm_ast, $is_flat_ast = 0, $root_kind = 'fsm') {
                 $element_name eq '+fsm'
                 || $element_name eq '+system'
                 || $element_name eq '+size'
+                || $element_name eq '+interface'
                 || $element_name eq '+constants'
                 || $element_name eq '+enums'
                 || $element_name eq '+types'
@@ -490,9 +499,9 @@ sub root_contract_label($self, $root_kind = 'fsm') {
 }
 
 sub supported_directives_description($self, $root_kind = 'fsm') {
-    return "The active contract currently supports only the conventional '+system' form, '+size', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?dt:name'"
+    return "The active contract currently supports only the conventional '+system' form, '+size', '+interface', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?dt:name'"
         if $root_kind eq 'dt';
-    return "The active contract currently supports only '+system', '+size', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?fsm:name'";
+    return "The active contract currently supports only '+system', '+size', '+interface', '+constants', '+enums', '+types', '+import', '+define', and '+params' inside '?fsm:name'";
 }
 
 sub supported_top_level_forms_description($self, $root_kind = 'fsm', $is_flat_ast = 0) {
@@ -703,6 +712,52 @@ sub parse_size_section($self, $size_ast) {
                 width_declared => 1,
             );
         }
+    }
+}
+
+sub parse_interface_section($self, $interface_ast) {
+    my (undef, $interface_entries) = @$interface_ast;
+
+    return unless defined $interface_entries;
+
+    Carp::confess
+        "Malformed '+interface' section. ".
+        "The active contract supports '+interface' only as a list of '(input signal)' or '(output signal)' role entries. ".
+        supported_boundary_hint()
+        unless ref($interface_entries) eq 'ARRAY';
+
+    for my $entry (@$interface_entries) {
+        Carp::confess
+            "Malformed '+interface' entry. ".
+            "Each '+interface' entry must be '(input signal)' or '(output signal)'. ".
+            supported_boundary_hint()
+            unless ref($entry) eq 'ARRAY' && @$entry == 2;
+
+        my ($direction, $signal_name) = map { $self->unwrap_scalar_token($_) } @$entry;
+        Carp::confess
+            "Malformed '+interface' entry. ".
+            "The interface role must be 'input' or 'output'. ".
+            supported_boundary_hint()
+            unless defined($direction)
+                && !ref($direction)
+                && ($direction eq 'input' || $direction eq 'output');
+        my $display_signal = defined($signal_name)
+            ? (ref($signal_name) ? ref($signal_name) : $signal_name)
+            : 'undef';
+        Carp::confess
+            "Malformed '+interface' entry for signal '$display_signal'. ".
+            "Interface role entries require an HDL-identifier-compatible signal name. ".
+            supported_boundary_hint()
+            unless defined($signal_name)
+                && !ref($signal_name)
+                && $signal_name =~ /\A[A-Za-z_]\w*\z/;
+
+        $self->{signal_manager}->register_signal(
+            $signal_name,
+            attributes => {
+                explicit_port_role => uc($direction),
+            },
+        );
     }
 }
 

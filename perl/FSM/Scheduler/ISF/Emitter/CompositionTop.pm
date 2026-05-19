@@ -281,6 +281,7 @@ sub _emit_wiring_block {
         my $trigger_child = $top->{trigger_child_port};
         my $event_parent = $top->{event_parent_port};
         my $event_child = $top->{event_child_port};
+        my @data_links = @{$top->{data_links} || []};
 
         confess "CompositionTop emitter ATL instance '$instance' references child module '$module' not present in emitted children\n"
             unless keys %$child_ports;
@@ -295,6 +296,20 @@ sub _emit_wiring_block {
 
         push @links, _link($actor_name . ".$trigger_parent", $instance . ".$trigger_child");
         push @links, _link($instance . ".$event_child", $actor_name . ".$event_parent");
+
+        for my $data_link (@data_links) {
+            my $parent_sink = $data_link->{parent_sink_port};
+            my $child_sink = $data_link->{child_sink_port};
+
+            confess "CompositionTop emitter ATL parent data handoff port '$parent_sink' is not present on parent '$actor_name'\n"
+                unless exists $parent_port{$parent_sink};
+            confess "CompositionTop emitter ATL child data input '$child_sink' is not present on module '$module'\n"
+                unless exists $child_ports->{$child_sink};
+            confess "CompositionTop emitter ATL child data endpoint '$child_sink' must be an input on module '$module'\n"
+                unless ($child_ports->{$child_sink}{direction} || '') eq 'input';
+
+            push @links, _link($actor_name . ".$parent_sink", $instance . ".$child_sink");
+        }
     }
 
     my @lines = ('  (?wiring:isf_wiring');
@@ -386,6 +401,10 @@ sub _atl_internal_parent_port_map {
             if defined($top->{trigger_parent_port}) && length($top->{trigger_parent_port});
         $ports{$top->{event_parent_port}} = 1
             if defined($top->{event_parent_port}) && length($top->{event_parent_port});
+        for my $data_link (@{$top->{data_links} || []}) {
+            $ports{$data_link->{parent_sink_port}} = 1
+                if defined($data_link->{parent_sink_port}) && length($data_link->{parent_sink_port});
+        }
     }
 
     return %ports;

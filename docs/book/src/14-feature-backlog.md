@@ -837,10 +837,12 @@ and unknown exports still fail before scheduled `.fsm` emission. Resolved
 qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
 and now emit their child `.fsm` files. The first generated ATL top is shipped
-for one resolved child plus one trigger/event handoff pair. Broader generated
-ATL tops, HDL child wiring outside that selected pair, interface binding
-inference, event fan-in, route mux/storage, CDC, recursive actor networks, and
-ready/backpressure remain later leaves.
+for one resolved child plus one trigger/event handoff pair, and the scalar
+pin-ingress route below is shipped for that same one-child top. Broader
+generated ATL tops, HDL child wiring outside that selected pair plus scalar
+pin-ingress route, interface binding inference, event fan-in,
+route mux/storage, CDC, recursive actor networks, and ready/backpressure
+remain later leaves.
 The resolved-child fixture is now shipped as
 `isf/atl_resolved_child_pipeline.isf`. It proves the generated-top boundary
 with one same-source library actor export, one resolved child instance, one
@@ -851,12 +853,15 @@ HDL promotion for that resolved-child shape is shipped. It keeps the source
 and report schema unchanged and proves plain plus strict CLI SystemVerilog
 generation contains the generated top, scheduled parent, resolved child, and
 selected internal trigger/event links.
-The next selected ATL slice is one scalar top-level input-pin route into one
-resolved child through the generated top, written as
-`(worker.payload pins.payload)` in a named drive body. That route is selected
-but not shipped yet; actor-to-actor generated-child routes, actor-to-pin
-routes, multi-child tops, route mux/storage, CDC/reset remapping,
-ready/backpressure, and payload protocols remain deferred.
+The first generated-child data-route slice is shipped as one scalar top-level
+input-pin route into one resolved child through the generated top, written as
+`(worker.payload pins.payload)` in a named drive body. The fixture
+`isf/atl_resolved_child_pin_ingress_pipeline.isf` proves parent/child/top
+artifacts, generated-top wiring, route metadata, child input port
+preservation, and plain plus strict HDL generation. Actor-to-actor
+generated-child routes, actor-to-pin routes, multi-child tops,
+route mux/storage, CDC/reset remapping, ready/backpressure, and payload
+protocols remain deferred.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -1899,10 +1904,14 @@ file-backed strict schedule JSON parity, parent plus resolved child scheduled
 `.fsm` structure, resolved actor-network instance metadata, one parent
 transaction-trigger handoff, one parent event-wait handoff, and empty
 data/association/group schedule arrays. It is the bounded
-`isf/atl_resolved_child_pipeline.isf` emitted-child fixture, not a claim for
-generated ATL tops, HDL child wiring, inferred interface binding, route
-mux/storage, actor-event fan-in, CDC, ready/backpressure, recursive actor
-networks, or permanent actor grouping.
+`isf/atl_resolved_child_pipeline.isf` emitted-child/generated-top fixture, not
+a claim for multi-child ATL tops, broader HDL child wiring, inferred
+interface binding, route mux/storage, actor-event fan-in, CDC,
+ready/backpressure, recursive actor networks, or permanent actor grouping.
+The follow-on `isf/atl_resolved_child_pin_ingress_pipeline.isf` fixture is now
+promoted for one generated-top scalar pin-ingress route into that resolved
+child, using `(worker.payload pins.payload)`, while broader generated-child
+data routes remain backlog.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

@@ -1,5 +1,28 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL resolved-child pin ingress top wiring shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
+- Added `isf/atl_resolved_child_pin_ingress_pipeline.isf` as the reviewable
+  generated-top data-route fixture.
+- The shipped subset is intentionally exact: one resolved `worker` child, one
+  top-level scalar input pin `payload`, one named drive body
+  `(worker.payload pins.payload)`, one transaction drive call, one
+  `(trigger worker.process)`, one `(await worker.done)`, and matching
+  parent/child clock and reset policy.
+- Lowering emits the parent, resolved child, and generated top `.fsm`
+  artifacts, wires top `payload` to the parent, wires parent
+  `worker_payload` to child input `payload`, and preserves the existing
+  parent/child trigger and event links through the generated top.
+- The generated child `.fsm` carries generated `+interface` metadata for the
+  selected child input so the downstream `.fsm` frontend preserves that child
+  input as an HDL port even when the child transaction does not otherwise read
+  it.
+- Schedule JSON keeps the public route evidence in
+  `actor_network.data_movements[]` and generated-top discovery in
+  `actor_network.generated_tops[]`; no new public report family was added.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, a selection leaf for the next
+  generated-child integration or fail-closed boundary.
 ## 2026-05-19: ATL resolved-child pin ingress selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` as a doc-only selection
   leaf.

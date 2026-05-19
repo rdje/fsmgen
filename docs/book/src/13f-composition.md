@@ -700,14 +700,20 @@ tops, data-route child wiring, CDC, payloads, ready/backpressure, route
 mux/storage, recursive actor networks, and permanent actor grouping remain
 unavailable.
 
-The next selected ATL implementation slice is one scalar top-level input-pin
-route into one resolved child through that generated top. The source shape is
-a named drive body with `(worker.payload pins.payload)`, activated by the
-same parent transaction that triggers `worker.process` and awaits
-`worker.done`. That slice is selected but not shipped yet; actor-to-actor
-generated-child routes, actor-to-pin routes, multi-child tops, route
-mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols
-remain unavailable.
+The first generated-child data route is also shipped for one scalar top-level
+input-pin route into one resolved child through that generated top. The
+source shape is a named drive body with `(worker.payload pins.payload)`,
+activated by the same parent transaction that triggers `worker.process` and
+awaits `worker.done`. The fixture
+`isf/atl_resolved_child_pin_ingress_pipeline.isf` emits parent, child, and top
+`.fsm` artifacts; the generated top wires top `payload` to the parent,
+parent `worker_payload` to child input `payload`, parent
+`worker_process_start` to child `process_start`, and child `done` to parent
+`worker_done`. The child `.fsm` includes generated `+interface` role metadata
+for the selected child input so the HDL backend preserves `payload` as a
+child module port. Actor-to-actor generated-child routes, actor-to-pin routes,
+multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
+and payload protocols remain unavailable.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

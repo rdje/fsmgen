@@ -140,12 +140,14 @@ in the same slice that ships the behavior.
 The shipped child-artifact boundary remains the prerequisite for ATL top
 generation. Resolved library-qualified ATL instances report and emit
 deterministic `<parent_actor>__<instance>.fsm` files while keeping the parent
-scheduled `.fsm` unchanged. The first generated ATL top is available only
-when one resolved child is paired with one parent trigger handoff and one
-parent event wait. Interface binding beyond that selected trigger/event pair,
-data handoff wiring, route mux/storage, ready/backpressure, CDC,
-actor-event fan-in, recursive actor networks, and permanent actor grouping
-remain separate future selections.
+scheduled `.fsm` unchanged. The first generated ATL top is available when one
+resolved child is paired with one parent trigger handoff and one parent event
+wait. That same one-child top can also carry the shipped scalar pin-ingress
+data route described below. Interface binding beyond that selected
+trigger/event pair plus one scalar input-pin route, broader data handoff
+wiring, route mux/storage, ready/backpressure, CDC, actor-event fan-in,
+recursive actor networks, and permanent actor grouping remain separate future
+selections.
 
 The shipped resolved-child fixture makes the first generated-top boundary
 reviewable through `isf/atl_resolved_child_pipeline.isf`: one resolved child
@@ -160,14 +162,17 @@ links. It does not widen ATL source syntax, infer additional interface
 bindings, add route mux/storage, or claim multi-child, CDC, payload,
 ready/backpressure, recursive-network, or permanent-group behavior.
 
-The next selected generated-child data step is one scalar top-level input-pin
-route into the same resolved child through the generated ATL top. The source
-shape reuses the existing drive-body pair syntax:
+The first generated-child data step is now shipped as one scalar top-level
+input-pin route into the same resolved child through the generated ATL top.
+The source shape reuses the existing drive-body pair syntax:
 `(worker.payload pins.payload)`, activated by a named drive call in the same
-transaction that triggers `worker.process` and awaits `worker.done`. The
-selected top wiring links the real top input to the parent, the parent
+transaction that triggers `worker.process` and awaits `worker.done`.
+`isf/atl_resolved_child_pin_ingress_pipeline.isf` is the reviewable fixture.
+The generated top wiring links the real top input to the parent, the parent
 generated sink handoff `worker_payload` to child input `payload`, and the
-existing trigger/event handoffs as before. Actor-to-actor generated-child
+existing trigger/event handoffs as before. The generated child `.fsm` carries
+generated `+interface` role metadata for the selected child input so HDL
+generation preserves the child `payload` port. Actor-to-actor generated-child
 routes, actor-to-pin routes, route mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, and multi-child tops remain deferred.
 
@@ -432,6 +437,20 @@ one event wait, empty data/association/group schedule arrays, and one
 does not claim multiple children, trigger batches, data movement, groups,
 CDC, ready/backpressure, payloads, route mux/storage, recursive actor
 networks, or permanent actor grouping.
+
+The ATL resolved-child scalar pin-ingress generated-top fixture is shipped as
+`isf/atl_resolved_child_pin_ingress_pipeline.isf`. It keeps the same one
+resolved `worker` child and trigger/event pair, adds one top-level scalar
+input pin `payload`, and activates one drive body with
+`(worker.payload pins.payload)` in the parent transaction. Lowering emits the
+parent, child, and generated top `.fsm` artifacts, reports the route through
+`actor_network.data_movements[]`, reports top discovery through
+`actor_network.generated_tops[]`, and wires parent `worker_payload` to child
+input `payload` internally in the generated top. This fixture still does not
+claim actor-to-actor generated-child routes, actor-to-pin generated-child
+routes, route mux/storage, CDC/reset remapping, ready/backpressure, payload
+protocols, multi-child tops, recursive actor networks, or permanent actor
+grouping.
 
 The shipped multi-event boundary proof is negative: a transaction that emits
 one temporary trigger batch and then attempts two actor event waits, such as
@@ -841,8 +860,10 @@ wait may also follow the selected same-cycle temporary trigger-batch form. The
 event wait lowers to a parent input named `actor_event`; the transaction
 trigger lowers to a parent output named `actor_transaction_start`. Both
 handoffs are external: resolved actor type metadata, when present, is not
-used to generate child artifacts, emit an ATL top, or wire HDL event/trigger
-routes yet.
+used by the basic parent-handoff subset itself. Separate generated-child
+leaves now emit resolved child `.fsm` artifacts, emit one generated ATL top
+for one resolved child, wire the selected trigger/event handoffs through that
+top, and wire the selected scalar pin-ingress route described below.
 
 The parser still recognizes unsupported reserved qualified forms and rejects
 them with ATL-specific diagnostics instead of letting them fall through as
@@ -918,6 +939,27 @@ The shipped inverse pin-movement subset is actor-to-top-level output pin:
 
 Later slices can add multiple sources feeding one sink, compact aliases, and
 concurrent groups.
+
+The shipped first generated-child data-route subset reuses the pin-to-actor
+movement syntax, but only for one resolved child in the generated ATL top:
+
+1. One resolved `(instance worker of ALIAS.EXPORT)` child.
+2. One top-level scalar input pin.
+3. One named drive body with one `(worker.payload pins.payload)` scalar pair.
+4. One parent transaction that calls the drive, triggers the same child
+   transaction, awaits the same child event, and completes.
+5. Matching parent/child clock and reset names/policies.
+6. The generated top wires the real top input to the parent, parent
+   `worker_payload` to child input `payload`, parent trigger handoff to child
+   start input, and child event output back to the parent event handoff.
+7. The child scheduled `.fsm` carries generated `+interface` role metadata for
+   the selected child input so the HDL backend keeps that input as a child
+   module port.
+
+This subset still does not ship actor-to-actor generated-child routes,
+actor-to-pin generated-child routes, multi-child tops, route mux/storage,
+CDC/reset remapping, ready/backpressure, payload protocols, or recursive actor
+networks.
 
 ## Fail-Closed Boundaries
 

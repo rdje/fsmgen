@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.30`.
+  activation `.111` and ATL actor-network orchestration `.9.31`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -285,13 +285,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   No production code change was required. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`
   selected the next bounded data-movement integration as one scalar
   top-level input-pin route into one resolved child through the generated ATL
-  top. The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`,
-  which must implement that one `(worker.payload pins.payload)` route on top
-  of the existing one-child trigger/event wiring. Broader generated-top
-  packaging, actor-to-actor generated-child routes, actor-to-pin generated
-  child routes, multi-child HDL child wiring, event fan-in, route
-  mux/storage, ready/backpressure, CDC, recursive actor networks, and
-  permanent actor grouping remain deferred.
+  top. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` shipped that route through
+  `isf/atl_resolved_child_pin_ingress_pipeline.isf`: lowering emits the
+  parent, resolved child, and generated top `.fsm` artifacts, preserves
+  public route evidence in `actor_network.data_movements[]`, wires the real
+  top-level `payload` input to the parent, wires parent `worker_payload` to
+  child input `payload`, and keeps the existing parent/child trigger and event
+  links internal to the generated top. The generated child `.fsm` carries
+  generated `+interface` metadata for that selected child input so HDL
+  generation preserves it as a child module port. The active ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, which must select the next
+  generated-child integration or fail-closed boundary before code. Broader
+  generated-top packaging, actor-to-actor generated-child routes,
+  actor-to-pin generated child routes, multi-child HDL child wiring, event
+  fan-in, route mux/storage, ready/backpressure, CDC, recursive actor
+  networks, and permanent actor grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL generated-child data wiring needs explicit child ports
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` ships the first generated-top data
+  route by wiring one top-level input pin through the scheduled parent into
+  one resolved child input.
+- The child may accept an authored scalar input as part of its interface even
+  when its local transaction body does not read that signal yet. To keep the
+  generated child module honest, the scheduled child `.fsm` now carries
+  generated `+interface` role metadata for the selected child input, and the
+  `.fsm` frontend preserves that role during HDL port classification.
+- The route still reports through existing `actor_network.data_movements[]`
+  metadata. The top-selection logic keeps generated-top wiring private to the
+  lowerer/emitter and does not add a new public schedule-report family.
 ## 2026-05-19: ATL data wiring should start at the top boundary
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` selects one top-level input pin to
   one resolved child input as the first generated-child data movement slice.

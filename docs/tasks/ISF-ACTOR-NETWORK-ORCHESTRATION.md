@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -491,9 +491,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.29: select ATL pin ingress top wiring`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`
-  Status: `active`
+  Status: `completed`
   Goal: `Wire one scalar top-level input-pin route into one resolved ATL child through the generated top.`
   Acceptance: `Implement only the selected scalar pin-ingress generated-top subset: one top-level actor with one resolved '(instance worker of pkt_lib.packet_worker)', one top-level scalar input pin such as 'payload', one named drive body with exactly one '(worker.payload pins.payload)' pair, one transaction that drives that route, triggers the same child transaction, awaits the same child event, and completes, and matching parent/child clock and reset policy. Lowering must keep the parent and child scheduled '.fsm' artifacts reviewable, emit '<parent>_top.fsm', expose the real top-level public pins on the generated top, wire the top input pin to the parent, wire the parent generated sink handoff output 'worker_payload' to the child's scalar input port 'payload', wire the existing parent trigger/event handoffs as in '.9.26', and report the route through actor_network.data_movements[] while preserving generated-top discovery through actor_network.generated_tops[]. It must fail closed for non-pin sources, actor-to-actor routes, actor-to-pin routes, multiple data movements, width mismatches, missing child input ports, data movement targeting a different instance than the resolved child, data movement in a different transaction than the trigger/event pair, trigger batches, groups, additional resolved children, payload/ready/backpressure protocol assumptions, route mux/storage, CDC/reset remapping, recursive actor networks, and permanent actor grouping.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm; perl -Iperl -c perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm; perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm; perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1322-isf-actor-network-static.t t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book (Files=236, Tests=1383); git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.30: wire ATL pin ingress top`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`
+  Status: `active`
+  Goal: `Select the next bounded ATL generated-child integration or fail-closed boundary after pin-ingress top wiring.`
+  Acceptance: `Review the shipped resolved-child generated top with trigger/event wiring and the shipped scalar top-level input-pin route into the child. Select one next bounded behavior-bearing or design-maintenance leaf before code, with exact source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope. Candidate directions include the inverse resolved-child actor-to-top-level output pin route, generated-child actor-to-actor data-route coupling, multi-child generated-top fail-closed coverage, width/interface binding hardening, or CDC/reset-remap boundary hardening.`
   Verification: `pending`
   Commit: `pending`
 
@@ -501,7 +508,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` | `active` | `.9.29` selected one scalar top-level input-pin route into one resolved child through the generated ATL top. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31` | `active` | `.9.30` shipped one scalar top-level input-pin route into one resolved child through the generated ATL top; the next leaf must select the following bounded ATL frontier before code. |
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -919,14 +926,14 @@ Shipped verification scope:
 - public-contract, fixture-tier, focused spec/book audits, mdBook build,
   broad ISF gate, and `git diff --check` are the completion checks.
 
-## Selected ATL Resolved-Child Pin-Ingress Top Wiring
+## Shipped ATL Resolved-Child Pin-Ingress Top Wiring
 
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` selects the next generated-child
-integration slice as scalar top-level input-pin movement into one resolved
-child through the generated ATL top. The selected implementation leaf is
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` ships scalar top-level input-pin
+movement into one resolved child through the generated ATL top. The
+implementation leaf is
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
 
-Selected source shape:
+Shipped source shape:
 
 ```lisp
 (actor atl_resolved_child_pin_ingress_pipeline
@@ -952,22 +959,28 @@ Selected source shape:
 The resolved child actor must expose scalar input ports `process_start` and
 `payload`, plus scalar output event port `done`.
 
-Selected report impact:
+Shipped report impact:
 
 - `actor_network.data_movements[]` remains the data-route report owner and
   records kind `scalar_pin_to_actor_handoff`;
 - `actor_network.generated_tops[]` remains the generated ATL top discovery
   owner;
 - no new report family is selected for `.9.30`;
-- public contract docs must stay explicit that the route is generated-top
-  wired only for this one pin-ingress shape.
+- the private generated-top data-link plumbing is not exposed as a new public
+  schedule-report family;
+- public contract docs stay explicit that the route is generated-top wired
+  only for this one pin-ingress shape.
 
-Selected artifact and HDL expectations:
+Shipped artifact and HDL behavior:
 
 - lowering emits the parent scheduled `.fsm`, resolved child `.fsm`, and
   generated top `.fsm`;
 - the parent scheduled `.fsm` keeps the existing top-level input `payload` and
   generated actor sink handoff output `worker_payload`;
+- the resolved child scheduled `.fsm` carries generated `+interface` metadata
+  for the selected child input `payload` so the downstream `.fsm` frontend
+  preserves that authored child input as an HDL module port even when the
+  child transaction does not otherwise read it locally;
 - the generated top exposes only clock/reset plus the real public pins
   `start`, `payload`, and `done`;
 - generated top wiring links top `payload` to the parent `payload`, parent
@@ -976,7 +989,7 @@ Selected artifact and HDL expectations:
 - plain and strict CLI HDL generation must show the generated top, parent,
   child, and all selected internal links.
 
-Selected fail-closed boundaries:
+Shipped fail-closed boundaries:
 
 - no non-pin source routes, actor-to-actor routes, actor-to-pin routes, or
   multiple data movements in the generated ATL top;
@@ -987,17 +1000,17 @@ Selected fail-closed boundaries:
   handshakes, ready/backpressure, route mux/storage, CDC/reset remapping,
   recursive actor networks, or permanent actor grouping.
 
-Selected verification scope:
+Shipped verification scope:
 
-- add a file-backed resolved-child pin-ingress fixture;
-- prove parent/child/top `.fsm` artifacts and strict schedule JSON parity;
-- prove plain and strict CLI HDL generation for the selected top;
-- add focused negative coverage for at least the mismatched child port or
-  unsupported route shape;
-- update the ISF spec, downstream handoff, public contract, mdBook, live docs,
-  focused-test index, and fixture-tier metadata as needed;
-- run the focused ATL tests, public audits, mdBook build, broad ISF gate, and
-  `git diff --check`.
+- `isf/atl_resolved_child_pin_ingress_pipeline.isf` is the file-backed
+  resolved-child pin-ingress fixture;
+- `t/1330-isf-atl-resolved-child-fixture-coverage.t` proves
+  parent/child/top `.fsm` artifacts, strict schedule JSON parity, plain and
+  strict CLI HDL generation, and fail-closed missing child input coverage;
+- ISF spec, downstream handoff, public contract, mdBook, live docs, focused
+  test index, and fixture-tier metadata are synchronized in this slice;
+- focused ATL tests, public audits, mdBook build, broad ISF gate, and
+  `git diff --check` are the completion checks.
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -1877,6 +1890,11 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a realistic resolved-child artifact fixture before generated-top or interface-binding work` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1139-isf-public-lower-result-metadata-audit.t`; `perl -Iperl -c t/1142-isf-public-guidance-metadata-audit.t`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t t/1183-ci-regression-tier-selection.t`; `prove -Iperl t/1139-isf-public-lower-result-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book (Files=236, Tests=1376)`; `git diff --check` | `promoted the resolved-child fixture with parent plus child .fsm coverage, strict schedule JSON parity, and no generated ATL top` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected the first generated ATL top subset for one resolved child and existing parent trigger/event handoffs before code` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `emitted the first generated ATL top for one resolved child and one parent trigger/event handoff pair` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected generated-top HDL promotion for the resolved-child fixture` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28` | `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `promoted plain and strict CLI HDL coverage for the resolved-child generated-top fixture` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected one scalar top-level input-pin route into one resolved child through the generated ATL top` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/SignalAnalyzer.pm`; `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/FSM.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1255-isf-schedule-report-golden-matrix.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `wired one scalar top-level input-pin route into one resolved child through the generated ATL top; broad ISF gate passes with Files=236, Tests=1383` |
 
 ## Commit Log
 
@@ -1937,9 +1955,24 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.23: select ATL resolved-child fixture` | `selects a realistic fixture for parent plus resolved child artifact coverage` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.24: add ATL resolved-child fixture` | `promotes the resolved-child fixture with strict schedule JSON parity and no-top coverage` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.25: select ATL generated top` | `selects the first generated ATL top and handoff-wiring subset before implementation` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.26: emit ATL generated top` | `ships the first generated ATL top for one resolved child and one parent trigger/event handoff pair` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.27: select ATL HDL top promotion` | `selects plain and strict CLI HDL coverage for the resolved-child generated top` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.28: promote ATL top HDL` | `proves generated top, parent, child, and trigger/event links in CLI SystemVerilog` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.29: select ATL pin ingress top wiring` | `selects one scalar top-level input-pin route into one resolved child through the generated ATL top` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.30: wire ATL pin ingress top` | `ships the bounded generated-top pin-ingress route and child input port preservation` |
 
 ## Changelog
 
+- `2026-05-19`: Completed `.9.30`: shipped one scalar top-level input-pin
+  route into one resolved child through the generated ATL top. The new
+  `isf/atl_resolved_child_pin_ingress_pipeline.isf` fixture lowers to
+  parent, child, and top `.fsm` artifacts; wires top `payload` to the parent;
+  wires parent `worker_payload` to child input `payload`; keeps the existing
+  trigger/event links internal; reports the route through
+  `actor_network.data_movements[]`; and preserves generated-top discovery
+  through `actor_network.generated_tops[]`. The active frontier moves to
+  `.9.31` to select the next bounded generated-child integration or
+  fail-closed boundary before code.
 - `2026-05-18`: Created proposed task tree for ISF actor-network orchestration.
 - `2026-05-18`: Activated the clarification leaf and recorded the Actor
   Transfer Level model where actors replace flops/registers as the transfer

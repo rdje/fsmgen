@@ -807,13 +807,22 @@ generation contains the generated ATL top, scheduled parent, resolved child,
 and the selected internal trigger/event links. Broader generated ATL top
 inference remains unshipped until a later task-tree leaf documents it here.
 
-The next selected generated-child data slice keeps the same one-child
-trigger/event top and adds one scalar pin-ingress route:
-`(worker.payload pins.payload)` in a named drive body activated by the same
-parent transaction. The selected top will wire the real top input pin to the
-parent, the parent generated handoff `worker_payload` to the child scalar
-input `payload`, and the existing trigger/event links unchanged. This is not
-yet shipped; actor-to-actor generated-child routes, actor-to-pin routes,
+The resolved-child scalar pin-ingress fixture is shipped as
+[isf/atl_resolved_child_pin_ingress_pipeline.isf](../isf/atl_resolved_child_pin_ingress_pipeline.isf).
+It keeps the same one-child trigger/event top and adds one scalar
+pin-ingress route: `(worker.payload pins.payload)` in a named drive body
+activated by the same parent transaction. The generated top wires the real
+top input pin to the parent, the parent generated handoff `worker_payload` to
+the child scalar input `payload`, and the existing trigger/event links
+unchanged. The child scheduled `.fsm` carries generated `+interface` role
+metadata for the selected child input so HDL generation preserves `payload`
+as a child module input. Schedule JSON keeps the route evidence in
+`actor_network.data_movements[]` and the generated-top discovery evidence in
+`actor_network.generated_tops[]`; no public report family is added.
+[t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
+covers strict schedule JSON parity, parent/child/top `.fsm` artifacts, plain
+and strict HDL generation, and fail-closed missing child input diagnostics for
+this fixture. Actor-to-actor generated-child routes, actor-to-pin routes,
 multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols, and permanent actor grouping remain deferred.
 
@@ -3104,6 +3113,12 @@ The shipped resolved-child fixture
 `isf/atl_resolved_child_pipeline.isf` combines one resolved child artifact
 with one parent trigger handoff and one parent event wait, and emits the first
 generated ATL top for that exact subset.
+The shipped resolved-child pin-ingress fixture
+`isf/atl_resolved_child_pin_ingress_pipeline.isf` adds one scalar
+`(worker.payload pins.payload)` data route to that same generated-top shape.
+It wires the top-level input pin through the parent and into the resolved
+child input while preserving public route metadata in
+`actor_network.data_movements[]`.
 
 The following remain fail-closed/deferred:
 
@@ -3115,8 +3130,8 @@ The following remain fail-closed/deferred:
 - broader qualified actor transaction/event behavior beyond the selected
   parent-handoff subsets;
 - generated top-level ATL wiring, interface binding, generated child HDL
-  wiring, and group scheduling outside the exact shipped trigger-batch
-  subset;
+  wiring, and group scheduling outside the exact shipped trigger/event top,
+  scalar pin-ingress generated-child route, and trigger-batch subsets;
 - recursive actor-network declarations.
 
 The broader ATL v0 vocabulary is selected, with only the bounded event-wait,
@@ -3264,22 +3279,25 @@ The current generated-artifact contract is explicit: the parent scheduled
 one-cycle actor-transaction trigger output, selected scalar data-movement
 handoff ports, and selected same-cycle trigger-batch handoff outputs. FSMGen
 also emits resolved ATL child scheduled `.fsm` artifacts for valid
-`(instance NAME of ALIAS.EXPORT)` entries. It still emits no generated ATL
-top, no generated route mux, no generated internal handoff storage, no HDL
-event wiring, and no inferred parent-to-child handoff wiring. Any later ATL
-implementation that emits broader artifacts must document their names, report
-keys, and review surfaces in the same slice that ships them.
+`(instance NAME of ALIAS.EXPORT)` entries. For one resolved child, one parent
+trigger handoff, one parent event wait, and matching parent/child clock/reset
+names and policies, FSMGen emits `<parent>_top.fsm`; it instantiates the
+parent and child, wires public pins to the parent, binds the parent trigger
+handoff to the child transaction start input discovered from the child's
+authored `(on START_SIGNAL)`, binds the child event output to the parent event
+handoff input, and reports the top through `actor_network.generated_tops[]`.
+For the one selected scalar pin-ingress generated-child route, the same top
+also wires the parent generated handoff output such as `worker_payload` to the
+child scalar input `payload`. The child scheduled `.fsm` may include generated
+`+interface` role metadata for that selected input so HDL generation preserves
+the child module port.
 
-The next selected, not-yet-shipped ATL implementation subset is generated top
-packaging for the resolved-child fixture shape. The shipped boundary is one
-resolved child, one parent trigger handoff, one parent event wait, and
-matching parent/child clock/reset names and policies. The selected top is
-`<parent>_top.fsm`; it instantiates the parent and child, wires public pins
-to the parent, binds the parent trigger handoff to the child transaction start
-input discovered from the child's authored `(on START_SIGNAL)`, binds the
-child event output to the parent event handoff input, and reports the top
-through `actor_network.generated_tops[]`. Broader generated ATL tops and
-inferred parent-to-child handoff wiring remain unshipped behavior.
+FSMGen still emits no generated route mux, no generated internal handoff
+storage, no broader HDL event wiring, no actor-to-actor generated-child data
+route, no actor-to-pin generated-child route, and no multi-child generated ATL
+top. Any later ATL implementation that emits broader artifacts must document
+their names, report keys, and review surfaces in the same slice that ships
+them.
 
 ## 10. Schedule JSON Report
 
@@ -3652,6 +3670,7 @@ Representative shipped fixtures:
 - [isf/atl_trigger_wait_pipeline.isf](../isf/atl_trigger_wait_pipeline.isf)
 - [isf/atl_trigger_batch_wait_pipeline.isf](../isf/atl_trigger_batch_wait_pipeline.isf)
 - [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf)
+- [isf/atl_resolved_child_pin_ingress_pipeline.isf](../isf/atl_resolved_child_pin_ingress_pipeline.isf)
 
 The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
@@ -3804,6 +3823,18 @@ generated-top subset and does not claim multiple resolved children, trigger
 batches, data-route coupling, inferred payload/ready/backpressure binding,
 route mux/storage, actor-event fan-in, CDC, recursive actor networks, or
 permanent actor grouping.
+The [isf/atl_resolved_child_pin_ingress_pipeline.isf](../isf/atl_resolved_child_pin_ingress_pipeline.isf)
+fixture now has file-backed ATL generated-top pin-ingress coverage for one
+resolved child, one top-level scalar input pin `payload`, one drive-body
+`(worker.payload pins.payload)` route, one transaction drive call, one
+trigger handoff, one event wait, parent/child/top `.fsm` artifacts, strict
+schedule JSON parity, generated child `+interface` metadata for the selected
+child input, internal generated-top wiring from parent `worker_payload` to
+child `payload`, and plain plus strict HDL generation. It stays inside the
+shipped one-child scalar pin-ingress generated-top subset and does not claim
+actor-to-actor generated-child routes, actor-to-pin generated-child routes,
+multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols, recursive actor networks, or permanent actor grouping.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

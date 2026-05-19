@@ -2,6 +2,27 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL resolved-child pin ingress top wiring shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
+- Added `isf/atl_resolved_child_pin_ingress_pipeline.isf` for one scalar
+  top-level input-pin route into one resolved child through the generated ATL
+  top.
+- The generated top now wires top `payload` to the parent, parent
+  `worker_payload` to child input `payload`, parent `worker_process_start` to
+  child `process_start`, and child `done` to parent `worker_done`.
+- Schedule JSON continues to expose the route through
+  `actor_network.data_movements[]` and generated-top discovery through
+  `actor_network.generated_tops[]`; no new public report family was added.
+- Generated child `.fsm` output can carry generated `+interface` role
+  metadata for selected ATL child input ports so HDL generation preserves
+  those ports.
+- Broader generated-child actor-to-actor routes, actor-to-pin routes,
+  multi-child tops, route mux/storage, CDC/reset remapping, ready/backpressure,
+  payload protocols, recursive actor networks, and permanent actor grouping
+  remain deferred or fail-closed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`.
+
 ## 2026-05-19: R14 — ATL resolved-child pin ingress selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`.
 - The next active ATL implementation leaf is

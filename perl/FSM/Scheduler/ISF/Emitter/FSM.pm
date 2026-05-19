@@ -43,6 +43,10 @@ sub emit($self, $ir) {
     }
     push @lines, $self->_emit_system($ir);
     push @lines, '';
+    if (@{$ir->{explicit_interface_ports} || []}) {
+        push @lines, $self->_emit_interface($ir);
+        push @lines, '';
+    }
     push @lines, $self->_emit_size($ir);
     push @lines, '';
     push @lines, $self->_emit_states($ir, $self->{outputs});
@@ -123,6 +127,18 @@ sub _emit_system($self, $ir) {
         push @l, "    (areset $r->{name})";
     } elsif ($r) {
         push @l, "    (sreset $r->{name})";
+    }
+    push @l, '  )';
+    return join("\n", @l);
+}
+
+sub _emit_interface($self, $ir) {
+    my @l;
+    push @l, '  (+interface';
+    for my $port (@{$ir->{explicit_interface_ports} || []}) {
+        my $direction = $port->{direction};
+        next unless defined($direction) && ($direction eq 'input' || $direction eq 'output');
+        push @l, "    ($direction $port->{name})";
     }
     push @l, '  )';
     return join("\n", @l);

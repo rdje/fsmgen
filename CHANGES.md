@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL resolved-child pin ingress top wiring shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`.
+- Added [isf/atl_resolved_child_pin_ingress_pipeline.isf](isf/atl_resolved_child_pin_ingress_pipeline.isf)
+  to prove one scalar top-level input-pin route into one resolved ATL child
+  through the generated top.
+- Updated the ISF parser/lowering/top-emitter path so the selected route
+  keeps `actor_network.data_movements[]` as public route evidence, keeps
+  `actor_network.generated_tops[]` as generated-top discovery, and wires
+  parent `worker_payload` to child input `payload` without exposing that
+  internal handoff as a public top port.
+- Added generated `.fsm` `+interface` role metadata support so selected
+  generated-child input ports remain visible to HDL generation even when the
+  child transaction does not otherwise consume the signal locally.
+- Extended [t/1330-isf-atl-resolved-child-fixture-coverage.t](t/1330-isf-atl-resolved-child-fixture-coverage.t)
+  with parent/child/top artifact coverage, strict schedule JSON parity,
+  plain and strict HDL generation checks, and a fail-closed missing-child-port
+  boundary for this generated-top data route.
+- Synced the task tree, roadmap, live docs, ISF spec, downstream integration
+  handoff, ATL design proposal, public contract docs, and mdBook. The active
+  ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`.
+
 ### R14 — ATL resolved-child pin ingress selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` before adding generated
   ATL top data-route wiring.

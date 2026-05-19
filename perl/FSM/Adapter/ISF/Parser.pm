@@ -1378,11 +1378,6 @@ sub _finalize_selected_atl_data_movements {
         if $group_count && @{$event_waits || []};
     return 1 unless @{$data_movements || []};
 
-    confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with actor event waits or actor transaction triggers in the current subset\n"
-        if @{$event_waits || []} || @{$transaction_triggers || []};
-    confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with concurrent group metadata in the current subset\n"
-        if $group_count;
-
     for my $movement (@$data_movements) {
         my @calls = grep { $_->{drive} eq $movement->{drive} } @{$data_movement_drive_calls || []};
         confess "Error: drive '$movement->{drive}' ATL scalar actor-to-actor data movement requires exactly one top-level transaction drive call in the current subset\n"
@@ -1390,6 +1385,45 @@ sub _finalize_selected_atl_data_movements {
         $movement->{transaction} = $calls[0]{transaction};
         $movement->{context} = $calls[0]{context};
     }
+
+    my $generated_top_pin_ingress_candidate =
+        _selected_atl_generated_top_pin_ingress_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL scalar actor data movement cannot be combined with actor event waits or actor transaction triggers except for the selected single resolved-child pin-ingress generated-top subset\n"
+        if (@{$event_waits || []} || @{$transaction_triggers || []})
+            && !$generated_top_pin_ingress_candidate;
+    confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with concurrent group metadata in the current subset\n"
+        if $group_count;
+
+    return 1;
+}
+
+sub _selected_atl_generated_top_pin_ingress_candidate {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    my @instances = @{$instances || []};
+    my @movements = @{$data_movements || []};
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+
+    return 0 unless @instances == 1
+        && @movements == 1
+        && @waits == 1
+        && @triggers == 1;
+
+    my $instance = $instances[0]{name};
+    my $movement = $movements[0];
+    my $wait = $waits[0];
+    my $trigger = $triggers[0];
+
+    return 0 unless defined($instance) && !ref($instance) && length($instance);
+    return 0 unless ($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff'
+        && ($movement->{source} // '') eq 'top_level_pin'
+        && ($movement->{sink} // '') eq 'external_handoff'
+        && ($movement->{source_instance} // '') eq 'pins'
+        && ($movement->{sink_instance} // '') eq $instance;
+    return 0 unless ($wait->{instance} // '') eq $instance
+        && ($trigger->{instance} // '') eq $instance;
+    return 0 unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
+        && ($movement->{transaction} // '') eq ($wait->{transaction} // '');
 
     return 1;
 }

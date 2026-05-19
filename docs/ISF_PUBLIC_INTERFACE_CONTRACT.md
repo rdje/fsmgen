@@ -193,10 +193,12 @@ covered.
 The same ATL fixture now has plain plus strict CLI HDL generation coverage,
 asserting the generated top, parent, child, and selected internal
 trigger/event links in SystemVerilog without widening the report schema.
-The next selected ATL coverage/behavior leaf is a not-yet-shipped scalar
-pin-ingress route into the resolved child through the generated top; until it
-lands, public consumers should treat generated-child data-route top wiring as
-deferred.
+The same focused coverage now also covers the shipped scalar pin-ingress
+route into the resolved child through the generated top. Public consumers
+should read the route from `actor_network.data_movements[]`, discover the top
+from `actor_network.generated_tops[]`, and treat the generated-top data-link
+plumbing as private implementation detail. Broader generated-child data-route
+top wiring remains deferred.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -563,20 +565,24 @@ instances. The first generated ATL top is now shipped for exactly one
 resolved child, one parent trigger handoff, and one parent event wait with
 matching parent/child clock and reset policy; its report entry is advertised
 through `schedule_report_actor_network_generated_top_keys` under
-`actor_network.generated_tops[]`. Broader generated ATL tops, multi-child
-HDL child wiring, data-route coupling, and inferred payload/ready/backpressure
-binding remain unshipped behavior. Unqualified
+`actor_network.generated_tops[]`. The bounded scalar top-level input-pin to
+resolved-child input route described below is also shipped for that same
+one-child top. Broader generated ATL tops, multi-child HDL child wiring,
+broader data-route coupling, and inferred payload/ready/backpressure binding
+remain unshipped behavior. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
 The HDL coverage promotion for that same resolved-child generated-top fixture
 is shipped: no new report keys were selected, and the proof asserts that plain
 and strict CLI SystemVerilog contains the generated top, scheduled parent,
 resolved child, and selected internal trigger/event links.
-The next selected public-contract update is one scalar top-level input-pin to
-resolved-child input route through the generated top, using the existing
-`actor_network.data_movements[]` route metadata and
-`actor_network.generated_tops[]` top discovery metadata. That route is not
-shipped until the next implementation leaf lands.
+The first generated-child scalar pin-ingress route is shipped for one
+top-level input pin to one resolved-child input through the generated top. It
+uses the existing `actor_network.data_movements[]` route metadata and
+`actor_network.generated_tops[]` top discovery metadata; no new public report
+family or public `data_links` key is exposed. The generated child `.fsm` may
+include generated `+interface` role metadata for the selected child input so
+the HDL backend preserves that child input as a module port.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

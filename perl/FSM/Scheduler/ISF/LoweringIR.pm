@@ -102,6 +102,7 @@ sub build_module($self, $actor) {
     }
 
     my @atl_top_instances = $self->_select_atl_generated_top_instances($actor, \%child_irs);
+    _mark_atl_data_link_child_interface_ports(\%child_irs, \@atl_top_instances);
 
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children);
     $parent_ir->{children} = \%child_irs;
@@ -234,6 +235,7 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
     my $network = $actor->{actor_network} || {};
     my @triggers = @{$network->{transaction_triggers} || []};
     my @event_waits = @{$network->{event_waits} || []};
+    my @data_movements = @{$network->{data_movements} || []};
     return () unless @triggers || @event_waits;
 
     my $actor_name = $actor->{actor_name};
@@ -243,8 +245,6 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         unless @resolutions == 1;
     confess "$context requires exactly one transaction trigger and exactly one event wait in the current subset\n"
         unless @triggers == 1 && @event_waits == 1;
-    confess "$context cannot combine generated child wiring with ATL data movement in the current subset\n"
-        if @{$network->{data_movements} || []};
     confess "$context cannot combine generated child wiring with static group metadata in the current subset\n"
         if @{$network->{groups} || []};
     confess "$context cannot combine generated child wiring with temporary association or group schedules in the current subset\n"
@@ -302,6 +302,15 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
             && ($child_ports{$event_port}{direction} || '') eq 'output'
             && ($child_ports{$event_port}{width} || 1) == 1;
 
+    my @data_links = _atl_generated_top_data_links(
+        $context,
+        $instance,
+        $trigger,
+        $event_wait,
+        \@data_movements,
+        \%child_ports,
+    );
+
     return ({
         kind                 => 'resolved_child_trigger_event_handoff',
         top_module           => $top_module,
@@ -317,6 +326,7 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         event                => $event_port,
         event_parent_port    => $event_wait->{signal},
         event_child_port     => $event_port,
+        data_links           => \@data_links,
         clock                => $actor->{clock},
         reset                => ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{name} : undef,
     });
@@ -342,6 +352,93 @@ sub _atl_generated_top_report_entry {
         clock                => $top->{clock},
         reset                => $top->{reset},
     };
+}
+
+sub _mark_atl_data_link_child_interface_ports {
+    my ($child_irs, $atl_top_instances) = @_;
+    return unless ref($child_irs) eq 'HASH' && ref($atl_top_instances) eq 'ARRAY';
+
+    for my $top (@$atl_top_instances) {
+        next unless ref($top) eq 'HASH';
+        my $child_module = $top->{child_module};
+        my $child_ir = $child_irs->{$child_module};
+        next unless ref($child_ir) eq 'HASH';
+
+        my %port_by_name = map { $_->{name} => $_ } @{$child_ir->{ports} || []};
+        my %already = map { $_->{name} => 1 } @{$child_ir->{explicit_interface_ports} || []};
+        for my $data_link (@{$top->{data_links} || []}) {
+            my $child_sink = $data_link->{child_sink_port};
+            next unless defined($child_sink) && !ref($child_sink) && length($child_sink);
+            next if $already{$child_sink}++;
+
+            my $port = $port_by_name{$child_sink};
+            next unless ref($port) eq 'HASH';
+            push @{$child_ir->{explicit_interface_ports}}, {
+                name      => $port->{name},
+                direction => $port->{direction},
+                width     => $port->{width} || 1,
+            };
+        }
+    }
+}
+
+sub _atl_generated_top_data_links($context, $instance, $trigger, $event_wait, $data_movements, $child_ports) {
+    my @movements = @{$data_movements || []};
+    return () unless @movements;
+
+    confess "$context supports at most one scalar pin-to-resolved-child data movement in the current subset\n"
+        unless @movements == 1;
+
+    my $movement = $movements[0];
+    confess "$context can only wire scalar top-level input pin to resolved child input data movement in the current subset\n"
+        unless ($movement->{kind} // '') eq 'scalar_pin_to_actor_handoff'
+            && ($movement->{source} // '') eq 'top_level_pin'
+            && ($movement->{sink} // '') eq 'external_handoff'
+            && ($movement->{source_instance} // '') eq 'pins';
+
+    confess "$context data movement must target resolved actor instance '$instance'\n"
+        unless ($movement->{sink_instance} // '') eq $instance;
+    confess "$context data movement must belong to the same parent transaction as the trigger/event handoffs\n"
+        unless ($movement->{transaction} // '') eq ($trigger->{owner_transaction} // '')
+            && ($movement->{transaction} // '') eq ($event_wait->{transaction} // '');
+    confess "$context data movement must be activated from a transaction body drive call in the current subset\n"
+        unless ($movement->{context} // '') eq 'transaction_body'
+            && defined($movement->{drive})
+            && length($movement->{drive});
+    confess "$context data movement must be a drive-call-cycle route without inserted storage\n"
+        unless ($movement->{route_lifetime} // '') eq 'drive_call_cycle'
+            && ($movement->{storage} // '') eq 'none';
+
+    my $width = $movement->{width} || 1;
+    confess "$context data movement '$movement->{drive}' must be scalar width 1 in the current subset\n"
+        unless $width == 1;
+
+    my $child_port = $movement->{sink_endpoint};
+    confess "$context data movement '$movement->{drive}' requires a scalar child input port '$child_port' on instance '$instance'\n"
+        unless defined($child_port)
+            && !ref($child_port)
+            && exists($child_ports->{$child_port})
+            && ($child_ports->{$child_port}{direction} || '') eq 'input'
+            && ($child_ports->{$child_port}{width} || 1) == $width;
+
+    my $parent_port = $movement->{sink_signal};
+    my $top_port = $movement->{source_signal};
+    confess "$context data movement '$movement->{drive}' requires generated parent sink handoff and top source pin signals\n"
+        unless defined($parent_port)
+            && !ref($parent_port)
+            && length($parent_port)
+            && defined($top_port)
+            && !ref($top_port)
+            && length($top_port);
+
+    return ({
+        kind             => 'scalar_pin_to_resolved_child_handoff',
+        drive            => $movement->{drive},
+        top_source_port  => $top_port,
+        parent_sink_port => $parent_port,
+        child_sink_port  => $child_port,
+        width            => $width,
+    });
 }
 
 sub _atl_transaction_scalar_on_signal {
