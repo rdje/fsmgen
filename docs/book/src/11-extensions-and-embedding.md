@@ -11,6 +11,7 @@ The machine-readable entrypoint for downstream tools is:
 ```
 
 The top-level `manifest_contract` object owns the bounded shell for that JSON.
+
 It now also publishes a grouped `top_level_contract_source_map` for the public
 top-level sections:
 
@@ -23,47 +24,63 @@ top-level sections:
 - `language_surface`
 - `documentation`
 
-That grouped map is the intended discovery surface for embedders. It lets a
-tool start from one manifest object, then hand each public top-level section to
+That grouped map is the intended discovery surface for embedders.
+
+It lets a tool start from one manifest object, then hand each public top-level section to
 its dedicated contract owner without reconstructing the owner map from scattered
 section payloads, hard-coding owner strings, or remembering that
 `language_surface` still advertises its nested owner under `surface_contract`
 for compatibility.
+
 The same manifest shell now also publishes a grouped
 `top_level_section_presence_key_map` so a downstream tool can discover the
 bounded key family for each public top-level section from one place instead of
 collecting those section-key lists field by field.
+
 It now also publishes a grouped `presence_key_family_map` so a downstream tool
 can discover the manifest-owned legacy `*_presence_keys` field families from
 one place instead of collecting those compatibility field lists one by one.
+
 The embedding section's `serializable_plan_reports` branch also advertises
 `public_top_level_presence_keys` and `json_safe_surface_keys`; both the
 standalone parent contract and the manifest-embedded branch are JSON-round-trip
 audited so embedders can validate the bounded shell, confirm its identity
 metadata, discover the advertised portable report surfaces they decoded, and
 check the public key lists for the bounded shell itself and for the normalized
-semantic and composition provenance reports those surfaces point at. A matching
-defensive-copy guard proves caller mutation of the parent public-key list does
+semantic and composition provenance reports those surfaces point at.
+
+A matching defensive-copy guard proves caller mutation of the parent public-key list does
 not pollute the next built contract, and the JSON-safe surface list has the same
-focused mutation guard. The parent surface-to-owner map is also defensively
-rebuilt, so callers cannot mutate one decoded contract into the next. The same
-parent branch embeds the composition-plan snapshot child contract, and that
+focused mutation guard.
+
+The parent surface-to-owner map is also defensively
+rebuilt, so callers cannot mutate one decoded contract into the next.
+
+The same parent branch embeds the composition-plan snapshot child contract, and that
 embedded child contract is JSON-round-trip audited against its canonical owner
 and defensively rebuilt after caller mutation.
+
 The generation-result snapshot child contract is audited and defensively rebuilt
 the same way, keeping both child-report contracts tied to their owners after
-serialization. The diagnostic-summary child contract now has the same parent
+serialization.
+
+The diagnostic-summary child contract now has the same parent
 JSON round-trip and defensive-copy guards.
+
 The branch also carries embedder
 guidance that is audited to keep directing consumers toward those JSON-safe
 reports rather than raw in-process `HDLGenerator` branches; its list is also
-defensively rebuilt after caller mutation. The JSON-safety flags are audited as
-decoded JSON booleans with that same safe/raw split. The
-raw-shell replacement key list is also audited after JSON round trip so tools
+defensively rebuilt after caller mutation.
+
+The JSON-safety flags are audited as
+decoded JSON booleans with that same safe/raw split.
+
+The raw-shell replacement key list is also audited after JSON round trip so tools
 can match raw compatibility branches to their advertised portable replacements;
 a matching defensive-copy guard proves caller mutation of that replacement-key
 list does not pollute the next built parent contract, and the replacement map
 itself now has the same focused mutation guard.
+
 The surface-registry entry-key list is audited the same way, so each decoded
 registry entry can be checked against the advertised bounded entry shape; a
 matching defensive-copy guard proves caller mutation of that list does not
@@ -72,316 +89,595 @@ pollute the next built parent contract.
 The public machine-JSON CLI boundary is runtime-audited too:
 [t/384-public-json-trace-stdout-boundary-audit.t](t/384-public-json-trace-stdout-boundary-audit.t)
 runs the capability manifest, check JSON, and normalized semantic JSON paths
-with debug/trace options enabled. It proves stdout remains JSON-only, stderr
+with debug/trace options enabled.
+
+It proves stdout remains JSON-only, stderr
 stays clean, trace output is routed to the requested trace file for report
 modes, and check/semantic JSON still do not write HDL artifacts.
+
 The bounded `HDLGenerator` result contract has also started receiving focused
 JSON round-trip coverage, beginning with an identity guard for its schema
-version, bounded status, owner, entrypoint, and primary test reference. Its
-top-level public, direct-root, and composition-root key families are now guarded
+version, bounded status, owner, entrypoint, and primary test reference.
+
+Its top-level public, direct-root, and composition-root key families are now guarded
 after JSON round trip and through focused defensive-copy coverage, along with
 the nested contract owner map that ties result branches back to their scalar
-owner fields and is defensively rebuilt for each contract build. The stable
-subsurface map is also guarded after JSON round trip so
+owner fields and is defensively rebuilt for each contract build.
+
+The stable subsurface map is also guarded after JSON round trip so
 grouped nested-surface discovery stays
 aligned with the scalar fields it summarizes, and it has focused defensive-copy
 coverage so caller mutation of one grouped map does not pollute the next build.
+
 The optional composition key-family map is guarded the same way for
 composition-only discovery, and it now has matching defensive-copy coverage so
-caller mutation of one grouped map does not pollute the next build. The
-semantic-layer presence family map now has the same JSON round-trip coverage
-and matching defensive-copy coverage. The shell-only fallback surface map also
+caller mutation of one grouped map does not pollute the next build.
+
+The semantic-layer presence family map now has the same JSON round-trip coverage
+and matching defensive-copy coverage.
+
+The shell-only fallback surface map also
 has focused defensive-copy coverage for its grouped discovery surface.
+
 The shell-only fallback surface map is also JSON-audited so raw compatibility
 branches keep pointing at their advertised structured replacements, and the
 narrower fallback-family map is guarded the same way and now has matching
-defensive-copy coverage. The result contract's source-info identity and summary
+defensive-copy coverage.
+
+The result contract's source-info identity and summary
 key lists are also JSON-audited, along with the full-hash stability flag and
 package-import copy-policy note; they also have focused defensive-copy coverage
-so mutations to one built contract do not pollute later builds. The module-info
-identity, summary, and
+so mutations to one built contract do not pollute later builds.
+
+The module-info identity, summary, and
 optional-composition key lists now carry matching JSON coverage, including the
 decoded family-map mirror for optional composition, plus focused defensive-copy
-coverage. The statistics summary and optional-composition key lists are guarded
+coverage.
+
+The statistics summary and optional-composition key lists are guarded
 the same way, including focused defensive-copy coverage.
+
 The scalar semantic-layer key lists for `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` now carry matching JSON coverage, including their grouped
 semantic and optional-composition family-map mirrors, plus focused
-defensive-copy coverage. The result contract guidance list is also defensively
+defensive-copy coverage.
+
+The result contract guidance list is also defensively
 rebuilt so callers can annotate one returned copy without mutating later
 contract builds, and it is JSON-audited so serialized metadata retains both the
-whole-result non-stability warning and sanitized interchange recommendation. Its
-`tested_by` provenance list follows the same caller-owned rebuild rule while
+whole-result non-stability warning and sanitized interchange recommendation.
+
+Its `tested_by` provenance list follows the same caller-owned rebuild rule while
 retaining the core audit references, and is JSON-audited so serialized metadata
-keeps those references visible. The `live_or_unsanitized_keys` list is
+keeps those references visible.
+
+The `live_or_unsanitized_keys` list is
 JSON-audited too, so serialized metadata keeps the raw/live compatibility branch
 list visible without marking `hdl_code` unsanitized, and it is defensively
-rebuilt for each contract build. The result contract's JSON-safety and
+rebuilt for each contract build.
+
+The result contract's JSON-safety and
 advertisement flags are JSON-audited too, including the pointer to
 `semantic_exports.normalized_semantic_json` as the sanitized export surface.
+
 Shell-only branch flags and raw branch metadata are JSON-audited as well, so
 serialized metadata keeps raw object classes, raw AST shape, and the raw
-composition-report non-JSON-safe status visible. The `fsm_module` shell summary
+composition-report non-JSON-safe status visible.
+
+The `fsm_module` shell summary
 and fallback surface metadata is JSON-audited against its dedicated owner and
 the grouped shell fallback maps, and it has matching defensive-copy coverage.
+
 The `raw_ast` shell summary and fallback surface metadata is guarded the same
-way, including defensive-copy coverage. The `resolved_package_imports` shell
+way, including defensive-copy coverage.
+
+The `resolved_package_imports` shell
 summary and fallback metadata now has matching JSON and defensive-copy coverage,
-as does the `composition_spec` shell summary and fallback metadata. The
-`composition_plan` shell summary and fallback metadata is now guarded in the
+as does the `composition_spec` shell summary and fallback metadata.
+
+The `composition_plan` shell summary and fallback metadata is now guarded in the
 same per-branch pass with JSON and defensive-copy coverage.
+
 The `composition_report` sanitized JSON fragment fallback now completes that
 per-branch JSON coverage and has matching defensive-copy coverage.
+
 The capability manifest also mirrors the bounded `HDLGenerator` result contract:
 its embedded identity metadata is JSON-audited so manifest consumers see the
-same schema, status, owner, entrypoint, and provenance shape. The manifest mirror
-also preserves the result contract's public, direct-root, and composition-root
+same schema, status, owner, entrypoint, and provenance shape.
+
+The manifest mirror also preserves the result contract's public, direct-root, and composition-root
 top-level key families through JSON round trip.
+
 Its nested-contract owner map is also JSON-audited at the manifest boundary, so embedders can discover each result branch owner without leaving the manifest.
+
 The manifest mirror keeps the grouped stable subsurface map JSON-audited too, including the source-info stable subsurface list.
+
 The optional composition key-family map is now checked through manifest JSON as well, matching the direct result-contract owner.
+
 The semantic-layer presence key-family map now has manifest-side JSON coverage, keeping intent, lowered RTL, and structural RTL discovery aligned.
+
 Source-info identity, summary, stable subsurface, and package-import copy-policy metadata now survive manifest JSON round trip under the same audit style.
+
 Module-info identity, summary, optional-composition, and stable subsurface metadata now has the same manifest JSON guard.
+
 Statistics summary, optional-composition, and stable subsurface metadata is now JSON-audited through the manifest mirror.
+
 The scalar semantic key lists for intent HIR, lowered RTL IR, and structural RTL IR now survive manifest JSON round trip.
+
 The grouped shell-only fallback surface map is now manifest JSON-audited, including the composition-report sanitized fragment path.
+
 The narrower shell fallback surface-family map now has matching manifest JSON coverage for every shell-only branch.
+
 Shell-only branch metadata now has manifest-side JSON coverage, including branch flags and raw-value or fragment descriptors.
+
 The `fsm_module` shell summary and fallback surfaces are now mirrored through manifest JSON alongside their branch owner and raw-value class.
+
 The `raw_ast` shell summary and fallback metadata now has the same manifest JSON coverage as the direct result contract.
+
 The `resolved_package_imports` shell summary and fallback metadata now survives manifest JSON round trip with its owner and raw-value class.
+
 The `composition_spec` shell summary and fallback metadata is now manifest JSON-audited together with its owner, shell flag, and raw-value class.
+
 The `composition_plan` shell summary and fallback metadata is now manifest JSON-audited with its owner, shell flag, and raw-value class.
+
 The `composition_report` shell metadata now completes the per-branch manifest JSON pass, including the sanitized fragment path and raw-hash JSON-safety flag.
+
 The embedded result-contract guidance list is now JSON-audited through the manifest so consumer-facing caveats remain visible there.
+
 The manifest mirror now preserves the result contract `tested_by` provenance list exactly through JSON round trip.
+
 The `live_or_unsanitized_keys` list is now audited through manifest JSON, keeping raw compatibility branches clearly marked for embedders.
+
 JSON-safety and full-hash stability flags now survive the manifest JSON mirror exactly, including the intentionally false full-result promises.
+
 The manifest mirror now also keeps the result-contract advertisement flags JSON-audited for identity, summary, statistics, and semantic-layer surfaces.
+
 Scalar nested contract-source fields now have manifest JSON coverage in addition to the grouped owner map.
+
 Semantic-layer full-hash stability flags now have a focused manifest JSON guard, preserving the bounded-shell warning for each semantic branch.
+
 The `json_safe_export_surface` pointer is now manifest JSON-audited, keeping embedders directed at normalized semantic exports.
+
 Manifest-side defensive-copy coverage now proves mutated embedded result top-level key families do not pollute later manifest builds.
+
 The manifest-embedded result nested-contract owner map is now checked as caller-owned across fresh manifest builds.
+
 The embedded result stable subsurface map and per-branch stable subsurface lists now have manifest-side defensive-copy coverage.
+
 The optional composition key-family map and its scalar key lists now rebuild cleanly after caller mutation of an earlier manifest.
+
 The semantic-layer presence map and scalar semantic key lists now have manifest-side defensive-copy coverage.
+
 Source-info manifest metadata now rebuilds cleanly after caller mutation of identity, summary, and stable subsurface lists.
+
 Module-info manifest metadata now rebuilds cleanly after caller mutation of identity, summary, optional-composition, and stable subsurface lists.
+
 Statistics manifest metadata now rebuilds cleanly after caller mutation of summary, optional-composition, and stable subsurface lists.
+
 Semantic scalar key lists now rebuild cleanly after caller mutation of an earlier manifest build.
+
 The grouped shell-only fallback surface map now rebuilds cleanly after caller mutation at the manifest boundary.
+
 The grouped shell-only fallback surface-family map now rebuilds cleanly after caller mutation at the manifest boundary.
+
 The embedded result-contract guidance list now rebuilds cleanly after caller mutation of an earlier manifest.
+
 The embedded result-contract `tested_by` provenance list now has manifest-side defensive-copy coverage.
+
 The `live_or_unsanitized_keys` list now rebuilds cleanly after caller mutation at the manifest boundary.
+
 JSON-safety and full-hash stability flags now rebuild cleanly after caller mutation of an embedded manifest result contract.
+
 Advertisement flags now rebuild cleanly after caller mutation of an embedded manifest result contract.
+
 Scalar nested contract-source fields now rebuild cleanly after caller mutation at the manifest boundary.
+
 The `json_safe_export_surface` pointer now rebuilds cleanly after caller mutation of a manifest result contract.
+
 Shell-only branch flags and raw-value or fragment descriptors now rebuild cleanly after manifest caller mutation.
+
 The `fsm_module` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+
 The `raw_ast` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+
 The `resolved_package_imports` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+
 The `composition_spec` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+
 The `composition_plan` shell summary and fallback surfaces now rebuild cleanly after manifest caller mutation.
+
 The `composition_report` shell fragment metadata and fallback maps now rebuild cleanly after manifest caller mutation.
+
 The capability manifest now mirrors `embedding.hdl_generator_facade` identity metadata through JSON round trip.
+
 Manifest facade public key, method, and target-language lists now survive JSON round trip.
+
 Manifest facade constructor option families now have JSON round-trip coverage.
+
 Manifest facade constructor shape metadata now survives JSON round trip, including duplicate and unknown option policies.
+
 Manifest facade generation receiver and argument boundary metadata now survives JSON round trip.
+
 Manifest facade linked contract sources, public booleans, and guidance now survive JSON round trip.
+
 Manifest facade identity metadata now rebuilds cleanly after caller mutation of an earlier manifest.
+
 Manifest facade public key, method, and target-language lists now rebuild cleanly after caller mutation.
+
 Manifest facade constructor option families now rebuild cleanly after caller mutation.
+
 Manifest facade constructor shape metadata now rebuilds cleanly after caller mutation, including option policy strings and numeric debug range.
+
 Manifest facade generation receiver and argument boundary metadata now rebuilds cleanly after caller mutation.
+
 Manifest facade linked contract sources, public booleans, and guidance now rebuild cleanly after caller mutation.
+
 The capability manifest now mirrors `embedding.debug_runtime` identity metadata through JSON round trip.
+
 Manifest debug-runtime public key lists and grouped family map now survive JSON round trip.
+
 Manifest debug-runtime helper and snapshot-state key lists now survive JSON round trip.
+
 Manifest debug-runtime flags, named verbosity values, numeric range, and guidance now survive JSON round trip.
+
 Manifest debug-runtime identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest debug-runtime public key lists and grouped family map now rebuild cleanly after caller mutation.
+
 Manifest debug-runtime helper and snapshot-state key lists now rebuild cleanly after caller mutation.
+
 Manifest debug-runtime flags, named verbosity values, numeric range, and guidance now rebuild cleanly after caller mutation.
+
 The capability manifest now mirrors `embedding.composition_report` identity metadata through JSON round trip.
+
 Manifest composition-report public, summary, and collection key families now survive JSON round trip.
+
 Manifest composition-report count-map, example-map, ordered-list, and grouped presence families now survive JSON round trip.
+
 Manifest composition-report JSON-safety and sanitization flags now survive JSON round trip.
+
 Manifest composition-report `tested_by` and guidance lists now survive JSON round trip.
+
 Manifest composition-report identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest composition-report public, summary, and collection key families now rebuild cleanly after caller mutation.
+
 Manifest composition-report map, ordered, and grouped presence families now rebuild cleanly after caller mutation.
+
 Manifest composition-report JSON-safety and sanitization flags now rebuild cleanly after caller mutation.
+
 Manifest composition-report `tested_by` and guidance lists now rebuild cleanly after caller mutation.
+
 The capability manifest now mirrors `embedding.section_contract` identity metadata through JSON round trip.
+
 Manifest embedding-section top-level and nested contract key lists now survive JSON round trip.
+
 Manifest embedding-section nested contract source map now survives JSON round trip.
+
 Manifest embedding-section nested presence key map now survives JSON round trip.
+
 Manifest embedding-section flags and guidance now survive JSON round trip.
+
 The capability manifest now mirrors `embedding.section_contract` identity metadata after caller mutation.
+
 Manifest embedding-section top-level and nested contract key lists now rebuild cleanly after caller mutation.
+
 Manifest embedding-section nested contract source map now rebuilds cleanly after caller mutation.
+
 Manifest embedding-section nested presence key map now rebuilds cleanly after caller mutation.
+
 Manifest embedding-section flags and guidance now rebuild cleanly after caller mutation.
+
 Manifest typed-extension identity metadata now survives JSON round trip.
+
 Manifest typed-extension tested_by and entrypoint metadata now survives JSON round trip.
+
 Manifest typed-extension object/loader shape metadata now survives JSON round trip.
+
 Manifest typed-extension context shape metadata now survives JSON round trip.
+
 Manifest typed-extension public key and grouped name families now survive JSON round trip.
+
 Manifest typed-extension `after_parse_source` hook metadata now survives JSON round trip.
+
 Manifest typed-extension `after_generate_result` hook metadata now survives JSON round trip.
+
 Manifest typed-extension stability and closure flags now survive JSON round trip.
+
 Manifest typed-extension guidance now survives JSON round trip.
+
 Manifest typed-extension core nested surfaces now survive JSON round trip together.
+
 Manifest typed-extension identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest typed-extension tested_by and entrypoint metadata now rebuilds cleanly after caller mutation.
+
 Manifest typed-extension object/loader shape metadata now rebuilds cleanly after caller mutation.
+
 Manifest typed-extension context shape metadata now rebuilds cleanly after caller mutation.
+
 Manifest typed-extension public key and grouped name families now rebuild cleanly after caller mutation.
+
 Manifest typed-extension `after_parse_source` hook metadata now rebuilds cleanly after caller mutation.
+
 Manifest typed-extension `after_generate_result` hook metadata now rebuilds cleanly after caller mutation.
+
 Manifest typed-extension stability and closure flags now rebuild cleanly after caller mutation.
+
 Manifest typed-extension guidance now rebuilds cleanly after caller mutation.
+
 Manifest typed-extension core nested surfaces now rebuild cleanly after caller mutation together.
+
 Manifest serializable-plan/report identity metadata now survives JSON round trip.
+
 Manifest serializable-plan/report public key list now survives JSON round trip.
+
 Manifest serializable-plan/report JSON-safe surface key lists now survive JSON round trip.
+
 Manifest serializable-plan/report surface registry now survives JSON round trip.
+
 Manifest serializable-plan/report nested contract source map now survives JSON round trip.
+
 Manifest serializable-plan/report raw-shell replacement keys now survive JSON round trip.
+
 Manifest serializable-plan/report raw-shell replacement map now survives JSON round trip.
+
 Manifest serializable-plan/report child contracts now survive JSON round trip.
+
 Manifest serializable-plan/report public report key metadata now survives JSON round trip.
+
 Manifest serializable-plan/report flags and guidance now survive JSON round trip.
+
 Manifest serializable-plan/report identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest serializable-plan/report public key list now rebuilds cleanly after caller mutation.
+
 Manifest serializable-plan/report JSON-safe surface key lists now rebuild cleanly after caller mutation.
+
 Manifest serializable-plan/report surface registry now rebuilds cleanly after caller mutation.
+
 Manifest serializable-plan/report nested contract source map now rebuilds cleanly after caller mutation.
+
 Manifest serializable-plan/report raw-shell replacement keys now rebuild cleanly after caller mutation.
+
 Manifest serializable-plan/report raw-shell replacement map now rebuilds cleanly after caller mutation.
+
 Manifest serializable-plan/report child contracts now rebuild cleanly after caller mutation.
+
 Manifest serializable-plan/report public report key metadata now rebuilds cleanly after caller mutation.
+
 Manifest serializable-plan/report flags and guidance now rebuild cleanly after caller mutation.
+
 Capability manifest contract identity metadata now survives JSON round trip.
+
 Capability manifest contract entrypoint metadata now survives JSON round trip.
+
 Capability manifest contract public top-level presence keys now survive JSON round trip.
+
 Capability manifest contract top-level source map now survives JSON round trip.
+
 Capability manifest contract section presence map now survives JSON round trip.
+
 Capability manifest contract grouped presence family map now survives JSON round trip.
+
 Capability manifest contract core section presence keys now survive JSON round trip.
+
 Capability manifest contract tooling section presence keys now survive JSON round trip.
+
 Capability manifest contract JSON-safety and nested-section advertisement flags now survive JSON round trip.
+
 Capability manifest contract guidance now survives JSON round trip.
+
 Capability manifest contract identity metadata now rebuilds cleanly after caller mutation.
+
 Capability manifest contract entrypoint metadata now rebuilds cleanly after caller mutation.
+
 Capability manifest contract public top-level presence keys now rebuild cleanly after caller mutation.
+
 Capability manifest contract top-level source map now rebuilds cleanly after caller mutation.
+
 Capability manifest contract section presence map now rebuilds cleanly after caller mutation.
+
 Capability manifest contract grouped presence family map now rebuilds cleanly after caller mutation.
+
 Capability manifest contract core section presence keys now rebuild cleanly after caller mutation.
+
 Capability manifest contract tooling section presence keys now rebuild cleanly after caller mutation.
+
 Capability manifest contract JSON-safety and nested-section advertisement flags now rebuild cleanly after caller mutation.
+
 Capability manifest contract guidance now rebuilds cleanly after caller mutation.
+
 Manifest producer section contract identity metadata now survives JSON round trip.
+
 Manifest producer section contract entrypoints now survive JSON round trip.
+
 Manifest producer section contract public key families now survive JSON round trip.
+
 Manifest producer section contract presence and identity maps now survive JSON round trip.
+
 Manifest producer section contract guidance now survives JSON round trip.
+
 Manifest producer section contract identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest producer section contract entrypoints now rebuild cleanly after caller mutation.
+
 Manifest producer section contract public key families now rebuild cleanly after caller mutation.
+
 Manifest producer section contract presence and identity maps now rebuild cleanly after caller mutation.
+
 Manifest producer section contract guidance now rebuilds cleanly after caller mutation.
+
 Manifest diagnostics section contract identity metadata now survives JSON round trip.
+
 Manifest diagnostics section key families now survive JSON round trip.
+
 Manifest diagnostics section nested maps now survive JSON round trip.
+
 Manifest diagnostics stable-code metadata now survives JSON round trip.
+
 Manifest diagnostics section flags and guidance now survive JSON round trip.
+
 Manifest diagnostics section contract identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest diagnostics section key families now rebuild cleanly after caller mutation.
+
 Manifest diagnostics section nested maps now rebuild cleanly after caller mutation.
+
 Manifest diagnostics stable-code metadata now rebuilds cleanly after caller mutation.
+
 Manifest diagnostics section flags and guidance now rebuild cleanly after caller mutation.
+
 Manifest semantic-exports contract identity metadata now survives JSON round trip.
+
 Manifest semantic-exports contract entrypoints now survive JSON round trip.
+
 Manifest semantic-exports public and nested key lists now survive JSON round trip.
+
 Manifest semantic-exports nested maps now survive JSON round trip.
+
 Manifest semantic-exports flags and guidance now survive JSON round trip.
+
 Manifest semantic-exports contract identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest semantic-exports contract entrypoints now rebuild cleanly after caller mutation.
+
 Manifest semantic-exports public and nested key lists now rebuild cleanly after caller mutation.
+
 Manifest semantic-exports nested maps now rebuild cleanly after caller mutation.
+
 Manifest semantic-exports flags and guidance now rebuild cleanly after caller mutation.
+
 Manifest backend-validation contract identity metadata now survives JSON round trip.
+
 Manifest backend-validation contract entrypoints now survive JSON round trip.
+
 Manifest backend-validation public and nested key lists now survive JSON round trip.
+
 Manifest backend-validation nested maps now survive JSON round trip.
+
 Manifest backend-validation flags and guidance now survive JSON round trip.
+
 Manifest backend-validation contract identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest backend-validation contract entrypoints now rebuild cleanly after caller mutation.
+
 Manifest backend-validation public and nested key lists now rebuild cleanly after caller mutation.
+
 Manifest backend-validation nested maps now rebuild cleanly after caller mutation.
+
 Manifest backend-validation flags and guidance now rebuild cleanly after caller mutation.
+
 Manifest language-surface contract identity metadata now survives JSON round trip.
+
 Manifest language-surface contract entrypoints now survive JSON round trip.
+
 Manifest language-surface top-level and mode key lists now survive JSON round trip.
+
 Manifest language-surface family key lists now survive JSON round trip.
+
 Manifest language-surface nested map and guidance now survive JSON round trip.
+
 Manifest language-surface contract identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest language-surface contract entrypoints now rebuild cleanly after caller mutation.
+
 Manifest language-surface top-level and mode key lists now rebuild cleanly after caller mutation.
+
 Manifest language-surface family key lists now rebuild cleanly after caller mutation.
+
 Manifest language-surface nested map and guidance now rebuild cleanly after caller mutation.
+
 Manifest documentation contract identity metadata now survives JSON round trip.
+
 Manifest documentation contract entrypoints now survive JSON round trip.
+
 Manifest documentation public and path-list keys now survive JSON round trip.
+
 Manifest documentation path contract maps now survive JSON round trip.
+
 Manifest documentation guidance now survives JSON round trip.
+
 Manifest documentation contract identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest documentation contract entrypoints now rebuild cleanly after caller mutation.
+
 Manifest documentation public and path-list keys now rebuild cleanly after caller mutation.
+
 Manifest documentation path contract maps now rebuild cleanly after caller mutation.
+
 Manifest documentation guidance now rebuilds cleanly after caller mutation.
+
 Manifest support-accounting contract identity metadata now survives JSON round trip.
+
 Manifest support-accounting contract entrypoints now survive JSON round trip.
+
 Manifest support-accounting public top-level presence keys now survive JSON round trip.
+
 Manifest support-accounting bucket presence keys now survive JSON round trip.
+
 Manifest support-accounting id-list presence keys now survive JSON round trip.
+
 Manifest support-accounting catalog required keys now survive JSON round trip.
+
 Manifest support-accounting catalog optional keys now survive JSON round trip.
+
 Manifest support-accounting grouped presence key map now survives JSON round trip.
+
 Manifest support-accounting sanitized/derived flags now survive JSON round trip.
+
 Manifest support-accounting guidance now survives JSON round trip.
+
 Manifest support-accounting full embedded contract now matches the direct owner contract after JSON round trip.
+
 Manifest support-accounting contract identity metadata now rebuilds cleanly after caller mutation.
+
 Manifest support-accounting contract entrypoints now rebuild cleanly after caller mutation.
+
 Manifest support-accounting public top-level presence keys now rebuild cleanly after caller mutation.
+
 Manifest support-accounting bucket presence keys now rebuild cleanly after caller mutation.
+
 Manifest support-accounting id-list presence keys now rebuild cleanly after caller mutation.
+
 Manifest support-accounting catalog required keys now rebuild cleanly after caller mutation.
+
 Manifest support-accounting catalog optional keys now rebuild cleanly after caller mutation.
+
 Manifest support-accounting grouped presence key map now rebuilds cleanly after caller mutation.
+
 Manifest support-accounting sanitized/derived flags now rebuild cleanly after caller mutation.
+
 Manifest support-accounting guidance now rebuilds cleanly after caller mutation.
+
 Manifest support-accounting full embedded contract now rebuilds to the direct owner contract after caller mutation.
+
 The full public capability manifest now survives JSON round trip unchanged.
+
 The full public capability manifest now rebuilds cleanly after caller mutation.
+
 The CLI `--capability-manifest` output now matches the full owner-built manifest.
+
 The CLI `--emit-capability-manifest` alias now matches the full owner-built manifest.
+
 Both capability-manifest CLI spellings now emit identical JSON bytes.
+
 The CLI capability-manifest output now matches canonical owner-builder JSON encoding.
+
 The full `HDLGenerator` result contract now survives JSON round trip unchanged.
+
 The full `HDLGenerator` result contract now rebuilds cleanly after caller mutation.
+
 The full serializable plan/report contract now survives JSON round trip unchanged.
+
 The full serializable plan/report contract now rebuilds cleanly after caller mutation.
+
 The full normalized semantic report contract now survives JSON round trip unchanged.
+
 The full normalized semantic report contract now rebuilds cleanly after caller mutation.
+
 The full check diagnostics contract now survives JSON round trip unchanged.
+
 The full shared check failure diagnostic contract now survives JSON round trip unchanged.
 
 ## Current Philosophy
@@ -389,8 +685,11 @@ The full shared check failure diagnostic contract now survives JSON round trip u
 The active extension model is typed and explicit.
 
 A typed extension is a normal blessed Perl object with explicit hook methods.
+
 The hook receives a typed context object with named accessors such as
-`source_info`, `target_language`, `raw_ast`, and `result`. Before dispatch, the
+`source_info`, `target_language`, `raw_ast`, and `result`.
+
+Before dispatch, the
 active pipeline validates that configured extension entries are blessed objects
 with at least one real supported hook method.
 
@@ -423,7 +722,9 @@ These run:
 
 This hook/context boundary is now advertised in the capability manifest under
 `embedding.typed_extensions`, owned by
-`FSM::Support::ExtensionContract`. That machine-readable contract records:
+`FSM::Support::ExtensionContract`.
+
+That machine-readable contract records:
 
 - explicit object/module/config loading entrypoints
 - the shipped hook names
@@ -437,16 +738,20 @@ This hook/context boundary is now advertised in the capability manifest under
 
 That registry ownership rule is runtime-audited directly: mutating the caller's
 extension array after `FSM::Extension::Registry->new(...)`, or mutating an
-`extensions()` accessor array, cannot add hooks to the registry. The extension
-objects themselves remain live hook objects by identity.
+`extensions()` accessor array, cannot add hooks to the registry.
+
+The extension objects themselves remain live hook objects by identity.
+
 The same construction-time ownership applies at the facade loader entrypoint:
 `HDLGenerator->new(extension_modules => \@modules)` resolves and registers the
 listed modules during construction, so later caller mutation of `@modules` does
 not add, remove, or replace hooks on that facade object.
+
 `HDLGenerator->new(extension_config_files => \@configs)` follows the same rule
 for config-file discovery: the constructor-time config path list is read during
 facade construction, and later caller mutation of `@configs` cannot change the
 installed hooks.
+
 Direct `HDLGenerator->new(extensions => \@objects)` construction follows the
 registry rule as well: the array container is snapped at construction, while the
 extension objects themselves remain live hook objects by identity.
@@ -454,6 +759,7 @@ extension objects themselves remain live hook objects by identity.
 That same owner now also publishes a grouped `name_family_map` so embedders
 can discover the bounded hook-name, context-accessor, and supported-source-kind
 families from one place instead of collecting those name lists separately.
+
 That grouped discovery key is itself now listed in the contract's advertised
 top-level key list, and
 [t/306-extension-contract.t](t/306-extension-contract.t)
@@ -472,14 +778,21 @@ The current context accessors are:
 
 `source_info->{kind}` is the classified root kind, such as `fsm`, `dt`, or
 `composition`.
+
 `source_info` and `raw_ast` accessors return fresh snapshots; mutating them does
-not alter the stored context. `raw_ast` is available on `after_parse_source`.
+not alter the stored context.
+
+`raw_ast` is available on `after_parse_source`.
+
 `result` is available on `after_generate_result` and remains the live result hash.
+
 Reusable `HDLGenerator` facade objects build new extension context snapshots for
 each generation, so mutations to one hook invocation's `source_info` or
 `raw_ast` snapshots do not leak into later hook invocations on the same facade.
+
 Result augmentation is a valid in-process extension use, but it is not the same
 thing as publishing a new sanitized JSON interchange field.
+
 [t/379-extension-result-json-boundary-audit.t](t/379-extension-result-json-boundary-audit.t)
 locks that split: extension-added raw result fields and HDL text remain
 available to in-process callers, while `--emit-semantic-json` and
@@ -516,6 +829,7 @@ my $result = $pipeline->generate_hdl_from_file('fsm/trial_0.fsm');
 That public constructor-plus-generate seam is now machine-advertised too under
 `embedding.hdl_generator_facade`, owned by
 [perl/FSM/Support/HDLGeneratorFacadeContract.pm](perl/FSM/Support/HDLGeneratorFacadeContract.pm).
+
 That bounded facade contract currently covers:
 
 - `new(...)`
@@ -526,199 +840,240 @@ That bounded facade contract currently covers:
 - direct blessed-object extension injection through `extensions`
 
 It intentionally does not freeze the lower-level owner-injection constructor
-arguments. It also leaves module/config-file extension loading behind
+arguments.
+
+It also leaves module/config-file extension loading behind
 `embedding.typed_extensions`, so the narrower facade contract stays honest
 about what is currently meant to be a stable in-process entry seam.
+
 That boundary is now audited directly:
 [t/377-hdl-generator-constructor-boundary-audit.t](t/377-hdl-generator-constructor-boundary-audit.t)
 classifies every current `HDLGenerator` constructor argument read from
 `%args` and proves the owner-injection arguments stay out of both the facade
 contract and the live manifest public constructor-option lists.
+
 [t/385-hdl-generator-facade-strict-mode-boundary-audit.t](t/385-hdl-generator-facade-strict-mode-boundary-audit.t)
 also proves the advertised `strict_mode` constructor option is runtime-backed:
 the default facade compiles the legacy infix-assignment compatibility fixture,
 the strict facade rejects that same source with the canonical pair-form hint,
 and the same strict facade object still accepts the canonical pair-form fixture.
+
 [t/386-hdl-generator-facade-target-language-boundary-audit.t](t/386-hdl-generator-facade-target-language-boundary-audit.t)
 also proves the advertised `target_language` constructor option routes real
 direct backend behavior: the default path emits SystemVerilog forms, explicit
 `verilog` emits Verilog forms, and explicit `vhdl` remains a source-contextual
 not-implemented boundary rather than a completed backend promise.
+
 [t/387-hdl-generator-facade-debug-level-boundary-audit.t](t/387-hdl-generator-facade-debug-level-boundary-audit.t)
 also proves the advertised `debug_level` constructor option is runtime-backed
 and scoped: level `0` stays silent, level `2` emits low/medium trace without
 high-detail raw-AST dumps, level `4` emits that high-detail path, and the
 caller debug state is restored afterward.
+
 [t/388-hdl-generator-facade-source-search-paths-boundary-audit.t](t/388-hdl-generator-facade-source-search-paths-boundary-audit.t)
 also proves the advertised `source_search_paths` constructor option is
 runtime-backed and facade-local: missing roots fail at external package
 resolution, supplied roots generate HDL with the imported package literal, and
 separate facade objects with different roots do not leak resolution state.
+
 That facade-local rule includes input ownership: the constructor-time
 `source_search_paths` array is copied into the resolver, so later caller
 mutation of the original array reference does not change package resolution for
 that facade object.
+
 [t/389-hdl-generator-facade-extensions-boundary-audit.t](t/389-hdl-generator-facade-extensions-boundary-audit.t)
 also proves the advertised `extensions` constructor option is runtime-backed as
 direct blessed-object injection: non-blessed values are rejected, hook-capable
 injected objects dispatch in order, result-hook mutation reaches the returned
 raw result, and separate facade objects do not share injected extension state.
+
 [t/390-hdl-generator-facade-quiet-boundary-audit.t](t/390-hdl-generator-facade-quiet-boundary-audit.t)
 also proves the advertised `quiet` constructor option is accepted compatibility
 state rather than core runtime behavior: it is grouped under
 `compatibility_constructor_option_names`, stays out of the core runtime family,
 and in-process generation captures no stdout/stderr for either quiet value.
+
 [t/419-hdl-generator-facade-legacy-debug-boundary-audit.t](t/419-hdl-generator-facade-legacy-debug-boundary-audit.t)
 also proves the older `debug` constructor compatibility key stays non-public:
 it is absent from the facade contract and manifest public constructor surfaces,
 maps boolean values to `debug_level` `0` / `1` only when public `debug_level`
 is omitted, yields to public `debug_level` when both are supplied, and rejects
-malformed defined values before debug-runtime setup. New embedder-facing code
-should use `debug_level`, not legacy `debug`.
+malformed defined values before debug-runtime setup.
+
+New embedder-facing code should use `debug_level`, not legacy `debug`.
+
 [t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t](t/420-hdl-generator-facade-constructor-duplicate-option-boundary-audit.t)
 also proves duplicate raw `new(...)` constructor option names fail at the
 facade seam before Perl hash assignment can silently keep only the last value:
 the duplicate-option policy is manifest-backed, public and non-public repeated
 names receive sorted targeted diagnostics, later value-shape or unsupported
 name validation does not run first, and caller debug state is preserved.
+
 [t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t](t/421-hdl-generator-facade-extension-hook-method-boundary-audit.t)
 also proves direct extension objects must expose at least one real supported
 typed-extension hook method: hookless, unsupported-hook-only, and
 `AUTOLOAD`/fake-`can` objects fail at the facade before registry or raw method
 fallout can leak, while parse-only and result-only real hook objects remain
 accepted.
+
 [t/426-typed-extension-registry-constructor-argument-boundary-audit.t](t/426-typed-extension-registry-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Registry->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed registry constructor calls fail before raw
 hash-coercion or `bless` fallout can leak.
+
 [t/429-typed-extension-registry-method-receiver-boundary-audit.t](t/429-typed-extension-registry-method-receiver-boundary-audit.t)
 also proves direct registry methods require an exact hash-backed
 `FSM::Extension::Registry` object constructed by `new(...)`, so class
 receivers, subclass stand-ins, and fake exact-class objects fail before hook or
 context diagnostics can leak.
+
 [t/432-typed-extension-registry-method-argument-list-boundary-audit.t](t/432-typed-extension-registry-method-argument-list-boundary-audit.t)
 also proves direct registry methods own their payload argument counts:
 `extensions(...)` takes no payload arguments, `dispatch_hook(...)` takes a
 hook name and context, and hook wrapper methods take one context argument after
 the registry invocant.
+
 [t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t](t/493-typed-extension-registry-extension-list-defensive-copy-boundary-audit.t)
 also proves direct registry construction and `extensions()` accessor calls copy
 the extension array, so caller-side list mutation cannot alter the registry's
 configured dispatch list while the extension objects remain the live hook
 objects that dispatch invokes.
+
 [t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t](t/399-hdl-generator-facade-stateful-reuse-boundary-audit.t)
 also proves the advertised `stateful_reuse_supported` promise is
 runtime-backed: one facade object preserves `strict_mode`, `target_language`,
 and `source_search_paths` across success, strict-mode failure, and later
 success, while restoring caller debug state after each path and still keeping
 lower-level owner-injection constructor args outside the public facade surface.
+
 [t/375-hdl-generator-facade-contract.t](t/375-hdl-generator-facade-contract.t)
 also now checks that the facade contract's advertised top-level key list
 exactly covers the emitted facade contract shell, so new facade metadata cannot
 silently miss the machine-readable key list.
+
 [t/380-extension-loading-command-boundary-audit.t](t/380-extension-loading-command-boundary-audit.t)
 locks the matching loading-owner split: module/config extension loading remains
 advertised by `embedding.typed_extensions`, stays out of
 `embedding.hdl_generator_facade`, and does not widen the normalized-semantic
 JSON `command` object when semantic export runs with loaded extensions.
+
 [t/391-typed-extension-programmatic-loading-boundary-audit.t](t/391-typed-extension-programmatic-loading-boundary-audit.t)
 also proves that same typed-extension-owned programmatic loading seam is
 runtime-backed in-process: `extension_modules` and `extension_config_files`
 both load a real module from `@INC`, dispatch `after_parse_source` before
 `after_generate_result`, and mutate only the returned raw result for the
 pipeline that requested loading.
+
 [t/400-typed-extension-config-line-shape-boundary-audit.t](t/400-typed-extension-config-line-shape-boundary-audit.t)
 also proves the advertised config-file line shape is runtime-backed:
 config files accept only `module Module::Name` lines plus inert blank,
 comment, and inline-comment text; malformed lines report extension config
 file and line-number context; and repeated config files preserve parsed module
 order during in-process hook dispatch.
+
 [t/401-typed-extension-module-name-shape-boundary-audit.t](t/401-typed-extension-module-name-shape-boundary-audit.t)
 also proves module-name validation fails closed before loading: every
 `::`-separated segment must use the `Module::Name` identifier shape, so names
 such as `FSM::BoundaryAudit::9Bad` are rejected at loader, config parser,
 pipeline, and CLI boundaries before `require` runs or emits missing-module
 fallout.
+
 [t/402-typed-extension-constructor-list-shape-boundary-audit.t](t/402-typed-extension-constructor-list-shape-boundary-audit.t)
 also proves the constructor list shape for programmatic extension loading
 fails at the facade seam: scalar/hash values for `extension_modules`,
 `extension_config_files`, and direct `extensions` are rejected with targeted
 array-reference diagnostics before raw Perl dereference or lower-level loader
 fallout can leak.
+
 [t/392-typed-extension-autoload-boundary-audit.t](t/392-typed-extension-autoload-boundary-audit.t)
 also proves `AUTOLOAD` remains outside the typed-extension hook boundary:
 AUTOLOAD-only extensions, including objects that override `can(...)`, fail
 closed as hookless direct extension objects, while explicit and inherited real
 hook methods still run normally.
+
 [t/393-typed-extension-hook-set-closed-boundary-audit.t](t/393-typed-extension-hook-set-closed-boundary-audit.t)
 also proves the hook set is closed for the current schema version: extra
 hook-shaped methods such as `before_parse_source` or `after_emit_hdl` remain
 inert during direct and composition generation until the contract deliberately
 adds a new hook family.
+
 [t/394-typed-extension-context-accessor-boundary-audit.t](t/394-typed-extension-context-accessor-boundary-audit.t)
 also proves the context accessor names are stable for the current schema
 version by checking manifest discovery, the implemented
 `FSM::Extension::Context` methods, and real direct plus composition hook
 contexts through every advertised accessor.
+
 [t/395-typed-extension-explicit-discovery-boundary-audit.t](t/395-typed-extension-explicit-discovery-boundary-audit.t)
 also proves extension discovery remains explicit: nearby `extensions.fsmext`,
 `fsmgen.fsmext`, and legacy `.plg`-shaped files stay inert for in-process and
 CLI generation unless the caller supplies explicit module or config loading
 entrypoints.
+
 [t/396-typed-extension-constructor-boundary-audit.t](t/396-typed-extension-constructor-boundary-audit.t)
 also proves module-name loading requires a real `new()` method: explicit and
 inherited constructors still work, while extension-provided `can(...)` methods
 and `AUTOLOAD`-only constructor discovery stay outside the typed loading
 boundary.
+
 [t/427-typed-extension-loader-constructor-argument-boundary-audit.t](t/427-typed-extension-loader-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Loader->new(...)` construction accepts
 only the exact class receiver and no option/value arguments, so malformed
 loader constructor calls fail before raw hash-coercion or `bless` fallout can
 leak.
+
 [t/428-typed-extension-loader-method-receiver-boundary-audit.t](t/428-typed-extension-loader-method-receiver-boundary-audit.t)
 also proves direct loader methods require an exact hash-backed
 `FSM::Extension::Loader` object constructed by `new(...)`, so class receivers,
 subclass stand-ins, and fake exact-class objects fail before loading payload
 diagnostics can leak.
+
 [t/431-typed-extension-loader-method-argument-list-boundary-audit.t](t/431-typed-extension-loader-method-argument-list-boundary-audit.t)
 also proves direct loader methods accept exactly one payload argument after the
 loader invocant, so missing or extra payload arguments fail before raw Perl
 signature fallout or payload value diagnostics can leak.
+
 [t/397-typed-extension-registry-dispatch-boundary-audit.t](t/397-typed-extension-registry-dispatch-boundary-audit.t)
 also proves the registry's direct `dispatch_hook(...)` entrypoint enforces the
 same closed hook set: `after_parse_source` and `after_generate_result` still
 dispatch, while unsupported hook names are rejected before extension methods
 can run.
+
 [t/422-typed-extension-registry-dispatch-context-boundary-audit.t](t/422-typed-extension-registry-dispatch-context-boundary-audit.t)
 also proves direct registry dispatch requires a real
 `FSM::Extension::Context` object whose `stage` matches the dispatched hook
 name, so malformed direct contexts fail before extension code can reinterpret
 them.
+
 [t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t](t/434-typed-extension-registry-dispatch-constructed-context-boundary-audit.t)
 also proves direct registry dispatch requires an exact hash-backed context
 object constructed by `FSM::Extension::Context->new(...)`, so fake exact-class
 context objects fail at the registry boundary before context accessor fallout
 can leak.
+
 [t/423-typed-extension-context-constructor-argument-boundary-audit.t](t/423-typed-extension-context-constructor-argument-boundary-audit.t)
 also proves direct `FSM::Extension::Context->new(...)` construction accepts
 only the exact class receiver and an even-length list of unique supported
 scalar option names, so malformed constructor calls fail before raw Perl
 argument or `bless` fallout can leak.
+
 [t/430-typed-extension-context-accessor-receiver-boundary-audit.t](t/430-typed-extension-context-accessor-receiver-boundary-audit.t)
 also proves direct context accessors require an exact hash-backed
 `FSM::Extension::Context` object constructed by `new(...)`, so class receivers,
 subclass stand-ins, and fake exact-class objects fail before raw accessor
 fallout can leak.
+
 [t/433-typed-extension-context-accessor-argument-list-boundary-audit.t](t/433-typed-extension-context-accessor-argument-list-boundary-audit.t)
 also proves direct context accessors take no payload arguments after the
 context invocant, so extra accessor arguments fail before raw Perl signature
 fallout can leak.
+
 [t/424-typed-extension-context-constructor-payload-boundary-audit.t](t/424-typed-extension-context-constructor-payload-boundary-audit.t)
 also proves direct context construction validates the payload values that hooks
 rely on: supported hook stages, a blessed pipeline, scalar source path and
 target language, scalar `source_info->{kind}`, parse contexts with
 `raw_ast` and no `result`, and result contexts with `result` and no `raw_ast`.
+
 [t/425-typed-extension-dt-source-kind-contract-audit.t](t/425-typed-extension-dt-source-kind-contract-audit.t)
 also proves standalone `?dt:` roots are part of the bounded typed-extension
 source-kind family: manifests advertise `dt`, and live `dt` generation
@@ -726,7 +1081,9 @@ dispatches parse/result contexts whose `source_info->{kind}` is `dt`.
 
 For in-process embedders, `FSM::Pipeline::HDLGenerator` no longer leaves its
 requested `debug_level` behind as process-global state after construction or
-generation. The pipeline now scopes its debug setting to the constructor or
+generation.
+
+The pipeline now scopes its debug setting to the constructor or
 generation call and restores the caller's prior `FSM::Debug` state afterward.
 
 If an embedder needs to rebind tracing manually, the current shipped
@@ -751,32 +1108,41 @@ restore_fsm_debug_state($saved);
 
 That restore path preserves the caller-facing trace/debug configuration,
 including the original trace sink, instead of forcing embedders to reconstruct
-global debug state by hand after a temporary trace-file switch. Restores now
-accept exact schema-version-1 snapshots from `capture_fsm_debug_state(...)` and
+global debug state by hand after a temporary trace-file switch.
+
+Restores now accept exact schema-version-1 snapshots from `capture_fsm_debug_state(...)` and
 reject malformed partial snapshots before mutating process-global debug state.
+
 [t/374-debug-runtime-contract.t](t/374-debug-runtime-contract.t)
 now also checks that the debug-runtime contract's advertised top-level key list
 exactly covers the emitted debug-runtime contract shell, matching the same
 self-description guard used by the sibling facade and typed-extension contracts.
+
 The same direct contract test also proves the advertised helper/control names
 are implemented and exported by `FSM::Debug`, and that the advertised named
 trace-verbosity values plus numeric range match the live debug runtime mapping.
+
 It also captures a trace-bound debug-state snapshot and proves the advertised
 `snapshot_state_keys` match the real snapshot keys, including the schema,
 debug level, trace path, live filehandle, and emoji state.
+
 That trace-bound snapshot is also checked as not JSON-safe as a whole, matching
 the contract's `snapshot_json_safe => false` claim.
+
 [t/494-debug-runtime-restore-state-boundary-audit.t](t/494-debug-runtime-restore-state-boundary-audit.t)
 also proves the manifest-backed restore argument shape, valid captured
 restores, targeted malformed-snapshot diagnostics, and caller-state
 preservation on rejection.
+
 [t/398-debug-runtime-scoped-helper-boundary-audit.t](t/398-debug-runtime-scoped-helper-boundary-audit.t)
 also proves `with_fsm_debug_state(...)` restores caller debug state across
 scalar, list, void, and error paths, while ordinary debug setters remain
 process-global unless callers explicitly scope or restore them.
+
 That current in-process seam is now also advertised through
 `embedding.debug_runtime`, owned by
 [perl/FSM/Support/DebugRuntimeContract.pm](perl/FSM/Support/DebugRuntimeContract.pm).
+
 That bounded contract publishes the shipped helper families, the bounded
 snapshot-state keys, the supported named trace-verbosity values, and the
 current limit that `FSM::Debug` is still one process-global singleton rather
@@ -794,7 +1160,9 @@ PERL5LIB=./my_extensions ./bin/fsmgen \
   fsm/trial_0.fsm
 ```
 
-Config-file loading is also explicit. The config file lists module names, and
+Config-file loading is also explicit.
+
+The config file lists module names, and
 those modules must also already be available in `@INC` with real `new()`
 constructors:
 
@@ -820,6 +1188,7 @@ Embedders can already consume structured result data such as:
 - composition reports
 
 The first bounded `HDLGenerator` result contract is now manifest-backed too.
+
 The in-process entrypoint is:
 
 ```perl
@@ -829,62 +1198,92 @@ my $result = FSM::Pipeline::HDLGenerator->new(
 ```
 
 `R13` now treats explicit serializable plan/report APIs as the preferred
-direction for new embedder-facing surfaces. The raw `HDLGenerator` result
+direction for new embedder-facing surfaces.
+
+The raw `HDLGenerator` result
 branches remain useful in-process compatibility shells, but downstream tooling
 should not have to traverse raw objects such as `composition_spec`,
 `composition_plan`, `fsm_module`, `raw_ast`, or `resolved_package_imports` to
 build stable machine-readable integrations.
+
 That direction now has a concrete manifest surface:
 [perl/FSM/Support/SerializablePlanReportContract.pm](perl/FSM/Support/SerializablePlanReportContract.pm)
 is advertised as `embedding.serializable_plan_reports`, with machine-readable
 identity metadata for schema version, bounded-public status, owner, and purpose.
+
 The capability manifest embeds the same identity metadata and preserves it
-across manifest JSON encode/decode. That parent identity metadata also survives
-contract JSON round-trip. It lists the current JSON-safe report families and maps
+across manifest JSON encode/decode.
+
+That parent identity metadata also survives
+contract JSON round-trip.
+
+It lists the current JSON-safe report families and maps
 raw `HDLGenerator` compatibility shells to preferred serializable replacements,
-and the advertised JSON-safe surface list survives contract JSON round-trip. The
-capability manifest preserves the same surface list across manifest JSON
-encode/decode. The parent contract's `public_top_level_presence_keys` list also
+and the advertised JSON-safe surface list survives contract JSON round-trip.
+
+The capability manifest preserves the same surface list across manifest JSON
+encode/decode.
+
+The parent contract's `public_top_level_presence_keys` list also
 survives JSON encode/decode and still matches the decoded contract payload.
+
 The parent contract publishes `raw_shell_replacement_keys` so tools can discover
-that compatibility branch family directly. The capability manifest embeds that
+that compatibility branch family directly.
+
+The capability manifest embeds that
 same key list with a matching replacement map, rebuilds it cleanly per call, and
 preserves it across manifest JSON encode/decode, including in the main manifest
-branch audit. The parent main round-trip audit also keeps decoded replacement
-paths portable. Its
-`surface_registry` maps each serializable surface to its contract owner and
-portable dotted primary report paths. Each registry entry has a scalar owner
+branch audit.
+
+The parent main round-trip audit also keeps decoded replacement
+paths portable.
+
+Its `surface_registry` maps each serializable surface to its contract owner and
+portable dotted primary report paths.
+
+Each registry entry has a scalar owner
 aligned with the nested source map and a non-empty unique path list, and returns
-fresh caller-owned containers that round-trip as JSON data. The parent contract
-also preserves the embedded registry across full-contract JSON round-trip and
+fresh caller-owned containers that round-trip as JSON data.
+
+The parent contract also preserves the embedded registry across full-contract JSON round-trip and
 keeps it aligned with the decoded JSON-safe surface list while keeping decoded
 registry paths portable and registry owners aligned with the decoded nested
-source map. The capability
-manifest embeds the canonical registry, rebuilds it cleanly after caller
+source map.
+
+The capability manifest embeds the canonical registry, rebuilds it cleanly after caller
 mutation, preserves it across manifest JSON encode/decode, and keeps the decoded
 registry aligned with the JSON-safe surface list while keeping decoded registry
 paths portable and registry owners aligned with the decoded nested source map.
-Its manifest-embedded
-`public_top_level_presence_keys` list also survives JSON encode/decode and still
-matches the decoded `serializable_plan_reports` payload. Embedding nested
-presence metadata advertises the registry branch for manifest consumers, and the
+
+Its manifest-embedded `public_top_level_presence_keys` list also survives JSON encode/decode and still
+matches the decoded `serializable_plan_reports` payload.
+
+Embedding nested presence metadata advertises the registry branch for manifest consumers, and the
 manifest-embedded registry owners stay aligned with the manifest-embedded nested
-source map. Manifest registry paths remain portable dotted report paths, and
+source map.
+
+Manifest registry paths remain portable dotted report paths, and
 manifest registry entries mirror the standalone registry's
 scalar-owner/non-empty-unique-path invariants.
+
 The parent contract also publishes `surface_registry_entry_keys` so tools can
 discover the per-surface entry shape directly, preserves that unique list across
 contract JSON round-trip, and checks decoded registry entries against it in the
-main parent round-trip audit. The capability manifest embeds that same entry-key
+main parent round-trip audit.
+
+The capability manifest embeds that same entry-key
 list alongside registry entries that match it, including in the main manifest
 branch audit.
-That parent
-contract returns fresh nested
+
+That parent contract returns fresh nested
 maps, lists, raw replacement-key lists, and embedded child contracts, so
-discovery-time annotations do not pollute later manifest construction. The
-capability manifest builder also rebuilds the embedded
+discovery-time annotations do not pollute later manifest construction.
+
+The capability manifest builder also rebuilds the embedded
 `serializable_plan_reports` child, entry-key list, and its
-grouped presence-key map cleanly each time. The parent contract round-trips as
+grouped presence-key map cleanly each time.
+
+The parent contract round-trips as
 JSON with nested contract owners, child contracts, exact composition snapshot
 child metadata, exact generation snapshot child metadata, exact diagnostic
 summary child metadata, raw-shell replacement keys, and raw-shell replacement
@@ -892,105 +1291,155 @@ guidance intact, and the full capability
 manifest preserves that branch, its exact
 composition snapshot child metadata, exact generation snapshot child metadata,
 exact diagnostic summary child metadata, and its entry-key list across JSON
-encode/decode. Its
-advertised public top-level key list is regression-locked to the keys the parent
+encode/decode.
+
+Its advertised public top-level key list is regression-locked to the keys the parent
 contract actually emits, and its nested source map is locked against the
 embedded child contracts it carries and the decoded JSON-safe surface list.
+
 The manifest branch main audit applies the same decoded nested-source-map
 alignment to its embedded JSON-safe surface list.
+
 The JSON-safety flags in that parent contract are explicit JSON booleans:
 current serializable report surfaces are marked safe, while raw `HDLGenerator`
 branches are marked non-safe interchange payloads, and those flags survive
-contract JSON round-trip with their boolean shape intact. The capability manifest
-embeds those flags with the same boolean shape and values, and preserves them
+contract JSON round-trip with their boolean shape intact.
+
+The capability manifest embeds those flags with the same boolean shape and values, and preserves them
 across manifest JSON encode/decode in the main manifest branch audit.
+
 The parent `guidance` list is also regression-checked as unique scalar guidance
 that keeps those embedder rules visible and survives JSON round-trip exactly; the
 capability manifest embeds the same structured guidance and preserves it exactly
 across manifest JSON encode/decode.
+
 The parent contract also embeds normalized semantic and composition report public
 key metadata, plus the composition report JSON fragment path, from their
 canonical report contracts and preserves that metadata across JSON round-trip.
+
 The capability manifest carries the same metadata in its serializable
 plan/report branch and preserves it across manifest JSON encode/decode,
 including in the main branch round-trip audit.
+
 The full capability manifest preserves that parent and child source-owner
 metadata when embedding the branch.
+
 The first plan-oriented API behind that surface is
 [perl/FSM/Support/SerializableCompositionPlanSnapshot.pm](perl/FSM/Support/SerializableCompositionPlanSnapshot.pm):
 `build_serializable_composition_plan_snapshot(...)` emits a JSON-safe
 `composition_plan_snapshot` with bounded summaries for the plan lane, top module,
 ports, links, resolved-link endpoints, nets, instances, auxiliary assignments,
 and shared-datapath candidates without exposing the raw
-`FSM::Composition::Plan` object graph. Successful normalized semantic JSON
+`FSM::Composition::Plan` object graph.
+
+Successful normalized semantic JSON
 reports for composition roots now embed that same snapshot at
-`semantic.composition.plan_snapshot`. Composition plan snapshot contracts and
+`semantic.composition.plan_snapshot`.
+
+Composition plan snapshot contracts and
 reports return fresh caller-owned containers, so local annotations of port,
 instance, or link summaries do not pollute later snapshot construction;
 normalized semantic reports also rebuild the embedded composition plan snapshot
-per report. Composition plan snapshots are JSON round-trip locked for plan
+per report.
+
+Composition plan snapshots are JSON round-trip locked for plan
 summaries, child instance names, port collections, and resolved links.
+
 The manifest surface also advertises
 [perl/FSM/Support/SerializableGenerationResultSnapshot.pm](perl/FSM/Support/SerializableGenerationResultSnapshot.pm)
 as `generation_result_snapshot`, a JSON-safe summary of raw `HDLGenerator`
 results that records stable module/source/HDL-size facts, semantic-layer
 presence, and raw-shell presence/class metadata without turning the raw result
-hash into a public JSON API. Successful normalized semantic JSON reports now
-expose that snapshot as top-level `generation_result_snapshot`. Generation
-result snapshot contracts and reports return fresh caller-owned containers, so
+hash into a public JSON API.
+
+Successful normalized semantic JSON reports now
+expose that snapshot as top-level `generation_result_snapshot`.
+
+Generation result snapshot contracts and reports return fresh caller-owned containers, so
 local annotations of summary hashes or raw-shell metadata do not pollute later
 snapshot construction; normalized semantic reports also rebuild the embedded
-`generation_result_snapshot` per report. Generation result snapshots are JSON
+`generation_result_snapshot` per report.
+
+Generation result snapshots are JSON
 round-trip locked for bounded module/source facts, HDL size metadata, key lists,
-and raw-shell metadata. Semantic report top-level key presence
+and raw-shell metadata.
+
+Semantic report top-level key presence
 is runtime-locked so success reports include the advertised success-only snapshot
-branches and failure reports omit them. Actual semantic JSON reports are also
+branches and failure reports omit them.
+
+Actual semantic JSON reports are also
 round-trip locked with embedded generation, composition, and diagnostic snapshot
-data intact. Failed semantic
+data intact.
+
+Failed semantic
 JSON reports deliberately omit both `generation_result_snapshot` and semantic
 composition `plan_snapshot`, preserving the existing success-only boundary for
-generated semantics. Semantic success and failure reports are also locked to
+generated semantics.
+
+Semantic success and failure reports are also locked to
 emit exactly their advertised top-level key sets.
+
 The manifest surface also advertises
 [perl/FSM/Support/SerializableDiagnosticSummary.pm](perl/FSM/Support/SerializableDiagnosticSummary.pm)
 as `diagnostic_summary`, a JSON-safe diagnostic count/code/severity summary for
-tools that do not need to copy complete diagnostic payloads. Normalized semantic
+tools that do not need to copy complete diagnostic payloads.
+
+Normalized semantic
 JSON now embeds that summary for both success and failure reports, and check JSON
 uses the same summary for `--check --json` / `--check-json` outputs.
+
 Check JSON top-level key presence is runtime-locked too: success and failure
 reports both include `diagnostic_summary`, while only success reports include the
-success-only `result` branch. Actual check JSON reports are round-trip locked
-with embedded diagnostic summary data intact. Check JSON success and failure
+success-only `result` branch.
+
+Actual check JSON reports are round-trip locked
+with embedded diagnostic summary data intact.
+
+Check JSON success and failure
 reports are also locked to emit exactly their advertised top-level key sets.
+
 The diagnostic summary builder and contract return fresh caller-owned
 containers, so local annotations of code lists or count maps do not pollute
-later report construction. Both public JSON report families rebuild their
+later report construction.
+
+Both public JSON report families rebuild their
 embedded summaries per report and are regression-locked to the same standalone
-summary builder output. Diagnostic summaries are also JSON round-trip locked:
+summary builder output.
+
+Diagnostic summaries are also JSON round-trip locked:
 stable counts, severities, and unique-code lists survive encode/decode as plain
 JSON data.
+
 Each child serializable report API is regression-locked so its advertised public
 top-level key list matches the keys its builder actually emits, and each child
 contract/report identifies its owning support module through `contract_source`
-and `report_source`. Public semantic/check JSON reports preserve those owners on
+and `report_source`.
+
+Public semantic/check JSON reports preserve those owners on
 embedded snapshot and summary branches, and preserve the standalone builders'
 advertised top-level key sets for those embedded branches.
+
 Tracked documentation and book links use paths relative to the repository root;
 machine-local absolute filesystem paths are not part of the public embedding
 surface.
 
 The bounded contract stabilizes top-level key presence for fields such as
 `hdl_code`, `module_info`, `intent_hir`, `lowered_rtl_ir`,
-`structural_rtl_ir`, `source_info`, and `resolved_package_imports`. It also
-stabilizes the small nested identity slices `source_info.header`,
+`structural_rtl_ir`, `source_info`, and `resolved_package_imports`.
+
+It also stabilizes the small nested identity slices `source_info.header`,
 `source_info.kind`, `module_info.module_name`, and
 `module_info.source_root_kind`, plus the bounded summary keys inside
-`source_info`, `module_info`, and `statistics`. That includes source-level
-facts such as `package_import_count` and `package_import_names`, reusable
+`source_info`, `module_info`, and `statistics`.
+
+That includes source-level facts such as `package_import_count` and `package_import_names`, reusable
 module/stats counts such as `signal_count`, `state_count`,
 `parameter_count`, `output_drive_family_count`, `intermediate_signals`,
 `global_expressions`, `factoring_enabled`, and the composition-only
-count/lane fields when the input root is a composition. The same contract now
+count/lane fields when the input root is a composition.
+
+The same contract now
 also advertises that the top-level `intent_hir`, `lowered_rtl_ir`, and
 `structural_rtl_ir` hashes reuse the bounded shell owners from normalized
 semantic JSON, while explicitly
@@ -998,330 +1447,443 @@ classifying live/raw/unsanitized compatibility payloads such as `fsm_module`,
 `raw_ast`, `resolved_package_imports`,
 `statistics`, `composition_spec`, `composition_plan`, and
 `composition_report`.
+
 Reusable `HDLGenerator` facade objects return fresh top-level direct result
 containers per generation, so caller additions, replacements, or deletions on
 one result do not leak into a later direct result from the same facade.
+
 Composition generation follows the same top-level result-container reuse rule,
 including composition-only branches such as `composition_report`.
+
 Standalone `?dt` generation follows that result-container reuse rule too.
+
 The top-level `resolved_package_imports` branch is therefore shell-only: it is
 still a hash of raw `FSM::Package::Spec` objects, so stable package-import
 inspection should use `source_info.package_import_count` and
 `source_info.package_import_names` instead of traversing those typed values.
+
 The `package_import_names` list is a fresh caller-owned array on each returned
 `source_info` object, so local caller mutation of one returned summary does not
 affect a later result.
+
 That same owner now also publishes a grouped `fallback_surface_map` so
 embedders can discover the bounded source-info package-import fallback family
 from one place instead of collecting those fallback paths separately.
+
 That shell-only branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm](perl/FSM/Support/HDLGeneratorResolvedPackageImportsContract.pm),
 which is the contract to follow for the raw package-spec-map rule plus that
 bounded package-import summary surface.
+
 Reusable `HDLGenerator` facade objects also return a fresh
 `resolved_package_imports` map for each generation: caller mutation of one
 result's raw map does not leak into a later result produced by the same facade
 object.
+
 The raw `FSM::Package::Spec` values inside that map are also per-generation
 objects for facade reuse: mutating one result's package name, symbols, or raw
 package AST does not leak into a later generation.
+
 The same per-generation package-spec rule applies whether the package source is
 embedded in the root file or loaded from a configured package search path.
+
 Composition results keep the top-level `resolved_package_imports` map and
 `source_info.resolved_package_imports` as independent mirrors down to the raw
 package-spec object graph, so annotating either mirror does not rewrite the
 other one.
+
 Reusable `HDLGenerator` facade objects also rebuild both composition
 package-spec mirrors for each generation, so caller mutation of one composition
 result's resolved package specs does not leak into the next composition result.
+
 The enclosing composition resolved-import maps are also fresh per generation for
 both the top-level branch and the `source_info` mirror.
+
 The top-level `fsm_module` branch is shell-only too when it is defined: it is a
 raw `FSM::CoreAST::FSMModule` object kept for in-process compatibility, so
 structured downstream consumers should prefer `intent_hir`, `lowered_rtl_ir`,
-`structural_rtl_ir`, or normalized semantic JSON. That shell-only branch now
+`structural_rtl_ir`, or normalized semantic JSON.
+
+That shell-only branch now
 also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorFSMModuleContract.pm](perl/FSM/Support/HDLGeneratorFSMModuleContract.pm),
 which is the contract to follow for the raw CoreAST-object rule plus the
 semantic-summary fallback surfaces.
+
 Reusable `HDLGenerator` facade objects return fresh direct-generation
 `fsm_module` object graphs per generation, so caller mutation of one result's
 raw module object, nested signals, or state array does not leak into a later
 result produced by the same facade object.
+
 Standalone `?dt` roots follow the same reuse rule for their distinct
 decision-tree-shaped `fsm_module` graphs.
+
 The top-level `raw_ast`
 branch is likewise shell-only and intentionally treated as a frontend/debug
 artifact rather than a public interchange tree, so structured consumers should
-prefer `intent_hir` instead of binding themselves to parser-level arrays. That
-shell-only branch now also has its own explicit owner through
+prefer `intent_hir` instead of binding themselves to parser-level arrays.
+
+That shell-only branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorRawASTContract.pm](perl/FSM/Support/HDLGeneratorRawASTContract.pm),
 which is the contract to follow for the parser/debug-array rule plus the
 `intent_hir` fallback surface.
+
 Reusable `HDLGenerator` facade objects return a fresh `raw_ast` snapshot per
 generation, so caller mutation of one result's parser/debug array does not leak
 into a later result produced by the same facade object.
+
 The same result contract now machine-advertises the narrower “stable
 subsurface” boundary for the nested hashes too: the whole `source_info`,
 `module_info`, and `statistics` hashes are still not stable APIs, but the
 advertised `source_info.*`, `module_info.*`, and `statistics.*` identity/summary
 paths are the bounded public slices embedders should target.
+
 That same contract now also publishes a grouped `stable_subsurface_map` so
 embedders can discover those bounded nested stable slices from one place
 instead of reconstructing the map from the separate `source_info`,
 `module_info`, and `statistics` arrays.
+
 The grouped map is defensively rebuilt by the contract and helper, so callers
 can annotate one returned copy without leaking changes into later builds.
+
 It now also publishes a grouped `optional_composition_key_family_map` so
 embedders can discover the bounded composition-only key families from one
 place instead of collecting the separate `module_info`,
 `statistics`, `intent_hir`, and `lowered_rtl_ir` optional-composition lists
 individually.
+
 That grouped optional-composition map is defensively rebuilt by the contract and
 helper, so callers can annotate one returned copy without leaking changes into
 later builds.
+
 It now also publishes a grouped `semantic_layer_presence_key_family_map` so
 embedders can discover the bounded top-level semantic-layer key families for
 `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` from one place
 instead of collecting those semantic-layer key lists separately.
+
 That grouped semantic-layer map is defensively rebuilt by the contract and
 helper, so callers can annotate one returned copy without leaking changes into
 later builds.
+
 It now also publishes a grouped `shell_only_fallback_surface_map` so embedders
 can discover, from one place, where to go instead of binding themselves to the
 raw shell-only compatibility branches such as `fsm_module`, `raw_ast`,
 `resolved_package_imports`, `composition_spec`, `composition_plan`, and
 `composition_report`.
+
 That grouped shell-only fallback surface map is defensively rebuilt by the
 contract and helper, so callers can annotate one returned copy without leaking
 changes into later builds.
+
 It now also publishes a grouped `shell_only_fallback_surface_family_map` so
 embedders can discover the narrower fallback-surface families those shell-only
 branches publish for themselves without reconstructing the per-branch grouping
 by hand.
+
 That grouped shell-only fallback family map is defensively rebuilt by the
 contract and helper, so callers can annotate one returned copy without leaking
 changes into later builds.
+
 The nested `source_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorSourceInfoContract.pm](perl/FSM/Support/HDLGeneratorSourceInfoContract.pm),
 which is the contract to follow for `header`, `kind`,
 `package_import_count`, and `package_import_names`.
+
 Reusable `HDLGenerator` facade objects return fresh `source_info` containers per
 generation, so caller mutation of one result's classification or package summary
 does not leak into a later result produced by the same facade object.
+
 That includes direct roots with non-empty package-import summaries.
+
 Standalone `?dt` roots follow the same source-info reuse rule when their
 packages are resolved through `source_search_paths`.
+
 That reuse rule covers composition `source_info` too, including the top-root
 header and package-import summary list.
+
 For direct package imports, `source_info.package_import_names` is also audited
 against the raw `fsm_module.attributes.package_imports` compatibility branch:
 the two arrays preserve the same authored import order without sharing mutable
 containers.
+
 Standalone `?dt` roots use the same package-import summary ownership rule,
 including external packages resolved through `source_search_paths`.
+
 Composition roots also use that rule: `source_info.package_import_names` matches
 the raw `composition_spec->top->package_imports` branch without sharing its
 mutable array.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity and summary source-info key
-families from one place instead of collecting those key lists separately. The
-parent result contract keeps JSON round-trip coverage for those two source-info
+families from one place instead of collecting those key lists separately.
+
+The parent result contract keeps JSON round-trip coverage for those two source-info
 key lists so this discovery path remains portable in serialized contract
-metadata. It also rebuilds those scalar key lists defensively for each contract
+metadata.
+
+It also rebuilds those scalar key lists defensively for each contract
 build.
+
 The nested `module_info` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
 which is the contract to follow for `module_name`,
 `source_root_kind`, the direct-root scalar summary keys, and the
 composition-only scalar summary keys.
+
 The parent result contract now JSON-audits those module-info identity, summary,
 and optional-composition key lists, including the grouped optional-composition
-family map mirror. It also rebuilds those scalar key lists defensively for each
+family map mirror.
+
+It also rebuilds those scalar key lists defensively for each
 contract build.
+
 Reusable `HDLGenerator` facade objects return fresh `module_info` containers per
 generation, so caller mutation of one result's module summary does not leak into
 a later result produced by the same facade object.
+
 That reuse rule covers composition `module_info` too, including top-level module
 summaries, signal analysis, and child summary containers.
+
 Standalone `?dt` `module_info` follows the same facade-reuse ownership rule for
 module and signal summaries.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded identity, summary, and composition-only
 module-info key families from one place instead of collecting those key lists
 separately.
+
 Composition `module_info` summary projections such as `signal_analysis`,
 `composition_children`, and `composition_generated_children` are also audited
-as owned result containers. They start equivalent to their embedded
+as owned result containers.
+
+They start equivalent to their embedded
 `intent_hir` mirrors, but annotating either location does not mutate the other.
+
 Direct-generation `module_info` forward summary projections such as
 `signal_analysis` and `signal_names` follow the same rule: they start equivalent
 to their embedded `intent_hir` mirrors without sharing mutable containers.
+
 The same rule applies to lowered summary projections such as
 `internal_net_names` and `instance_names`: they start equivalent to the embedded
 `lowered_rtl_ir` mirrors without sharing mutable containers.
+
 Direct-generation lowered summaries such as `output_drive_families`,
 `selector_conflict_targets`, and `standalone_dt_multi_drive_targets` are audited
 the same way: initially equivalent to their embedded `lowered_rtl_ir` mirrors,
 independently mutable after return.
+
 The nested `statistics` object now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorStatisticsContract.pm](perl/FSM/Support/HDLGeneratorStatisticsContract.pm),
 which is the contract to follow for the direct-root scalar summary keys and
 the composition-only scalar summary keys.
+
 The parent result contract now JSON-audits those statistics summary and
 optional-composition key lists, including the grouped optional-composition
-family map mirror. It also rebuilds those scalar key lists defensively for each
+family map mirror.
+
+It also rebuilds those scalar key lists defensively for each
 contract build.
+
 Reusable `HDLGenerator` facade objects return fresh `statistics` containers per
 generation, so caller mutation of one result's scalar statistics or nested raw
 backend maps does not leak into a later result produced by the same facade
 object.
+
 Composition statistics follow the same reuse rule, including the nested
 `statistics.composition_provenance` mirror.
+
 Standalone `?dt` statistics follow the same reuse rule for common scalar
 statistics and raw nested backend maps.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded summary and composition-only statistics
 key families from one place instead of collecting those key lists
 separately.
+
 Composition statistics returned from a caller-supplied `statistics_seed` are
 also audited as owned snapshots: nested seed arrays and hashes remain
 caller-owned, while the returned `statistics` branch can be annotated without
 rewriting the original seed.
+
 The top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` hashes
 follow the same honesty rule: they reuse the dedicated normalized-semantic
 shell owners and their advertised shell keys, but the `HDLGenerator` result
 contract does not treat those top-level hashes as separately stabilized full
 trees beyond those shell boundaries.
+
 The parent result contract now JSON-audits those scalar semantic-layer key lists
 and their grouped family-map mirrors so serialized contract metadata stays in
-sync with the normalized semantic owners. It also rebuilds those scalar key
+sync with the normalized semantic owners.
+
+It also rebuilds those scalar key
 lists defensively for each contract build.
+
 Direct and composition generation both expose those semantic IR payloads twice:
 as convenient top-level result branches and as compatibility mirrors under
-`module_info`. Those locations should compare equal at return time, but callers
-must treat them as separate mutable projections. Mutating
-`result->{intent_hir}`, `result->{lowered_rtl_ir}`, or
+`module_info`.
+
+Those locations should compare equal at return time, but callers
+must treat them as separate mutable projections.
+
+Mutating `result->{intent_hir}`, `result->{lowered_rtl_ir}`, or
 `result->{structural_rtl_ir}` must not rewrite the same-result `module_info`
 mirror, and mutating the mirror must not rewrite the top-level projection.
+
 Reusable `HDLGenerator` facade objects also return fresh top-level semantic IR
 maps per generation, so caller mutation of one result's `intent_hir`,
 `lowered_rtl_ir`, or `structural_rtl_ir` does not leak into a later result
 produced by the same facade object.
+
 The direct-generation `intent_hir` shell is explicitly audited under that
 stateful facade-reuse rule.
+
 The direct-generation `lowered_rtl_ir` shell is audited under the same rule,
 including caller-created optional branches.
+
 The direct-generation `structural_rtl_ir` shell is audited under that rule as
 well, including structural ports and net lists.
+
 Composition `intent_hir` shells are also audited under the same facade-reuse
 rule, including realized child summaries.
+
 Composition `lowered_rtl_ir` shells follow that rule for lowered instance and
 net summaries.
+
 Composition `structural_rtl_ir` shells follow it for top ports, child
 instances, and resolved links.
+
 Standalone `?dt` `intent_hir` shells follow the same facade-reuse rule for
 data-transform intent summaries.
+
 The whole raw result hash is now runtime-audited as non-JSON-safe too:
 [t/378-hdl-generator-result-json-boundary-audit.t](t/378-hdl-generator-result-json-boundary-audit.t)
 checks real direct and composition `HDLGenerator` results against strict JSON
 encoding and verifies that normalized semantic JSON remains the public
 JSON-safe interchange path.
+
 The composition-only `composition_spec` and `composition_plan` branches are
 shell-only too: they are raw `FSM::Composition::Spec` and
-`FSM::Composition::Plan` objects kept for in-process compatibility. The
-`composition_spec` branch now also has its own explicit owner through
+`FSM::Composition::Plan` objects kept for in-process compatibility.
+
+The `composition_spec` branch now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm](perl/FSM/Support/HDLGeneratorCompositionSpecContract.pm),
 which is the contract to follow for the raw composition-spec rule plus the
-sanitized composition-summary fallback surfaces. That same owner now also
+sanitized composition-summary fallback surfaces.
+
+That same owner now also
 publishes a grouped `fallback_surface_map` so embedders can discover the
-bounded semantic-composition fallback families from one place. Reusable
-`HDLGenerator` facade objects return fresh `composition_spec` objects per
+bounded semantic-composition fallback families from one place.
+
+Reusable `HDLGenerator` facade objects return fresh `composition_spec` objects per
 composition generation, so caller mutation of one result's raw composition
 object graph does not leak into a later result produced by the same facade
-object. The `source_info.composition_spec` compatibility mirror follows the
-same per-generation ownership rule when a facade object is reused. The
-`composition_plan` branch
+object.
+
+The `source_info.composition_spec` compatibility mirror follows the
+same per-generation ownership rule when a facade object is reused.
+
+The `composition_plan` branch
 now also has its own explicit owner through
 [perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm](perl/FSM/Support/HDLGeneratorCompositionPlanContract.pm),
 which is the contract to follow for the raw composition-plan rule plus the
-same sanitized composition-summary fallback surfaces. That same owner now also
+same sanitized composition-summary fallback surfaces.
+
+That same owner now also
 publishes a grouped `fallback_surface_map` so embedders can discover the
-bounded semantic-composition fallback families from one place. Reusable
-`HDLGenerator` facade objects return fresh `composition_plan` objects per
+bounded semantic-composition fallback families from one place.
+
+Reusable `HDLGenerator` facade objects return fresh `composition_plan` objects per
 composition generation, so caller mutation of one result's raw plan object graph
-does not leak into a later result produced by the same facade object. Raw
-`composition_report` is likewise an in-process compatibility hash rather than
+does not leak into a later result produced by the same facade object.
+
+Raw `composition_report` is likewise an in-process compatibility hash rather than
 a serializable public JSON surface, so embedders should follow
 [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm)
 and the sanitized
 `semantic.composition.provenance_report` fragment for downstream interchange.
+
 Reusable `HDLGenerator` facade objects return fresh `composition_report`
 containers per composition generation, so caller mutation of one result's raw
 provenance report does not leak into a later result produced by the same facade
 object.
+
 Composition generation also mirrors provenance into
 `module_info.composition_provenance` and `statistics.composition_provenance`.
+
 Those three branches should compare equal at return time, but they are separate
 result containers: caller-side annotation of raw `composition_report` must not
 rewrite `module_info` or `statistics`, and annotation of either mirror must not
 rewrite the raw report or the other mirror.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded composition-report summary, collection,
 count-map, example-map, and ordered-list families from one place instead of
 collecting those key-family lists separately.
+
 The public `support_accounting` match objects emitted beside those reports also
 share one bounded nested-object contract:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](perl/FSM/Support/SupportAccountingMatchContract.pm)
 owns the common `matched` key plus the matched success/failure identity keys
 used by check JSON and normalized semantic JSON.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded support-accounting key families from one
 place instead of collecting the individual field-family lists separately.
+
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for producer identity:
 [perl/FSM/Support/ReportProducerContract.pm](perl/FSM/Support/ReportProducerContract.pm)
 owns the shared `name` plus `report_source` keys, while normalized semantic
 JSON adds the bounded `semantic_layers` extension documented by that same
 owner.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded producer key families from one place
 instead of collecting the individual field-family lists separately.
+
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for the caller-facing source identity:
 [perl/FSM/Support/ReportSourceContract.pm](perl/FSM/Support/ReportSourceContract.pm)
 owns the shared `input` plus `resolved_path` keys emitted under the nested
 `source` object.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded source input and resolution key families
 from one place instead of collecting the individual key-family lists
 separately.
+
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for invocation metadata:
 [perl/FSM/Support/ReportCommandContract.pm](perl/FSM/Support/ReportCommandContract.pm)
 owns the shared `mode`, `json`, `strict_mode`, and `target_language` keys
 emitted under the nested `command` object.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded command mode, flag, and target-language
 key families from one place instead of collecting the individual
 key-family lists separately.
+
 Those same public check JSON and normalized semantic JSON reports now also
 share one bounded nested-object contract for HDL-emission side effects:
 [perl/FSM/Support/ReportGeneratedOutputContract.pm](perl/FSM/Support/ReportGeneratedOutputContract.pm)
 owns the shared `emitted` key emitted under the nested `generated_output`
 object.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded generated-output emission key family from
 one place instead of collecting that key-family list separately.
+
 Successful public check JSON reports now also have one bounded nested-object
 contract for the compact success summary:
 [perl/FSM/Support/CheckResultContract.pm](perl/FSM/Support/CheckResultContract.pm)
 owns the `module_name`, `state_count`, `signal_count`, and
 `composition_child_count` keys emitted under the nested `result` object.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded result identity and summary key families
 from one place instead of collecting the individual key-family lists
 separately.
+
 The public check JSON contract now also publishes a grouped
 `nested_presence_key_map` so embedders can discover the primary nested object
 key families for `command`, `result`, `failure_diagnostic`,
@@ -1329,30 +1891,37 @@ key families for `command`, `result`, `failure_diagnostic`,
 `support_accounting` from one place, while the matched overlays and optional
 failure-diagnostic artifacts remain explicitly advertised as separate bounded
 key families.
+
 That same shell now also publishes a grouped `presence_key_family_map` so
 embedders can discover the shell-owned success, failure, and shared report key
 families from one place instead of collecting those check-JSON field-family
 lists separately.
+
 At the manifest-facing diagnostics-section level, FSMGen now also publishes a
 grouped `nested_presence_key_map` so downstream tools can discover the bounded
 key family for `stable_code_registry` and `check_json` from one place before
 descending into those child contracts.
+
 Failed public check JSON reports now also have one bounded nested-object
 contract for the failure payload itself:
 [perl/FSM/Support/CheckFailureDiagnosticContract.pm](perl/FSM/Support/CheckFailureDiagnosticContract.pm)
 owns the core stable diagnostic keys plus the matched-only, optional-artifact,
 and nested support-accounting key lists emitted under each `diagnostic`
 object.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded failure-diagnostic key families from one
 place instead of collecting the individual field-family lists separately.
+
 Failed public normalized semantic JSON reports now explicitly reuse that same
 bounded nested failure-diagnostic contract too.
+
 The shared failure-diagnostic contract owner is also full-surface JSON-round-trip
 audited and full-surface defensive-copy audited, so both public report families
 stay tied to the same serialized nested `diagnostic` contract shape and embedders
 can treat that contract object as caller-owned metadata rather than a shared
 mutable singleton.
+
 Successful public normalized semantic JSON reports now also have one bounded
 nested-object contract for the success payload itself:
 [perl/FSM/Support/NormalizedSemanticPayloadContract.pm](perl/FSM/Support/NormalizedSemanticPayloadContract.pm)
@@ -1360,32 +1929,38 @@ owns the `module`, `system_contract`, `explicit_system_contract`,
 `signal_analysis`, and `forward_ir` keys, and the same owner also publishes
 the nested `explicit_system_contract`, `signal_analysis`, `system_contract`,
 `forward_ir`, and optional `symbol_contract` plus `composition` key lists.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the shell-owned semantic payload and child extension
 key families from one place instead of collecting those field-family lists
 separately.
+
 That same payload contract now also publishes a grouped
 `nested_presence_key_map`, and the public normalized semantic report contract
 that advertises it now also publishes the same grouped child families as
 `semantic_nested_presence_key_map`, so embedders can discover the deeper
 semantic child key families from one place instead of reconstructing them
 from separate `success_*` lists.
+
 The public normalized semantic report now also republishes the payload
 owner's grouped shell-family view as `semantic_presence_key_family_map`, so
 embedders can discover the shell-owned semantic payload and child-extension
 families from one place instead of reconstructing them from separate
 `success_*` fields.
+
 The bounded `semantic.forward_ir` shell now also publishes its own grouped
 `nested_presence_key_map`, and both the nested payload contract and the
 public normalized semantic report now republish that grouped view as
 `forward_ir_nested_presence_key_map`, so embedders can discover the deeper
 `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` key families without
 reconstructing them from separate `success_forward_ir_*` lists.
+
 That same payload contract, and the public normalized semantic report contract
 that advertises it, now also publish a grouped
 `forward_ir_nested_contract_source_map` so embedders can discover the deeper
 `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` shell owners without
 reconstructing them from parallel scalar owner fields.
+
 The public normalized semantic report contract now also publishes a grouped
 `nested_presence_key_map` so embedders can discover the primary nested object
 key families for `command`, `failure_diagnostic`, `generated_output`,
@@ -1393,104 +1968,129 @@ key families for `command`, `failure_diagnostic`, `generated_output`,
 semantic branches from one place, while the matched overlays and optional
 failure-diagnostic artifacts remain explicitly advertised as separate bounded
 key families.
+
 That same shell now also publishes a grouped `presence_key_family_map` so
 embedders can discover the shell-owned shared-report, success, and failure
 key families from one place instead of collecting those normalized semantic
 field-family lists separately.
+
 At the manifest-facing semantic-exports-section level, FSMGen now also
 publishes a grouped `nested_presence_key_map` so downstream tools can
 discover the bounded key family for `normalized_semantic_json` from one place
 before descending into that child contract.
+
 The nested `semantic.signal_analysis` summary inside that payload now also has
 its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm](perl/FSM/Support/NormalizedSemanticSignalAnalysisContract.pm)
 owns the current sanitized signal-family projection keys plus the shared core
 signal-entry keys emitted across direct and composition roots.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded signal-analysis bucket and entry key
 families from one place instead of collecting the individual field-family
 lists separately.
+
 The nested `semantic.explicit_system_contract` summary inside that payload now
 also has its own bounded nested-object contract when the authored explicit
 contract is preserved:
 [perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm](perl/FSM/Support/NormalizedSemanticExplicitSystemContract.pm)
 owns the current authored explicit clock/reset projection keys through one
 real built nested-object contract, not just parallel helper lists.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded explicit clock, reset-identity, and
 reset-metadata key families from one place instead of collecting the
 individual key-family lists separately.
+
 The nested `semantic.system_contract` summary inside that payload now also has
 its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticSystemContract.pm](perl/FSM/Support/NormalizedSemanticSystemContract.pm)
 owns the current clock/reset/system-contract projection keys through one real
 built nested-object contract, not just parallel helper lists.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded clock, reset-identity, reset-metadata,
 and system-behavior key families from one place instead of collecting the
 individual key-family lists separately.
+
 The nested `semantic.forward_ir` summary inside that payload now also has its
 own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticForwardIRContract.pm](perl/FSM/Support/NormalizedSemanticForwardIRContract.pm)
 owns the current sanitized forward semantic projection keys.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the shell-owned `forward_ir` and child
 composition-only extension key families from one place instead of collecting
 those field-family lists separately.
+
 The nested `semantic.forward_ir.lowered_rtl_ir` summary inside that branch now
 also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticLoweredRTLIRContract.pm)
 owns the current lowered-RTL shell keys plus the composition-only extension
 keys emitted today for top roots.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded `lowered_rtl_ir` key families from one
 place instead of collecting the individual field-family lists separately.
+
 The nested `semantic.forward_ir.structural_rtl_ir` summary inside that branch
 now also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm](perl/FSM/Support/NormalizedSemanticStructuralRTLIRContract.pm)
 owns the current structural-RTL shell keys shared by direct and composition
 roots.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded structural-RTL shell summary and
 collection key families from one place instead of collecting the individual
 key-family lists separately.
+
 The nested `semantic.forward_ir.intent_hir` summary inside that branch now
 also has its own bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm](perl/FSM/Support/NormalizedSemanticIntentHIRContract.pm)
 owns the current intent-hir shell keys plus the composition-only extension
 keys emitted today for top roots.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded `intent_hir` key families from one place
 instead of collecting the individual field-family lists separately.
+
 The optional `semantic.symbol_contract` summary inside that payload now also
 has its own bounded nested-object contract for symbol-rich sources:
 [perl/FSM/Support/NormalizedSemanticSymbolContract.pm](perl/FSM/Support/NormalizedSemanticSymbolContract.pm)
 owns the published symbol-contract key family.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded symbol-contract summary, name-list,
 nested-map, constant-detail, and package-import key families from one place
 instead of collecting the individual key-family lists separately.
+
 The nested `semantic.module` summary inside that payload now also has its own
 bounded nested-object contract:
 [perl/FSM/Support/NormalizedSemanticModuleContract.pm](perl/FSM/Support/NormalizedSemanticModuleContract.pm)
 owns the core module-summary keys plus the current optional metric-key family.
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover those bounded semantic.module key families from one
 place instead of collecting the individual field-family lists separately.
+
 The nested `semantic.composition` summary inside that payload now also has its
 own bounded nested-object contract for composition sources:
 [perl/FSM/Support/NormalizedSemanticCompositionContract.pm](perl/FSM/Support/NormalizedSemanticCompositionContract.pm)
 owns the composition key family while keeping nested provenance-report
 ownership delegated to
 [perl/FSM/Support/CompositionReportContract.pm](perl/FSM/Support/CompositionReportContract.pm).
+
 That same owner now also publishes a grouped `presence_key_family_map` so
 embedders can discover the bounded composition summary, collection, and
 nested provenance key families from one place instead of collecting the
 individual key-family lists separately.
 
-Do not treat the raw `HDLGenerator` result hash as a stable JSON document. Some
-nested branches still contain live CoreAST/AST objects for compatibility and
-in-process tooling. If you need sanitized machine interchange, use
+Do not treat the raw `HDLGenerator` result hash as a stable JSON document.
+
+Some nested branches still contain live CoreAST/AST objects for compatibility and
+in-process tooling.
+
+If you need sanitized machine interchange, use
 `--emit-semantic-json` or the `FSM::Support::NormalizedSemanticReport` surface
 instead.
 
@@ -1512,7 +2112,9 @@ origin/kind lists, ports, resolved links, override events, and block events,
 while stripping private Perl objects before JSON emission.
 
 On the current live path, `structural_rtl_ir` instance bindings are not just
-flat signal names anymore. They can preserve:
+flat signal names anymore.
+
+They can preserve:
 
 - `connection_expr` for the structural source shape
 - `connection_type_name` when a binding reuses a declared named type alias
@@ -1525,7 +2127,9 @@ aggregate actual root without reconstructing that meaning from packed width
 alone.
 
 Composition provenance endpoint contexts also preserve typed aggregate source
-expression facts. For example, `in_frame.tag` and
+expression facts.
+
+For example, `in_frame.tag` and
 `producer.OUT_FRAME.payload[1]` report the resolved aggregate leaf width/type
 when their base endpoint carries a declared aggregate type, rather than forcing
 embedders to infer that path from string spelling or whole-base widths.
@@ -1558,8 +2162,9 @@ That means:
 - not yet promised as a permanently stable contract forever
 
 The active `R13` lane is where that public stabilization work is being
-graduated from useful internal seams into deliberate public contracts. The
-fully frozen embedding API item is tracked in
+graduated from useful internal seams into deliberate public contracts.
+
+The fully frozen embedding API item is tracked in
 [Feature Backlog](14-feature-backlog.md).
 
 The capability manifest's `semantic_exports` section now has that same
@@ -1575,7 +2180,9 @@ bounded split too:
 The emitted `semantic_exports` section itself is now built through
 [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
-in-process and CLI manifest surfaces. That keeps the current bounded
+in-process and CLI manifest surfaces.
+
+That keeps the current bounded
 `normalized_semantic_json` export plus its manifest-context support-accounting
 coverage promises in one place instead of leaving that public section as
 duplicated inline manifest assembly logic.
@@ -1597,7 +2204,9 @@ That response accepts the broad direction that FSMGen should become a precise
 - and later checked metadata for actor roles, channel grouping, semantic signal
   roles, temporal/stability contracts, and provenance/residuals.
 
-Those surfaces are not all implemented yet. They are intentionally staged
+Those surfaces are not all implemented yet.
+
+They are intentionally staged
 behind support accounting, diagnostics, and the active `R13` public embedding
 lane so adapter-facing contracts can be regression-backed instead of merely
 documented.
@@ -1609,77 +2218,100 @@ The first bounded machine-readable surface is now:
 ```
 
 It emits schema-versioned JSON from `FSM::Support::CapabilityManifest`, backed
-by `FSM::Support::RegressionCorpus` and `FSM::Support::DiagnosticCodes`. Treat
-this as a conservative support manifest, not yet as a full normalized semantic
-export. It can already tell downstream tools which expected-failure corpus
+by `FSM::Support::RegressionCorpus` and `FSM::Support::DiagnosticCodes`.
+
+Treat this as a conservative support manifest, not yet as a full normalized semantic
+export.
+
+It can already tell downstream tools which expected-failure corpus
 entries carry stable diagnostic codes, which stable codes exist, and which
-bounded check-JSON command shape is public. It also advertises that check JSON
+bounded check-JSON command shape is public.
+
+It also advertises that check JSON
 emits support-accounting objects and that supported-smoke, strict-supported,
-and expected-failure coverage are locked across the current corpus. The same
-manifest now advertises supported-smoke, strict-supported, and expected-failure
-coverage for the bounded normalized semantic JSON surface. It also advertises
-the bounded typed-extension/context contract, the bounded sanitized composition
+and expected-failure coverage are locked across the current corpus.
+
+The same manifest now advertises supported-smoke, strict-supported, and expected-failure
+coverage for the bounded normalized semantic JSON surface.
+
+It also advertises the bounded typed-extension/context contract, the bounded sanitized composition
 report contract, and the bounded `HDLGenerator` result contract for in-process
-embedders. The full normalized semantic export remains tracked in
+embedders.
+
+The full normalized semantic export remains tracked in
 [Feature Backlog](14-feature-backlog.md).
 embedders, while making clear that the raw result hash is not JSON-safe as a
-whole. It also advertises the optional external SystemVerilog validation lane:
+whole.
+
+It also advertises the optional external SystemVerilog validation lane:
 `--verify-hdl` / `--validate-hdl` writes generated `.sv` and then runs
 Verilator lint plus ABC-free Yosys structural synthesis when those tools are
 installed.
+
 The public `support_accounting` match objects emitted by both `--check --json`
 and `--emit-semantic-json` now share one bounded nested-object owner too:
 [perl/FSM/Support/SupportAccountingMatchContract.pm](perl/FSM/Support/SupportAccountingMatchContract.pm).
+
 The manifest's `support_accounting` section now has its own bounded contract
 owner too:
 [perl/FSM/Support/SupportAccountingContract.pm](perl/FSM/Support/SupportAccountingContract.pm).
+
 That keeps the top-level support counts, id lists, and sanitized catalog-entry
 key set discoverable as an explicit contract instead of only as sample output.
+
 The stable diagnostic-code registry now follows the same pattern:
 [perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm)
 owns the production registry, while
 [perl/FSM/Support/DiagnosticCodeRegistryContract.pm](perl/FSM/Support/DiagnosticCodeRegistryContract.pm)
 owns the bounded manifest-facing sibling-key and stable-entry-key promise.
+
 That same owner now also publishes grouped `key_family_map` and
 `bounded_value_family_map` views so downstream tools can discover the bounded
 registry key families and allowed value families from one place instead of
 collecting those lists separately.
+
 The in-process registry helpers also deliberately return defensive copies:
 downstream code may inspect and transform those returned hashes locally, but it
 must not expect mutations to feed back into FSMGen’s canonical stable-code
 registry.
+
 The manifest shell now follows the same split too:
 [perl/FSM/Support/CapabilityManifest.pm](perl/FSM/Support/CapabilityManifest.pm)
 builds the JSON, while
 [perl/FSM/Support/CapabilityManifestContract.pm](perl/FSM/Support/CapabilityManifestContract.pm)
 owns the bounded top-level and first nested section key lists advertised under
 top-level `manifest_contract`.
+
 The whole top-level public section fleet is now regression-locked as dedicated
 `*Section.pm` builders too: [t/369-manifest-section-builder-audit.t](t/369-manifest-section-builder-audit.t)
 discovers the section-builder modules, proves that the discovered set exactly
 matches the manifest’s public top-level sections, and then checks that each
 section stays an exact dedicated-builder projection across the in-process
 manifest and both CLI spellings.
+
 The grouped top-level discovery tables published by `manifest_contract` are now
 runtime-locked too: [t/370-capability-manifest-section-discovery-audit.t](t/370-capability-manifest-section-discovery-audit.t)
 proves that `top_level_contract_source_map` and
 `top_level_section_presence_key_map` stay aligned with the real section
 builders and with the live manifest payloads exposed through the in-process
 builder plus both CLI spellings.
+
 That runtime boundary is now locked directly too: the emitted
 `--capability-manifest` and `--emit-capability-manifest` JSON must match the
-in-process `build_capability_manifest()` output exactly. The embedded
-`manifest_contract`, every `*.section_contract`, `language_surface.surface_contract`,
+in-process `build_capability_manifest()` output exactly.
+
+The embedded `manifest_contract`, every `*.section_contract`, `language_surface.surface_contract`,
 `diagnostics.stable_code_registry`, and the exact embedding children
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
 `typed_extensions`, and `debug_runtime` are now treated as literal
 dedicated-builder pass-throughs.
-Only three advertised
-manifest children are intentionally enriched beyond their dedicated builders:
+
+Only three advertised manifest children are intentionally enriched beyond their dedicated builders:
 `diagnostics.check_json`, `semantic_exports.normalized_semantic_json`, and
 `backend_validation.systemverilog_external`, and those enrichments are
 runtime-locked to a small documented set of manifest-context fields rather than
 left as open-ended widening.
+
 Those three enrichments now also have explicit section-owned builders in
 [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm),
 [perl/FSM/Support/SemanticExportsSection.pm](perl/FSM/Support/SemanticExportsSection.pm),
@@ -1687,11 +2319,13 @@ and
 [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm),
 so the runtime parity audit reuses the same named manifest-surface builders
 instead of reconstructing those bounded enrichments inline.
+
 Published `tested_by` provenance is now repo-checked too:
 [t/381-contract-tested-by-provenance-audit.t](t/381-contract-tested-by-provenance-audit.t)
 walks the direct support contracts plus the in-process and CLI manifest
 surfaces, finds every public `tested_by` list, and requires each entry to stay
 a relative existing `t/*.t` file under this repository.
+
 Published module provenance is repo-checked as well:
 [t/382-contract-module-provenance-audit.t](t/382-contract-module-provenance-audit.t)
 walks the direct support contracts plus the in-process and CLI manifest
@@ -1699,6 +2333,7 @@ surfaces, finds public module-reference fields such as `contract_source`,
 `*_contract_source_map`, `implementation_owners`, `report_sources`,
 `report_builder`, and `registry_source`, and requires each value to be a
 loadable `FSM::...` module present under `perl/`.
+
 Grouped discovery maps now have the same generic guard:
 [t/383-contract-family-map-integrity-audit.t](t/383-contract-family-map-integrity-audit.t)
 walks direct contracts plus manifest outputs and requires maps such as
@@ -1706,26 +2341,34 @@ walks direct contracts plus manifest outputs and requires maps such as
 `constructor_option_family_map`, `name_family_map`, and `family_map` to stay
 hashes of non-empty unique scalar lists, aligned with same-named sibling lists
 when the sibling exists.
+
 That shell contract now also explicitly lists the first nested
 `support_accounting` keys, so embedders can discover the corpus-backed section
 shape without a manifest-specific exception.
+
 The `support_accounting` section now also exposes that same bounded owner
 through `support_accounting.section_contract`.
+
 That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded bucket, id-list, and catalog-entry
 key families from one place instead of collecting those support-accounting key
 families field by field.
+
 The emitted `support_accounting` section is now also built through
 [perl/FSM/Support/SupportAccountingSection.pm](perl/FSM/Support/SupportAccountingSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
 in-process and CLI manifest surfaces.
+
 That projection is also runtime-locked against corpus truth: the emitted
 `support_accounting` section must stay an exact bounded projection of
 [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm),
 including the derived bucket counts, ordered id lists, sanitized catalog
-entries, and the embedded exact `section_contract` copy. In other words, this
+entries, and the embedded exact `section_contract` copy.
+
+In other words, this
 section is not just “shape compatible”; it is deliberately tied to maintained
 regression-corpus truth.
+
 Those published catalog paths are now checked against the real repository too:
 [t/372-support-accounting-catalog-path-audit.t](t/372-support-accounting-catalog-path-audit.t)
 proves that every public `catalog_entries[*].relpath` stays relative and
@@ -1733,139 +2376,179 @@ present on disk as a file, every published `search_path_relpaths` entry stays
 relative and present as a directory, and the public derived id lists stay
 unique and catalog-backed across the in-process manifest plus both CLI
 spellings.
+
 The `embedding` section now follows the same split too:
 [perl/FSM/Support/EmbeddingContract.pm](perl/FSM/Support/EmbeddingContract.pm)
 owns the published top-level and nested contract-owner map advertised through
 `embedding.section_contract`, while the narrower result, composition-report,
 serializable plan/report, facade, ISF public-interface, typed-extension, and
 debug-runtime contracts still own their deeper public promises.
+
 The emitted `embedding` section itself is now built through
 [perl/FSM/Support/EmbeddingSection.pm](perl/FSM/Support/EmbeddingSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
-in-process and CLI manifest surfaces. That keeps the grouped
+in-process and CLI manifest surfaces.
+
+That keeps the grouped
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
 `isf_public_interface`, `serializable_plan_reports`, `typed_extensions`, and
 `debug_runtime` child contracts in one place instead of leaving that public
 section as duplicated inline manifest assembly logic.
+
 The embedding section contract is also full-surface audited for JSON round-trip
 stability and for clean rebuilds after caller mutation, so embedders can treat
 the advertised `embedding.section_contract` object as caller-owned metadata
 rather than a shared mutable singleton.
+
 The `hdl_generator_facade` child also has a constructor-boundary audit in
 [t/377-hdl-generator-constructor-boundary-audit.t](t/377-hdl-generator-constructor-boundary-audit.t),
 so new constructor arguments cannot quietly appear without being classified as
 bounded public facade options, internal owner-injection options, or
 non-public extension-loading options.
+
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key families for
 `composition_report`, `hdl_generator_facade`, `hdl_generator_result`,
 `isf_public_interface`, `serializable_plan_reports`, `typed_extensions`, and
 `debug_runtime` from one place before descending into those narrower contracts.
+
 The `diagnostics` section now follows the same split too:
 [perl/FSM/Support/DiagnosticsContract.pm](perl/FSM/Support/DiagnosticsContract.pm)
 owns the published top-level, scalar-string, and stable-code entry families
 advertised through `diagnostics.section_contract`, while the narrower stable
 registry and check-JSON contracts still own their deeper public promises.
+
 The emitted `diagnostics` section itself is now built through
 [perl/FSM/Support/DiagnosticsSection.pm](perl/FSM/Support/DiagnosticsSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
-in-process and CLI manifest surfaces. That keeps the grouped stable registry,
+in-process and CLI manifest surfaces.
+
+That keeps the grouped stable registry,
 bounded manifest-context `check_json`, and section contract in one place
 instead of leaving that public section as duplicated inline manifest assembly
 logic.
+
 That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded diagnostics-owned scalar-string,
 list, and stable-code entry key families from one place instead of collecting
 those diagnostics key families separately.
+
 That section is now runtime-locked against diagnostic-registry truth too: the
 emitted `stable_codes` list must stay an exact ordered projection of
 [perl/FSM/Support/DiagnosticCodes.pm](perl/FSM/Support/DiagnosticCodes.pm),
 while `diagnostics.stable_code_registry` stays the exact dedicated registry
 contract and `diagnostics.check_json` stays the exact dedicated check-report
-contract plus only its documented bounded manifest-context fields. This keeps
-the diagnostics section machine-trustworthy without pretending the whole
+contract plus only its documented bounded manifest-context fields.
+
+This keeps the diagnostics section machine-trustworthy without pretending the whole
 downstream check-report payload is frozen inside the manifest.
+
 The `producer` section now follows the same split too:
 [perl/FSM/Support/ProducerContract.pm](perl/FSM/Support/ProducerContract.pm)
 owns the published top-level, scalar-string, and boolean field families
 advertised through `producer.section_contract`, while the broader producer
 story stays limited to current tool/build identity rather than becoming an
 accidental release-management API.
+
 The emitted `producer` section itself is now built through
 [perl/FSM/Support/ProducerSection.pm](perl/FSM/Support/ProducerSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
-in-process and CLI manifest surfaces. That keeps the current tool identity,
+in-process and CLI manifest surfaces.
+
+That keeps the current tool identity,
 best-effort git hash, and bounded `source`/`section_contract` payload in one
 place instead of leaving that public section as duplicated inline manifest
 assembly logic.
+
 That section shell now also publishes a grouped `presence_key_family_map` so
 downstream tools can discover the bounded scalar-string and boolean key
 families from one place instead of collecting those producer key families
 field by field.
+
 The `backend_validation` section now follows the same split too:
 [perl/FSM/Support/BackendValidationContract.pm](perl/FSM/Support/BackendValidationContract.pm)
 owns the published top-level and nested contract-owner map advertised through
 `backend_validation.section_contract`, while the narrower
 `HDLExternalValidationContract` still owns the deeper validation-lane promise.
+
 The emitted `backend_validation` section itself is now built through
 [perl/FSM/Support/BackendValidationSection.pm](perl/FSM/Support/BackendValidationSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
-in-process and CLI manifest surfaces. That keeps the current bounded
+in-process and CLI manifest surfaces.
+
+That keeps the current bounded
 `systemverilog_external` lane plus its manifest-context regression-smoke claim
 in one place instead of leaving that public section as duplicated inline
 manifest assembly logic.
+
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded child key family for
 `systemverilog_external` from one place before descending into the narrower
 validation contract.
+
 The `language_surface` section now has its own bounded owner as well:
 [perl/FSM/Support/LanguageSurfaceContract.pm](perl/FSM/Support/LanguageSurfaceContract.pm)
 advertises the public top-level and first nested section-key lists through
 `language_surface.surface_contract`, while the broader authored-language
 surface still widens only when new claims are regression-backed deliberately.
+
 The emitted `language_surface` section itself is now built through
 [perl/FSM/Support/LanguageSurfaceSection.pm](perl/FSM/Support/LanguageSurfaceSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
-in-process and CLI manifest surfaces. That keeps the current authored strict
+in-process and CLI manifest surfaces.
+
+That keeps the current authored strict
 mode, compatibility, expression, declaration, and composition guidance in one
 place while preserving the contract rule that the broader language surface is
 still widened only by deliberate regression-backed changes.
+
 That section shell now also publishes a grouped `nested_presence_key_map` so
 downstream tools can discover the bounded first nested key families for
 `strict_mode`, `default_mode_compatibility`, `assignments`,
 `system_contracts`, `expressions`, `declarations`, and `composition` from one
 place before descending into those nested language-surface sections.
+
 The `documentation` section now has its own bounded owner too:
 [perl/FSM/Support/DocumentationContract.pm](perl/FSM/Support/DocumentationContract.pm)
 advertises the public top-level and path-list keys through
 `documentation.section_contract`, while the exact documentation file lists stay
 deliberately widenable.
+
 The emitted `documentation` section itself is now built through
 [perl/FSM/Support/DocumentationSection.pm](perl/FSM/Support/DocumentationSection.pm)
 and runtime-locked as an exact dedicated-builder projection across both
-in-process and CLI manifest surfaces. That keeps the current grouped path
+in-process and CLI manifest surfaces.
+
+That keeps the current grouped path
 lists in one place while preserving the documented rule that those exact lists
 may still widen deliberately over time.
+
 Those published path lists are now runtime-checked against the real repository
 too: [t/371-documentation-path-existence-audit.t](t/371-documentation-path-existence-audit.t)
 proves that every published documentation path remains relative, unique, and
 present on disk under the repo root across the in-process manifest and both
 CLI spellings.
+
 That section shell now also publishes a grouped `path_list_contract_map` so
 downstream tools can discover the bounded path-list families for
 `human_contract` and `downstream_alignment` from one place before consuming
 those documentation path lists.
+
 That lane is currently SystemVerilog-only; VHDL/GHDL validation waits for an
 active VHDL backend.
+
 The bounded contract for that lane now has its own owner too:
 [perl/FSM/Support/HDLExternalValidationContract.pm](perl/FSM/Support/HDLExternalValidationContract.pm).
+
 The capability manifest advertises the command shape, tool identities, stage
 names, and bounded success result/step keys for embedders that want the same
 post-emission gate without reverse-engineering sample output.
+
 That same contract now also publishes a grouped
 `success_presence_key_family_map` so embedders can discover the bounded
 success top-level and step key families from one place instead of collecting
 those success key lists separately.
+
 It now also publishes bounded `failure_mode_names`,
 `failure_mode_family_map`, and `failure_text_prefix_map` values so embedders
 can distinguish input-side failures such as missing tools or missing source
@@ -1878,31 +2561,46 @@ The first bounded check/diagnostic surface is now:
 ./bin/fsmgen --strict --check --json path/to/file.fsm
 ```
 
-It emits schema-versioned JSON to stdout and writes no HDL. Matched
-expected-failure diagnostics include the stable `FSMGEN_*` code and the matched
-support-accounting entry. The nested `support_accounting` object is the
-preferred machine-readable bridge back to corpus truth. Unclassified failures
-keep a `null` code until their family is deliberately promoted into the stable
-registry. `.isf` parser, lowering, schedule-report, and semantic check
+It emits schema-versioned JSON to stdout and writes no HDL.
+
+Matched expected-failure diagnostics include the stable `FSMGEN_*` code and the matched
+support-accounting entry.
+
+The nested `support_accounting` object is the
+preferred machine-readable bridge back to corpus truth.
+
+Unclassified failures keep a `null` code until their family is deliberately promoted into the stable
+registry.
+
+`.isf` parser, lowering, schedule-report, and semantic check
 failures use the same `success:false` JSON path rather than empty stdout.
+
 Accepted corpus entries are covered too: supported-smoke entries must
 succeed through `--check-json`, and strict-supported entries must succeed
-through `--strict --check-json`. When a successful check matches a non-failure
+through `--strict --check-json`.
+
+When a successful check matches a non-failure
 corpus entry by resolved source path, the report-level `support_accounting`
 object gives embedders the matched entry id, family, coverage, classification,
-source kind, and `strict_supported` marker. Successful user sources outside the
+source kind, and `strict_supported` marker.
+
+Successful user sources outside the
 corpus report `matched: false` instead of claiming catalog support they do not
 yet have.
+
 Unclassified failures follow the same honesty rule: they still keep the
 bounded failure-diagnostic and nested `support_accounting` object shape, but
 they omit matched-only fields and keep `matched: false` until that failure
 family is deliberately promoted into the stable corpus-backed registry.
+
 The bounded key-presence contract for this surface now has its own owner:
 [perl/FSM/Support/CheckDiagnosticsContract.pm](perl/FSM/Support/CheckDiagnosticsContract.pm).
+
 The capability manifest advertises that contract so downstream tools can
 discover the common top-level keys plus the current bounded success-result and
 failure-diagnostic keys without relying only on narrative docs or reverse-
 engineering sample payloads.
+
 The full check-diagnostics contract owner is also full-surface audited for JSON
 round-trip stability and for clean rebuilds after caller mutation, so embedders
 can treat the advertised contract object as caller-owned metadata rather than a
@@ -1914,9 +2612,13 @@ The first bounded normalized semantic surface is now:
 ./bin/fsmgen --strict --emit-semantic-json path/to/file.fsm
 ```
 
-`--semantic-json` is the short alias. The command runs the full generation
+`--semantic-json` is the short alias.
+
+The command runs the full generation
 pipeline, emits schema-versioned JSON to stdout, and writes no HDL file even
-when `-o` is present. Successful reports expose:
+when `-o` is present.
+
+Successful reports expose:
 
 - `normalized_semantic_schema_version: 1`
 - `command.mode: semantic_export`
@@ -1930,32 +2632,46 @@ when `-o` is present. Successful reports expose:
 - `semantic.forward_ir.structural_rtl_ir`
 - `semantic.composition.provenance_report` for composition sources
 
-The important word is "sanitized". This surface does not dump private Perl
+The important word is "sanitized".
+
+This surface does not dump private Perl
 objects such as live AST nodes or `FSM::CoreAST::Signal` instances, and it does
-not include generated HDL text. It projects scalar/list/hash metadata that
+not include generated HDL text.
+
+It projects scalar/list/hash metadata that
 downstream tools can consume without depending on private runtime object
-identity. Failed semantic exports reuse the same stable diagnostic-code and
+identity.
+
+Failed semantic exports reuse the same stable diagnostic-code and
 support-accounting bridge as `--check-json`, return non-zero, and do not expose
 partial semantics.
+
 When a semantic failure does not match a promoted corpus-backed diagnostic
 family, the report still keeps its bounded top-level `support_accounting`
 object with `matched: false`, while the failure diagnostic keeps `code: null`
 and omits matched-only fields.
+
 Successful composition semantic exports now also recover a bounded effective
 `system_contract` when the realized child roots agree on one clock/reset
 contract and the top actually exposes those system-port names, even if the top
-itself did not author `+system`. In that case `semantic.system_contract`
+itself did not author `+system`.
+
+In that case `semantic.system_contract`
 preserves the shared child clock/reset/reset-policy fields with
 `implicit: true`, while `semantic.explicit_system_contract` stays `null`
 unless the composition top explicitly authored a system contract.
 
-Accepted corpus entries are covered too. Every current supported-smoke entry
+Accepted corpus entries are covered too.
+
+Every current supported-smoke entry
 must succeed through `--emit-semantic-json`, and every current strict-supported
 entry must succeed through `--strict --emit-semantic-json`, while preserving
 matched support-accounting identity, expected module/top identity, sanitized
 forward-IR projections, and no HDL emission.
 
-Rejected corpus entries are covered too. Every current expected-failure entry
+Rejected corpus entries are covered too.
+
+Every current expected-failure entry
 must reject through `--emit-semantic-json`, using the same strict/default
 routing as check JSON, while preserving the stable diagnostic code and matched
 support-accounting identity, omitting partial semantic payloads, and writing no
@@ -1963,42 +2679,59 @@ HDL.
 
 The bounded key-presence contract for this public surface now has its own owner:
 [perl/FSM/Support/NormalizedSemanticReportContract.pm](perl/FSM/Support/NormalizedSemanticReportContract.pm).
+
 The capability manifest advertises that contract so downstream tools can
 discover the current top-level and bounded nested success/composition keys
 without relying only on narrative docs or reverse-engineering sample payloads.
+
 Those same normalized-semantic child-owner contracts are now also checked
 against real successful runtime payloads on both sides of the surface:
-symbol-rich direct roots and composition roots. That keeps the shipped child
+symbol-rich direct roots and composition roots.
+
+That keeps the shipped child
 contracts honest against the actual emitted `semantic.module`,
 `semantic.system_contract`, `semantic.explicit_system_contract`,
 `semantic.signal_analysis`, `semantic.forward_ir`, optional
 `semantic.symbol_contract`, and optional `semantic.composition` branches,
 instead of relying only on static helper-family consistency.
+
 The same runtime-audit stance now also covers the bounded in-process
 `HDLGenerator` leaf owners for `source_info`, `module_info`, and `statistics`.
+
 Real direct and composition generation results are checked against the shipped
 leaf-owner key families, and the `source_info` audit also locks authored
-package-import summaries on both direct and composition roots. That keeps the
-leaf contracts tied to what embedders actually receive in-process instead of
+package-import summaries on both direct and composition roots.
+
+That keeps the leaf contracts tied to what embedders actually receive in-process instead of
 only to static helper lists.
+
 The same hardening now also covers the shell-only `HDLGenerator`
-compatibility branches. Real direct and composition generation results are now
+compatibility branches.
+
+Real direct and composition generation results are now
 checked so `fsm_module`, `raw_ast`, `resolved_package_imports`,
 `composition_spec`, `composition_plan`, and raw `composition_report` keep the
 published runtime shape they still advertise for in-process compatibility, and
-their documented fallback surfaces are checked too. In particular, the raw
+their documented fallback surfaces are checked too.
+
+In particular, the raw
 composition provenance report is now locked against the normalized semantic
 JSON `semantic.composition.provenance_report` fragment, so the branch/fallback
 story is regression-backed instead of only narrated.
-The public report shells themselves are now runtime-checked too. Real
-`--check-json` success and matched-failure payloads are checked against the
+
+The public report shells themselves are now runtime-checked too.
+
+Real `--check-json` success and matched-failure payloads are checked against the
 bounded check-report shell families, and real `--emit-semantic-json` success
 and matched-failure payloads are checked against the bounded normalized
-semantic shell families. That keeps the top-level public report contract
+semantic shell families.
+
+That keeps the top-level public report contract
 honest at runtime, not only the nested leaves and child-owner surfaces.
 
-This is still a bounded public slice, not the final full semantic export. Wider
-expression, state/DT control-shape, assignment/guard, package/type, and
+This is still a bounded public slice, not the final full semantic export.
+
+Wider expression, state/DT control-shape, assignment/guard, package/type, and
 provenance fields should graduate only when they are backed by regression
 coverage and support-accounting truth.
 

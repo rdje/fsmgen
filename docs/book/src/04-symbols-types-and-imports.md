@@ -119,6 +119,7 @@ that widening is tracked in [Feature Backlog](14-feature-backlog.md).
 Direct-root `+params` values may also reuse resolved semantic symbols:
 same-root constants, whole aggregate constant roots, enum members such as
 `mode.BUSY`, direct `+define` values, and other same-root direct `+params`.
+
 Parameter-to-parameter references are resolved as one acyclic dependency graph,
 so declaration order does not matter when there is one safe answer. Cycles such
 as `(P_A P_B)` plus `(P_B P_A)` are rejected before HDL emission instead of
@@ -177,16 +178,20 @@ magic numbers:
 The resolved value must be one positive integer before generation. Named types
 still work in this same slot, so `(+size (frame frame_t))` remains the way to
 attach a declared aggregate/scalar type rather than computing a raw width.
+
 Positive integer scalar symbols used as direct `+size` widths or composition
 `?ports` widths accept the same common scalar literal spellings, so a shared
 `(BYTE_W 0x8)` or `(BYTE_W 'h8)` can safely drive a width contract.
+
 Aggregate scalar leaves may participate too, for example `LANES[1]` or
 `FRAME.meta.mode`, but a whole aggregate root such as `LANES` is not itself a
 scalar width. Use a scalar leaf when computing a raw width, or use a declared
 aggregate type alias when the intent is typed aggregate storage.
+
 The direct `+size` expression path and the scalar-width-symbol path share the
 same integer literal interpreter for decimal, `0d`, `0b`, `0o`, `0x`,
 SystemVerilog-style based spellings, and FSMGen intent-level sized values.
+
 Signed literal terms are valid ingredients when the final width remains
 positive, for example:
 
@@ -207,8 +212,10 @@ being delegated to the backend.
 
 For example, `(pow 2 3)` is intentionally rejected today because `pow` is not
 part of the bounded width-expression operator set.
+
 Likewise, `(+ 8)` is rejected because the supported infix-style width
 operators require at least two operands.
+
 Expressions such as `(/ 8 0)` or `(% 8 0)` are rejected before HDL generation
 because width declarations must fold to one well-defined positive integer.
 
@@ -240,6 +247,7 @@ explicit decimal `0d...` spelling so the source stays unambiguous before HDL
 generation.
 
 FSMGen intent-level sized literals use `<width>'<integer-value>` in `.fsm`.
+
 They are source-language values, not target-HDL text escapes. The backend must
 normalize them before emission, so `5'23` lowers to legal SV like `5'd23`,
 `20'x1` lowers to `20'h1`, and negative sized values lower as two's-complement

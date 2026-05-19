@@ -48,6 +48,7 @@ the book view cannot drift apart.
 the `bin/fsmgen` runtime spine. It is not a tutorial chapter, but it is the
 right place to verify whether the saved CLI/import-tree picture still matches
 the source at the start of an engineering session.
+
 Keep detailed static measurements in that focused doc; the book should point to
 the current maintainer map rather than duplicate volatile line-count tables.
 

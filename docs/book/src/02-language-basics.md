@@ -65,6 +65,7 @@ The expression must resolve to one positive integer before generation. Unknown
 or aggregate-valued leaves are rejected instead of becoming accidental signals.
 
 `.fsm` integer literals are intentionally a little friendlier than target HDL.
+
 Alongside SystemVerilog-style forms such as `8'hA5`, you can write
 intent-level sized values as `<width>'<integer-value>`: `5'23`, `8'-10`,
 `8'-0xA`, `8'-0b1010`, or `20'x1`. Those are normalized before HDL emission,
@@ -77,6 +78,7 @@ FSMGen now rejects obviously bitstring-like bare `0/1` tokens such as
 `00001110` or `10000000` instead of guessing whether they were meant as
 decimal or binary. Write `0b00001110` for intrinsic-width binary,
 `8'b00001110` for exact-width binary, or `0d1110` if decimal was intended.
+
 Positive-width slots keep the existing decimal compatibility, so
 `(+size (DATA 10))` still means decimal ten.
 
@@ -95,6 +97,7 @@ Use canonical `:=` pairs for explicit reset/default metadata:
 
 The value slot is also an expression slot. It may be a literal, a named
 constant/enum/param, an aggregate scalar leaf, or a nested Lisp-ish expression.
+
 The older compact form `(:= signal=value)` remains default-mode compatibility
 residue; strict mode points users to the pair form.
 
@@ -283,6 +286,7 @@ The current live expression surface includes:
 - RHS pack expressions with `(concat ...)` or the shorter `(cat ...)` alias
 
 The arithmetic/bitwise expression families are n-ary except for shifts.
+
 Operators such as `+`, `*`, `&`, `|`, and `^` combine all operands; `-`, `/`,
 and `%` are left-associative, so `(/ a b c)` means `((a / b) / c)` and
 `(% a b c)` means `((a % b) % c)`. Shift operators are exact binary forms:

@@ -72,6 +72,7 @@ numeric and bitwise families.
 
 Current boundary: matching list/record aggregate shapes support leafwise
 `+`, `-`, `*`, `/`, `%`, `&`, `|`, `^` plus word aliases before HDL lowering.
+
 Additional aggregate operators remain deferred until each operator has a
 defined type/shape/result contract and validation path.
 
@@ -156,6 +157,7 @@ outside the shipped value domain.
 ### General Transaction Activation Parameter Overrides
 
 Status: shipped bounded surface; broader activation forms remain backlog.
+
 The original `ISF-TRANSACTION-ACTIVATION` tree is closed for spawn and
 blocking `do`, and the `ISF-ACTIVATION-PARAM-OVERRIDES` tree is closed for
 rule-trigger overrides plus the direct-activation boundary. Rule-trigger
@@ -171,11 +173,13 @@ and shipped activation-site `(bind ...)` blocks pass scalar actual signals for
 the supported `do`, `spawn`, and rule `trigger` subset. Spawned child
 transactions and blocking `do` child activations support per-instance
 `(params (NAME value) ...)` overrides through generated composition.
+
 Parameterized rule triggers now use the same generated-composition
 specialization model. Parameter overrides on direct transaction activation or
 other future activation forms are not public syntax. For direct `(on ...)`,
 there is deliberately no source shape: the entry guard belongs to the
 transaction definition, not to a caller-owned instance that can be specialized.
+
 Runtime-varying values should use transaction ports, `(sample ...)`, or
 activation-site `(bind ...)` where supported.
 
@@ -228,8 +232,10 @@ value to a transaction input port and `(bind ...)` it as runtime data.
 ### Spawn Inside Repeat Bodies
 
 Status: partially shipped; broader repeat-body child activation remains backlog.
+
 Task-tree owner for the remaining backlog:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
+
 Repeat-body local `(do child)`, top-level when-body nested repeat local
 or generated-child `(do child)`, top-level when-body nested repeat
 static-parameter generated `(do child (params ...))` with optional
@@ -283,6 +289,7 @@ generated-do rule and may wire input/output binding handoffs once when
 `(bind ...)` is paired with static `(params ...)`; it may also carry declared
 same-domain `(domain NAME)` metadata when static params are present. It
 rejects deeper branch nesting and loop-contained repeat activation.
+
 A top-level repeat body may use
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
 when the same repeat body reaches `(await_all done)` before the repeat check
@@ -297,6 +304,7 @@ the generated instance's done handoff before the repeat check. Samples after
 repeat-body spawn are shipped when they appear before the same-body
 `await_all` or single-pending `await_any`; they materialize in an explicit
 sample state before the sync state.
+
 Parameter overrides reuse the same static specialization contract as top-level
 spawn: they specialize the one lexical child instance in the generated top and do not
 create per-iteration parameter values. Binding handoffs generate one set of
@@ -315,6 +323,7 @@ that instance's fresh done handoff. Samples immediately before shipped
 repeat-body local or generated `do` states now lower into explicit sample
 states before the do state. Samples immediately after those do states lower
 after the do state's fresh done guard and before the repeat check.
+
 Multi-pending repeat-body `await_any` is now shipped only as an observation
 point: a later same-body `await_all` must drain the same outstanding
 repeat-body spawns before the repeat check can loop, and new repeat-body
@@ -325,6 +334,7 @@ more generated
 the same nested repeat body reaches `(await_all done)` before the nested
 repeat check can loop. Repeats directly inside a top-level `switch` branch
 accept the same multiple generated-spawn plus same-body `await_all` subset.
+
 Both branch-contained paths may use single-pending `(await_any done)` directly
 when exactly one generated child is pending. Both branch-contained paths may
 also use multi-pending `(await_any done)` as an observation point when a later
@@ -414,6 +424,7 @@ The when-contained nested repeat spawn leaf covers a repeat directly inside a
 top-level `when` body with one or more generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites that
 reach same-body `(await_all done)` before the nested repeat check can loop.
+
 This subset is shipped. Exactly one pending generated child may also use
 single-pending `(await_any done)`. It reuses the static generated-child
 handoff model, keeps source-order samples before the spawn or sync states
@@ -425,6 +436,7 @@ analogue: a repeat directly inside a top-level `switch` branch with one or
 more generated
 `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites that
 reach same-body `(await_all done)` before the nested repeat check can loop.
+
 This subset is shipped. Exactly one pending generated child may also use
 single-pending `(await_any done)`. It reuses the static generated-child
 handoff model, keeps source-order samples before the spawn or sync states
@@ -465,18 +477,22 @@ analogue is also shipped: a repeat directly inside a top-level `switch` branch
 may run a local `(do child)` while generated nested spawns remain pending,
 with the same later same-body `(await_all done)` drain requirement and the
 same local start/done proof.
+
 The top-level `when` body generated-child analogue is also shipped: plain
 `(do child)` may run while generated nested spawns are pending when `child` is
 already emitted as a generated child by another activation site. The generated
 do site owns one deterministic generated instance, waits for that instance's
 fresh done handoff, and leaves the pending generated-spawn done set live for
 the later same-body `(await_all done)` drain.
+
 The direct top-level `switch` branch generated-child analogue is also shipped:
 plain `(do child)` may run while generated nested spawns are pending when
 `child` is already emitted as a generated child by another activation site.
+
 The generated do site owns one deterministic generated instance, waits for
 that instance's fresh done handoff, and leaves the pending generated-spawn
 done set live for the later same-body `(await_all done)` drain.
+
 The top-level `when` body and top-level `switch` branch static-parameter
 generated `do` analogues are also shipped: `(do child (params ...))` may run
 while generated nested spawns are pending when a later same-body
@@ -485,6 +501,7 @@ nested repeat check can loop. The generated do site owns one deterministic
 generated instance, records static generated-top parameter binding, waits for
 that instance's fresh done handoff, and leaves the pending generated-spawn
 done set live for the later drain.
+
 The top-level `when` body binding analogue is also shipped: generated
 `(do child (params ...) (bind ...))` may run while generated nested spawns are
 pending when a later same-body `(await_all done)` still drains every
@@ -493,10 +510,12 @@ subset mirrors the shipped static-parameter pending-spawn leaf, with
 generated-top input/output binding handoffs added once for the generated do
 instance while pending generated-spawn done handoffs remain live until the
 later drain.
+
 The direct top-level `switch` branch binding analogue is also shipped:
 generated `(do child (params ...) (bind ...))` may run while generated nested
 spawns are pending when a later same-body `(await_all done)` still drains
 every outstanding generated child before the nested repeat check can loop.
+
 This switch-contained subset mirrors the shipped when-contained bound
 pending-spawn leaf, with generated-top input/output binding handoffs added
 once for the generated do instance while pending generated-spawn done
@@ -511,6 +530,7 @@ top-level `when` body or top-level `switch` branch with multiple generated
 spawns, a multi-pending `(await_any done)` observation, local blocking
 `(do child)` while those generated spawns remain pending, and a later
 same-body `(await_all done)` drain before the nested repeat check can loop.
+
 The local do target stays in the parent scheduled module and the
 generated-spawn done handoffs stay live through the local do until the later
 drain. The when-contained generated-child `await_any`-before-do subset is also
@@ -578,6 +598,7 @@ generated spawns remain pending, and a later same-body `(await_all done)`
 drain before the nested repeat check can loop. The shipped contract mirrors
 the shipped when-contained domain proof and records declared same-domain
 ownership metadata without implying CDC or cross-domain activation.
+
 The top-level `when` body nested repeat local do before post-do multi-pending
 `await_any` subset is also shipped: a repeat directly inside a top-level
 `when` body with multiple generated spawns, local blocking `(do child)` while
@@ -598,6 +619,7 @@ point, and a later same-body `(await_all done)` drain before the nested
 repeat check can loop. The generated-child do waits for its deterministic
 generated do instance's fresh done handoff, and the post-do `await_any`
 observes only the pending generated-spawn done set without clearing it.
+
 The switch-contained generated-child post-do `await_any` analogue is now
 shipped with the same generated-child and later-drain contract: a repeat
 directly inside a top-level `switch` branch may run a plain generated-child
@@ -646,12 +668,15 @@ Status: active ATL design tree; static metadata, scalar handoffs, bounded
 temporary trigger-batch scheduling, parent trigger/event handoffs, and
 resolved child `.fsm` artifact emission are shipped under the selected ATL v0
 public contract.
+
 Task-tree owner:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
+
 Concrete design proposal:
 [ISF_ATL_DESIGN_PROPOSAL](../../ISF_ATL_DESIGN_PROPOSAL.md).
 
 Goal: move ISF up one abstraction level while staying in explicit `.isf`.
+
 The working name is Actor Transfer Level (`ATL`): where RTL describes data
 movement between flops/registers, ATL describes data, information, and
 activation movement between actors. The actor is the transfer endpoint.
@@ -676,10 +701,13 @@ implementation slices are shipped: static actor instances may be declared with
 the direct actor-level `(instance NAME of ACTOR_TYPE)` clause, and static
 concurrent groups may be declared with direct actor-level
 `(group NAME (members ACTOR...) (mode concurrent))` clauses.
+
 The enclosing actor is the network boundary; `(network ...)` is not part of
 the shipped source surface. The accepted form lowers to parser shell and
 schedule-report metadata under `actor_network` with `declaration: "actor"`.
+
 Unqualified static instances remain metadata-only external intent.
+
 Library-qualified static instances now resolve to report metadata and emit
 their resolved child scheduled `.fsm` artifacts; they still do not emit a
 generated ATL top, infer parent/child handoff wiring, schedule groups, or wire
@@ -687,15 +715,18 @@ HDL. Multiple instances outside the shipped
 scalar handoff and report-only group metadata subsets, broader event/trigger
 behavior beyond the single parent-handoff subsets, and wider endpoint movement
 remain backlog.
+
 Actor-to-actor and pin-to-actor movement is not expressed as top-level
 `connect` clauses. The selected ATL v0 proposal reuses existing drive
 definitions and drive calls: a drive body keeps its shipped `(sink source)`
 assignment-pair order, while ATL widens `sink` and `source` to qualified actor
 endpoints and top-level pins. FSMGen discriminates endpoint roles during
 scheduling; the source does not add a new movement keyword.
+
 The rationale is uniform ISF syntax: ATL should not make downstream emitters
 or users learn a second data-movement form when existing drive bodies and
 drive calls can carry the same intent.
+
 The first `.5` data-movement implementation sequence shipped fail-closed
 reservation for unsupported endpoint drive-body pairs, then shipped the first
 generated scalar actor-to-actor handoff subset. The shipped subset is exactly
@@ -705,10 +736,12 @@ transaction drive call. It emits one-bit external parent handoff ports named
 `source_actor_source_endpoint` and `sink_actor_sink_endpoint`, uses a
 one-cycle route lifetime, and reports through
 `actor_network.data_movements[]`.
+
 Storage, muxing, generated child `.fsm` artifacts, generated ATL tops, HDL
 child wiring, broader pin movement, inline/expression movement,
 fan-in/fan-out, groups, CDC, and trigger/await coupling remain separate
 backlog leaves.
+
 The first pin-movement subsets are shipped in both scalar directions:
 top-level input pin to actor endpoint as `(actor.endpoint pins.input_pin)`,
 and actor endpoint to top-level output pin as
@@ -716,6 +749,7 @@ and actor endpoint to top-level output pin as
 drive body, one direct static actor instance, one top-level transaction drive
 call, and one-bit top-level pins only. Wider pin payloads and mixed
 pin/actor movement in one drive remain later leaves.
+
 The selected orchestration vocabulary reuses existing ISF activation forms:
 `(do actor.transaction)` for blocking actor transaction activation,
 `(spawn actor.transaction as NAME)` for nonblocking activation,
@@ -729,12 +763,14 @@ group axis starts with shipped fail-closed diagnostics for direct `(group ...)`
 declarations and compact `(concurrent ...)` aliases. Report-only static group
 metadata is shipped for verbose `(group ...)`; scheduling behavior and compact
 aliases remain later leaves.
+
 The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch over existing transaction-body
 `(trigger actor.transaction)` clauses: one contiguous batch, distinct static
 actor instances, generated external trigger outputs pulsed from one parent
 state, and `actor_network.association_schedules[]` report evidence. Static
 `(group ...)` declarations are not required and remain review metadata only.
+
 Noncontiguous batches, repeated members, generated children, group endpoints,
 data-movement coupling, multi-event fan-in, route mux/storage, CDC, and
 compact aliases remain later leaves.
@@ -831,6 +867,7 @@ export from that library. Unqualified `(instance NAME of ACTOR_TYPE)` remains
 metadata-only external intent until a later leaf widens it, and sibling actor
 roots remain rejected. Existing `(use alias.actor as instance ...)` remains
 the separate reusable-library generated-top surface with explicit bindings.
+
 The targeted fail-closed reservation for the qualified ATL syntax is now
 shipped: missing imports, non-explicit import aliases, unknown aliases,
 and unknown exports still fail before scheduled `.fsm` emission. Resolved
@@ -843,16 +880,19 @@ top. Broader generated ATL tops, HDL child wiring outside that selected pair
 plus scalar pin-ingress/pin-egress routes, interface binding inference, event
 fan-in, route mux/storage, CDC, recursive actor networks, and
 ready/backpressure remain later leaves.
+
 The resolved-child fixture is now shipped as
 `isf/atl_resolved_child_pipeline.isf`. It proves the generated-top boundary
 with one same-source library actor export, one resolved child instance, one
 parent trigger handoff, one parent event wait, exactly three lower-result
 artifacts, strict schedule JSON parity, and generated parent/child handoff
 wiring through `atl_resolved_child_pipeline_top.fsm`.
+
 HDL promotion for that resolved-child shape is shipped. It keeps the source
 and report schema unchanged and proves plain plus strict CLI SystemVerilog
 generation contains the generated top, scheduled parent, resolved child, and
 selected internal trigger/event links.
+
 The first generated-child data-route slice is shipped as one scalar top-level
 input-pin route into one resolved child through the generated top, written as
 `(worker.payload pins.payload)` in a named drive body. The fixture
@@ -879,9 +919,11 @@ across two resolved children when it is coupled to qualified actor
 trigger/event handoffs. The source shape reuses the existing `(sink source)`
 drive-body pair; the selected scalar two-child route is now shipped, while
 broader routes still require later scheduling work.
+
 The first positive two-child generated top is now shipped for the control-only
 case: `isf/atl_two_child_pipeline.isf` triggers `reader.capture`, waits on
 `reader.done`, triggers `writer.emit`, waits on `writer.done`, and completes.
+
 Lowering emits parent, both children, and one generated top; schedule JSON
 records the generated-top child wiring under
 `actor_network.generated_tops[].children[]`.
@@ -894,70 +936,84 @@ and one generated top. The parent exposes `reader_payload` and
 `writer_payload` handoffs, the parent drive body moves the scalar payload for
 the drive-call cycle, and the generated top wires `reader.payload` to the
 parent source handoff plus the parent sink handoff to `writer.payload`.
+
 Multi-route data wiring, fan-in/fan-out, mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, repeated triggers, trigger batches,
 groups, recursive actor networks, and permanent actor grouping remain
 backlog.
+
 The shipped hardening does not widen that support. It locks focused
 fail-closed coverage for missing or wrong-direction child payload ports and
 route-cardinality violations around the shipped one-route fixture before any
 multi-route, mux/storage, fan-in/fan-out, or payload-protocol work is claimed.
+
 The shipped width hardening narrows that payload-protocol backlog further by
 locking wider generated-child route endpoints as fail-closed until explicit
 packing, truncation, extension, or storage semantics are selected.
+
 The shipped clock/reset hardening narrows the CDC/reset-remap backlog by
 requiring source and sink children in the generated-child actor-to-actor
 route to share the parent clock/reset policy; mismatches fail closed until
 explicit CDC bridge or reset-remapping semantics are selected.
+
 The shipped self-route hardening narrows the loopback/storage backlog by
 requiring source and sink actor qualifiers in the generated-child
 actor-to-actor route to name distinct resolved children; same-child pairs
 fail closed until explicit self-route, bypass, storage, mux, or fan-in/fan-out
 semantics are selected.
+
 The shipped repeated-trigger hardening narrows the repeated-activation
 backlog by requiring the generated-child actor-to-actor route sequence to
 contain only one source-child trigger and one sink-child trigger; extra
 route-child triggers fail closed until explicit restart, pending-request,
 trigger fan-in/fan-out, or multi-activation scheduling semantics are
 selected.
+
 The shipped repeated-wait hardening narrows the event-coupling backlog by
 requiring the same route sequence to contain only one source-child event wait
 and one sink-child event wait; extra route-child waits fail closed until
 explicit event fan-in/fan-out, repeated wait sequencing, route-level wait
 storage, muxing, ready/backpressure, or payload semantics are selected.
+
 The shipped same-parent-transaction hardening narrows the route continuation
 backlog by requiring the route sequence to stay inside one parent
 transaction; split route clauses remain fail-closed until explicit pending
 handoff storage, transaction rendezvous, cross-transaction scheduling,
 muxing, ready/backpressure, or payload semantics are selected.
+
 The shipped sink-trigger ordering hardening narrows the speculative
 activation backlog by requiring the data drive call to precede the sink child
 trigger; sink-before-drive route clauses remain fail-closed until explicit
 delayed payload delivery, route storage, muxing, ready/backpressure, or
 payload semantics are selected.
+
 The shipped sink-event-wait ordering hardening narrows the event sampling
 backlog by requiring the sink child event wait to follow the sink child
 trigger; sink-wait-before-trigger route clauses remain fail-closed until
 explicit pre-trigger acknowledgement, sticky event sampling, event replay,
 route storage, muxing, ready/backpressure, or payload semantics are selected.
+
 The shipped source-event-wait ordering hardening applies the same
 event-sampling boundary on the source side by requiring the source child
 event wait to follow the source child trigger; source-wait-before-trigger
 route clauses remain fail-closed until explicit pre-trigger acknowledgement,
 sticky event sampling, event replay, route storage, muxing, ready/backpressure,
 or payload semantics are selected.
+
 The shipped route-contiguity hardening narrows the route-interleaving
 backlog by requiring the same route sequence to stay one contiguous
 transaction-body segment; unrelated parent clauses interleaved between route
 clauses remain fail-closed until explicit interleaved parent work, local side
 effects, pre/post route sampling, route continuation, storage, muxing,
 ready/backpressure, or payload semantics are selected.
+
 The shipped route-isolation hardening narrows the pre/post-route side-effect
 backlog by requiring the contiguous route segment to remain the only
 executable parent transaction-body work between start and completion; parent
 clauses before the source trigger or after the sink event wait remain
 fail-closed until explicit setup, cleanup, local side effects, continuation,
 storage, muxing, ready/backpressure, or payload semantics are selected.
+
 The shipped route-boundary cardinality hardening narrows the activation and
 completion boundary backlog by requiring that isolated route to stay bounded
 by exactly one simple start boundary and one simple completion boundary;
@@ -965,6 +1021,7 @@ extra start or completion clauses remain fail-closed until explicit
 activation fan-in, completion fan-out, start arbitration, setup/cleanup,
 continuation, storage, muxing, ready/backpressure, or payload semantics are
 selected.
+
 The shipped boundary-simplicity hardening narrows the boundary-body backlog
 by keeping those start/completion boundaries body-free; activation-body
 samples in `(on ...)` and extra payload operands in `(complete ...)` remain
@@ -1085,6 +1142,7 @@ such as `=>` are not preferred because they can look like physical routing
 instead of intent-level movement.
 
 The movement action is not intended to mean permanent actor-to-actor wiring.
+
 The RTL analogy is a mux feeding a flop: the sink actor is like the flop D
 input, and source actors are like mux data inputs. Several source actors may
 be allowed to provide the same information to a sink actor at different
@@ -1093,6 +1151,7 @@ on the drive body's `(sink source)` pair, the drive-call timing point,
 triggers, sink-valid conditions, disjoint timing, and any generated
 mux/enable/handoff plan. The scheduler derives the connectivity; the source
 does not need a separate `connect` clause for actor-to-actor movement.
+
 The author should not have to hand-author routing. FSMGen owns the runtime
 route-select control, mux selects, enables, and handoffs that dynamically move
 information between actors once the scheduled interaction is inferred.
@@ -1182,6 +1241,7 @@ package-qualified enum members too, such as
 `(until shared.mode.BUSY (complete done))`; those dotted standalone condition
 tokens lower through computed `.fsm` selector syntax such as `?(mode.BUSY)` or
 `?(shared.mode.BUSY)`.
+
 Transaction `switch` selectors and branch values may consume local and
 package-qualified enum members, scalar rule assignment RHS values and scalar
 operands inside rule assignment RHS expressions and scalar operands inside rule
@@ -1196,6 +1256,7 @@ now also consume local and package-qualified enum members. Reusable-library
 use-site parameter override values and aggregate/list leaves may consume local
 and package-qualified enum members too, resolving to literal generated-top
 bindings and `library_uses[]` report values.
+
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
 aggregate storage carriers, such as
 `frame.mode` or `lanes[0]`, either directly or as scalar operands inside
@@ -1295,6 +1356,7 @@ resource kind: `rule_slot`, a one-cycle mutual-exclusion slot where each bound
 rule requests when its guard is true, the priority graph chooses a unique
 active winner, and the generated grant gates the whole rule DT DTE without
 adding a cycle.
+
 The resource-kind catalog is owned in code by
 `FSM::Support::ISFResourceCatalog` and exposed through the machine-readable
 ISF public contract, so downstream consumers can distinguish shipped resource
@@ -1333,7 +1395,9 @@ covered same-target data case by guarding the transaction-state assignment
 with the inverse active rule condition. Priority cycles, incomparable rule
 conflicts, unordered rule/transaction conflicts, and mixed timing conflicts
 fail closed.
+
 Rule/drive overlap is still tracked because compile-time proof is not doable.
+
 Generated SystemVerilog now includes verification-only selector assertions
 derived from backend assignment analysis: same-value source selectors and
 whole-mux value selectors are checked with `$onehot0` under
@@ -1375,6 +1439,7 @@ and scalar operands inside RHS expressions may read scalar aggregate storage
 leaves such as `frame.mode`, and named drive body targets may write scalar
 aggregate storage leaves such as `frame.mode`; aggregate paths in drive body
 RHS expression operator position and subaggregate drive targets remain backlog.
+
 Named drive-call scalar
 actual values may
 read scalar aggregate storage leaves, and drive-call actual expressions may
@@ -1383,6 +1448,7 @@ operator position remain backlog. Inline drive assignment scalar RHS values
 and scalar operands inside RHS expressions may read scalar aggregate storage
 leaves; aggregate paths in inline drive RHS expression operator position and
 subaggregate inline drive targets remain backlog.
+
 `(trigger transaction)` lowers through a generated one-cycle source and
 transaction start fan-in. `(priority over other_rule)` feeds the covered
 priority/resource arbitration paths. Same-expression rule writes report as
@@ -1404,6 +1470,7 @@ Shipped subset: a top-level transaction stage of the preferred form
 alias. It lowers to one state that drives `valid_signal = 1` while active and
 advances only when `ready_signal` is true. The valid endpoint is still a normal
 transaction drive and participates in existing same-target conflict checks.
+
 Actor-level phase/stage metadata is now parser-carried and schedule-report
 visible through `actor_phases[]` and `actor_stages[]`, preserving each
 authored metadata name and list-form body. It still has no runtime scheduler
@@ -1436,6 +1503,7 @@ declared with `(params (NAME value) ...)` when they resolve to non-negative
 integer literals. `wait 0`, constants that resolve to zero, and scalar actor
 parameters that resolve to zero are transparent no-ops that emit no wait
 state, consume no active transaction cycle, and create no report entry.
+
 `wait 1` occupies one generated wait state for one active cycle and advances
 on the next state transition; `wait N` contributes exactly `N` active cycles
 wherever it executes, including inside `when`, `switch`, `repeat`, `while`,
@@ -1446,12 +1514,14 @@ and the expression-width helper derives a positive result width.
 
 The static lowering is a reviewable fixed scheduled-state chain. No hidden
 wait counter is introduced for the static literal/constant/parameter surface.
+
 Pending samples before a positive static wait piggyback onto the first wait
 state; pending samples before a zero wait remain pending for the next
 state-producing clause. The runtime scalar lowering splits the predecessor
 edge: zero bypasses the generated wait state, and positive counts load a
 generated counter before entering the wait state. The wait state decrements the
 sampled counter and loops until the sampled value reaches `1`.
+
 Consecutive top-level runtime waits are shipped: a zero bypass from one wait
 immediately evaluates the next wait, and the final sampled-counter edge of an
 active wait splits into the following wait's positive sampled-counter and zero
@@ -1459,14 +1529,17 @@ bypass paths. Pending samples before the first top-level runtime wait in the
 chain are also shipped when the final zero-count successor can carry the
 sample; zero-then-positive paths use generated downstream wait-entry clones,
 and all-zero paths use final compatible target clones.
+
 Additional top-level predecessor kinds are shipped for `await`, `stage`,
 `repeat` exit checks, `await_all`, `await_any`, and bank `load`/`store`
 states; their own advance conditions are ANDed or ORed into the runtime count
 split, and their unrelated alternatives such as await timeouts or repeat
 loop-back edges are preserved.
+
 Loop decision predecessors are shipped for the no-pending-sample subset: loop
 body entries, loop back-edges, and loop exits that target a runtime wait split
 that edge while preserving the opposite loop branch.
+
 Successful reports expose bounded `transaction_waits[]` entries with
 transaction name, `cycles`, `count_kind`, `count_source`, entry state, exit
 state, optional counter signal, and optional counter width. Static waits keep
@@ -1506,6 +1579,7 @@ shipped only for pass-through marker states with no assignments or guards;
 loop decision/check successors are shipped only when their counter assignment
 and loop condition are independent of the pending sample alias; forms that
 read or overwrite a pending sample alias remain backlog.
+
 The inline-body surface is now split into context-specific implementation
 leaves. `when` and `repeat` bodies are shipped for the no-pending-sample
 subset, `switch` branches are shipped for the no-pending-sample subset, and
@@ -1517,6 +1591,7 @@ in that sample-compatible branch subset, along with independent shift
 assemble, extract, bank-load, and bank-store successors. A scalar setter,
 shift, assemble state, extract state, bank-load state, or bank-store state is
 independent only when it neither reads nor overwrites a pending sample alias.
+
 Pending samples before `repeat`, `while`, and `until` dynamic waits are also
 shipped when the zero-count successor is an independent loop decision/check
 state that preserves the repeat counter decrement or while/until branch
@@ -1534,6 +1609,7 @@ no-pending-sample subset. Pending-sample preservation is now split under
 `ISF-DYNAMIC-WAIT.3.3.5.4`. Expression-valued runtime counts shipped under
 `ISF-DYNAMIC-WAIT.3.3.6` with the same predecessor-edge snapshot contract as
 scalar runtime counts.
+
 Consecutive top-level runtime waits now include pending-sample zero-link
 carrying for the shipped sample-compatible final target subset.
 
@@ -1542,6 +1618,7 @@ shared successor state. The positive-count path must behave like a positive
 static wait, where samples materialize in the first active wait state. The
 zero-count path must behave like `wait 0`, where no hidden wait/sample cycle is
 introduced and the samples materialize with the next state-producing clause.
+
 Top-level runtime waits now use a first wait state that samples once, a
 separate wait-loop state for counts greater than one, and a zero-bypass clone
 of the following state-producing clause when that successor can carry samples
@@ -1549,17 +1626,21 @@ without changing timing, including completion states that preserve their
 delayed pulse and return-to-idle behavior plus independent scalar setters that
 neither read nor overwrite pending sample aliases plus independent shifts and
 independent assemble and extract states plus independent bank-load states.
+
 Independent bank stores now share that same independent-successor rule, and
 top-level ready/valid stages can carry samples when their ready input and
 valid output are independent of the pending sample alias. Top-level bounded
 eventual contract arm states can carry samples while preserving the monitor
 arm pulse. Top-level await-all/await-any sync states can carry samples when
 their collected done ports are independent of the pending sample alias.
+
 Top-level spawn states can carry samples when the generated start handoff is
 independent of the pending sample alias.
+
 Top-level transaction phase states can carry samples by preserving the
 original pass-through transition; actor-level phase metadata remains
 report-only and unrelated to runtime zero-count sample materialization.
+
 Consecutive top-level runtime waits carry pending samples through zero-count
 wait links with generated downstream wait-entry clones for zero-then-positive
 paths and final compatible target clones for all-zero paths. `when` and
@@ -1567,6 +1648,7 @@ paths and final compatible target clones for all-zero paths. `when` and
 fallthrough exits, and their selected completion, independent setter,
 independent shift, independent assemble, independent extract, independent
 bank-load, and independent bank-store successors are sample-compatible.
+
 `repeat`, `while`, and `until` use the same materialization while preserving
 loop-back and loop-exit edges. Other successor shapes that cannot yet carry
 samples remain fail-closed.
@@ -1584,6 +1666,7 @@ emits an entry decision state and a back-edge decision state that each sample
 transaction clause. Zero iterations are therefore possible. `(until cond
 body...)` is a body-first loop. It executes the body once, then samples `cond`
 in a generated decision state; true exits, and false loops back to the body.
+
 That spelling means one-or-more iterations. A pre-test "run while not done"
 loop should be authored as `(while (! done) body...)` rather than overloading
 `until`.
@@ -1598,6 +1681,7 @@ lifetime, and reporting semantics are specified. The condition uses the same
 scalar or list-expression condition surface as `when`.
 
 These loops are persistent hardware schedule regions, not software processes.
+
 They may be data-dependent or unbounded at runtime and do not create an
 implicit timeout. Existing watchdog, latency, and temporal-contract mechanisms
 remain explicit and count loop-body cycles according to their own active-cycle
@@ -1608,6 +1692,7 @@ decision/body/exit states, and body clause count.
 ### Transaction Ports And Actor Pin Access
 
 Status: shipped base surface; richer output/report surfaces remain backlog.
+
 Transaction `(ports ...)` declarations, scalar and expression-valued input
 activation bindings, first actor-pin conflict/runtime coverage, and bounded
 schedule-report binding provenance are shipped. The original
@@ -1707,6 +1792,7 @@ signals consumed by explicit spawn input-binding expressions are not also
 same-name wired into the child instance. Rule `trigger` supports input
 bindings only; each rule owns a distinct payload source and the trigger fan-in
 DT routes payloads under the matching per-rule trigger pulse.
+
 Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
 richer report fields, and broader static conflict diagnostics remain backlog.
 
@@ -1735,6 +1821,7 @@ checks or equivalent scheduled artifacts.
 Shipped subset: a top-level transaction contract of the preferred form
 `(contract name (eventually signal within cycles))`. The older nested
 `(eventually signal (within cycles))` spelling remains accepted as an alias.
+
 Reaching the clause emits one arm state; the generated scheduled `.fsm`
 monitor tracks pending/age/fail storage, clears on actor reset, and sets a
 sticky fail bit if the signal is not seen within the window or if the same
@@ -1745,6 +1832,7 @@ verification-only assertion under `` `ifndef SYNTHESIS``; Verilog output stays
 assertion-free. Remaining backlog: global `always` implication forms, min/max
 windows, dynamic bounds, same-cycle checks, nested contracts, expression
 operands, and multiple outstanding obligations.
+
 The file-backed `isf/stream_stage_contract.isf` fixture covers the shipped
 top-level ready/valid stage plus bounded eventual contract path through
 strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
@@ -1762,6 +1850,7 @@ Current boundary: deprecated handshake metadata is structurally validated and
 ignored. The parser accepts a scalar handshake name plus scalar `valid`/`ready`
 property entries and leaves the actor-shell handshake placeholder empty. Direct
 `(on port ...)` activation plus generated `can_accept` is the current model.
+
 Policy: keep well-formed legacy handshakes accepted and ignored for
 compatibility, and do not lower them into scheduled `.fsm`, schedule JSON, or
 HDL. Accepted legacy forms now require one `valid` and one `ready` property
@@ -1800,6 +1889,7 @@ Current boundary: `shift_left` and `shift_right` accept `(width N)` and
 `extract` accepts `(widths N...)` as explicit assertions. `shift_left` uses
 the optional width only as register-width evidence; plain widthless
 `shift_left` remains accepted because no insertion-position width is needed.
+
 `extract` also infers exactly one missing destination field width when the
 source word width and all sibling field widths prove one positive remainder;
 two or more unknown fields remain backlog. `extract` fails closed instead of
@@ -1811,6 +1901,7 @@ width when the target width and all sibling part widths prove one positive
 remainder; two or more unknown parts remain backlog for inference and are
 accepted only as non-evidence concat operands. `assemble` also rejects known
 target-width mismatches and non-positive single-part inferred remainders.
+
 Schedule reports now expose positive integer `width` metadata for inferred
 scheduler counters and register storage with known ISF width evidence.
 
@@ -1822,6 +1913,7 @@ Goal: classify inferred storage more precisely in schedule reports.
 
 Current boundary: schedule reports expose bounded storage metadata with
 optional positive integer widths when width evidence is known.
+
 `inferred_storage[].kind` remains the coarse storage category (`counter` or
 `register`). The first optional `inferred_storage[].role` slice is shipped for
 storage families with stable lowering evidence: `activation_done_handoff`,
@@ -1831,6 +1923,7 @@ storage families with stable lowering evidence: `activation_done_handoff`,
 `temporal_contract_monitor`,
 `rule_trigger_source`, `rule_trigger_payload_source`, `transaction_port`,
 `transaction_port_binding`, and `trigger_done_observe`.
+
 Declared typed actor-owned storage may also expose optional `type` and
 `type_kind` summaries; those fields are bounded metadata, not raw type-spec
 hashes.
@@ -1865,6 +1958,7 @@ Freeze policy: the current contractual surface is the metadata
 advertised by `embedding.isf_public_interface`, including top-level keys,
 nested key/value families, scalar policies, ordering policies, nullability
 rules, storage kind/role/width metadata, and CLI/in-process report parity.
+
 New optional keys or value-family members may be added only when the same slice
 updates contract metadata, focused tests, and user-facing docs.
 
@@ -1873,12 +1967,14 @@ the same source and FSMGen version and may be used for report-local or
 artifact-local joins when public fields explicitly reference them, but
 downstream consumers should use bounded metadata fields instead of parsing
 generated-name spelling as a semantic contract.
+
 Additive/deprecation policy is also explicit: new report keys, nested optional
 keys, and value-family members are additive only when public contract metadata,
 focused tests, and user-facing docs move in the same slice. Removing,
 renaming, changing required/optional status, changing value type, or changing
 advertised value meaning is breaking and requires a `schema_version` bump plus
 migration or deprecation documentation.
+
 Assignment-provenance and multi-file child-summary policy is explicit: raw
 assignment provenance, private assignment indexes, activation proof internals,
 and recursive child report dumps stay private. The public boundary is bounded
@@ -1918,44 +2014,53 @@ fixture promotions should add stable structural assertions rather than full
 HDL or full schedule JSON snapshots. The SPI-like and I2C-like fixtures
 intentionally stay out of the quick/smoke tier for now; `quick` remains
 APB-centered for fast turnaround.
+
 The burst-reader fixture is now also promoted in the `isf` tier for
 file-backed strict schedule JSON parity, scheduled `.fsm` structure, plain and
 strict HDL generation, dynamic repeat counter storage, watchdog/latency
 counter roles, sampled aliases, and completion/timeout pulse fan-in.
+
 The UART-like fixture is now promoted in the `isf` tier for file-backed strict
 schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, sampled-byte LSB drive selection, known-width `shift_right`,
 repeat counter storage, busy drive sequencing, and completion pulse behavior.
+
 The phase fixture is now promoted in the `isf` tier for file-backed strict
 schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, transaction phase pass-through states, absence of reusable
 `done` drive storage, and delayed completion pulse behavior.
+
 The switch fixture is now promoted in the `isf` tier for file-backed strict
 schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, sampled selector capture, explicit branch dispatch, default
 fallthrough to completion, named-drive branch starts, and delayed completion
 pulse behavior.
+
 The when fixture is now promoted in the `isf` tier for file-backed strict
 schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, entry drive setup, two conditional decision states, multi-step
 true-body drives, false-path fallthrough, compatible named-drive start fan-in,
 and delayed completion pulse behavior.
+
 The generated-composition fixture is now promoted in the `isf` tier for
 file-backed strict schedule JSON parity, strict `--outdir` file emission,
 generated top, parent, and child scheduled `.fsm` artifacts, start/done
 handoffs, named-drive request/payload handoffs, public input fanout,
 `await_all` synchronization, and strict HDL generation for the generated top,
 parent, and child artifacts.
+
 The rule/resource fixture is now promoted in the `isf` tier for file-backed
 strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, rule-over-transaction priority suppression, `rule_slot`/`priority`
 resource metadata, lower-priority rule gating by a higher-priority rule, and
 delayed completion pulse behavior.
+
 The stage/contract fixture is now promoted in the `isf` tier for file-backed
 strict schedule JSON parity, scheduled `.fsm` structure, plain and strict HDL
 generation, sampled payload forwarding, ready/valid stage metadata, bounded
 eventual contract metadata, temporal monitor storage roles, SystemVerilog
 sticky-fail assertion projection, and delayed completion pulse behavior.
+
 The FIFO datapath fixture is now promoted in the `isf` tier for file-backed
 strict schedule JSON parity, scheduled `.fsm` structure, bounded
 `bank_accesses[]` metadata, plain and strict HDL generation, scalarized
@@ -1963,6 +2068,7 @@ depth-4 `data_0` through `data_3` storage, pointer-guarded accepted pushes,
 and pointer-guarded accepted pops. It does not claim general memory-array HDL
 emission, write-first collision behavior, bypassing, or arbitrary-depth
 parameterized FIFOs.
+
 The FIFO controller fixture is now promoted in the `isf` tier for file-backed
 strict schedule JSON parity, scheduled `.fsm` structure, compatible
 same-value fan-in metadata, plain and strict HDL generation, idle cycles,
@@ -1970,6 +2076,7 @@ push-only, pop-only, simultaneous push+pop occupancy updates,
 actor-maintained full/empty flags, and 2-bit pointer wrap. It is
 controller-only and does not claim data-bank storage or `data_out` datapath
 transfer behavior.
+
 The FIFO library fixture is now promoted in the `isf` tier for file-backed
 strict schedule JSON parity, strict `--outdir` emission, generated importer,
 specialized child, and top scheduled `.fsm` artifacts, fixed FIFO parameter
@@ -1989,6 +2096,7 @@ generation. It is the bounded two-actor `isf/atl_data_route_pipeline.isf`
 handoff fixture, not a claim for generated ATL children, generated ATL tops,
 route mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
 ready/backpressure, or permanent actor grouping.
+
 The ATL scalar pin-ingress fixture is now promoted in the `isf` tier for
 file-backed strict schedule JSON parity, scheduled `.fsm` structure, an
 existing top-level source input pin, generated actor handoff output,
@@ -1999,6 +2107,7 @@ for generated ATL children, generated ATL tops, actor-to-pin egress,
 bidirectional pin movement, route mux/storage, trigger/data coupling, wider
 payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent actor
 grouping.
+
 The ATL scalar pin-egress fixture is now promoted in the `isf` tier for
 file-backed strict schedule JSON parity, scheduled `.fsm` structure, generated
 actor source handoff input, existing top-level output sink,
@@ -2008,6 +2117,7 @@ single-actor `isf/atl_pin_egress_pipeline.isf` egress fixture, not a claim for
 generated ATL children, generated ATL tops, bidirectional pin movement, route
 mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
 ready/backpressure, or permanent actor grouping.
+
 The ATL resolved-child fixture is now promoted in the `isf` tier for
 file-backed strict schedule JSON parity, parent plus resolved child scheduled
 `.fsm` structure, resolved actor-network instance metadata, one parent
@@ -2017,6 +2127,7 @@ data/association/group schedule arrays. It is the bounded
 a claim for multi-child data wiring, broader HDL child wiring, inferred
 interface binding, route mux/storage, actor-event fan-in, CDC,
 ready/backpressure, recursive actor networks, or permanent actor grouping.
+
 The follow-on `isf/atl_resolved_child_pin_ingress_pipeline.isf` fixture is now
 promoted for one generated-top scalar pin-ingress route into that resolved
 child, using `(worker.payload pins.payload)`. The follow-on
@@ -2036,6 +2147,7 @@ construct instead of hiding the workaround inside the test.
 
 ISF expressiveness policy: Lisp-like syntax makes argument-level composition
 and variadic constructs natural, but arity is part of the public contract.
+
 Constructs with fixed hardware roles should keep exact arity. Constructs whose
 meaning is naturally list-like or associative may accept an arbitrary number of
 arguments when that keeps the source clear and the lowering remains
@@ -2114,6 +2226,7 @@ The first repo-local reusable FIFO fixture uses that model through
 the public FIFO ports to instance `u_fifo`. The generated HDL proof checks
 the specialized child module, fixed parameter bindings, scalarized data
 entries, pointer-gated accepted push/pop selectors, and generated top wiring.
+
 The promoted fixture coverage additionally checks strict schedule JSON parity,
 strict `--outdir` file emission for the importer, specialized child, and
 generated top `.fsm` files, fixed use-site binding provenance, and both plain
@@ -2191,6 +2304,7 @@ owns persistent storage, pointers, occupancy, full/empty flags, reset behavior,
 and interface timing across cycles. Enqueue, dequeue, flush, or status-probe
 behaviors can be transactions or callable operations inside or against that
 actor, but a transaction alone should not own the FIFO's persistent state.
+
 Hardware components in ISF are persistent regions, not software processes that
 die when their immediate work is done. Actors, transactions, DTs, and rules
 may be inactive, but while the design is powered, clocked, and released from
@@ -2209,6 +2323,7 @@ Shipped actor-owned storage model:
 
 `(var name (width N))` declares one fixed-width internal actor scalar storage
 value. `(variable ...)` is the verbose scalar-storage alias.
+
 `(bank name (width N) (depth N))` remains the fixed-depth actor-owned storage
 form. The FIFO-controller matrix does not use an internal bank, but the
 shipped data-path probe now exercises a depth-4 bank through explicit
@@ -2222,12 +2337,15 @@ Selected data-buffer access surface:
 ```
 
 `store` writes a value into the actor-owned bank entry selected by the index.
+
 For the first depth-4 implementation it lowers through the existing scalarized
 review artifact by guarded updates to `data_0`, `data_1`, `data_2`, and
 `data_3`. `load` reads the selected bank entry into a scalar target, again
 through mux-equivalent guarded assignments from the scalarized entry family.
+
 Rules and supported transaction contexts accept these forms for declared
 actor-owned banks.
+
 `store` is intentionally bank-entry-only; scalar actor-owned storage declared
 with `(var ...)` or `(variable ...)` uses the existing rule assignment and
 transaction `update` surfaces.
@@ -2242,6 +2360,7 @@ forms: access kind, owner, container, bank name, index expression, width,
 depth, scalarized entries, value or target, and the same-cycle policy. The
 shipped index is a scalar signal or literal token; full list-expression indexes
 remain future work.
+
 `isf/fifo_data_path.isf` is now the strict file-backed datapath fixture for
 this surface. It proves strict schedule JSON parity, scheduled `.fsm`
 structure, bounded `bank_accesses[]` metadata, plain and strict HDL
@@ -2254,6 +2373,7 @@ does not exercise FIFO depth, pointers, or occupancy semantics. The first
 fixture is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and
 `OCC_WIDTH=3`. Those parameters are emitted as provenance and use-site binding
 evidence; parameter-driven interface/storage elaboration remains future work.
+
 The fixture explicitly models the four request cases: no request, push without
 pop, pop without push, and push with pop. Push-only updates occupancy and the
 write pointer when not full; pop-only updates occupancy and the read pointer
@@ -2262,21 +2382,25 @@ the same pre-cycle state and updates both sides atomically; idle preserves
 state. Depth 4 gives the initial implementation concrete 2-bit pointer wrap,
 occupancy values 0 through 4, and full/empty flag checks before arbitrary-depth
 elaboration is generalized.
+
 `full` is actor-maintained and is `1` when `occupancy == 4`; `empty` is
 actor-maintained and is `1` when `occupancy == 0`. `wr_ptr` names the next
 entry selected by an accepted push; `rd_ptr` names the next entry selected by
 an accepted pop. For the depth-4 controller matrix both pointers wrap from
 entry 3 back to entry 0.
+
 `isf/fifo_controller.isf` is now the strict file-backed controller fixture for
 this matrix. It proves strict schedule JSON parity, scheduled `.fsm`
 structure, compatible same-value fan-in metadata, plain and strict HDL
 generation, and the explicit controller-only boundary.
+
 `isf/fifo_library_use.isf` is now the strict file-backed reusable FIFO fixture
 for the combined fixed controller/datapath actor. It proves strict schedule
 JSON parity, generated importer/child/top scheduled `.fsm` files, strict
 `--outdir` emission, fixed parameter and binding provenance, scalarized bank
 entries, generated top wiring, and plain plus strict generated-top HDL
 generation.
+
 Transaction `(when condition body...)` is ordered control flow, so using a
 chain of `when` branches to model FIFO ports would be misleading. Disjoint-rule
 proof for same-target FIFO-style rule writes is shipped for direct
@@ -2307,6 +2431,7 @@ event-crossing actors now reach generated SystemVerilog/Verilog-family HDL for
 the generated top plus concrete acknowledged-event CDC child modules for
 accepted crossings when each emitted domain artifact satisfies the current
 scheduled `.fsm` clock/reset HDL contract.
+
 Different clock signal names, library clock/reset bindings, and generated-top
 system-port links are not CDC semantics by themselves.
 
@@ -2316,6 +2441,7 @@ hardening slice now adds
 [isf/clock_domain_dual_event_crossing.isf](../../isf/clock_domain_dual_event_crossing.isf),
 which covers two opposite-direction acknowledged event crossings in one
 generated top with two CDC children, report metadata, and generated HDL.
+
 Remaining backlog still needs richer CDC fixture matrices for payload-like
 protocol actors, dual-clock FIFO-like actors, and broader reset/no-reset
 combinations.
@@ -2347,6 +2473,7 @@ crossing primitive ships.
 Reset-ownership decision: multi-domain source puts reset ownership inside each
 domain entry. Existing actor-level `(reset ...)` remains the single-domain
 shorthand, but it must not be mixed with `(clock-domains ...)`.
+
 Each domain owns zero or one reset. Synchronous resets are sampled on the
 owning domain clock; asynchronous resets are direct external reset pins, not
 DT-generated logic. Reusing one reset signal across domains is only legal when
@@ -2356,6 +2483,7 @@ Crossing decision: the first legal crossing primitive is an acknowledged
 single-bit event channel declared in actor-scoped
 `(crossings ...)` source. It has a source-domain event request, generated
 source-domain `ready`, and generated destination-domain one-cycle pulse.
+
 Lowering represents it as an explicit CDC child interface in the generated top;
 schedule reports expose the endpoint domains/signals and generated
 instance/module names. The first concrete generated-HDL path emits an
@@ -2405,6 +2533,7 @@ Goal: make every intended sample under `fsm/` externally warning-clean under
 the supported Verilog-family validation tools.
 
 Current boundary: the regression gate uses a focused SystemVerilog smoke set.
+
 It does not claim every historical sample in `fsm/` is externally
 warning-clean.
 

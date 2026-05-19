@@ -1,6 +1,7 @@
 # Intent Scheduling Format (`.isf`)
 
 The Intent Scheduling Format abstracts cycle counting away from the author.
+
 You describe **what** happens — the compiler infers **when** and produces
 explicit cycle-accurate `.fsm`.
 
@@ -12,21 +13,29 @@ IAL1 .isf → LoweringIR → Emitter::FSM → IAL0 .fsm → SystemVerilog / Veri
 ## Intent Abstraction Layers
 
 FSMGen treats explicit `.fsm` as **Intent Abstraction Layer 0** (`IAL0`).
+
 Layer 0 is still an abstraction above HDL, but it is the cycle-authored review
 artifact: DTs, assignment operators, state and non-state regions, mux-selector
 semantics, and exact runtime behavior are visible there.
 
-Current `.isf` constructs form **Intent Abstraction Layer 1** (`IAL1`). Layer 1
-describes scheduling intent: transactions, rules, drives, samples, waits,
-repeats, child calls, spawned child activation, and constraints. The Layer 1
-contract is that lowering produces reviewable Layer 0 `.fsm` unless a targeted
+Current `.isf` constructs form **Intent Abstraction Layer 1** (`IAL1`).
+
+Layer 1 describes scheduling intent: transactions, rules, drives, samples, waits,
+repeats, child calls, spawned child activation, and constraints.
+
+The Layer 1 contract is that lowering produces reviewable Layer 0 `.fsm` unless a targeted
 diagnostic rejects the construct first.
 
-Higher layers are intentionally reserved, not assumed. A future `IAL2` would
+Higher layers are intentionally reserved, not assumed.
+
+A future `IAL2` would
 need its own semantic level, such as reusable protocol-level intent objects
 (`APB read transaction`, `AXI burst`, and similar) or platform/resource mapping
-decisions above individual transactions. It should not be introduced for
+decisions above individual transactions.
+
+It should not be introduced for
 aliases, macros, syntax sugar, or wrappers that have no distinct runtime model.
+
 Any future layer must lower through the same chain: clear source semantics,
 clear lower-layer mapping, and clear runtime behavior.
 
@@ -114,237 +123,369 @@ FSM::Scheduler::ISF::LoweringIR   ← typed IR
     └──► Emitter::JSON  → schedule report
 ```
 
-The schedule report is generated from the same IR as the `.fsm` text. The
-current APB report shape is regression-covered. The bounded downstream-facing
+The schedule report is generated from the same IR as the `.fsm` text.
+
+The current APB report shape is regression-covered.
+
+The bounded downstream-facing
 ISF API contract is advertised through `--capability-manifest` at
 `embedding.isf_public_interface` and described in
 [docs/ISF_PUBLIC_INTERFACE_CONTRACT.md](../../ISF_PUBLIC_INTERFACE_CONTRACT.md).
+
 That contract's `live_document_paths` metadata advertises the full Intent
 Scheduling book chapter set from [Summary](SUMMARY.md), plus the canonical
 [Feature Backlog](14-feature-backlog.md) and
 [Reference Map](90-reference-map.md), so downstream consumers can discover the
 same user-facing ISF documentation surface from the manifest.
+
 The self-contained SPECFORGE-style integration handoff is
 [docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md](../../ISF_DOWNSTREAM_INTEGRATION_SPEC.md)
-and is included later in this book as the downstream integration chapter. It
-must stay synchronized with the live spec, this book, public contract,
+and is included later in this book as the downstream integration chapter.
+
+It must stay synchronized with the live spec, this book, public contract,
 manifest metadata, tests, and implementation behavior.
+
 That contract is live documentation: it evolves in the same slice as public ISF
 parser, scheduler, CLI, lower-result, or schedule-report changes, and those
 feature slices must move the matching public contract and manifest audit tests
-with the implementation. The public
-adapter and scheduler constructors reject malformed option lists and unsupported
+with the implementation.
+
+The public adapter and scheduler constructors reject malformed option lists and unsupported
 option names, require exact class invocants, and currently accept only `debug`.
+
 The parser facade validates method receivers before private internals are used,
 then validates
 `parse_file(...)` and `parse_source(...)` argument counts and defined-scalar
 shape before private parsing begins; `parse_file(...)` also requires a readable
-`.isf` file path. The scheduler facade validates method receivers and the
+`.isf` file path.
+
+The scheduler facade validates method receivers and the
 public actor shell before calling private LoweringIR, and the manifest
 advertises the required `actor_name`, `transactions`, and `interface` shell keys
-plus their public value shapes without freezing the full raw actor hash. The
-current parser handoff also advertises a bounded `interface` subshape:
+plus their public value shapes without freezing the full raw actor hash.
+
+The current parser handoff also advertises a bounded `interface` subshape:
 `inputs` and `outputs` arrays whose port entries expose unique non-empty scalar
 `name` and positive integer `width`, with omitted source widths normalized to
-`1`. Duplicate port names across either direction are rejected before
-actor-shell return. It also
-advertises a bounded transaction-entry shell: `transactions` entries expose
+`1`.
+
+Duplicate port names across either direction are rejected before
+actor-shell return.
+
+It also advertises a bounded transaction-entry shell: `transactions` entries expose
 unique non-empty scalar `name` and a `clauses` array while the clause payload
-contents remain private scheduler input. Duplicate transaction names are
-rejected before actor-shell return. It also advertises `actor_name` as the
-non-empty scalar identifier preserved from the ISF actor root. Current actor timing
-handoff metadata is bounded too: `clock` is scalar when configured, `reset` is
+contents remain private scheduler input.
+
+Duplicate transaction names are
+rejected before actor-shell return.
+
+It also advertises `actor_name` as the
+non-empty scalar identifier preserved from the ISF actor root.
+
+Current actor timing handoff metadata is bounded too: `clock` is scalar when configured, `reset` is
 null when omitted or a scalar-field hash, and `watchdog` is null when omitted
-or a positive integer. Rule entries are bounded as unique non-empty scalar
+or a positive integer.
+
+Rule entries are bounded as unique non-empty scalar
 `name`, optional `when`, and `actions` array shells while rule payload contents
-remain private scheduler input. Duplicate rule names are rejected before
-actor-shell return. Drive definitions are bounded as a drive-name-keyed hash whose
+remain private scheduler input.
+
+Duplicate rule names are rejected before
+actor-shell return.
+
+Drive definitions are bounded as a drive-name-keyed hash whose
 entries carry `params` and `body` arrays while drive body payload contents
-remain private scheduler input. Duplicate drive names are rejected before
-actor-shell return instead of overwriting an earlier drive body. Parameterized
-drive declarations also reject duplicate parameter names before actor-shell
-return. The
-facade-shape metadata for those
+remain private scheduler input.
+
+Duplicate drive names are rejected before
+actor-shell return instead of overwriting an earlier drive body.
+
+Parameterized drive declarations also reject duplicate parameter names before actor-shell
+return.
+
+The facade-shape metadata for those
 receiver, argument, path, and actor-shell boundaries is audited as exact across
 direct and manifest views, including bounded scalar diagnostics for public
-facade boundary failures. The manifest also advertises the public facade
+facade boundary failures.
+
+The manifest also advertises the public facade
 return containers: parser facades return scheduler-consumable actor hashes,
 `lower(...)` returns the bounded lower-result hash, and `report(...)` returns
-schedule-report JSON. Assigned scheduler counters in the
+schedule-report JSON.
+
+Assigned scheduler counters in the
 `*_wd`, `*_cc`, and `*_cnt` naming families are reported as `counter` storage
-with the width inferred by the lowering IR. The advertised contract object is
+with the width inferred by the lowering IR.
+
+The advertised contract object is
 JSON-round-trip audited so downstream tooling can consume the manifest metadata
 as portable discovery data, and defensive-copy audited so caller mutation does
-not pollute later contract builds. It is live, not a frozen API schema; exact
-audits describe the currently advertised surface. Its identity and stability
+not pollute later contract builds.
+
+It is live, not a frozen API schema; exact
+audits describe the currently advertised surface.
+
+Its identity and stability
 metadata plus its
 top-level discovery list are audited as exact across direct and manifest views,
 and its advertised
 entrypoint, CLI option, method-name, and constructor-option lists are audited as
-exact and duplicate-free. Its lower-result and schedule-report discovery
+exact and duplicate-free.
+
+Its lower-result and schedule-report discovery
 metadata are audited as exact, as is the downstream guidance list that explains
-the current bounded-public stance. Its `tested_by` provenance list is also
-audited as exact repo-local metadata. CLI success-shape metadata is audited for
+the current bounded-public stance.
+
+Its `tested_by` provenance list is also
+audited as exact repo-local metadata.
+
+CLI success-shape metadata is audited for
 the schedule JSON, `--outdir`, plain HDL-generation, and accepted strict
-HDL-generation paths. Both
-capability-manifest CLI spellings are audited to emit the same ISF contract
-payload. The current APB schedule report is also checked against the advertised
+HDL-generation paths.
+
+Both capability-manifest CLI spellings are audited to emit the same ISF contract
+payload.
+
+The current APB schedule report is also checked against the advertised
 public key families, and successful reports advertise and keep an empty
-`compile_issues` array when no nonfatal issues exist. Schedule reports carry
-`schema_version: 1` as a payload version separate from the
-`embedding.isf_public_interface` contract metadata version. Report evolution
-is additive only when new keys or value-family members are advertised in the
+`compile_issues` array when no nonfatal issues exist.
+
+Schedule reports carry `schema_version: 1` as a payload version separate from the
+`embedding.isf_public_interface` contract metadata version.
+
+Report evolution is additive only when new keys or value-family members are advertised in the
 public contract metadata and covered by focused tests and docs in the same
 slice; removing, renaming, changing type, or changing semantics requires a
-`schema_version` bump plus migration or deprecation documentation. Nonfatal
-conflict issues now project into `compile_issues` as bounded objects with stable code/severity,
+`schema_version` bump plus migration or deprecation documentation.
+
+Nonfatal conflict issues now project into `compile_issues` as bounded objects with stable code/severity,
 target/domain, `proof_status`, reason text, and capped source summaries.
+
 Accepted fan-in groups now project as bounded `compatible_fanin_groups`
-entries. Successful priority and resource arbitration decisions now project as
+entries.
+
+Successful priority and resource arbitration decisions now project as
 bounded `priority_resolutions` and `resource_arbitration` entries that describe
-static lowering decisions, not per-cycle runtime traces. Transaction port
-bindings now project as bounded `transaction_port_bindings` entries with
+static lowering decisions, not per-cycle runtime traces.
+
+Transaction port bindings now project as bounded `transaction_port_bindings` entries with
 binding site, owner, target transaction, port role/name, scalar actor signal
 where applicable, formatted actor expression, width, and generated handoff
-signal names where applicable. Raw assignment
-provenance, private assignment indexes, and activation proof internals remain
-private. Public substitutes are the bounded source summaries in
+signal names where applicable.
+
+Raw assignment provenance, private assignment indexes, and activation proof internals remain
+private.
+
+Public substitutes are the bounded source summaries in
 `compile_issues[]`, compatible fan-in facts in `compatible_fanin_groups[]`,
 priority/resource summaries in `priority_resolutions[]` and
 `resource_arbitration[]`, binding summaries in `transaction_port_bindings[]`,
 aggregate access summaries such as `bank_accesses[]`, and counts such as
 `dt_blocks[].assignments`; the report does not serialize raw assignment lists.
-Parent schedule reports also do not embed recursive child reports. Multi-file
-review stays bounded to the lower-result `files` map, the named generated
+
+Parent schedule reports also do not embed recursive child reports.
+
+Multi-file review stays bounded to the lower-result `files` map, the named generated
 artifacts, `actor_network`, `generated_composition`, `library_uses[]`, and
-`clock_domains[]` / `crossings[]`. Shipped transaction
-stages now project into `transaction_stages` with authored names, generated
-state, and ready/valid endpoints. Shipped bounded eventual contracts project
+`clock_domains[]` / `crossings[]`.
+
+Shipped transaction stages now project into `transaction_stages` with authored names, generated
+state, and ready/valid endpoints.
+
+Shipped bounded eventual contracts project
 into `temporal_contracts` with trigger state, observed signal, cycle bound,
 generated storage signal names, reset policy, overlap policy, and assertion
-projection status. The current projection value is
+projection status.
+
+The current projection value is
 `systemverilog_sticky_fail`: SystemVerilog HDL checks the generated sticky
 fail bit under `` `ifndef SYNTHESIS``, while Verilog output stays
-assertion-free. Monitor equations and backend assertion text remain private
-report internals. The lower-result
-`files` map is checked for both
+assertion-free.
+
+Monitor equations and backend assertion text remain private
+report internals.
+
+The lower-result `files` map is checked for both
 single-file and multi-file lowering, including scheduled `.fsm` basename keys
-and matching scheduled-text roots. The in-memory `parse_source(...)` facade is
-also checked against `parse_file(...)` on a real fixture. APB DT block order
+and matching scheduled-text roots.
+
+The in-memory `parse_source(...)` facade is
+also checked against `parse_file(...)` on a real fixture.
+
+APB DT block order
 is locked across generated `.fsm` text and schedule-report `dt_blocks` so
 hash-backed drive definitions do not create review-artifact churn; the manifest
 also advertises the DT ordering policy, and that scheduled-artifact ordering
-metadata is audited as exact. Rule-trigger fan-in schedule reports are also
+metadata is audited as exact.
+
+Rule-trigger fan-in schedule reports are also
 covered so generated `rule_trigger_fanin` DTs and one-bit trigger-source
-storage stay visible to downstream consumers. DT selector logic remains
+storage stay visible to downstream consumers.
+
+DT selector logic remains
 combinational; assignment families decide the selected target behavior:
 `=` drives combinational mux outputs, `<-` and `<=` drive sequential/flopped
 targets, and `<1` requests a one-cycle delayed pulse whether they appear in
-state or non-state DT blocks. The manifest advertises those operator families
+state or non-state DT blocks.
+
+The manifest advertises those operator families
 through `dt_assignment_operator_family_map`.
+
 Rule guards lower through non-state DT DTE headers in scheduled `.fsm` review
 artifacts, so the guard activates the whole rule DT once instead of being
 repeated on every action.
+
 Generated names in schedule reports and generated artifacts are deterministic
 for the same source and FSMGen version and may be used for report-local or
 artifact-local joins when a public field explicitly references the same name.
+
 They are not a semantic string grammar; downstream consumers should use
 bounded metadata fields such as owner, role, kind, instance, binding, storage
 role, and generated-composition summaries instead of parsing generated name
 spelling.
+
 Schedule-report `dt_blocks`
 `assignments` values are assignment counts, not payload lists, and the manifest
 advertises that shape through `schedule_report_dt_assignments_shape`.
+
 Schedule-report DT `kind` values are currently `drive`, `latency_counter`,
 `rule`, `rule_trigger_fanin`, and `temporal_contract_monitor`, and the
 manifest advertises that family through `schedule_report_dt_kind_values`.
+
 Inferred-storage `kind` values are `counter` or `register`, and optional
-`role` values describe stable scheduler purpose when evidence is known. The
-current role family is `activation_done_handoff`,
+`role` values describe stable scheduler purpose when evidence is known.
+
+The current role family is `activation_done_handoff`,
 `activation_start_handoff`, `actor_storage`, `completion_pulse`,
 `data_register`, `dynamic_wait_counter`, `drive_payload`, `drive_request`,
 `extract_field`, `latency_counter`, `repeat_counter`,
 `rule_trigger_payload_source`, `rule_trigger_source`, `sample_alias`,
 `temporal_contract_monitor`, `transaction_port`, `transaction_port_binding`,
-`trigger_done_observe`, and `watchdog_counter`. Runtime dynamic waits use
-`dynamic_wait_counter` for generated sampled-count storage. Rule-trigger
-source pulses use `rule_trigger_source`, and per-input trigger payload-source
-storage uses `rule_trigger_payload_source`. Generated activation start/done
+`trigger_done_observe`, and `watchdog_counter`.
+
+Runtime dynamic waits use
+`dynamic_wait_counter` for generated sampled-count storage.
+
+Rule-trigger source pulses use `rule_trigger_source`, and per-input trigger payload-source
+storage uses `rule_trigger_payload_source`.
+
+Generated activation start/done
 handoff storage uses `activation_start_handoff` and
 `activation_done_handoff` when those one-bit generated handoff signals appear
-in `inferred_storage[]`. Generated activation port-binding handoffs use
+in `inferred_storage[]`.
+
+Generated activation port-binding handoffs use
 `transaction_port_binding`, and generated rule-trigger completion observation
 uses `trigger_done_observe`.
+
 Transaction-local port storage uses `transaction_port` when a declared port is
 materialized in the scheduled `.fsm` review artifact.
+
 Temporal-contract pending/fail registers and age counters share the
 `temporal_contract_monitor` role; `temporal_contracts[]` names the specific
-pending, counter, and fail signals for each contract. Optional positive
-integer `width` values belong to declared actor-owned storage, inferred
-counters, and register storage with known ISF width evidence. Declared typed
-actor-owned storage may also expose optional `type` and `type_kind` summaries;
+pending, counter, and fail signals for each contract.
+
+Optional positive integer `width` values belong to declared actor-owned storage, inferred
+counters, and register storage with known ISF width evidence.
+
+Declared typed actor-owned storage may also expose optional `type` and `type_kind` summaries;
 the full type shape remains in the scheduled `.fsm` `+types`/`+size` review
 artifact.
+
 Transaction summaries expose emitted scheduled-state names in `states`, and
 `count` equals that array length; transaction summaries are sorted lexically by
 name while each `states` array keeps scheduled `.fsm` state emission order.
+
 Transaction stage summaries advertise `ready_valid_barrier` as their current
 kind, and temporal contract summaries advertise `bounded_eventually`, `fail`
 overlap policy, and `systemverilog_sticky_fail` assertion projection as their
 current value families.
+
 Reset summaries advertise `async`/`sync`
 kind values and `active_high`/`active_low` polarity values; omitted resets are
-reported as JSON null. Interface count
-summaries count input and output ports by direction for single-clock reports;
+reported as JSON null.
+
+Interface count summaries count input and output ports by direction for single-clock reports;
 multi-domain reports count generated-top public ports including domain
-clocks/resets and actor interface ports. `state_count` counts scheduled `.fsm`
+clocks/resets and actor interface ports.
+
+`state_count` counts scheduled `.fsm`
 state blocks in the current report scope; multi-domain generated-top reports
-use zero and put domain-local counts in `clock_domains[]`. Report `source` and
+use zero and put domain-local counts in `clock_domains[]`.
+
+Report `source` and
 `scheduled_fsm` are actor-derived basenames, `clock` is the actor clock signal
 or selected default-domain clock, and `watchdog` is scalar when configured or
-null when omitted. The ISF
-live-document path list is
+null when omitted.
+
+The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
-and present. The public `--emit-schedule-json` path is audited to emit the same
-report as the in-process scheduler with clean stderr. The public `--outdir`
+and present.
+
+The public `--emit-schedule-json` path is audited to emit the same
+report as the in-process scheduler with clean stderr.
+
+The public `--outdir`
 path is audited to write multi-file scheduled `.fsm` artifacts matching the
-in-process lower-result file map. Single-clock multi-file schedule reports are
+in-process lower-result file map.
+
+Single-clock multi-file schedule reports are
 currently parent-scoped, and multi-domain reports describe the generated top
 while projecting bounded domain/crossing metadata through `clock_domains[]`
-and `crossings[]`. That scope is advertised in the manifest. Reusable library
-actor uses now project through a bounded `library_uses` schedule-report array
+and `crossings[]`.
+
+That scope is advertised in the manifest.
+
+Reusable library actor uses now project through a bounded `library_uses` schedule-report array
 with library/export/instance identity, generated child artifact names,
-parameter source/value summaries, and explicit binding summaries. The
-lower-result `files` map can include specialized library-child scheduled
+parameter source/value summaries, and explicit binding summaries.
+
+The lower-result `files` map can include specialized library-child scheduled
 `.fsm` artifacts and a generated top that wires library actor instances through
-the normal composition/HDL path. Same-name clock/reset bindings use system-port
-auto-wiring. Differently named reusable-actor clock/reset bindings emit
+the normal composition/HDL path.
+
+Same-name clock/reset bindings use system-port
+auto-wiring.
+
+Differently named reusable-actor clock/reset bindings emit
 explicit generated-top links to the child system ports, for example
-`(clk rx.lib_clk)`; the child actor still owns reset kind and polarity. This
-is signal-name remapping inside the one-clock library-binding model, not
-clock-domain-crossing support. Multi-clock, asynchronous, and interacting
+`(clk rx.lib_clk)`; the child actor still owns reset kind and polarity.
+
+This is signal-name remapping inside the one-clock library-binding model, not
+clock-domain-crossing support.
+
+Multi-clock, asynchronous, and interacting
 clock domains use the actor-scoped named-domain source model tracked in
-[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md). The parser now accepts
+[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md).
+
+The parser now accepts
 that metadata and the scheduler validates an internal domain partition, while
 public multi-domain `lower(...)` now emits one normal single-clock scheduled
 `.fsm` artifact per declared domain plus a generated top that wires domain
-modules and explicit CDC child interfaces for accepted event crossings. Public
-`report(...)` now exposes those domain artifacts and accepted event crossings
+modules and explicit CDC child interfaces for accepted event crossings.
+
+Public `report(...)` now exposes those domain artifacts and accepted event crossings
 in schedule JSON, and plain HDL generation for accepted event-crossing actors
 now emits the generated top plus concrete acknowledged-event CDC child modules
 for accepted crossings on SystemVerilog/Verilog-family targets when each
 emitted domain artifact satisfies the current scheduled `.fsm` clock/reset HDL
-contract. The
-file-backed `isf/clock_domain_dual_event_crossing.isf` fixture now covers two
+contract.
+
+The file-backed `isf/clock_domain_dual_event_crossing.isf` fixture now covers two
 opposite-direction event crossings in one top, proving repeated CDC child
-generation without adding payload or ordering semantics. Direct
-cross-domain reads, writes, triggers, activations, bindings, and multi-domain
+generation without adding payload or ordering semantics.
+
+Direct cross-domain reads, writes, triggers, activations, bindings, and multi-domain
 drive reuse remain illegal unless a shipped CDC primitive or protocol actor
-owns the crossing semantics. The plain
-single-clock `file.isf` CLI path is audited to reach generated HDL with clean
-stderr, including when the advertised `--strict` flag is present. Transaction summaries
-include the generated state families used by the current scheduler, including
-control-flow and data-operation states. Transaction-local `while` and `until`
+owns the crossing semantics.
+
+The plain single-clock `file.isf` CLI path is audited to reach generated HDL with clean
+stderr, including when the advertised `--strict` flag is present.
+
+Transaction summaries include the generated state families used by the current scheduler, including
+control-flow and data-operation states.
+
+Transaction-local `while` and `until`
 loops now project through bounded `transaction_loops` schedule-report entries
 with transaction name, loop kind, normalized condition text, generated decision
 states, body start, body states, exit state, and body clause count.
@@ -352,11 +493,14 @@ states, body start, body states, exit state, and body clause count.
 ## Current Limitations
 
 The consolidated backlog for deferred user-visible work is
-[Feature Backlog](14-feature-backlog.md). The closed shipped surface for ISF
+[Feature Backlog](14-feature-backlog.md).
+
+The closed shipped surface for ISF
 type aliases, enum members, aggregate storage carriers, scalar aggregate
 leaves, examples, lowering artifacts, diagnostics, and explicit deferrals is
-[Types, Enums, And Aggregates](13j-type-enum-aggregate.md). The ISF-specific
-current limitations are:
+[Types, Enums, And Aggregates](13j-type-enum-aggregate.md).
+
+The ISF-specific current limitations are:
 
 - Reusable library imports currently ship the resolver/review-artifact slice:
   actor-scoped `(imports ...)`, `(use ...)`, exported actor resolution,

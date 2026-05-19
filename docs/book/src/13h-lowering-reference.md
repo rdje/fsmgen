@@ -1,6 +1,7 @@
 # Lowering Reference
 
 Every ISF construct maps to specific `.fsm` patterns.
+
 This chapter shows the exact generated `.fsm` for each construct.
 
 ## Actor → Module
@@ -30,6 +31,7 @@ Single-domain `(clock-domains ...)` actors lower through the same one-clock
 scheduled `.fsm` path using the declared domain clock/reset. Multi-domain
 actors emit validated per-domain scheduled `.fsm` artifacts named
 `<actor>__domain_<domain>.fsm` plus `<actor>_top.fsm` generated top wiring.
+
 Accepted event crossings are represented as explicit CDC `?rtl`/`?rtlif`
 child interfaces in the generated top. Schedule reports expose the generated
 top scope, each domain artifact, and accepted event crossing metadata;
@@ -146,6 +148,7 @@ the composition realizer to emit FSMGen's generated event-CDC module.
 An actor may declare multiple independent event crossings. Each crossing emits
 its own `?rtl` child, its own embedded `?rtlif` metadata root, its own bounded
 `crossings[]` report entry, and its own concrete generated CDC HDL module.
+
 The file-backed
 `isf/clock_domain_dual_event_crossing.isf` fixture covers two opposite-direction
 events in one generated top. This still carries no payload and creates no
@@ -189,6 +192,7 @@ still being reset.
 The full plain `.isf` HDL path writes those generated `.fsm` artifacts to
 `--outdir` or the current directory, selects `<actor>_top.fsm` as the entry
 artifact, and feeds that top through the existing composition HDL pipeline.
+
 The final SystemVerilog/Verilog-family output contains the two generated
 domain modules, the generated CDC module, and the generated top module.
 
@@ -221,6 +225,7 @@ artifact.
 Declared interface ports are emitted once. If inferred scheduler storage such
 as timeout/error bookkeeping has the same name as an interface port, the
 inferred duplicate is suppressed.
+
 When generated scheduled `.fsm` assigns a declared output port, the assignment
 LHS carries the normal `.fsm` output marker, for example `done>` or `rdata>`.
 
@@ -233,6 +238,7 @@ LHS carries the normal `.fsm` output marker, for example `done>` or `rdata>`.
 | `(reset rst_n)` | `(sreset rst_n)` |
 
 Reset name convention: `*_n` or `*_b` suffix infers `active_low`.
+
 Explicit `async`/`active_low`/`active_high` override.
 
 ## `(on port ...)` → Entry State
@@ -295,7 +301,9 @@ Actuals can be composed expression forms. For example,
 `(= (scl_val (& bit_a bit_b)))`.
 
 **Timing**: The `scl_start` assertion enables the non-state DT in the SAME cycle.
+
 The DT's `<-` assignment takes effect NEXT cycle (flopped).
+
 So `(drive scl 1)` → cycle N: assert start + wire value, cycle N+1: port changes.
 
 **Cycles**: 1 per call. **No automatic merging.**
@@ -330,6 +338,7 @@ appear before the drive's start assertion:
 ```
 
 **Timing**: Captures port value at the moment of transition.
+
 The generated assignment is intentionally `<=`, not `<-`. In FSMGen's `.fsm`
 assignment model, `<-` names the flop's Q/output side, while `<=` names the
 D-input/next-value side. A sample needs the authored variable name to denote the
@@ -434,6 +443,7 @@ and `counter_width`. Only waits whose resolved count is greater than zero
 create report entries. Static waits report `count_kind` as `static`,
 `count_source` as the literal, actor constant name, or actor parameter name, and
 `counter_signal`/`counter_width` as null for the fixed-chain lowering.
+
 Runtime scalar and runtime expression waits additionally expose their
 generated sampled-count storage through `inferred_storage[]` with role
 `dynamic_wait_counter` and the known counter width.
@@ -513,6 +523,7 @@ still consumes no hidden wait or sample-only cycle:
 
 The original `main_drive_2` remains the positive-count successor and does not
 carry the sample assignment, preventing a second sample after a positive wait.
+
 The separate `main_wait_1_loop` state handles counts greater than one without
 repeating the sample on every loop cycle. If the zero-count successor cannot
 carry the pending sample without changing timing, the lowerer rejects the form
@@ -654,6 +665,7 @@ fail-closed for the same sample-and-consume timing reason.
 
 Top-level `await_all` and `await_any` sync states can also carry the pending
 sample when their collected done ports do not read the pending sample alias.
+
 The clone keeps the original synchronization transition:
 
 ```lisp
@@ -678,10 +690,12 @@ child start pulse and advances like the original spawn state:
 ```
 
 If the generated start handoff is `hold`, the form remains fail-closed.
+
 Blocking `do` remains a separate shape because it also owns input/output
 bindings and a completion guard.
 
 A top-level transaction `(phase ...)` marker can also carry the pending sample.
+
 The clone preserves the original pass-through transition; actor-level phase
 metadata remains report-only and unrelated to this runtime scheduling path:
 
@@ -881,6 +895,7 @@ all explicit case predicates:
 ```
 
 The positive selected-case path samples the runtime count and enters the wait.
+
 The zero selected-case path bypasses the wait to the next state in that branch
 body. Values not listed by the author take the guarded fallthrough edge.
 
@@ -1022,6 +1037,7 @@ the minimum width that can represent the loaded count, named counts use their
 known interface or sample-derived width, and unknown count forms fall back to
 8 bits. Switch-nested repeats register the same transaction counter at the
 widest required branch width.
+
 Repeat bodies lower named drive calls, awaits, samples, updates, the current
 data operations, local blocking `(do child)`, top-level when-body nested repeat
 local or generated-child `(do child)`, generated blocking `do` for already
@@ -1059,6 +1075,7 @@ handoffs, and optional declared same-domain `(domain NAME)` metadata when the
 same nested repeat body reaches `(await_all done)` before the nested repeat
 check can loop. A repeat directly inside a top-level `switch` branch may
 contain the same multiple generated-spawn plus same-body `await_all` subset.
+
 Both branch-contained paths may use single-pending `(await_any done)` directly
 when exactly one generated child is pending. Both branch-contained paths may
 also use multi-pending `(await_any done)` as an observation point only when a
@@ -1066,6 +1083,7 @@ later same-body `(await_all done)` drains the same outstanding generated
 children before the nested repeat check can loop. Sample-before-spawn and
 sample-after-spawn timing stay explicit, and the generated top still
 instantiates one static child per lexical `spawn` instance.
+
 The top-level `when` body and top-level `switch` branch nested-repeat forms
 may also lower a local plain `(do child)` while generated nested spawns are
 pending either before or after a prior multi-pending `await_any` observation,
@@ -1119,6 +1137,7 @@ shares that post-do `await_any` observation and later-drain contract; lowering
 waits for the deterministic generated do instance's fresh done handoff before
 the observation. Top-level `switch` branch plain generated-child `(do child)`
 shares the same post-do `await_any` observation and later-drain contract.
+
 Top-level `when` body and top-level `switch` branch static-parameter
 generated `(do child (params ...))` share that post-do `await_any`
 observation and later-drain contract; lowering waits for the deterministic
@@ -1439,6 +1458,7 @@ report behavior is specified.
 
 `while` emits an entry decision plus a back-edge decision so zero iterations
 and repeated condition sampling are both explicit in the scheduled artifact.
+
 `until` emits the body first and checks only after the first body pass. In
 both forms, the condition is sampled only in the generated decision state; it
 is not a continuous guard over the body.
@@ -1465,6 +1485,7 @@ Schedule reports expose the loop through `transaction_loops[]`, including
 ```
 
 **Timing**: 1 cycle for the decision, then body cycles (if true), or skip (0 additional).
+
 The body tail exits to the same next state that the false path skips to,
 including when the `when` is nested inside a switch branch.
 **Implicit signals**: None (uses existing signals in condition).
@@ -1489,8 +1510,10 @@ including when the `when` is nested inside a switch branch.
 ```
 
 **Timing**: 1 cycle for decision, then body cycles of the matching branch.
+
 Branch tails transition to the state after the whole switch; multi-state
 branches and repeat-check exits do not fall through into later branch bodies.
+
 The `default` selector is the `.fsm` fallback branch. It is true exactly when
 the logical OR of all explicit sibling branch predicates is false. For this
 example it means `!(opcode == 0 || opcode == 1)`, not another `opcode == 0`
@@ -1515,14 +1538,17 @@ scheduler's implicit fallthrough branch.
 
 **Timing**: 1 cycle. Assignment takes effect next cycle.
 **Implicit signals**: None (operates on existing variables).
+
 The generated shift expressions are ordinary `.fsm` expressions. Raw `<<` and
 `>>`, plus the `shl` and `shr` aliases, pass through the downstream
 SystemVerilog path as binary operators rather than schedule-only placeholders.
+
 For `shift_right`, known signal widths are used for the inserted MSB position;
 an explicit `(width N)` option supplies that width when the register is not
 declared elsewhere. The option is an assertion and must agree with any known
 register width. Unknown widths fail closed instead of emitting the placeholder
 `WIDTH` expression.
+
 For `shift_left`, the same optional `(width N)` option supplies register-width
 evidence for later data operations and report metadata. It does not change the
 emitted left-shift expression, and plain `shift_left` remains accepted without
@@ -1549,7 +1575,9 @@ When all `assemble` part widths are known, the target width is derived from
 their sum. If exactly one part width is missing and the target width plus every
 sibling part width is known, the missing part width is inferred as the positive
 remainder and can be reused by later data operations in the same transaction.
+
 If the target already has a known width, the final sum must match it.
+
 Non-positive inferred remainders fail closed. Two or more unknown part widths
 may still lower as a reviewable concat expression, but they do not become
 width evidence.
@@ -1575,9 +1603,11 @@ width disagreement fail closed before scheduled `.fsm` emission, so accepted
 
 Here `data` is the declared bank name. Actors may declare more than one bank;
 the second item in the action selects the bank being accessed.
+
 `store` is not a general scalar assignment form; it only writes a selected
 entry of a declared bank. Use ordinary rule assignments or transaction
 `update` for scalar actor-owned storage.
+
 Rule assignments and transaction `update` are separate because they live in
 different scheduling regions: rules are actor-level concurrent non-state DTs,
 while transaction updates are ordered transaction states.
@@ -1607,6 +1637,7 @@ Malformed access, unknown banks, non-bank storage names, literal indexes
 outside fixed depth, and known width mismatches fail before scheduled `.fsm`
 is accepted. Successful schedule reports include bounded `bank_accesses`
 metadata for downstream tools.
+
 The checked-in `isf/fifo_data_path.isf` fixture is the file-backed regression
 for this surface; it proves strict schedule JSON parity, the scalarized
 scheduled `.fsm` shape, and plain plus strict HDL generation for a depth-4
@@ -1644,6 +1675,7 @@ Adds to done state:
 ```
 
 **Timing**: Counter increments each active cycle. Min violation = error if done too early.
+
 Max violation via watchdog timeout (if no `(await ...)` in transaction).
 **Implicit signals**: `{tx}_cc` (inferred), `{tx}_inc` (1), `{tx}_lerr` (1).
 
@@ -1673,6 +1705,7 @@ scheduled module.
 ```
 
 **Implicit signals**: `{child}_start` (1), `{child}_done` (1).
+
 The internal `{child}_done` handoff is pulse-shaped for the same reason as the
 public completion output: a parent may call the same child again, and a sticky
 done bit would let the next `(do child)` observe an old completion.
@@ -1738,6 +1771,7 @@ site again reuses the same instance. This is the required interpretation for
 future spawn-in-repeat support as well.
 
 Rule-trigger parameter overrides use the same static-specialization principle.
+
 A parameterized trigger:
 
 ```lisp
@@ -1754,9 +1788,11 @@ shared local `child` transaction. The instance name is
 `launch_child_trigger_0`. The rule DT keeps the existing `<1` pulse source and
 input payload sampling behavior; a generated handoff DT drives
 `launch_child_trigger_0_start` and any input handoff ports from those sources.
+
 The generated top applies the static override through the ordinary `?fsmc`
 `(params ...)` block and wires the child `done` output back to the parent for
 composition consistency, while the rule itself does not wait on completion.
+
 The parent handoff DT reads that `done` input into an internal observer signal
 only to make the composition endpoint explicit; it does not change rule
 control flow. Rule-trigger output bindings stay rejected.
@@ -1797,6 +1833,7 @@ signal is owned by `(complete done)`, because `done` is the scheduler-visible
 transaction completion event rather than an APB bus signal.
 
 Total: 7 states. Each `(drive ...)` is one state. `(await ...)` is one state.
+
 `(sample ...)` piggybacks — no extra state.
 
 ## Phases and Stages
@@ -1824,6 +1861,7 @@ conditional entry points. Needs more design discussion.
 
 Pipeline stages with implicit valid/ready handshake. Stage names must be scalar,
 and stage body entries must be list forms before an actor shell is returned.
+
 The first shipped transaction-stage subset is intentionally smaller than the
 historical free-form examples: a top-level transaction clause with one ready
 input and one valid output.
@@ -1831,6 +1869,7 @@ input and one valid output.
 Actor-level `(phase ...)` and `(stage ...)` metadata uses the same scalar-name
 and list-body structural boundary, is carried in the parser actor shell for
 downstream consumers, and is not semantically enforced by the scheduler yet.
+
 That actor-level metadata is copied into the scheduling IR only for bounded
 public report projection: schedule JSON exposes `actor_phases[]` and
 `actor_stages[]` entries with the authored metadata name and parser-validated
@@ -1848,15 +1887,20 @@ is driven combinationally high with `=`, and the state advances only when
 `ready` is true in the same cycle. If `ready` is false, the FSM remains in the
 stage state and keeps `valid` asserted. Pending samples immediately before the
 stage materialize before the stage so a stall does not resample every cycle.
+
 When a runtime wait with pending samples has a zero-count path into the stage,
 the generated stage clone materializes the sample, drives `valid`, and keeps
 the same ready-gated transition as the original stage.
+
 The older `(input ready)`/`(output valid)` spelling is accepted as an alias.
+
 The valid endpoint remains a normal transaction combinational assignment, so
 same-target rule/transaction conflict checks still apply.
+
 Schedule reports expose this shipped subset through `transaction_stages`
 entries with the authored transaction/stage names, `kind =
 ready_valid_barrier`, generated state, ready input, and valid output.
+
 Nested stages, stage-local `(latency ...)`, `(compute ...)`, embedded
 transaction actions, multiple ready/valid endpoints, registered-valid variants,
 and skid-buffer behavior remain separate backlog features until their
@@ -1895,6 +1939,7 @@ counter. Those storage entries carry the `temporal_contract_monitor` storage
 role, while bounded `temporal_contracts` entries expose the public trigger
 state, observed signal, cycle bound, generated pending/counter/fail signal
 names, reset policy, overlap policy, and assertion projection status.
+
 Generated SystemVerilog now projects the fail bit into a verification-only
 assertion under `` `ifndef SYNTHESIS``; the current assertion projection status
 is `systemverilog_sticky_fail`. Verilog output remains assertion-free. When a
@@ -1902,6 +1947,7 @@ runtime wait with pending samples has a zero-count path into the contract arm
 state, the generated contract clone materializes the sample and emits the same
 arm request; the monitor DT remains unchanged and remains the only owner of
 pending, age, and fail storage.
+
 Unsupported bodies and nested contracts fail closed. Global
 `always` implication forms, min/max windows, dynamic bounds, same-cycle
 windows, expression operands, and multiple outstanding obligations remain

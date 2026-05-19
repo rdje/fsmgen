@@ -62,6 +62,7 @@ If a normal register update reads its previous value, prefer the Q/output-named
 form, for example `(<- (COUNT (+ COUNT 1)))`. The D-input-named forms `<=` and
 `<=-` are stricter: their RHS and assignment guard may not read the same LHS
 name, because that would build a combinational loop on the next-value carrier.
+
 Legacy `<=+` is accepted as an alias for `<=-` and follows the same rule.
 
 ## Failure Summaries
@@ -112,9 +113,11 @@ fits the cleaner forward contract.
 The regression corpus deliberately keeps paired default-compatible and
 strict-rejected assets for compatibility residue such as infix assignments, so
 the supported boundary is machine-checked instead of living only in examples.
+
 Coverage buckets are also tied to their intended classifications, so supported
 smoke, legacy compatibility, and expected-failure entries cannot accidentally
 borrow one another's execution contracts.
+
 Expected-failure entries record compiled diagnostic patterns, and strict
 rejection entries must also record compiled migration-hint patterns, so the
 failure side of the corpus checks both "this fails" and "the user is guided
@@ -123,8 +126,11 @@ Expected-failure entries also carry stable `FSMGEN_*` diagnostic codes from
 `FSM::Support::DiagnosticCodes`. Those codes are meant for downstream tools and
 long-lived docs: wording can improve, but the code is the machine identity for
 the failure family.
+
 It also keeps positive acceptance markers for canonical supported surfaces.
+
 Every `supported_smoke` entry must pass default pipeline and CLI generation.
+
 The current supported protocol fixtures and supported direct language-feature
 fixtures also carry `strict_supported`, so they must pass through both the
 strict pipeline API and `bin/fsmgen --strict`. These success contracts are
@@ -147,6 +153,7 @@ FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 
 Each code has severity, stability, family, and summary metadata.
+
 `./bin/fsmgen --capability-manifest` exposes the registry, and the bounded
 check-only JSON path emits those codes on matched expected failures:
 

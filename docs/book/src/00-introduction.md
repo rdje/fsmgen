@@ -13,6 +13,7 @@ This book is the progressive front door for FSMGen:
 - then move into composition, packages, types, debugging, and embedding.
 
 It should also be treated as an evolving product manual, not a static snapshot.
+
 When FSMGen's user-facing surface changes, this book is expected to change with
 it.
 
@@ -72,6 +73,7 @@ The repository still keeps a few focused technical references:
   maintainer side
 
 The goal is not to duplicate every narrow maintainer artifact here immediately.
+
 The goal is to give users one friendly, transparent path through the product
 while the remaining user-facing deep reference material is folded into the book
 incrementally.

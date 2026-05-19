@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `MDBOOK-PARAGRAPH-SPACING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `project documentation`
 - Created: `2026-05-19`
 - Last updated: `2026-05-19`
@@ -35,7 +35,7 @@ large text blobs.
 ## Task Tree
 
 - ID: `MDBOOK-PARAGRAPH-SPACING`
-  Status: `active`
+  Status: `done`
   Goal: `Normalize mdBook prose paragraph separation without changing technical content.`
   Children: `MDBOOK-PARAGRAPH-SPACING.1`, `MDBOOK-PARAGRAPH-SPACING.2`
 
@@ -43,21 +43,21 @@ large text blobs.
   Status: `completed`
   Goal: `Create task-tree ownership and define the paragraph-spacing cleanup scope.`
   Acceptance: `Create this task tree, register it in docs/TASK_TREE.md, identify chapter 12 and chapter 14 as required audit targets, and keep implementation deferred to the next leaf.`
-  Verification: `mdbook build docs/book; git diff --check`
+  Verification: `mdbook build docs/book; git diff --check; whitespace-normalized mdBook source comparison against HEAD`
   Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.1: create book spacing task tree`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.2`
-  Status: `active`
+  Status: `completed`
   Goal: `Normalize obvious mdBook prose paragraph blobs.`
   Acceptance: `Review the mdBook source, starting with chapter 12 and chapter 14, and insert one blank line between adjacent prose paragraphs where missing. Preserve code fences, tables, lists, examples, headings, and all technical wording. Update live docs with the formatting-only result.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `mdbook build docs/book; git diff --check`
+  Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `MDBOOK-PARAGRAPH-SPACING.2` | `active` | Task-tree ownership is in place; the next slice performs the formatting-only mdBook cleanup. |
+| 1 | `closed` | `done` | Paragraph-spacing cleanup is complete and validated. |
 
 ## Decisions
 
@@ -79,14 +79,19 @@ large text blobs.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-19` | `MDBOOK-PARAGRAPH-SPACING.1` | `mdbook build docs/book`; `git diff --check` | `created task-tree ownership for the mdBook paragraph-spacing cleanup` |
+| `2026-05-19` | `MDBOOK-PARAGRAPH-SPACING.2` | `mdbook build docs/book`; `git diff --check`; whitespace-normalized mdBook source comparison against `HEAD` | `normalized paragraph spacing across the named chapters and other obvious mdBook prose blobs without changing technical content` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `MDBOOK-PARAGRAPH-SPACING.1` | `this commit: MDBOOK-PARAGRAPH-SPACING.1: create book spacing task tree` | `creates ownership before book-source formatting edits` |
+| `MDBOOK-PARAGRAPH-SPACING.2` | `this commit: MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing` | `formatting-only mdBook source readability cleanup` |
 
 ## Changelog
 
 - `2026-05-19`: Created task tree and selected `.2` for the formatting-only
   mdBook paragraph-spacing cleanup.
+- `2026-05-19`: Completed `.2` by adding blank-line paragraph separation to
+  chapter 12, chapter 14, and other obvious mdBook prose blobs discovered by
+  the audit.

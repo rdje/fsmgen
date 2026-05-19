@@ -213,6 +213,7 @@ literal overrides are width-flexible, and aggregate defaults require
 compatible aggregate overrides. Actor-local constants may be used as scalar
 override values, or as scalar leaves inside aggregate/list override values;
 they resolve to literal values before generated-top emission.
+
 A generated child `.fsm` emits the child transaction defaults in `+params`;
 parameter declarations on non-generated transactions fail closed; the parent
 lowerer IR preserves per-instance override lists, and the generated top applies
@@ -418,6 +419,7 @@ FSMGen rewrites the drive body to generated parent handoff signals before
 lowering. The scheduled parent `.fsm` exposes `producer_payload` as the
 source input and `consumer_payload` as the sink output, then the named drive
 request drives `consumer_payload` from `producer_payload` for that call cycle.
+
 The schedule report records the movement in `actor_network.data_movements[]`
 with source/sink instance, endpoint, generated signal, width, route lifetime,
 and storage fields.
@@ -597,11 +599,14 @@ to move an actor endpoint value to a top-level actor output:
 One transaction drive call activates the route for that drive-call cycle. The
 scheduled parent exposes `producer_payload` as the generated actor source
 handoff input and preserves `result` as the existing top-level output sink.
+
 Schedule JSON reports the route in `actor_network.data_movements[]` with kind
 `scalar_actor_to_pin_handoff`, `source: "external_handoff"`, `sink:
 "top_level_pin"`, `route_lifetime: "drive_call_cycle"`, and `storage: "none"`.
+
 The fixture keeps `association_schedules[]` and `group_schedules[]` empty
 because it is a drive-activated data route, not a trigger-batch association.
+
 It does not claim generated ATL child `.fsm` artifacts, generated ATL tops,
 bidirectional pin movement, route mux/storage, trigger/data coupling, wider
 payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or
@@ -645,6 +650,7 @@ The shipped ATL source-root safety boundary rejects a second top-level
 resolved actor type for `(instance name of ActorType)`. One actor root plus
 `(library ...)` roots remains accepted, and the shipped library-qualified ATL
 subsets now emit generated child `.fsm` artifacts and generated ATL tops.
+
 Sibling-root child type resolution remains deferred.
 
 The selected future source contract for ATL actor type resolution is explicit
@@ -666,13 +672,16 @@ library qualification:
 
 The alias before the dot must come from the enclosing actor's explicit library
 imports, and the name after the dot must be an actor export from that library.
+
 Unqualified `(instance name of ActorType)` remains metadata-only external
 intent for now, not an implicit search through sibling actor roots or files.
+
 Existing `(use alias.actor as instance ...)` remains the separate reusable
 library generated-top path with explicit bindings. The targeted fail-closed
 reservation for this qualified ATL syntax is shipped: missing imports,
 non-explicit import aliases, unknown aliases, and unknown actor exports still
 fail before scheduled `.fsm` emission with ATL-specific diagnostics.
+
 Resolved qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm`, with
 `type_resolution: "library_actor_export"` and deterministic child
@@ -682,6 +691,7 @@ files, and the first generated ATL top is shipped for the one-resolved-child
 trigger/event subset. Broader generated ATL tops, interface binding inference,
 data-route child wiring, and event/trigger/data handoff wiring outside that
 selected pair remain later leaves.
+
 The shipped resolved-child fixture is
 `isf/atl_resolved_child_pipeline.isf`. It uses one same-source library actor
 export, one resolved `(instance worker of pkt_lib.packet_worker)`, one parent
@@ -750,6 +760,7 @@ the same actor-network families and uses
 `actor_network.generated_tops[].children[]` for the per-child generated-top
 wiring records. The first scalar generated-child actor-to-actor route through
 that two-child top is also shipped as `isf/atl_two_child_data_pipeline.isf`.
+
 It reuses a named drive body with `(writer.payload reader.payload)` and calls
 it after `reader.done` and before `writer.emit`. The scheduled parent exposes
 `reader_payload` as the source handoff input and `writer_payload` as the sink
@@ -762,71 +773,86 @@ handoff output, drives `writer_payload` from `reader_payload` only for the
 fan-in/fan-out, route mux/storage, CDC/reset remapping, ready/backpressure,
 payload protocols, repeated triggers, trigger batches, groups, recursive
 actor networks, and permanent actor grouping remain unavailable.
+
 The shipped hardening around this one-route surface locks the nearby
 fail-closed rules: the source endpoint must be a scalar output on the source
 child, the sink endpoint must be a scalar input on the sink child, and only
 one route drive body, one endpoint pair, and one top-level drive call may
 participate.
+
 The shipped width hardening keeps the route scalar one-bit only. Wider child
 payload endpoints remain fail-closed until a later payload-width protocol
 defines packing, truncation, extension, or storage behavior.
+
 The shipped clock/reset hardening keeps the same route in one parent
 clock/reset policy. Source or sink child clock/reset mismatches fail closed
 until a later CDC or reset-remap contract is selected; the generated top does
 not insert async crossing logic, system-port remapping, route storage, muxing,
 or backpressure.
+
 The shipped self-route hardening keeps the route between two distinct
 resolved children. Same-child source/sink route pairs fail closed until a
 later contract selects self-route, loopback, child-internal bypass, storage,
 muxing, fan-in/fan-out, or payload behavior.
+
 The shipped repeated-trigger hardening keeps the route sequence to one
 source-child trigger and one sink-child trigger. Extra route-child triggers
 fail closed until a later contract selects repeated activation, restart,
 pending-request merging, trigger fan-in/fan-out, or multi-activation
 scheduling.
+
 The shipped repeated-wait hardening keeps the same route sequence to one
 source-child event wait and one sink-child event wait. Extra route-child
 waits fail closed until a later contract selects event fan-in/fan-out,
 repeated wait sequencing, route-level wait storage, muxing, backpressure, or
 payload behavior.
+
 The shipped same-parent-transaction hardening keeps that same route inside
 one parent transaction. Route clauses split across multiple parent
 transactions stay fail-closed until a later contract selects route
 continuation, pending handoff storage, transaction rendezvous,
 cross-transaction scheduling, muxing, backpressure, or payload behavior.
+
 The shipped sink-trigger ordering hardening keeps the data drive call before
 the sink child trigger. Sink-before-drive route sequences stay fail-closed
 until a later contract selects speculative sink activation, delayed payload
 delivery, route storage, muxing, backpressure, or payload behavior.
+
 The shipped sink-event-wait ordering hardening keeps the sink child event
 wait after the sink child trigger. Sink-wait-before-trigger route sequences
 stay fail-closed until a later contract selects pre-trigger acknowledgement,
 sticky event sampling, event replay, route storage, muxing, backpressure, or
 payload behavior.
+
 The shipped source-event-wait ordering hardening keeps the source child
 event wait after the source child trigger. Source-wait-before-trigger route
 sequences stay fail-closed until a later contract selects pre-trigger
 acknowledgement, sticky event sampling, event replay, route storage, muxing,
 backpressure, or payload behavior.
+
 The shipped route-contiguity hardening keeps that route as one contiguous
 transaction-body segment. Interleaved parent clauses between the source
 trigger, source event wait, data drive call, sink trigger, and sink event
 wait stay fail-closed until a later contract selects interleaved parent work,
 local side effects, pre/post route sampling, route continuation, storage,
 muxing, backpressure, or payload behavior.
+
 The shipped route-isolation hardening keeps that route segment as the only
 executable parent transaction-body work between the transaction start
 condition and completion. Parent-local clauses before the source trigger or
 after the sink event wait stay fail-closed until a later contract selects
 pre-route setup, post-route sampling, local side effects, cleanup work, route
 continuation, storage, muxing, backpressure, or payload behavior.
+
 The shipped route-boundary cardinality hardening keeps that isolated route
 bounded by exactly one simple start condition and one simple completion
 pulse. Extra start or completion boundaries stay fail-closed until a later
 contract selects activation fan-in, completion fan-out, start-condition
 arbitration, setup/cleanup, continuation, storage, muxing, backpressure, or
 payload behavior.
+
 The shipped boundary-simplicity hardening keeps those boundaries body-free.
+
 Activation-body samples in `(on ...)` and extra payload operands in
 `(complete ...)` stay fail-closed until a later contract selects
 activation-body sampling, completion payload/fan-out, setup/cleanup,
@@ -845,12 +871,14 @@ The event producer is external in this subset. FSMGen still does not resolve
 the actor type, emit an ATL child `.fsm`, generate an ATL top, trigger actor
 transactions, carry event payloads, or support fan-in/fan-out, multiple waits,
 nested waits, cross-clock actor events, or concurrent group events.
+
 Unqualified local forms keep their existing meaning: `(await signal)` waits
 on a local transaction signal, and rule-level `(trigger transaction)` triggers
 a local transaction. Dotted enum-looking names that do not name a static
 actor instance keep their prior diagnostics.
 
 The current qualified trigger behavior is the matching parent-handoff subset.
+
 A top-level transaction-body `(trigger actor.transaction)` may target a
 static actor instance either as a single handoff or as part of the temporary
 trigger-batch subset. FSMGen lowers it to a generated one-cycle parent output

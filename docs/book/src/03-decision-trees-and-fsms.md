@@ -129,6 +129,7 @@ state_DT_output_EN = state_DTE && state_DT_selector_predicate
 
 That shape is intentional. Inside one state DT, all route predicates that
 select the same `LHS`/`VAL` pair are ORed into the DT-local selector predicate.
+
 That ORed selector is then ANDed with the state `DTE` just before it leaves the
 state DT. At the FSM level, the already-gated state-DT enables are ORed again
 per `LHS`/`VAL` pair to form the FSM-level enable for that mux input. That
@@ -152,6 +153,7 @@ MUXOUT = (MUXIN0 && SEL0) || (MUXIN1 && SEL1) || ... || (MUXINP && SELP)
 ```
 
 Each `SELp` is the logical OR of the gated DT enables that select `MUXINp`.
+
 For a combinational assignment such as `(= (MUXOUT MUXIN0))`, the mux output is
 the authored LHS. For a flopped assignment such as
 `(<- (MUXOUT_Q MUXIN0))`, the mux output is the D input of the flop whose
@@ -225,6 +227,7 @@ described in the language basics chapter still apply.
 
 Non-state DT names must use exactly one leading dash plus an
 HDL-identifier-compatible base name, for example `-route_dt` or `-comb_1`.
+
 Malformed block names such as `(bad-name ...)`, `(-bad-name ...)`, and
 `(--bad ...)` are rejected explicitly. Non-state DTs use the same activation
 and enable rules everywhere they are accepted; they are not regular encoded
@@ -256,6 +259,7 @@ fully frozen language forever, so keep an eye on current wording in the
 reference docs.
 
 Do not treat a DT as a way to build arbitrary asynchronous reset-tree glue.
+
 Random combinational logic on an asynchronous reset path is glitch-prone and is
 outside the DT model. Actual clock/reset policy belongs to the `+system` reset
 contract and explicit reset/default metadata.
@@ -263,6 +267,7 @@ contract and explicit reset/default metadata.
 ## State Transitions
 
 Transitions target named FSM states in the same root.
+
 Targets must be declared regular FSM-state DT blocks and must be
 HDL-identifier-compatible. A transition to `bad-name`, `-comb`, or an unknown
 state is rejected before generation.
@@ -346,6 +351,7 @@ replace the state decode. A guarded state DT can therefore be active even when
 `current_state` is a different encoded state. This is powerful and deliberate,
 but it must be reviewed as whole-DT activation: assignments, tests, and
 transitions inside that state DT all participate when the header guard is true.
+
 If the body contains `(-> other_state)`, that transition can drive
 `next_state` under the external activation condition as well as under the
 ordinary state decode.

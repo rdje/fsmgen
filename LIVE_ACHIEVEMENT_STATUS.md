@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: Project documentation — mdBook paragraph-spacing cleanup shipped
+- Completed `MDBOOK-PARAGRAPH-SPACING.2`.
+- Closed the `MDBOOK-PARAGRAPH-SPACING` task tree.
+- Reformatted the mdBook source so the user-reported Extensions and
+  Embedding and Intent Scheduling chapters, plus other obvious prose blobs
+  found during audit, have blank-line paragraph separation.
+- The slice is formatting-only: no behavior, syntax, diagnostic, example,
+  feature-claim, table, list, or fenced-code content change is intended.
+- Validation passed with `mdbook build docs/book`, `git diff --check`, and a
+  whitespace-normalized mdBook source comparison against `HEAD`.
+
 ## 2026-05-19: Project documentation — mdBook paragraph-spacing cleanup ownership created
 - Completed `MDBOOK-PARAGRAPH-SPACING.1`.
 - Created task-tree ownership for the requested formatting-only mdBook

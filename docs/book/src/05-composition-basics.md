@@ -115,6 +115,7 @@ is equivalent to:
 
 Both forms resolve `frame_t`, use its packed bit width for sizing, and preserve
 its declared type contract on the port. The packed width is only the bit count.
+
 The declared type contract may also carry signedness, two-state/four-state
 intent, aggregate shape, member layout, and type identity. Two ports can
 therefore have the same packed width while still being incompatible because
@@ -256,6 +257,7 @@ names on the `?fsmc` or `?dtc` instance:
 ```
 
 Scalar overrides are intentionally width-flexible at the intent layer.
+
 Aggregate overrides must match the list/record shape inferred from the child
 parameter default before HDL is emitted.
 
@@ -358,11 +360,13 @@ External RTL metadata can be sidecar `<module>.rtlif` or an embedded
 `(?rtlif:module ...)` companion root. Embedded metadata for the requested
 module takes precedence over sidecar metadata. Metadata roots are flat port
 contracts plus an optional semantic `(params (NAME default_value) ...)` block.
+
 Port categories are currently `data`, `clock`, and `reset`; typed clock/reset
 ports are system-input roles and output-direction clock/reset tokens are
 rejected.
 
 Those category markers are interface roles, not separate HDL data types.
+
 `:clock` marks a clock input that participates in composition's system-clock
 auto-wiring, `:reset` marks a reset input that participates in system-reset
 auto-wiring, and `:data` marks an ordinary payload/status/control port. The

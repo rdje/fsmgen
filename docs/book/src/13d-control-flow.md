@@ -152,6 +152,7 @@ do state's fresh done guard and before the repeat check. Multi-pending
 repeat-body `await_any` is shipped only when a later same-body `await_all`
 drains the same outstanding spawn set before the repeat check; new
 repeat-body `spawn` or `do` clauses before that drain remain rejected.
+
 Repeat-body generated `do`
 accepts already generated child targets or static `(params ...)` overrides,
 optional `(bind ...)` input/output handoffs, and optional same-domain
@@ -169,6 +170,7 @@ switch-contained nested subset accepts the same local, plain generated-child,
 static-parameter generated, or static-parameter generated bound forms in a
 repeat directly inside a top-level `switch` branch, and it may also carry
 declared same-domain `(domain NAME)` metadata when static params are present.
+
 Both nested subsets keep the nested repeat check gated by the child's fresh
 done pulse. A repeat directly inside a top-level `when` body may also contain
 one or more generated
@@ -176,6 +178,7 @@ one or more generated
 when the same nested body reaches `(await_all done)` before the nested repeat
 check can loop. A repeat directly inside a top-level `switch` branch may
 contain the same multiple generated-spawn plus same-body `await_all` subset.
+
 Both branch-contained paths may use single-pending `(await_any done)` directly
 when exactly one generated child is pending. Both branch-contained paths may
 also use multi-pending `(await_any done)` as an observation point only when a later
@@ -194,6 +197,7 @@ multi-pending `await_any` observation; the top-level `switch` local-do form
 and both generated-child pending-spawn forms still require no prior
 multi-pending `await_any` observation. Every pending-spawn `do` form requires
 a later same-body `await_all` drain before the nested repeat check can loop.
+
 The local do waits for the local child's fresh done pulse; the
 generated-child do waits for its deterministic generated do instance's fresh
 done handoff. Neither form clears the generated-spawn done set before the
@@ -215,11 +219,13 @@ CDC. Generated `do` after prior multi-pending `await_any`, switch-contained
 local `do` after prior multi-pending `await_any`, new spawn after the
 generated do before the drain, and await-any-after-do forms remain
 fail-closed.
+
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and
 branch-contained spawned cases, `stage`, `contract`, nested `while`, and
 nested `until` forms remain outside the
 shipped repeat-body subset.
+
 Unsupported nested forms now fail closed during lowering instead of
 disappearing from scheduled `.fsm` output.
 
@@ -249,7 +255,9 @@ disappearing from scheduled `.fsm` output.
 ```
 
 Read branch: captures 8 bits via shift register.
+
 Write branch: drives the sampled data byte MSB-first and shifts the sampled
 byte left after each bit.
+
 Both branch repeats exit to the same post-switch STOP sequence when their
 repeat checks complete.

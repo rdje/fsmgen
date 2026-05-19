@@ -73,6 +73,7 @@ valid lint-clean SystemVerilog?” while Yosys answers “can that SystemVerilog
 lowered into structural logic?” The Yosys lane uses `synth -noabc` on purpose:
 ABC optimization/mapping can have timeout-sensitive edge cases, and those
 belong to a later dedicated hardening lane rather than this garbage-code gate.
+
 VHDL validation with GHDL is intentionally deferred until FSMGen has an active
 VHDL backend. The current regression gate is a focused SystemVerilog smoke,
 not yet a claim that every historical sample in `fsm/` is externally

@@ -24,9 +24,11 @@ The long form remains accepted and normalizes to the same parser output:
 ```
 
 This rule-local `(when ready)` is a guard clause, not transaction control flow.
+
 It has no body of its own; it guards the rule actions that follow it. The
 body-bearing `(when condition body...)` form is only described in
 [Control Flow](13d-control-flow.md) because it is a transaction clause.
+
 Rule guards may be scalar conditions or list expressions using the normal
 `.fsm` expression spelling. Expression guards are the intended way to author
 FIFO fire predicates such as `(& push (! pop) (! full))` without creating
@@ -37,6 +39,7 @@ the non-state DT header guard `<mode.BUSY`, while a package guard such as
 existing `.fsm` condition-suffix machinery, so a nonzero enum value selects the
 rule and a zero-valued enum member does not. Scalar aggregate storage leaves
 from declared actor-owned storage are valid standalone rule guards as well.
+
 For example, `frame.flag` lowers to `<frame.flag`, and a package-backed list
 leaf such as `lanes[1]` lowers to `<lanes[1]`. Subaggregate guards, such as a
 whole record member or whole list member, still fail closed.
@@ -66,13 +69,16 @@ whole record member or whole list member, still fail closed.
   covered priority and resource-arbitration paths
 
 Rule actions are structurally validated before the actor shell is returned.
+
 The shipped `(set port expr)` action is the canonical explicit rule setter.
+
 The shorter `(port expr)` action remains supported shorthand. Both accept a
 scalar RHS or one list expression using the same `.fsm` RHS expression domain
 as transaction `(set var expr)` and `(update var expr)`, while keeping rule
 assignments flopped with `<-`. Rule guard and assignment expressions reject
 literal-zero division/modulo divisor operands before scheduled `.fsm` emission;
 dynamic scalar divisors lower unchanged and are not yet proven nonzero.
+
 `(trigger transaction)` must name a declared transaction in the same actor;
 forward references are accepted because validation happens after the full actor
 body is collected. `(priority over other_rule)` must name a declared rule in
@@ -84,6 +90,7 @@ all become the public parser `when` field. Scheduled `.fsm` emission writes
 that guard once in the DT header instead of repeating it on every assignment
 or wrapping the actions in a nested guard block. `(set port expr)` and ordinary
 `(port expr)` actions are flopped assignments selected by the guarded DT.
+
 `(trigger transaction)`
 uses `<1` on a generated
 `rule_transaction` source so the request remains pulse-shaped, and a generated
@@ -116,6 +123,7 @@ cycle.
 ## Rule Data Conflicts
 
 Rule data writes are checked before generated scheduled `.fsm` text is accepted.
+
 When two rules drive the same target to incompatible values, lowering fails
 closed with `isf_conflicting_rule_writes`; compatible same-target/same-value
 rule writes remain accepted.
@@ -129,6 +137,7 @@ requires `push=1` while the other requires `push=0`. Equality facts are covered
 too: rules guarded by `(== occupancy 1)` and `(== occupancy 2)` cannot both
 select the same target in the same cycle. That proof is enough for the
 scheduler to avoid priority boilerplate for the covered FIFO-style cases.
+
 The proof is intentionally conservative: if the guard equations are not
 reduced to direct contradictory signal or equality facts, the pair remains
 unproved and uses the existing compatible fan-in, priority-resolution, or
@@ -139,6 +148,7 @@ recorded internally as `isf_unproven_rule_drive_overlap` with
 `proof_status => not_doable` because the current compile-time analysis does
 not prove that the rule guard and generated drive-start guard can or cannot be
 active together.
+
 That status is explicit: the compiler is flagging that the proof is NOT doable
 for the current analysis rather than claiming the overlap is safe.
 
@@ -256,6 +266,7 @@ same static parameter block shipped for spawn and blocking `do`.
 
 The lowering preserves the shipped trigger timing. The rule DT still creates
 the per-rule trigger source and, for input bindings, per-rule payload sources.
+
 Instead of feeding the shared `transaction_start` fan-in, the parameterized
 path elaborates a static generated child instance named
 `{rule}_{transaction}_trigger_{ordinal}` and a generated trigger handoff DT
@@ -265,6 +276,7 @@ source. The generated top applies the `(params ...)` overrides on that
 composition and reads it into an internal observer signal, but the rule does
 not wait for it. Rule-trigger output bindings remain unsupported because there
 is no completion point in the rule action.
+
 Malformed or ambiguous trigger parameter overrides must fail before scheduled
 artifacts are emitted: duplicate `params` blocks, duplicate override names,
 unknown target parameters, incompatible aggregate/list shapes, unsupported
@@ -316,6 +328,7 @@ Priority declarations are structurally validated as
 in the same actor; forward references are accepted. When both sides are rules,
 the edge can resolve same-target rule/rule data conflicts by suppressing the
 lower-priority assignment under the higher-priority rule condition.
+
 Transaction priority and broader resource arbitration are still deferred. The
 remaining enforcement work is tracked in [Feature Backlog](14-feature-backlog.md).
 
@@ -332,6 +345,7 @@ remaining enforcement work is tracked in [Feature Backlog](14-feature-backlog.md
 ```
 
 Resources name shareable hardware or scheduler-controlled ownership domains.
+
 The resource name, such as `rule_exec` or `mem_port`, is the author-defined
 instance handle. The resource kind says what is being shared. The arbiter says
 how requesters are selected. Arbiter names accepted by the parser are
@@ -347,6 +361,7 @@ The table below is the current public registry of things ISF can name as
 shareable resources. It deliberately starts small. A new kind should enter the
 registry only when its authoring shape, lowering path, runtime semantics,
 diagnostics, report surface, and tests are explicit.
+
 The code owner is `FSM::Support::ISFResourceCatalog`; the parser and
 machine-readable ISF public contract use that same owner. Downstream consumers
 can discover the current arbiter list, resource-kind list, status map, meaning

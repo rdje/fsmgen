@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: mdBook paragraph-spacing cleanup shipped
+- Completed `MDBOOK-PARAGRAPH-SPACING.2` and closed the
+  `MDBOOK-PARAGRAPH-SPACING` task tree.
+- Reformatted the mdBook source with blank-line paragraph separation in the
+  user-reported chapters, [Extensions and Embedding](docs/book/src/11-extensions-and-embedding.md)
+  and [Intent Scheduling](docs/book/src/13-intent-scheduling.md), plus other
+  obvious prose blobs found during the book-source audit.
+- The cleanup is formatting-only: no FSMGen behavior, ISF semantics,
+  examples, feature claims, code fences, tables, or list structure changed.
+- Validation passed with `mdbook build docs/book`, `git diff --check`, and a
+  whitespace-normalized mdBook source comparison against `HEAD`.
+
 ## 2026-05-19: mdBook paragraph-spacing cleanup ownership created
 - Completed `MDBOOK-PARAGRAPH-SPACING.1`.
 - Created task-tree ownership for the formatting-only mdBook readability

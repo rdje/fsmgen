@@ -15,10 +15,12 @@ General-purpose variable assignment. The expression is any `.fsm`-compatible
 expression, supplied as one scalar or list expression payload. The form is
 exact: `(update var expr)`, with scalar `var`. Missing expressions, nested
 targets, and extra operands are rejected before scheduled `.fsm` emission.
+
 Division and modulo RHS expressions also fail closed when a divisor operand is
 a numeric/exact-width literal zero or an actor-level constant that resolves to
 zero, including nested expressions such as
 `(update out (+ mask (% numerator 8'd0)))` or `(set out (/ numerator ZERO))`.
+
 Nonzero literal divisors, nonzero actor-constant divisors, and dynamic scalar
 divisors are preserved in the scheduled `.fsm`; FSMGen does not yet prove
 arbitrary dynamic divisors nonzero.
@@ -33,6 +35,7 @@ arbitrary dynamic divisors nonzero.
 ```
 
 Shifts `reg` left by 1 and ORs in `bit` at LSB.
+
 The form is exact: `(shift_left reg bit)` or
 `(shift_left reg bit (width N))`, with scalar `reg`, scalar `bit`, and a
 positive integer width when the option is present.
@@ -70,6 +73,7 @@ not need a computed MSB insertion position.
 ```
 
 Shifts `reg` right by 1 and ORs in `bit` at MSB.
+
 The form is exact: `(shift_right reg bit)` or
 `(shift_right reg bit (width N))`, with scalar `reg`, scalar `bit`, and
 positive integer width when the option is present.
@@ -96,6 +100,7 @@ already-known width for the shifted register.
 ```
 
 Concatenates fields into a single variable.
+
 The form is exact: `(assemble part... as var)`, with one or more scalar parts
 and scalar target `var`.
 
@@ -164,6 +169,7 @@ actor and transaction shape. Interface declarations and actor-owned
 widths, explicit `shift_left`, `shift_right`, and `extract` width options add
 local evidence, and `assemble` can infer its target width when all parts are
 known or infer one missing part width from a known target and known siblings.
+
 This is
 type/shape evidence, not cycle-value evidence, so it is not
 source-order-sensitive inside the transaction.
@@ -188,9 +194,11 @@ existing width fact for the same name.
 Accepted migrated operation families do not emit `WIDTH`, `HIGH`, or `LOW`
 placeholders. `extract` fails when field positions cannot be proven after the
 single-missing-field inference rule.
+
 `shift_right` fails when the shifted register width is missing or
 contradictory. `shift_left` accepts optional width evidence and rejects
 contradictory explicit widths while still accepting widthless shifts.
+
 `assemble` rejects known target-width mismatches and non-positive single-part
 inferred remainders.
 
@@ -208,4 +216,5 @@ inferred remainders.
 ```
 
 Each cycle: SCL high → sample `sda_in` into `rdata` LSB → SCL low.
+
 After 8 cycles: `rdata` contains the full byte.

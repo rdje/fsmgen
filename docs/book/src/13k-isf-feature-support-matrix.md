@@ -288,16 +288,19 @@ to parent `worker_done`. Schedule JSON records the resolved child under
 children, trigger batches, generated-child data routes, route mux/storage,
 CDC, ready/backpressure, payload binding, recursive actor networks, or
 permanent actor grouping.
+
 The generated-top HDL promotion fixture extension is shipped for the same
 source: plain and strict CLI SystemVerilog includes the generated top,
 scheduled parent, resolved child, and selected internal trigger/event links
 without adding new ATL syntax or report keys.
+
 The generated-child pin-ingress fixture is shipped as
 `isf/atl_resolved_child_pin_ingress_pipeline.isf`: one scalar top-level input
 pin routes to one resolved child input through the generated top, using a
 named drive body with `(worker.payload pins.payload)`. The same focused
 coverage proves route metadata, child input port preservation, generated top
 wiring, and plain plus strict HDL generation for that bounded shape.
+
 The generated-child pin-egress fixture is shipped as
 `isf/atl_resolved_child_pin_egress_pipeline.isf`: one scalar resolved-child
 output routes to one top-level output pin through the generated top, using a
@@ -306,6 +309,7 @@ wait. The same focused coverage proves route metadata, child output port
 preservation, generated top wiring, plain plus strict HDL generation, missing
 child output failure, and pre-event drive-order failure for that bounded
 shape.
+
 Generated-child actor-to-actor data movement across two resolved children now
 fails closed with a targeted diagnostic when the parent transaction also uses
 qualified actor trigger/event handoffs; positive multi-child ATL top
@@ -319,9 +323,11 @@ both children. Schedule JSON records one generated top with `children[]`
 entries for reader and writer wiring, while keeping the existing
 `actor_network.instances[]`, `transaction_triggers[]`, and `event_waits[]`
 evidence.
+
 The first scalar generated-child actor-to-actor route through that top is
 shipped as `isf/atl_two_child_data_pipeline.isf`: `(writer.payload
 reader.payload)` is called after `reader.done` and before `writer.emit`.
+
 Schedule JSON reports the route through
 `actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
 discovers the parent/reader/writer/top wiring through
@@ -329,62 +335,76 @@ discovers the parent/reader/writer/top wiring through
 multi-route data wiring, route mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, repeated triggers, trigger batches,
 groups, and permanent actor grouping remain deferred.
+
 The shipped hardening leaf keeps that surface unchanged and adds focused
 fail-closed coverage for source child output validation, sink child input
 validation, and the one-drive/one-pair/one-call cardinality boundary.
+
 The shipped width hardening keeps generated-child actor-to-actor endpoints
 scalar one-bit and targets wider source/sink child payload ports as
 fail-closed coverage, without payload conversion semantics.
+
 The shipped clock/reset hardening keeps that route same-domain only: source
 or sink child clock/reset mismatches fail closed before any CDC bridge, reset
 remap, generated-top system-port remap, storage, mux, or backpressure
 contract.
+
 The shipped self-route hardening keeps that route between two distinct
 resolved children: same-child source/sink route pairs fail closed before any
 self-route, loopback, child-internal bypass, storage, mux, fan-in/fan-out, or
 payload contract.
+
 The shipped repeated-trigger hardening keeps the route to one source-child
 trigger and one sink-child trigger: extra route-child triggers fail closed
 before any repeated activation, restart, pending-request merging, trigger
 fan-in/fan-out, or multi-activation scheduling contract.
+
 The shipped repeated-wait hardening keeps the same route to one source-child
 event wait and one sink-child event wait: extra route-child waits fail closed
 before any event fan-in/fan-out, repeated wait sequencing, route-level wait
 storage, muxing, backpressure, or payload contract.
+
 The shipped same-parent-transaction hardening keeps that route inside one
 parent transaction: split route clauses remain fail-closed before any route
 continuation, pending handoff storage, transaction rendezvous,
 cross-transaction scheduling, muxing, backpressure, or payload contract.
+
 The shipped sink-trigger ordering hardening keeps the data drive call before
 the sink child trigger: sink-before-drive route clauses remain fail-closed
 before any speculative sink activation, delayed payload delivery, route
 storage, muxing, backpressure, or payload contract.
+
 The shipped sink-event-wait ordering hardening keeps the sink child event
 wait after the sink child trigger: sink-wait-before-trigger route clauses
 remain fail-closed before any pre-trigger acknowledgement, sticky event
 sampling, event replay, route storage, muxing, backpressure, or payload
 contract.
+
 The shipped source-event-wait ordering hardening keeps the source child
 event wait after the source child trigger: source-wait-before-trigger route
 clauses remain fail-closed before any pre-trigger acknowledgement, sticky
 event sampling, event replay, route storage, muxing, backpressure, or payload
 contract.
+
 The shipped route-contiguity hardening keeps that same route as one
 contiguous transaction-body segment: interleaved parent clauses remain
 fail-closed before any interleaved parent work, local side effects,
 pre/post route sampling, route continuation, storage, muxing, backpressure,
 or payload contract.
+
 The shipped route-isolation hardening keeps that contiguous route segment
 as the only executable parent transaction-body work between the transaction
 start condition and completion: pre-route and post-route parent clauses
 remain fail-closed before any local side effects, setup/cleanup work,
 continuation, storage, muxing, backpressure, or payload contract.
+
 The shipped route-boundary cardinality hardening keeps that isolated route
 bounded by one simple start boundary and one simple completion boundary:
 extra start or completion boundaries remain fail-closed before any
 activation fan-in, completion fan-out, start-condition arbitration,
 setup/cleanup work, continuation, storage, muxing, backpressure, or payload
 contract.
+
 The shipped boundary-simplicity hardening keeps those boundaries body-free:
 activation-body samples in `(on ...)` and extra payload operands in
 `(complete ...)` remain fail-closed before any activation-body sampling,
@@ -490,6 +510,7 @@ The shipped stage surface is a top-level ready/valid barrier. The shipped
 contract surface is a top-level bounded eventual check. The older
 `(input ready)`/`(output valid)` stage spelling remains accepted as an alias,
 and the valid endpoint still participates in same-target conflict checks.
+
 Broader stage-local compute, nested stages, registered-valid/skid-buffer
 variants, expression contract operands, min/max windows, and global
 implication contracts remain backlog.
@@ -512,9 +533,11 @@ implication contracts remain backlog.
 
 The repeat body may use the shipped inline body clauses documented in
 [Transactions](13b-transactions.md) and [Control Flow](13d-control-flow.md).
+
 `WAIT_PARAM` is an actor parameter wait count: scalar actor parameter defaults
 that resolve to non-negative integer literals lower through the same static
 wait contract as literals and actor constants.
+
 Generated or spawned nested child activation, cross-domain repeat-body `do`,
 deeper branch repeat activation, loop-contained repeat activation, and nested
 `stage` or `contract` clauses remain outside the shipped repeat-body subset.

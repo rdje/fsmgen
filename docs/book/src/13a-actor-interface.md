@@ -11,6 +11,7 @@
 ```
 
 Every actor has a clock, an optional reset, and optional watchdog.
+
 The actor is the top-level unit — one hardware agent.
 
 The parser treats `(clock ...)`, `(clock-domains ...)`, `(reset ...)`,
@@ -27,6 +28,7 @@ overwritten. `(clock-domains ...)` is mutually exclusive with actor-level
 ```
 
 Legacy `(clock name)` ISF actors have one clock domain per actor/generated top.
+
 The clock name is an authored signal name for that domain; using a name other
 than `clk` does not create a second domain.
 
@@ -41,6 +43,7 @@ selected actor-scoped named-domain metadata and the scheduler builds an
 internal domain partition. Multi-domain public `lower(...)` now emits one
 domain scheduled `.fsm` artifact per declared domain plus a generated top that
 wires explicit CDC child-interface artifacts for accepted event crossings.
+
 `report(...)` and `--emit-schedule-json` now expose bounded domain and
 crossing metadata for that generated top. Accepted event-crossing actors now
 reach generated SystemVerilog/Verilog-family HDL with the generated top and a
@@ -68,6 +71,7 @@ path.
 Interface ports, storage entries, transactions, rules, reusable `use`
 instances, and generated child activations can carry `(domain NAME)`
 annotations, or inherit the default when `(clock-domains ...)` is present.
+
 Drives inherit the domain of their activation site. None of those annotations
 are CDC primitives: direct cross-domain reads, writes, triggers, activations,
 bindings, or multi-domain drive reuse fail closed before emission unless a
@@ -148,6 +152,7 @@ metadata parameters, for example:
 ```
 
 That marker is the boundary between generated CDC and ordinary external RTL.
+
 Normal `?rtl` children still need externally supplied RTL; FSMGen does not
 invent module internals from a matching port list. When the marker is present,
 the composition realizer emits a concrete Verilog-family child module beside
@@ -223,6 +228,7 @@ and polarity match exactly, not a CDC primitive or data synchronizer.
 ```
 
 Global timeout for every `(await ...)` in this actor.
+
 See [Transactions](13b-transactions.md) for per-await semantics.
 
 **Counter width** is inferred from the limit by the current scheduler.
@@ -240,8 +246,10 @@ See [Transactions](13b-transactions.md) for per-await semantics.
 
 Ports become `.fsm` `+size` declarations and module ports. Inferred scheduler
 storage is not emitted a second time when it shares a name with a declared port.
+
 Interface port names are unique across both input and output directions, and
 the interface block itself is a singleton actor clause.
+
 When an actor uses `(clock-domains ...)`, a port may add `(domain NAME)` to
 declare the owning domain; omitted port domains inherit the actor default
 domain. The annotation is ownership metadata only, not permission for another
@@ -265,10 +273,12 @@ deterministic scalar element names in the scheduled `.fsm` review artifact:
 `data_0`, `data_1`, `data_2`, and `data_3` for the example above.
 
 This scalarized representation is deliberate for the first reusable FIFO work.
+
 It lets the `DEPTH=4` fixture use four concrete storage entries, 2-bit
 pointers, and 3-bit occupancy state while staying on the existing scalar
 signal/flop backend path. Parameter-derived widths/depths, symbolic
 dimensions, and memory-array backend emission are future generalizations.
+
 Pointer-selected access is available through explicit action forms such as
 `(store data wr_ptr data_in)` and `(load data rd_ptr as data_out)`, which
 lower through guarded scalarized entries.
@@ -278,7 +288,9 @@ element names must not collide with interface ports, actor clock/reset signals,
 or generated scheduler signals such as `can_accept`. Missing `(width N)`,
 missing bank `(depth N)`, duplicate storage names, duplicate scalarized element
 names, and repeated storage clauses fail closed before scheduler handoff.
+
 When `(clock-domains ...)` is present, storage entries may add `(domain NAME)`.
+
 The domain applies to every scalar signal produced by that entry, including
 scalarized bank elements.
 
@@ -287,8 +299,10 @@ evidence to later lowering, and appears in schedule reports as `kind:
 register`, `role: actor_storage`, with positive integer `width`. Declared
 typed actor-owned storage may also report the authored `type` and resolved
 `type_kind`; the full shape remains in the scheduled `.fsm` review artifact.
+
 Used storage signals reach SystemVerilog through the normal scalar assignment
 path.
+
 The report `kind` is the generated storage class; authored scalar storage uses
 the normalized scalar storage kind. `(state ...)` and `(register ...)` are not
 accepted storage entry spellings.

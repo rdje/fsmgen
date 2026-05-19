@@ -196,5 +196,6 @@ scheduled `.fsm` emission. That means these failures are reported in ISF space:
 - Aggregate paths outside the shipped scalar leaf contexts listed above.
 
 Strict HDL generation is part of the shipped contract for the listed forms.
+
 When a form is accepted, the scheduled `.fsm` review artifact is the source of
 truth for how the ISF syntax reached the backend.

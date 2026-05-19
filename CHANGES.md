@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### Project documentation — mdBook paragraph-spacing cleanup shipped
+- Completed `MDBOOK-PARAGRAPH-SPACING.2` and closed the task tree.
+- Added blank-line paragraph separation to the mdBook source, including the
+  user-reported [Extensions and Embedding](docs/book/src/11-extensions-and-embedding.md)
+  and [Intent Scheduling](docs/book/src/13-intent-scheduling.md) chapters,
+  plus other obvious prose blobs found during the audit.
+- Preserved technical wording and Markdown structure; this is a
+  formatting-only readability cleanup with no behavior, syntax, diagnostic,
+  feature-claim, table, list, example, or code-fence change intended.
+- Validation passed with `mdbook build docs/book`, `git diff --check`, and a
+  whitespace-normalized mdBook source comparison against `HEAD`.
+
 ### Project documentation — mdBook paragraph-spacing cleanup ownership created
 - Completed `MDBOOK-PARAGRAPH-SPACING.1`.
 - Created a dedicated task tree for the requested formatting-only mdBook

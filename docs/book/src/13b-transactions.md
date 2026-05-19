@@ -25,6 +25,7 @@ activation is explicitly not a parameter-override site because it is the
 transaction's own guard, not a caller-owned generated instance.
 
 Parameter overrides and port bindings must stay separate in authored intent.
+
 Use `(bind (input port expr) ...)` for runtime data/control values that can
 change from cycle to cycle. Use `(params (NAME value) ...)` only for static
 specialization values on activation forms that explicitly support that surface:
@@ -92,6 +93,7 @@ as activation with identical semantics — useful for expression conditions:
 The only supported inline body clauses inside `(on ...)` are
 `(sample port as name)` forms. Other body forms are rejected instead of being
 silently ignored.
+
 `(params ...)` is not a legal `(on ...)` body clause. A direct entry guard has
 no per-call instance to specialize; transaction-local `params` on that
 transaction remain definition defaults. If an author needs a statically
@@ -133,6 +135,7 @@ data through ports or bindings.
 ## `(drive name args...)` — One State per Call
 
 **Timing**: exactly 1 cycle. The `_start` assertion fires in the current cycle.
+
 The port value changes in the NEXT cycle (flopped).
 
 **Cycle-by-cycle** (for `(drive scl 1)`):
@@ -188,6 +191,7 @@ before scheduled `.fsm` emission.
 - Before `(drive ...)` or `(await ...)`: piggybacked onto that state.
 
 **No implicit signals**. The variable `name` is tracked internally.
+
 When a sample is followed by a data operation rather than a drive or await, the
 scheduler emits a sample state first so the data operation reads the captured
 value.
@@ -299,16 +303,20 @@ whose generated start handoff is independent of pending sample aliases plus
 top-level transaction phase pass-through states plus top-level
 bounded-eventual contract arm states; other successor shapes fail closed until
 their sample materialization is specified.
+
 Consecutive top-level runtime waits carry pending samples across zero-count
 wait links with generated downstream wait-entry clones for zero-then-positive
 paths and final compatible target clones for all-zero paths.
+
 Repeat, while, and until loop decision/check states can also carry pending
 samples when their repeat-counter assignment and loop condition are
 independent of the pending sample alias.
+
 Runtime waits can also follow transaction bank `load` and `store` states. The
 bank state keeps its guarded scalarized assignments, and its unconditional
 advance edge splits into positive-count counter load and zero-count bypass
 paths.
+
 Runtime waits inside `when` bodies and `switch` branches now use the same
 one-shot positive sample plus zero-count clone scheme for sample-compatible
 successors, including completion, independent scalar setter, independent
@@ -361,8 +369,10 @@ child start handoff. Top-level transaction phase successors preserve the
 original pass-through transition and apply only to transaction `(phase ...)`
 marker states, not actor-level phase metadata. Top-level contract arm
 successors preserve the original one-cycle monitor arm request.
+
 Loop decision/check successors preserve the original repeat counter decrement
 or while/until branch decision.
+
 In a `switch`, only the selected branch's runtime wait edge is split; other
 cases remain selectable and implicit fallthrough is guarded by the complement
 of all explicit case values. In loops, the relevant entry, back-edge, or exit
@@ -375,6 +385,7 @@ with diagnostics that name the rejected body context.
 **Timing**: exactly 1 cycle. Returns to idle.
 
 The form is exact: `(complete port)`. The target `port` must be a scalar name.
+
 Missing targets, nested targets, and extra operands are rejected before
 scheduled `.fsm` emission.
 
@@ -450,6 +461,7 @@ subsets also accept declared same-domain `(domain NAME)` metadata when static
 `(params ...)` overrides are present. Deeper branch nesting and loop-contained
 repeats remain
 outside both nested subsets.
+
 The shipped
 repeat-body clause
 surface also includes generated blocking `(do child)` when the target child is
@@ -494,12 +506,14 @@ spawns are pending either before or after a prior multi-pending
 drains every outstanding generated spawn before the nested repeat check can
 loop. That local do target remains in the parent scheduled module, waits for
 its own fresh local done pulse, and does not clear the generated-spawn done set.
+
 The top-level `when` body and top-level `switch` branch forms also support
 plain generated-child `(do child)` in that pending-spawn interval when the
 target child is already emitted as a generated child by another activation
 site. That generated do site owns one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
 fresh done handoff, and does not clear the pending generated-spawn done set.
+
 The same branch-contained forms support static-parameter generated
 `(do child (params ...))` in that pending-spawn interval; the generated do
 site keeps its authored static parameter binding and still leaves the pending
@@ -519,6 +533,7 @@ before the mandatory later same-body `(await_all done)` drain. The top-level
 `switch` branch nested repeat local `(do child)` subset supports the same
 post-do multi-pending observation and later-drain contract while generated
 nested spawns remain pending before the same-body `await_all` drain.
+
 The top-level `when` body nested repeat plain generated-child `(do child)`
 subset supports the same post-do multi-pending observation and later-drain
 contract while generated nested spawns remain pending before the same-body
@@ -542,6 +557,7 @@ same post-do multi-pending observation and later-drain contract while
 generated nested spawns remain pending before the same-body `await_all`
 drain; it waits for the deterministic generated do instance's fresh done
 handoff before the observation.
+
 Cross-domain
 repeat-body `do`, generated or
 spawned nested activation beyond the documented top-level branch-contained
@@ -557,6 +573,7 @@ source-order timing point: before a later spawn state for sample-before-spawn
 ordering, or before the sync state for sample-after-spawn ordering. The same
 sample timing applies to the documented branch-contained nested spawn subsets
 before their same-body sync.
+
 The shipped repeat-body child-activation subset is
 `(do child)` for local child transactions, generated-child `(do child)` when
 the target is already generated by another activation site, generated
@@ -571,6 +588,7 @@ when-body nested local or plain generated-child `do` while generated nested
 spawns are pending before a same-body `await_all` drain, plus the documented
 top-level switch-branch nested local `do` while generated nested spawns are
 pending before a same-body `await_all` drain.
+
 The lexical spawn name denotes one static generated child instance reused
 across repeat iterations, optional parameter overrides specialize that
 instance once in the generated top, optional input/output bindings create
@@ -584,15 +602,19 @@ finished. Samples around repeat-body spawn and do lower into explicit
 source-order sample states, so the scheduled `.fsm` shows capture timing
 before spawn/do, before spawn sync, between multi-pending `await_any` and its
 drain, or after do completion before the repeat check.
+
 The local `(do child)` form is also shipped inside a repeat that is directly
 inside a top-level `when` body or directly inside a top-level `switch` branch.
+
 Those nested repeat forms also accept a plain generated-child `(do child)`
 target that is already generated elsewhere. The top-level `when` nested
 repeat form also accepts static `(params ...)` on generated blocking `do`.
+
 That nested generated do site owns one
 `{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter overrides
 once when present, uses no port binding or domain annotation, and waits for
 the generated instance's fresh done handoff before the nested repeat check.
+
 Deeper branch/loop placement remains backlog.
 
 Example: a parent can spawn `worker` once, then call the already generated
@@ -768,8 +790,10 @@ multi-pending `await_any` observation or after that observation:
 Here `local_worker` remains a local child transaction in the parent scheduled
 module. The nested do state starts `local_worker`, waits for its fresh local
 done pulse, and then the `after_do` sample runs before the `await_all` state.
+
 The generated-spawn done set remains live across the local do, so the nested
 repeat check is still gated by `w0_done` at the same-body `await_all` drain.
+
 The same top-level `when` path may observe any one of multiple generated
 children first and still run a local child before the mandatory drain:
 
@@ -792,6 +816,7 @@ In this form `await_any` only observes `w0_done` or `w1_done`; it does not
 remove either generated child from the outstanding set. The local do waits for
 `local_worker_done`, then `await_all` still waits for both generated done
 handoffs before the nested repeat check can re-enter.
+
 The top-level `switch` branch nested-repeat subset accepts the same
 local-do-after-`await_any` shape when the later same-body `await_all` drain
 still gates re-entry:
@@ -812,6 +837,7 @@ still gates re-entry:
 
 Generated `do` forms with static parameters, optional binding handoffs, and
 same-domain metadata are documented below as separate shipped subsets.
+
 Static-parameter generated `do` after prior multi-pending `await_any` is
 shipped only for the top-level `when` body and top-level `switch` branch
 nested subsets documented below. Static-parameter generated `do` with bind
@@ -852,6 +878,7 @@ do are shipped for both top-level `when` and top-level `switch` branch nested
 repeats. Both top-level branch-contained subsets may also place that static-
 parameter generated do after a prior multi-pending `await_any` observation
 while a later same-body `await_all` still drains every pending generated spawn.
+
 Static
 `(params ...)` plus `(bind ...)` handoffs on the pending generated do are
 shipped for both top-level branch-contained subsets, and
@@ -1091,8 +1118,10 @@ the same outstanding spawn set. Binding handoff ports are generated once for
 the lexical instance and wired in the generated top just like top-level spawn
 bindings. Domain annotations are accepted only as declared same-domain
 ownership metadata; cross-domain activation remains a CDC/backlog item.
+
 Samples around repeat-body spawn are accepted only when the same-body sync
 that consumes the spawned done ports still appears before the repeat check.
+
 Sample-before-spawn materializes before the spawn state; sample-after-spawn
 materializes before the sync state. The branch-contained nested subsets can
 have multiple generated spawns on the same-body `await_all` path, and may
@@ -1103,17 +1132,20 @@ spawn. In the top-level `when` body and top-level `switch` branch
 nested-repeat subsets, local plain `(do child)` may appear while generated
 nested spawns are pending before or after a prior multi-pending `await_any`
 observation, as long as a later same-body `await_all` drain still follows.
+
 The local do waits on the local child's fresh done pulse and leaves
 generated-spawn done handoffs pending for the later drain. Those same
 branch-contained subsets may also run plain generated-child `(do child)` in
 that interval when the target is already generated elsewhere; that generated
 do waits on its generated do instance's fresh done handoff and still leaves
 spawned done handoffs pending for the later drain.
+
 The top-level `when` body and top-level `switch` branch nested subsets may
 additionally run static-parameter generated `(do child (params ...))` in that
 interval; that generated do preserves static generated-top parameter binding,
 waits on its generated do instance's fresh done handoff, and still leaves
 spawned done handoffs pending for the later drain.
+
 The top-level `when` body and top-level `switch` branch nested subsets may
 additionally run static-parameter generated
 `(do child (params ...) (bind ...))` in that interval; that generated do wires
@@ -1174,10 +1206,12 @@ the selected branch:
 
 For the shipped repeat-body local `do` subset, `(do child)` remains a local
 child activation when the target child remains in the parent scheduled module.
+
 If the same target child is already emitted as a generated child by another
 activation site, the plain repeat-body `(do child)` uses a generated do
 instance for that lexical repeat-body site instead of trying to call a local
 child body that is no longer present in the parent module.
+
 For the shipped repeat-body generated `do` subset,
 `(do child)` may be selected by an already generated child target, while
 `(do child (params ...) [(bind ...)] [(domain NAME)])` is selected by static
@@ -1245,6 +1279,7 @@ used by `when`/`switch`: named drives, `await`, `sample`, `complete`, `repeat`,
 `store`/`load`, nested `when`, and waits. `while`/`until` bodies continue to
 reject `do`, `spawn`, `await_all`, `await_any`, `stage`, `contract`, and nested
 loops until their re-entry, child-lifetime, and report semantics are specified.
+
 The shipped repeat-body spawn plus same-body `await_all` or single-pending
 same-body `await_any` subset applies to top-level `repeat` bodies and, in the
 narrower branch-contained forms documented above, to repeats directly inside a
@@ -1351,6 +1386,7 @@ expr)` remains supported as the older transaction-local spelling for the same
 behavior. Division and modulo inside the RHS reject literal-zero divisor
 operands before scheduled `.fsm` emission. Dynamic scalar divisors lower
 unchanged; full runtime nonzero proof is still backlog.
+
 Shift operations are also exact scalar forms:
 `(shift_left reg bit [(width N)])` and
 `(shift_right reg bit [(width N)])`.

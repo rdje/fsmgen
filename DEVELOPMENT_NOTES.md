@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: mdBook paragraph cleanup preserves content
+- `MDBOOK-PARAGRAPH-SPACING.2` uses source formatting only: blank lines were
+  inserted between prose paragraphs while fenced code, tables, lists,
+  examples, headings, and technical wording were preserved.
+- The largest cleanup targets were the user-reported
+  [Extensions and Embedding](docs/book/src/11-extensions-and-embedding.md)
+  and [Intent Scheduling](docs/book/src/13-intent-scheduling.md) chapters.
+  The audit also caught other obvious prose runs across the book.
+- The check scope for this slice is `mdbook build docs/book`,
+  `git diff --check`, and a whitespace-normalized mdBook source comparison
+  against `HEAD`; no code or generated behavior changed.
+
 ## 2026-05-19: mdBook paragraph cleanup is formatting-only
 - `MDBOOK-PARAGRAPH-SPACING.1` establishes ownership for a readability
   cleanup in the book source, starting with the user-reported blobs in chapter
