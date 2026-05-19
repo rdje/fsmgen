@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL HDL promotion can be a coverage slice
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28` proved the first generated ATL top
+  through plain and strict CLI SystemVerilog without production code changes.
+- The existing `.isf` CLI flow materializes the multi-file lower result, feeds
+  the generated top into the normal composition HDL path, and emits the top,
+  parent, and child modules in one SystemVerilog output.
+- The test writes lowered `.fsm` artifacts into a temp `--outdir` so the
+  multi-file CLI path is exercised without leaving generated files in the repo
+  root.
 ## 2026-05-19: ATL generated top must be proven through HDL
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` selects the next slice as HDL
   promotion for the first generated ATL top instead of widening the ATL source

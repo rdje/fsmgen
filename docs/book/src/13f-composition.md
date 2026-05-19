@@ -692,13 +692,13 @@ the parent, parent `worker_process_start` to child `process_start`, and child
 `done` to parent `worker_done`, then reports the top under
 `actor_network.generated_tops[]`.
 
-The next selected ATL implementation slice is HDL promotion for that same
-resolved-child shape. The source and report schema stay unchanged; the next
-leaf must prove plain and strict CLI SystemVerilog generation contains the
-generated top, scheduled parent, resolved child, and selected internal
-trigger/event links. Multi-child ATL tops, data-route child wiring, CDC,
-payloads, ready/backpressure, route mux/storage, recursive actor networks, and
-permanent actor grouping remain unavailable.
+HDL promotion for that same resolved-child shape is shipped. The source and
+report schema stay unchanged; focused coverage proves plain and strict CLI
+SystemVerilog generation contains the generated top, scheduled parent,
+resolved child, and selected internal trigger/event links. Multi-child ATL
+tops, data-route child wiring, CDC, payloads, ready/backpressure, route
+mux/storage, recursive actor networks, and permanent actor grouping remain
+unavailable.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

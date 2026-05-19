@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-top HDL promotion shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`.
+- Extended `t/1330-isf-atl-resolved-child-fixture-coverage.t` so
+  `isf/atl_resolved_child_pipeline.isf` reaches plain and strict CLI
+  SystemVerilog generation through a temp `--outdir`.
+- The regression asserts the HDL output contains
+  `atl_resolved_child_pipeline_top`, `atl_resolved_child_pipeline`, and
+  `atl_resolved_child_pipeline__worker`.
+- The regression also asserts the generated top HDL links parent
+  `worker_process_start` to child `process_start` and child `done` to parent
+  `worker_done`.
+- No production code change was required; the existing materialized generated
+  top CLI path already emitted the selected HDL shape.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, a selection leaf for the next
+  generated-child integration, interface-binding, or fail-closed boundary.
 ## 2026-05-19: ATL generated-top HDL promotion selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` as a doc-only selection
   leaf.

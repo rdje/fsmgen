@@ -107,6 +107,20 @@ subtest 'ATL resolved-child fixture strict outdir lowering writes the generated 
     );
 };
 
+subtest 'ATL resolved-child fixture reaches generated-top HDL generation' => sub {
+    my $plain_dir = tempdir(CLEANUP => 1);
+    my $plain_hdl = File::Spec->catfile($plain_dir, 'atl_resolved_child_pipeline_plain.sv');
+    my $plain = generate_hdl($plain_hdl, [], 'plain HDL generation');
+
+    assert_generated_top_hdl($plain, 'plain HDL');
+
+    my $strict_dir = tempdir(CLEANUP => 1);
+    my $strict_hdl = File::Spec->catfile($strict_dir, 'atl_resolved_child_pipeline_strict.sv');
+    my $strict = generate_hdl($strict_hdl, ['--strict'], 'strict HDL generation');
+
+    assert_generated_top_hdl($strict, 'strict HDL');
+};
+
 subtest 'ATL generated top fail-closed boundary rejects unsupported child wiring shapes' => sub {
     lower_source_fails_like(
         atl_fixture_variant(<<'LIBRARY'),
@@ -335,6 +349,57 @@ sub lower_source_fails_like {
     like($@, $pattern, "$label diagnostic is targeted");
 }
 
+sub generate_hdl {
+    my ($output_file, $extra_args, $label) = @_;
+    my $lower_dir = tempdir(CLEANUP => 1);
+    my @command = (
+        './bin/fsmgen',
+        @{$extra_args || []},
+        '--quiet',
+        '--outdir',
+        $lower_dir,
+        '--output',
+        $output_file,
+        $isf_file,
+    );
+    my ($success, undef, $stderr) = run_cli(\@command, $label);
+
+    ok($success, "$label succeeds for the ATL resolved-child fixture");
+    is($stderr, '', "$label keeps stderr clean");
+    ok(-f $output_file, "$label writes the requested output");
+    is_deeply(
+        sorted([fsm_basenames_in($lower_dir)]),
+        [
+            'atl_resolved_child_pipeline.fsm',
+            'atl_resolved_child_pipeline__worker.fsm',
+            'atl_resolved_child_pipeline_top.fsm',
+        ],
+        "$label materializes the parent, child, and generated top FSM artifacts",
+    );
+
+    return slurp($output_file);
+}
+
+sub assert_generated_top_hdl {
+    my ($hdl, $label) = @_;
+
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pipeline_top\b/, "$label contains the generated ATL top module");
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pipeline\b/, "$label contains the scheduled parent module");
+    like($hdl, qr/\bmodule\s+atl_resolved_child_pipeline__worker\b/, "$label contains the resolved child module");
+    like($hdl, qr/\bwire\s+comp_link_atl_resolved_child_pipeline_worker_process_start\b/,
+        "$label declares the parent-to-child trigger link");
+    like($hdl, qr/\bwire\s+comp_link_worker_done\b/,
+        "$label declares the child-to-parent event link");
+    like($hdl, qr/\.worker_process_start\(comp_link_atl_resolved_child_pipeline_worker_process_start\)/,
+        "$label connects the parent trigger handoff to the internal trigger link");
+    like($hdl, qr/\.process_start\(comp_link_atl_resolved_child_pipeline_worker_process_start\)/,
+        "$label connects the child process start input to the internal trigger link");
+    like($hdl, qr/\.done\(comp_link_worker_done\)/,
+        "$label connects the child done output to the internal event link");
+    like($hdl, qr/\.worker_done\(comp_link_worker_done\)/,
+        "$label connects the parent event handoff input to the internal event link");
+}
+
 sub atl_fixture_variant {
     my ($library) = @_;
     my $actor = <<'ISF';
@@ -363,6 +428,14 @@ sub fsm_basenames_in {
     my @files = grep { /\.fsm\z/ } readdir $dh;
     closedir $dh or die "cannot close directory $dir: $!";
     return @files;
+}
+
+sub slurp {
+    my ($path) = @_;
+    open my $fh, '<', $path or die "cannot read $path: $!";
+    my $text = do { local $/; <$fh> };
+    close $fh or die "cannot close $path: $!";
+    return $text;
 }
 
 sub sorted {

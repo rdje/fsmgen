@@ -1743,12 +1743,12 @@ reported `event_waits[]`, `transaction_triggers[]`, `data_movements[]`,
 `association_schedules[]`, `group_schedules[]`, and `generated_tops[]`
 entries until a later task-tree leaf documents broader generated artifact
 names and report keys in this handoff.
-The next selected ATL slice does not change downstream source or report
-requirements: it promotes HDL coverage for the already shipped
-`isf/atl_resolved_child_pipeline.isf` generated top, proving that plain and
-strict CLI SystemVerilog output contains the generated top, parent, child, and
+The HDL promotion slice does not change downstream source or report
+requirements: the already shipped
+`isf/atl_resolved_child_pipeline.isf` generated top now has plain and strict
+CLI SystemVerilog coverage proving the generated top, parent, child, and
 selected internal trigger/event links. Downstream producers should not infer
-any broader ATL HDL wiring from that selected coverage.
+any broader ATL HDL wiring from that coverage.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2250,10 +2250,10 @@ clock mismatches. It intentionally does not claim multiple resolved children,
 trigger batches, data-route coupling, route mux/storage, actor-event fan-in,
 CDC, ready/backpressure, recursive actor networks, or permanent actor
 grouping.
-The next selected ATL leaf keeps the same source and report contract and
-promotes this fixture through plain and strict CLI HDL generation, requiring
-the emitted SystemVerilog to contain the generated top, scheduled parent,
-resolved child, and selected internal trigger/event links.
+The HDL promotion leaf keeps the same source and report contract and proves
+this fixture through plain and strict CLI HDL generation, requiring the
+emitted SystemVerilog to contain the generated top, scheduled parent, resolved
+child, and selected internal trigger/event links.
 
 Recommended downstream smoke commands:
 

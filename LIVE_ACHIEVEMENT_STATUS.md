@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-top HDL promotion shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`.
+- The resolved-child generated-top fixture now has plain and strict CLI HDL
+  coverage in `t/1330-isf-atl-resolved-child-fixture-coverage.t`.
+- The emitted SystemVerilog is asserted to contain the generated top,
+  scheduled parent, resolved child, parent-to-child trigger link, and
+  child-to-parent event link.
+- No production code change was required.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`.
+
 ## 2026-05-19: R14 — ATL generated-top HDL promotion selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`.
 - The next active ATL implementation leaf is

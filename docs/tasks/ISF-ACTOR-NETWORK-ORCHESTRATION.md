@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -477,9 +477,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.27: select ATL HDL top promotion`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`
-  Status: `active`
+  Status: `completed`
   Goal: `Promote generated ATL top HDL reachability for the resolved-child fixture.`
   Acceptance: `Implement only the selected HDL promotion for the already shipped resolved-child generated-top shape: one top-level actor, one resolved library-qualified child, one parent trigger handoff wired to the child's scalar transaction start input, one parent event wait wired from the child's scalar output event, matching parent/child clock and reset policy, and no ATL data movements, trigger batches, groups, additional resolved children, payloads, ready/backpressure, CDC, route mux/storage, recursive actor networks, or permanent actor grouping. The focused fixture must prove plain and strict CLI HDL generation for isf/atl_resolved_child_pipeline.isf, assert that the generated SystemVerilog output contains the generated top module plus parent and child modules, and assert that the top-level HDL carries the internal parent/child trigger and event links. If implementation changes are required, they must be limited to selecting the materialized ATL top as the HDL entry for this resolved-child lower result while preserving existing single-file, reusable-library, multi-domain, and schedule-JSON behavior. Documentation must remain transparent that broader ATL HDL wiring remains unshipped.`
+  Verification: `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t; prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.28: promote ATL top HDL`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`
+  Status: `active`
+  Goal: `Select the next ATL generated-child integration, interface-binding, or fail-closed boundary after generated-top HDL promotion.`
+  Acceptance: `Review the now-shipped generated ATL top '.fsm' and plain/strict HDL proof, current actor_network.generated_tops[] metadata, remaining data-route/generated-child integration gap, multi-child/top fail-closed boundaries, and interface-binding deferrals; choose one bounded next slice before code. Candidate directions include generated-child data-route integration, explicit interface-binding widening, richer resolved-child fixtures, multi-child fail-closed coverage, or CDC/reset-remap boundary hardening. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -487,7 +494,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28` | `active` | `.9.27` selected generated-top HDL promotion for the resolved-child fixture; the next slice must add plain/strict HDL coverage and any needed entry-selection fix. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29` | `active` | `.9.28` promoted generated-top HDL coverage; the next bounded ATL direction must be selected before code. |
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -847,11 +854,11 @@ Explicit fail-closed boundaries for `.9.26`:
   ready/backpressure, route mux/storage, recursive actor networks, and any
   generated-top name conflict.
 
-## Selected ATL Generated-Top HDL Promotion
+## Shipped ATL Generated-Top HDL Promotion
 
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` selects generated-top HDL reachability
-as the next bounded ATL implementation leaf. The selected code leaf is
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` selected generated-top HDL
+reachability as the next bounded ATL implementation leaf, and `.9.28` ships
+the focused proof without changing production lowering behavior.
 
 Selected source shape:
 
@@ -864,7 +871,7 @@ Selected source shape:
 - one parent `(await worker.done)` handoff;
 - matching parent/child clock and reset name, kind, and polarity.
 
-Selected report impact:
+Shipped report impact:
 
 - no new schedule-report family is selected;
 - `actor_network.generated_tops[]` remains the generated ATL top discovery
@@ -872,7 +879,7 @@ Selected report impact:
 - `actor_network.instances[]` remains the resolved child discovery surface;
 - strict schedule JSON parity must remain unchanged.
 
-Selected generated artifact and HDL expectations:
+Shipped generated artifact and HDL expectations:
 
 - lowering continues to emit exactly the parent, child, and generated top
   `.fsm` artifacts already shipped by `.9.26`;
@@ -882,11 +889,10 @@ Selected generated artifact and HDL expectations:
 - the generated top HDL must include the internal link from parent
   `worker_process_start` to child `process_start` and the internal link from
   child `done` to parent `worker_done`;
-- if the implementation needs code changes, the change must stay limited to
-  selecting the materialized ATL generated top as the HDL entry for this
-  lower-result shape.
+- no production code change was required because the existing materialized
+  generated-top CLI path already emitted the top, parent, and child HDL.
 
-Selected fail-closed boundaries:
+Shipped fail-closed boundaries:
 
 - no additional resolved ATL children;
 - no trigger batches or group schedules in generated ATL tops;
@@ -895,17 +901,16 @@ Selected fail-closed boundaries:
   networks, interface auto-fanout, or permanent actor grouping;
 - no report-schema widening beyond already shipped generated-top metadata.
 
-Selected verification scope:
+Shipped verification scope:
 
-- extend the existing resolved-child fixture test with plain and strict HDL
-  generation checks;
-- assert generated top, parent, and child modules are present in the emitted
-  SystemVerilog;
-- assert top-level HDL includes the selected parent/child trigger and event
-  links;
-- rerun the relevant public-contract, schedule-report, fixture-tier, focused
-  spec/book audits, mdBook build, broad ISF gate if behavior changes, and
-  `git diff --check`.
+- `t/1330-isf-atl-resolved-child-fixture-coverage.t` now checks plain and
+  strict HDL generation;
+- the regression asserts generated top, parent, and child modules are present
+  in the emitted SystemVerilog;
+- the regression asserts top-level HDL includes the selected parent/child
+  trigger and event links;
+- public-contract, fixture-tier, focused spec/book audits, mdBook build,
+  broad ISF gate, and `git diff --check` are the completion checks.
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -2200,3 +2205,11 @@ Current proposal summary:
   SystemVerilog generation includes the generated top, scheduled parent,
   resolved child, and selected internal trigger/event links without widening
   ATL source syntax or report keys.
+- `2026-05-19`: Completed `.9.28`: promoted the resolved-child generated top
+  through plain and strict CLI HDL coverage in
+  `t/1330-isf-atl-resolved-child-fixture-coverage.t`. The existing CLI path
+  already emits SystemVerilog containing the generated top, parent, child, and
+  selected internal trigger/event links, so no production code change was
+  required. The active frontier moves to `.9.29` to select the next ATL
+  generated-child integration, interface-binding, or fail-closed boundary
+  before code.

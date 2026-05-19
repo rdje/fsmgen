@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-top HDL promotion shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`.
+- Extended [t/1330-isf-atl-resolved-child-fixture-coverage.t](t/1330-isf-atl-resolved-child-fixture-coverage.t)
+  with plain and strict CLI HDL checks for
+  [isf/atl_resolved_child_pipeline.isf](isf/atl_resolved_child_pipeline.isf).
+- The new coverage asserts the emitted SystemVerilog contains the generated
+  ATL top, scheduled parent, resolved child, and selected internal
+  trigger/event links.
+- No production code change was required; docs now describe generated-top HDL
+  promotion as shipped and advance the ATL frontier to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`.
+
 ### R14 — ATL generated-top HDL promotion selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` before further ATL HDL
   work.

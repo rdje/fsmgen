@@ -847,11 +847,10 @@ with one same-source library actor export, one resolved child instance, one
 parent trigger handoff, one parent event wait, exactly three lower-result
 artifacts, strict schedule JSON parity, and generated parent/child handoff
 wiring through `atl_resolved_child_pipeline_top.fsm`.
-The next selected ATL implementation slice is HDL promotion for that
-resolved-child shape. It keeps the source and report schema unchanged and
-requires plain plus strict CLI SystemVerilog generation to contain the
-generated top, scheduled parent, resolved child, and selected internal
-trigger/event links.
+HDL promotion for that resolved-child shape is shipped. It keeps the source
+and report schema unchanged and proves plain plus strict CLI SystemVerilog
+generation contains the generated top, scheduled parent, resolved child, and
+selected internal trigger/event links.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
