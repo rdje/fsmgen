@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `MDBOOK-PARAGRAPH-SPACING`
-- Status: `done`
+- Status: `active`
 - Roadmap lane: `project documentation`
 - Created: `2026-05-19`
 - Last updated: `2026-05-19`
@@ -28,6 +28,8 @@ large text blobs.
   the audit are reformatted so adjacent paragraphs have one blank line.
 - Markdown structures that depend on adjacency, including lists, tables,
   fenced code blocks, headings, and admonition-like blocks, remain intact.
+- Rendered HTML no longer contains obvious long prose list-item blobs in the
+  reported chapters.
 - `mdbook build docs/book` passes.
 - A focused diff review confirms the slice is formatting-only.
 - Each completed leaf is committed through `COMMIT.md`.
@@ -35,9 +37,9 @@ large text blobs.
 ## Task Tree
 
 - ID: `MDBOOK-PARAGRAPH-SPACING`
-  Status: `done`
+  Status: `active`
   Goal: `Normalize mdBook prose paragraph separation without changing technical content.`
-  Children: `MDBOOK-PARAGRAPH-SPACING.1`, `MDBOOK-PARAGRAPH-SPACING.2`
+  Children: `MDBOOK-PARAGRAPH-SPACING.1`, `MDBOOK-PARAGRAPH-SPACING.2`, `MDBOOK-PARAGRAPH-SPACING.3`, `MDBOOK-PARAGRAPH-SPACING.4`
 
 - ID: `MDBOOK-PARAGRAPH-SPACING.1`
   Status: `completed`
@@ -53,22 +55,39 @@ large text blobs.
   Verification: `mdbook build docs/book; git diff --check`
   Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing`
 
+- ID: `MDBOOK-PARAGRAPH-SPACING.3`
+  Status: `completed`
+  Goal: `Reopen the cleanup for rendered-HTML list-item blobs.`
+  Acceptance: `Record that the first cleanup fixed ordinary paragraph boundaries but left long Markdown list items that render as single HTML list-item blobs, and select a follow-up leaf with rendered-HTML validation.`
+  Verification: `mdbook build docs/book; rendered HTML audit identifies long list-item blobs`
+  Commit: `this commit: MDBOOK-PARAGRAPH-SPACING.3: reopen rendered HTML blob cleanup`
+
+- ID: `MDBOOK-PARAGRAPH-SPACING.4`
+  Status: `active`
+  Goal: `Split long rendered HTML list-item prose blobs.`
+  Acceptance: `Audit the built mdBook HTML for long prose paragraphs and list items, split the remaining long list-item prose blobs into list-contained paragraphs without changing technical wording, preserve fences/tables/lists/examples/headings, and validate the rendered HTML no longer has obvious long blobs in the reported chapters.`
+  Verification: `pending`
+  Commit: `pending`
+
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `closed` | `done` | Paragraph-spacing cleanup is complete and validated. |
+| 1 | `MDBOOK-PARAGRAPH-SPACING.4` | `active` | Rendered HTML still has long list-item blobs; the next slice fixes the HTML-visible issue directly. |
 
 ## Decisions
 
 - `2026-05-19`: Treat the user-reported readability problem as a
   formatting-only mdBook source cleanup. Chapter 12 and chapter 14 are
   mandatory audit targets because the user called them out directly.
+- `2026-05-19`: Reopened after rendered HTML review showed that ordinary
+  Markdown paragraph splitting did not affect long list items, which still
+  render as single `<li>` blobs unless list-contained paragraph breaks are
+  inserted.
 
 ## Open Questions
 
-- None for `.2`; obvious prose blobs can be corrected without changing
-  technical content.
+- None for `.4`; the remaining work is a rendered-HTML formatting fix.
 
 ## Blockers
 
@@ -80,6 +99,7 @@ large text blobs.
 | --- | --- | --- | --- |
 | `2026-05-19` | `MDBOOK-PARAGRAPH-SPACING.1` | `mdbook build docs/book`; `git diff --check` | `created task-tree ownership for the mdBook paragraph-spacing cleanup` |
 | `2026-05-19` | `MDBOOK-PARAGRAPH-SPACING.2` | `mdbook build docs/book`; `git diff --check`; whitespace-normalized mdBook source comparison against `HEAD` | `normalized paragraph spacing across the named chapters and other obvious mdBook prose blobs without changing technical content` |
+| `2026-05-19` | `MDBOOK-PARAGRAPH-SPACING.3` | `mdbook build docs/book`; rendered HTML audit | `confirmed the remaining rendered blobs are long list items, not ordinary paragraph tags` |
 
 ## Commit Log
 
@@ -87,6 +107,7 @@ large text blobs.
 | --- | --- | --- |
 | `MDBOOK-PARAGRAPH-SPACING.1` | `this commit: MDBOOK-PARAGRAPH-SPACING.1: create book spacing task tree` | `creates ownership before book-source formatting edits` |
 | `MDBOOK-PARAGRAPH-SPACING.2` | `this commit: MDBOOK-PARAGRAPH-SPACING.2: normalize book paragraph spacing` | `formatting-only mdBook source readability cleanup` |
+| `MDBOOK-PARAGRAPH-SPACING.3` | `this commit: MDBOOK-PARAGRAPH-SPACING.3: reopen rendered HTML blob cleanup` | `reopens the task tree for HTML-visible list-item blobs` |
 
 ## Changelog
 
@@ -95,3 +116,5 @@ large text blobs.
 - `2026-05-19`: Completed `.2` by adding blank-line paragraph separation to
   chapter 12, chapter 14, and other obvious mdBook prose blobs discovered by
   the audit.
+- `2026-05-19`: Reopened with `.4` selected after rendered HTML inspection
+  confirmed long list-item prose still displays as blobs.

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: mdBook rendered-HTML blob cleanup reopened
+- Completed `MDBOOK-PARAGRAPH-SPACING.3`.
+- Reopened the task tree because rendered HTML inspection showed the
+  remaining readability issue is in long Markdown list items that render as
+  single `<li>` blobs, especially in the reported ISF-related chapters.
+- The active project-documentation frontier is now
+  `MDBOOK-PARAGRAPH-SPACING.4`, which must split those list items into
+  list-contained paragraphs and validate the generated HTML directly.
+
 ## 2026-05-19: mdBook paragraph-spacing cleanup shipped
 - Completed `MDBOOK-PARAGRAPH-SPACING.2` and closed the
   `MDBOOK-PARAGRAPH-SPACING` task tree.

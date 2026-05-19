@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: Project documentation — mdBook rendered-HTML blob cleanup reopened
+- Completed `MDBOOK-PARAGRAPH-SPACING.3`.
+- Reopened the task tree because generated HTML still contains long
+  list-item prose blobs.
+- The active project-documentation frontier is now
+  `MDBOOK-PARAGRAPH-SPACING.4`.
+- The next slice must split those list items into rendered list-contained
+  paragraphs and validate against generated HTML.
+
 ## 2026-05-19: Project documentation — mdBook paragraph-spacing cleanup shipped
 - Completed `MDBOOK-PARAGRAPH-SPACING.2`.
 - Closed the `MDBOOK-PARAGRAPH-SPACING` task tree.

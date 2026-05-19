@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: rendered mdBook blobs can come from list items
+- `MDBOOK-PARAGRAPH-SPACING.3` reopens the paragraph-spacing cleanup because
+  rendered HTML review showed that some long Markdown list items still become
+  single `<li>` blocks even when ordinary Markdown paragraphs are separated.
+- The follow-up fix should insert list-contained paragraph breaks, not change
+  wording or list membership. Validation must inspect generated HTML, not only
+  the Markdown source.
+
 ## 2026-05-19: mdBook paragraph cleanup preserves content
 - `MDBOOK-PARAGRAPH-SPACING.2` uses source formatting only: blank lines were
   inserted between prose paragraphs while fenced code, tables, lists,

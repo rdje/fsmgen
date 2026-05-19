@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### Project documentation — mdBook rendered-HTML blob cleanup reopened
+- Completed `MDBOOK-PARAGRAPH-SPACING.3`.
+- Reopened `MDBOOK-PARAGRAPH-SPACING` after generated HTML inspection showed
+  the remaining blobs are long Markdown list items that still render as
+  single `<li>` blocks.
+- Selected `MDBOOK-PARAGRAPH-SPACING.4` to split those list items into
+  list-contained paragraphs and validate the generated HTML directly.
+
 ### Project documentation — mdBook paragraph-spacing cleanup shipped
 - Completed `MDBOOK-PARAGRAPH-SPACING.2` and closed the task tree.
 - Added blank-line paragraph separation to the mdBook source, including the
