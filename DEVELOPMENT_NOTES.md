@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child routes should stay in one parent transaction
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51` selects same-parent-transaction
+  hardening as the next generated-child route boundary.
+- Splitting the source trigger, source wait, drive call, sink trigger, or
+  sink wait across multiple parent transactions would imply continuation,
+  pending handoff storage, transaction rendezvous, or cross-transaction route
+  scheduling. None of those has been selected for ATL generated-child wiring.
+- The next code leaf should therefore lock split parent-transaction route
+  sequences as diagnostics while leaving route storage, muxing,
+  backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL repeated route-child waits should diagnose before trigger-batch fallback
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50` adds source-level diagnostics for
   generated-child actor-to-actor route sequences that contain an extra source

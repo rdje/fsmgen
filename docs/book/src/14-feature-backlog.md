@@ -925,6 +925,11 @@ requiring the same route sequence to contain only one source-child event wait
 and one sink-child event wait; extra route-child waits fail closed until
 explicit event fan-in/fan-out, repeated wait sequencing, route-level wait
 storage, muxing, ready/backpressure, or payload semantics are selected.
+The next selected same-parent-transaction hardening narrows the route
+continuation backlog by requiring the route sequence to stay inside one
+parent transaction; split route clauses remain fail-closed until explicit
+pending handoff storage, transaction rendezvous, cross-transaction scheduling,
+muxing, ready/backpressure, or payload semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
