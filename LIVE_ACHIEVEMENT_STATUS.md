@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL design proposal sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`.
+- `.9.78` is selected to synchronize the ATL design proposal with the latest
+  generated-child route parent-boundary, generated-handoff collision,
+  lowerer-backstop, and mdBook route-term support-boundary facts.
+- This is documentation-only. No source syntax, parser/lowerer behavior,
+  report shape, generated artifact shape, runtime behavior, remapping,
+  mux/storage, fan-in/fan-out, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior is selected.
+
 ## 2026-05-19: R14 — ATL route-term precision docs shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.76`.
 - The active ATL frontier advances to

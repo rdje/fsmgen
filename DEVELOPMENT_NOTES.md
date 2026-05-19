@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL design proposal needs latest route-boundary sync
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77` selects a documentation truth-sync
+  leaf for `docs/ISF_ATL_DESIGN_PROPOSAL.md`.
+- The proposal currently captures the generated-child route through earlier
+  hardening, but it should also record the shipped parent interface-role
+  boundary, generated-handoff collision diagnostics, lowerer defensive
+  collision backstop, and mdBook route-term support boundary.
+- The next leaf is documentation-only. It should keep all behavior,
+  generated artifacts, report keys, route mux/storage, fan-in/fan-out,
+  ready/backpressure, payload protocols, and grouping semantics unchanged.
+
 ## 2026-05-19: ATL route terminology is now term-by-term in the book
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.76` expands the mdBook
   `Generated-Child Route Terms` section into explicit subsections instead of
