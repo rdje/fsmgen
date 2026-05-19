@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL design proposal route sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86` to synchronize the ATL
+  design proposal with the shipped generated-child actor-to-actor route
+  boundary.
+- The selected slice must remove blanket proposal wording that
+  actor-to-actor generated-child routes remain deferred when the shipped
+  two-child scalar route is being described.
+- `.9.86` must state that one-child pin routes do not include actor-to-actor
+  routing, that the selected two-child scalar route is shipped, and that
+  broader mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocol, recursive network, and permanent
+  grouping behavior remain deferred.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, or route capability is selected.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
+
 ### R14 — ATL reserved-route docs synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`.
 - Synchronized remaining reserved generated-child actor-to-actor route wording

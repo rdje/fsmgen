@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL design proposal route sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85` as a documentation
+  truth-sync selection leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
+- `.9.86` will synchronize the ATL design proposal's one-child pin-route
+  wording and generated-child route summary with the shipped two-child scalar
+  actor-to-actor route.
+- The selected truth is that one-child pin ingress/egress routes do not
+  include actor-to-actor routing, while the selected two-child scalar
+  actor-to-actor route is shipped and broader mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, payload protocol, recursive
+  network, and permanent grouping behavior remain deferred.
+- The slice is documentation and audit only; no source syntax, parser/lowerer
+  behavior, report key, generated artifact shape, runtime behavior, or route
+  capability is selected.
+
 ## 2026-05-19: ATL reserved-route docs synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85`.

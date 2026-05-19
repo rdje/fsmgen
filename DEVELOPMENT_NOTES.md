@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL design proposal needs route availability sync
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85` selects a documentation/audit slice
+  because the ATL design proposal still has one-child pin-route paragraphs
+  with blanket wording that actor-to-actor generated-child routes remain
+  deferred.
+- That wording is now too broad: the selected two-child scalar
+  actor-to-actor route is shipped, while the one-child pin ingress/egress
+  routes themselves do not include actor-to-actor routing.
+- The next leaf should update the design proposal and audit it against the
+  same boundary already captured by the book, downstream handoff, and
+  feature matrix.
+
 ## 2026-05-19: ATL reserved-route wording is synchronized
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84` updates the composition chapter,
   downstream handoff, and feature backlog so they no longer describe the
