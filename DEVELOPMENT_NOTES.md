@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route transactions should stay isolated for now
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61` selects parent-work isolation as
+  the next generated-child route boundary.
+- The current generated-child actor-to-actor route is a complete
+  task-scoped transaction path from source activation through sink
+  acknowledgement. Parent-local work before the source trigger or after the
+  sink event wait would imply pre-route setup, post-route sampling, cleanup
+  effects, or route continuation semantics that have not been selected.
+- The next code leaf should lock those pre/post parent clauses as diagnostics
+  while leaving route continuation, storage, muxing, backpressure, and payload
+  protocols deferred.
+
 ## 2026-05-19: ATL route contiguity is now parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60` adds focused coverage for the
   generated-child actor-to-actor route sequence where otherwise ordered

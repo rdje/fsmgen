@@ -374,6 +374,11 @@ contiguous transaction-body segment: interleaved parent clauses remain
 fail-closed before any interleaved parent work, local side effects,
 pre/post route sampling, route continuation, storage, muxing, backpressure,
 or payload contract.
+The selected route-isolation hardening keeps that contiguous route segment
+as the only executable parent transaction-body work between the transaction
+start condition and completion: pre-route and post-route parent clauses
+remain fail-closed before any local side effects, setup/cleanup work,
+continuation, storage, muxing, backpressure, or payload contract.
 
 ### Actor, Interface, Storage, And Timing
 

@@ -1148,6 +1148,14 @@ interleaved parent work, local side effects, pre/post route sampling, route
 continuation, storage, muxing, ready/backpressure, or payload behavior is
 claimed.
 
+The selected route-isolation hardening keeps that contiguous route segment
+as the only executable parent work in the selected route transaction between
+the transaction start condition and completion. The next leaf must reject
+unrelated parent clauses before the source trigger or after the sink event
+wait before any pre-route setup, post-route sampling, local side effects,
+cleanup work, route continuation, storage, muxing, ready/backpressure, or
+payload behavior is claimed.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

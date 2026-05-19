@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child route-isolation hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62` to harden parent-work
+  isolation around the contiguous generated-child actor-to-actor route.
+- The next slice will require the selected route segment to be the only
+  executable parent transaction-body work between the transaction start
+  condition and completion, rejecting unrelated parent clauses before the
+  source trigger or after the sink event wait before pre/post route side
+  effects are claimed.
+- No new ATL syntax, report key, generated artifact shape, route storage,
+  muxing, CDC/reset remapping, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior is selected.
+
 ### R14 — ATL generated-child route-contiguity hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60`.
 - Added focused generated-child actor-to-actor data-route rejection coverage

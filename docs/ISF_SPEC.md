@@ -945,6 +945,13 @@ source trigger, source event wait, data drive call, sink trigger, and sink
 event wait fail closed before FSMGen claims interleaved parent work, local
 side effects, pre/post route sampling, route continuation, pending handoff
 storage, muxing, ready/backpressure, or payload protocol behavior.
+The selected route-isolation hardening keeps the contiguous route segment as
+the only executable parent transaction-body work between the transaction
+start condition and completion in this subset. Parent clauses before the
+source trigger or after the sink event wait remain fail-closed before FSMGen
+claims pre-route setup, post-route sampling, local side effects, cleanup
+work, route continuation, pending handoff storage, muxing,
+ready/backpressure, or payload protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

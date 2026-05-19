@@ -260,6 +260,12 @@ trigger, and sink event wait must remain one contiguous transaction-body
 segment until a later contract explicitly adds interleaved parent work, local
 side-effect, pre/post route sampling, continuation, storage, muxing,
 backpressure, or payload metadata.
+The selected route-isolation hardening keeps the same public surface
+unchanged: the contiguous route segment must remain the only executable
+parent transaction-body work between the transaction start condition and
+completion until a later contract explicitly adds pre-route setup,
+post-route sampling, local side-effect, cleanup, continuation, storage,
+muxing, backpressure, or payload metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

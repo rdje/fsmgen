@@ -814,6 +814,12 @@ trigger, source event wait, data drive call, sink trigger, and sink event
 wait stay fail-closed until a later contract selects interleaved parent work,
 local side effects, pre/post route sampling, route continuation, storage,
 muxing, backpressure, or payload behavior.
+The selected route-isolation hardening keeps that route segment as the only
+executable parent transaction-body work between the transaction start
+condition and completion. Parent-local clauses before the source trigger or
+after the sink event wait stay fail-closed until a later contract selects
+pre-route setup, post-route sampling, local side effects, cleanup work, route
+continuation, storage, muxing, backpressure, or payload behavior.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
