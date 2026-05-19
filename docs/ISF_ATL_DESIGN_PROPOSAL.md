@@ -106,8 +106,9 @@ ATL v0 now has a selected public source direction:
 - Rule-level actor-transaction orchestration uses
   `(trigger actor.transaction)` when that future implementation ships.
 - Actor event synchronization uses `(await actor.event)`. The shipped subset
-  is one top-level transaction-body wait for the current single static actor
-  instance; event payloads are not part of ATL v0.
+  accepts one top-level transaction-body event wait, either alone for a single
+  static actor or after one selected temporary trigger batch; event payloads
+  are not part of ATL v0.
 - Concurrent actor groups may still use
   `(group NAME (members ACTOR...) (mode concurrent))`. The shipped subset is
   report-only metadata for at least two declared direct static actor
@@ -362,17 +363,18 @@ wiring, event payloads, data movement coupling, route mux/storage,
 fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
 
-The next selected ATL fixture is
+The ATL trigger-batch wait fixture is shipped as
 `isf/atl_trigger_batch_wait_pipeline.isf`. It extends parent-handoff
 orchestration by coupling the shipped same-cycle temporary trigger-batch
 surface to one following actor event wait: reader/filter/writer trigger
 outputs fire in one state, then the parent waits on `writer_done` before
-completion. The selected fixture will prove one task-scoped association entry,
-one schema-version-1 compatibility group schedule entry, one event-wait entry,
-and strict schedule/HDL reachability without claiming multiple event waits,
-actor-event fan-in, generated ATL children, generated ATL tops, actor type
-resolution, HDL child wiring, data movement coupling, CDC, ready/backpressure,
-compact aliases, or permanent actor grouping.
+completion. The fixture proves one task-scoped association entry, one
+schema-version-1 compatibility group schedule entry, one event-wait entry,
+strict schedule/HDL reachability, and the default await timeout state without
+claiming multiple event waits, actor-event fan-in, generated ATL children,
+generated ATL tops, actor type resolution, HDL child wiring, data movement
+coupling, CDC, ready/backpressure, compact aliases, or permanent actor
+grouping.
 
 ## Endpoints
 
@@ -716,10 +718,11 @@ scheduled temporary association. The entry shape uses `association`, `kind`,
 static group matches the trigger set, `group` is a synthetic
 transaction-scoped name such as `run_trigger_batch`.
 
-The shipped first behavior-bearing handoff subset accepts one top-level
-transaction-body `(await actor.event)` and one top-level transaction-body
-`(trigger actor.transaction)` for the current single static actor instance.
-The event wait lowers to a parent input named `actor_event`; the transaction
+The shipped parent-handoff subsets accept one top-level transaction-body
+`(await actor.event)` and one top-level transaction-body
+`(trigger actor.transaction)` for a direct static actor instance. The event
+wait may also follow the selected same-cycle temporary trigger-batch form. The
+event wait lowers to a parent input named `actor_event`; the transaction
 trigger lowers to a parent output named `actor_transaction_start`. Both
 handoffs are external: FSMGen does not resolve actor types, generate child
 artifacts, emit an ATL top, or wire HDL event/trigger routes yet.

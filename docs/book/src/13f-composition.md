@@ -620,21 +620,27 @@ artifacts, generated ATL tops, actor type resolution, HDL child wiring, event
 payloads, data movement coupling, fan-in/fan-out, CDC, ready/backpressure,
 compact aliases, or permanent actor grouping.
 
-The next selected ATL fixture is `isf/atl_trigger_batch_wait_pipeline.isf`.
-It couples one same-cycle temporary trigger batch to one following actor event
-wait. The parent transaction will trigger reader, filter, and writer in one
-state, wait on `writer.done`, then complete. The selected fixture remains
+The ATL trigger-batch wait fixture is shipped as
+`isf/atl_trigger_batch_wait_pipeline.isf`. It couples one same-cycle temporary
+trigger batch to one following actor event wait. The parent transaction
+triggers reader, filter, and writer in one state, waits on `writer.done`, then
+completes. The fixture proves `association_schedules[]` temporary-association
+metadata, `group_schedules[]` compatibility metadata, one `event_waits[]`
+entry, strict schedule JSON parity, scheduled `.fsm` structure with the
+default await timeout state, and plain plus strict HDL generation. It remains
 parent-handoff orchestration: it does not claim generated ATL child `.fsm`
 artifacts, generated ATL tops, actor type resolution, HDL child wiring,
 multiple event waits, actor-event fan-in, data movement coupling, CDC,
 ready/backpressure, compact aliases, or permanent actor grouping.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
-top-level transaction-body `(await actor.event)` may target the current single
-static actor instance. FSMGen lowers it to a generated one-bit parent event
-input named `actor_event`; for example, `reader.done` becomes `reader_done`.
-The scheduled parent `.fsm` exposes and waits on that input, and schedule JSON
-records the wait under `actor_network.event_waits[]`.
+top-level transaction-body `(await actor.event)` may target a declared direct
+static actor instance. The wait may stand alone for a single static actor, or
+follow one selected same-cycle temporary trigger batch. FSMGen lowers it to a
+generated one-bit parent event input named `actor_event`; for example,
+`reader.done` becomes `reader_done`. The scheduled parent `.fsm` exposes and
+waits on that input, and schedule JSON records the wait under
+`actor_network.event_waits[]`.
 
 The event producer is external in this subset. FSMGen still does not resolve
 the actor type, emit an ATL child `.fsm`, generate an ATL top, trigger actor

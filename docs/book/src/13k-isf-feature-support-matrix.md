@@ -232,6 +232,19 @@ generated ATL children, generated ATL tops, actor type resolution, HDL child
 wiring, trigger-batch/event coupling, data movement coupling, fan-in/fan-out,
 CDC, ready/backpressure, or permanent actor grouping.
 
+The ATL trigger-batch wait fixture is file-backed in the `isf` regression tier
+for task-scoped trigger-batch/event parent orchestration. It uses
+`isf/atl_trigger_batch_wait_pipeline.isf` to declare reader/filter/writer
+actors, emit one same-cycle trigger batch, wait on `writer.done`, and
+complete. It proves generated trigger/event handoff ports,
+`actor_network.association_schedules[]`, compatibility
+`actor_network.group_schedules[]`, one `actor_network.event_waits[]` entry,
+empty data movement, strict schedule JSON parity, scheduled `.fsm` structure
+including the default await timeout state, and plain plus strict HDL
+generation without claiming generated ATL children, generated ATL tops, actor
+type resolution, HDL child wiring, multi-event fan-in, data movement coupling,
+CDC, ready/backpressure, or permanent actor grouping.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

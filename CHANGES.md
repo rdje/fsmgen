@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL trigger-batch wait fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`.
+- Relaxed [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so
+  a selected temporary trigger batch can be followed by one actor event wait;
+  scalar data-movement coupling remains rejected.
+- Added `isf/atl_trigger_batch_wait_pipeline.isf` and
+  `t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`.
+- The fixture proves one bounded trigger-batch/event orchestration path:
+  three generated parent trigger outputs, one `writer_done` event input,
+  `association_schedules[]` temporary-association metadata,
+  `group_schedules[]` compatibility metadata, strict schedule JSON parity,
+  scheduled `.fsm` structure with the default await timeout state, and
+  plain/strict HDL reachability.
+- Broad ISF gate passed with `Files=235, Tests=1372`.
+- Synchronized the public contract tested-by metadata, CI tier audit, ISF
+  spec, downstream handoff, fixture matrix, mdBook, roadmap board, task tree,
+  memory, live achievement status, and development notes.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`
+  for selecting the next bounded ATL behavior after trigger-batch/event wait
+  coupling before code.
+
 ### R14 — ATL trigger-batch wait fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` before adding fixture
   source or tests.

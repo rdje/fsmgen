@@ -1,0 +1,16 @@
+(actor atl_trigger_batch_wait_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (instance filter of packet_filter)
+  (instance writer of packet_writer)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger filter.process)
+    (trigger writer.emit)
+    (await writer.done)
+    (complete done)))

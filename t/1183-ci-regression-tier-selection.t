@@ -82,6 +82,8 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($isf_block || '', qr/t\/1327-isf-atl-pin-egress-fixture-coverage\.t/, 'ISF tier includes the ATL pin-egress fixture coverage');
     unlike($quick_block || '', qr/t\/1328-isf-atl-trigger-wait-fixture-coverage\.t/, 'quick tier does not include the broader ATL trigger-wait fixture');
     like($isf_block || '', qr/t\/1328-isf-atl-trigger-wait-fixture-coverage\.t/, 'ISF tier includes the ATL trigger-wait fixture coverage');
+    unlike($quick_block || '', qr/t\/1329-isf-atl-trigger-batch-wait-fixture-coverage\.t/, 'quick tier does not include the broader ATL trigger-batch wait fixture');
+    like($isf_block || '', qr/t\/1329-isf-atl-trigger-batch-wait-fixture-coverage\.t/, 'ISF tier includes the ATL trigger-batch wait fixture coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -123,6 +125,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($isf->{stdout}, qr/t\/1326-isf-atl-pin-ingress-fixture-coverage\.t/, 'ISF dry-run includes ATL pin-ingress fixture coverage');
     like($isf->{stdout}, qr/t\/1327-isf-atl-pin-egress-fixture-coverage\.t/, 'ISF dry-run includes ATL pin-egress fixture coverage');
     like($isf->{stdout}, qr/t\/1328-isf-atl-trigger-wait-fixture-coverage\.t/, 'ISF dry-run includes ATL trigger-wait fixture coverage');
+    like($isf->{stdout}, qr/t\/1329-isf-atl-trigger-batch-wait-fixture-coverage\.t/, 'ISF dry-run includes ATL trigger-batch wait fixture coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');

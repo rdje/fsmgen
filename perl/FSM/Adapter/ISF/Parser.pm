@@ -1222,8 +1222,8 @@ sub _finalize_selected_atl_trigger_batches {
     if (@triggers == 1) {
         return 1;
     }
-    confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch cannot be combined with actor event waits or scalar data movements in the current subset\n"
-        if @{$event_waits || []} || @{$data_movements || []};
+    confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch cannot be combined with scalar data movements in the current subset\n"
+        if @{$data_movements || []};
 
     my @runs;
     for my $tx (@{$actor->{transactions} || []}) {

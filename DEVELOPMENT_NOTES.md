@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL trigger-batch wait coupling is still parent handoff
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12` intentionally relaxes only one
+  boundary: a selected temporary trigger batch may be followed by one actor
+  event wait in the same transaction.
+- The generated parent now has one batch trigger state, then one await state.
+  The actors are still external handoff endpoints; no actor type resolution,
+  generated child artifacts, ATL top, or HDL child wiring is implied.
+- Scalar data movement remains incompatible with trigger-batch/event coupling
+  in this slice, avoiding route scheduling semantics before a separate task
+  selects them.
 ## 2026-05-19: ATL next fixture should couple a trigger batch to one event wait
 - After proving single-actor trigger/event sequencing, the next bounded ATL
   step is to let a task-scoped temporary trigger batch be followed by one

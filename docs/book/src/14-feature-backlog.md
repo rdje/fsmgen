@@ -732,8 +732,8 @@ actor instances, generated external trigger outputs pulsed from one parent
 state, and `actor_network.association_schedules[]` report evidence. Static
 `(group ...)` declarations are not required and remain review metadata only.
 Noncontiguous batches, repeated members, generated children, group endpoints,
-event/data-movement coupling, route mux/storage, CDC, and compact aliases
-remain later leaves.
+data-movement coupling, multi-event fan-in, route mux/storage, CDC, and
+compact aliases remain later leaves.
 
 The compatibility `actor_network.group_schedules[]` array remains for schedule
 JSON `schema_version: 1`. The canonical association entry uses
@@ -797,23 +797,25 @@ event coupling, multiple waits or triggers, generated children, generated ATL
 tops, actor type resolution, HDL child wiring, data movement coupling,
 fan-in/fan-out, CDC, ready/backpressure, or permanent grouping.
 
-The next ATL fixture is selected as
+The ATL trigger-batch wait fixture is now shipped as
 `isf/atl_trigger_batch_wait_pipeline.isf`. It couples the shipped temporary
 trigger-batch surface to one following actor event wait: a parent transaction
 triggers reader, filter, and writer in one same-cycle batch, waits on
-`writer.done`, then completes. The fixture will prove parent-level
-trigger-batch/event sequencing without claiming multiple event waits,
-actor-event fan-in, generated children, generated ATL tops, actor type
-resolution, HDL child wiring, data movement coupling, CDC, ready/backpressure,
-or permanent grouping.
+`writer.done`, then completes. The fixture proves parent-level
+trigger-batch/event sequencing, strict schedule JSON, and plain plus strict
+HDL reachability without claiming multiple event waits, actor-event fan-in,
+generated children, generated ATL tops, actor type resolution, HDL child
+wiring, data movement coupling, CDC, ready/backpressure, or permanent
+grouping.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
-transaction-body `(await actor.event)` when the qualifier names the current
-single declared static actor instance. That wait lowers to a deterministic
-one-bit parent handoff input named `actor_event`; for example, `reader.done`
-maps to `reader_done`. The scheduled parent `.fsm` exposes and waits on that
-input, and schedule JSON records the wait under
+transaction-body `(await actor.event)` when the qualifier names a declared
+direct static actor instance. The wait may stand alone for a single static
+actor, or follow one selected same-cycle temporary trigger batch. That wait
+lowers to a deterministic one-bit parent handoff input named `actor_event`;
+for example, `reader.done` maps to `reader_done`. The scheduled parent `.fsm`
+exposes and waits on that input, and schedule JSON records the wait under
 `actor_network.event_waits[]`.
 
 The producer of that pulse remains external until later ATL leaves resolve
@@ -828,8 +830,8 @@ diagnostics.
 
 The shipped qualified actor-transaction trigger subset mirrors that handoff
 boundary. One top-level transaction-body `(trigger actor.transaction)` against
-the current single static actor instance lowers to a generated one-cycle
-parent output named `actor_transaction_start`; for example, `reader.capture`
+a direct static actor instance lowers to a generated one-cycle parent output
+named `actor_transaction_start`; for example, `reader.capture`
 maps to `reader_capture_start`. The scheduled parent `.fsm` exposes and
 pulses that output at the trigger point, and schedule JSON records the
 trigger under `actor_network.transaction_triggers[]`.

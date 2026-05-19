@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL trigger-batch wait fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`.
+- Relaxed the ATL parser so a selected temporary trigger batch can be followed
+  by exactly one actor event wait while scalar data-movement coupling remains
+  deferred.
+- Added `isf/atl_trigger_batch_wait_pipeline.isf` as the bounded parent
+  orchestration fixture: reader/filter/writer trigger handoffs fire in one
+  batch state, then the parent waits on `writer_done` before completion.
+- The new regression
+  `t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t` proves scheduled
+  parent `.fsm` structure including the default await timeout state, strict
+  schedule JSON parity, trigger-batch association metadata, compatibility
+  group schedule metadata, event-wait metadata, and plain/strict HDL
+  reachability.
+- Broad ISF gate passed with `Files=235, Tests=1372`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` to select the next ATL behavior
+  after trigger-batch/event wait coupling before code.
 ## 2026-05-19: ATL trigger-batch wait fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` as a selection leaf before
   fixture source/test changes.

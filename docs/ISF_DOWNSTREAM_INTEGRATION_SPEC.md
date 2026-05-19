@@ -1602,9 +1602,9 @@ capability manifest and this handoff:
   `(spawn actor.transaction as NAME)`, and rule-level orchestration as
   `(trigger actor.transaction)`.
 - Actor event waits use `(await actor.event)`. The shipped subset is one
-  top-level transaction-body wait for the current single static actor
-  instance; events are one-cycle control pulses and event payloads are not
-  supported.
+  top-level transaction-body wait against a direct static actor instance,
+  either alone for one actor or after one selected temporary trigger batch;
+  events are one-cycle control pulses and event payloads are not supported.
 - Concurrent actor groups may still use
   `(group NAME (members ACTOR...) (mode concurrent))`, but groups are static
   review metadata only. They are not required for task-scoped ATL trigger
@@ -1629,17 +1629,20 @@ capability manifest and this handoff:
   compatibility `group` field names that group; otherwise it carries a
   synthetic transaction-scoped name such as `run_trigger_batch`. Downstream
   producers must still avoid repeated members, noncontiguous batches,
-  generated child assumptions, group endpoints, event/data-movement coupling,
-  storage/mux insertion, CDC, compact aliases, and broader fan-in/fan-out.
+  generated child assumptions, group endpoints, data-movement coupling,
+  multi-event fan-in, storage/mux insertion, CDC, compact aliases, and broader
+  fan-in/fan-out.
 
 Current ATL event-wait handoff subset: downstream producers may emit exactly
-one top-level transaction-body `(await actor.event)` against the current
-single declared static actor instance. The event name must be a scalar HDL
-identifier. FSMGen maps that wait to a generated one-bit parent event input
-named `actor_event`; for example, `reader.done` maps to `reader_done`. The
-scheduled parent `.fsm` exposes that input and waits on it. The producer of
-that event is external in this subset: no actor type resolution, generated
-ATL child `.fsm`, generated ATL top, or event wiring is emitted.
+one top-level transaction-body `(await actor.event)` against a declared direct
+static actor instance. The event name must be a scalar HDL identifier. The
+wait may stand alone for a single static actor, or follow one selected
+same-cycle temporary trigger batch. FSMGen maps that wait to a generated
+one-bit parent event input named `actor_event`; for example, `reader.done`
+maps to `reader_done`. The scheduled parent `.fsm` exposes that input and
+waits on it. The producer of that event is external in this subset: no actor
+type resolution, generated ATL child `.fsm`, generated ATL top, or event
+wiring is emitted.
 
 Schedule JSON reports accepted waits under `actor_network.event_waits[]`.
 Each entry exposes `transaction`, `context`, `instance`, `event`, `signal`,
@@ -2028,6 +2031,7 @@ isf/atl_data_route_pipeline.isf
 isf/atl_pin_ingress_pipeline.isf
 isf/atl_pin_egress_pipeline.isf
 isf/atl_trigger_wait_pipeline.isf
+isf/atl_trigger_batch_wait_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2161,6 +2165,17 @@ arrays, and plain plus strict HDL generation for
 ATL children, generated ATL tops, actor type resolution, HDL child wiring,
 temporary trigger-batch plus event coupling, data movement coupling,
 fan-in/fan-out, CDC, ready/backpressure, or permanent actor grouping.
+The ATL trigger-batch wait fixture is covered by
+`t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t`, which proves strict
+schedule JSON parity, scheduled `.fsm` structure, three same-cycle generated
+trigger output pulses, one following `writer_done` event input wait,
+`actor_network.association_schedules[]` temporary-association metadata,
+`actor_network.group_schedules[]` compatibility metadata, one
+`actor_network.event_waits[]` entry, empty data movement, and plain plus
+strict HDL generation for `isf/atl_trigger_batch_wait_pipeline.isf`. It
+intentionally does not claim generated ATL children, generated ATL tops, actor
+type resolution, HDL child wiring, multi-event fan-in, data movement coupling,
+CDC, ready/backpressure, or permanent actor grouping.
 
 Recommended downstream smoke commands:
 
@@ -2183,6 +2198,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_pin_egress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_wait_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_trigger_batch_wait_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
