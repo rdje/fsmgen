@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL two-child generated top selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` to emit one generated ATL
+  top for two resolved children with sequential trigger/event handoffs and no
+  ATL data movement.
+- The selected source shape triggers `reader.capture`, awaits `reader.done`,
+  triggers `writer.emit`, awaits `writer.done`, then completes.
+- No compiler behavior changed in this selection slice.
+
 ### R14 — ATL multi-child route diagnostic shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
 - Added a targeted parser diagnostic for the reserved generated-child

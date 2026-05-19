@@ -878,6 +878,9 @@ across two resolved children when it is coupled to qualified actor
 trigger/event handoffs. The source shape reuses the existing `(sink source)`
 drive-body pair, but positive behavior waits for multi-child top scheduling
 rather than implying a permanent route or inserted storage.
+The next selected positive slice is a control-only two-child generated top:
+sequential trigger/event handoffs for `reader` and then `writer`, with no
+data movement yet.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

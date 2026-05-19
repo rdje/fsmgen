@@ -735,6 +735,9 @@ data-route shape across two resolved children when it is coupled to qualified
 actor trigger/event handoffs. That shape reuses the existing `(sink source)`
 drive-body movement surface, but positive behavior waits for multi-child top
 scheduling rather than claiming a permanent route or inserted storage.
+The next selected ATL implementation step is a control-only two-child
+generated top: sequential trigger/event handoffs for `reader` then `writer`,
+with no data movement yet.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

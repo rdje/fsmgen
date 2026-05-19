@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL two-child generated top selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35` as a doc-only selection
+  leaf.
+- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
+- `.9.36` must emit one generated ATL top for two resolved children with
+  sequential trigger/event handoffs and no data movement.
+- Selected source shape: `reader.capture`, `await reader.done`,
+  `writer.emit`, `await writer.done`, then complete.
+- The selected slice must keep report evidence in existing
+  `actor_network.instances[]`, `transaction_triggers[]`, `event_waits[]`,
+  and `generated_tops[]` surfaces while leaving data movement, mux/storage,
+  CDC, ready/backpressure, and permanent grouping deferred.
+
 ## 2026-05-19: ATL multi-child route diagnostic shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
 - FSMGen now fails closed the reserved generated-child actor-to-actor data
@@ -12,9 +25,9 @@ This is the live continuity document for fast session recovery after crashes, re
   two-resolved-child source shape with `(writer.payload reader.payload)`,
   producer trigger/event sequencing, and attempted sink trigger/event
   sequencing.
-- The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, a
-  selection leaf for the next bounded multi-child generated-top design or
-  fail-closed boundary.
+- This slice advanced the ATL frontier to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, the selection leaf that has since
+  completed.
 
 ## 2026-05-19: ATL multi-child route boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33` as a doc-only selection

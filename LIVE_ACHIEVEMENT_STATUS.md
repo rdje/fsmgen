@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL two-child generated top selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` as the active ATL frontier.
+- `.9.36` will emit one generated ATL top for two resolved children with
+  sequential trigger/event handoffs and no ATL data movement.
+- Selected source shape: `reader.capture`, `await reader.done`,
+  `writer.emit`, `await writer.done`, then complete.
+- Report evidence must stay in existing `actor_network.instances[]`,
+  `transaction_triggers[]`, `event_waits[]`, and `generated_tops[]` surfaces.
+
 ## 2026-05-19: R14 — ATL multi-child route diagnostic shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`.
 - FSMGen now fails closed the reserved generated-child actor-to-actor
@@ -13,8 +23,9 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - Focused coverage preserves the shipped parent-handoff actor-to-actor route
   and the one-child generated-top trigger/event, pin-ingress, and pin-egress
   fixtures.
-- The active ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`.
+- This slice advanced the ATL frontier to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, the selection leaf that has since
+  completed.
 
 ## 2026-05-19: R14 — ATL multi-child route boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`.

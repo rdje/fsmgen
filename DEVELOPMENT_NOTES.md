@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL multi-child top should grow before actor-to-actor data routes
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35` selects a positive two-child
+  trigger/event generated-top slice before attempting generated-child
+  actor-to-actor data movement.
+- This keeps the next implementation focused on topology and control
+  handoffs: instantiate two resolved child modules in one generated top and
+  wire the parent trigger/event handoffs to each child in transaction order.
+- Data movement remains deliberately out of that slice. That avoids mixing
+  multi-child top representation, route timing, child-to-child payload wiring,
+  and storage/mux policy in one change.
+
 ## 2026-05-19: ATL multi-child route requests fail before generic event limits
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34` adds an explicit parser preflight
   for the reserved generated-child actor-to-actor data-route shape.

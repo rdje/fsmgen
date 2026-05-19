@@ -1014,6 +1014,11 @@ reserved shape reuses the existing `(sink source)` drive-body pair, such as
 inserted storage, or child-to-child wiring until the scheduler can represent
 the multi-child top explicitly.
 
+The next selected positive multi-child step is control-only: one generated
+ATL top with two resolved children and sequential trigger/event handoffs, but
+no data movement. That slice grows the top representation before attempting
+child-to-child payload routing.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:
