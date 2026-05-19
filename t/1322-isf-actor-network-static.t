@@ -17,6 +17,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_actor_network_association_schedule_keys
     isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
+    isf_public_interface_schedule_report_actor_network_generated_top_keys
     isf_public_interface_schedule_report_actor_network_group_schedule_keys
     isf_public_interface_schedule_report_actor_network_group_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
@@ -1434,6 +1435,13 @@ sub assert_actor_network_report {
             "$label exposes advertised actor_network group_schedule keys",
         );
     }
+    if (@{$report->{actor_network}{generated_tops} || []}) {
+        is_deeply(
+            [sort keys %{$report->{actor_network}{generated_tops}[0]}],
+            [sort @{isf_public_interface_schedule_report_actor_network_generated_top_keys()}],
+            "$label exposes advertised actor_network generated_top keys",
+        );
+    }
     if (@{$report->{actor_network}{association_schedules} || []}) {
         is_deeply(
             [sort keys %{$report->{actor_network}{association_schedules}[0]}],
@@ -1464,6 +1472,8 @@ sub assert_actor_network_report {
     }
     $expected->{association_schedules} = []
         unless exists $expected->{association_schedules};
+    $expected->{generated_tops} = []
+        unless exists $expected->{generated_tops};
     is_deeply($report->{actor_network}, $expected, "$label preserves actor-network identity");
 }
 

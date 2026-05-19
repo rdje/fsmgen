@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use Test::More;
 use File::Spec;
+use File::Temp qw(tempdir);
 use FindBin;
 use IPC::Cmd qw(run);
 use JSON::PP qw(decode_json);
@@ -15,7 +16,7 @@ use FSM::Scheduler::ISF;
 my $repo_root = File::Spec->catdir($FindBin::Bin, '..');
 my $isf_file = File::Spec->catfile($repo_root, 'isf', 'atl_resolved_child_pipeline.isf');
 
-subtest 'ATL resolved-child fixture lowers to parent plus child artifacts' => sub {
+subtest 'ATL resolved-child fixture lowers to parent, child, and generated top artifacts' => sub {
     my ($files, $report) = lower_atl_fixture();
 
     is_deeply(
@@ -23,11 +24,10 @@ subtest 'ATL resolved-child fixture lowers to parent plus child artifacts' => su
         [
             'atl_resolved_child_pipeline.fsm',
             'atl_resolved_child_pipeline__worker.fsm',
+            'atl_resolved_child_pipeline_top.fsm',
         ],
-        'lowering emits exactly the parent and resolved child scheduled FSM artifacts',
+        'lowering emits exactly the parent, resolved child, and generated ATL top FSM artifacts',
     );
-
-    ok(!exists $files->{'atl_resolved_child_pipeline_top.fsm'}, 'lowering emits no generated ATL top');
 
     my $parent = $files->{'atl_resolved_child_pipeline.fsm'};
     like($parent, qr/\A\(\?fsm:atl_resolved_child_pipeline\b/, 'parent scheduled FSM uses the fixture module name');
@@ -43,6 +43,16 @@ subtest 'ATL resolved-child fixture lowers to parent plus child artifacts' => su
     like($child, qr/\(process_start 1\)/, 'child keeps its authored process_start input');
     like($child, qr/\(done 1\)/, 'child keeps its authored done output');
     like($child, qr/\bprocess_idle_0\b/, 'child keeps its process transaction entry state');
+
+    my $top = $files->{'atl_resolved_child_pipeline_top.fsm'};
+    like($top, qr/\A\(\?top:atl_resolved_child_pipeline_top\b/, 'generated top uses the fixture top module name');
+    like($top, qr/\(\?ports:public_io\s+clk\s+rst_n\s+start\s+done>\s+\)/s, 'generated top exposes only parent public pins plus clock/reset');
+    like($top, qr/\(\?fsmc:atl_resolved_child_pipeline atl_resolved_child_pipeline\)/, 'generated top instantiates the scheduled parent');
+    like($top, qr/\(\?fsmc:worker atl_resolved_child_pipeline__worker\)/, 'generated top instantiates the resolved child');
+    like($top, qr/\(start atl_resolved_child_pipeline\.start\)/, 'generated top wires top start into the parent');
+    like($top, qr/\(atl_resolved_child_pipeline\.done done\)/, 'generated top wires parent done to the top output');
+    like($top, qr/\(atl_resolved_child_pipeline\.worker_process_start worker\.process_start\)/, 'generated top wires parent trigger handoff to the child transaction start input');
+    like($top, qr/\(worker\.done atl_resolved_child_pipeline\.worker_done\)/, 'generated top wires child event pulse to the parent event handoff input');
 
     assert_report_shape($report);
 };
@@ -66,6 +76,112 @@ subtest 'ATL resolved-child fixture strict schedule JSON matches the in-process 
         decode_json($stdout),
         $in_process_report,
         'strict schedule JSON generation matches the in-process report',
+    );
+};
+
+subtest 'ATL resolved-child fixture strict outdir lowering writes the generated top' => sub {
+    my $dir = tempdir(CLEANUP => 1);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--outdir',
+            $dir,
+            $isf_file,
+        ],
+        'strict outdir lowering',
+    );
+
+    ok($success, 'strict outdir lowering succeeds for the ATL resolved-child fixture');
+    like($stdout, qr/Wrote: .*atl_resolved_child_pipeline_top\.fsm/, 'strict outdir lowering reports the written generated top');
+    is($stderr, '', 'strict outdir lowering keeps stderr clean');
+    is_deeply(
+        sorted([fsm_basenames_in($dir)]),
+        [
+            'atl_resolved_child_pipeline.fsm',
+            'atl_resolved_child_pipeline__worker.fsm',
+            'atl_resolved_child_pipeline_top.fsm',
+        ],
+        'strict outdir lowering writes the parent, resolved child, and generated top files',
+    );
+};
+
+subtest 'ATL generated top fail-closed boundary rejects unsupported child wiring shapes' => sub {
+    lower_source_fails_like(
+        atl_fixture_variant(<<'LIBRARY'),
+(library common.packet
+  (exports
+    (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input process_start)
+      (output done))
+    (transaction other
+      (on process_start)
+      (complete done))))
+LIBRARY
+        qr/trigger targets missing child transaction 'process'/,
+        'missing child target transaction fails closed',
+    );
+
+    lower_source_fails_like(
+        atl_fixture_variant(<<'LIBRARY'),
+(library common.packet
+  (exports
+    (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input process_start)
+      (output done))
+    (transaction process
+      (on (== process_start 1))
+      (complete done))))
+LIBRARY
+        qr/on requires '\(on port \[sample\.\.\.\]\)'/,
+        'non-scalar child transaction on condition fails closed',
+    );
+
+    lower_source_fails_like(
+        atl_fixture_variant(<<'LIBRARY'),
+(library common.packet
+  (exports
+    (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input process_start)
+      (output finished))
+    (transaction process
+      (on process_start)
+      (complete finished))))
+LIBRARY
+        qr/event 'done' is not a scalar child output port/,
+        'missing child event output fails closed',
+    );
+
+    lower_source_fails_like(
+        atl_fixture_variant(<<'LIBRARY'),
+(library common.packet
+  (exports
+    (actor packet_worker))
+  (actor packet_worker
+    (clock child_clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input process_start)
+      (output done))
+    (transaction process
+      (on process_start)
+      (complete done))))
+LIBRARY
+        qr/requires parent and child clocks to match/,
+        'cross-clock child wiring fails closed',
     );
 };
 
@@ -137,6 +253,30 @@ sub assert_report_shape {
         'report records the resolved child actor metadata',
     );
     is_deeply($actor_network->{groups}, [], 'fixture has no permanent static group');
+    is_deeply(
+        $actor_network->{generated_tops},
+        [
+            {
+                kind                 => 'resolved_child_trigger_event_handoff',
+                top_module           => 'atl_resolved_child_pipeline_top',
+                top_fsm              => 'atl_resolved_child_pipeline_top.fsm',
+                parent_module        => 'atl_resolved_child_pipeline',
+                parent_scheduled_fsm => 'atl_resolved_child_pipeline.fsm',
+                instance             => 'worker',
+                child_module         => 'atl_resolved_child_pipeline__worker',
+                child_scheduled_fsm  => 'atl_resolved_child_pipeline__worker.fsm',
+                target_transaction   => 'process',
+                trigger_parent_port  => 'worker_process_start',
+                trigger_child_port   => 'process_start',
+                event                => 'done',
+                event_parent_port    => 'worker_done',
+                event_child_port     => 'done',
+                clock                => 'clk',
+                reset                => 'rst_n',
+            },
+        ],
+        'report records the generated ATL top handoff wiring',
+    );
     is_deeply($actor_network->{data_movements}, [], 'fixture does not use ATL data movement');
     is_deeply($actor_network->{association_schedules}, [], 'fixture does not use trigger-batch association schedules');
     is_deeply($actor_network->{group_schedules}, [], 'fixture does not use compatibility group schedule evidence');
@@ -181,6 +321,48 @@ sub run_cli {
         join('', @{$stdout_buf || []}),
         join('', @{$stderr_buf || []}),
     );
+}
+
+sub lower_source_fails_like {
+    my ($source, $pattern, $label) = @_;
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, "$label.isf");
+    my $ok = eval {
+        FSM::Scheduler::ISF->new()->lower($actor);
+        1;
+    };
+
+    ok(!$ok, "$label is rejected during lowering");
+    like($@, $pattern, "$label diagnostic is targeted");
+}
+
+sub atl_fixture_variant {
+    my ($library) = @_;
+    my $actor = <<'ISF';
+(actor atl_resolved_child_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (trigger worker.process)
+    (await worker.done)
+    (complete done)))
+
+ISF
+    return $actor . $library;
+}
+
+sub fsm_basenames_in {
+    my ($dir) = @_;
+    opendir my $dh, $dir or die "cannot read directory $dir: $!";
+    my @files = grep { /\.fsm\z/ } readdir $dh;
+    closedir $dh or die "cannot close directory $dir: $!";
+    return @files;
 }
 
 sub sorted {

@@ -19,7 +19,8 @@ sub emit($self, $ir, $files) {
 
     my @spawn_instances = @{$ir->{spawn_instances} || []};
     my @library_uses = @{$ir->{library_uses} || []};
-    return undef unless @spawn_instances || @library_uses;
+    my @atl_top_instances = @{$ir->{atl_top_instances} || []};
+    return undef unless @spawn_instances || @library_uses || @atl_top_instances;
 
     fsm_trace_enter('Emitter::CompositionTop emit', 2);
 
@@ -36,7 +37,8 @@ sub emit($self, $ir, $files) {
     push @lines, _emit_parent_instance($actor_name);
     push @lines, map { _emit_spawn_instance($_) } @spawn_instances;
     push @lines, map { _emit_library_instance($_) } @library_uses;
-    push @lines, _emit_wiring_block($ir, \@spawn_instances, \@library_uses);
+    push @lines, map { _emit_atl_instance($_) } @atl_top_instances;
+    push @lines, _emit_wiring_block($ir, \@spawn_instances, \@library_uses, \@atl_top_instances);
     push @lines, ')';
     push @lines, '';
     push @lines, _trim_trailing_newlines($files->{$parent_file});
@@ -57,6 +59,7 @@ sub _emit_ports_block {
     my ($ir) = @_;
     my @tokens;
     my %seen;
+    my %atl_internal_parent_port = _atl_internal_parent_port_map($ir->{atl_top_instances} || []);
 
     _push_port_token(\@tokens, \%seen, $ir->{clock}, 'input', 1)
         if defined($ir->{clock}) && length($ir->{clock});
@@ -67,6 +70,7 @@ sub _emit_ports_block {
 
     for my $port (@{$ir->{ports} || []}) {
         next if $port->{isf_handoff};
+        next if $atl_internal_parent_port{$port->{name}};
         _push_port_token(\@tokens, \%seen, $port->{name}, $port->{direction}, $port->{width} // 1);
     }
 
@@ -142,8 +146,21 @@ sub _emit_library_instance {
     return join("\n", @lines);
 }
 
+sub _emit_atl_instance {
+    my ($top) = @_;
+    my $instance = $top->{instance};
+    my $module = $top->{child_module};
+
+    confess "CompositionTop emitter ATL top binding is missing an instance name\n"
+        unless defined($instance) && length($instance);
+    confess "CompositionTop emitter ATL top binding '$instance' is missing a child module name\n"
+        unless defined($module) && length($module);
+
+    return "  (?fsmc:$instance $module)";
+}
+
 sub _emit_wiring_block {
-    my ($ir, $spawn_instances, $library_uses) = @_;
+    my ($ir, $spawn_instances, $library_uses, $atl_top_instances) = @_;
     my $actor_name = $ir->{actor_name};
     my %parent_port = map { $_->{name} => $_ } @{$ir->{ports} || []};
     my %child_ports_by_name = map {
@@ -154,10 +171,12 @@ sub _emit_wiring_block {
     my @links;
     my %library_output_parent = _library_output_parent_port_map($library_uses || []);
     my %library_input_parent = _library_input_parent_port_map($library_uses || []);
+    my %atl_internal_parent_port = _atl_internal_parent_port_map($atl_top_instances || []);
 
     for my $port (@{$ir->{ports} || []}) {
         next if $port->{isf_handoff};
         my $name = $port->{name};
+        next if $atl_internal_parent_port{$name};
         if ($port->{direction} eq 'output') {
             next if $library_output_parent{$name};
             push @links, _link($actor_name . ".$name", $name);
@@ -254,6 +273,30 @@ sub _emit_wiring_block {
         }
     }
 
+    for my $top (@$atl_top_instances) {
+        my $instance = $top->{instance};
+        my $module = $top->{child_module};
+        my $child_ports = $child_ports_by_name{$module} || {};
+        my $trigger_parent = $top->{trigger_parent_port};
+        my $trigger_child = $top->{trigger_child_port};
+        my $event_parent = $top->{event_parent_port};
+        my $event_child = $top->{event_child_port};
+
+        confess "CompositionTop emitter ATL instance '$instance' references child module '$module' not present in emitted children\n"
+            unless keys %$child_ports;
+        confess "CompositionTop emitter ATL instance '$instance' trigger child port '$trigger_child' is not present on module '$module'\n"
+            unless exists $child_ports->{$trigger_child};
+        confess "CompositionTop emitter ATL instance '$instance' event child port '$event_child' is not present on module '$module'\n"
+            unless exists $child_ports->{$event_child};
+        confess "CompositionTop emitter ATL parent trigger port '$trigger_parent' is not present on parent '$actor_name'\n"
+            unless exists $parent_port{$trigger_parent};
+        confess "CompositionTop emitter ATL parent event port '$event_parent' is not present on parent '$actor_name'\n"
+            unless exists $parent_port{$event_parent};
+
+        push @links, _link($actor_name . ".$trigger_parent", $instance . ".$trigger_child");
+        push @links, _link($instance . ".$event_child", $actor_name . ".$event_parent");
+    }
+
     my @lines = ('  (?wiring:isf_wiring');
     push @lines, map { "    $_" } @links;
     push @lines, '  )';
@@ -332,6 +375,20 @@ sub _library_input_parent_port_map {
     }
 
     return %consumers;
+}
+
+sub _atl_internal_parent_port_map {
+    my ($atl_top_instances) = @_;
+    my %ports;
+
+    for my $top (@$atl_top_instances) {
+        $ports{$top->{trigger_parent_port}} = 1
+            if defined($top->{trigger_parent_port}) && length($top->{trigger_parent_port});
+        $ports{$top->{event_parent_port}} = 1
+            if defined($top->{event_parent_port}) && length($top->{event_parent_port});
+    }
+
+    return %ports;
 }
 
 sub _format_param_value {

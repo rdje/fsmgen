@@ -101,9 +101,17 @@ sub build_module($self, $actor) {
         $child_irs{$module} = $self->_build_resolved_atl_child_ir($resolution, $actor);
     }
 
+    my @atl_top_instances = $self->_select_atl_generated_top_instances($actor, \%child_irs);
+
     my $parent_ir = $self->_build_parent_ir($actor, \%generated_children);
     $parent_ir->{children} = \%child_irs;
     $parent_ir->{library_uses} = \@library_instances;
+    $parent_ir->{atl_top_instances} = \@atl_top_instances;
+    if (@atl_top_instances) {
+        $parent_ir->{actor_network}{generated_tops} = [
+            map { _atl_generated_top_report_entry($_) } @atl_top_instances
+        ];
+    }
     $parent_ir->{domain_partition} = $domain_partition if $domain_partition;
     return $parent_ir;
 }
@@ -217,6 +225,155 @@ sub _build_resolved_atl_child_ir($self, $resolution, $parent_actor) {
         usage          => 'atl_static_instance',
     };
     return $ir;
+}
+
+sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
+    my @resolutions = _resolved_atl_actor_type_resolutions($actor);
+    return () unless @resolutions;
+
+    my $network = $actor->{actor_network} || {};
+    my @triggers = @{$network->{transaction_triggers} || []};
+    my @event_waits = @{$network->{event_waits} || []};
+    return () unless @triggers || @event_waits;
+
+    my $actor_name = $actor->{actor_name};
+    my $context = "ATL generated top for actor '$actor_name'";
+
+    confess "$context requires exactly one resolved ATL static actor instance in the current subset\n"
+        unless @resolutions == 1;
+    confess "$context requires exactly one transaction trigger and exactly one event wait in the current subset\n"
+        unless @triggers == 1 && @event_waits == 1;
+    confess "$context cannot combine generated child wiring with ATL data movement in the current subset\n"
+        if @{$network->{data_movements} || []};
+    confess "$context cannot combine generated child wiring with static group metadata in the current subset\n"
+        if @{$network->{groups} || []};
+    confess "$context cannot combine generated child wiring with temporary association or group schedules in the current subset\n"
+        if @{$network->{association_schedules} || []} || @{$network->{group_schedules} || []};
+
+    my $resolution = $resolutions[0];
+    my $instance = $resolution->{instance};
+    my $module = $resolution->{module};
+    my $trigger = $triggers[0];
+    my $event_wait = $event_waits[0];
+
+    confess "$context requires trigger and event handoffs to target the same resolved actor instance '$instance'\n"
+        unless ($trigger->{instance} // '') eq $instance
+            && ($event_wait->{instance} // '') eq $instance;
+    confess "$context requires trigger and event handoffs to belong to the same parent transaction\n"
+        unless ($trigger->{owner_transaction} // '') eq ($event_wait->{transaction} // '');
+    confess "$context expects the selected trigger sink to be an external handoff before top wiring\n"
+        unless ($trigger->{sink} // '') eq 'external_handoff';
+    confess "$context expects the selected event source to be an external handoff before top wiring\n"
+        unless ($event_wait->{source} // '') eq 'external_handoff';
+
+    my $top_module = "${actor_name}_top";
+    confess "$context generated top module '$top_module' conflicts with a generated child module\n"
+        if exists $child_irs->{$top_module};
+    confess "$context cannot find resolved child module '$module'\n"
+        unless exists $child_irs->{$module};
+
+    my $child_actor = $resolution->{actor};
+    confess "$context child instance '$instance' does not carry a resolved actor shell\n"
+        unless ref($child_actor) eq 'HASH';
+    confess "$context child instance '$instance' contains nested actor-network instances; recursive actor networks are deferred\n"
+        if @{(($child_actor->{actor_network} || {})->{instances}) || []};
+    confess "$context requires parent and child clocks to match before ATL child wiring; parent '$actor->{clock}' child '$child_actor->{clock}'\n"
+        unless ($actor->{clock} // '') eq ($child_actor->{clock} // '');
+    confess "$context requires parent and child reset policy to match before ATL child wiring\n"
+        unless _atl_reset_signature($actor->{reset}) eq _atl_reset_signature($child_actor->{reset});
+
+    my %child_tx_by_name = map { $_->{name} => $_ } @{$child_actor->{transactions} || []};
+    my $target_transaction = $trigger->{target_transaction};
+    my $child_tx = $child_tx_by_name{$target_transaction};
+    confess "$context trigger targets missing child transaction '$target_transaction' on instance '$instance'\n"
+        unless ref($child_tx) eq 'HASH';
+    my $child_start_port = _atl_transaction_scalar_on_signal($child_tx, $context);
+
+    my $child_ir = $child_irs->{$module};
+    my %child_ports = map { $_->{name} => $_ } @{$child_ir->{ports} || []};
+    confess "$context child transaction '$target_transaction' scalar on signal '$child_start_port' is not a scalar child input port\n"
+        unless exists($child_ports{$child_start_port})
+            && ($child_ports{$child_start_port}{direction} || '') eq 'input'
+            && ($child_ports{$child_start_port}{width} || 1) == 1;
+
+    my $event_port = $event_wait->{event};
+    confess "$context event '$event_port' is not a scalar child output port on instance '$instance'\n"
+        unless exists($child_ports{$event_port})
+            && ($child_ports{$event_port}{direction} || '') eq 'output'
+            && ($child_ports{$event_port}{width} || 1) == 1;
+
+    return ({
+        kind                 => 'resolved_child_trigger_event_handoff',
+        top_module           => $top_module,
+        top_fsm              => "$top_module.fsm",
+        parent_module        => $actor_name,
+        parent_scheduled_fsm => "$actor_name.fsm",
+        instance             => $instance,
+        child_module         => $module,
+        child_scheduled_fsm  => "$module.fsm",
+        target_transaction   => $target_transaction,
+        trigger_parent_port  => $trigger->{signal},
+        trigger_child_port   => $child_start_port,
+        event                => $event_port,
+        event_parent_port    => $event_wait->{signal},
+        event_child_port     => $event_port,
+        clock                => $actor->{clock},
+        reset                => ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{name} : undef,
+    });
+}
+
+sub _atl_generated_top_report_entry {
+    my ($top) = @_;
+    return {
+        kind                 => $top->{kind},
+        top_module           => $top->{top_module},
+        top_fsm              => $top->{top_fsm},
+        parent_module        => $top->{parent_module},
+        parent_scheduled_fsm => $top->{parent_scheduled_fsm},
+        instance             => $top->{instance},
+        child_module         => $top->{child_module},
+        child_scheduled_fsm  => $top->{child_scheduled_fsm},
+        target_transaction   => $top->{target_transaction},
+        trigger_parent_port  => $top->{trigger_parent_port},
+        trigger_child_port   => $top->{trigger_child_port},
+        event                => $top->{event},
+        event_parent_port    => $top->{event_parent_port},
+        event_child_port     => $top->{event_child_port},
+        clock                => $top->{clock},
+        reset                => $top->{reset},
+    };
+}
+
+sub _atl_transaction_scalar_on_signal {
+    my ($tx, $context) = @_;
+    my @on_clauses = grep {
+        ref($_) eq 'ARRAY'
+            && @$_
+            && defined($_->[0])
+            && !ref($_->[0])
+            && $_->[0] eq 'on'
+    } @{$tx->{clauses} || []};
+
+    confess "$context target transaction '$tx->{name}' requires exactly one scalar '(on SIGNAL)' clause before ATL child wiring\n"
+        unless @on_clauses == 1
+            && defined($on_clauses[0][1])
+            && !ref($on_clauses[0][1])
+            && _is_hdl_identifier($on_clauses[0][1]);
+
+    return $on_clauses[0][1];
+}
+
+sub _atl_reset_signature {
+    my ($reset) = @_;
+    return 'none' unless ref($reset) eq 'HASH'
+        && defined($reset->{name})
+        && length($reset->{name});
+
+    return join("\0",
+        $reset->{name},
+        $reset->{kind} // '',
+        $reset->{polarity} // '',
+    );
 }
 
 # --- Parent IR (composition top, non-spawned transactions only) ---
@@ -455,6 +612,7 @@ sub _actor_network_for_ir {
             } @{$network->{instances}}
         ],
         groups => \@groups,
+        generated_tops => [],
         association_schedules => \@association_schedules,
         group_schedules => \@group_schedules,
         event_waits => \@event_waits,

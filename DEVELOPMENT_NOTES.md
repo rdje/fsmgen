@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL generated top is a wiring proof, not a router
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` ships the first ATL generated top by
+  consuming only handoffs that the parent scheduled `.fsm` already exposes:
+  one one-cycle trigger output and one event input for one resolved child.
+- The implementation discovers the child trigger sink from the resolved child
+  transaction's scalar authored `(on START_SIGNAL)` and requires the event to
+  be a scalar child output port. That makes the generated wiring auditable
+  from source instead of relying on naming convention alone.
+- The top deliberately removes the parent trigger/event handoffs from the top
+  public interface and wires them internally. The parent and child `.fsm`
+  artifacts remain reviewable standalone scheduled artifacts.
+- The fail-closed boundary is intentionally conservative: no trigger batches,
+  generated-child data routes, multiple resolved children, cross-clock or
+  reset-remapped wiring, payload binding, ready/backpressure, route
+  mux/storage, or recursive actor networks are inferred in this slice.
 ## 2026-05-19: ATL top generation starts from existing handoffs
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` selects generated ATL top emission as
   the next implementation step, but only for the handoffs that already exist:

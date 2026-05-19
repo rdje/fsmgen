@@ -183,16 +183,18 @@ The shipped ATL actor type-resolution source is library-qualified:
 actor's `(imports (library ... as ALIAS))` clause and `EXPORT` is an actor
 export from that library. Resolved qualified instances report library/export
 provenance on `actor_network.instances[]` and now emit child scheduled `.fsm`
-artifacts named by their `scheduled_fsm` fields. FSMGen still emits no
-generated ATL top and no child wiring, so downstream producers must treat ATL
-top emission, interface binding, and HDL child wiring as unshipped.
-The emitted-child/no-top boundary is locked by
-`isf/atl_resolved_child_pipeline.isf`.
-The next selected implementation subset, not yet shipped in this handoff, is
-one generated ATL top for exactly one resolved child with one parent trigger
-handoff and one parent event wait. Downstream producers must continue to
-treat generated ATL tops and inferred handoff wiring as unavailable until
-that selected implementation lands.
+artifacts named by their `scheduled_fsm` fields. The first generated ATL top
+is shipped for exactly one resolved child with one parent trigger handoff and
+one parent event wait in the same clock/reset policy. That top is reported
+through `actor_network.generated_tops[]`, instantiates the parent and child,
+wires public pins to the parent, wires the parent trigger handoff to the
+child transaction start input discovered from the child transaction's scalar
+`(on START_SIGNAL)`, and wires the child scalar event output back to the
+parent event handoff input. Downstream producers must still treat broader ATL
+top emission, multi-child scheduling, data-route coupling, route mux/storage,
+payload/ready/backpressure bindings, CDC, recursive actor networks, and
+permanent actor grouping as unavailable until later leaves explicitly ship
+them.
 
 Imported files may also contain library roots:
 
@@ -1525,15 +1527,18 @@ groups, selected scalar handoffs, selected parent event/trigger handoffs, and
 the exact same-cycle temporary trigger batch. The static declarations record
 actor-network intent for downstream discovery; behavior-bearing leaves add
 only the explicitly documented parent handoff ports and scheduled states.
-FSMGen now resolves library-qualified child actor types and emits their child
-scheduled `.fsm` artifacts, but it still does not generate an ATL top or wire
-child HDL behavior. The shipped source contract for ATL actor type resolution is explicit
-library qualification in `(instance NAME of ALIAS.EXPORT)`, not sibling actor
-roots and not implicit lookup of unqualified `ACTOR_TYPE` names. The shipped
-resolution subset reports metadata for that qualified form:
+FSMGen now resolves library-qualified child actor types, emits their child
+scheduled `.fsm` artifacts, and emits the first generated ATL top for the
+selected one-resolved-child trigger/event subset. The shipped source contract
+for ATL actor type resolution is explicit library qualification in
+`(instance NAME of ALIAS.EXPORT)`, not sibling actor roots and not implicit
+lookup of unqualified `ACTOR_TYPE` names. The shipped resolution subset
+reports metadata for that qualified form:
 `type_resolution: library_actor_export`, the resolved `library`, `alias`, and
 `export`, plus `module` and `scheduled_fsm` names. It emits the child `.fsm`
-artifact named by `scheduled_fsm`, but still emits no ATL top.
+artifact named by `scheduled_fsm`; when the source also has exactly one
+matching parent trigger/event pair, it emits the matching `<parent>_top.fsm`
+and reports it through `actor_network.generated_tops[]`.
 
 Accepted form:
 
@@ -1719,21 +1724,25 @@ qualified triggers, repeated triggers to the same actor instance,
 fan-in/fan-out trigger structures, generated handoff signal conflicts, trigger
 payloads or bindings, ready/backpressure assumptions, cross-clock actor
 triggers, concurrent group endpoints, or source that relies on generated ATL
-child artifacts or generated ATL top wiring until the corresponding support is
-documented here and advertised in the manifest.
+child artifacts or generated ATL top wiring outside the explicitly shipped
+resolved-child subset until the corresponding support is documented here and
+advertised in the manifest.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
 the selected one-bit actor-event handoff input, selected one-cycle
 actor-transaction trigger output, selected scalar data-movement handoff
 ports, and selected same-cycle trigger-batch handoff outputs. Resolved
 library-qualified ATL instances also emit child scheduled `.fsm` artifacts.
-FSMGen still emits no generated ATL top, no route mux, no internal handoff
-storage, and no HDL event wiring. Downstream consumers must treat
+FSMGen now emits one generated ATL top for the selected resolved-child
+trigger/event subset and reports it through `actor_network.generated_tops[]`.
+FSMGen still emits no generated ATL route mux, data-route storage,
+multi-child ATL top, CDC child wiring, payload/ready/backpressure binding, or
+broader HDL event wiring. Downstream consumers must treat
 `actor_network` as discovery/review metadata plus the explicitly
 reported `event_waits[]`, `transaction_triggers[]`, `data_movements[]`,
-`association_schedules[]`, and compatibility `group_schedules[]` entries
-until a later task-tree leaf documents broader
-generated artifact names and report keys in this handoff.
+`association_schedules[]`, `group_schedules[]`, and `generated_tops[]`
+entries until a later task-tree leaf documents broader generated artifact
+names and report keys in this handoff.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2220,17 +2229,21 @@ type resolution, HDL child wiring, multi-event fan-in, data movement coupling,
 CDC, ready/backpressure, or permanent actor grouping.
 The ATL resolved-child fixture is covered by
 `t/1330-isf-atl-resolved-child-fixture-coverage.t`, which proves strict
-schedule JSON parity, exactly two lower-result artifacts
-`atl_resolved_child_pipeline.fsm` and
-`atl_resolved_child_pipeline__worker.fsm`, no generated
+schedule JSON parity, exactly three lower-result artifacts
+`atl_resolved_child_pipeline.fsm`,
+`atl_resolved_child_pipeline__worker.fsm`, and
 `atl_resolved_child_pipeline_top.fsm`, resolved
 `actor_network.instances[]` metadata for `worker`, one
 `actor_network.transaction_triggers[]` entry, one
-`actor_network.event_waits[]` entry, and empty data/association/group
-schedule arrays for `isf/atl_resolved_child_pipeline.isf`. It intentionally
-does not claim generated ATL tops, HDL child wiring, inferred interface
-binding, route mux/storage, actor-event fan-in, CDC, ready/backpressure,
-recursive actor networks, or permanent actor grouping.
+`actor_network.event_waits[]` entry, one `actor_network.generated_tops[]`
+entry, and empty data/association/group schedule arrays for
+`isf/atl_resolved_child_pipeline.isf`. It also proves strict `--outdir`
+top emission and fail-closed diagnostics for missing child transactions,
+non-scalar child activation, missing child event outputs, and parent/child
+clock mismatches. It intentionally does not claim multiple resolved children,
+trigger batches, data-route coupling, route mux/storage, actor-event fan-in,
+CDC, ready/backpressure, recursive actor networks, or permanent actor
+grouping.
 
 Recommended downstream smoke commands:
 
@@ -2258,6 +2271,7 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest

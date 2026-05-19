@@ -184,10 +184,12 @@ artifacts, generated ATL tops, group endpoints, compact aliases, CDC,
 payloads, ready/backpressure, route mux/storage, or permanent actor grouping.
 The ATL resolved-child fixture is checked by
 [t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
-to keep file-backed resolved child artifact emission, strict schedule JSON
-parity, parent and child scheduled `.fsm` structure, resolved
+to keep file-backed resolved child artifact emission, generated ATL top
+emission, strict schedule JSON parity, parent/child/top scheduled `.fsm`
+structure, resolved
 `actor_network.instances[]` metadata, one actor-transaction trigger handoff,
-one actor-event wait handoff, and no generated ATL top covered.
+one actor-event wait handoff, and `actor_network.generated_tops[]` metadata
+covered.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -550,14 +552,15 @@ named by `scheduled_fsm` while keeping the parent scheduled `.fsm` unchanged.
 The machine-readable contract advertises those keys through
 `schedule_report_actor_network_resolved_instance_keys` while preserving
 `schedule_report_actor_network_instance_keys` for unqualified metadata-only
-instances. Generated ATL tops, HDL child wiring, and inferred handoff binding
-remain unshipped behavior. Unqualified
+instances. The first generated ATL top is now shipped for exactly one
+resolved child, one parent trigger handoff, and one parent event wait with
+matching parent/child clock and reset policy; its report entry is advertised
+through `schedule_report_actor_network_generated_top_keys` under
+`actor_network.generated_tops[]`. Broader generated ATL tops, multi-child
+HDL child wiring, data-route coupling, and inferred payload/ready/backpressure
+binding remain unshipped behavior. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
-The next selected ATL implementation subset is a generated top for one
-resolved child with one parent trigger handoff and one parent event wait, but
-that generated-top surface is not part of the public contract until its
-implementation and metadata audits land.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
@@ -1883,8 +1886,9 @@ files
 ```
 
 `files` is a hash reference mapping `.fsm` basenames to scheduled module,
-multi-domain domain scheduled module, specialized library-child module,
-generated multi-domain top, or generated composition-top `.fsm` source text.
+resolved ATL child module, generated ATL top, multi-domain domain scheduled
+module, specialized library-child module, generated multi-domain top, or
+generated composition-top `.fsm` source text.
 The generated `.fsm` text is a reviewable compiler artifact and then flows
 through the existing `.fsm` pipeline where that path is implemented.
 The plain single-clock `file.isf` CLI path lowers through that pipeline into
@@ -2020,9 +2024,10 @@ actor_phases entries: name, body
 actor_stages entries: name, body
 actor_params entries: name, value
 actor_constants entries: name, value
-actor_network: kind, instances, groups, association_schedules, group_schedules, data_movements, event_waits, transaction_triggers
+actor_network: kind, instances, groups, generated_tops, association_schedules, group_schedules, data_movements, event_waits, transaction_triggers
 actor_network instances entries: name, actor_type, declaration
 actor_network groups entries: name, members, mode, declaration, source, scheduling
+actor_network generated_tops entries: kind, top_module, top_fsm, parent_module, parent_scheduled_fsm, instance, child_module, child_scheduled_fsm, target_transaction, trigger_parent_port, trigger_child_port, event, event_parent_port, event_child_port, clock, reset
 actor_network association_schedules entries: association, kind, lifetime, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network group_schedules entries: group, owner_transaction, context, members, target_transactions, signals, schedule, dependency_policy, storage, source, sink
 actor_network event_waits entries: transaction, context, instance, event, signal, source

@@ -15,7 +15,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_lower_result_presence_keys
 );
 
-my $expected_file_map_shape = 'hash reference mapping .fsm basename to scheduled module, resolved ATL child module, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, or generated composition-top .fsm source text';
+my $expected_file_map_shape = 'hash reference mapping .fsm basename to scheduled module, resolved ATL child module, generated ATL top, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, or generated composition-top .fsm source text';
 
 subtest 'direct ISF lower-result metadata is exact and unique' => sub {
     assert_lower_result_metadata(

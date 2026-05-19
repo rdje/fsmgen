@@ -773,21 +773,33 @@ parent event wait, and one completion pulse:
     (complete done)))
 ```
 
-The fixture emits exactly `atl_resolved_child_pipeline.fsm` and
-`atl_resolved_child_pipeline__worker.fsm`; it emits no
-`atl_resolved_child_pipeline_top.fsm`. The parent artifact exposes
-`worker_process_start` and `worker_done` as external handoff ports, while the
+The fixture emits exactly `atl_resolved_child_pipeline.fsm`,
+`atl_resolved_child_pipeline__worker.fsm`, and
+`atl_resolved_child_pipeline_top.fsm`. The parent artifact still exposes
+`worker_process_start` and `worker_done` as scheduled handoff ports, the
 resolved child artifact keeps its authored `process_start` input and `done`
-output. Schedule JSON reports the resolved `worker` entry in
+output, and the generated top makes those handoffs internal by wiring
+`atl_resolved_child_pipeline.worker_process_start` to
+`worker.process_start` and `worker.done` to
+`atl_resolved_child_pipeline.worker_done`. The generated top exposes only the
+top-level public pins plus clock/reset, instantiates the parent and resolved
+child, wires `start` to the parent, and wires parent `done` to the top output.
+Schedule JSON reports the resolved `worker` entry in
 `actor_network.instances[]` with `type_resolution: library_actor_export`,
 `library`, `alias`, `export`, `module`, and `scheduled_fsm`, plus one
-`transaction_triggers[]` entry and one `event_waits[]` entry. The fixture is
-backed by
+`transaction_triggers[]` entry, one `event_waits[]` entry, and one
+`actor_network.generated_tops[]` entry describing the top module/file,
+parent/child modules, trigger parent/child ports, event parent/child ports,
+clock, and reset. The fixture is backed by
 [t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
-for strict schedule JSON parity and parent/child scheduled `.fsm` structure.
-It deliberately does not claim generated ATL tops, HDL child wiring, inferred
-interface binding, route mux/storage, actor-event fan-in, CDC,
-ready/backpressure, recursive actor networks, or permanent actor grouping.
+for strict schedule JSON parity, strict `--outdir` top emission,
+parent/child/top scheduled `.fsm` structure, and fail-closed diagnostics for
+missing child transactions, non-scalar child activation, missing child event
+outputs, and parent/child clock mismatches. It deliberately does not claim
+multiple resolved children, trigger batches, ATL data movement coupled to
+generated children, inferred payload or ready/backpressure bindings,
+route mux/storage, actor-event fan-in, CDC, recursive actor networks, or
+permanent actor grouping.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
@@ -3060,20 +3072,22 @@ qualified syntax now fails closed with targeted diagnostics for missing
 imports, non-explicit import aliases, unknown aliases, and unknown actor
 exports. Known actor exports now resolve to metadata as described below.
 
-The shipped first resolution subset is intentionally report-only. It accepts
-resolved qualified entries and widens only those `actor_network.instances[]`
+The shipped first resolution subset accepts
+resolved qualified entries and widens those `actor_network.instances[]`
 entries with `type_resolution`, `library`, `alias`, `export`, `module`, and
 `scheduled_fsm`. The selected `type_resolution` value is
 `library_actor_export`; `module` and
 `scheduled_fsm` reserve `<parent_actor>__<instance>` and
 `<parent_actor>__<instance>.fsm`. The lowerer now emits those child `.fsm`
-artifacts while still emitting no ATL top, and trigger/event/data handoffs
-remain external parent handoffs until interface binding and HDL wiring are
+artifacts. For the selected one-resolved-child trigger/event subset, it also
+emits `<parent_actor>_top.fsm` and reports the top through
+`actor_network.generated_tops[]`; other trigger/event/data handoffs remain
+external parent handoffs until their interface binding and HDL wiring are
 explicitly selected.
 The shipped resolved-child fixture
 `isf/atl_resolved_child_pipeline.isf` combines one resolved child artifact
-with one parent trigger handoff and one parent event wait while preserving the
-no-top/no-child-wiring boundary.
+with one parent trigger handoff and one parent event wait, and emits the first
+generated ATL top for that exact subset.
 
 The following remain fail-closed/deferred:
 
@@ -3241,16 +3255,15 @@ implementation that emits broader artifacts must document their names, report
 keys, and review surfaces in the same slice that ships them.
 
 The next selected, not-yet-shipped ATL implementation subset is generated top
-packaging for the resolved-child fixture shape. The selected boundary is one
+packaging for the resolved-child fixture shape. The shipped boundary is one
 resolved child, one parent trigger handoff, one parent event wait, and
-matching parent/child clock/reset names and policies. The selected top will
-be `<parent>_top.fsm`; it will instantiate the parent and child, wire public
-pins to the parent, bind the parent trigger handoff to the child transaction
-start input discovered from the child's authored `(on START_SIGNAL)`, bind
-the child event output to the parent event handoff input, and report the top
-through additive `actor_network` metadata. Until that implementation lands,
-generated ATL tops and inferred parent-to-child handoff wiring remain
-unshipped behavior.
+matching parent/child clock/reset names and policies. The selected top is
+`<parent>_top.fsm`; it instantiates the parent and child, wires public pins
+to the parent, binds the parent trigger handoff to the child transaction start
+input discovered from the child's authored `(on START_SIGNAL)`, binds the
+child event output to the parent event handoff input, and reports the top
+through `actor_network.generated_tops[]`. Broader generated ATL tops and
+inferred parent-to-child handoff wiring remain unshipped behavior.
 
 ## 10. Schedule JSON Report
 
@@ -3357,8 +3370,8 @@ Each `dt_blocks` entry's `kind` value is currently `drive`,
 advertises this value family through `schedule_report_dt_kind_values`.
 `actor_network` is null for actors without a static ATL actor declaration, or
 an object with `kind`, `instances`, `event_waits`, `transaction_triggers`,
-`association_schedules`, `group_schedules`, and `data_movements` for the
-current bounded static actor-network subset.
+`association_schedules`, `group_schedules`, `data_movements`, and
+`generated_tops` for the current bounded static actor-network subset.
 Unqualified instance entries contain `name`, `actor_type`, and `declaration`.
 Resolved library-qualified instance entries also contain `type_resolution`,
 `library`, `alias`, `export`, `module`, and `scheduled_fsm`.
@@ -3371,11 +3384,17 @@ and `sink`. Each scalar data-movement entry contains `kind`, `transaction`,
 Each association-schedule entry contains `association`, `kind`, `lifetime`,
 `owner_transaction`, `context`, `members`, `target_transactions`, `signals`,
 `schedule`, `dependency_policy`, `storage`, `source`, and `sink`.
+Each generated-top entry contains `kind`, `top_module`, `top_fsm`,
+`parent_module`, `parent_scheduled_fsm`, `instance`, `child_module`,
+`child_scheduled_fsm`, `target_transaction`, `trigger_parent_port`,
+`trigger_child_port`, `event`, `event_parent_port`, `event_child_port`,
+`clock`, and `reset`.
 The capability-manifest ISF public contract advertises these families through
 `schedule_report_actor_network_keys`,
 `schedule_report_actor_network_instance_keys`,
 `schedule_report_actor_network_resolved_instance_keys`,
 `schedule_report_actor_network_group_keys`,
+`schedule_report_actor_network_generated_top_keys`,
 `schedule_report_actor_network_association_schedule_keys`,
 `schedule_report_actor_network_group_schedule_keys`,
 `schedule_report_actor_network_data_movement_keys`,
@@ -3757,16 +3776,18 @@ The [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf
 fixture now has file-backed ATL resolved-child coverage for one same-source
 library actor export, one resolved `(instance worker of
 pkt_lib.packet_worker)`, one parent `(trigger worker.process)`, one parent
-`(await worker.done)`, exactly two lower-result artifacts
+`(await worker.done)`, exactly three lower-result artifacts
 `atl_resolved_child_pipeline.fsm` and
-`atl_resolved_child_pipeline__worker.fsm`, strict schedule JSON parity,
+`atl_resolved_child_pipeline__worker.fsm`, and
+`atl_resolved_child_pipeline_top.fsm`, strict schedule JSON parity,
 resolved `actor_network.instances[]` metadata, one
-`transaction_triggers[]` entry, one `event_waits[]` entry, and empty
-data/association/group schedule arrays. It stays inside the shipped
-resolved-child artifact subset and does not claim generated ATL tops, HDL
-child wiring, inferred interface binding, route mux/storage, actor-event
-fan-in, CDC, ready/backpressure, recursive actor networks, or permanent actor
-grouping.
+`transaction_triggers[]` entry, one `event_waits[]` entry, one
+`actor_network.generated_tops[]` entry, and empty data/association/group
+schedule arrays. It stays inside the shipped one-child trigger/event
+generated-top subset and does not claim multiple resolved children, trigger
+batches, data-route coupling, inferred payload/ready/backpressure binding,
+route mux/storage, actor-event fan-in, CDC, recursive actor networks, or
+permanent actor grouping.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

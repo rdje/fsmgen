@@ -1,5 +1,29 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated top shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`.
+- The resolved-child fixture now lowers to three artifacts:
+  `atl_resolved_child_pipeline.fsm`,
+  `atl_resolved_child_pipeline__worker.fsm`, and
+  `atl_resolved_child_pipeline_top.fsm`.
+- The generated ATL top instantiates the scheduled parent and one resolved
+  child, wires public pins to the parent, wires parent
+  `worker_process_start` to child `process_start`, and wires child `done` to
+  parent `worker_done`.
+- Schedule JSON now includes `actor_network.generated_tops[]` for this
+  bounded top, and the public contract advertises
+  `schedule_report_actor_network_generated_top_keys`.
+- `t/1330-isf-atl-resolved-child-fixture-coverage.t` now proves parent,
+  child, and top `.fsm` structure, strict schedule JSON parity, strict
+  `--outdir` top emission, and fail-closed diagnostics for missing child
+  transactions, non-scalar child activation, missing child event outputs, and
+  parent/child clock mismatches.
+- Multiple resolved children, trigger batches, generated-child data routes,
+  route mux/storage, payload or ready/backpressure bindings, CDC, recursive
+  actor networks, and permanent actor grouping remain deferred or fail-closed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, a doc-only selection leaf for the
+  next generated-top/interface-binding/HDL handoff boundary.
 ## 2026-05-19: ATL generated top subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` as a doc-only selection
   leaf.

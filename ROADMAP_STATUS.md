@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.26`.
+  activation `.111` and ATL actor-network orchestration `.9.27`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -263,28 +263,25 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `actor_network.instances[]` `module` and `scheduled_fsm` fields; no
   `library_uses[]` entry is created for ATL `(instance ...)` children. The
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` selected the next step as a
-  realistic emitted-child fixture rather than generated-top or interface
-  wiring. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` promoted
+  realistic emitted-child fixture before generated-top wiring.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` promoted
   `isf/atl_resolved_child_pipeline.isf`: lowering emits exactly the parent
   `atl_resolved_child_pipeline.fsm` plus resolved child
   `atl_resolved_child_pipeline__worker.fsm`, strict schedule JSON matches the
   in-process report, and actor-network metadata exposes the resolved child,
   one transaction trigger, and one event wait while data movement and
-  association/group schedules remain empty. No generated ATL top is emitted
-  and trigger/event handoffs remain external parent ports.
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` selected the first generated ATL top
-  implementation subset before code. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`: emit `<parent>_top.fsm` for exactly
-  one resolved child, one parent trigger handoff, one parent event wait, and
-  matching parent/child clock/reset names and policies. The selected top will
-  instantiate the parent and child, wire public top-level pins to the parent,
-  wire the parent trigger handoff to the child transaction start input
-  discovered from the child's authored `(on START_SIGNAL)`, wire the child
-  event output to the parent event handoff input, and report the generated
-  ATL top through additive `actor_network` metadata. Broader generated-top
-  packaging, HDL child wiring beyond that one trigger/event pair, event
-  fan-in, route mux/storage, ready/backpressure, CDC, recursive actor
-  networks, and permanent actor grouping remain deferred.
+  association/group schedules remain empty. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`
+  then emitted `atl_resolved_child_pipeline_top.fsm`: the generated top
+  instantiates the parent and resolved child, wires public top-level pins to
+  the parent, wires parent `worker_process_start` to child `process_start`,
+  wires child `done` to parent `worker_done`, and reports the top through
+  `actor_network.generated_tops[]`. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, which must select the next
+  generated-top, interface-binding, HDL handoff, or fail-closed boundary
+  before code. Broader generated-top packaging, multi-child HDL child wiring,
+  event fan-in, generated-child data routes, route mux/storage,
+  ready/backpressure, CDC, recursive actor networks, and permanent actor
+  grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
@@ -6588,10 +6585,11 @@ Done:
   top-level actor whose structure/content is a network of actors, where
   top-level actor transactions/rules can trigger actors or transactions,
   data/information can move between actors, concurrent actor groups, and
-  top-level pins, and FSMGen infers the reviewable schedule. Implementation
-  remains blocked until the exact source spelling, compact/verbose syntax
-  relationship, event/data primitives, first subset, and fail-closed boundary
-  are agreed in
+  top-level pins, and FSMGen infers the reviewable schedule. The first ATL
+  slices are now implementation-backed: static metadata, parent event/trigger
+  handoffs, scalar data routes, temporary trigger-batch associations,
+  library-qualified child artifacts, and the first one-child generated ATL top
+  are shipped under
   [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
 - [docs/ISF_ATL_DESIGN_PROPOSAL.md](docs/ISF_ATL_DESIGN_PROPOSAL.md) now
   carries the concrete ATL v0 proposal: `(actor ...)` remains the root,
@@ -6607,6 +6605,17 @@ Done:
   mux/enable/handoff evidence make the movement reviewable; the scheduler
   derives the needed connectivity, discriminates endpoint roles, and owns the
   dynamic runtime route-select/mux/enable/handoff control.
+- `isf/atl_resolved_child_pipeline.isf` now has file-backed generated ATL top
+  coverage through
+  [t/1330-isf-atl-resolved-child-fixture-coverage.t](t/1330-isf-atl-resolved-child-fixture-coverage.t):
+  the lowerer emits the parent, resolved child, and
+  `atl_resolved_child_pipeline_top.fsm`, wires parent `worker_process_start`
+  to child `process_start`, wires child `done` to parent `worker_done`,
+  reports `actor_network.generated_tops[]`, and fails closed for missing child
+  transactions, non-scalar child activation, missing child event outputs, and
+  parent/child clock mismatches. Broader multi-child ATL tops, generated-child
+  data routes, route mux/storage, payload or ready/backpressure binding, CDC,
+  recursive actor networks, and permanent actor grouping remain deferred.
 - `isf/spawn_parent.isf` now has file-backed strict generated-composition
   fixture coverage through
   [t/1315-isf-generated-composition-fixture-coverage.t](t/1315-isf-generated-composition-fixture-coverage.t),

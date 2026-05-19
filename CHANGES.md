@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated top shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`.
+- Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  to select the first generated ATL top only for one resolved child, one
+  parent trigger handoff, one parent event wait, matching parent/child clock
+  and reset policy, and no data movement, groups, trigger batches, or nested
+  actor networks.
+- Updated [perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm](perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm)
+  so the generated top instantiates the parent plus resolved child and wires
+  parent `worker_process_start` to child `process_start` and child `done` to
+  parent `worker_done` while keeping those handoffs off the top public port
+  list.
+- Added `actor_network.generated_tops[]` schedule JSON metadata and public
+  contract key-family advertising for the generated ATL top.
+- Extended [t/1330-isf-atl-resolved-child-fixture-coverage.t](t/1330-isf-atl-resolved-child-fixture-coverage.t)
+  to prove parent/child/top `.fsm` emission, strict schedule JSON parity,
+  strict `--outdir` top emission, and fail-closed diagnostics for unsupported
+  child wiring shapes.
+- Synced the task tree, roadmap, live docs, ISF spec, downstream integration
+  handoff, ATL design proposal, public contract docs, and mdBook. The active
+  ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`.
+
 ### R14 — ATL generated top subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` before generated-top code.
 - Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` to emit the first generated

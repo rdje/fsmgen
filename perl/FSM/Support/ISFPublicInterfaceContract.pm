@@ -99,6 +99,7 @@ our @EXPORT_OK = qw(
     isf_public_interface_schedule_report_actor_network_association_schedule_keys
     isf_public_interface_schedule_report_actor_network_data_movement_keys
     isf_public_interface_schedule_report_actor_network_event_wait_keys
+    isf_public_interface_schedule_report_actor_network_generated_top_keys
     isf_public_interface_schedule_report_actor_network_group_schedule_keys
     isf_public_interface_schedule_report_actor_network_group_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
@@ -208,7 +209,7 @@ sub build_isf_public_interface_contract {
         actor_shell_rule_shape => isf_public_interface_actor_shell_rule_shape(),
         actor_shell_drive_shape => isf_public_interface_actor_shell_drive_shape(),
         lower_result_presence_keys => isf_public_interface_lower_result_presence_keys(),
-        lower_result_file_map_shape => 'hash reference mapping .fsm basename to scheduled module, resolved ATL child module, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, or generated composition-top .fsm source text',
+        lower_result_file_map_shape => 'hash reference mapping .fsm basename to scheduled module, resolved ATL child module, generated ATL top, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, or generated composition-top .fsm source text',
         lower_result_file_name_shape => isf_public_interface_lower_result_file_name_shape(),
         lower_result_file_text_shape => isf_public_interface_lower_result_file_text_shape(),
         dt_assignment_operator_family_map => isf_public_interface_dt_assignment_operator_family_map(),
@@ -228,6 +229,7 @@ sub build_isf_public_interface_contract {
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),
         schedule_report_actor_network_group_keys => isf_public_interface_schedule_report_actor_network_group_keys(),
+        schedule_report_actor_network_generated_top_keys => isf_public_interface_schedule_report_actor_network_generated_top_keys(),
         schedule_report_actor_network_group_schedule_keys => isf_public_interface_schedule_report_actor_network_group_schedule_keys(),
         schedule_report_actor_network_association_schedule_keys => isf_public_interface_schedule_report_actor_network_association_schedule_keys(),
         schedule_report_actor_network_data_movement_keys => isf_public_interface_schedule_report_actor_network_data_movement_keys(),
@@ -515,7 +517,7 @@ sub build_isf_public_interface_contract {
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
             'Treat the contract as live: exact metadata audits describe the current advertised surface, not a promise that ISF or the schedule-report schema is frozen.',
             'The public in-process seam is the parser/scheduler facade pair, not the raw parser AST or LoweringIR internals.',
-            'The lower(...) result currently advertises the files map as scheduled module, resolved ATL child module, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
+            'The lower(...) result currently advertises the files map as scheduled module, resolved ATL child module, generated ATL top, multi-domain domain scheduled module, specialized library-child module, generated multi-domain top, and generated composition-top .fsm artifacts; the whole result hash is not yet a broad API.',
             'The library catalog path list and shipped_library_definitions entries are live discovery metadata for reusable ISF definitions; add or change entries only with source, limitations, and tests updated together.',
             'The schedule report currently advertises only the named top-level and summary key families; wider schema promises must be documented and regression-backed before downstream tools rely on them.',
             'The live human contract documents must evolve in the same slices that change supported ISF syntax, facade behavior, lower result shape, or schedule-report shape.',
@@ -589,6 +591,7 @@ sub isf_public_interface_public_top_level_keys {
             schedule_report_actor_network_instance_keys
             schedule_report_actor_network_resolved_instance_keys
             schedule_report_actor_network_group_keys
+            schedule_report_actor_network_generated_top_keys
             schedule_report_actor_network_group_schedule_keys
             schedule_report_actor_network_association_schedule_keys
             schedule_report_actor_network_data_movement_keys
@@ -907,7 +910,7 @@ sub isf_public_interface_lower_result_file_name_shape {
 }
 
 sub isf_public_interface_lower_result_file_text_shape {
-    return 'scheduled module, resolved ATL child module, multi-domain domain scheduled module, or specialized library-child .fsm source text rooted at (?fsm:<basename-stem> ...) or generated top .fsm text rooted at (?top:<basename-stem> ...), optionally followed by embedded (?rtlif:...) interface declarations for explicit CDC children';
+    return 'scheduled module, resolved ATL child module, generated ATL top, multi-domain domain scheduled module, or specialized library-child .fsm source text rooted at (?fsm:<basename-stem> ...) or generated top .fsm text rooted at (?top:<basename-stem> ...), optionally followed by embedded (?rtlif:...) interface declarations for explicit CDC children';
 }
 
 sub isf_public_interface_dt_assignment_operator_family_map {
@@ -1332,6 +1335,7 @@ sub isf_public_interface_schedule_report_actor_network_keys {
         qw(
             data_movements
             event_waits
+            generated_tops
             groups
             association_schedules
             group_schedules
@@ -1375,6 +1379,29 @@ sub isf_public_interface_schedule_report_actor_network_group_keys {
             name
             scheduling
             source
+        ),
+    ];
+}
+
+sub isf_public_interface_schedule_report_actor_network_generated_top_keys {
+    return [
+        qw(
+            child_module
+            child_scheduled_fsm
+            clock
+            event
+            event_child_port
+            event_parent_port
+            instance
+            kind
+            parent_module
+            parent_scheduled_fsm
+            reset
+            target_transaction
+            top_fsm
+            top_module
+            trigger_child_port
+            trigger_parent_port
         ),
     ];
 }
@@ -1810,6 +1837,7 @@ sub isf_public_interface_schedule_report_presence_key_family_map {
         schedule_report_actor_network_instance_keys => isf_public_interface_schedule_report_actor_network_instance_keys(),
         schedule_report_actor_network_resolved_instance_keys => isf_public_interface_schedule_report_actor_network_resolved_instance_keys(),
         schedule_report_actor_network_group_keys => isf_public_interface_schedule_report_actor_network_group_keys(),
+        schedule_report_actor_network_generated_top_keys => isf_public_interface_schedule_report_actor_network_generated_top_keys(),
         schedule_report_actor_network_group_schedule_keys => isf_public_interface_schedule_report_actor_network_group_schedule_keys(),
         schedule_report_actor_network_association_schedule_keys => isf_public_interface_schedule_report_actor_network_association_schedule_keys(),
         schedule_report_actor_network_data_movement_keys => isf_public_interface_schedule_report_actor_network_data_movement_keys(),

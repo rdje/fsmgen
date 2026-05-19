@@ -272,6 +272,15 @@ sub golden_matrix_cases {
             ],
         },
         {
+            name => 'actor_network_generated_top',
+            fixture => 'isf/atl_resolved_child_pipeline.isf',
+            covers => [
+                qw(
+                  schedule_report_actor_network_generated_top_keys
+                )
+            ],
+        },
+        {
             name => 'actor_network_group',
             filename => 'actor_network_group_report.isf',
             source => actor_network_group_source(),
@@ -536,6 +545,10 @@ sub assert_key_branch {
     }
     if ($branch eq 'schedule_report_actor_network_group_keys') {
         assert_entry_keys(first_entry($report->{actor_network}{groups}), $contract->{$branch}, "$label actor network group keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_actor_network_generated_top_keys') {
+        assert_entry_keys(first_entry($report->{actor_network}{generated_tops}), $contract->{$branch}, "$label actor network generated top keys");
         return 1;
     }
     if ($branch eq 'schedule_report_actor_network_group_schedule_keys') {

@@ -617,6 +617,28 @@ sub _actor_network_summary($self, $ir) {
                 }
             } @{$network->{groups} || []}
         ],
+        generated_tops => [
+            map {
+                {
+                    kind                 => $_->{kind},
+                    top_module           => $_->{top_module},
+                    top_fsm              => $_->{top_fsm},
+                    parent_module        => $_->{parent_module},
+                    parent_scheduled_fsm => $_->{parent_scheduled_fsm},
+                    instance             => $_->{instance},
+                    child_module         => $_->{child_module},
+                    child_scheduled_fsm  => $_->{child_scheduled_fsm},
+                    target_transaction   => $_->{target_transaction},
+                    trigger_parent_port  => $_->{trigger_parent_port},
+                    trigger_child_port   => $_->{trigger_child_port},
+                    event                => $_->{event},
+                    event_parent_port    => $_->{event_parent_port},
+                    event_child_port     => $_->{event_child_port},
+                    clock                => $_->{clock},
+                    reset                => $_->{reset},
+                }
+            } @{$network->{generated_tops} || []}
+        ],
         group_schedules => [
             map {
                 {

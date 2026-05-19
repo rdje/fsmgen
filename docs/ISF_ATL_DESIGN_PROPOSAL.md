@@ -127,24 +127,30 @@ outputs to the parent scheduled `.fsm`; it reports those handoffs through
 Static group declarations still report `actor_network.groups[]` metadata with
 `scheduling: "metadata_only"`; runtime group evidence appears only for an
 accepted trigger batch. Resolved library-qualified ATL instances now emit
-their reported child scheduled `.fsm` artifacts, but FSMGen still emits no
-generated ATL top, route mux, internal handoff storage, child instance wiring,
-or HDL event wiring. Later leaves must add their generated artifact names,
-report keys, examples, and fail-closed diagnostics in the same slice that
-ships the behavior.
+their reported child scheduled `.fsm` artifacts. For the first narrow
+trigger/event subset, FSMGen also emits a generated ATL top that instantiates
+the parent and one resolved child, then wires the parent trigger handoff to
+the child's scalar transaction start input and the child's scalar event output
+back to the parent event handoff input. Route muxes, data-route storage,
+multi-child top scheduling, ready/backpressure, payload bindings, CDC, and
+broader HDL event wiring remain deferred. Later leaves must add their
+generated artifact names, report keys, examples, and fail-closed diagnostics
+in the same slice that ships the behavior.
 
-The shipped child-artifact boundary is deliberately child emission only.
-Resolved library-qualified ATL instances report and emit deterministic
-`<parent_actor>__<instance>.fsm` files while keeping the parent scheduled
-`.fsm` unchanged and still emitting no ATL top. Interface binding,
-trigger/event/data handoff wiring, route mux/storage, ready/backpressure, CDC,
+The shipped child-artifact boundary remains the prerequisite for ATL top
+generation. Resolved library-qualified ATL instances report and emit
+deterministic `<parent_actor>__<instance>.fsm` files while keeping the parent
+scheduled `.fsm` unchanged. The first generated ATL top is available only
+when one resolved child is paired with one parent trigger handoff and one
+parent event wait. Interface binding beyond that selected trigger/event pair,
+data handoff wiring, route mux/storage, ready/backpressure, CDC,
 actor-event fan-in, recursive actor networks, and permanent actor grouping
 remain separate future selections.
 
-The shipped resolved-child fixture makes that boundary reviewable through
-`isf/atl_resolved_child_pipeline.isf`: one resolved child actor artifact plus
-parent trigger/event handoffs, with no generated ATL top and no inferred child
-wiring.
+The shipped resolved-child fixture makes the first generated-top boundary
+reviewable through `isf/atl_resolved_child_pipeline.isf`: one resolved child
+actor artifact plus a generated ATL top that wires the existing parent
+trigger/event handoffs to that child.
 
 ## Shipped First Actor-Event Wait Subset
 
@@ -390,31 +396,23 @@ generated ATL tops, actor type resolution, HDL child wiring, data movement
 coupling, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
 
-The ATL resolved-child fixture is shipped as
+The ATL resolved-child generated-top fixture is shipped as
 `isf/atl_resolved_child_pipeline.isf`. It uses one same-source library actor
 export, one resolved `(instance worker of pkt_lib.packet_worker)`, one parent
 `(trigger worker.process)`, and one parent `(await worker.done)`. Lowering
-emits exactly the parent `atl_resolved_child_pipeline.fsm` plus resolved
-child `atl_resolved_child_pipeline__worker.fsm`; it emits no
-`atl_resolved_child_pipeline_top.fsm`. The fixture proves strict schedule JSON
-parity, resolved `actor_network.instances[]` metadata, one trigger handoff,
-one event wait, and empty data/association/group schedule arrays without
-claiming generated ATL tops, HDL child wiring, inferred interface binding,
-route mux/storage, actor-event fan-in, CDC, ready/backpressure, recursive
-actor networks, or permanent actor grouping.
-
-The next selected implementation subset is the first generated ATL top for
-that resolved-child shape. It remains unshipped until
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` lands. The selected boundary is exactly
-one resolved child, one parent trigger handoff, one parent event wait, and
-matching parent/child clock/reset names and policies. The top will instantiate
-the parent and child, wire public pins to the parent, bind the parent trigger
-handoff to the child transaction start input discovered from the child's
-authored `(on START_SIGNAL)`, bind the child event output to the parent event
-handoff input, and report the top through additive `actor_network` metadata.
-Multiple children, trigger batches, data movement, groups, CDC,
-ready/backpressure, payloads, route mux/storage, recursive actor networks, and
-generated-top conflicts remain fail-closed/deferred for that first top slice.
+emits exactly the parent `atl_resolved_child_pipeline.fsm`, resolved child
+`atl_resolved_child_pipeline__worker.fsm`, and generated top
+`atl_resolved_child_pipeline_top.fsm`. The top instantiates the parent and
+child, wires public pins to the parent, binds
+`atl_resolved_child_pipeline.worker_process_start` to `worker.process_start`
+using the child transaction's authored `(on process_start)`, and binds
+`worker.done` to `atl_resolved_child_pipeline.worker_done`. Schedule JSON
+reports resolved `actor_network.instances[]` metadata, one trigger handoff,
+one event wait, empty data/association/group schedule arrays, and one
+`actor_network.generated_tops[]` entry for the generated top. The fixture
+does not claim multiple children, trigger batches, data movement, groups,
+CDC, ready/backpressure, payloads, route mux/storage, recursive actor
+networks, or permanent actor grouping.
 
 The shipped multi-event boundary proof is negative: a transaction that emits
 one temporary trigger batch and then attempts two actor event waits, such as
