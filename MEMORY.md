@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL multi-event fan-in boundary proof shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
+- Added focused negative regression coverage in
+  `t/1322-isf-actor-network-static.t` for one temporary trigger batch followed
+  by `(await reader.done)` and `(await writer.done)`.
+- The parser fails on the second wait with the current one-event-wait
+  diagnostic before scheduled `.fsm` emission, proving `.9.12` did not widen
+  into actor-event fan-in or generated child completion joins.
+- Broad ISF gate passed with `Files=235, Tests=1372`.
+- No production behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` to select the next generated-child or
+  actor-type-resolution boundary before code.
 ## 2026-05-19: ATL multi-event fan-in boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` as a selection leaf before
   any negative regression source/test changes.

@@ -736,6 +736,11 @@ generated ATL child artifacts, generated ATL tops, actor type resolution, HDL
 child wiring, event payloads, endpoint data movement coupling, route
 mux/storage, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
+Focused negative coverage in
+[t/1322-isf-actor-network-static.t](../t/1322-isf-actor-network-static.t)
+also proves that one temporary trigger batch followed by two actor event waits
+still fails before scheduled `.fsm` emission with the one-event-wait
+diagnostic.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

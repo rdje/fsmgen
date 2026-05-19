@@ -633,12 +633,12 @@ artifacts, generated ATL tops, actor type resolution, HDL child wiring,
 multiple event waits, actor-event fan-in, data movement coupling, CDC,
 ready/backpressure, compact aliases, or permanent actor grouping.
 
-The next selected ATL proof is a negative boundary for that last point: one
-temporary trigger batch followed by two actor event waits, for example
-`(await reader.done)` then `(await writer.done)`, must still fail before
-scheduled `.fsm` emission with the one-event-wait diagnostic. That selected
-regression keeps trigger-batch/event sequencing separate from future
-actor-event fan-in or generated child completion joins.
+FSMGen also has negative coverage for that boundary: one temporary trigger
+batch followed by two actor event waits, for example `(await reader.done)`
+then `(await writer.done)`, fails before scheduled `.fsm` emission with the
+one-event-wait diagnostic. That regression keeps trigger-batch/event
+sequencing separate from future actor-event fan-in or generated child
+completion joins.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

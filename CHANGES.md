@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL multi-event fan-in boundary proof
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
+- Added focused negative coverage in
+  `t/1322-isf-actor-network-static.t` for one temporary trigger batch followed
+  by two actor event waits.
+- The rejected source now proves that the second wait fails before scheduled
+  `.fsm` emission with the current one-event-wait diagnostic.
+- Broad ISF gate passed with `Files=235, Tests=1372`.
+- No production behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15` for selecting the next generated
+  child/artifact or actor type-resolution boundary before code.
+
 ### R14 — ATL multi-event fan-in boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` before adding negative
   regression code.

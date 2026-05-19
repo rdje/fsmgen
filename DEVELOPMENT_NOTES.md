@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL multi-event proof keeps the parent-handoff line
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` intentionally adds only negative
+  coverage. It does not widen parser or scheduler behavior.
+- The new regression exercises a realistic temporary trigger batch before the
+  second actor event wait. That proves the `.9.12` relaxation stops at one
+  parent handoff event and does not become an implicit event fan-in/join.
+- The next ATL selection should decide the generated child artifact or actor
+  type-resolution boundary before any child wiring code is attempted.
 ## 2026-05-19: ATL multi-event fan-in stays a boundary until selected
 - After shipping one trigger-batch followed by one actor event wait, the next
   useful slice is negative coverage rather than a wider scheduler feature.

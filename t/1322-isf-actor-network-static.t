@@ -1018,6 +1018,27 @@ ISF
 
     parse_fails_like(
         <<'ISF',
+(actor trigger_batch_multiple_event_waits
+  (clock clk)
+  (interface (input start) (output done))
+  (instance reader of packet_reader)
+  (instance filter of packet_filter)
+  (instance writer of packet_writer)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger filter.process)
+    (trigger writer.emit)
+    (await reader.done)
+    (await writer.done)
+    (complete done)))
+ISF
+        qr/ATL actor event wait '\(await writer\.done\)' exceeds the current one-event-wait subset/,
+        'temporary trigger batch plus multiple event waits fails closed before scheduled emission',
+    );
+
+    parse_fails_like(
+        <<'ISF',
 (actor qualified_event_wait_signal_conflict
   (clock clk)
   (interface

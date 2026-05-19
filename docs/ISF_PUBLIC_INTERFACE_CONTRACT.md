@@ -1651,6 +1651,9 @@ and concurrent group events remain fail-closed/deferred. Existing
 unqualified local `(await signal)` and rule-level `(trigger transaction)`
 behavior remains unchanged, and dotted enum-looking names outside
 actor-network instances keep their prior diagnostics.
+Regression coverage includes a temporary trigger batch followed by two actor
+event waits; that source remains unsupported multi-event fan-in and fails
+before scheduled `.fsm` emission with the one-event-wait diagnostic.
 The current qualified actor-trigger subset is one top-level transaction-body
 `(trigger actor.transaction)` for a static actor instance, plus the exact
 same-cycle temporary trigger batch described above. Each trigger lowers to a

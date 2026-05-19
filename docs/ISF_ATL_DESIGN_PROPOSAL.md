@@ -376,9 +376,9 @@ generated ATL tops, actor type resolution, HDL child wiring, data movement
 coupling, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
 
-The next selected boundary proof is negative: a transaction that emits one
-temporary trigger batch and then attempts two actor event waits, such as
-`(await reader.done)` followed by `(await writer.done)`, must still fail before
+The shipped multi-event boundary proof is negative: a transaction that emits
+one temporary trigger batch and then attempts two actor event waits, such as
+`(await reader.done)` followed by `(await writer.done)`, fails before
 scheduled `.fsm` emission with the current one-event-wait diagnostic. This
 keeps `.9.12` transparent as a single-event parent-handoff subset, not
 actor-event fan-in or generated child completion joining.

@@ -1658,6 +1658,10 @@ forms are unchanged: `(await signal)` remains a local transaction wait, and
 rule-level `(trigger transaction)` remains a local transaction trigger.
 Dotted enum-looking names that do not name a static actor instance keep their
 prior diagnostics.
+The regression suite specifically covers one temporary trigger batch followed
+by two actor event waits; downstream producers must still treat that as
+unsupported multi-event fan-in, and FSMGen fails it before scheduled `.fsm`
+emission with the one-event-wait diagnostic.
 
 Current actor-transaction trigger handoff subset: downstream producers may
 emit a top-level transaction-body `(trigger actor.transaction)` against a

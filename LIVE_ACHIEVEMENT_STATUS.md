@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL multi-event fan-in boundary proof
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
+- Added focused negative coverage in
+  `t/1322-isf-actor-network-static.t` for one temporary trigger batch followed
+  by two actor event waits.
+- The parser fails before scheduled `.fsm` emission with the current
+  one-event-wait diagnostic, preserving the single-event parent-handoff
+  boundary.
+- Broad ISF gate passed with `Files=235, Tests=1372`.
+- No production behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`.
+
 ## 2026-05-19: R14 — ATL multi-event fan-in boundary selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`.
 - Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` for negative coverage of
