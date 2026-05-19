@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL generated-child routes must stay contiguous for now
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59` selects route-contiguity hardening
+  as the next generated-child route boundary.
+- The current shipped route is a single parent transaction-body segment:
+  source trigger, source event wait, data drive call, sink trigger, and sink
+  event wait. Interleaving a parent `sample`, `set`, `update`, local drive,
+  or other work inside that sequence would imply parent side effects or
+  route scheduling semantics that have not been selected.
+- The next code leaf should therefore lock interleaved parent clauses as
+  diagnostics while leaving route continuation, storage, muxing,
+  ready/backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL source-event wait ordering was already parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58` adds focused coverage for the
   generated-child actor-to-actor route sequence where the source child event

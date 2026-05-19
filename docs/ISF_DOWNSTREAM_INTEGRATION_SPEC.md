@@ -1860,6 +1860,13 @@ on the source child event before triggering that child or assume pre-trigger
 acknowledgement, sticky event sampling, event replay, route storage, muxing,
 backpressure, or payload insertion until FSMGen publishes an explicit
 contract for those behaviors.
+The selected route-contiguity hardening keeps the same route as one
+contiguous transaction-body segment. Downstream producers should not
+interleave unrelated parent transaction clauses between the source trigger,
+source event wait, data drive call, sink trigger, and sink event wait or
+assume interleaved parent work, local side effects, pre/post route sampling,
+route continuation, pending handoff storage, muxing, backpressure, or payload
+insertion until FSMGen publishes an explicit contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

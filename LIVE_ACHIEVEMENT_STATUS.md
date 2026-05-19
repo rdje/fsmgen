@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route-contiguity hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60`.
+- `.9.60` is selected to keep the generated-child actor-to-actor route as
+  one contiguous transaction-body segment: source trigger, source event
+  wait, data drive call, sink trigger, and sink event wait.
+- Interleaved parent work, local side effects, pre/post route sampling,
+  route continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocols, recursive actor networks, and
+  permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child source-wait order hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58`.
 - The active ATL frontier advances to

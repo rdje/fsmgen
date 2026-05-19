@@ -254,6 +254,12 @@ surface unchanged: the source child event wait must occur after the source
 child trigger, and source-wait-before-trigger clauses fail closed until a
 later contract explicitly adds sticky event, replay, or pre-trigger
 acknowledgement metadata.
+The selected route-contiguity hardening also keeps the public surface
+unchanged: the source trigger, source event wait, data drive call, sink
+trigger, and sink event wait must remain one contiguous transaction-body
+segment until a later contract explicitly adds interleaved parent work, local
+side-effect, pre/post route sampling, continuation, storage, muxing,
+backpressure, or payload metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

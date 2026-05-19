@@ -946,6 +946,12 @@ event wait to follow the source child trigger; source-wait-before-trigger
 route clauses remain fail-closed until explicit pre-trigger acknowledgement,
 sticky event sampling, event replay, route storage, muxing, ready/backpressure,
 or payload semantics are selected.
+The selected route-contiguity hardening narrows the route-interleaving
+backlog by requiring the same route sequence to stay one contiguous
+transaction-body segment; unrelated parent clauses interleaved between route
+clauses remain fail-closed until explicit interleaved parent work, local side
+effects, pre/post route sampling, route continuation, storage, muxing,
+ready/backpressure, or payload semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
