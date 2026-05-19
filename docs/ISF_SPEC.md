@@ -4053,6 +4053,12 @@ complete for generated handoffs, remapping, route mux/storage, fan-in/fan-out,
 ready/backpressure, payload protocols, parser/lowerer collision ownership,
 and the current one-bit drive-call-cycle boundary. This is documentation
 truth hardening only.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.75` selected a follow-on mdBook precision
+pass for that same section so those terms become a term-by-term support
+boundary. The selected work is documentation-only and does not claim new ATL
+source syntax, reports, generated artifacts, mux/storage, fan-in/fan-out,
+ready/backpressure, payload protocols, remapping, CDC behavior, recursive
+actor networks, or permanent actor grouping.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route terminology needs term-by-term precision
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75` selects a documentation-only
+  precision pass after audit-backing the generated-child route terms.
+- The current section is present and audit-backed, but the route terms are
+  important enough to present as a term-by-term support boundary: definition,
+  current support, and explicit deferral/fail-closed status.
+- The next leaf should edit the mdBook section and keep the downstream handoff
+  plus ISF spec relationship truthful. It must not widen ATL source syntax,
+  parser/lowerer behavior, reports, generated artifacts, remapping,
+  mux/storage, fan-in/fan-out, ready/backpressure, payload protocols, or
+  grouping semantics.
+
 ## 2026-05-19: ATL route terminology is now audit-backed
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.74` extends the mdBook feature-matrix
   audit to cover the ISF composition chapter's dedicated generated-child

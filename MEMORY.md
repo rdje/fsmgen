@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route-term precision docs selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.76`.
+- `.9.76` will make the mdBook's dedicated `Generated-Child Route Terms`
+  section more precise by turning the current prose into a term-by-term
+  support boundary for generated handoffs, remapping, route muxing/storage,
+  fan-in/fan-out, ready/backpressure, payload protocols, parser/lowerer
+  collision ownership, route lifetime, and the one-bit drive-call-cycle
+  value boundary.
+- The next leaf is documentation-only and must keep the downstream handoff
+  and ISF spec truthful without changing ATL source syntax, parser/lowerer
+  behavior, report keys, generated artifacts, runtime behavior, remapping,
+  mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+  payload protocol, recursive actor network, or permanent actor grouping.
+
 ## 2026-05-19: ATL route-term book audit shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.74`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75`.

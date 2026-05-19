@@ -1163,6 +1163,11 @@ mux/storage, fan-in/fan-out, ready/backpressure, payload protocols,
 parser/lowerer collision ownership, and the current one-bit drive-call-cycle
 boundary, not a behavior widening.
 
+The next selected documentation hardening is a precision pass for that same
+section. The route terms should be presented as a term-by-term support
+boundary so the current definitions, shipped subset, and deferred behavior
+are reviewable without reading implementation code.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared
