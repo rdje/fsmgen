@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child data-route hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for missing source child output, multiple endpoint pairs in one route drive,
+  multiple selected data-route drive bodies, and repeated route drive calls.
+- Tightened the source-side generated-child actor-to-actor diagnostic to name
+  the `source instance` role while preserving the existing one-child
+  actor-to-pin wording.
+- Existing positive generated-child actor-to-actor, control-only two-child,
+  pin-ingress, pin-egress, and parent-handoff data-route fixtures remain in
+  the focused regression set.
+- No ATL source syntax, report key, generated artifact shape, mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior changed.
+
 ### R14 — ATL generated-child data-route hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39` as a doc-only selection
   leaf.

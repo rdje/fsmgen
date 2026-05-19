@@ -211,10 +211,10 @@ two-child top. Public consumers should read the route from
 `actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
 discover parent/reader/writer/top wiring from `actor_network.generated_tops[]`
 with `children[]`; no public `data_links` key is exposed.
-The next selected hardening around that route keeps the same public surface:
-it adds focused fail-closed coverage for source child output validation, sink
-child input validation, one route drive body, one endpoint pair, and one
-top-level drive call, without adding report keys or widening ATL syntax.
+The shipped hardening around that route keeps the same public surface: it adds
+focused fail-closed coverage for source child output validation, sink child
+input validation, one route drive body, one endpoint pair, and one top-level
+drive call, without adding report keys or widening ATL syntax.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

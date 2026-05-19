@@ -820,9 +820,33 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ omit_reader_payload => 1 }),
+        qr/data movement 'forward_payload' requires a scalar child output port 'payload' on source instance 'reader'/,
+        'generated-child actor-to-actor data route fails closed when the source child omits the source output',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ extra_drive_pair => 1 }),
+        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset/,
+        'generated-child actor-to-actor data route fails closed when one route drive contains multiple endpoint pairs',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ second_route_drive => 1 }),
+        qr/ATL scalar actor-to-actor data movement exceeds the current one-movement subset; fan-in, fan-out, route muxes, and multiple data movements remain deferred/,
+        'generated-child actor-to-actor data route fails closed when a second route drive is declared',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ repeated_drive_call => 1 }),
+        qr/transaction 'run' ATL scalar actor-to-actor data movement exceeds the current one-drive-call subset; fan-in, fan-out, and repeated movement remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the route drive is called twice',
     );
 };
 
@@ -1862,6 +1886,21 @@ CLAUSES
     my $writer_payload_port = $options->{omit_writer_payload}
         ? ''
         : "      (input payload)\n";
+    my $reader_payload_port = $options->{omit_reader_payload}
+        ? ''
+        : "      (output payload)\n";
+    my $drive_body = $options->{extra_drive_pair}
+        ? "    (writer.payload reader.payload)\n    (writer.sideband reader.sideband)"
+        : "    (writer.payload reader.payload)";
+    my $second_route_drive = $options->{second_route_drive}
+        ? <<'ISF'
+  (drive forward_sideband
+    (writer.sideband reader.sideband))
+ISF
+        : '';
+    my $repeated_drive_call = $options->{repeated_drive_call}
+        ? "    (drive forward_payload)\n"
+        : '';
 
     my $actor = <<'ISF';
 (actor atl_two_child_data_pipeline
@@ -1875,11 +1914,18 @@ CLAUSES
   (instance reader of pkt_lib.packet_reader)
   (instance writer of pkt_lib.packet_writer)
   (drive forward_payload
-    (writer.payload reader.payload))
+ISF
+    $actor .= $drive_body;
+    $actor .= <<'ISF';
+)
+ISF
+    $actor .= $second_route_drive;
+    $actor .= <<'ISF';
   (transaction run
     (on start)
 ISF
     $actor .= $clauses;
+    $actor .= $repeated_drive_call;
     $actor .= <<'ISF';
     (complete done)))
 
@@ -1894,7 +1940,9 @@ ISF
     (reset (rst_n async active_low))
     (interface
       (input capture_start)
-      (output payload)
+ISF
+    $library .= $reader_payload_port;
+    $library .= <<'ISF';
       (output done))
     (transaction capture
       (on capture_start)

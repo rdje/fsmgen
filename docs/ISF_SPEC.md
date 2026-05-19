@@ -887,14 +887,14 @@ ready/backpressure, wider payload protocols, repeated triggers, trigger
 batches, groups, recursive actor networks, and permanent actor grouping remain
 deferred.
 
-The next selected hardening frontier keeps that positive route unchanged and
-adds focused fail-closed coverage around it. A generated-child actor-to-actor
-route must prove the source endpoint is a scalar output on the source child,
-the sink endpoint is a scalar input on the sink child, one selected data-route
-drive body owns exactly one endpoint pair, and one top-level transaction
-drive call activates the route. Multi-route wiring, mux/storage,
-fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
-and permanent actor grouping remain deferred.
+The shipped hardening around that positive route keeps the route unchanged
+and adds focused fail-closed coverage around it. A generated-child
+actor-to-actor route must prove the source endpoint is a scalar output on the
+source child, the sink endpoint is a scalar input on the sink child, one
+selected data-route drive body owns exactly one endpoint pair, and one
+top-level transaction drive call activates the route. Multi-route wiring,
+mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload
+protocols, and permanent actor grouping remain deferred.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
@@ -3949,10 +3949,10 @@ writer input generated `+interface` metadata, internal generated-top payload
 wiring, plain plus strict HDL generation, a missing sink payload diagnostic,
 and a fail-closed diagnostic when the drive call does not follow the source
 event wait.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.39` selected the next focused hardening
-frontier for that same fixture family: source-child output validation and
-route-cardinality fail-closed coverage before any broader generated-child
-data wiring is claimed.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.40` shipped focused hardening for that
+same fixture family: source-child output validation and route-cardinality
+fail-closed coverage before any broader generated-child data wiring is
+claimed.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

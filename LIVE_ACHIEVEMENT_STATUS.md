@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child data-route hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`.
+- Focused coverage now rejects generated-child actor-to-actor routes with a
+  missing source child output, multiple endpoint pairs in one route drive,
+  multiple selected route drives, or repeated route drive calls.
+- The missing source-output diagnostic now names the `source instance` role.
+- No ATL source syntax, public report key, generated artifact shape,
+  mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+  payload protocol, recursive actor network, or permanent actor grouping
+  behavior changed.
+
 ## 2026-05-19: R14 — ATL generated-child data-route hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`.
 - The active ATL frontier advances to

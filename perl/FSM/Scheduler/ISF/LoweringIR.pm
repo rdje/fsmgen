@@ -562,7 +562,10 @@ sub _ensure_atl_child_data_source_ports {
         my $declared = defined($port_name) && !ref($port_name)
             ? $declared_outputs{$port_name}
             : undef;
-        confess "$context data movement '$movement->{drive}' requires a scalar child output port '$port_name' on instance '$instance'\n"
+        my $instance_role = ($movement->{kind} // '') eq 'scalar_actor_handoff'
+            ? 'source instance'
+            : 'instance';
+        confess "$context data movement '$movement->{drive}' requires a scalar child output port '$port_name' on $instance_role '$instance'\n"
             unless ref($declared) eq 'HASH'
                 && ($declared->{width} || 1) == $width
                 && $width == 1;

@@ -1800,7 +1800,7 @@ networks, repeated triggers, trigger batches, groups, and permanent actor
 grouping as deferred. The shipped route fails closed if the drive call does
 not follow the source event wait and precede the sink trigger.
 
-The next selected FSMGen hardening frontier does not widen this downstream
+The shipped FSMGen hardening around this route does not widen the downstream
 surface. It adds focused fail-closed coverage for adjacent invalid shapes:
 the source endpoint must be a scalar output on the source child, the sink
 endpoint must be a scalar input on the sink child, exactly one selected

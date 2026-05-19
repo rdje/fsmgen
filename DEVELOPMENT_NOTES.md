@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-route diagnostics should name endpoint roles
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40` keeps the generated-child
+  actor-to-actor route model unchanged and hardens diagnostics around it.
+- The only production diagnostic adjustment is role-specific wording for a
+  missing source child output in a `scalar_actor_handoff`: the error now names
+  the `source instance`, matching the existing sink-side wording and making
+  root cause clearer for downstream issue bundles.
+- Cardinality remains a fail-closed parser boundary, not a hidden lowering
+  choice. Multiple pairs, multiple route drives, and repeated route drive
+  calls continue to stop before any mux, storage, or fan-in/fan-out behavior
+  can be inferred accidentally.
+
 ## 2026-05-19: ATL child-route hardening should precede wider routing
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39` selects fail-closed hardening before
   widening the generated-child data-route model beyond one scalar route.

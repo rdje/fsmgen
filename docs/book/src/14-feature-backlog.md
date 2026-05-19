@@ -898,11 +898,10 @@ Multi-route data wiring, fan-in/fan-out, mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, repeated triggers, trigger batches,
 groups, recursive actor networks, and permanent actor grouping remain
 backlog.
-The next selected hardening does not widen that support. It locks focused
+The shipped hardening does not widen that support. It locks focused
 fail-closed coverage for missing or wrong-direction child payload ports and
 route-cardinality violations around the shipped one-route fixture before any
-multi-route, mux/storage, fan-in/fan-out, or payload-protocol work is
-claimed.
+multi-route, mux/storage, fan-in/fan-out, or payload-protocol work is claimed.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
