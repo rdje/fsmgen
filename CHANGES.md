@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child boundary-role hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for start boundaries that name a top-level output, undeclared pin, or wider
+  input, and completion boundaries that name a top-level input, undeclared
+  pin, or wider output.
+- The parser now emits a targeted parent-interface boundary-role diagnostic
+  after route ownership, ordering, contiguity, isolation, boundary
+  cardinality, and boundary-shape evidence is present; the lowerer keeps a
+  defensive role/width backstop.
+- No ATL source syntax, report key, generated artifact shape, interface
+  remapping, activation fan-in, completion fan-out, boundary expression,
+  route continuation, pending handoff storage, route mux/storage, CDC/reset
+  remapping, ready/backpressure, payload protocol, recursive actor network,
+  or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69` to select the next bounded widening
+  or hardening slice before code.
+
 ### R14 — ATL generated-child boundary-role hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` as a doc-only selection
   leaf.

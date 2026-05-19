@@ -1135,14 +1135,13 @@ fail-closed until explicit activation-body sampling, completion payload,
 setup/cleanup, continuation, storage, muxing, ready/backpressure, or payload
 semantics are selected.
 
-The next selected hardening narrows the parent-interface boundary backlog.
-For the generated-child actor-to-actor route, the start boundary will remain
-a scalar top-level input pin, and the completion boundary will remain a
-scalar top-level output pin. Output-as-start, input-as-completion,
-undeclared, and wider boundary pins stay fail-closed until explicit
-interface remapping, activation fan-in, completion fan-out, boundary
-expressions, storage, muxing, ready/backpressure, or payload semantics are
-selected.
+The shipped boundary-role hardening narrows the parent-interface boundary
+backlog. For the generated-child actor-to-actor route, the start boundary
+must remain a scalar top-level input pin, and the completion boundary must
+remain a scalar top-level output pin. Output-as-start, input-as-completion,
+undeclared, and wider boundary pins fail closed until explicit interface
+remapping, activation fan-in, completion fan-out, boundary expressions,
+storage, muxing, ready/backpressure, or payload semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
@@ -1591,9 +1590,9 @@ shorthand and long-form `(when ...)` rule syntax, such as `(rule fire
 mode.BUSY (set seen 1))` and `(rule fire (when frame.flag) (set seen 1))`;
 they lower to guarded non-state DT headers.
 
-The remaining backlog is aggregate paths in rule assignment RHS or rule guard
-expression operator position, expression operator-position enum members, enum
-rule targets, and subaggregate rule targets.
+The remaining backlog is aggregate paths in rule assignment RHS or
+rule guard expression operator position, expression operator-position enum
+members, enum rule targets, and subaggregate rule targets.
 
 Transaction `switch` selectors and branch values may read scalar aggregate
 storage leaves such as `frame.mode`, and selectors or branch values may use

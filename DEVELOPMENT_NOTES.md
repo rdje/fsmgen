@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL boundary roles are now parser-owned
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68` adds focused coverage for
+  generated-child actor-to-actor route transactions whose simple start or
+  completion boundary names the wrong parent interface direction, an
+  undeclared pin, or a wider pin.
+- The parser now distinguishes malformed parent interface-role boundaries
+  from boundary cardinality and boundary-body failures once route ownership,
+  order, contiguity, isolation, and simple-boundary evidence is present.
+- The lowerer mirrors the same role/width check when generated-top
+  construction receives route-clause evidence, preserving fail-closed
+  behavior if malformed metadata bypasses parser finalization.
+- This keeps interface remapping, activation fan-in, completion fan-out,
+  boundary expressions, route continuation, storage, muxing, backpressure,
+  and payload protocols deferred.
+
 ## 2026-05-19: ATL route boundaries should name parent pins by role
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` selects parent interface-role
   hardening as the next generated-child route boundary.

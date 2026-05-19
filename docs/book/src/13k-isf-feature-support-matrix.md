@@ -481,12 +481,13 @@ activation-body samples in `(on ...)` and extra payload operands in
 completion payload/fan-out, setup/cleanup work, continuation, storage,
 muxing, backpressure, or payload contract.
 
-The next selected hardening keeps those boundaries tied to parent interface
-roles: the route start boundary remains a scalar top-level input, and the
-route completion boundary remains a scalar top-level output. Output-as-start,
-input-as-completion, undeclared, and wider boundary pins stay fail-closed
-before any interface remapping, activation fan-in, completion fan-out,
-boundary expression, storage, muxing, backpressure, or payload contract.
+The shipped boundary-role hardening keeps those boundaries tied to parent
+interface roles: the route start boundary remains a scalar top-level input,
+and the route completion boundary remains a scalar top-level output.
+Output-as-start, input-as-completion, undeclared, and wider boundary pins
+fail closed before any interface remapping, activation fan-in, completion
+fan-out, boundary expression, storage, muxing, backpressure, or payload
+contract.
 
 ### Actor, Interface, Storage, And Timing
 

@@ -1896,11 +1896,11 @@ qualified actor trigger/event handoffs.
 
 The selected generated-child actor-to-actor data route remains bounded by a
 simple parent input start boundary and a simple parent output completion
-boundary. The next hardening leaf will make output-as-start,
-input-as-completion, undeclared, and wider boundary pins targeted
-fail-closed cases before downstream producers can rely on interface
-remapping, activation fan-in, completion fan-out, boundary expressions,
-route storage, route muxing, ready/backpressure, or payload protocols.
+boundary. Output-as-start, input-as-completion, undeclared, and wider
+boundary pins are targeted fail-closed cases before downstream producers can
+rely on interface remapping, activation fan-in, completion fan-out, boundary
+expressions, route storage, route muxing, ready/backpressure, or payload
+protocols.
 
 Downstream consumers must treat `actor_network` as discovery/review metadata
 plus the explicitly reported `event_waits[]`, `transaction_triggers[]`,

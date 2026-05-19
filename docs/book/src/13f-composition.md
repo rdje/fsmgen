@@ -885,13 +885,13 @@ Activation-body samples in `(on ...)` and extra payload operands in
 activation-body sampling, completion payload/fan-out, setup/cleanup,
 continuation, storage, muxing, backpressure, or payload behavior.
 
-The next selected hardening keeps those route boundaries tied to parent
-interface direction. The start boundary remains a scalar top-level input and
-the completion boundary remains a scalar top-level output; output-as-start,
-input-as-completion, undeclared, and wider boundary pins stay fail-closed
-until a later contract selects interface remapping, activation fan-in,
-completion fan-out, boundary expressions, storage, muxing, backpressure, or
-payload behavior.
+The shipped boundary-role hardening keeps those route boundaries tied to
+parent interface direction. The start boundary remains a scalar top-level
+input and the completion boundary remains a scalar top-level output;
+output-as-start, input-as-completion, undeclared, and wider boundary pins
+fail closed until a later contract selects interface remapping, activation
+fan-in, completion fan-out, boundary expressions, storage, muxing,
+backpressure, or payload behavior.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

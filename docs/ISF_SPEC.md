@@ -4026,13 +4026,13 @@ claimed.
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42` shipped scalar endpoint-width
 hardening for that same route family; positive wider payload movement remains
 unclaimed until a payload-width protocol is explicitly selected.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` selected the next fail-closed
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.68` shipped the next fail-closed
 hardening for that route family: route start/completion boundaries remain
-parent interface pins with fixed roles. The next code slice will require the
-start boundary to name a scalar top-level input and the completion boundary
-to name a scalar top-level output before interface remapping, activation
-fan-in, completion fan-out, boundary expressions, storage, muxing,
-ready/backpressure, or payload protocols are claimed.
+parent interface pins with fixed roles. The parser and lowerer now require
+the start boundary to name a scalar top-level input and the completion
+boundary to name a scalar top-level output before interface remapping,
+activation fan-in, completion fan-out, boundary expressions, storage,
+muxing, ready/backpressure, or payload protocols are claimed.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

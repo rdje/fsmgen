@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child boundary-role hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  transactions whose start boundary names an output, undeclared pin, or wider
+  input, and whose completion boundary names an input, undeclared pin, or
+  wider output.
+- The parser emits a targeted boundary-role diagnostic, and the lowerer keeps
+  a defensive parent-interface-role backstop.
+- No interface remapping, activation fan-in, completion fan-out, boundary
+  expressions, route continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocol, recursive actor network, or permanent
+  actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child boundary-role hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` as a doc-only selection
   leaf.

@@ -952,6 +952,42 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ start_boundary_output => 1 }),
+        qr/generated-child actor-to-actor data movement requires scalar parent interface boundaries '\(on INPUT_PIN\)' and '\(complete OUTPUT_PIN\)' in the current subset; interface remapping and boundary expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the start boundary names a top-level output',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ completion_boundary_input => 1 }),
+        qr/generated-child actor-to-actor data movement requires scalar parent interface boundaries '\(on INPUT_PIN\)' and '\(complete OUTPUT_PIN\)' in the current subset; interface remapping and boundary expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the completion boundary names a top-level input',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ start_boundary_undeclared => 1 }),
+        qr/generated-child actor-to-actor data movement requires scalar parent interface boundaries '\(on INPUT_PIN\)' and '\(complete OUTPUT_PIN\)' in the current subset; interface remapping and boundary expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the start boundary names an undeclared pin',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ completion_boundary_undeclared => 1 }),
+        qr/generated-child actor-to-actor data movement requires scalar parent interface boundaries '\(on INPUT_PIN\)' and '\(complete OUTPUT_PIN\)' in the current subset; interface remapping and boundary expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the completion boundary names an undeclared pin',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ start_width => 2 }),
+        qr/generated-child actor-to-actor data movement requires scalar parent interface boundaries '\(on INPUT_PIN\)' and '\(complete OUTPUT_PIN\)' in the current subset; interface remapping and boundary expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the start boundary is wider than one bit',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ completion_width => 2 }),
+        qr/generated-child actor-to-actor data movement requires scalar parent interface boundaries '\(on INPUT_PIN\)' and '\(complete OUTPUT_PIN\)' in the current subset; interface remapping and boundary expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the completion boundary is wider than one bit',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the sink child is triggered before the drive call',
@@ -2135,6 +2171,10 @@ ISF
         if $options->{extra_start_boundary};
     $interface_extra .= "    (output extra_done)\n"
         if $options->{extra_completion_boundary};
+    $interface_extra .= "    (output launch)\n"
+        if $options->{start_boundary_output};
+    $interface_extra .= "    (input ack)\n"
+        if $options->{completion_boundary_input};
     my $extra_start_boundary = $options->{extra_start_boundary}
         ? "    (on alt_start)\n"
         : '';
@@ -2142,12 +2182,22 @@ ISF
         ? "    (complete extra_done)\n"
         : '';
     my $run_complete = $options->{split_sink_transaction} ? 'staged' : 'done';
+    my $start_pin = $options->{start_boundary_output}
+        ? 'launch'
+        : $options->{start_boundary_undeclared}
+            ? 'missing_start'
+            : 'start';
+    my $completion_pin = $options->{completion_boundary_input}
+        ? 'ack'
+        : $options->{completion_boundary_undeclared}
+            ? 'missing_done'
+            : $run_complete;
     my $start_boundary = $options->{start_boundary_sample}
-        ? "    (on start (sample start as observed))\n"
-        : "    (on start)\n";
+        ? "    (on $start_pin (sample start as observed))\n"
+        : "    (on $start_pin)\n";
     my $completion_boundary = $options->{completion_payload_operand}
-        ? "    (complete $run_complete payload)\n"
-        : "    (complete $run_complete)\n";
+        ? "    (complete $completion_pin payload)\n"
+        : "    (complete $completion_pin)\n";
     my $split_sink_transaction = $options->{split_sink_transaction}
         ? <<'ISF'
   (transaction finish
@@ -2163,11 +2213,12 @@ ISF
   (clock clk)
   (reset (rst_n async active_low))
   (interface
-    (input start)
 ISF
+    $actor .= _interface_port_decl('input', 'start', $options->{start_width} || 1);
     $actor .= $interface_extra;
+    $actor .= _interface_port_decl('output', 'done', $options->{completion_width} || 1);
     $actor .= <<'ISF';
-    (output done))
+  )
   (imports
     (library common.packet as pkt_lib))
   (instance reader of pkt_lib.packet_reader)

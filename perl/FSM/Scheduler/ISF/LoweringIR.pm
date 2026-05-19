@@ -355,6 +355,10 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
                 my $last_route_index = $route_indices[-1];
                 my $start_boundary_count = 0;
                 my $completion_boundary_count = 0;
+                my %parent_input_widths = map { $_->{name} => ($_->{width} // 1) }
+                    @{$actor->{interface}{inputs} || []};
+                my %parent_output_widths = map { $_->{name} => ($_->{width} // 1) }
+                    @{$actor->{interface}{outputs} || []};
                 for my $clause_idx (0 .. $#$clauses) {
                     next if $clause_idx >= $first_route_index && $clause_idx <= $last_route_index;
                     my $clause = $clauses->[$clause_idx];
@@ -374,6 +378,9 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
                                 && defined($clause->[1])
                                 && !ref($clause->[1])
                                 && length($clause->[1]);
+                        confess "$context two-child data route requires scalar parent interface boundaries '(on INPUT_PIN)' and '(complete OUTPUT_PIN)' in the current subset; interface remapping and boundary expressions remain deferred\n"
+                            unless exists $parent_input_widths{$clause->[1]}
+                                && ($parent_input_widths{$clause->[1]} || 1) == 1;
                         ++$start_boundary_count;
                         next;
                     }
@@ -392,6 +399,9 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
                             && defined($clause->[1])
                             && !ref($clause->[1])
                             && length($clause->[1]);
+                    confess "$context two-child data route requires scalar parent interface boundaries '(on INPUT_PIN)' and '(complete OUTPUT_PIN)' in the current subset; interface remapping and boundary expressions remain deferred\n"
+                        unless exists $parent_output_widths{$clause->[1]}
+                            && ($parent_output_widths{$clause->[1]} || 1) == 1;
                     ++$completion_boundary_count;
                 }
                 confess "$context two-child data route requires exactly one start boundary and exactly one completion boundary around the route in the current subset; activation fan-in and completion fan-out remain deferred\n"
