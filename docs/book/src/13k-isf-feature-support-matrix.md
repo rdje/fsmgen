@@ -207,6 +207,18 @@ plus strict HDL generation without claiming generated ATL children, generated
 ATL tops, actor-to-pin egress, bidirectional pin movement, route mux/storage,
 fan-in/fan-out, CDC, ready/backpressure, or permanent actor grouping.
 
+The ATL scalar pin-egress fixture is file-backed in the `isf` regression tier
+for moving information from an actor in the network to the enclosing actor
+boundary. It uses `isf/atl_pin_egress_pipeline.isf` to declare one static
+producer actor, a top-level output pin `result`, a named drive body with
+`(pins.result producer.payload)`, and one transaction drive call. It proves
+the generated actor source handoff input, existing top-level output sink,
+`actor_network.data_movements[]` metadata, empty association/group schedule
+arrays, strict schedule JSON parity, scheduled `.fsm` structure, and plain
+plus strict HDL generation without claiming generated ATL children, generated
+ATL tops, bidirectional pin movement, route mux/storage, fan-in/fan-out, CDC,
+ready/backpressure, or permanent actor grouping.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

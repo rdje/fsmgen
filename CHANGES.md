@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL pin egress fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`.
+- Added `isf/atl_pin_egress_pipeline.isf` and
+  `t/1327-isf-atl-pin-egress-fixture-coverage.t`.
+- The fixture proves one bounded scalar actor-to-top-level output pin route
+  using existing drive-body `(sink source)` syntax: generated actor source
+  handoff input `producer_payload`, existing top-level output sink `result`,
+  `actor_network.data_movements[]` route metadata, strict schedule JSON
+  parity, scheduled `.fsm` structure, and plain/strict HDL reachability.
+- Broad ISF gate passed with `Files=233, Tests=1366`.
+- Synchronized the public contract tested-by metadata, CI tier audit, ISF
+  spec, downstream handoff, fixture matrix, mdBook, roadmap board, task tree,
+  memory, live achievement status, and development notes.
+- The active ATL frontier advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`
+  for selecting the next bounded ATL behavior after the scalar boundary
+  fixture ladder before code.
+
 ### R14 — ATL pin egress fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7` before adding fixture
   source or tests.

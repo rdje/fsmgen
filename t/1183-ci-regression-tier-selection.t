@@ -78,6 +78,8 @@ subtest 'list mode advertises concrete quick and ISF test tiers' => sub {
     like($isf_block || '', qr/t\/1325-isf-atl-data-route-fixture-coverage\.t/, 'ISF tier includes the ATL data-route fixture coverage');
     unlike($quick_block || '', qr/t\/1326-isf-atl-pin-ingress-fixture-coverage\.t/, 'quick tier does not include the broader ATL pin-ingress fixture');
     like($isf_block || '', qr/t\/1326-isf-atl-pin-ingress-fixture-coverage\.t/, 'ISF tier includes the ATL pin-ingress fixture coverage');
+    unlike($quick_block || '', qr/t\/1327-isf-atl-pin-egress-fixture-coverage\.t/, 'quick tier does not include the broader ATL pin-egress fixture');
+    like($isf_block || '', qr/t\/1327-isf-atl-pin-egress-fixture-coverage\.t/, 'ISF tier includes the ATL pin-egress fixture coverage');
 };
 
 subtest 'dry-run modes select the expected command families' => sub {
@@ -117,6 +119,7 @@ subtest 'dry-run modes select the expected command families' => sub {
     like($isf->{stdout}, qr/t\/1324-isf-atl-fixture-coverage\.t/, 'ISF dry-run includes ATL temporary trigger-batch fixture coverage');
     like($isf->{stdout}, qr/t\/1325-isf-atl-data-route-fixture-coverage\.t/, 'ISF dry-run includes ATL data-route fixture coverage');
     like($isf->{stdout}, qr/t\/1326-isf-atl-pin-ingress-fixture-coverage\.t/, 'ISF dry-run includes ATL pin-ingress fixture coverage');
+    like($isf->{stdout}, qr/t\/1327-isf-atl-pin-egress-fixture-coverage\.t/, 'ISF dry-run includes ATL pin-egress fixture coverage');
     unlike($isf->{stdout}, qr/mdBook build/, '--no-book suppresses book build');
 
     my $full = run_ci('full', '--dry-run');

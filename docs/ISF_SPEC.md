@@ -648,6 +648,31 @@ movement, route mux/storage, peer events, trigger/data coupling, wider
 payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or
 permanent actor grouping.
 
+The scalar ATL pin-egress fixture is shipped as
+[isf/atl_pin_egress_pipeline.isf](../isf/atl_pin_egress_pipeline.isf). It uses
+one direct static actor instance, one existing top-level output pin, one named
+drive body, and one transaction drive call:
+
+```lisp
+(drive publish_result
+  (pins.result producer.payload))
+```
+
+The fixture emits only `atl_pin_egress_pipeline.fsm`, exposes the generated
+actor source handoff input `producer_payload`, preserves `result` as the
+top-level output sink, and reports one `actor_network.data_movements[]` entry
+with `kind: "scalar_actor_to_pin_handoff"`, `source: "external_handoff"`,
+`sink: "top_level_pin"`, `route_lifetime: "drive_call_cycle"`, and `storage:
+"none"`. It keeps `actor_network.association_schedules[]` and
+`group_schedules[]` empty because this is a drive-activated data route, not a
+trigger-batch association. The fixture is backed by
+[t/1327-isf-atl-pin-egress-fixture-coverage.t](../t/1327-isf-atl-pin-egress-fixture-coverage.t)
+for strict schedule JSON parity, scheduled `.fsm` structure, and plain plus
+strict HDL generation. It deliberately does not claim generated ATL child
+artifacts, generated ATL tops, bidirectional pin movement, route mux/storage,
+peer events, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
+ready/backpressure, compact aliases, or permanent actor grouping.
+
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape
@@ -3406,6 +3431,7 @@ Representative shipped fixtures:
 - [isf/atl_trigger_batch_pipeline.isf](../isf/atl_trigger_batch_pipeline.isf)
 - [isf/atl_data_route_pipeline.isf](../isf/atl_data_route_pipeline.isf)
 - [isf/atl_pin_ingress_pipeline.isf](../isf/atl_pin_ingress_pipeline.isf)
+- [isf/atl_pin_egress_pipeline.isf](../isf/atl_pin_egress_pipeline.isf)
 
 The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
@@ -3508,6 +3534,17 @@ inside the shipped scalar pin-to-actor subset and does not claim generated ATL
 child artifacts, generated ATL tops, actor-to-pin egress, route mux/storage,
 trigger/data coupling, wider payloads, fan-in/fan-out, CDC, or permanent actor
 grouping.
+The [isf/atl_pin_egress_pipeline.isf](../isf/atl_pin_egress_pipeline.isf)
+fixture now has file-backed ATL scalar pin-egress coverage for one direct
+static actor instance, one generated actor source handoff input, one drive-body
+`(pins.result producer.payload)` route, one transaction drive call, existing
+top-level output sink `result`, `actor_network.data_movements[]` metadata,
+empty association/group schedule arrays, strict schedule JSON parity,
+scheduled `.fsm` structure, and plain plus strict HDL generation. It stays
+inside the shipped scalar actor-to-pin subset and does not claim generated ATL
+child artifacts, generated ATL tops, bidirectional pin movement, route
+mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC, or
+permanent actor grouping.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a
@@ -3757,6 +3794,7 @@ Focused tests:
 - [t/1324-isf-atl-fixture-coverage.t](../t/1324-isf-atl-fixture-coverage.t)
 - [t/1325-isf-atl-data-route-fixture-coverage.t](../t/1325-isf-atl-data-route-fixture-coverage.t)
 - [t/1326-isf-atl-pin-ingress-fixture-coverage.t](../t/1326-isf-atl-pin-ingress-fixture-coverage.t)
+- [t/1327-isf-atl-pin-egress-fixture-coverage.t](../t/1327-isf-atl-pin-egress-fixture-coverage.t)
 
 ## 12. Explicitly Deferred
 

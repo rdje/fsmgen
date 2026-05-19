@@ -1,0 +1,14 @@
+(actor atl_pin_egress_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output result)
+    (output done))
+  (instance producer of packet_reader)
+  (drive publish_result
+    (pins.result producer.payload))
+  (transaction run
+    (on start)
+    (drive publish_result)
+    (complete done)))

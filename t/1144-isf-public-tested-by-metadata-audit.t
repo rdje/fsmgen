@@ -219,6 +219,7 @@ my $expected_tested_by = [
     't/1324-isf-atl-fixture-coverage.t',
     't/1325-isf-atl-data-route-fixture-coverage.t',
     't/1326-isf-atl-pin-ingress-fixture-coverage.t',
+    't/1327-isf-atl-pin-egress-fixture-coverage.t',
 ];
 
 subtest 'direct ISF tested_by metadata is exact and valid' => sub {

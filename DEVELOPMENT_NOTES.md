@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL pin-egress fixture closes the scalar boundary ladder
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8` promotes the inverse of the pin-ingress
+  fixture and proves actor endpoint information can be routed to an existing
+  top-level output pin in the shipped scalar subset.
+- The fixture keeps `result` as the authored output sink and exposes only the
+  actor endpoint as a generated source handoff input named `producer_payload`.
+- With actor-to-actor, pin-to-actor, and actor-to-pin fixtures now promoted,
+  the next ATL selection should move beyond scalar boundary fixture coverage
+  unless review finds a documentation or compatibility gap.
 ## 2026-05-19: ATL next fixture should show network egress
 - After promoting top-level pin ingress coverage, the next fixture should
   prove the inverse boundary movement: actor endpoint information driving a

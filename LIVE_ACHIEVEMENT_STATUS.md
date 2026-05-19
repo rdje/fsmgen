@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL pin egress fixture shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`.
+- Added the file-backed `isf/atl_pin_egress_pipeline.isf` fixture and
+  `t/1327-isf-atl-pin-egress-fixture-coverage.t`.
+- The fixture proves the bounded scalar actor-to-top-level output pin route
+  through scheduled `.fsm` structure, strict schedule JSON parity, generated
+  actor source handoff input, `actor_network.data_movements[]` metadata, empty
+  association/group schedules, and plain/strict HDL generation.
+- Broad ISF gate passed with `Files=233, Tests=1366`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`.
+
 ## 2026-05-19: R14 — ATL pin egress fixture selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`.
 - Selected `isf/atl_pin_egress_pipeline.isf` for the next fixture slice,

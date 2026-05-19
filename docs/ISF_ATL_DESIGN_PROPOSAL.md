@@ -335,13 +335,14 @@ generated ATL tops, actor-to-pin egress, bidirectional pin movement, route
 mux/storage, trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
 ready/backpressure, compact aliases, or permanent actor grouping.
 
-The next selected ATL fixture is `isf/atl_pin_egress_pipeline.isf`. It stays
-inside the shipped scalar actor-to-top-level output pin movement subset: one
-direct static actor instance, one existing top-level output pin `result`, one
-named drive body with `(pins.result producer.payload)`, and one top-level
-transaction drive call. The selected fixture will prove the generated actor
-source handoff input `producer_payload`, existing top-level output sink
-`result`, `actor_network.data_movements[]` route metadata with kind
+The scalar pin-egress ATL fixture is shipped as
+`isf/atl_pin_egress_pipeline.isf`. It stays inside the shipped scalar
+actor-to-top-level output pin movement subset: one direct static actor
+instance, one existing top-level output pin `result`, one named drive body
+with `(pins.result producer.payload)`, and one top-level transaction drive
+call. The fixture proves the generated actor source handoff input
+`producer_payload`, existing top-level output sink `result`,
+`actor_network.data_movements[]` route metadata with kind
 `scalar_actor_to_pin_handoff`, strict schedule JSON parity, and plain/strict
 HDL reachability without claiming generated ATL children, generated ATL tops,
 bidirectional pin movement, route mux/storage, trigger/data coupling, wider
