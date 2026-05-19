@@ -111,6 +111,14 @@ my @required_examples = (
     'FIFO controller fixture',
     'FIFO library fixture',
     'ATL temporary trigger-batch fixture',
+    'the shipped two-child scalar actor-to-actor route',
+    'actor-to-actor route between two resolved children',
+    'one named drive-call cycle',
+    'Generated-child actor-to-actor route support is intentionally small',
+    'generated handoffs, and one named',
+    'route drive unparameterized',
+    'route drive call remains',
+    'argument-free: `(drive',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',
@@ -229,6 +237,9 @@ my @required_non_claims = (
     'snapshot-vs-live binding timing selection',
     'Nested stages',
     'Temporal contracts beyond the top-level bounded eventual subset',
+    'remapping or reuse',
+    'parameterized route drive definitions',
+    'route drive-call actual arguments',
     'Domain-qualified generated-do post-do await_any',
     'switch-contained bound generated-do post-do await_any',
     'new spawn after the do before drain',
@@ -243,6 +254,18 @@ for my $non_claim (@required_non_claims) {
         "matrix keeps explicit non-claim: $non_claim",
     );
 }
+
+unlike(
+    $matrix,
+    qr{Actor-to-actor generated-child routes, multi-child data wiring, route\s+mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols\s+remain backlog\.},
+    'matrix no longer treats all actor-to-actor generated-child routes as backlog',
+);
+
+unlike(
+    $matrix,
+    qr{positive multi-child ATL top\s+scheduling remains backlog},
+    'matrix no longer claims positive multi-child ATL top scheduling remains backlog',
+);
 
 my $route_terms_section = markdown_heading_section(
     $composition,

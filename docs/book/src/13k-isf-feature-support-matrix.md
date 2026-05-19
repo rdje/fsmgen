@@ -131,26 +131,36 @@ generated-do post-do await_any, and new spawn after the do before drain
 remain fail-closed.
 
 ATL generated-child matrix note: the broad backlog wording for
-data-route/generated-child coupling excludes the shipped pin exceptions.
+data-route/generated-child coupling excludes the shipped pin exceptions and
+the shipped two-child scalar actor-to-actor route.
 
-The current exceptions are exactly one scalar top-level input pin routed to
-one resolved child input through the generated ATL top, using
-`(worker.payload pins.payload)` in
-`isf/atl_resolved_child_pin_ingress_pipeline.isf`, and exactly one scalar
+The current generated-child data-route exceptions are exactly one scalar
+top-level input pin routed to one resolved child input through the generated
+ATL top, using `(worker.payload pins.payload)` in
+`isf/atl_resolved_child_pin_ingress_pipeline.isf`; exactly one scalar
 resolved child output routed to one top-level output pin through the
 generated ATL top, using `(pins.result worker.payload)` in
-`isf/atl_resolved_child_pin_egress_pipeline.isf`.
+`isf/atl_resolved_child_pin_egress_pipeline.isf`; and exactly one scalar
+actor-to-actor route between two resolved children through the generated ATL
+top, using `(writer.payload reader.payload)` in
+`isf/atl_two_child_data_pipeline.isf`.
 
-Route evidence remains in `actor_network.data_movements[]`; generated-top
-discovery remains in `actor_network.generated_tops[]`.
+Route evidence remains in `actor_network.data_movements[]`. Generated-top
+discovery remains in `actor_network.generated_tops[]`, including
+`children[]` wiring evidence for generated-child routes.
 
-Actor-to-actor generated-child routes, multi-child data wiring, route
-mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols
-remain backlog.
+Generated-child actor-to-actor route support is intentionally small. It uses
+one scalar source child output, one scalar sink child input, deterministic
+generated handoffs, and one named drive-call cycle. Generated-handoff
+remapping or reuse, multi-route data wiring, route mux/storage,
+fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+parameterized route drive definitions, route drive-call actual arguments,
+recursive actor networks, and permanent actor grouping remain outside the
+shipped subset.
 
-The reserved generated-child actor-to-actor route shape now fails closed with
-a targeted diagnostic when it is coupled to qualified actor trigger/event
-handoffs.
+Malformed or wider generated-child actor-to-actor route shapes still fail
+closed with targeted diagnostics before FSMGen infers remapping, storage,
+muxing, payload, fan-in/fan-out, or backpressure behavior.
 
 ## Examples By Family
 
@@ -380,10 +390,10 @@ preservation, generated top wiring, plain plus strict HDL generation, missing
 child output failure, and pre-event drive-order failure for that bounded
 shape.
 
-Generated-child actor-to-actor data movement across two resolved children now
-fails closed with a targeted diagnostic when the parent transaction also uses
-qualified actor trigger/event handoffs; positive multi-child ATL top
-scheduling remains backlog.
+Generated-child actor-to-actor data movement across two resolved children is
+now shipped only for the selected one-scalar, one-drive-call,
+trigger/event-ordered shape below. Wider shapes still fail closed before
+broader multi-child routing or scheduling is inferred.
 
 The first positive two-child generated top is shipped as
 `isf/atl_two_child_pipeline.isf`: two resolved children, sequential
@@ -488,6 +498,19 @@ Output-as-start, input-as-completion, undeclared, and wider boundary pins
 fail closed before any interface remapping, activation fan-in, completion
 fan-out, boundary expression, storage, muxing, backpressure, or payload
 contract.
+
+The shipped generated-handoff collision hardening keeps deterministic route
+handoff names owned by FSMGen. Parent declarations that collide with selected
+trigger, event, data, or named-drive request handoffs fail closed in parser
+coverage for normal `.isf` source and lowerer coverage for malformed
+scheduler-facing metadata.
+
+The shipped route drive argument hardening keeps the generated-child
+actor-to-actor route drive unparameterized. The route drive call remains
+argument-free: `(drive (forward_payload value) ...)` and
+`(drive forward_payload value)` remain outside this subset before drive
+actual binding, expression movement, payload protocols, storage, muxing,
+fan-in/fan-out, or backpressure behavior is inferred.
 
 ### Actor, Interface, Storage, And Timing
 
@@ -856,7 +879,11 @@ does not exist:
   event, data, or named-drive request handoff names fail closed with focused
   parser-owned coverage for normal `.isf` source and lowerer-owned coverage
   for malformed or mutated scheduler-facing actor metadata. This is not a new
-  source feature.
+  source feature. Route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocols, route drive parameters, route
+  drive-call actual arguments, recursive actor networks, and permanent actor
+  grouping also remain outside the shipped generated-child actor-to-actor
+  route subset.
 - Direct `(on ...)` activation-site `(params ...)` is unsupported; static
   specialization belongs to spawn, generated blocking `do`, and rule-trigger
   generated activation sites.

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL book matrix route status is audit-backed
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82` fixes the mdBook feature-support
+  matrix drift where older text still described all actor-to-actor
+  generated-child routes as backlog.
+- The matrix now matches the dedicated composition chapter: the shipped
+  generated-child data-route exceptions are exactly the two one-child
+  pin-route cases and the one two-child scalar actor-to-actor route.
+- The audit now checks for the exact shipped markers and for absence of the
+  old backlog-only wording, giving the book a mechanical guard against this
+  particular truth drift.
+
 ## 2026-05-19: ATL book matrix needs generated-child route truth sync
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81` selects a documentation/audit slice
   because the dedicated composition chapter is accurate, but the mdBook

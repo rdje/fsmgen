@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL book matrix route status synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`.
+- Synchronized the mdBook feature-support matrix with the shipped
+  generated-child actor-to-actor route and explicit route-term boundaries.
+- The matrix now says the shipped generated-child data-route exceptions are
+  one scalar pin-ingress route, one scalar pin-egress route, and one scalar
+  actor-to-actor route between two resolved children through the generated ATL
+  top.
+- The matrix keeps generated-handoff remapping/reuse, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocols,
+  route drive parameters, route drive-call actual arguments, recursive actor
+  networks, and permanent actor grouping outside the shipped subset.
+- The mdBook audit now requires the corrected matrix markers and rejects the
+  older backlog-only wording.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, or route capability changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83`.
+
 ### R14 — ATL book matrix truth sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81` as a doc-only selection
   leaf.

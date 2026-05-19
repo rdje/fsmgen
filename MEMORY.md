@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL book matrix route status synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83`.
+- The mdBook feature-support matrix now matches the dedicated composition
+  chapter for generated-child data routes: one scalar pin-ingress route, one
+  scalar pin-egress route, and one scalar actor-to-actor route between two
+  resolved children through the generated ATL top.
+- The matrix now states the actor-to-actor route's one named drive-call
+  cycle, deterministic generated handoffs, `data_movements[]` evidence, and
+  `generated_tops[].children[]` generated-top wiring evidence.
+- The mdBook audit now requires those matrix markers and rejects the older
+  backlog-only wording. No source syntax, parser/lowerer behavior, report
+  key, generated artifact shape, runtime behavior, or route capability
+  changed.
+
 ## 2026-05-19: ATL book matrix truth sync selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81` as a documentation
   truth-sync selection leaf.
