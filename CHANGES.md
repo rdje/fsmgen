@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child repeated-wait hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50` to harden repeated
+  route-child event-wait diagnostics around generated-child actor-to-actor
+  route wiring.
+- The next slice will keep the shipped route to one source-child event wait
+  and one sink-child event wait while rejecting extra source-child or
+  sink-child event waits in the same route sequence.
+- No new ATL syntax, report key, generated artifact shape, event fan-in or
+  fan-out, repeated wait sequencing, route mux/storage, CDC/reset remapping,
+  ready/backpressure, payload protocol, recursive actor network, or permanent
+  actor grouping behavior is selected.
+
 ### R14 — ATL generated-child repeated-trigger hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`.
 - Added focused generated-child actor-to-actor data-route rejection coverage

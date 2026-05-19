@@ -1830,6 +1830,12 @@ source-child trigger and one sink-child trigger. Extra route-child triggers
 fail closed; downstream producers should not assume repeated activation,
 restart, pending-request merging, trigger fan-in/fan-out, or multi-activation
 scheduling until FSMGen publishes an explicit contract for those behaviors.
+The next selected repeated-wait hardening keeps the same route sequence to
+one source-child event wait and one sink-child event wait. Downstream
+producers should not emit extra route-child waits or assume event
+fan-in/fan-out, repeated wait sequencing, child replay, route-level wait
+storage, muxing, backpressure, or payload insertion until FSMGen publishes an
+explicit contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

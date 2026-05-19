@@ -347,6 +347,11 @@ The shipped repeated-trigger hardening keeps the route to one source-child
 trigger and one sink-child trigger: extra route-child triggers fail closed
 before any repeated activation, restart, pending-request merging, trigger
 fan-in/fan-out, or multi-activation scheduling contract.
+The next selected repeated-wait hardening keeps the same route to one
+source-child event wait and one sink-child event wait: extra route-child
+waits remain fail-closed before any event fan-in/fan-out, repeated wait
+sequencing, route-level wait storage, muxing, backpressure, or payload
+contract.
 
 ### Actor, Interface, Storage, And Timing
 

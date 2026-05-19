@@ -920,6 +920,12 @@ contain only one source-child trigger and one sink-child trigger; extra
 route-child triggers fail closed until explicit restart, pending-request,
 trigger fan-in/fan-out, or multi-activation scheduling semantics are
 selected.
+The next selected repeated-wait hardening narrows the event-coupling backlog
+by requiring the same route sequence to contain only one source-child event
+wait and one sink-child event wait; extra route-child waits remain
+fail-closed until explicit event fan-in/fan-out, repeated wait sequencing,
+route-level wait storage, muxing, ready/backpressure, or payload semantics
+are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

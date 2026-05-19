@@ -914,6 +914,11 @@ source-child trigger and one sink-child trigger. Extra triggers targeting
 either route child fail closed before FSMGen claims repeated activation,
 restart, pending-request merging, trigger fan-in/fan-out, or multi-activation
 scheduling behavior.
+The next selected hardening keeps the same route sequence to one source-child
+event wait and one sink-child event wait. Extra waits targeting either route
+child must fail closed before FSMGen claims event fan-in/fan-out, repeated
+wait sequencing, child replay, route-level wait storage, muxing,
+ready/backpressure, or payload behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

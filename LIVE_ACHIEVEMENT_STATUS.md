@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child repeated-wait hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50`.
+- `.9.50` is selected to keep the generated-child actor-to-actor route to
+  one source-child event wait and one sink-child event wait in the selected
+  route sequence, with focused fail-closed coverage for extra waits.
+- Event fan-in/fan-out, repeated wait sequencing, route mux/storage,
+  CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
+  networks, and permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child repeated-trigger hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`.
 - The active ATL frontier advances to

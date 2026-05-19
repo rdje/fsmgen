@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child repeated-wait hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50`.
+- `.9.50` will add focused fail-closed coverage for extra source-child and
+  sink-child event waits in the same generated-child actor-to-actor route
+  sequence.
+- No event fan-in/fan-out, repeated wait sequencing, route mux/storage,
+  CDC/reset remapping, ready/backpressure, payload protocol, recursive actor
+  network, or permanent actor grouping behavior is selected.
+
 ## 2026-05-19: ATL generated-child repeated-trigger hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49`.

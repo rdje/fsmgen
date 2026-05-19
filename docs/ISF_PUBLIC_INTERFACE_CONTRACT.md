@@ -231,6 +231,11 @@ unchanged: generated-child actor-to-actor routes remain one source trigger
 and one sink trigger per selected sequence, and extra route-child triggers
 fail closed until a later contract explicitly adds repeated-activation
 metadata.
+The next selected repeated-wait hardening keeps that same public surface
+unchanged: generated-child actor-to-actor routes remain one source event wait
+and one sink event wait per selected sequence, and extra route-child waits
+stay fail-closed until a later contract explicitly adds event fan-in/fan-out
+or repeated wait sequencing metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

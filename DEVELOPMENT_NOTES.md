@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child routes should not repeat route-child event waits yet
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49` selects repeated event-wait
+  hardening as the next generated-child route boundary.
+- Extra waits from the source or sink child in the same actor-to-actor route
+  sequence would imply event fan-in/fan-out, repeated acknowledgement
+  sequencing, child restart/replay, or route-level wait storage. None of
+  those has been selected for ATL generated-child wiring.
+- The next code leaf should therefore lock extra source/sink child waits as
+  diagnostics while leaving event fan-in/fan-out, storage, muxing,
+  backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL repeated route-child triggers should diagnose before trigger-batch fallback
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48` adds source-level diagnostics for
   generated-child actor-to-actor route sequences that contain an extra source
