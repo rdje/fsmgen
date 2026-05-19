@@ -355,6 +355,10 @@ The shipped same-parent-transaction hardening keeps that route inside one
 parent transaction: split route clauses remain fail-closed before any route
 continuation, pending handoff storage, transaction rendezvous,
 cross-transaction scheduling, muxing, backpressure, or payload contract.
+The next selected sink-trigger ordering hardening keeps the data drive call
+before the sink child trigger: sink-before-drive route clauses remain
+fail-closed before any speculative sink activation, delayed payload delivery,
+route storage, muxing, backpressure, or payload contract.
 
 ### Actor, Interface, Storage, And Timing
 

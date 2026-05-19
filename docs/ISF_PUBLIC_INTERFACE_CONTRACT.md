@@ -240,6 +240,11 @@ The shipped same-parent-transaction hardening also keeps the public surface
 unchanged: the selected route sequence must remain inside one parent
 transaction, and split route clauses fail closed until a later contract
 explicitly adds continuation or cross-transaction route scheduling metadata.
+The next selected sink-trigger ordering hardening keeps that public surface
+unchanged as well: the data drive call must occur before the sink child
+trigger, and sink-before-drive clauses stay fail-closed until a later
+contract explicitly adds storage, backpressure, or delayed payload delivery
+metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

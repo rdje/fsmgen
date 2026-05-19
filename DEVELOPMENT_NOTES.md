@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL sink triggers must remain after the data drive call
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53` selects sink-trigger ordering as
+  the next generated-child route boundary.
+- In the current route contract, the parent first triggers the source child,
+  waits for the source event, drives the scalar handoff, then triggers and
+  waits for the sink child. Triggering the sink before the drive call would
+  imply speculative sink activation, delayed payload delivery, route storage,
+  or a backpressure/payload protocol. None of those has been selected.
+- The next code leaf should therefore lock sink-before-drive route sequences
+  as diagnostics while leaving route continuation, storage, muxing,
+  backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL split parent-transaction routes fail before continuation semantics
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52` turns the selected
   same-parent-transaction boundary into parser and lowerer checks for the

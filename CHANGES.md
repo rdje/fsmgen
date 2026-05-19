@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child sink-trigger order hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.54` to harden sink-trigger
+  ordering around generated-child actor-to-actor route wiring.
+- The next slice will keep the shipped route sequence ordered so the data
+  drive call occurs before the sink child trigger, rejecting sink-trigger
+  before drive-call shapes before speculative sink activation, delayed
+  payload delivery, route continuation, or pending handoff storage behavior
+  is claimed.
+- No new ATL syntax, report key, generated artifact shape, route storage,
+  muxing, CDC/reset remapping, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior is selected.
+
 ### R14 — ATL generated-child route transaction-owner hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`.
 - Added focused generated-child actor-to-actor data-route rejection coverage

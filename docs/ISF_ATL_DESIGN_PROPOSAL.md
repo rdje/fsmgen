@@ -1121,6 +1121,12 @@ multiple parent transactions before any route continuation, pending handoff
 storage, transaction rendezvous, cross-transaction scheduling, muxing,
 ready/backpressure, or payload behavior is claimed.
 
+The next selected sink-trigger ordering hardening keeps the data drive call
+before the sink child trigger. Focused coverage must reject a route sequence
+that triggers the sink child before the data drive call, before any
+speculative sink activation, delayed payload delivery, route storage, muxing,
+ready/backpressure, or payload protocol behavior is claimed.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

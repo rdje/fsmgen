@@ -924,6 +924,11 @@ inside one parent transaction. Route clauses split across multiple parent
 transactions fail closed before FSMGen claims route continuation, pending
 handoff storage, transaction rendezvous, cross-transaction scheduling,
 muxing, ready/backpressure, or payload behavior.
+The next selected sink-trigger ordering hardening keeps the data drive call
+before the sink child trigger. A sink trigger that appears before the drive
+call remains fail-closed before FSMGen claims speculative sink activation,
+delayed payload delivery, route storage, muxing, ready/backpressure, or
+payload protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
