@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL pin ingress fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` before adding fixture
+  source or tests.
+- Selected `isf/atl_pin_ingress_pipeline.isf` as the next ATL fixture: one
+  direct static actor instance, one top-level input pin `payload`, one named
+  drive body with `(consumer.payload pins.payload)`, and one top-level
+  transaction drive call.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`.
+
 ### R14 — ATL data-route fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`.
 - Added `isf/atl_data_route_pipeline.isf` and

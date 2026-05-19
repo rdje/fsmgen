@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL pin ingress fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`.
+- Selected `isf/atl_pin_ingress_pipeline.isf` for the next fixture slice,
+  using one static actor, one top-level input pin source, one scalar
+  pin-to-actor drive-body route, and one transaction drive call.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`.
+
 ## 2026-05-19: R14 — ATL data-route fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`.
 - Added the file-backed `isf/atl_data_route_pipeline.isf` fixture and

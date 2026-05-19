@@ -761,6 +761,18 @@ without claiming generated children, route mux/storage, trigger/data coupling,
 wider payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent
 grouping.
 
+The next selected ATL fixture is `isf/atl_pin_ingress_pipeline.isf`. It will
+use the already shipped scalar top-level input-pin to actor movement surface:
+one direct static actor, one top-level input pin `payload`, one named drive
+body with `(consumer.payload pins.payload)`, and one transaction drive call.
+The fixture is selected to prove the existing top-level pin as the source,
+generated actor handoff output `consumer_payload`,
+`actor_network.data_movements[]` route metadata with kind
+`scalar_pin_to_actor_handoff`, strict schedule JSON, and plain plus strict HDL
+reachability without claiming actor-to-pin egress, bidirectional pin movement,
+generated children, route mux/storage, trigger/data coupling, wider payloads,
+fan-in/fan-out, CDC, ready/backpressure, or permanent grouping.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names the current

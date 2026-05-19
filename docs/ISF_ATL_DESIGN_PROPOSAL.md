@@ -322,6 +322,19 @@ generated ATL tops, route mux/storage, trigger/data coupling, wider payloads,
 fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
 
+The next selected ATL fixture is `isf/atl_pin_ingress_pipeline.isf`. It stays
+inside the shipped scalar top-level input-pin to actor movement subset: one
+direct static actor instance, one existing top-level input pin `payload`, one
+named drive body with `(consumer.payload pins.payload)`, and one top-level
+transaction drive call. The selected fixture will prove the top-level pin
+source, generated actor handoff output `consumer_payload`,
+`actor_network.data_movements[]` route metadata with kind
+`scalar_pin_to_actor_handoff`, strict schedule JSON parity, and plain/strict
+HDL reachability without claiming generated ATL children, generated ATL tops,
+actor-to-pin egress, bidirectional pin movement, route mux/storage,
+trigger/data coupling, wider payloads, fan-in/fan-out, CDC,
+ready/backpressure, compact aliases, or permanent actor grouping.
+
 ## Endpoints
 
 ATL needs a reviewable endpoint vocabulary:

@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -316,9 +316,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.4: add ATL data-route fixture`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the next ATL temporary-association behavior after the scalar data-route fixture.`
   Acceptance: `Review the shipped trigger-batch association report, scalar data-route fixture, actor-event wait, actor-transaction trigger, pin movement, and static group surfaces; choose one next bounded behavior-bearing or design-clarification slice before code. Candidate directions include coupling temporary trigger batches with peer event waits, adding fixture coverage for pin movement, selecting generated child artifact boundaries, tightening group_schedules[] compatibility/deprecation policy, or selecting a richer scheduled data-route association. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.5: select ATL pin ingress fixture`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`
+  Status: `active`
+  Goal: `Promote a realistic ATL top-level input-pin to actor fixture.`
+  Acceptance: `Add isf/atl_pin_ingress_pipeline.isf as a bounded network-boundary data-movement fixture using already shipped ATL source syntax: one direct static actor instance, one scalar top-level input pin named payload, one named drive body with exactly one '(consumer.payload pins.payload)' pin-to-actor endpoint pair, and one top-level transaction drive call. The fixture must emit only atl_pin_ingress_pipeline.fsm, preserve payload as the existing top-level input source, expose the generated actor handoff output consumer_payload, report one actor_network.data_movements[] entry with kind scalar_pin_to_actor_handoff, source top_level_pin, sink external_handoff, route_lifetime drive_call_cycle, and storage none, keep actor_network.association_schedules[] and group_schedules[] empty, and prove strict schedule JSON parity plus plain/strict HDL reachability. Do not claim generated ATL child artifacts, generated ATL tops, actor-to-pin egress, bidirectional pin movement, route mux/storage, peer events, trigger/data coupling, wider payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor grouping.`
   Verification: `pending`
   Commit: `pending`
 
@@ -326,7 +333,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` | `active` | `.9.4` promoted the selected scalar data-route fixture; the next ATL behavior must be selected before any further implementation. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6` | `active` | `.9.5` selected the next realistic fixture as a top-level input-pin to actor handoff using already shipped ATL pin movement. |
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -447,6 +454,61 @@ Explicit non-claims:
 - no route mux or inserted storage;
 - no peer events, trigger/data coupling, fan-in/fan-out, wider payloads, CDC,
   ready/backpressure, compact aliases, or permanent actor grouping.
+
+## Selected Next ATL Pin-Ingress Fixture
+
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` selects the next fixture leaf as a
+network-boundary data movement fixture. The goal is to demonstrate movement
+from a top-level actor pin into an actor in the network while staying inside
+the already shipped scalar pin-to-actor handoff subset.
+
+Selected next implementation leaf:
+
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`
+
+Selected file:
+
+- `isf/atl_pin_ingress_pipeline.isf`
+
+Selected source shape:
+
+```lisp
+(actor atl_pin_ingress_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (input payload)
+    (output done))
+  (instance consumer of packet_writer)
+  (drive feed_consumer
+    (consumer.payload pins.payload))
+  (transaction run
+    (on start)
+    (drive feed_consumer)
+    (complete done)))
+```
+
+Selected coverage:
+
+- one scheduled parent artifact: `atl_pin_ingress_pipeline.fsm`;
+- existing top-level input source pin: `payload`;
+- generated actor handoff output: `consumer_payload`;
+- one `actor_network.data_movements[]` route with kind
+  `scalar_pin_to_actor_handoff`, `source: top_level_pin`, `sink:
+  external_handoff`, `route_lifetime: drive_call_cycle`, and `storage: none`;
+- empty `actor_network.association_schedules[]` and `group_schedules[]`
+  because this route is drive-activated, not a trigger-batch association;
+- strict schedule JSON parity plus plain and strict HDL reachability.
+
+Explicit non-claims:
+
+- no generated ATL child `.fsm`;
+- no generated ATL top;
+- no actor-to-pin egress or bidirectional pin movement in this fixture;
+- no route mux/storage, peer event, trigger/data coupling, wider payload,
+  fan-in/fan-out, CDC, ready/backpressure, compact alias, or permanent actor
+  grouping behavior.
 
 ## Selected First ATL Fixture
 
@@ -842,6 +904,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `prove -Iperl t/1322-isf-actor-network-static.t t/1324-isf-atl-fixture-coverage.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t`; `prove -Iperl t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_trigger_batch_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `canonical actor_network.association_schedules[] report metadata shipped for temporary trigger batches while group_schedules[] remains a compatibility view` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a realistic scalar actor-to-actor data-route fixture before source/test implementation` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1325-isf-atl-data-route-fixture-coverage.t`; `prove -Iperl t/1325-isf-atl-data-route-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_data_route_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `realistic scalar actor-to-actor data-route fixture promoted; strict schedule JSON plus HDL coverage prove generated parent handoff ports and data_movements[] metadata; broad ISF gate passes with Files=231, Tests=1360` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a top-level input-pin to actor ingress fixture before source/test implementation` |
 
 ## Commit Log
 
@@ -881,6 +944,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.2: add ATL association reports` | `ships canonical association_schedules[] metadata while preserving group_schedules[] compatibility` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.3: select ATL data-route fixture` | `selects a scalar actor-to-actor data-route fixture using shipped drive-body movement syntax` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.4: add ATL data-route fixture` | `promotes the scalar actor-to-actor data-route fixture with strict schedule JSON and HDL coverage` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.5: select ATL pin ingress fixture` | `selects the top-level input-pin to actor ingress fixture using shipped pin movement syntax` |
 
 ## Changelog
 
@@ -1068,3 +1132,11 @@ Current proposal summary:
   association/group schedule arrays, and plain/strict HDL reachability. The
   broad ISF gate passed with `Files=231, Tests=1360`. The active frontier
   moves to `.9.5` to select the next ATL behavior before code.
+- `2026-05-19`: Completed `.9.5`: selected `.9.6` to promote
+  `isf/atl_pin_ingress_pipeline.isf`, a realistic top-level input-pin to
+  actor ingress fixture using a named drive body and one transaction drive
+  call. The selected fixture will prove `payload` as the existing top-level
+  input source, generated actor handoff output `consumer_payload`,
+  `scalar_pin_to_actor_handoff` metadata, strict schedule JSON, and
+  plain/strict HDL reachability without claiming actor-to-pin egress,
+  generated ATL children, ATL tops, route mux/storage, or broader pin routing.

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL next fixture should show network ingress
+- After promoting actor-to-actor scalar data-route coverage, the next fixture
+  should prove that the enclosing actor/network boundary can feed data into a
+  network actor using the same drive-body movement syntax.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6` is selected as a fixture promotion
+  slice around the already shipped top-level input-pin to actor handoff
+  subset.
+- The selected source intentionally uses `(consumer.payload pins.payload)`
+  rather than a new movement keyword. That keeps the ATL user surface uniform
+  while making `source: top_level_pin` and `sink: external_handoff` visible in
+  `actor_network.data_movements[]`.
 ## 2026-05-19: ATL data-route fixture is coverage, not a syntax expansion
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4` promotes a fixture around behavior
   that was already shipped by the scalar actor-to-actor data movement subset.
