@@ -929,10 +929,10 @@ the sink child trigger. A sink trigger that appears before the drive call
 fails closed before FSMGen claims speculative sink activation, delayed
 payload delivery, route storage, muxing, ready/backpressure, or payload
 protocol behavior.
-The next selected sink-event-wait ordering hardening keeps the sink child
-event wait after the sink child trigger. A wait on the sink child event
-before the sink trigger remains fail-closed before FSMGen claims pre-trigger
-acknowledgement, sticky event sampling, event replay, route storage, muxing,
+The shipped sink-event-wait ordering hardening keeps the sink child event
+wait after the sink child trigger. A wait on the sink child event before the
+sink trigger fails closed before FSMGen claims pre-trigger acknowledgement,
+sticky event sampling, event replay, route storage, muxing,
 ready/backpressure, or payload protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a

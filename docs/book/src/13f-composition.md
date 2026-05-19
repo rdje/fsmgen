@@ -798,11 +798,11 @@ The shipped sink-trigger ordering hardening keeps the data drive call before
 the sink child trigger. Sink-before-drive route sequences stay fail-closed
 until a later contract selects speculative sink activation, delayed payload
 delivery, route storage, muxing, backpressure, or payload behavior.
-The next selected sink-event-wait ordering hardening keeps the sink child
-event wait after the sink child trigger. Sink-wait-before-trigger route
-sequences stay fail-closed until a later contract selects pre-trigger
-acknowledgement, sticky event sampling, event replay, route storage, muxing,
-backpressure, or payload behavior.
+The shipped sink-event-wait ordering hardening keeps the sink child event
+wait after the sink child trigger. Sink-wait-before-trigger route sequences
+stay fail-closed until a later contract selects pre-trigger acknowledgement,
+sticky event sampling, event replay, route storage, muxing, backpressure, or
+payload behavior.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

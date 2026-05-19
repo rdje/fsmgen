@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL sink-event wait ordering was already parser-owned
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.56` adds focused coverage for the
+  generated-child actor-to-actor route sequence where the sink child event
+  wait appears before the sink child trigger.
+- The existing parser route-order diagnostic already rejects this shape, so
+  the implementation is coverage-only: no lowerer, report schema, generated
+  top, or HDL behavior changed.
+- This keeps pre-trigger acknowledgement, sticky event sampling, event
+  replay, route continuation, storage, muxing, backpressure, and payload
+  protocols deferred.
+
 ## 2026-05-19: ATL sink waits must remain after the sink trigger
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.55` selects sink-event-wait ordering as
   the next generated-child route boundary.

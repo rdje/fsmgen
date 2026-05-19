@@ -935,12 +935,11 @@ activation backlog by requiring the data drive call to precede the sink child
 trigger; sink-before-drive route clauses remain fail-closed until explicit
 delayed payload delivery, route storage, muxing, ready/backpressure, or
 payload semantics are selected.
-The next selected sink-event-wait ordering hardening narrows the event
-sampling backlog by requiring the sink child event wait to follow the sink
-child trigger; sink-wait-before-trigger route clauses remain fail-closed
-until explicit pre-trigger acknowledgement, sticky event sampling, event
-replay, route storage, muxing, ready/backpressure, or payload semantics are
-selected.
+The shipped sink-event-wait ordering hardening narrows the event sampling
+backlog by requiring the sink child event wait to follow the sink child
+trigger; sink-wait-before-trigger route clauses remain fail-closed until
+explicit pre-trigger acknowledgement, sticky event sampling, event replay,
+route storage, muxing, ready/backpressure, or payload semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
