@@ -895,6 +895,10 @@ selected data-route drive body owns exactly one endpoint pair, and one
 top-level transaction drive call activates the route. Multi-route wiring,
 mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload
 protocols, and permanent actor grouping remain deferred.
+The next selected hardening keeps the route scalar one-bit only and adds
+focused rejection coverage for wider source child outputs and wider sink
+child inputs. No packing, truncation, extension, payload protocol, or storage
+semantics are selected for wider generated-child route endpoints.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
@@ -3953,6 +3957,9 @@ event wait.
 same fixture family: source-child output validation and route-cardinality
 fail-closed coverage before any broader generated-child data wiring is
 claimed.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.41` selects scalar endpoint-width
+hardening for the next leaf; positive wider payload movement remains
+unclaimed until a payload-width protocol is explicitly selected.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

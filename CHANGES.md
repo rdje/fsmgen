@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child route width hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42` to harden scalar-width
+  fail-closed diagnostics around generated-child actor-to-actor route
+  endpoints.
+- The next slice will keep the shipped route scalar one-bit only while
+  rejecting a wider source child output and wider sink child input with
+  focused coverage.
+- No new ATL syntax, report key, generated artifact shape, payload packing,
+  truncation, extension, route mux/storage, fan-in/fan-out, CDC/reset
+  remapping, ready/backpressure, recursive actor network, or permanent actor
+  grouping behavior is selected.
+
 ### R14 — ATL generated-child data-route hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`.
 - Added focused generated-child actor-to-actor data-route rejection coverage

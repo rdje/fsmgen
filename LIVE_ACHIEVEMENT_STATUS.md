@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route width hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`.
+- `.9.42` is selected to keep the generated-child actor-to-actor route
+  scalar one-bit and add focused fail-closed coverage for wider source child
+  output and sink child input endpoints.
+- Payload packing, truncation, extension, route mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, recursive actor networks, and
+  permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child data-route hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`.
 - The active ATL frontier advances to

@@ -1086,6 +1086,12 @@ one top-level transaction drive call may activate it. The source-side
 diagnostic names the source instance role explicitly before any future
 mux/storage or fan-in/fan-out design.
 
+The next selected route-boundary hardening keeps the same scalar contract and
+targets endpoint width evidence. A source child output or sink child input
+wider than one bit must continue to fail closed until a later slice selects a
+real payload-width protocol, including any packing, truncation, extension, or
+storage semantics.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

@@ -1808,6 +1808,11 @@ route drive body may participate, that drive body must contain exactly one
 endpoint pair, and the route must be activated by exactly one top-level drive
 call. Downstream producers should keep emitting only the shipped one-route
 shape until a later spec update explicitly widens the contract.
+The next selected hardening keeps that same one-route surface scalar
+one-bit. Wider source child outputs and wider sink child inputs remain
+deferred/fail-closed until FSMGen publishes an explicit payload-width
+protocol; downstream producers should not assume truncation, extension,
+packing, or storage insertion.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

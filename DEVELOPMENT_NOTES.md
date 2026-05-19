@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-route width should stay explicit
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41` selects scalar-width hardening as
+  the next route-boundary slice.
+- The shipped generated-child actor-to-actor route reports `width: 1` and
+  `width_source: scalar_one_bit`; accepting a wider child endpoint without an
+  explicit payload protocol would silently choose truncation, extension,
+  packing, or storage semantics. None of those policies has been selected.
+- The next code leaf should therefore lock wider source and sink child
+  endpoints as diagnostics, not try to infer a conversion.
+
 ## 2026-05-19: ATL child-route diagnostics should name endpoint roles
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40` keeps the generated-child
   actor-to-actor route model unchanged and hardens diagnostics around it.
