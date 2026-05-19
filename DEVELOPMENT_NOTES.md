@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL expression movement stays explicit
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` selects a narrow generated-child
+  route hardening leaf for expression-valued sources.
+- The shipped route intentionally moves one scalar child endpoint to one
+  scalar child endpoint for one named drive-call cycle. Letting
+  `(writer.payload (+ reader.payload 1))` pass would silently imply
+  expression movement, payload/value transformation, and potentially width
+  or storage semantics that are not part of the selected ATL contract.
+- The next leaf should prove that this boundary fails closed while keeping
+  the book and downstream handoff anchored to the dedicated ATL concept and
+  route-term sections.
+
 ## 2026-05-19: ATL handoff mirrors the book concept anchors
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89` keeps the downstream handoff
   self-contained after the book concept-section sync.

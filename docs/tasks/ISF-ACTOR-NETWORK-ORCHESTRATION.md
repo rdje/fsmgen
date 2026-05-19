@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.47`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.54`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.55`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.56`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.57`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.64`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.74`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.76`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.29`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.30`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.31`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.32`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.35`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.40`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.47`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.48`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.51`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.52`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.54`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.55`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.56`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.57`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.60`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.61`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.62`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.63`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.64`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.74`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.76`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.77`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.78`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -911,9 +911,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.89: sync ATL handoff concept coverage`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the next bounded ATL widening or hardening slice after downstream handoff concept synchronization.`
   Acceptance: `Review the synchronized mdBook, downstream handoff, design proposal, feature-support matrix, route-term audit, remaining route mux/storage, fan-in/fan-out, ready/backpressure, payload protocol, remapping, CDC/reset-remap, recursive-network, permanent-group, and implementation-hardening boundaries. Choose exactly one next behavior-bearing, diagnostic, audit, or documentation hardening slice before code, with source shape, report impact, generated artifact expectations, fail-closed boundaries, documentation impact, and verification scope.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.90: select ATL route expression hardening`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`
+  Status: `active`
+  Goal: `Harden the generated-child actor-to-actor route source-expression boundary.`
+  Acceptance: `Implement only focused fail-closed coverage for the shipped generated-child actor-to-actor route when its drive-body source side is an expression rather than one qualified scalar source endpoint, for example '(writer.payload (+ reader.payload 1))'. FSMGen must reject the form before scheduled '.fsm' emission with the current targeted ATL scalar actor-to-actor data movement source-expression diagnostic. The shipped positive route '(writer.payload reader.payload)' and all existing generated-child route hardening coverage must keep their current behavior. No source syntax, parser/lowerer behavior beyond diagnostic coverage if already enforced, public report key, generated artifact shape, runtime behavior, expression movement, payload protocol, route mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor network, or permanent actor grouping behavior may be widened. The mdBook, downstream handoff, spec, and design proposal must remain synchronized with their dedicated ATL concept and route-term sections; update them in this slice only if the user-facing truth changes.`
   Verification: `pending`
   Commit: `pending`
 
@@ -921,7 +928,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` | `active` | `.9.89` synchronized downstream handoff ATL concept coverage with the book and audit. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91` | `active` | `.9.90` selected route source-expression boundary hardening while preserving dedicated book and handoff ATL concept anchors. |
 
 ## Selected Two-Child Generated Data Route
 
@@ -1814,6 +1821,27 @@ Selected next ATL slice for `.9.90`:
 - `.9.90` is a selection leaf after the downstream handoff concept sync. It
   will review the remaining ATL feature and hardening boundaries and choose
   one next bounded slice before code.
+
+Selection outcome for `.9.90`:
+
+- `.9.90` selects `.9.91` as focused source-expression boundary hardening
+  for the generated-child actor-to-actor route.
+- The selected source shape is the already shipped two-resolved-child route
+  sequence, but with the named drive body source side changed from the scalar
+  endpoint `reader.payload` to an expression such as
+  `(+ reader.payload 1)`.
+- The next leaf must prove that expression movement remains fail-closed with
+  the current targeted ATL scalar actor-to-actor data movement diagnostic
+  before scheduled `.fsm` emission.
+- The selected positive route stays exactly `(writer.payload reader.payload)`;
+  no report key, generated artifact, route lifetime, generated handoff,
+  storage, muxing, fan-in/fan-out, ready/backpressure, payload protocol,
+  CDC/reset-remap, recursive-network, or permanent-group behavior is
+  selected.
+- The mdBook is the user-facing review surface for this work. `.9.91` must
+  keep the dedicated ATL concept sections, route-term subsections, downstream
+  handoff, design proposal, and feature-support matrix truthful; it should
+  update those documents only if this hardening changes user-facing truth.
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -3461,6 +3489,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87` | `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `added dedicated mdBook ATL concept sections and audit markers` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `selected downstream ATL concept handoff sync` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89` | `perl -Iperl -c t/1305-isf-book-feature-matrix-audit.t`; `prove -Iperl t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `synchronized downstream ATL concept handoff coverage` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `git diff --check` | `selected generated-child actor-to-actor route source-expression boundary hardening` |
 
 ## Commit Log
 
@@ -3585,6 +3614,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.87: add ATL book concept sections` | `adds dedicated mdBook ATL concept subsections and audit markers` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.88: select ATL handoff concept sync` | `selects downstream handoff synchronization with book ATL concept coverage` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.89: sync ATL handoff concept coverage` | `syncs downstream handoff ATL concept sections and audit coverage` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.90: select ATL route expression hardening` | `selects generated-child actor-to-actor route source-expression boundary hardening with book/handoff sync requirements` |
 
 ## Changelog
 
@@ -3707,6 +3737,12 @@ Current proposal summary:
   concept coverage with the dedicated book sections and audit markers. The
   active ATL frontier advances to `.9.90` to select the next bounded ATL
   widening, diagnostic, audit, or documentation hardening slice.
+- `2026-05-19`: Completed `.9.90`: selected `.9.91` as focused
+  generated-child actor-to-actor route source-expression boundary hardening.
+  The next leaf must prove expression movement on the route source side
+  remains fail-closed before scheduled `.fsm` emission while the mdBook,
+  downstream handoff, design proposal, and feature-support matrix stay
+  synchronized with their dedicated ATL concept and route-term sections.
 - `2026-05-19`: Completed `.9.65`: selected `.9.66` as
   boundary-body simplicity hardening for the generated-child actor-to-actor
   data route. The next leaf must reject route-adjacent boundary-headed

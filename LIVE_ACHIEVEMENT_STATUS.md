@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route expression hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.
+- `.9.91` is selected to prove generated-child actor-to-actor route
+  source expressions remain fail-closed while the shipped scalar endpoint
+  route remains unchanged.
+- The dedicated mdBook ATL concept and route-term sections remain the
+  user-facing truth anchors for this boundary.
+- No compiler behavior changed.
+
 ## 2026-05-19: R14 — ATL downstream handoff concept coverage synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`.
 - The active ATL frontier advances to

@@ -1,6 +1,26 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL route source-expression hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91` to harden the
+  generated-child actor-to-actor route source-expression boundary.
+- The selected next leaf will prove that a drive-body pair such as
+  `(writer.payload (+ reader.payload 1))` remains fail-closed before
+  scheduled `.fsm` emission, while the shipped scalar route
+  `(writer.payload reader.payload)` remains accepted.
+- The mdBook's dedicated ATL concept and route-term sections, downstream
+  handoff, design proposal, and feature-support matrix remain the truth
+  surfaces for any user-facing wording changes.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, expression movement, payload protocol,
+  route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, recursive actor network, or permanent actor grouping
+  behavior is selected.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.
+
 ### R14 — ATL downstream handoff concept coverage synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`.
 - Synchronized the downstream ISF integration handoff with the dedicated

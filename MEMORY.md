@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route source-expression hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` as a selection leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.
+- `.9.91` will add focused fail-closed coverage for the selected
+  generated-child actor-to-actor route when the drive-body source side is an
+  expression such as `(+ reader.payload 1)` rather than the shipped scalar
+  endpoint `reader.payload`.
+- The selected positive route remains exactly `(writer.payload
+  reader.payload)`. No expression movement, payload protocol, route
+  mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure,
+  recursive actor network, or permanent actor grouping behavior is selected.
+- The mdBook remains the user-facing truth surface: the dedicated ATL concept
+  sections, route-term subsections, downstream handoff, design proposal, and
+  feature-support matrix must stay synchronized if `.9.91` changes any
+  user-facing truth.
+
 ## 2026-05-19: ATL downstream handoff concept coverage synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.89`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`.
