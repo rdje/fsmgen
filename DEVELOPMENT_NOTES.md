@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-route width checks were already in the lowerer
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42` added regression coverage for wider
+  generated-child actor-to-actor route endpoints without changing production
+  lowering.
+- The existing generated-top data-link checks already require child endpoint
+  width to match the selected scalar route width. The new tests make that
+  boundary explicit for both source child outputs and sink child inputs.
+- Keeping this as coverage-only is intentional: no payload conversion policy
+  has been selected, so the right behavior is still fail-closed.
+
 ## 2026-05-19: ATL child-route width should stay explicit
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41` selects scalar-width hardening as
   the next route-boundary slice.

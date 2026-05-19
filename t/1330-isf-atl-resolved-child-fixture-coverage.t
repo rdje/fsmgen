@@ -826,6 +826,18 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ reader_payload_width => 8 }),
+        qr/data movement 'forward_payload' requires a scalar child output port 'payload' on source instance 'reader'/,
+        'generated-child actor-to-actor data route fails closed when the source child output is wider than one bit',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ writer_payload_width => 8 }),
+        qr/data movement 'forward_payload' requires a scalar child input port 'payload' on sink instance 'writer'/,
+        'generated-child actor-to-actor data route fails closed when the sink child input is wider than one bit',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
@@ -1883,12 +1895,14 @@ CLAUSES
     (trigger writer.emit)
     (await writer.done)
 CLAUSES
+    my $writer_payload_width = $options->{writer_payload_width} || 1;
+    my $reader_payload_width = $options->{reader_payload_width} || 1;
     my $writer_payload_port = $options->{omit_writer_payload}
         ? ''
-        : "      (input payload)\n";
+        : _interface_port_decl('input', 'payload', $writer_payload_width);
     my $reader_payload_port = $options->{omit_reader_payload}
         ? ''
-        : "      (output payload)\n";
+        : _interface_port_decl('output', 'payload', $reader_payload_width);
     my $drive_body = $options->{extra_drive_pair}
         ? "    (writer.payload reader.payload)\n    (writer.sideband reader.sideband)"
         : "    (writer.payload reader.payload)";
@@ -1962,6 +1976,13 @@ ISF
       (complete done))))
 ISF
     return $actor . $library;
+}
+
+sub _interface_port_decl {
+    my ($direction, $name, $width) = @_;
+    $width ||= 1;
+    return "      ($direction $name)\n" if $width == 1;
+    return "      ($direction $name (width $width))\n";
 }
 
 sub fsm_basenames_in {

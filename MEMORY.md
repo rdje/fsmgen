@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child route width hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43`.
+- Focused coverage now rejects generated-child actor-to-actor routes when
+  the source child output endpoint or sink child input endpoint is wider than
+  one bit.
+- No production code change was required; the existing lowerer already
+  enforced the scalar endpoint width contract.
+- No source syntax, public report key, generated artifact shape, payload
+  packing/truncation/extension, route mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child route width hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.41` as a doc-only selection
   leaf.

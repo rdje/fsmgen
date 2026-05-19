@@ -332,7 +332,7 @@ groups, and permanent actor grouping remain deferred.
 The shipped hardening leaf keeps that surface unchanged and adds focused
 fail-closed coverage for source child output validation, sink child input
 validation, and the one-drive/one-pair/one-call cardinality boundary.
-The next selected hardening keeps generated-child actor-to-actor endpoints
+The shipped width hardening keeps generated-child actor-to-actor endpoints
 scalar one-bit and targets wider source/sink child payload ports as
 fail-closed coverage, without payload conversion semantics.
 

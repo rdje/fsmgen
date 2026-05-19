@@ -215,7 +215,7 @@ The shipped hardening around that route keeps the same public surface: it adds
 focused fail-closed coverage for source child output validation, sink child
 input validation, one route drive body, one endpoint pair, and one top-level
 drive call, without adding report keys or widening ATL syntax.
-The next selected hardening also keeps the public surface unchanged: it locks
+The shipped width hardening also keeps the public surface unchanged: it locks
 the scalar-width boundary for generated-child actor-to-actor route endpoints
 and does not add payload-width report keys or conversion semantics.
 The compatibility CLI parity path is checked by

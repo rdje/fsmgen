@@ -767,7 +767,7 @@ fail-closed rules: the source endpoint must be a scalar output on the source
 child, the sink endpoint must be a scalar input on the sink child, and only
 one route drive body, one endpoint pair, and one top-level drive call may
 participate.
-The next selected hardening keeps the route scalar one-bit only. Wider child
+The shipped width hardening keeps the route scalar one-bit only. Wider child
 payload endpoints remain fail-closed until a later payload-width protocol
 defines packing, truncation, extension, or storage behavior.
 

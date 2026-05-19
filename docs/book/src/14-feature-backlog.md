@@ -902,7 +902,7 @@ The shipped hardening does not widen that support. It locks focused
 fail-closed coverage for missing or wrong-direction child payload ports and
 route-cardinality violations around the shipped one-route fixture before any
 multi-route, mux/storage, fan-in/fan-out, or payload-protocol work is claimed.
-The next selected hardening narrows that payload-protocol backlog further by
+The shipped width hardening narrows that payload-protocol backlog further by
 locking wider generated-child route endpoints as fail-closed until explicit
 packing, truncation, extension, or storage semantics are selected.
 
