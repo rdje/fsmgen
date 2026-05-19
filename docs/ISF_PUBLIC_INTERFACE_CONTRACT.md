@@ -272,6 +272,11 @@ simple start boundary and one simple completion boundary until a later
 contract explicitly adds activation fan-in, completion fan-out,
 start-condition arbitration, setup/cleanup, continuation, storage, muxing,
 backpressure, or payload metadata.
+The selected boundary-simplicity hardening keeps that surface unchanged as
+well: the start and completion boundaries must remain body-free until a later
+contract explicitly adds activation-body sampling, completion payload/fan-out,
+setup/cleanup, continuation, storage, muxing, backpressure, or payload
+metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

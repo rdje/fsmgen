@@ -1882,6 +1882,13 @@ or assume activation fan-in, completion fan-out, start-condition arbitration,
 local setup/cleanup, route continuation, pending handoff storage, muxing,
 backpressure, or payload insertion until FSMGen publishes an explicit
 contract for those behaviors.
+The selected boundary-simplicity hardening keeps those two route boundaries
+body-free. Downstream producers should not emit `(on ...)` activation-body
+samples or `(complete ...)` extra payload operands around the route, or
+assume activation-body sampling, completion payload/fan-out, local
+setup/cleanup, route continuation, pending handoff storage, muxing,
+backpressure, or payload insertion until FSMGen publishes an explicit
+contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

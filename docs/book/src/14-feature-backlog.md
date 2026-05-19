@@ -965,6 +965,12 @@ extra start or completion clauses remain fail-closed until explicit
 activation fan-in, completion fan-out, start arbitration, setup/cleanup,
 continuation, storage, muxing, ready/backpressure, or payload semantics are
 selected.
+The selected boundary-simplicity hardening narrows the boundary-body backlog
+by keeping those start/completion boundaries body-free; activation-body
+samples in `(on ...)` and extra payload operands in `(complete ...)` remain
+fail-closed until explicit activation-body sampling, completion payload,
+setup/cleanup, continuation, storage, muxing, ready/backpressure, or payload
+semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route boundaries should stay body-free for now
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.65` selects boundary-body simplicity as
+  the next generated-child route boundary.
+- The current route has no contract for activation samples captured as part
+  of `(on ...)`, completion payload operands, or boundary-local setup/cleanup
+  work. Accepting boundary bodies would blur route isolation even when the
+  number of start and completion boundaries is correct.
+- The next code leaf should add focused diagnostics for boundary-headed
+  clauses with bodies or extra operands while leaving activation-body
+  sampling, completion payload/fan-out, route continuation, storage, muxing,
+  backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL route-boundary cardinality is now parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.64` adds focused coverage for
   generated-child actor-to-actor route transactions that contain multiple

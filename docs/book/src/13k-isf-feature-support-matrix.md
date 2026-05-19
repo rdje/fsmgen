@@ -385,6 +385,11 @@ extra start or completion boundaries remain fail-closed before any
 activation fan-in, completion fan-out, start-condition arbitration,
 setup/cleanup work, continuation, storage, muxing, backpressure, or payload
 contract.
+The selected boundary-simplicity hardening keeps those boundaries body-free:
+activation-body samples in `(on ...)` and extra payload operands in
+`(complete ...)` remain fail-closed before any activation-body sampling,
+completion payload/fan-out, setup/cleanup work, continuation, storage,
+muxing, backpressure, or payload contract.
 
 ### Actor, Interface, Storage, And Timing
 
