@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL type resolution is metadata before child emission
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20` deliberately resolves
+  `(instance NAME of ALIAS.EXPORT)` only far enough to publish library/export
+  provenance and reserved child artifact names.
+- The implementation does not clone the exported actor body into ATL child
+  generation. That avoids implying interface binding, start/done wiring,
+  event routing, or an ATL generated top before those contracts are selected.
+- Resolved entries use a separate public resolved-instance key family so
+  unqualified metadata-only instances keep their existing report shape.
+- The next ATL selection should decide whether to emit child `.fsm` files,
+  select generated-top packaging, infer handoff bindings, or harden conflict
+  diagnostics around reserved child names.
 ## 2026-05-19: ATL type resolution should start as report metadata
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` selects the next behavior slice as
   metadata-only resolution for `(instance NAME of ALIAS.EXPORT)`.

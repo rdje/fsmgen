@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL type-resolution metadata shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`.
+- `(instance NAME of ALIAS.EXPORT)` now resolves when `ALIAS` is an explicit
+  HDL identifier import alias and `EXPORT` names an actor export in that
+  library. Same-source library roots and external library files are covered.
+- Resolved static actor instances report `type_resolution:
+  library_actor_export`, `library`, `alias`, `export`, `module`, and
+  `scheduled_fsm` on the resolved `actor_network.instances[]` entry.
+- Lowering still emits only the parent scheduled `.fsm`; no generated ATL
+  child `.fsm`, generated ATL top, HDL child wiring, interface binding
+  inference, event fan-in, route mux/storage, CDC, ready/backpressure, or
+  permanent actor grouping is claimed.
+- The next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, which must
+  select the next generated-child, generated-top, or interface-binding
+  boundary before code.
 ## 2026-05-19: ATL type-resolution metadata subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` as a doc-only selection
   leaf.
@@ -8,11 +23,11 @@ This is the live continuity document for fast session recovery after crashes, re
   `(instance NAME of ALIAS.EXPORT)` only for explicit imported library aliases
   and existing actor exports, then record library/export provenance in
   `actor_network.instances[]` without emitting child artifacts.
-- Selected future resolved-instance report keys are `type_resolution`,
+- Selected resolved-instance report keys are `type_resolution`,
   `library`, `alias`, `export`, `module`, and `scheduled_fsm`, with
   `type_resolution: library_actor_export` and deterministic reserved child
   names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm`.
-- `.9.20` must still emit only the parent scheduled `.fsm`; generated ATL
+- `.9.20` was selected to emit only the parent scheduled `.fsm`; generated ATL
   child `.fsm` files, generated ATL tops, HDL child wiring, interface binding
   inference, actor-event fan-in, route mux/storage, CDC, ready/backpressure,
   and permanent actor grouping remain deferred.

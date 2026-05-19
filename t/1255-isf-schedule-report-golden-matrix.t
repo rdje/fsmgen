@@ -262,6 +262,16 @@ sub golden_matrix_cases {
             ],
         },
         {
+            name => 'actor_network_resolved_instance',
+            filename => 'actor_network_resolved_instance_report.isf',
+            source => actor_network_resolved_instance_source(),
+            covers => [
+                qw(
+                  schedule_report_actor_network_resolved_instance_keys
+                )
+            ],
+        },
+        {
             name => 'actor_network_group',
             filename => 'actor_network_group_report.isf',
             source => actor_network_group_source(),
@@ -518,6 +528,10 @@ sub assert_key_branch {
     }
     if ($branch eq 'schedule_report_actor_network_instance_keys') {
         assert_entry_keys(first_entry($report->{actor_network}{instances}), $contract->{$branch}, "$label actor network instance keys");
+        return 1;
+    }
+    if ($branch eq 'schedule_report_actor_network_resolved_instance_keys') {
+        assert_entry_keys(first_entry($report->{actor_network}{instances}), $contract->{$branch}, "$label actor network resolved instance keys");
         return 1;
     }
     if ($branch eq 'schedule_report_actor_network_group_keys') {
@@ -1075,6 +1089,31 @@ sub actor_network_static_source {
   (transaction run
     (on start)
     (complete done)))
+ISF
+}
+
+sub actor_network_resolved_instance_source {
+    return <<'ISF';
+(actor actor_network_resolved_instance_report
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (imports (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (complete done)))
+
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
 ISF
 }
 

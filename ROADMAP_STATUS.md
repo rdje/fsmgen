@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.20`.
+  activation `.111` and ATL actor-network orchestration `.9.21`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -228,7 +228,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   roots can be mistaken for resolved ATL child types, and one actor root plus
   `(library ...)` roots remains accepted.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` selected the explicit actor
-  type-resolution source contract: future resolved ATL instances use
+  type-resolution source contract: resolved ATL instances use
   `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` comes from the enclosing
   actor's explicit library imports and `EXPORT` is an actor export from that
   library. Unqualified actor types remain metadata-only, sibling actor roots
@@ -242,17 +242,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   are preserved; no actor type resolution, generated child artifacts,
   generated ATL tops, HDL child wiring, or report schema changes are claimed
   yet. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` selected the first actual
-  resolution step as metadata-only provenance: the next code leaf,
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, will accept
-  `(instance NAME of ALIAS.EXPORT)` only for explicit imported aliases and
-  existing actor exports, record `type_resolution`, `library`, `alias`,
-  `export`, `module`, and `scheduled_fsm` on resolved
-  `actor_network.instances[]` entries, and reserve child names
-  `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm`. It must
-  still emit only the parent scheduled `.fsm`; generated ATL child artifacts,
+  resolution step as metadata-only provenance, and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20` shipped it:
+  `(instance NAME of ALIAS.EXPORT)` now resolves when `ALIAS` is an explicit
+  imported alias and `EXPORT` names a library actor export. Resolved
+  `actor_network.instances[]` entries record `type_resolution`, `library`,
+  `alias`, `export`, `module`, and `scheduled_fsm`, reserving child names
+  `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm`. Lowering
+  still emits only the parent scheduled `.fsm`; generated ATL child artifacts,
   generated ATL tops, HDL child wiring, inferred handoff binding,
   actor-event fan-in, route mux/storage, CDC, ready/backpressure, and
-  permanent actor grouping remain deferred.
+  permanent actor grouping remain deferred. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, which must select the next
+  generated-child, generated-top, interface-binding, or conflict-boundary
+  slice before code.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

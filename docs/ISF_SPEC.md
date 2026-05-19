@@ -217,16 +217,15 @@ into canonical `(actor name ...)`. A source with multiple top-level
 roots are not ATL child type definitions until actor type resolution is
 explicitly selected. Imported sources may additionally provide
 `(library name ...)` roots as described in [3.1](#31-reusable-library-imports).
-The selected future ATL actor type-resolution source is not a sibling actor
-root; it is a library-qualified static instance type,
+The shipped ATL actor type-resolution source is not a sibling actor root; it
+is a library-qualified static instance type,
 `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is declared by the enclosing
 actor's library imports and `EXPORT` names a library actor export. That
-qualified spelling is selected for later ATL resolution and now fails closed
-with ATL-specific diagnostics; it is not generated child behavior. The next
-selected resolution subset is metadata-only: accepted qualified instances will
-add library/export provenance to their `actor_network.instances[]` report
-entry and reserve deterministic future child names while still emitting only
-the parent scheduled `.fsm`.
+qualified spelling now resolves to metadata only when the alias is an explicit
+import and the export exists. Accepted qualified instances add
+library/export provenance to their `actor_network.instances[]` report entry
+and reserve deterministic future child names while still emitting only the
+parent scheduled `.fsm`.
 Accepted parser output preserves `name` as the public actor-shell
 `actor_name`; nested or otherwise non-scalar actor names are rejected before
 the parser returns an actor shell.
@@ -2990,13 +2989,14 @@ parser/schedule-report metadata:
 are direct clauses of the enclosing actor. Instance names and actor types must
 be scalar HDL identifiers. Multiple direct static instances are accepted only
 by shipped bounded subsets: the scalar actor-to-actor handoff route and
-report-only static group metadata. Static instance metadata does not
-instantiate or resolve actor types, emit generated child `.fsm`, create a
-generated composition top, or change HDL generation. It is report-visible
-design intent for the upcoming ATL scheduler slices.
+report-only static group metadata. Unqualified static instance metadata does
+not instantiate or resolve actor types. Library-qualified static instances
+resolve only to report metadata and reserved child names; they still do not
+emit generated child `.fsm`, create a generated composition top, or change HDL
+generation.
 
-The selected source contract for future ATL actor type resolution is the
-qualified library-backed form:
+The shipped source contract for ATL actor type resolution is the qualified
+library-backed form:
 
 ```lisp
 (actor packet_system
@@ -3026,11 +3026,11 @@ imports, non-explicit import aliases, unknown aliases, unknown actor exports,
 and known actor exports before any generated child `.fsm`, ATL top, or report
 schema change is claimed.
 
-The selected first resolution subset is intentionally report-only. The next
-behavior leaf accepts resolved qualified entries and widens only those
-`actor_network.instances[]` entries with `type_resolution`,
-`library`, `alias`, `export`, `module`, and `scheduled_fsm`. The selected
-`type_resolution` value is `library_actor_export`; `module` and
+The shipped first resolution subset is intentionally report-only. It accepts
+resolved qualified entries and widens only those `actor_network.instances[]`
+entries with `type_resolution`, `library`, `alias`, `export`, `module`, and
+`scheduled_fsm`. The selected `type_resolution` value is
+`library_actor_export`; `module` and
 `scheduled_fsm` reserve `<parent_actor>__<instance>` and
 `<parent_actor>__<instance>.fsm` for future child emission. The lowerer still
 emits no child `.fsm` and no ATL top in that subset, and trigger/event/data
@@ -3306,7 +3306,9 @@ advertises this value family through `schedule_report_dt_kind_values`.
 an object with `kind`, `instances`, `event_waits`, `transaction_triggers`,
 `association_schedules`, `group_schedules`, and `data_movements` for the
 current bounded static actor-network subset.
-Each instance entry contains `name`, `actor_type`, and `declaration`.
+Unqualified instance entries contain `name`, `actor_type`, and `declaration`.
+Resolved library-qualified instance entries also contain `type_resolution`,
+`library`, `alias`, `export`, `module`, and `scheduled_fsm`.
 Each event-wait entry contains `transaction`, `context`, `instance`, `event`,
 `signal`, and `source`. Each transaction-trigger entry contains
 `owner_transaction`, `context`, `instance`, `target_transaction`, `signal`,
@@ -3319,6 +3321,7 @@ Each association-schedule entry contains `association`, `kind`, `lifetime`,
 The capability-manifest ISF public contract advertises these families through
 `schedule_report_actor_network_keys`,
 `schedule_report_actor_network_instance_keys`,
+`schedule_report_actor_network_resolved_instance_keys`,
 `schedule_report_actor_network_group_keys`,
 `schedule_report_actor_network_association_schedule_keys`,
 `schedule_report_actor_network_group_schedule_keys`,

@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -421,9 +421,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.19: select ATL type metadata`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`
-  Status: `active`
+  Status: `completed`
   Goal: `Resolve library-qualified ATL actor types to report-visible metadata without generating child artifacts.`
   Acceptance: `Parser/lowering accepts '(instance NAME of ALIAS.EXPORT)' only when ALIAS is an explicit HDL identifier import alias from '(imports (library LIBRARY as ALIAS))' and EXPORT names an actor export in that library, records library/export provenance on the existing actor_network.instances[] entry, and reserves deterministic future child artifact names while still emitting only the parent scheduled '.fsm'. The shipped unqualified '(instance NAME of ACTOR_TYPE)' metadata-only surface and existing '(use alias.actor as instance ...)' reusable-library generated-top path remain unchanged. No generated ATL child '.fsm', generated ATL top, HDL child wiring, inferred event/trigger/data handoff binding, route mux/storage, ready/backpressure, actor-event fan-in, CDC, or permanent actor grouping is claimed.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm; perl -Iperl -c perl/FSM/Scheduler/ISF/Emitter/JSON.pm; perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm; perl -Iperl -c t/1322-isf-actor-network-static.t; prove -Iperl t/1322-isf-actor-network-static.t t/1230-isf-library-import-resolution.t t/1231-isf-library-generated-top.t; prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.20: resolve ATL type metadata`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`
+  Status: `active`
+  Goal: `Select the next ATL generated-child, generated-top, or interface-binding boundary after metadata-only type resolution.`
+  Acceptance: `Review the shipped metadata-only library-qualified type resolution, existing reusable-library child artifact machinery, current parent trigger/event/data handoff surfaces, and report-visible reserved child names; choose one bounded next slice before code. Candidate directions include generating resolved child '.fsm' artifacts without an ATL top, selecting generated ATL top packaging, selecting interface binding inference from current parent handoffs, proving conflict/fail-closed boundaries for duplicate reserved child names, or selecting a realistic fixture that consumes resolved type metadata. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -431,13 +438,13 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20` | `active` | `.9.19` selected metadata-only library/export provenance for the first actual qualified-type resolution slice. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` | `active` | `.9.20` shipped metadata-only qualified type resolution; select the next generated child/artifact or binding boundary before code. |
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` selects the explicit source contract
-for future ATL actor type resolution before any generated child artifacts are
-emitted.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` selected the explicit source contract
+for ATL actor type resolution before any generated child artifacts are
+emitted; `.9.20` now resolves that source shape as metadata only.
 
 Selected source shape:
 
@@ -522,23 +529,25 @@ Verification scope for the next code leaf:
 - spec, downstream handoff, public contract, mdBook, and focused-test index
   synchronization.
 
-Shipped `.9.18` reservation:
+Shipped `.9.18` / `.9.20` progression:
 
 - `(instance NAME of ALIAS.EXPORT)` is recognized as the selected future ATL
   library-qualified type syntax.
 - Missing imports, non-explicit import aliases, unknown aliases, unknown actor
-  exports, and known actor exports all fail before scheduled `.fsm` emission
-  with ATL-specific diagnostics that explain actor type resolution is selected
-  but generated child emission is not supported yet.
+  exports still fail before scheduled `.fsm` emission with ATL-specific
+  diagnostics.
+- The `.9.18` reservation leaf also made known actor exports fail closed;
+  `.9.20` replaces that known-export failure with metadata-only resolution
+  and still emits no generated child artifact or ATL top.
 - Existing unqualified `(instance NAME of ACTOR_TYPE)` remains metadata-only.
 - Existing `(use alias.actor as instance ...)` library generation behavior is
   unchanged.
 
-## Selected ATL Type-Resolution Metadata Subset
+## Shipped ATL Type-Resolution Metadata Subset
 
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` selects the first behavior-bearing
-library-qualified ATL type-resolution slice as metadata-only resolution. The
-next implementation leaf is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` selected the first behavior-bearing
+library-qualified ATL type-resolution slice as metadata-only resolution, and
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.20` ships it.
 
 Selected source shape:
 
@@ -559,7 +568,7 @@ Selected source shape:
     (complete done)))
 ```
 
-Selected report impact for `.9.20`:
+Shipped report impact:
 
 - `actor_network.instances[]` remains the instance metadata owner.
 - Resolved library-qualified entries add report-visible provenance keys:
@@ -578,7 +587,7 @@ Selected report impact for `.9.20`:
 
 Selected generated artifact expectations:
 
-- `.9.20` still emits only the parent scheduled `.fsm`.
+- `.9.20` emits only the parent scheduled `.fsm`.
 - No generated ATL child `.fsm` is placed in `lower(...)->{files}`.
 - No generated ATL top is emitted.
 - The selected child module/file names are metadata reservations only until a
@@ -595,10 +604,10 @@ Selected fail-closed boundaries:
   CDC, recursive actor networks, and permanent actor grouping remain
   deferred.
 
-Verification scope for `.9.20`:
+Shipped verification coverage:
 
-- parser/lowering coverage for accepted same-source and imported-file library
-  actor exports;
+- parser/lowering coverage for accepted same-source and imported-file
+  library actor exports;
 - schedule JSON coverage for the widened resolved
   `actor_network.instances[]` entry;
 - preservation coverage for unqualified metadata-only static instances;

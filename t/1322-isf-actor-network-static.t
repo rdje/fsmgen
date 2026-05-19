@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 use Test::More;
+use File::Path qw(make_path);
 use File::Spec;
 use File::Temp qw(tempdir);
 use FindBin;
@@ -20,6 +21,7 @@ use FSM::Support::ISFPublicInterfaceContract qw(
     isf_public_interface_schedule_report_actor_network_group_keys
     isf_public_interface_schedule_report_actor_network_instance_keys
     isf_public_interface_schedule_report_actor_network_keys
+    isf_public_interface_schedule_report_actor_network_resolved_instance_keys
     isf_public_interface_schedule_report_actor_network_transaction_trigger_keys
 );
 
@@ -128,7 +130,7 @@ ISF
     is($actor->{actor_name}, 'one_actor_with_library_root', 'one actor root plus library root remains accepted');
 };
 
-subtest 'library-qualified ATL actor type syntax fails closed before generated child resolution' => sub {
+subtest 'library-qualified ATL actor type syntax resolves to metadata without child emission' => sub {
     parse_fails_like(
         <<'ISF',
 (actor atl_parent
@@ -215,8 +217,7 @@ ISF
         'unknown library actor export fails closed',
     );
 
-    parse_fails_like(
-        <<'ISF',
+    my $same_source = <<'ISF';
 (actor atl_parent
   (clock clk)
   (interface (input start) (output done))
@@ -235,8 +236,28 @@ ISF
       (on start)
       (complete done))))
 ISF
-        qr/ATL static actor instance 'worker' type 'pkt_lib\.packet_worker' resolved to library 'common\.packet' actor export 'packet_worker'.*ATL actor type resolution is selected and not supported yet.*no generated ATL child \.fsm or generated ATL top is emitted/s,
-        'known library actor export is reserved and fails closed before child emission',
+    assert_resolved_actor_type_metadata(
+        parse_source($same_source, 'atl-type-resolution-same-source.isf'),
+        'same-source library root',
+    );
+
+    my $dir = tempdir(CLEANUP => 1);
+    write_packet_library($dir);
+    my $top = File::Spec->catfile($dir, 'atl-type-resolution-external.isf');
+    write_file($top, <<'ISF');
+(actor external_atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (imports (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (complete done)))
+ISF
+    assert_resolved_actor_type_metadata(
+        FSM::Adapter::ISF->new()->parse_file($top),
+        'external library file',
+        'external_atl_parent',
     );
 };
 
@@ -1367,7 +1388,7 @@ sub assert_actor_network_report {
     );
     is_deeply(
         [sort keys %{$report->{actor_network}{instances}[0]}],
-        [sort @{isf_public_interface_schedule_report_actor_network_instance_keys()}],
+        [sort @{_expected_actor_network_instance_keys($report->{actor_network}{instances}[0])}],
         "$label exposes advertised actor_network instance keys",
     );
     if (@{$report->{actor_network}{groups} || []}) {
@@ -1417,6 +1438,62 @@ sub assert_actor_network_report {
     is_deeply($report->{actor_network}, $expected, "$label preserves actor-network identity");
 }
 
+sub assert_resolved_actor_type_metadata {
+    my ($actor, $label, $actor_name) = @_;
+    $actor_name //= 'atl_parent';
+
+    my $expected_instance = {
+        name            => 'worker',
+        actor_type      => 'pkt_lib.packet_worker',
+        declaration     => 'actor',
+        type_resolution => 'library_actor_export',
+        library         => 'common.packet',
+        alias           => 'pkt_lib',
+        export          => 'packet_worker',
+        module          => "${actor_name}__worker",
+        scheduled_fsm   => "${actor_name}__worker.fsm",
+    };
+    is_deeply(
+        $actor->{actor_network}{instances}[0],
+        $expected_instance,
+        "$label parser records resolved ATL actor type metadata",
+    );
+
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $lowered = $scheduler->lower($actor);
+    is_deeply(
+        [sort keys %{$lowered->{files}}],
+        ["$actor_name.fsm"],
+        "$label emits only the parent scheduled .fsm",
+    );
+    ok(!exists $lowered->{files}{"${actor_name}__worker.fsm"}, "$label emits no generated ATL child .fsm");
+    ok(!exists $lowered->{files}{"${actor_name}_top.fsm"}, "$label emits no generated ATL top");
+
+    my $report = decode_json($scheduler->report($actor));
+    assert_actor_network_report(
+        $report,
+        {
+            kind      => 'static_declaration',
+            instances => [ $expected_instance ],
+            groups => [],
+            association_schedules => [],
+            group_schedules => [],
+            data_movements => [],
+            event_waits => [],
+            transaction_triggers => [],
+        },
+        "$label resolved actor type report",
+    );
+    is_deeply($report->{library_uses}, [], "$label does not report a reusable-library use");
+}
+
+sub _expected_actor_network_instance_keys {
+    my ($entry) = @_;
+    return isf_public_interface_schedule_report_actor_network_resolved_instance_keys()
+        if exists $entry->{type_resolution};
+    return isf_public_interface_schedule_report_actor_network_instance_keys();
+}
+
 sub parse_source {
     my ($source, $label) = @_;
     return FSM::Adapter::ISF->new()->parse_source($source, $label);
@@ -1447,10 +1524,33 @@ sub write_temp_isf {
     my ($source) = @_;
     my $dir = tempdir(CLEANUP => 1);
     my $path = File::Spec->catfile($dir, 'atl-static-network.isf');
+    write_file($path, $source);
+    return $path;
+}
+
+sub write_packet_library {
+    my ($dir) = @_;
+    my $lib_dir = File::Spec->catdir($dir, 'common');
+    make_path($lib_dir);
+    my $path = File::Spec->catfile($lib_dir, 'packet.isf');
+    write_file($path, <<'ISF');
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
+ISF
+    return $path;
+}
+
+sub write_file {
+    my ($path, $source) = @_;
     open my $fh, '>', $path or die "cannot write $path: $!";
     print {$fh} $source or die "cannot write $path: $!";
     close $fh or die "cannot close $path: $!";
-    return $path;
 }
 
 sub actor_body_network_source {

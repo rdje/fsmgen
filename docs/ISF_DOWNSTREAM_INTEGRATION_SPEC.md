@@ -178,17 +178,14 @@ one compile/report entry actor until FSMGen publishes an explicit actor
 type-resolution contract. Additional `(library ...)` roots remain the
 accepted same-source reusable actor packaging surface.
 
-The selected future ATL actor type-resolution source is library-qualified:
+The shipped ATL actor type-resolution source is library-qualified:
 `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` comes from the enclosing
 actor's `(imports (library ... as ALIAS))` clause and `EXPORT` is an actor
-export from that library. That spelling is selected for a future
-actor-network resolution path and now fails closed with targeted diagnostics;
-downstream producers must still treat resolution and generated child emission
-as unshipped until the corresponding resolution leaf appears in this handoff
-and the public contract. The next selected resolution leaf is metadata-only:
-it will accept resolved qualified instances, report library/export provenance
-on `actor_network.instances[]`, and reserve future child artifact names while
-still emitting only the parent scheduled `.fsm`.
+export from that library. The first resolution leaf is metadata-only: it
+accepts resolved qualified instances, reports library/export provenance on
+`actor_network.instances[]`, and reserves future child artifact names while
+still emitting only the parent scheduled `.fsm`. Downstream producers must
+still treat generated child emission and ATL top emission as unshipped.
 
 Imported files may also contain library roots:
 
@@ -1521,14 +1518,14 @@ groups, selected scalar handoffs, selected parent event/trigger handoffs, and
 the exact same-cycle temporary trigger batch. The static declarations record
 actor-network intent for downstream discovery; behavior-bearing leaves add
 only the explicitly documented parent handoff ports and scheduled states.
-FSMGen still does not resolve child actor types, instantiate ATL child
-scheduled `.fsm` artifacts, generate an ATL top, or wire child HDL behavior.
-The selected source contract for future ATL actor type resolution is explicit
+FSMGen resolves child actor types only as report metadata; it does not
+instantiate ATL child scheduled `.fsm` artifacts, generate an ATL top, or wire
+child HDL behavior. The shipped source contract for ATL actor type resolution is explicit
 library qualification in `(instance NAME of ALIAS.EXPORT)`, not sibling actor
-roots and not implicit lookup of unqualified `ACTOR_TYPE` names. The next
-selected resolution subset will report only metadata for that qualified form:
+roots and not implicit lookup of unqualified `ACTOR_TYPE` names. The shipped
+resolution subset reports only metadata for that qualified form:
 `type_resolution: library_actor_export`, the resolved `library`, `alias`, and
-`export`, plus reserved `module` and `scheduled_fsm` names. It will still not
+`export`, plus reserved `module` and `scheduled_fsm` names. It still does not
 emit child artifacts or an ATL top.
 
 Accepted form:
@@ -1894,7 +1891,7 @@ dt_blocks[]: name, kind, assignments
 actor_network: kind, instances, groups, association_schedules,
   group_schedules, data_movements, event_waits, transaction_triggers
 actor_network.instances[]: name, actor_type, declaration
-selected future resolved actor_network.instances[] metadata-only keys:
+resolved actor_network.instances[] metadata-only keys:
   type_resolution, library, alias, export, module, scheduled_fsm
 actor_network.groups[]: name, members, mode, declaration, source, scheduling
 actor_network.association_schedules[]: association, kind, lifetime,

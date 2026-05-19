@@ -2,10 +2,25 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL type-resolution metadata shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`.
+- Valid `(instance NAME of ALIAS.EXPORT)` forms now resolve to
+  metadata-only library/export provenance for explicit imported library
+  aliases and existing actor exports.
+- Schedule JSON carries resolved instance keys under
+  `actor_network.instances[]`: `type_resolution`, `library`, `alias`,
+  `export`, `module`, and `scheduled_fsm`.
+- The lowerer still emits only the parent scheduled `.fsm`; generated ATL
+  child `.fsm` artifacts, generated ATL tops, HDL child wiring, inferred
+  handoff binding, actor-event fan-in, route mux/storage, CDC, and
+  ready/backpressure remain deferred.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`.
+
 ## 2026-05-19: R14 — ATL type-resolution metadata subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`.
 - The next active ATL slice is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, which will resolve
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, selected to resolve
   `(instance NAME of ALIAS.EXPORT)` to report-visible library/export
   provenance only when `ALIAS` is an explicit import alias and `EXPORT` names
   an actor export.

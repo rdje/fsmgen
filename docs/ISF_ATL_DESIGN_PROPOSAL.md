@@ -415,23 +415,24 @@ reusing the existing library import model. Unqualified
 later leaf explicitly widens it; sibling top-level `(actor ...)` roots remain
 fail-closed. The source-contract reservation diagnostic is shipped: missing
 imports, non-explicit import aliases, unknown aliases, unknown actor exports,
-and known actor exports all fail before scheduled `.fsm` emission with
-ATL-specific messages explaining that actor type resolution is selected but
-generated child emission is not supported yet. No `actor_network.instances[]`
-keys change in that reservation leaf.
+and, in the `.9.18` reservation leaf, known actor exports failed before
+scheduled `.fsm` emission with ATL-specific messages explaining that actor
+type resolution was selected but generated child emission was not supported
+yet. `.9.20` keeps the invalid-source diagnostics and replaces the known
+export failure with metadata-only resolution.
 
-The next selected implementation subset is metadata-only type resolution. It
-will accept the same `(instance NAME of ALIAS.EXPORT)` source shape only when
-`ALIAS` is an explicit import alias and `EXPORT` names a library actor export,
-then widen the resolved `actor_network.instances[]` entry with
+The shipped metadata-only type-resolution subset accepts the same
+`(instance NAME of ALIAS.EXPORT)` source shape only when `ALIAS` is an
+explicit import alias and `EXPORT` names a library actor export, then widens
+the resolved `actor_network.instances[]` entry with
 `type_resolution`, `library`, `alias`, `export`, `module`, and
 `scheduled_fsm`. `type_resolution` is `library_actor_export`; `module` and
 `scheduled_fsm` reserve the deterministic future child names
-`<parent_actor>__<instance>` and `<parent_actor>__<instance>.fsm`. That subset
-still emits only the parent scheduled `.fsm`. It does not emit a child `.fsm`,
-generate an ATL top, infer interface bindings, or wire trigger/event/data
-handoffs. `<parent_actor>_top.fsm` remains reserved for a later leaf that
-selects ATL generated-top composition.
+`<parent_actor>__<instance>` and `<parent_actor>__<instance>.fsm`. The subset
+still emits only the parent scheduled `.fsm`: it does not emit a child
+`.fsm`, generate an ATL top, infer interface bindings, or wire
+trigger/event/data handoffs. `<parent_actor>_top.fsm` remains reserved for a
+later leaf that selects ATL generated-top composition.
 
 ## Endpoints
 
@@ -781,8 +782,9 @@ The shipped parent-handoff subsets accept one top-level transaction-body
 wait may also follow the selected same-cycle temporary trigger-batch form. The
 event wait lowers to a parent input named `actor_event`; the transaction
 trigger lowers to a parent output named `actor_transaction_start`. Both
-handoffs are external: FSMGen does not resolve actor types, generate child
-artifacts, emit an ATL top, or wire HDL event/trigger routes yet.
+handoffs are external: resolved actor type metadata, when present, is not
+used to generate child artifacts, emit an ATL top, or wire HDL event/trigger
+routes yet.
 
 The parser still recognizes unsupported reserved qualified forms and rejects
 them with ATL-specific diagnostics instead of letting them fall through as
@@ -822,11 +824,11 @@ than full actor-to-actor routing:
    `sink_signal`, `width`, `width_source`, `route_lifetime`, `storage`,
    `source`, and `sink`.
 
-This subset still does not resolve actor types, emit child `.fsm` files,
-generate an ATL top, wire HDL child interfaces, move data to or from
-`pins.name`, support inline drive movement, support endpoint expressions,
-infer fan-in or fan-out, combine data movement with actor triggers/events, or
-cross clock domains.
+This subset still does not use resolved actor type metadata for interface or
+width inference, emit child `.fsm` files, generate an ATL top, wire HDL child
+interfaces, move data to or from `pins.name`, support inline drive movement,
+support endpoint expressions, infer fan-in or fan-out, combine data movement
+with actor triggers/events, or cross clock domains.
 
 The shipped first pin-movement subset is pin-to-actor:
 

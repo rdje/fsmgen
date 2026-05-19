@@ -670,16 +670,17 @@ intent for now, not an implicit search through sibling actor roots or files.
 Existing `(use alias.actor as instance ...)` remains the separate reusable
 library generated-top path with explicit bindings. The targeted fail-closed
 reservation for this qualified ATL syntax is shipped: missing imports,
-non-explicit import aliases, unknown aliases, unknown actor exports, and known
-actor exports all fail before scheduled `.fsm` emission with ATL-specific
-diagnostics. The next selected ATL leaf resolves only metadata for accepted
-qualified entries: `actor_network.instances[]` gains `type_resolution`,
-`library`, `alias`, `export`, `module`, and `scheduled_fsm`, with
+non-explicit import aliases, unknown aliases, and unknown actor exports still
+fail before scheduled `.fsm` emission with ATL-specific diagnostics. The
+first resolution leaf is shipped as metadata-only behavior: accepted
+qualified entries add `type_resolution`, `library`, `alias`, `export`,
+`module`, and `scheduled_fsm`, with
 `type_resolution: "library_actor_export"` and deterministic reserved child
-names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm`.
-That selected subset still emits only the parent scheduled `.fsm`; generated
-child `.fsm` files, generated ATL tops, HDL child wiring, interface binding
-inference, and event/trigger/data handoff wiring remain later leaves.
+names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm` under
+`actor_network.instances[]`. That subset still emits only the parent scheduled
+`.fsm`; generated child `.fsm` files, generated ATL tops, HDL child wiring,
+interface binding inference, and event/trigger/data handoff wiring remain
+later leaves.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

@@ -411,11 +411,15 @@ sub _actor_network_for_ir {
         kind      => $network->{kind} // 'static_declaration',
         instances => [
             map {
-                {
+                my $instance = {
                     name        => $_->{name},
                     actor_type  => $_->{actor_type},
                     declaration => $_->{declaration},
+                };
+                for my $key (qw(type_resolution library alias export module scheduled_fsm)) {
+                    $instance->{$key} = $_->{$key} if exists $_->{$key};
                 }
+                $instance;
             } @{$network->{instances}}
         ],
         groups => \@groups,

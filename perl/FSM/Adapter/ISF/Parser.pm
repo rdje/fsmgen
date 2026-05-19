@@ -116,7 +116,7 @@ sub parse_source($self, $source_text, $source_label) {
     fsm_debug("Building typed actor AST", 3);
     my $result = $self->_build_actor($actor_ast, $source_label);
     $self->_resolve_library_uses($result, $forms, $source_label);
-    $self->_validate_atl_actor_type_resolution_boundary($result, $forms, $source_label);
+    $self->_resolve_atl_actor_type_metadata($result, $forms, $source_label);
     $self->_finalize_actor_domain_annotations($result);
     $self->_finalize_actor_crossings($result);
     fsm_debug("Actor '" . $result->{actor_name} . "' parsed: "
@@ -3712,7 +3712,7 @@ sub _resolve_library_uses($self, $actor, $forms, $source_label) {
     return 1;
 }
 
-sub _validate_atl_actor_type_resolution_boundary($self, $actor, $forms, $source_label) {
+sub _resolve_atl_actor_type_metadata($self, $actor, $forms, $source_label) {
     my @qualified_instances = grep {
         defined($_->{actor_type})
             && !ref($_->{actor_type})
@@ -3764,9 +3764,13 @@ sub _validate_atl_actor_type_resolution_boundary($self, $actor, $forms, $source_
             . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
             unless $library->{exports}{actor}{$export};
 
-        confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
-            . " resolved to library '$library->{name}' actor export '$export', but ATL actor type resolution is selected"
-            . " and not supported yet; no generated ATL child .fsm or generated ATL top is emitted in this slice\n";
+        my $module = _specialized_library_module_name($actor->{actor_name}, $name);
+        $instance->{type_resolution} = 'library_actor_export';
+        $instance->{library}         = $library->{name};
+        $instance->{alias}           = $alias;
+        $instance->{export}          = $export;
+        $instance->{module}          = $module;
+        $instance->{scheduled_fsm}   = "$module.fsm";
     }
 
     return 1;

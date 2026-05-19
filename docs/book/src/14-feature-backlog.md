@@ -678,11 +678,13 @@ concurrent groups may be declared with direct actor-level
 The enclosing actor is the network boundary; `(network ...)` is not part of
 the shipped source surface. The accepted form lowers to parser shell and
 schedule-report metadata under `actor_network` with `declaration: "actor"`.
-The static metadata surface does not resolve actor types, instantiate
-children, emit a generated ATL top, schedule groups, or wire HDL. Multiple
-instances outside the shipped scalar handoff and report-only group metadata
-subsets, broader event/trigger behavior beyond the single parent-handoff
-subsets, and wider endpoint movement remain backlog.
+Unqualified static instances remain metadata-only external intent.
+Library-qualified static instances now resolve to report metadata and reserved
+child names only; they still do not instantiate children, emit a generated ATL
+top, schedule groups, or wire HDL. Multiple instances outside the shipped
+scalar handoff and report-only group metadata subsets, broader event/trigger
+behavior beyond the single parent-handoff subsets, and wider endpoint movement
+remain backlog.
 Actor-to-actor and pin-to-actor movement is not expressed as top-level
 `connect` clauses. The selected ATL v0 proposal reuses existing drive
 definitions and drive calls: a drive body keeps its shipped `(sink source)`
@@ -829,14 +831,14 @@ roots remain rejected. Existing `(use alias.actor as instance ...)` remains
 the separate reusable-library generated-top surface with explicit bindings.
 The targeted fail-closed reservation for the qualified ATL syntax is now
 shipped: missing imports, non-explicit import aliases, unknown aliases,
-unknown exports, and known exports all fail before scheduled `.fsm` emission.
-The next selected behavior leaf resolves only report metadata for accepted
-qualified entries. It will add `type_resolution`, `library`, `alias`,
-`export`, `module`, and `scheduled_fsm` to resolved
-`actor_network.instances[]` entries while still emitting only the parent
-scheduled `.fsm`. Actual generated child emission, ATL top emission, HDL
-child wiring, interface binding inference, event fan-in, route mux/storage,
-CDC, and ready/backpressure remain later leaves.
+and unknown exports still fail before scheduled `.fsm` emission. The first
+resolution behavior leaf is now shipped as metadata-only resolution: accepted
+qualified entries add `type_resolution`, `library`, `alias`, `export`,
+`module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
+while still emitting only the parent scheduled `.fsm`. Generated child
+emission, ATL top emission, HDL child wiring, interface binding inference,
+event fan-in, route mux/storage, CDC, and ready/backpressure remain later
+leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

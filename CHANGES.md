@@ -1,6 +1,27 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL type-resolution metadata shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`.
+- Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)
+  so valid `(instance NAME of ALIAS.EXPORT)` forms resolve to
+  metadata-only ATL actor type provenance when `ALIAS` is an explicit import
+  alias and `EXPORT` names a library actor export.
+- The lowerer and JSON report emitter now preserve resolved instance keys:
+  `type_resolution`, `library`, `alias`, `export`, `module`, and
+  `scheduled_fsm`.
+- Extended `t/1322-isf-actor-network-static.t` to prove same-source and
+  external-library resolution, report shape, parent-only `.fsm` emission, and
+  preservation of targeted diagnostics for missing imports, non-explicit
+  aliases, unknown aliases, and unknown exports.
+- Added a public contract key family for resolved actor-network instance
+  entries while preserving the base unqualified instance key list.
+- Generated ATL child `.fsm` artifacts, generated ATL tops, HDL child wiring,
+  inferred handoff bindings, actor-event fan-in, route mux/storage, CDC,
+  ready/backpressure, and permanent actor grouping remain deferred.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`.
+
 ### R14 — ATL type-resolution metadata subset selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` before changing parser or
   report behavior again.
