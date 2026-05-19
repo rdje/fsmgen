@@ -797,6 +797,16 @@ event coupling, multiple waits or triggers, generated children, generated ATL
 tops, actor type resolution, HDL child wiring, data movement coupling,
 fan-in/fan-out, CDC, ready/backpressure, or permanent grouping.
 
+The next ATL fixture is selected as
+`isf/atl_trigger_batch_wait_pipeline.isf`. It couples the shipped temporary
+trigger-batch surface to one following actor event wait: a parent transaction
+triggers reader, filter, and writer in one same-cycle batch, waits on
+`writer.done`, then completes. The fixture will prove parent-level
+trigger-batch/event sequencing without claiming multiple event waits,
+actor-event fan-in, generated children, generated ATL tops, actor type
+resolution, HDL child wiring, data movement coupling, CDC, ready/backpressure,
+or permanent grouping.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names the current

@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL trigger-batch wait fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` as a selection leaf before
+  fixture source/test changes.
+- The next active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`,
+  which will promote `isf/atl_trigger_batch_wait_pipeline.isf`.
+- Selected source shape: three direct static actors, one contiguous
+  transaction-body trigger batch, then one `(await writer.done)` event wait
+  before completion.
+- The selected fixture will prove generated trigger-batch handoff outputs,
+  generated event handoff input `writer_done`, temporary association schedule
+  metadata, compatibility group schedule metadata, strict schedule JSON
+  parity, and plain/strict HDL reachability.
 ## 2026-05-19: ATL trigger-wait fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
 - Added `isf/atl_trigger_wait_pipeline.isf` as the bounded single-actor ATL

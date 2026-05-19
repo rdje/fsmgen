@@ -620,6 +620,15 @@ artifacts, generated ATL tops, actor type resolution, HDL child wiring, event
 payloads, data movement coupling, fan-in/fan-out, CDC, ready/backpressure,
 compact aliases, or permanent actor grouping.
 
+The next selected ATL fixture is `isf/atl_trigger_batch_wait_pipeline.isf`.
+It couples one same-cycle temporary trigger batch to one following actor event
+wait. The parent transaction will trigger reader, filter, and writer in one
+state, wait on `writer.done`, then complete. The selected fixture remains
+parent-handoff orchestration: it does not claim generated ATL child `.fsm`
+artifacts, generated ATL tops, actor type resolution, HDL child wiring,
+multiple event waits, actor-event fan-in, data movement coupling, CDC,
+ready/backpressure, compact aliases, or permanent actor grouping.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single
 static actor instance. FSMGen lowers it to a generated one-bit parent event

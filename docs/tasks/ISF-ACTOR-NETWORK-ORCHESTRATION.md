@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -358,9 +358,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.10: add ATL trigger-wait fixture`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the next ATL behavior after the single-actor trigger/event wait fixture.`
   Acceptance: `Review the shipped trigger-batch, scalar data-route, pin-ingress, pin-egress, and trigger-wait fixture ladder; choose the next bounded ATL behavior-bearing or design-clarification slice before code. Candidate directions include temporary trigger-batch plus event-wait coupling, generated child artifact boundaries, actor type resolution prerequisites, richer scheduled data-route associations, or group_schedules[] compatibility/deprecation policy. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.11: select ATL trigger-batch wait fixture`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`
+  Status: `active`
+  Goal: `Promote a realistic ATL temporary trigger-batch plus single event-wait fixture.`
+  Acceptance: `Add isf/atl_trigger_batch_wait_pipeline.isf as a bounded orchestration fixture using already shipped ATL source syntax: three direct static actor instances, one top-level transaction that reacts to start, emits one contiguous temporary trigger batch with exactly three '(trigger actor.transaction)' clauses to distinct actors, then waits on exactly one '(await writer.done)' event handoff from one triggered actor before completing done. The fixture must emit only atl_trigger_batch_wait_pipeline.fsm, expose reader_capture_start, filter_process_start, writer_emit_start as generated parent trigger outputs, expose writer_done as the generated parent event input, report per-target transaction_triggers[], one association_schedules[] temporary_trigger_batch entry, one group_schedules[] schema-version-1 compatibility entry, one event_waits[] entry, and empty groups[] and data_movements[]. It must prove strict schedule JSON parity plus plain/strict HDL reachability. Do not claim multiple event waits, await_all/await_any actor-event fan-in, generated ATL child artifacts, generated ATL tops, actor type resolution, HDL child wiring, event payloads, endpoint data movement coupling, route mux/storage, CDC, ready/backpressure, compact aliases, or permanent actor grouping.`
   Verification: `pending`
   Commit: `pending`
 
@@ -368,7 +375,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` | `active` | `.9.10` promoted the single-actor trigger/event wait fixture; the next ATL behavior must be selected before further implementation. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12` | `active` | `.9.11` selected temporary trigger-batch plus single event-wait coupling before generated ATL children or broader event fan-in. |
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -686,6 +693,66 @@ Explicit non-claims:
 - no event payload, endpoint data movement coupling, route mux/storage,
   fan-in/fan-out, CDC, ready/backpressure, compact alias, or permanent actor
   grouping behavior.
+
+## Selected ATL Trigger-Batch Wait Fixture
+
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` selects the next fixture leaf as the
+first coupling between a task-scoped temporary trigger batch and one actor
+event wait. A top-level actor emits one same-cycle trigger batch to distinct
+static actor instances, then waits for one event handoff from one triggered
+actor before completing. This is still parent-handoff orchestration only.
+
+Selected implementation leaf:
+
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`
+
+Selected file:
+
+- `isf/atl_trigger_batch_wait_pipeline.isf`
+
+Selected source shape:
+
+```lisp
+(actor atl_trigger_batch_wait_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (instance reader of packet_reader)
+  (instance filter of packet_filter)
+  (instance writer of packet_writer)
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (trigger filter.process)
+    (trigger writer.emit)
+    (await writer.done)
+    (complete done)))
+```
+
+Selected coverage:
+
+- one scheduled parent artifact: `atl_trigger_batch_wait_pipeline.fsm`;
+- generated trigger handoff outputs: `reader_capture_start`,
+  `filter_process_start`, and `writer_emit_start`;
+- generated event handoff input: `writer_done`;
+- per-target `actor_network.transaction_triggers[]` entries;
+- one canonical `actor_network.association_schedules[]` entry with kind
+  `temporary_trigger_batch`;
+- one schema-version-1 compatibility `actor_network.group_schedules[]` entry;
+- one `actor_network.event_waits[]` entry for `writer.done`;
+- empty `actor_network.groups[]` and `data_movements[]`;
+- strict schedule JSON parity plus plain and strict HDL reachability.
+
+Explicit non-claims:
+
+- no multiple event waits or actor-event fan-in;
+- no generated ATL child `.fsm`;
+- no generated ATL top;
+- no actor type resolution or HDL child wiring;
+- no event payload, endpoint data movement coupling, route mux/storage, CDC,
+  ready/backpressure, compact alias, or permanent actor grouping behavior.
 
 ## Selected First ATL Fixture
 
@@ -1087,6 +1154,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1327-isf-atl-pin-egress-fixture-coverage.t`; `prove -Iperl t/1327-isf-atl-pin-egress-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_pin_egress_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `realistic scalar pin-egress fixture promoted; strict schedule JSON plus HDL coverage prove generated actor source handoff and scalar_actor_to_pin_handoff metadata; broad ISF gate passes with Files=233, Tests=1366` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a single-actor trigger/event wait fixture to prove parent orchestration handoffs before generated ATL child artifacts or broader trigger-batch/event coupling` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1328-isf-atl-trigger-wait-fixture-coverage.t`; `prove -Iperl t/1328-isf-atl-trigger-wait-fixture-coverage.t`; `prove -Iperl t/1144-isf-public-tested-by-metadata-audit.t t/1183-ci-regression-tier-selection.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `./bin/fsmgen --strict --quiet --emit-schedule-json isf/atl_trigger_wait_pipeline.isf`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `realistic single-actor trigger-wait fixture promoted; strict schedule JSON plus HDL coverage prove generated trigger/event handoffs and parent orchestration metadata; broad ISF gate passes with Files=234, Tests=1369` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a temporary trigger-batch plus single actor-event wait fixture before source/test implementation` |
 
 ## Commit Log
 
@@ -1132,6 +1200,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.8: add ATL pin egress fixture` | `promotes the scalar actor-to-top-level output pin fixture with strict schedule JSON and HDL coverage` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.9: select ATL trigger-wait fixture` | `selects the single-actor trigger/event wait fixture using shipped parent handoff syntax` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.10: add ATL trigger-wait fixture` | `promotes the single-actor trigger/event wait fixture with strict schedule JSON and HDL coverage` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.11: select ATL trigger-batch wait fixture` | `selects the first temporary trigger-batch plus single event-wait fixture` |
 
 ## Changelog
 
@@ -1366,3 +1435,12 @@ Current proposal summary:
   `event_waits[]` entry, empty association/group/data-movement arrays, and
   plain/strict HDL reachability. The active frontier moves to `.9.11` to
   select the next ATL behavior after the trigger-wait fixture before code.
+- `2026-05-19`: Completed `.9.11`: selected `.9.12` to promote
+  `isf/atl_trigger_batch_wait_pipeline.isf`, a realistic temporary
+  trigger-batch plus single event-wait fixture. The selected fixture will
+  prove same-cycle trigger batch handoffs, one `writer_done` event wait,
+  `association_schedules[]` temporary-association evidence,
+  `group_schedules[]` compatibility evidence, strict schedule JSON, and
+  plain/strict HDL reachability without claiming generated ATL children, ATL
+  tops, actor type resolution, child wiring, event fan-in, or permanent actor
+  grouping.

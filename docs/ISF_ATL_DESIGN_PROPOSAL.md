@@ -362,6 +362,18 @@ wiring, event payloads, data movement coupling, route mux/storage,
 fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
 grouping.
 
+The next selected ATL fixture is
+`isf/atl_trigger_batch_wait_pipeline.isf`. It extends parent-handoff
+orchestration by coupling the shipped same-cycle temporary trigger-batch
+surface to one following actor event wait: reader/filter/writer trigger
+outputs fire in one state, then the parent waits on `writer_done` before
+completion. The selected fixture will prove one task-scoped association entry,
+one schema-version-1 compatibility group schedule entry, one event-wait entry,
+and strict schedule/HDL reachability without claiming multiple event waits,
+actor-event fan-in, generated ATL children, generated ATL tops, actor type
+resolution, HDL child wiring, data movement coupling, CDC, ready/backpressure,
+compact aliases, or permanent actor grouping.
+
 ## Endpoints
 
 ATL needs a reviewable endpoint vocabulary:

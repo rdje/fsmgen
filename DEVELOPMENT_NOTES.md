@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL next fixture should couple a trigger batch to one event wait
+- After proving single-actor trigger/event sequencing, the next bounded ATL
+  step is to let a task-scoped temporary trigger batch be followed by one
+  actor event wait.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12` is selected as a fixture promotion
+  slice around three same-cycle trigger handoffs and one `writer_done` parent
+  event input.
+- This is still not full actor fan-in or child execution. Multiple event waits,
+  await-all semantics, actor type resolution, generated ATL children, and HDL
+  child wiring remain future leaves.
 ## 2026-05-19: ATL trigger-wait fixture is parent orchestration only
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10` promotes a fixture around behavior
   already shipped by the individual parent-handoff trigger and event-wait

@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL trigger-batch wait fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` before adding fixture
+  source or tests.
+- Selected `isf/atl_trigger_batch_wait_pipeline.isf` as the next ATL fixture:
+  one temporary trigger batch to reader/filter/writer, followed by one
+  `(await writer.done)` event wait before parent completion.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`.
+
 ### R14 — ATL trigger-wait fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
 - Added `isf/atl_trigger_wait_pipeline.isf` and

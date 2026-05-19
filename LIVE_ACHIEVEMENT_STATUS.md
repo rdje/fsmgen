@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL trigger-batch wait fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`.
+- Selected `isf/atl_trigger_batch_wait_pipeline.isf` for the next fixture
+  slice, using one same-cycle trigger batch to three static actors followed by
+  one `writer.done` event wait before completion.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`.
+
 ## 2026-05-19: R14 — ATL trigger-wait fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
 - Added the file-backed `isf/atl_trigger_wait_pipeline.isf` fixture and

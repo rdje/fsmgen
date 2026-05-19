@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.11`.
+  activation `.111` and ATL actor-network orchestration `.9.12`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -205,10 +205,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `actor_network.event_waits[]` entry, empty association/group/data-movement
   arrays, strict schedule JSON parity, scheduled `.fsm` structure including
   the default await timeout state, and plain plus strict HDL reachability. The
-  next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, which must
-  select the next bounded ATL behavior before broader trigger-batch/event
-  coupling, generated ATL child artifacts, generated ATL tops, actor type
-  resolution, or HDL child wiring are claimed.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11` then selected the next ATL fixture
+  as `isf/atl_trigger_batch_wait_pipeline.isf`: three direct static actors,
+  one same-cycle temporary trigger batch, one following `(await writer.done)`
+  parent event handoff, and one completion pulse. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, which must promote that fixture
+  before broader multi-event fan-in, generated ATL child artifacts, generated
+  ATL tops, actor type resolution, or HDL child wiring are claimed.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
