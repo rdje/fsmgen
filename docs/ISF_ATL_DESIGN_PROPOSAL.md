@@ -418,11 +418,20 @@ imports, non-explicit import aliases, unknown aliases, unknown actor exports,
 and known actor exports all fail before scheduled `.fsm` emission with
 ATL-specific messages explaining that actor type resolution is selected but
 generated child emission is not supported yet. No `actor_network.instances[]`
-keys change. The eventual child artifact naming direction follows the
-existing library convention:
-`<parent_actor>__<instance>.fsm` for a specialized child and
-`<parent_actor>_top.fsm` only after a later leaf selects ATL generated-top
-composition.
+keys change in that reservation leaf.
+
+The next selected implementation subset is metadata-only type resolution. It
+will accept the same `(instance NAME of ALIAS.EXPORT)` source shape only when
+`ALIAS` is an explicit import alias and `EXPORT` names a library actor export,
+then widen the resolved `actor_network.instances[]` entry with
+`type_resolution`, `library`, `alias`, `export`, `module`, and
+`scheduled_fsm`. `type_resolution` is `library_actor_export`; `module` and
+`scheduled_fsm` reserve the deterministic future child names
+`<parent_actor>__<instance>` and `<parent_actor>__<instance>.fsm`. That subset
+still emits only the parent scheduled `.fsm`. It does not emit a child `.fsm`,
+generate an ATL top, infer interface bindings, or wire trigger/event/data
+handoffs. `<parent_actor>_top.fsm` remains reserved for a later leaf that
+selects ATL generated-top composition.
 
 ## Endpoints
 

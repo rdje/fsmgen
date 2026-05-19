@@ -222,7 +222,11 @@ root; it is a library-qualified static instance type,
 `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is declared by the enclosing
 actor's library imports and `EXPORT` names a library actor export. That
 qualified spelling is selected for later ATL resolution and now fails closed
-with ATL-specific diagnostics; it is not generated child behavior.
+with ATL-specific diagnostics; it is not generated child behavior. The next
+selected resolution subset is metadata-only: accepted qualified instances will
+add library/export provenance to their `actor_network.instances[]` report
+entry and reserve deterministic future child names while still emitting only
+the parent scheduled `.fsm`.
 Accepted parser output preserves `name` as the public actor-shell
 `actor_name`; nested or otherwise non-scalar actor names are rejected before
 the parser returns an actor shell.
@@ -3021,6 +3025,17 @@ qualified syntax now fails closed with targeted diagnostics for missing
 imports, non-explicit import aliases, unknown aliases, unknown actor exports,
 and known actor exports before any generated child `.fsm`, ATL top, or report
 schema change is claimed.
+
+The selected first resolution subset is intentionally report-only. The next
+behavior leaf accepts resolved qualified entries and widens only those
+`actor_network.instances[]` entries with `type_resolution`,
+`library`, `alias`, `export`, `module`, and `scheduled_fsm`. The selected
+`type_resolution` value is `library_actor_export`; `module` and
+`scheduled_fsm` reserve `<parent_actor>__<instance>` and
+`<parent_actor>__<instance>.fsm` for future child emission. The lowerer still
+emits no child `.fsm` and no ATL top in that subset, and trigger/event/data
+handoffs remain external parent handoffs until interface binding and HDL
+wiring are explicitly selected.
 
 The following remain fail-closed/deferred:
 

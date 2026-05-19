@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL type resolution should start as report metadata
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` selects the next behavior slice as
+  metadata-only resolution for `(instance NAME of ALIAS.EXPORT)`.
+- This keeps the first source-resolution step small: prove library/export
+  lookup, expose provenance to downstream tools, and reserve deterministic
+  future child names before attempting generated child `.fsm` emission or an
+  ATL top.
+- The selected `.9.20` keys intentionally mirror existing reusable-library
+  concepts where useful (`library`, `alias`, `export`, `module`,
+  `scheduled_fsm`) while keeping ATL `(instance ...)` distinct from
+  `(use alias.actor as instance ...)`.
+- Child interface inference, trigger/event/data handoff wiring,
+  ready/backpressure, route mux/storage, actor-event fan-in, and CDC remain
+  separate selections because each one changes scheduling semantics.
 ## 2026-05-19: ATL qualified type syntax is reserved before resolution
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18` intentionally stops at a targeted
   fail-closed reservation for `(instance NAME of ALIAS.EXPORT)`.

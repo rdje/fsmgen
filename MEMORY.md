@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL type-resolution metadata subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` as a doc-only selection
+  leaf.
+- The next ATL implementation frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`: accept
+  `(instance NAME of ALIAS.EXPORT)` only for explicit imported library aliases
+  and existing actor exports, then record library/export provenance in
+  `actor_network.instances[]` without emitting child artifacts.
+- Selected future resolved-instance report keys are `type_resolution`,
+  `library`, `alias`, `export`, `module`, and `scheduled_fsm`, with
+  `type_resolution: library_actor_export` and deterministic reserved child
+  names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm`.
+- `.9.20` must still emit only the parent scheduled `.fsm`; generated ATL
+  child `.fsm` files, generated ATL tops, HDL child wiring, interface binding
+  inference, actor-event fan-in, route mux/storage, CDC, ready/backpressure,
+  and permanent actor grouping remain deferred.
 ## 2026-05-19: ATL library-qualified type syntax fails closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`.
 - `perl/FSM/Adapter/ISF/Parser.pm` now treats

@@ -541,7 +541,12 @@ future actor-network resolution path and now fails closed before scheduled
 child emission, generated ATL tops, HDL child wiring, and report-schema
 widening remain unshipped behavior until a later task-tree leaf updates this
 contract and its tests. Unqualified `(instance NAME of ACTOR_TYPE)` remains
-the current metadata-only external intent surface.
+the current metadata-only external intent surface. The next selected contract
+update is limited to metadata-only resolution for qualified entries:
+`actor_network.instances[]` will add `type_resolution`, `library`, `alias`,
+`export`, `module`, and `scheduled_fsm` only for resolved
+`ALIAS.EXPORT` actor types, and the lowerer will still emit only the parent
+scheduled `.fsm`.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

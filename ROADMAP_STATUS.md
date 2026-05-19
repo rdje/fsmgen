@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.19`.
+  activation `.111` and ATL actor-network orchestration `.9.20`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -241,11 +241,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   static instances and `(use alias.actor as instance ...)` library behavior
   are preserved; no actor type resolution, generated child artifacts,
   generated ATL tops, HDL child wiring, or report schema changes are claimed
-  yet. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, which must select the first
-  resolution metadata or generated-artifact slice before code claims generated
-  ATL child artifacts, generated ATL tops, HDL child wiring, actor-event
-  fan-in, route mux/storage, or permanent actor grouping.
+  yet. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` selected the first actual
+  resolution step as metadata-only provenance: the next code leaf,
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, will accept
+  `(instance NAME of ALIAS.EXPORT)` only for explicit imported aliases and
+  existing actor exports, record `type_resolution`, `library`, `alias`,
+  `export`, `module`, and `scheduled_fsm` on resolved
+  `actor_network.instances[]` entries, and reserve child names
+  `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm`. It must
+  still emit only the parent scheduled `.fsm`; generated ATL child artifacts,
+  generated ATL tops, HDL child wiring, inferred handoff binding,
+  actor-event fan-in, route mux/storage, CDC, ready/backpressure, and
+  permanent actor grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

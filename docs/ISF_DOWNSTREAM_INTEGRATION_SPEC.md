@@ -185,7 +185,10 @@ export from that library. That spelling is selected for a future
 actor-network resolution path and now fails closed with targeted diagnostics;
 downstream producers must still treat resolution and generated child emission
 as unshipped until the corresponding resolution leaf appears in this handoff
-and the public contract.
+and the public contract. The next selected resolution leaf is metadata-only:
+it will accept resolved qualified instances, report library/export provenance
+on `actor_network.instances[]`, and reserve future child artifact names while
+still emitting only the parent scheduled `.fsm`.
 
 Imported files may also contain library roots:
 
@@ -1522,7 +1525,11 @@ FSMGen still does not resolve child actor types, instantiate ATL child
 scheduled `.fsm` artifacts, generate an ATL top, or wire child HDL behavior.
 The selected source contract for future ATL actor type resolution is explicit
 library qualification in `(instance NAME of ALIAS.EXPORT)`, not sibling actor
-roots and not implicit lookup of unqualified `ACTOR_TYPE` names.
+roots and not implicit lookup of unqualified `ACTOR_TYPE` names. The next
+selected resolution subset will report only metadata for that qualified form:
+`type_resolution: library_actor_export`, the resolved `library`, `alias`, and
+`export`, plus reserved `module` and `scheduled_fsm` names. It will still not
+emit child artifacts or an ATL top.
 
 Accepted form:
 
@@ -1887,6 +1894,8 @@ dt_blocks[]: name, kind, assignments
 actor_network: kind, instances, groups, association_schedules,
   group_schedules, data_movements, event_waits, transaction_triggers
 actor_network.instances[]: name, actor_type, declaration
+selected future resolved actor_network.instances[] metadata-only keys:
+  type_resolution, library, alias, export, module, scheduled_fsm
 actor_network.groups[]: name, members, mode, declaration, source, scheduling
 actor_network.association_schedules[]: association, kind, lifetime,
   owner_transaction, context, members, target_transactions, signals, schedule,

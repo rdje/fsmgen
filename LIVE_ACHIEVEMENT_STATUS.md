@@ -2,6 +2,22 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL type-resolution metadata subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`.
+- The next active ATL slice is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, which will resolve
+  `(instance NAME of ALIAS.EXPORT)` to report-visible library/export
+  provenance only when `ALIAS` is an explicit import alias and `EXPORT` names
+  an actor export.
+- The selected report keys for resolved `actor_network.instances[]` entries
+  are `type_resolution`, `library`, `alias`, `export`, `module`, and
+  `scheduled_fsm`, with reserved future child names
+  `<parent_actor>__<instance>` and `<parent_actor>__<instance>.fsm`.
+- No compiler behavior changed. Generated ATL child `.fsm` artifacts,
+  generated ATL tops, HDL child wiring, inferred handoff bindings,
+  route mux/storage, actor-event fan-in, CDC, and ready/backpressure remain
+  deferred.
+
 ## 2026-05-19: R14 — ATL library-qualified type syntax fails closed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`.
 - `(instance NAME of ALIAS.EXPORT)` now fails closed with targeted ATL

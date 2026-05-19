@@ -830,7 +830,13 @@ the separate reusable-library generated-top surface with explicit bindings.
 The targeted fail-closed reservation for the qualified ATL syntax is now
 shipped: missing imports, non-explicit import aliases, unknown aliases,
 unknown exports, and known exports all fail before scheduled `.fsm` emission.
-Actual type resolution and generated child emission remain later leaves.
+The next selected behavior leaf resolves only report metadata for accepted
+qualified entries. It will add `type_resolution`, `library`, `alias`,
+`export`, `module`, and `scheduled_fsm` to resolved
+`actor_network.instances[]` entries while still emitting only the parent
+scheduled `.fsm`. Actual generated child emission, ATL top emission, HDL
+child wiring, interface binding inference, event fan-in, route mux/storage,
+CDC, and ready/backpressure remain later leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
