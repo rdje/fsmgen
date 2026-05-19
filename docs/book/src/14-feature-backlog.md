@@ -1143,12 +1143,12 @@ undeclared, and wider boundary pins fail closed until explicit interface
 remapping, activation fan-in, completion fan-out, boundary expressions,
 storage, muxing, ready/backpressure, or payload semantics are selected.
 
-The next selected hardening narrows generated-handoff collision coverage for
-that same route. Parent interface or actor-owned storage declarations that
-collide with generated trigger, event, data, or named-drive request handoffs
-must fail closed before any generated-handoff remapping, route mux/storage,
-fan-in/fan-out, interface remapping, ready/backpressure, or payload semantics
-are claimed.
+The shipped generated-handoff collision hardening narrows collision coverage
+for that same route. Parent interface or actor-owned storage declarations
+that collide with generated trigger, event, data, or named-drive request
+handoffs fail closed before any generated-handoff remapping, route
+mux/storage, fan-in/fan-out, interface remapping, ready/backpressure, or
+payload semantics are claimed.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-handoff collision hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71`.
+- Parent interface or actor-owned storage names that collide with the
+  generated-child actor-to-actor route's trigger, event, data, or named-drive
+  request handoffs now fail closed in focused coverage.
+- The parser now rejects the route drive-request collision before the
+  scheduler can materialize `forward_payload_start`.
+- Generated-handoff remapping, route mux/storage, fan-in/fan-out, interface
+  remapping, CDC/reset remapping, ready/backpressure, payload protocols,
+  recursive actor networks, and permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-handoff collision hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69`.
 - The active ATL frontier advances to

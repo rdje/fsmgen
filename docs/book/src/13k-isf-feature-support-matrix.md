@@ -853,8 +853,8 @@ does not exist:
   behavior.
 - ATL generated-child actor-to-actor routes do not support generated-handoff
   remapping or reuse. Parent-declared collisions with selected trigger,
-  event, data, or named-drive request handoff names remain fail-closed; the
-  next hardening slice only adds focused coverage for that boundary.
+  event, data, or named-drive request handoff names fail closed with focused
+  coverage.
 - Direct `(on ...)` activation-site `(params ...)` is unsupported; static
   specialization belongs to spawn, generated blocking `do`, and rule-trigger
   generated activation sites.

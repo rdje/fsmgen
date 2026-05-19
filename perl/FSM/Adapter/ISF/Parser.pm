@@ -1074,6 +1074,9 @@ sub _accept_selected_atl_actor_to_actor_data_movement {
 
     my $source_signal = _actor_atl_data_handoff_signal($source_instance, $source_endpoint);
     my $sink_signal = _actor_atl_data_handoff_signal($sink_instance, $sink_endpoint);
+    my $request_signal = "${drive_name}_start";
+    confess "Error: $context ATL scalar actor-to-actor data movement generated drive request signal '$request_signal' conflicts with a declared actor signal\n"
+        if $declared_signals->{$request_signal};
     for my $signal ($source_signal, $sink_signal) {
         confess "Error: $context ATL scalar actor-to-actor data movement generated handoff signal '$signal' conflicts with a declared actor signal\n"
             if $declared_signals->{$signal};

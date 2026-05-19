@@ -893,12 +893,56 @@ fail closed until a later contract selects interface remapping, activation
 fan-in, completion fan-out, boundary expressions, storage, muxing,
 backpressure, or payload behavior.
 
-The next selected hardening keeps generated parent handoff names exclusive.
-Parent-declared interface or storage signals that collide with the selected
-route's trigger, event, data, or named-drive request handoffs must fail
-closed before generated-top wiring can silently reuse or suppress those
-ports. This does not select handoff remapping, route muxing, route storage,
-fan-in/fan-out, ready/backpressure, or payload behavior.
+The shipped generated-handoff collision hardening keeps generated parent
+handoff names exclusive. Parent-declared interface or storage signals that
+collide with the selected route's trigger, event, data, or named-drive
+request handoffs fail closed before generated-top wiring can silently reuse
+or suppress those ports. This does not select handoff remapping, route
+muxing, route storage, fan-in/fan-out, ready/backpressure, or payload
+behavior.
+
+#### Generated-Child Route Terms
+
+The current generated-child actor-to-actor route is intentionally small. It
+means one scalar child output reaches one scalar child input through fixed
+generated parent handoffs for exactly the named drive-call cycle.
+
+Generated handoffs are the parent-visible signals that FSMGen creates for
+the route. In the shipped fixture, `reader_payload` carries the source child
+payload into the parent, `writer_payload` carries the parent value out to the
+sink child, `reader_capture_start` and `writer_emit_start` are one-cycle
+child-start pulses, `reader_done` and `writer_done` are child completion
+event inputs, and `forward_payload_start` is the named-drive request signal.
+
+Handoff remapping would let the author choose different generated parent
+handoff names or map the generated handoffs onto existing parent signals.
+That is not shipped for this route. The current contract uses deterministic
+generated names and rejects collisions with authored parent interface or
+storage names.
+
+Route muxing would let several possible sources feed the same sink endpoint,
+with a selector deciding which source is active in a given cycle. Route
+storage would hold route data across cycles before the sink consumes it. The
+current route has neither: it transfers one one-bit value during the
+`forward_payload` drive-call cycle and does not allocate route-local data
+storage.
+
+Fan-in would let multiple triggers, events, or data sources converge onto
+one generated handoff or child endpoint. Fan-out would let one trigger,
+event, or data source drive multiple generated handoffs or child endpoints.
+The current route has one source child, one sink child, one trigger and event
+per child, and one data movement.
+
+Ready/backpressure would let the sink child or generated top say "not ready"
+so the parent stalls, retries, buffers, or replays the transfer. The current
+route has no ready signal and no retry contract; the source event wait,
+drive-call cycle, sink trigger, and sink event wait are fixed in order.
+
+Payload protocols would define data movement richer than the current one-bit
+scalar drive-call-cycle value, such as multi-bit payloads, structured
+payloads, valid/ready payload transfer, or multi-cycle packet movement. The
+current route deliberately stays at one scalar bit until a later task tree
+selects and proves a wider protocol.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

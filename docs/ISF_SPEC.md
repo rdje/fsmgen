@@ -4033,12 +4033,12 @@ the start boundary to name a scalar top-level input and the completion
 boundary to name a scalar top-level output before interface remapping,
 activation fan-in, completion fan-out, boundary expressions, storage,
 muxing, ready/backpressure, or payload protocols are claimed.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.69` selected generated-handoff collision
-hardening as the next route-family slice. The next implementation leaf must
-prove that parent-declared interface or storage signals cannot collide with
-the selected source/sink trigger, event, data, or named-drive request
-handoffs before generated-handoff remapping, route mux/storage,
-fan-in/fan-out, ready/backpressure, or payload protocols are claimed.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.70` shipped generated-handoff collision
+hardening for that route family. Parent-declared interface or storage
+signals that collide with the selected source/sink trigger, event, data, or
+named-drive request handoffs now fail closed before generated-handoff
+remapping, route mux/storage, fan-in/fan-out, ready/backpressure, or payload
+protocols are claimed.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL generated handoff collision checks are complete for the selected route
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70` adds focused generated-child
+  actor-to-actor route coverage for parent interface and actor-owned storage
+  declarations that collide with selected generated handoff names.
+- Existing parser checks already covered trigger, event, and data-handoff
+  collisions against declared actor signals. This slice closes the remaining
+  named-drive request gap by rejecting `forward_payload_start`-style
+  collisions while accepting the route drive body.
+- The scheduler still sees only collision-free route metadata for this
+  subset. Generated-handoff remapping, route mux/storage, fan-in/fan-out,
+  ready/backpressure, and payload protocols remain future work.
+
 ## 2026-05-19: ATL generated handoff names must stay exclusive
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69` selects generated-handoff collision
   hardening as the next generated-child actor-to-actor route boundary.

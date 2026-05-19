@@ -1872,12 +1872,12 @@ child artifacts or generated ATL top wiring outside the explicitly shipped
 resolved-child subset until the corresponding support is documented here and
 advertised in the manifest.
 
-The next selected ATL hardening tightens generated-handoff collision coverage
-for the shipped generated-child actor-to-actor route. Downstream producers
-should treat parent-declared collisions with the selected trigger, event,
-data, or named-drive request handoff names as fail-closed input; FSMGen does
-not support handoff remapping, route mux/storage, fan-in/fan-out,
-ready/backpressure, or payload protocols for that route.
+The generated-child actor-to-actor route now has focused generated-handoff
+collision coverage. Downstream producers should treat parent-declared
+collisions with the selected trigger, event, data, or named-drive request
+handoff names as fail-closed input; FSMGen does not support handoff
+remapping, route mux/storage, fan-in/fan-out, ready/backpressure, or payload
+protocols for that route.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
 the selected one-bit actor-event handoff input, selected one-cycle

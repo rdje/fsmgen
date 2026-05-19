@@ -987,6 +987,58 @@ LIBRARY
         'generated-child actor-to-actor data route fails closed when the completion boundary is wider than one bit',
     );
 
+    my @generated_handoff_collision_cases = (
+        [
+            'source data handoff',
+            'reader_payload',
+            qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement generated handoff signal 'reader_payload' conflicts with a declared actor signal/,
+        ],
+        [
+            'sink data handoff',
+            'writer_payload',
+            qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement generated handoff signal 'writer_payload' conflicts with a declared actor signal/,
+        ],
+        [
+            'source trigger handoff',
+            'reader_capture_start',
+            qr/ATL actor transaction trigger '\(trigger reader\.capture\)' generated handoff signal 'reader_capture_start' conflicts with a declared actor signal/,
+        ],
+        [
+            'source event handoff',
+            'reader_done',
+            qr/ATL actor event wait '\(await reader\.done\)' generated handoff signal 'reader_done' conflicts with a declared actor signal/,
+        ],
+        [
+            'sink trigger handoff',
+            'writer_emit_start',
+            qr/ATL actor transaction trigger '\(trigger writer\.emit\)' generated handoff signal 'writer_emit_start' conflicts with a declared actor signal/,
+        ],
+        [
+            'sink event handoff',
+            'writer_done',
+            qr/ATL actor event wait '\(await writer\.done\)' generated handoff signal 'writer_done' conflicts with a declared actor signal/,
+        ],
+        [
+            'named-drive request handoff',
+            'forward_payload_start',
+            qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement generated drive request signal 'forward_payload_start' conflicts with a declared actor signal/,
+        ],
+    );
+
+    for my $case (@generated_handoff_collision_cases) {
+        my ($label, $signal, $expected) = @$case;
+        lower_source_fails_like(
+            generated_child_actor_route_fixture({ parent_interface_collision => $signal }),
+            $expected,
+            "generated-child actor-to-actor data route fails closed when a parent interface declares the $label name",
+        );
+        lower_source_fails_like(
+            generated_child_actor_route_fixture({ parent_storage_collision => $signal }),
+            $expected,
+            "generated-child actor-to-actor data route fails closed when parent storage declares the $label name",
+        );
+    }
+
     lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
@@ -2175,6 +2227,11 @@ ISF
         if $options->{start_boundary_output};
     $interface_extra .= "    (input ack)\n"
         if $options->{completion_boundary_input};
+    $interface_extra .= _interface_port_decl('input', $options->{parent_interface_collision}, 1)
+        if $options->{parent_interface_collision};
+    my $parent_storage = $options->{parent_storage_collision}
+        ? "  (storage\n    (var $options->{parent_storage_collision} (width 1)))\n"
+        : '';
     my $extra_start_boundary = $options->{extra_start_boundary}
         ? "    (on alt_start)\n"
         : '';
@@ -2219,6 +2276,9 @@ ISF
     $actor .= _interface_port_decl('output', 'done', $options->{completion_width} || 1);
     $actor .= <<'ISF';
   )
+ISF
+    $actor .= $parent_storage;
+    $actor .= <<'ISF';
   (imports
     (library common.packet as pkt_lib))
   (instance reader of pkt_lib.packet_reader)
