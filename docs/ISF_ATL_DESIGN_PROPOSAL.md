@@ -1203,6 +1203,12 @@ fan-in/fan-out, ready/backpressure, and payload protocols. It is
 audit-backed so the user-facing book remains synchronized with this design
 proposal, the ISF spec, and the downstream integration handoff.
 
+The shipped route drive remains non-parameterized and the selected drive call
+remains argument-free. Parameterized route drive definitions and drive calls
+with actual arguments fail closed before drive actual binding, expression
+movement, route mux/storage, ready/backpressure, or payload protocols are
+claimed.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

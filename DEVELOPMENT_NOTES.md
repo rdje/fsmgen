@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route drive arguments are coverage-locked
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80` adds focused regression coverage for
+  generated-child actor-to-actor route drives with formal parameters and
+  route drive calls with actual arguments.
+- Existing parser diagnostics already rejected both shapes, so the slice did
+  not need production code changes.
+- The docs now state the reason explicitly: parameterized route drives and
+  route call actuals would imply drive actual binding, expression movement,
+  or payload protocol semantics beyond the current one-bit route.
+
 ## 2026-05-19: ATL route drives need argument-boundary coverage
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79` selects focused hardening for route
   drive parameters and route drive-call actual arguments.

@@ -1091,6 +1091,18 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ route_drive_parameters => 1 }),
+        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement does not accept drive parameters in the current subset/,
+        'generated-child actor-to-actor data route fails closed when the route drive declares formal parameters',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ drive_call_actual => 1 }),
+        qr/transaction 'run' ATL scalar actor-to-actor data movement drive '\(drive forward_payload\)' does not accept actual arguments in the current subset/,
+        'generated-child actor-to-actor data route fails closed when the route drive call carries an actual argument',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ extra_drive_pair => 1 }),
         qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset/,
         'generated-child actor-to-actor data route fails closed when one route drive contains multiple endpoint pairs',
@@ -2177,6 +2189,9 @@ ISF
 sub generated_child_actor_route_fixture {
     my ($options) = @_;
     $options ||= {};
+    my $route_drive_call = $options->{drive_call_actual}
+        ? "    (drive forward_payload start)\n"
+        : "    (drive forward_payload)\n";
     my $clauses = $options->{split_sink_transaction}
         ? <<'CLAUSES'
     (trigger reader.capture)
@@ -2249,7 +2264,7 @@ CLAUSES
             . "    (await reader.done)\n"
             . $extra_reader_wait
             . $extra_reader_trigger
-            . "    (drive forward_payload)\n"
+            . $route_drive_call
             . "    (trigger writer.emit)\n"
             . $extra_writer_trigger
             . "    (await writer.done)\n"
@@ -2372,8 +2387,10 @@ ISF
     (library common.packet as pkt_lib))
   (instance reader of pkt_lib.packet_reader)
   (instance writer of pkt_lib.packet_writer)
-  (drive forward_payload
 ISF
+    $actor .= $options->{route_drive_parameters}
+        ? "  (drive (forward_payload value)\n"
+        : "  (drive forward_payload\n";
     $actor .= $drive_body;
     $actor .= <<'ISF';
 )

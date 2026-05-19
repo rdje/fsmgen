@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route drive argument hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`.
+- Focused coverage now rejects generated-child actor-to-actor route drive
+  definitions with formal parameters and route drive calls with actual
+  arguments.
+- Existing parser diagnostics already enforced both boundaries, so no
+  production parser/lowerer change was required.
+- The book, ISF spec, downstream handoff, ATL design proposal, and backlog
+  now state that route drive parameters and drive-call actuals remain outside
+  the shipped route subset.
+
 ## 2026-05-19: ATL route drive argument hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79` as a doc-only selection
   leaf.

@@ -1168,6 +1168,11 @@ shipped. The route terms are presented as a term-by-term support boundary so
 the current definitions, shipped subset, and deferred behavior are reviewable
 without reading implementation code.
 
+Parameterized route drive definitions and route drive calls with actual
+arguments also remain outside the generated-child actor-to-actor route. Those
+forms fail closed before drive actual binding, expression movement, or payload
+protocol behavior can be inferred.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared

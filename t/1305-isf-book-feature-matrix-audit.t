@@ -265,6 +265,8 @@ my @required_route_term_markers = (
     '##### Payload Protocols',
     'one scalar child output reaches one scalar child input',
     'named drive-call cycle',
+    'Parameterized route drive definitions',
+    'drive-call actual arguments',
     'Generated handoffs are',
     'Handoff remapping would',
     'Route muxing would',

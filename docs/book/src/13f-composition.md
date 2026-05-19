@@ -934,6 +934,12 @@ Wider payloads, structured payloads, replayed payloads, or delayed delivery
 remain deferred until a later task tree selects and verifies a wider
 protocol.
 
+Parameterized route drive definitions and drive-call actual arguments are
+also outside this route. `(drive (forward_payload value) ...)` and
+`(drive forward_payload value)` fail closed in the generated-child
+actor-to-actor route subset before drive actual binding, expression movement,
+or payload protocols can be inferred.
+
 ##### Generated Handoffs
 
 Generated handoffs are the parent-visible signals that FSMGen creates for

@@ -2005,6 +2005,11 @@ networks, repeated triggers, trigger batches, groups, and permanent actor
 grouping as deferred. The shipped route fails closed if the drive call does
 not follow the source event wait and precede the sink trigger.
 
+Downstream producers must also keep the route drive unparameterized and the
+route drive call argument-free. Parameterized route drive definitions and
+route drive calls with actual arguments remain fail-closed before drive
+actual binding, expression movement, or payload protocols are inferred.
+
 The shipped FSMGen hardening around this route does not widen the downstream
 surface.
 

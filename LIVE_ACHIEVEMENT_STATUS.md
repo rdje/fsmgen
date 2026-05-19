@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route drive argument hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`.
+- Focused coverage now rejects generated-child route drive definitions with
+  formal parameters and route drive calls with actual arguments.
+- Existing parser diagnostics already enforced both cases, so no production
+  code changed.
+- The book, spec, downstream handoff, design proposal, and backlog now state
+  that those forms remain outside the shipped route subset.
+
 ## 2026-05-19: R14 — ATL route drive argument hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.79`.
 - The active ATL frontier advances to

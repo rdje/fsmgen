@@ -4064,6 +4064,11 @@ mdBook now gives route lifetime/value boundary, generated handoffs, handoff
 remapping, diagnostic ownership, route muxing/storage, fan-in/fan-out,
 ready/backpressure, and payload protocols their own generated-child route
 term subsections.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.80` hardens the same route boundary for
+drive arguments: generated-child actor-to-actor route drive definitions do
+not accept formal parameters, and route drive calls do not accept actual
+arguments in this subset. Those shapes remain fail-closed before drive actual
+binding, expression movement, or payload protocols are inferred.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

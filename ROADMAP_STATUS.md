@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. The active R14
   frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -29,7 +29,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.80`.
+  activation `.111` and ATL actor-network orchestration `.9.81`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -430,8 +430,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `.9.79` leaf selected route drive parameter and drive-call actual-argument
   hardening before payload protocols, expression movement, mux/storage,
   fan-in/fan-out, ready/backpressure, or remapping behavior can be inferred.
-  The active ATL frontier is now
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.80`.
+  `.9.80` shipped that focused coverage without production code changes and
+  synchronized the book, spec, downstream handoff, design proposal, and
+  backlog with the fail-closed route drive argument boundary. The active ATL
+  frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.81`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)
