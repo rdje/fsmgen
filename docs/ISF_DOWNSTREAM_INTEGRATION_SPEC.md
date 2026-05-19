@@ -1813,6 +1813,12 @@ one-bit. Wider source child outputs and wider sink child inputs remain
 deferred/fail-closed until FSMGen publishes an explicit payload-width
 protocol; downstream producers should not assume truncation, extension,
 packing, or storage insertion.
+The next selected hardening keeps the generated-child actor-to-actor route in
+one parent clock/reset policy. Source or sink child clock/reset mismatches
+must remain fail-closed until FSMGen publishes an explicit CDC bridge or
+reset-remapping contract; downstream producers should not assume generated
+system-port remapping, async crossing logic, route storage, muxing, or
+backpressure insertion.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

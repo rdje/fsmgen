@@ -905,6 +905,10 @@ multi-route, mux/storage, fan-in/fan-out, or payload-protocol work is claimed.
 The shipped width hardening narrows that payload-protocol backlog further by
 locking wider generated-child route endpoints as fail-closed until explicit
 packing, truncation, extension, or storage semantics are selected.
+The next selected hardening narrows the CDC/reset-remap backlog by requiring
+source and sink children in the generated-child actor-to-actor route to share
+the parent clock/reset policy; mismatches remain fail-closed until explicit
+CDC bridge or reset-remapping semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

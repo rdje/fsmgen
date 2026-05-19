@@ -770,6 +770,11 @@ participate.
 The shipped width hardening keeps the route scalar one-bit only. Wider child
 payload endpoints remain fail-closed until a later payload-width protocol
 defines packing, truncation, extension, or storage behavior.
+The next selected hardening keeps the same route in one parent clock/reset
+policy. Source or sink child clock/reset mismatches must stay fail-closed
+until a later CDC or reset-remap contract is selected; the generated top does
+not insert async crossing logic, system-port remapping, route storage, muxing,
+or backpressure.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

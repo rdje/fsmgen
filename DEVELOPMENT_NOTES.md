@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-route clock/reset parity precedes CDC
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.43` selects same-clock/reset-policy
+  hardening as the next generated-child route boundary.
+- The shipped generated ATL top is not a CDC bridge and does not perform
+  reset remapping. Accepting mismatched source or sink child clock/reset
+  metadata in the actor-to-actor route would silently imply a crossing or
+  system-port mapping policy that has not been selected.
+- The next code leaf should therefore add focused fail-closed coverage for
+  source-side and sink-side child clock/reset mismatches, without changing
+  syntax, report keys, generated artifact shape, or routing behavior.
+
 ## 2026-05-19: ATL child-route width checks were already in the lowerer
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42` added regression coverage for wider
   generated-child actor-to-actor route endpoints without changing production

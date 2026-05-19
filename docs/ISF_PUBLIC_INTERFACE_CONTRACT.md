@@ -218,6 +218,10 @@ drive call, without adding report keys or widening ATL syntax.
 The shipped width hardening also keeps the public surface unchanged: it locks
 the scalar-width boundary for generated-child actor-to-actor route endpoints
 and does not add payload-width report keys or conversion semantics.
+The next selected clock/reset hardening likewise keeps the public surface
+unchanged: generated-child actor-to-actor routes remain same-domain
+generated-top wiring, and child clock/reset mismatches stay fail-closed until
+a later contract explicitly adds CDC or reset-remap metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
