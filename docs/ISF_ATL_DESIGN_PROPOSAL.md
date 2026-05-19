@@ -1127,6 +1127,13 @@ triggers the sink child before the data drive call, before any speculative
 sink activation, delayed payload delivery, route storage, muxing,
 ready/backpressure, or payload protocol behavior is claimed.
 
+The next selected sink-event-wait ordering hardening keeps the sink child
+event wait after the sink child trigger. Focused coverage must reject a route
+sequence that waits on the sink child event before triggering that child,
+before any pre-trigger acknowledgement, sticky event sampling, event replay,
+route storage, muxing, ready/backpressure, or payload protocol behavior is
+claimed.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

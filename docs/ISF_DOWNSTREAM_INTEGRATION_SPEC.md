@@ -1848,6 +1848,12 @@ before the sink child trigger. Downstream producers must not trigger the sink
 child before the drive call or assume speculative sink activation, delayed
 payload delivery, route storage, muxing, backpressure, or payload insertion
 until FSMGen publishes an explicit contract for those behaviors.
+The next selected sink-event-wait ordering hardening keeps the sink child
+event wait after the sink child trigger. Downstream producers should not wait
+on the sink child event before triggering that child or assume pre-trigger
+acknowledgement, sticky event sampling, event replay, route storage, muxing,
+backpressure, or payload insertion until FSMGen publishes an explicit
+contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL sink waits must remain after the sink trigger
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.55` selects sink-event-wait ordering as
+  the next generated-child route boundary.
+- In the current route contract, the parent triggers the sink child only
+  after the data drive call, then waits for the sink event. Waiting on the
+  sink event before triggering the sink child would imply sticky event
+  sampling, pre-trigger acknowledgement, event replay, or continuation
+  storage. None of those has been selected.
+- The next code leaf should therefore lock sink-wait-before-trigger route
+  sequences as diagnostics while leaving route continuation, storage, muxing,
+  backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL sink-trigger ordering was already parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.54` adds focused coverage for the
   generated-child actor-to-actor route sequence where the sink child trigger
