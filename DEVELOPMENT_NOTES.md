@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL next fixture should prove trigger/event orchestration
+- After closing the scalar data and pin movement fixture ladder, the next
+  useful ATL proof point is a single actor trigger/event round trip.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10` is selected as a fixture promotion
+  slice around the already shipped parent-handoff forms: one
+  `(trigger worker.process)` output pulse followed by one
+  `(await worker.done)` input pulse wait.
+- This deliberately avoids the broader temporary trigger-batch plus event-wait
+  coupling problem. The fixture proves orchestration sequencing without
+  claiming generated ATL child artifacts, actor type resolution, or HDL child
+  wiring.
 ## 2026-05-19: ATL pin-egress fixture closes the scalar boundary ladder
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8` promotes the inverse of the pin-ingress
   fixture and proves actor endpoint information can be routed to an existing

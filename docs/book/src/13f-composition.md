@@ -607,6 +607,17 @@ bidirectional pin movement, route mux/storage, trigger/data coupling, wider
 payloads, fan-in/fan-out, CDC, ready/backpressure, compact aliases, or
 permanent actor grouping.
 
+The next selected ATL fixture is `isf/atl_trigger_wait_pipeline.isf`. It uses
+one static actor instance and one parent transaction that emits
+`(trigger worker.process)`, then waits on `(await worker.done)`, then
+completes. The fixture is selected to prove parent-level trigger/event
+sequencing with generated handoff ports `worker_process_start` and
+`worker_done`. It does not claim temporary trigger-batch plus event coupling,
+generated ATL child `.fsm` artifacts, generated ATL tops, actor type
+resolution, HDL child wiring, event payloads, data movement coupling,
+fan-in/fan-out, CDC, ready/backpressure, compact aliases, or permanent actor
+grouping.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target the current single
 static actor instance. FSMGen lowers it to a generated one-bit parent event

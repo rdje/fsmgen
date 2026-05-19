@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL trigger-wait fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`.
+- Selected `isf/atl_trigger_wait_pipeline.isf` for the next fixture slice,
+  using one static actor, one generated trigger handoff output, one generated
+  event handoff input, and one top-level transaction that triggers, waits,
+  and completes.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
+
 ## 2026-05-19: R14 — ATL pin egress fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`.
 - Added the file-backed `isf/atl_pin_egress_pipeline.isf` fixture and

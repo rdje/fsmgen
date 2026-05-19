@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL trigger-wait fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` before adding fixture
+  source or tests.
+- Selected `isf/atl_trigger_wait_pipeline.isf` as the next ATL fixture: one
+  direct static actor instance `worker`, one top-level transaction that
+  triggers `worker.process`, waits on `worker.done`, and completes `done`.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`.
+
 ### R14 — ATL pin egress fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`.
 - Added `isf/atl_pin_egress_pipeline.isf` and

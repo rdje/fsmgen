@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL trigger-wait fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9` as a selection leaf before
+  fixture source/test changes.
+- The next active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`,
+  which will promote `isf/atl_trigger_wait_pipeline.isf`.
+- Selected source shape: one direct static actor instance `worker`, one
+  top-level transaction that emits `(trigger worker.process)`, waits on
+  `(await worker.done)`, then completes `done`.
+- The selected fixture will prove generated trigger handoff output
+  `worker_process_start`, generated event handoff input `worker_done`,
+  one `transaction_triggers[]` entry, one `event_waits[]` entry, strict
+  schedule JSON parity, and plain/strict HDL reachability.
 ## 2026-05-19: ATL pin egress fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`.
 - Added `isf/atl_pin_egress_pipeline.isf` as the bounded scalar ATL

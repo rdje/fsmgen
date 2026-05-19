@@ -786,6 +786,16 @@ plain plus strict HDL reachability without claiming bidirectional pin
 movement, generated children, route mux/storage, trigger/data coupling, wider
 payloads, fan-in/fan-out, CDC, ready/backpressure, or permanent grouping.
 
+The next ATL fixture is selected as `isf/atl_trigger_wait_pipeline.isf`. It
+uses the shipped parent handoff subsets rather than generated child wiring:
+one static actor `worker`, one `(trigger worker.process)` one-cycle output
+handoff, one following `(await worker.done)` event input wait, and one
+completion pulse. The fixture will prove single-actor orchestration sequencing
+without claiming temporary trigger-batch plus event coupling, multiple waits
+or triggers, generated children, generated ATL tops, actor type resolution,
+HDL child wiring, data movement coupling, fan-in/fan-out, CDC,
+ready/backpressure, or permanent grouping.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names the current
