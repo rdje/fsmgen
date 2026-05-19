@@ -459,7 +459,7 @@ parent, child, and generated top `.fsm` artifacts, reports the route through
 `actor_network.data_movements[]`, reports top discovery through
 `actor_network.generated_tops[]`, and wires parent `worker_payload` to child
 input `payload` internally in the generated top. This fixture still does not
-claim actor-to-actor generated-child routes, route mux/storage,
+claim broader actor-to-actor generated-child routes, route mux/storage,
 CDC/reset remapping, ready/backpressure, payload protocols, multi-child data
 wiring, recursive actor networks, or permanent actor grouping.
 
@@ -473,7 +473,7 @@ parent, child, and generated top `.fsm` artifacts, reports the route through
 `actor_network.generated_tops[]`, preserves child `payload` as an explicit
 child output port, and wires child `payload` to parent `worker_payload`
 internally in the generated top. This fixture still does not claim
-actor-to-actor generated-child routes, multi-child data wiring,
+broader actor-to-actor generated-child routes, multi-child data wiring,
 route mux/storage, CDC/reset remapping, ready/backpressure, payload
 protocols, recursive actor networks, or permanent actor grouping.
 
@@ -493,10 +493,28 @@ to `writer_done`. Schedule JSON records both resolved children in
 `actor_network.transaction_triggers[]`, both event waits in
 `actor_network.event_waits[]`, and one generated-top entry in
 `actor_network.generated_tops[]` with `children[]` per-child wiring records.
-The fixture does not claim generated-child actor-to-actor data routes,
-trigger batches, event fan-in/fan-out, route mux/storage, CDC/reset
+The data-free fixture does not claim generated-child actor-to-actor data
+routes, trigger batches, event fan-in/fan-out, route mux/storage, CDC/reset
 remapping, ready/backpressure, payload protocols, recursive actor networks,
 or permanent actor grouping.
+
+The ATL two-child scalar data-route generated-top fixture is shipped as
+`isf/atl_two_child_data_pipeline.isf`. It adds one named drive body pair
+`(writer.payload reader.payload)` between the same resolved `reader` and
+`writer` children. The parent transaction triggers `reader.capture`, awaits
+`reader.done`, calls `forward_payload`, triggers `writer.emit`, awaits
+`writer.done`, and completes. Lowering emits parent, reader, writer, and
+generated top `.fsm` artifacts. The parent exposes `reader_payload` as the
+source handoff input and `writer_payload` as the sink handoff output, drives
+`writer_payload` from `reader_payload` only in the drive-call cycle, and the
+generated top wires `reader.payload` to parent `reader_payload` plus parent
+`writer_payload` to `writer.payload`. Schedule JSON keeps route provenance in
+`actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
+generated-top discovery in `actor_network.generated_tops[]` with `children[]`.
+Broader multi-route data wiring, fan-in/fan-out, route mux/storage,
+CDC/reset remapping, ready/backpressure, payload protocols, repeated
+triggers, trigger batches, groups, recursive actor networks, and permanent
+actor grouping remain deferred.
 
 The shipped multi-event boundary proof is negative: a transaction that emits
 one temporary trigger batch and then attempts two actor event waits, such as
@@ -505,12 +523,12 @@ scheduled `.fsm` emission with the current one-event-wait diagnostic. This
 keeps `.9.12` transparent as a single-event parent-handoff subset, not
 actor-event fan-in or generated child completion joining.
 
-The shipped generated-child prerequisite is a source-root boundary. Until ATL
-actor type resolution is explicitly selected, a second top-level `(actor ...)`
-root in the same `.isf` source is not an inline child type definition and
-fails closed with a targeted diagnostic. One actor root plus `(library ...)`
-roots remains accepted. Generated child `.fsm` naming, generated ATL top
-packaging, and HDL child wiring remain deferred.
+The shipped generated-child prerequisite is a source-root boundary. A second
+top-level `(actor ...)` root in the same `.isf` source is not an inline child
+type definition and fails closed with a targeted diagnostic. One actor root
+plus `(library ...)` roots remains accepted, and the shipped
+library-qualified ATL subsets now emit generated child `.fsm` artifacts and
+generated ATL tops. Sibling-root child type resolution remains deferred.
 
 The selected ATL actor type-resolution source contract is library-qualified:
 
@@ -1002,7 +1020,7 @@ movement syntax, but only for one resolved child in the generated ATL top:
    the selected child input so the HDL backend keeps that input as a child
    module port.
 
-This subset still does not ship actor-to-actor generated-child routes,
+This subset still does not ship broader actor-to-actor generated-child routes,
 multi-child data wiring, route mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, or recursive actor networks.
 
@@ -1023,27 +1041,23 @@ movement syntax, again only for one resolved child in the generated ATL top:
    the selected child output so the HDL backend keeps that output as a child
    module port.
 
-This subset still does not ship actor-to-actor generated-child routes,
+This subset still does not ship broader actor-to-actor generated-child routes,
 multi-child data wiring, route mux/storage, CDC/reset remapping,
 ready/backpressure, payload protocols, or recursive actor networks.
 
-The generated-child actor-to-actor boundary is intentionally negative today:
-FSMGen fails closed the actor-to-actor data-route shape across two resolved
-children when it is coupled to qualified actor trigger/event handoffs. The
-reserved shape reuses the existing `(sink source)` drive-body pair, such as
-`(writer.payload reader.payload)`, but must not imply a permanent route,
-inserted storage, or child-to-child wiring until the scheduler can represent
-the multi-child top explicitly.
+The generated-child actor-to-actor boundary now has one positive path:
+FSMGen accepts the selected actor-to-actor data-route shape across two
+resolved children when it is coupled to the selected qualified actor
+trigger/event order. The shape reuses the existing `(sink source)` drive-body
+pair, such as `(writer.payload reader.payload)`, and still does not imply a
+permanent route, inserted storage, route mux, or broader child-to-child wiring.
 
-The first positive multi-child step is now shipped as a control-only
-generated ATL top with two resolved children and sequential trigger/event
-handoffs, but no data movement. That slice grows the top representation
-before attempting child-to-child payload routing.
-
-The next selected ATL widening is the first positive child-to-child payload
-route through that generated top. The selected source shape has two resolved
-children, one drive body pair `(writer.payload reader.payload)`, and one
-parent transaction ordered as:
+The first positive multi-child step shipped as a control-only generated ATL
+top with two resolved children and sequential trigger/event handoffs. The
+next shipped widening is the first positive child-to-child payload route
+through that generated top. The source shape has two resolved children, one
+drive body pair `(writer.payload reader.payload)`, and one parent transaction
+ordered as:
 
 ```lisp
 (trigger reader.capture)
@@ -1053,9 +1067,9 @@ parent transaction ordered as:
 (await writer.done)
 ```
 
-The generated top should wire the reader child output `payload` into the
-parent handoff input `reader_payload`, wire the parent handoff output
-`writer_payload` into the writer child input `payload`, and keep the existing
+The generated top wires the reader child output `payload` into the parent
+handoff input `reader_payload`, wires the parent handoff output
+`writer_payload` into the writer child input `payload`, and keeps the existing
 reader/writer trigger and event links internal. The scheduled parent remains
 the timing owner for the route: it drives `writer_payload` from
 `reader_payload` only for the selected drive-call cycle. This does not select

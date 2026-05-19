@@ -338,6 +338,36 @@ sub _emit_wiring_block {
                     next;
                 }
 
+                if (($data_link->{kind} // '') eq 'scalar_resolved_child_to_parent_handoff') {
+                    my $parent_source = $data_link->{parent_source_port};
+                    my $child_source = $data_link->{child_source_port};
+
+                    confess "CompositionTop emitter ATL parent data handoff port '$parent_source' is not present on parent '$actor_name'\n"
+                        unless exists $parent_port{$parent_source};
+                    confess "CompositionTop emitter ATL child data output '$child_source' is not present on module '$module'\n"
+                        unless exists $child_ports->{$child_source};
+                    confess "CompositionTop emitter ATL child data endpoint '$child_source' must be an output on module '$module'\n"
+                        unless ($child_ports->{$child_source}{direction} || '') eq 'output';
+
+                    push @links, _link($instance . ".$child_source", $actor_name . ".$parent_source");
+                    next;
+                }
+
+                if (($data_link->{kind} // '') eq 'scalar_parent_to_resolved_child_handoff') {
+                    my $parent_sink = $data_link->{parent_sink_port};
+                    my $child_sink = $data_link->{child_sink_port};
+
+                    confess "CompositionTop emitter ATL parent data handoff port '$parent_sink' is not present on parent '$actor_name'\n"
+                        unless exists $parent_port{$parent_sink};
+                    confess "CompositionTop emitter ATL child data input '$child_sink' is not present on module '$module'\n"
+                        unless exists $child_ports->{$child_sink};
+                    confess "CompositionTop emitter ATL child data endpoint '$child_sink' must be an input on module '$module'\n"
+                        unless ($child_ports->{$child_sink}{direction} || '') eq 'input';
+
+                    push @links, _link($actor_name . ".$parent_sink", $instance . ".$child_sink");
+                    next;
+                }
+
                 confess "CompositionTop emitter ATL data link has unsupported kind '$data_link->{kind}'\n";
             }
         }

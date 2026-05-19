@@ -197,14 +197,20 @@ The same focused coverage now also covers the shipped scalar pin-ingress
 route into the resolved child through the generated top. Public consumers
 should read the route from `actor_network.data_movements[]`, discover the top
 from `actor_network.generated_tops[]`, and treat the generated-top data-link
-plumbing as private implementation detail. Broader generated-child data-route
-top wiring remains deferred.
+plumbing as private implementation detail.
 The same focused coverage also covers
 [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf), the
 first data-free two-child generated-top subset. It proves parent, reader,
 writer, and generated top `.fsm` artifacts, strict schedule JSON parity,
 plain plus strict HDL generation, and per-child generated-top wiring metadata
 under `actor_network.generated_tops[].children[]`.
+The same focused coverage now covers
+[isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf),
+the first scalar generated-child actor-to-actor data route through that
+two-child top. Public consumers should read the route from
+`actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
+discover parent/reader/writer/top wiring from `actor_network.generated_tops[]`
+with `children[]`; no public `data_links` key is exposed.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -578,9 +584,15 @@ control-only two-child generated top is shipped for sequential trigger/event
 handoffs with no data movement; its generated-top entry uses `children[]`
 records advertised through
 `schedule_report_actor_network_generated_top_multi_child_keys` and
-`schedule_report_actor_network_generated_top_child_keys`. Broader
-generated ATL tops, multi-child data wiring, broader data-route coupling, and
-inferred payload/ready/backpressure binding remain unshipped behavior.
+`schedule_report_actor_network_generated_top_child_keys`. The first scalar
+generated-child actor-to-actor route through that two-child top is also
+shipped for `(writer.payload reader.payload)` when the parent transaction is
+ordered as source trigger, source event wait, drive call, sink trigger, and
+sink event wait. The route uses existing
+`schedule_report_actor_network_data_movement_keys`; no new report family is
+introduced. Broader generated ATL tops, multi-route data wiring, broader
+data-route coupling, route mux/storage, and inferred payload/ready/backpressure
+binding remain unshipped behavior.
 Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
@@ -1648,13 +1660,16 @@ The enclosing actor is the network boundary; `(network ...)` wrappers are not
 part of the shipped source surface. That field is not a required actor shell
 key. When present, `actor_network` is a `static_declaration` hash with direct
 static instance metadata, optional report-only group metadata, shipped event,
-trigger, data movement, exact temporary trigger-batch metadata, and resolved
-library-qualified child artifact metadata families. Schedule reports project
-it through top-level `actor_network`. Resolved instance entries report actor
-type provenance and child artifact names, and lowering emits those child
-scheduled `.fsm` files without wiring them to the parent. No generated ATL
-top, generated child trigger wiring, group endpoints, route mux/storage, or
-HDL event wiring is promised by this field.
+trigger, data movement, exact temporary trigger-batch metadata, resolved
+library-qualified child artifact metadata, and the bounded generated ATL top
+families. Schedule reports project it through top-level `actor_network`.
+Resolved instance entries report actor type provenance and child artifact
+names. The generated-top subset wires the selected one-child trigger/event
+forms, the selected one-child pin-ingress and pin-egress routes, the selected
+two-child trigger/event sequence, and the selected two-child scalar
+generated-child actor-to-actor route. No group endpoints, route mux/storage,
+broader HDL event wiring, or broader generated-top data routing is promised by
+this field.
 The selected broader ATL v0 public direction is direct actor-body syntax plus
 existing drive-body movement syntax, but most of those forms remain future
 behavior until advertised by capability metadata. Endpoint-aware movement
@@ -1719,20 +1734,21 @@ names that group; otherwise it carries a synthetic transaction-scoped name
 such as `run_trigger_batch`. Public reports therefore separate static
 membership (`groups[]`) from scheduled temporary associations
 (`association_schedules[]`).
-The current shipped actor-event wait subset accepts exactly one top-level
-transaction-body `(await actor.event)` for the current single declared static
-actor instance, lowered to a generated one-bit parent event handoff input
-named `actor_event`. For example, `reader.done` lowers through `reader_done`.
-Schedule reports expose this through `actor_network.event_waits[]` entries
-with `transaction`, `context`, `instance`, `event`, `signal`, and `source`
-keys, where `source` is currently `external_handoff`. The event source is
-external; actor type resolution, ATL child generation, generated ATL tops,
-and generated child event wiring are still deferred. Multiple event waits,
-nested event waits, fan-in, fan-out, event payloads, cross-clock actor events,
-and concurrent group events remain fail-closed/deferred. Existing
-unqualified local `(await signal)` and rule-level `(trigger transaction)`
-behavior remains unchanged, and dotted enum-looking names outside
-actor-network instances keep their prior diagnostics.
+The current shipped actor-event wait subset accepts top-level transaction-body
+`(await actor.event)` in the bounded selected ATL contexts. The external
+parent-handoff subset supports one declared static actor instance and lowers
+to a generated one-bit parent event handoff input named `actor_event`; for
+example, `reader.done` lowers through `reader_done`. The generated-top subset
+also uses these event wait records for the selected one-child and two-child
+resolved-library forms. Schedule reports expose waits through
+`actor_network.event_waits[]` entries with `transaction`, `context`,
+`instance`, `event`, `signal`, and `source` keys, where `source` is currently
+`external_handoff`. Nested event waits, fan-in, fan-out, event payloads,
+cross-clock actor events, concurrent group events, and waits outside the
+selected generated-top/source-order shapes remain fail-closed/deferred.
+Existing unqualified local `(await signal)` and rule-level
+`(trigger transaction)` behavior remains unchanged, and dotted enum-looking
+names outside actor-network instances keep their prior diagnostics.
 Regression coverage includes a temporary trigger batch followed by two actor
 event waits; that source remains unsupported multi-event fan-in and fails
 before scheduled `.fsm` emission with the one-event-wait diagnostic.

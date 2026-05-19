@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child actor-to-actor route shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`.
+- Added `isf/atl_two_child_data_pipeline.isf`, the first positive scalar
+  generated-child actor-to-actor data route through the two-child generated
+  ATL top.
+- FSMGen now accepts the selected route when the parent transaction is ordered
+  as source trigger, source event wait, data drive call, sink trigger, and
+  sink event wait.
+- Lowering emits parent, reader child, writer child, and generated top `.fsm`
+  artifacts. The parent owns the route timing through `reader_payload` and
+  `writer_payload` handoffs, and the generated top wires the child payload
+  ports to those handoffs.
+- Schedule JSON reuses `actor_network.data_movements[]` and
+  `actor_network.generated_tops[]`; no new public report family or public
+  data-link key was introduced.
+
 ### R14 — ATL generated-child actor-to-actor route selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` as a doc-only selection
   leaf.

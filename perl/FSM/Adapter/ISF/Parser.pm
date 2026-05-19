@@ -755,12 +755,6 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
 
     my %data_movement_drives = map { $_->{drive} => $_ } @data_movements;
 
-    _validate_atl_generated_child_actor_route_boundary(
-        $actor,
-        \@data_movements,
-        \%actor_instances,
-    );
-
     for my $tx (@{$actor->{transactions} || []}) {
         _validate_transaction_atl_reserved_qualified_forms(
             $tx->{clauses},
@@ -841,56 +835,6 @@ sub _validate_actor_atl_reserved_qualified_forms($self, $actor) {
         confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement requires a single-clock actor in the current subset\n"
             if ref($actor->{clock_domains}) eq 'HASH';
         $actor->{actor_network}{data_movements} = \@data_movements;
-    }
-
-    return 1;
-}
-
-sub _validate_atl_generated_child_actor_route_boundary {
-    my ($actor, $data_movements, $actor_instances) = @_;
-    my @actor_routes = grep { ($_->{kind} // '') eq 'scalar_actor_handoff' }
-        @{$data_movements || []};
-    return 1 unless @actor_routes;
-
-    my %actor_route_by_drive = map { $_->{drive} => $_ } @actor_routes;
-    my %route_instance;
-    for my $movement (@actor_routes) {
-        $route_instance{$movement->{source_instance}} = 1
-            if defined($movement->{source_instance}) && !ref($movement->{source_instance});
-        $route_instance{$movement->{sink_instance}} = 1
-            if defined($movement->{sink_instance}) && !ref($movement->{sink_instance});
-    }
-
-    for my $tx (@{$actor->{transactions} || []}) {
-        my $clauses = $tx->{clauses};
-        next unless ref($clauses) eq 'ARRAY';
-
-        my @transaction_actor_route_drives = grep { defined($_) && exists $actor_route_by_drive{$_} }
-            map {
-                ref($_) eq 'ARRAY'
-                    && (@$_ >= 2)
-                    && defined($_->[0])
-                    && !ref($_->[0])
-                    && $_->[0] eq 'drive'
-                    && defined($_->[1])
-                    && !ref($_->[1])
-                    ? $_->[1]
-                    : undef
-            } @$clauses;
-        next unless @transaction_actor_route_drives;
-
-        for my $clause (@$clauses) {
-            next unless ref($clause) eq 'ARRAY' && @$clause >= 2;
-            my $head = $clause->[0];
-            next unless defined($head) && !ref($head)
-                && ($head eq 'trigger' || $head eq 'await');
-
-            my ($instance) = _parse_qualified_atl_endpoint_token($clause->[1], $actor_instances);
-            next unless defined($instance) && $route_instance{$instance};
-
-            my $drive = $transaction_actor_route_drives[0];
-            confess "Error: transaction '$tx->{name}' ATL generated-child actor-to-actor data movement drive '$drive' cannot be combined with actor trigger/event handoffs in the current subset; multi-child ATL top scheduling remains deferred\n";
-        }
     }
 
     return 1;
@@ -1290,6 +1234,12 @@ sub _finalize_selected_atl_trigger_batches {
         $transaction_triggers,
         $data_movements,
     );
+    return 1 if _selected_atl_generated_top_actor_route_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
     confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch cannot be combined with scalar data movements in the current subset\n"
         if @{$data_movements || []};
 
@@ -1410,6 +1360,12 @@ sub _validate_selected_atl_event_wait_count {
         $transaction_triggers,
         $data_movements,
     );
+    return 1 if _selected_atl_generated_top_actor_route_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
 
     my $wait = $waits[1];
     my $transaction = $wait->{transaction} // 'unknown';
@@ -1458,6 +1414,108 @@ sub _selected_atl_two_child_generated_top_candidate {
     return 0 unless $declared{$ordered[0]{instance}} && $declared{$ordered[2]{instance}};
 
     return 1;
+}
+
+sub _selected_atl_generated_top_actor_route_candidate {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    return 0 unless _selected_atl_generated_top_actor_route_shape(
+        $instances,
+        $data_movements,
+        $event_waits,
+        $transaction_triggers,
+    );
+
+    my $movement = $data_movements->[0];
+    my ($source_trigger, $source_wait, $sink_trigger, $sink_wait) =
+        _selected_atl_generated_top_actor_route_sequence($movement, $event_waits, $transaction_triggers);
+
+    my $drive_index = $movement->{_drive_clause_index};
+    return 0 unless defined($source_trigger->{_clause_index})
+        && defined($source_wait->{_clause_index})
+        && defined($drive_index)
+        && defined($sink_trigger->{_clause_index})
+        && defined($sink_wait->{_clause_index});
+
+    return $source_trigger->{_clause_index} < $source_wait->{_clause_index}
+        && $source_wait->{_clause_index} < $drive_index
+        && $drive_index < $sink_trigger->{_clause_index}
+        && $sink_trigger->{_clause_index} < $sink_wait->{_clause_index}
+        ? 1
+        : 0;
+}
+
+sub _selected_atl_generated_top_actor_route_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    my @instances = @{$instances || []};
+    my @movements = @{$data_movements || []};
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+
+    return 0 unless @instances == 2
+        && @movements == 1
+        && @waits == 2
+        && @triggers == 2;
+
+    my $movement = $movements[0];
+    return 0 unless ($movement->{kind} // '') eq 'scalar_actor_handoff'
+        && ($movement->{source} // '') eq 'external_handoff'
+        && ($movement->{sink} // '') eq 'external_handoff';
+
+    my $source_instance = $movement->{source_instance};
+    my $sink_instance = $movement->{sink_instance};
+    return 0 unless defined($source_instance)
+        && defined($sink_instance)
+        && !ref($source_instance)
+        && !ref($sink_instance)
+        && length($source_instance)
+        && length($sink_instance)
+        && $source_instance ne $sink_instance;
+
+    my %declared = map { $_->{name} => 1 } @instances;
+    return 0 unless $declared{$source_instance} && $declared{$sink_instance};
+
+    my ($source_trigger, $source_wait, $sink_trigger, $sink_wait) =
+        _selected_atl_generated_top_actor_route_sequence($movement, \@waits, \@triggers);
+    return 0 unless ref($source_trigger) eq 'HASH'
+        && ref($source_wait) eq 'HASH'
+        && ref($sink_trigger) eq 'HASH'
+        && ref($sink_wait) eq 'HASH';
+
+    my $transaction = $movement->{transaction};
+    $transaction = $source_trigger->{owner_transaction}
+        unless defined($transaction) && !ref($transaction) && length($transaction);
+    return 0 unless defined($transaction) && !ref($transaction) && length($transaction);
+
+    return 0 unless ($movement->{transaction} // $transaction) eq $transaction
+        && ($source_trigger->{owner_transaction} // '') eq $transaction
+        && ($sink_trigger->{owner_transaction} // '') eq $transaction
+        && ($source_wait->{transaction} // '') eq $transaction
+        && ($sink_wait->{transaction} // '') eq $transaction;
+
+    return 1;
+}
+
+sub _selected_atl_generated_top_actor_route_sequence {
+    my ($movement, $event_waits, $transaction_triggers) = @_;
+    return unless ref($movement) eq 'HASH';
+
+    my $source_instance = $movement->{source_instance};
+    my $sink_instance = $movement->{sink_instance};
+    my @source_triggers = grep { ($_->{instance} // '') eq ($source_instance // '') }
+        @{$transaction_triggers || []};
+    my @source_waits = grep { ($_->{instance} // '') eq ($source_instance // '') }
+        @{$event_waits || []};
+    my @sink_triggers = grep { ($_->{instance} // '') eq ($sink_instance // '') }
+        @{$transaction_triggers || []};
+    my @sink_waits = grep { ($_->{instance} // '') eq ($sink_instance // '') }
+        @{$event_waits || []};
+
+    return unless @source_triggers == 1
+        && @source_waits == 1
+        && @sink_triggers == 1
+        && @sink_waits == 1;
+
+    return ($source_triggers[0], $source_waits[0], $sink_triggers[0], $sink_waits[0]);
 }
 
 sub _atl_temporary_trigger_batch_name {
@@ -1515,13 +1573,19 @@ sub _finalize_selected_atl_data_movements {
         _selected_atl_generated_top_pin_ingress_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
     my $generated_top_pin_egress_candidate =
         _selected_atl_generated_top_pin_egress_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
+    my $generated_top_actor_route_candidate =
+        _selected_atl_generated_top_actor_route_candidate($instances, $data_movements, $event_waits, $transaction_triggers);
     confess "Error: actor '$actor->{actor_name}' ATL resolved-child pin-egress data movement requires trigger before event wait and drive call after event wait in the current subset\n"
         if !$generated_top_pin_egress_candidate
             && _selected_atl_generated_top_pin_egress_shape($instances, $data_movements, $event_waits, $transaction_triggers);
-    confess "Error: actor '$actor->{actor_name}' ATL scalar actor data movement cannot be combined with actor event waits or actor transaction triggers except for the selected single resolved-child pin-ingress or pin-egress generated-top subsets\n"
+    confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order\n"
+        if !$generated_top_actor_route_candidate
+            && _selected_atl_generated_top_actor_route_shape($instances, $data_movements, $event_waits, $transaction_triggers);
+    confess "Error: actor '$actor->{actor_name}' ATL scalar actor data movement cannot be combined with actor event waits or actor transaction triggers except for the selected single resolved-child pin-ingress, pin-egress, or two-child actor-to-actor generated-top subsets\n"
         if (@{$event_waits || []} || @{$transaction_triggers || []})
             && !$generated_top_pin_ingress_candidate
-            && !$generated_top_pin_egress_candidate;
+            && !$generated_top_pin_egress_candidate
+            && !$generated_top_actor_route_candidate;
     confess "Error: actor '$actor->{actor_name}' ATL scalar actor-to-actor data movement cannot be combined with concurrent group metadata in the current subset\n"
         if $group_count;
 

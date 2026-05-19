@@ -2,6 +2,24 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child actor-to-actor route shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`.
+- `isf/atl_two_child_data_pipeline.isf` now proves one scalar
+  generated-child actor-to-actor data route through the two-child generated
+  ATL top.
+- The parent owns timing: it triggers `reader.capture`, awaits `reader.done`,
+  drives `(writer.payload reader.payload)`, triggers `writer.emit`, awaits
+  `writer.done`, and completes.
+- The generated top wires `reader.payload` to parent `reader_payload` and
+  parent `writer_payload` to `writer.payload`; reports reuse
+  `actor_network.data_movements[]` and `actor_network.generated_tops[]`.
+- Broader multi-route data wiring, fan-in/fan-out, route mux/storage,
+  CDC/reset remapping, ready/backpressure, payload protocols, repeated
+  triggers, trigger batches, groups, recursive actor networks, and permanent
+  actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child actor-to-actor route selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`.
 - The active ATL frontier advances to

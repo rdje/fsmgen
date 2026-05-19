@@ -30,6 +30,11 @@ my $two_child_isf_file = File::Spec->catfile(
     'isf',
     'atl_two_child_pipeline.isf',
 );
+my $two_child_data_isf_file = File::Spec->catfile(
+    $repo_root,
+    'isf',
+    'atl_two_child_data_pipeline.isf',
+);
 
 subtest 'ATL resolved-child fixture lowers to parent, child, and generated top artifacts' => sub {
     my ($files, $report) = lower_atl_fixture();
@@ -240,6 +245,87 @@ subtest 'ATL two-child fixture lowers sequential trigger/event handoffs through 
     assert_two_child_report_shape($report);
 };
 
+subtest 'ATL two-child data fixture lowers a scalar generated-child actor-to-actor route' => sub {
+    my ($files, $report) = lower_atl_fixture($two_child_data_isf_file);
+
+    is_deeply(
+        sorted([keys %$files]),
+        [
+            'atl_two_child_data_pipeline.fsm',
+            'atl_two_child_data_pipeline__reader.fsm',
+            'atl_two_child_data_pipeline__writer.fsm',
+            'atl_two_child_data_pipeline_top.fsm',
+        ],
+        'two-child data lowering emits exactly the parent, reader, writer, and generated ATL top FSM artifacts',
+    );
+
+    my $parent = $files->{'atl_two_child_data_pipeline.fsm'};
+    like($parent, qr/\A\(\?fsm:atl_two_child_data_pipeline\b/,
+        'two-child data parent uses the fixture module name');
+    like($parent, qr/\(reader_payload 1\)/,
+        'two-child data parent exposes the generated reader payload source handoff');
+    like($parent, qr/\(writer_payload 1\)/,
+        'two-child data parent exposes the generated writer payload sink handoff');
+    like($parent, qr/\brun_atl_trigger_1\b/,
+        'two-child data parent contains the reader trigger state');
+    like($parent, qr/\brun_await_2\b/,
+        'two-child data parent contains the reader await state');
+    like($parent, qr/\brun_drive_3\b/,
+        'two-child data parent contains the drive-call state between reader and writer');
+    like($parent, qr/\brun_atl_trigger_4\b/,
+        'two-child data parent contains the writer trigger state after the drive');
+    like($parent, qr/\brun_await_5\b/,
+        'two-child data parent contains the writer await state');
+    like($parent, qr/\(= \(forward_payload_start 1\)\)/,
+        'two-child data drive-call state pulses the named drive enable');
+    like($parent, qr/\(-forward_payload\s+\(<- \(writer_payload> reader_payload\) <forward_payload_start\)\s+\)/s,
+        'two-child data named drive transfers the reader handoff into the writer handoff for the drive-call cycle');
+
+    my $reader = $files->{'atl_two_child_data_pipeline__reader.fsm'};
+    like($reader, qr/\A\(\?fsm:atl_two_child_data_pipeline__reader\b/,
+        'two-child data reader child uses the resolved reader module name');
+    like($reader, qr/\(\+interface\s+\(output payload\)\s+\)/s,
+        'two-child data reader child preserves payload as an explicit generated output interface role');
+    like($reader, qr/\(payload 1\)/, 'two-child data reader keeps the payload size declaration');
+    like($reader, qr/\(capture_start 1\)/, 'two-child data reader keeps its authored capture_start input');
+    like($reader, qr/\(done 1\)/, 'two-child data reader keeps its authored done output');
+
+    my $writer = $files->{'atl_two_child_data_pipeline__writer.fsm'};
+    like($writer, qr/\A\(\?fsm:atl_two_child_data_pipeline__writer\b/,
+        'two-child data writer child uses the resolved writer module name');
+    like($writer, qr/\(\+interface\s+\(input payload\)\s+\)/s,
+        'two-child data writer child preserves payload as an explicit generated input interface role');
+    like($writer, qr/\(payload 1\)/, 'two-child data writer keeps the payload size declaration');
+    like($writer, qr/\(emit_start 1\)/, 'two-child data writer keeps its authored emit_start input');
+    like($writer, qr/\(done 1\)/, 'two-child data writer keeps its authored done output');
+
+    my $top = $files->{'atl_two_child_data_pipeline_top.fsm'};
+    like($top, qr/\A\(\?top:atl_two_child_data_pipeline_top\b/,
+        'two-child data generated top uses the fixture top module name');
+    like($top, qr/\(\?ports:public_io\s+clk\s+rst_n\s+start\s+done>\s+\)/s,
+        'two-child data generated top exposes only parent public pins plus clock/reset');
+    like($top, qr/\(\?fsmc:atl_two_child_data_pipeline atl_two_child_data_pipeline\)/,
+        'two-child data generated top instantiates the scheduled parent');
+    like($top, qr/\(\?fsmc:reader atl_two_child_data_pipeline__reader\)/,
+        'two-child data generated top instantiates the resolved reader child');
+    like($top, qr/\(\?fsmc:writer atl_two_child_data_pipeline__writer\)/,
+        'two-child data generated top instantiates the resolved writer child');
+    like($top, qr/\(reader\.payload atl_two_child_data_pipeline\.reader_payload\)/,
+        'two-child data generated top wires reader payload to the parent source handoff');
+    like($top, qr/\(atl_two_child_data_pipeline\.writer_payload writer\.payload\)/,
+        'two-child data generated top wires the parent sink handoff to writer payload');
+    like($top, qr/\(atl_two_child_data_pipeline\.reader_capture_start reader\.capture_start\)/,
+        'two-child data generated top wires parent reader trigger handoff to the reader');
+    like($top, qr/\(reader\.done atl_two_child_data_pipeline\.reader_done\)/,
+        'two-child data generated top wires reader done to the parent');
+    like($top, qr/\(atl_two_child_data_pipeline\.writer_emit_start writer\.emit_start\)/,
+        'two-child data generated top wires parent writer trigger handoff to the writer');
+    like($top, qr/\(writer\.done atl_two_child_data_pipeline\.writer_done\)/,
+        'two-child data generated top wires writer done to the parent');
+
+    assert_two_child_data_report_shape($report);
+};
+
 subtest 'ATL resolved-child fixture strict schedule JSON matches the in-process report' => sub {
     my (undef, $in_process_report) = lower_atl_fixture();
     my ($success, $stdout, $stderr) = run_cli(
@@ -325,6 +411,28 @@ subtest 'ATL two-child fixture strict schedule JSON matches the in-process repor
         decode_json($stdout),
         $in_process_report,
         'two-child strict schedule JSON generation matches the in-process report',
+    );
+};
+
+subtest 'ATL two-child data fixture strict schedule JSON matches the in-process report' => sub {
+    my (undef, $in_process_report) = lower_atl_fixture($two_child_data_isf_file);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--emit-schedule-json',
+            $two_child_data_isf_file,
+        ],
+        'two-child data strict schedule JSON generation',
+    );
+
+    ok($success, 'strict schedule JSON generation succeeds for the ATL two-child data fixture');
+    is($stderr, '', 'two-child data strict schedule JSON generation keeps stderr clean');
+    is_deeply(
+        decode_json($stdout),
+        $in_process_report,
+        'two-child data strict schedule JSON generation matches the in-process report',
     );
 };
 
@@ -431,6 +539,31 @@ subtest 'ATL two-child fixture strict outdir lowering writes the generated top' 
     );
 };
 
+subtest 'ATL two-child data fixture strict outdir lowering writes the generated top' => sub {
+    my $dir = tempdir(CLEANUP => 1);
+    my ($success, $stdout, $stderr) = run_cli(
+        [
+            './bin/fsmgen',
+            '--strict',
+            '--quiet',
+            '--outdir',
+            $dir,
+            $two_child_data_isf_file,
+        ],
+        'two-child data strict outdir lowering',
+    );
+
+    ok($success, 'strict outdir lowering succeeds for the ATL two-child data fixture');
+    like($stdout, qr/Wrote: .*atl_two_child_data_pipeline_top\.fsm/,
+        'two-child data strict outdir lowering reports the written generated top');
+    is($stderr, '', 'two-child data strict outdir lowering keeps stderr clean');
+    is_deeply(
+        sorted([fsm_basenames_in($dir)]),
+        expected_fsm_basenames_for_source($two_child_data_isf_file),
+        'two-child data strict outdir lowering writes the parent, resolved children, and generated top files',
+    );
+};
+
 subtest 'ATL resolved-child fixture reaches generated-top HDL generation' => sub {
     my $plain_dir = tempdir(CLEANUP => 1);
     my $plain_hdl = File::Spec->catfile($plain_dir, 'atl_resolved_child_pipeline_plain.sv');
@@ -515,6 +648,30 @@ subtest 'ATL two-child fixture reaches generated-top HDL generation' => sub {
     );
 
     assert_two_child_generated_top_hdl($strict, 'two-child strict HDL');
+};
+
+subtest 'ATL two-child data fixture reaches generated-top HDL generation' => sub {
+    my $plain_dir = tempdir(CLEANUP => 1);
+    my $plain_hdl = File::Spec->catfile($plain_dir, 'atl_two_child_data_pipeline_plain.sv');
+    my $plain = generate_hdl(
+        $plain_hdl,
+        [],
+        'two-child data plain HDL generation',
+        $two_child_data_isf_file,
+    );
+
+    assert_two_child_data_generated_top_hdl($plain, 'two-child data plain HDL');
+
+    my $strict_dir = tempdir(CLEANUP => 1);
+    my $strict_hdl = File::Spec->catfile($strict_dir, 'atl_two_child_data_pipeline_strict.sv');
+    my $strict = generate_hdl(
+        $strict_hdl,
+        ['--strict'],
+        'two-child data strict HDL generation',
+        $two_child_data_isf_file,
+    );
+
+    assert_two_child_data_generated_top_hdl($strict, 'two-child data strict HDL');
 };
 
 subtest 'ATL generated top fail-closed boundary rejects unsupported child wiring shapes' => sub {
@@ -657,9 +814,15 @@ LIBRARY
     );
 
     lower_source_fails_like(
-        generated_child_actor_route_fixture(),
-        qr/generated-child actor-to-actor data movement drive 'feed_writer' cannot be combined with actor trigger\/event handoffs.*multi-child ATL top scheduling remains deferred/,
-        'generated-child actor-to-actor data route fails closed before multi-child top scheduling',
+        generated_child_actor_route_fixture({ omit_writer_payload => 1 }),
+        qr/data movement 'forward_payload' requires a scalar child input port 'payload' on sink instance 'writer'/,
+        'generated-child actor-to-actor data route fails closed when the sink child omits the target input',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
+        qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
+        'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
     );
 };
 
@@ -1187,6 +1350,192 @@ sub assert_two_child_report_shape {
     );
 }
 
+sub assert_two_child_data_report_shape {
+    my ($report) = @_;
+
+    is($report->{source}, 'atl_two_child_data_pipeline.isf',
+        'two-child data schedule report names the fixture');
+    is($report->{scheduled_fsm}, 'atl_two_child_data_pipeline.fsm',
+        'two-child data schedule report names the scheduled parent FSM');
+    is($report->{inputs}, 4, 'two-child data report input count includes start, both events, and reader payload');
+    is($report->{outputs}, 4, 'two-child data report output count includes done, both triggers, and writer payload');
+    is($report->{port_count}, 8, 'two-child data report port count includes public and generated handoff ports');
+    is($report->{state_count}, 8, 'two-child data report state count includes trigger, await, drive, trigger, await, done, and timeout');
+    is_deeply($report->{compile_issues}, [], 'two-child data schedule report has no compile issues');
+    is_deeply(
+        $report->{dt_blocks},
+        [
+            {
+                assignments => 1,
+                kind        => 'drive',
+                name        => 'forward_payload',
+            },
+        ],
+        'two-child data schedule report records the scalar transfer drive body',
+    );
+    is_deeply(
+        $report->{transactions},
+        [
+            {
+                name => 'run',
+                count => 8,
+                states => [qw(
+                  run_idle_0
+                  run_atl_trigger_1
+                  run_await_2
+                  run_drive_3
+                  run_atl_trigger_4
+                  run_await_5
+                  run_done_6
+                  run_timeout
+                )],
+            },
+        ],
+        'two-child data schedule report records the selected trigger-await-drive-trigger-await state order',
+    );
+
+    my $actor_network = $report->{actor_network};
+    is($actor_network->{kind}, 'static_declaration', 'two-child data actor network kind');
+    is_deeply(
+        $actor_network->{instances},
+        [
+            {
+                name            => 'reader',
+                actor_type      => 'pkt_lib.packet_reader',
+                declaration     => 'actor',
+                type_resolution => 'library_actor_export',
+                library         => 'common.packet',
+                alias           => 'pkt_lib',
+                export          => 'packet_reader',
+                module          => 'atl_two_child_data_pipeline__reader',
+                scheduled_fsm   => 'atl_two_child_data_pipeline__reader.fsm',
+            },
+            {
+                name            => 'writer',
+                actor_type      => 'pkt_lib.packet_writer',
+                declaration     => 'actor',
+                type_resolution => 'library_actor_export',
+                library         => 'common.packet',
+                alias           => 'pkt_lib',
+                export          => 'packet_writer',
+                module          => 'atl_two_child_data_pipeline__writer',
+                scheduled_fsm   => 'atl_two_child_data_pipeline__writer.fsm',
+            },
+        ],
+        'two-child data report records both resolved child actor metadata entries',
+    );
+    is_deeply($actor_network->{groups}, [], 'two-child data fixture has no permanent static group');
+    is_deeply(
+        $actor_network->{generated_tops},
+        [
+            {
+                kind                 => 'resolved_children_trigger_event_sequence',
+                top_module           => 'atl_two_child_data_pipeline_top',
+                top_fsm              => 'atl_two_child_data_pipeline_top.fsm',
+                parent_module        => 'atl_two_child_data_pipeline',
+                parent_scheduled_fsm => 'atl_two_child_data_pipeline.fsm',
+                clock                => 'clk',
+                reset                => 'rst_n',
+                children             => [
+                    {
+                        instance             => 'reader',
+                        child_module         => 'atl_two_child_data_pipeline__reader',
+                        child_scheduled_fsm  => 'atl_two_child_data_pipeline__reader.fsm',
+                        target_transaction   => 'capture',
+                        trigger_parent_port  => 'reader_capture_start',
+                        trigger_child_port   => 'capture_start',
+                        event                => 'done',
+                        event_parent_port    => 'reader_done',
+                        event_child_port     => 'done',
+                    },
+                    {
+                        instance             => 'writer',
+                        child_module         => 'atl_two_child_data_pipeline__writer',
+                        child_scheduled_fsm  => 'atl_two_child_data_pipeline__writer.fsm',
+                        target_transaction   => 'emit',
+                        trigger_parent_port  => 'writer_emit_start',
+                        trigger_child_port   => 'emit_start',
+                        event                => 'done',
+                        event_parent_port    => 'writer_done',
+                        event_child_port     => 'done',
+                    },
+                ],
+            },
+        ],
+        'two-child data report records one generated ATL top with per-child wiring metadata',
+    );
+    is_deeply(
+        $actor_network->{data_movements},
+        [
+            {
+                kind            => 'scalar_actor_handoff',
+                drive           => 'forward_payload',
+                transaction     => 'run',
+                context         => 'transaction_body',
+                source          => 'external_handoff',
+                source_instance => 'reader',
+                source_endpoint => 'payload',
+                source_signal   => 'reader_payload',
+                sink            => 'external_handoff',
+                sink_instance   => 'writer',
+                sink_endpoint   => 'payload',
+                sink_signal     => 'writer_payload',
+                width           => 1,
+                width_source    => 'scalar_one_bit',
+                route_lifetime  => 'drive_call_cycle',
+                storage         => 'none',
+            },
+        ],
+        'two-child data report records the public scalar generated-child data movement',
+    );
+    is_deeply($actor_network->{association_schedules}, [], 'two-child data fixture has no trigger-batch association schedules');
+    is_deeply($actor_network->{group_schedules}, [], 'two-child data fixture has no compatibility group schedule evidence');
+    is_deeply(
+        $actor_network->{transaction_triggers},
+        [
+            {
+                owner_transaction  => 'run',
+                context            => 'transaction_body',
+                instance           => 'reader',
+                target_transaction => 'capture',
+                signal             => 'reader_capture_start',
+                sink               => 'external_handoff',
+            },
+            {
+                owner_transaction  => 'run',
+                context            => 'transaction_body',
+                instance           => 'writer',
+                target_transaction => 'emit',
+                signal             => 'writer_emit_start',
+                sink               => 'external_handoff',
+            },
+        ],
+        'two-child data report records both transaction trigger handoffs',
+    );
+    is_deeply(
+        $actor_network->{event_waits},
+        [
+            {
+                transaction => 'run',
+                context     => 'transaction_body',
+                instance    => 'reader',
+                event       => 'done',
+                signal      => 'reader_done',
+                source      => 'external_handoff',
+            },
+            {
+                transaction => 'run',
+                context     => 'transaction_body',
+                instance    => 'writer',
+                event       => 'done',
+                signal      => 'writer_done',
+                source      => 'external_handoff',
+            },
+        ],
+        'two-child data report records both event wait handoffs',
+    );
+}
+
 sub run_cli {
     my ($command, $label) = @_;
     my ($success, $error_message, $full_buf, $stdout_buf, $stderr_buf) =
@@ -1360,6 +1709,51 @@ sub assert_two_child_generated_top_hdl {
         "$label connects the parent writer event handoff input to the internal writer event link");
 }
 
+sub assert_two_child_data_generated_top_hdl {
+    my ($hdl, $label) = @_;
+
+    like($hdl, qr/\bmodule\s+atl_two_child_data_pipeline_top\b/,
+        "$label contains the generated ATL top module");
+    like($hdl, qr/\bmodule\s+atl_two_child_data_pipeline\b/,
+        "$label contains the scheduled parent module");
+    like($hdl, qr/\bmodule\s+atl_two_child_data_pipeline__reader\b/,
+        "$label contains the resolved reader child module");
+    like($hdl, qr/\bmodule\s+atl_two_child_data_pipeline__writer\b/,
+        "$label contains the resolved writer child module");
+    like($hdl, qr/\bmodule\s+atl_two_child_data_pipeline__reader\s*\([^;]*\boutput\s+reg\s+payload\b/s,
+        "$label preserves the reader payload output as a module port");
+    like($hdl, qr/\bmodule\s+atl_two_child_data_pipeline__writer\s*\([^;]*\binput\s+wire\s+payload\b/s,
+        "$label preserves the writer payload input as a module port");
+    like($hdl, qr/\bwire\s+comp_link_reader_payload\b/,
+        "$label declares the reader-to-parent payload link");
+    like($hdl, qr/\bwire\s+comp_link_atl_two_child_data_pipeline_writer_payload\b/,
+        "$label declares the parent-to-writer payload link");
+    like($hdl, qr/\bwire\s+comp_link_atl_two_child_data_pipeline_reader_capture_start\b/,
+        "$label declares the parent-to-reader trigger link");
+    like($hdl, qr/\bwire\s+comp_link_reader_done\b/,
+        "$label declares the reader-to-parent event link");
+    like($hdl, qr/\bwire\s+comp_link_atl_two_child_data_pipeline_writer_emit_start\b/,
+        "$label declares the parent-to-writer trigger link");
+    like($hdl, qr/\bwire\s+comp_link_writer_done\b/,
+        "$label declares the writer-to-parent event link");
+    like($hdl, qr/\.reader_payload\(comp_link_reader_payload\)/,
+        "$label connects the reader payload link to the parent source handoff input");
+    like($hdl, qr/\.payload\(comp_link_reader_payload\)/,
+        "$label connects the reader payload output to the internal payload link");
+    like($hdl, qr/\.writer_payload\(comp_link_atl_two_child_data_pipeline_writer_payload\)/,
+        "$label connects the parent sink handoff output to the writer payload link");
+    like($hdl, qr/\.payload\(comp_link_atl_two_child_data_pipeline_writer_payload\)/,
+        "$label connects the internal writer payload link to the writer payload input");
+    like($hdl, qr/\.capture_start\(comp_link_atl_two_child_data_pipeline_reader_capture_start\)/,
+        "$label connects the reader capture start input to the internal trigger link");
+    like($hdl, qr/\.done\(comp_link_reader_done\)/,
+        "$label connects the reader done output to the internal event link");
+    like($hdl, qr/\.emit_start\(comp_link_atl_two_child_data_pipeline_writer_emit_start\)/,
+        "$label connects the writer emit start input to the internal trigger link");
+    like($hdl, qr/\.writer_done\(comp_link_writer_done\)/,
+        "$label connects the parent writer event handoff input to the internal event link");
+}
+
 sub atl_fixture_variant {
     my ($library) = @_;
     my $actor = <<'ISF';
@@ -1448,8 +1842,29 @@ ISF
 }
 
 sub generated_child_actor_route_fixture {
-    return <<'ISF';
-(actor atl_resolved_child_data_route_pipeline
+    my ($options) = @_;
+    $options ||= {};
+    my $clauses = $options->{drive_before_reader_done}
+        ? <<'CLAUSES'
+    (trigger reader.capture)
+    (drive forward_payload)
+    (await reader.done)
+    (trigger writer.emit)
+    (await writer.done)
+CLAUSES
+        : <<'CLAUSES';
+    (trigger reader.capture)
+    (await reader.done)
+    (drive forward_payload)
+    (trigger writer.emit)
+    (await writer.done)
+CLAUSES
+    my $writer_payload_port = $options->{omit_writer_payload}
+        ? ''
+        : "      (input payload)\n";
+
+    my $actor = <<'ISF';
+(actor atl_two_child_data_pipeline
   (clock clk)
   (reset (rst_n async active_low))
   (interface
@@ -1459,17 +1874,17 @@ sub generated_child_actor_route_fixture {
     (library common.packet as pkt_lib))
   (instance reader of pkt_lib.packet_reader)
   (instance writer of pkt_lib.packet_writer)
-  (drive feed_writer
+  (drive forward_payload
     (writer.payload reader.payload))
   (transaction run
     (on start)
-    (trigger reader.capture)
-    (await reader.done)
-    (drive feed_writer)
-    (trigger writer.consume)
-    (await writer.done)
+ISF
+    $actor .= $clauses;
+    $actor .= <<'ISF';
     (complete done)))
 
+ISF
+    my $library = <<'ISF';
 (library common.packet
   (exports
     (actor packet_reader)
@@ -1489,13 +1904,16 @@ sub generated_child_actor_route_fixture {
     (clock clk)
     (reset (rst_n async active_low))
     (interface
-      (input consume_start)
-      (input payload)
+      (input emit_start)
+ISF
+    $library .= $writer_payload_port;
+    $library .= <<'ISF';
       (output done))
-    (transaction consume
-      (on consume_start)
+    (transaction emit
+      (on emit_start)
       (complete done))))
 ISF
+    return $actor . $library;
 }
 
 sub fsm_basenames_in {
@@ -1511,7 +1929,7 @@ sub expected_fsm_basenames_for_source {
     my (undef, undef, $filename) = File::Spec->splitpath($source_file);
     $filename =~ s/\.isf\z//;
 
-    if ($filename eq 'atl_two_child_pipeline') {
+    if ($filename eq 'atl_two_child_pipeline' || $filename eq 'atl_two_child_data_pipeline') {
         return [
             "$filename.fsm",
             "${filename}__reader.fsm",

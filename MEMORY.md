@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child actor-to-actor route shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.39`.
+- `.9.38` shipped `isf/atl_two_child_data_pipeline.isf`: one scalar
+  generated-child actor-to-actor route through the two-child generated ATL
+  top.
+- The parent triggers `reader.capture`, awaits `reader.done`, drives
+  `(writer.payload reader.payload)`, triggers `writer.emit`, awaits
+  `writer.done`, then completes.
+- The parent exposes `reader_payload` and `writer_payload` handoffs; the
+  generated top wires `reader.payload` to parent `reader_payload` and parent
+  `writer_payload` to `writer.payload`.
+- Schedule JSON reuses `actor_network.data_movements[]` with
+  `kind: "scalar_actor_handoff"` and `actor_network.generated_tops[]` with
+  `children[]`; no new public report family was added.
+
 ## 2026-05-19: ATL generated-child actor-to-actor route selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` as a doc-only selection
   leaf.

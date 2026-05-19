@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child-to-child data route remains parent-scheduled
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.38` implements the selected
+  generated-child actor-to-actor route without adding a permanent direct
+  child-to-child wire.
+- The source child output is wired to a parent input handoff and the parent
+  output handoff is wired to the sink child input in the generated top. The
+  parent scheduled drive body remains the only place where the route is
+  activated.
+- This keeps the ATL/RTL analogy precise: the route is a scheduled transfer
+  path for a cycle, not an always-on association. Storage, muxing,
+  ready/backpressure, fan-in/fan-out, and repeated-trigger policies are still
+  deferred until a later task selects them explicitly.
+- The schedule report did not need a new family. Existing
+  `data_movements[]` owns route provenance and existing `generated_tops[]`
+  owns top discovery; private generated-top data-link details stay out of the
+  public JSON contract.
+
 ## 2026-05-19: ATL child-to-child data should reuse parent-scheduled routing first
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` selects the first positive
   generated-child actor-to-actor route now that `.9.36` has proved a

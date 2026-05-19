@@ -291,6 +291,17 @@ sub golden_matrix_cases {
             ],
         },
         {
+            name => 'actor_network_generated_top_child_data_route',
+            fixture => 'isf/atl_two_child_data_pipeline.isf',
+            covers => [
+                qw(
+                  schedule_report_actor_network_generated_top_multi_child_keys
+                  schedule_report_actor_network_generated_top_child_keys
+                  schedule_report_actor_network_data_movement_keys
+                )
+            ],
+        },
+        {
             name => 'actor_network_group',
             filename => 'actor_network_group_report.isf',
             source => actor_network_group_source(),

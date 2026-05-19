@@ -1779,23 +1779,26 @@ resolved child metadata from `actor_network.instances[]`, trigger evidence
 from `actor_network.transaction_triggers[]`, event evidence from
 `actor_network.event_waits[]`, and the generated-top discovery plus
 per-child wiring metadata from `actor_network.generated_tops[].children[]`.
-Downstream producers must still treat actor-to-actor generated-child routes,
-multi-child data wiring, route mux/storage, CDC/reset remapping,
-ready/backpressure, payload protocols, recursive actor networks, and
-permanent actor grouping as deferred. If they emit the reserved two-child
-route shape with a drive-body pair such as `(writer.payload reader.payload)`
-plus qualified actor trigger/event handoffs, they should expect a targeted
-fail-closed diagnostic rather than generated child-to-child wiring.
+The first scalar generated-child actor-to-actor route through that generated
+top is shipped by `isf/atl_two_child_data_pipeline.isf`. Downstream producers
+may emit one named drive body pair `(writer.payload reader.payload)` between
+two resolved children when the parent transaction is ordered as
+`trigger reader.capture`, `await reader.done`, `drive forward_payload`,
+`trigger writer.emit`, `await writer.done`, then complete. The parent exposes
+`reader_payload` as the generated source handoff input and `writer_payload` as
+the generated sink handoff output; the generated top wires `reader.payload` to
+parent `reader_payload` and parent `writer_payload` to `writer.payload`.
+Downstream consumers should read route provenance from
+`actor_network.data_movements[]` with `kind: "scalar_actor_handoff"` and
+generated-top discovery from `actor_network.generated_tops[]` with
+`children[]`. No new report family or public `data_links` key is exposed.
 
-The next selected ATL implementation frontier is that first scalar
-generated-child actor-to-actor route, but it is not downstream-emittable until
-the implementation leaf lands and this handoff is updated again. The selected
-future source shape is one drive body pair `(writer.payload reader.payload)`
-between two resolved children, called after `reader.done` and before
-`writer.emit`. The planned report contract reuses `actor_network.data_movements[]`
-for route provenance and `actor_network.generated_tops[]` for generated-top
-discovery; no new report family is selected. Until that support ships,
-downstream producers must keep treating the shape as deferred/fail-closed.
+Downstream producers must still treat broader actor-to-actor generated-child
+routes, multi-route data wiring, fan-in/fan-out, route mux/storage,
+CDC/reset remapping, ready/backpressure, payload protocols, recursive actor
+networks, repeated triggers, trigger batches, groups, and permanent actor
+grouping as deferred. The shipped route fails closed if the drive call does
+not follow the source event wait and precede the sink trigger.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
@@ -2138,6 +2141,8 @@ isf/atl_trigger_batch_wait_pipeline.isf
 isf/atl_resolved_child_pipeline.isf
 isf/atl_resolved_child_pin_ingress_pipeline.isf
 isf/atl_resolved_child_pin_egress_pipeline.isf
+isf/atl_two_child_pipeline.isf
+isf/atl_two_child_data_pipeline.isf
 ```
 
 The SPI-like fixture and I2C-like fixture are bounded realistic examples, not
@@ -2318,16 +2323,19 @@ schedule JSON parity, parent/child/top `.fsm` artifacts, generated child
 output role preservation, plain and strict CLI HDL generation, a fail-closed
 missing child output diagnostic, and a fail-closed pre-event drive-order
 diagnostic for that route.
-The same focused regression now also covers the reserved generated-child
-actor-to-actor data-route diagnostic: the two-resolved-child
-`(writer.payload reader.payload)` shape fails closed when paired with
-qualified actor trigger/event handoffs because multi-child ATL top scheduling
-is still deferred.
 The same focused regression also covers
 `isf/atl_two_child_pipeline.isf`: parent/reader/writer/top `.fsm` artifacts,
 strict schedule JSON parity, nested generated-top `children[]` metadata,
 generated-top wiring, and plain plus strict CLI HDL generation for the
 data-free two-child trigger/event subset.
+The same focused regression now also covers
+`isf/atl_two_child_data_pipeline.isf`: parent/reader/writer/top `.fsm`
+artifacts, strict schedule JSON parity, `scalar_actor_handoff`
+`data_movements[]` metadata, nested generated-top `children[]` metadata,
+reader output and writer input `+interface` preservation, generated-top
+payload wiring, plain plus strict CLI HDL generation, missing sink payload
+diagnostics, and wrong-order diagnostics for the selected two-child scalar
+data route.
 
 Recommended downstream smoke commands:
 
@@ -2354,12 +2362,14 @@ Recommended downstream smoke commands:
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --emit-schedule-json isf/atl_resolved_child_pin_egress_pipeline.isf
+./bin/fsmgen --strict --emit-schedule-json isf/atl_two_child_data_pipeline.isf
 ./bin/fsmgen --strict isf/apb_requester.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-build isf/spawn_parent.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-fifo-library isf/fifo_library_use.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child isf/atl_resolved_child_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-ingress isf/atl_resolved_child_pin_ingress_pipeline.isf
 ./bin/fsmgen --strict --outdir /tmp/isf-atl-resolved-child-pin-egress isf/atl_resolved_child_pin_egress_pipeline.isf
+./bin/fsmgen --strict --outdir /tmp/isf-atl-two-child-data isf/atl_two_child_data_pipeline.isf
 ./bin/fsmgen --emit-schedule-json isf/clock_domain_event_crossing.isf
 ./bin/fsmgen --outdir /tmp/isf-cdc isf/clock_domain_dual_event_crossing.isf
 ./bin/fsmgen --capability-manifest

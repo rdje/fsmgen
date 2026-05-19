@@ -877,22 +877,26 @@ ready/backpressure, and payload protocols remain deferred.
 FSMGen now fails closed reserved generated-child actor-to-actor data movement
 across two resolved children when it is coupled to qualified actor
 trigger/event handoffs. The source shape reuses the existing `(sink source)`
-drive-body pair, but positive behavior waits for multi-child top scheduling
-rather than implying a permanent route or inserted storage.
+drive-body pair; the selected scalar two-child route is now shipped, while
+broader routes still require later scheduling work.
 The first positive two-child generated top is now shipped for the control-only
 case: `isf/atl_two_child_pipeline.isf` triggers `reader.capture`, waits on
 `reader.done`, triggers `writer.emit`, waits on `writer.done`, and completes.
 Lowering emits parent, both children, and one generated top; schedule JSON
 records the generated-top child wiring under
-`actor_network.generated_tops[].children[]`. Generated-child data movement
-between the children remains backlog.
+`actor_network.generated_tops[].children[]`.
 
-The next selected ATL implementation frontier narrows that backlog to one
-scalar child-to-child route through the two-child top. The selected source
-uses `(writer.payload reader.payload)` in a named drive body, called after
-`reader.done` and before `writer.emit`. Positive support is not shipped yet;
-multi-route data wiring, mux/storage, CDC/reset remapping,
-ready/backpressure, payload protocols, and permanent actor grouping remain
+The first scalar generated-child actor-to-actor route through that two-child
+top is now shipped as `isf/atl_two_child_data_pipeline.isf`. The source uses
+`(writer.payload reader.payload)` in a named drive body, called after
+`reader.done` and before `writer.emit`. Lowering emits parent, both children,
+and one generated top. The parent exposes `reader_payload` and
+`writer_payload` handoffs, the parent drive body moves the scalar payload for
+the drive-call cycle, and the generated top wires `reader.payload` to the
+parent source handoff plus the parent sink handoff to `writer.payload`.
+Multi-route data wiring, fan-in/fan-out, mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, repeated triggers, trigger batches,
+groups, recursive actor networks, and permanent actor grouping remain
 backlog.
 
 The first actor-event implementation boundary is a generated parent-handoff
@@ -1946,7 +1950,11 @@ child, using `(worker.payload pins.payload)`. The follow-on
 `isf/atl_resolved_child_pin_egress_pipeline.isf` fixture is now promoted for
 one generated-top scalar pin-egress route from that resolved child to a
 top-level output, using `(pins.result worker.payload)` after the child event
-wait, while broader generated-child data routes remain backlog.
+wait. The follow-on `isf/atl_two_child_data_pipeline.isf` fixture is now
+promoted for one generated-top scalar generated-child actor-to-actor route
+from `reader.payload` to `writer.payload` after the reader event wait and
+before the writer trigger, while broader generated-child data routes remain
+backlog.
 
 Fixture authoring policy: realistic fixtures should use documented ISF
 constructs. If a fixture needs an awkward workaround to express a normal

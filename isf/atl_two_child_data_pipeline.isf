@@ -1,0 +1,46 @@
+(actor atl_two_child_data_pipeline
+  (clock clk)
+  (reset (rst_n async active_low))
+  (interface
+    (input start)
+    (output done))
+  (imports
+    (library common.packet as pkt_lib))
+  (instance reader of pkt_lib.packet_reader)
+  (instance writer of pkt_lib.packet_writer)
+  (drive forward_payload
+    (writer.payload reader.payload))
+  (transaction run
+    (on start)
+    (trigger reader.capture)
+    (await reader.done)
+    (drive forward_payload)
+    (trigger writer.emit)
+    (await writer.done)
+    (complete done)))
+
+(library common.packet
+  (exports
+    (actor packet_reader)
+    (actor packet_writer))
+  (actor packet_reader
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input capture_start)
+      (output payload)
+      (output done))
+    (transaction capture
+      (on capture_start)
+      (set payload capture_start)
+      (complete done)))
+  (actor packet_writer
+    (clock clk)
+    (reset (rst_n async active_low))
+    (interface
+      (input emit_start)
+      (input payload)
+      (output done))
+    (transaction emit
+      (on emit_start)
+      (complete done))))

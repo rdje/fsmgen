@@ -643,8 +643,9 @@ completion joins.
 The shipped ATL source-root safety boundary rejects a second top-level
 `(actor ...)` root in the same `.isf` file. That sibling root is not yet a
 resolved actor type for `(instance name of ActorType)`. One actor root plus
-`(library ...)` roots remains accepted. Generated child `.fsm` artifacts,
-generated ATL tops, and HDL child wiring remain deferred.
+`(library ...)` roots remains accepted, and the shipped library-qualified ATL
+subsets now emit generated child `.fsm` artifacts and generated ATL tops.
+Sibling-root child type resolution remains deferred.
 
 The selected future source contract for ATL actor type resolution is explicit
 library qualification:
@@ -733,8 +734,8 @@ payload protocols remain unavailable.
 FSMGen now fails closed the reserved generated-child actor-to-actor
 data-route shape across two resolved children when it is coupled to qualified
 actor trigger/event handoffs. That shape reuses the existing `(sink source)`
-drive-body movement surface, but positive behavior waits for multi-child top
-scheduling rather than claiming a permanent route or inserted storage.
+drive-body movement surface and is now supported only for the selected
+two-child scalar data route described below.
 
 The first control-only two-child generated top is now shipped. The fixture
 `isf/atl_two_child_pipeline.isf` declares resolved `reader` and `writer`
@@ -747,18 +748,20 @@ clock/reset, wires `reader_capture_start` to `reader.capture_start`,
 `writer.emit_start`, and `writer.done` to `writer_done`. Schedule JSON keeps
 the same actor-network families and uses
 `actor_network.generated_tops[].children[]` for the per-child generated-top
-wiring records. Data movement between generated children, fan-in/fan-out,
-route mux/storage, CDC/reset remapping, ready/backpressure, and payload
-protocols remain unavailable.
-
-The next selected ATL implementation frontier is the first positive
-generated-child actor-to-actor scalar route through that two-child top. The
-selected source reuses a named drive body with `(writer.payload
-reader.payload)` and calls it after `reader.done` and before
-`writer.emit`. Until that implementation leaf ships, this remains selected
-backlog rather than supported behavior: current released behavior still fails
-closed for the generated-child actor-to-actor data route coupled to child
-trigger/event handoffs.
+wiring records. The first scalar generated-child actor-to-actor route through
+that two-child top is also shipped as `isf/atl_two_child_data_pipeline.isf`.
+It reuses a named drive body with `(writer.payload reader.payload)` and calls
+it after `reader.done` and before `writer.emit`. The scheduled parent exposes
+`reader_payload` as the source handoff input and `writer_payload` as the sink
+handoff output, drives `writer_payload` from `reader_payload` only for the
+`forward_payload` drive-call cycle, and the generated top wires
+`reader.payload` to parent `reader_payload` plus parent `writer_payload` to
+`writer.payload`. Schedule JSON records the route in
+`actor_network.data_movements[]` and the generated top in
+`actor_network.generated_tops[]` with `children[]`. Multi-route data wiring,
+fan-in/fan-out, route mux/storage, CDC/reset remapping, ready/backpressure,
+payload protocols, repeated triggers, trigger batches, groups, recursive
+actor networks, and permanent actor grouping remain unavailable.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

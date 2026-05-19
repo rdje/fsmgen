@@ -842,14 +842,10 @@ covers strict schedule JSON parity, parent/child/top `.fsm` artifacts, plain
 and strict HDL generation, fail-closed missing child output diagnostics, and
 fail-closed pre-event drive-order diagnostics for this fixture.
 
-Actor-to-actor generated-child routes, multi-child data wiring,
-route mux/storage, CDC/reset remapping, ready/backpressure, payload
-protocols, and permanent actor grouping remain deferred. When a
-generated-child actor-to-actor route shape reuses the existing
-`(sink source)` drive-body pair across two resolved children and also uses
-qualified actor trigger/event handoffs, FSMGen now fails closed with a
-targeted multi-child ATL top diagnostic instead of claiming generated
-child-to-child wiring.
+Broader actor-to-actor generated-child routes, multi-child data wiring beyond
+the selected two-child scalar route, route mux/storage, CDC/reset remapping,
+ready/backpressure, payload protocols, and permanent actor grouping remain
+deferred.
 
 The first positive two-child generated-top subset is shipped by
 [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf). The
@@ -864,10 +860,10 @@ to `writer_done`. Schedule JSON keeps the existing actor-network families and
 uses `actor_network.generated_tops[].children[]` for the per-child generated
 top wiring records.
 
-The next selected ATL implementation leaf is the first positive
-generated-child actor-to-actor scalar data route through that two-child top.
-The selected source shape reuses the existing drive-body `(sink source)`
-order:
+The first positive generated-child actor-to-actor scalar data route through
+that two-child top is shipped by
+[isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf).
+The source shape reuses the existing drive-body `(sink source)` order:
 
 ```lisp
 (drive forward_payload
@@ -876,13 +872,20 @@ order:
 
 inside a parent transaction ordered as trigger `reader.capture`, await
 `reader.done`, drive `forward_payload`, trigger `writer.emit`, await
-`writer.done`, then complete. The selected generated top will wire
-`reader.payload` to the parent `reader_payload` handoff and parent
-`writer_payload` to `writer.payload`, while the scheduled parent owns the
-one-cycle route activation. This is selected backlog until the implementation
-leaf ships; route mux/storage, fan-in/fan-out, CDC/reset remapping,
-ready/backpressure, wider payload protocols, and permanent actor grouping
-remain deferred.
+`writer.done`, then complete. Lowering emits parent, reader, writer, and
+generated top `.fsm` artifacts. The parent exposes `reader_payload` as the
+generated source handoff input and `writer_payload` as the generated sink
+handoff output; the parent drive body assigns `writer_payload` from
+`reader_payload` only for the `forward_payload` drive-call cycle. The
+generated top wires `reader.payload` to parent `reader_payload`, parent
+`writer_payload` to `writer.payload`, and keeps trigger/event handoffs
+internal. Schedule JSON reports the route through existing
+`actor_network.data_movements[]` `scalar_actor_handoff` fields and discovers
+the top through existing `actor_network.generated_tops[]` `children[]`
+metadata. Route mux/storage, fan-in/fan-out, CDC/reset remapping,
+ready/backpressure, wider payload protocols, repeated triggers, trigger
+batches, groups, recursive actor networks, and permanent actor grouping remain
+deferred.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
@@ -3182,11 +3185,17 @@ The shipped resolved-child pin-egress fixture
 `(pins.result worker.payload)` route to that same generated-top shape. It
 wires the resolved child output through the parent and to the top-level output
 pin while preserving public route metadata in `actor_network.data_movements[]`.
+The shipped two-child data fixture `isf/atl_two_child_data_pipeline.isf` adds
+one scalar generated-child actor-to-actor route `(writer.payload
+reader.payload)` through a generated top with resolved `reader` and `writer`
+children. It preserves public route metadata in
+`actor_network.data_movements[]` and top discovery in
+`actor_network.generated_tops[]`.
 
 The following remain fail-closed/deferred:
 
-- multiple static actor instances outside the shipped scalar handoff and
-  report-only group metadata subsets;
+- multiple static actor instances outside the shipped scalar handoff,
+  generated-top, and report-only group metadata subsets;
 - `(network ...)` wrappers;
 - broader actor-to-actor endpoint movement through widened drive-body
   `(sink source)` pairs outside the shipped scalar one-cycle handoff subset;
@@ -3194,8 +3203,8 @@ The following remain fail-closed/deferred:
   parent-handoff subsets;
 - generated top-level ATL wiring, interface binding, generated child HDL
   wiring, and group scheduling outside the exact shipped trigger/event top,
-  scalar pin-ingress and pin-egress generated-child routes, the targeted
-  generated-child actor-to-actor route diagnostic, and trigger-batch subsets;
+  scalar pin-ingress and pin-egress generated-child routes, selected
+  generated-child actor-to-actor route, and trigger-batch subsets;
 - recursive actor-network declarations.
 
 The broader ATL v0 vocabulary is selected, with only the bounded event-wait,
@@ -3736,6 +3745,8 @@ Representative shipped fixtures:
 - [isf/atl_resolved_child_pipeline.isf](../isf/atl_resolved_child_pipeline.isf)
 - [isf/atl_resolved_child_pin_ingress_pipeline.isf](../isf/atl_resolved_child_pin_ingress_pipeline.isf)
 - [isf/atl_resolved_child_pin_egress_pipeline.isf](../isf/atl_resolved_child_pin_egress_pipeline.isf)
+- [isf/atl_two_child_pipeline.isf](../isf/atl_two_child_pipeline.isf)
+- [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf)
 
 The current realistic fixture matrix is tracked in
 [docs/tasks/ISF-FIXTURE-COVERAGE.md](tasks/ISF-FIXTURE-COVERAGE.md). That
@@ -3918,18 +3929,17 @@ fixture now has file-backed two-child generated-top coverage for sequential
 trigger/event handoffs without data movement. It proves parent/reader/writer
 and top `.fsm` artifacts, strict schedule JSON parity, nested
 `generated_tops[].children[]` child wiring metadata, generated-top wiring,
-and plain plus strict HDL generation. Generated-child actor-to-actor
-movement across two resolved children now has
-targeted fail-closed coverage in
-[t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t):
-the reserved `(writer.payload reader.payload)` route is rejected when it is
-coupled to qualified actor trigger/event handoffs because multi-child ATL top
-scheduling remains deferred.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` selects that same source shape as the
-next implementation frontier now that the control-only two-child generated
-top is shipped. Positive support is still not claimed until `.9.38` lands;
-downstream producers should continue to treat generated-child actor-to-actor
-routes as deferred in released behavior.
+and plain plus strict HDL generation.
+The [isf/atl_two_child_data_pipeline.isf](../isf/atl_two_child_data_pipeline.isf)
+fixture now has file-backed two-child generated-top data-route coverage for
+the selected scalar generated-child actor-to-actor route. It proves
+parent/reader/writer/top `.fsm` artifacts, strict schedule JSON parity,
+`actor_network.data_movements[]` `scalar_actor_handoff` route metadata,
+nested `generated_tops[].children[]` child wiring metadata, reader output and
+writer input generated `+interface` metadata, internal generated-top payload
+wiring, plain plus strict HDL generation, a missing sink payload diagnostic,
+and a fail-closed diagnostic when the drive call does not follow the source
+event wait.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a
