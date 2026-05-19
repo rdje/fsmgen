@@ -135,24 +135,32 @@ ISF-generated multi-file scheduled designs.
 
 Current boundary: spawn and parameterized blocking `do` emit child files, a
 parent scheduled `.fsm`, and a generated composition top for covered
-generated-child fixtures. The ISF lowerer accepts one optional nested
-`(params (NAME value) ...)` block on `(spawn child as instance ...)` and on
-`(do child ...)`, accepts generated child transaction parameters from a
-transaction-local `params` clause, emits child defaults as scheduled child
-`+params`, validates duplicates/unknown overrides/value shapes, rejects
-parameter declarations on non-generated transactions, preserves per-instance
-override lists in the parent lowerer IR, and applies those overrides through
-the generated top. The shipped value domain is scalar/exact-width literals,
-actor-local constants, scalar local or package-qualified enum members, and
-compatible aggregate/list literals whose scalar leaves are literals,
-actor-local constants for activation overrides, or enum members for actor
-parameter defaults, generated child transaction parameter defaults, and
-activation overrides. Reusable-library use-site parameter overrides may use
-enum members as scalar values or scalar leaves inside compatible aggregate/list
-override values. Constant names and scalar enum members on activation sites,
-and enum members on reusable-library use sites, are resolved to literal values
-before generated-top emission. Runtime signals and arbitrary expressions remain
-outside the shipped value domain.
+generated-child fixtures.
+
+The ISF lowerer accepts one optional nested `(params (NAME value) ...)` block
+on `(spawn child as instance ...)` and on `(do child ...)`, accepts generated
+child transaction parameters from a transaction-local `params` clause, emits
+child defaults as scheduled child `+params`, validates duplicates/unknown
+overrides/value shapes, rejects parameter declarations on non-generated
+transactions, preserves per-instance override lists in the parent lowerer IR,
+and applies those overrides through the generated top.
+
+The shipped value domain is scalar/exact-width literals, actor-local
+constants, scalar local or package-qualified enum members, and compatible
+aggregate/list literals whose scalar leaves are literals, actor-local
+constants for activation overrides, or enum members for actor parameter
+defaults, generated child transaction parameter defaults, and activation
+overrides.
+
+Reusable-library use-site parameter overrides may use enum members as scalar
+values or scalar leaves inside compatible aggregate/list override values.
+
+Constant names and scalar enum members on activation sites, and enum members
+on reusable-library use sites, are resolved to literal values before
+generated-top emission.
+
+Runtime signals and arbitrary expressions remain outside the shipped value
+domain.
 
 ### General Transaction Activation Parameter Overrides
 
@@ -203,20 +211,29 @@ shipped for spawn, blocking `do`, and rule `trigger`:
 ```
 
 Lowering rule: parameter overrides specialize hardware; they do not assign
-runtime parameter signals. A parameterized blocking `do` elaborates a generated
-child activation instance named `{parent}_{child}_do_{ordinal}` and waits for
-that instance's `done` handoff. The selected parameterized rule-trigger
-lowering elaborates a generated child activation instance named
-`{rule}_{transaction}_trigger_{ordinal}`. The rule still emits the existing
-one-cycle trigger source and input payload sources, then a generated handoff DT
-drives the instance start and input handoff ports under that source. The
-generated top applies the static `(params ...)` overrides on the child
-`?fsmc` instance. The rule wires but does not await the generated child `done`
-handoff, and output bindings remain unsupported. Scalar enum member override
-values are resolved to literal generated-top parameter bindings for the shipped
-spawn, generated blocking `do`, and rule-trigger subset; scalar enum member
-leaves inside aggregate/list override values resolve to the same literal
-generated-top bindings.
+runtime parameter signals.
+
+A parameterized blocking `do` elaborates a generated child activation
+instance named `{parent}_{child}_do_{ordinal}` and waits for that instance's
+`done` handoff.
+
+The selected parameterized rule-trigger lowering elaborates a generated child
+activation instance named `{rule}_{transaction}_trigger_{ordinal}`.
+
+The rule still emits the existing one-cycle trigger source and input payload
+sources, then a generated handoff DT drives the instance start and input
+handoff ports under that source.
+
+The generated top applies the static `(params ...)` overrides on the child
+`?fsmc` instance.
+
+The rule wires but does not await the generated child `done` handoff, and
+output bindings remain unsupported.
+
+Scalar enum member override values are resolved to literal generated-top
+parameter bindings for the shipped spawn, generated blocking `do`, and
+rule-trigger subset; scalar enum member leaves inside aggregate/list override
+values resolve to the same literal generated-top bindings.
 
 Direct `(on port body...)` remains the entry/idle-state guard and accepts only
 `(sample port as name)` nested body clauses. `(on start (params (WIDTH 16)))`
@@ -236,31 +253,37 @@ Status: partially shipped; broader repeat-body child activation remains backlog.
 Task-tree owner for the remaining backlog:
 [`ISF-REPEAT-BODY-CHILD-ACTIVATION`](../../tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md).
 
-Repeat-body local `(do child)`, top-level when-body nested repeat local
-or generated-child `(do child)`, top-level when-body nested repeat
-static-parameter generated `(do child (params ...))` with optional
-`(bind ...)` handoffs, top-level switch-branch nested repeat local,
-generated-child `(do child)`, or static-parameter generated
-`(do child (params ...))` with optional `(bind ...)` handoffs and optional
-declared same-domain `(domain NAME)` metadata, repeat-body generated blocking
-`(do child (params ...))`, repeat-body spawn `(bind ...)`, and declared
-same-domain `(domain NAME)` metadata are shipped for the already shipped
-top-level repeat plus same-body synchronization paths. The local `do` subset
-stays in the parent scheduled module and waits for the child's fresh done
-pulse before the repeat check can loop; when the repeat is directly inside a
-top-level `when` body, a local do state lives in the branch-owned repeat
-region or a plain generated-child do site emits one deterministic
-`{parent}_{child}_repeat_do_{ordinal}` instance when the target is already
-generated elsewhere. Both forms gate that nested repeat check on fresh child
-done. Top-level `switch` branch nested repeats support the same local or
-generated-child do forms. The
-generated `do` subset emits one
-generated child instance for the lexical repeat-body do site and applies
-static parameter overrides once in the generated top. The spawn subset reuses
-the static generated-child model: one lexical spawn name maps to one generated
-child instance, binding payload ports are generated once for that instance
-rather than per repeat iteration, and the domain annotation records ownership
-metadata without implying CDC behavior.
+Repeat-body local `(do child)`, top-level when-body nested repeat local or
+generated-child `(do child)`, top-level when-body nested repeat
+static-parameter generated `(do child (params ...))` with optional `(bind
+...)` handoffs, top-level switch-branch nested repeat local, generated-child
+`(do child)`, or static-parameter generated `(do child (params ...))` with
+optional `(bind ...)` handoffs and optional declared same-domain `(domain
+NAME)` metadata, repeat-body generated blocking `(do child (params ...))`,
+repeat-body spawn `(bind ...)`, and declared same-domain `(domain NAME)`
+metadata are shipped for the already shipped top-level repeat plus same-body
+synchronization paths.
+
+The local `do` subset stays in the parent scheduled module and waits for the
+child's fresh done pulse before the repeat check can loop; when the repeat is
+directly inside a top-level `when` body, a local do state lives in the
+branch-owned repeat region or a plain generated-child do site emits one
+deterministic `{parent}_{child}_repeat_do_{ordinal}` instance when the target
+is already generated elsewhere.
+
+Both forms gate that nested repeat check on fresh child done.
+
+Top-level `switch` branch nested repeats support the same local or
+generated-child do forms.
+
+The generated `do` subset emits one generated child instance for the lexical
+repeat-body do site and applies static parameter overrides once in the
+generated top.
+
+The spawn subset reuses the static generated-child model: one lexical spawn
+name maps to one generated child instance, binding payload ports are
+generated once for that instance rather than per repeat iteration, and the
+domain annotation records ownership metadata without implying CDC behavior.
 
 Goal: allow `(spawn child as name)` inside `(repeat count body...)` without
 implying dynamic hardware creation.
@@ -273,56 +296,75 @@ each later iteration observes the child's fresh done pulse before starting it
 again, or reject the loop with a targeted diagnostic.
 
 Shipped subset: a top-level repeat body may use local `(do child)` when the
-child remains in the parent scheduled module. A repeat directly inside a
-top-level `when` body may also use that local `(do child)` subset, may use
-plain generated-child `(do child)` when the target child is already emitted as
-a generated child by another activation site, or may use generated blocking
-`(do child (params ...))` with static parameter overrides. The nested
-generated `when` forms own one deterministic generated do instance for the
-lexical site, apply parameter overrides once when present, may wire
+child remains in the parent scheduled module.
+
+A repeat directly inside a top-level `when` body may also use that local `(do
+child)` subset, may use plain generated-child `(do child)` when the target
+child is already emitted as a generated child by another activation site, or
+may use generated blocking `(do child (params ...))` with static parameter
+overrides.
+
+The nested generated `when` forms own one deterministic generated do instance
+for the lexical site, apply parameter overrides once when present, may wire
 input/output binding handoffs once when `(bind ...)` is paired with static
 `(params ...)`, and may carry declared same-domain `(domain NAME)` metadata
-when static params are present. A repeat directly inside a top-level
-`switch` branch may use local, plain generated-child `(do child)`, or
-static-parameter generated `(do child (params ...))` under the same
-generated-do rule and may wire input/output binding handoffs once when
-`(bind ...)` is paired with static `(params ...)`; it may also carry declared
-same-domain `(domain NAME)` metadata when static params are present. It
-rejects deeper branch nesting and loop-contained repeat activation.
+when static params are present.
 
-A top-level repeat body may use
-`(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])` clauses
-when the same repeat body reaches `(await_all done)` before the repeat check
-can loop. A single-pending `(await_any done)` is also shipped when exactly one
+A repeat directly inside a top-level `switch` branch may use local, plain
+generated-child `(do child)`, or static-parameter generated `(do child
+(params ...))` under the same generated-do rule and may wire input/output
+binding handoffs once when `(bind ...)` is paired with static `(params ...)`;
+it may also carry declared same-domain `(domain NAME)` metadata when static
+params are present.
+
+It rejects deeper branch nesting and loop-contained repeat activation.
+
+A top-level repeat body may use `(spawn child as inst [(params ...)] [(bind
+...)] [(domain NAME)])` clauses when the same repeat body reaches `(await_all
+done)` before the repeat check can loop.
+
+A single-pending `(await_any done)` is also shipped when exactly one
 repeat-body spawn is pending; in that case it has the same re-entry proof as
-waiting for the one static child. Local repeat-body `do` and `await_all`
-consume the needed done pulse before the repeat check, so the next iteration
-cannot re-assert the local or static child start before the previous activation
-has returned fresh done. Repeat-body generated blocking `do` with static
-parameter overrides has the same re-entry proof because the do state waits for
-the generated instance's done handoff before the repeat check. Samples after
-repeat-body spawn are shipped when they appear before the same-body
-`await_all` or single-pending `await_any`; they materialize in an explicit
-sample state before the sync state.
+waiting for the one static child.
 
-Parameter overrides reuse the same static specialization contract as top-level
-spawn: they specialize the one lexical child instance in the generated top and do not
-create per-iteration parameter values. Binding handoffs generate one set of
-parent handoff ports for the lexical static instance and are wired in the
-generated top. Repeat-body generated `do` now uses the same static
-parameter-plus-binding handoff model for its lexical generated do instance and
-may also carry same-domain `(domain NAME)` metadata. Domain annotations are
-accepted only when they name the same declared domain as the owning
-transaction and child; cross-domain activation still needs an explicit
-CDC/protocol contract. Plain repeat-body generated-child `(do child)` is now
-shipped for targets already generated elsewhere: it creates one deterministic
-generated do instance for the lexical repeat-body do site without requiring
-`(params ...)`,
-`(bind ...)`, or `(domain NAME)` on that site, then gates repeat re-entry on
-that instance's fresh done handoff. Samples immediately before shipped
-repeat-body local or generated `do` states now lower into explicit sample
-states before the do state. Samples immediately after those do states lower
-after the do state's fresh done guard and before the repeat check.
+Local repeat-body `do` and `await_all` consume the needed done pulse before
+the repeat check, so the next iteration cannot re-assert the local or static
+child start before the previous activation has returned fresh done.
+
+Repeat-body generated blocking `do` with static parameter overrides has the
+same re-entry proof because the do state waits for the generated instance's
+done handoff before the repeat check.
+
+Samples after repeat-body spawn are shipped when they appear before the
+same-body `await_all` or single-pending `await_any`; they materialize in an
+explicit sample state before the sync state.
+
+Parameter overrides reuse the same static specialization contract as
+top-level spawn: they specialize the one lexical child instance in the
+generated top and do not create per-iteration parameter values.
+
+Binding handoffs generate one set of parent handoff ports for the lexical
+static instance and are wired in the generated top.
+
+Repeat-body generated `do` now uses the same static parameter-plus-binding
+handoff model for its lexical generated do instance and may also carry
+same-domain `(domain NAME)` metadata.
+
+Domain annotations are accepted only when they name the same declared domain
+as the owning transaction and child; cross-domain activation still needs an
+explicit CDC/protocol contract.
+
+Plain repeat-body generated-child `(do child)` is now shipped for targets
+already generated elsewhere: it creates one deterministic generated do
+instance for the lexical repeat-body do site without requiring `(params
+...)`, `(bind ...)`, or `(domain NAME)` on that site, then gates repeat
+re-entry on that instance's fresh done handoff.
+
+Samples immediately before shipped repeat-body local or generated `do` states
+now lower into explicit sample states before the do state.
+
+Samples immediately after those do states lower after the do state's fresh
+done guard and before the repeat check.
 
 Multi-pending repeat-body `await_any` is now shipped only as an observation
 point: a later same-body `await_all` must drain the same outstanding
@@ -335,71 +377,98 @@ the same nested repeat body reaches `(await_all done)` before the nested
 repeat check can loop. Repeats directly inside a top-level `switch` branch
 accept the same multiple generated-spawn plus same-body `await_all` subset.
 
-Both branch-contained paths may use single-pending `(await_any done)` directly
-when exactly one generated child is pending. Both branch-contained paths may
-also use multi-pending `(await_any done)` as an observation point when a later
-same-body `(await_all done)` drains the same outstanding generated children
-before the nested repeat check can loop. Those branch-contained nested spawn
-subsets reuse the static generated-child handoff model, preserve source-order
-samples before the nested spawn or sync states, and gate the nested repeat
-check on spawned child done handoffs. The top-level `when` body nested-repeat
-subset now also allows a local plain `(do child)` while generated nested
-spawns remain pending either before or after a prior multi-pending
-`(await_any done)` observation, provided a later same-body `(await_all done)`
-drains the outstanding generated children before the nested repeat check can
-loop. The top-level `switch` branch nested-repeat subset allows the same
-local plain `(do child)` pending-spawn form before or after a prior
-multi-pending `(await_any done)` observation. That local do target remains in
-the parent scheduled module, waits for the local child's fresh done pulse, and
-does not clear the pending generated-spawn done set. The top-level `when`
-body and top-level `switch` branch nested-repeat subsets also allow a plain
-generated-child `(do child)` in that same pending-spawn interval when the
-target child is already emitted as a generated child by another activation
-site. Both branch-contained generated-child subsets may place that do before
-or after a prior multi-pending `(await_any done)` observation. Those generated
-do sites own one deterministic generated instance, wait for that instance's
-fresh done handoff, and leave the pending generated-spawn done set live for
-the later same-body `(await_all done)` drain. The same two
-branch-contained subsets also ship static-parameter generated
-`(do child (params ...))` in that pending-spawn interval, preserving generated
-top parameter binding on the generated do instance while still requiring the
-later same-body drain. The same branch-contained pending-spawn generated do
-subsets also accept `(bind ...)` input/output port bindings when static
-`(params ...)` overrides are present. The nested do site reuses the
-deterministic generated do instance for that lexical site, wires
-generated-top binding handoffs once, waits for the instance's fresh done
-handoff before the branch-owned repeat check, and leaves the pending
-generated-spawn done set live for the later drain. Generated `do` after a
-prior multi-pending `await_any`, `await_any` after the do, new nested
-`spawn` after the do before the drain, cross-domain repeat-body `do`,
-generated/spawn nested activation beyond the documented branch-contained
-generated `do` cases and the branch-contained spawned cases, deeper branch
-repeat activation, loop-contained repeat activation, and broader
-outstanding-child lifetime semantics beyond the mandatory-drain subset remain
-backlog. The shipped branch-contained generated nested do subsets still keep
+Both branch-contained paths may use single-pending `(await_any done)`
+directly when exactly one generated child is pending.
+
+Both branch-contained paths may also use multi-pending `(await_any done)` as
+an observation point when a later same-body `(await_all done)` drains the
+same outstanding generated children before the nested repeat check can loop.
+
+Those branch-contained nested spawn subsets reuse the static generated-child
+handoff model, preserve source-order samples before the nested spawn or sync
+states, and gate the nested repeat check on spawned child done handoffs.
+
+The top-level `when` body nested-repeat subset now also allows a local plain
+`(do child)` while generated nested spawns remain pending either before or
+after a prior multi-pending `(await_any done)` observation, provided a later
+same-body `(await_all done)` drains the outstanding generated children before
+the nested repeat check can loop.
+
+The top-level `switch` branch nested-repeat subset allows the same local
+plain `(do child)` pending-spawn form before or after a prior multi-pending
+`(await_any done)` observation.
+
+That local do target remains in the parent scheduled module, waits for the
+local child's fresh done pulse, and does not clear the pending
+generated-spawn done set.
+
+The top-level `when` body and top-level `switch` branch nested-repeat subsets
+also allow a plain generated-child `(do child)` in that same pending-spawn
+interval when the target child is already emitted as a generated child by
+another activation site.
+
+Both branch-contained generated-child subsets may place that do before or
+after a prior multi-pending `(await_any done)` observation.
+
+Those generated do sites own one deterministic generated instance, wait for
+that instance's fresh done handoff, and leave the pending generated-spawn
+done set live for the later same-body `(await_all done)` drain.
+
+The same two branch-contained subsets also ship static-parameter generated
+`(do child (params ...))` in that pending-spawn interval, preserving
+generated top parameter binding on the generated do instance while still
+requiring the later same-body drain.
+
+The same branch-contained pending-spawn generated do subsets also accept
+`(bind ...)` input/output port bindings when static `(params ...)` overrides
+are present.
+
+The nested do site reuses the deterministic generated do instance for that
+lexical site, wires generated-top binding handoffs once, waits for the
+instance's fresh done handoff before the branch-owned repeat check, and
+leaves the pending generated-spawn done set live for the later drain.
+
+Generated `do` after a prior multi-pending `await_any`, `await_any` after the
+do, new nested `spawn` after the do before the drain, cross-domain
+repeat-body `do`, generated/spawn nested activation beyond the documented
+branch-contained generated `do` cases and the branch-contained spawned cases,
+deeper branch repeat activation, loop-contained repeat activation, and
+broader outstanding-child lifetime semantics beyond the mandatory-drain
+subset remain backlog.
+
+The shipped branch-contained generated nested do subsets still keep
 unsupported activation subclauses, spawn nesting, deeper branch/loop nesting,
-cross-domain activation, and broader outstanding-child semantics out of scope.
+cross-domain activation, and broader outstanding-child semantics out of
+scope.
 
 The when-contained same-domain metadata analogue for that pending-spawn
-interval is shipped. It covers a repeat directly inside a top-level `when`
-body with one or more generated spawns, generated blocking
-`(do child (params ...) [(bind ...)] (domain NAME))` while those generated
-nested spawns are pending, and a later same-body `(await_all done)` drain
-before the nested repeat check can loop. The domain
-annotation is declared same-domain ownership metadata only for the
-deterministic generated do instance; it preserves generated-composition/domain
-partition metadata and schedule-report clock-domain child-instance summaries
-without implying CDC or cross-domain activation. The switch-contained
-same-domain analogue for that pending-spawn interval is also shipped. It
-covers a repeat directly inside a top-level `switch` branch with one or more
-generated spawns, generated blocking
-`(do child (params ...) [(bind ...)] (domain NAME))` while those generated
-nested spawns are pending, and a later same-body `(await_all done)` drain
-before the nested repeat check can loop. The domain annotation is declared
-same-domain ownership metadata only for the deterministic generated do
-instance; it preserves generated-composition/domain partition metadata and
-schedule-report clock-domain child-instance summaries without implying CDC or
-cross-domain activation.
+interval is shipped.
+
+It covers a repeat directly inside a top-level `when` body with one or more
+generated spawns, generated blocking `(do child (params ...) [(bind ...)]
+(domain NAME))` while those generated nested spawns are pending, and a later
+same-body `(await_all done)` drain before the nested repeat check can loop.
+
+The domain annotation is declared same-domain ownership metadata only for the
+deterministic generated do instance; it preserves
+generated-composition/domain partition metadata and schedule-report
+clock-domain child-instance summaries without implying CDC or cross-domain
+activation.
+
+The switch-contained same-domain analogue for that pending-spawn interval is
+also shipped.
+
+It covers a repeat directly inside a top-level `switch` branch with one or
+more generated spawns, generated blocking `(do child (params ...) [(bind
+...)] (domain NAME))` while those generated nested spawns are pending, and a
+later same-body `(await_all done)` drain before the nested repeat check can
+loop.
+
+The domain annotation is declared same-domain ownership metadata only for the
+deterministic generated do instance; it preserves
+generated-composition/domain partition metadata and schedule-report
+clock-domain child-instance summaries without implying CDC or cross-domain
+activation.
 
 Outside the pending-spawn interval, the when-contained nested generated-do
 domain leaf covers a repeat directly inside a top-level `when` body with
@@ -465,18 +534,22 @@ outstanding-child semantics remain backlog beyond the shipped
 branch-contained spawn leaves.
 
 The when-contained nested repeat local-do-while-spawn-pending leaf covers
-top-level `when` body nested repeats with one or more
-generated `(spawn child as inst [(params ...)] [(bind ...)] [(domain NAME)])`
-sites may run a local `(do child)` while those generated spawns remain
-pending, provided a later same-body `(await_all done)` drains the outstanding
-generated children before the nested repeat check can loop. This subset is
-shipped. The `do` target must remain local to the parent scheduled module; it
-uses the parent-module start/done pulse contract and leaves generated-spawn
-done handoffs live until the later drain. The direct top-level `switch` branch
-analogue is also shipped: a repeat directly inside a top-level `switch` branch
-may run a local `(do child)` while generated nested spawns remain pending,
-with the same later same-body `(await_all done)` drain requirement and the
-same local start/done proof.
+top-level `when` body nested repeats with one or more generated `(spawn child
+as inst [(params ...)] [(bind ...)] [(domain NAME)])` sites may run a local
+`(do child)` while those generated spawns remain pending, provided a later
+same-body `(await_all done)` drains the outstanding generated children before
+the nested repeat check can loop.
+
+This subset is shipped.
+
+The `do` target must remain local to the parent scheduled module; it uses the
+parent-module start/done pulse contract and leaves generated-spawn done
+handoffs live until the later drain.
+
+The direct top-level `switch` branch analogue is also shipped: a repeat
+directly inside a top-level `switch` branch may run a local `(do child)`
+while generated nested spawns remain pending, with the same later same-body
+`(await_all done)` drain requirement and the same local start/done proof.
 
 The top-level `when` body generated-child analogue is also shipped: plain
 `(do child)` may run while generated nested spawns are pending when `child` is
@@ -533,31 +606,39 @@ same-body `(await_all done)` drain before the nested repeat check can loop.
 
 The local do target stays in the parent scheduled module and the
 generated-spawn done handoffs stay live through the local do until the later
-drain. The when-contained generated-child `await_any`-before-do subset is also
+drain.
+
+The when-contained generated-child `await_any`-before-do subset is also
 shipped: a repeat directly inside a top-level `when` body with multiple
 generated spawns, a multi-pending `(await_any done)` observation, a plain
 generated-child `(do child)` whose target is already emitted by another
 activation site, and a later same-body `(await_all done)` drain before the
-nested repeat check can loop. The generated do instance keeps its own fresh
-done handoff while the pending generated-spawn done set remains live for the
-later drain. The switch-contained generated-child `await_any`-before-do
-analogue is also shipped with the same pending-spawn lifetime and later drain
-contract. The when-contained static-parameter generated
-`await_any`-before-do analogue is now shipped as well: a repeat directly
-inside a top-level `when` body may have multiple generated spawns, a
-multi-pending `(await_any done)` observation, generated blocking
-`(do child (params ...))` with static parameter overrides while those
-generated spawns remain pending, and a later same-body `(await_all done)`
-drain before the nested repeat check can loop. The generated do instance
-carries its static parameter binding in the generated top, waits on its own
-fresh done handoff, and does not clear the pending generated-spawn done set
-that the later drain must consume. The switch-contained static-parameter
-generated `await_any`-before-do analogue is shipped with the same contract: a
-repeat directly inside a top-level `switch` branch may have multiple
-generated spawns, a multi-pending `(await_any done)` observation, generated
-blocking `(do child (params ...))` with static parameter overrides while those
-generated spawns remain pending, and a later same-body `(await_all done)`
-drain before the nested repeat check can loop.
+nested repeat check can loop.
+
+The generated do instance keeps its own fresh done handoff while the pending
+generated-spawn done set remains live for the later drain.
+
+The switch-contained generated-child `await_any`-before-do analogue is also
+shipped with the same pending-spawn lifetime and later drain contract.
+
+The when-contained static-parameter generated `await_any`-before-do analogue
+is now shipped as well: a repeat directly inside a top-level `when` body may
+have multiple generated spawns, a multi-pending `(await_any done)`
+observation, generated blocking `(do child (params ...))` with static
+parameter overrides while those generated spawns remain pending, and a later
+same-body `(await_all done)` drain before the nested repeat check can loop.
+
+The generated do instance carries its static parameter binding in the
+generated top, waits on its own fresh done handoff, and does not clear the
+pending generated-spawn done set that the later drain must consume.
+
+The switch-contained static-parameter generated `await_any`-before-do
+analogue is shipped with the same contract: a repeat directly inside a
+top-level `switch` branch may have multiple generated spawns, a multi-pending
+`(await_any done)` observation, generated blocking `(do child (params ...))`
+with static parameter overrides while those generated spawns remain pending,
+and a later same-body `(await_all done)` drain before the nested repeat check
+can loop.
 
 The when-contained bound generated `await_any`-before-do analogue is also
 shipped: a repeat directly inside a top-level `when` body may have multiple
@@ -603,57 +684,74 @@ The top-level `when` body nested repeat local do before post-do multi-pending
 `await_any` subset is also shipped: a repeat directly inside a top-level
 `when` body with multiple generated spawns, local blocking `(do child)` while
 those generated spawns remain pending, `(await_any done)` after the local do
-as an observation point, and a later same-body `(await_all done)` drain before
-the nested repeat check can loop. The top-level switch branch nested repeat
-local do before post-do multi-pending `await_any` subset is shipped with the
-same contract for a repeat directly inside a top-level `switch` branch while
-generated nested spawns remain pending before the same-body `await_all` drain:
-the local child still completes through the parent scheduled module, and the
-post-do `await_any` observes only the pending generated-spawn done set
-without clearing it. The top-level `when` body nested repeat plain
-generated-child `(do child)` before post-do multi-pending `await_any` subset
-is shipped as well: a repeat directly inside a top-level `when` body with
-multiple generated spawns, a plain generated-child blocking do while those
-generated spawns remain pending, post-do `(await_any done)` as an observation
-point, and a later same-body `(await_all done)` drain before the nested
-repeat check can loop. The generated-child do waits for its deterministic
-generated do instance's fresh done handoff, and the post-do `await_any`
-observes only the pending generated-spawn done set without clearing it.
+as an observation point, and a later same-body `(await_all done)` drain
+before the nested repeat check can loop.
+
+The top-level switch branch nested repeat local do before post-do
+multi-pending `await_any` subset is shipped with the same contract for a
+repeat directly inside a top-level `switch` branch while generated nested
+spawns remain pending before the same-body `await_all` drain: the local child
+still completes through the parent scheduled module, and the post-do
+`await_any` observes only the pending generated-spawn done set without
+clearing it.
+
+The top-level `when` body nested repeat plain generated-child `(do child)`
+before post-do multi-pending `await_any` subset is shipped as well: a repeat
+directly inside a top-level `when` body with multiple generated spawns, a
+plain generated-child blocking do while those generated spawns remain
+pending, post-do `(await_any done)` as an observation point, and a later
+same-body `(await_all done)` drain before the nested repeat check can loop.
+
+The generated-child do waits for its deterministic generated do instance's
+fresh done handoff, and the post-do `await_any` observes only the pending
+generated-spawn done set without clearing it.
 
 The switch-contained generated-child post-do `await_any` analogue is now
 shipped with the same generated-child and later-drain contract: a repeat
 directly inside a top-level `switch` branch may run a plain generated-child
 blocking do while multiple generated spawns remain pending, then use post-do
 `(await_any done)` as an observation point before the later same-body
-`(await_all done)` drain. The top-level `when` body static-parameter
-generated-do post-do `await_any` analogue is also shipped: a repeat directly
-inside a top-level `when` body may run `(do child (params ...))` while
-multiple generated spawns remain pending, then use post-do
-`(await_any done)` as an observation point before the later same-body
-`(await_all done)` drain. The generated do preserves static generated-top
-parameter binding, waits for its deterministic generated do instance's fresh
-done handoff before that observation, and leaves the pending generated-spawn
-done set live for the later drain. The direct switch-contained
-static-parameter generated-do post-do `await_any` analogue is also shipped:
-a repeat directly inside a top-level `switch` branch may run
-`(do child (params ...))` while multiple generated spawns remain pending,
-then use post-do `(await_any done)` as an observation point before the later
-same-body `(await_all done)` drain. It uses the same deterministic generated
-do instance, preserves the static generated-top parameter binding, waits for
-that generated do instance's fresh done handoff before the observation, and
-leaves the pending generated-spawn done set live for the later drain. The
-when-contained bound generated-do post-do `await_any` subset is now shipped:
-a repeat directly inside a top-level `when` body may run
-`(do child (params ...) (bind ...))` while multiple generated spawns remain
+`(await_all done)` drain.
+
+The top-level `when` body static-parameter generated-do post-do `await_any`
+analogue is also shipped: a repeat directly inside a top-level `when` body
+may run `(do child (params ...))` while multiple generated spawns remain
 pending, then use post-do `(await_any done)` as an observation point before
-the later same-body `(await_all done)` drain. That subset wires the
-generated-top input/output binding handoffs for the generated do instance,
-requires that instance's fresh done handoff before the observation, and
-leaves the pending generated-spawn done set live for the later drain. Domain
-metadata on generated-do post-do `await_any`, the switch-contained bound
-analogue, new spawn after the do before the drain, cross-domain activation,
-deeper branch/loop nesting, and broader outstanding-child semantics remain
-backlog until their own leaves select and ship them.
+the later same-body `(await_all done)` drain.
+
+The generated do preserves static generated-top parameter binding, waits for
+its deterministic generated do instance's fresh done handoff before that
+observation, and leaves the pending generated-spawn done set live for the
+later drain.
+
+The direct switch-contained static-parameter generated-do post-do `await_any`
+analogue is also shipped: a repeat directly inside a top-level `switch`
+branch may run `(do child (params ...))` while multiple generated spawns
+remain pending, then use post-do `(await_any done)` as an observation point
+before the later same-body `(await_all done)` drain.
+
+It uses the same deterministic generated do instance, preserves the static
+generated-top parameter binding, waits for that generated do instance's fresh
+done handoff before the observation, and leaves the pending generated-spawn
+done set live for the later drain.
+
+The when-contained bound generated-do post-do `await_any` subset is now
+shipped: a repeat directly inside a top-level `when` body may run `(do child
+(params ...)
+
+(bind ...))` while multiple generated spawns remain pending, then use post-do
+`(await_any done)` as an observation point before the later same-body
+`(await_all done)` drain.
+
+That subset wires the generated-top input/output binding handoffs for the
+generated do instance, requires that instance's fresh done handoff before the
+observation, and leaves the pending generated-spawn done set live for the
+later drain.
+
+Domain metadata on generated-do post-do `await_any`, the switch-contained
+bound analogue, new spawn after the do before the drain, cross-domain
+activation, deeper branch/loop nesting, and broader outstanding-child
+semantics remain backlog until their own leaves select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency
@@ -751,18 +849,26 @@ call, and one-bit top-level pins only. Wider pin payloads and mixed
 pin/actor movement in one drive remain later leaves.
 
 The selected orchestration vocabulary reuses existing ISF activation forms:
-`(do actor.transaction)` for blocking actor transaction activation,
-`(spawn actor.transaction as NAME)` for nonblocking activation,
-`(trigger actor.transaction)` for rule-level or transaction-body activation,
-and `(await actor.event)` for one-cycle actor event synchronization. Only the
-bounded transaction-body trigger and event-wait parent-handoff subsets are
-shipped today. Event payloads are not part of ATL v0. Concurrent groups use
-`(group NAME (members ACTOR...) (mode concurrent))` as schedulable intent,
-not as a bypass for ordering, fan-in, width, lifetime, or CDC safety. The
-group axis starts with shipped fail-closed diagnostics for direct `(group ...)`
-declarations and compact `(concurrent ...)` aliases. Report-only static group
-metadata is shipped for verbose `(group ...)`; scheduling behavior and compact
-aliases remain later leaves.
+`(do actor.transaction)` for blocking actor transaction activation, `(spawn
+actor.transaction as NAME)` for nonblocking activation, `(trigger
+actor.transaction)` for rule-level or transaction-body activation, and
+`(await actor.event)` for one-cycle actor event synchronization.
+
+Only the bounded transaction-body trigger and event-wait parent-handoff
+subsets are shipped today.
+
+Event payloads are not part of ATL v0.
+
+Concurrent groups use `(group NAME (members ACTOR...)
+
+(mode concurrent))` as schedulable intent, not as a bypass for ordering,
+fan-in, width, lifetime, or CDC safety.
+
+The group axis starts with shipped fail-closed diagnostics for direct `(group
+...)` declarations and compact `(concurrent ...)` aliases.
+
+Report-only static group metadata is shipped for verbose `(group ...)`;
+scheduling behavior and compact aliases remain later leaves.
 
 The first multi-actor trigger scheduling leaf is shipped as a same-cycle
 external trigger batch over existing transaction-body
@@ -1158,21 +1264,27 @@ information between actors once the scheduled interaction is inferred.
 
 Current boundary: ISF actors currently decompose into actor-local
 transactions, rules, stages, resources, storage, and generated child
-transaction activations. They now define public actor-network source surfaces:
-static actor instance declarations, library-qualified resolved child
-artifacts, and report-only static group declarations recorded as
-`actor_network` metadata. Resolved ATL child `.fsm` files are emitted, but the
-ATL generated-artifact contract still excludes generated ATL tops, route
-muxes, handoff storage, child HDL wiring, and inferred child interface
-bindings. Event pulse semantics, actor-to-actor and pin-to-actor data
-movement, concurrent actor-group scheduling, global versus local scheduling
-ownership, generated top names, report visibility beyond the shipped
-actor-network metadata, compact aliases, and broader fail-closed
-boundaries remain under task-tree ownership. This direction is still IAL1 if
-the source remains explicit actor/network `.isf` syntax with
-scheduler-visible events, bindings, and constraints. It becomes an IAL2
-candidate only if the source model moves above explicit ISF actor/network
-syntax into protocol/platform intent inference.
+transaction activations.
+
+They now define public actor-network source surfaces: static actor instance
+declarations, library-qualified resolved child artifacts, and report-only
+static group declarations recorded as `actor_network` metadata.
+
+Resolved ATL child `.fsm` files are emitted, but the ATL generated-artifact
+contract still excludes generated ATL tops, route muxes, handoff storage,
+child HDL wiring, and inferred child interface bindings.
+
+Event pulse semantics, actor-to-actor and pin-to-actor data movement,
+concurrent actor-group scheduling, global versus local scheduling ownership,
+generated top names, report visibility beyond the shipped actor-network
+metadata, compact aliases, and broader fail-closed boundaries remain under
+task-tree ownership.
+
+This direction is still IAL1 if the source remains explicit actor/network
+`.isf` syntax with scheduler-visible events, bindings, and constraints.
+
+It becomes an IAL2 candidate only if the source model moves above explicit
+ISF actor/network syntax into protocol/platform intent inference.
 
 ### IAL2 Protocol And Platform Intent Exploration
 
@@ -1203,118 +1315,147 @@ Goal: let ISF use the same enum, type, and aggregate variable capability that
 
 Current boundary: ISF now ships scalar type aliases for width-bearing actor
 interface ports, transaction ports, and actor-owned storage, plus packed
-`list`/`record` aliases on actor-owned storage variables only. Actor bodies may
-carry `(types ...)` declarations whose payloads map directly to `.fsm`
-`+types`; existing `.fsm` packages may be referenced with `(imports (package
-shared_pkg) ...)`; and declarations may use `(type NAME)` instead of `(width
-N)`, where `NAME` is local (`byte`, `frame_t`) or package-qualified
-(`shared_pkg.byte`, `shared_pkg.frame_t`). Lowered scheduled `.fsm` preserves
-`+types`, `+import`, typed `+size` entries, and embedded imported package roots
-so the review artifact and CLI HDL generation stay self-contained. Actor-local
-`(enums ...)` declarations are accepted as declaration artifacts and preserved
-as scheduled `.fsm` `+enums`. Actor constants may now consume enum members
-with local `mode.BUSY` or package-qualified `shared.mode.BUSY` spelling; the
-authored token is preserved in scheduled `.fsm` `+constants` and schedule
-reports, while the resolved non-negative integer value feeds static wait
-lowering and existing static activation-parameter overrides.
+`list`/`record` aliases on actor-owned storage variables only.
 
-The implementation path remains task-tree-managed. The current shipped subset
-also continues to accept numeric/exact-width parameter values, scalar actor
-parameter defaults backed by local or package-qualified enum members,
-actor aggregate/list parameter default leaves backed by local or
-package-qualified enum members,
-generated child transaction scalar parameter defaults backed by local or
-package-qualified enum members,
-generated child transaction aggregate/list parameter default leaves backed by
-local or package-qualified enum members,
-actor-local constants for selected static specialization values, and
-compatible aggregate/list literal parameter values. Scalar activation parameter
-overrides and scalar leaves inside activation aggregate/list parameter override
-values may now also consume local and package-qualified enum members. Direct
-transaction `set` RHS scalar values and scalar operands inside transaction
-`set` RHS expressions may consume local and package-qualified enum members,
-transaction `when`/`while`/`until` condition expressions may consume local and
-package-qualified enum members as scalar operands. Direct transaction
-`when`/`while`/`until` scalar conditions may now consume local and
-package-qualified enum members too, such as
-`(when mode.BUSY (set fire 1))`, `(while mode.BUSY (set busy 1))`, or
-`(until shared.mode.BUSY (complete done))`; those dotted standalone condition
-tokens lower through computed `.fsm` selector syntax such as `?(mode.BUSY)` or
+Actor bodies may carry `(types ...)` declarations whose payloads map directly
+to `.fsm` `+types`; existing `.fsm` packages may be referenced with `(imports
+(package shared_pkg) ...)`; and declarations may use `(type NAME)` instead of
+`(width N)`, where `NAME` is local (`byte`, `frame_t`) or package-qualified
+(`shared_pkg.byte`, `shared_pkg.frame_t`).
+
+Lowered scheduled `.fsm` preserves `+types`, `+import`, typed `+size`
+entries, and embedded imported package roots so the review artifact and CLI
+HDL generation stay self-contained.
+
+Actor-local `(enums ...)` declarations are accepted as declaration artifacts
+and preserved as scheduled `.fsm` `+enums`.
+
+Actor constants may now consume enum members with local `mode.BUSY` or
+package-qualified `shared.mode.BUSY` spelling; the authored token is
+preserved in scheduled `.fsm` `+constants` and schedule reports, while the
+resolved non-negative integer value feeds static wait lowering and existing
+static activation-parameter overrides.
+
+The implementation path remains task-tree-managed.
+
+The current shipped subset also continues to accept numeric/exact-width
+parameter values, scalar actor parameter defaults backed by local or
+package-qualified enum members, actor aggregate/list parameter default leaves
+backed by local or package-qualified enum members, generated child
+transaction scalar parameter defaults backed by local or package-qualified
+enum members, generated child transaction aggregate/list parameter default
+leaves backed by local or package-qualified enum members, actor-local
+constants for selected static specialization values, and compatible
+aggregate/list literal parameter values.
+
+Scalar activation parameter overrides and scalar leaves inside activation
+aggregate/list parameter override values may now also consume local and
+package-qualified enum members.
+
+Direct transaction `set` RHS scalar values and scalar operands inside
+transaction `set` RHS expressions may consume local and package-qualified
+enum members, transaction `when`/`while`/`until` condition expressions may
+consume local and package-qualified enum members as scalar operands.
+
+Direct transaction `when`/`while`/`until` scalar conditions may now consume
+local and package-qualified enum members too, such as `(when mode.BUSY (set
+fire 1))`, `(while mode.BUSY (set busy 1))`, or `(until shared.mode.BUSY
+(complete done))`; those dotted standalone condition tokens lower through
+computed `.fsm` selector syntax such as `?(mode.BUSY)` or
 `?(shared.mode.BUSY)`.
 
 Transaction `switch` selectors and branch values may consume local and
 package-qualified enum members, scalar rule assignment RHS values and scalar
-operands inside rule assignment RHS expressions and scalar operands inside rule
-guard expressions may consume local and package-qualified enum members, and
-scalar drive body RHS values or scalar operands inside drive body RHS
-expressions may consume local and package-qualified enum members. Named
-drive-call scalar actual values may also
-consume local and package-qualified enum members, and drive-call actual
-expressions may use enum members as scalar operands. Inline drive assignment
-RHS scalar values and scalar operands inside inline drive RHS expressions may
-now also consume local and package-qualified enum members. Reusable-library
-use-site parameter override values and aggregate/list leaves may consume local
-and package-qualified enum members too, resolving to literal generated-top
-bindings and `library_uses[]` report values.
+operands inside rule assignment RHS expressions and scalar operands inside
+rule guard expressions may consume local and package-qualified enum members,
+and scalar drive body RHS values or scalar operands inside drive body RHS
+expressions may consume local and package-qualified enum members.
+
+Named drive-call scalar actual values may also consume local and
+package-qualified enum members, and drive-call actual expressions may use
+enum members as scalar operands.
+
+Inline drive assignment RHS scalar values and scalar operands inside inline
+drive RHS expressions may now also consume local and package-qualified enum
+members.
+
+Reusable-library use-site parameter override values and aggregate/list leaves
+may consume local and package-qualified enum members too, resolving to
+literal generated-top bindings and `library_uses[]` report values.
 
 Transaction `set` RHS clauses may read scalar aggregate leaves from declared
-aggregate storage carriers, such as
-`frame.mode` or `lanes[0]`, either directly or as scalar operands inside
-transaction `set` RHS expressions. Direct transaction `set` targets may write
-scalar aggregate leaves on those same carriers, such as `(set frame.flag
-flag_in)` or `(set lanes[0] bit_in)`. Rule assignment scalar RHS values may
-read scalar aggregate leaves directly or as scalar operands inside RHS
-expressions, such as `(set mode_out (+ frame.mode mode_in))` inside a rule
-body. Rule guard expressions may read scalar aggregate leaves as operands, such
-as `(rule fire (& ready frame.flag) (set seen 1))`, and standalone rule guards
-may read scalar aggregate leaves directly, such as
-`(rule fire frame.flag (set seen 1))`. Transaction
-`when`/`while`/`until` conditions may read scalar aggregate leaves directly or
-as operands inside condition expressions, such as
-`(when frame.flag (set seen 1))` or
-`(when (& ready frame.flag) (set seen 1))`. Direct aggregate condition leaves
-lower through computed `.fsm` selector syntax. Transaction
-`switch` selectors and branch values may read scalar aggregate leaves, such as
-`(switch frame.mode (1 (set seen 1)) (default (set seen 0)))` or
-`(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`; selector
-leaves lower through computed `.fsm` selector syntax. Named drive body
-scalar RHS values and scalar operands inside RHS expressions may read scalar
-aggregate leaves, such as `(drive publish (mode_out frame.mode))` or
-`(drive publish (mode_out (+ frame.mode mode_in)))`. Named drive body targets
-may write scalar aggregate leaves, such as
-`(drive capture (frame.mode mode_in))` or
-`(drive capture (lanes[1] pair_in))`. Named drive-call scalar
-actual values and scalar operands inside actual expressions may read scalar
-aggregate leaves, such as `(drive publish frame.mode)` or
-`(drive publish (+ frame.mode mode_in))`. Inline drive assignment scalar RHS
-values and scalar operands inside RHS expressions may read scalar aggregate
-leaves, such as `(drive inline_publish (mode_out frame.mode))` or
-`(drive inline_publish (mode_out (+ frame.mode mode_in)))`. Inline drive
-targets may write scalar aggregate leaves, such as
-`(drive inline_capture (frame.mode mode_in))` or
-`(drive inline_capture (lanes[1] pair_in))`. Aggregate member
-paths outside transaction `set` RHS values, direct transaction `set` targets,
-transaction condition scalar values/expression operands, transaction `switch`
-selectors/branch values, rule assignment target tokens, rule assignment RHS
-values/expression operands, rule guard scalar values/expression operands, drive target
-tokens, drive body RHS scalar values/expression operands, inline drive target
-tokens, inline drive assignment RHS scalar values/expression operands, or
-drive-call actual scalar values/expression operands, subaggregate
-operands/updates, aggregate
-interface or transaction ports, aggregate storage banks, enum member
-references outside actor constants, actor parameter scalar
-values or aggregate/list default leaves, generated child transaction scalar
-parameter defaults or aggregate/list default leaves, activation parameter
-scalar values or aggregate/list override leaves, reusable-library use-site
-parameter override values or leaves, transaction `set` RHS scalar
-values/expression operands, transaction `when`/`while`/`until` condition
-scalar values/expression operands, transaction `switch` selector/branch values,
-rule guard scalar values/expression operands, scalar rule assignment RHS values
-or expression operands, or drive body RHS scalar values/expression operands, inline drive
+aggregate storage carriers, such as `frame.mode` or `lanes[0]`, either
+directly or as scalar operands inside transaction `set` RHS expressions.
+
+Direct transaction `set` targets may write scalar aggregate leaves on those
+same carriers, such as `(set frame.flag flag_in)` or `(set lanes[0] bit_in)`.
+
+Rule assignment scalar RHS values may read scalar aggregate leaves directly
+or as scalar operands inside RHS expressions, such as `(set mode_out (+
+frame.mode mode_in))` inside a rule body.
+
+Rule guard expressions may read scalar aggregate leaves as operands, such as
+`(rule fire (& ready frame.flag) (set seen 1))`, and standalone rule guards
+may read scalar aggregate leaves directly, such as `(rule fire frame.flag
+(set seen 1))`.
+
+Transaction `when`/`while`/`until` conditions may read scalar aggregate
+leaves directly or as operands inside condition expressions, such as `(when
+frame.flag (set seen 1))` or `(when (& ready frame.flag) (set seen 1))`.
+
+Direct aggregate condition leaves lower through computed `.fsm` selector
+syntax.
+
+Transaction `switch` selectors and branch values may read scalar aggregate
+leaves, such as `(switch frame.mode (1 (set seen 1)) (default (set seen 0)))`
+or `(switch mode_in (frame.mode (set seen 1)) (default (set seen 0)))`;
+selector leaves lower through computed `.fsm` selector syntax.
+
+Named drive body scalar RHS values and scalar operands inside RHS expressions
+may read scalar aggregate leaves, such as `(drive publish (mode_out
+frame.mode))` or `(drive publish (mode_out (+ frame.mode mode_in)))`.
+
+Named drive body targets may write scalar aggregate leaves, such as `(drive
+capture (frame.mode mode_in))` or `(drive capture (lanes[1] pair_in))`.
+
+Named drive-call scalar actual values and scalar operands inside actual
+expressions may read scalar aggregate leaves, such as `(drive publish
+frame.mode)` or `(drive publish (+ frame.mode mode_in))`.
+
+Inline drive assignment scalar RHS values and scalar operands inside RHS
+expressions may read scalar aggregate leaves, such as `(drive inline_publish
+(mode_out frame.mode))` or `(drive inline_publish (mode_out (+ frame.mode
+mode_in)))`.
+
+Inline drive targets may write scalar aggregate leaves, such as `(drive
+inline_capture (frame.mode mode_in))` or `(drive inline_capture (lanes[1]
+pair_in))`.
+
+Aggregate member paths outside transaction `set` RHS values, direct
+transaction `set` targets, transaction condition scalar values/expression
+operands, transaction `switch` selectors/branch values, rule assignment
+target tokens, rule assignment RHS values/expression operands, rule guard
+scalar values/expression operands, drive target tokens, drive body RHS scalar
+values/expression operands, inline drive target tokens, inline drive
 assignment RHS scalar values/expression operands, or drive-call actual scalar
-values/expression operands, aggregate field/slice/update lowering, and broader
-aggregate shape inference require future task-tree ownership before they can
-ship.
+values/expression operands, subaggregate operands/updates, aggregate
+interface or transaction ports, aggregate storage banks, enum member
+references outside actor constants, actor parameter scalar values or
+aggregate/list default leaves,
+
+generated child transaction scalar parameter defaults or aggregate/list
+default leaves, activation parameter scalar values or aggregate/list override
+leaves, reusable-library use-site parameter override values or leaves,
+transaction `set` RHS scalar values/expression operands, transaction
+`when`/`while`/`until` condition scalar values/expression operands,
+transaction `switch` selector/branch values, rule guard scalar
+values/expression operands, scalar rule assignment RHS values or expression
+operands, or drive body RHS scalar values/expression operands, inline drive
+assignment RHS scalar values/expression operands, or drive-call actual scalar
+values/expression operands, aggregate field/slice/update lowering,
+
+and broader aggregate shape inference require future task-tree ownership
+before they can ship.
 
 The lowering artifact remains the contract. ISF enum/aggregate source should
 lower to reviewable `.fsm` text that uses the established type and aggregate
@@ -1412,33 +1553,48 @@ Goal: allow rule actions to assign expression values, not only scalar
 `(port value)` pairs.
 
 Current boundary: rule actions accept `(set port expr)`, `(port expr)`,
-`(trigger transaction)`, and `(priority over other_rule)`. Trigger targets and
-priority targets remain scalar-only today. `(set port expr)` is the canonical
-explicit setter; `(port expr)` remains shorthand. Both lower as flopped `<-`
-rule assignments under the rule DT DTE, where `expr` may be a scalar token or
-one list expression from the transaction `set`/`update`/`.fsm` RHS expression
-domain. Direct scalar rule assignment RHS values and scalar operands inside RHS
-expressions may use local or package-qualified enum members. Direct scalar rule
-assignment RHS values and scalar operands inside RHS expressions may also read
-scalar aggregate storage leaves such as `frame.mode` or `lanes[1]`. Rule
-assignment targets may write scalar aggregate storage leaves such as
-`frame.mode` or `lanes[1]`. Rule guard expressions may use enum members as
-scalar operands and may read scalar aggregate storage leaves such as
-`frame.flag`. Standalone scalar enum and scalar aggregate rule guards are
-shipped in both shorthand and long-form `(when ...)` rule syntax, such as
-`(rule fire mode.BUSY (set seen 1))` and
-`(rule fire (when frame.flag) (set seen 1))`; they lower to guarded non-state
-DT headers. The remaining backlog is aggregate paths in rule assignment RHS or
-rule guard expression operator position, expression operator-position enum
-members, enum rule targets, and subaggregate rule targets. Transaction
-`switch` selectors and branch values may
-read scalar aggregate storage leaves such as `frame.mode`, and selectors or
-branch values may use enum members; subaggregate selectors/branch values remain
-backlog. Named drive body scalar RHS values
-and scalar operands inside RHS expressions may read scalar aggregate storage
-leaves such as `frame.mode`, and named drive body targets may write scalar
-aggregate storage leaves such as `frame.mode`; aggregate paths in drive body
-RHS expression operator position and subaggregate drive targets remain backlog.
+`(trigger transaction)`, and `(priority over other_rule)`.
+
+Trigger targets and priority targets remain scalar-only today.
+
+`(set port expr)` is the canonical explicit setter; `(port expr)` remains
+shorthand.
+
+Both lower as flopped `<-` rule assignments under the rule DT DTE, where
+`expr` may be a scalar token or one list expression from the transaction
+`set`/`update`/`.fsm` RHS expression domain.
+
+Direct scalar rule assignment RHS values and scalar operands inside RHS
+expressions may use local or package-qualified enum members.
+
+Direct scalar rule assignment RHS values and scalar operands inside RHS
+expressions may also read scalar aggregate storage leaves such as
+`frame.mode` or `lanes[1]`.
+
+Rule assignment targets may write scalar aggregate storage leaves such as
+`frame.mode` or `lanes[1]`.
+
+Rule guard expressions may use enum members as scalar operands and may read
+scalar aggregate storage leaves such as `frame.flag`.
+
+Standalone scalar enum and scalar aggregate rule guards are shipped in both
+shorthand and long-form `(when ...)` rule syntax, such as `(rule fire
+mode.BUSY (set seen 1))` and `(rule fire (when frame.flag) (set seen 1))`;
+they lower to guarded non-state DT headers.
+
+The remaining backlog is aggregate paths in rule assignment RHS or rule guard
+expression operator position, expression operator-position enum members, enum
+rule targets, and subaggregate rule targets.
+
+Transaction `switch` selectors and branch values may read scalar aggregate
+storage leaves such as `frame.mode`, and selectors or branch values may use
+enum members; subaggregate selectors/branch values remain backlog.
+
+Named drive body scalar RHS values and scalar operands inside RHS expressions
+may read scalar aggregate storage leaves such as `frame.mode`, and named
+drive body targets may write scalar aggregate storage leaves such as
+`frame.mode`; aggregate paths in drive body RHS expression operator position
+and subaggregate drive targets remain backlog.
 
 Named drive-call scalar
 actual values may
@@ -1562,16 +1718,18 @@ whose successor cannot yet carry samples without changing timing, branch
 pending-sample zero bypasses whose successor cannot yet carry samples without
 changing timing outside the shipped completion and independent-setter
 successor subsets plus independent shift, assemble, and extract successor
-subsets plus independent bank-load, bank-store, top-level stage, and top-level
-await-all/await-any sync, top-level spawn, top-level transaction phase, and
-top-level contract-arm successor subsets,
-repeat/loop pending-sample zero bypasses whose successor cannot yet carry
-samples without changing timing, and setter successors that read or overwrite
-a pending sample alias. Shift, assemble, extract, bank-load, and bank-store
-successors are shipped only when independent; stage successors are shipped
-only when the ready input and valid output are independent of the pending
-sample alias; await-all/await-any sync successors are shipped only when their
-collected done ports are independent of the pending sample alias; contract arm
+subsets plus independent bank-load, bank-store, top-level stage, and
+top-level await-all/await-any sync, top-level spawn, top-level transaction
+phase, and top-level contract-arm successor subsets, repeat/loop
+pending-sample zero bypasses whose successor cannot yet carry samples without
+changing timing, and setter successors that read or overwrite a pending
+sample alias.
+
+Shift, assemble, extract, bank-load, and bank-store successors are shipped
+only when independent; stage successors are shipped only when the ready input
+and valid output are independent of the pending sample alias;
+await-all/await-any sync successors are shipped only when their collected
+done ports are independent of the pending sample alias; contract arm
 successors are shipped only when independent of the pending sample alias;
 spawn successors are shipped only when the generated start handoff is
 independent of the pending sample alias; transaction phase successors are
@@ -1780,18 +1938,26 @@ Shipped binding shape:
 ```
 
 Input bindings accept scalar signals, numeric/exact-width literals, and
-non-empty list expressions. Scalar and known-width expression sources are
-width-checked against the transaction input port; unknown expression widths
-continue through the downstream `.fsm` expression validation path. Local `do`
-lowers input bindings in the state that starts the child and copies output
-bindings under the generated child-done guard. Parameterized/generated `do`
-lowers through explicit generated-top handoff ports and a parent-owned
-`do_port_binding` DT whose output copy is done-gated. `spawn` lowers through
-hidden generated-top handoff ports and reviewable parent binding DTs; actor
-signals consumed by explicit spawn input-binding expressions are not also
-same-name wired into the child instance. Rule `trigger` supports input
-bindings only; each rule owns a distinct payload source and the trigger fan-in
-DT routes payloads under the matching per-rule trigger pulse.
+non-empty list expressions.
+
+Scalar and known-width expression sources are width-checked against the
+transaction input port; unknown expression widths continue through the
+downstream `.fsm` expression validation path.
+
+Local `do` lowers input bindings in the state that starts the child and
+copies output bindings under the generated child-done guard.
+
+Parameterized/generated `do` lowers through explicit generated-top handoff
+ports and a parent-owned `do_port_binding` DT whose output copy is
+done-gated.
+
+`spawn` lowers through hidden generated-top handoff ports and reviewable
+parent binding DTs; actor signals consumed by explicit spawn input-binding
+expressions are not also same-name wired into the child instance.
+
+Rule `trigger` supports input bindings only; each rule owns a distinct
+payload source and the trigger fan-in DT routes payloads under the matching
+per-rule trigger pulse.
 
 Rule-trigger output bindings, explicit snapshot-vs-live timing selection,
 richer report fields, and broader static conflict diagnostics remain backlog.
@@ -2000,20 +2166,28 @@ Goal: keep realistic protocol fixtures aligned with shipped ISF behavior,
 strict-mode expectations, schedule JSON assertions, scheduled `.fsm` review
 artifacts, and generated HDL reachability.
 
-Current boundary: APB remains the quick/smoke ISF baseline for parse, scheduled
-`.fsm` header, and public-contract checks. Broader realistic fixture coverage
-belongs in the `isf` regression tier. The active matrix in
+Current boundary: APB remains the quick/smoke ISF baseline for parse,
+scheduled `.fsm` header, and public-contract checks.
+
+Broader realistic fixture coverage belongs in the `isf` regression tier.
+
+The active matrix in
 [ISF-FIXTURE-COVERAGE](../../tasks/ISF-FIXTURE-COVERAGE.md) now covers
 `isf/spi_master.isf` as a bounded SPI-like mode-0 serial-transfer fixture
-through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL
-checks, and [ISF-I2C-FIXTURE-PROMOTION](../../tasks/ISF-I2C-FIXTURE-PROMOTION.md)
-now covers `isf/i2c_master.isf` as a bounded I2C-like serial-transfer fixture
-through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict HDL
-checks. These are not complete SPI or I2C protocol compliance suites. Future
-fixture promotions should add stable structural assertions rather than full
-HDL or full schedule JSON snapshots. The SPI-like and I2C-like fixtures
-intentionally stay out of the quick/smoke tier for now; `quick` remains
-APB-centered for fast turnaround.
+through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict
+HDL checks, and
+[ISF-I2C-FIXTURE-PROMOTION](../../tasks/ISF-I2C-FIXTURE-PROMOTION.md) now
+covers `isf/i2c_master.isf` as a bounded I2C-like serial-transfer fixture
+through file-backed schedule JSON, scheduled `.fsm`, plain HDL, and strict
+HDL checks.
+
+These are not complete SPI or I2C protocol compliance suites.
+
+Future fixture promotions should add stable structural assertions rather than
+full HDL or full schedule JSON snapshots.
+
+The SPI-like and I2C-like fixtures intentionally stay out of the quick/smoke
+tier for now; `quick` remains APB-centered for fast turnaround.
 
 The burst-reader fixture is now also promoted in the `isf` tier for
 file-backed strict schedule JSON parity, scheduled `.fsm` structure, plain and
@@ -2166,28 +2340,32 @@ ISF libraries are broader than scalar constants or type packages: they should
 be able to contain reusable ISF actors, transactions, drives, and associated
 constraints when those surfaces are specified.
 
-Current boundary: the first reusable ISF library import, same-name
-and remapped generated-top system binding, actor-owned fixed-storage,
+Current boundary: the first reusable ISF library import, same-name and
+remapped generated-top system binding, actor-owned fixed-storage,
 expression-valued rule-guard, disjoint-rule write, FIFO-controller matrix,
-bank-access, and fixed FIFO
-library fixture slices have shipped under
-[ISF-LIBRARIES](../../tasks/ISF-LIBRARIES.md). Actor roots may import library roots, use
-an exported actor, validate use-site parameters and explicit bindings, emit a
-specialized child scheduled `.fsm` artifact, wire the library actor through a
-generated top, reach SystemVerilog generation for the covered generated-top
-path, project bounded `library_uses` schedule-report metadata, declare fixed
-actor-owned state/banks, author rule fire predicates as expressions, accept
-same-target rule writes when direct contradictory guard facts prove
-disjointness, prove a depth-4 FIFO-controller same-cycle update matrix, and
-author a reusable fixed-shape FIFO actor source with bank-backed accepted
-push/pop data movement that reaches generated-top SystemVerilog. Clock/reset
-name remapping now works through explicit generated-top links while keeping
-the reusable actor's reset kind and polarity unchanged. This remapping is
-still system-signal binding behavior; it does not imply CDC. Multi-clock,
-asynchronous, and interacting clock-domain semantics are owned by the
-separate shipped
-[ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md) event-crossing surface
-and its remaining backlog.
+bank-access, and fixed FIFO library fixture slices have shipped under
+[ISF-LIBRARIES](../../tasks/ISF-LIBRARIES.md).
+
+Actor roots may import library roots, use an exported actor, validate
+use-site parameters and explicit bindings, emit a specialized child scheduled
+`.fsm` artifact, wire the library actor through a generated top, reach
+SystemVerilog generation for the covered generated-top path, project bounded
+`library_uses` schedule-report metadata, declare fixed actor-owned
+state/banks, author rule fire predicates as expressions, accept same-target
+rule writes when direct contradictory guard facts prove disjointness, prove a
+depth-4 FIFO-controller same-cycle update matrix, and author a reusable
+fixed-shape FIFO actor source with bank-backed accepted push/pop data
+movement that reaches generated-top SystemVerilog.
+
+Clock/reset name remapping now works through explicit generated-top links
+while keeping the reusable actor's reset kind and polarity unchanged.
+
+This remapping is still system-signal binding behavior; it does not imply
+CDC.
+
+Multi-clock, asynchronous, and interacting clock-domain semantics are owned
+by the separate shipped [ISF-CLOCK-DOMAINS](../../tasks/ISF-CLOCK-DOMAINS.md)
+event-crossing surface and its remaining backlog.
 
 Shipped source model for actor exports:
 

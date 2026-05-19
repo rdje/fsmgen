@@ -126,50 +126,63 @@ fallthrough target in the generated `.fsm`.
 
 ## Nested Control Flow
 
-The shipped nested-control subset is explicit. A `switch` branch may contain a
-`when` body, a `when` body may contain another `when`, and `repeat` bodies are
-supported inside top-level `when` and `switch` bodies. The shipped repeat-body
-clause surface is named drive calls, `await`, `sample`, `update`, `set`,
-`shift_left`, `shift_right`, `assemble`, `extract`, actor-owned bank `store`
-and `load`, shipped `wait` clauses, top-level repeat-body local `(do child)`,
-top-level repeat-body generated `(do child)` for already generated child
-targets, top-level repeat-body generated `(do child (params ...))` with
-static parameter overrides, top-level when-body nested repeat local,
-generated-child `(do child)`, static-parameter generated
-`(do child (params ...))`, or static-parameter generated bound
-`(do child (params ...) (bind ...))`, top-level switch-branch nested repeat
-local, generated-child `(do child)`, or static-parameter generated
-`(do child (params ...))` with optional `(bind ...)` handoffs, and
-top-level repeat-body spawn with optional static `(params ...)`, optional
-`(bind ...)`, and optional declared same-domain
-`(domain NAME)` metadata followed by same-body `await_all` or by same-body
-`await_any` when exactly one spawn is pending. Samples may appear before or
-after repeat-body spawn before that same-body sync; they lower to an explicit
-sample state before the later spawn state or before `await_all` /
-single-pending `await_any`, matching source order. Samples may also appear
-before or after repeat-body `do`; they lower before the do state or after the
-do state's fresh done guard and before the repeat check. Multi-pending
-repeat-body `await_any` is shipped only when a later same-body `await_all`
-drains the same outstanding spawn set before the repeat check; new
-repeat-body `spawn` or `do` clauses before that drain remain rejected.
+The shipped nested-control subset is explicit.
 
-Repeat-body generated `do`
-accepts already generated child targets or static `(params ...)` overrides,
-optional `(bind ...)` input/output handoffs, and optional same-domain
-`(domain NAME)` metadata; those handoffs and domain summaries are
-wired/recorded once for the lexical generated do instance. Cross-domain
-repeat-body `do` remains deferred. The when-contained nested subset accepts
-only a repeat directly inside a top-level `when` body and accepts either local
-plain `(do child)`, plain generated-child `(do child)` for targets already
-generated elsewhere, static-parameter generated `(do child (params ...))`, or
-static-parameter generated bound
-`(do child (params ...) (bind ...))`; it may also carry declared same-domain
-`(domain NAME)` metadata when static params are present and requires static
-params whenever bindings or domain metadata are present. The
-switch-contained nested subset accepts the same local, plain generated-child,
-static-parameter generated, or static-parameter generated bound forms in a
-repeat directly inside a top-level `switch` branch, and it may also carry
-declared same-domain `(domain NAME)` metadata when static params are present.
+A `switch` branch may contain a `when` body, a `when` body may contain
+another `when`, and `repeat` bodies are supported inside top-level `when` and
+`switch` bodies.
+
+The shipped repeat-body clause surface is named drive calls, `await`,
+`sample`, `update`, `set`, `shift_left`, `shift_right`, `assemble`,
+`extract`, actor-owned bank `store` and `load`, shipped `wait` clauses,
+top-level repeat-body local `(do child)`, top-level repeat-body generated
+`(do child)` for already generated child targets, top-level repeat-body
+generated `(do child (params ...))` with static parameter overrides,
+top-level when-body nested repeat local, generated-child `(do child)`,
+static-parameter generated `(do child (params ...))`, or static-parameter
+generated bound `(do child (params ...)
+
+(bind ...))`, top-level switch-branch nested repeat local, generated-child
+`(do child)`, or static-parameter generated `(do child (params ...))` with
+optional `(bind ...)` handoffs, and top-level repeat-body spawn with optional
+static `(params ...)`, optional `(bind ...)`, and optional declared
+same-domain `(domain NAME)` metadata followed by same-body `await_all` or by
+same-body `await_any` when exactly one spawn is pending.
+
+Samples may appear before or after repeat-body spawn before that same-body
+sync; they lower to an explicit sample state before the later spawn state or
+before `await_all` / single-pending `await_any`, matching source order.
+
+Samples may also appear before or after repeat-body `do`; they lower before
+the do state or after the do state's fresh done guard and before the repeat
+check.
+
+Multi-pending repeat-body `await_any` is shipped only when a later same-body
+`await_all` drains the same outstanding spawn set before the repeat check;
+new repeat-body `spawn` or `do` clauses before that drain remain rejected.
+
+Repeat-body generated `do` accepts already generated child targets or static
+`(params ...)` overrides, optional `(bind ...)` input/output handoffs, and
+optional same-domain `(domain NAME)` metadata; those handoffs and domain
+summaries are wired/recorded once for the lexical generated do instance.
+
+Cross-domain repeat-body `do` remains deferred.
+
+The when-contained nested subset accepts only a repeat directly inside a
+top-level `when` body and accepts either local plain `(do child)`, plain
+generated-child `(do child)` for targets already generated elsewhere,
+static-parameter generated `(do child (params ...))`, or static-parameter
+generated bound `(do child (params ...)
+
+(bind ...))`; it may also carry declared same-domain `(domain NAME)` metadata
+when static params are present and requires static params whenever bindings
+or domain metadata are present.
+
+The switch-contained nested subset accepts the same local, plain
+generated-child, static-parameter generated, or static-parameter generated
+bound forms in a repeat directly inside a top-level `switch` branch, and it
+may also carry declared same-domain `(domain NAME)` metadata when static
+params are present.
 
 Both nested subsets keep the nested repeat check gated by the child's fresh
 done pulse. A repeat directly inside a top-level `when` body may also contain
@@ -179,46 +192,62 @@ when the same nested body reaches `(await_all done)` before the nested repeat
 check can loop. A repeat directly inside a top-level `switch` branch may
 contain the same multiple generated-spawn plus same-body `await_all` subset.
 
-Both branch-contained paths may use single-pending `(await_any done)` directly
-when exactly one generated child is pending. Both branch-contained paths may
-also use multi-pending `(await_any done)` as an observation point only when a later
-same-body `(await_all done)` drains the same outstanding generated children
-before the nested repeat check can loop. Those branch-contained nested spawns
-reuse the static generated-child handoff model and preserve source-order
-samples before the spawn or sync states. Both
-branch-contained bound nested generated `do` subsets still reject deeper
-branch nesting and loop-contained repeats. `do` while a nested spawn is
-pending is shipped for a local plain `(do child)` in a repeat directly inside
-a top-level `when` body or a top-level `switch` branch, and for a plain
-generated-child `(do child)` in either top-level branch-contained repeat when
-the target child is already emitted as a generated child by another activation
-site. The top-level `when` local-do pending-spawn form may also follow a prior
+Both branch-contained paths may use single-pending `(await_any done)`
+directly when exactly one generated child is pending.
+
+Both branch-contained paths may also use multi-pending `(await_any done)` as
+an observation point only when a later same-body `(await_all done)` drains
+the same outstanding generated children before the nested repeat check can
+loop.
+
+Those branch-contained nested spawns reuse the static generated-child handoff
+model and preserve source-order samples before the spawn or sync states.
+
+Both branch-contained bound nested generated `do` subsets still reject deeper
+branch nesting and loop-contained repeats.
+
+`do` while a nested spawn is pending is shipped for a local plain `(do
+child)` in a repeat directly inside a top-level `when` body or a top-level
+`switch` branch, and for a plain generated-child `(do child)` in either
+top-level branch-contained repeat when the target child is already emitted as
+a generated child by another activation site.
+
+The top-level `when` local-do pending-spawn form may also follow a prior
 multi-pending `await_any` observation; the top-level `switch` local-do form
 and both generated-child pending-spawn forms still require no prior
-multi-pending `await_any` observation. Every pending-spawn `do` form requires
-a later same-body `await_all` drain before the nested repeat check can loop.
+multi-pending `await_any` observation.
+
+Every pending-spawn `do` form requires a later same-body `await_all` drain
+before the nested repeat check can loop.
 
 The local do waits for the local child's fresh done pulse; the
 generated-child do waits for its deterministic generated do instance's fresh
-done handoff. Neither form clears the generated-spawn done set before the
-later drain. Top-level `when` body and top-level `switch`
-branch nested repeats may also run static-parameter generated
-`(do child (params ...))` while generated nested spawns are pending; that
-generated do preserves static generated-top parameter binding, waits for its
-deterministic generated do instance's fresh done handoff, and leaves the
-generated-spawn done set live for the later drain. Top-level `when` body and
-top-level `switch` branch nested repeats may also run static-parameter
-generated `(do child (params ...) (bind ...))` while generated nested spawns
-are pending; that generated do wires generated-top input/output binding
-handoffs once and leaves the generated-spawn done set live for the later
-drain. A top-level `when` body or top-level `switch` branch nested repeat may
-also run static-parameter same-domain generated
-`(do child (params ...) [(bind ...)] (domain NAME))` in that interval; the
-domain annotation is metadata for the generated do instance and does not imply
-CDC. Generated `do` after prior multi-pending `await_any`, switch-contained
-local `do` after prior multi-pending `await_any`, new spawn after the
-generated do before the drain, and await-any-after-do forms remain
-fail-closed.
+done handoff.
+
+Neither form clears the generated-spawn done set before the later drain.
+
+Top-level `when` body and top-level `switch` branch nested repeats may also
+run static-parameter generated `(do child (params ...))` while generated
+nested spawns are pending; that generated do preserves static generated-top
+parameter binding, waits for its deterministic generated do instance's fresh
+done handoff, and leaves the generated-spawn done set live for the later
+drain.
+
+Top-level `when` body and top-level `switch` branch nested repeats may also
+run static-parameter generated `(do child (params ...)
+
+(bind ...))` while generated nested spawns are pending; that generated do
+wires generated-top input/output binding handoffs once and leaves the
+generated-spawn done set live for the later drain.
+
+A top-level `when` body or top-level `switch` branch nested repeat may also
+run static-parameter same-domain generated `(do child (params ...) [(bind
+...)] (domain NAME))` in that interval; the domain annotation is metadata for
+the generated do instance and does not imply CDC.
+
+Generated `do` after prior multi-pending `await_any`, switch-contained local
+`do` after prior multi-pending `await_any`, new spawn after the generated do
+before the drain, and await-any-after-do forms remain fail-closed.
 
 Broader outstanding-child semantics, generated or spawned nested activation
 beyond the documented top-level branch-contained generated do cases and

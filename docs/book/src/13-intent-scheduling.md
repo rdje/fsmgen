@@ -510,34 +510,44 @@ The ISF-specific current limitations are:
   report metadata, actor-owned fixed storage declarations, and
   expression-valued rule guards for direct fire predicates, plus a
   conservative disjoint-rule proof for same-target FIFO-style rule writes,
-  and pointer-selected `(store <bank-name> <index> <value>)` /
-  `(load <bank-name> <index> as <target>)` access for actor-owned banks. The
-  checked-in `isf/fifo_data_path.isf` datapath fixture now proves that
+  and pointer-selected `(store <bank-name> <index> <value>)` / `(load
+  <bank-name> <index> as <target>)` access for actor-owned banks.
+
+  The checked-in `isf/fifo_data_path.isf` datapath fixture now proves that
   store/load surface through file-backed strict schedule JSON parity,
-  scheduled `.fsm` structure, and plain plus strict HDL generation. The
-  checked-in `isf/fifo_controller.isf` fixture separately proves the
+  scheduled `.fsm` structure, and plain plus strict HDL generation.
+
+  The checked-in `isf/fifo_controller.isf` fixture separately proves the
   controller-only occupancy/full/empty and pointer-update matrix through the
   same strict schedule JSON and HDL handoff paths without claiming data-bank
-  storage or `data_out` transfer behavior. The first reusable FIFO fixture is
-  now shipped as `isf/common/fifo.isf`, with
-  `isf/fifo_library_use.isf` proving the file-backed import/use source. It is
-  fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`, and
-  covers push-only, pop-only, simultaneous push+pop, idle cycles,
+  storage or `data_out` transfer behavior.
+
+  The first reusable FIFO fixture is now shipped as `isf/common/fifo.isf`,
+  with `isf/fifo_library_use.isf` proving the file-backed import/use source.
+
+  It is fixed to `DATA_WIDTH=8`, `DEPTH=4`, `PTR_WIDTH=2`, and `OCC_WIDTH=3`,
+  and covers push-only, pop-only, simultaneous push+pop, idle cycles,
   pointer-selected bank access, 2-bit pointer wrap, occupancy values 0
-  through 4, and full/empty derivation. It also reaches generated-top
-  SystemVerilog through the CLI. The promoted fixture regression also proves
-  strict schedule JSON parity, strict `--outdir` emission of the importer,
-  specialized child, and generated-top scheduled `.fsm` artifacts, fixed
-  parameter and binding provenance in `library_uses[]`, and both plain and
-  strict generated-top HDL generation. Reusable library clock/reset bindings
-  now support parent/child name remapping through explicit generated-top
-  links. That remapping is a single-clock-domain name binding only.
-  Parameter-driven
-  interface/storage widths, arbitrary-depth generation beyond the first
-  `DEPTH=4` fixture, automatic non-zero reset values, standalone
-  transaction/drive exports, package/imported constants beyond actor-local
-  constants, derived parameter expressions, and nested library imports remain
-  backlog work.
+  through 4, and full/empty derivation.
+
+  It also reaches generated-top SystemVerilog through the CLI.
+
+  The promoted fixture regression also proves strict schedule JSON parity,
+  strict `--outdir` emission of the importer, specialized child, and
+  generated-top scheduled `.fsm` artifacts, fixed parameter and binding
+  provenance in `library_uses[]`, and both plain and strict generated-top HDL
+  generation.
+
+  Reusable library clock/reset bindings now support parent/child name
+  remapping through explicit generated-top links.
+
+  That remapping is a single-clock-domain name binding only.
+
+  Parameter-driven interface/storage widths, arbitrary-depth generation
+  beyond the first `DEPTH=4` fixture, automatic non-zero reset values,
+  standalone transaction/drive exports, package/imported constants beyond
+  actor-local constants, derived parameter expressions, and nested library
+  imports remain backlog work.
 - `(do ...)` and `(spawn ...)` targets must resolve to declared same-actor
   transactions before scheduled `.fsm` emission. They bind named start/done
   signals in scheduled `.fsm`. Spawn and blocking `do` parameter declaration,
@@ -558,115 +568,151 @@ The ISF-specific current limitations are:
   snapshot-vs-live timing selection remain backlog.
 - Width-bearing actor interface ports, transaction-local ports, and
   actor-owned storage entries may use scalar type aliases through `(type
-  NAME)`, mutually exclusive with `(width N)`. Actor-owned storage variables
-  may also use packed `list` or `record` aliases as whole-root aggregate
-  carriers. Local aliases come from actor-local `(types ...)`;
-  package-qualified aliases come from existing `.fsm` packages imported with
-  `(imports (package NAME) ...)`. Lowered scheduled `.fsm` preserves `+types`,
-  `+import`, typed `+size` entries, and embedded package roots. Actor-local
-  `(enums ...)` are preserved as `+enums` declaration artifacts. Actor
-  constants may use local enum members such as `mode.BUSY` or package enum
-  members such as `shared.mode.BUSY`; those constants preserve the authored
-  token in `+constants` and schedule reports while resolving to non-negative
-  integer values for static waits and existing static activation-parameter
-  overrides. Scalar actor parameter defaults, scalar leaves inside actor
-  aggregate/list parameter defaults, generated child transaction scalar
-  parameter defaults, scalar leaves inside generated child transaction
-  aggregate/list parameter defaults, direct transaction `set` RHS scalar values,
-  scalar operands inside transaction `set` RHS expressions, transaction
+  NAME)`, mutually exclusive with `(width N)`.
+
+  Actor-owned storage variables may also use packed `list` or `record`
+  aliases as whole-root aggregate carriers.
+
+  Local aliases come from actor-local `(types ...)`; package-qualified
+  aliases come from existing `.fsm` packages imported with `(imports (package
+  NAME) ...)`.
+
+  Lowered scheduled `.fsm` preserves `+types`, `+import`, typed `+size`
+  entries, and embedded package roots.
+
+  Actor-local `(enums ...)` are preserved as `+enums` declaration artifacts.
+
+  Actor constants may use local enum members such as `mode.BUSY` or package
+  enum members such as `shared.mode.BUSY`; those constants preserve the
+  authored token in `+constants` and schedule reports while resolving to
+  non-negative integer values for static waits and existing static
+  activation-parameter overrides.
+
+  Scalar actor parameter defaults, scalar leaves inside actor aggregate/list
+  parameter defaults, generated child transaction scalar parameter defaults,
+  scalar leaves inside generated child transaction aggregate/list parameter
+  defaults, direct transaction `set` RHS scalar values, scalar operands
+  inside transaction `set` RHS expressions, transaction
   `when`/`while`/`until` condition expression operands, direct transaction
-  `when`/`while`/`until` scalar conditions, transaction `switch` branch values,
-  scalar rule assignment RHS values and scalar operands inside rule assignment
-  RHS expressions, scalar operands inside rule guard expressions, scalar drive
-  body RHS values and scalar operands inside drive body RHS expressions, and
-  named drive-call scalar actual values may also use local and
-  package-qualified enum members. Drive-call actual expressions may
-  use enum members as scalar operands too, inline drive assignment RHS scalar
-  values and scalar operands inside inline drive RHS expressions may use enum
-  members, and scalar activation parameter overrides for spawn, generated
-  blocking `do`, and rule `trigger` may use enum members as static
-  specialization values. Scalar leaves inside those activation
-  aggregate/list parameter override values may use enum members too.
+  `when`/`while`/`until` scalar conditions, transaction `switch` branch
+  values, scalar rule assignment RHS values and scalar operands inside rule
+  assignment RHS expressions, scalar operands inside rule guard expressions,
+  scalar drive body RHS values and scalar operands inside drive body RHS
+  expressions, and named drive-call scalar actual values may also use local
+  and package-qualified enum members.
+
+  Drive-call actual expressions may use enum members as scalar operands too,
+  inline drive assignment RHS scalar values and scalar operands inside inline
+  drive RHS expressions may use enum members, and scalar activation parameter
+  overrides for spawn, generated blocking `do`, and rule `trigger` may use
+  enum members as static specialization values.
+
+  Scalar leaves inside those activation aggregate/list parameter override
+  values may use enum members too.
+
   Reusable-library use-site parameter overrides may also use enum members as
   scalar values or scalar leaves inside compatible aggregate/list override
   values; those use-site enum members resolve to literal generated-top
-  bindings and `library_uses[]` report values. Transaction `switch` selectors
-  and branch values may use enum members; dotted enum selectors lower through
-  computed `.fsm` selector syntax such as `?(mode.BUSY)`.
+  bindings and `library_uses[]` report values.
+
+  Transaction `switch` selectors and branch values may use enum members;
+  dotted enum selectors lower through computed `.fsm` selector syntax such as
+  `?(mode.BUSY)`.
+
   Direct transaction `when`/`while`/`until` conditions may also use local or
-  package-qualified enum members. For example, `(when mode.BUSY (set fire 1))`,
-  `(while mode.BUSY (set busy 1))`, and
-  `(until shared.mode.BUSY (complete done))` are accepted as standalone scalar
-  enum conditions. They lower through computed `.fsm` selector syntax, so the
-  review artifact uses selectors such as `?(mode.BUSY)` or
-  `?(shared.mode.BUSY)`. Enum members also remain valid as scalar operands
-  inside condition expressions, for example
-  `(when (== mode_in mode.BUSY) (set fire 1))`.
+  package-qualified enum members.
+
+  For example, `(when mode.BUSY (set fire 1))`, `(while mode.BUSY (set busy
+  1))`, and `(until shared.mode.BUSY (complete done))` are accepted as
+  standalone scalar enum conditions.
+
+  They lower through computed `.fsm` selector syntax, so the review artifact
+  uses selectors such as `?(mode.BUSY)` or `?(shared.mode.BUSY)`.
+
+  Enum members also remain valid as scalar operands inside condition
+  expressions, for example `(when (== mode_in mode.BUSY) (set fire 1))`.
+
   Rule guards may also use local or package enum members directly, either in
-  shorthand form `(rule fire_when_busy mode.BUSY ...)` or long-form
-  `(rule fire_when_busy (when shared.mode.BUSY) ...)`. These standalone enum
-  rule guards lower to the non-state DT header guard, such as
-  `<mode.BUSY` or `<shared.mode.BUSY`, and strict HDL generation accepts that
-  review artifact.
-  Transaction
-  `set` RHS clauses may read scalar aggregate leaves from declared aggregate
-  storage carriers directly or as operands inside transaction `set` RHS
-  expressions, transaction `when`/`while`/`until` conditions may read scalar
-  aggregate leaves directly or as operands inside condition expressions, and
-  direct transaction `set` targets may write scalar aggregate leaves on those
-  same carriers. Direct aggregate condition leaves lower through computed
-  `.fsm` selector syntax. Transaction
-  `switch` selectors and branch values may also read scalar aggregate leaves;
-  aggregate selectors lower through computed `.fsm` selector syntax such as
-  `?(frame.mode)` or `?(lanes[1])`. Rule assignment
-  scalar RHS values and scalar operands inside rule assignment RHS expressions
-  may also read scalar aggregate leaves from those carriers, and rule
-  assignment targets may write scalar aggregate leaves from those carriers.
+  shorthand form `(rule fire_when_busy mode.BUSY ...)` or long-form `(rule
+  fire_when_busy (when shared.mode.BUSY) ...)`.
+
+  These standalone enum rule guards lower to the non-state DT header guard,
+  such as `<mode.BUSY` or `<shared.mode.BUSY`, and strict HDL generation
+  accepts that review artifact.
+
+  Transaction `set` RHS clauses may read scalar aggregate leaves from
+  declared aggregate storage carriers directly or as operands inside
+  transaction `set` RHS expressions, transaction `when`/`while`/`until`
+  conditions may read scalar aggregate leaves directly or as operands inside
+  condition expressions, and direct transaction `set` targets may write
+  scalar aggregate leaves on those same carriers.
+
+  Direct aggregate condition leaves lower through computed `.fsm` selector
+  syntax.
+
+  Transaction `switch` selectors and branch values may also read scalar
+  aggregate leaves; aggregate selectors lower through computed `.fsm`
+  selector syntax such as `?(frame.mode)` or `?(lanes[1])`.
+
+  Rule assignment scalar RHS values and scalar operands inside rule
+  assignment RHS expressions may also read scalar aggregate leaves from those
+  carriers, and rule assignment targets may write scalar aggregate leaves
+  from those carriers.
+
   Rule guard scalar values and expressions may read scalar aggregate leaves
-  too, for example `(rule fire_when_flag frame.flag ...)` or
-  `(rule fire_when_lane (when lanes[1]) ...)`; standalone aggregate rule guards
+  too, for example `(rule fire_when_flag frame.flag ...)` or `(rule
+  fire_when_lane (when lanes[1]) ...)`; standalone aggregate rule guards
   lower to non-state DT header guards such as `<frame.flag` or `<lanes[1]`.
-  Named drive body scalar RHS values and scalar operands inside RHS expressions may read
-  scalar aggregate leaves from those carriers, and named drive body targets may
-  write scalar aggregate leaves on those carriers. Named drive-call scalar
-  actual values and operands inside actual expressions may also read scalar
-  aggregate leaves from those carriers. Inline drive assignment scalar RHS
-  values and operands inside RHS expressions may read scalar aggregate leaves
-  too, and inline drive targets may write scalar aggregate leaves on those
-  carriers. Enum
-  members in
-  expression operator
-  position,
-  set targets, rules outside scalar trigger parameter
-  overrides, rule guard or transaction condition expression operator position,
-  rule assignment expression operator position, drive targets, drive body RHS
-  expression operator position, inline drive assignment RHS expression
-  operator position, drive-call expression operator position, and other
-  non-shipped contexts remain backlog, as do aggregate paths outside
-  transaction `set` RHS values, direct transaction `set` targets, transaction
-  condition scalar values/expression operands, transaction `switch`
-  selectors/branch values, rule assignment target tokens, rule assignment RHS
-  values/expression operands, rule guard scalar values/expression operands, drive target
-  tokens, or drive body RHS scalar values/expression operands, inline drive
-  target tokens, inline drive assignment RHS scalar values/expression operands,
-  or drive-call actual scalar values/expression operands, subaggregate
-  operands/updates, and
-  aggregate interface/transaction/bank carriers.
+
+  Named drive body scalar RHS values and scalar operands inside RHS
+  expressions may read scalar aggregate leaves from those carriers, and named
+  drive body targets may write scalar aggregate leaves on those carriers.
+
+  Named drive-call scalar actual values and operands inside actual
+  expressions may also read scalar aggregate leaves from those carriers.
+
+  Inline drive assignment scalar RHS values and operands inside RHS
+  expressions may read scalar aggregate leaves too, and inline drive targets
+  may write scalar aggregate leaves on those carriers.
+
+  Enum members in expression operator position, set targets, rules outside
+  scalar trigger parameter overrides, rule guard or transaction condition
+  expression operator position, rule assignment expression operator position,
+  drive targets, drive body RHS expression operator position, inline drive
+  assignment RHS expression operator position, drive-call expression operator
+  position, and other non-shipped contexts remain backlog, as do aggregate
+  paths outside transaction `set` RHS values, direct transaction `set`
+  targets, transaction condition scalar values/expression operands,
+  transaction `switch` selectors/branch values, rule assignment target
+  tokens, rule assignment RHS values/expression operands, rule guard scalar
+  values/expression operands,
+
+  drive target tokens, or drive body RHS scalar values/expression operands,
+  inline drive target tokens, inline drive assignment RHS scalar
+  values/expression operands, or drive-call actual scalar values/expression
+  operands, subaggregate operands/updates, and aggregate
+  interface/transaction/bank carriers.
 - `(resources ...)` is structurally validated by the parser and now has one
   enforced resource kind: `rule_slot`, a one-cycle mutual-exclusion slot for
-  rule users under the `priority` arbiter. Future kinds such as
-  `output_bundle`, `interface_bundle`, `named_drive`, `transaction_start`,
-  `child_instance`, and `storage_port` remain backlog until their lowering
-  contracts are explicit. The accepted `round_robin` value remains parser
-  metadata until round-robin lowering ships. The parser and
-  `embedding.isf_public_interface` contract share the same resource catalog,
-  including the current status and meaning of each kind. `(priority ...)` is
-  structurally validated and currently enforced for same-target rule/rule data
-  conflicts,
-  priority-arbitrated `rule_slot` resources, and the lowerable
-  rule-over-transaction same-target data case. Transaction-over-rule priority
-  remains deferred because scheduled `.fsm` review text does not yet expose a
-  state-active predicate that can safely guard a non-state rule DT assignment.
+  rule users under the `priority` arbiter.
+
+  Future kinds such as `output_bundle`, `interface_bundle`, `named_drive`,
+  `transaction_start`, `child_instance`, and `storage_port` remain backlog
+  until their lowering contracts are explicit.
+
+  The accepted `round_robin` value remains parser metadata until round-robin
+  lowering ships.
+
+  The parser and `embedding.isf_public_interface` contract share the same
+  resource catalog, including the current status and meaning of each kind.
+
+  `(priority ...)` is structurally validated and currently enforced for
+  same-target rule/rule data conflicts, priority-arbitrated `rule_slot`
+  resources, and the lowerable rule-over-transaction same-target data case.
+
+  Transaction-over-rule priority remains deferred because scheduled `.fsm`
+  review text does not yet expose a state-active predicate that can safely
+  guard a non-state rule DT assignment.
 - Deprecated `(handshake name (valid signal) (ready signal))` metadata is
   structurally validated and then ignored; direct `(on port ...)` activation
   plus generated `can_accept` is the current model.

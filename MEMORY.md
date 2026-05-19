@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: mdBook rendered prose-blob cleanup shipped
+- Completed `MDBOOK-PARAGRAPH-SPACING.4` and closed the
+  `MDBOOK-PARAGRAPH-SPACING` task tree.
+- Split long rendered prose blocks across the mdBook sources and the included
+  downstream ISF integration handoff so the generated HTML no longer contains
+  long `<p>` blobs or long prose `<li>` blobs under the rendered-output audit.
+- This is formatting-only: whitespace-normalized source comparison against
+  `HEAD` is clean for the touched Markdown sources.
+- Validation passed with `mdbook build docs/book`, rendered HTML long-prose
+  audit, whitespace-normalized source comparison, and `git diff --check`.
+
 ## 2026-05-19: mdBook rendered-HTML blob cleanup reopened
 - Completed `MDBOOK-PARAGRAPH-SPACING.3`.
 - Reopened the task tree because rendered HTML inspection showed the

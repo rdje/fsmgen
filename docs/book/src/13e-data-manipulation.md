@@ -139,19 +139,27 @@ Deconstructs `word` into named fields. The form is exact:
 one or more scalar destination fields. The optional `(widths N...)` payload
 must contain one positive integer width per field.
 
-**Current lowering**: one extraction state is emitted. When the source word and
-destination fields have known widths, or when the extract clause supplies an
-ordered `(widths N...)` list matching the field count, each field is assigned
-from an exact descending slice. If exactly one destination field width is
-missing and the source word plus every sibling field has known positive width,
-FSMGen infers the missing field width as the positive remainder. That inferred
-width remains available as transaction-local evidence for later data
-operations, such as a following `shift_right` on the extracted field. Two or
-more unknown field widths remain ambiguous and fail closed instead of
-placeholder slice bounds. Explicit widths must be positive integers and must
-not conflict with already known field widths. When the source word width is
-known, the sum of field widths must match it; a zero or negative inferred
-remainder fails closed.
+**Current lowering**: one extraction state is emitted.
+
+When the source word and destination fields have known widths, or when the
+extract clause supplies an ordered `(widths N...)` list matching the field
+count, each field is assigned from an exact descending slice.
+
+If exactly one destination field width is missing and the source word plus
+every sibling field has known positive width, FSMGen infers the missing field
+width as the positive remainder.
+
+That inferred width remains available as transaction-local evidence for later
+data operations, such as a following `shift_right` on the extracted field.
+
+Two or more unknown field widths remain ambiguous and fail closed instead of
+placeholder slice bounds.
+
+Explicit widths must be positive integers and must not conflict with already
+known field widths.
+
+When the source word width is known, the sum of field widths must match it; a
+zero or negative inferred remainder fails closed.
 
 ```lisp
 (state

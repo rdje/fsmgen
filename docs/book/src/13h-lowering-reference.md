@@ -1047,26 +1047,39 @@ optional `(bind ...)` handoffs, and optional declared same-domain
 `(domain NAME)` ownership metadata followed by same-body `await_all`, or by
 same-body `await_any` when exactly one spawn is pending.
 
-`N` is a counter load value, not a structural replication count. A dynamic
-scalar count is therefore compatible with the hardware model when its width is
-known, but it makes loop latency runtime-dependent and forces the zero-count
-policy to be explicit. For repeat-body spawn, the generated top still
-instantiates one static child instance for the lexical spawn name. The repeat
-body starts that instance, waits for the same instance's done port, and only
-then reaches the repeat check. `await_any` has the same direct re-entry proof
-as `await_all` only when exactly one spawn is pending. With multiple pending
-spawns, `await_any` is allowed only as an observation point before a later
-same-body `await_all` drains the same outstanding spawn set. If the spawn
-carries `(params ...)`, those
-overrides appear once on that static generated-top child instance, not on each
-iteration. If it carries `(bind ...)`, the generated parent handoff ports are
-also emitted once for that static instance and wired by the generated top. If
-it carries `(domain NAME)`, that name must be declared by the actor and remain
-the same domain as the owning transaction and child; it only records ownership
-metadata and does not add CDC behavior. Samples after repeat-body spawn lower
-to an explicit sample state before the same-body sync state, so capture timing
-is visible before the repeat check. Spawning again after that pending sample
-remains deferred.
+`N` is a counter load value, not a structural replication count.
+
+A dynamic scalar count is therefore compatible with the hardware model when
+its width is known, but it makes loop latency runtime-dependent and forces
+the zero-count policy to be explicit.
+
+For repeat-body spawn, the generated top still instantiates one static child
+instance for the lexical spawn name.
+
+The repeat body starts that instance, waits for the same instance's done
+port, and only then reaches the repeat check.
+
+`await_any` has the same direct re-entry proof as `await_all` only when
+exactly one spawn is pending.
+
+With multiple pending spawns, `await_any` is allowed only as an observation
+point before a later same-body `await_all` drains the same outstanding spawn
+set.
+
+If the spawn carries `(params ...)`, those overrides appear once on that
+static generated-top child instance, not on each iteration.
+
+If it carries `(bind ...)`, the generated parent handoff ports are also
+emitted once for that static instance and wired by the generated top.
+
+If it carries `(domain NAME)`, that name must be declared by the actor and
+remain the same domain as the owning transaction and child; it only records
+ownership metadata and does not add CDC behavior.
+
+Samples after repeat-body spawn lower to an explicit sample state before the
+same-body sync state, so capture timing is visible before the repeat check.
+
+Spawning again after that pending sample remains deferred.
 
 The same static child handoff is shipped for two narrower nested placements. A
 repeat directly inside a top-level `when` body may contain one or more
@@ -1087,56 +1100,81 @@ instantiates one static child per lexical `spawn` instance.
 The top-level `when` body and top-level `switch` branch nested-repeat forms
 may also lower a local plain `(do child)` while generated nested spawns are
 pending either before or after a prior multi-pending `await_any` observation,
-before a later same-body `await_all` drain. That local do uses the
-parent-module start/done contract and does not consume the generated-spawn
-done set; the later `await_all` still gates the nested repeat check on every
-outstanding generated child. The
-top-level `when` body and top-level `switch` branch nested-repeat forms may
-also lower a plain generated-child `(do child)`
-in that pending-spawn interval when the target is already generated
-elsewhere. That generated do starts its own deterministic
+before a later same-body `await_all` drain.
+
+That local do uses the parent-module start/done contract and does not consume
+the generated-spawn done set; the later `await_all` still gates the nested
+repeat check on every outstanding generated child.
+
+The top-level `when` body and top-level `switch` branch nested-repeat forms
+may also lower a plain generated-child `(do child)` in that pending-spawn
+interval when the target is already generated elsewhere.
+
+That generated do starts its own deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, waits for that instance's
 fresh done handoff, and leaves pending generated-spawn done handoffs live
-until the later `await_all` drain. The same top-level branch-contained
-nested-repeat forms may lower static-parameter generated
-`(do child (params ...))` in that interval; the generated do instance carries
-the authored parameter overrides in the generated top and still leaves
-pending generated-spawn done handoffs live until the later drain. Top-level
-`when` body and top-level `switch` branch nested-repeat forms may also lower
-static-parameter generated `(do child (params ...) (bind ...))` in that
-interval; the generated do instance wires generated-top input/output binding
-handoffs once and leaves pending generated-spawn done handoffs live until the
-later drain. Top-level `when` body and top-level `switch` branch nested
-repeats may also lower static-parameter same-domain generated
-`(do child (params ...) [(bind ...)] (domain NAME))` in that interval. The
-domain annotation is declared ownership metadata for the generated do
+until the later `await_all` drain.
+
+The same top-level branch-contained nested-repeat forms may lower
+static-parameter generated `(do child (params ...))` in that interval; the
+generated do instance carries the authored parameter overrides in the
+generated top and still leaves pending generated-spawn done handoffs live
+until the later drain.
+
+Top-level `when` body and top-level `switch` branch nested-repeat forms may
+also lower static-parameter generated `(do child (params ...)
+
+(bind ...))` in that interval; the generated do instance wires generated-top
+input/output binding handoffs once and leaves pending generated-spawn done
+handoffs live until the later drain.
+
+Top-level `when` body and top-level `switch` branch nested repeats may also
+lower static-parameter same-domain generated `(do child (params ...) [(bind
+...)] (domain NAME))` in that interval.
+
+The domain annotation is declared ownership metadata for the generated do
 instance; lowering keeps pending generated-spawn done handoffs live until the
-later drain. The top-level `when` body and top-level `switch` branch plain
-generated-child do after prior multi-pending `await_any` subsets are shipped
-for this same pending-spawn lifetime proof. The top-level `when` body
-static-parameter generated do after prior multi-pending `await_any` subset is
-also shipped, and the top-level `switch` branch static-parameter analogue is
-shipped with the same later drain requirement. The top-level `when` body
-static-parameter bound generated do after prior multi-pending `await_any`
-subset is shipped with the same later drain requirement and generated-top
-binding handoffs. The top-level `switch` branch static-parameter bound
-generated do after prior multi-pending `await_any` subset is shipped with the
-same later drain requirement and generated-top binding handoffs. The
-top-level `when` body and top-level `switch` branch same-domain generated do
-after prior multi-pending `await_any` subsets are shipped with the same later
-drain requirement and declared ownership metadata in generated-composition/
-domain partition and schedule-report clock-domain summaries. Top-level
-`when` body local `(do child)` may also lower before a post-do multi-pending
-`await_any` observation; lowering waits for the local child's fresh done
-pulse, emits the post-do `await_any` as an observation of the still-pending
-generated-spawn done set, and keeps the later same-body `await_all` as the
-drain before nested repeat re-entry. Top-level `switch` branch local
-`(do child)` now shares that post-do `await_any` observation and later-drain
-contract. Top-level `when` body plain generated-child `(do child)` also
-shares that post-do `await_any` observation and later-drain contract; lowering
-waits for the deterministic generated do instance's fresh done handoff before
-the observation. Top-level `switch` branch plain generated-child `(do child)`
-shares the same post-do `await_any` observation and later-drain contract.
+later drain.
+
+The top-level `when` body and top-level `switch` branch plain generated-child
+do after prior multi-pending `await_any` subsets are shipped for this same
+pending-spawn lifetime proof.
+
+The top-level `when` body static-parameter generated do after prior
+multi-pending `await_any` subset is also shipped, and the top-level `switch`
+branch static-parameter analogue is shipped with the same later drain
+requirement.
+
+The top-level `when` body static-parameter bound generated do after prior
+multi-pending `await_any` subset is shipped with the same later drain
+requirement and generated-top binding handoffs.
+
+The top-level `switch` branch static-parameter bound generated do after prior
+multi-pending `await_any` subset is shipped with the same later drain
+requirement and generated-top binding handoffs.
+
+The top-level `when` body and top-level `switch` branch same-domain generated
+do after prior multi-pending `await_any` subsets are shipped with the same
+later drain requirement and declared ownership metadata in
+generated-composition/ domain partition and schedule-report clock-domain
+summaries.
+
+Top-level `when` body local `(do child)` may also lower before a post-do
+multi-pending `await_any` observation; lowering waits for the local child's
+fresh done pulse, emits the post-do `await_any` as an observation of the
+still-pending generated-spawn done set, and keeps the later same-body
+`await_all` as the drain before nested repeat re-entry.
+
+Top-level `switch` branch local `(do child)` now shares that post-do
+`await_any` observation and later-drain contract.
+
+Top-level `when` body plain generated-child `(do child)` also shares that
+post-do `await_any` observation and later-drain contract; lowering waits for
+the deterministic generated do instance's fresh done handoff before the
+observation.
+
+Top-level `switch` branch plain generated-child `(do child)` shares the same
+post-do `await_any` observation and later-drain contract.
 
 Top-level `when` body and top-level `switch` branch static-parameter
 generated `(do child (params ...))` share that post-do `await_any`
@@ -1247,22 +1285,28 @@ For a switch branch, the selector targets the branch-owned repeat init state:
     (default (-> parent_done_8))))
 ```
 
-The `when` and `switch` nested repeat subsets accept local plain `(do child)`,
-plain generated-child `(do child)` when the target is already generated
-elsewhere, static-parameter generated `(do child (params ...))`, and
-static-parameter generated bound `(do child (params ...) (bind ...))`. The
-generated case emits one deterministic
+The `when` and `switch` nested repeat subsets accept local plain `(do
+child)`, plain generated-child `(do child)` when the target is already
+generated elsewhere, static-parameter generated `(do child (params ...))`,
+and static-parameter generated bound `(do child (params ...)
+
+(bind ...))`.
+
+The generated case emits one deterministic
 `{parent}_{child}_repeat_do_{ordinal}` instance, applies parameter overrides
-once when present, and waits for that instance's fresh done handoff before the
-nested repeat check. The generated bound case wires generated-top
-input/output binding handoffs once for that lexical nested do site. The
-when-contained and switch-contained generated cases also accept
-`(domain NAME)` as declared same-domain metadata when static `(params ...)`
-overrides are present. Both nested subsets reject deeper branch nesting,
-loop-contained repeats, and
-generated/spawned nested activation
-beyond the documented branch-contained generated `do` cases and the
-branch-contained generated-spawn cases.
+once when present, and waits for that instance's fresh done handoff before
+the nested repeat check.
+
+The generated bound case wires generated-top input/output binding handoffs
+once for that lexical nested do site.
+
+The when-contained and switch-contained generated cases also accept `(domain
+NAME)` as declared same-domain metadata when static `(params ...)` overrides
+are present.
+
+Both nested subsets reject deeper branch nesting, loop-contained repeats, and
+generated/spawned nested activation beyond the documented branch-contained
+generated `do` cases and the branch-contained generated-spawn cases.
 
 Representative repeat-body spawn lowering uses the static generated instance
 handoff, then an optional sample state, before the repeat check:
@@ -1352,29 +1396,40 @@ keeps the two child lifetimes separate:
   (-> parent_repeat_check_6 <w0_done))
 ```
 
-The generated top instantiates both `w0` and
-`parent_worker_repeat_do_0`. The blocking generated-child `do` consumes only
+The generated top instantiates both `w0` and `parent_worker_repeat_do_0`.
+
+The blocking generated-child `do` consumes only
 `parent_worker_repeat_do_0_done`; it does not clear `w0_done`, so the nested
 repeat check remains unreachable until the later `await_all` drain observes
-the spawned child. The top-level `when` body and top-level `switch` branch
-generated-child subsets may also place a multi-pending `await_any` observation
-before that generated-child `do`: the observation branches to the generated
-do state, the generated do waits only for its deterministic instance done
-handoff, and the later `await_all` drain still observes every pending spawned
-child before the nested repeat check. The top-level `when` body and top-level
-`switch` branch static-parameter generated pending-spawn subsets use the same
-state shape, with `parent_worker_repeat_do_0` carrying the authored static
-parameter overrides in the generated top. The generated `do` still consumes
-only its own fresh done handoff and leaves the spawned child done handoff live
-for the later drain. In both top-level branch-contained subsets, this same
-static-parameter generated do shape may also follow a prior multi-pending
-`await_any` observation before the later `await_all` drain. The top-level
-`when` body static-parameter bound pending-spawn subset uses the same state
-shape and adds generated-top input/output binding handoffs to
+the spawned child.
+
+The top-level `when` body and top-level `switch` branch generated-child
+subsets may also place a multi-pending `await_any` observation before that
+generated-child `do`: the observation branches to the generated do state, the
+generated do waits only for its deterministic instance done handoff, and the
+later `await_all` drain still observes every pending spawned child before the
+nested repeat check.
+
+The top-level `when` body and top-level `switch` branch static-parameter
+generated pending-spawn subsets use the same state shape, with
+`parent_worker_repeat_do_0` carrying the authored static parameter overrides
+in the generated top.
+
+The generated `do` still consumes only its own fresh done handoff and leaves
+the spawned child done handoff live for the later drain.
+
+In both top-level branch-contained subsets, this same static-parameter
+generated do shape may also follow a prior multi-pending `await_any`
+observation before the later `await_all` drain.
+
+The top-level `when` body static-parameter bound pending-spawn subset uses
+the same state shape and adds generated-top input/output binding handoffs to
 `parent_worker_repeat_do_0`; those handoffs are consumed by the generated do
-instance only, while the spawned child done handoff remains live for the later
-drain. The top-level `when` body and top-level `switch` branch bound forms
-may also follow a prior multi-pending `await_any` observation before the later
+instance only, while the spawned child done handoff remains live for the
+later drain.
+
+The top-level `when` body and top-level `switch` branch bound forms may also
+follow a prior multi-pending `await_any` observation before the later
 `await_all` drain.
 
 Multi-pending repeat-body `await_any` keeps the outstanding spawned done ports

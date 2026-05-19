@@ -46,7 +46,6 @@ first.
 | --- | --- | --- | --- | --- |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `active` | `R14` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `active` | `R14` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
-| `MDBOOK-PARAGRAPH-SPACING` | `active` | `project documentation` | `MDBOOK-PARAGRAPH-SPACING.4` | [docs/tasks/MDBOOK-PARAGRAPH-SPACING.md](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 
 ## Proposed Task Trees
 
@@ -61,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `MDBOOK-PARAGRAPH-SPACING` | `done` | `project documentation` | `closed` | [docs/tasks/MDBOOK-PARAGRAPH-SPACING.md](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `CI-HOSTED-ISF-REGRESSION-CASCADE` | `done` | `project operations` | `closed` | [docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md](docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md) |
 | `CI-FULL-REGRESSION-GREEN` | `done` | `project operations` | `closed` | [docs/tasks/CI-FULL-REGRESSION-GREEN.md](docs/tasks/CI-FULL-REGRESSION-GREEN.md) |
 | `CI-PERL-532-REGRESSION-COMPAT` | `done` | `project operations` | `closed` | [docs/tasks/CI-PERL-532-REGRESSION-COMPAT.md](docs/tasks/CI-PERL-532-REGRESSION-COMPAT.md) |

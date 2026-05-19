@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: Project documentation — mdBook rendered prose-blob cleanup shipped
+- Completed `MDBOOK-PARAGRAPH-SPACING.4`.
+- Closed the `MDBOOK-PARAGRAPH-SPACING` task tree.
+- Split long rendered prose blocks across the mdBook sources and included
+  downstream ISF integration handoff so generated HTML no longer contains
+  long `<p>` blobs or long prose `<li>` blobs under the rendered-output audit.
+- The slice is formatting-only; whitespace-normalized source comparison
+  against `HEAD` is clean for the touched Markdown sources.
+- Validation passed with `mdbook build docs/book`, rendered HTML long-prose
+  audit, whitespace-normalized source comparison, and `git diff --check`.
+
 ## 2026-05-19: Project documentation — mdBook rendered-HTML blob cleanup reopened
 - Completed `MDBOOK-PARAGRAPH-SPACING.3`.
 - Reopened the task tree because generated HTML still contains long

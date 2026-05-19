@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### Project documentation — mdBook rendered prose-blob cleanup shipped
+- Completed `MDBOOK-PARAGRAPH-SPACING.4` and closed the task tree.
+- Split long rendered prose blocks across the mdBook sources and the included
+  downstream ISF integration handoff so generated HTML no longer contains long
+  `<p>` blobs or long prose `<li>` blobs under the rendered-output audit.
+- Preserved technical content; whitespace-normalized source comparison
+  against `HEAD` is clean for the touched Markdown sources.
+- Validation passed with `mdbook build docs/book`, rendered HTML long-prose
+  audit, whitespace-normalized source comparison, and `git diff --check`.
+
 ### Project documentation — mdBook rendered-HTML blob cleanup reopened
 - Completed `MDBOOK-PARAGRAPH-SPACING.3`.
 - Reopened `MDBOOK-PARAGRAPH-SPACING` after generated HTML inspection showed

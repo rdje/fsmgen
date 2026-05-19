@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: rendered prose audit is the book readability gate
+- `MDBOOK-PARAGRAPH-SPACING.4` closes the gap between Markdown readability
+  and rendered HTML readability by checking the built book for long paragraph
+  and list-item text blocks.
+- The fix is still source-formatting only. Long Markdown paragraphs and long
+  list items were split into rendered paragraphs while preserving technical
+  wording, examples, headings, tables, and fenced code.
+- The validation rule for this class of cleanup is now: build the book,
+  inspect generated HTML for long `<p>` and long prose `<li>` blobs, run
+  whitespace-normalized source comparison against `HEAD`, and finish with
+  `git diff --check`.
+
 ## 2026-05-19: rendered mdBook blobs can come from list items
 - `MDBOOK-PARAGRAPH-SPACING.3` reopens the paragraph-spacing cleanup because
   rendered HTML review showed that some long Markdown list items still become

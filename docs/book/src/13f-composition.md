@@ -382,23 +382,31 @@ broader group scheduling outside the exact trigger-batch subset, pin
 movement, event fan-in/fan-out, trigger fan-in/fan-out, and generated ATL
 wiring remain backlog under the actor-network task tree.
 
-The broader ATL v0 contract is selected for later slices. The source root
-stays `(actor ...)`, and future ATL declarations remain direct actor-body
-clauses rather than a `(network ...)` section. Actor-to-actor and scalar
-top-level pin movement reuse the existing drive-body pair shape in
-`(sink source)` order plus ordinary drive-call timing points. `connect`,
-`transfer`, and `move` are not part of ATL v0 movement syntax. The first
-endpoint-movement implementation sequence first shipped fail-closed
+The broader ATL v0 contract is selected for later slices.
+
+The source root stays `(actor ...)`, and future ATL declarations remain
+direct actor-body clauses rather than a `(network ...)` section.
+
+Actor-to-actor and scalar top-level pin movement reuse the existing
+drive-body pair shape in `(sink source)` order plus ordinary drive-call
+timing points.
+
+`connect`, `transfer`, and `move` are not part of ATL v0 movement syntax.
+
+The first endpoint-movement implementation sequence first shipped fail-closed
 reservation for unsupported endpoint drive-body pairs, then shipped the first
-generated scalar actor-to-actor handoff subset. The accepted subset is
-intentionally narrow: exactly two direct static actor instances, one named
-drive body with one `(sink_actor.endpoint source_actor.endpoint)` scalar
-pair, and one top-level transaction drive call. The generated parent `.fsm`
-exposes a one-bit external source input named
+generated scalar actor-to-actor handoff subset.
+
+The accepted subset is intentionally narrow: exactly two direct static actor
+instances, one named drive body with one `(sink_actor.endpoint
+source_actor.endpoint)` scalar pair, and one top-level transaction drive
+call.
+
+The generated parent `.fsm` exposes a one-bit external source input named
 `source_actor_source_endpoint` and a one-bit external sink output named
-`sink_actor_sink_endpoint`; the route lasts for the drive-call cycle and
-does not imply storage, a mux, generated child `.fsm` artifacts, an ATL top,
-HDL child wiring, pin movement in that actor-to-actor route, fan-in/fan-out,
+`sink_actor_sink_endpoint`; the route lasts for the drive-call cycle and does
+not imply storage, a mux, generated child `.fsm` artifacts, an ATL top, HDL
+child wiring, pin movement in that actor-to-actor route, fan-in/fan-out,
 groups, CDC, or trigger/await coupling.
 
 ```lisp
@@ -712,34 +720,47 @@ mux/storage, recursive actor networks, and permanent actor grouping remain
 unavailable.
 
 The first generated-child data route is also shipped for one scalar top-level
-input-pin route into one resolved child through that generated top. The
-source shape is a named drive body with `(worker.payload pins.payload)`,
+input-pin route into one resolved child through that generated top.
+
+The source shape is a named drive body with `(worker.payload pins.payload)`,
 activated by the same parent transaction that triggers `worker.process` and
-awaits `worker.done`. The fixture
-`isf/atl_resolved_child_pin_ingress_pipeline.isf` emits parent, child, and top
-`.fsm` artifacts; the generated top wires top `payload` to the parent,
-parent `worker_payload` to child input `payload`, parent
+awaits `worker.done`.
+
+The fixture `isf/atl_resolved_child_pin_ingress_pipeline.isf` emits parent,
+child, and top `.fsm` artifacts; the generated top wires top `payload` to the
+parent, parent `worker_payload` to child input `payload`, parent
 `worker_process_start` to child `process_start`, and child `done` to parent
-`worker_done`. The child `.fsm` includes generated `+interface` role metadata
-for the selected child input so the HDL backend preserves `payload` as a
-child module port. Actor-to-actor generated-child routes, multi-child data
-wiring, route mux/storage, CDC/reset remapping, ready/backpressure, and
-payload protocols remain unavailable.
+`worker_done`.
+
+The child `.fsm` includes generated `+interface` role metadata for the
+selected child input so the HDL backend preserves `payload` as a child module
+port.
+
+Actor-to-actor generated-child routes, multi-child data wiring, route
+mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols
+remain unavailable.
 
 The inverse generated-child data route is also shipped for one scalar
-resolved-child output route to one top-level output pin through that generated
-top. The source shape is a named drive body with
-`(pins.result worker.payload)`, activated after the parent transaction
-triggers `worker.process` and awaits `worker.done`. The fixture
-`isf/atl_resolved_child_pin_egress_pipeline.isf` emits parent, child, and top
-`.fsm` artifacts; the generated top wires child `payload` to parent
-`worker_payload`, parent `result` to top `result`, parent
+resolved-child output route to one top-level output pin through that
+generated top.
+
+The source shape is a named drive body with `(pins.result worker.payload)`,
+activated after the parent transaction triggers `worker.process` and awaits
+`worker.done`.
+
+The fixture `isf/atl_resolved_child_pin_egress_pipeline.isf` emits parent,
+child, and top `.fsm` artifacts; the generated top wires child `payload` to
+parent `worker_payload`, parent `result` to top `result`, parent
 `worker_process_start` to child `process_start`, and child `done` to parent
-`worker_done`. The child `.fsm` includes generated `+interface` role metadata
-for the selected child output so the HDL backend preserves `payload` as a
-child module port. Actor-to-actor generated-child routes, multi-child data
-wiring, route mux/storage, CDC/reset remapping, ready/backpressure, and
-payload protocols remain unavailable.
+`worker_done`.
+
+The child `.fsm` includes generated `+interface` role metadata for the
+selected child output so the HDL backend preserves `payload` as a child
+module port.
+
+Actor-to-actor generated-child routes, multi-child data wiring, route
+mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols
+remain unavailable.
 
 FSMGen now fails closed the reserved generated-child actor-to-actor
 data-route shape across two resolved children when it is coupled to qualified
@@ -747,19 +768,25 @@ actor trigger/event handoffs. That shape reuses the existing `(sink source)`
 drive-body movement surface and is now supported only for the selected
 two-child scalar data route described below.
 
-The first control-only two-child generated top is now shipped. The fixture
-`isf/atl_two_child_pipeline.isf` declares resolved `reader` and `writer`
-children, triggers `reader.capture`, waits on `reader.done`, triggers
-`writer.emit`, waits on `writer.done`, and completes. Lowering emits parent,
-reader, writer, and generated top `.fsm` artifacts. The generated top
-instantiates all three modules, exposes only the parent public pins plus
-clock/reset, wires `reader_capture_start` to `reader.capture_start`,
-`reader.done` to `reader_done`, `writer_emit_start` to
-`writer.emit_start`, and `writer.done` to `writer_done`. Schedule JSON keeps
-the same actor-network families and uses
+The first control-only two-child generated top is now shipped.
+
+The fixture `isf/atl_two_child_pipeline.isf` declares resolved `reader` and
+`writer` children, triggers `reader.capture`, waits on `reader.done`,
+triggers `writer.emit`, waits on `writer.done`, and completes.
+
+Lowering emits parent, reader, writer, and generated top `.fsm` artifacts.
+
+The generated top instantiates all three modules, exposes only the parent
+public pins plus clock/reset, wires `reader_capture_start` to
+`reader.capture_start`, `reader.done` to `reader_done`, `writer_emit_start`
+to `writer.emit_start`, and `writer.done` to `writer_done`.
+
+Schedule JSON keeps the same actor-network families and uses
 `actor_network.generated_tops[].children[]` for the per-child generated-top
-wiring records. The first scalar generated-child actor-to-actor route through
-that two-child top is also shipped as `isf/atl_two_child_data_pipeline.isf`.
+wiring records.
+
+The first scalar generated-child actor-to-actor route through that two-child
+top is also shipped as `isf/atl_two_child_data_pipeline.isf`.
 
 It reuses a named drive body with `(writer.payload reader.payload)` and calls
 it after `reader.done` and before `writer.emit`. The scheduled parent exposes

@@ -64,23 +64,93 @@ detailed chapter, [ISF Downstream Integration](13i-downstream-integration.md),
 | Schedule report schema and storage roles | shipped bounded surface | Schedule JSON `schema_version: 1`, public `schedule_report_full_schema_stable`, advertised key/value families, and `inferred_storage[].kind`/`role` values. | The version-1 schedule JSON schema is stable through the public contract. Storage roles include dynamic waits, activation handoffs, rule-trigger sources, transaction ports/bindings, and temporal contract monitors. Raw parser actor hashes, private `LoweringIR` internals, raw assignment lists, and recursive child report dumps remain private. |
 | Diagnostics and downstream issue reporting | shipped | Fail-closed parser/lowering diagnostics, strict-mode compatibility cuts, `--check --json` / `--check-json` failure payloads, and `bin/fsmgen-issue-bundle`. | Unsupported public forms reject before misleading artifacts are emitted. For `.isf` inputs, parser, lowering, report-building, and semantic check failures emit `success: false` JSON in check mode instead of empty stdout. Downstream consumers can provide a reproducible issue bundle without understanding `.fsm` or `.isf` internals. |
 
-Repeat-body activation matrix note: the shipped top-level when-body nested repeat generated do with static params and bind handoffs after multi-pending await_any while generated nested spawn pending before same-body await_all drain subset preserves generated-top input/output binding handoffs and leaves the pending generated-spawn done set live for the later drain. The shipped top-level switch-branch nested repeat generated do with static params and bind handoffs after multi-pending await_any while generated nested spawn pending before same-body await_all drain subset uses the same generated-top binding handoff and later drain contract. The shipped top-level when-body nested repeat generated do with static params, optional bind handoffs, and same-domain metadata after multi-pending await_any while generated nested spawn pending before same-body await_all drain subset records declared ownership metadata for the generated do instance and generated children without implying CDC or cross-domain activation. The shipped top-level switch-branch nested repeat generated do with static params, optional bind handoffs, and same-domain metadata after multi-pending await_any while generated nested spawn pending before same-body await_all drain subset mirrors that ownership metadata and later drain contract. The shipped top-level when-body nested repeat local do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset waits for the local child done pulse before the observation and leaves the pending generated-spawn done set live for the later drain. The shipped top-level switch-branch nested repeat local do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset mirrors that local-child and later-drain contract. The shipped top-level when-body nested repeat generated-child do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset waits for the generated do instance done handoff before the observation and leaves the pending generated-spawn done set live for the later drain. The shipped top-level switch-branch nested repeat generated-child do before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset mirrors that generated-child and later-drain contract. The shipped top-level when-body nested repeat generated do with static params before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset waits for the generated do instance done handoff before the observation, preserves generated-top parameter binding, and leaves the pending generated-spawn done set live for the later drain. The shipped top-level switch-branch nested repeat generated do with static params before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset mirrors that static-parameter generated do and later-drain contract. The shipped top-level when-body nested repeat generated do with static params and bind handoffs before post-do multi-pending await_any while generated nested spawn pending before same-body await_all drain subset additionally wires generated-top input/output binding handoffs for the generated do instance before the observation. Domain-qualified generated-do post-do await_any, switch-contained bound generated-do post-do await_any, and new spawn after the do before drain remain fail-closed.
+Repeat-body activation matrix note: the shipped top-level when-body nested
+repeat generated do with static params and bind handoffs after multi-pending
+await_any while generated nested spawn pending before same-body await_all
+drain subset preserves generated-top input/output binding handoffs and leaves
+the pending generated-spawn done set live for the later drain.
+
+The shipped top-level switch-branch nested repeat generated do with static
+params and bind handoffs after multi-pending await_any while generated nested
+spawn pending before same-body await_all drain subset uses the same
+generated-top binding handoff and later drain contract.
+
+The shipped top-level when-body nested repeat generated do with static
+params, optional bind handoffs, and same-domain metadata after multi-pending
+await_any while generated nested spawn pending before same-body await_all
+drain subset records declared ownership metadata for the generated do
+instance and generated children without implying CDC or cross-domain
+activation.
+
+The shipped top-level switch-branch nested repeat generated do with static
+params, optional bind handoffs, and same-domain metadata after multi-pending
+await_any while generated nested spawn pending before same-body await_all
+drain subset mirrors that ownership metadata and later drain contract.
+
+The shipped top-level when-body nested repeat local do before post-do
+multi-pending await_any while generated nested spawn pending before same-body
+await_all drain subset waits for the local child done pulse before the
+observation and leaves the pending generated-spawn done set live for the
+later drain.
+
+The shipped top-level switch-branch nested repeat local do before post-do
+multi-pending await_any while generated nested spawn pending before same-body
+await_all drain subset mirrors that local-child and later-drain contract.
+
+The shipped top-level when-body nested repeat generated-child do before
+post-do multi-pending await_any while generated nested spawn pending before
+same-body await_all drain subset waits for the generated do instance done
+handoff before the observation and leaves the pending generated-spawn done
+set live for the later drain.
+
+The shipped top-level switch-branch nested repeat generated-child do before
+post-do multi-pending await_any while generated nested spawn pending before
+same-body await_all drain subset mirrors that generated-child and later-drain
+contract.
+
+The shipped top-level when-body nested repeat generated do with static params
+before post-do multi-pending await_any while generated nested spawn pending
+before same-body await_all drain subset waits for the generated do instance
+done handoff before the observation, preserves generated-top parameter
+binding, and leaves the pending generated-spawn done set live for the later
+drain.
+
+The shipped top-level switch-branch nested repeat generated do with static
+params before post-do multi-pending await_any while generated nested spawn
+pending before same-body await_all drain subset mirrors that static-parameter
+generated do and later-drain contract.
+
+The shipped top-level when-body nested repeat generated do with static params
+and bind handoffs before post-do multi-pending await_any while generated
+nested spawn pending before same-body await_all drain subset additionally
+wires generated-top input/output binding handoffs for the generated do
+instance before the observation.
+
+Domain-qualified generated-do post-do await_any, switch-contained bound
+generated-do post-do await_any, and new spawn after the do before drain
+remain fail-closed.
 
 ATL generated-child matrix note: the broad backlog wording for
-data-route/generated-child coupling excludes the shipped pin exceptions. The
-current exceptions are exactly one scalar top-level input pin routed to one
-resolved child input through the generated ATL top, using
+data-route/generated-child coupling excludes the shipped pin exceptions.
+
+The current exceptions are exactly one scalar top-level input pin routed to
+one resolved child input through the generated ATL top, using
 `(worker.payload pins.payload)` in
 `isf/atl_resolved_child_pin_ingress_pipeline.isf`, and exactly one scalar
-resolved child output routed to one top-level output pin through the generated
-ATL top, using `(pins.result worker.payload)` in
-`isf/atl_resolved_child_pin_egress_pipeline.isf`. Route evidence remains in
-`actor_network.data_movements[]`; generated-top discovery remains in
-`actor_network.generated_tops[]`. Actor-to-actor generated-child routes,
-multi-child data wiring, route mux/storage, CDC/reset remapping,
-ready/backpressure, and payload protocols remain backlog. The reserved generated-child
-actor-to-actor route shape now fails closed with a targeted diagnostic when
-it is coupled to qualified actor trigger/event handoffs.
+resolved child output routed to one top-level output pin through the
+generated ATL top, using `(pins.result worker.payload)` in
+`isf/atl_resolved_child_pin_egress_pipeline.isf`.
+
+Route evidence remains in `actor_network.data_movements[]`; generated-top
+discovery remains in `actor_network.generated_tops[]`.
+
+Actor-to-actor generated-child routes, multi-child data wiring, route
+mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols
+remain backlog.
+
+The reserved generated-child actor-to-actor route shape now fails closed with
+a targeted diagnostic when it is coupled to qualified actor trigger/event
+handoffs.
 
 ## Examples By Family
 

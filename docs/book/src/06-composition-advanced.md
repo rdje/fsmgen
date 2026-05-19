@@ -475,27 +475,38 @@ block:
 )
 ```
 
-The shipped value surface accepts scalar integer literals such as `8`, `8'hA5`,
-`'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal aggregate payloads
-such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`. It also accepts resolved
-composition-top and imported-package symbols for instance overrides, including
-enum members and whole aggregate roots. `.rtlif` declaration defaults may use
-literal values or package-qualified symbols from packages imported by the
-consuming composition source, such as `param_pkg.DEFAULT_WIDTH` or
-`param_pkg.DEFAULT_LANES`; they deliberately do not depend on unqualified
-top-local names so sidecar metadata stays reusable. Importing `param_pkg`
-therefore makes the namespace available; it does not make `DEFAULT_WIDTH` an
-unqualified local name. `.rtlif` metadata should keep the package prefix so the
-default remains reviewable, reusable, and unambiguous when multiple packages
-define similarly named defaults. Overrides must name entries in the `.rtlif`
-`(params ...)` block. Aggregate overrides must also match the
-aggregate shape inferred from the `.rtlif` default value before generation
-continues. Unresolved symbolic declaration defaults or override values fail
-after package import resolution and before planning or HDL emission. Validated
-values survive into the composition plan and structural RTL IR, and the current
-Verilog-family backend lowers them to SystemVerilog `#(...)` instance
-parameters by packing aggregates into one literal. VHDL generic-map lowering is
-still a future backend follow-up tracked in
+The shipped value surface accepts scalar integer literals such as `8`,
+`8'hA5`, `'hA5`, `0xA5`, `0b1010`, and `0o77`, plus bounded literal aggregate
+payloads such as `(8'hA5 8'h3C)` and `((mode 2'b10) (flag 1))`.
+
+It also accepts resolved composition-top and imported-package symbols for
+instance overrides, including enum members and whole aggregate roots.
+
+`.rtlif` declaration defaults may use literal values or package-qualified
+symbols from packages imported by the consuming composition source, such as
+`param_pkg.DEFAULT_WIDTH` or `param_pkg.DEFAULT_LANES`; they deliberately do
+not depend on unqualified top-local names so sidecar metadata stays reusable.
+
+Importing `param_pkg` therefore makes the namespace available; it does not
+make `DEFAULT_WIDTH` an unqualified local name.
+
+`.rtlif` metadata should keep the package prefix so the default remains
+reviewable, reusable, and unambiguous when multiple packages define similarly
+named defaults.
+
+Overrides must name entries in the `.rtlif` `(params ...)` block.
+
+Aggregate overrides must also match the aggregate shape inferred from the
+`.rtlif` default value before generation continues.
+
+Unresolved symbolic declaration defaults or override values fail after
+package import resolution and before planning or HDL emission.
+
+Validated values survive into the composition plan and structural RTL IR, and
+the current Verilog-family backend lowers them to SystemVerilog `#(...)`
+instance parameters by packing aggregates into one literal.
+
+VHDL generic-map lowering is still a future backend follow-up tracked in
 [Feature Backlog](14-feature-backlog.md).
 
 Parameter/generic values on this path may also use bounded operator
@@ -505,20 +516,28 @@ parenthesized scalar parameter expressions. Scalar leaves inside list/record
 aggregate values are valid operands, including nested leaves such as
 `shared.FRAME.meta.mode` or `LOCAL_BYTES[1]`.
 
-Parameter/generic values are not scalar-only. Scalars and aggregates are both
-valid semantic parameter/generic values on the composition surface where the
-declared/default contracts allow them. The first aggregate operator slice
-supports leafwise numeric and bitwise operators `+`, `-`, `*`, `/`, `%`, `&`,
-`|`, and `^`, plus `add`, `sub`, `mul`, `div`, `mod`, `and`, `or`, and `xor`
-aliases, between matching list/record aggregate shapes. The normalizer folds
-those expressions leaf-by-leaf into one aggregate value before the composition
-plan reaches HDL lowering. Arithmetic leaves are unsigned fixed-width values:
-leaf widths must match, division or modulo by zero is rejected, and
-overflow/underflow outside that leaf width aborts before generation. Richer
-aggregate operators remain future work until the specific operator is defined
-for the operand aggregate types/shapes and the result can be validated before
-generation. That widening is tracked in
-[Feature Backlog](14-feature-backlog.md).
+Parameter/generic values are not scalar-only.
+
+Scalars and aggregates are both valid semantic parameter/generic values on
+the composition surface where the declared/default contracts allow them.
+
+The first aggregate operator slice supports leafwise numeric and bitwise
+operators `+`, `-`, `*`, `/`, `%`, `&`, `|`, and `^`, plus `add`, `sub`,
+`mul`, `div`, `mod`, `and`, `or`, and `xor` aliases, between matching
+list/record aggregate shapes.
+
+The normalizer folds those expressions leaf-by-leaf into one aggregate value
+before the composition plan reaches HDL lowering.
+
+Arithmetic leaves are unsigned fixed-width values: leaf widths must match,
+division or modulo by zero is rejected, and overflow/underflow outside that
+leaf width aborts before generation.
+
+Richer aggregate operators remain future work until the specific operator is
+defined for the operand aggregate types/shapes and the result can be
+validated before generation.
+
+That widening is tracked in [Feature Backlog](14-feature-backlog.md).
 
 Generated `?fsmc` and `?dtc` children now use the same semantic override
 surface, but the declaration contract lives in the realized child source's
