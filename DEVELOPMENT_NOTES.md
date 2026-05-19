@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route terminology is now audit-backed
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.74` extends the mdBook feature-matrix
+  audit to cover the ISF composition chapter's dedicated generated-child
+  route terms section.
+- The audit extracts the section instead of scanning the whole book, so the
+  required explanations must stay together in the dedicated location.
+- The required markers cover generated handoffs, handoff remapping, route
+  muxing/storage, fan-in/fan-out, ready/backpressure, payload protocols,
+  parser/lowerer collision ownership, and the current one-bit
+  drive-call-cycle route boundary.
+- This is documentation truth hardening only; no ATL behavior changed.
+
 ## 2026-05-19: ATL route terminology needs an mdBook audit
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73` selects a documentation-audit
   hardening leaf after the lowerer collision backstop.

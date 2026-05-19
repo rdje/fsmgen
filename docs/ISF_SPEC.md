@@ -4047,7 +4047,7 @@ generated-top wiring from reusing, suppressing, or shadowing those handoff
 names if metadata reaches lowering outside the normal parser path. It does
 not select new syntax, generated-handoff remapping, route mux/storage,
 fan-in/fan-out, ready/backpressure, or payload protocols.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.73` selects an mdBook audit so the
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.74` shipped an mdBook audit so the
 dedicated generated-child route terminology section remains present and
 complete for generated handoffs, remapping, route mux/storage, fan-in/fan-out,
 ready/backpressure, payload protocols, parser/lowerer collision ownership,

@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL route-term book audit shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.74`.
+- Extended the mdBook feature-matrix audit so it also verifies that the ISF
+  composition chapter is reachable from `SUMMARY.md`.
+- The audit now extracts the dedicated `Generated-Child Route Terms` section
+  and requires coverage markers for generated handoffs, handoff remapping,
+  route muxing, route storage, fan-in, fan-out, ready/backpressure, payload
+  protocols, parser-owned source collision handling, lowerer-owned metadata
+  collision handling, and the one-bit drive-call-cycle route boundary.
+- No ATL source syntax, runtime behavior, report key, generated artifact
+  shape, generated-handoff remapping, route mux/storage, fan-in/fan-out,
+  interface remapping, CDC/reset remapping, ready/backpressure, payload
+  protocol, recursive actor network, or permanent actor grouping behavior
+  changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.75` to select the next bounded widening
+  or hardening slice before code.
+
 ### R14 — ATL route-term book audit selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73` as a doc-only selection
   leaf.

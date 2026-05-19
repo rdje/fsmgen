@@ -13,13 +13,21 @@ use FSM::Support::ISFPublicInterfaceContract qw(
 
 my $repo_root = File::Spec->rel2abs(File::Spec->catdir($FindBin::Bin, '..'));
 my $matrix_path = 'docs/book/src/13k-isf-feature-support-matrix.md';
+my $composition_path = 'docs/book/src/13f-composition.md';
 my $matrix = read_repo_file($matrix_path);
+my $composition = read_repo_file($composition_path);
 my $summary = read_repo_file('docs/book/src/SUMMARY.md');
 
 like(
     $summary,
     qr{\[Feature Support Matrix\]\(13k-isf-feature-support-matrix\.md\)},
     'ISF feature support matrix is reachable from the mdBook summary',
+);
+
+like(
+    $summary,
+    qr{\[Composition\]\(13f-composition\.md\)},
+    'ISF composition chapter is reachable from the mdBook summary',
 );
 
 my %live_paths = map { $_ => 1 } @{isf_public_interface_live_document_paths()};
@@ -236,6 +244,41 @@ for my $non_claim (@required_non_claims) {
     );
 }
 
+my $route_terms_section = markdown_heading_section(
+    $composition,
+    '#### Generated-Child Route Terms',
+);
+
+ok(
+    length($route_terms_section),
+    'composition chapter keeps a dedicated generated-child route terms section',
+);
+
+my @required_route_term_markers = (
+    'one scalar child output reaches one scalar child input',
+    'named drive-call cycle',
+    'Generated handoffs are',
+    'Handoff remapping would',
+    'Route muxing would',
+    'storage would hold route data across cycles',
+    'Fan-in would',
+    'Fan-out would',
+    'Ready/backpressure would',
+    'Payload protocols would',
+    'Parser-owned diagnostics',
+    'The lowerer repeats the safety check',
+    'already registered generated',
+    'one-bit value during the',
+);
+
+for my $marker (@required_route_term_markers) {
+    like(
+        $route_terms_section,
+        qr{\Q$marker\E},
+        "generated-child route terms section keeps marker: $marker",
+    );
+}
+
 done_testing();
 
 sub read_repo_file {
@@ -245,4 +288,10 @@ sub read_repo_file {
     my $content = do { local $/; <$fh> };
     close $fh;
     return $content;
+}
+
+sub markdown_heading_section {
+    my ($content, $heading) = @_;
+    return $1 if $content =~ /^ \Q$heading\E \s* \n (.*?)(?=^ \#{1,6} \s+ \S|\z)/msx;
+    return '';
 }

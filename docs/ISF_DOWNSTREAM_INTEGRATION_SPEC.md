@@ -1886,10 +1886,10 @@ cannot reuse, suppress, or shadow those same handoff names if metadata
 bypasses normal parser finalization. This is a safety backstop only, not a
 new source or report feature.
 
-The mdBook has a dedicated generated-child route terminology section for
-these terms, and the next selected hardening keeps that section audit-backed.
-Downstream consumers should treat that book section and this handoff as the
-truth sources for current route support and explicit non-support.
+The mdBook has an audit-backed dedicated generated-child route terminology
+section for these terms. Downstream consumers should treat that book section
+and this handoff as the truth sources for current route support and explicit
+non-support.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
 the selected one-bit actor-event handoff input, selected one-cycle
