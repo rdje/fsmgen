@@ -827,8 +827,10 @@ export from that library. Unqualified `(instance NAME of ACTOR_TYPE)` remains
 metadata-only external intent until a later leaf widens it, and sibling actor
 roots remain rejected. Existing `(use alias.actor as instance ...)` remains
 the separate reusable-library generated-top surface with explicit bindings.
-The next implementation leaf is a targeted fail-closed reservation for the
-qualified ATL syntax, not generated child emission.
+The targeted fail-closed reservation for the qualified ATL syntax is now
+shipped: missing imports, non-explicit import aliases, unknown aliases,
+unknown exports, and known exports all fail before scheduled `.fsm` emission.
+Actual type resolution and generated child emission remain later leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL qualified type syntax is reserved before resolution
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18` intentionally stops at a targeted
+  fail-closed reservation for `(instance NAME of ALIAS.EXPORT)`.
+- The parser validates enough of the library surface to distinguish missing
+  imports, non-explicit import aliases, unknown aliases, unknown exports, and
+  known exports, but it does not attach the library actor body to
+  `actor_network.instances[]` or emit child artifacts.
+- This gives downstream producers a precise diagnostic boundary while keeping
+  generated child naming, interface binding inference, event/trigger wiring,
+  and report-schema widening for a separate selected leaf.
 ## 2026-05-19: ATL type resolution should be library-qualified
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` selects the source contract before
   any child-generation code: resolved ATL actor types will use

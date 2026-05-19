@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL library-qualified type syntax fails closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`.
+- `perl/FSM/Adapter/ISF/Parser.pm` now treats
+  `(instance NAME of ALIAS.EXPORT)` as selected ATL actor type-resolution
+  syntax rather than a generic invalid scalar actor type.
+- Focused coverage in `t/1322-isf-actor-network-static.t` proves targeted
+  diagnostics for missing imports, non-explicit import aliases, unknown
+  aliases, unknown actor exports, and known actor exports, all before
+  scheduled `.fsm` emission.
+- No actor type is resolved, no generated ATL child `.fsm` or generated ATL
+  top is emitted, no `actor_network.instances[]` key changes, and existing
+  unqualified metadata-only instances plus `(use alias.actor as instance ...)`
+  library generation behavior are preserved.
+- Broad ISF gate passed with `Files=235, Tests=1374`.
+- The next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, which must
+  select the first actual library-qualified type resolution metadata or
+  generated-artifact slice before code.
 ## 2026-05-19: ATL actor type-resolution source contract selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` as a doc-only selection
   leaf.

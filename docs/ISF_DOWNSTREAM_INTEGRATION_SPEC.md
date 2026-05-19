@@ -182,9 +182,10 @@ The selected future ATL actor type-resolution source is library-qualified:
 `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` comes from the enclosing
 actor's `(imports (library ... as ALIAS))` clause and `EXPORT` is an actor
 export from that library. That spelling is selected for a future
-actor-network resolution path; downstream producers must still treat it as
-unshipped until the corresponding fail-closed/resolution leaf appears in this
-handoff and the public contract.
+actor-network resolution path and now fails closed with targeted diagnostics;
+downstream producers must still treat resolution and generated child emission
+as unshipped until the corresponding resolution leaf appears in this handoff
+and the public contract.
 
 Imported files may also contain library roots:
 
@@ -1583,8 +1584,9 @@ capability manifest and this handoff:
   Movement is temporal scheduling intent, not a permanent actor-to-actor wire.
 - Future resolved actor types use `(instance NAME of ALIAS.EXPORT)`, where
   `ALIAS` names an imported library and `EXPORT` names a library actor export.
-  Unqualified `(instance NAME of ACTOR_TYPE)` stays metadata-only until a
-  later leaf explicitly widens it.
+  That qualified spelling is reserved today and fails closed before scheduled
+  `.fsm` emission; unqualified `(instance NAME of ACTOR_TYPE)` stays
+  metadata-only until a later leaf explicitly widens it.
 - The first endpoint-movement code leaf shipped fail-closed reservation for
   unsupported qualified actor endpoint drive-body pairs, and the first
   generated scalar actor-to-actor handoff subset is now downstream-emittable.

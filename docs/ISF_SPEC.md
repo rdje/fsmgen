@@ -221,8 +221,8 @@ The selected future ATL actor type-resolution source is not a sibling actor
 root; it is a library-qualified static instance type,
 `(instance NAME of ALIAS.EXPORT)`, where `ALIAS` is declared by the enclosing
 actor's library imports and `EXPORT` names a library actor export. That
-qualified spelling is selected for later ATL resolution but is not generated
-child behavior until the corresponding implementation leaf ships.
+qualified spelling is selected for later ATL resolution and now fails closed
+with ATL-specific diagnostics; it is not generated child behavior.
 Accepted parser output preserves `name` as the public actor-shell
 `actor_name`; nested or otherwise non-scalar actor names are rejected before
 the parser returns an actor shell.
@@ -3016,9 +3016,10 @@ library import model. Unqualified `(instance NAME of ACTOR_TYPE)` remains
 metadata-only external intent until a later leaf explicitly changes it.
 Existing `(use alias.actor as instance ...)` remains the shipped reusable
 library path with explicit bindings and generated-top behavior; ATL
-`(instance ...)` type resolution is a separate actor-network path. The next
-ATL implementation leaf reserves the qualified syntax with targeted
-fail-closed diagnostics before any generated child `.fsm`, ATL top, or report
+`(instance ...)` type resolution is a separate actor-network path. The
+qualified syntax now fails closed with targeted diagnostics for missing
+imports, non-explicit import aliases, unknown aliases, unknown actor exports,
+and known actor exports before any generated child `.fsm`, ATL top, or report
 schema change is claimed.
 
 The following remain fail-closed/deferred:

@@ -116,6 +116,7 @@ sub parse_source($self, $source_text, $source_label) {
     fsm_debug("Building typed actor AST", 3);
     my $result = $self->_build_actor($actor_ast, $source_label);
     $self->_resolve_library_uses($result, $forms, $source_label);
+    $self->_validate_atl_actor_type_resolution_boundary($result, $forms, $source_label);
     $self->_finalize_actor_domain_annotations($result);
     $self->_finalize_actor_crossings($result);
     fsm_debug("Actor '" . $result->{actor_name} . "' parsed: "
@@ -3711,6 +3712,66 @@ sub _resolve_library_uses($self, $actor, $forms, $source_label) {
     return 1;
 }
 
+sub _validate_atl_actor_type_resolution_boundary($self, $actor, $forms, $source_label) {
+    my @qualified_instances = grep {
+        defined($_->{actor_type})
+            && !ref($_->{actor_type})
+            && _is_library_qualified_actor_type($_->{actor_type})
+    } @{(($actor->{actor_network} || {})->{instances}) || []};
+    return 1 unless @qualified_instances;
+
+    my @imports = @{$actor->{imports} || []};
+    confess "Error: actor '$actor->{actor_name}' ATL library-qualified static actor instance type"
+        . " '$qualified_instances[0]->{actor_type}' requires an '(imports (library ... as alias))' clause;"
+        . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
+        unless @imports;
+
+    my %same_source_libraries = $self->_same_source_libraries($forms, $source_label);
+    my %imports_by_alias;
+    my %resolved_by_alias;
+
+    for my $import (@imports) {
+        my $alias = $import->{alias};
+        my $library = $import->{library};
+        confess "Error: actor '$actor->{actor_name}' has duplicate library import alias '$alias'\n"
+            if $imports_by_alias{$alias}++;
+        $resolved_by_alias{$alias} = $self->_resolve_library(
+            $library,
+            \%same_source_libraries,
+            $source_label,
+            {},
+        );
+    }
+
+    for my $instance (@qualified_instances) {
+        my $name = $instance->{name};
+        my $actor_type = $instance->{actor_type};
+        my ($alias, $export) = _split_use_target($actor_type, \%resolved_by_alias);
+
+        confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
+            . " must use '(instance $name of ALIAS.EXPORT)' where ALIAS is an imported library alias and EXPORT is a scalar actor export;"
+            . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
+            unless defined $alias;
+
+        my $library = $resolved_by_alias{$alias};
+        confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
+            . " must use an explicit HDL identifier library alias from '(imports (library $library->{name} as ALIAS))';"
+            . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
+            unless _is_hdl_identifier($alias);
+
+        confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
+            . " references missing actor export '$export' from library '$library->{name}';"
+            . " actor type resolution is selected but generated ATL child emission is not supported yet\n"
+            unless $library->{exports}{actor}{$export};
+
+        confess "Error: actor '$actor->{actor_name}' ATL static actor instance '$name' type '$actor_type'"
+            . " resolved to library '$library->{name}' actor export '$export', but ATL actor type resolution is selected"
+            . " and not supported yet; no generated ATL child .fsm or generated ATL top is emitted in this slice\n";
+    }
+
+    return 1;
+}
+
 sub _same_source_libraries($self, $forms, $source_label) {
     my %libraries;
     for my $form (_forms_by_head($forms, 'library')) {
@@ -3982,6 +4043,14 @@ sub _specialized_library_module_name($actor_name, $instance) {
 sub _is_hdl_identifier {
     my ($value) = @_;
     return defined($value) && !ref($value) && $value =~ /\A[A-Za-z_]\w*\z/;
+}
+
+sub _is_library_qualified_actor_type {
+    my ($value) = @_;
+    return defined($value)
+        && !ref($value)
+        && index($value, '.') >= 0
+        && _is_library_namespace($value);
 }
 
 sub _is_type_reference {
@@ -5248,8 +5317,8 @@ sub _parse_actor_network_instance($self, $clause, $actor_name) {
     my ($name, $actor_type) = ($clause->[1], $clause->[3]);
     confess "Error: actor '$actor_name' static actor instance name must be a scalar HDL identifier\n"
         unless _is_hdl_identifier($name);
-    confess "Error: actor '$actor_name' static actor instance '$name' type must be a scalar HDL identifier\n"
-        unless _is_hdl_identifier($actor_type);
+    confess "Error: actor '$actor_name' static actor instance '$name' type must be a scalar HDL identifier or selected ATL library-qualified 'ALIAS.EXPORT' token\n"
+        unless _is_hdl_identifier($actor_type) || _is_library_qualified_actor_type($actor_type);
     confess "Error: actor '$actor_name' static actor instance '$name' cannot instantiate its own enclosing actor type '$actor_type'\n"
         if $actor_type eq $actor_name;
 

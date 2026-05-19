@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.18`.
+  activation `.111` and ATL actor-network orchestration `.9.19`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -233,11 +233,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   actor's explicit library imports and `EXPORT` is an actor export from that
   library. Unqualified actor types remain metadata-only, sibling actor roots
   remain fail-closed, and no generated child artifacts or report schema
-  changes are claimed yet. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, which must reserve the qualified
-  syntax with targeted diagnostics before code claims generated ATL child
-  artifacts, generated ATL tops, HDL child wiring, actor-event fan-in, route
-  mux/storage, or permanent actor grouping.
+  changes are claimed yet. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18` shipped the
+  fail-closed reservation for that selected syntax: missing imports,
+  non-explicit import aliases, unknown aliases, unknown actor exports, and
+  known actor exports all receive targeted ATL diagnostics before scheduled
+  `.fsm` emission. Existing unqualified
+  static instances and `(use alias.actor as instance ...)` library behavior
+  are preserved; no actor type resolution, generated child artifacts,
+  generated ATL tops, HDL child wiring, or report schema changes are claimed
+  yet. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, which must select the first
+  resolution metadata or generated-artifact slice before code claims generated
+  ATL child artifacts, generated ATL tops, HDL child wiring, actor-event
+  fan-in, route mux/storage, or permanent actor grouping.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

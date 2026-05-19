@@ -668,9 +668,11 @@ imports, and the name after the dot must be an actor export from that library.
 Unqualified `(instance name of ActorType)` remains metadata-only external
 intent for now, not an implicit search through sibling actor roots or files.
 Existing `(use alias.actor as instance ...)` remains the separate reusable
-library generated-top path with explicit bindings. The next implementation
-step is a targeted fail-closed reservation for this qualified ATL syntax, not
-generated child emission.
+library generated-top path with explicit bindings. The targeted fail-closed
+reservation for this qualified ATL syntax is shipped: missing imports,
+non-explicit import aliases, unknown aliases, unknown actor exports, and known
+actor exports all fail before scheduled `.fsm` emission with ATL-specific
+diagnostics. Resolution and generated child emission remain later leaves.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

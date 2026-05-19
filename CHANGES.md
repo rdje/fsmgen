@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL library-qualified type syntax fail-closed reservation
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`.
+- Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so
+  `(instance NAME of ALIAS.EXPORT)` is recognized as selected ATL
+  actor-type-resolution syntax and fails closed with ATL-specific diagnostics
+  before scheduled `.fsm` emission.
+- Extended `t/1322-isf-actor-network-static.t` to cover missing imports,
+  non-explicit import aliases, unknown aliases, unknown library actor exports,
+  and known exports that are still reserved before child emission.
+- Existing unqualified static actor instances remain metadata-only, existing
+  `(use alias.actor as instance ...)` reusable-library behavior remains
+  unchanged, and no actor type resolution, generated child artifact, generated
+  ATL top, HDL child wiring, or report schema change is claimed.
+- Broad ISF gate passed with `Files=235, Tests=1374`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`.
+
 ### R14 — ATL actor type-resolution source contract selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17` before changing parser
   behavior.

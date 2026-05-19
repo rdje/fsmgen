@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -407,9 +407,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.17: select ATL type resolution contract`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`
-  Status: `active`
+  Status: `completed`
   Goal: `Fail closed the selected library-qualified ATL actor type syntax before generated child resolution.`
   Acceptance: `Parser coverage recognizes '(instance NAME of ALIAS.EXPORT)' as the selected future ATL actor type-resolution source shape when ALIAS names an imported library namespace, rejects it with a targeted diagnostic before scheduled '.fsm' emission, and preserves existing unqualified '(instance NAME of ACTOR_TYPE)' metadata plus existing '(use alias.actor as instance ...)' reusable-library behavior. Same-source and external library roots may remain resolver inputs, but no actor type is resolved, no actor_network instance report keys change, no generated ATL child '.fsm', generated ATL top, HDL child wiring, event wiring, route mux/storage, or ready/backpressure behavior is claimed. Specs, downstream handoff, public contract, mdBook, task tree, tests, and live docs must stay transparent that this is a source-contract reservation leaf.`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm; perl -Iperl -c t/1322-isf-actor-network-static.t; prove -Iperl t/1322-isf-actor-network-static.t t/1230-isf-library-import-resolution.t t/1231-isf-library-generated-top.t; prove -Iperl t/1112-isf-public-interface-contract.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; mdbook build docs/book; ./bin/ci-regression isf --no-book (Files=235, Tests=1374); git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.18: fail closed ATL type syntax`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`
+  Status: `active`
+  Goal: `Select the first ATL library-qualified actor type resolution metadata subset.`
+  Acceptance: `Review the targeted '.9.18' reservation diagnostics, existing reusable-library generated child artifact machinery, current actor_network instance report key contract, and parent handoff surfaces; choose the next bounded source-resolution or generated-artifact slice before code. Candidate directions include resolving '(instance NAME of ALIAS.EXPORT)' to metadata-only library/export provenance without child emission, selecting child artifact names and generated-top packaging, selecting interface binding inference from existing trigger/event/data handoffs, or adding external-library file coverage for the reserved syntax. No code changes may begin until this leaf records source syntax, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
   Verification: `pending`
   Commit: `pending`
 
@@ -417,7 +424,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18` | `active` | `.9.17` selected library-qualified ATL actor type syntax; reserve that syntax with a targeted diagnostic before generated child artifacts. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19` | `active` | `.9.18` reserved the selected library-qualified type syntax; select the first resolution metadata or artifact slice before code. |
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -489,8 +496,8 @@ Selected generated artifact expectations:
 
 Selected fail-closed boundaries:
 
-- library-qualified ATL instance types fail closed until the resolution leaf
-  deliberately implements them;
+- library-qualified ATL instance types now fail closed with targeted
+  diagnostics until the resolution leaf deliberately implements them;
 - unqualified actor types do not resolve implicitly;
 - sibling actor roots stay rejected;
 - generated children, generated ATL tops, HDL child wiring, event fan-in,
@@ -500,13 +507,25 @@ Selected fail-closed boundaries:
 Verification scope for the next code leaf:
 
 - parser syntax coverage for the qualified `ALIAS.EXPORT` shape;
-- negative coverage for missing imports, unknown aliases, and unknown exports
-  when the syntax is reserved;
+- negative coverage for missing imports, non-explicit import aliases, unknown
+  aliases, and unknown exports when the syntax is reserved;
 - preservation coverage for unqualified metadata-only instances;
 - preservation coverage for existing `(use alias.actor as instance ...)`
   library generation behavior;
 - spec, downstream handoff, public contract, mdBook, and focused-test index
   synchronization.
+
+Shipped `.9.18` reservation:
+
+- `(instance NAME of ALIAS.EXPORT)` is recognized as the selected future ATL
+  library-qualified type syntax.
+- Missing imports, non-explicit import aliases, unknown aliases, unknown actor
+  exports, and known actor exports all fail before scheduled `.fsm` emission
+  with ATL-specific diagnostics that explain actor type resolution is selected
+  but generated child emission is not supported yet.
+- Existing unqualified `(instance NAME of ACTOR_TYPE)` remains metadata-only.
+- Existing `(use alias.actor as instance ...)` library generation behavior is
+  unchanged.
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -1712,3 +1731,13 @@ Current proposal summary:
   no generated child artifacts or report schema changes are claimed. The
   active frontier moves to `.9.18` to reserve the selected qualified syntax
   with targeted diagnostics before generated ATL child resolution.
+- `2026-05-19`: Completed `.9.18`: the parser now recognizes
+  `(instance NAME of ALIAS.EXPORT)` as the selected future ATL
+  library-qualified type syntax and fails closed with targeted diagnostics for
+  missing imports, non-explicit import aliases, unknown aliases, unknown actor
+  exports, and known exports before scheduled `.fsm` emission. No actor type
+  is resolved, no
+  `actor_network.instances[]` keys change, existing unqualified metadata-only
+  instances and `(use alias.actor as instance ...)` library behavior are
+  preserved. The active frontier moves to `.9.19` to select the first
+  resolution metadata or generated-artifact slice before code.

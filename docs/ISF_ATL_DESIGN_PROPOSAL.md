@@ -413,9 +413,13 @@ must name an actor export from that imported library. Same-source
 reusing the existing library import model. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains metadata-only external intent until a
 later leaf explicitly widens it; sibling top-level `(actor ...)` roots remain
-fail-closed. The next implementation step is a source-contract reservation
-diagnostic, not generated child emission. The eventual child artifact naming
-direction follows the existing library convention:
+fail-closed. The source-contract reservation diagnostic is shipped: missing
+imports, non-explicit import aliases, unknown aliases, unknown actor exports,
+and known actor exports all fail before scheduled `.fsm` emission with
+ATL-specific messages explaining that actor type resolution is selected but
+generated child emission is not supported yet. No `actor_network.instances[]`
+keys change. The eventual child artifact naming direction follows the
+existing library convention:
 `<parent_actor>__<instance>.fsm` for a specialized child and
 `<parent_actor>_top.fsm` only after a later leaf selects ATL generated-top
 composition.

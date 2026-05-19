@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL library-qualified type syntax fails closed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`.
+- `(instance NAME of ALIAS.EXPORT)` now fails closed with targeted ATL
+  diagnostics for the selected future actor type-resolution source shape.
+- The focused regression covers missing imports, non-explicit import aliases,
+  unknown aliases, unknown exports, and known exports that remain reserved
+  before generated child emission.
+- No actor type resolution, generated child `.fsm`, generated ATL top, HDL
+  child wiring, or report schema change is claimed. The active ATL frontier
+  advances to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`.
+- Broad ISF gate passed with `Files=235, Tests=1374`.
+
 ## 2026-05-19: R14 — ATL actor type-resolution source contract selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`.
 - Future ATL actor type resolution is selected as explicit

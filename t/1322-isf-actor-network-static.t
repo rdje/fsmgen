@@ -128,6 +128,118 @@ ISF
     is($actor->{actor_name}, 'one_actor_with_library_root', 'one actor root plus library root remains accepted');
 };
 
+subtest 'library-qualified ATL actor type syntax fails closed before generated child resolution' => sub {
+    parse_fails_like(
+        <<'ISF',
+(actor atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (complete done)))
+ISF
+        qr/ATL library-qualified static actor instance type 'pkt_lib\.packet_worker' requires an '\(imports \(library \.\.\. as alias\)\)' clause.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        'library-qualified actor type without imports fails closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (imports (library common.packet as pkt_lib))
+  (instance worker of other_lib.packet_worker)
+  (transaction run
+    (on start)
+    (complete done)))
+
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
+ISF
+        qr/ATL static actor instance 'worker' type 'other_lib\.packet_worker' must use '\(instance worker of ALIAS\.EXPORT\)' where ALIAS is an imported library alias.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        'unknown library-qualified actor type alias fails closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (imports (library common.packet))
+  (instance worker of common.packet.packet_worker)
+  (transaction run
+    (on start)
+    (complete done)))
+
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
+ISF
+        qr/ATL static actor instance 'worker' type 'common\.packet\.packet_worker' must use an explicit HDL identifier library alias from '\(imports \(library common\.packet as ALIAS\)\)'.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        'library-qualified actor type requires explicit HDL import alias',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (imports (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_writer)
+  (transaction run
+    (on start)
+    (complete done)))
+
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
+ISF
+        qr/ATL static actor instance 'worker' type 'pkt_lib\.packet_writer' references missing actor export 'packet_writer' from library 'common\.packet'.*actor type resolution is selected but generated ATL child emission is not supported yet/s,
+        'unknown library actor export fails closed',
+    );
+
+    parse_fails_like(
+        <<'ISF',
+(actor atl_parent
+  (clock clk)
+  (interface (input start) (output done))
+  (imports (library common.packet as pkt_lib))
+  (instance worker of pkt_lib.packet_worker)
+  (transaction run
+    (on start)
+    (complete done)))
+
+(library common.packet
+  (exports (actor packet_worker))
+  (actor packet_worker
+    (clock clk)
+    (interface (input start) (output done))
+    (transaction process
+      (on start)
+      (complete done))))
+ISF
+        qr/ATL static actor instance 'worker' type 'pkt_lib\.packet_worker' resolved to library 'common\.packet' actor export 'packet_worker'.*ATL actor type resolution is selected and not supported yet.*no generated ATL child \.fsm or generated ATL top is emitted/s,
+        'known library actor export is reserved and fails closed before child emission',
+    );
+};
+
 subtest 'static concurrent group metadata is parsed, lowered, and reported' => sub {
     my $source = <<'ISF';
 (actor atl_static_group
