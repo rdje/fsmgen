@@ -364,6 +364,11 @@ wait after the sink child trigger: sink-wait-before-trigger route clauses
 remain fail-closed before any pre-trigger acknowledgement, sticky event
 sampling, event replay, route storage, muxing, backpressure, or payload
 contract.
+The next selected source-event-wait ordering hardening keeps the source child
+event wait after the source child trigger: source-wait-before-trigger route
+clauses remain fail-closed before any pre-trigger acknowledgement, sticky
+event sampling, event replay, route storage, muxing, backpressure, or payload
+contract.
 
 ### Actor, Interface, Storage, And Timing
 

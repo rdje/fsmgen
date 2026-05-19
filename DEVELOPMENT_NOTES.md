@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL source waits must remain after the source trigger
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.57` selects source-event-wait ordering
+  as the next generated-child route boundary.
+- In the current route contract, the parent first triggers the source child,
+  then waits for the source event before driving the scalar handoff. Waiting
+  on the source event before triggering the source child would imply sticky
+  event sampling, pre-trigger acknowledgement, event replay, or continuation
+  storage. None of those has been selected.
+- The next code leaf should therefore lock source-wait-before-trigger route
+  sequences as diagnostics while leaving route continuation, storage, muxing,
+  backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL sink-event wait ordering was already parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.56` adds focused coverage for the
   generated-child actor-to-actor route sequence where the sink child event

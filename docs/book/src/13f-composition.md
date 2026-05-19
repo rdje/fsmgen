@@ -803,6 +803,11 @@ wait after the sink child trigger. Sink-wait-before-trigger route sequences
 stay fail-closed until a later contract selects pre-trigger acknowledgement,
 sticky event sampling, event replay, route storage, muxing, backpressure, or
 payload behavior.
+The next selected source-event-wait ordering hardening keeps the source child
+event wait after the source child trigger. Source-wait-before-trigger route
+sequences stay fail-closed until a later contract selects pre-trigger
+acknowledgement, sticky event sampling, event replay, route storage, muxing,
+backpressure, or payload behavior.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

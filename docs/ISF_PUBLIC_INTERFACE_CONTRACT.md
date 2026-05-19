@@ -249,6 +249,11 @@ unchanged: the sink child event wait must occur after the sink child trigger,
 and sink-wait-before-trigger clauses fail closed until a later contract
 explicitly adds sticky event, replay, or pre-trigger acknowledgement
 metadata.
+The next selected source-event-wait ordering hardening keeps the same public
+surface unchanged: the source child event wait must occur after the source
+child trigger, and source-wait-before-trigger clauses stay fail-closed until
+a later contract explicitly adds sticky event, replay, or pre-trigger
+acknowledgement metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

@@ -940,6 +940,12 @@ backlog by requiring the sink child event wait to follow the sink child
 trigger; sink-wait-before-trigger route clauses remain fail-closed until
 explicit pre-trigger acknowledgement, sticky event sampling, event replay,
 route storage, muxing, ready/backpressure, or payload semantics are selected.
+The next selected source-event-wait ordering hardening applies the same
+event-sampling boundary on the source side by requiring the source child
+event wait to follow the source child trigger; source-wait-before-trigger
+route clauses remain fail-closed until explicit pre-trigger acknowledgement,
+sticky event sampling, event replay, route storage, muxing,
+ready/backpressure, or payload semantics are selected.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
