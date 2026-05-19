@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL reserved-route docs sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`.
+- `.9.84` is selected to replace remaining stale reserved-route wording in
+  the composition chapter, downstream handoff, and backlog with the current
+  shipped/tight-fail-closed boundary.
+- This is documentation and audit only; no compiler behavior is selected.
+
 ## 2026-05-19: R14 — ATL book matrix route status synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`.
 - The active ATL frontier advances to

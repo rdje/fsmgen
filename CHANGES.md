@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL reserved-route docs sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84` to synchronize remaining
+  stale reserved generated-child actor-to-actor route wording in the
+  composition chapter, downstream integration handoff, and feature backlog.
+- The selected docs sync must state that the two-child scalar actor-to-actor
+  route is shipped, while malformed or wider route shapes still fail closed
+  before remapping, storage, muxing, fan-in/fan-out, payload, or backpressure
+  behavior is inferred.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, or route capability is selected.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`.
+
 ### R14 — ATL book matrix route status synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`.
 - Synchronized the mdBook feature-support matrix with the shipped

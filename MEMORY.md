@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL reserved-route docs sync selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83` as a documentation
+  truth-sync selection leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`.
+- `.9.84` will synchronize remaining older reserved generated-child
+  actor-to-actor route wording in the composition chapter, downstream
+  handoff, and feature backlog.
+- The selected truth is that the two-child scalar actor-to-actor route is
+  shipped, while malformed or wider route shapes still fail closed before
+  remapping, storage, muxing, fan-in/fan-out, payload, or backpressure
+  behavior is inferred.
+
 ## 2026-05-19: ATL book matrix route status synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.82`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83`.
