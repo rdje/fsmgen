@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: mdBook paragraph cleanup is formatting-only
+- `MDBOOK-PARAGRAPH-SPACING.1` establishes ownership for a readability
+  cleanup in the book source, starting with the user-reported blobs in chapter
+  12 and chapter 14.
+- The cleanup must preserve wording, examples, tables, lists, and code fences;
+  the only intended change is inserting paragraph breaks where prose blocks
+  currently run together.
+- This keeps the book synchronized with the codebase while improving review
+  readability without introducing behavior or contract changes.
+
 ## 2026-05-19: ATL boundary simplicity is now parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66` adds focused coverage for
   generated-child actor-to-actor route transactions whose route-adjacent

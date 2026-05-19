@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: mdBook paragraph-spacing cleanup ownership created
+- Completed `MDBOOK-PARAGRAPH-SPACING.1`.
+- Created task-tree ownership for the formatting-only mdBook readability
+  cleanup requested for chapter 12, chapter 14, and any other obvious prose
+  blobs found during audit.
+- The active project-documentation frontier is now
+  `MDBOOK-PARAGRAPH-SPACING.2`.
+- No mdBook chapter content has been reformatted in this ownership slice.
+
 ## 2026-05-19: ATL generated-child boundary-simplicity hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.67`.

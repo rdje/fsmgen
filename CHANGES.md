@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### Project documentation — mdBook paragraph-spacing cleanup ownership created
+- Completed `MDBOOK-PARAGRAPH-SPACING.1`.
+- Created a dedicated task tree for the requested formatting-only mdBook
+  cleanup so chapter 12, chapter 14, and any other obvious prose blobs can be
+  corrected under recoverable task-tree tracking.
+- The active project-documentation frontier is
+  `MDBOOK-PARAGRAPH-SPACING.2`; the next slice performs the chapter-source
+  formatting cleanup without changing technical content.
+
 ### R14 — ATL generated-child boundary-simplicity hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66`.
 - Added focused generated-child actor-to-actor data-route rejection coverage

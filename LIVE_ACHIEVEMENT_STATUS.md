@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: Project documentation — mdBook paragraph-spacing cleanup ownership created
+- Completed `MDBOOK-PARAGRAPH-SPACING.1`.
+- Created task-tree ownership for the requested formatting-only mdBook
+  readability cleanup.
+- The active project-documentation frontier is now
+  `MDBOOK-PARAGRAPH-SPACING.2`.
+- Chapter content is intentionally unchanged in this ownership slice; the
+  next slice performs the paragraph-spacing cleanup and mdBook gate.
+
 ## 2026-05-19: R14 — ATL generated-child boundary-simplicity hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.66`.
 - The active ATL frontier advances to
