@@ -846,6 +846,12 @@ with one same-source library actor export, one resolved child instance, one
 parent trigger handoff, one parent event wait, exactly two lower-result
 artifacts, strict schedule JSON parity, and no generated ATL top or inferred
 child handoff wiring.
+The next selected ATL implementation slice is generated top packaging for
+that resolved-child shape. It is not shipped yet; it is selected as one
+resolved child, one parent trigger handoff, one parent event wait, matching
+parent/child clock and reset, public-pin-to-parent wiring, trigger-handoff to
+child transaction start wiring, and child-event to parent event-handoff
+wiring.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

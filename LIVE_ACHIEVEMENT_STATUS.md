@@ -2,6 +2,23 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated top subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`.
+- `.9.26` is selected to emit the first generated ATL top for exactly one
+  resolved child, one parent trigger handoff, and one parent event wait with
+  matching parent/child clock and reset names/policies.
+- The selected top will instantiate the parent and resolved child, wire
+  public top-level pins to the parent, wire the parent trigger handoff to the
+  child transaction start input discovered from the child transaction's
+  authored `(on START_SIGNAL)`, and wire the child event output to the parent
+  event handoff input.
+- Broader generated-top inference, multiple children, data movement, trigger
+  batches, groups, CDC, ready/backpressure, payloads, route mux/storage,
+  recursive actor networks, and generated-top conflicts remain fail-closed or
+  deferred.
+
 ## 2026-05-19: R14 — ATL resolved-child fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`.
 - Added `isf/atl_resolved_child_pipeline.isf` as the reviewable fixture for

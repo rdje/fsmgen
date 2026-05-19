@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated top subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` as a doc-only selection
+  leaf.
+- The active ATL implementation frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`: emit `<parent>_top.fsm` for the
+  resolved-child fixture shape.
+- The selected `.9.26` subset is intentionally narrow: one resolved ATL child,
+  one parent `(trigger instance.transaction)`, one parent
+  `(await instance.event)`, matching parent/child clock and reset
+  names/policies, no data movements, no trigger batches, no groups, and no
+  extra resolved children.
+- The generated top must wire public pins to the parent, parent trigger
+  handoff to the child transaction start input discovered from the child's
+  `(on START_SIGNAL)`, and the child event output to the parent event
+  handoff input. It must report the generated ATL top through additive
+  `actor_network` metadata.
 ## 2026-05-19: ATL resolved-child fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`.
 - Added `isf/atl_resolved_child_pipeline.isf` as a self-contained

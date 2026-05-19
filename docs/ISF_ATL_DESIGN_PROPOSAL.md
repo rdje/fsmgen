@@ -403,6 +403,19 @@ claiming generated ATL tops, HDL child wiring, inferred interface binding,
 route mux/storage, actor-event fan-in, CDC, ready/backpressure, recursive
 actor networks, or permanent actor grouping.
 
+The next selected implementation subset is the first generated ATL top for
+that resolved-child shape. It remains unshipped until
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` lands. The selected boundary is exactly
+one resolved child, one parent trigger handoff, one parent event wait, and
+matching parent/child clock/reset names and policies. The top will instantiate
+the parent and child, wire public pins to the parent, bind the parent trigger
+handoff to the child transaction start input discovered from the child's
+authored `(on START_SIGNAL)`, bind the child event output to the parent event
+handoff input, and report the top through additive `actor_network` metadata.
+Multiple children, trigger batches, data movement, groups, CDC,
+ready/backpressure, payloads, route mux/storage, recursive actor networks, and
+generated-top conflicts remain fail-closed/deferred for that first top slice.
+
 The shipped multi-event boundary proof is negative: a transaction that emits
 one temporary trigger batch and then attempts two actor event waits, such as
 `(await reader.done)` followed by `(await writer.done)`, fails before

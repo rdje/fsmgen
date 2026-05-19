@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.25`.
+  activation `.111` and ATL actor-network orchestration `.9.26`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -271,12 +271,20 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   in-process report, and actor-network metadata exposes the resolved child,
   one transaction trigger, and one event wait while data movement and
   association/group schedules remain empty. No generated ATL top is emitted
-  and trigger/event handoffs remain external parent ports. The next ATL
-  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, which must select
-  generated-top packaging, interface binding inference, or a fail-closed
-  boundary before code. Generated-top packaging, HDL child wiring, inferred
-  interface binding, event fan-in, route mux/storage, ready/backpressure, CDC,
-  recursive actor networks, and permanent actor grouping remain deferred.
+  and trigger/event handoffs remain external parent ports.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` selected the first generated ATL top
+  implementation subset before code. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`: emit `<parent>_top.fsm` for exactly
+  one resolved child, one parent trigger handoff, one parent event wait, and
+  matching parent/child clock/reset names and policies. The selected top will
+  instantiate the parent and child, wire public top-level pins to the parent,
+  wire the parent trigger handoff to the child transaction start input
+  discovered from the child's authored `(on START_SIGNAL)`, wire the child
+  event output to the parent event handoff input, and report the generated
+  ATL top through additive `actor_network` metadata. Broader generated-top
+  packaging, HDL child wiring beyond that one trigger/event pair, event
+  fan-in, route mux/storage, ready/backpressure, CDC, recursive actor
+  networks, and permanent actor grouping remain deferred.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated top subset selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` before generated-top code.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` to emit the first generated
+  ATL top for one resolved child with one parent trigger handoff and one
+  parent event wait.
+- The selected generated top will instantiate the parent and child, wire
+  top-level public pins to the parent, bind the parent trigger handoff to the
+  child transaction start input from the child transaction's authored
+  `(on START_SIGNAL)`, bind the child event output to the parent event
+  handoff input, and advertise the top through additive `actor_network`
+  metadata.
+- No compiler behavior changed in this selection slice.
+
 ### R14 — ATL resolved-child fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`.
 - Added [isf/atl_resolved_child_pipeline.isf](isf/atl_resolved_child_pipeline.isf)

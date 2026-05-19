@@ -188,6 +188,11 @@ generated ATL top and no child wiring, so downstream producers must treat ATL
 top emission, interface binding, and HDL child wiring as unshipped.
 The emitted-child/no-top boundary is locked by
 `isf/atl_resolved_child_pipeline.isf`.
+The next selected implementation subset, not yet shipped in this handoff, is
+one generated ATL top for exactly one resolved child with one parent trigger
+handoff and one parent event wait. Downstream producers must continue to
+treat generated ATL tops and inferred handoff wiring as unavailable until
+that selected implementation lands.
 
 Imported files may also contain library roots:
 

@@ -3240,6 +3240,18 @@ event wiring, and no inferred parent-to-child handoff wiring. Any later ATL
 implementation that emits broader artifacts must document their names, report
 keys, and review surfaces in the same slice that ships them.
 
+The next selected, not-yet-shipped ATL implementation subset is generated top
+packaging for the resolved-child fixture shape. The selected boundary is one
+resolved child, one parent trigger handoff, one parent event wait, and
+matching parent/child clock/reset names and policies. The selected top will
+be `<parent>_top.fsm`; it will instantiate the parent and child, wire public
+pins to the parent, bind the parent trigger handoff to the child transaction
+start input discovered from the child's authored `(on START_SIGNAL)`, bind
+the child event output to the parent event handoff input, and report the top
+through additive `actor_network` metadata. Until that implementation lands,
+generated ATL tops and inferred parent-to-child handoff wiring remain
+unshipped behavior.
+
 ## 10. Schedule JSON Report
 
 `--emit-schedule-json` emits the current `Emitter::JSON` surface:

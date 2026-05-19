@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL top generation starts from existing handoffs
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` selects generated ATL top emission as
+  the next implementation step, but only for the handoffs that already exist:
+  one parent trigger handoff and one parent event wait for one resolved child.
+- The selected binding source is the child actor shell, not naming guesswork:
+  the trigger target transaction must have a scalar authored `(on
+  START_SIGNAL)`, and the event must name a scalar child output port.
+- Keeping the first subset to matching parent/child clock/reset names avoids
+  hiding CDC or reset-remapping policy inside generated top wiring.
 ## 2026-05-19: ATL resolved-child fixtures lock the no-top boundary
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` adds a file-backed fixture before
   selecting generated ATL top packaging or inferred handoff binding.

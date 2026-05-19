@@ -282,7 +282,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9`
   Status: `active`
   Goal: `Select the next task-scoped ATL association behavior after the trigger-batch fixture.`
-  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`
+  Children: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.1`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.2`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.4`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.5`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.6`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.7`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.8`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.9`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.10`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.11`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.15`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.16`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.17`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.18`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.19`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`, `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`
   Acceptance: `The next ATL implementation frontier is selected before code. The selection must preserve the clarified model that actor associations are task-scoped, must not rely on permanent groups by default, and must identify one bounded behavior slice with source syntax, report keys, generated artifact expectations, fail-closed boundaries, mdBook impact, and regression scope.`
   Verification: `pending`
   Commit: `pending`
@@ -456,9 +456,16 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
   Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.24: add ATL resolved-child fixture`
 
 - ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25`
-  Status: `active`
+  Status: `completed`
   Goal: `Select the next ATL generated-top, interface-binding, or fail-closed boundary after resolved-child fixture coverage.`
   Acceptance: `Review the shipped resolved child artifact fixture, existing parent trigger/event/data handoff surfaces, reusable-library generated-top machinery, current lower-result file contract, and public report metadata; choose one bounded next slice before code. Candidate directions include selecting generated ATL top packaging, selecting explicit interface binding inference from current parent handoffs, adding fail-closed coverage for attempted handoff wiring before an ATL top exists, or selecting a richer resolved-child fixture. No code changes may begin until this leaf records source shape, report impact, generated artifact expectations, fail-closed boundaries, mdBook impact, and verification scope.`
+  Verification: `mdbook build docs/book; prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t; git diff --check`
+  Commit: `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.25: select ATL generated top`
+
+- ID: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`
+  Status: `active`
+  Goal: `Emit the first generated ATL top with resolved-child trigger/event handoff wiring.`
+  Acceptance: `Implement only the selected first generated ATL top subset for the resolved-child fixture shape: one top-level actor, exactly one resolved '(instance NAME of ALIAS.EXPORT)' child, one accepted parent '(trigger instance.transaction)' handoff to that child, one accepted parent '(await instance.event)' handoff from that same child, same clock/reset names and reset policy between parent and child, no ATL data movements, no association/group schedules, and no additional resolved ATL children. Lowering must emit '<parent>_top.fsm' in addition to the parent and child '.fsm' artifacts, instantiate the parent and child, wire top-level public pins to the parent, wire the parent trigger handoff output to the resolved child transaction start input discovered from the child transaction's '(on START_SIGNAL)' source, wire the child event output to the parent event handoff input, and report the generated ATL top through an additive actor_network generated-top metadata family. The implementation must fail closed for missing child target transactions, target transactions without a scalar '(on ...)' start signal, event names that are not child output ports, multiple resolved children, multiple or repeated trigger/event bindings, cross-clock or reset-mismatched parent/child pairs, data-movement coupling, trigger batches, groups, ready/backpressure, payload bindings, route mux/storage, recursive actor networks, and any generated-top name conflict.`
   Verification: `pending`
   Commit: `pending`
 
@@ -466,7 +473,7 @@ FSMGen owns scheduling and lowering to explicit `.fsm`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` | `active` | `.9.24` promoted the resolved-child artifact fixture, so the next slice must select generated-top, interface-binding, or a fail-closed boundary before code. |
+| 1 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` | `active` | `.9.25` selected the first generated ATL top subset for one resolved child and existing parent trigger/event handoffs. |
 
 ## Selected ATL Actor Type-Resolution Source Contract
 
@@ -772,6 +779,60 @@ Explicit non-claims:
   `worker_done` and the emitted child artifact;
 - no route mux/storage, actor-event fan-in, CDC, ready/backpressure,
   recursive actor networks, or permanent actor grouping.
+
+## Selected ATL Generated Top Subset
+
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` selects the next implementation leaf as
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`: emit the first generated ATL top for
+the already shipped resolved-child fixture shape.
+
+Selected source boundary:
+
+- one top-level `(actor ...)`;
+- exactly one resolved library-qualified ATL child instance using
+  `(instance NAME of ALIAS.EXPORT)`;
+- one accepted parent `(trigger instance.transaction)` handoff to that child;
+- one accepted parent `(await instance.event)` handoff from that same child;
+- parent and child use the same clock name, reset name, reset kind, and reset
+  polarity;
+- no ATL data movements, no temporary trigger batches, no static group
+  schedules, and no additional resolved children.
+
+Selected generated artifacts:
+
+- emit the existing parent `<parent>.fsm`;
+- emit the existing resolved child `<parent>__<instance>.fsm`;
+- emit a new generated ATL top `<parent>_top.fsm`;
+- instantiate the parent as `(?fsmc:<parent> <parent>)`;
+- instantiate the child as `(?fsmc:<instance> <parent>__<instance>)`;
+- wire top-level public pins to the parent as the existing composition-top
+  path does;
+- wire the parent trigger handoff output
+  `<instance>_<transaction>_start` to the resolved child's transaction start
+  input discovered from the child transaction's authored `(on START_SIGNAL)`;
+- wire the resolved child output named by the parent `(await instance.event)`
+  to the parent event handoff input `<instance>_<event>`.
+
+Selected report impact:
+
+- add an `actor_network` generated-top metadata family so downstream
+  consumers can discover the generated ATL top without overloading
+  `library_uses[]`;
+- keep resolved child discovery in `actor_network.instances[]`;
+- keep `library_uses[]` reserved for explicit `(use alias.actor as instance
+  ...)` reusable-library composition.
+
+Explicit fail-closed boundaries for `.9.26`:
+
+- missing child target transaction;
+- target transaction without a scalar `(on ...)` start signal;
+- event name that is not a scalar child output port;
+- multiple resolved ATL children;
+- multiple trigger/event bindings or repeated binding to the same handoff;
+- cross-clock or reset-mismatched parent/child pairs;
+- ATL data movement, trigger batches, static group scheduling, payloads,
+  ready/backpressure, route mux/storage, recursive actor networks, and any
+  generated-top name conflict.
 
 ## Shipped ATL Association Report Vocabulary
 
@@ -1650,6 +1711,7 @@ Current proposal summary:
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22` | `perl -Iperl -c perl/FSM/Adapter/ISF/Parser.pm`; `perl -Iperl -c perl/FSM/Scheduler/ISF/LoweringIR.pm`; `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1322-isf-actor-network-static.t`; `prove -Iperl t/1322-isf-actor-network-static.t t/1230-isf-library-import-resolution.t t/1231-isf-library-generated-top.t`; `prove -Iperl t/1255-isf-schedule-report-golden-matrix.t t/1112-isf-public-interface-contract.t t/1116-isf-public-schedule-report-key-family-audit.t t/1140-isf-public-schedule-report-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book`; `git diff --check` | `emitted resolved ATL child scheduled artifacts while keeping parent handoffs external and emitting no ATL top` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected a realistic resolved-child artifact fixture before generated-top or interface-binding work` |
 | `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` | `perl -Iperl -c perl/FSM/Support/ISFPublicInterfaceContract.pm`; `perl -Iperl -c t/1139-isf-public-lower-result-metadata-audit.t`; `perl -Iperl -c t/1142-isf-public-guidance-metadata-audit.t`; `perl -Iperl -c t/1330-isf-atl-resolved-child-fixture-coverage.t`; `prove -Iperl t/1330-isf-atl-resolved-child-fixture-coverage.t t/1183-ci-regression-tier-selection.t`; `prove -Iperl t/1139-isf-public-lower-result-metadata-audit.t t/1142-isf-public-guidance-metadata-audit.t t/1144-isf-public-tested-by-metadata-audit.t t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `mdbook build docs/book`; `./bin/ci-regression isf --no-book (Files=236, Tests=1376)`; `git diff --check` | `promoted the resolved-child fixture with parent plus child .fsm coverage, strict schedule JSON parity, and no generated ATL top` |
+| `2026-05-19` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` | `mdbook build docs/book`; `prove -Iperl t/1250-isf-spec-focused-test-index-audit.t t/1305-isf-book-feature-matrix-audit.t`; `git diff --check` | `selected the first generated ATL top subset for one resolved child and existing parent trigger/event handoffs before code` |
 
 ## Commit Log
 
@@ -1709,6 +1771,7 @@ Current proposal summary:
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.22: emit ATL child artifacts` | `emits resolved ATL child scheduled artifacts without generating an ATL top` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.23: select ATL resolved-child fixture` | `selects a realistic fixture for parent plus resolved child artifact coverage` |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.24: add ATL resolved-child fixture` | `promotes the resolved-child fixture with strict schedule JSON parity and no-top coverage` |
+| `ISF-ACTOR-NETWORK-ORCHESTRATION.9.25` | `this commit: ISF-ACTOR-NETWORK-ORCHESTRATION.9.25: select ATL generated top` | `selects the first generated ATL top and handoff-wiring subset before implementation` |
 
 ## Changelog
 
@@ -2037,3 +2100,13 @@ Current proposal summary:
   one `event_waits[]` entry, and empty data/association/group schedule
   arrays. The active frontier moves to `.9.25` to select generated ATL top,
   interface-binding, or fail-closed behavior before code.
+- `2026-05-19`: Completed `.9.25`: selected `.9.26` as the first generated
+  ATL top implementation leaf. The selected subset is one resolved child,
+  one parent trigger handoff, one parent event wait, matching parent/child
+  clock and reset names/policies, generated `<parent>_top.fsm`, inferred
+  trigger wiring from the child transaction's authored `(on START_SIGNAL)`,
+  inferred event wiring from the child output port, and additive
+  `actor_network` generated-top metadata. Broader wiring, data movement,
+  trigger batches, groups, CDC, ready/backpressure, payloads, route
+  mux/storage, recursive actor networks, and generated-top conflicts remain
+  fail-closed for the next implementation leaf.

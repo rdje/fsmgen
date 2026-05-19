@@ -689,6 +689,16 @@ one parent event wait. Lowering emits exactly
 `atl_resolved_child_pipeline__worker.fsm`; it emits no ATL top and does not
 infer child handoff wiring.
 
+The next selected ATL implementation slice is generated top packaging for
+that same resolved-child shape, but it is not shipped yet. The selected first
+top is exactly one resolved child, one parent trigger handoff, one parent
+event wait, and matching parent/child clock/reset names and policies. The
+planned top will wire public pins to the parent, parent trigger handoff to the
+child transaction start input discovered from the child's authored
+`(on START_SIGNAL)`, and child event output to the parent event handoff input.
+Until that slice lands, generated ATL tops and inferred parent/child handoff
+wiring remain unavailable.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
 static actor instance. The wait may stand alone for a single static actor, or

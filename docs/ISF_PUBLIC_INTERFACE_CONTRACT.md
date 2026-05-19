@@ -554,6 +554,10 @@ instances. Generated ATL tops, HDL child wiring, and inferred handoff binding
 remain unshipped behavior. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
+The next selected ATL implementation subset is a generated top for one
+resolved child with one parent trigger handoff and one parent event wait, but
+that generated-top surface is not part of the public contract until its
+implementation and metadata audits land.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
