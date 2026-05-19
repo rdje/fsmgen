@@ -10,7 +10,6 @@ no warnings qw(experimental::signatures experimental::smartmatch);
 use Lispish;
 use Cwd qw(abs_path);
 use File::Basename qw(dirname);
-use File::Slurp qw(read_file);
 use File::Spec;
 use FSM::Adapter::ISF::LispishAdapter;
 use FSM::Adapter::FSMGenFull::ExpressionBuilder;
@@ -79,7 +78,7 @@ sub new($class, %args) {
 
 sub parse_file($self, $isf_path) {
     fsm_trace_enter("Parser parse_file: $isf_path", 2);
-    my $source_text = read_file($isf_path);
+    my $source_text = _read_text_file($isf_path);
     my $result = $self->parse_source($source_text, $isf_path);
     fsm_trace_exit("Parser parse_file completed for $isf_path", 2);
     return $result;
@@ -4067,7 +4066,7 @@ sub _resolve_library($self, $library_name, $same_source_libraries, $source_label
         confess "Error: recursive library import of '$library_name' through '$candidate' is unsupported\n"
             if $seen->{$key}++;
 
-        my $source = read_file($candidate);
+        my $source = _read_text_file($candidate);
         my $raw = Lispish::multi(\$source);
         confess "Error: failed to parse library '$library_name' source '$candidate' with Lispish\n"
             unless defined $raw && ref($raw) eq 'ARRAY';
@@ -5786,6 +5785,16 @@ sub _parse_named_body_clause($self, $clause, $kind) {
     }
 
     return { name => $name, body => \@body };
+}
+
+sub _read_text_file($path) {
+    open my $fh, '<', $path
+        or confess "Error: unable to read '$path': $!\n";
+    local $/;
+    my $content = <$fh>;
+    close $fh
+        or confess "Error: unable to close '$path' after reading: $!\n";
+    return defined($content) ? $content : '';
 }
 
 1;

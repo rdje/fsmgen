@@ -60,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `CI-PERL-532-REGRESSION-COMPAT` | `done` | `project operations` | `closed` | [docs/tasks/CI-PERL-532-REGRESSION-COMPAT.md](docs/tasks/CI-PERL-532-REGRESSION-COMPAT.md) |
 | `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` | `done` | `R14` | `closed` | [docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md](docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md) |
 | `GITHUB-PUBLIC-AUTOMATION-REENABLE` | `done` | `project operations` | `closed` | [docs/tasks/GITHUB-PUBLIC-AUTOMATION-REENABLE.md](docs/tasks/GITHUB-PUBLIC-AUTOMATION-REENABLE.md) |
 | `ISF-REPEAT-SPAWN-PARAMS` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md](docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md) |

@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: Hosted Perl 5.32 regression compatibility repaired
+- Completed `CI-PERL-532-REGRESSION-COMPAT.1`.
+- GitHub's `Perl FSM Regression` workflow was failing on pushes because the
+  hosted Perl 5.32 environment exposed two local-environment assumptions:
+  `FSM::Adapter::ISF::Parser` loaded undeclared `File::Slurp`, and
+  `FSM::Composition::InterfacePortBuilder` read `@_` inside a signatured
+  subroutine, which Perl 5.32 reports as an experimental warning on stderr.
+- The parser now uses a core-Perl `_read_text_file` helper for `.isf` sources
+  and imported library files, so ordinary execution no longer requires
+  `File::Slurp`.
+- `uniform_declared_type_contract` now uses a slurpy signature parameter for
+  list-form ports instead of touching `@_`, keeping CLI stderr clean on Perl
+  5.32.
+- The hosted workflow remains pointed at `./bin/ci-regression`; no new
+  GitHub-only command path or hidden CI dependency was added.
+- Focused gates pass. The local full regression still fails five unrelated
+  tests (`t/214`, `t/217`, `t/25`, `t/310`, `t/44`); a detached clean
+  worktree at pre-fix `HEAD` reproduced the same failures, so they are
+  pre-existing and need a separate CI-green repair slice.
+
 ## 2026-05-19: ATL two-child generated top shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
 - The active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`, a

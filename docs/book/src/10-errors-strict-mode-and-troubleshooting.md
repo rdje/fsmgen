@@ -260,6 +260,10 @@ the same gate. The GitHub Pages workflow builds this mdBook from `docs/book`
 and publishes the generated `docs/book/book` artifact when Pages is configured
 to use GitHub Actions.
 
+Hosted regression uses a minimal Perl setup. Ordinary runtime paths should not
+depend on undeclared local CPAN modules, and CLI report modes that are tested
+for clean stderr must remain compatible with the hosted Perl version.
+
 ## Current Boundary
 
 The project is trying to move toward:

@@ -12,6 +12,10 @@ The hosted workflow calls `./bin/ci-regression`, the same entrypoint used by
 the local pre-push gate. That keeps the local and GitHub quality gates aligned,
 including the mdBook build that `bin/ci-regression` runs by default.
 
+The workflow's Perl setup is intentionally minimal. Runtime code should avoid
+undeclared CPAN dependencies in ordinary execution, and CLI paths that are
+tested for clean stderr must stay compatible with the hosted Perl version.
+
 ## GitHub Pages
 
 `pages.yml` builds the mdBook from `docs/book` and uploads `docs/book/book` as

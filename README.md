@@ -346,6 +346,9 @@ cd docs/book && mdbook serve
 - GitHub Actions is active again under [.github/workflows/](.github/workflows/).
   The hosted regression workflow calls `./bin/ci-regression`, so the local and
   GitHub quality gates use the same repo-owned entrypoint.
+- Hosted CI uses a minimal Perl setup. Ordinary runtime paths should not rely
+  on undeclared local CPAN modules, and CLI report modes tested for clean
+  stderr must remain compatible with the hosted Perl version.
 
 ## CLI quick reference
 ```bash

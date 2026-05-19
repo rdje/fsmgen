@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### Project operations — hosted Perl 5.32 regression compatibility
+- Completed `CI-PERL-532-REGRESSION-COMPAT.1`.
+- Removed the undeclared `File::Slurp` runtime dependency from
+  [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) by using a
+  core-Perl file reader for `.isf` sources and imported library files.
+- Updated
+  [perl/FSM/Composition/InterfacePortBuilder.pm](perl/FSM/Composition/InterfacePortBuilder.pm)
+  so `uniform_declared_type_contract` no longer reads `@_` inside a
+  signatured subroutine, avoiding Perl-5.32 experimental warnings on CLI
+  stderr.
+- Kept the hosted regression workflow on `./bin/ci-regression`; no
+  GitHub-only gate or hidden CPAN install step was introduced.
+
 ### R14 — ATL two-child generated top shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
 - Added [isf/atl_two_child_pipeline.isf](isf/atl_two_child_pipeline.isf)

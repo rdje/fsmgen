@@ -180,8 +180,8 @@ sub declared_type_conflicts ($class, $left, $right) {
     return $left_signature ne $right_signature ? 1 : 0;
 }
 
-sub uniform_declared_type_contract ($class, $ports) {
-    my @ports = ref($ports) eq 'ARRAY' ? @$ports : @_;
+sub uniform_declared_type_contract ($class, $ports, @additional_ports) {
+    my @ports = ref($ports) eq 'ARRAY' ? @$ports : ($ports, @additional_ports);
     return {
         declared_type_name => undef,
         declared_type_spec => undef,

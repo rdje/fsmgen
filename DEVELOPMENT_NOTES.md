@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: Hosted CI should not depend on local CPAN drift
+- `CI-PERL-532-REGRESSION-COMPAT.1` fixes the public GitHub regression
+  failure at the source instead of teaching the workflow to install an
+  undeclared module.
+- The ISF parser only needs whole-file text reads for source and library
+  files, so a local helper built from core `open`/slurp/`close` is simpler and
+  more portable than carrying a `File::Slurp` runtime dependency.
+- Perl 5.32 still warns when a signatured subroutine uses `@_` in the tested
+  pattern. Moving the list-form port tail into a slurpy signature parameter
+  keeps the helper's API shape while preserving the project's strict
+  clean-stderr CLI contract.
+- The hosted workflow remains intentionally simple: set up Perl and mdBook,
+  then call `./bin/ci-regression`, the same entrypoint used locally.
+
 ## 2026-05-19: ATL multi-child top should grow before actor-to-actor data routes
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` now ships that boundary for the
   control-only case: two resolved children, sequential trigger/event
