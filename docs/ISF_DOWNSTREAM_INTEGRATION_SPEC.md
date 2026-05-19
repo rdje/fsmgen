@@ -1913,9 +1913,11 @@ generated-child data wiring beyond the selected one scalar two-child route,
 CDC child wiring, payload/ready/backpressure binding, or broader HDL event
 wiring.
 
-The reserved generated-child actor-to-actor data-route shape now fails closed
-with a targeted multi-child ATL top diagnostic when it is coupled to
-qualified actor trigger/event handoffs.
+The selected generated-child actor-to-actor data route is shipped only for
+the one scalar two-child shape that uses qualified trigger/event handoffs,
+one named drive-call cycle, and deterministic generated handoffs. Malformed
+or wider route shapes still fail closed before FSMGen infers remapping,
+storage, muxing, fan-in/fan-out, payload, or backpressure behavior.
 
 The selected generated-child actor-to-actor data route remains bounded by a
 simple parent input start boundary and a simple parent output completion

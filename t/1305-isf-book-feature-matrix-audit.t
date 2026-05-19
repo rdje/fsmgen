@@ -14,8 +14,12 @@ use FSM::Support::ISFPublicInterfaceContract qw(
 my $repo_root = File::Spec->rel2abs(File::Spec->catdir($FindBin::Bin, '..'));
 my $matrix_path = 'docs/book/src/13k-isf-feature-support-matrix.md';
 my $composition_path = 'docs/book/src/13f-composition.md';
+my $backlog_path = 'docs/book/src/14-feature-backlog.md';
+my $downstream_path = 'docs/ISF_DOWNSTREAM_INTEGRATION_SPEC.md';
 my $matrix = read_repo_file($matrix_path);
 my $composition = read_repo_file($composition_path);
+my $backlog = read_repo_file($backlog_path);
+my $downstream = read_repo_file($downstream_path);
 my $summary = read_repo_file('docs/book/src/SUMMARY.md');
 
 like(
@@ -28,6 +32,12 @@ like(
     $summary,
     qr{\[Composition\]\(13f-composition\.md\)},
     'ISF composition chapter is reachable from the mdBook summary',
+);
+
+like(
+    $summary,
+    qr{\[Feature Backlog\]\(14-feature-backlog\.md\)},
+    'ISF feature backlog chapter is reachable from the mdBook summary',
 );
 
 my %live_paths = map { $_ => 1 } @{isf_public_interface_live_document_paths()};
@@ -265,6 +275,42 @@ unlike(
     $matrix,
     qr{positive multi-child ATL top\s+scheduling remains backlog},
     'matrix no longer claims positive multi-child ATL top scheduling remains backlog',
+);
+
+for my $doc (
+    ['composition chapter', $composition],
+    ['feature backlog',     $backlog],
+    ['downstream handoff',  $downstream],
+) {
+    my ($label, $content) = @{$doc};
+    unlike(
+        $content,
+        qr{reserved generated-child actor-to-actor(?: data-route)? shape now fails closed},
+        "$label no longer says the reserved actor-to-actor route shape now fails closed as a whole",
+    );
+    unlike(
+        $content,
+        qr{fails closed reserved generated-child actor-to-actor data movement},
+        "$label no longer uses stale reserved-route fail-closed wording",
+    );
+}
+
+like(
+    $composition,
+    qr{The selected generated-child actor-to-actor data-route shape across two\s+resolved children reuses the existing `\(sink source\)` drive-body movement\s+surface},
+    'composition chapter states selected generated-child actor-to-actor route is shipped narrowly',
+);
+
+like(
+    $downstream,
+    qr{The selected generated-child actor-to-actor data route is shipped only for\s+the one scalar two-child shape},
+    'downstream handoff states selected generated-child actor-to-actor route is shipped narrowly',
+);
+
+like(
+    $backlog,
+    qr{The selected generated-child actor-to-actor data movement across two resolved\s+children is shipped only for the one scalar two-child route},
+    'feature backlog states selected generated-child actor-to-actor route is shipped narrowly',
 );
 
 my $route_terms_section = markdown_heading_section(

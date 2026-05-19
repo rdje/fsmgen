@@ -441,8 +441,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `generated_tops[]` evidence, and explicit non-support boundaries. `.9.83`
   selected a follow-up documentation sync for remaining stale
   reserved-route wording in the composition chapter, downstream handoff, and
-  backlog. The active ATL frontier is now
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84`.
+  backlog. `.9.84` completed that sync and added audit coverage so those
+  docs now state the selected two-child scalar route is shipped while wider
+  or malformed routes still fail closed. The active ATL frontier is now
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.85`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

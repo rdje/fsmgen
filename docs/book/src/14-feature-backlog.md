@@ -1016,15 +1016,16 @@ parent triggers `worker.process` and awaits `worker.done`. The fixture
 `isf/atl_resolved_child_pin_egress_pipeline.isf` proves parent/child/top
 artifacts, generated-top wiring, route metadata, child output port
 preservation, plain plus strict HDL generation, missing child output failure,
-and pre-event drive-order failure. Actor-to-actor generated-child routes,
-multi-child data wiring, route mux/storage, CDC/reset remapping,
-ready/backpressure, and payload protocols remain deferred.
+and pre-event drive-order failure. That one-child pin route does not include
+actor-to-actor generated-child routing, multi-child data wiring, route
+mux/storage, CDC/reset remapping, ready/backpressure, or payload protocols.
 
-FSMGen now fails closed reserved generated-child actor-to-actor data movement
-across two resolved children when it is coupled to qualified actor
-trigger/event handoffs. The source shape reuses the existing `(sink source)`
-drive-body pair; the selected scalar two-child route is now shipped, while
-broader routes still require later scheduling work.
+The selected generated-child actor-to-actor data movement across two resolved
+children is shipped only for the one scalar two-child route that uses
+qualified trigger/event handoffs. The source shape reuses the existing
+`(sink source)` drive-body pair; malformed or wider routes still fail closed
+before remapping, storage, muxing, fan-in/fan-out, payload, or backpressure
+behavior is inferred.
 
 The first positive two-child generated top is now shipped for the control-only
 case: `isf/atl_two_child_pipeline.isf` triggers `reader.capture`, waits on

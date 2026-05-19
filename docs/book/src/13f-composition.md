@@ -736,9 +736,9 @@ The child `.fsm` includes generated `+interface` role metadata for the
 selected child input so the HDL backend preserves `payload` as a child module
 port.
 
-Actor-to-actor generated-child routes, multi-child data wiring, route
-mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols
-remain unavailable.
+This one-child pin-ingress route does not include actor-to-actor
+generated-child routing, multi-child data wiring, route mux/storage,
+CDC/reset remapping, ready/backpressure, or payload protocols.
 
 The inverse generated-child data route is also shipped for one scalar
 resolved-child output route to one top-level output pin through that
@@ -758,15 +758,16 @@ The child `.fsm` includes generated `+interface` role metadata for the
 selected child output so the HDL backend preserves `payload` as a child
 module port.
 
-Actor-to-actor generated-child routes, multi-child data wiring, route
-mux/storage, CDC/reset remapping, ready/backpressure, and payload protocols
-remain unavailable.
+This one-child pin-egress route does not include actor-to-actor
+generated-child routing, multi-child data wiring, route mux/storage,
+CDC/reset remapping, ready/backpressure, or payload protocols.
 
-FSMGen now fails closed the reserved generated-child actor-to-actor
-data-route shape across two resolved children when it is coupled to qualified
-actor trigger/event handoffs. That shape reuses the existing `(sink source)`
-drive-body movement surface and is now supported only for the selected
-two-child scalar data route described below.
+The selected generated-child actor-to-actor data-route shape across two
+resolved children reuses the existing `(sink source)` drive-body movement
+surface and is shipped only for the two-child scalar data route described
+below. Malformed or wider actor-to-actor route shapes still fail closed before
+FSMGen infers remapping, storage, muxing, fan-in/fan-out, payload, or
+backpressure behavior.
 
 The first control-only two-child generated top is now shipped.
 

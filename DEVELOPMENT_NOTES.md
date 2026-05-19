@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL reserved-route wording is synchronized
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.84` updates the composition chapter,
+  downstream handoff, and feature backlog so they no longer describe the
+  reserved generated-child actor-to-actor route as failing closed as a whole.
+- The docs now use the same precise boundary as the feature matrix: the
+  selected scalar two-child route is shipped, and malformed or wider route
+  shapes fail closed before any broader routing behavior is inferred.
+- The mdBook feature-matrix audit now reads those documents and rejects the
+  stale wording directly.
+
 ## 2026-05-19: ATL reserved-route wording needs final truth sync
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.83` selects a documentation/audit sync
   for remaining older prose that says the reserved generated-child
