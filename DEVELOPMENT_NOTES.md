@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL sink-trigger ordering was already parser-owned
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.54` adds focused coverage for the
+  generated-child actor-to-actor route sequence where the sink child trigger
+  appears before the data drive call.
+- The existing parser route-order diagnostic already rejects this shape, so
+  the implementation is coverage-only: no lowerer, report schema, generated
+  top, or HDL behavior changed.
+- This keeps speculative sink activation, delayed payload delivery, route
+  continuation, storage, muxing, backpressure, and payload protocols
+  deferred.
+
 ## 2026-05-19: ATL sink triggers must remain after the data drive call
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53` selects sink-trigger ordering as
   the next generated-child route boundary.

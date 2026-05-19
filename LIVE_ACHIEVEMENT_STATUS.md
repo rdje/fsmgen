@@ -2,6 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child sink-trigger order hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.54`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.55`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  sequences that trigger the sink child before the data drive call.
+- No production code change was required; the existing parser order
+  diagnostic already enforced this boundary.
+- Speculative sink activation, delayed payload delivery, route continuation,
+  pending handoff storage, route mux/storage, ready/backpressure, payload
+  protocols, recursive actor networks, and permanent actor grouping remain
+  deferred.
+
 ## 2026-05-19: R14 — ATL generated-child sink-trigger order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53`.
 - The active ATL frontier advances to

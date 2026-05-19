@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child sink-trigger order hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.54`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.55`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  sequences that trigger the sink child before the data drive call.
+- No production code change was required because the existing parser route
+  order diagnostic already enforces this boundary.
+- No speculative sink activation, delayed payload delivery, route
+  continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocol, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child sink-trigger order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.53` as a doc-only selection
   leaf.

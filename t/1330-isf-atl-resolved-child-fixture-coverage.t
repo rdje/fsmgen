@@ -904,6 +904,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
+        qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
+        'generated-child actor-to-actor data route fails closed when the sink child is triggered before the drive call',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ extra_drive_pair => 1 }),
         qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset/,
         'generated-child actor-to-actor data route fails closed when one route drive contains multiple endpoint pairs',
@@ -1952,6 +1958,14 @@ CLAUSES
     (drive forward_payload)
     (await reader.done)
     (trigger writer.emit)
+    (await writer.done)
+CLAUSES
+        : $options->{sink_trigger_before_drive}
+        ? <<'CLAUSES'
+    (trigger reader.capture)
+    (await reader.done)
+    (trigger writer.emit)
+    (drive forward_payload)
     (await writer.done)
 CLAUSES
         : undef;

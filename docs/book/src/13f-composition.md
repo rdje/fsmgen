@@ -794,11 +794,10 @@ one parent transaction. Route clauses split across multiple parent
 transactions stay fail-closed until a later contract selects route
 continuation, pending handoff storage, transaction rendezvous,
 cross-transaction scheduling, muxing, backpressure, or payload behavior.
-The next selected sink-trigger ordering hardening keeps the data drive call
-before the sink child trigger. Sink-before-drive route sequences stay
-fail-closed until a later contract selects speculative sink activation,
-delayed payload delivery, route storage, muxing, backpressure, or payload
-behavior.
+The shipped sink-trigger ordering hardening keeps the data drive call before
+the sink child trigger. Sink-before-drive route sequences stay fail-closed
+until a later contract selects speculative sink activation, delayed payload
+delivery, route storage, muxing, backpressure, or payload behavior.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

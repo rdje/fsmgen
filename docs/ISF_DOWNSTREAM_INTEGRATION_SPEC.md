@@ -1843,11 +1843,11 @@ across multiple parent transactions or assume route continuation, pending
 handoff storage, transaction rendezvous, cross-transaction scheduling,
 muxing, backpressure, or payload insertion until FSMGen publishes an explicit
 contract for those behaviors.
-The next selected sink-trigger ordering hardening keeps the route data drive
-call before the sink child trigger. Downstream producers should not trigger
-the sink child before the drive call or assume speculative sink activation,
-delayed payload delivery, route storage, muxing, backpressure, or payload
-insertion until FSMGen publishes an explicit contract for those behaviors.
+The shipped sink-trigger ordering hardening keeps the route data drive call
+before the sink child trigger. Downstream producers must not trigger the sink
+child before the drive call or assume speculative sink activation, delayed
+payload delivery, route storage, muxing, backpressure, or payload insertion
+until FSMGen publishes an explicit contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 
