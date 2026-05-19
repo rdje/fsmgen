@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL multi-event fan-in stays a boundary until selected
+- After shipping one trigger-batch followed by one actor event wait, the next
+  useful slice is negative coverage rather than a wider scheduler feature.
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` will prove that two actor event waits
+  after one temporary trigger batch still fail closed with the one-event-wait
+  diagnostic.
+- This keeps the parent-handoff model honest: no actor-event fan-in, generated
+  child completion join, internal storage, route mux, or HDL child wiring is
+  implied by the `.9.12` fixture.
 ## 2026-05-19: ATL trigger-batch wait coupling is still parent handoff
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12` intentionally relaxes only one
   boundary: a selected temporary trigger batch may be followed by one actor

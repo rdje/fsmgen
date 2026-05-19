@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL multi-event fan-in boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` before adding negative
+  regression code.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` to prove that a temporary
+  trigger batch followed by multiple actor event waits remains fail-closed.
+- The selected rejected case triggers reader/filter/writer, then attempts
+  `(await reader.done)` and `(await writer.done)` in one parent transaction.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
+
 ### R14 — ATL trigger-batch wait fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`.
 - Relaxed [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm) so

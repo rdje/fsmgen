@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL multi-event fan-in boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13` as a selection leaf before
+  any negative regression source/test changes.
+- The next active ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`,
+  which must prove that one selected temporary trigger batch followed by two
+  actor event waits remains fail-closed.
+- The rejected source shape triggers reader/filter/writer, then attempts
+  `(await reader.done)` followed by `(await writer.done)` before completion.
+- Expected behavior is parser failure before scheduled `.fsm` emission with
+  the current one-event-wait diagnostic; no production behavior should widen.
 ## 2026-05-19: ATL trigger-batch wait fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`.
 - Relaxed the ATL parser so a selected temporary trigger batch can be followed

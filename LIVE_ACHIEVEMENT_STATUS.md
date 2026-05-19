@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL multi-event fan-in boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.13`.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14` for negative coverage of
+  the deferred multi-event actor fan-in boundary after a temporary trigger
+  batch.
+- The selected rejected source attempts one trigger batch followed by
+  `(await reader.done)` and `(await writer.done)` in the same transaction.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.14`.
+
 ## 2026-05-19: R14 — ATL trigger-batch wait fixture shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.12`.
 - Added the file-backed `isf/atl_trigger_batch_wait_pipeline.isf` fixture and

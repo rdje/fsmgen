@@ -808,6 +808,12 @@ generated children, generated ATL tops, actor type resolution, HDL child
 wiring, data movement coupling, CDC, ready/backpressure, or permanent
 grouping.
 
+The next active ATL slice is a fail-closed boundary proof for multi-event
+fan-in. A parent transaction that emits one temporary trigger batch and then
+attempts two actor event waits remains outside the shipped subset; the
+selected regression must fail before scheduled emission with the current
+one-event-wait diagnostic and must not widen production behavior.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared
