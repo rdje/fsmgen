@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL concepts have dedicated book anchors
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87` responds to the need for the
+  user-facing book to explain ATL concepts as first-class topics, not only as
+  scattered implementation notes.
+- The composition chapter now has dedicated ATL subsections for the parent
+  actor-as-network model, direct instances, drive-body data movement,
+  one-cycle trigger/event pulses, static groups versus task-scoped
+  associations, and generated-child top data routes.
+- The audit checks the section headings and markers so future edits cannot
+  accidentally collapse those concepts back into undifferentiated prose.
+
 ## 2026-05-19: ATL route availability wording is proposal-audited
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86` fixes the ATL design proposal's
   remaining broad generated-child route deferral wording.

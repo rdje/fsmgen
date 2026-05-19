@@ -449,8 +449,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `.9.86` synchronized that proposal wording and extended the mdBook audit to
   read the proposal directly: one-child pin routes do not include
   actor-to-actor routing, the selected two-child scalar route is shipped, and
-  broader route features remain deferred. The active ATL frontier is now
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
+  broader route features remain deferred. `.9.87` added dedicated mdBook
+  subsections and audit markers for ATL actor-network concepts, including the
+  actor-as-network boundary, movement, pulses, static groups, task-scoped
+  associations, and generated-child routes. The active ATL frontier is now
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

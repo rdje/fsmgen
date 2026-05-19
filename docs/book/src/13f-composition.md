@@ -332,6 +332,8 @@ drive exports, and nested library imports remain future work.
 
 ## Static Actor-Network Metadata
 
+### Actor-As-Network Boundary And Direct Instances
+
 The first Actor Transfer Level (`ATL`) implementation slice is intentionally
 small: a top-level actor may declare one static actor instance, and FSMGen
 preserves that declaration in the parser shell and schedule report.
@@ -386,6 +388,8 @@ The broader ATL v0 contract is selected for later slices.
 
 The source root stays `(actor ...)`, and future ATL declarations remain
 direct actor-body clauses rather than a `(network ...)` section.
+
+### Drive-Body Data Movement
 
 Actor-to-actor and scalar top-level pin movement reuse the existing
 drive-body pair shape in `(sink source)` order plus ordinary drive-call
@@ -474,11 +478,17 @@ named `producer_payload`, drives the existing one-bit top-level output pin
 children, group scheduling combined with pin movement, CDC, and
 trigger/await coupling remain deferred.
 
+### Trigger And Event Pulses
+
 ATL orchestration spellings are `(do actor.transaction)`,
 `(spawn actor.transaction as NAME)`, `(trigger actor.transaction)`, and
 `(await actor.event)`, with only the bounded transaction-body trigger and
 event-wait parent-handoff subsets shipped today. Events are one-cycle control
-pulses with no payloads in ATL v0. Concurrent groups may still use
+pulses with no payloads in ATL v0.
+
+### Static Groups Versus Task-Scoped Associations
+
+Concurrent groups may still use
 `(group NAME (members ACTOR...) (mode concurrent))`, but that declaration is
 static review metadata, not a permanent runtime association and not a way to
 bypass fan-in, ordering, width, lifetime, or CDC safety. Compact
@@ -718,6 +728,8 @@ resolved child, and selected internal trigger/event links. Multi-child ATL
 tops, data-route child wiring, CDC, payloads, ready/backpressure, route
 mux/storage, recursive actor networks, and permanent actor grouping remain
 unavailable.
+
+### Generated-Child Top Data Routes
 
 The first generated-child data route is also shipped for one scalar top-level
 input-pin route into one resolved child through that generated top.

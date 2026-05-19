@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL mdBook concept sections synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88`.
+- The composition chapter now gives ATL concepts dedicated subsections for
+  actor-as-network boundary/direct instances, drive-body data movement,
+  trigger/event pulses, static groups versus task-scoped associations, and
+  generated-child top data routes.
+- The mdBook audit now requires those headings and markers for no
+  `(network ...)` wrapper, `(sink source)` movement, one-cycle events,
+  `task_scoped` temporary associations, one-child pin routes,
+  generated-child actor-to-actor routes, generated handoffs, route lifetime,
+  mux/storage, fan-in/fan-out, ready/backpressure, payload protocols,
+  recursive actor networks, and permanent actor grouping.
+- `.9.88` is active as a selection leaf for the next bounded ATL slice.
+
 ## 2026-05-19: ATL design proposal route status synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.

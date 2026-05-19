@@ -346,6 +346,49 @@ like(
     'ATL design proposal keeps broader generated-child route features deferred',
 );
 
+my $atl_composition_section = markdown_heading_section(
+    $composition,
+    '## Static Actor-Network Metadata',
+);
+
+ok(
+    length($atl_composition_section),
+    'composition chapter keeps a dedicated ATL actor-network section',
+);
+
+my @required_atl_concept_markers = (
+    '### Actor-As-Network Boundary And Direct Instances',
+    '### Drive-Body Data Movement',
+    '### Trigger And Event Pulses',
+    '### Static Groups Versus Task-Scoped Associations',
+    '### Generated-Child Top Data Routes',
+    'The enclosing actor is the network boundary',
+    'rather than a `(network ...)` section',
+    'drive-body pair shape in `(sink source)` order',
+    'Events are one-cycle control',
+    'pulses with no payloads in ATL v0',
+    'static review metadata, not a permanent runtime association',
+    'lifetime `task_scoped`',
+    'This one-child pin-ingress route does not include actor-to-actor',
+    'This one-child pin-egress route does not include actor-to-actor',
+    'The selected generated-child actor-to-actor data-route shape across two',
+    'generated handoff',
+    'route mux/storage',
+    'fan-in/fan-out',
+    'ready/backpressure',
+    'payload protocols',
+    'recursive actor networks',
+    'permanent actor grouping',
+);
+
+for my $marker (@required_atl_concept_markers) {
+    like(
+        $atl_composition_section,
+        qr{\Q$marker\E},
+        "ATL composition section keeps concept marker: $marker",
+    );
+}
+
 my $route_terms_section = markdown_heading_section(
     $composition,
     '#### Generated-Child Route Terms',

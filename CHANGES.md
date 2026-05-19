@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL mdBook concept sections synced
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.87`.
+- Added dedicated ATL subsections to the composition chapter for
+  actor-as-network boundary and direct instances, drive-body data movement,
+  trigger/event pulses, static groups versus task-scoped associations, and
+  generated-child top data routes.
+- Extended the mdBook audit to require those headings and the key ATL concept
+  markers that describe supported behavior and explicit non-support.
+- No source syntax, parser/lowerer behavior, public report key, generated
+  artifact shape, runtime behavior, or route capability changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.88`.
+
 ### R14 — ATL design proposal route status synced
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.86`.
 - Synchronized the ATL design proposal with the shipped generated-child
