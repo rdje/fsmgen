@@ -838,6 +838,9 @@ and now emit their child `.fsm` files without an ATL top and without handoff
 wiring. ATL top emission, HDL child wiring, interface binding inference,
 event fan-in, route mux/storage, CDC, recursive actor networks, and
 ready/backpressure remain later leaves.
+The next selected fixture,
+`isf/atl_resolved_child_pipeline.isf`, will prove that emitted-child boundary
+with one parent trigger handoff and one parent event wait.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

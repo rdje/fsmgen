@@ -17,7 +17,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.23`.
+  activation `.111` and ATL actor-network orchestration `.9.24`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -262,9 +262,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   JSON continues to expose the child artifact names through the resolved
   `actor_network.instances[]` `module` and `scheduled_fsm` fields; no
   `library_uses[]` entry is created for ATL `(instance ...)` children. The
-  next ATL frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`, which must
-  select the next generated-top, interface-binding, emitted-child fixture, or
-  fail-closed boundary before code. Generated-top packaging, HDL child wiring,
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` selected the next step as a
+  realistic emitted-child fixture rather than generated-top or interface
+  wiring. The next ATL frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, which will add
+  `isf/atl_resolved_child_pipeline.isf` to prove parent plus resolved child
+  `.fsm` emission, strict schedule JSON parity, and the continued no-top /
+  no-child-wiring boundary. Generated-top packaging, HDL child wiring,
   inferred interface binding, event fan-in, route mux/storage,
   ready/backpressure, CDC, recursive actor networks, and permanent actor
   grouping remain deferred.

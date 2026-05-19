@@ -3036,6 +3036,10 @@ entries with `type_resolution`, `library`, `alias`, `export`, `module`, and
 artifacts while still emitting no ATL top, and trigger/event/data handoffs
 remain external parent handoffs until interface binding and HDL wiring are
 explicitly selected.
+The next selected fixture leaf is
+`isf/atl_resolved_child_pipeline.isf`, which will combine one resolved child
+artifact with one parent trigger handoff and one parent event wait while
+preserving the no-top/no-child-wiring boundary.
 
 The following remain fail-closed/deferred:
 

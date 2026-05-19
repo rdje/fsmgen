@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL resolved-child fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` as a doc-only selection
+  leaf.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`: add
+  `isf/atl_resolved_child_pipeline.isf` as a realistic fixture for resolved
+  ATL child artifact emission.
+- The selected fixture uses one imported same-source library actor export,
+  one `(instance worker of pkt_lib.packet_worker)`, one parent
+  `(trigger worker.process)`, one parent `(await worker.done)`, and one
+  completion pulse.
+- Expected artifacts are exactly `atl_resolved_child_pipeline.fsm` and
+  `atl_resolved_child_pipeline__worker.fsm`; no ATL top or child wiring is
+  selected.
 ## 2026-05-19: ATL child artifacts shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
 - Parser resolution now keeps the exported library actor shell in private

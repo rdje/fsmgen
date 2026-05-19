@@ -141,6 +141,11 @@ trigger/event/data handoff wiring, route mux/storage, ready/backpressure, CDC,
 actor-event fan-in, recursive actor networks, and permanent actor grouping
 remain separate future selections.
 
+The next selected fixture leaf will make that boundary reviewable through
+`isf/atl_resolved_child_pipeline.isf`: one resolved child actor artifact plus
+parent trigger/event handoffs, with no generated ATL top and no inferred child
+wiring.
+
 ## Shipped First Actor-Event Wait Subset
 
 The first behavior-bearing event wait subset is shipped:

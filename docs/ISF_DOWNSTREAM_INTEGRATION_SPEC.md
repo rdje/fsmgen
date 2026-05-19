@@ -186,6 +186,8 @@ provenance on `actor_network.instances[]` and now emit child scheduled `.fsm`
 artifacts named by their `scheduled_fsm` fields. FSMGen still emits no
 generated ATL top and no child wiring, so downstream producers must treat ATL
 top emission, interface binding, and HDL child wiring as unshipped.
+The next selected ATL fixture is `isf/atl_resolved_child_pipeline.isf`, which
+will lock this emitted-child/no-top boundary in a file-backed example.
 
 Imported files may also contain library roots:
 

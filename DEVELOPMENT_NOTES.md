@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL emitted children need fixture coverage before wiring
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` selects a realistic fixture as the
+  next slice instead of moving directly into ATL top generation.
+- The fixture will combine resolved child artifact emission with already
+  shipped parent trigger and event handoffs. That locks the no-top/no-wiring
+  boundary with a reviewable source file before interface binding inference
+  changes scheduler semantics.
+- The selected source deliberately uses a same-source library root so the
+  fixture stays self-contained and easy for downstream consumers to inspect.
 ## 2026-05-19: ATL child artifacts are emitted before ATL wiring
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22` now emits resolved child scheduled
   `.fsm` files for library-qualified ATL instances, but it deliberately stops

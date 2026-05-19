@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL resolved-child fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23`.
+- The next active ATL slice is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`, selected to add
+  `isf/atl_resolved_child_pipeline.isf`.
+- The fixture will prove resolved child `.fsm` artifact emission together
+  with parent trigger/event handoffs, while keeping generated ATL tops and
+  child wiring deferred.
+- No compiler behavior changed.
+
 ## 2026-05-19: R14 — ATL child artifacts shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
 - Resolved `(instance NAME of ALIAS.EXPORT)` ATL static actor instances now

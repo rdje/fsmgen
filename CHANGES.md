@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL resolved-child fixture selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.23` before adding another ATL
+  fixture.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24` to promote
+  `isf/atl_resolved_child_pipeline.isf` as a realistic emitted-child
+  artifact fixture.
+- The selected fixture will prove parent plus resolved child `.fsm` emission,
+  strict schedule JSON parity, resolved actor-network report metadata, and
+  the continued absence of generated ATL tops or child handoff wiring.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.24`.
+
 ### R14 — ATL child artifacts shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
 - Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)

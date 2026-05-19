@@ -680,6 +680,9 @@ names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm` under
 files while keeping the parent `.fsm` unchanged and still emitting no ATL top.
 Generated ATL tops, HDL child wiring, interface binding inference, and
 event/trigger/data handoff wiring remain later leaves.
+The next selected fixture is `isf/atl_resolved_child_pipeline.isf`, which will
+show this emitted-child/no-top boundary with one parent trigger and one parent
+event wait.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
