@@ -272,6 +272,10 @@ to parent `worker_done`. Schedule JSON records the resolved child under
 children, trigger batches, generated-child data routes, route mux/storage,
 CDC, ready/backpressure, payload binding, recursive actor networks, or
 permanent actor grouping.
+The next selected fixture extension is generated-top HDL promotion for the
+same source: plain and strict CLI SystemVerilog must include the generated
+top, scheduled parent, resolved child, and selected internal trigger/event
+links without adding new ATL syntax or report keys.
 
 ### Actor, Interface, Storage, And Timing
 

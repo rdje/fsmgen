@@ -801,6 +801,13 @@ generated children, inferred payload or ready/backpressure bindings,
 route mux/storage, actor-event fan-in, CDC, recursive actor networks, or
 permanent actor grouping.
 
+The next selected implementation slice for this fixture is HDL promotion: the
+source and report schema stay unchanged, while focused coverage must prove
+plain and strict CLI SystemVerilog generation contains the generated ATL top,
+scheduled parent, resolved child, and the selected internal trigger/event
+links. Broader generated ATL top inference remains unshipped until a later
+task-tree leaf documents it here.
+
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency
 requirements. The shipped reusable FIFO actor target is fixed-shape

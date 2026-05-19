@@ -1,6 +1,20 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-top HDL promotion selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` before further ATL HDL
+  work.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28` to promote plain and strict
+  CLI SystemVerilog reachability for the already shipped resolved-child
+  generated top fixture.
+- The selected coverage must prove the HDL output for
+  [isf/atl_resolved_child_pipeline.isf](isf/atl_resolved_child_pipeline.isf)
+  contains the generated top module, scheduled parent module, resolved child
+  module, and the selected internal trigger/event links.
+- Corrected stale mdBook ATL text that still described generated top
+  packaging as unshipped after `.9.26`. No compiler behavior changed in this
+  selection slice.
+
 ### R14 — ATL generated top shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`.
 - Updated [perl/FSM/Scheduler/ISF/LoweringIR.pm](perl/FSM/Scheduler/ISF/LoweringIR.pm)

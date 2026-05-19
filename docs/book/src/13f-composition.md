@@ -677,27 +677,28 @@ Resolved qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `type_resolution: "library_actor_export"` and deterministic child
 names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm` under
 `actor_network.instances[]`. Lowering now emits those resolved child `.fsm`
-files while keeping the parent `.fsm` unchanged and still emitting no ATL top.
-Generated ATL tops, HDL child wiring, interface binding inference, and
-event/trigger/data handoff wiring remain later leaves.
+files, and the first generated ATL top is shipped for the one-resolved-child
+trigger/event subset. Broader generated ATL tops, interface binding inference,
+data-route child wiring, and event/trigger/data handoff wiring outside that
+selected pair remain later leaves.
 The shipped resolved-child fixture is
-`isf/atl_resolved_child_pipeline.isf`. It shows this emitted-child/no-top
-boundary with one same-source library actor export, one resolved
-`(instance worker of pkt_lib.packet_worker)`, one parent trigger handoff, and
-one parent event wait. Lowering emits exactly
-`atl_resolved_child_pipeline.fsm` plus
-`atl_resolved_child_pipeline__worker.fsm`; it emits no ATL top and does not
-infer child handoff wiring.
+`isf/atl_resolved_child_pipeline.isf`. It uses one same-source library actor
+export, one resolved `(instance worker of pkt_lib.packet_worker)`, one parent
+trigger handoff, and one parent event wait. Lowering emits exactly
+`atl_resolved_child_pipeline.fsm`,
+`atl_resolved_child_pipeline__worker.fsm`, and
+`atl_resolved_child_pipeline_top.fsm`. The generated top wires public pins to
+the parent, parent `worker_process_start` to child `process_start`, and child
+`done` to parent `worker_done`, then reports the top under
+`actor_network.generated_tops[]`.
 
-The next selected ATL implementation slice is generated top packaging for
-that same resolved-child shape, but it is not shipped yet. The selected first
-top is exactly one resolved child, one parent trigger handoff, one parent
-event wait, and matching parent/child clock/reset names and policies. The
-planned top will wire public pins to the parent, parent trigger handoff to the
-child transaction start input discovered from the child's authored
-`(on START_SIGNAL)`, and child event output to the parent event handoff input.
-Until that slice lands, generated ATL tops and inferred parent/child handoff
-wiring remain unavailable.
+The next selected ATL implementation slice is HDL promotion for that same
+resolved-child shape. The source and report schema stay unchanged; the next
+leaf must prove plain and strict CLI SystemVerilog generation contains the
+generated top, scheduled parent, resolved child, and selected internal
+trigger/event links. Multi-child ATL tops, data-route child wiring, CDC,
+payloads, ready/backpressure, route mux/storage, recursive actor networks, and
+permanent actor grouping remain unavailable.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

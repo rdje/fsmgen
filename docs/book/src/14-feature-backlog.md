@@ -836,22 +836,22 @@ shipped: missing imports, non-explicit import aliases, unknown aliases,
 and unknown exports still fail before scheduled `.fsm` emission. Resolved
 qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
-and now emit their child `.fsm` files without an ATL top and without handoff
-wiring. ATL top emission, HDL child wiring, interface binding inference,
-event fan-in, route mux/storage, CDC, recursive actor networks, and
+and now emit their child `.fsm` files. The first generated ATL top is shipped
+for one resolved child plus one trigger/event handoff pair. Broader generated
+ATL tops, HDL child wiring outside that selected pair, interface binding
+inference, event fan-in, route mux/storage, CDC, recursive actor networks, and
 ready/backpressure remain later leaves.
 The resolved-child fixture is now shipped as
-`isf/atl_resolved_child_pipeline.isf`. It proves the emitted-child boundary
+`isf/atl_resolved_child_pipeline.isf`. It proves the generated-top boundary
 with one same-source library actor export, one resolved child instance, one
-parent trigger handoff, one parent event wait, exactly two lower-result
-artifacts, strict schedule JSON parity, and no generated ATL top or inferred
-child handoff wiring.
-The next selected ATL implementation slice is generated top packaging for
-that resolved-child shape. It is not shipped yet; it is selected as one
-resolved child, one parent trigger handoff, one parent event wait, matching
-parent/child clock and reset, public-pin-to-parent wiring, trigger-handoff to
-child transaction start wiring, and child-event to parent event-handoff
-wiring.
+parent trigger handoff, one parent event wait, exactly three lower-result
+artifacts, strict schedule JSON parity, and generated parent/child handoff
+wiring through `atl_resolved_child_pipeline_top.fsm`.
+The next selected ATL implementation slice is HDL promotion for that
+resolved-child shape. It keeps the source and report schema unchanged and
+requires plain plus strict CLI SystemVerilog generation to contain the
+generated top, scheduled parent, resolved child, and selected internal
+trigger/event links.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

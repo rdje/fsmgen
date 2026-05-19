@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL generated top must be proven through HDL
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` selects the next slice as HDL
+  promotion for the first generated ATL top instead of widening the ATL source
+  surface.
+- The reason is reviewability: `.9.26` made the generated top visible as a
+  scheduled `.fsm` artifact and report entry; the next useful proof is that
+  normal CLI HDL generation carries that top, parent, child, and selected
+  handoff links into SystemVerilog.
+- The selected `.9.28` work should not invent new routing semantics. It should
+  only add the missing focused proof, and make the smallest entry-selection
+  fix if the CLI path does not already treat the materialized ATL top as the
+  HDL entry for this lower-result shape.
 ## 2026-05-19: ATL generated top is a wiring proof, not a router
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26` ships the first ATL generated top by
   consuming only handoffs that the parent scheduled `.fsm` already exposes:

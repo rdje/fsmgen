@@ -190,6 +190,10 @@ structure, resolved
 `actor_network.instances[]` metadata, one actor-transaction trigger handoff,
 one actor-event wait handoff, and `actor_network.generated_tops[]` metadata
 covered.
+The next selected ATL fixture coverage extension is plain plus strict CLI HDL
+generation for the same source, asserting the generated top, parent, child,
+and selected internal trigger/event links in SystemVerilog without widening
+the report schema.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON
@@ -561,6 +565,11 @@ HDL child wiring, data-route coupling, and inferred payload/ready/backpressure
 binding remain unshipped behavior. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.
+The next selected ATL public-contract slice is HDL coverage promotion for
+that same resolved-child generated-top fixture: no new report keys are
+selected, and the required proof is that plain and strict CLI SystemVerilog
+contains the generated top, scheduled parent, resolved child, and selected
+internal trigger/event links.
 The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields

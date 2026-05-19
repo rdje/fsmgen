@@ -152,6 +152,15 @@ reviewable through `isf/atl_resolved_child_pipeline.isf`: one resolved child
 actor artifact plus a generated ATL top that wires the existing parent
 trigger/event handoffs to that child.
 
+The next selected ATL implementation slice is HDL promotion for that same
+resolved-child generated-top fixture. The source shape and report schema stay
+unchanged; the slice must prove plain and strict CLI SystemVerilog generation
+contains the generated top, scheduled parent, resolved child, and selected
+internal trigger/event links. It must not widen ATL source syntax, infer
+additional interface bindings, add route mux/storage, or claim multi-child,
+CDC, payload, ready/backpressure, recursive-network, or permanent-group
+behavior.
+
 ## Shipped First Actor-Event Wait Subset
 
 The first behavior-bearing event wait subset is shipped:

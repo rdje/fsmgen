@@ -2,6 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-top HDL promotion selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27`.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`.
+- `.9.28` is selected to prove plain and strict CLI SystemVerilog generation
+  for `isf/atl_resolved_child_pipeline.isf`, including the generated top,
+  scheduled parent, resolved child, and selected internal trigger/event
+  handoff links.
+- No compiler behavior changed in the selection slice. No new report schema
+  is selected; `actor_network.generated_tops[]` remains the discovery surface.
+- Multi-child ATL tops, generated-child data routes, payloads,
+  ready/backpressure, CDC, route mux/storage, recursive actor networks, and
+  permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated top shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`.
 - The resolved-child fixture now emits the parent

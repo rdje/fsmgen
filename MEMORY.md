@@ -1,5 +1,25 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-top HDL promotion selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.27` as a doc-only selection
+  leaf.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.28`: promote generated-top HDL
+  reachability for `isf/atl_resolved_child_pipeline.isf`.
+- The selected `.9.28` source shape is unchanged from the shipped generated
+  top fixture: one resolved `worker` child, one parent
+  `(trigger worker.process)`, one parent `(await worker.done)`, and matching
+  parent/child clock and reset policy.
+- The selected verification must prove plain and strict CLI SystemVerilog
+  generation includes `atl_resolved_child_pipeline_top`,
+  `atl_resolved_child_pipeline`, and
+  `atl_resolved_child_pipeline__worker`, with top-level HDL links from parent
+  `worker_process_start` to child `process_start` and child `done` to parent
+  `worker_done`.
+- No new report schema is selected; `actor_network.generated_tops[]` remains
+  the discovery surface. Multi-child ATL tops, generated-child data routes,
+  payloads, ready/backpressure, CDC, route mux/storage, recursive actor
+  networks, and permanent actor grouping remain deferred.
 ## 2026-05-19: ATL generated top shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.26`.
 - The resolved-child fixture now lowers to three artifacts:
