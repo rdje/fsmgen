@@ -784,11 +784,11 @@ source-child trigger and one sink-child trigger. Extra route-child triggers
 fail closed until a later contract selects repeated activation, restart,
 pending-request merging, trigger fan-in/fan-out, or multi-activation
 scheduling.
-The next selected repeated-wait hardening keeps the same route sequence to
-one source-child event wait and one sink-child event wait. Extra route-child
-waits must stay fail-closed until a later contract selects event
-fan-in/fan-out, repeated wait sequencing, route-level wait storage, muxing,
-backpressure, or payload behavior.
+The shipped repeated-wait hardening keeps the same route sequence to one
+source-child event wait and one sink-child event wait. Extra route-child
+waits fail closed until a later contract selects event fan-in/fan-out,
+repeated wait sequencing, route-level wait storage, muxing, backpressure, or
+payload behavior.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

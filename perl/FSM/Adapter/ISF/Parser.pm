@@ -1247,6 +1247,13 @@ sub _finalize_selected_atl_trigger_batches {
             $event_waits,
             $transaction_triggers,
         );
+    confess "Error: actor '$actor->{actor_name}' ATL generated-child actor-to-actor data route requires exactly one event wait per source and sink child in the current subset; repeated waits remain deferred\n"
+        if _selected_atl_generated_top_actor_route_repeated_wait_shape(
+            $instances,
+            $data_movements,
+            $event_waits,
+            $transaction_triggers,
+        );
     confess "Error: actor '$actor->{actor_name}' ATL temporary trigger batch cannot be combined with scalar data movements in the current subset\n"
         if @{$data_movements || []};
 
@@ -1546,6 +1553,52 @@ sub _selected_atl_generated_top_actor_route_repeated_trigger_shape {
     }
 
     return @source_triggers != 1 || @sink_triggers != 1 ? 1 : 0;
+}
+
+sub _selected_atl_generated_top_actor_route_repeated_wait_shape {
+    my ($instances, $data_movements, $event_waits, $transaction_triggers) = @_;
+    my @instances = @{$instances || []};
+    my @movements = @{$data_movements || []};
+    my @waits = @{$event_waits || []};
+    my @triggers = @{$transaction_triggers || []};
+
+    return 0 unless @instances == 2
+        && @movements == 1
+        && @waits > 2
+        && @triggers == 2;
+
+    my $movement = $movements[0];
+    return 0 unless ($movement->{kind} // '') eq 'scalar_actor_handoff'
+        && ($movement->{source} // '') eq 'external_handoff'
+        && ($movement->{sink} // '') eq 'external_handoff';
+
+    my $source_instance = $movement->{source_instance};
+    my $sink_instance = $movement->{sink_instance};
+    return 0 unless defined($source_instance)
+        && defined($sink_instance)
+        && !ref($source_instance)
+        && !ref($sink_instance)
+        && length($source_instance)
+        && length($sink_instance)
+        && $source_instance ne $sink_instance;
+
+    my %declared = map { $_->{name} => 1 } @instances;
+    return 0 unless $declared{$source_instance} && $declared{$sink_instance};
+
+    my @source_triggers = grep { ($_->{instance} // '') eq $source_instance } @triggers;
+    my @sink_triggers = grep { ($_->{instance} // '') eq $sink_instance } @triggers;
+    return 0 unless @source_triggers == 1 && @sink_triggers == 1;
+
+    my @source_waits = grep { ($_->{instance} // '') eq $source_instance } @waits;
+    my @sink_waits = grep { ($_->{instance} // '') eq $sink_instance } @waits;
+    return 0 unless @source_waits >= 1 && @sink_waits >= 1;
+
+    for my $wait (@waits) {
+        my $instance = $wait->{instance} // '';
+        return 0 unless $instance eq $source_instance || $instance eq $sink_instance;
+    }
+
+    return @source_waits != 1 || @sink_waits != 1 ? 1 : 0;
 }
 
 sub _selected_atl_generated_top_actor_route_sequence {

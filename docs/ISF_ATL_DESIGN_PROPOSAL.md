@@ -1109,11 +1109,11 @@ route child. Focused coverage rejects extra source-child or sink-child
 triggers before any repeated activation, restart, pending-request merging,
 trigger fan-in/fan-out, or multi-activation scheduling behavior is claimed.
 
-The next selected route-boundary hardening keeps the same route to one event
-wait per route child. `.9.50` must add focused fail-closed coverage for
-extra source-child or sink-child event waits before any event fan-in/fan-out,
-repeated wait sequencing, child replay, route-level wait storage, muxing,
-ready/backpressure, or payload behavior is claimed.
+The shipped repeated-wait hardening keeps the same route to one event wait
+per route child. Focused coverage rejects extra source-child or sink-child
+event waits before any event fan-in/fan-out, repeated wait sequencing, child
+replay, route-level wait storage, muxing, ready/backpressure, or payload
+behavior is claimed.
 
 ## Fail-Closed Boundaries
 

@@ -880,6 +880,18 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ extra_reader_wait => 1 }),
+        qr/generated-child actor-to-actor data route requires exactly one event wait per source and sink child in the current subset; repeated waits remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the source child event is awaited twice',
+    );
+
+    lower_source_fails_like(
+        generated_child_actor_route_fixture({ extra_writer_wait => 1 }),
+        qr/generated-child actor-to-actor data route requires exactly one event wait per source and sink child in the current subset; repeated waits remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the sink child event is awaited twice',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ drive_before_reader_done => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the drive call precedes the source event wait',
@@ -1938,13 +1950,21 @@ CLAUSES
         my $extra_writer_trigger = $options->{extra_writer_trigger}
             ? "    (trigger writer.prime)\n"
             : '';
+        my $extra_reader_wait = $options->{extra_reader_wait}
+            ? "    (await reader.done)\n"
+            : '';
+        my $extra_writer_wait = $options->{extra_writer_wait}
+            ? "    (await writer.done)\n"
+            : '';
         $clauses = "    (trigger reader.capture)\n"
             . "    (await reader.done)\n"
+            . $extra_reader_wait
             . $extra_reader_trigger
             . "    (drive forward_payload)\n"
             . "    (trigger writer.emit)\n"
             . $extra_writer_trigger
-            . "    (await writer.done)\n";
+            . "    (await writer.done)\n"
+            . $extra_writer_wait;
     }
     my $writer_payload_width = $options->{writer_payload_width} || 1;
     my $reader_payload_width = $options->{reader_payload_width} || 1;

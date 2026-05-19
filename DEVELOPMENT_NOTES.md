@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL repeated route-child waits should diagnose before trigger-batch fallback
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.50` adds source-level diagnostics for
+  generated-child actor-to-actor route sequences that contain an extra source
+  or sink child event wait.
+- The parser now recognizes the route shape with repeated route-child waits
+  and reports that repeated waits remain deferred instead of falling through
+  to the broader temporary-trigger-batch plus data-movement diagnostic.
+- The lowerer keeps a defensive repeated-wait backstop for malformed
+  metadata, while preserving the repeated-trigger backstop from `.9.48`.
+  Event fan-in/fan-out, route-level wait storage, muxing, backpressure, and
+  payload behavior remain deferred.
+
 ## 2026-05-19: ATL child routes should not repeat route-child event waits yet
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.49` selects repeated event-wait
   hardening as the next generated-child route boundary.
