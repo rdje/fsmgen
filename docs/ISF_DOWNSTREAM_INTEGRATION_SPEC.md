@@ -1880,11 +1880,11 @@ remapping, route mux/storage, fan-in/fan-out, ready/backpressure, or payload
 protocols for that route.
 
 Normal downstream `.isf` source sees those generated-handoff collisions as
-parser-owned failures. The next selected hardening is a lowerer defensive
-backstop for malformed or mutated scheduler-facing actor metadata so
-generated-top wiring cannot reuse, suppress, or shadow those same handoff
-names if metadata bypasses normal parser finalization. This is a safety
-backstop only, not a new source or report feature.
+parser-owned failures. FSMGen also has a lowerer defensive backstop for
+malformed or mutated scheduler-facing actor metadata, so generated-top wiring
+cannot reuse, suppress, or shadow those same handoff names if metadata
+bypasses normal parser finalization. This is a safety backstop only, not a
+new source or report feature.
 
 Current generated-artifact contract: the parent scheduled `.fsm` may include
 the selected one-bit actor-event handoff input, selected one-cycle

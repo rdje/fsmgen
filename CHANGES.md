@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL lowerer collision backstop shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72`.
+- Added lowerer validation before two-child generated-top construction for
+  the shipped generated-child actor-to-actor data route.
+- Mutated scheduler-facing actor metadata now fails closed when a selected
+  generated trigger, event, data, or named-drive request handoff collides with
+  a parent interface port, declared actor-owned storage signal, or already
+  registered generated handoff.
+- Focused regression coverage parses a valid route and mutates the actor hash
+  after parser finalization, proving the lowerer backstop separately from the
+  parser-owned normal source diagnostics.
+- No ATL source syntax, report key, generated artifact shape,
+  generated-handoff remapping, route mux/storage, fan-in/fan-out, interface
+  remapping, CDC/reset remapping, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73` to select the next bounded widening
+  or hardening slice before code.
+
 ### R14 — ATL lowerer collision backstop selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71` as a doc-only selection
   leaf.

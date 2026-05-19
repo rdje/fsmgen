@@ -854,9 +854,9 @@ does not exist:
 - ATL generated-child actor-to-actor routes do not support generated-handoff
   remapping or reuse. Parent-declared collisions with selected trigger,
   event, data, or named-drive request handoff names fail closed with focused
-  parser-owned coverage for normal `.isf` source. The next selected
-  hardening is only a lowerer defensive backstop for malformed or mutated
-  scheduler-facing actor metadata; it is not a new source feature.
+  parser-owned coverage for normal `.isf` source and lowerer-owned coverage
+  for malformed or mutated scheduler-facing actor metadata. This is not a new
+  source feature.
 - Direct `(on ...)` activation-site `(params ...)` is unsupported; static
   specialization belongs to spawn, generated blocking `do`, and rule-trigger
   generated activation sites.

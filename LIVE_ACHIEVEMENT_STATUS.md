@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL lowerer collision backstop shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73`.
+- The lowerer now revalidates selected generated-child actor-to-actor route
+  trigger, event, data, and named-drive request handoff names before
+  generated-top wiring.
+- Mutated scheduler-facing metadata that collides with parent interface,
+  actor-owned storage, or another generated handoff fails closed with a
+  targeted lowerer diagnostic.
+- Normal source diagnostics remain parser-owned, and no source syntax,
+  report shape, generated artifact shape, remapping, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload protocol,
+  recursive actor network, or permanent actor grouping behavior changed.
+
 ## 2026-05-19: R14 — ATL lowerer collision backstop selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71`.
 - The active ATL frontier advances to

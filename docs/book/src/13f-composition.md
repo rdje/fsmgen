@@ -901,12 +901,12 @@ or suppress those ports. This does not select handoff remapping, route
 muxing, route storage, fan-in/fan-out, ready/backpressure, or payload
 behavior.
 
-The next selected hardening is a lowerer defensive backstop for the same
-generated-handoff names. Normal `.isf` source still fails in the parser, but
-programmatic or mutated actor metadata must also fail closed in lowering
-before generated-top wiring can reuse, suppress, or shadow those handoffs.
-This selection does not add syntax, remapping, muxing, storage,
-ready/backpressure, fan-in/fan-out, or payload behavior.
+The shipped lowerer defensive backstop protects the same generated-handoff
+names after parsing. Normal `.isf` source still fails in the parser, but
+programmatic or mutated actor metadata also fails closed in lowering before
+generated-top wiring can reuse, suppress, or shadow those handoffs. This does
+not add syntax, remapping, muxing, storage, ready/backpressure,
+fan-in/fan-out, or payload behavior.
 
 #### Generated-Child Route Terms
 
@@ -926,6 +926,12 @@ handoff names or map the generated handoffs onto existing parent signals.
 That is not shipped for this route. The current contract uses deterministic
 generated names and rejects collisions with authored parent interface or
 storage names.
+
+Collision handling has two layers. Parser-owned diagnostics reject normal
+`.isf` source that declares parent interface or storage names matching the
+generated handoffs. The lowerer repeats the safety check for
+scheduler-facing metadata and also rejects already registered generated
+handoff duplicates before generated-top wiring.
 
 Route muxing would let several possible sources feed the same sink endpoint,
 with a selector deciding which source is active in a given cycle. Route

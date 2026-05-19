@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL lowerer now owns a defensive handoff collision backstop
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72` adds lowerer validation for the
+  shipped generated-child actor-to-actor data route.
+- The normal source path is still parser-owned, but tests now parse a valid
+  route and mutate the actor hash afterward. That proves malformed
+  scheduler-facing metadata fails in lowering when selected trigger, event,
+  data, or named-drive request handoff names collide with parent interface
+  ports, actor-owned storage, or another generated handoff.
+- The backstop runs before two-child generated-top construction. It does not
+  add handoff remapping, route mux/storage, fan-in/fan-out,
+  ready/backpressure, payload protocols, or any new source syntax.
+
 ## 2026-05-19: ATL collision checks need a lowerer backstop
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71` selects a defensive lowerer
   backstop after the parser-owned generated-handoff collision hardening.

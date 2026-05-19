@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL lowerer collision backstop shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.72`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.73`.
+- The lowerer now revalidates selected generated-child actor-to-actor route
+  handoff names before generated-top wiring. Mutated scheduler-facing actor
+  metadata that collides with a parent interface port, declared actor-owned
+  storage signal, or already registered generated handoff fails closed with a
+  targeted lowerer generated-handoff collision diagnostic.
+- Normal `.isf` source diagnostics remain parser-owned from `.9.70`; no
+  source syntax, report key, generated artifact shape, remapping,
+  route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, payload protocol, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL lowerer collision backstop selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.71` as a doc-only selection
   leaf.

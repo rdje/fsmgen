@@ -1150,12 +1150,12 @@ handoffs fail closed before any generated-handoff remapping, route
 mux/storage, fan-in/fan-out, interface remapping, ready/backpressure, or
 payload semantics are claimed.
 
-The next selected hardening is a lowerer defensive backstop for the same
-handoff names. It covers malformed or mutated scheduler-facing actor
-metadata that bypasses normal parser finalization and must fail closed before
-generated-top wiring. It does not select a new authoring surface,
-generated-handoff remapping, route mux/storage, fan-in/fan-out,
-ready/backpressure, or payload semantics.
+The shipped lowerer defensive backstop covers the same handoff names for
+malformed or mutated scheduler-facing actor metadata that bypasses normal
+parser finalization. Those collisions now fail closed before generated-top
+wiring. This did not select a new authoring surface, generated-handoff
+remapping, route mux/storage, fan-in/fan-out, ready/backpressure, or payload
+semantics.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

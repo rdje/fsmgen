@@ -410,6 +410,13 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
             }
         }
 
+        _validate_atl_two_child_route_generated_handoffs(
+            $context,
+            $actor,
+            $movement,
+            \@child_specs,
+        );
+
         for my $child_spec (@child_specs) {
             push @children, _atl_generated_top_child_entry(
                 $context,
@@ -484,6 +491,67 @@ sub _select_atl_generated_top_instances($self, $actor, $child_irs) {
         clock                => $actor->{clock},
         reset                => ref($actor->{reset}) eq 'HASH' ? $actor->{reset}{name} : undef,
     });
+}
+
+sub _validate_atl_two_child_route_generated_handoffs($context, $actor, $movement, $child_specs) {
+    my %declared = _atl_parent_declared_signal_origins($actor);
+    my %generated;
+
+    my @handoffs;
+    if (ref($child_specs) eq 'ARRAY' && @$child_specs >= 2) {
+        push @handoffs,
+            [ 'source trigger handoff', $child_specs->[0][1]{signal} ],
+            [ 'source event handoff',   $child_specs->[0][2]{signal} ],
+            [ 'sink trigger handoff',   $child_specs->[1][1]{signal} ],
+            [ 'sink event handoff',     $child_specs->[1][2]{signal} ];
+    }
+
+    if (ref($movement) eq 'HASH') {
+        push @handoffs,
+            [ 'source data handoff', $movement->{source_signal} ],
+            [ 'sink data handoff',   $movement->{sink_signal} ];
+
+        my $drive = $movement->{drive};
+        push @handoffs, [ 'named-drive request handoff', "${drive}_start" ]
+            if defined($drive) && !ref($drive) && length($drive);
+    }
+
+    for my $handoff (@handoffs) {
+        my ($role, $signal) = @$handoff;
+        next unless defined($signal) && !ref($signal) && length($signal);
+
+        if (my $origin = $declared{$signal}) {
+            confess "$context two-child data route lowerer generated-handoff collision: $role signal '$signal' conflicts with $origin '$signal'\n";
+        }
+
+        if (my $prior_role = $generated{$signal}) {
+            confess "$context two-child data route lowerer generated-handoff collision: $role signal '$signal' conflicts with already registered generated handoff '$signal' from $prior_role\n";
+        }
+
+        $generated{$signal} = $role;
+    }
+}
+
+sub _atl_parent_declared_signal_origins($actor) {
+    my %declared;
+
+    for my $direction (qw(inputs outputs)) {
+        for my $port (@{($actor->{interface} || {})->{$direction} || []}) {
+            my $name = $port->{name};
+            next unless defined($name) && !ref($name) && length($name);
+            $declared{$name} //= 'parent interface port';
+        }
+    }
+
+    for my $entry (@{$actor->{storage} || []}) {
+        for my $signal (@{$entry->{signals} || []}) {
+            my $name = $signal->{name};
+            next unless defined($name) && !ref($name) && length($name);
+            $declared{$name} //= 'declared actor-owned storage signal';
+        }
+    }
+
+    return %declared;
 }
 
 sub _single_atl_entry_for_instance {

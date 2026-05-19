@@ -1039,6 +1039,45 @@ LIBRARY
         );
     }
 
+    my @lowerer_handoff_collision_cases = (
+        [ 'source data handoff',        'reader_payload' ],
+        [ 'sink data handoff',          'writer_payload' ],
+        [ 'source trigger handoff',     'reader_capture_start' ],
+        [ 'source event handoff',       'reader_done' ],
+        [ 'sink trigger handoff',       'writer_emit_start' ],
+        [ 'sink event handoff',         'writer_done' ],
+        [ 'named-drive request handoff', 'forward_payload_start' ],
+    );
+
+    for my $case (@lowerer_handoff_collision_cases) {
+        my ($role, $signal) = @$case;
+
+        my $interface_actor = parsed_generated_child_actor_route_actor();
+        add_mutated_parent_interface_signal($interface_actor, $signal);
+        lower_actor_fails_like(
+            $interface_actor,
+            lowerer_generated_handoff_collision_pattern($role, $signal, 'parent interface port'),
+            "generated-child actor-to-actor data route lowerer backstop rejects mutated parent interface collision for $role",
+        );
+
+        my $storage_actor = parsed_generated_child_actor_route_actor();
+        add_mutated_parent_storage_signal($storage_actor, $signal);
+        lower_actor_fails_like(
+            $storage_actor,
+            lowerer_generated_handoff_collision_pattern($role, $signal, 'declared actor-owned storage signal'),
+            "generated-child actor-to-actor data route lowerer backstop rejects mutated parent storage collision for $role",
+        );
+    }
+
+    my $duplicate_handoff_actor = parsed_generated_child_actor_route_actor();
+    $duplicate_handoff_actor->{actor_network}{data_movements}[0]{sink_signal} =
+        $duplicate_handoff_actor->{actor_network}{data_movements}[0]{source_signal};
+    lower_actor_fails_like(
+        $duplicate_handoff_actor,
+        qr/lowerer generated-handoff collision: sink data handoff signal 'reader_payload' conflicts with already registered generated handoff 'reader_payload' from source data handoff/,
+        'generated-child actor-to-actor data route lowerer backstop rejects duplicated generated handoff metadata',
+    );
+
     lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
@@ -1803,6 +1842,56 @@ sub lower_source_fails_like {
 
     ok(!$ok, "$label is rejected during lowering");
     like($@, $pattern, "$label diagnostic is targeted");
+}
+
+sub lower_actor_fails_like {
+    my ($actor, $pattern, $label) = @_;
+    my $ok = eval {
+        FSM::Scheduler::ISF->new()->lower($actor);
+        1;
+    };
+
+    ok(!$ok, "$label is rejected during lowering");
+    like($@, $pattern, "$label diagnostic is targeted");
+}
+
+sub parsed_generated_child_actor_route_actor {
+    return FSM::Adapter::ISF->new()->parse_source(
+        generated_child_actor_route_fixture(),
+        'atl-two-child-lowerer-backstop.isf',
+    );
+}
+
+sub add_mutated_parent_interface_signal {
+    my ($actor, $signal) = @_;
+    push @{$actor->{interface}{inputs}}, {
+        name  => $signal,
+        width => 1,
+    };
+}
+
+sub add_mutated_parent_storage_signal {
+    my ($actor, $signal) = @_;
+    push @{$actor->{storage}}, {
+        kind    => 'var',
+        name    => $signal,
+        width   => 1,
+        signals => [
+            {
+                name  => $signal,
+                width => 1,
+            },
+        ],
+    };
+}
+
+sub lowerer_generated_handoff_collision_pattern {
+    my ($role, $signal, $origin) = @_;
+    my $role_pattern = quotemeta($role);
+    my $signal_pattern = quotemeta($signal);
+    my $origin_pattern = quotemeta($origin);
+
+    return qr/lowerer generated-handoff collision: $role_pattern signal '$signal_pattern' conflicts with $origin_pattern '$signal_pattern'/;
 }
 
 sub generate_hdl {
