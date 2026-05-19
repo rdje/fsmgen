@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL generated-child route self-route hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46`.
+- `.9.46` is selected to keep the generated-child actor-to-actor route
+  between two distinct resolved children and add focused fail-closed coverage
+  for same-child source/sink route pairs.
+- Self-route, loopback, child-internal bypass, route mux/storage,
+  fan-in/fan-out, ready/backpressure, payload protocols, recursive actor
+  networks, and permanent actor grouping remain deferred.
+
 ## 2026-05-19: R14 — ATL generated-child route clock/reset hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`.
 - The active ATL frontier advances to

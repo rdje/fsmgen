@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child route self-route hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.46`.
+- `.9.46` will add focused fail-closed coverage for generated-child
+  actor-to-actor route pairs whose source and sink actor qualifiers name the
+  same resolved child instance.
+- No self-route, loopback, child-internal bypass, route mux/storage,
+  fan-in/fan-out, ready/backpressure, payload protocol, recursive actor
+  network, or permanent actor grouping behavior is selected.
+
 ## 2026-05-19: ATL generated-child route clock/reset hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45`.

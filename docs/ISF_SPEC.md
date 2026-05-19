@@ -904,6 +904,11 @@ clock/reset policy. Source or sink children whose clock or reset signature
 differs from the parent fail closed before FSMGen claims any CDC bridge,
 reset remapping, generated-top system-port remapping, route mux/storage,
 ready/backpressure, or payload protocol behavior.
+The next selected hardening keeps the same route between two distinct
+resolved children. A route pair whose source and sink actor qualifiers name
+the same child must fail closed before FSMGen claims self-route, loopback,
+child-internal bypass, storage, mux, fan-in/fan-out, ready/backpressure, or
+payload protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

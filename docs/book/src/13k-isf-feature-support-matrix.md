@@ -339,6 +339,10 @@ The shipped clock/reset hardening keeps that route same-domain only: source
 or sink child clock/reset mismatches fail closed before any CDC bridge, reset
 remap, generated-top system-port remap, storage, mux, or backpressure
 contract.
+The next selected hardening keeps that route between two distinct resolved
+children: same-child source/sink route pairs remain fail-closed before any
+self-route, loopback, child-internal bypass, storage, mux, fan-in/fan-out, or
+payload contract.
 
 ### Actor, Interface, Storage, And Timing
 

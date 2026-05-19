@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child routes should stay between distinct children
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.45` selects distinct source/sink child
+  hardening as the next generated-child route boundary.
+- A route pair such as `(reader.payload reader.payload)` would imply
+  self-route, loopback, or child-internal bypass semantics. None of those has
+  been selected for ATL generated-child wiring.
+- The next code leaf should therefore lock same-child source/sink route pairs
+  as diagnostics, while leaving mux, storage, fan-in/fan-out, and payload
+  policies deferred.
+
 ## 2026-05-19: ATL child-route clock/reset checks were already in the lowerer
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.44` added regression coverage for
   generated-child actor-to-actor source/sink clock and reset mismatches

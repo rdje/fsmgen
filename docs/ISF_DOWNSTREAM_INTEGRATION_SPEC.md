@@ -1819,6 +1819,12 @@ mismatches fail closed until FSMGen publishes an explicit CDC bridge or
 reset-remapping contract; downstream producers should not assume generated
 system-port remapping, async crossing logic, route storage, muxing, or
 backpressure insertion.
+The next selected hardening keeps the generated-child actor-to-actor route
+between two distinct resolved children. Downstream producers should not emit
+same-child source/sink route pairs or assume self-route, loopback,
+child-internal bypass, storage, muxing, fan-in/fan-out, backpressure, or
+payload insertion until FSMGen publishes an explicit contract for those
+behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

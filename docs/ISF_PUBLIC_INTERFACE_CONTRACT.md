@@ -222,6 +222,10 @@ The shipped clock/reset hardening likewise keeps the public surface
 unchanged: generated-child actor-to-actor routes remain same-domain
 generated-top wiring, and child clock/reset mismatches fail closed until a
 later contract explicitly adds CDC or reset-remap metadata.
+The next selected self-route hardening keeps the public surface unchanged:
+generated-child actor-to-actor routes remain between two distinct resolved
+children, and same-child source/sink route pairs stay fail-closed until a
+later contract explicitly adds loopback, storage, or bypass metadata.
 The compatibility CLI parity path is checked by
 [t/1229-isf-compatibility-cli-parity.t](../t/1229-isf-compatibility-cli-parity.t)
 so accepted ignored handshake compatibility source reaches CLI schedule JSON

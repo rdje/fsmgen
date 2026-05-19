@@ -1098,6 +1098,12 @@ sink children whose clock or reset signature differs from the parent; CDC
 bridge insertion, reset remapping, generated-top system-port remapping, route
 mux/storage, ready/backpressure, and payload protocols remain deferred.
 
+The next selected route-boundary hardening keeps the generated-child
+actor-to-actor route between two distinct resolved children. `.9.46` must add
+focused fail-closed coverage for same-child source/sink route pairs before
+any self-route, loopback, child-internal bypass, storage, mux, fan-in/fan-out,
+ready/backpressure, or payload behavior is claimed.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:
