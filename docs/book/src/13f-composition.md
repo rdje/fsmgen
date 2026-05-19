@@ -678,9 +678,11 @@ qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `type_resolution: "library_actor_export"` and deterministic reserved child
 names `<parent_actor>__<instance>` / `<parent_actor>__<instance>.fsm` under
 `actor_network.instances[]`. That subset still emits only the parent scheduled
-`.fsm`; generated child `.fsm` files, generated ATL tops, HDL child wiring,
-interface binding inference, and event/trigger/data handoff wiring remain
-later leaves.
+`.fsm`. The next selected implementation boundary is child-artifact emission
+only: emit those resolved child `.fsm` files while keeping the parent `.fsm`
+unchanged and still emitting no ATL top. Generated ATL tops, HDL child
+wiring, interface binding inference, and event/trigger/data handoff wiring
+remain later leaves.
 
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct

@@ -132,6 +132,15 @@ event wiring. Later leaves must add their generated artifact names, report
 keys, examples, and fail-closed diagnostics in the same slice that ships the
 behavior.
 
+The next selected generated-artifact boundary is child emission only. Resolved
+library-qualified ATL instances already report deterministic
+`<parent_actor>__<instance>.fsm` names; the next implementation leaf is scoped
+to emitting those child scheduled `.fsm` files while keeping the parent
+scheduled `.fsm` unchanged and still emitting no ATL top. Interface binding,
+trigger/event/data handoff wiring, route mux/storage, ready/backpressure, CDC,
+actor-event fan-in, recursive actor networks, and permanent actor grouping
+remain separate future selections.
+
 ## Shipped First Actor-Event Wait Subset
 
 The first behavior-bearing event wait subset is shipped:
@@ -431,8 +440,11 @@ the resolved `actor_network.instances[]` entry with
 `<parent_actor>__<instance>` and `<parent_actor>__<instance>.fsm`. The subset
 still emits only the parent scheduled `.fsm`: it does not emit a child
 `.fsm`, generate an ATL top, infer interface bindings, or wire
-trigger/event/data handoffs. `<parent_actor>_top.fsm` remains reserved for a
-later leaf that selects ATL generated-top composition.
+trigger/event/data handoffs. `.9.21` selects the next implementation boundary
+as child-artifact emission only: emit the reserved child `.fsm` files while
+still emitting no ATL top and still leaving handoffs external.
+`<parent_actor>_top.fsm` remains reserved for a later leaf that selects ATL
+generated-top composition.
 
 ## Endpoints
 

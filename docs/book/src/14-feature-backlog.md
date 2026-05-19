@@ -836,9 +836,10 @@ resolution behavior leaf is now shipped as metadata-only resolution: accepted
 qualified entries add `type_resolution`, `library`, `alias`, `export`,
 `module`, and `scheduled_fsm` to resolved `actor_network.instances[]` entries
 while still emitting only the parent scheduled `.fsm`. Generated child
-emission, ATL top emission, HDL child wiring, interface binding inference,
-event fan-in, route mux/storage, CDC, and ready/backpressure remain later
-leaves.
+emission is selected as the next boundary: emit the reserved child `.fsm`
+files without an ATL top and without handoff wiring. ATL top emission, HDL
+child wiring, interface binding inference, event fan-in, route mux/storage,
+CDC, recursive actor networks, and ready/backpressure remain later leaves.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

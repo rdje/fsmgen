@@ -542,7 +542,9 @@ metadata-only: `actor_network.instances[]` adds `type_resolution`, `library`,
 scheduled `.fsm`. The machine-readable contract advertises those keys through
 `schedule_report_actor_network_resolved_instance_keys` while preserving
 `schedule_report_actor_network_instance_keys` for unqualified metadata-only
-instances. Generated child emission, generated ATL tops, HDL child wiring,
+instances. The next selected ATL boundary is child-artifact emission only:
+resolved instances will emit their reserved child scheduled `.fsm` files
+without changing this report key family. Generated ATL tops, HDL child wiring,
 and inferred handoff binding remain unshipped behavior. Unqualified
 `(instance NAME of ACTOR_TYPE)` remains the current metadata-only external
 intent surface.

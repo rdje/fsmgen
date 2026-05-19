@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL child-artifact boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` before changing lowering
+  behavior again.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22` as the next bounded ATL
+  slice: emit resolved library-qualified ATL child scheduled `.fsm`
+  artifacts using the already reported `<parent_actor>__<instance>.fsm`
+  names.
+- The selected implementation must not emit a generated ATL top, must not
+  infer or wire child interfaces, and must keep existing trigger/event/data
+  handoffs as external parent handoff ports.
+- Existing `(use alias.actor as instance ...)` reusable-library generated-top
+  behavior remains separate from ATL `(instance ...)` type resolution.
+- No compiler behavior changed. The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`.
+
 ### R14 — ATL type-resolution metadata shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`.
 - Updated [perl/FSM/Adapter/ISF/Parser.pm](perl/FSM/Adapter/ISF/Parser.pm)

@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL child emission should precede ATL top wiring
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` selects child scheduled `.fsm`
+  emission as the next step after metadata-only type resolution.
+- This is deliberately narrower than generated ATL top packaging. Emitting a
+  resolved child artifact proves the type-resolution and module-name path
+  without inventing child interface binding, event routing, trigger
+  ready/backpressure, data-route storage, or top-level HDL composition.
+- The next implementation should reuse the existing reusable-library child IR
+  builder where possible, but it must keep ATL `(instance ...)` children out
+  of `library_uses[]` because `(use alias.actor as instance ...)` remains the
+  explicit bound-library composition surface.
+- Duplicate module/file basenames need fail-closed coverage before emission
+  so resolved ATL children do not collide with generated transaction children
+  or reusable-library uses.
 ## 2026-05-19: ATL type resolution is metadata before child emission
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20` deliberately resolves
   `(instance NAME of ALIAS.EXPORT)` only far enough to publish library/export

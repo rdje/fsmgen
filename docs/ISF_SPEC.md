@@ -225,7 +225,9 @@ qualified spelling now resolves to metadata only when the alias is an explicit
 import and the export exists. Accepted qualified instances add
 library/export provenance to their `actor_network.instances[]` report entry
 and reserve deterministic future child names while still emitting only the
-parent scheduled `.fsm`.
+parent scheduled `.fsm`. The next selected behavior-bearing boundary is
+child-artifact emission only: a future leaf will emit those reserved child
+scheduled `.fsm` files without an ATL top or child wiring.
 Accepted parser output preserves `name` as the public actor-shell
 `actor_name`; nested or otherwise non-scalar actor names are rejected before
 the parser returns an actor shell.
@@ -3022,9 +3024,8 @@ Existing `(use alias.actor as instance ...)` remains the shipped reusable
 library path with explicit bindings and generated-top behavior; ATL
 `(instance ...)` type resolution is a separate actor-network path. The
 qualified syntax now fails closed with targeted diagnostics for missing
-imports, non-explicit import aliases, unknown aliases, unknown actor exports,
-and known actor exports before any generated child `.fsm`, ATL top, or report
-schema change is claimed.
+imports, non-explicit import aliases, unknown aliases, and unknown actor
+exports. Known actor exports now resolve to metadata as described below.
 
 The shipped first resolution subset is intentionally report-only. It accepts
 resolved qualified entries and widens only those `actor_network.instances[]`
@@ -3035,7 +3036,9 @@ entries with `type_resolution`, `library`, `alias`, `export`, `module`, and
 `<parent_actor>__<instance>.fsm` for future child emission. The lowerer still
 emits no child `.fsm` and no ATL top in that subset, and trigger/event/data
 handoffs remain external parent handoffs until interface binding and HDL
-wiring are explicitly selected.
+wiring are explicitly selected. The next selected implementation boundary is
+to emit only those resolved child `.fsm` artifacts while still emitting no ATL
+top and still leaving trigger/event/data handoffs as external parent ports.
 
 The following remain fail-closed/deferred:
 

@@ -184,8 +184,12 @@ actor's `(imports (library ... as ALIAS))` clause and `EXPORT` is an actor
 export from that library. The first resolution leaf is metadata-only: it
 accepts resolved qualified instances, reports library/export provenance on
 `actor_network.instances[]`, and reserves future child artifact names while
-still emitting only the parent scheduled `.fsm`. Downstream producers must
-still treat generated child emission and ATL top emission as unshipped.
+still emitting only the parent scheduled `.fsm`. The next selected ATL
+implementation boundary is child-artifact emission only: resolved instances
+will emit their reserved child scheduled `.fsm` files while still emitting no
+generated ATL top and no child wiring. Until that leaf ships, downstream
+producers must still treat generated child emission and ATL top emission as
+unshipped.
 
 Imported files may also contain library roots:
 
@@ -1518,9 +1522,11 @@ groups, selected scalar handoffs, selected parent event/trigger handoffs, and
 the exact same-cycle temporary trigger batch. The static declarations record
 actor-network intent for downstream discovery; behavior-bearing leaves add
 only the explicitly documented parent handoff ports and scheduled states.
-FSMGen resolves child actor types only as report metadata; it does not
-instantiate ATL child scheduled `.fsm` artifacts, generate an ATL top, or wire
-child HDL behavior. The shipped source contract for ATL actor type resolution is explicit
+FSMGen currently resolves child actor types only as report metadata; it does
+not instantiate ATL child scheduled `.fsm` artifacts, generate an ATL top, or
+wire child HDL behavior. The selected next boundary will emit child `.fsm`
+artifacts only and will still leave generated ATL tops and HDL child wiring
+unshipped. The shipped source contract for ATL actor type resolution is explicit
 library qualification in `(instance NAME of ALIAS.EXPORT)`, not sibling actor
 roots and not implicit lookup of unqualified `ACTOR_TYPE` names. The shipped
 resolution subset reports only metadata for that qualified form:

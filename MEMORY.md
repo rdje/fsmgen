@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL child-artifact boundary selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.21` as a doc-only selection
+  leaf.
+- The next active ATL implementation leaf is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.22`: emit child scheduled `.fsm`
+  artifacts for resolved `(instance NAME of ALIAS.EXPORT)` static actor
+  instances using the already reported `<parent_actor>__<instance>.fsm`
+  names.
+- The selected `.9.22` slice must keep the parent scheduled `.fsm` unchanged,
+  emit no generated ATL top, and keep trigger/event/data handoffs as external
+  parent handoff ports.
+- `library_uses[]` remains reserved for `(use alias.actor as instance ...)`;
+  resolved ATL `(instance ...)` children continue to be discovered through
+  `actor_network.instances[]` metadata.
+- Generated ATL top packaging, HDL child wiring, inferred interface binding,
+  actor-event fan-in, route mux/storage, ready/backpressure, CDC, recursive
+  actor networks, and permanent actor grouping remain deferred.
 ## 2026-05-19: ATL type-resolution metadata shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.20`.
 - `(instance NAME of ALIAS.EXPORT)` now resolves when `ALIAS` is an explicit
