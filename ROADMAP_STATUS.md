@@ -2,11 +2,13 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
-- Recent project operations: `CI-PERL-532-REGRESSION-COMPAT` is closed. The
-  hosted `Perl FSM Regression` workflow remains on the repo-owned
-  `./bin/ci-regression` entrypoint, while the code now avoids the undeclared
-  `File::Slurp` runtime dependency and the Perl-5.32 signature warning that
-  polluted strict CLI stderr checks. The active R14 frontiers remain
+- Recent project operations: `CI-PERL-532-REGRESSION-COMPAT` and
+  `CI-FULL-REGRESSION-GREEN` are closed. The hosted `Perl FSM Regression`
+  workflow remains on the repo-owned `./bin/ci-regression` entrypoint; the
+  code avoids the undeclared `File::Slurp` runtime dependency and the
+  Perl-5.32 signature warning that polluted strict CLI stderr checks, and the
+  stale full-regression contracts exposed by the hosted rerun now pass the
+  local full gate. The active R14 frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37`.
 - Recent R14 downstream bug tree:

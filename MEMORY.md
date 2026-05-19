@@ -1,5 +1,22 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: Hosted full regression gate repaired
+- Completed `CI-FULL-REGRESSION-GREEN.1`.
+- The GitHub run from `0319406a` reached the shared full regression entrypoint
+  and exposed the same five stale regression contracts already reproduced
+  locally: `t/214`, `t/217`, `t/25`, `t/310`, and `t/44`.
+- The factorization fixpoint tests now feed a true compound
+  post-substitution expression into the second pass. That preserves the
+  shipped bare-intermediate skip policy while still testing second-pass
+  signature and repeated-signature behavior.
+- The legacy composition-scope error test now uses a genuinely malformed
+  nested wiring list; canonical `(source target)` wiring remains valid.
+- The SystemVerilog width/truthiness and relational-operator tests now allow
+  harmless parentheses around generated compare operands while still checking
+  the semantic contracts that matter.
+- The focused five-file cluster and `./bin/ci-regression full --no-book` pass
+  locally. The fix is ready for hosted GitHub validation after push.
+
 ## 2026-05-19: Hosted Perl 5.32 regression compatibility repaired
 - Completed `CI-PERL-532-REGRESSION-COMPAT.1`.
 - GitHub's `Perl FSM Regression` workflow was failing on pushes because the

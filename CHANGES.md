@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### Project operations — hosted full regression gate repaired
+- Completed `CI-FULL-REGRESSION-GREEN.1`.
+- Aligned five stale regression contracts with current shipped behavior
+  without changing production compiler semantics or weakening
+  `./bin/ci-regression`.
+- The factorization fixpoint tests now exercise second-pass signature and
+  repeated-signature behavior with a true compound post-substitution
+  expression, while preserving the existing bare-intermediate skip policy.
+- The legacy composition-scope error test now uses malformed nested wiring
+  instead of treating canonical `(source target)` wiring as invalid.
+- The SystemVerilog width/truthiness and relational-operator tests now allow
+  harmless generated parentheses around compare operands while still checking
+  the relevant semantic contracts.
+- The focused five-test cluster and `./bin/ci-regression full --no-book` pass
+  locally.
+
 ### Project operations — hosted Perl 5.32 regression compatibility
 - Completed `CI-PERL-532-REGRESSION-COMPAT.1`.
 - Removed the undeclared `File::Slurp` runtime dependency from

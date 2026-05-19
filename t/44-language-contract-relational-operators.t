@@ -150,7 +150,7 @@ FSM
     like($hdl, qr/\binput\s+wire\s+\[7:0\]\s+low\b/, 'generated HDL keeps low as a live input');
     like($hdl, qr/\binput\s+wire\s+\[7:0\]\s+mid\b/, 'generated HDL keeps mid as a live input');
     like($hdl, qr/\binput\s+wire\s+\[7:0\]\s+high\b/, 'generated HDL keeps high as a live input');
-    like($hdl, qr/\blow\s*<=\s*mid\s*&\s*mid\s*<=\s*high\b/, 'generated HDL preserves chained relational semantics in emitted logic');
+    like($hdl, qr/(?:\(\s*)?\blow\s*<=\s*mid\s*(?:\))?\s*&\s*(?:\(\s*)?\bmid\s*<=\s*high\b(?:\s*\))?/, 'generated HDL preserves chained relational semantics in emitted logic');
     like($hdl, qr/\ba\s*==\s*b\b/, 'generated HDL preserves equality chain comparisons');
     like($hdl, qr/\bhigh\s*>=\s*mid\b/, 'generated HDL preserves alias-based relational comparisons');
 };

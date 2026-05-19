@@ -33,10 +33,10 @@ subtest 'fixpoint pass support rebuilds the per-pass signature and collision con
     (OUT2 1)
   )
   (idle
-    (<(| A B)
+    (<(& (| A B) C)
       (OUT1 <= C)
     )
-    (<(| A B)
+    (<(& (| A B) D)
       (OUT2 <= D)
     )
   )
@@ -51,6 +51,8 @@ FSM
 
     my $primary_intermediate_signals = $pass_support->resolve_primary_intermediate_signals($prepared_backend->{ast_factorizer});
     ok($primary_intermediate_signals->{A_or_B}, 'pass support exposes the live primary intermediate-signal map from the prepared first-pass factorizer');
+
+    inject_second_pass_compound_expression($prepared_backend, 'A_or_B');
 
     my $second_pass_factorizer = FSM::HDL::ASTFactorization->new(
         min_usage_count => 2,
@@ -149,6 +151,16 @@ sub prepare_factorized_backend {
     $hdl_generator->{enable_graph_factorization_policy_support}->count_binary_logical_operation_occurrences();
     $hdl_generator->{backend_sv_global_factorization}->run_global_ast_factorization();
     return $hdl_generator;
+}
+
+sub inject_second_pass_compound_expression {
+    my ($prepared_backend, $intermediate_signal_name) = @_;
+
+    $prepared_backend->{state_enables}{__test_second_pass_compound} = FSM::AST::BinaryOp->new(
+        '&',
+        FSM::HDL::IntermediateSignalRef->new(signal_name => $intermediate_signal_name),
+        FSM::AST::SignalRef->new('C'),
+    );
 }
 
 sub write_file {

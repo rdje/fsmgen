@@ -2,6 +2,21 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: Project operations — hosted full regression gate repaired
+- Completed `CI-FULL-REGRESSION-GREEN.1`.
+- The stale five-test full-regression failures exposed after the Perl 5.32
+  compatibility fix are now aligned with shipped behavior.
+- Factorization fixpoint coverage now reaches second-pass signature behavior
+  through compound post-substitution expressions while keeping the
+  bare-intermediate skip policy intact.
+- Composition-scope coverage now rejects a malformed nested wiring structure
+  instead of rejecting the valid canonical `(source target)` form.
+- SystemVerilog assertion checks now allow harmless compare-operand
+  parentheses while preserving the semantic checks for width, truthiness, and
+  relational lowering.
+- The focused five-file cluster and `./bin/ci-regression full --no-book`
+  pass locally.
+
 ## 2026-05-19: R14 — ATL two-child generated top shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36`.
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.37` is the active ATL frontier and must

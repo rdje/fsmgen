@@ -73,7 +73,7 @@ write_file(
   )
   (?fsmc:child child_src)
   (?wiring:wiring
-    (foo bar)
+    ((foo bar) baz)
   )
 )
 
@@ -155,8 +155,8 @@ $nested_wiring_error = $@;
 
 like(
     $nested_wiring_error,
-    qr/nested '\?wiring' item.*only supports flat '\/source\/target\/' link tokens/s,
-    'parser rejects nested wiring structures explicitly',
+    qr/\?wiring' link form.*source endpoints currently accept scalar endpoint tokens, '\(cat \.\.\.\)'\/'\(concat \.\.\.\)' source expressions, or '\(repeat COUNT operand\)' source expressions/s,
+    'parser rejects malformed nested wiring structures explicitly',
 );
 
 my $unsupported_child_error = eval {

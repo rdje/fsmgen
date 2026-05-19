@@ -1,5 +1,24 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: Full-regression CI repair should preserve shipped behavior
+- `CI-FULL-REGRESSION-GREEN.1` repaired the full-regression gate by updating
+  stale regression expectations, not by changing shipped compiler behavior or
+  reducing CI coverage.
+- The two factorization fixpoint tests were still expecting bare
+  intermediate-backed expressions to be reconsidered by the second pass, but
+  existing coverage already documents the opposite policy: bare
+  intermediate-backed selectors are skipped. The corrected fixtures inject a
+  compound post-substitution expression so the tests still reach the
+  signature/collision paths they were meant to cover.
+- The legacy composition-scope error test used `(source target)` list wiring
+  as an invalid example even though that is now the canonical shipped
+  `?wiring` form. The replacement fixture keeps malformed nested structures
+  rejected without contradicting supported wiring syntax.
+- The SystemVerilog output checks now tolerate parentheses around relational
+  operands. Parenthesization is behavior-preserving, so the assertions focus
+  on the real contracts: no accidental widening, preserved slice use,
+  preserved truthiness lowering, and preserved relational operator lowering.
+
 ## 2026-05-19: Hosted CI should not depend on local CPAN drift
 - `CI-PERL-532-REGRESSION-COMPAT.1` fixes the public GitHub regression
   failure at the source instead of teaching the workflow to install an
