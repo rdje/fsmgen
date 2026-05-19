@@ -893,6 +893,13 @@ fail closed until a later contract selects interface remapping, activation
 fan-in, completion fan-out, boundary expressions, storage, muxing,
 backpressure, or payload behavior.
 
+The next selected hardening keeps generated parent handoff names exclusive.
+Parent-declared interface or storage signals that collide with the selected
+route's trigger, event, data, or named-drive request handoffs must fail
+closed before generated-top wiring can silently reuse or suppress those
+ports. This does not select handoff remapping, route muxing, route storage,
+fan-in/fan-out, ready/backpressure, or payload behavior.
+
 The current actor-event wait behavior is a narrow parent-handoff subset. One
 top-level transaction-body `(await actor.event)` may target a declared direct
 static actor instance. The wait may stand alone for a single static actor, or

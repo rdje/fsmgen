@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL generated handoff names must stay exclusive
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69` selects generated-handoff collision
+  hardening as the next generated-child actor-to-actor route boundary.
+- The selected route already relies on generated parent handoffs for child
+  triggers, child events, data movement, and the named-drive request. If an
+  authored parent interface or storage signal can share one of those names,
+  the generated top could silently reuse or suppress a generated port.
+- The next code leaf should add focused regression coverage for those
+  collision shapes while preserving the current parser-owned diagnostics and
+  leaving route mux/storage, fan-in/fan-out, handoff remapping,
+  ready/backpressure, and payload protocols deferred.
+
 ## 2026-05-19: ATL boundary roles are now parser-owned
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68` adds focused coverage for
   generated-child actor-to-actor route transactions whose simple start or

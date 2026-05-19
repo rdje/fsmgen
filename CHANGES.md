@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-handoff collision hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70` to harden
+  generated-handoff collision coverage around the shipped generated-child
+  actor-to-actor data route.
+- The next slice will prove that authored parent interface or storage names
+  cannot collide with the route's selected source/sink trigger, event, data,
+  or named-drive request handoffs before route mux/storage, fan-in/fan-out,
+  generated-handoff remapping, interface remapping, CDC/reset remapping,
+  ready/backpressure, payload protocol, recursive actor network, or
+  permanent actor grouping behavior is claimed.
+- No ATL source syntax, report key, generated artifact shape, or runtime
+  behavior is selected in this slice.
+
 ### R14 — ATL generated-child boundary-role hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
 - Added focused generated-child actor-to-actor data-route rejection coverage

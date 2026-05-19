@@ -851,6 +851,10 @@ does not exist:
 - Actor-level phase and stage metadata is report-only; it does not schedule
   actor-level runtime phases, barriers, generated `.fsm` states, or HDL
   behavior.
+- ATL generated-child actor-to-actor routes do not support generated-handoff
+  remapping or reuse. Parent-declared collisions with selected trigger,
+  event, data, or named-drive request handoff names remain fail-closed; the
+  next hardening slice only adds focused coverage for that boundary.
 - Direct `(on ...)` activation-site `(params ...)` is unsupported; static
   specialization belongs to spawn, generated blocking `do`, and rule-trigger
   generated activation sites.

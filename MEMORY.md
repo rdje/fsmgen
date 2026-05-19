@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-handoff collision hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69` as a doc-only selection
+  leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.70`.
+- `.9.70` will add focused fail-closed coverage for parent interface or
+  actor-owned storage declarations that collide with the generated-child
+  actor-to-actor route's trigger, event, data, or named-drive request
+  handoffs.
+- No route mux/storage, fan-in/fan-out, generated-handoff remapping,
+  interface remapping, CDC/reset remapping, ready/backpressure, payload
+  protocol, recursive actor network, or permanent actor grouping behavior is
+  selected.
+
 ## 2026-05-19: ATL generated-child boundary-role hardening shipped
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.68`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.69`.
