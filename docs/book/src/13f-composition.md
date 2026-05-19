@@ -803,7 +803,7 @@ wait after the sink child trigger. Sink-wait-before-trigger route sequences
 stay fail-closed until a later contract selects pre-trigger acknowledgement,
 sticky event sampling, event replay, route storage, muxing, backpressure, or
 payload behavior.
-The next selected source-event-wait ordering hardening keeps the source child
+The shipped source-event-wait ordering hardening keeps the source child
 event wait after the source child trigger. Source-wait-before-trigger route
 sequences stay fail-closed until a later contract selects pre-trigger
 acknowledgement, sticky event sampling, event replay, route storage, muxing,

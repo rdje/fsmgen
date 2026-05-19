@@ -1,6 +1,28 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL generated-child source-wait order hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58`.
+- Added focused generated-child actor-to-actor data-route rejection coverage
+  for a route sequence that waits on the source child event before triggering
+  the source child.
+- No production code change was required; the existing parser order
+  diagnostic already requires source trigger, source event wait, data drive
+  call, sink trigger, and sink event wait in that order.
+- Existing positive generated-child actor-to-actor, control-only two-child,
+  pin-ingress, pin-egress, parent-handoff data-route, repeated-trigger,
+  repeated-wait, same-parent-transaction, drive-before-source-wait,
+  source-wait-before-trigger, sink-before-drive, and
+  sink-wait-before-trigger fixtures remain in the focused regression set.
+- No ATL source syntax, report key, generated artifact shape, pre-trigger
+  acknowledgement, sticky event sampling, event replay, route continuation,
+  pending handoff storage, route mux/storage, CDC/reset remapping,
+  ready/backpressure, payload protocol, recursive actor network, or permanent
+  actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59` to select the next bounded widening
+  or hardening slice before code.
+
 ### R14 — ATL generated-child source-wait order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.57` as a doc-only selection
   leaf.

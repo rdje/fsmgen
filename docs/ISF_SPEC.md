@@ -934,11 +934,11 @@ wait after the sink child trigger. A wait on the sink child event before the
 sink trigger fails closed before FSMGen claims pre-trigger acknowledgement,
 sticky event sampling, event replay, route storage, muxing,
 ready/backpressure, or payload protocol behavior.
-The next selected source-event-wait ordering hardening keeps the source child
+The shipped source-event-wait ordering hardening keeps the source child
 event wait after the source child trigger. A wait on the source child event
-before the source trigger remains fail-closed before FSMGen claims
-pre-trigger acknowledgement, sticky event sampling, event replay, route
-storage, muxing, ready/backpressure, or payload protocol behavior.
+before the source trigger fails closed before FSMGen claims pre-trigger
+acknowledgement, sticky event sampling, event replay, route storage, muxing,
+ready/backpressure, or payload protocol behavior.
 
 A depth-1 element is not considered a FIFO for this library catalog; it is a
 register/holding element and would hide the real storage and concurrency

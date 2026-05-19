@@ -1854,12 +1854,12 @@ sink child event before triggering that child or assume pre-trigger
 acknowledgement, sticky event sampling, event replay, route storage, muxing,
 backpressure, or payload insertion until FSMGen publishes an explicit
 contract for those behaviors.
-The next selected source-event-wait ordering hardening keeps the source child
-event wait after the source child trigger. Downstream producers should not
-wait on the source child event before triggering that child or assume
-pre-trigger acknowledgement, sticky event sampling, event replay, route
-storage, muxing, backpressure, or payload insertion until FSMGen publishes an
-explicit contract for those behaviors.
+The shipped source-event-wait ordering hardening keeps the source child
+event wait after the source child trigger. Downstream producers must not wait
+on the source child event before triggering that child or assume pre-trigger
+acknowledgement, sticky event sampling, event replay, route storage, muxing,
+backpressure, or payload insertion until FSMGen publishes an explicit
+contract for those behaviors.
 
 ## 13. Scheduled `.fsm` Review Artifact
 

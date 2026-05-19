@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL generated-child source-wait order hardening shipped
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  sequences that wait on the source child event before triggering the source
+  child.
+- No production code change was required because the existing parser route
+  order diagnostic already enforces this boundary.
+- No pre-trigger acknowledgement, sticky event sampling, event replay, route
+  continuation, pending handoff storage, route mux/storage,
+  ready/backpressure, payload protocol, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL generated-child source-wait order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.57` as a doc-only selection
   leaf.

@@ -904,6 +904,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ source_wait_before_trigger => 1 }),
+        qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
+        'generated-child actor-to-actor data route fails closed when the source child event is awaited before the source trigger',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_trigger_before_drive => 1 }),
         qr/generated-child actor-to-actor data movement requires source trigger, source event wait, data drive call, sink trigger, and sink event wait in that order/,
         'generated-child actor-to-actor data route fails closed when the sink child is triggered before the drive call',
@@ -1963,6 +1969,14 @@ CLAUSES
     (trigger reader.capture)
     (drive forward_payload)
     (await reader.done)
+    (trigger writer.emit)
+    (await writer.done)
+CLAUSES
+        : $options->{source_wait_before_trigger}
+        ? <<'CLAUSES'
+    (await reader.done)
+    (trigger reader.capture)
+    (drive forward_payload)
     (trigger writer.emit)
     (await writer.done)
 CLAUSES

@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. The active R14
   frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -29,7 +29,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.58`.
+  activation `.111` and ATL actor-network orchestration `.9.59`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -371,8 +371,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   behavior is claimed. `.9.56` shipped that hardening as focused
   parser-owned coverage without production code changes. `.9.57` selected
   source-event-wait ordering hardening before pre-trigger acknowledgement,
-  sticky event sampling, or event replay behavior is claimed. The active ATL
-  frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.58`.
+  sticky event sampling, or event replay behavior is claimed. `.9.58`
+  shipped that hardening as focused parser-owned coverage without production
+  code changes. The active ATL frontier is now
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.59`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

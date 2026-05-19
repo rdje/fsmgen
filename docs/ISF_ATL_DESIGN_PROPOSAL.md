@@ -1133,12 +1133,12 @@ that waits on the sink child event before triggering that child, before any
 pre-trigger acknowledgement, sticky event sampling, event replay, route
 storage, muxing, ready/backpressure, or payload protocol behavior is claimed.
 
-The next selected source-event-wait ordering hardening keeps the source
-child event wait after the source child trigger. Focused coverage must reject
-a route sequence that waits on the source child event before triggering that
-child, before any pre-trigger acknowledgement, sticky event sampling, event
-replay, route storage, muxing, ready/backpressure, or payload protocol
-behavior is claimed.
+The shipped source-event-wait ordering hardening keeps the source child
+event wait after the source child trigger. Focused coverage rejects a route
+sequence that waits on the source child event before triggering that child,
+before any pre-trigger acknowledgement, sticky event sampling, event replay,
+route storage, muxing, ready/backpressure, or payload protocol behavior is
+claimed.
 
 ## Fail-Closed Boundaries
 
