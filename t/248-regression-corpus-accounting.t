@@ -117,6 +117,13 @@ for my $required_id (qw(
     contract.direct_size_expression_unsupported_operator
     contract.direct_size_expression_bad_arity
     contract.direct_lhs_deconstruct_width_mismatch
+    contract.unsupported_top_level_define_source
+    contract.unsupported_top_level_clock_directive
+    contract.generic_placeholder_selector
+    contract.generic_repeat_macro
+    contract.generic_placeholder_token
+    contract.bare_assignment_condition_suffix
+    contract.bare_transition_condition_suffix
     contract.direct_rhs_concat_width_mismatch
     contract.direct_aggregate_contract_mismatch
     contract.missing_rtl_metadata_sidecar
@@ -259,8 +266,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    32,
-    'catalog now records thirty-two explicit expected-failure entries',
+    39,
+    'catalog now records thirty-nine explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

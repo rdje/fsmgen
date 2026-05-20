@@ -2,11 +2,18 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1` selected the next
-  support-accounting slice. The active frontier is
-  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2`, which will promote already-focused
-  language-contract rejections into maintained expected-failure corpus entries.
-- Recent R12 corpus-widening selection:
+  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` widened the maintained
+  language-contract expected-failure corpus and closed the task tree. The next
+  PNT selection should choose a fresh active tree before any further source,
+  test, fixture, generated-artifact, or config changes.
+- Recent R12 corpus-widening completion:
+  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` added seven named
+  language-contract expected-failure corpus entries for unsupported top-level
+  source/directive forms, generic/template placeholder forms, and bare
+  condition suffix forms. Each entry carries stable diagnostic-code metadata
+  and is covered through pipeline/CLI behavior, check JSON, normalized
+  semantic JSON, manifest, corpus accounting, and docs.
+- Previous R12 corpus-widening selection:
   `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1` activated the task tree for adding
   bounded language-contract expected-failure corpus coverage before any
   fixture, catalog, diagnostic-code, or test changes.
@@ -6905,13 +6912,17 @@ Done:
   - [t/300-check-json-regression-corpus.t](t/300-check-json-regression-corpus.t) locks check-JSON classification across every current `expected_failure` entry, including exact stable code emission, matched support-accounting object data, no-HDL emission, and clean JSON output,
   - [t/301-check-json-supported-corpus.t](t/301-check-json-supported-corpus.t) locks check-JSON acceptance across every current `supported_smoke` entry and strict check-JSON acceptance across every current `strict_supported` entry, including decodable success JSON, empty diagnostics, resolved source path, checked module/top identity, matched success support-accounting data, and no-HDL emission,
   - and [t/297-capability-manifest.t](t/297-capability-manifest.t) locks the manifest's bounded check-JSON command metadata, support-accounting object flags, supported-smoke/strict-supported/expected-failure corpus-coverage flags, most-specific-pattern classifier policy, and resolved-path success match policy.
+- The maintained language-contract expected-failure corpus now also accounts
+  for already-focused rejection families beyond `+size` and deconstruct
+  width:
+  - [t/corpus/unsupported_top_level_define_source.fsm](t/corpus/unsupported_top_level_define_source.fsm) records an unsupported tagged `?define:` wrapper as an expected failure with `FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_SOURCE`,
+  - [t/corpus/unsupported_top_level_clock_directive.fsm](t/corpus/unsupported_top_level_clock_directive.fsm) records an unsupported top-level `+clock` directive as an expected failure with `FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_DIRECTIVE`,
+  - [t/corpus/generic_placeholder_selector.fsm](t/corpus/generic_placeholder_selector.fsm), [t/corpus/generic_repeat_macro.fsm](t/corpus/generic_repeat_macro.fsm), and [t/corpus/generic_placeholder_token.fsm](t/corpus/generic_placeholder_token.fsm) record legacy generic/template placeholder forms as expected failures with stable language-contract diagnostic codes,
+  - [t/corpus/bare_assignment_condition_suffix.fsm](t/corpus/bare_assignment_condition_suffix.fsm) and [t/corpus/bare_transition_condition_suffix.fsm](t/corpus/bare_transition_condition_suffix.fsm) record bare assignment and transition condition suffixes as expected failures with `FSMGEN_LANGUAGE_BARE_CONDITION_SUFFIX`,
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t), [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t), [t/300-check-json-regression-corpus.t](t/300-check-json-regression-corpus.t), and [t/304-normalized-semantic-json-regression-corpus.t](t/304-normalized-semantic-json-regression-corpus.t) cover the widened failure set through corpus accounting, pipeline/CLI behavior, check JSON, and normalized semantic JSON.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current direct-generation contract entries, and the current composition-contract rejection families.
-- Promote already-focused language-contract rejection families such as
-  unsupported top-level source/directive forms, generic/template placeholder
-  forms, and bare condition suffix forms into maintained expected-failure
-  corpus entries under `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2`.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive, generic/template placeholder, and bare condition suffix entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:

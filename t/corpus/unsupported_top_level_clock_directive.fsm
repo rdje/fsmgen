@@ -1,0 +1,7 @@
+(?fsm:unsupported_top_level_clock_directive
+  (+clock clk)
+  (+asreset rstn)
+  (-dt
+    (A = 1)
+  )
+)

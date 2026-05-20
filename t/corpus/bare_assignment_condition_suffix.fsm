@@ -1,0 +1,9 @@
+(?fsm:bare_assignment_condition_suffix
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (-dt
+    (A <= B start)
+  )
+)

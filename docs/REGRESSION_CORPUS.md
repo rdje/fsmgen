@@ -82,8 +82,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   API and the CLI, and that rejection is part of the supported contract. This
   bucket now includes malformed `+size` entries and non-positive resolved
   `+size` expression widths, plus unresolved or non-scalar symbols inside
-  `+size` expressions, divide/modulo-by-zero width arithmetic, and unsupported
-  width operators or malformed operator arity.
+  `+size` expressions, divide/modulo-by-zero width arithmetic, unsupported
+  width operators or malformed operator arity, unsupported top-level source or
+  directive forms, legacy generic/template placeholders, and bare condition
+  suffixes.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -503,6 +505,13 @@ manifest output while keeping the exact file lists widenable.
 | `contract.direct_size_expression_unsupported_operator` | [t/corpus/direct_size_expression_unsupported_operator.fsm](t/corpus/direct_size_expression_unsupported_operator.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_size_expression_bad_arity` | [t/corpus/direct_size_expression_bad_arity.fsm](t/corpus/direct_size_expression_bad_arity.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_lhs_deconstruct_width_mismatch` | [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](t/corpus/direct_lhs_deconstruct_width_mismatch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.unsupported_top_level_define_source` | [t/corpus/unsupported_top_level_define_source.fsm](t/corpus/unsupported_top_level_define_source.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.unsupported_top_level_clock_directive` | [t/corpus/unsupported_top_level_clock_directive.fsm](t/corpus/unsupported_top_level_clock_directive.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.generic_placeholder_selector` | [t/corpus/generic_placeholder_selector.fsm](t/corpus/generic_placeholder_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.generic_repeat_macro` | [t/corpus/generic_repeat_macro.fsm](t/corpus/generic_repeat_macro.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.generic_placeholder_token` | [t/corpus/generic_placeholder_token.fsm](t/corpus/generic_placeholder_token.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.bare_assignment_condition_suffix` | [t/corpus/bare_assignment_condition_suffix.fsm](t/corpus/bare_assignment_condition_suffix.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.bare_transition_condition_suffix` | [t/corpus/bare_transition_condition_suffix.fsm](t/corpus/bare_transition_condition_suffix.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
@@ -577,8 +586,10 @@ manifest output while keeping the exact file lists widenable.
 - [t/249-regression-corpus-classified-behavior.t](t/249-regression-corpus-classified-behavior.t)
   checks that the current `legacy_out_of_scope` entries and the current
   `expected_failure` entries actually behave according to their recorded
-  contract, including assignment-surface strict rejections and child-root
-  compatibility residue that depends on explicit search-path realization.
+  contract, including assignment-surface strict rejections, child-root
+  compatibility residue that depends on explicit search-path realization,
+  unsupported top-level source/directive language-contract failures,
+  generic/template placeholder failures, and bare condition suffix failures.
 
 ## Working rule
 

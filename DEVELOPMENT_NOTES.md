@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Language-contract corpus widening stays behavior-neutral
+- `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` deliberately promotes already
+  focused failures instead of changing parser behavior.
+- The seven new entries increase support-accounting truth for failures users
+  can hit in real `.fsm` sources: unsupported wrapper roots, unsupported
+  top-level directives, generic/template residues, and bare condition suffixes.
+- The stable diagnostic-code split is family-based rather than one-code-per
+  file where that would be noise: both assignment and transition bare suffix
+  fixtures share `FSMGEN_LANGUAGE_BARE_CONDITION_SUFFIX` because the contract
+  violation is the same authored shape.
+
 ## 2026-05-20: Widen R12 by promoting focused language-contract failures
 - `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1` selects a corpus/accounting slice,
   not a language-semantics change.

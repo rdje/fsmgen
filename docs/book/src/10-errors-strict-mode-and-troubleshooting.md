@@ -131,6 +131,13 @@ Expected-failure entries also carry stable `FSMGEN_*` diagnostic codes from
 long-lived docs: wording can improve, but the code is the machine identity for
 the failure family.
 
+The maintained language-contract expected-failure corpus now includes named
+entries for unsupported top-level source wrappers, unsupported top-level
+directives, legacy generic/template placeholders, and bare condition suffixes.
+Those entries are not only prose examples: pipeline, CLI, check JSON, and
+normalized semantic JSON regression tests all classify them through the same
+support-accounting path.
+
 It also keeps positive acceptance markers for canonical supported surfaces.
 
 Every `supported_smoke` entry must pass default pipeline and CLI generation.
@@ -153,6 +160,9 @@ corpus and the capability manifest:
 FSMGEN_STRICT_INFIX_ASSIGNMENT
 FSMGEN_STRICT_LEGACY_FSM_ROOT
 FSMGEN_LANGUAGE_BAD_SIZE_ENTRY
+FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_DIRECTIVE
+FSMGEN_LANGUAGE_GENERIC_PLACEHOLDER_TOKEN
+FSMGEN_LANGUAGE_BARE_CONDITION_SUFFIX
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 

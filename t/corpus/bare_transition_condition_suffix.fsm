@@ -1,0 +1,12 @@
+(?fsm:bare_transition_condition_suffix
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (idle
+    (-> busy full)
+  )
+  (busy
+    (A = 1)
+  )
+)

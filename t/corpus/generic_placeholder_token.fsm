@@ -1,0 +1,12 @@
+(?fsm:generic_placeholder_token
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (X 8)
+  )
+  (s0
+    (X = [DATAIN])
+  )
+)

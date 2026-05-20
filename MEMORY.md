@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 language-contract corpus widening shipped
+- Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` and closed the tree.
+- Added seven maintained expected-failure corpus entries for unsupported
+  top-level source/directive forms, generic/template placeholder forms, and
+  bare condition suffix forms.
+- Each new entry carries stable diagnostic-code metadata and is covered by
+  corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 language-contract corpus widening selected
 - Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for widening maintained expected-failure corpus

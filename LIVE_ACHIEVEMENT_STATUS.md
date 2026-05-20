@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — language-contract widening shipped
+- Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has seven additional language-contract
+  expected-failure entries for unsupported top-level source/directive forms,
+  generic/template placeholder forms, and bare condition suffix forms.
+- Stable diagnostic codes, corpus behavior checks, check JSON, normalized
+  semantic JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — language-contract widening selected
 - Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

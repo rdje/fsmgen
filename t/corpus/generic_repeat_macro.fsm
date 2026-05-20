@@ -1,0 +1,14 @@
+(?fsm:generic_repeat_macro
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (X 1)
+  )
+  (s0
+    (?repeat:[MAX_COUNT]
+      (X = 1)
+    )
+  )
+)

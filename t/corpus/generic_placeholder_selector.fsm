@@ -1,0 +1,14 @@
+(?fsm:generic_placeholder_selector
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (X 1)
+  )
+  (s0
+    (?[READ]
+      (=1 (X = 1))
+    )
+  )
+)

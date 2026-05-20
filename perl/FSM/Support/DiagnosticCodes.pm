@@ -121,6 +121,42 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A deconstructing LHS did not match the RHS width.',
     },
+    FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_SOURCE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A top-level source root is outside the active source contract.',
+    },
+    FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_DIRECTIVE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A top-level directive is outside the active source contract.',
+    },
+    FSMGEN_LANGUAGE_GENERIC_PLACEHOLDER_SELECTOR => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A legacy generic/template placeholder selector is unsupported.',
+    },
+    FSMGEN_LANGUAGE_GENERIC_REPEAT_ACTION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A legacy generic/template repeat action is unsupported.',
+    },
+    FSMGEN_LANGUAGE_GENERIC_PLACEHOLDER_TOKEN => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A legacy generic/template placeholder token is unsupported.',
+    },
+    FSMGEN_LANGUAGE_BARE_CONDITION_SUFFIX => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A bare condition suffix was used where an explicit guard is required.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

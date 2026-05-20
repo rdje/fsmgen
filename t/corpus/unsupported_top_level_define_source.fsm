@@ -1,0 +1,14 @@
+(?define:legacy_template
+  (?fsm:inner_smoke
+    (+system
+      (clock clk)
+      (sreset reset)
+    )
+    (+size
+      (A 1)
+    )
+    (-dt
+      (A = 1)
+    )
+  )
+)
