@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Inline-modifier corpus widening keeps modifier syntax closed
+- `R12-INLINE-MODIFIER-CORPUS-WIDENING.1` selects inline compound modifier
+  diagnostics for support-accounting promotion.
+- The implementation should promote existing malformed-payload and
+  duplicate-modifier rejections into stable-code-backed expected-failure
+  entries without changing the supported delta-one modifier behavior.
+
 ## 2026-05-20: Test-selector support accounting avoids ambiguous matching
 - `R12-TEST-SELECTOR-CORPUS-WIDENING.2` promotes only unambiguously
   classifiable test-selector diagnostics into the maintained corpus.

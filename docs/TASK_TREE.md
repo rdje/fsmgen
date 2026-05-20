@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-INLINE-MODIFIER-CORPUS-WIDENING` | `active` | `R12` | `R12-INLINE-MODIFIER-CORPUS-WIDENING.2` | [docs/tasks/R12-INLINE-MODIFIER-CORPUS-WIDENING.md](docs/tasks/R12-INLINE-MODIFIER-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
