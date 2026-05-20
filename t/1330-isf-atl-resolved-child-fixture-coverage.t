@@ -326,6 +326,36 @@ subtest 'ATL two-child data fixture lowers a scalar generated-child actor-to-act
     assert_two_child_data_report_shape($report);
 };
 
+subtest 'ATL two-child data route stays valid when the route drive precedes actor instances' => sub {
+    my ($files, $report) = lower_source(
+        generated_child_actor_route_fixture({ drive_before_instances => 1 }),
+        'atl_two_child_data_pipeline.isf',
+    );
+
+    is_deeply(
+        sorted([keys %$files]),
+        [
+            'atl_two_child_data_pipeline.fsm',
+            'atl_two_child_data_pipeline__reader.fsm',
+            'atl_two_child_data_pipeline__writer.fsm',
+            'atl_two_child_data_pipeline_top.fsm',
+        ],
+        'drive-before-instance route lowering emits the same parent, child, and top FSM artifacts',
+    );
+
+    my $parent = $files->{'atl_two_child_data_pipeline.fsm'};
+    like($parent, qr/\(-forward_payload\s+\(<- \(writer_payload> reader_payload\) <forward_payload_start\)\s+\)/s,
+        'drive-before-instance route keeps the same scalar parent data handoff');
+
+    my $top = $files->{'atl_two_child_data_pipeline_top.fsm'};
+    like($top, qr/\(reader\.payload atl_two_child_data_pipeline\.reader_payload\)/,
+        'drive-before-instance route wires reader payload to the parent source handoff');
+    like($top, qr/\(atl_two_child_data_pipeline\.writer_payload writer\.payload\)/,
+        'drive-before-instance route wires the parent sink handoff to writer payload');
+
+    assert_two_child_data_report_shape($report);
+};
+
 subtest 'ATL resolved-child fixture strict schedule JSON matches the in-process report' => sub {
     my (undef, $in_process_report) = lower_atl_fixture();
     my ($success, $stdout, $stderr) = run_cli(
@@ -1146,6 +1176,18 @@ sub lower_atl_fixture {
     $source_file //= $isf_file;
 
     my $actor = FSM::Adapter::ISF->new()->parse_file($source_file);
+    my $scheduler = FSM::Scheduler::ISF->new();
+    my $result = $scheduler->lower($actor);
+    my $report = decode_json($scheduler->report($actor));
+
+    return ($result->{files}, $report);
+}
+
+sub lower_source {
+    my ($source, $source_label) = @_;
+    $source_label //= 'inline.isf';
+
+    my $actor = FSM::Adapter::ISF->new()->parse_source($source, $source_label);
     my $scheduler = FSM::Scheduler::ISF->new();
     my $result = $scheduler->lower($actor);
     my $report = decode_json($scheduler->report($actor));

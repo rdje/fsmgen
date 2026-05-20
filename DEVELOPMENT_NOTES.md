@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: Accepted ATL route source order is now explicit
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97` adds the positive companion to the
+  `.9.95` malformed-sink source-order hardening.
+- The accepted generated-child actor-to-actor route now has coverage proving
+  that route-drive placement before direct actor instances still resolves
+  against the final actor network and emits the same generated top/data
+  movement contract.
+- This prevents future parser refactors from accidentally making the route
+  source-order sensitive.
+
 ## 2026-05-19: Accepted ATL route order needs explicit coverage too
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96` selects positive coverage for
   drive-before-instance source order.

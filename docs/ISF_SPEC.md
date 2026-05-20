@@ -4086,6 +4086,11 @@ source-order independent: a drive body written before the matching
 expressions until actor instances are known, while ordinary malformed local
 drive targets such as `((out) 1)` keep the existing generic scalar-head
 diagnostic.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.97` proves the accepted scalar route is
+source-order independent as well: the `forward_payload` drive may appear
+before the `reader` and `writer` instances and still resolves to the same
+one-bit generated-child actor-to-actor route, generated ATL top handoffs, and
+`actor_network.data_movements[]` report entry.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL accepted-route source-order coverage completed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+- The accepted generated-child actor-to-actor route now has positive coverage
+  for drive-before-instance source order.
+- The book, downstream handoff, spec, design proposal, backlog, and audit now
+  document that accepted-route source-order guarantee.
+
 ## 2026-05-19: R14 — ATL accepted-route source-order coverage selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96`.
 - The active ATL frontier advances to

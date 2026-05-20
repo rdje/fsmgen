@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. The active R14
   frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -29,7 +29,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.97`.
+  activation `.111` and ATL actor-network orchestration `.9.98`.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -470,8 +470,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   the drive-before-instance route shape gets the targeted ATL diagnostic, and
   ordinary malformed local drive targets keep the generic scalar-head
   diagnostic. `.9.96` selected positive coverage for the accepted scalar
-  generated-child route under drive-before-instance source order. The active
-  ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
+  generated-child route under drive-before-instance source order. `.9.97`
+  completed that coverage and synchronized the book/handoff/spec/design/backlog
+  wording around accepted-route source-order independence. The active ATL
+  frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

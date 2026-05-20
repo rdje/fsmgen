@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL accepted-route source-order coverage completed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
+- Added positive generated-child actor-to-actor route coverage for the
+  accepted scalar route when the named route drive is authored before the
+  direct static actor instances.
+- The coverage verifies the same scheduled parent, resolved children,
+  generated ATL top, scalar route handoffs, and `actor_network.data_movements[]`
+  report shape as the instance-before-drive fixture.
+- Synchronized the mdBook composition chapter, feature-support matrix,
+  downstream handoff, ISF spec, ATL design proposal, feature backlog, and
+  audit so the accepted-route source-order guarantee is documented.
+- No source syntax, public report key, generated artifact family, runtime
+  behavior, expression movement, payload protocol, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor
+  network, or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+
 ### R14 — ATL accepted-route source-order coverage selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96` as a doc-only selection
   leaf.

@@ -136,6 +136,7 @@ my @required_examples = (
     '((+ writer.payload 1) reader.payload)',
     'source-order independent',
     '((out) 1)',
+    'placing the named `forward_payload` route drive before',
     './bin/fsmgen -l sv isf/apb_requester.isf',
     '"schema_version": 1',
     '"actor_params"',
@@ -430,6 +431,7 @@ my @required_downstream_atl_markers = (
     'sink expression such as `(+ writer.payload 1)`',
     'source-order independent',
     '((out) 1)',
+    'accepted scalar route is also source-order independent',
     'selected one scalar two-child route',
     'broader actor-to-actor generated-child',
 );
@@ -469,6 +471,7 @@ my @required_route_term_markers = (
     'sink expression such as `(+ writer.payload 1)`',
     'source-order independent',
     '((out) 1)',
+    'accepted scalar route is source-order independent',
     'Generated handoffs are',
     'Handoff remapping would',
     'Route muxing would',

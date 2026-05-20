@@ -971,6 +971,12 @@ the actor instance set is known, then reports the same sink-expression
 diagnostic. Ordinary malformed local drive targets such as `((out) 1)` keep
 the generic drive-body scalar-head diagnostic.
 
+The accepted scalar route is source-order independent too. The named
+`forward_payload` drive may appear before or after the `reader` and `writer`
+instance declarations; after the full actor body is parsed, FSMGen resolves
+the same `reader.payload` to `writer.payload` route, emits the same generated
+top handoffs, and records the same `actor_network.data_movements[]` metadata.
+
 ##### Generated Handoffs
 
 Generated handoffs are the parent-visible signals that FSMGen creates for

@@ -1232,6 +1232,10 @@ endpoint-looking malformed route sinks: drive-before-instance source order
 defers that malformed ATL-looking sink until actor instances are known, while
 non-ATL malformed local drive targets such as `((out) 1)` keep the generic
 drive-body scalar-head diagnostic.
+The accepted scalar route is source-order independent too: placing
+`forward_payload` before the `reader` and `writer` instance declarations still
+resolves to the same generated-child route, generated ATL top handoffs, and
+`actor_network.data_movements[]` metadata after the full actor body is parsed.
 
 ## Fail-Closed Boundaries
 

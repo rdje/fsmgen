@@ -1949,6 +1949,12 @@ For downstream implementation, the current route terms mean:
   expression until the full actor instance set is known, then reports the same
   ATL sink-expression diagnostic. Ordinary malformed local drive targets such
   as `((out) 1)` keep the generic drive-body scalar-head diagnostic.
+- The accepted scalar route is also source-order independent. A named route
+  drive such as `forward_payload` may appear before or after the relevant
+  direct static actor instances; FSMGen resolves the same scalar
+  `reader.payload` to `writer.payload` route after the full actor body is
+  parsed, emits the same generated ATL top handoffs, and reports the same
+  `actor_network.data_movements[]` metadata.
 
 ### 12.5.6. Generated Child Artifacts And Top Data Routes
 

@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL accepted-route source-order coverage completed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+- Focused positive coverage now proves the accepted scalar generated-child
+  actor-to-actor route remains accepted when `forward_payload` is declared
+  before `reader` and `writer`.
+- The emitted parent, child artifacts, generated ATL top, scalar route
+  handoffs, and `actor_network.data_movements[]` report shape match the
+  instance-before-drive fixture.
+- The mdBook, downstream handoff, ISF spec, ATL design proposal, backlog, and
+  audit now state that the accepted scalar route is source-order independent.
+- No source syntax, report key, generated artifact family, runtime behavior,
+  expression movement, route mux/storage, fan-in/fan-out, ready/backpressure,
+  payload protocol, CDC/reset remapping, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL accepted-route source-order coverage selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96` as a selection leaf.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.

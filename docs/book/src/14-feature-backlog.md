@@ -1185,6 +1185,10 @@ That sink-expression diagnostic is source-order independent for
 endpoint-looking malformed route sinks, while ordinary malformed local drive
 targets such as `((out) 1)` keep the generic drive-body scalar-head
 diagnostic.
+The accepted scalar generated-child route is source-order independent too:
+placing the named route drive before the direct static actor instances still
+resolves to the same generated ATL top handoffs and
+`actor_network.data_movements[]` metadata.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
