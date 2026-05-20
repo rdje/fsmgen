@@ -1,0 +1,6 @@
+(?fsm:unsupported_top_level_infix_init_form
+  (tester_reset := 1)
+  (-dt
+    (A = 1)
+  )
+)

@@ -133,6 +133,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A top-level directive is outside the active source contract.',
     },
+    FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_FORM => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A top-level FSM body form is outside the active source contract.',
+    },
     FSMGEN_LANGUAGE_GENERIC_PLACEHOLDER_SELECTOR => {
         severity => 'error',
         stability => 'stable',

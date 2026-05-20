@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — top-level form widening shipped
+- Completed `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` and closed the task tree.
+- Added two named unsupported top-level form expected-failure fixtures and
+  catalog entries for future-looking infix init forms and malformed bare
+  scalar body forms.
+- Added stable diagnostic-code metadata for the new expected-failure family
+  and widened corpus accounting, manifest, check JSON, normalized semantic
+  JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — top-level form widening selected
 - Completed `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure corpus

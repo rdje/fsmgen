@@ -1,0 +1,6 @@
+(?fsm:unsupported_top_level_bare_scalar_form
+  (BROKEN 1)
+  (-dt
+    (A = 1)
+  )
+)

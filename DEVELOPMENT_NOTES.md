@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Top-level form support accounting separates body residue from roots
+- `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` promotes existing unsupported
+  top-level body-form diagnostics without changing source-root handling.
+- The stable code intentionally covers unsupported body forms inside a
+  supported `?fsm:name` source root, while existing root/directive codes keep
+  their separate source-root and top-level directive meanings.
+
 ## 2026-05-20: Top-level form corpus widening stays body-shape-local
 - `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1` selects unsupported top-level body
   form diagnostics for support-accounting promotion.

@@ -83,12 +83,12 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   bucket now includes malformed `+size` entries and non-positive resolved
   `+size` expression widths, plus unresolved or non-scalar symbols inside
   `+size` expressions, divide/modulo-by-zero width arithmetic, unsupported
-  width operators or malformed operator arity, unsupported top-level source or
-  directive forms, legacy generic/template placeholders, and bare condition
-  suffixes. It also covers malformed top-level source roots, malformed action
-  and guard forms, malformed test branches, malformed test selectors, and
-  malformed `+system` sections such as incomplete sections, duplicate
-  clock/reset entries, malformed entry structures, invalid clock/reset
+  width operators or malformed operator arity, unsupported top-level source,
+  directive, or body forms, legacy generic/template placeholders, and bare
+  condition suffixes. It also covers malformed top-level source roots,
+  malformed action and guard forms, malformed test branches, malformed test
+  selectors, and malformed `+system` sections such as incomplete sections,
+  duplicate clock/reset entries, malformed entry structures, invalid clock/reset
   identifiers, malformed direct/composition source names, malformed structured
   `?fsm` root bodies and body items, malformed state or standalone-DT names,
   malformed empty state/standalone-DT bodies, malformed transition targets,
@@ -532,6 +532,8 @@ manifest output while keeping the exact file lists widenable.
 | `contract.direct_lhs_deconstruct_width_mismatch` | [t/corpus/direct_lhs_deconstruct_width_mismatch.fsm](t/corpus/direct_lhs_deconstruct_width_mismatch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_define_source` | [t/corpus/unsupported_top_level_define_source.fsm](t/corpus/unsupported_top_level_define_source.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unsupported_top_level_clock_directive` | [t/corpus/unsupported_top_level_clock_directive.fsm](t/corpus/unsupported_top_level_clock_directive.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.unsupported_top_level_infix_init_form` | [t/corpus/unsupported_top_level_infix_init_form.fsm](t/corpus/unsupported_top_level_infix_init_form.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.unsupported_top_level_bare_scalar_form` | [t/corpus/unsupported_top_level_bare_scalar_form.fsm](t/corpus/unsupported_top_level_bare_scalar_form.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.generic_placeholder_selector` | [t/corpus/generic_placeholder_selector.fsm](t/corpus/generic_placeholder_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.generic_repeat_macro` | [t/corpus/generic_repeat_macro.fsm](t/corpus/generic_repeat_macro.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.generic_placeholder_token` | [t/corpus/generic_placeholder_token.fsm](t/corpus/generic_placeholder_token.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

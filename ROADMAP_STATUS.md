@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1` selected a fresh task tree for
-  promoting already-focused unsupported top-level form diagnostics into the
-  maintained expected-failure corpus. The next implementation leaf is
-  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2`.
+  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` widened the maintained
+  expected-failure corpus for unsupported top-level form diagnostics. The task
+  tree is closed; the next PNT step should select the next roadmap-aligned
+  support-accounting or stabilization slice before code changes.
+- Recent R12 top-level form corpus-widening completion:
+  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` added two named expected-failure
+  corpus entries for unsupported top-level infix init and malformed bare
+  scalar body forms. Each entry carries stable diagnostic-code metadata and is
+  covered through pipeline/CLI behavior, check JSON, normalized semantic JSON,
+  manifest, corpus accounting, and docs.
 - Recent R12 top-level form corpus-widening selection:
   `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting unsupported top-level infix init and
@@ -4489,8 +4495,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R12`:
   [docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md](docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md)
-  is active. `.1` selects the unsupported top-level form support-accounting
-  slice before implementation; `.2` will promote the already-focused
+  is closed. `.1` selected the unsupported top-level form support-accounting
+  slice before implementation; `.2` promoted the already-focused
   future-looking infix init and malformed bare scalar body-form failures into
   maintained expected-failure corpus entries.
 - Closed architecture backlog context:
@@ -7229,9 +7235,14 @@ Done:
   - [t/corpus/delayed_pulse_lhs_range.fsm](t/corpus/delayed_pulse_lhs_range.fsm) records range-sliced delayed-pulse targets as an expected failure with `FSMGEN_LANGUAGE_DELAYED_PULSE_LHS_TARGET`,
   - [t/corpus/delayed_pulse_lhs_pair_index.fsm](t/corpus/delayed_pulse_lhs_pair_index.fsm) records pair-form indexed delayed-pulse targets as an expected failure with `FSMGEN_LANGUAGE_DELAYED_PULSE_LHS_TARGET`,
   - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
+- The maintained unsupported top-level body-form expected-failure corpus now
+  accounts for already-focused direct FSM body failures:
+  - [t/corpus/unsupported_top_level_infix_init_form.fsm](t/corpus/unsupported_top_level_infix_init_form.fsm) records future-looking top-level infix init forms as an expected failure with `FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_FORM`,
+  - [t/corpus/unsupported_top_level_bare_scalar_form.fsm](t/corpus/unsupported_top_level_bare_scalar_form.fsm) records malformed bare scalar top-level body forms as an expected failure with `FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_FORM`,
+  - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive, generic/template placeholder, bare condition suffix, malformed source/body/test-form and legacy `+fsm` body entries, malformed delayed-pulse RHS/target entries, malformed system-section entries, current symbol-definition section/entry/value/token and parameter-dependency/expression entries, current direct-generation contract entries, and the current composition-contract rejection families.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive/body-form, generic/template placeholder, bare condition suffix, malformed source/body/test-form and legacy `+fsm` body entries, malformed delayed-pulse RHS/target entries, malformed system-section entries, current symbol-definition section/entry/value/token and parameter-dependency/expression entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:

@@ -133,9 +133,10 @@ the failure family.
 
 The maintained language-contract expected-failure corpus now includes named
 entries for unsupported top-level source wrappers, unsupported top-level
-directives, legacy generic/template placeholders, and bare condition suffixes.
-It also includes malformed top-level source roots, malformed action/guard
-forms, malformed test branches, malformed bare test selectors, and malformed
+directives, unsupported top-level FSM body forms, legacy generic/template
+placeholders, and bare condition suffixes. It also includes malformed
+top-level source roots, malformed action/guard forms, malformed test branches,
+malformed bare test selectors, and malformed
 `+system` sections. It also carries source-shape and name/reference boundary
 entries for malformed direct `?fsm:name` roots, empty structured `?fsm` roots
 such as `(?fsm:empty_root_body)`, scalar top-level body items such as
@@ -208,6 +209,7 @@ FSMGEN_STRICT_INFIX_ASSIGNMENT
 FSMGEN_STRICT_LEGACY_FSM_ROOT
 FSMGEN_LANGUAGE_BAD_SIZE_ENTRY
 FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_DIRECTIVE
+FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_FORM
 FSMGEN_LANGUAGE_GENERIC_PLACEHOLDER_TOKEN
 FSMGEN_LANGUAGE_BARE_CONDITION_SUFFIX
 FSMGEN_LANGUAGE_UNSUPPORTED_ACTION_FORM
@@ -301,6 +303,8 @@ contract. Current out-of-support examples include:
   template roots outside the active `?fsm`, `?dt`, `?mod`, `?module`, and
   `?top` families
 - bare top-level FSM content without a supported source root
+- unsupported top-level FSM body forms inside a supported root, such as
+  `(tester_reset := 1)` or `(BROKEN 1)`
 - bare condition suffixes such as `(A <= B start)` and `(-> busy full)`
 - empty guarded blocks such as `(<req)` or malformed action-only forms such as
   `(BROKEN)`
