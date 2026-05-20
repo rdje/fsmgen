@@ -1,0 +1,12 @@
+(?fsm:symbol_param_unresolved_value
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD NO_SUCH_SYMBOL)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

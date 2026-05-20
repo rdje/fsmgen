@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 symbol-value corpus widening shipped
+- Completed `R12-SYMBOL-VALUE-CORPUS-WIDENING.2` and closed the tree.
+- Added three maintained expected-failure corpus entries for unresolved
+  `+params` value names and ambiguous bare bitstring-like `+constants` /
+  `+params` values.
+- Each new entry carries stable diagnostic-code metadata and is covered by
+  corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 symbol-value corpus widening selected
 - Completed `R12-SYMBOL-VALUE-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused unresolved

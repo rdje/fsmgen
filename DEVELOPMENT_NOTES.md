@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Symbol-value support accounting follows fix guidance
+- `R12-SYMBOL-VALUE-CORPUS-WIDENING.2` promotes existing symbol-value
+  diagnostics without changing declaration syntax.
+- Unresolved parameter value names and ambiguous bare bitstring-like symbol
+  values use separate stable codes because downstream tools can suggest
+  different fixes: declare/use a scalar literal-compatible value, or add an
+  explicit base/width such as `0b...`, `N'b...`, or `0d...`.
+
 ## 2026-05-20: Symbol-value corpus widening separates value diagnostics
 - `R12-SYMBOL-VALUE-CORPUS-WIDENING.1` selects symbol-definition value
   diagnostics for support-accounting promotion.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-SYMBOL-VALUE-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -41,7 +41,7 @@ coverage.
 ## Task Tree
 
 - ID: `R12-SYMBOL-VALUE-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained expected-failure corpus coverage for symbol-definition value failures`
   Children: `R12-SYMBOL-VALUE-CORPUS-WIDENING.1`, `R12-SYMBOL-VALUE-CORPUS-WIDENING.2`
 
@@ -53,17 +53,17 @@ coverage.
   Commit: `R12-SYMBOL-VALUE-CORPUS-WIDENING.1: select symbol-value widening`
 
 - ID: `R12-SYMBOL-VALUE-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add maintained expected-failure entries for unresolved parameter values and ambiguous bare bitstring symbol values`
   Acceptance: `named fixtures/catalog entries cover unresolved +params value names plus ambiguous bare +constants and +params bitstring-like values with stable diagnostics and corpus behavior checks`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused symbol-definition tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-SYMBOL-VALUE-CORPUS-WIDENING.2: widen symbol-value corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-SYMBOL-VALUE-CORPUS-WIDENING.2` | `pending` | Promotes the already-focused symbol-value diagnostics after ownership is committed. |
+| 1 | `closed` | `done` | `R12-SYMBOL-VALUE-CORPUS-WIDENING.2` shipped the selected symbol-value corpus widening. |
 
 ## Decisions
 
@@ -85,14 +85,18 @@ coverage.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-SYMBOL-VALUE-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-SYMBOL-VALUE-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused symbol-definition tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-SYMBOL-VALUE-CORPUS-WIDENING.1` | `R12-SYMBOL-VALUE-CORPUS-WIDENING.1: select symbol-value widening` | Selection leaf; no compiler behavior changed. |
+| `R12-SYMBOL-VALUE-CORPUS-WIDENING.2` | `R12-SYMBOL-VALUE-CORPUS-WIDENING.2: widen symbol-value corpus` | Adds three maintained symbol-value expected-failure entries. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Shipped the selected symbol-value corpus widening and closed
+  the task tree.

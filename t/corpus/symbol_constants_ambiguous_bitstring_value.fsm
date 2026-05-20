@@ -1,0 +1,12 @@
+(?fsm:symbol_constants_ambiguous_bitstring_value
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (BAD 00001110)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

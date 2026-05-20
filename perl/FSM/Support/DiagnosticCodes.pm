@@ -409,6 +409,24 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A +enums member did not match the supported shape.',
     },
+    FSMGEN_LANGUAGE_UNRESOLVED_PARAM_VALUE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +params value referenced a name that cannot be used as a scalar literal.',
+    },
+    FSMGEN_LANGUAGE_AMBIGUOUS_CONSTANT_VALUE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +constants value used an ambiguous bare integer literal.',
+    },
+    FSMGEN_LANGUAGE_AMBIGUOUS_PARAM_VALUE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +params value used an ambiguous bare integer literal.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

@@ -1,0 +1,12 @@
+(?fsm:symbol_params_ambiguous_bitstring_value
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD 00001110)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
