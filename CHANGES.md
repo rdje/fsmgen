@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — parameter dependency widening selected
+- Completed `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused cyclic `+params` dependency graph and
+  duplicate `+params` declaration rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — symbol-value widening shipped
 - Completed `R12-SYMBOL-VALUE-CORPUS-WIDENING.2` and closed the task tree.
 - Added three named symbol-value expected-failure fixtures and catalog entries
