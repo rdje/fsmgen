@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Nested and compound guard corpus widening stays guard-local
+- `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.1` selects nested guarded blocks
+  and compound suffix guards for support-accounting promotion.
+- The implementation should promote existing guard lowering without changing
+  malformed guard diagnostics, bare suffix rejection, selector semantics, or
+  state-DTE header behavior.
+
 ## 2026-05-21: Arithmetic and XOR operator support accounting proves emitted shapes
 - `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.2` promotes n-ary arithmetic
   and XOR operator variants into the executable supported-smoke corpus.
