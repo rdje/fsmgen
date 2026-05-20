@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: R12 custom system clock corpus widening shipped
+- Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` and closed the tree.
+- Added one maintained supported-smoke corpus entry for supported custom
+  `+system` clock names using canonical reset spelling.
+- The entry carries `strict_supported` metadata and explicit HDL-shape checks
+  for emitted `core_clk` input and `always_ff @(posedge core_clk)` behavior,
+  and is covered by supported corpus behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-21: R12 custom system clock corpus widening selected
 - Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused supported custom

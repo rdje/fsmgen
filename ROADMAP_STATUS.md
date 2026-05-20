@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.1` selected the next task tree for
-  promoting already-focused supported custom `+system` clock names into the
-  maintained supported-smoke corpus. The next frontier is
-  `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2`.
+  `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` closed the latest custom
+  system-clock support-accounting tree. The next PNT step is to select the
+  next inactive or ongoing task-tree frontier before any implementation work.
+- Recent R12 custom system clock corpus-widening completion:
+  `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` added one named supported-smoke
+  corpus entry for canonical reset declarations with custom authored clock
+  identifiers. The entry carries strict-supported metadata and HDL-shape
+  expectations, and is covered through default/strict pipeline/CLI behavior,
+  check JSON, normalized semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 custom system clock corpus-widening selection:
   `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting canonical reset declarations with
@@ -7486,6 +7491,21 @@ Done:
   - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now records them as `feature.direct_sreset_active_high` and `feature.direct_areset_active_low` with semantic HDL-shape expectations for synchronous active-high and asynchronous active-low SystemVerilog lowering,
   - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t) now checks both through pipeline and CLI, and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t) now records `34` catalog entries and `10` named supported-smoke entries.
+- The supported-language-feature corpus now also covers custom direct
+  `+system` clock names under the canonical reset policy:
+  - [t/corpus/custom_system_clock.fsm](t/corpus/custom_system_clock.fsm) now
+    exists as a named `supported_smoke` direct-root corpus asset for
+    `(+system (clock core_clk) (sreset reset))`,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.custom_system_clock` with strict-supported metadata
+    and semantic HDL-shape expectations for the emitted `core_clk` input and
+    `always_ff @(posedge core_clk)` lowering,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    checks the fixture through pipeline and CLI in default and strict mode,
+    and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `32` named supported-smoke entries and `32`
+    strict-supported entries.
 - The direct-generation failure side of the corpus now also covers a pre-generation assignment contract rejection:
   - [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) now exists as a named `expected_failure` direct-root corpus asset for a direct RHS `(concat ...)` assignment whose summed RHS width is too small for the LHS,
   - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) now records it as `contract.direct_rhs_concat_width_mismatch` under the new `direct_generation_contract_rejection_pipeline_cli` coverage bucket,

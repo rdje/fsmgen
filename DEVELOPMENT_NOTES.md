@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Custom system clock support accounting proves authored clock projection
+- `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` promotes custom `+system` clock
+  identifiers into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for `core_clk` as the generated clock
+  input and state/register `always_ff @(posedge core_clk)` blocks, while
+  keeping reset-policy coverage on canonical `(sreset reset)`.
+
 ## 2026-05-21: Custom system clock corpus widening stays reset-policy-neutral
 - `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.1` selects custom authored clock
   identifiers for support-accounting promotion.

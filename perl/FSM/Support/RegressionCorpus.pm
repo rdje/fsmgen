@@ -137,6 +137,21 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.custom_system_clock',
+        relpath => 't/corpus/custom_system_clock.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'custom_system_clock',
+        expected_hdl_patterns => [
+            qr/\binput\s+wire\s+core_clk\b/s,
+            qr/\binput\s+wire\s+reset\b/s,
+            qr/always_ff\s*@\(posedge\s+core_clk\)\s*begin\s+if\s*\(reset\)\s*begin/s,
+        ],
+    },
+    {
         id => 'feature.direct_areset_active_low',
         relpath => 't/corpus/direct_areset_active_low.fsm',
         family => 'language_feature_fixture',

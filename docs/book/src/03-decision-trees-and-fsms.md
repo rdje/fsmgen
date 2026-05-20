@@ -63,6 +63,22 @@ Typical ingredients:
 - `:=` init/reset directives
 - state blocks such as `idle`, `run`, `done`
 
+The direct-root `+system` clock entry accepts HDL-compatible authored clock
+names, not only the conventional `clk`. For example, this is a strict-supported
+system contract:
+
+```lisp
+(+system
+  (clock core_clk)
+  (sreset reset))
+```
+
+That contract emits `core_clk` as the generated SystemVerilog clock input and
+uses `always_ff @(posedge core_clk)` for the state and register flops. The
+reset spelling still matters: `(sreset reset)` is the canonical active-high
+synchronous reset form, while legacy reset-name combinations such as
+`(sreset rstn)` stay outside the strict-supported corpus.
+
 ## `?dt:name`
 
 Use `?dt:name` for a standalone decision tree, especially when the logic is:

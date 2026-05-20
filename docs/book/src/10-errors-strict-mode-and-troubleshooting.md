@@ -197,8 +197,11 @@ checked at the catalog level even if a future entry belongs to a new fixture
 family. Supported direct language-feature entries must also carry explicit
 HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
 only proving that generation completed. Current supported direct
-language-feature coverage includes canonical assignment pairs and
-update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
+language-feature coverage includes direct-root `+system` contracts with
+HDL-compatible authored clock names such as `core_clk`, using canonical
+active-high synchronous reset spelling `(sreset reset)`. It also includes
+canonical assignment pairs and update-shorthand `+=` / `-=` variants with
+implicit and explicit deltas, plus
 compound update variants such as `++`, `--`, compact `+=N` / `-=N`, and inline
 `(+= N)` / `(-= N)` modifiers. It also includes
 arithmetic and XOR operator variants such as n-ary `+`, `-`, `*`, `add`, `^`,

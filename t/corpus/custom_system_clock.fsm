@@ -1,0 +1,17 @@
+(?fsm:custom_system_clock
+  (+system
+    (clock core_clk)
+    (sreset reset)
+  )
+
+  (+size
+    (START 1)
+    (DONE 1)
+  )
+
+  (idle
+    (<START
+      (<= (DONE 1'b1))
+    )
+  )
+)

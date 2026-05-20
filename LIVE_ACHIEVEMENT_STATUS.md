@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — custom system clock widening shipped
+- Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has one additional supported-smoke entry for
+  custom `+system` clock names using canonical reset spelling.
+- Strict-supported metadata, HDL-shape checks, supported corpus behavior,
+  check JSON, normalized semantic JSON, manifest coverage, regression-corpus
+  docs, and the mdBook are synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-21: R12 regression corpus — custom system clock widening selected
 - Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.1`.
 - The active R12 frontier is now
