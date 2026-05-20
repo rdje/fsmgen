@@ -157,6 +157,10 @@ for my $required_id (qw(
     contract.computed_test_missing_expr
     contract.inline_modifier_malformed_payload
     contract.inline_modifier_duplicate
+    contract.update_shorthand_nested_prefix_target
+    contract.update_shorthand_nested_separated_target
+    contract.update_shorthand_tail_single
+    contract.update_shorthand_tail_multi
     contract.direct_rhs_concat_width_mismatch
     contract.direct_aggregate_contract_mismatch
     contract.missing_rtl_metadata_sidecar
@@ -299,8 +303,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    72,
-    'catalog now records seventy-two explicit expected-failure entries',
+    76,
+    'catalog now records seventy-six explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

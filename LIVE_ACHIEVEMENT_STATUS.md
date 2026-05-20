@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — update-shorthand widening shipped
+- Completed `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has four additional update-shorthand
+  expected-failure entries for malformed nested targets and malformed
+  positional tails.
+- Stable diagnostic codes, corpus behavior checks, check JSON, normalized
+  semantic JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — update-shorthand widening selected
 - Completed `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

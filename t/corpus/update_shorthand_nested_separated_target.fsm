@@ -1,0 +1,9 @@
+(?fsm:update_shorthand_nested_separated_target
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (+= (byte_count) 4)
+  )
+)

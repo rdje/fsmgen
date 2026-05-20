@@ -97,7 +97,8 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   self-dependency, D-input self-dependency, unsupported assignment operators,
   unsupported compact `:=` reset values, malformed plain test-signal names,
   malformed computed test selectors, malformed inline compound modifier
-  payloads, and duplicate inline compound modifiers.
+  payloads, duplicate inline compound modifiers, malformed update-shorthand
+  targets, and malformed update-shorthand tails.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -557,6 +558,10 @@ manifest output while keeping the exact file lists widenable.
 | `contract.computed_test_missing_expr` | [t/corpus/computed_test_missing_expr.fsm](t/corpus/computed_test_missing_expr.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.inline_modifier_malformed_payload` | [t/corpus/inline_modifier_malformed_payload.fsm](t/corpus/inline_modifier_malformed_payload.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.inline_modifier_duplicate` | [t/corpus/inline_modifier_duplicate.fsm](t/corpus/inline_modifier_duplicate.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.update_shorthand_nested_prefix_target` | [t/corpus/update_shorthand_nested_prefix_target.fsm](t/corpus/update_shorthand_nested_prefix_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.update_shorthand_nested_separated_target` | [t/corpus/update_shorthand_nested_separated_target.fsm](t/corpus/update_shorthand_nested_separated_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.update_shorthand_tail_single` | [t/corpus/update_shorthand_tail_single.fsm](t/corpus/update_shorthand_tail_single.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.update_shorthand_tail_multi` | [t/corpus/update_shorthand_tail_multi.fsm](t/corpus/update_shorthand_tail_multi.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |

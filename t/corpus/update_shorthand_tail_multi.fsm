@@ -1,0 +1,9 @@
+(?fsm:update_shorthand_tail_multi
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (+= counter 4 3 2)
+  )
+)

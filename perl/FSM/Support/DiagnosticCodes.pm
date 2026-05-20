@@ -325,6 +325,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'An assignment used more than one inline compound modifier.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_UPDATE_SHORTHAND_TARGET => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An update shorthand used a malformed target.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_UPDATE_SHORTHAND_TAIL => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An update shorthand used unsupported positional tail tokens.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

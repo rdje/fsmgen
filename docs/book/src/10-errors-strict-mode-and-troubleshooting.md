@@ -149,8 +149,10 @@ and `=>`, plus unsupported compact `:=` reset values such as `[DATAIN]` and
 computed test selectors that omit their selector expression. Those entries are
 not only prose examples. Inline-modifier entries cover malformed compound
 modifier payloads such as `(+= 2 3)` and duplicate modifier clauses such as
-`(+= 2) (-= 1)`. Pipeline, CLI, check JSON, and normalized semantic JSON
-regression tests all classify these failures through the same
+`(+= 2) (-= 1)`. Update-shorthand entries cover nested targets such as
+`(++ (counter))` or `(+= (byte_count) 4)`, plus malformed positional tails
+such as `(+= counter 4 3)`. Pipeline, CLI, check JSON, and normalized semantic
+JSON regression tests all classify these failures through the same
 support-accounting path.
 
 It also keeps positive acceptance markers for canonical supported surfaces.
@@ -192,6 +194,8 @@ FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL
 FSMGEN_LANGUAGE_MALFORMED_COMPUTED_TEST_SELECTOR
 FSMGEN_LANGUAGE_MALFORMED_INLINE_MODIFIER
 FSMGEN_LANGUAGE_DUPLICATE_INLINE_MODIFIER
+FSMGEN_LANGUAGE_MALFORMED_UPDATE_SHORTHAND_TARGET
+FSMGEN_LANGUAGE_MALFORMED_UPDATE_SHORTHAND_TAIL
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 

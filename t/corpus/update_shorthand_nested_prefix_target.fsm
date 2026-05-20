@@ -1,0 +1,9 @@
+(?fsm:update_shorthand_nested_prefix_target
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (++ (counter))
+  )
+)

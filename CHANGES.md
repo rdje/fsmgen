@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — update-shorthand widening shipped
+- Completed `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` and closed the task tree.
+- Added four named update-shorthand expected-failure fixtures and catalog
+  entries for malformed nested update-shorthand targets and malformed
+  positional update-shorthand tails.
+- Added stable diagnostic codes for the new expected-failure families and
+  widened corpus accounting, manifest, check JSON, normalized semantic JSON,
+  regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — update-shorthand widening selected
 - Completed `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure corpus

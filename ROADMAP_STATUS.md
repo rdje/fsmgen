@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.1` activated the task tree for adding
-  maintained expected-failure corpus coverage for malformed update-shorthand
-  targets and tails. The current frontier is
-  `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2`.
+  `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` completed the latest maintained
+  expected-failure corpus widening slice. The next PNT step must select fresh
+  task-tree ownership before any new code, test, source, generated-artifact, or
+  config change.
+- Recent R12 update-shorthand corpus-widening completion:
+  `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` added four named expected-failure
+  corpus entries for malformed nested update-shorthand targets such as
+  `(++ (counter))` and `(+= (byte_count) 4)`, plus malformed positional tails
+  such as `(+= counter 4 3)` and `(+= counter 4 3 2)`. Each entry carries
+  stable diagnostic-code metadata and is covered through pipeline/CLI behavior,
+  check JSON, normalized semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 update-shorthand corpus-widening selection:
   `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting already-focused nested
