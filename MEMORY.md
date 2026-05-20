@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 symbolic/default selector corpus widening shipped
+- Completed `R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.2` and closed
+  the tree.
+- Added one maintained supported-smoke corpus entry for symbolic equality
+  selectors and `default` / `_` fallback selector lowering.
+- The entry carries `strict_supported` metadata and explicit HDL-shape checks,
+  and is covered by supported corpus behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 symbolic/default selector corpus widening selected
 - Completed `R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused supported

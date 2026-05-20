@@ -211,7 +211,9 @@ covered as supported-smoke entries with emitted comparison-shape checks.
 Computed test selectors using `?(expr)` are covered as a positive supported
 entry that must emit and reuse the computed selector intermediate. Plain
 HDL-compatible `?SIG` test-node names are covered for equality branches, and
-relational `?SIG` branch selectors such as `!=`, `>`, and `<=` are also
+symbolic selectors plus `default` / `_` fallback selectors are covered for
+named equality, explicit fallback negation, and fallback-alias branch enables.
+Relational `?SIG` branch selectors such as `!=`, `>`, and `<=` are also
 covered with width-safe reduction and comparison-enable HDL-shape checks.
 
 ## Diagnostic Codes
