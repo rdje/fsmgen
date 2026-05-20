@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ATL source-expression source-order hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` as a selection leaf.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- `.9.99` will harden generated-child actor-to-actor route diagnostics when a
+  malformed source expression such as `(writer.payload (+ reader.payload 1))`
+  is authored before the relevant direct static actor instances.
+- The selected leaf must preserve the accepted scalar route, the already
+  shipped sink-expression source-order diagnostic, and every generated
+  artifact/report shape.
+- No source syntax, report key, generated artifact shape, runtime behavior,
+  expression movement, payload protocol, route mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, recursive actor network, or
+  permanent actor grouping is selected.
+
 ## 2026-05-20: Repeat-body switch-bound post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` as a selection leaf.
 - The active repeat-body frontier advances to
@@ -32,11 +47,12 @@ This is the live continuity document for fast session recovery after crashes, re
 - Same-name reusable-library clock/reset bindings can be inferred when the
   defaulted parent timing policy exactly matches the child timing policy.
 - The active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`
-  and `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+  and `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 
 ## 2026-05-19: ATL accepted-route source-order coverage completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
-- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+- After that slice, the ATL frontier advanced to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 - Focused positive coverage now proves the accepted scalar generated-child
   actor-to-actor route remains accepted when `forward_payload` is declared
   before `reader` and `writer`.

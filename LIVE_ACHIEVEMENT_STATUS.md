@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R14 — ATL source-expression source-order hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- `.9.99` is selected to harden generated-child route source-expression
+  diagnostics for drive-before-instance source order.
+- No compiler behavior changed in the selection leaf.
+
 ## 2026-05-20: R14 — Repeat-body switch-bound post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
 - The active repeat-body frontier advances to
@@ -21,7 +29,7 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   focused coverage now document the same convention.
 - The `ISF-TIMING-CONVENTIONS` tree is closed; active R14 frontiers are now
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 
 ## 2026-05-19: R14 — ATL accepted-route source-order coverage completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.

@@ -13,7 +13,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. The active R14
   frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 - Recent R14 timing conventions: `ISF-TIMING-CONVENTIONS` is closed. Legacy
   single-clock actors that omit `(clock ...)`, `(reset ...)`, or
   `(watchdog ...)` now normalize to `clk`, async active-low `rst_n`, and
@@ -25,7 +25,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   Same-name reusable-library clock/reset bindings can be inferred when the
   defaulted parent timing policy exactly matches the child timing policy. The
   active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -41,7 +41,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.112` and ATL actor-network orchestration `.9.98`.
+  activation `.112` and ATL actor-network orchestration `.9.99`.
+- Recent R14 ATL selection: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` selected
+  source-order-independent source-expression diagnostic hardening as the next
+  bounded ATL leaf. The selected `.9.99` scope is diagnostic-only: if a
+  generated-child actor-to-actor route drive body is authored before the
+  relevant `(instance ...)` clauses and its source side is an expression such
+  as `(writer.payload (+ reader.payload 1))`, it must fail with the same
+  targeted ATL source-expression diagnostic after actor instances are known.
+  No source syntax, report key, generated artifact shape, expression
+  movement, payload protocol, route mux/storage, fan-in/fan-out, CDC/reset
+  remapping, ready/backpressure, recursive network, or permanent grouping is
+  selected.
 - Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
@@ -489,7 +500,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   generated-child route under drive-before-instance source order. `.9.97`
   completed that coverage and synchronized the book/handoff/spec/design/backlog
   wording around accepted-route source-order independence. The active ATL
-  frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+  frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`; `.9.99` must harden
+  the generated-child route source-expression diagnostic for
+  drive-before-instance source order.
 - Project-operations status: `GITHUB-PUBLIC-AUTOMATION-REENABLE.1` restored
   hosted automation after the repository was made public. Regression CI is
   discoverable at [.github/workflows/regression.yml](.github/workflows/regression.yml)

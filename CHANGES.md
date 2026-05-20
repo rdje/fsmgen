@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R14 — ATL source-expression source-order hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` as a documentation
+  selection leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99` to harden
+  generated-child actor-to-actor route diagnostics when a malformed source
+  expression such as `(writer.payload (+ reader.payload 1))` is authored
+  before the relevant direct static actor instances.
+- The selected implementation must keep the accepted scalar route, the
+  existing sink-expression source-order diagnostic, generated artifacts, and
+  schedule-report shape unchanged.
+- No source syntax, public report key, runtime behavior, expression movement,
+  payload protocol, route mux/storage, fan-in/fan-out, CDC/reset remapping,
+  ready/backpressure, recursive actor network, or permanent actor grouping is
+  selected.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+
 ### R14 — Repeat-body switch-bound post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` as a documentation
   selection leaf.
@@ -35,7 +52,7 @@ This is the persistent technical change history for FSMGen.
   interface contract, the mdBook, live docs, and focused tests.
 - The `ISF-TIMING-CONVENTIONS` task tree is now closed; the active R14
   frontiers are `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 
 ## 2026-05-19
 ### R14 — ATL accepted-route source-order coverage completed

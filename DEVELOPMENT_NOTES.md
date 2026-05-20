@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: ATL source-expression ordering gets the same diagnostic policy
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` selects the source-expression
+  counterpart to the earlier drive-before-instance sink-expression diagnostic
+  hardening.
+- The accepted scalar route is already source-order independent, and the sink
+  expression diagnostic can already defer ATL-looking malformed sinks until
+  actor instances are known. The remaining asymmetric diagnostic risk is the
+  malformed source expression shape `(writer.payload (+ reader.payload 1))`
+  when the drive body appears before the direct static actor declarations.
+- The next implementation should only defer enough ATL-looking source
+  expression information to emit the targeted source-expression diagnostic
+  after actor instances are known. It must not make expression-valued route
+  sources legal or infer payload transformation/storage semantics.
+
 ## 2026-05-20: Switch-bound post-do await_any is the next repeat slice
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` selects the switch-contained
   counterpart to the when-contained bound generated-do post-do `await_any`

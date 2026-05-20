@@ -1188,6 +1188,13 @@ transformation, storage, or payload protocol behavior can be inferred. The
 selected sink stays the scalar endpoint `writer.payload`; a sink expression
 such as `(+ writer.payload 1)` fails closed before expression destinations,
 route-side transforms, storage, or payload protocol behavior can be inferred.
+
+The source-expression source-order diagnostic is now selected as the next ATL
+hardening slice. It will make drive-before-instance malformed source
+expressions such as `(writer.payload (+ reader.payload 1))` report the same
+targeted ATL source-expression diagnostic after actor instances are known. It
+does not select expression movement, route-side transforms, storage,
+muxing, ready/backpressure, or payload protocols.
 That sink-expression diagnostic is source-order independent for
 endpoint-looking malformed route sinks, while ordinary malformed local drive
 targets such as `((out) 1)` keep the generic drive-body scalar-head
