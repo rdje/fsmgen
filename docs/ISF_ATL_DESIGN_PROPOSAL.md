@@ -1219,6 +1219,11 @@ with actual arguments fail closed before drive actual binding, expression
 movement, route mux/storage, ready/backpressure, or payload protocols are
 claimed.
 
+The route source side also remains one scalar endpoint. Source expressions
+such as `(writer.payload (+ reader.payload 1))` fail closed before FSMGen
+claims expression movement, value transformation, width conversion, storage,
+route mux/storage, ready/backpressure, or payload protocols.
+
 ## Fail-Closed Boundaries
 
 ATL v0 should reject:

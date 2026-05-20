@@ -512,6 +512,12 @@ argument-free: `(drive (forward_payload value) ...)` and
 actual binding, expression movement, payload protocols, storage, muxing,
 fan-in/fan-out, or backpressure behavior is inferred.
 
+The shipped source-expression hardening keeps the generated-child
+actor-to-actor route source as one scalar endpoint. A route drive body such
+as `(writer.payload (+ reader.payload 1))` remains outside this subset before
+expression movement, value transformation, payload protocols, storage,
+muxing, fan-in/fan-out, or backpressure behavior is inferred.
+
 ### Actor, Interface, Storage, And Timing
 
 ```lisp

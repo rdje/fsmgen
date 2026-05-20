@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL route source-expression boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.
+- Added focused generated-child actor-to-actor route coverage for a
+  drive-body source expression such as `(writer.payload (+ reader.payload 1))`.
+- The existing parser diagnostic already rejected the form before scheduled
+  `.fsm` emission, so no production parser/lowerer behavior changed.
+- Synchronized the mdBook composition chapter, feature-support matrix,
+  downstream handoff, ISF spec, ATL design proposal, feature backlog, and
+  mdBook audit so source-side route expressions are an explicit deferred
+  boundary.
+- No source syntax, public report key, generated artifact shape, runtime
+  behavior, expression movement, payload protocol, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor
+  network, or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92`.
+
 ### R14 — ATL route source-expression hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` as a doc-only selection
   leaf.

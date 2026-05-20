@@ -893,8 +893,9 @@ actor-to-actor route must prove the source endpoint is a scalar output on the
 source child, the sink endpoint is a scalar input on the sink child, one
 selected data-route drive body owns exactly one endpoint pair, and one
 top-level transaction drive call activates the route. Multi-route wiring,
-mux/storage, fan-in/fan-out, CDC/reset remapping, ready/backpressure, payload
-protocols, and permanent actor grouping remain deferred.
+mux/storage, source-side route expressions, fan-in/fan-out, CDC/reset
+remapping, ready/backpressure, payload protocols, and permanent actor
+grouping remain deferred.
 The shipped width hardening keeps the route scalar one-bit only and adds
 focused rejection coverage for wider source child outputs and wider sink
 child inputs. No packing, truncation, extension, payload protocol, or storage
@@ -4069,6 +4070,11 @@ drive arguments: generated-child actor-to-actor route drive definitions do
 not accept formal parameters, and route drive calls do not accept actual
 arguments in this subset. Those shapes remain fail-closed before drive actual
 binding, expression movement, or payload protocols are inferred.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.91` hardens the source-expression boundary:
+the route source side remains one scalar endpoint, and a drive-body source
+expression such as `(writer.payload (+ reader.payload 1))` fails closed
+before expression movement, value transformation, storage, or payload
+protocol behavior is inferred.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

@@ -1935,6 +1935,11 @@ For downstream implementation, the current route terms mean:
   buffering, or replay contract.
 - Payload protocols are not shipped beyond the current one-bit scalar
   drive-call-cycle value.
+- Source-side route expressions are not shipped. The route source must be the
+  scalar endpoint `reader.payload`; a source expression such as
+  `(+ reader.payload 1)` fails closed before expression movement, value
+  transformation, width conversion, storage, or payload protocols are
+  inferred.
 
 ### 12.5.6. Generated Child Artifacts And Top Data Routes
 
@@ -2054,6 +2059,11 @@ Downstream producers must also keep the route drive unparameterized and the
 route drive call argument-free. Parameterized route drive definitions and
 route drive calls with actual arguments remain fail-closed before drive
 actual binding, expression movement, or payload protocols are inferred.
+
+The route source must remain one scalar endpoint. A drive-body source
+expression such as `(writer.payload (+ reader.payload 1))` remains
+fail-closed before FSMGen infers expression movement, payload transformation,
+storage, muxing, or backpressure behavior.
 
 The shipped FSMGen hardening around this route does not widen the downstream
 surface.

@@ -1174,6 +1174,11 @@ arguments also remain outside the generated-child actor-to-actor route. Those
 forms fail closed before drive actual binding, expression movement, or payload
 protocol behavior can be inferred.
 
+Source-side route expressions also remain outside that route. The selected
+source stays the scalar endpoint `reader.payload`; a source expression such
+as `(+ reader.payload 1)` fails closed before expression movement, value
+transformation, storage, or payload protocol behavior can be inferred.
+
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level
 transaction-body `(await actor.event)` when the qualifier names a declared

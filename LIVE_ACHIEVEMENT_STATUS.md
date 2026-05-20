@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route source-expression boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92`.
+- Focused coverage now rejects generated-child actor-to-actor route
+  source-side expressions such as `(+ reader.payload 1)`.
+- The book, downstream handoff, spec, design proposal, backlog, and audit now
+  document that boundary directly.
+- No production compiler behavior changed.
+
 ## 2026-05-19: R14 — ATL route expression hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90`.
 - The active ATL frontier advances to

@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL source-expression boundary is now audit-backed
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91` turns the generated-child route
+  source-expression boundary into explicit fixture coverage and synchronized
+  documentation.
+- This matters because the current route is a one-endpoint transfer contract,
+  not an expression-evaluation or payload-transformation contract. Keeping
+  `(+ reader.payload 1)` fail-closed prevents accidental claims about width,
+  storage, truncation/extension, or replay behavior.
+- The mdBook and downstream handoff now name source-side route expressions
+  directly, and the mdBook audit checks the marker.
+
 ## 2026-05-19: ATL expression movement stays explicit
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` selects a narrow generated-child
   route hardening leaf for expression-valued sources.

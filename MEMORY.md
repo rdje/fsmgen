@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route source-expression boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92`.
+- Focused coverage in `t/1330-isf-atl-resolved-child-fixture-coverage.t`
+  now rejects generated-child actor-to-actor route drive bodies whose source
+  side is an expression such as `(+ reader.payload 1)`.
+- Existing production parser diagnostics already rejected the form, so no
+  parser/lowerer behavior changed.
+- The mdBook composition chapter and feature-support matrix, downstream
+  handoff, ISF spec, ATL design proposal, backlog, and mdBook audit now name
+  source-side route expressions as a deferred ATL route boundary.
+
 ## 2026-05-19: ATL route source-expression hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.90` as a selection leaf.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.

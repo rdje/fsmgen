@@ -1103,6 +1103,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ source_expression => 1 }),
+        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement source expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the route source is an expression',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ extra_drive_pair => 1 }),
         qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset/,
         'generated-child actor-to-actor data route fails closed when one route drive contains multiple endpoint pairs',
@@ -2283,11 +2289,16 @@ CLAUSES
     my $reader_payload_port = $options->{omit_reader_payload}
         ? ''
         : _interface_port_decl('output', 'payload', $reader_payload_width);
-    my $drive_body = $options->{same_child_route}
-        ? "    (reader.payload_in reader.payload_out)"
-        : $options->{extra_drive_pair}
-            ? "    (writer.payload reader.payload)\n    (writer.sideband reader.sideband)"
-            : "    (writer.payload reader.payload)";
+    my $drive_body = "    (writer.payload reader.payload)";
+    if ($options->{same_child_route}) {
+        $drive_body = "    (reader.payload_in reader.payload_out)";
+    }
+    elsif ($options->{extra_drive_pair}) {
+        $drive_body = "    (writer.payload reader.payload)\n    (writer.sideband reader.sideband)";
+    }
+    elsif ($options->{source_expression}) {
+        $drive_body = "    (writer.payload (+ reader.payload 1))";
+    }
     my $reader_self_route_ports = $options->{same_child_route}
         ? "      (input payload_in)\n      (output payload_out)\n"
         : '';
