@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — ISF LoweringIR subfamilies inventoried
+- Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`.
+- Stable private `LoweringIR` subfamilies and public projection points are now
+  mapped in the task tree.
+- The active frontier is `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for selecting
+  one extraction candidate.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — GlobalASTManager boundary corrected
 - Completed `GLOBAL-AST-MANAGER-BOUNDARY.2` and closed the tree.
 - [perl/FSM/GlobalASTManager.pm](perl/FSM/GlobalASTManager.pm) now documents

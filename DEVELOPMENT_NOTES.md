@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: LoweringIR extraction starts from boundaries, not line count
+- `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` keeps raw `LoweringIR` private and
+  inventories subfamilies by invariants and public projections.
+- The best candidates are those with narrow inputs/outputs and stable report
+  surfaces. Domain/CDC partitioning is attractive because it already has a
+  coherent `actor -> domain_partition` shape. ATL and storage/provenance are
+  also stable but have broader blast radius.
+- `.2` must pick one candidate and name unchanged `.fsm`, schedule JSON,
+  generated composition, and HDL surfaces before `.3` changes source.
+
 ## 2026-05-20: GlobalASTManager wording now matches runtime ownership
 - `GLOBAL-AST-MANAGER-BOUNDARY.2` changes only the documentation/comments in
   [perl/FSM/GlobalASTManager.pm](perl/FSM/GlobalASTManager.pm).

@@ -2,15 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `GLOBAL-AST-MANAGER-BOUNDARY` is closed. `.1` classified
-  `FSM::GlobalASTManager` as compatibility-only, not the live runtime
-  factorization owner. `.2` corrected stale module ownership wording. The
-  live direct SystemVerilog first-pass factorization owner remains
-  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm).
-  The next architecture PNT candidate is
-  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`, followed by
-  `MODULE-INFO-PROJECTION-GUARD.1`.
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` inventoried stable private
+  `LoweringIR` subfamilies and their public projection points. Raw
+  `LoweringIR` remains private; public truth stays emitted `.fsm`, schedule
+  JSON, generated composition artifacts, and HDL behavior. The active
+  frontier is `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for selecting one
+  private extraction candidate before source changes.
 - Recent architecture backlog:
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` mapped scheduler/emitter handoff,
+  actor-network/ATL metadata, domain/CDC partitioning, activation handoffs and
+  generated children, storage/provenance, conflict/fan-in/priority/resource
+  resolution, transaction control/data lowering, and actor/package/type
+  metadata. No compiler behavior changed.
+- Previous architecture backlog:
   `GLOBAL-AST-MANAGER-BOUNDARY.2` updated
   [perl/FSM/GlobalASTManager.pm](perl/FSM/GlobalASTManager.pm) so it
   documents compatibility-only status for explicitly collected blessed
@@ -2794,6 +2798,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
   completed `.1` by classifying the module as compatibility-only and `.2` by
   correcting stale ownership wording.
+- Active architecture follow-up:
+  [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md)
+  completed `.1` by inventorying stable private `LoweringIR` subfamilies.
+  `.2` is active for selecting one extraction candidate.
 - Closed expression ownership follow-up:
   [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
   removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate.
@@ -4165,12 +4173,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md)
   has removed the standalone `FSM::AST::Utils` duplicate.
   [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md)
-  is closed after guarding the current legacy hash parser boundary. The next
-  active frontier is
+  is closed after guarding the current legacy hash parser boundary.
   [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
-  is closed after correcting stale ownership wording. The next PNT candidate
-  is
-  [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md).
+  is closed after correcting stale ownership wording.
+  [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md)
+  is active at `.2` for selecting one private extraction candidate.
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op

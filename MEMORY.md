@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ISF LoweringIR subfamilies inventoried
+- Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`.
+- Inventoried stable private `LoweringIR` subfamilies: scheduler/emitter
+  handoff, actor-network/ATL metadata, domain/CDC partitioning, activation
+  handoffs/generated children, storage/provenance, conflict/fan-in/priority
+  resolution, transaction control/data lowering, and actor/package/type
+  metadata.
+- Raw `LoweringIR` remains private; public truth stays emitted `.fsm`,
+  schedule JSON, generated composition artifacts, and HDL behavior.
+- The active frontier is `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for selecting
+  one private extraction candidate before source changes.
+
 ## 2026-05-20: GlobalASTManager boundary corrected
 - Completed `GLOBAL-AST-MANAGER-BOUNDARY.2` and closed the tree.
 - [perl/FSM/GlobalASTManager.pm](perl/FSM/GlobalASTManager.pm) now documents

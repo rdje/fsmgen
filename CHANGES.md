@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — ISF LoweringIR subfamilies inventoried
+- Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`.
+- Inventoried stable private `LoweringIR` subfamilies and their public
+  projection points across scheduler/emitter handoff, actor-network/ATL,
+  domain/CDC, activation/generated children, storage/provenance,
+  conflict/fan-in/priority/resource resolution, transaction lowering, and
+  actor/package/type metadata.
+- Advanced the active frontier to `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for
+  selecting one private extraction candidate.
+- No compiler behavior changed.
+
 ### Architecture backlog — GlobalASTManager boundary corrected
 - Completed `GLOBAL-AST-MANAGER-BOUNDARY.2` and closed the tree.
 - Updated [perl/FSM/GlobalASTManager.pm](perl/FSM/GlobalASTManager.pm) so it

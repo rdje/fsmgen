@@ -884,6 +884,12 @@ IR audit checkpoint:
   wording. The module is now documented as legacy compatibility support for
   explicitly collected blessed `FSM::AST::*` object trees, not as the live
   runtime factorization owner.
+- `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` inventoried stable private
+  [perl/FSM/Scheduler/ISF/LoweringIR.pm](../perl/FSM/Scheduler/ISF/LoweringIR.pm)
+  subfamilies and their projection points. Raw `LoweringIR` stays private;
+  public truth remains scheduled `.fsm`, schedule JSON, generated composition
+  artifacts, and HDL behavior. `.2` is active for selecting one extraction
+  candidate.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
