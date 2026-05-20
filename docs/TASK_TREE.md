@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING` | `active` | `R12` | `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.2` | [docs/tasks/R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.md](docs/tasks/R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 

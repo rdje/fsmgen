@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — arithmetic and XOR operator widening selected
+- Completed `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.2`.
+- The selected implementation will promote supported n-ary arithmetic and XOR
+  operator variants into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 regression corpus — reset-state alias widening shipped
 - Completed `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has one additional supported-smoke entry for

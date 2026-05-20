@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Arithmetic and XOR operator corpus widening stays expression-local
+- `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.1` selects n-ary arithmetic and
+  XOR expression operators for support-accounting promotion.
+- The implementation should promote existing `+`, `-`, `*`, `add`, `^`, and
+  `xor` lowering without changing unsupported operator diagnostics, malformed
+  arity diagnostics, or division/modulo safety handling.
+
 ## 2026-05-21: Reset-state alias support accounting proves DT-style normalization
 - `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2` promotes legacy reset-state aliases
   into the executable supported-smoke corpus.
