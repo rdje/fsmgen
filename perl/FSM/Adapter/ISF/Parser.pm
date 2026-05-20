@@ -39,6 +39,12 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
     & | ! ~ ^ = == != < > <= >= !| ~|
 );
 
+use constant {
+    ISF_DEFAULT_CLOCK_NAME => 'clk',
+    ISF_DEFAULT_RESET_NAME => 'rst_n',
+    ISF_DEFAULT_WATCHDOG_LIMIT => '65535',
+};
+
 # Parses .isf source files into a structured, validated AST.
 #
 # Pipeline: Lispish raw parse -> LispishAdapter normalization -> validation
@@ -49,7 +55,7 @@ my %RULE_GUARD_SHORTHAND_EXPR_HEADS = map { $_ => 1 } qw(
 #     clock         => "clk",
 #     reset         => { name => "rst_n", kind => "async", polarity => "active_low" },
 #     clock_domains => undef, # or { default => "core", domains => [...] }
-#     watchdog      => 65536,
+#     watchdog      => 65535,
 #     interface     => { inputs => [...], outputs => [...] },
 #     handshakes    => {}, # deprecated compatibility placeholder; parsed
 #                          # handshake clauses are validated then ignored
@@ -282,6 +288,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_validate_actor_enum_member_value_contexts($result);
     $self->_validate_actor_literal_zero_divisors($result);
     $self->_finalize_actor_clock_domain_timing($result, \%singleton_actor_clauses);
+    $self->_finalize_actor_timing_conventions($result, \%singleton_actor_clauses);
     $self->_validate_rule_trigger_targets($result);
     $self->_validate_rule_priority_targets($result);
     $self->_validate_actor_priority_targets($result);
@@ -4777,10 +4784,24 @@ sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
         push @resolved, { %$binding, width => $library_width };
     }
 
+    if (defined($exported_actor->{clock}) && length($exported_actor->{clock}) && !$seen_clock_reset{clock}) {
+        my $implicit_clock = _implicit_same_name_clock_binding($actor, $exported_actor);
+        if ($implicit_clock) {
+            push @resolved, $implicit_clock;
+            $seen_clock_reset{clock} = 1;
+        }
+    }
     confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' requires a clock binding for actor '$exported_actor->{actor_name}'\n"
         if defined($exported_actor->{clock}) && length($exported_actor->{clock}) && !$seen_clock_reset{clock};
     confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' has a clock binding but actor '$exported_actor->{actor_name}' has no clock\n"
         if (!defined($exported_actor->{clock}) || !length($exported_actor->{clock})) && $seen_clock_reset{clock};
+    if ($exported_actor->{reset} && !$seen_clock_reset{reset}) {
+        my $implicit_reset = _implicit_same_name_reset_binding($actor, $exported_actor);
+        if ($implicit_reset) {
+            push @resolved, $implicit_reset;
+            $seen_clock_reset{reset} = 1;
+        }
+    }
     confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' requires a reset binding for actor '$exported_actor->{actor_name}'\n"
         if $exported_actor->{reset} && !$seen_clock_reset{reset};
     confess "Error: actor '$actor->{actor_name}' use '$use->{instance}' has a reset binding but actor '$exported_actor->{actor_name}' has no reset\n"
@@ -4792,6 +4813,45 @@ sub _validate_use_bindings($self, $actor, $use, $exported_actor) {
     }
 
     return \@resolved;
+}
+
+sub _implicit_same_name_clock_binding {
+    my ($actor, $exported_actor) = @_;
+    return undef unless defined($actor->{clock})
+        && defined($exported_actor->{clock})
+        && length($actor->{clock})
+        && length($exported_actor->{clock})
+        && $actor->{clock} eq $exported_actor->{clock};
+
+    return {
+        role         => 'clock',
+        library_name => undef,
+        parent_name  => $actor->{clock},
+        width        => 1,
+    };
+}
+
+sub _implicit_same_name_reset_binding {
+    my ($actor, $exported_actor) = @_;
+    return undef unless ref($actor->{reset}) eq 'HASH'
+        && ref($exported_actor->{reset}) eq 'HASH';
+    return undef unless _reset_policy_signature($actor->{reset})
+        eq _reset_policy_signature($exported_actor->{reset});
+
+    return {
+        role         => 'reset',
+        library_name => undef,
+        parent_name  => $actor->{reset}{name},
+        width        => 1,
+    };
+}
+
+sub _reset_policy_signature {
+    my ($reset) = @_;
+    return join "\0",
+        $reset->{name} // '',
+        $reset->{kind} // 'sync',
+        $reset->{polarity} // 'active_high';
 }
 
 sub _split_use_target($target, $libraries_by_alias) {
@@ -5199,6 +5259,30 @@ sub _finalize_actor_clock_domain_timing($self, $actor, $singleton_actor_clauses)
     $actor->{clock} = $domain->{clock};
     $actor->{reset} = _clone_isf_value($domain->{reset}) if $domain->{reset};
     return 1;
+}
+
+sub _finalize_actor_timing_conventions($self, $actor, $singleton_actor_clauses) {
+    my $has_clock_domains = ref($actor->{clock_domains}) eq 'HASH';
+
+    if (!$has_clock_domains) {
+        $actor->{clock} = ISF_DEFAULT_CLOCK_NAME
+            unless $singleton_actor_clauses->{clock};
+        $actor->{reset} = _default_actor_reset()
+            unless $singleton_actor_clauses->{reset};
+    }
+
+    $actor->{watchdog} = ISF_DEFAULT_WATCHDOG_LIMIT
+        unless $singleton_actor_clauses->{watchdog};
+
+    return 1;
+}
+
+sub _default_actor_reset {
+    return {
+        name     => ISF_DEFAULT_RESET_NAME,
+        kind     => 'async',
+        polarity => 'active_low',
+    };
 }
 
 sub _parse_watchdog($self, $clause) {

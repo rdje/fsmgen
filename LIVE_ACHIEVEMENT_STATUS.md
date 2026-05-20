@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R14 — ISF timing conventions completed
+- Completed `ISF-TIMING-CONVENTIONS.1`.
+- Omitted legacy single-clock actor timing now defaults to `clk`, async
+  active-low `rst_n`, and watchdog `65535`.
+- Explicit timing remains source-owned, and named clock-domain actors keep
+  domain-owned clock/reset semantics.
+- The book, ISF spec, downstream handoff, public contract, live docs, and
+  focused coverage now document the same convention.
+- The `ISF-TIMING-CONVENTIONS` tree is closed; active R14 frontiers remain
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+
 ## 2026-05-19: R14 — ATL accepted-route source-order coverage completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
 - The active ATL frontier advances to
@@ -7954,7 +7966,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-12: R14 — ISF report reset-shape metadata audit
 - Active: `R14`. `t/1159` proves schedule-report reset-shape metadata is exact
-  for configured reset hashes and omitted reset JSON null.
+  for configured and defaulted legacy single-clock reset hashes, with null
+  reserved for domain-owned omitted resets.
 
 ## 2026-05-12: R14 — ISF report DT kind metadata audit
 - Active: `R14`. `t/1158` proves schedule-report DT kind metadata is exact and
@@ -7982,7 +7995,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
 ## 2026-05-12: R14 — ISF report scalar metadata audit
 - Active: `R14`. `t/1152` proves schedule-report scalar metadata is exact and
-  aligned with APB plus no-watchdog reports.
+  aligned with APB plus no-watchdog reports that now use the default scalar
+  watchdog limit.
 
 ## 2026-05-12: R14 — ISF report count metadata audit
 - Active: `R14`. `t/1151` proves schedule-report interface and state-count

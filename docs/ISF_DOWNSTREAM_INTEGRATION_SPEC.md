@@ -301,16 +301,24 @@ Deprecated compatibility input:
 Single-domain shorthand:
 
 ```lisp
+;; Implicit legacy single-clock defaults when the author omits the clauses:
 (clock clk)
-(reset rst_n)
 (reset (rst_n async active_low))
-(watchdog 65536)
+(watchdog 65535)
+
+;; Explicit reset shorthand remains available:
+(reset rst_n)
 ```
 
 Rules:
 
+- A legacy single-domain actor that omits `(clock ...)` defaults to `clk`.
+- A legacy single-domain actor that omits `(reset ...)` defaults to
+  asynchronous active-low reset `rst_n`.
+- Any actor that omits `(watchdog ...)` defaults to `65535`, exactly
+  `(2^16 - 1)`.
 - `(clock name)` names the actor clock for legacy single-domain actors.
-- `(reset name)` defaults to synchronous reset.
+- Explicit `(reset name)` keeps the shipped synchronous reset shorthand.
 - Reset names ending in `_n` or `_b` infer `active_low`; other names infer
   `active_high`.
 - List reset form may include `sync`, `async`, `active_low`, or `active_high`.
@@ -517,8 +525,11 @@ Rules:
 - Schedule reports expose actor parameter defaults through `actor_params[]`
   entries with `name` and JSON-safe default `value`, preserving authored enum
   tokens. These are static specialization defaults, not runtime payloads.
-- Every exported actor clock/reset/interface endpoint must be explicitly bound
-  at the use site.
+- Every exported actor interface endpoint must be explicitly bound at the use
+  site. Exported actor clock/reset endpoints may omit explicit bindings only
+  when the parent and child use the same clock name and the same reset
+  name/kind/polarity; FSMGen records those same-name system bindings in
+  `library_uses[].bindings[]`.
 - Binding direction and known width must match.
 - Lowering emits a specialized child scheduled `.fsm` artifact named
   `<importing_actor>__<instance>.fsm`.
@@ -2331,9 +2342,12 @@ Scalar summaries:
 - `source`: report source basename derived from the actor name with `.isf`.
 - `scheduled_fsm`: scheduled `.fsm` basename for the report scope. Multi-domain
   reports use the generated `<actor>_top.fsm` artifact.
-- `clock`: actor/default-domain clock name.
-- `reset`: null or object with `name`, `kind`, and `polarity`.
-- `watchdog`: null or scalar watchdog limit.
+- `clock`: actor/default-domain clock name; omitted legacy single-clock
+  clocks report `clk`.
+- `reset`: object with `name`, `kind`, and `polarity` for configured or
+  defaulted legacy single-clock resets; null only when the selected
+  default-domain reset is omitted in a `(clock-domains ...)` actor.
+- `watchdog`: scalar watchdog limit; omitted watchdogs report `65535`.
 - `inputs`, `outputs`, `port_count`, `state_count`: non-negative integer
   counts. Multi-domain generated-top reports use `state_count == 0` and put
   domain-local counts in `clock_domains[]`.
@@ -2872,7 +2886,8 @@ prove -Iperl t/1112-isf-public-interface-contract.t \
   t/1299-isf-aggregate-standalone-condition-values.t \
   t/1300-isf-enum-member-standalone-condition-values.t \
   t/1301-isf-enum-member-rule-standalone-guard-values.t \
-  t/1302-isf-aggregate-rule-standalone-guard-values.t
+  t/1302-isf-aggregate-rule-standalone-guard-values.t \
+  t/1331-isf-timing-conventions.t
 
 ./bin/ci-regression isf
 mdbook build docs/book

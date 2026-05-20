@@ -14,6 +14,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   frontiers remain
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+- Recent R14 timing conventions: `ISF-TIMING-CONVENTIONS` is closed. Legacy
+  single-clock actors that omit `(clock ...)`, `(reset ...)`, or
+  `(watchdog ...)` now normalize to `clk`, async active-low `rst_n`, and
+  watchdog `65535` exactly `(2^16 - 1)`. Explicit timing clauses remain
+  author-owned, named clock-domain actors keep domain-owned clock/reset
+  semantics, and omitted actor watchdogs still receive the `65535` default.
+  The parser, lowering IR, public contract metadata, focused tests, ISF spec,
+  downstream handoff, mdBook, and live docs all describe the same convention.
+  Same-name reusable-library clock/reset bindings can be inferred when the
+  defaulted parent timing policy exactly matches the child timing policy. The
+  active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -3068,7 +3080,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `t/1158` now advertises and proves schedule-report DT kind values:
   `drive`, `latency_counter`, and `rule`.
 - `t/1159` now advertises and proves schedule-report reset shape: configured
-  reset hashes and omitted reset JSON null.
+  and defaulted legacy single-clock reset hashes, with JSON null reserved for
+  domain-owned omitted resets.
 - `t/1160` now advertises and proves public actor-shell value shapes for
   `actor_name`, `transactions`, and `interface`.
 - `t/1161` now advertises and proves public facade boundary failures emit
@@ -3086,9 +3099,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   actor root, with non-scalar actor names rejected before returning an actor
   shell.
 - `t/1165` now advertises and proves public actor timing metadata for parser
-  handoff: scalar configured clocks, reset hash/null shape, and positive
-  integer/null watchdogs, with malformed timing declarations rejected before
-  returning an actor shell.
+  handoff: scalar clocks, defaulted legacy single-clock reset hashes, and
+  positive watchdogs, with omitted legacy timing normalized to `clk`,
+  async active-low `rst_n`, and `65535`, and malformed timing declarations
+  rejected before returning an actor shell.
 - `t/1166` now advertises and proves the public actor-shell `rules` entry
   shell: scalar rule names, optional `when`, and `actions` arrays, while
   keeping rule payloads private scheduler input and rejecting non-scalar rule

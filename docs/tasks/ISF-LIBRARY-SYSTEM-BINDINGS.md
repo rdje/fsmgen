@@ -26,8 +26,10 @@ to differently named parent clock/reset signals.
 
 ## Acceptance Criteria
 
-- Library `(bind (clock parent) (reset parent))` entries emit explicit generated
-  top links when the child system names differ from the parent names.
+- Same-name library clock/reset system bindings can be inferred when the parent
+  and child clock names match and the reset name/kind/polarity matches.
+- Library `(bind (clock parent) (reset parent))` entries emit explicit
+  generated top links when the child system names differ from the parent names.
 - Direct `.fsm +system` accepts HDL-identifier-compatible clock names so
   specialized library children with authored clock names can reach HDL.
 - Malformed clock names still fail closed with a targeted diagnostic.

@@ -3453,7 +3453,7 @@ sub _build_transaction($self, $tx, $actor, $txi, $generated_children = undef) {
 
     # Watchdog
     if ($ha && $wdc) {
-        my $lim = $wd // 65536;
+        my $lim = $wd // 65535;
         $ct{$wdc} = int(log($lim)/log(2)) + 1;
         $storage_roles{$wdc} = 'watchdog_counter';
         _inj_watchdog(\@st, $tn, $wdc, $lim, \%ct);
@@ -5513,7 +5513,7 @@ sub _ir_await {
         assignments => \@assignments,
         transitions => [],
         guard       => { port => $cl->[1] },
-        watchdog    => { name => "${tn}_wd", limit => $wd // 65536 },
+        watchdog    => { name => "${tn}_wd", limit => $wd // 65535 },
     };
 }
 sub _ir_atl_trigger {

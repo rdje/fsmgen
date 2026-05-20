@@ -10,7 +10,7 @@ This chapter shows the exact generated `.fsm` for each construct.
 (actor name
   (clock clk)
   (reset (rst_n async active_low))
-  (watchdog 65536)
+  (watchdog 65535)
   (interface ...)
   (drive ...)
   (transaction ...))
@@ -254,7 +254,7 @@ Explicit `async`/`active_low`/`active_high` override.
 ```lisp
 (apb_transfer_idle_0
   (= (can_accept 1))              ;; implicit: ready signal
-  (<- (apb_transfer_wd 65535))    ;; watchdog: load max-1
+  (<- (apb_transfer_wd 65534))    ;; watchdog: load max-1
   (<start                         ;; condition guard
     (<= (addr req_addr))          ;; sample: D-input capture
     (<= (is_write req_write))

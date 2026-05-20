@@ -1,5 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
+## 2026-05-20
+### R14 — ISF timing conventions completed
+- Completed `ISF-TIMING-CONVENTIONS.1`.
+- Legacy single-clock actors that omit `(clock ...)` now normalize to
+  `(clock clk)`.
+- Legacy single-clock actors that omit `(reset ...)` now normalize to
+  `(reset (rst_n async active_low))`.
+- Any actor that omits `(watchdog ...)` now lowers and reports watchdog
+  `65535`, exactly `(2^16 - 1)`.
+- Explicit timing clauses remain source-owned, and actors with
+  `(clock-domains ...)` keep domain-owned clock/reset semantics while omitted
+  actor watchdogs still receive the default.
+- Same-name reusable-library clock/reset bindings can be inferred when the
+  defaulted parent timing policy exactly matches the child timing policy.
+- Synchronized `ISF_SPEC.md`, the downstream integration handoff, the public
+  interface contract, the mdBook, live docs, and focused tests.
+- The `ISF-TIMING-CONVENTIONS` task tree is now closed; the active R14
+  frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+
 ## 2026-05-19
 ### R14 — ATL accepted-route source-order coverage completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
@@ -8567,7 +8587,8 @@ This is the persistent technical change history for FSMGen.
   `parse_source(...)` APB actors.
 ### R14 — ISF report reset-shape metadata audit
 - Added `schedule_report_reset_shape` to `embedding.isf_public_interface` for
-  configured reset hashes and omitted reset JSON null.
+  configured and defaulted legacy single-clock reset hashes, with null reserved
+  for domain-owned omitted resets.
 - Added [t/1159-isf-public-report-reset-shape-metadata-audit.t](t/1159-isf-public-report-reset-shape-metadata-audit.t)
   to prove the metadata is exact and aligned with APB plus inline no-reset
   reports.

@@ -1,5 +1,22 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: ISF timing omissions are parser-normalized conventions
+- `ISF-TIMING-CONVENTIONS.1` implements the user-requested
+  convention-over-configuration defaults at parser finalization time so every
+  downstream consumer sees one canonical actor shell.
+- The selected defaults are intentionally narrow: omitted legacy single-clock
+  actors receive `clk`, async active-low `rst_n`, and watchdog `65535`
+  exactly `(2^16 - 1)`. Explicit timing clauses stay source-owned, and
+  actors using `(clock-domains ...)` keep domain-owned clock/reset semantics.
+- Lowering and schedule reporting now use the same watchdog default as parser
+  metadata, so omitted watchdog behavior is consistent across generated
+  counters, schedule JSON, and public contract text.
+- Defaulted timing exposed one reusable-library edge case: a parent and child
+  that both use the same clock/reset policy should not require redundant
+  explicit `(system ...)` bindings. The parser now infers same-name
+  clock/reset bindings only when the reset name, kind, and polarity exactly
+  match.
+
 ## 2026-05-19: Accepted ATL route source order is now explicit
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97` adds the positive companion to the
   `.9.95` malformed-sink source-order hardening.
@@ -7539,10 +7556,11 @@ This document captures engineering rationale, design constraints, and working de
 ## 2026-05-13: R14 ISF actor-shell timing metadata audit
 - Parser-returned timing fields already drive scheduled `.fsm` and schedule
   report output. The contract now records their bounded parser-handoff shape:
-  scalar configured clock, reset hash/null, and positive integer/null watchdog.
-- This does not require reset or watchdog in every actor. It documents the
-  current optionality and rejects malformed timing declarations before they can
-  become public actor-shell data.
+  scalar clock, defaulted legacy single-clock reset hash, and positive
+  watchdog.
+- Legacy single-clock actors may omit clock, reset, or watchdog; those omissions
+  now normalize to `clk`, async active-low `rst_n`, and `65535` exactly
+  `(2^16 - 1)`. Named clock-domain actors keep domain-owned reset nullability.
 - `t/1165-isf-public-actor-shell-timing-shape-audit.t` locks the metadata
   across direct and manifest views, checks APB timing values, checks omitted
   reset/watchdog values, and covers malformed clock/reset/watchdog declarations.
@@ -7596,8 +7614,9 @@ This document captures engineering rationale, design constraints, and working de
   `parse_source(...)` actors.
 ## 2026-05-12: R14 ISF report reset-shape metadata audit
 - Reset key and enum metadata was already public, but the container/null rule
-  was still prose-only. The contract now records that configured reset is a
-  summary hash and omitted reset is JSON null.
+  was still prose-only. The current contract records configured and defaulted
+  legacy single-clock resets as summary hashes, with null reserved for
+  domain-owned omitted resets.
 - `t/1159-isf-public-report-reset-shape-metadata-audit.t` locks that field
   across direct and manifest views and checks APB plus inline no-reset reports.
 ## 2026-05-12: R14 ISF report DT kind metadata audit

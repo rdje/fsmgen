@@ -130,7 +130,7 @@ data through ports or bindings.
 ```lisp
 (apb_transfer_idle_0
   (= (can_accept 1))              ;; implicit ready
-  (<= (apb_transfer_wd 65535))    ;; watchdog: load max-1
+  (<= (apb_transfer_wd 65534))    ;; watchdog: load max-1
   (<start                         ;; condition guard
     (<= (addr req_addr))          ;; sample: (sample req_addr as addr)
     (<= (is_write req_write))     ;; sample: (sample req_write as is_write)

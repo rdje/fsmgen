@@ -6,11 +6,19 @@
 (actor apb_requester
   (clock clk)
   (reset (rst_n async active_low))
-  (watchdog 65536)
+  (watchdog 65535)
   ...)
 ```
 
-Every actor has a clock, an optional reset, and optional watchdog.
+Every legacy single-clock actor has a clock, reset policy, and watchdog after
+parser defaults are applied.
+
+When the author omits those timing clauses, FSMGen assumes `(clock clk)`,
+`(reset (rst_n async active_low))`, and `(watchdog 65535)`. The watchdog
+default is exactly `(2^16 - 1)`.
+
+Explicit `(clock ...)`, `(reset ...)`, and `(watchdog ...)` clauses override
+those defaults exactly as authored.
 
 The actor is the top-level unit — one hardware agent.
 
@@ -31,6 +39,9 @@ Legacy `(clock name)` ISF actors have one clock domain per actor/generated top.
 
 The clock name is an authored signal name for that domain; using a name other
 than `clk` does not create a second domain.
+
+If a legacy single-clock actor omits `(clock ...)`, the parser normalizes its
+clock to `clk`.
 
 Generated-top clock/reset links for reusable libraries are still
 single-domain signal-name bindings. They are not clock-domain-crossing
@@ -189,6 +200,7 @@ top/CDC HDL targets remain outside the shipped backend scope.
 ## Reset
 
 ```lisp
+(reset (rst_n async active_low))       ;; omitted reset default
 (reset rst_n)                          ;; sync, polarity from _n → active_low
 (reset (rst_n))                        ;; sync, polarity from _n
 (reset (rst_n async))                  ;; async, polarity from _n
@@ -197,6 +209,10 @@ top/CDC HDL targets remain outside the shipped backend scope.
 ```
 
 Reset name convention: `*_n` or `*_b` suffix → `active_low`. Otherwise `active_high`.
+
+If a legacy single-clock actor omits `(reset ...)`, the parser normalizes its
+reset to asynchronous active-low `rst_n`. Explicit flat `(reset name)` keeps
+the shipped synchronous reset shorthand.
 
 **Lowering to .fsm**:
 | ISF | .fsm |
@@ -224,10 +240,13 @@ and polarity match exactly, not a CDC primitive or data synchronizer.
 ## Watchdog
 
 ```lisp
-(watchdog 65536)
+(watchdog 65535)
 ```
 
 Global timeout for every `(await ...)` in this actor.
+
+If the author omits `(watchdog ...)`, the parser normalizes the watchdog to
+`65535`, exactly `(2^16 - 1)`.
 
 See [Transactions](13b-transactions.md) for per-await semantics.
 
@@ -313,7 +332,7 @@ accepted storage entry spellings.
 (actor apb_requester
   (clock clk)
   (reset (rst_n async active_low))
-  (watchdog 65536)
+  (watchdog 65535)
 
   (interface
     ;; Local side

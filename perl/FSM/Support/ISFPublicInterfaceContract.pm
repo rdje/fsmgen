@@ -516,6 +516,7 @@ sub build_isf_public_interface_contract {
             't/1328-isf-atl-trigger-wait-fixture-coverage.t',
             't/1329-isf-atl-trigger-batch-wait-fixture-coverage.t',
             't/1330-isf-atl-resolved-child-fixture-coverage.t',
+            't/1331-isf-timing-conventions.t',
         ],
         guidance => [
             'Treat this as the first bounded public ISF downstream-consumer contract, advertised through embedding.isf_public_interface.',
@@ -864,7 +865,7 @@ sub isf_public_interface_actor_shell_actor_name_shape {
 }
 
 sub isf_public_interface_actor_shell_timing_shape {
-    return 'clock is a non-empty scalar when configured and is the default-domain clock when clock_domains is present; reset is null when omitted or a hash with scalar name, kind, and polarity for the default domain; watchdog is null when omitted or a positive integer; source clock, reset, watchdog, interface, resources, storage, clock-domains, and crossings clauses are singleton actor clauses; multi-domain scheduler lower emits domain-specific scheduled .fsm artifacts plus a generated multi-domain top, and report calls expose bounded domain and crossing metadata';
+    return 'clock is a non-empty scalar; legacy single-clock actors omitted clock default to clk, and clock is the default-domain clock when clock_domains is present; legacy single-clock actors omitted reset default to async active-low rst_n, while reset is null only when the selected default clock-domain reset is omitted or is a hash with scalar name, kind, and polarity for the default domain; watchdog is a positive integer and omitted watchdog defaults to 65535 (2^16 - 1); source clock, reset, watchdog, interface, resources, storage, clock-domains, and crossings clauses are singleton actor clauses; multi-domain scheduler lower emits domain-specific scheduled .fsm artifacts plus a generated multi-domain top, and report calls expose bounded domain and crossing metadata';
 }
 
 sub isf_public_interface_actor_shell_interface_shape {
@@ -1306,7 +1307,7 @@ sub isf_public_interface_schedule_report_clock_shape {
 }
 
 sub isf_public_interface_schedule_report_watchdog_shape {
-    return 'scalar watchdog limit when configured; null when omitted';
+    return 'scalar watchdog limit; omitted watchdog clauses default to 65535 (2^16 - 1)';
 }
 
 sub isf_public_interface_schedule_report_actor_constant_keys {
@@ -1624,7 +1625,7 @@ sub isf_public_interface_schedule_report_reset_keys {
 }
 
 sub isf_public_interface_schedule_report_reset_shape {
-    return 'hash reference with schedule_report_reset_keys when configured; null when omitted';
+    return 'hash reference with schedule_report_reset_keys for configured or defaulted legacy single-clock reset; null only when the selected default clock-domain reset is omitted';
 }
 
 sub isf_public_interface_schedule_report_reset_kind_values {
@@ -1832,7 +1833,7 @@ sub isf_public_interface_schedule_report_temporal_contract_assertion_projection_
 }
 
 sub isf_public_interface_schedule_report_temporal_contract_reset_policy_shape {
-    return 'same bounded shape as top-level reset summary when reset is configured; null when the actor omits reset';
+    return 'same bounded shape as top-level reset summary when reset is configured or defaulted; null only when the selected default clock-domain reset is omitted';
 }
 
 sub isf_public_interface_schedule_report_dt_keys {

@@ -60,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-TIMING-CONVENTIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TIMING-CONVENTIONS.md](docs/tasks/ISF-TIMING-CONVENTIONS.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `done` | `project documentation` | `closed` | [docs/tasks/MDBOOK-PARAGRAPH-SPACING.md](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `CI-HOSTED-ISF-REGRESSION-CASCADE` | `done` | `project operations` | `closed` | [docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md](docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md) |
 | `CI-FULL-REGRESSION-GREEN` | `done` | `project operations` | `closed` | [docs/tasks/CI-FULL-REGRESSION-GREEN.md](docs/tasks/CI-FULL-REGRESSION-GREEN.md) |
@@ -203,6 +204,7 @@ as done work unless a future task reopens them.
 | I2C-like realistic fixture promotion | `ISF-I2C-FIXTURE-PROMOTION` |
 | Reusable ISF libraries/imports for generic actors and transactions | `ISF-LIBRARIES` |
 | Reusable-library clock/reset name remapping inside the single-clock-domain ISF model | `ISF-LIBRARY-SYSTEM-BINDINGS` |
+| Default actor timing conventions for omitted legacy single-clock actor clock/reset/watchdog clauses | `ISF-TIMING-CONVENTIONS` |
 | Multi-clock, asynchronous, and interacting clock-domain semantics | `ISF-CLOCK-DOMAINS` |
 | Multi-clock/CDC fixture matrix hardening | `ISF-CDC-FIXTURE-MATRIX` |
 | ISF enum/type/aggregate parity with existing `.fsm` semantic machinery | `ISF-TYPE-AGGREGATE-PARITY` |

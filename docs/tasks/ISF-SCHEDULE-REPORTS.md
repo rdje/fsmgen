@@ -126,7 +126,7 @@ Current bounded nested key families:
 
 | Report branch | Required keys | Optional keys / value families |
 | --- | --- | --- |
-| `reset` | `name`, `kind`, `polarity` | `kind` values: `async`, `sync`; `polarity` values: `active_high`, `active_low`; omitted reset reports as JSON null. |
+| `reset` | `name`, `kind`, `polarity` | `kind` values: `async`, `sync`; `polarity` values: `active_high`, `active_low`; configured and defaulted legacy single-clock resets report as objects, while domain-owned omitted resets report as JSON null. |
 | `inferred_storage[]` | `name`, `kind` | Optional `role`, `width`; `kind` values: `counter`, `register`; `role` values are the bounded storage purpose family; `width` is a positive integer when present. |
 | `transactions[]` | `name`, `states`, `count` | `states` keeps emitted scheduled-state order per transaction; `count` equals the states length. |
 | `transaction_stages[]` | `transaction`, `name`, `kind`, `state`, `ready`, `valid` | Current `kind` value: `ready_valid_barrier`. |
@@ -278,8 +278,9 @@ Contractual now:
   blocks, compile issues, compatible fan-in groups, priority resolutions,
   resource arbitration, and generated-composition summaries.
 - Existing advertised scalar policies are contractual: port and state counts
-  are non-negative integers, `port_count = inputs + outputs`, `watchdog` is a
-  scalar limit or null, and `reset` is a bounded reset object or null.
+  are non-negative integers, `port_count = inputs + outputs`, omitted
+  watchdogs default to scalar limit `65535`, and `reset` is a bounded reset
+  object except for domain-owned omitted resets, which report as null.
 - Advertised ordering policies are contractual for transactions and DT blocks.
   Generated `.fsm` text remains a review artifact; consumers should rely on
   the advertised order/count summaries rather than private IR layout.

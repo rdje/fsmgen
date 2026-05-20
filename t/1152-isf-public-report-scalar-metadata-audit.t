@@ -63,7 +63,7 @@ subtest 'schedule reports follow advertised scalar metadata' => sub {
     is($no_watchdog_report->{source}, 'scalar_probe.isf', 'inline report source basename is actor-derived');
     is($no_watchdog_report->{scheduled_fsm}, 'scalar_probe.fsm', 'inline report scheduled_fsm basename is actor-derived');
     is($no_watchdog_report->{clock}, 'clk_i', 'inline report clock is the actor clock signal');
-    ok(!defined($no_watchdog_report->{watchdog}), 'watchdog is null when omitted');
+    is($no_watchdog_report->{watchdog}, '65535', 'omitted watchdog defaults to 65535');
 };
 
 done_testing();

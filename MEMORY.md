@@ -1,5 +1,23 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ISF timing conventions completed
+- Completed `ISF-TIMING-CONVENTIONS.1`.
+- Legacy single-clock ISF actors that omit `(clock ...)` now normalize to
+  `(clock clk)`.
+- Legacy single-clock ISF actors that omit `(reset ...)` now normalize to
+  `(reset (rst_n async active_low))`.
+- Any ISF actor that omits `(watchdog ...)` now lowers and reports watchdog
+  limit `65535`, exactly `(2^16 - 1)`.
+- Explicit timing clauses remain author-owned, and actors with
+  `(clock-domains ...)` keep domain-owned clock/reset semantics while still
+  receiving the actor watchdog default when omitted.
+- The parser, lowering IR, public contract metadata, focused tests, ISF spec,
+  downstream handoff, mdBook, and task-tree/live docs are synchronized.
+- Same-name reusable-library clock/reset bindings can be inferred when the
+  defaulted parent timing policy exactly matches the child timing policy.
+- The active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`
+  and `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
+
 ## 2026-05-19: ATL accepted-route source-order coverage completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
@@ -9133,8 +9151,9 @@ This is the live continuity document for fast session recovery after crashes, re
   `parse_file(...)` plus `parse_source(...)` APB actors.
 ## 2026-05-12: R14 — ISF report reset-shape metadata audit
 - Added `schedule_report_reset_shape` to `embedding.isf_public_interface`,
-  documenting configured reset summaries as hashes with advertised reset keys
-  and omitted resets as JSON null.
+  documenting configured and defaulted legacy single-clock reset summaries as
+  hashes with advertised reset keys and domain-owned omitted resets as JSON
+  null.
 - Added `t/1159-isf-public-report-reset-shape-metadata-audit.t` to prove that
   metadata is exact across direct and manifest views and aligned with APB plus
   inline no-reset reports.
@@ -9184,7 +9203,7 @@ This is the live continuity document for fast session recovery after crashes, re
   `clock`, and `watchdog` to `embedding.isf_public_interface`.
 - Added `t/1152-isf-public-report-scalar-metadata-audit.t` to prove that
   metadata is exact across direct and manifest views and that APB plus inline
-  no-watchdog reports follow the advertised scalar/null shapes.
+  no-watchdog reports follow the advertised scalar default shapes.
 ## 2026-05-12: R14 — ISF report count metadata audit
 - Added `schedule_report_interface_count_shape` and
   `schedule_report_state_count_shape` to `embedding.isf_public_interface`,
@@ -9790,7 +9809,8 @@ This is the live continuity document for fast session recovery after crashes, re
 ## 2026-05-11: `.isf` specification v0.4 — sample everywhere, watchdog, spawn params
 - Revised [docs/ISF_SPEC.md](docs/ISF_SPEC.md) to v0.4:
   - `(sample ... as ...)` allowed anywhere in transaction body, not only inside `(on ...)`
-  - Every `(await ...)` carries implicit watchdog timer (default 2^16 cycles)
+  - Every `(await ...)` carries an implicit watchdog timer; the current omitted
+    watchdog convention is `65535` cycles, exactly `(2^16 - 1)`
   - `(spawn ...)` supports parameter passing; recursive spawn with no explicit limit
   - 3 resolved questions, 4 open questions remain
 ## 2026-05-11: `.isf` specification v0.3 — transaction composition, spawn, priority

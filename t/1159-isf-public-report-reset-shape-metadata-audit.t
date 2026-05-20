@@ -59,8 +59,15 @@ subtest 'schedule reports follow advertised reset shape' => sub {
         'configured reset exposes exactly the advertised reset keys',
     );
 
-    my $without_reset = report_for_source(no_reset_source(), 'inline-no-reset.isf');
-    ok(!defined($without_reset->{reset}), 'omitted reset is JSON null');
+    my $defaulted_reset = report_for_source(no_reset_source(), 'inline-no-reset.isf');
+    is_deeply(
+        $defaulted_reset->{reset},
+        { name => 'rst_n', kind => 'async', polarity => 'active_low' },
+        'legacy single-clock omitted reset defaults to async active-low rst_n',
+    );
+
+    my $domain_without_reset = report_for_source(domain_no_reset_source(), 'inline-domain-no-reset.isf');
+    ok(!defined($domain_without_reset->{reset}), 'domain-owned omitted reset is JSON null');
 };
 
 done_testing();
@@ -92,6 +99,18 @@ sub no_reset_source {
     return <<'ISF';
 (actor no_reset_probe
   (clock clk_i)
+  (interface
+    (output done))
+  (transaction main
+    (complete done)))
+ISF
+}
+
+sub domain_no_reset_source {
+    return <<'ISF';
+(actor domain_no_reset_probe
+  (clock-domains
+    (domain core (clock core_clk)))
   (interface
     (output done))
   (transaction main

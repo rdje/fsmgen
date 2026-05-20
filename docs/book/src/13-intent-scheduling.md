@@ -86,7 +86,7 @@ clear lower-layer mapping, and clear runtime behavior.
 (actor apb_requester
   (clock clk)
   (reset (rst_n async active_low))
-  (watchdog 65536)
+  (watchdog 65535)
 
   (interface
     (input  start)
@@ -182,9 +182,11 @@ rejected before actor-shell return.
 It also advertises `actor_name` as the
 non-empty scalar identifier preserved from the ISF actor root.
 
-Current actor timing handoff metadata is bounded too: `clock` is scalar when configured, `reset` is
-null when omitted or a scalar-field hash, and `watchdog` is null when omitted
-or a positive integer.
+Current actor timing handoff metadata is bounded too: omitted legacy
+single-clock actor timing defaults to clock `clk`, async active-low reset
+`rst_n`, and watchdog `65535`; with `clock-domains`, `clock` and `reset`
+expose the selected default-domain timing, and reset is null only when that
+domain omits reset.
 
 Rule entries are bounded as unique non-empty scalar
 `name`, optional `when`, and `actions` array shells while rule payload contents
@@ -402,8 +404,9 @@ overlap policy, and `systemverilog_sticky_fail` assertion projection as their
 current value families.
 
 Reset summaries advertise `async`/`sync`
-kind values and `active_high`/`active_low` polarity values; omitted resets are
-reported as JSON null.
+kind values and `active_high`/`active_low` polarity values. Configured and
+defaulted legacy single-clock resets report as hashes; reset is JSON null only
+when a selected default clock-domain omits reset.
 
 Interface count summaries count input and output ports by direction for single-clock reports;
 multi-domain reports count generated-top public ports including domain
@@ -415,8 +418,9 @@ use zero and put domain-local counts in `clock_domains[]`.
 
 Report `source` and
 `scheduled_fsm` are actor-derived basenames, `clock` is the actor clock signal
-or selected default-domain clock, and `watchdog` is scalar when configured or
-null when omitted.
+or selected default-domain clock, and omitted legacy single-clock clocks report
+as `clk`. `watchdog` is scalar after parser defaults; omitted watchdog clauses
+report as `65535`.
 
 The ISF live-document path list is
 audited across direct and manifest views so recovery pointers stay repo-local
@@ -444,8 +448,9 @@ The lower-result `files` map can include specialized library-child scheduled
 `.fsm` artifacts and a generated top that wires library actor instances through
 the normal composition/HDL path.
 
-Same-name clock/reset bindings use system-port
-auto-wiring.
+Same-name clock/reset bindings can be omitted when the parent and child clock
+names match and the reset name/kind/polarity matches. FSMGen records the
+inferred binding in the schedule report and uses system-port auto-wiring.
 
 Differently named reusable-actor clock/reset bindings emit
 explicit generated-top links to the child system ports, for example

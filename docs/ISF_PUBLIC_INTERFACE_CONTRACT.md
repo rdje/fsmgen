@@ -373,7 +373,8 @@ to keep advertised reset `kind` and `polarity` values exact across direct and
 manifest views.
 The reset container/null shape is checked by
 [t/1159-isf-public-report-reset-shape-metadata-audit.t](../t/1159-isf-public-report-reset-shape-metadata-audit.t)
-to keep configured reset summaries as hashes and omitted resets as JSON null.
+to keep configured and defaulted legacy single-clock reset summaries as hashes
+and domain-owned omitted resets as JSON null.
 The schedule-report count metadata is checked by
 [t/1151-isf-public-report-count-metadata-audit.t](../t/1151-isf-public-report-count-metadata-audit.t)
 to keep interface and state-count semantics exact across direct and manifest
@@ -692,6 +693,10 @@ The actor-shell timing shape is checked by
 [t/1165-isf-public-actor-shell-timing-shape-audit.t](../t/1165-isf-public-actor-shell-timing-shape-audit.t)
 to keep parser-returned `clock`, `reset`, and `watchdog` timing fields
 discoverable as bounded current handoff metadata.
+The default timing convention is checked by
+[t/1331-isf-timing-conventions.t](../t/1331-isf-timing-conventions.t)
+to keep omitted legacy single-clock timing normalized to clock `clk`, async
+active-low reset `rst_n`, and watchdog `65535`.
 The actor-shell rule shape is checked by
 [t/1166-isf-public-actor-shell-rule-shape-audit.t](../t/1166-isf-public-actor-shell-rule-shape-audit.t)
 to keep parser-returned rule entries discoverable as unique non-empty scalar
@@ -1614,9 +1619,11 @@ path-like file names such as `common.pulse.isf` and `common/pulse.isf`.
 resolution requires a real source path, so file-backed library use should call
 `parse_file(...)`. Resolved library actor instances emit a generated top when
 lowered for HDL: bound library inputs/outputs link directly between top ports
-and the library child instance. Same-name clock/reset bindings use the existing
-composition system-port auto-wiring path. Differently named clock/reset
-bindings emit explicit generated-top `?wiring` list links such as
+and the library child instance. Same-name clock/reset bindings can be inferred
+when the parent and child clock names match and the reset name/kind/polarity
+matches; they use the existing composition system-port auto-wiring path and
+are still reported in `library_uses[].bindings[]`. Differently named
+clock/reset bindings emit explicit generated-top `?wiring` list links such as
 `(clk rx.lib_clk)` to the library child system ports; the reusable actor still
 owns reset kind and polarity. That reusable-library system-binding surface is
 still signal-name binding, not CDC behavior by itself.
@@ -1884,14 +1891,17 @@ The current public parser handoff also advertises the actor identity shell:
 root. The machine-readable contract advertises this through
 `actor_shell_actor_name_shape`.
 The current public parser handoff also advertises bounded actor timing fields:
-`clock` is a non-empty scalar when configured and is the default-domain clock
-when `clock_domains` is present, `reset` is null when omitted or a hash with
-scalar `name`, `kind`, and `polarity` for the default domain, and `watchdog` is
-null when omitted or a positive integer. Public multi-domain `lower(...)`
-emits domain-specific scheduled `.fsm` artifacts plus a generated multi-domain
-top, and public `report(...)` exposes bounded domain and crossing report
-metadata. The machine-readable contract advertises this through
-`actor_shell_timing_shape`.
+`clock` is a non-empty scalar, with omitted legacy single-clock actor clocks
+defaulting to `clk`; `reset` is a default-domain hash with scalar `name`,
+`kind`, and `polarity`, with omitted legacy single-clock actor resets
+defaulting to async active-low `rst_n`; and `watchdog` is a positive integer,
+with omitted watchdog clauses defaulting to `65535` exactly `(2^16 - 1)`.
+When `clock_domains` is present, `clock` and `reset` expose the selected
+default-domain timing, and `reset` is null only when that domain omits reset.
+Public multi-domain `lower(...)` emits domain-specific scheduled `.fsm`
+artifacts plus a generated multi-domain top, and public `report(...)` exposes
+bounded domain and crossing report metadata. The machine-readable contract
+advertises this through `actor_shell_timing_shape`.
 Those timing fields, along with `interface`, parser-carried `resources`,
 parser-carried `storage`, and parser-carried `crossings`, are source-level
 singleton actor clauses. The `clock-domains` clause is also singleton and is
@@ -2344,7 +2354,8 @@ For each `temporal_contracts` entry, `kind` is currently
 reports the generated trigger state, observed signal, positive cycle bound,
 generated pending, counter, and fail signal names, and reset policy.
 `reset_policy` uses the same bounded shape as the top-level reset summary when
-reset is configured and is null when the actor omits reset. For
+reset is configured or defaulted and is null only when the selected
+default-domain reset is omitted. For
 SystemVerilog-family generation, FSMGen projects the generated sticky fail bit
 into a verification-only assertion under `` `ifndef SYNTHESIS``; Verilog
 output remains assertion-free. The machine-readable contract advertises these
@@ -2360,9 +2371,10 @@ For the `reset` summary, `kind` is currently `async` or `sync`, and `polarity`
 is currently `active_high` or `active_low`. The machine-readable contract
 advertises those value families through `schedule_report_reset_kind_values` and
 `schedule_report_reset_polarity_values`.
-When reset is configured, `reset` is a hash reference with
-`schedule_report_reset_keys`. When reset is omitted, `reset` is null. The
-machine-readable contract advertises this through `schedule_report_reset_shape`.
+When reset is configured or defaulted for a legacy single-clock actor, `reset`
+is a hash reference with `schedule_report_reset_keys`. When the selected
+default clock-domain reset is omitted, `reset` is null. The machine-readable
+contract advertises this through `schedule_report_reset_shape`.
 
 The top-level `inputs` and `outputs` values are non-negative integer counts.
 Single-clock reports count interface ports by direction. Multi-domain reports
@@ -2380,9 +2392,10 @@ schedule-report payload shape and is separate from the
 The top-level `source` value is an actor-derived `.isf` basename, and
 `scheduled_fsm` is the scheduled `.fsm` basename for the current report scope.
 Multi-domain reports use the generated `<actor>_top.fsm` artifact. `clock` is
-the scalar clock signal name from the actor declaration, or the selected
-default-domain clock when `clock_domains` is present. `watchdog` is a scalar
-limit when configured and null when omitted. The machine-readable contract
+the scalar clock signal name from the actor declaration, `clk` for omitted
+legacy single-clock actor clocks, or the selected default-domain clock when
+`clock_domains` is present. `watchdog` is a scalar limit, with omitted
+watchdog clauses normalized to `65535`. The machine-readable contract
 advertises these through
 `schedule_report_source_shape`, `schedule_report_scheduled_fsm_shape`,
 `schedule_report_clock_shape`, and `schedule_report_watchdog_shape`.

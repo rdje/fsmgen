@@ -58,14 +58,17 @@ subtest 'public parser facades return advertised actor timing shape' => sub {
 
     my $minimal = $adapter->parse_source(<<'ISF', 'minimal-timing.isf');
 (actor minimal_timing
-  (clock clk)
   (interface
     (input start)))
 ISF
 
-    is($minimal->{clock}, 'clk', 'minimal actor keeps scalar clock');
-    is($minimal->{reset}, undef, 'minimal actor omits reset as undef');
-    is($minimal->{watchdog}, undef, 'minimal actor omits watchdog as undef');
+    is($minimal->{clock}, 'clk', 'minimal actor defaults omitted clock to clk');
+    is_deeply(
+        $minimal->{reset},
+        { name => 'rst_n', kind => 'async', polarity => 'active_low' },
+        'minimal actor defaults omitted reset to async active-low rst_n',
+    );
+    is($minimal->{watchdog}, '65535', 'minimal actor defaults omitted watchdog to 65535');
 };
 
 subtest 'public parser rejects timing declarations that cannot satisfy the advertised shape' => sub {

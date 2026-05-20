@@ -175,10 +175,12 @@ live-contract metadata for scheduler-consumable actors, not a freeze of the
 full raw actor hash or the private transaction clause payloads.
 The actor identity shape is also explicit: `actor_name` is a non-empty scalar
 identifier preserved from the ISF actor root.
-Current actor timing fields are explicit too: `clock` is a non-empty scalar
-when configured, `reset` is null when omitted or a hash with scalar `name`,
-`kind`, and `polarity`, and `watchdog` is null when omitted or a positive
-integer.
+Current actor timing fields are explicit too: `clock` is a non-empty scalar.
+For legacy single-clock actors, omitted timing clauses default to `clock =
+clk`, `reset = { name: rst_n, kind: async, polarity: active_low }`, and
+`watchdog = 65535` exactly `(2^16 - 1)`. With `(clock-domains ...)`,
+`clock` and `reset` expose the selected default-domain timing, and `reset`
+is null only when that default domain omits reset ownership.
 Current rule entries are advertised as a bounded shell: `rules` is an array of
 entries with scalar `name`, optional `when`, and `actions` array fields. Rule
 condition/action payload contents remain private scheduler input.
@@ -547,13 +549,16 @@ When a library actor use is present, lowering also emits a generated top
 `<importing_actor>_top.fsm` that instantiates the importing actor and each
 library child actor. Bound library inputs are linked from top inputs directly
 to the library instance, and bound library outputs drive the corresponding top
-outputs. Same-name clock/reset bindings use the existing generated-composition
-system-port auto-wiring path. When the library actor's authored clock or reset
-name differs from the importing actor's bound parent signal, the generated top
-emits explicit Lisp-ish composition links such as `(clk rx.lib_clk)` or
-`(rst_n rx.lib_rst_n)`. The reusable actor still owns reset kind and polarity;
-the binding remaps only the signal identity seen at the parent boundary. This
-is not multi-clock-domain support. The current ISF scheduler still models one
+outputs. Same-name clock/reset system bindings can be omitted at the use site
+when the parent and child clock names match and the reset name/kind/polarity
+matches; FSMGen records the inferred bindings in `library_uses[].bindings[]`
+and uses the existing generated-composition system-port auto-wiring path.
+When the library actor's authored clock or reset name differs from the
+importing actor's parent signal, the generated top emits explicit Lisp-ish
+composition links such as `(clk rx.lib_clk)` or `(rst_n rx.lib_rst_n)`. The
+reusable actor still owns reset kind and polarity; the binding remaps only the
+signal identity seen at the parent boundary. This is not multi-clock-domain
+support. The current ISF scheduler still models one
 clock domain for an actor/generated top; multi-clock, asynchronous, and
 interacting clock-domain semantics remain unspecified and out of scope here.
 Successful schedule reports expose a bounded top-level `library_uses` array
@@ -1010,20 +1015,29 @@ library actors that import other libraries remain deferred.
 ## 4. Clock, Reset, Watchdog
 
 ```lisp
+;; Implicit legacy single-clock defaults when the author omits the clauses:
 (clock clk)
-(reset rst_n)
 (reset (rst_n async active_low))
-(watchdog 65536)
+(watchdog 65535)
+
+;; Explicit reset shorthand remains available:
+(reset rst_n)
 ```
 
 Reset rules:
+- A legacy single-clock actor that omits `(clock ...)` defaults to clock
+  signal `clk`.
+- A legacy single-clock actor that omits `(reset ...)` defaults to asynchronous
+  active-low reset signal `rst_n`.
+- Any actor that omits `(watchdog ...)` defaults to watchdog limit `65535`,
+  exactly `(2^16 - 1)`.
 - Clock names must be scalar when a `(clock ...)` clause is present.
 - `(clock ...)`, `(reset ...)`, and `(watchdog ...)` are actor-level
   singleton clauses; duplicates are rejected before actor-shell return.
 - ISF currently supports one actor clock domain. A non-`clk` name is just an
   authored signal name for that single domain, not a second or interacting
   clock domain.
-- Flat `(reset name)` defaults to synchronous reset.
+- Explicit flat `(reset name)` keeps the shipped synchronous reset shorthand.
 - Names ending in `_n` or `_b` infer `active_low`; other names infer
   `active_high`.
 - List form may include `async`, `active_low`, or `active_high`.
@@ -3467,7 +3481,7 @@ them.
     "kind": "async",
     "polarity": "active_low"
   },
-  "watchdog": "65536",
+  "watchdog": "65535",
   "actor_phases": [],
   "actor_stages": [],
   "actor_params": [],
@@ -3683,9 +3697,11 @@ The reset summary's `kind` value is currently `async` or `sync`, and its
 capability-manifest ISF public contract advertises those value families through
 `schedule_report_reset_kind_values` and
 `schedule_report_reset_polarity_values`.
-Configured reset summaries are hashes with the advertised reset keys; omitted
-resets are reported as JSON null. The capability-manifest ISF public contract
-advertises this through `schedule_report_reset_shape`.
+Configured and defaulted legacy single-clock reset summaries are hashes with
+the advertised reset keys. Reset is JSON null only when the selected
+default-domain reset is omitted in a `(clock-domains ...)` actor. The
+capability-manifest ISF public contract advertises this through
+`schedule_report_reset_shape`.
 The `clock_domains` array is empty for legacy one-clock actors. For accepted
 `(clock-domains ...)` actors, each entry exposes the domain name, default
 marker, clock/reset summary, scheduled domain artifact basename, local
@@ -3711,10 +3727,11 @@ advertises this through `schedule_report_interface_count_shape` and
 The top-level `source` and `scheduled_fsm` values are actor-derived `.isf` and
 `.fsm` basenames for the current report scope; for multi-domain reports,
 `scheduled_fsm` is the generated `<actor>_top.fsm` artifact. `clock` is the
-actor clock signal name, or the selected default-domain clock when
-`clock-domains` is present, and `watchdog` is a scalar limit when configured
-or null when omitted. The capability-manifest ISF public contract advertises
-this through `schedule_report_source_shape`,
+actor clock signal name, or `clk` when a legacy single-clock actor omits
+`(clock ...)`; with `clock-domains`, it is the selected default-domain clock.
+`watchdog` is always a scalar limit after parser defaults, with omitted
+`(watchdog ...)` normalized to `65535`. The capability-manifest ISF public
+contract advertises this through `schedule_report_source_shape`,
 `schedule_report_scheduled_fsm_shape`, `schedule_report_clock_shape`, and
 `schedule_report_watchdog_shape`.
 Successful reports keep `compile_issues` present as an array. Reports with no
@@ -4344,6 +4361,7 @@ Focused tests:
 - [t/1328-isf-atl-trigger-wait-fixture-coverage.t](../t/1328-isf-atl-trigger-wait-fixture-coverage.t)
 - [t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t](../t/1329-isf-atl-trigger-batch-wait-fixture-coverage.t)
 - [t/1330-isf-atl-resolved-child-fixture-coverage.t](../t/1330-isf-atl-resolved-child-fixture-coverage.t)
+- [t/1331-isf-timing-conventions.t](../t/1331-isf-timing-conventions.t)
 
 ## 12. Explicitly Deferred
 
