@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IR-EXPRESSION-AST-OWNERSHIP`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -38,7 +38,7 @@ conversion owner, and public/private boundary.
 ## Task Tree
 
 - ID: `IR-EXPRESSION-AST-OWNERSHIP`
-  Status: `active`
+  Status: `done`
   Goal: `Rationalize expression AST ownership and conversion boundaries.`
   Children: `IR-EXPRESSION-AST-OWNERSHIP.1`,
   `IR-EXPRESSION-AST-OWNERSHIP.2`, `IR-EXPRESSION-AST-OWNERSHIP.3`
@@ -59,26 +59,26 @@ conversion owner, and public/private boundary.
   actionable duplication, with no behavior-bearing refactor selected without
   a follow-up leaf.`
   Verification: `git diff --check`; `mdbook build docs/book`
-  Commit: `pending`
+  Commit: `60d36eb1 IR-EXPRESSION-AST-OWNERSHIP.2: classify expression ownership`
 
 - ID: `IR-EXPRESSION-AST-OWNERSHIP.3`
-  Status: `active`
+  Status: `done`
   Goal: `Create implementation leaves for actionable expression ownership fixes.`
   Acceptance: `Only concrete redundant conversions or unsafe ownership gaps
   become executable follow-up leaves with verification plans.`
-  Verification: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
   Commit: `pending`
 
 ## Current Frontier
 
-This tree is active. The current PNT frontier creates concrete implementation
-leaves for the actionable ownership fixes selected by `.2`.
+This tree is closed. The next architecture PNT frontier should activate one
+of the proposed follow-up trees created by `.3`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `IR-EXPRESSION-AST-OWNERSHIP.1` | `done` | Expression surfaces and conversion sites are inventoried. |
 | 2 | `IR-EXPRESSION-AST-OWNERSHIP.2` | `done` | Deliberate phase boundaries and actionable duplication are classified. |
-| 3 | `IR-EXPRESSION-AST-OWNERSHIP.3` | `active` | Actionable concerns need concrete behavior-preserving follow-up leaves before code changes. |
+| 3 | `IR-EXPRESSION-AST-OWNERSHIP.3` | `done` | Concrete behavior-preserving follow-up trees were created. |
 
 ## Expression Representation Inventory
 
@@ -137,6 +137,19 @@ creation.
   `ExpressionNamer` legacy hash/string boundaries, `GlobalASTManager` legacy
   status, duplicate `FSM::AST::Utils`, and tracked `ExpressionNamer.pm.new`.
 
+## Follow-up Trees Created
+
+`IR-EXPRESSION-AST-OWNERSHIP.3` created these proposed follow-up task trees.
+They are not implementation work yet; each must be activated before code
+changes begin.
+
+| Follow-up tree | Concern | Proposed first leaf |
+| --- | --- | --- |
+| [EXPR-NAMER-TRACKED-COPY-CLEANUP](EXPR-NAMER-TRACKED-COPY-CLEANUP.md) | Tracked package-identical `ExpressionNamer.pm.new` residue. | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` |
+| [EXPR-AST-UTILS-OWNER-CONSOLIDATION](EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) | Duplicate `FSM::AST::Utils` package definitions and broken standalone constructors. | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` |
+| [EXPR-NAMER-LEGACY-PARSE-BOUNDARY](EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) | `ExpressionNamer` object-AST naming plus legacy hash/string parser boundary. | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` |
+| [GLOBAL-AST-MANAGER-BOUNDARY](GLOBAL-AST-MANAGER-BOUNDARY.md) | Legacy `GlobalASTManager` ownership and reachability against live backend factorization owners. | `GLOBAL-AST-MANAGER-BOUNDARY.1` |
+
 ## Decisions
 
 - `2026-05-20`: Selected as an actionable follow-up from
@@ -149,13 +162,13 @@ creation.
 - `2026-05-20`: Completed `.2` by classifying phase-specific expression
   representations as deliberate, and selecting only concrete legacy/duplicate
   ownership concerns for `.3` follow-up leaf creation.
+- `2026-05-20`: Completed `.3` by creating proposed follow-up trees for every
+  actionable expression ownership concern and closing this audit tree.
 
 ## Open Questions
 
-- Which implementation leaves in `.3` should be done as removals versus
-  compatibility shims?
-- Should `ExpressionNamer` hash parsing be guarded as private compatibility
-  before any behavior-preserving caller cleanup?
+- None for this closed tree. The follow-up trees each own their open
+  implementation questions.
 
 ## Blockers
 
@@ -167,13 +180,15 @@ creation.
 | --- | --- | --- | --- |
 | `2026-05-20` | `IR-EXPRESSION-AST-OWNERSHIP.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
 | `2026-05-20` | `IR-EXPRESSION-AST-OWNERSHIP.2` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `IR-EXPRESSION-AST-OWNERSHIP.3` | `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `IR-EXPRESSION-AST-OWNERSHIP.1` | `74456538 IR-EXPRESSION-AST-OWNERSHIP.1: inventory expression surfaces` | Inventory committed; no compiler behavior changed. |
-| `IR-EXPRESSION-AST-OWNERSHIP.2` | `pending` | `pending` |
+| `IR-EXPRESSION-AST-OWNERSHIP.2` | `60d36eb1 IR-EXPRESSION-AST-OWNERSHIP.2: classify expression ownership` | Classification committed; no compiler behavior changed. |
+| `IR-EXPRESSION-AST-OWNERSHIP.3` | `pending` | `pending` |
 
 ## Changelog
 
@@ -181,5 +196,6 @@ creation.
   `.2` classification.
 - `2026-05-20`: Completed `.2` classification and advanced the active frontier
   to `.3` follow-up leaf creation.
+- `2026-05-20`: Completed `.3` follow-up creation and closed the tree.
 - `2026-05-20`: Created proposed follow-up task tree from
   `FSMGEN-IR-AUDIT.4`.

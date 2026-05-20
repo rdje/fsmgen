@@ -185,7 +185,11 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-RULE-TRIGGER-STORAGE-REPORTS.md` — completed `R14` task tree for rule-trigger source and payload-source storage schedule-report roles.
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — completed architecture task tree for current IR inventory, canonical/private boundary classification, repo-local IR policy, and consolidation follow-up selection.
 - `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md` — completed architecture follow-up that guarded the current direct-root `structural_rtl_ir` projection before future convergence work.
-- `docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md` — active architecture follow-up for expression representation ownership and conversion boundaries; `.1` inventoried the live expression surfaces, `.2` classified deliberate phase boundaries versus actionable duplication, and `.3` is creating concrete follow-up leaves.
+- `docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md` — completed architecture follow-up for expression representation ownership and conversion boundaries.
+- `docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md` — proposed architecture follow-up for removing or reclassifying the tracked `ExpressionNamer.pm.new` duplicate.
+- `docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md` — proposed architecture follow-up for collapsing duplicate `FSM::AST::Utils` ownership.
+- `docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md` — proposed architecture follow-up for guarding `ExpressionNamer` legacy hash/string parse boundaries.
+- `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — proposed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — proposed architecture follow-up for private ISF `LoweringIR` helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — proposed architecture follow-up for keeping `module_info` a bounded compatibility projection.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.

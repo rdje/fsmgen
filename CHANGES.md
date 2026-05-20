@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — Expression AST ownership follow-ups created
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.3` and closed the tree.
+- Created proposed follow-up task trees for the selected expression ownership
+  cleanup concerns:
+  [EXPR-NAMER-TRACKED-COPY-CLEANUP](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md),
+  [EXPR-AST-UTILS-OWNER-CONSOLIDATION](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md),
+  [EXPR-NAMER-LEGACY-PARSE-BOUNDARY](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
+  and [GLOBAL-AST-MANAGER-BOUNDARY](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md).
+- No compiler behavior changed.
+
 ### Architecture backlog — Expression AST ownership classification completed
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.2`.
 - Classified direct semantic `CoreAST`, backend `FSM::AST::*`, structural

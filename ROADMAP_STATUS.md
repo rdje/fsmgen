@@ -2,13 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `IR-EXPRESSION-AST-OWNERSHIP` is active. `.1` completed the factual
-  expression-surface inventory, `.2` classified deliberate phase boundaries
-  versus actionable duplication, and `.3` is the current frontier for
-  concrete follow-up leaf creation.
+  `IR-EXPRESSION-AST-OWNERSHIP` is closed after creating concrete proposed
+  follow-up trees for expression ownership cleanup. The next architecture PNT
+  candidate is `EXPR-NAMER-TRACKED-COPY-CLEANUP.1`, followed by
+  `EXPR-AST-UTILS-OWNER-CONSOLIDATION`,
+  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY`, and
+  `GLOBAL-AST-MANAGER-BOUNDARY`.
   Remaining proposed architecture follow-ups are
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` and `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `IR-EXPRESSION-AST-OWNERSHIP.3` created proposed follow-up task trees for
+  each actionable expression ownership concern: tracked
+  `ExpressionNamer.pm.new`, duplicate `FSM::AST::Utils`, `ExpressionNamer`
+  legacy hash/string parse boundaries, and legacy `GlobalASTManager`
+  ownership. The expression ownership audit tree is closed. No compiler
+  behavior changed.
+- Previous architecture backlog:
   `IR-EXPRESSION-AST-OWNERSHIP.2` classified direct semantic `CoreAST`,
   backend `FSM::AST::*`, structural `ConnectionExpr`, composition
   source-expression specs, actual literal support, aggregate type support,
@@ -2731,10 +2740,16 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   projection work.
 - Active architecture follow-up:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
-  is active. `.1` completed the expression-surface inventory, `.2`
+  is closed. `.1` completed the expression-surface inventory, `.2`
   classified deliberate phase separation versus accidental duplication, and
-  `.3` is now creating concrete behavior-preserving follow-up leaves before
-  any cleanup code is touched.
+  `.3` created proposed behavior-preserving follow-up trees before any cleanup
+  code is touched.
+- Proposed expression ownership follow-ups:
+  [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md),
+  [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md),
+  [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
+  and [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
+  now own the concrete expression cleanup candidates.
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed after `.3` added a no-op projection guard. Future direct-root
@@ -4091,13 +4106,15 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `architecture backlog`:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
-  is active. `.1` inventoried direct semantic `CoreAST`, backend
+  is closed. `.1` inventoried direct semantic `CoreAST`, backend
   `FSM::AST::*`, `ExpressionNamer` object/hash/string paths,
   `GlobalASTManager`, enable-graph conversion handoffs, structural
   `ConnectionExpr`, composition source-expression specs, actual literal
   lowering, and private ISF expression payloads. `.2` classified the
   deliberate phase boundaries and selected concrete ownership concerns.
-  `.3` is now creating follow-up leaves for those concerns.
+  `.3` created proposed follow-up trees for those concerns. The next PNT
+  candidate is
+  [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md).
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op

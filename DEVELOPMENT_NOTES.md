@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Expression cleanup now has concrete owners
+- `IR-EXPRESSION-AST-OWNERSHIP.3` closes the audit tree by creating proposed
+  task trees instead of letting cleanup concerns remain as loose notes.
+- The follow-ups are intentionally narrow: one tree for the tracked
+  `ExpressionNamer.pm.new` duplicate, one for duplicate `FSM::AST::Utils`
+  ownership, one for `ExpressionNamer` legacy parse-boundary guards, and one
+  for `GlobalASTManager` reachability/ownership.
+- This keeps later code changes reviewable and recoverable: each cleanup has
+  its own acceptance criteria, validation plan, and commit boundary.
+
 ## 2026-05-20: Expression AST duplication is mostly phase separation
 - `IR-EXPRESSION-AST-OWNERSHIP.2` deliberately does not choose one universal
   expression AST.

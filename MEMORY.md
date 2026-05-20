@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Expression AST ownership follow-up trees created
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.3` and closed the tree.
+- Created proposed follow-up trees for the actionable expression ownership
+  concerns:
+  [EXPR-NAMER-TRACKED-COPY-CLEANUP](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md),
+  [EXPR-AST-UTILS-OWNER-CONSOLIDATION](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md),
+  [EXPR-NAMER-LEGACY-PARSE-BOUNDARY](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
+  and [GLOBAL-AST-MANAGER-BOUNDARY](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md).
+- No compiler behavior changed.
+- The next architecture PNT candidate is
+  `EXPR-NAMER-TRACKED-COPY-CLEANUP.1`.
+
 ## 2026-05-20: Expression AST ownership classification completed
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.2`.
 - Classified `CoreAST`, backend `FSM::AST::*`, structural `ConnectionExpr`,

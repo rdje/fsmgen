@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — Expression AST ownership follow-up trees created
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.3` and closed the tree.
+- Proposed follow-up trees now own each cleanup candidate:
+  `EXPR-NAMER-TRACKED-COPY-CLEANUP`,
+  `EXPR-AST-UTILS-OWNER-CONSOLIDATION`,
+  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY`, and
+  `GLOBAL-AST-MANAGER-BOUNDARY`.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — Expression AST ownership classification completed
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.2`.
 - Deliberate phase boundaries remain separate: direct `CoreAST`, backend

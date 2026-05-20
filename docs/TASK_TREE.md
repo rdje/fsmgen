@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `IR-EXPRESSION-AST-OWNERSHIP` | `active` | `architecture backlog` | `IR-EXPRESSION-AST-OWNERSHIP.3` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
 
 ## Proposed Task Trees
 
@@ -53,6 +52,10 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `EXPR-NAMER-TRACKED-COPY-CLEANUP` | `proposed` | `architecture backlog` | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md) |
+| `EXPR-AST-UTILS-OWNER-CONSOLIDATION` | `proposed` | `architecture backlog` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) |
+| `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` | `proposed` | `architecture backlog` | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` | [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) |
+| `GLOBAL-AST-MANAGER-BOUNDARY` | `proposed` | `architecture backlog` | `GLOBAL-AST-MANAGER-BOUNDARY.1` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `proposed` | `architecture backlog` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
 | `MODULE-INFO-PROJECTION-GUARD` | `proposed` | `architecture backlog` | `MODULE-INFO-PROJECTION-GUARD.1` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 
@@ -60,6 +63,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `IR-EXPRESSION-AST-OWNERSHIP` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
 | `FSMGEN-IR-AUDIT` | `done` | `architecture backlog` | `closed` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
 | `ISF-ATL-DOC-STATUS-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md](docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md) |

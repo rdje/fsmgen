@@ -843,6 +843,12 @@ IR audit checkpoint:
   frontier is `.3`, which creates concrete follow-up leaves for the actionable
   residue: `ExpressionNamer` hash/string compatibility, `GlobalASTManager`,
   duplicate `FSM::AST::Utils`, and tracked `ExpressionNamer.pm.new`.
+- `IR-EXPRESSION-AST-OWNERSHIP.3` closed that audit by creating proposed
+  follow-up trees for each actionable expression ownership concern:
+  [EXPR-NAMER-TRACKED-COPY-CLEANUP](tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md),
+  [EXPR-AST-UTILS-OWNER-CONSOLIDATION](tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md),
+  [EXPR-NAMER-LEGACY-PARSE-BOUNDARY](tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
+  and [GLOBAL-AST-MANAGER-BOUNDARY](tasks/GLOBAL-AST-MANAGER-BOUNDARY.md).
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
