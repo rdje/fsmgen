@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Compound update variant corpus widening stays update-local
+- `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.1` selects supported compound
+  update variants for support-accounting promotion.
+- The implementation should promote existing `++`, `--`, compact `+=N` /
+  `-=N`, and inline compound modifier lowering without changing malformed
+  update-shorthand or inline-modifier diagnostics.
+
 ## 2026-05-21: Nested and compound guard support accounting proves enable composition
 - `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` promotes nested guarded blocks
   and compound suffix guards into the executable supported-smoke corpus.

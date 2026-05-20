@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — compound update variant widening selected
+- Completed `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused compound update variants.
+- No compiler behavior changed.
+
 ### R12 regression corpus — nested and compound guard widening shipped
 - Completed `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` and closed the task
   tree.

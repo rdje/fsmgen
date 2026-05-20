@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` closed the latest task tree by
-  promoting already-focused supported nested guarded blocks and compound
-  suffix guards into the maintained supported-smoke corpus. The next PNT pass
-  should select a new task tree before any further implementation.
+  `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.1` selected the next task tree
+  for promoting already-focused supported compound update variants into the
+  maintained supported-smoke corpus. The next frontier is
+  `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.2`.
+- Recent R12 compound update variant corpus-widening selection:
+  `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.1` selected a
+  behavior-neutral support-accounting slice for promoting `++`, `--`, compact
+  `+=N` / `-=N`, and inline `(+= N)` / `(-= N)` modifiers into
+  strict-supported corpus coverage.
 - Recent R12 nested/compound guard corpus-widening completion:
   `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` added one named
   supported-smoke corpus entry for nested guarded blocks, compound list-form
@@ -4661,13 +4666,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `R12`:
-  [docs/tasks/R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.md](docs/tasks/R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.md)
-  is closed. `.1` selected the nested and compound guard support-accounting
-  slice before implementation; `.2` promoted nested guarded blocks, compound
-  list-form guards, assignment suffix guards, and transition suffix guards into
-  a maintained supported-smoke corpus entry. The next PNT pass should select a
-  new R12 task tree before changing code, tests, sources, generated artifacts,
-  or config.
+  [docs/tasks/R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.md](docs/tasks/R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.md)
+  is active. `.1` selected the compound update variant support-accounting
+  slice before implementation. The current frontier is `.2`: promote `++`,
+  `--`, compact `+=N` / `-=N`, and inline `(+= N)` / `(-= N)` modifiers into a
+  maintained supported-smoke corpus entry with strict-supported metadata and
+  HDL-shape expectations.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

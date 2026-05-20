@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — compound update variant widening selected
+- Completed `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.2`.
+- The selected implementation will promote supported compound update variants
+  into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 regression corpus — nested and compound guard widening shipped
 - Completed `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` and closed the
   tree.

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: R12 compound update variant corpus widening selected
+- Completed `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused supported compound
+  update variants into maintained supported-smoke corpus coverage.
+- The next frontier is
+  `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.2`: add a bounded
+  fixture/catalog entry, strict-supported marker, HDL-shape checks, and
+  synchronized docs for the selected update family.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 nested and compound guard corpus widening shipped
 - Completed `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` and closed the
   tree.
