@@ -879,7 +879,11 @@ IR audit checkpoint:
   compatibility-only. The live runtime owner for direct SystemVerilog
   first-pass AST factorization is
   [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](../perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm).
-  `.2` is active to correct stale ownership wording and guard that boundary.
+- `GLOBAL-AST-MANAGER-BOUNDARY.2` corrected the stale
+  [perl/FSM/GlobalASTManager.pm](../perl/FSM/GlobalASTManager.pm) ownership
+  wording. The module is now documented as legacy compatibility support for
+  explicitly collected blessed `FSM::AST::*` object trees, not as the live
+  runtime factorization owner.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: GlobalASTManager wording now matches runtime ownership
+- `GLOBAL-AST-MANAGER-BOUNDARY.2` changes only the documentation/comments in
+  [perl/FSM/GlobalASTManager.pm](perl/FSM/GlobalASTManager.pm).
+- The correction matters because the previous header claimed broad "single
+  authority" status even though production direct SystemVerilog factorization
+  runs through `GlobalFactorizationSupport`.
+- The compatibility behavior remains in place for blessed `FSM::AST::*`
+  object trees, and the focused compatibility/live-owner tests still pass.
+
 ## 2026-05-20: GlobalASTManager is compatibility support, not live owner
 - `GLOBAL-AST-MANAGER-BOUNDARY.1` separates historical naming from current
   runtime ownership.

@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `GLOBAL-AST-MANAGER-BOUNDARY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -36,7 +36,7 @@ accidentally.
 ## Task Tree
 
 - ID: `GLOBAL-AST-MANAGER-BOUNDARY`
-  Status: `active`
+  Status: `done`
   Goal: `Classify and resolve GlobalASTManager ownership.`
   Children: `GLOBAL-AST-MANAGER-BOUNDARY.1`,
   `GLOBAL-AST-MANAGER-BOUNDARY.2`
@@ -50,23 +50,23 @@ accidentally.
   Commit: `GLOBAL-AST-MANAGER-BOUNDARY.1: classify GlobalASTManager boundary`
 
 - ID: `GLOBAL-AST-MANAGER-BOUNDARY.2`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected boundary cleanup or guard.`
   Acceptance: `The selected retirement, shim, or documentation guard is
   implemented with focused validation and no generated behavior drift.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `focused compatibility and live-owner tests passed`
+  Commit: `GLOBAL-AST-MANAGER-BOUNDARY.2: correct GlobalASTManager boundary`
 
 ## Current Frontier
 
-The active frontier is `GLOBAL-AST-MANAGER-BOUNDARY.2`, selected to correct
-the module/documentation boundary for compatibility-only status without
-changing generated behavior.
+This tree is closed. `FSM::GlobalASTManager` is documented as legacy
+compatibility support for explicitly collected blessed AST objects, not the
+live direct-backend factorization owner.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `GLOBAL-AST-MANAGER-BOUNDARY.1` | `done` | Runtime reachability and compatibility-only status are classified. |
-| 2 | `GLOBAL-AST-MANAGER-BOUNDARY.2` | `active` | Correct stale ownership claims and guard the compatibility boundary. |
+| 2 | `GLOBAL-AST-MANAGER-BOUNDARY.2` | `done` | Corrected stale ownership claims and validated the compatibility boundary. |
 
 ## Decisions
 
@@ -84,6 +84,11 @@ changing generated behavior.
   wording and guard/document the compatibility boundary rather than remove
   the module immediately. Existing compatibility tests still cover blessed
   `FSM::AST::*` object inputs.
+- `2026-05-20`: Corrected
+  [perl/FSM/GlobalASTManager.pm](../../perl/FSM/GlobalASTManager.pm) POD and
+  comments so the module no longer claims production-wide "single authority"
+  ownership. The live runtime owner remains
+  `FSM::HDL::FlattenedDT::Backend::SystemVerilog::GlobalFactorizationSupport`.
 
 ## Open Questions
 
@@ -100,12 +105,14 @@ changing generated behavior.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `GLOBAL-AST-MANAGER-BOUNDARY.1` | `rg -n -- 'use FSM::GlobalASTManager|FSM::GlobalASTManager->new|GlobalFactorizationSupport' perl t bin`; `perl -Iperl -c perl/FSM/GlobalASTManager.pm`; `prove -Iperl t/542-global-ast-manager-signal-ref-name-compatibility-audit.t t/211-systemverilog-global-factorization-support.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `GLOBAL-AST-MANAGER-BOUNDARY.2` | `perl -Iperl -c perl/FSM/GlobalASTManager.pm`; `prove -Iperl t/542-global-ast-manager-signal-ref-name-compatibility-audit.t t/211-systemverilog-global-factorization-support.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `GLOBAL-AST-MANAGER-BOUNDARY.1` | `GLOBAL-AST-MANAGER-BOUNDARY.1: classify GlobalASTManager boundary` | Classifies the module as compatibility-only and selects wording/guard cleanup. |
+| `GLOBAL-AST-MANAGER-BOUNDARY.2` | `GLOBAL-AST-MANAGER-BOUNDARY.2: correct GlobalASTManager boundary` | Corrects stale module ownership wording and closes the tree. |
 
 ## Changelog
 
@@ -113,6 +120,8 @@ changing generated behavior.
   `IR-EXPRESSION-AST-OWNERSHIP.3`.
 - `2026-05-20`: Activated `.1`, classified the current reachability boundary,
   and advanced `.2` for stale ownership wording/guard cleanup.
+- `2026-05-20`: Completed `.2` by correcting module ownership wording and
+  closing the tree.
 
 ## Reachability And Ownership Audit
 

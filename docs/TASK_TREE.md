@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `GLOBAL-AST-MANAGER-BOUNDARY` | `active` | `architecture backlog` | `GLOBAL-AST-MANAGER-BOUNDARY.2` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
 
 ## Proposed Task Trees
 
@@ -60,6 +59,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `GLOBAL-AST-MANAGER-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) |
 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) |
 | `EXPR-NAMER-TRACKED-COPY-CLEANUP` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md) |

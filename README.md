@@ -189,7 +189,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md` — completed architecture follow-up that removed the tracked `ExpressionNamer.pm.new` duplicate.
 - `docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md` — completed architecture follow-up that collapsed duplicate `FSM::AST::Utils` ownership.
 - `docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md` — completed architecture follow-up for guarding `ExpressionNamer` legacy hash/string parse boundaries.
-- `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — active architecture follow-up for resolving legacy `GlobalASTManager` ownership.
+- `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — proposed architecture follow-up for private ISF `LoweringIR` helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — proposed architecture follow-up for keeping `module_info` a bounded compatibility projection.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.

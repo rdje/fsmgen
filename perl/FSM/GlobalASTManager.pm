@@ -11,18 +11,29 @@ use FSM::Debug;
 
 =head1 NAME
 
-FSM::GlobalASTManager - Centralized Global AST Factorization and Naming
+FSM::GlobalASTManager - Legacy blessed-AST compatibility factorization helper
 
 =head1 DESCRIPTION
 
-This is the SINGLE AUTHORITY for all AST analysis and naming in the design.
-It collects ALL ASTs from the entire design, performs global factorization 
-analysis, and assigns consistent names to ASTs and sub-ASTs that occur multiple times.
+This module is legacy compatibility support for blessed C<FSM::AST::*> object
+trees. It is not the live direct-backend global factorization owner.
+
+The live direct SystemVerilog first-pass factorization path is owned by
+C<FSM::HDL::FlattenedDT::Backend::SystemVerilog::GlobalFactorizationSupport>.
+That backend owner is constructed by C<FSM::HDL::FlattenedDT> and is the
+runtime path used by direct HDL generation.
+
+C<FSM::GlobalASTManager> remains useful only for compatibility tests and any
+explicit legacy caller that already passes blessed AST objects. It intentionally
+does not treat unblessed legacy hash ASTs from C<FSM::ExpressionNamer> as
+collectable AST objects.
 
 Key principles:
 - ONE name per unique AST structure (structural equality)
-- Global analysis of ALL ASTs before any naming decisions
-- Centralized authority - nothing else creates intermediate signal names
+- Compatibility analysis of explicitly collected blessed ASTs before naming
+  decisions
+- Compatibility helper only; it is not the production intermediate-signal
+  authority
 - Binary ops (A op B) and unary ops (op A) get factored if they occur multiple times
 - Identical AST structures ALWAYS get the same name
 
@@ -504,7 +515,7 @@ sub ensure_unique_name ($self, $base_name) {
 #========================================================================
 
 sub run_global_factorization ($self, $flattened_dt_generator) {
-    # Run the complete global factorization process
+    # Run the legacy compatibility factorization process for blessed ASTs.
     
     fsm_debug("GAM-DEBUG: \n=== STARTING GLOBAL AST FACTORIZATION ===", 3);
     
