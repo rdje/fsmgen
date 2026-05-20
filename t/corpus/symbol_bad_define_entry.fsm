@@ -1,0 +1,12 @@
+(?fsm:symbol_bad_define_entry
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+define
+    (D0)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

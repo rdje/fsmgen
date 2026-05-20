@@ -160,6 +160,9 @@ Init-directive shape entries cover malformed `:=` payloads such as
 compact `:=` directives such as `(:= BROKEN)`.
 Empty symbol-section entries cover empty `+constants`, `+define`, `+params`,
 and `+enums` forms that have no symbol declarations.
+Malformed symbol-entry entries cover malformed `+constants`, `+define`,
+`+params`, and `+enums` member payloads that do not match their required
+entry shapes.
 Test-selector entries cover malformed plain `?SIG` signal names and computed
 test selectors that omit their selector expression. Those entries are not only
 prose examples. Inline-modifier entries cover malformed compound modifier
@@ -219,6 +222,10 @@ FSMGEN_LANGUAGE_EMPTY_CONSTANTS_SECTION
 FSMGEN_LANGUAGE_EMPTY_DEFINE_DIRECTIVE
 FSMGEN_LANGUAGE_EMPTY_PARAMS_SECTION
 FSMGEN_LANGUAGE_EMPTY_ENUMS_SECTION
+FSMGEN_LANGUAGE_MALFORMED_CONSTANTS_ENTRY
+FSMGEN_LANGUAGE_MALFORMED_DEFINE_ENTRY
+FSMGEN_LANGUAGE_MALFORMED_PARAMS_ENTRY
+FSMGEN_LANGUAGE_MALFORMED_ENUMS_MEMBER
 FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL
 FSMGEN_LANGUAGE_MALFORMED_COMPUTED_TEST_SELECTOR
 FSMGEN_LANGUAGE_MALFORMED_INLINE_MODIFIER

@@ -385,6 +385,30 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A +enums section had no entries.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_CONSTANTS_ENTRY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +constants entry did not match the supported shape.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_DEFINE_ENTRY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +define entry did not match the supported shape.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_PARAMS_ENTRY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +params entry did not match the supported shape.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_ENUMS_MEMBER => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +enums member did not match the supported shape.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

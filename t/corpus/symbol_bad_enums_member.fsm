@@ -1,0 +1,14 @@
+(?fsm:symbol_bad_enums_member
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+enums
+    (mode
+      BROKEN
+    )
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Malformed symbol-entry support accounting keeps fixes specific
+- `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.2` promotes existing malformed
+  symbol-entry diagnostics without changing declaration syntax.
+- `+constants`, `+define`, `+params`, and `+enums` member shape failures use
+  separate stable codes so downstream tools can map each failure to its own
+  declaration grammar.
+
 ## 2026-05-20: Malformed symbol-entry corpus widening stays entry-local
 - `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.1` selects malformed
   symbol-definition entry diagnostics for support-accounting promotion.
