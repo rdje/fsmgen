@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ExpressionNamer tracked duplicate removed
+- Completed `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` and closed the tree.
+- Removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate
+  after static search found no runtime or test load path.
+- The live owner remains [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm).
+- Expression naming behavior is unchanged.
+- The next architecture PNT candidate is
+  `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`.
+
 ## 2026-05-20: Expression AST ownership follow-up trees created
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.3` and closed the tree.
 - Created proposed follow-up trees for the actionable expression ownership

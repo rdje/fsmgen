@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — ExpressionNamer tracked duplicate removed
+- Completed `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` and closed the tree.
+- Removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` source file
+  after static search found no runtime or test load path.
+- The live `FSM::ExpressionNamer` owner remains
+  [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm).
+- No expression naming behavior changed.
+
 ### Architecture backlog — Expression AST ownership follow-ups created
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.3` and closed the tree.
 - Created proposed follow-up task trees for the selected expression ownership

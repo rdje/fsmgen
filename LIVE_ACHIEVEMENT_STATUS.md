@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — ExpressionNamer tracked duplicate removed
+- Completed `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` and closed the tree.
+- Removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate
+  after static search found no runtime or test load path.
+- The live owner remains [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm).
+- No expression naming behavior changed.
+
 ## 2026-05-20: Architecture backlog — Expression AST ownership follow-up trees created
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.3` and closed the tree.
 - Proposed follow-up trees now own each cleanup candidate:

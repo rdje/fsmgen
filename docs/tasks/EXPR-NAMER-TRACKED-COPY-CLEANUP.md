@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `EXPR-NAMER-TRACKED-COPY-CLEANUP`
-- Status: `proposed`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -11,10 +11,8 @@
 
 ## Goal
 
-Remove or explicitly reclassify the tracked
-[perl/FSM/ExpressionNamer.pm.new](../../perl/FSM/ExpressionNamer.pm.new)
-package duplicate so review has one obvious `FSM::ExpressionNamer` source of
-truth.
+Remove the formerly tracked `perl/FSM/ExpressionNamer.pm.new` package
+duplicate so review has one obvious `FSM::ExpressionNamer` source of truth.
 
 ## Non-Goals
 
@@ -37,37 +35,42 @@ truth.
 ## Task Tree
 
 - ID: `EXPR-NAMER-TRACKED-COPY-CLEANUP`
-  Status: `proposed`
+  Status: `done`
   Goal: `Clean up the tracked ExpressionNamer duplicate.`
   Children: `EXPR-NAMER-TRACKED-COPY-CLEANUP.1`
 
 - ID: `EXPR-NAMER-TRACKED-COPY-CLEANUP.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Remove or reclassify ExpressionNamer.pm.new.`
   Acceptance: `The tracked duplicate no longer creates package-level source
   ambiguity, and focused expression-namer validation passes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `static reference audit plus focused expression-namer checks passed`
+  Commit: `EXPR-NAMER-TRACKED-COPY-CLEANUP.1: remove tracked ExpressionNamer copy`
 
 ## Current Frontier
 
-This tree is proposed, not active. Activate it before editing or removing
-[perl/FSM/ExpressionNamer.pm.new](../../perl/FSM/ExpressionNamer.pm.new).
+This tree is closed. The tracked duplicate was removed after static search
+confirmed no live load/reference outside documentation.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | `proposed` | This is the smallest concrete expression ownership cleanup. |
+| 1 | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | `done` | The tracked duplicate source file was removed. |
 
 ## Decisions
 
 - `2026-05-20`: Created from `IR-EXPRESSION-AST-OWNERSHIP.3` because static
   search found no references loading `ExpressionNamer.pm.new`, but it declares
   the same package name as the live module.
+- `2026-05-20`: Selected removal rather than archival reclassification because
+  no runtime or test path loads the duplicate, while the live module remains
+  [perl/FSM/ExpressionNamer.pm](../../perl/FSM/ExpressionNamer.pm).
+- `2026-05-20`: Removed the formerly tracked
+  `perl/FSM/ExpressionNamer.pm.new` source file. The live owner remains
+  [perl/FSM/ExpressionNamer.pm](../../perl/FSM/ExpressionNamer.pm).
 
 ## Open Questions
 
-- Should the duplicate be removed outright, or does the user want it preserved
-  as non-source archival material?
+- None for the active removal leaf.
 
 ## Blockers
 
@@ -77,15 +80,17 @@ This tree is proposed, not active. Activate it before editing or removing
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-20` | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | `pending` | `pending` |
+| `2026-05-20` | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | `rg -n 'ExpressionNamer\.pm\.new' perl t bin`; `perl -Iperl -c perl/FSM/ExpressionNamer.pm`; `prove -Iperl t/520-expression-namer-query-defensive-copy-boundary-audit.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | `pending` | `pending` |
+| `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1: remove tracked ExpressionNamer copy` | Removes the duplicate package file; live owner remains `perl/FSM/ExpressionNamer.pm`. |
 
 ## Changelog
 
 - `2026-05-20`: Created proposed follow-up task tree from
   `IR-EXPRESSION-AST-OWNERSHIP.3`.
+- `2026-05-20`: Activated `.1`, removed the duplicate source file, and closed
+  the tree after focused validation.

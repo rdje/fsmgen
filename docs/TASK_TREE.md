@@ -52,7 +52,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `EXPR-NAMER-TRACKED-COPY-CLEANUP` | `proposed` | `architecture backlog` | `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` | [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md) |
 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION` | `proposed` | `architecture backlog` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) |
 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` | `proposed` | `architecture backlog` | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` | [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) |
 | `GLOBAL-AST-MANAGER-BOUNDARY` | `proposed` | `architecture backlog` | `GLOBAL-AST-MANAGER-BOUNDARY.1` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
@@ -63,6 +62,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `EXPR-NAMER-TRACKED-COPY-CLEANUP` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md) |
 | `IR-EXPRESSION-AST-OWNERSHIP` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
 | `FSMGEN-IR-AUDIT` | `done` | `architecture backlog` | `closed` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |

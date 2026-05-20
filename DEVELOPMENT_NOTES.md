@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: ExpressionNamer tracked duplicate removed
+- `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` removes the tracked
+  `perl/FSM/ExpressionNamer.pm.new` duplicate after static search found no
+  live runtime or test load path for it.
+- This is intentionally a source-of-truth cleanup, not a behavior change:
+  [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm) remains the live
+  owner for `FSM::ExpressionNamer`.
+- The next expression cleanup can now focus on the duplicate `FSM::AST::Utils`
+  ownership boundary without also carrying a second `ExpressionNamer` package
+  file in review.
+
 ## 2026-05-20: Expression cleanup now has concrete owners
 - `IR-EXPRESSION-AST-OWNERSHIP.3` closes the audit tree by creating proposed
   task trees instead of letting cleanup concerns remain as loose notes.

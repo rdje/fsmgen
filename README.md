@@ -186,7 +186,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/FSMGEN-IR-AUDIT.md` — completed architecture task tree for current IR inventory, canonical/private boundary classification, repo-local IR policy, and consolidation follow-up selection.
 - `docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md` — completed architecture follow-up that guarded the current direct-root `structural_rtl_ir` projection before future convergence work.
 - `docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md` — completed architecture follow-up for expression representation ownership and conversion boundaries.
-- `docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md` — proposed architecture follow-up for removing or reclassifying the tracked `ExpressionNamer.pm.new` duplicate.
+- `docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md` — completed architecture follow-up that removed the tracked `ExpressionNamer.pm.new` duplicate.
 - `docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md` — proposed architecture follow-up for collapsing duplicate `FSM::AST::Utils` ownership.
 - `docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md` — proposed architecture follow-up for guarding `ExpressionNamer` legacy hash/string parse boundaries.
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — proposed architecture follow-up for resolving legacy `GlobalASTManager` ownership.

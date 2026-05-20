@@ -849,6 +849,13 @@ IR audit checkpoint:
   [EXPR-AST-UTILS-OWNER-CONSOLIDATION](tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md),
   [EXPR-NAMER-LEGACY-PARSE-BOUNDARY](tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
   and [GLOBAL-AST-MANAGER-BOUNDARY](tasks/GLOBAL-AST-MANAGER-BOUNDARY.md).
+- `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` removed the formerly tracked
+  `perl/FSM/ExpressionNamer.pm.new` duplicate after static search found no
+  runtime or test load path. The single live `FSM::ExpressionNamer` owner in
+  this import tree is
+  [perl/FSM/ExpressionNamer.pm](../perl/FSM/ExpressionNamer.pm). The next
+  expression cleanup candidate is
+  [EXPR-AST-UTILS-OWNER-CONSOLIDATION.1](tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md).
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

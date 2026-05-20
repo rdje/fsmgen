@@ -4,13 +4,18 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - Active lane: `architecture backlog`.
   `IR-EXPRESSION-AST-OWNERSHIP` is closed after creating concrete proposed
   follow-up trees for expression ownership cleanup. The next architecture PNT
-  candidate is `EXPR-NAMER-TRACKED-COPY-CLEANUP.1`, followed by
-  `EXPR-AST-UTILS-OWNER-CONSOLIDATION`,
-  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY`, and
+  candidate is `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`, followed by
+  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` and
   `GLOBAL-AST-MANAGER-BOUNDARY`.
   Remaining proposed architecture follow-ups are
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` and `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` removed the formerly tracked
+  `perl/FSM/ExpressionNamer.pm.new` duplicate after static search found no
+  runtime or test load path. The live owner remains
+  [perl/FSM/ExpressionNamer.pm](perl/FSM/ExpressionNamer.pm). Expression
+  naming behavior is unchanged.
+- Previous architecture backlog:
   `IR-EXPRESSION-AST-OWNERSHIP.3` created proposed follow-up task trees for
   each actionable expression ownership concern: tracked
   `ExpressionNamer.pm.new`, duplicate `FSM::AST::Utils`, `ExpressionNamer`
@@ -2745,11 +2750,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `.3` created proposed behavior-preserving follow-up trees before any cleanup
   code is touched.
 - Proposed expression ownership follow-ups:
-  [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md),
   [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md),
   [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
   and [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
   now own the concrete expression cleanup candidates.
+- Closed expression ownership follow-up:
+  [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
+  removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate.
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed after `.3` added a no-op projection guard. Future direct-root
@@ -4112,9 +4119,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `ConnectionExpr`, composition source-expression specs, actual literal
   lowering, and private ISF expression payloads. `.2` classified the
   deliberate phase boundaries and selected concrete ownership concerns.
-  `.3` created proposed follow-up trees for those concerns. The next PNT
-  candidate is
-  [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md).
+  `.3` created proposed follow-up trees for those concerns, and
+  [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
+  has already removed the tracked duplicate. The next PNT candidate is
+  [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md).
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op
