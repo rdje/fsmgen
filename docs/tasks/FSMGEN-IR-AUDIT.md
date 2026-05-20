@@ -73,16 +73,16 @@ set, lifecycle, and documented handoff contract.
   Commit: `FSMGEN-IR-AUDIT.2: classify IR boundaries`
 
 - ID: `FSMGEN-IR-AUDIT.3`
-  Status: `active`
+  Status: `done`
   Goal: `Define the repo-local policy for adding or extending IRs.`
   Acceptance: `The policy says what a new IR must document before landing:
   owner, producer, consumers, invariants, serialization/report contract,
   defensive-copy boundary, and migration/retirement plan if temporary.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
+  Commit: `FSMGEN-IR-AUDIT.3: define IR policy`
 
 - ID: `FSMGEN-IR-AUDIT.4`
-  Status: `proposed`
+  Status: `active`
   Goal: `Propose consolidation or standardization follow-up slices.`
   Acceptance: `Concrete follow-up leaves are created only where the audit
   finds actionable duplication, unsafe handoffs, or missing canonical
@@ -92,14 +92,16 @@ set, lifecycle, and documented handoff contract.
 
 ## Current Frontier
 
-This tree is active. The current PNT frontier is the repo-local policy for
-adding, extending, freezing, or retiring IR boundaries.
+This tree is active. The current PNT frontier is concrete consolidation or
+standardization follow-up selection from the inventory, classification, and
+policy.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-IR-AUDIT.1` | `done` | Completed factual inventory before prescribing consolidation. |
 | 2 | `FSMGEN-IR-AUDIT.2` | `done` | Classified which inventoried structures are canonical phase boundaries versus private/local projections. |
-| 3 | `FSMGEN-IR-AUDIT.3` | `active` | Turn the inventory/classification into repo-local policy for future IR changes. |
+| 3 | `FSMGEN-IR-AUDIT.3` | `done` | Defined repo-local policy for future IR changes. |
+| 4 | `FSMGEN-IR-AUDIT.4` | `active` | Select concrete follow-up leaves only where the audit found actionable duplication, unsafe handoffs, or missing ownership. |
 
 ## Initial IR Inventory Targets
 
@@ -216,6 +218,28 @@ Classification conclusions:
   details. A later follow-up may clean or standardize them, but `.2` does not
   select that refactor.
 
+## Repo-Local IR Policy
+
+`FSMGEN-IR-AUDIT.3` moved durable policy into
+[docs/IR_POLICY.md](../IR_POLICY.md). The policy requires any new or extended
+IR-like surface to document its name, phase, owner, producers, consumers,
+invariants, mutation/defensive-copy policy, public/private status,
+serialization/report contract, validation, documentation impact, and
+migration/retirement plan when temporary or overlapping.
+
+Policy conclusions:
+
+- Reuse or extend an existing IR when the new facts belong to the same phase
+  and can preserve that boundary's invariants.
+- Create a new IR only for a distinct compiler phase boundary or a stable
+  cross-phase handoff that cannot safely stay local.
+- Keep private helpers private. Downstream consumers should see bounded
+  projections, contract metadata, or artifacts, not raw compiler objects.
+- Treat textual handoffs as real boundaries only when the artifact is
+  deliberately inspectable and tested, such as the scheduled `.fsm` output.
+- Require explicit migration or retirement notes when a surface overlaps an
+  older one or is temporary.
+
 ## Decisions
 
 - `2026-05-14`: Multiple IRs are acceptable when they represent distinct
@@ -238,14 +262,16 @@ Classification conclusions:
   `Composition::Plan`, and the named forward IRs have legitimate phase roles;
   report and compatibility surfaces remain projections, not competing IR
   truth.
+- `2026-05-20`: `FSMGEN-IR-AUDIT.3` records the repo-local IR policy in
+  [docs/IR_POLICY.md](../IR_POLICY.md). Future behavior-bearing IR changes
+  need task-tree ownership and an explicit phase/owner/invariant/public-contract
+  record before code changes begin.
 
 ## Open Questions
 
 - Should ISF eventually lower into an existing FSM/CoreAST or forward IR
   directly, or is the scheduled `.fsm` textual handoff the right reviewable
   and debuggable boundary?
-- What exact repo-local policy should future work follow before adding,
-  extending, freezing, or retiring an IR boundary?
 - Which classifications deserve concrete follow-up refactors after the policy
   leaf, rather than documentation only?
 
@@ -260,6 +286,7 @@ Classification conclusions:
 | `2026-05-14` | `FSMGEN-IR-AUDIT` | `git diff --check -- docs/tasks/FSMGEN-IR-AUDIT.md docs/TASK_TREE.md README.md ROADMAP_STATUS.md CHANGES.md DEVELOPMENT_NOTES.md MEMORY.md LIVE_ACHIEVEMENT_STATUS.md` | `pass` |
 | `2026-05-20` | `FSMGEN-IR-AUDIT.1` | `git diff --check`; `mdbook build docs/book` | `pass` |
 | `2026-05-20` | `FSMGEN-IR-AUDIT.2` | `git diff --check`; `mdbook build docs/book` | `pass` |
+| `2026-05-20` | `FSMGEN-IR-AUDIT.3` | `git diff --check`; `mdbook build docs/book` | `pass` |
 
 ## Commit Log
 
@@ -268,9 +295,12 @@ Classification conclusions:
 | `FSMGEN-IR-AUDIT` | `FSMGEN-IR-AUDIT: capture IR audit task tree` | Created proposed task tree. |
 | `FSMGEN-IR-AUDIT.1` | `FSMGEN-IR-AUDIT.1: inventory current IR surfaces` | Inventoried current IR and IR-like structures and advanced `.2` classification. |
 | `FSMGEN-IR-AUDIT.2` | `FSMGEN-IR-AUDIT.2: classify IR boundaries` | Classified current IR boundaries/projections and advanced `.3` policy. |
+| `FSMGEN-IR-AUDIT.3` | `FSMGEN-IR-AUDIT.3: define IR policy` | Defined repo-local IR policy and advanced `.4` follow-up selection. |
 
 ## Changelog
 
+- `2026-05-20`: Completed `FSMGEN-IR-AUDIT.3` policy and advanced the active
+  frontier to `FSMGEN-IR-AUDIT.4` follow-up selection.
 - `2026-05-20`: Completed `FSMGEN-IR-AUDIT.2` classification and advanced the
   active frontier to `FSMGEN-IR-AUDIT.3` policy.
 - `2026-05-20`: Completed `FSMGEN-IR-AUDIT.1` factual inventory and advanced

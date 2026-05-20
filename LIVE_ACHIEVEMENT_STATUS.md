@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — IR policy completed
+- Completed `FSMGEN-IR-AUDIT.3`.
+- Added [docs/IR_POLICY.md](docs/IR_POLICY.md) as the repo-local policy for
+  adding, extending, exposing, or retiring IR and IR-like compiler surfaces.
+- Future IR changes must document owner, producer/consumer set, invariants,
+  public/private boundary, serialization/report contract, defensive-copy
+  policy, validation, docs impact, and migration/retirement plan when needed.
+- The active frontier is `FSMGEN-IR-AUDIT.4` for concrete follow-up selection.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — IR boundary classification completed
 - Completed `FSMGEN-IR-AUDIT.2`.
 - Every inventoried IR or IR-like surface now has a phase classification,

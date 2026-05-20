@@ -804,6 +804,11 @@ IR audit checkpoint:
   distinct phase-boundary roles; public JSON, contract metadata,
   `module_info`, provenance, snapshots, and artifacts remain bounded
   projections.
+- [docs/IR_POLICY.md](IR_POLICY.md) records the required gate for future IR
+  changes: name, phase, owner, producers, consumers, invariants,
+  mutation/defensive-copy policy, public/private status,
+  serialization/report contract, validation, docs impact, and
+  migration/retirement plan when needed.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

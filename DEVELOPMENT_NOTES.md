@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: IR policy turns classification into a gate
+- `FSMGEN-IR-AUDIT.3` adds [docs/IR_POLICY.md](docs/IR_POLICY.md) so future
+  IR changes have a concrete review gate instead of relying on informal taste.
+- The policy intentionally allows multiple IRs when they represent distinct
+  phase boundaries. The restriction is that each durable surface must name its
+  owner, producers, consumers, invariants, mutation/copy contract, and
+  public/private report boundary before behavior-bearing work begins.
+- The strongest rule is public-contract hygiene: downstream consumers get
+  bounded projections, schema/contract metadata, or artifacts, not raw private
+  compiler objects.
+
 ## 2026-05-20: IR classification keeps phase boundaries distinct
 - `FSMGEN-IR-AUDIT.2` classifies current surfaces without forcing one
   universal IR.

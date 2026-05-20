@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: IR policy completed
+- Completed `FSMGEN-IR-AUDIT.3`.
+- Added [docs/IR_POLICY.md](docs/IR_POLICY.md). Future IR or durable
+  IR-like changes must document the surface name, phase, owner, producers,
+  consumers, invariants, mutation/defensive-copy policy, public/private
+  status, serialization/report contract, validation, documentation impact, and
+  migration/retirement plan when temporary or overlapping.
+- The policy keeps raw private compiler objects out of downstream API surfaces
+  and treats public truth as bounded projections, contract metadata, and
+  artifacts.
+- The active architecture frontier is now `FSMGEN-IR-AUDIT.4` for concrete
+  consolidation or standardization follow-up selection.
+
 ## 2026-05-20: IR boundary classification completed
 - Completed `FSMGEN-IR-AUDIT.2`.
 - Current canonical in-process boundaries are classified as direct `CoreAST`,

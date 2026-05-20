@@ -1,10 +1,18 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT.2` completed
-  canonical/private boundary classification; `FSMGEN-IR-AUDIT.3` is the
-  current frontier for repo-local IR policy.
+- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT.3` completed
+  repo-local IR policy; `FSMGEN-IR-AUDIT.4` is the current frontier for
+  concrete consolidation or standardization follow-up selection.
 - Recent architecture backlog:
+  `FSMGEN-IR-AUDIT.3` added [docs/IR_POLICY.md](docs/IR_POLICY.md). Future
+  IR or durable IR-like changes must document name, phase, owner, producers,
+  consumers, invariants, mutation/defensive-copy policy, public/private
+  status, serialization/report contract, validation, documentation impact, and
+  migration/retirement plan when temporary or overlapping. Public downstream
+  truth remains bounded projections, contract metadata, and artifacts rather
+  than raw private compiler objects. No compiler behavior changed.
+- Previous architecture backlog classification:
   `FSMGEN-IR-AUDIT.2` classified every inventoried IR or IR-like surface by
   phase, source-of-truth status, public/private status, and disposition. The
   classification keeps direct `CoreAST`, private ISF parser/scheduler state,
@@ -13,7 +21,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `module_info`, provenance reports, snapshots, and artifacts remain bounded
   projections or compatibility surfaces. The mdBook IR/metadata section now
   reflects that public/private boundary. No compiler behavior changed.
-- Previous architecture backlog:
+- Previous architecture backlog inventory:
   `FSMGEN-IR-AUDIT.1` inventoried the current IR and IR-like structures,
   including raw Lispish ASTs, direct `CoreAST`, backend expression ASTs, ISF
   typed actor metadata and scheduler `LoweringIR`, domain/CDC metadata,
@@ -2663,10 +2671,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   intent or platform/resource mapping semantics above transactions, not for
   aliases, macros, wrappers, or syntax sugar without distinct runtime meaning.
 - Architecture backlog: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
-  is active. `.1` completed factual inventory and `.2` completed
-  canonical/private boundary classification. `.3` now defines the repo-local
-  policy for adding, extending, freezing, or retiring IR boundaries before
-  any consolidation/refactor follow-up is selected.
+  is active. `.1` completed factual inventory, `.2` completed
+  canonical/private boundary classification, and `.3` completed
+  repo-local IR policy. `.4` now selects concrete consolidation or
+  standardization follow-up slices where the audit found actionable
+  duplication, unsafe handoffs, or missing ownership.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -4020,9 +4029,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 - `architecture backlog`: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
   is active after the R14 task-tree frontier closed. `FSMGEN-IR-AUDIT.1`
   completed factual inventory, and `FSMGEN-IR-AUDIT.2` completed
-  canonical/private boundary classification. The current next decision point
-  is `FSMGEN-IR-AUDIT.3`, which defines repo-local policy before any
-  consolidation/refactor follow-up is selected.
+  canonical/private boundary classification. `FSMGEN-IR-AUDIT.3` completed
+  repo-local IR policy. The current next decision point is
+  `FSMGEN-IR-AUDIT.4`, which selects concrete consolidation or
+  standardization follow-up slices.
 - Last R14 context:
   - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the R14 mdBook chapters now match
     the shipped parser/scheduler surface instead of the older aspirational

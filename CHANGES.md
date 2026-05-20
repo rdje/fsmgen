@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — IR policy completed
+- Completed `FSMGEN-IR-AUDIT.3`.
+- Added [docs/IR_POLICY.md](docs/IR_POLICY.md), defining the required record
+  for future IR changes: name, phase, owner, producers, consumers,
+  invariants, mutation/defensive-copy policy, public/private status,
+  serialization/report contract, validation, documentation impact, and
+  migration/retirement plan.
+- Advanced the active architecture frontier to `FSMGEN-IR-AUDIT.4`, which
+  selects concrete consolidation or standardization follow-up slices only
+  where the audit found actionable duplication, unsafe handoffs, or missing
+  ownership.
+- No compiler behavior changed.
+
 ### Architecture backlog — IR boundary classification completed
 - Completed `FSMGEN-IR-AUDIT.2`.
 - Classified every inventoried IR or IR-like surface by phase, source-of-truth
