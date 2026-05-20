@@ -1,0 +1,12 @@
+(?fsm:assignment_comb_self_dependency
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (A = A)
+  )
+  (+size
+    (A 8)
+  )
+)

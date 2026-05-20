@@ -91,7 +91,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   clock/reset entries, malformed entry structures, invalid clock/reset
   identifiers, malformed direct/composition source names, malformed state or
   standalone-DT names, malformed transition targets, and unknown transition
-  targets.
+  targets. It also covers malformed delayed-pulse RHS values, mixed
+  combinational/sequential assignment families, mixed pulse and non-pulse
+  sequential writes, multiple pulse delays for one signal, combinational
+  self-dependency, and D-input self-dependency.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -536,6 +539,12 @@ manifest output while keeping the exact file lists widenable.
 | `contract.malformed_standalone_dt_name` | [t/corpus/malformed_standalone_dt_name.fsm](t/corpus/malformed_standalone_dt_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_transition_target` | [t/corpus/malformed_transition_target.fsm](t/corpus/malformed_transition_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unknown_transition_target` | [t/corpus/unknown_transition_target.fsm](t/corpus/unknown_transition_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.assignment_delayed_pulse_bad_rhs` | [t/corpus/assignment_delayed_pulse_bad_rhs.fsm](t/corpus/assignment_delayed_pulse_bad_rhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.assignment_mixed_comb_seq` | [t/corpus/assignment_mixed_comb_seq.fsm](t/corpus/assignment_mixed_comb_seq.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.assignment_mixed_pulse_nonpulse` | [t/corpus/assignment_mixed_pulse_nonpulse.fsm](t/corpus/assignment_mixed_pulse_nonpulse.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.assignment_multiple_pulse_delays` | [t/corpus/assignment_multiple_pulse_delays.fsm](t/corpus/assignment_multiple_pulse_delays.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.assignment_comb_self_dependency` | [t/corpus/assignment_comb_self_dependency.fsm](t/corpus/assignment_comb_self_dependency.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.assignment_d_input_self_dependency` | [t/corpus/assignment_d_input_self_dependency.fsm](t/corpus/assignment_d_input_self_dependency.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |

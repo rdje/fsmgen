@@ -139,9 +139,13 @@ forms, malformed test branches, malformed bare test selectors, and malformed
 `+system` sections. It also carries name/reference boundary entries for
 malformed direct `?fsm:name` roots, malformed `?top:name` composition roots,
 malformed state or standalone-DT names, malformed transition targets, and
-unknown transition targets. Those entries are not only prose examples:
-pipeline, CLI, check JSON, and normalized semantic JSON regression tests all
-classify them through the same support-accounting path.
+unknown transition targets. Assignment-boundary entries cover malformed
+delayed-pulse RHS values, mixed combinational/sequential assignment families,
+mixed pulse and non-pulse sequential writes, multiple pulse delays for one
+signal, combinational self-dependency, and D-input self-dependency. Those
+entries are not only prose examples: pipeline, CLI, check JSON, and normalized
+semantic JSON regression tests all classify them through the same
+support-accounting path.
 
 It also keeps positive acceptance markers for canonical supported surfaces.
 
@@ -174,6 +178,8 @@ FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION
 FSMGEN_LANGUAGE_DUPLICATE_SYSTEM_RESET
 FSMGEN_LANGUAGE_MALFORMED_STATE_NAME
 FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET
+FSMGEN_LANGUAGE_DELAYED_PULSE_RHS
+FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 

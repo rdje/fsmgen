@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Assignment-boundary support accounting keeps lowering unchanged
+- `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.2` promotes existing assignment
+  diagnostics without changing parser acceptance or generated HDL.
+- The stable-code split mirrors real remediation categories: delayed-pulse RHS
+  shape, mixed assignment families, mixed pulse/non-pulse sequential writes,
+  multiple pulse delays, combinational feedback, and D-input feedback.
+
 ## 2026-05-20: Assignment-boundary corpus widening stays behavior-neutral
 - `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.1` selects assignment diagnostics
   for support-accounting promotion.

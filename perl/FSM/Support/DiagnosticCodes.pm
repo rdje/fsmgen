@@ -253,6 +253,42 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A transition target referenced no declared state.',
     },
+    FSMGEN_LANGUAGE_DELAYED_PULSE_RHS => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A delayed-pulse assignment used an unsupported RHS value.',
+    },
+    FSMGEN_LANGUAGE_MIXED_ASSIGNMENT_FAMILIES => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A signal mixed combinational and sequential assignment families.',
+    },
+    FSMGEN_LANGUAGE_MIXED_PULSE_ASSIGNMENT_FAMILY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A signal mixed pulse-delayed and non-pulse sequential assignment families.',
+    },
+    FSMGEN_LANGUAGE_MULTIPLE_PULSE_DELAYS => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A signal used more than one delayed-pulse latency.',
+    },
+    FSMGEN_LANGUAGE_COMBINATIONAL_SELF_DEPENDENCY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A combinational assignment depended on its own LHS value.',
+    },
+    FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A D-input assignment depended on its own D-input LHS value.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

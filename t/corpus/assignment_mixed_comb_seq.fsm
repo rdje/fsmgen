@@ -1,0 +1,15 @@
+(?fsm:assignment_mixed_comb_seq
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (A = B)
+    (A <= C)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+  )
+)

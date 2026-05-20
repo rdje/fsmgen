@@ -1,0 +1,13 @@
+(?fsm:assignment_multiple_pulse_delays
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (P <2 1)
+    (P <3 1)
+  )
+  (+size
+    (P 1)
+  )
+)

@@ -1,0 +1,14 @@
+(?fsm:assignment_mixed_pulse_nonpulse
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (P <2 1)
+    (P <= D)
+  )
+  (+size
+    (P 1)
+    (D 1)
+  )
+)

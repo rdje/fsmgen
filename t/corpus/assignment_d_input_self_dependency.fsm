@@ -1,0 +1,12 @@
+(?fsm:assignment_d_input_self_dependency
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (A <= (+ A 1))
+  )
+  (+size
+    (A 8)
+  )
+)
