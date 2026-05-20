@@ -1,0 +1,9 @@
+(?fsm:system_bad_reset_identifier
+  (+system
+    (clock clk)
+    (sreset reset-name)
+  )
+  (-dt
+    (A <= 1)
+  )
+)

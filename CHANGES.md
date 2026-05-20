@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — system-section widening shipped
+- Completed `R12-SYSTEM-SECTION-CORPUS-WIDENING.2` and closed the task tree.
+- Added six named malformed `+system` expected-failure fixtures and catalog
+  entries for incomplete sections, duplicate clock/reset entries, malformed
+  entry structures, and invalid clock/reset identifiers.
+- Added stable diagnostic codes for the new expected-failure families and
+  widened corpus accounting, manifest, check JSON, normalized semantic JSON,
+  regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — system-section widening selected
 - Completed `R12-SYSTEM-SECTION-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure corpus

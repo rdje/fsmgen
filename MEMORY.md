@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 system-section corpus widening shipped
+- Completed `R12-SYSTEM-SECTION-CORPUS-WIDENING.2` and closed the tree.
+- Added six maintained expected-failure corpus entries for incomplete
+  `+system` sections, duplicate clock/reset entries, malformed system entry
+  structures, and invalid clock/reset identifiers.
+- Each new entry carries stable diagnostic-code metadata and is covered by
+  corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 system-section corpus widening selected
 - Completed `R12-SYSTEM-SECTION-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused malformed

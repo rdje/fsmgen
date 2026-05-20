@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: System-section support accounting keeps accepted forms stable
+- `R12-SYSTEM-SECTION-CORPUS-WIDENING.2` promotes malformed `+system`
+  diagnostics without changing the accepted clock/reset surface.
+- The stable codes distinguish incomplete metadata, duplicate singleton
+  entries, duplicate reset-policy declarations, malformed entry structure, and
+  invalid identifiers because each family gives downstream tools a different
+  remediation path.
+
 ## 2026-05-20: System-section corpus widening is support accounting
 - `R12-SYSTEM-SECTION-CORPUS-WIDENING.1` selects malformed `+system` failures
   for support-accounting promotion.

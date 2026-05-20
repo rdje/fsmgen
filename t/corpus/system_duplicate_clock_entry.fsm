@@ -1,0 +1,10 @@
+(?fsm:system_duplicate_clock_entry
+  (+system
+    (clock clk)
+    (clock clk)
+    (sreset reset)
+  )
+  (-dt
+    (A = 1)
+  )
+)

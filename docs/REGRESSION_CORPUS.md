@@ -86,7 +86,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   width operators or malformed operator arity, unsupported top-level source or
   directive forms, legacy generic/template placeholders, and bare condition
   suffixes. It also covers malformed top-level source roots, malformed action
-  and guard forms, malformed test branches, and malformed test selectors.
+  and guard forms, malformed test branches, malformed test selectors, and
+  malformed `+system` sections such as incomplete sections, duplicate
+  clock/reset entries, malformed entry structures, and invalid clock/reset
+  identifiers.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -519,6 +522,12 @@ manifest output while keeping the exact file lists widenable.
 | `contract.malformed_empty_test_branch` | [t/corpus/malformed_empty_test_branch.fsm](t/corpus/malformed_empty_test_branch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_bare_symbolic_test_selector` | [t/corpus/malformed_bare_symbolic_test_selector.fsm](t/corpus/malformed_bare_symbolic_test_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_bare_numeric_test_selector` | [t/corpus/malformed_bare_numeric_test_selector.fsm](t/corpus/malformed_bare_numeric_test_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.system_incomplete_section` | [t/corpus/system_incomplete_section.fsm](t/corpus/system_incomplete_section.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.system_duplicate_clock_entry` | [t/corpus/system_duplicate_clock_entry.fsm](t/corpus/system_duplicate_clock_entry.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.system_duplicate_reset_declaration` | [t/corpus/system_duplicate_reset_declaration.fsm](t/corpus/system_duplicate_reset_declaration.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.system_malformed_entry_structure` | [t/corpus/system_malformed_entry_structure.fsm](t/corpus/system_malformed_entry_structure.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.system_bad_clock_identifier` | [t/corpus/system_bad_clock_identifier.fsm](t/corpus/system_bad_clock_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.system_bad_reset_identifier` | [t/corpus/system_bad_reset_identifier.fsm](t/corpus/system_bad_reset_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
@@ -597,7 +606,7 @@ manifest output while keeping the exact file lists widenable.
   compatibility residue that depends on explicit search-path realization,
   unsupported top-level source/directive language-contract failures,
   generic/template placeholder failures, bare condition suffix failures, and
-  malformed source/body/test-form failures.
+  malformed source/body/test-form and `+system` failures.
 
 ## Working rule
 

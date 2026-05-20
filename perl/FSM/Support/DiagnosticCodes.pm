@@ -187,6 +187,42 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A test selector used an unsupported bare selector shape.',
     },
+    FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +system section omitted required clock or reset metadata.',
+    },
+    FSMGEN_LANGUAGE_DUPLICATE_SYSTEM_ENTRY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +system section repeated a singleton system entry.',
+    },
+    FSMGEN_LANGUAGE_DUPLICATE_SYSTEM_RESET => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +system section declared more than one reset policy.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_SYSTEM_ENTRY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +system section entry did not match the supported shape.',
+    },
+    FSMGEN_LANGUAGE_BAD_SYSTEM_CLOCK_NAME => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +system clock identifier was malformed.',
+    },
+    FSMGEN_LANGUAGE_BAD_SYSTEM_RESET_NAME => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +system reset identifier was malformed.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

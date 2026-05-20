@@ -1,0 +1,10 @@
+(?fsm:system_duplicate_reset_declaration
+  (+system
+    (clock clk)
+    (sreset reset)
+    (areset rst_n)
+  )
+  (-dt
+    (A = 1)
+  )
+)

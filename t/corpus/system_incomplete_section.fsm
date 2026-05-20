@@ -1,0 +1,8 @@
+(?fsm:system_incomplete_section
+  (+system
+    (clock clk)
+  )
+  (-dt
+    (A = 1)
+  )
+)

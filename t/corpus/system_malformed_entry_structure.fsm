@@ -1,0 +1,10 @@
+(?fsm:system_malformed_entry_structure
+  (+system
+    BROKEN
+    (clock clk)
+    (sreset reset)
+  )
+  (-dt
+    (A = 1)
+  )
+)
