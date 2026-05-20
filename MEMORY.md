@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: AST utils owner selected
+- Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`.
+- Static search found no live `use FSM::AST::Utils` or
+  `require FSM::AST::Utils` path outside the standalone duplicate itself.
+- The selected owner is the in-file `FSM::AST::Utils` package in
+  [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm).
+- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` is now active to delete
+  [perl/FSM/AST/Utils.pm](perl/FSM/AST/Utils.pm) and validate current backend
+  callers.
+
 ## 2026-05-20: ExpressionNamer tracked duplicate removed
 - Completed `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` and closed the tree.
 - Removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate

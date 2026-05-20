@@ -856,6 +856,13 @@ IR audit checkpoint:
   [perl/FSM/ExpressionNamer.pm](../perl/FSM/ExpressionNamer.pm). The next
   expression cleanup candidate is
   [EXPR-AST-UTILS-OWNER-CONSOLIDATION.1](tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md).
+- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` selected the in-file
+  `FSM::AST::Utils` package in
+  [perl/FSM/AST/Node.pm](../perl/FSM/AST/Node.pm) as the sole live backend AST
+  utility owner. Static search found no live import of standalone
+  [perl/FSM/AST/Utils.pm](../perl/FSM/AST/Utils.pm) outside that duplicate
+  file itself, so `.2` is active to remove it and validate existing backend
+  callers.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

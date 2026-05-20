@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: AST utils should collapse by deleting the standalone file
+- `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` selects deletion rather than a shim
+  for [perl/FSM/AST/Utils.pm](perl/FSM/AST/Utils.pm).
+- The reason is stronger than simple non-use: no live caller imports the
+  standalone module, while live backend callers already load
+  [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm), whose in-file
+  `FSM::AST::Utils` package constructs the actual `FSM::AST::*` classes.
+- Keeping a shim would preserve an extra source file and invite future
+  ambiguity. `.2` should remove it and validate the current `Node.pm` owner
+  plus focused enable-graph callers.
+
 ## 2026-05-20: ExpressionNamer tracked duplicate removed
 - `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` removes the tracked
   `perl/FSM/ExpressionNamer.pm.new` duplicate after static search found no

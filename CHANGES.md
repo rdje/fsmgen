@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — AST utils owner selected
+- Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`.
+- Selected the in-file `FSM::AST::Utils` package in
+  [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm) as the sole live backend AST
+  constructor owner.
+- Static search found no live `use FSM::AST::Utils` or
+  `require FSM::AST::Utils` path outside the standalone duplicate itself.
+- Advanced the active implementation frontier to
+  `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` for deleting
+  [perl/FSM/AST/Utils.pm](perl/FSM/AST/Utils.pm) and validating backend
+  callers.
+- No compiler behavior changed.
+
 ### Architecture backlog — ExpressionNamer tracked duplicate removed
 - Completed `EXPR-NAMER-TRACKED-COPY-CLEANUP.1` and closed the tree.
 - Removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` source file

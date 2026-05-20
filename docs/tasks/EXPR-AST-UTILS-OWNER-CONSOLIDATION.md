@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `EXPR-AST-UTILS-OWNER-CONSOLIDATION`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -34,21 +34,21 @@ reviewable backend AST constructor boundary.
 ## Task Tree
 
 - ID: `EXPR-AST-UTILS-OWNER-CONSOLIDATION`
-  Status: `proposed`
+  Status: `active`
   Goal: `Make backend AST utils ownership single and correct.`
   Children: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`,
   `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`
 
 - ID: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Select owner shape for the duplicate AST utils packages.`
   Acceptance: `The task file records whether to delete the standalone file,
   keep it as a shim, or move the in-file package, with validation scope.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `static import audit`; `git diff --check`; `mdbook build docs/book`
+  Commit: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1: select AST utils owner`
 
 - ID: `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected backend AST utils owner cleanup.`
   Acceptance: `Duplicate/broken constructor ownership is removed or corrected
   without changing generated HDL.`
@@ -57,13 +57,17 @@ reviewable backend AST constructor boundary.
 
 ## Current Frontier
 
-This tree is proposed, not active. Activate it before editing
-[perl/FSM/AST/Node.pm](../../perl/FSM/AST/Node.pm) or
-[perl/FSM/AST/Utils.pm](../../perl/FSM/AST/Utils.pm).
+The selected implementation frontier is
+`EXPR-AST-UTILS-OWNER-CONSOLIDATION.2`. The selected owner shape is to delete
+the standalone [perl/FSM/AST/Utils.pm](../../perl/FSM/AST/Utils.pm) file and
+keep the in-file `FSM::AST::Utils` package in
+[perl/FSM/AST/Node.pm](../../perl/FSM/AST/Node.pm) as the sole live backend
+AST constructor owner.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `proposed` | The owner shape must be selected before a source cleanup. |
+| 1 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `done` | Selected deletion of the standalone duplicate. |
+| 2 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` | `active` | Remove the duplicate source file and validate live backend callers. |
 
 ## Decisions
 
@@ -71,11 +75,23 @@ This tree is proposed, not active. Activate it before editing
   has two tracked `FSM::AST::Utils` package definitions, and the standalone
   one references class names that do not match the actual `FSM::AST::*`
   classes.
+- `2026-05-20`: Selected deletion of the standalone
+  [perl/FSM/AST/Utils.pm](../../perl/FSM/AST/Utils.pm) file rather than a shim.
+  Static search found no live `use FSM::AST::Utils` or
+  `require FSM::AST::Utils` path outside the file itself. Current backend
+  callers load [perl/FSM/AST/Node.pm](../../perl/FSM/AST/Node.pm), which
+  defines the working in-file `FSM::AST::Utils` package. The standalone file
+  is not only duplicate ownership; its constructors refer to nonexistent
+  `FSM::AST::Node::*` classes and use a binary-constructor argument order that
+  does not match `FSM::AST::BinaryOp`.
+- `2026-05-20`: `.2` must delete the standalone file, prove no runtime/test
+  path imports it directly, compile the live `Node.pm` owner, and run focused
+  enable-graph/backend AST caller tests. Generated HDL is expected to remain
+  unchanged because live callers already use the in-file owner.
 
 ## Open Questions
 
-- Is deleting the standalone file enough, or does any user/test path require a
-  compatibility shim?
+- None for the selected owner shape.
 
 ## Blockers
 
@@ -85,15 +101,18 @@ This tree is proposed, not active. Activate it before editing
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-20` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `pending` | `pending` |
+| `2026-05-20` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `rg -n '^use FSM::AST::Utils|^require FSM::AST::Utils|package FSM::AST::Utils' perl t bin`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `pending` | `pending` |
+| `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1` | `EXPR-AST-UTILS-OWNER-CONSOLIDATION.1: select AST utils owner` | Selects standalone-file deletion; `.2` owns implementation. |
 
 ## Changelog
 
 - `2026-05-20`: Created proposed follow-up task tree from
   `IR-EXPRESSION-AST-OWNERSHIP.3`.
+- `2026-05-20`: Activated `.1`, selected the in-file `FSM::AST::Utils`
+  package in `Node.pm` as the sole live owner, and advanced `.2` for source
+  cleanup.
