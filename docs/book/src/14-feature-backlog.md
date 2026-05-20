@@ -1181,6 +1181,10 @@ transformation, storage, or payload protocol behavior can be inferred. The
 selected sink stays the scalar endpoint `writer.payload`; a sink expression
 such as `(+ writer.payload 1)` fails closed before expression destinations,
 route-side transforms, storage, or payload protocol behavior can be inferred.
+That sink-expression diagnostic is source-order independent for
+endpoint-looking malformed route sinks, while ordinary malformed local drive
+targets such as `((out) 1)` keep the generic drive-body scalar-head
+diagnostic.
 
 The first actor-event implementation boundary is a generated parent-handoff
 wait, not full child orchestration. FSMGen accepts exactly one top-level

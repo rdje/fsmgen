@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route sink-expression source-order boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96`.
+- Drive-before-instance generated-child route sink expressions now fail with
+  the same targeted ATL sink-expression diagnostic.
+- Ordinary malformed local drive targets such as `((out) 1)` keep the
+  generic drive-body scalar-head diagnostic.
+- The book, downstream handoff, spec, design proposal, backlog, and audit now
+  document that source-order diagnostic guarantee.
+
 ## 2026-05-19: R14 — ATL route sink-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94`.
 - The active ATL frontier advances to

@@ -1943,6 +1943,12 @@ For downstream implementation, the current route terms mean:
   `writer.payload`; a sink expression such as `(+ writer.payload 1)` fails
   closed before expression destinations, route-side transforms, width
   conversion, storage, or payload protocols are inferred.
+- The route sink-expression diagnostic is source-order independent for
+  endpoint-looking route sinks. If a drive body appears before the relevant
+  `(instance ...)` clauses, FSMGen defers that malformed ATL-looking sink
+  expression until the full actor instance set is known, then reports the same
+  ATL sink-expression diagnostic. Ordinary malformed local drive targets such
+  as `((out) 1)` keep the generic drive-body scalar-head diagnostic.
 
 ### 12.5.6. Generated Child Artifacts And Top Data Routes
 

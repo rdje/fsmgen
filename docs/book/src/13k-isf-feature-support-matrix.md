@@ -520,7 +520,10 @@ storage, muxing, fan-in/fan-out, or backpressure behavior is inferred. A
 route drive body such as `((+ writer.payload 1) reader.payload)` also remains
 outside this subset before sink expression movement, route-side transforms,
 payload protocols, storage, muxing, fan-in/fan-out, or backpressure behavior
-is inferred.
+is inferred. The sink-expression diagnostic is source-order independent for
+endpoint-looking malformed route sinks, while non-ATL malformed local drive
+targets such as `((out) 1)` keep the generic drive-body scalar-head
+diagnostic.
 
 ### Actor, Interface, Storage, And Timing
 

@@ -964,6 +964,13 @@ The sink half of the drive-body pair must likewise be the scalar endpoint
 closed before FSMGen infers expression destinations, route-side transforms,
 width conversion, storage, or a payload protocol.
 
+That ATL sink-expression diagnostic is source-order independent for
+endpoint-looking route sinks. If a drive body appears before the corresponding
+`(instance ...)` clauses, FSMGen defers that ATL-looking sink expression until
+the actor instance set is known, then reports the same sink-expression
+diagnostic. Ordinary malformed local drive targets such as `((out) 1)` keep
+the generic drive-body scalar-head diagnostic.
+
 ##### Generated Handoffs
 
 Generated handoffs are the parent-visible signals that FSMGen creates for

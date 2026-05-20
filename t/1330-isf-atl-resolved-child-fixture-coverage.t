@@ -1115,6 +1115,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ sink_expression => 1, drive_before_instances => 1 }),
+        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement sink expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when a route sink expression appears before actor instances',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ extra_drive_pair => 1 }),
         qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset/,
         'generated-child actor-to-actor data route fails closed when one route drive contains multiple endpoint pairs',
@@ -2405,16 +2411,20 @@ ISF
     $actor .= <<'ISF';
   (imports
     (library common.packet as pkt_lib))
+ISF
+    my $route_drive = $options->{route_drive_parameters}
+        ? "  (drive (forward_payload value)\n"
+        : "  (drive forward_payload\n";
+    $route_drive .= $drive_body;
+    $route_drive .= <<'ISF';
+)
+ISF
+    $actor .= $route_drive if $options->{drive_before_instances};
+    $actor .= <<'ISF';
   (instance reader of pkt_lib.packet_reader)
   (instance writer of pkt_lib.packet_writer)
 ISF
-    $actor .= $options->{route_drive_parameters}
-        ? "  (drive (forward_payload value)\n"
-        : "  (drive forward_payload\n";
-    $actor .= $drive_body;
-    $actor .= <<'ISF';
-)
-ISF
+    $actor .= $route_drive unless $options->{drive_before_instances};
     $actor .= $second_route_drive;
     $actor .= <<'ISF';
   (transaction run

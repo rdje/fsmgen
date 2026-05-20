@@ -4080,6 +4080,12 @@ the route sink side also remains one scalar endpoint, and a drive-body sink
 expression such as `((+ writer.payload 1) reader.payload)` fails closed
 before expression destinations, route-side transforms, storage, or payload
 protocol behavior is inferred.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.95` keeps that sink-expression diagnostic
+source-order independent: a drive body written before the matching
+`(instance ...)` clauses defers only endpoint-looking malformed sink
+expressions until actor instances are known, while ordinary malformed local
+drive targets such as `((out) 1)` keep the existing generic scalar-head
+diagnostic.
 
 Realistic fixtures should use documented ISF constructs. If writing a fixture
 requires an awkward workaround for ordinary hardware intent, treat that as a

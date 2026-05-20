@@ -1,6 +1,25 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL route sink-expression source-order boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95`.
+- Added deferred dotted-token validation for drive-body sink expressions so
+  actor-network sink-expression diagnostics do not depend on whether the
+  route drive appears before or after `(instance ...)` clauses.
+- Added focused coverage for the drive-before-instance malformed route
+  `((+ writer.payload 1) reader.payload)`.
+- Preserved the existing non-ATL malformed local drive-target diagnostic for
+  `((out) 1)`.
+- Synchronized the mdBook composition chapter, feature-support matrix,
+  downstream handoff, ISF spec, ATL design proposal, feature backlog, and
+  audit so the source-order-independent diagnostic guarantee is documented.
+- No accepted source syntax, public report key, generated artifact shape,
+  runtime behavior, expression movement, payload protocol, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor
+  network, or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96`.
+
 ### R14 — ATL route sink-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94` as a doc-only selection
   leaf.

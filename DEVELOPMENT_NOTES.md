@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL-looking malformed sinks can wait for actor context
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95` implements the source-order
+  diagnostic hardening selected by `.9.94`.
+- The parser still rejects plain malformed drive targets immediately. It only
+  defers sink expressions that contain dotted tokens, because those are the
+  only forms that may become ATL actor endpoints after later `(instance ...)`
+  clauses have been parsed.
+- The deferred check runs before aggregate-storage validation, so ATL
+  drive-before-instance sink expressions do not get misreported as local
+  drive target shape errors.
+- This keeps diagnostics stable without making expression-valued route sinks
+  legal.
+
 ## 2026-05-19: ATL sink-expression diagnostics must not depend on clause order
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94` selects a follow-up hardening leaf
   for drive-before-instance source order.

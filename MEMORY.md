@@ -1,5 +1,26 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route sink-expression source-order boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96`.
+- The parser now defers dotted-token drive-body sink expressions until the
+  full actor instance set is available, then emits the targeted ATL
+  sink-expression diagnostic when the malformed sink contains a declared
+  static actor endpoint.
+- Focused coverage now proves
+  `((+ writer.payload 1) reader.payload)` fails with the same ATL diagnostic
+  when the route drive body appears before the corresponding `(instance ...)`
+  clauses.
+- Focused drive-body boundary coverage still proves ordinary malformed local
+  drive targets such as `((out) 1)` keep the generic scalar-head diagnostic.
+- The mdBook, downstream handoff, ISF spec, ATL design proposal, backlog, and
+  audit now state that the ATL sink-expression diagnostic is source-order
+  independent for endpoint-looking route sinks.
+- No accepted source syntax, report key, generated artifact shape, runtime
+  behavior, expression movement, route mux/storage, fan-in/fan-out,
+  ready/backpressure, payload protocol, CDC/reset remapping, recursive actor
+  network, or permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL route sink-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94` as a selection leaf.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95`.

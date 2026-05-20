@@ -1227,6 +1227,11 @@ protocols. Sink expressions such as
 `((+ writer.payload 1) reader.payload)` fail closed before FSMGen claims
 expression destinations, route-side transforms, width conversion, storage,
 route mux/storage, ready/backpressure, or payload protocols.
+The sink-expression diagnostic is source-order independent for
+endpoint-looking malformed route sinks: drive-before-instance source order
+defers that malformed ATL-looking sink until actor instances are known, while
+non-ATL malformed local drive targets such as `((out) 1)` keep the generic
+drive-body scalar-head diagnostic.
 
 ## Fail-Closed Boundaries
 

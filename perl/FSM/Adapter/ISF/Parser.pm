@@ -276,6 +276,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
     $self->_finalize_actor_constant_values($result);
     $self->_finalize_actor_param_values($result);
     $self->_finalize_actor_type_references($result);
+    $self->_validate_deferred_atl_drive_sink_expression_candidates($result);
     $self->_validate_actor_aggregate_storage_paths($result);
     $self->_validate_actor_atl_reserved_qualified_forms($result);
     $self->_validate_actor_enum_member_value_contexts($result);
@@ -720,6 +721,23 @@ sub _validate_actor_aggregate_storage_paths($self, $actor) {
             $actor->{drives}{$drive_name},
             \%aggregate_roots,
         );
+    }
+
+    return 1;
+}
+
+sub _validate_deferred_atl_drive_sink_expression_candidates($self, $actor) {
+    my %actor_instances = map { $_->{name} => 1 }
+        @{(($actor->{actor_network} || {})->{instances}) || []};
+
+    for my $drive_name (sort keys %{$actor->{drives} || {}}) {
+        for my $entry (@{($actor->{drives}{$drive_name} || {})->{body} || []}) {
+            next unless ref($entry) eq 'ARRAY' && @$entry;
+            next unless ref($entry->[0]) && _contains_dotted_token($entry->[0]);
+            confess "Error: drive '$drive_name' body ATL scalar actor-to-actor data movement sink expressions remain deferred\n"
+                if _contains_atl_data_movement_endpoint_token($entry->[0], \%actor_instances);
+            confess "Error: drive '$drive_name' body entry heads must be scalar\n";
+        }
     }
 
     return 1;
@@ -2281,6 +2299,18 @@ sub _contains_atl_data_movement_endpoint_token {
     if (ref($value) eq 'ARRAY') {
         for my $item (@$value) {
             return 1 if _contains_atl_data_movement_endpoint_token($item, $actor_instances);
+        }
+    }
+    return 0;
+}
+
+sub _contains_dotted_token {
+    my ($value) = @_;
+    return $value =~ /\A[A-Za-z_][A-Za-z0-9_]*\.[A-Za-z_][A-Za-z0-9_]*\z/
+        if defined($value) && !ref($value);
+    if (ref($value) eq 'ARRAY') {
+        for my $item (@$value) {
+            return 1 if _contains_dotted_token($item);
         }
     }
     return 0;
@@ -6060,11 +6090,14 @@ sub _parse_drive_def($self, $clause, $drives, $actor) {
     for my $entry (@body) {
         confess "Error: drive '$name' body entries must be list forms\n"
             unless ref($entry) eq 'ARRAY' && @$entry;
+        my $deferred_atl_sink_expression_candidate =
+            ref($entry->[0]) && _contains_dotted_token($entry->[0]);
         confess "Error: drive '$name' body ATL scalar actor-to-actor data movement sink expressions remain deferred\n"
-            if ref($entry->[0])
+            if $deferred_atl_sink_expression_candidate
                 && _contains_atl_data_movement_endpoint_token($entry->[0], \%actor_instances);
         confess "Error: drive '$name' body entry heads must be scalar\n"
-            unless defined($entry->[0]) && !ref($entry->[0]) && length($entry->[0]);
+            unless (defined($entry->[0]) && !ref($entry->[0]) && length($entry->[0]))
+                || $deferred_atl_sink_expression_candidate;
         confess "Error: drive '$name' body assignments require '(port value)'\n"
             unless @$entry == 2
                 && defined($entry->[1])
