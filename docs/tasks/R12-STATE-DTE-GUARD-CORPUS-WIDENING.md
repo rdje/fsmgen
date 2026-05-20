@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-STATE-DTE-GUARD-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -39,7 +39,7 @@ coverage and public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-STATE-DTE-GUARD-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for state-DT header activation guards`
   Children: `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1`, `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2`
 
@@ -51,17 +51,17 @@ coverage and public support-accounting visibility.
   Commit: `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1: select state-DTE guard widening`
 
 - ID: `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for state-DT header guards`
   Acceptance: `named fixture/catalog entry covers scalar and expression state-DT header guards with strict-supported checks and HDL-shape expectations`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused state-DT DTE guard tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2: widen state-DTE guard corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2` | `pending` | Promotes an already-focused supported state activation surface after ownership is committed. |
+| 1 | `closed` | `done` | `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2` shipped the selected state-DTE guard corpus widening. |
 
 ## Decisions
 
@@ -84,14 +84,18 @@ coverage and public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused state-DT DTE guard tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1` | `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1: select state-DTE guard widening` | Selection leaf; no compiler behavior changed. |
+| `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2` | `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2: widen state-DTE guard corpus` | Adds one maintained supported state-DTE guard smoke entry. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Added a maintained supported-smoke entry for regular-state
+  header DTE guards, then closed the tree.

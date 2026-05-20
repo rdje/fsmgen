@@ -1,0 +1,24 @@
+(?fsm:state_dte_guards
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (req 1)
+    (ready 1)
+    (done 1)
+    (OUT_A 1)
+    (OUT_B 1)
+  )
+
+  (idle <req
+    (= (OUT_A 1))
+    (-> active <done)
+  )
+
+  (active <(& req ready)
+    (= (OUT_B 1))
+    (-> idle)
+  )
+)

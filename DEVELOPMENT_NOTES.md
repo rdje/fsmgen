@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: State-DTE guard support accounting proves boundary gating
+- `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2` promotes regular-state header DTE
+  guards into the executable supported-smoke corpus.
+- The entry records state-enable, factored guard-expression, assignment-enable,
+  and transition-enable HDL shapes so support accounting proves both the
+  activation path and the DTE boundary gate.
+
 ## 2026-05-20: State-DTE guard corpus widening stays activation-local
 - `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1` selects regular-state header DTE
   guards for support-accounting promotion.

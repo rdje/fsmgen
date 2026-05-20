@@ -238,6 +238,23 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.state_dte_guards',
+        relpath => 't/corpus/state_dte_guards.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'state_dte_guards',
+        expected_hdl_patterns => [
+            qr/\bidle_en\s*=\s*\(current_state\s*==\s*IDLE\)\s*\|\s*req\s*;/s,
+            qr/\bactive_en\s*=\s*\(current_state\s*==\s*ACTIVE\)\s*\|\s*intermediate_and_req_ready_\d+\s*;/s,
+            qr/\bintermediate_and_req_ready_\d+\s*=\s*req\s*&\s*ready\s*;/s,
+            qr/\bidle_next_state_active_en\s*=\s*idle_en\s*&\s*done\s*;/s,
+            qr/\bactive_out_b_1_en\s*=\s*active_en\s*&\s*1'b1\s*;/s,
+        ],
+    },
+    {
         id => 'feature.direct_intent_integer_literals',
         relpath => 't/corpus/direct_intent_integer_literals.fsm',
         family => 'language_feature_fixture',

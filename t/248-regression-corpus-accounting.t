@@ -89,6 +89,7 @@ for my $required_id (qw(
     feature.direct_runtime_div_mod
     feature.direct_assignment_pair_form
     feature.update_shorthand_variants
+    feature.state_dte_guards
     feature.direct_intent_integer_literals
     feature.composition_intent_integer_literals
     legacy.mipicsi2_txccore_ulp.default_compat
@@ -339,8 +340,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    17,
-    'catalog now keeps seventeen named supported-smoke entries including direct and composition language-feature fixtures',
+    18,
+    'catalog now keeps eighteen named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -354,8 +355,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    17,
-    'catalog now records seventeen positive strict-mode supported-smoke acceptance entries',
+    18,
+    'catalog now records eighteen positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -373,6 +374,7 @@ for my $strict_supported_id (qw(
     feature.direct_runtime_div_mod
     feature.direct_assignment_pair_form
     feature.update_shorthand_variants
+    feature.state_dte_guards
     feature.direct_intent_integer_literals
     feature.composition_intent_integer_literals
 )) {

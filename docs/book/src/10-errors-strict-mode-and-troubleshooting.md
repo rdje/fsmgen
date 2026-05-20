@@ -198,7 +198,9 @@ family. Supported direct language-feature entries must also carry explicit
 HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
 only proving that generation completed. Current supported direct
 language-feature coverage includes canonical assignment pairs and
-update-shorthand `+=` / `-=` variants with implicit and explicit deltas.
+update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
+regular-state header DTE guards that must keep state-enable and DTE
+boundary-gating HDL shapes.
 
 ## Diagnostic Codes
 
