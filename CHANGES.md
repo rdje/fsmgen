@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — plus-FSM body widening selected
+- Completed `R12-PLUS-FSM-BODY-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused empty legacy `+fsm` root-body and scalar
+  nested `+fsm` body-item rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — symbol-token widening shipped
 - Completed `R12-SYMBOL-TOKEN-CORPUS-WIDENING.2` and closed the task tree.
 - Added four named symbol-token expected-failure fixtures and catalog entries

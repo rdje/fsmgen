@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-PLUS-FSM-BODY-CORPUS-WIDENING` | `active` | `R12` | `R12-PLUS-FSM-BODY-CORPUS-WIDENING.2` | [docs/tasks/R12-PLUS-FSM-BODY-CORPUS-WIDENING.md](docs/tasks/R12-PLUS-FSM-BODY-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 

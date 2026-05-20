@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Plus-FSM body corpus widening stays legacy-root-local
+- `R12-PLUS-FSM-BODY-CORPUS-WIDENING.1` selects malformed legacy `+fsm`
+  root-body diagnostics for support-accounting promotion.
+- The implementation should promote existing source-shape failures without
+  changing strict-mode legacy root compatibility or structured `?fsm` behavior.
+
 ## 2026-05-20: Symbol-token support accounting keeps token failures specific
 - `R12-SYMBOL-TOKEN-CORPUS-WIDENING.2` promotes existing identifier and enum
   scalar-token diagnostics without changing declaration syntax.
