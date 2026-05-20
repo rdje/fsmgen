@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — IR follow-up selection completed
+- Completed `FSMGEN-IR-AUDIT.4` and closed the audit tree.
+- Proposed follow-up task trees now cover direct-root structural backend
+  convergence, expression-AST ownership, private ISF `LoweringIR` boundary
+  extraction, and `module_info` projection guarding.
+- Deliberate non-actions are recorded: raw parser/lowerer/planner objects stay
+  private, public JSON/report surfaces stay projections, and no generic all-IR
+  refactor is selected.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — IR policy completed
 - Completed `FSMGEN-IR-AUDIT.3`.
 - Added [docs/IR_POLICY.md](docs/IR_POLICY.md) as the repo-local policy for

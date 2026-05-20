@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — IR follow-up selection completed
+- Completed `FSMGEN-IR-AUDIT.4` and closed the audit tree.
+- Created proposed follow-up task trees for the actionable audit outcomes:
+  [IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md),
+  [IR-EXPRESSION-AST-OWNERSHIP](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md),
+  [ISF-LOWERINGIR-BOUNDARY-EXTRACTION](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md),
+  and [MODULE-INFO-PROJECTION-GUARD](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md).
+- Recorded deliberate non-actions: raw parser/lowerer/planner objects stay
+  private, public JSON/report surfaces stay projections, composition parsed
+  spec and plan remain separate, and no generic all-IR refactor is selected.
+- No compiler behavior changed.
+
 ### Architecture backlog — IR policy completed
 - Completed `FSMGEN-IR-AUDIT.3`.
 - Added [docs/IR_POLICY.md](docs/IR_POLICY.md), defining the required record

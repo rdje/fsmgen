@@ -1,10 +1,21 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT.3` completed
-  repo-local IR policy; `FSMGEN-IR-AUDIT.4` is the current frontier for
-  concrete consolidation or standardization follow-up selection.
+- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT` is closed after
+  follow-up selection. Proposed next architecture follow-ups are
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE`,
+  `IR-EXPRESSION-AST-OWNERSHIP`,
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION`, and
+  `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `FSMGEN-IR-AUDIT.4` closed the audit by creating proposed follow-up task
+  trees only for actionable concerns: direct-root structural backend
+  convergence, expression representation ownership, private ISF `LoweringIR`
+  boundary extraction, and `module_info` projection guarding. Deliberate
+  non-actions are recorded in the audit: raw parser/lowerer/planner objects
+  remain private, public JSON/report surfaces remain projections, and no
+  generic all-IR refactor is selected. No compiler behavior changed.
+- Previous architecture backlog policy:
   `FSMGEN-IR-AUDIT.3` added [docs/IR_POLICY.md](docs/IR_POLICY.md). Future
   IR or durable IR-like changes must document name, phase, owner, producers,
   consumers, invariants, mutation/defensive-copy policy, public/private
@@ -2671,11 +2682,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   intent or platform/resource mapping semantics above transactions, not for
   aliases, macros, wrappers, or syntax sugar without distinct runtime meaning.
 - Architecture backlog: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
-  is active. `.1` completed factual inventory, `.2` completed
-  canonical/private boundary classification, and `.3` completed
-  repo-local IR policy. `.4` now selects concrete consolidation or
-  standardization follow-up slices where the audit found actionable
-  duplication, unsafe handoffs, or missing ownership.
+  is closed. `.1` completed factual inventory, `.2` completed
+  canonical/private boundary classification, `.3` completed repo-local IR
+  policy, and `.4` created proposed follow-up task trees for actionable
+  direct-backend, expression-AST, private ISF `LoweringIR`, and `module_info`
+  projection work.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -4027,12 +4038,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `architecture backlog`: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
-  is active after the R14 task-tree frontier closed. `FSMGEN-IR-AUDIT.1`
+  is closed after the R14 task-tree frontier closed. `FSMGEN-IR-AUDIT.1`
   completed factual inventory, and `FSMGEN-IR-AUDIT.2` completed
   canonical/private boundary classification. `FSMGEN-IR-AUDIT.3` completed
-  repo-local IR policy. The current next decision point is
-  `FSMGEN-IR-AUDIT.4`, which selects concrete consolidation or
-  standardization follow-up slices.
+  repo-local IR policy. `FSMGEN-IR-AUDIT.4` created proposed follow-up task
+  trees for direct structural backend convergence, expression-AST ownership,
+  private ISF `LoweringIR` extraction, and `module_info` projection guarding.
 - Last R14 context:
   - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the R14 mdBook chapters now match
     the shipped parser/scheduler surface instead of the older aspirational

@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `FSMGEN-IR-AUDIT` | `active` | `architecture backlog` | `FSMGEN-IR-AUDIT.4` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
 
 ## Proposed Task Trees
 
@@ -53,11 +52,16 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
+| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `proposed` | `architecture backlog` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
+| `IR-EXPRESSION-AST-OWNERSHIP` | `proposed` | `architecture backlog` | `IR-EXPRESSION-AST-OWNERSHIP.1` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
+| `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `proposed` | `architecture backlog` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
+| `MODULE-INFO-PROJECTION-GUARD` | `proposed` | `architecture backlog` | `MODULE-INFO-PROJECTION-GUARD.1` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 
 ## Completed Task Trees
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `FSMGEN-IR-AUDIT` | `done` | `architecture backlog` | `closed` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
 | `ISF-ATL-DOC-STATUS-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md](docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md) |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |

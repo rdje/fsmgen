@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: IR follow-ups are task trees, not an open-ended refactor
+- `FSMGEN-IR-AUDIT.4` closes the audit by creating proposed follow-up task
+  trees only where the inventory/classification found actionable risk:
+  direct-root structural backend convergence, expression representation
+  ownership, private ISF `LoweringIR` extraction, and `module_info`
+  projection guarding.
+- The deliberate non-action list is just as important: raw parser/lowerer/plan
+  objects stay private, public JSON/report surfaces stay projections, the
+  composition parsed spec remains separate from `Composition::Plan`, and no
+  generic all-IR rewrite is selected.
+- Any future behavior-bearing work must activate one of the proposed trees or
+  create a smaller honest task tree under [docs/IR_POLICY.md](docs/IR_POLICY.md).
+
 ## 2026-05-20: IR policy turns classification into a gate
 - `FSMGEN-IR-AUDIT.3` adds [docs/IR_POLICY.md](docs/IR_POLICY.md) so future
   IR changes have a concrete review gate instead of relying on informal taste.

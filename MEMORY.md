@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: IR follow-up selection completed
+- Completed `FSMGEN-IR-AUDIT.4` and closed `FSMGEN-IR-AUDIT`.
+- Proposed follow-up task trees now track actionable outcomes:
+  [IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md),
+  [IR-EXPRESSION-AST-OWNERSHIP](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md),
+  [ISF-LOWERINGIR-BOUNDARY-EXTRACTION](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md),
+  and [MODULE-INFO-PROJECTION-GUARD](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md).
+- Deliberate non-actions are recorded in the audit: raw parser/lowerer/planner
+  objects remain private, public JSON/report surfaces remain projections,
+  composition parsed spec and `Composition::Plan` remain separate, and no
+  generic all-IR refactor is selected.
+- No compiler behavior changed.
+
 ## 2026-05-20: IR policy completed
 - Completed `FSMGEN-IR-AUDIT.3`.
 - Added [docs/IR_POLICY.md](docs/IR_POLICY.md). Future IR or durable

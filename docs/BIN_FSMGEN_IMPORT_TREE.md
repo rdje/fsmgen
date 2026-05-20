@@ -809,6 +809,11 @@ IR audit checkpoint:
   mutation/defensive-copy policy, public/private status,
   serialization/report contract, validation, docs impact, and
   migration/retirement plan when needed.
+- `FSMGEN-IR-AUDIT.4` closed the audit and created proposed follow-up task
+  trees for direct-root structural backend convergence, expression AST
+  ownership, private ISF `LoweringIR` boundary extraction, and `module_info`
+  projection guarding. It deliberately did not select a generic all-IR
+  rewrite or raw private IR export.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

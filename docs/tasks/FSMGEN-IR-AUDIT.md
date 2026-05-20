@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `FSMGEN-IR-AUDIT`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-14`
 - Last updated: `2026-05-20`
@@ -48,7 +48,7 @@ set, lifecycle, and documented handoff contract.
 ## Task Tree
 
 - ID: `FSMGEN-IR-AUDIT`
-  Status: `active`
+  Status: `done`
   Goal: `Audit and rationalize FSMGen IR ownership, boundaries, and creation policy.`
   Children: `FSMGEN-IR-AUDIT.1`, `FSMGEN-IR-AUDIT.2`,
   `FSMGEN-IR-AUDIT.3`, `FSMGEN-IR-AUDIT.4`
@@ -82,26 +82,25 @@ set, lifecycle, and documented handoff contract.
   Commit: `FSMGEN-IR-AUDIT.3: define IR policy`
 
 - ID: `FSMGEN-IR-AUDIT.4`
-  Status: `active`
+  Status: `done`
   Goal: `Propose consolidation or standardization follow-up slices.`
   Acceptance: `Concrete follow-up leaves are created only where the audit
   finds actionable duplication, unsafe handoffs, or missing canonical
   ownership. Non-actionable differences are documented as deliberate.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
+  Commit: `FSMGEN-IR-AUDIT.4: select IR follow-ups`
 
 ## Current Frontier
 
-This tree is active. The current PNT frontier is concrete consolidation or
-standardization follow-up selection from the inventory, classification, and
-policy.
+This tree is closed. The audit selected proposed follow-up task trees for the
+actionable items and left deliberate phase separations documented.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `FSMGEN-IR-AUDIT.1` | `done` | Completed factual inventory before prescribing consolidation. |
 | 2 | `FSMGEN-IR-AUDIT.2` | `done` | Classified which inventoried structures are canonical phase boundaries versus private/local projections. |
 | 3 | `FSMGEN-IR-AUDIT.3` | `done` | Defined repo-local policy for future IR changes. |
-| 4 | `FSMGEN-IR-AUDIT.4` | `active` | Select concrete follow-up leaves only where the audit found actionable duplication, unsafe handoffs, or missing ownership. |
+| 4 | `FSMGEN-IR-AUDIT.4` | `done` | Selected concrete follow-up task trees and recorded deliberate non-actions. |
 
 ## Initial IR Inventory Targets
 
@@ -240,6 +239,34 @@ Policy conclusions:
 - Require explicit migration or retirement notes when a surface overlaps an
   older one or is temporary.
 
+## Follow-Up Selection
+
+`FSMGEN-IR-AUDIT.4` selected only follow-ups with concrete architecture risk
+or ownership ambiguity. These follow-ups are proposed task trees until the
+roadmap/PNT workflow activates one.
+
+| Follow-up tree | Why actionable | Initial boundary |
+| --- | --- | --- |
+| [IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE](IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) | The direct single-module path still has not converged on the cleaner `StructuralRTLIR -> backend emitter` shape already used by composition. | Start with residue mapping; no direct backend code changes until a smallest safe slice is selected. |
+| [IR-EXPRESSION-AST-OWNERSHIP](IR-EXPRESSION-AST-OWNERSHIP.md) | Direct `CoreAST` expressions, legacy/backend `FSM::AST::*` nodes, and structural `ConnectionExpr` nodes have legitimate phase roles but need one ownership/conversion map. | Start with conversion-site inventory; do not collapse deliberate phase-separated expression models. |
+| [ISF-LOWERINGIR-BOUNDARY-EXTRACTION](ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) | ISF `LoweringIR` is a valid private scheduler boundary but now owns enough stable subfamilies that helper-owner extraction should be considered deliberately. | Keep raw `LoweringIR` private and preserve current schedule/artifact behavior. |
+| [MODULE-INFO-PROJECTION-GUARD](MODULE-INFO-PROJECTION-GUARD.md) | `module_info` is useful and compatibility-bound, but it overlaps forward IR and report projections enough to deserve periodic guard coverage. | Audit mirrors and contract keys before adding any guard or changing compatibility shape. |
+
+Deliberate non-actions:
+
+- Do not merge raw Lispish AST, `CoreAST`, ISF typed actor metadata, and
+  `LoweringIR`; they represent different parse, semantic, and scheduling
+  boundaries.
+- Do not expose raw parser actor hashes, raw `LoweringIR`, raw
+  `Composition::Plan`, or backend-local intermediate state as downstream APIs.
+- Do not collapse normalized semantic reports or schedule JSON back into
+  compiler IR. They are public projections with their own schema contracts.
+- Do not merge composition parsed spec and `Composition::Plan`; one is
+  authored input, and the other is planned connectivity truth.
+- Do not create a generic "all IR" refactor. Future work must enter through
+  one of the proposed task trees or a new task tree that satisfies
+  [docs/IR_POLICY.md](../IR_POLICY.md).
+
 ## Decisions
 
 - `2026-05-14`: Multiple IRs are acceptable when they represent distinct
@@ -266,14 +293,18 @@ Policy conclusions:
   [docs/IR_POLICY.md](../IR_POLICY.md). Future behavior-bearing IR changes
   need task-tree ownership and an explicit phase/owner/invariant/public-contract
   record before code changes begin.
+- `2026-05-20`: `FSMGEN-IR-AUDIT.4` closes the audit by creating proposed
+  follow-up task trees for direct structural backend convergence, expression
+  AST ownership, private ISF `LoweringIR` boundary extraction, and
+  `module_info` projection guarding. Non-actionable phase separations remain
+  deliberate.
 
 ## Open Questions
 
 - Should ISF eventually lower into an existing FSM/CoreAST or forward IR
   directly, or is the scheduled `.fsm` textual handoff the right reviewable
   and debuggable boundary?
-- Which classifications deserve concrete follow-up refactors after the policy
-  leaf, rather than documentation only?
+- Which proposed follow-up should the roadmap/PNT workflow activate first?
 
 ## Blockers
 
@@ -287,6 +318,7 @@ Policy conclusions:
 | `2026-05-20` | `FSMGEN-IR-AUDIT.1` | `git diff --check`; `mdbook build docs/book` | `pass` |
 | `2026-05-20` | `FSMGEN-IR-AUDIT.2` | `git diff --check`; `mdbook build docs/book` | `pass` |
 | `2026-05-20` | `FSMGEN-IR-AUDIT.3` | `git diff --check`; `mdbook build docs/book` | `pass` |
+| `2026-05-20` | `FSMGEN-IR-AUDIT.4` | `git diff --check`; `mdbook build docs/book` | `pass` |
 
 ## Commit Log
 
@@ -296,9 +328,12 @@ Policy conclusions:
 | `FSMGEN-IR-AUDIT.1` | `FSMGEN-IR-AUDIT.1: inventory current IR surfaces` | Inventoried current IR and IR-like structures and advanced `.2` classification. |
 | `FSMGEN-IR-AUDIT.2` | `FSMGEN-IR-AUDIT.2: classify IR boundaries` | Classified current IR boundaries/projections and advanced `.3` policy. |
 | `FSMGEN-IR-AUDIT.3` | `FSMGEN-IR-AUDIT.3: define IR policy` | Defined repo-local IR policy and advanced `.4` follow-up selection. |
+| `FSMGEN-IR-AUDIT.4` | `FSMGEN-IR-AUDIT.4: select IR follow-ups` | Created proposed follow-up task trees and closed the audit. |
 
 ## Changelog
 
+- `2026-05-20`: Completed `FSMGEN-IR-AUDIT.4`, created proposed follow-up
+  task trees, recorded deliberate non-actions, and closed the audit.
 - `2026-05-20`: Completed `FSMGEN-IR-AUDIT.3` policy and advanced the active
   frontier to `FSMGEN-IR-AUDIT.4` follow-up selection.
 - `2026-05-20`: Completed `FSMGEN-IR-AUDIT.2` classification and advanced the
