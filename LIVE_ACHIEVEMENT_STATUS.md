@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — Direct structural backend residue map completed
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1`.
+- Direct-root HDL still emits through `GeneratedModuleEmitter -> FlattenedDT`
+  before direct `StructuralRTLIR` exists; composition already emits the top
+  from `StructuralRTLIR`.
+- Direct `StructuralRTLIR` is currently port/system-port projection only, so
+  the next slice must select a no-op guard/convergence step rather than
+  rerouting HDL emission.
+- The active frontier is `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — IR follow-up selection completed
 - Completed `FSMGEN-IR-AUDIT.4` and closed the audit tree.
 - Proposed follow-up task trees now cover direct-root structural backend

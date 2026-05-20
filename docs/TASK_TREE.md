@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `active` | `architecture backlog` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
 
 ## Proposed Task Trees
 
@@ -52,7 +53,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `proposed` | `architecture backlog` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
 | `IR-EXPRESSION-AST-OWNERSHIP` | `proposed` | `architecture backlog` | `IR-EXPRESSION-AST-OWNERSHIP.1` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `proposed` | `architecture backlog` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
 | `MODULE-INFO-PROJECTION-GUARD` | `proposed` | `architecture backlog` | `MODULE-INFO-PROJECTION-GUARD.1` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |

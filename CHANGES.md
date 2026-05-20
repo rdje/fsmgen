@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — Direct structural backend residue map completed
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1`.
+- Activated the direct structural backend convergence follow-up and mapped the
+  current direct-root flow: direct roots still emit HDL through
+  `GeneratedModuleEmitter -> FlattenedDT` before direct `StructuralRTLIR`
+  exists, while composition emits the top module from `StructuralRTLIR`.
+- Identified remaining direct-root bypasses in HDL body emission,
+  post-flattening SystemVerilog assembly, lowered metadata extraction,
+  port-only direct `StructuralRTLIR`, runtime assertion postprocessing,
+  generated-child direct roots, and Verilog text conversion.
+- Advanced the active frontier to
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` to select the first no-op
+  convergence guard before code changes.
+- No compiler behavior changed.
+
 ### Architecture backlog — IR follow-up selection completed
 - Completed `FSMGEN-IR-AUDIT.4` and closed the audit tree.
 - Created proposed follow-up task trees for the actionable audit outcomes:

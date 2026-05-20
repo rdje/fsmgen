@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Direct structural convergence must start with guards
+- `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` confirmed that direct-root HDL
+  emission still happens before direct `StructuralRTLIR` exists.
+- Composition can emit the top module from `StructuralRTLIR` because its plan
+  already carries ports, nets, instances, bindings, links, and auxiliary
+  assignments. Direct-root `StructuralRTLIR` is currently much thinner:
+  identity plus ports/system ports derived from enriched `module_info`.
+- The first safe convergence slice should therefore be a no-op guard around
+  the direct structural projection, not a premature reroute of direct HDL
+  emission through `StructuralRTLIREmitter`.
+
 ## 2026-05-20: IR follow-ups are task trees, not an open-ended refactor
 - `FSMGEN-IR-AUDIT.4` closes the audit by creating proposed follow-up task
   trees only where the inventory/classification found actionable risk:

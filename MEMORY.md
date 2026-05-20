@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Direct structural backend residue map completed
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1`.
+- The direct-root path still emits HDL through
+  `GeneratedModuleEmitter -> FlattenedDT` before direct `StructuralRTLIR`
+  exists. Composition already emits its top module through
+  `StructuralRTLIR -> StructuralRTLIREmitter`.
+- The direct `StructuralRTLIR` currently captures module identity plus
+  ports/system ports from enriched `module_info`; it does not contain the
+  behavior body, enables, state register, internal nets, or assignment
+  structure needed to emit direct-root HDL.
+- The active frontier is
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`, selecting a first no-op
+  guard/convergence slice before any behavior-bearing code changes.
+
 ## 2026-05-20: IR follow-up selection completed
 - Completed `FSMGEN-IR-AUDIT.4` and closed `FSMGEN-IR-AUDIT`.
 - Proposed follow-up task trees now track actionable outcomes:

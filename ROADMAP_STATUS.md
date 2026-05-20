@@ -1,13 +1,19 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT` is closed after
-  follow-up selection. Proposed next architecture follow-ups are
-  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE`,
-  `IR-EXPRESSION-AST-OWNERSHIP`,
-  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION`, and
-  `MODULE-INFO-PROJECTION-GUARD`.
+- Active lane: `architecture backlog`.
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` completed direct backend
+  residue mapping; `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` is the
+  current frontier for selecting the first no-op convergence guard.
 - Recent architecture backlog:
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` confirmed that direct-root HDL
+  still emits through `GeneratedModuleEmitter -> FlattenedDT` before direct
+  `StructuralRTLIR` exists. Direct `StructuralRTLIR` currently captures module
+  identity and ports/system ports from enriched `module_info`; composition is
+  the cleaner path that emits the top from `StructuralRTLIR`. The next slice
+  must select a no-op guard/convergence step before any behavior-bearing code
+  changes. No compiler behavior changed.
+- Previous architecture backlog follow-up selection:
   `FSMGEN-IR-AUDIT.4` closed the audit by creating proposed follow-up task
   trees only for actionable concerns: direct-root structural backend
   convergence, expression representation ownership, private ISF `LoweringIR`
@@ -2687,6 +2693,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   policy, and `.4` created proposed follow-up task trees for actionable
   direct-backend, expression-AST, private ISF `LoweringIR`, and `module_info`
   projection work.
+- Active architecture follow-up:
+  [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
+  has `.1` done and `.2` active. The direct-root residue map says the first
+  safe step is a guard around the existing direct structural projection, not
+  rerouting HDL emission.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -4037,13 +4048,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `architecture backlog`: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
-  is closed after the R14 task-tree frontier closed. `FSMGEN-IR-AUDIT.1`
-  completed factual inventory, and `FSMGEN-IR-AUDIT.2` completed
-  canonical/private boundary classification. `FSMGEN-IR-AUDIT.3` completed
-  repo-local IR policy. `FSMGEN-IR-AUDIT.4` created proposed follow-up task
-  trees for direct structural backend convergence, expression-AST ownership,
-  private ISF `LoweringIR` extraction, and `module_info` projection guarding.
+- `architecture backlog`:
+  [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
+  is active. `.1` mapped direct-root residues; `.2` selects the first no-op
+  convergence guard before code changes.
+- Closed architecture context:
+  [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) closed after
+  inventory, classification, policy, and follow-up selection.
 - Last R14 context:
   - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the R14 mdBook chapters now match
     the shipped parser/scheduler surface instead of the older aspirational

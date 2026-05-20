@@ -814,6 +814,12 @@ IR audit checkpoint:
   ownership, private ISF `LoweringIR` boundary extraction, and `module_info`
   projection guarding. It deliberately did not select a generic all-IR
   rewrite or raw private IR export.
+- `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` mapped the direct-root residue:
+  direct roots still emit HDL through `GeneratedModuleEmitter -> FlattenedDT`
+  before direct `StructuralRTLIR` exists, while composition emits its top
+  through `StructuralRTLIREmitter`. Direct `StructuralRTLIR` is currently a
+  port/system-port projection, so the next convergence slice should be a
+  guard rather than an emission reroute.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
