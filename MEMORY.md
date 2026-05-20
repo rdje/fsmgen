@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 FSM-root body corpus widening shipped
+- Completed `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` and closed the tree.
+- Added two maintained expected-failure corpus entries for malformed empty
+  structured `?fsm` roots such as `(?fsm:empty_root_body)` and scalar
+  top-level body items such as `(?fsm:scalar_root_body BROKEN)`.
+- Each new entry carries stable diagnostic-code metadata and is covered by
+  corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 FSM-root body corpus widening selected
 - Completed `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused empty structured

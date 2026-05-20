@@ -89,10 +89,11 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   and guard forms, malformed test branches, malformed test selectors, and
   malformed `+system` sections such as incomplete sections, duplicate
   clock/reset entries, malformed entry structures, invalid clock/reset
-  identifiers, malformed direct/composition source names, malformed state or
-  standalone-DT names, malformed empty state/standalone-DT bodies, malformed
-  transition targets, and unknown transition targets. It also covers malformed
-  delayed-pulse RHS values, mixed
+  identifiers, malformed direct/composition source names, malformed structured
+  `?fsm` root bodies and body items, malformed state or standalone-DT names,
+  malformed empty state/standalone-DT bodies, malformed transition targets,
+  and unknown transition targets. It also covers malformed delayed-pulse RHS
+  values, mixed
   combinational/sequential assignment families, mixed pulse and non-pulse
   sequential writes, multiple pulse delays for one signal, combinational
   self-dependency, D-input self-dependency, unsupported assignment operators,
@@ -539,6 +540,8 @@ manifest output while keeping the exact file lists widenable.
 | `contract.system_bad_clock_identifier` | [t/corpus/system_bad_clock_identifier.fsm](t/corpus/system_bad_clock_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.system_bad_reset_identifier` | [t/corpus/system_bad_reset_identifier.fsm](t/corpus/system_bad_reset_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_fsm_source_name` | [t/corpus/malformed_fsm_source_name.fsm](t/corpus/malformed_fsm_source_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_empty_fsm_root_body` | [t/corpus/malformed_empty_fsm_root_body.fsm](t/corpus/malformed_empty_fsm_root_body.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_scalar_fsm_root_body_item` | [t/corpus/malformed_scalar_fsm_root_body_item.fsm](t/corpus/malformed_scalar_fsm_root_body_item.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_top_source_name` | [t/corpus/malformed_top_source_name.fsm](t/corpus/malformed_top_source_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_state_name` | [t/corpus/malformed_state_name.fsm](t/corpus/malformed_state_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_standalone_dt_name` | [t/corpus/malformed_standalone_dt_name.fsm](t/corpus/malformed_standalone_dt_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

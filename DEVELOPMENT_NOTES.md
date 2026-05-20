@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: FSM-root body support accounting separates empty root from bad item
+- `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` promotes existing structured-root
+  diagnostics without changing parser acceptance.
+- Empty structured `?fsm` roots and scalar top-level body items use separate
+  stable codes because they point to different author fixes: add a real body
+  versus replace the scalar with a valid top-level section, state, or DT form.
+
 ## 2026-05-20: FSM-root body corpus widening stays source-shape only
 - `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1` selects malformed structured `?fsm`
   root bodies for support-accounting promotion.

@@ -136,11 +136,13 @@ entries for unsupported top-level source wrappers, unsupported top-level
 directives, legacy generic/template placeholders, and bare condition suffixes.
 It also includes malformed top-level source roots, malformed action/guard
 forms, malformed test branches, malformed bare test selectors, and malformed
-`+system` sections. It also carries name/reference boundary entries for
-malformed direct `?fsm:name` roots, malformed `?top:name` composition roots,
+`+system` sections. It also carries source-shape and name/reference boundary
+entries for malformed direct `?fsm:name` roots, empty structured `?fsm` roots
+such as `(?fsm:empty_root_body)`, scalar top-level body items such as
+`(?fsm:scalar_root_body BROKEN)`, malformed `?top:name` composition roots,
 malformed state or standalone-DT names, malformed transition targets, and
-unknown transition targets. State-body entries cover empty regular state
-blocks such as `(idle)` and empty standalone-DT blocks such as `(-misc)`.
+unknown transition targets. State-body entries cover empty regular state blocks
+such as `(idle)` and empty standalone-DT blocks such as `(-misc)`.
 Assignment-boundary entries cover malformed delayed-pulse RHS values, mixed
 combinational/sequential assignment families, mixed pulse and non-pulse
 sequential writes, multiple pulse delays for one signal, combinational
@@ -186,6 +188,8 @@ FSMGEN_LANGUAGE_UNSUPPORTED_ACTION_FORM
 FSMGEN_LANGUAGE_MALFORMED_TEST_SELECTOR
 FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION
 FSMGEN_LANGUAGE_DUPLICATE_SYSTEM_RESET
+FSMGEN_LANGUAGE_MALFORMED_FSM_ROOT_BODY
+FSMGEN_LANGUAGE_MALFORMED_FSM_ROOT_BODY_ITEM
 FSMGEN_LANGUAGE_MALFORMED_STATE_NAME
 FSMGEN_LANGUAGE_MALFORMED_STATE_DT_BLOCK
 FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET

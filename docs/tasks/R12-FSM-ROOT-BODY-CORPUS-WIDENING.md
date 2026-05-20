@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-FSM-ROOT-BODY-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -39,7 +39,7 @@ public report coverage.
 ## Task Tree
 
 - ID: `R12-FSM-ROOT-BODY-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained expected-failure corpus coverage for malformed structured ?fsm root-body failures`
   Children: `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1`, `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2`
 
@@ -51,17 +51,17 @@ public report coverage.
   Commit: `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1: select FSM-root body widening`
 
 - ID: `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add maintained expected-failure entries for empty and scalar structured ?fsm root bodies`
   Acceptance: `named fixtures/catalog entries cover empty structured ?fsm roots and scalar top-level body items with stable diagnostics and corpus behavior checks`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused FSM-root body tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2: widen FSM-root body corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` | `pending` | Focused tests already cover malformed structured `?fsm` root bodies; the maintained corpus does not yet carry them as stable support-accounting entries. |
+| 1 | `closed` | `done` | `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` shipped the selected FSM-root body corpus widening. |
 
 ## Decisions
 
@@ -83,15 +83,18 @@ public report coverage.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused FSM-root body tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1` | `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1: select FSM-root body widening` | Selection leaf; no compiler behavior changed. |
-| `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` | `pending` | Implementation leaf pending. |
+| `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` | `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2: widen FSM-root body corpus` | Adds two maintained structured `?fsm` root-body expected-failure entries. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Shipped the selected FSM-root body corpus widening and closed
+  the task tree.

@@ -229,6 +229,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A top-level FSM source name was malformed.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_FSM_ROOT_BODY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A structured ?fsm root had no valid body.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_FSM_ROOT_BODY_ITEM => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A structured ?fsm root had a malformed top-level body item.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TOP_SOURCE_NAME => {
         severity => 'error',
         stability => 'stable',
