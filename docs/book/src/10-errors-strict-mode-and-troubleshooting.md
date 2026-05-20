@@ -200,7 +200,9 @@ only proving that generation completed. Current supported direct
 language-feature coverage includes canonical assignment pairs and
 update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
 regular-state header DTE guards that must keep state-enable and DTE
-boundary-gating HDL shapes.
+boundary-gating HDL shapes. It also includes guard shorthand such as `<req`,
+`<!full`, `<mode==3`, and suffix guards, with emitted HDL-shape checks for
+truthiness, negated truthiness, comparisons, and multibit reduction.
 
 ## Diagnostic Codes
 

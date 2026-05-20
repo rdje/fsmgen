@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-GUARD-SHORTHAND-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -40,7 +40,7 @@ public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-GUARD-SHORTHAND-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for guard shorthand`
   Children: `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1`, `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2`
 
@@ -52,17 +52,17 @@ public support-accounting visibility.
   Commit: `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1: select guard-shorthand widening`
 
 - ID: `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for guard shorthand`
   Acceptance: `named fixture/catalog entry covers scalar truthiness, negated truthiness, inline comparison, and suffix-guard shorthand with strict-supported checks and HDL-shape expectations`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused guard-shorthand tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2: widen guard-shorthand corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2` | `pending` | Promotes an already-focused supported guard surface after ownership is committed. |
+| 1 | `closed` | `done` | `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2` shipped the selected guard-shorthand corpus widening. |
 
 ## Decisions
 
@@ -85,14 +85,18 @@ public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused guard-shorthand tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1` | `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1: select guard-shorthand widening` | Selection leaf; no compiler behavior changed. |
+| `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2` | `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2: widen guard-shorthand corpus` | Adds one maintained supported guard-shorthand smoke entry. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Added a maintained supported-smoke entry for guard shorthand,
+  then closed the tree.

@@ -1,0 +1,42 @@
+(?fsm:guard_shorthand
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (A 8)
+    (B 8)
+    (req 1)
+    (full 1)
+    (mode 4)
+    (count 4)
+    (start 1)
+    (REQ_HIT 1)
+    (FULL_HIT 1)
+    (MODE_HIT 1)
+    (COUNT_HIT 1)
+    (START_HIT 1)
+  )
+
+  (idle
+    (<req
+      (= (REQ_HIT 1))
+    )
+    (<!full
+      (= (FULL_HIT 1))
+    )
+    (<mode==3
+      (= (MODE_HIT 1))
+    )
+    (<count<=3
+      (= (COUNT_HIT 1))
+    )
+    (<= (START_HIT 1) <start)
+    (-> busy <mode!=0)
+  )
+
+  (busy
+    (<= (A B))
+  )
+)

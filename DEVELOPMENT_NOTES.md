@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Guard-shorthand support accounting proves truthiness lowering
+- `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2` promotes guard shorthand into the
+  executable supported-smoke corpus.
+- The entry records emitted HDL shapes for scalar truthiness, negated
+  truthiness, factored inline comparisons, suffix truthiness, and multibit
+  reduction truthiness so support accounting proves the intended guard
+  lowering.
+
 ## 2026-05-20: Guard-shorthand corpus widening stays guard-surface-local
 - `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1` selects supported guard shorthand
   for support-accounting promotion.

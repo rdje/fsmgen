@@ -388,9 +388,9 @@ preferred `<=-` dual-output syntax, RHS concat/cat packing, LHS concat/cat
 deconstruction, canonical reset spellings, canonical init/default metadata,
 expression-backed widths, runtime div/mod expressions, canonical assignment
 pairs, update-shorthand `+=` / `-=` variants, regular-state header DTE guards,
-and intent-level integer literal normalization on both direct and composition
-paths. Legacy `<=+` compatibility is tracked separately through paired
-default-compatible and strict-rejected corpus entries.
+guard shorthand, and intent-level integer literal normalization on both direct
+and composition paths. Legacy `<=+` compatibility is tracked separately through
+paired default-compatible and strict-rejected corpus entries.
 
 ## Capability manifest
 
@@ -505,6 +505,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.direct_assignment_pair_form` | [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.update_shorthand_variants` | [t/corpus/update_shorthand_variants.fsm](t/corpus/update_shorthand_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.state_dte_guards` | [t/corpus/state_dte_guards.fsm](t/corpus/state_dte_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.guard_shorthand` | [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_intent_integer_literals` | [t/corpus/direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.composition_intent_integer_literals` | [t/corpus/composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.default_compat` | [fsm/mipicsi2_txccore_ulp.fsm](fsm/mipicsi2_txccore_ulp.fsm) | `legacy_out_of_scope` | `legacy_root_default_pipeline_cli` |
@@ -671,7 +672,9 @@ manifest output while keeping the exact file lists widenable.
   register-style update muxes through pipeline and CLI. The
   `feature.state_dte_guards` entry proves that regular-state header activation
   guards lower into state enable expressions and still gate assignment and
-  transition enables at the DTE boundary. The
+  transition enables at the DTE boundary. The `feature.guard_shorthand` entry
+  proves scalar truthiness, negated truthiness, inline comparison, and suffix
+  guard lowering through emitted enable expressions. The
   `feature.direct_intent_integer_literals` and
   `feature.composition_intent_integer_literals` entries prove that FSMGen
   intent-level sized spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`,
