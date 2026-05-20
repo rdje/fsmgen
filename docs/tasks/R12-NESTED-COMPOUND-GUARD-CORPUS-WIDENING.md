@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-21`
 - Last updated: `2026-05-21`
@@ -41,7 +41,7 @@ strict-supported coverage and public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for supported nested and compound guard forms`
   Children: `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.1`, `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2`
 
@@ -53,17 +53,17 @@ strict-supported coverage and public support-accounting visibility.
   Commit: `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.1: select nested compound guard widening`
 
 - ID: `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for nested and compound guard forms`
   Acceptance: `named fixture/catalog entry covers nested guarded blocks and compound suffix guards with strict-supported checks and HDL-shape expectations`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `./bin/fsmgen --strict --quiet -o /tmp/nested_compound_guards.sv t/corpus/nested_compound_guards.fsm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/29-language-contract-core-forms.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2: widen nested compound guard corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` | `pending` | Ownership is selected; the next slice can promote the already-focused guard behavior into the maintained corpus. |
+| 1 | `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` | `done` | Promoted already-focused nested and compound guard behavior after ownership was committed. |
 
 ## Decisions
 
@@ -87,15 +87,20 @@ strict-supported coverage and public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-21` | `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-21` | `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` | `./bin/fsmgen --strict --quiet -o /tmp/nested_compound_guards.sv t/corpus/nested_compound_guards.fsm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/29-language-contract-core-forms.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t`; `prove -Iperl t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.1` | `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.1: select nested compound guard widening` | Selection leaf; no compiler behavior changed. |
-| `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` | `pending` | `pending` |
+| `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` | `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2: widen nested compound guard corpus` | Added supported-smoke fixture/catalog coverage; no parser or HDL-generation behavior changed. |
 
 ## Changelog
 
 - `2026-05-21`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-21`: Added a maintained supported-smoke corpus entry for nested
+  and compound guard forms, including strict-supported metadata, HDL-shape
+  expectations, support-accounting gates, regression-corpus docs, and mdBook
+  coverage.

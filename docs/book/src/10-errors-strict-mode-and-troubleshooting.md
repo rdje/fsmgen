@@ -212,7 +212,10 @@ non-state `(-name ...)` blocks, including always-on DT enables, scalar guards,
 negated guards, inline comparison guards, expression guards, and guarded
 output-enable boundaries. Guard shorthand such as `<req`, `<!full`,
 `<mode==3`, and suffix guards is covered with emitted HDL-shape checks for
-truthiness, negated truthiness, comparisons, and multibit reduction. Relational
+truthiness, negated truthiness, comparisons, and multibit reduction. Nested
+guarded blocks and compound list-form guards such as `<(& req start !full)`
+are also covered for nested enable composition, assignment suffixes, and
+transition suffixes. Relational
 operator chains and word aliases such as `eq`, `ge`, and `not` are also
 covered as supported-smoke entries with emitted comparison-shape checks.
 Computed test selectors using `?(expr)` are covered as a positive supported

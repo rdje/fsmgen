@@ -512,6 +512,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.state_dte_guards` | [t/corpus/state_dte_guards.fsm](t/corpus/state_dte_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.standalone_dt_guards` | [t/corpus/standalone_dt_guards.fsm](t/corpus/standalone_dt_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.guard_shorthand` | [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.nested_compound_guards` | [t/corpus/nested_compound_guards.fsm](t/corpus/nested_compound_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.relational_operator_chains` | [t/corpus/relational_operator_chains.fsm](t/corpus/relational_operator_chains.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.computed_test_selector` | [t/corpus/computed_test_selector.fsm](t/corpus/computed_test_selector.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.computed_comparison_selector` | [t/corpus/computed_comparison_selector.fsm](t/corpus/computed_comparison_selector.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -700,6 +701,9 @@ manifest output while keeping the exact file lists widenable.
   `feature.guard_shorthand` entry proves scalar truthiness, negated
   truthiness, inline comparison, and suffix guard lowering through emitted
   enable expressions. The
+  `feature.nested_compound_guards` entry proves nested guarded blocks,
+  compound list-form guards, assignment suffix guards, and transition suffix
+  guards through emitted nested/compound enable shapes. The
   `feature.relational_operator_chains` entry proves n-ary relational chain
   lowering, word aliases such as `eq` and `ge`, unary `not`, and guarded
   relational chains through emitted HDL comparisons and enables. The

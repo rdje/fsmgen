@@ -383,6 +383,19 @@ The negated form executes when the guard condition is false:
 Guarded blocks must contain at least one action. Nested guards are allowed, and
 their conditions compose by logical `AND`.
 
+Example with nested and compound guards:
+
+```lisp
+(<req
+  (<= (A B))
+  (<!full
+    (= (C A))
+    (-> busy)))
+
+(<(& req start !full)
+  (= (D C)))
+```
+
 Active shorthand meanings are:
 
 - `(<foo ...)` means `foo != 0`
@@ -418,6 +431,11 @@ Examples:
 
 The suffix is action metadata, not part of an assignment RHS expression and not
 part of a transition target name.
+
+Assignment suffix guards and transition suffix guards use the same lowering
+model as guarded blocks. The generated HDL may share intermediate predicates
+for compound guards such as `<(& req start !full)` and then reuse them in
+assignment or `next_state` enable terms.
 
 ### Test Nodes
 

@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Nested and compound guard support accounting proves enable composition
+- `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.2` promotes nested guarded blocks
+  and compound suffix guards into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for nested `req & !full` composition,
+  compound list-form guard intermediates, assignment suffix guards, and
+  transition suffix guards.
+
 ## 2026-05-21: Nested and compound guard corpus widening stays guard-local
 - `R12-NESTED-COMPOUND-GUARD-CORPUS-WIDENING.1` selects nested guarded blocks
   and compound suffix guards for support-accounting promotion.

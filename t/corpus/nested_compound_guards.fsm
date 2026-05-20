@@ -1,0 +1,36 @@
+(?fsm:nested_compound_guards
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+    (D 8)
+    (req 1)
+    (full 1)
+    (start 1)
+  )
+
+  (idle
+    (<req
+      (<= (A B))
+      (<!full
+        (= (C A))
+        (-> busy)
+      )
+    )
+    (<(& req start !full)
+      (= (D C))
+    )
+    (<= (A C) <start)
+    (-> busy <!full)
+    (-> busy <(& req start !full))
+  )
+
+  (busy
+    (<= (A B))
+  )
+)
