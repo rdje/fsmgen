@@ -825,6 +825,10 @@ IR audit checkpoint:
   and port projection parity, while keeping direct nets, instances, and
   auxiliary assignments empty until a later behavior-bearing slice widens the
   model.
+- `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` added the guard in
+  [t/1333-direct-structural-rtl-ir-projection.t](../t/1333-direct-structural-rtl-ir-projection.t).
+  Direct HDL emission still goes through `GeneratedModuleEmitter ->
+  FlattenedDT`; the guard only locks the current projection boundary.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

@@ -2,10 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` selected the first no-op direct
-  structural projection guard; `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3`
-  is the current implementation frontier.
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` is closed after the no-op direct
+  structural projection guard. Remaining proposed architecture follow-ups are
+  `IR-EXPRESSION-AST-OWNERSHIP`,
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION`, and
+  `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` added
+  [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t),
+  proving the current direct `structural_rtl_ir` projection matches generated
+  result public facts while direct body structures remain empty. No
+  production code changed, and direct HDL emission still goes through
+  `GeneratedModuleEmitter -> FlattenedDT`.
+- Previous architecture backlog guard selection:
   `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` selected focused regression
   coverage for the existing direct-root `structural_rtl_ir` projection:
   module identity, source kind, target language, ports/system ports, and empty
@@ -2702,9 +2711,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   projection work.
 - Active architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
-  has `.1` and `.2` done, with `.3` active. The direct-root residue map says
-  the first safe step is a guard around the existing direct structural
-  projection; `.3` implements that selected guard.
+  is closed after `.3` added a no-op projection guard. Future direct-root
+  behavior modeling beyond ports needs a new task tree or reopened follow-up.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -4057,8 +4065,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `architecture backlog`:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
-  is active. `.1` mapped direct-root residues; `.2` selected the first no-op
-  convergence guard before code changes. `.3` implements the selected guard.
+  is closed. `.1` mapped direct-root residues; `.2` selected the first no-op
+  convergence guard; `.3` implemented it with coverage only.
 - Closed architecture context:
   [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) closed after
   inventory, classification, policy, and follow-up selection.

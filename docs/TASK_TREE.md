@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `active` | `architecture backlog` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
 
 ## Proposed Task Trees
 
@@ -61,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
 | `FSMGEN-IR-AUDIT` | `done` | `architecture backlog` | `closed` | [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md) |
 | `ISF-ATL-DOC-STATUS-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md](docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md) |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |

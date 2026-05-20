@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — Direct structural projection guard completed
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` and closed the tree.
+- Added [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t).
+- The guard proves direct `structural_rtl_ir` currently exposes identity and
+  port/system-port projection only, and direct body structures remain empty.
+- No production code changed.
+
 ## 2026-05-20: Architecture backlog — Direct structural guard selected
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`.
 - The active implementation frontier is

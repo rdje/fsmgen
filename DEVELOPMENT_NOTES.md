@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Direct structural projection guard lands as coverage only
+- `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` adds a focused regression guard
+  for the direct `structural_rtl_ir` projection without changing production
+  code.
+- The guard intentionally locks both sides of the current boundary: identity
+  and port/system-port projection are public generated-result facts, while
+  direct body structure remains unmodeled in `StructuralRTLIR`.
+- Any future direct structural convergence now starts from a guarded port
+  projection and must select one behavior family to model before changing HDL
+  emission.
+
 ## 2026-05-20: Direct structural guard selected before behavior work
 - `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` intentionally selects a guard
   slice before any direct backend reroute.

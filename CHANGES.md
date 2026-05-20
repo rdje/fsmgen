@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — Direct structural projection guard completed
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` and closed the tree.
+- Added [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t),
+  proving direct generation returns the existing `structural_rtl_ir`
+  projection, `module_info` mirrors it, system/user ports match public
+  generated-result facts, generated HDL headers include those ports, and
+  direct structural nets/instances/links/auxiliary assignments remain empty.
+- No production code changed and direct HDL emission still goes through
+  `GeneratedModuleEmitter -> FlattenedDT`.
+
 ### Architecture backlog — Direct structural guard selected
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`.
 - Selected the first behavior-preserving convergence slice: add focused

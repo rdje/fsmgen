@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Direct structural projection guard completed
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` and closed the tree.
+- Added [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t).
+- The test proves the current direct `structural_rtl_ir` projection matches
+  generated direct-result public facts for module identity, root kind, target
+  language, ports, explicit system ports, and generated HDL header presence.
+- It also locks the current boundary: direct structural `nets`, `instances`,
+  `declared_links`, `resolved_links`, and `auxiliary_assignments` remain
+  empty until a future behavior-bearing task deliberately widens the direct
+  structural model.
+- No production code changed.
+
 ## 2026-05-20: Direct structural guard selected
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`.
 - `.3` is selected as a no-op regression guard for the existing direct-root

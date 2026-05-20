@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -40,7 +40,7 @@ debuggability.
 ## Task Tree
 
 - ID: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE`
-  Status: `active`
+  Status: `done`
   Goal: `Converge direct-root backend emission toward StructuralRTLIR where safe.`
   Children: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1`,
   `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`,
@@ -64,23 +64,23 @@ debuggability.
   Commit: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2: select direct structural guard`
 
 - ID: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3`
-  Status: `active`
+  Status: `done`
   Goal: `Implement the selected direct-root structural convergence slice.`
   Acceptance: `Direct-root generation consumes the selected StructuralRTLIR
   boundary without behavior drift, and all selected gates pass.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c t/1333-direct-structural-rtl-ir-projection.t`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t`; `prove -Iperl t/162-composition-top-structural-rtl-ir-surface.t t/167-structural-connection-expr-helpers.t`; `mdbook build docs/book`; `git diff --check`
+  Commit: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3: guard direct structural projection`
 
 ## Current Frontier
 
-This tree is active. The current PNT frontier implements the selected no-op
-direct structural projection guard.
+This tree is closed. The selected no-op direct structural projection guard
+landed without changing production behavior.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | `done` | Factual residue mapping completed before any direct-backend refactor. |
 | 2 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | `done` | Selected the smallest no-op convergence guard and its gates before code changes. |
-| 3 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` | `active` | Implement the selected direct structural projection guard. |
+| 3 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` | `done` | Implemented the selected direct structural projection guard. |
 
 ## Direct Backend Residue Map
 
@@ -191,6 +191,26 @@ Rollback boundary:
   must change, stop and create or select a more precise follow-up leaf before
   editing production code.
 
+## Implementation Evidence
+
+`IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` added
+[t/1333-direct-structural-rtl-ir-projection.t](../../t/1333-direct-structural-rtl-ir-projection.t).
+
+The guard generates a direct `.fsm` through the normal `HDLGenerator` pipeline
+and proves:
+
+- the top-level direct `structural_rtl_ir` is returned;
+- `module_info.structural_rtl_ir` mirrors the same serialized projection;
+- module name, source root kind, target language, and port count are stable;
+- direct structural ports match `module_info.signal_analysis` plus the
+  explicit system clock/reset contract;
+- every structural port is present in the generated HDL module header;
+- direct `nets`, `instances`, `declared_links`, `resolved_links`, and
+  `auxiliary_assignments` remain empty for now.
+
+No production code changed. This is a guard for the existing projection, not a
+direct HDL emission reroute.
+
 ## Decisions
 
 - `2026-05-20`: Selected as an actionable follow-up from
@@ -204,11 +224,14 @@ Rollback boundary:
 - `2026-05-20`: `.2` selected a no-op focused regression guard for direct
   `structural_rtl_ir` projection parity. The next implementation must not
   reroute direct HDL emission or widen direct structural semantics.
+- `2026-05-20`: `.3` added the selected no-op guard and closed the tree. The
+  next behavior-bearing direct structural convergence work needs a new task
+  tree or a reopened follow-up leaf before production code changes.
 
 ## Open Questions
 
-- After the `.3` guard lands, which direct-root behavior family is the first
-  safe candidate for structural modeling beyond ports?
+- Which future direct-root behavior family is the first safe candidate for
+  structural modeling beyond ports?
 
 ## Blockers
 
@@ -218,17 +241,19 @@ Rollback boundary:
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `pending` | `pending` |
+| `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `git diff --check`; `mdbook build docs/book` under `FSMGEN-IR-AUDIT.4` | `pass` |
 | `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | `git diff --check`; `mdbook build docs/book` | `pass` |
 | `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | `git diff --check`; `mdbook build docs/book` | `pass` |
+| `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` | `perl -Iperl -c t/1333-direct-structural-rtl-ir-projection.t`; `prove -Iperl t/1333-direct-structural-rtl-ir-projection.t`; `prove -Iperl t/162-composition-top-structural-rtl-ir-surface.t t/167-structural-connection-expr-helpers.t`; `mdbook build docs/book`; `git diff --check` | `pass` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `pending` | `pending` |
+| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `FSMGEN-IR-AUDIT.4: select IR follow-ups` | Created proposed follow-up task tree. |
 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1: map direct backend residues` | Mapped direct-root bypasses and advanced `.2` selection. |
 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2: select direct structural guard` | Selected no-op direct structural projection guard and advanced `.3` implementation. |
+| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3: guard direct structural projection` | Added focused no-op guard and closed the tree. |
 
 ## Changelog
 
@@ -238,3 +263,5 @@ Rollback boundary:
   the active frontier to `.2` selection.
 - `2026-05-20`: Completed `.2` direct structural guard selection and advanced
   the active frontier to `.3` implementation.
+- `2026-05-20`: Completed `.3` direct structural projection guard and closed
+  the tree.
