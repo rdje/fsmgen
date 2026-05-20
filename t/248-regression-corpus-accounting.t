@@ -102,6 +102,8 @@ for my $required_id (qw(
     legacy.compact_init_directive.strict_rejection
     legacy.infix_assignment.default_compat
     legacy.infix_assignment.strict_rejection
+    legacy.lteplus_assignment.default_compat
+    legacy.lteplus_assignment.strict_rejection
     legacy.fsm_child_root.default_compat
     legacy.fsm_child_root.strict_rejection
     legacy.dt_child_root.default_compat
@@ -252,13 +254,13 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
-    8,
-    'catalog now records eight explicit legacy-out-of-scope compatibility entries',
+    9,
+    'catalog now records nine explicit legacy-out-of-scope compatibility entries',
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    31,
-    'catalog now records thirty-one explicit expected-failure entries',
+    32,
+    'catalog now records thirty-two explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

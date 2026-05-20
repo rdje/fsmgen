@@ -192,7 +192,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
-- `docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md` — active `R9` task tree for strict-mode rejection of the legacy `<=+` assignment alias.
+- `docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md` — completed `R9` task tree for strict-mode rejection of the legacy `<=+` assignment alias.
 - `docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md` — completed `R8` task tree for the delayed-pulse partial-LHS fail-closed boundary.
 - `docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md` — completed `R8` task tree for preferred `<=-` partial-LHS dual-output coverage and the remaining pulse/vector decision split.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
@@ -545,7 +545,7 @@ owns the bounded top-level and path-list contract advertised through
 - `A <= expr`: synchronous/flopped variant where `A` names the D-input/next-value side.
 - `A = expr`: combinational assignment.
 - Safety rule: combinational `=` cannot create direct/indirect RHS feedback to same LHS.
-- Safety rule: D-input-named `<=` / `<=-` cannot read the same LHS name from the RHS or guard; use `<-` for ordinary register feedback. Legacy `<=+` is accepted as an alias for `<=-`.
+- Safety rule: D-input-named `<=` / `<=-` cannot read the same LHS name from the RHS or guard; use `<-` for ordinary register feedback. In default mode, legacy `<=+` is accepted as an alias for `<=-`; strict mode rejects `<=+` and points to preferred `<=-`.
 
 ## README maintenance policy
 - Keep `README.md` as the canonical onboarding hub.

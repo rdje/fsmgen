@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R9 strict mode — legacy <=+ boundary shipped
+- Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` and closed the tree.
+- Strict mode now rejects legacy `<=+` pair and infix assignments with a
+  preferred `<=-` migration hint, including generated-child sources.
+- Default mode keeps `<=+` compatibility; a paired corpus asset now proves
+  default acceptance and strict rejection.
+- The mdBook and regression corpus docs now state that strict-supported
+  partial-LHS fixtures use preferred `<=-`.
+
 ## 2026-05-20: R9 strict mode — legacy <=+ boundary selected
 - Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1`.
 - The active R9 frontier is now strict-mode rejection of the legacy `<=+`

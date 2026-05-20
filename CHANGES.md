@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R9 strict mode — legacy <=+ boundary shipped
+- Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` and closed the task tree.
+- Added shared strict-mode rejection for pair and infix `<=+` assignments with
+  a preferred `<=-` migration hint.
+- Added [t/410-strict-mode-legacy-lteplus-boundary.t](t/410-strict-mode-legacy-lteplus-boundary.t)
+  and a paired legacy corpus asset for default compatibility plus strict
+  rejection.
+- Updated the mdBook, regression corpus docs, diagnostic registry, manifest
+  checks, and strict-supported partial-LHS fixtures.
+
 ### R9 strict mode — legacy <=+ boundary selected
 - Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1`.
 - Activated a new R9 task tree for the next assignment-surface support-tier

@@ -63,7 +63,9 @@ form, for example `(<- (COUNT (+ COUNT 1)))`. The D-input-named forms `<=` and
 `<=-` are stricter: their RHS and assignment guard may not read the same LHS
 name, because that would build a combinational loop on the next-value carrier.
 
-Legacy `<=+` is accepted as an alias for `<=-` and follows the same rule.
+In default mode, legacy `<=+` is accepted as an alias for `<=-` and follows the
+same self-dependency rule. In strict mode, `<=+` is rejected as compatibility
+residue; write the preferred `<=-` pair form instead.
 
 ## Failure Summaries
 
@@ -106,6 +108,8 @@ Examples of what strict mode is already used for:
 - preventing accidental dependence on older looser spellings
 - preferring canonical assignment pairs such as `(= (OUT IN))` over infix
   compatibility spellings such as `(OUT = IN)`
+- preferring the D-input dual-output spelling `(<=- (D_IN NEXT_VALUE))` over
+  the legacy `<=+` alias
 
 Use strict mode when you want the tool to tell you whether a source already
 fits the cleaner forward contract.

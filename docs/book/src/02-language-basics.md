@@ -110,7 +110,7 @@ Current quick reference:
 - `A <= expr`: synchronous/flopped variant where `A` names the D-input/next-value side
 - `A <-= expr`: synchronous with auxiliary `next_*` surface
 - `A <=- expr`: synchronous with auxiliary `*_r` surface
-- `A <=+ expr`: legacy spelling for `<=-`
+- `A <=+ expr`: legacy default-mode spelling for `<=-`
 - `A <N 0` or `A <N 1`: delayed pulse form
 
 ### Clock Ticks and Cycles
@@ -174,7 +174,7 @@ where `assign-op` is one of the same assignment families:
 (<=  (D_IN NEXT_VALUE))
 (<-= (Q D))
 (<=- (D_IN NEXT_VALUE))
-(<=+ (D_IN NEXT_VALUE))   ;; legacy alias for <=-
+(<=+ (D_IN NEXT_VALUE))   ;; legacy default-mode alias for <=-
 (<1  (PULSE 1))
 ```
 
@@ -198,8 +198,9 @@ not a safe counter spelling: it reads the same D-input carrier it is building
 and FSMGen rejects it before HDL generation. Write `A <- (+ A 1)` for normal
 registered feedback. If you really need same-cycle D visibility and a separate
 registered Q mirror, use `<=-` and read the generated `A_r` mirror. The older
-`<=+` spelling is still accepted as a compatibility alias for `<=-`, but new
-sources should prefer the symmetric `<=-` / `<-=` pair.
+`<=+` spelling is still accepted in default mode as a compatibility alias for
+`<=-`, but new sources should prefer the symmetric `<=-` / `<-=` pair. Strict
+mode rejects `<=+` and points authors to the preferred `<=-` pair form.
 
 The same pair form covers the active LHS/RHS surface, including nested
 expressions, RHS concat, aggregate leaves, explicit output exposure, and LHS
@@ -221,11 +222,12 @@ as `(<= (output_data 8'1))`, which drives the internal D-input-named target
 without requesting public output exposure.
 
 Static indexed and sliced LHS targets are supported for the core assignment
-families `=`, `<-`, `<=`, `<-=`, and `<=-`. The legacy `<=+` alias follows the
-same partial-LHS contract as `<=-`. For same-context partial writes, FSMGen
-assembles one full-width mux input from the addressed pieces. Untouched bits
-retain the correct feedback source: Q/output-named families read the Q value,
-and D-input-named families read the generated `*_q` mirror. Dual-output partial
+families `=`, `<-`, `<=`, `<-=`, and `<=-`. In default mode, the legacy `<=+`
+alias follows the same partial-LHS lowering contract as `<=-`; in strict mode,
+use `<=-` directly. For same-context partial writes, FSMGen assembles one
+full-width mux input from the addressed pieces. Untouched bits retain the
+correct feedback source: Q/output-named families read the Q value, and
+D-input-named families read the generated `*_q` mirror. Dual-output partial
 writes keep their auxiliary `next_*` or `*_r` port at the full base-signal
 width even when that width is inferred only from static slice or bit indexes.
 Delayed-pulse `<N` assignments are not part of this partial-LHS contract: their
@@ -248,9 +250,10 @@ If you want retained state, use one of the sequential families instead.
 
 There is a second, related sequential safety rule: D-input-named `<=` and
 `<=-` assignments must not read the same LHS name from the RHS or assignment
-guard. The legacy `<=+` alias follows the same rule. That form creates
-combinational feedback in the generated next-value logic. Q/output-named `<-`
-feedback remains valid and is the preferred spelling for ordinary registers.
+guard. In default mode, the legacy `<=+` alias follows the same safety rule.
+That form creates combinational feedback in the generated next-value logic.
+Q/output-named `<-` feedback remains valid and is the preferred spelling for
+ordinary registers.
 
 ## Practical Authoring Guidelines
 

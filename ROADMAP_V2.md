@@ -103,7 +103,7 @@ Initial sub-slices:
    - any remaining parser-accepted legacy constructs not yet classified clearly.
 3. Add focused per-family regression coverage so support claims become provable.
 - One now-shipped correctness sub-slice under this lane is static numeric partial-LHS lowering for the core assignment families:
-  - same-context piecewise `=` / `<-` / `<=` / `<-=` / `<=+` writes now normalize into full-width mux inputs instead of collapsing to raw whole-signal writes,
+  - same-context piecewise `=` / `<-` / `<=` / `<-=` / `<=-` writes now normalize into full-width mux inputs instead of collapsing to raw whole-signal writes, with legacy `<=+` preserved as a default-mode compatibility alias,
   - partial sequential writes now retain untouched bits through the correct feedback source,
   - the dual-output sequential families now also keep `next_*` / `*_r` auxiliary outputs aligned to the full base-signal width even for partial indexed/sliced writes,
   - and that same shipped contract is now regression-backed both when width comes from explicit `+size` and when width is inferred only from static slice/index bounds.

@@ -1,0 +1,13 @@
+(?fsm:legacy_lteplus_assignment
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (D_IN 8)
+    (NEXT_VALUE 8)
+  )
+  (idle
+    (<=+ (D_IN NEXT_VALUE))
+  )
+)

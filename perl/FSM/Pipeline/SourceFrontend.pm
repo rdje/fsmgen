@@ -342,6 +342,14 @@ sub enforce_strict_source_boundary ($class, %args) {
               . strict_mode_boundary_hint();
         }
 
+        if (my $lteplus_issue = $class->_find_strict_legacy_lteplus_assignment_issue($body_items)) {
+            confess
+                "Strict mode rejects legacy '<=+' assignment '$lteplus_issue->{display}' in source '$source_label'. "
+              . "Use the preferred '<=-' pair form '$lteplus_issue->{canonical_hint}' for strict-mode D-input dual-output assignment intent, "
+              . "or re-run without strict mode if you still need '<=+' compatibility. "
+              . strict_mode_boundary_hint();
+        }
+
         if (my $infix_issue = $class->_find_strict_infix_assignment_issue($body_items)) {
             confess
                 "Strict mode rejects infix assignment '$infix_issue->{display}' in source '$source_label'. "
@@ -595,6 +603,72 @@ sub _is_legacy_compact_init_directive ($class, $node) {
                 && $unwrapped =~ /\A[A-Za-z_]\w*=.+\z/;
     }
     return 0;
+}
+
+sub _find_strict_legacy_lteplus_assignment_issue ($class, $node) {
+    return undef unless ref($node) eq 'ARRAY';
+
+    if (my $issue = $class->_strict_legacy_lteplus_assignment_issue_for_action($node)) {
+        return $issue;
+    }
+
+    for my $child (@$node) {
+        next unless ref($child) eq 'ARRAY';
+        if (my $issue = $class->_find_strict_legacy_lteplus_assignment_issue($child)) {
+            return $issue;
+        }
+    }
+
+    return undef;
+}
+
+sub _strict_legacy_lteplus_assignment_issue_for_action ($class, $node) {
+    return undef unless ref($node) eq 'ARRAY' && @$node >= 2;
+
+    my $head = $class->_unwrap_scalar_token($node->[0]);
+    if (defined($head) && !ref($head) && $head eq '<=+') {
+        my ($target, $rhs) = $class->_assignment_pair_target_and_rhs($node);
+        return {
+            operator => '<=+',
+            target => $target,
+            rhs => $rhs,
+            display => $class->_render_lispish_node($node),
+            canonical_hint => $class->_render_canonical_assignment_pair_hint('<=-', $target, $rhs),
+        };
+    }
+
+    my ($target, $spec) = @$node[0, 1];
+    return undef if defined($target) && !ref($target) && $class->_is_assignment_operator_token($target);
+    return undef if defined($target) && !ref($target) && $target =~ /\A</;
+    return undef unless $class->_is_strict_infix_assignment_target($target);
+    return undef unless ref($spec) eq 'ARRAY' && @$spec >= 2;
+
+    my $operator = $class->_unwrap_scalar_token($spec->[0]);
+    return undef unless defined($operator) && !ref($operator) && $operator eq '<=+';
+
+    my $rhs = $class->_unwrap_scalar_token($spec->[1]);
+    return {
+        operator => '<=+',
+        target => $target,
+        rhs => $rhs,
+        display => $class->_render_infix_assignment_action($target, $spec),
+        canonical_hint => $class->_render_canonical_assignment_pair_hint('<=-', $target, $rhs),
+    };
+}
+
+sub _assignment_pair_target_and_rhs ($class, $node) {
+    my $payload = $node->[1];
+    if (ref($payload) eq 'ARRAY' && @$payload == 1 && ref($payload->[0]) eq 'ARRAY') {
+        $payload = $payload->[0];
+    }
+
+    if (ref($payload) eq 'ARRAY' && @$payload >= 2) {
+        return ($payload->[0], $payload->[1]);
+    }
+
+    return ($node->[1], $node->[2]) if @$node >= 3;
+
+    return ($node->[1], undef);
 }
 
 sub _find_strict_infix_assignment_issue ($class, $node) {

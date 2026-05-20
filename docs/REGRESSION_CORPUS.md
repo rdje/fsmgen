@@ -345,21 +345,23 @@ right-nested same-precedence grouping such as modulo over a product.
 now also locks the parser-side safety rail for D-input-named sequential
 assignments: `<=` and `<=-` may not read the same LHS name from the RHS or
 assignment guard, because that creates combinational feedback before HDL
-emission. Legacy `<=+` is accepted as an alias for `<=-` and follows the same
-rule. Q/output-named `<-` loopback remains supported for ordinary register
-feedback.
+emission. In default mode, legacy `<=+` is accepted as an alias for `<=-` and
+follows the same rule; in strict mode, `<=+` is rejected with a migration hint
+toward preferred `<=-`. Q/output-named `<-` loopback remains supported for
+ordinary register feedback.
 
 All current supported protocol fixtures are now `strict_supported`: the APB
 requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
 and must pass both default and strict pipeline/CLI smoke. All current supported
 language-feature fixtures are also `strict_supported`. That means strict mode
-positively accepts the maintained fixtures for partial LHS writes, including
-preferred `<=-` dual-output writes and legacy `<=+` alias compatibility, RHS
-concat/cat packing, LHS concat/cat deconstruction, canonical reset spellings,
-canonical init/default metadata, expression-backed widths, runtime div/mod
-expressions, canonical assignment pairs, and intent-level integer literal
-normalization on both direct and composition paths.
+positively accepts the maintained fixtures for partial LHS writes using
+preferred `<=-` dual-output syntax, RHS concat/cat packing, LHS concat/cat
+deconstruction, canonical reset spellings, canonical init/default metadata,
+expression-backed widths, runtime div/mod expressions, canonical assignment
+pairs, and intent-level integer literal normalization on both direct and
+composition paths. Legacy `<=+` compatibility is tracked separately through
+paired default-compatible and strict-rejected corpus entries.
 
 ## Capability manifest
 
@@ -486,6 +488,8 @@ manifest output while keeping the exact file lists widenable.
 | `legacy.compact_init_directive.strict_rejection` | [t/corpus/legacy_compact_init_directive.fsm](t/corpus/legacy_compact_init_directive.fsm) | `expected_failure` | `strict_section_rejection_pipeline_cli` |
 | `legacy.infix_assignment.default_compat` | [t/corpus/legacy_infix_assignment.fsm](t/corpus/legacy_infix_assignment.fsm) | `legacy_out_of_scope` | `legacy_assignment_default_pipeline_cli` |
 | `legacy.infix_assignment.strict_rejection` | [t/corpus/legacy_infix_assignment.fsm](t/corpus/legacy_infix_assignment.fsm) | `expected_failure` | `strict_assignment_rejection_pipeline_cli` |
+| `legacy.lteplus_assignment.default_compat` | [t/corpus/legacy_lteplus_assignment.fsm](t/corpus/legacy_lteplus_assignment.fsm) | `legacy_out_of_scope` | `legacy_assignment_default_pipeline_cli` |
+| `legacy.lteplus_assignment.strict_rejection` | [t/corpus/legacy_lteplus_assignment.fsm](t/corpus/legacy_lteplus_assignment.fsm) | `expected_failure` | `strict_assignment_rejection_pipeline_cli` |
 | `legacy.fsm_child_root.default_compat` | [t/corpus/legacy_fsm_child_root_top.fsm](t/corpus/legacy_fsm_child_root_top.fsm) | `legacy_out_of_scope` | `legacy_child_root_default_pipeline_cli` |
 | `legacy.fsm_child_root.strict_rejection` | [t/corpus/legacy_fsm_child_root_top.fsm](t/corpus/legacy_fsm_child_root_top.fsm) | `expected_failure` | `strict_child_root_rejection_pipeline_cli` |
 | `legacy.dt_child_root.default_compat` | [t/corpus/legacy_dt_child_root_top.fsm](t/corpus/legacy_dt_child_root_top.fsm) | `legacy_out_of_scope` | `legacy_child_root_default_pipeline_cli` |

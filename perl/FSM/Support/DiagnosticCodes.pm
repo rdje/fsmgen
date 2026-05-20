@@ -49,6 +49,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'strict_mode',
         summary => 'Strict mode rejected legacy infix assignment syntax.',
     },
+    FSMGEN_STRICT_LEGACY_LTEPLUS_ASSIGNMENT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'strict_mode',
+        summary => 'Strict mode rejected the legacy <=+ assignment alias.',
+    },
     FSMGEN_STRICT_FSMC_LEGACY_ROOT => {
         severity => 'error',
         stability => 'stable',

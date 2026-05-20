@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Legacy <=+ is now default-mode-only compatibility
+- `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` completes the support-tier split for
+  the D-input dual-output alias.
+- The strict scanner runs before the generic infix scanner so `(D_IN <=+
+  NEXT_VALUE)` receives the `<=+`-specific migration hint instead of being
+  reported only as generic infix residue.
+- Default mode keeps the alias because compatibility sources still rely on
+  it; strict mode now requires `<=-`, which is the forward spelling already
+  covered by focused and corpus partial-LHS tests.
+- The corpus split is intentional: strict-supported fixtures prove preferred
+  syntax, while `legacy_lteplus_assignment.fsm` proves the compatibility path
+  and the strict rejection path.
+
 ## 2026-05-20: Strict mode should prefer <=- over legacy <=+
 - `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` selects a bounded strict-mode cut that
   follows directly from the recent R8 coverage work.

@@ -386,6 +386,7 @@ subtest 'manifest exposes the stable diagnostic-code registry' => sub {
 
     my %stable_codes = map { $_->{code} => $_ } @{$manifest->{diagnostics}{stable_codes}};
     ok($stable_codes{FSMGEN_STRICT_INFIX_ASSIGNMENT}, 'manifest includes the strict infix-assignment diagnostic code');
+    ok($stable_codes{FSMGEN_STRICT_LEGACY_LTEPLUS_ASSIGNMENT}, 'manifest includes the strict legacy <=+ diagnostic code');
     is(
         $stable_codes{FSMGEN_STRICT_INFIX_ASSIGNMENT}{severity},
         'error',

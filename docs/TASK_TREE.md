@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY` | `active` | `R9` | `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` | [docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md](docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY` | `done` | `R9` | `closed` | [docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md](docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md) |
 | `R8-PARTIAL-LHS-PULSE-BOUNDARY` | `done` | `R8` | `closed` | [docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md](docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md) |
 | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT` | `done` | `R8` | `closed` | [docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md](docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md) |
 | `MODULE-INFO-PROJECTION-GUARD` | `done` | `architecture backlog` | `closed` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |

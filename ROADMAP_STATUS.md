@@ -2,17 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R9`.
-  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` selected the next strict-mode
-  support-tier cut: default mode should keep legacy `<=+` compatibility, but
-  strict mode should reject `<=+` and point users to the preferred `<=-`
-  spelling. The active frontier is
-  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2`.
+  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` shipped the legacy `<=+` strict-mode
+  support-tier cut. Default mode keeps `<=+` compatibility, strict mode now
+  rejects `<=+` with a preferred `<=-` migration hint, and no active R9 task
+  tree remains after this slice.
+- Recent R9 strict-mode hardening:
+  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` added a shared frontend scanner for
+  pair and infix `<=+`, a stable diagnostic code, focused direct/CLI/child
+  strict-boundary coverage, a paired regression-corpus compatibility asset,
+  and book/corpus documentation. Strict-supported partial-LHS fixtures now use
+  preferred `<=-` instead of depending on legacy alias compatibility.
 - Recent R9 strict-mode selection:
-  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` activated a task tree for the legacy
-  `<=+` alias boundary. The selection depends on the just-completed R8
-  preferred `<=-` coverage: strict-supported fixtures can now prove the
-  forward spelling directly while a separate compatibility fixture can prove
-  default-mode `<=+` acceptance and strict-mode rejection.
+  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` activated the task tree for this
+  boundary before source, test, or fixture changes.
 - Recent R8 language-contract hardening:
   `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` added parser-owned validation so indexed,
   sliced, aggregate, and deconstruct delayed-pulse `<N` targets reject with a
@@ -5643,6 +5645,21 @@ Deliverables:
 - User/developer docs that explain how strict mode interacts with support tiers.
 Status: `in progress`
 Done:
+- `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` shipped the selected strict-mode
+  assignment-surface cut:
+  - [perl/FSM/Pipeline/SourceFrontend.pm](perl/FSM/Pipeline/SourceFrontend.pm)
+    rejects pair and infix `<=+` in strict mode with a preferred `<=-`
+    migration hint,
+  - default mode still accepts `<=+`,
+  - [t/410-strict-mode-legacy-lteplus-boundary.t](t/410-strict-mode-legacy-lteplus-boundary.t)
+    locks direct, CLI, infix-specific, preferred `<=-`, and generated-child
+    behavior,
+  - [t/corpus/legacy_lteplus_assignment.fsm](t/corpus/legacy_lteplus_assignment.fsm)
+    is now the paired default-compatible / strict-rejected legacy corpus
+    asset,
+  - strict-supported partial-LHS corpus fixtures now use preferred `<=-`, and
+  - the mdBook, regression corpus docs, diagnostic registry, and manifest
+    checks are synchronized.
 - `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` selected the next high-signal
   assignment-surface strict-mode cut before code:
   - legacy `<=+` remains default-mode compatibility residue,
@@ -5730,9 +5747,6 @@ Done:
   - checks expected direct module names, composition top/child modules, and recorded HDL-shape patterns,
   - and prevents future supported entries from depending only on family-specific tests for positive acceptance.
 Left:
-- Complete `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2`: implement the strict-mode
-  `<=+` rejection, keep default-mode compatibility, split or rewrite the
-  maintained corpus fixtures, and synchronize the mdBook plus live docs.
 - Widen strict-mode enforcement beyond the current canonical-root-family and current section-level compatibility cuts into more of the fully supported-vs-compatibility split.
 - Decide the next high-signal support-tier cuts after the current legacy root-family slices.
 - Continue documenting strict-mode behavior as the supported-tier boundary widens.

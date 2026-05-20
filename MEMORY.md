@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R9 legacy <=+ strict boundary shipped
+- Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` and closed the tree.
+- Strict mode now rejects pair and infix `<=+` through the shared frontend
+  with a migration hint toward preferred `<=-`.
+- Default mode still accepts `<=+`; the paired
+  `legacy_lteplus_assignment.fsm` corpus asset proves default compatibility
+  and strict rejection.
+- Strict-supported partial-LHS corpus fixtures now use preferred `<=-` instead
+  of depending on the legacy alias.
+
 ## 2026-05-20: R9 legacy <=+ strict boundary selected
 - Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1`.
 - Activated the R9 task tree for moving legacy `<=+` out of the
