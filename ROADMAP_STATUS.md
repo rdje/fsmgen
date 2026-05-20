@@ -13,6 +13,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   quick, focused ISF, and full regression gates pass. No active R14
   task-tree frontier remains in `docs/TASK_TREE.md` after the ATL `.9.99`
   completion.
+- Recent R14 ATL documentation truth sync:
+  `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1` corrected stale active-tree wording in
+  the mdBook feature backlog, ATL design proposal, and roadmap status board.
+  The shipped boundary is the bounded ATL v0 public contract; broader ATL
+  behavior remains backlog and needs a new task-tree leaf before code changes.
 - Recent R14 timing conventions: `ISF-TIMING-CONVENTIONS` is closed. Legacy
   single-clock actors that omit `(clock ...)`, `(reset ...)`, or
   `(watchdog ...)` now normalize to `clk`, async active-low `rst_n`, and
@@ -62,7 +67,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   `await_any`, spawn-after-do, cross-domain activation, deeper branch/loop
   nesting, and broader outstanding-child semantics remain fail-closed. The
   `ISF-REPEAT-BODY-CHILD-ACTIVATION` task tree is closed.
-- Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` shipped the
+- R14 ATL completed axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` shipped the
   first behavior-bearing actor-transaction trigger subset after `.4.3.2`
   shipped actor-event waits. A top-level actor can declare exactly one static
   child actor instance through `(instance NAME of ACTOR_TYPE)` directly in the
@@ -118,22 +123,23 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   handoff input, the scheduled parent `.fsm` drives the existing top-level
   output pin for the named drive-call cycle, and schedule JSON reports
   `scalar_actor_to_pin_handoff` provenance. The `.6` top-level pin movement
-  group is complete. The next ATL frontier is
+  group is complete. At that point the ATL frontier advanced to
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7`, which starts concurrent actor-group
   scheduling selection/decomposition before behavior-bearing code.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7.1` decomposed concurrent actor groups
   into targeted fail-closed group diagnostics, static group metadata, first
-  scheduling selection, and first scheduling lowering leaves. The next ATL
-  frontier is `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`, which rejects reserved
-  direct actor-body `(group NAME (members ACTOR...) (mode concurrent))`
-  declarations and compact `(concurrent NAME ACTOR...)` aliases with targeted
-  ATL diagnostics before any group metadata or scheduling behavior is claimed.
+  scheduling selection, and first scheduling lowering leaves. At that point
+  the ATL frontier advanced to `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2`, which
+  rejects reserved direct actor-body
+  `(group NAME (members ACTOR...) (mode concurrent))` declarations and compact
+  `(concurrent NAME ACTOR...)` aliases with targeted ATL diagnostics before
+  any group metadata or scheduling behavior is claimed.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.7.2` shipped those targeted diagnostics:
   verbose and compact group forms now fail closed without claiming group
   metadata, scheduling overlap, generated child artifacts, route mux/storage,
-  CDC, or concurrent actor execution. The next ATL frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`, which ships report-only static group
-  metadata. `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` now accepts direct
+  CDC, or concurrent actor execution. At that point the ATL frontier advanced
+  to `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3`, which ships report-only static
+  group metadata. `ISF-ACTOR-NETWORK-ORCHESTRATION.7.3` now accepts direct
   actor-body `(group NAME (members ACTOR...) (mode concurrent))`
   declarations for at least two already declared direct static actor
   instances and reports them under `actor_network.groups[]` with
@@ -180,9 +186,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   family without changing ATL source syntax or generated HDL behavior:
   schedule JSON now includes canonical `association_schedules[]` entries with
   `kind: temporary_trigger_batch` and `lifetime: task_scoped`, while
-  `group_schedules[]` remains as compatibility output. The next ATL frontier
-  is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, which must select the next
-  temporary-association behavior before code.
+  `group_schedules[]` remains as compatibility output. At that point the ATL
+  frontier advanced to `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3`, which had to
+  select the next temporary-association behavior before code.
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.3` selected the next fixture as
   `isf/atl_data_route_pipeline.isf`: two direct static actors, one scalar
   actor-to-actor drive-body route `(consumer.payload producer.payload)`, and
@@ -333,8 +339,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   and awaited `worker.done`. The generated top wires child `payload` to
   parent `worker_payload`, parent `result` to top `result`, and keeps the
   existing trigger/event links internal. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.33`
-  selected the next ATL frontier as
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, which now fails closed the reserved
+  selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.34`, which now fails closed the reserved
   generated-child actor-to-actor data-route shape before multi-child ATL top
   scheduling is widened. `ISF-ACTOR-NETWORK-ORCHESTRATION.9.36` shipped the
   first positive multi-child generated-top slice through
@@ -358,7 +363,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   diagnostic for missing source child outputs. Broader generated-top
   packaging, multi-route data wiring, event fan-in, route mux/storage,
   ready/backpressure, CDC, recursive actor networks, and permanent actor
-  grouping remain deferred. The active ATL frontier is now
+  grouping remain deferred. At that point the ATL frontier advanced to
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.42`, which hardens the scalar endpoint
   width boundary for the same generated-child actor-to-actor route. Wider
   source child outputs or sink child inputs must stay fail-closed until a

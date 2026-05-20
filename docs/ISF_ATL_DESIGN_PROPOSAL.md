@@ -1,6 +1,6 @@
 # ISF Actor Transfer Level Design Proposal
 
-Status: active ATL v0 public contract, partially implemented.
+Status: closed ATL v0 design tree; bounded public contract partially implemented.
 
 Task-tree owner:
 [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).

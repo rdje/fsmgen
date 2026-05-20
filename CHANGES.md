@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R14 — ATL documentation status truth sync completed
+- Completed `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1`.
+- Removed stale active-tree wording after
+  `ISF-ACTOR-NETWORK-ORCHESTRATION` closed.
+- The mdBook feature backlog now says the bounded ATL v0 public contract is
+  shipped while broader ATL remains backlog, and the ATL design proposal now
+  says the ATL v0 design tree is closed.
+- Added `t/1332-isf-atl-doc-status-audit.t` to prevent the stale active-tree
+  status wording from returning in the book, design proposal, or roadmap
+  board.
+- No compiler behavior changed.
+
 ### R14 — ATL source-expression source-order hardening completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 - Added focused regression coverage proving drive-before-instance

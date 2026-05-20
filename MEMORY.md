@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ATL documentation status truth sync completed
+- Completed `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1`.
+- Corrected stale "active ATL design tree" wording after
+  `ISF-ACTOR-NETWORK-ORCHESTRATION` closed.
+- The mdBook feature backlog now says the bounded ATL v0 public contract is
+  shipped while broader ATL remains backlog, and the design proposal says the
+  ATL v0 design tree is closed.
+- Scope was documentation and audit only: parser, scheduler, emitter,
+  schedule-report shape, generated artifacts, and HDL behavior are unchanged.
+
 ## 2026-05-20: ATL source-expression source-order hardening completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 - Drive-before-instance generated-child actor-to-actor route source

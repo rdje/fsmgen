@@ -58,6 +58,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-ATL-DOC-STATUS-TRUTH-SYNC` | `done` | `R14` | `closed` | [docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md](docs/tasks/ISF-ATL-DOC-STATUS-TRUTH-SYNC.md) |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |
 | `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
 | `ISF-TIMING-CONVENTIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TIMING-CONVENTIONS.md](docs/tasks/ISF-TIMING-CONVENTIONS.md) |

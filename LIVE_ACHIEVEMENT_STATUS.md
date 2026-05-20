@@ -2,6 +2,12 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R14 — ATL documentation status truth sync completed
+- Completed `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1`.
+- Removed stale active-tree wording from the ATL book/proposal/status surfaces
+  after `ISF-ACTOR-NETWORK-ORCHESTRATION` closed.
+- No compiler behavior changed.
+
 ## 2026-05-20: R14 — ATL source-expression source-order hardening completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 - Drive-before-instance generated-child actor-to-actor route source

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: ATL status wording needs a guard after tree closure
+- `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1` is a documentation truth-sync slice.
+- The implementation boundary did not change: the bounded ATL v0 public
+  contract is shipped, the `ISF-ACTOR-NETWORK-ORCHESTRATION` tree is closed,
+  and broader ATL behavior remains backlog.
+- The risk is user-facing drift. The book and proposal must not advertise an
+  active ATL design tree after the owner tree has closed, so the slice adds a
+  focused audit for that status wording.
+
 ## 2026-05-20: ATL source-expression source-order hardening needed coverage, not new lowering
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99` adds the missing
   drive-before-instance source-expression regression for the generated-child

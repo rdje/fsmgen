@@ -771,10 +771,14 @@ policy for the fully general case.
 
 ### Actor Network Orchestration
 
-Status: active ATL design tree; static metadata, scalar handoffs, bounded
-temporary trigger-batch scheduling, parent trigger/event handoffs, and
-resolved child `.fsm` artifact emission are shipped under the selected ATL v0
-public contract.
+Status: shipped bounded ATL v0 public contract; broader ATL remains backlog.
+
+Static metadata, scalar handoffs, bounded temporary trigger-batch scheduling,
+parent trigger/event handoffs, resolved child `.fsm` artifact emission,
+generated ATL tops, and selected scalar generated-child routes are shipped
+under the selected ATL v0 public contract. The owning task tree is closed;
+remaining ATL behavior changes need a new task-tree leaf before
+implementation.
 
 Task-tree owner:
 [ISF-ACTOR-NETWORK-ORCHESTRATION](../../tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md).
