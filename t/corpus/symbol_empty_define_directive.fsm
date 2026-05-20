@@ -1,0 +1,10 @@
+(?fsm:symbol_empty_define_directive
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+define)
+  (-dt
+    (OUT = 1)
+  )
+)

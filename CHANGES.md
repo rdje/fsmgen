@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — empty symbol-section widening shipped
+- Completed `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` and closed the task
+  tree.
+- Added four named empty symbol-section expected-failure fixtures and catalog
+  entries for empty `+constants`, `+define`, `+params`, and `+enums` forms.
+- Added stable diagnostic codes for the new expected-failure families and
+  widened corpus accounting, manifest, check JSON, normalized semantic JSON,
+  regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — empty symbol-section widening selected
 - Completed `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure corpus

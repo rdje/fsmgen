@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1` activated the task tree for
-  adding maintained expected-failure corpus coverage for empty
-  symbol-definition sections. The current frontier is
-  `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2`.
+  `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` completed the latest maintained
+  expected-failure corpus widening slice. The next PNT step must select fresh
+  task-tree ownership before any new code, test, source, generated-artifact, or
+  config change.
+- Recent R12 empty symbol-section corpus-widening completion:
+  `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` added four named
+  expected-failure corpus entries for empty `+constants`, `+define`,
+  `+params`, and `+enums` forms. Each entry carries stable diagnostic-code
+  metadata and is covered through pipeline/CLI behavior, check JSON,
+  normalized semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 empty symbol-section corpus-widening selection:
   `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting already-focused empty `+constants`,

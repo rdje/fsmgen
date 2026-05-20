@@ -361,6 +361,30 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A compact init directive did not match the supported signal=value form.',
     },
+    FSMGEN_LANGUAGE_EMPTY_CONSTANTS_SECTION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +constants section had no entries.',
+    },
+    FSMGEN_LANGUAGE_EMPTY_DEFINE_DIRECTIVE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +define directive had no entries.',
+    },
+    FSMGEN_LANGUAGE_EMPTY_PARAMS_SECTION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +params section had no entries.',
+    },
+    FSMGEN_LANGUAGE_EMPTY_ENUMS_SECTION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +enums section had no entries.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

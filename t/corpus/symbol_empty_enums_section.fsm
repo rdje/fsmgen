@@ -1,0 +1,10 @@
+(?fsm:symbol_empty_enums_section
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+enums)
+  (-dt
+    (OUT = 1)
+  )
+)

@@ -1,0 +1,10 @@
+(?fsm:symbol_empty_params_section
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params)
+  (-dt
+    (OUT = 1)
+  )
+)

@@ -158,6 +158,8 @@ unsupported compact `:=` reset values such as `[DATAIN]` and `<start`.
 Init-directive shape entries cover malformed `:=` payloads such as
 `(:= (tester_reset=1 extra))` and `(:= (tester_reset))`, plus unsupported
 compact `:=` directives such as `(:= BROKEN)`.
+Empty symbol-section entries cover empty `+constants`, `+define`, `+params`,
+and `+enums` forms that have no symbol declarations.
 Test-selector entries cover malformed plain `?SIG` signal names and computed
 test selectors that omit their selector expression. Those entries are not only
 prose examples. Inline-modifier entries cover malformed compound modifier
@@ -213,6 +215,10 @@ FSMGEN_LANGUAGE_UNSUPPORTED_ASSIGNMENT_OPERATOR
 FSMGEN_LANGUAGE_UNSUPPORTED_INIT_RESET_VALUE
 FSMGEN_LANGUAGE_MALFORMED_INIT_DIRECTIVE_PAYLOAD
 FSMGEN_LANGUAGE_UNSUPPORTED_INIT_DIRECTIVE
+FSMGEN_LANGUAGE_EMPTY_CONSTANTS_SECTION
+FSMGEN_LANGUAGE_EMPTY_DEFINE_DIRECTIVE
+FSMGEN_LANGUAGE_EMPTY_PARAMS_SECTION
+FSMGEN_LANGUAGE_EMPTY_ENUMS_SECTION
 FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL
 FSMGEN_LANGUAGE_MALFORMED_COMPUTED_TEST_SELECTOR
 FSMGEN_LANGUAGE_MALFORMED_INLINE_MODIFIER

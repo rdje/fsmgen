@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -39,7 +39,7 @@ public report coverage.
 ## Task Tree
 
 - ID: `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained expected-failure corpus coverage for empty symbol-definition section failures`
   Children: `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1`, `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2`
 
@@ -51,17 +51,17 @@ public report coverage.
   Commit: `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1: select empty symbol-section widening`
 
 - ID: `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add maintained expected-failure entries for empty +constants, +define, +params, and +enums forms`
   Acceptance: `named fixtures/catalog entries cover empty symbol-definition sections with stable diagnostics and corpus behavior checks`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused symbol-definition tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2: widen empty symbol-section corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` | `pending` | Focused tests already cover empty symbol-definition sections; the maintained corpus does not yet carry them as stable support-accounting entries. |
+| 1 | `closed` | `done` | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` shipped the selected empty symbol-section corpus widening. |
 
 ## Decisions
 
@@ -83,15 +83,18 @@ public report coverage.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused symbol-definition tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1` | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1: select empty symbol-section widening` | Selection leaf; no compiler behavior changed. |
-| `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` | `pending` | Implementation leaf pending. |
+| `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2: widen empty symbol-section corpus` | Adds four maintained empty symbol-section expected-failure entries. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Shipped the selected empty symbol-section corpus widening and
+  closed the task tree.

@@ -1,0 +1,10 @@
+(?fsm:symbol_empty_constants_section
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants)
+  (-dt
+    (OUT = 1)
+  )
+)

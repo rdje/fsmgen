@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Empty symbol-section support accounting keeps families explicit
+- `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` promotes existing empty
+  symbol-definition diagnostics without changing declaration syntax.
+- Empty `+constants`, `+define`, `+params`, and `+enums` forms use separate
+  stable codes because downstream tools can offer section-specific fixes.
+
 ## 2026-05-20: Empty symbol-section corpus widening is deliberately narrow
 - `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1` selects only empty
   symbol-definition section diagnostics for support-accounting promotion.

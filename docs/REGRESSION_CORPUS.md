@@ -100,10 +100,11 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   sequential writes, multiple pulse delays for one signal, combinational
   self-dependency, D-input self-dependency, unsupported assignment operators,
   unsupported compact `:=` reset values, malformed `:=` directive payloads,
-  unsupported compact `:=` directive shapes, malformed plain test-signal
-  names, malformed computed test selectors, malformed inline compound modifier
-  payloads, duplicate inline compound modifiers, malformed update-shorthand
-  targets, and malformed update-shorthand tails.
+  unsupported compact `:=` directive shapes, empty symbol-definition sections,
+  malformed plain test-signal names, malformed computed test selectors,
+  malformed inline compound modifier payloads, duplicate inline compound
+  modifiers, malformed update-shorthand targets, and malformed update-shorthand
+  tails.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -572,6 +573,10 @@ manifest output while keeping the exact file lists widenable.
 | `contract.init_directive_payload_extra` | [t/corpus/init_directive_payload_extra.fsm](t/corpus/init_directive_payload_extra.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.init_directive_compact_broken` | [t/corpus/init_directive_compact_broken.fsm](t/corpus/init_directive_compact_broken.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.init_directive_canonical_missing_value` | [t/corpus/init_directive_canonical_missing_value.fsm](t/corpus/init_directive_canonical_missing_value.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_empty_constants_section` | [t/corpus/symbol_empty_constants_section.fsm](t/corpus/symbol_empty_constants_section.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_empty_define_directive` | [t/corpus/symbol_empty_define_directive.fsm](t/corpus/symbol_empty_define_directive.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_empty_params_section` | [t/corpus/symbol_empty_params_section.fsm](t/corpus/symbol_empty_params_section.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_empty_enums_section` | [t/corpus/symbol_empty_enums_section.fsm](t/corpus/symbol_empty_enums_section.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.test_signal_bad_hyphen` | [t/corpus/test_signal_bad_hyphen.fsm](t/corpus/test_signal_bad_hyphen.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.test_signal_numeric` | [t/corpus/test_signal_numeric.fsm](t/corpus/test_signal_numeric.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.computed_test_missing_expr` | [t/corpus/computed_test_missing_expr.fsm](t/corpus/computed_test_missing_expr.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
