@@ -504,6 +504,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.direct_canonical_init_directive` | [t/corpus/direct_canonical_init_directive.fsm](t/corpus/direct_canonical_init_directive.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_size_expression_widths` | [t/corpus/direct_size_expression_widths.fsm](t/corpus/direct_size_expression_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_runtime_div_mod` | [t/corpus/direct_runtime_div_mod.fsm](t/corpus/direct_runtime_div_mod.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.rhs_expression_supported_variants` | [t/corpus/rhs_expression_supported_variants.fsm](t/corpus/rhs_expression_supported_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_assignment_pair_form` | [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.update_shorthand_variants` | [t/corpus/update_shorthand_variants.fsm](t/corpus/update_shorthand_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.state_dte_guards` | [t/corpus/state_dte_guards.fsm](t/corpus/state_dte_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -672,6 +673,10 @@ manifest output while keeping the exact file lists widenable.
   `feature.direct_runtime_div_mod` entry proves that runtime RHS `/`, `%`,
   `div`, and `mod` expressions lower through pipeline and CLI, including the
   left-associative n-ary shape for three-operand forms. The
+  `feature.rhs_expression_supported_variants` entry proves inline scalar
+  comparisons such as `cnt[2:1]!=2'2` and negated n-ary bitwise RHS forms such
+  as `!&`, `!|`, and `xnor` through emitted expression and intermediate
+  shapes. The
   `feature.direct_assignment_pair_form` entry proves that canonical
   `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
   as infix compatibility assignments, including guarded nested RHS

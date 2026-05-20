@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: RHS expression variant support accounting proves emitted expression shape
+- `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.2` promotes inline
+  scalar comparisons and negated n-ary bitwise RHS operators into the
+  executable supported-smoke corpus.
+- The entry records emitted HDL shapes for inline comparison rendering,
+  factored `!&` / `!|` intermediates, and `xnor` alias lowering.
+
 ## 2026-05-20: RHS expression supported variant widening stays expression-local
 - `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.1` selects inline
   scalar comparisons and negated n-ary bitwise RHS operators for

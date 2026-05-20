@@ -193,7 +193,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
 - `docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md` — completed `R9` task tree for strict-mode rejection of the legacy `<=+` assignment alias.
-- `docs/tasks/R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.md` — active `R12` task tree for widening maintained supported RHS expression variant corpus coverage.
+- `docs/tasks/R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported RHS expression variant corpus coverage.
 - `docs/tasks/R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported computed comparison selector corpus coverage.
 - `docs/tasks/R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported symbolic/default test-selector corpus coverage.
 - `docs/tasks/R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported plain test-signal corpus coverage.

@@ -1,0 +1,23 @@
+(?fsm:rhs_expression_supported_variants
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (MATCH 1)
+    (cnt 3)
+    (A 1)
+    (B 1)
+    (C 1)
+    (D 1)
+    (E 1)
+  )
+
+  (-exprs
+    (= (MATCH cnt[2:1]!=2'2))
+    (= (A (!& B C)))
+    (= (D (!| B C)))
+    (= (E (xnor B C)))
+  )
+)
