@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 state-body corpus widening selected
+- Completed `R12-STATE-BODY-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused empty regular
+  state body diagnostics and empty standalone-DT body diagnostics into
+  maintained expected-failure corpus entries.
+- The next frontier is `R12-STATE-BODY-CORPUS-WIDENING.2`: add bounded
+  fixtures/catalog entries, stable diagnostic codes, corpus behavior checks,
+  and synchronized docs for the selected rejection families.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 update-shorthand corpus widening shipped
 - Completed `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` and closed the tree.
 - Added four maintained expected-failure corpus entries for malformed nested

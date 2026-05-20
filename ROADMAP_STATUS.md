@@ -2,10 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` completed the latest maintained
-  expected-failure corpus widening slice. The next PNT step must select fresh
-  task-tree ownership before any new code, test, source, generated-artifact, or
-  config change.
+  `R12-STATE-BODY-CORPUS-WIDENING.1` activated the task tree for adding
+  maintained expected-failure corpus coverage for malformed empty state/DT
+  bodies. The current frontier is `R12-STATE-BODY-CORPUS-WIDENING.2`.
+- Recent R12 state-body corpus-widening selection:
+  `R12-STATE-BODY-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting already-focused empty regular state
+  and empty standalone-DT body diagnostics into stable-code-backed
+  expected-failure corpus entries.
 - Recent R12 update-shorthand corpus-widening completion:
   `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` added four named expected-failure
   corpus entries for malformed nested update-shorthand targets such as

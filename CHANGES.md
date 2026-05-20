@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — state-body widening selected
+- Completed `R12-STATE-BODY-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused empty regular state body and empty
+  standalone-DT body rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — update-shorthand widening shipped
 - Completed `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` and closed the task tree.
 - Added four named update-shorthand expected-failure fixtures and catalog

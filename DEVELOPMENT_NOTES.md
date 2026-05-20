@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: State-body corpus widening is a shape-accounting slice
+- `R12-STATE-BODY-CORPUS-WIDENING.1` selects malformed empty state/DT bodies
+  for support-accounting promotion.
+- The implementation should promote existing empty regular state and empty
+  standalone-DT body rejections into stable-code-backed expected-failure
+  entries without changing accepted state, DT, DTE, or guard body semantics.
+
 ## 2026-05-20: Update-shorthand support accounting separates target and tail shape
 - `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.2` promotes existing
   update-shorthand diagnostics without widening the accepted shorthand grammar.
