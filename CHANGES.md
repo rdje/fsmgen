@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R8 language-contract hardening — preferred partial-LHS coverage shipped
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`.
+- Added direct preferred `<=-` partial-LHS coverage to focused lowering,
+  dual-output, inferred-width, and maintained corpus checks.
+- Updated the mdBook language-basics chapter and regression corpus docs to
+  state the supported preferred/legacy split.
+- No production code changed; the existing implementation already satisfied
+  the covered behavior.
+
 ### R8 language-contract hardening — preferred partial-LHS coverage selected
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1`.
 - Activated a new R8 task tree for the remaining partial-LHS contract

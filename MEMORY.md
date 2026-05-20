@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R8 preferred partial-LHS coverage shipped
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`.
+- Focused tests and maintained regression corpus fixtures now directly cover
+  preferred `<=-` partial indexed/sliced writes, full-width `*_r` auxiliary
+  outputs, and width inference from static slice/index bounds.
+- Existing legacy `<=+` compatibility coverage remains intact.
+- The next leaf is `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`, which must split
+  or defer the delayed-pulse/vector widening question.
+
 ## 2026-05-20: R8 preferred partial-LHS coverage selected
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1`.
 - Activated the R8 task tree after the architecture backlog reached

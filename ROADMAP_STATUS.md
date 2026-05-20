@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R8`.
-  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` selected the next
-  language-contract hardening slice: prove preferred `<=-` partial-LHS
-  dual-output lowering directly while keeping existing legacy `<=+`
-  compatibility coverage intact.
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` proved preferred `<=-`
+  partial-LHS dual-output lowering directly while keeping existing legacy
+  `<=+` compatibility coverage intact. The active frontier is
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`, which must split or defer the
+  remaining delayed-pulse/vector widening decision.
+- Recent R8 language-contract hardening:
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` added preferred `<=-`
+  partial-LHS coverage to focused lowering tests, dual-output width tests,
+  inferred-width tests, maintained regression corpus fixtures, and the book.
+  The existing `<=+` alias coverage remains intact.
 - Recent R8 language-contract hardening:
   `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` activated a task tree for the
   remaining partial-LHS contract frontier. Current focused/corpus coverage
@@ -5591,14 +5597,20 @@ Done:
   shipped/deferred user-visible work, and local caveat sections link back to
   that chapter instead of leaving future-work lists stranded only in prose.
 - [docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md](docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md)
-  now owns the next partial-LHS language-contract hardening slice. The selected
-  implementation leaf will prove preferred `<=-` partial-LHS dual-output
-  lowering directly while preserving legacy `<=+` compatibility coverage.
+  now owns the partial-LHS language-contract hardening slice for the preferred
+  `<=-` dual-output spelling and the remaining delayed-pulse/vector decision.
+- [t/258-partial-lhs-assignment-lowering.t](t/258-partial-lhs-assignment-lowering.t),
+  [t/259-partial-dual-output-lhs-lowering.t](t/259-partial-dual-output-lhs-lowering.t),
+  [t/260-partial-target-width-inference.t](t/260-partial-target-width-inference.t),
+  [t/corpus/partial_lhs_with_size.fsm](t/corpus/partial_lhs_with_size.fsm),
+  and [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm)
+  now directly prove preferred `<=-` partial-LHS dual-output writes alongside
+  legacy `<=+` alias compatibility.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
-- Decide whether the same partial-LHS lowering contract should now also be widened into future pulse/vector edge cases beyond the current `=`, `<-`, `<=`, `<-=`, and `<=+` family.
+- Decide whether the same partial-LHS lowering contract should now also be widened into future pulse/vector edge cases beyond the current `=`, `<-`, `<=`, `<-=`, `<=-`, and legacy `<=+` family.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.
 

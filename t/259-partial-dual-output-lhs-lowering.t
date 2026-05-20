@@ -41,12 +41,19 @@ sub assert_partial_dual_output_contract {
     my %module_output_by_name = map { $_->{name} => $_ } @{$module_plan->{outputs} || []};
 
     is($module_output_by_name{next_ROD}{width}, 4, "module declaration plan keeps next_ROD full width for partial '<-=' writes");
+    is($module_output_by_name{RIP_r}{width}, 4, "module declaration plan keeps RIP_r full width for partial '<=-' writes");
     is($module_output_by_name{RID_r}{width}, 4, "module declaration plan keeps RID_r full width for partial '<=+' writes");
 
     like(
         $hdl,
         qr/\boutput\s+reg\s+\[3:0\]\s+next_ROD\b/s,
         "generated HDL exposes next_ROD as a full-width auxiliary output",
+    );
+
+    like(
+        $hdl,
+        qr/\boutput\s+reg\s+\[3:0\]\s+RIP_r\b/s,
+        "generated HDL exposes RIP_r as a full-width auxiliary output",
     );
 
     like(
@@ -63,6 +70,12 @@ sub assert_partial_dual_output_contract {
 
     like(
         $hdl,
+        qr/\bRIP\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+        "partial '<=-' writes assemble one full-width D-input expression",
+    );
+
+    like(
+        $hdl,
         qr/\bRID\s*=\s*\{HI,\s*MID,\s*LO\};/s,
         "partial '<=+' writes assemble one full-width D-input expression",
     );
@@ -71,6 +84,12 @@ sub assert_partial_dual_output_contract {
         $hdl,
         qr/\bnext_ROD\s*=\s*ROD_next;/s,
         "generated HDL still exposes the full-width next_ROD auxiliary output",
+    );
+
+    like(
+        $hdl,
+        qr/\bRIP_r\s*=\s*RIP_q;/s,
+        "generated HDL still exposes the full-width RIP_r auxiliary output",
     );
 
     like(
@@ -89,6 +108,7 @@ sub fsm_text_for_dual_partial_contract {
     (MID 1)
     (LO 1)
     (ROD 4)
+    (RIP 4)
     (RID 4)
   )
 FSM
@@ -99,6 +119,9 @@ FSM
       (ROD[3:2] <-= HI)
       (ROD[1] <-= MID)
       (ROD[0] <-= LO)
+      (RIP[3:2] <=- HI)
+      (RIP[1] <=- MID)
+      (RIP[0] <=- LO)
       (RID[3:2] <=+ HI)
       (RID[1] <=+ MID)
       (RID[0] <=+ LO)

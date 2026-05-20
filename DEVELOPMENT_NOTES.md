@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Preferred <=- partial-LHS behavior was already implemented
+- `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` added evidence rather than changing
+  production code.
+- The existing lowering path already treats preferred `<=-` like the legacy
+  `<=+` alias for partial indexed/sliced D-input dual-output writes: it
+  assembles full-width D-input mux values, preserves untouched bits through the
+  generated `*_q` mirror, and exposes a full-width `*_r` output even when the
+  base width comes only from static slice/index bounds.
+- Keeping both `<=-` and `<=+` in the same fixtures is intentional. It proves
+  the forward spelling and the compatibility alias together without changing
+  strict-mode or default-mode operator policy.
+
 ## 2026-05-20: Preferred partial-LHS coverage before broader pulse/vector work
 - `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` selects a narrow language-contract
   gap before reopening broader assignment semantics.

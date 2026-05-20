@@ -63,8 +63,10 @@ my @REGRESSION_CORPUS = (
         expected_hdl_patterns => [
             qr/\bOUT\s*=\s*\{HI,\s*MID,\s*LO\};/s,
             qr/\bROD_next\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+            qr/\bRIP\s*=\s*\{HI,\s*MID,\s*LO\};/s,
             qr/\bRID\s*=\s*\{HI,\s*MID,\s*LO\};/s,
             qr/\boutput\s+reg\s+\[3:0\]\s+next_ROD\b/s,
+            qr/\boutput\s+reg\s+\[3:0\]\s+RIP_r\b/s,
             qr/\boutput\s+reg\s+\[3:0\]\s+RID_r\b/s,
         ],
     },
@@ -80,9 +82,11 @@ my @REGRESSION_CORPUS = (
         expected_hdl_patterns => [
             qr/\breg\s+\[3:0\]\s+OUT;/s,
             qr/\boutput\s+reg\s+\[3:0\]\s+next_ROD\b/s,
+            qr/\boutput\s+reg\s+\[3:0\]\s+RIP_r\b/s,
             qr/\boutput\s+reg\s+\[3:0\]\s+RID_r\b/s,
             qr/\breg\s+\[4:0\]\s+IDXOUT;/s,
             qr/\boutput\s+reg\s+\[4:0\]\s+next_IDXRO\b/s,
+            qr/\boutput\s+reg\s+\[4:0\]\s+IDXRIP_r\b/s,
             qr/\boutput\s+reg\s+\[4:0\]\s+IDXRI_r\b/s,
         ],
     },

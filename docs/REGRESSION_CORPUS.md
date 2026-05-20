@@ -354,7 +354,8 @@ requester, APB completer, AMBA requester, and APB composition top use the
 canonical `areset rst_n`, `(:= (signal value))`, and assignment-pair surfaces
 and must pass both default and strict pipeline/CLI smoke. All current supported
 language-feature fixtures are also `strict_supported`. That means strict mode
-positively accepts the maintained fixtures for partial LHS writes, RHS
+positively accepts the maintained fixtures for partial LHS writes, including
+preferred `<=-` dual-output writes and legacy `<=+` alias compatibility, RHS
 concat/cat packing, LHS concat/cat deconstruction, canonical reset spellings,
 canonical init/default metadata, expression-backed widths, runtime div/mod
 expressions, canonical assignment pairs, and intent-level integer literal

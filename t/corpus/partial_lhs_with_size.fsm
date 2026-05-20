@@ -10,6 +10,7 @@
     (LO 1)
     (OUT 4)
     (ROD 4)
+    (RIP 4)
     (RID 4)
   )
   (idle
@@ -20,6 +21,9 @@
       (<-= (ROD[3:2] HI))
       (<-= (ROD[1] MID))
       (<-= (ROD[0] LO))
+      (<=- (RIP[3:2] HI))
+      (<=- (RIP[1] MID))
+      (<=- (RIP[0] LO))
       (<=+ (RID[3:2] HI))
       (<=+ (RID[1] MID))
       (<=+ (RID[0] LO))

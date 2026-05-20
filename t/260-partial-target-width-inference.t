@@ -32,6 +32,9 @@ subtest 'slice bounds alone infer base widths for partial writes without +size' 
       (ROD[3:2] <-= 2'b10)
       (ROD[1] <-= 1'b1)
       (ROD[0] <-= 1'b0)
+      (RIP[3:2] <=- 2'b10)
+      (RIP[1] <=- 1'b1)
+      (RIP[0] <=- 1'b0)
       (RID[3:2] <=+ 2'b10)
       (RID[1] <=+ 1'b1)
       (RID[0] <=+ 1'b0)
@@ -47,12 +50,15 @@ FSM
     my %module_output_by_name = map { $_->{name} => $_ } @{$module_plan->{outputs} || []};
 
     is($module_output_by_name{next_ROD}{width}, 4, 'slice-only partial <-= infers a 4-bit next_ROD output');
+    is($module_output_by_name{RIP_r}{width}, 4, 'slice-only partial <=- infers a 4-bit RIP_r output');
     is($module_output_by_name{RID_r}{width}, 4, 'slice-only partial <=+ infers a 4-bit RID_r output');
 
     like($hdl, qr/\breg\s+\[3:0\]\s+OUT;/s, 'slice-only partial = infers a 4-bit internal target');
     like($hdl, qr/\breg\s+\[3:0\]\s+ROD;/s, 'slice-only partial <-= infers a 4-bit internal target');
+    like($hdl, qr/\breg\s+\[3:0\]\s+RIP;/s, 'slice-only partial <=- infers a 4-bit internal target');
     like($hdl, qr/\breg\s+\[3:0\]\s+RID;/s, 'slice-only partial <=+ infers a 4-bit internal target');
     like($hdl, qr/\boutput\s+reg\s+\[3:0\]\s+next_ROD\b/s, 'slice-only partial <-= keeps full-width next_ROD output');
+    like($hdl, qr/\boutput\s+reg\s+\[3:0\]\s+RIP_r\b/s, 'slice-only partial <=- keeps full-width RIP_r output');
     like($hdl, qr/\boutput\s+reg\s+\[3:0\]\s+RID_r\b/s, 'slice-only partial <=+ keeps full-width RID_r output');
 };
 
@@ -74,6 +80,8 @@ subtest 'indexed bounds alone infer base widths for partial writes without +size
       (IDXOUT[0] = 1'b1)
       (IDXRO[4] <-= 1'b1)
       (IDXRO[0] <-= 1'b1)
+      (IDXRIP[4] <=- 1'b1)
+      (IDXRIP[0] <=- 1'b1)
       (IDXRI[4] <=+ 1'b1)
       (IDXRI[0] <=+ 1'b1)
     )
@@ -88,12 +96,15 @@ FSM
     my %module_output_by_name = map { $_->{name} => $_ } @{$module_plan->{outputs} || []};
 
     is($module_output_by_name{next_IDXRO}{width}, 5, 'index-only partial <-= infers a 5-bit next_IDXRO output');
+    is($module_output_by_name{IDXRIP_r}{width}, 5, 'index-only partial <=- infers a 5-bit IDXRIP_r output');
     is($module_output_by_name{IDXRI_r}{width}, 5, 'index-only partial <=+ infers a 5-bit IDXRI_r output');
 
     like($hdl, qr/\breg\s+\[4:0\]\s+IDXOUT;/s, 'index-only partial = infers a 5-bit internal target');
     like($hdl, qr/\breg\s+\[4:0\]\s+IDXRO;/s, 'index-only partial <-= infers a 5-bit internal target');
+    like($hdl, qr/\breg\s+\[4:0\]\s+IDXRIP;/s, 'index-only partial <=- infers a 5-bit internal target');
     like($hdl, qr/\breg\s+\[4:0\]\s+IDXRI;/s, 'index-only partial <=+ infers a 5-bit internal target');
     like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+next_IDXRO\b/s, 'index-only partial <-= keeps full-width next_IDXRO output');
+    like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+IDXRIP_r\b/s, 'index-only partial <=- keeps full-width IDXRIP_r output');
     like($hdl, qr/\boutput\s+reg\s+\[4:0\]\s+IDXRI_r\b/s, 'index-only partial <=+ keeps full-width IDXRI_r output');
 };
 

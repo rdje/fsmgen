@@ -220,6 +220,15 @@ default-mode compatibility spelling `(output_data> <= 8'1)`. It is not the same
 as `(<= (output_data 8'1))`, which drives the internal D-input-named target
 without requesting public output exposure.
 
+Static indexed and sliced LHS targets are supported for the core assignment
+families `=`, `<-`, `<=`, `<-=`, and `<=-`. The legacy `<=+` alias follows the
+same partial-LHS contract as `<=-`. For same-context partial writes, FSMGen
+assembles one full-width mux input from the addressed pieces. Untouched bits
+retain the correct feedback source: Q/output-named families read the Q value,
+and D-input-named families read the generated `*_q` mirror. Dual-output partial
+writes keep their auxiliary `next_*` or `*_r` port at the full base-signal
+width even when that width is inferred only from static slice or bit indexes.
+
 Existing infix forms such as `(OUT = VALUE)` and `(Q <- D)` remain compatibility
 spellings. Both surfaces normalize into the same assignment AST/IR before HDL
 generation, so backends see normalized assignment intent rather than

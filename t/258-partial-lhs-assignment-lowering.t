@@ -29,8 +29,10 @@ subtest 'partial indexed and sliced writes assemble full-width combinational and
     (OUT 4)
     (RO 4)
     (RI 4)
+    (RIP 4)
     (RO_HOLD 4)
     (RI_HOLD 4)
+    (RIP_HOLD 4)
   )
   (idle
     (<COND
@@ -43,8 +45,12 @@ subtest 'partial indexed and sliced writes assemble full-width combinational and
       (RI[3:2] <= HI)
       (RI[1] <= MID)
       (RI[0] <= LO)
+      (RIP[3:2] <=- HI)
+      (RIP[1] <=- MID)
+      (RIP[0] <=- LO)
       (RO_HOLD[0] <- LO)
       (RI_HOLD[0] <= LO)
+      (RIP_HOLD[0] <=- LO)
     )
   )
 )
@@ -73,6 +79,12 @@ FSM
 
     like(
         $hdl,
+        qr/\bRIP\s*=\s*\{HI,\s*MID,\s*LO\};/s,
+        "partial '<=-' writes assemble one full-width D-input expression",
+    );
+
+    like(
+        $hdl,
         qr/\bRO_HOLD_next\s*=\s*\{RO_HOLD\[3:1\],\s*LO\};/s,
         "partial '<-' writes retain untouched register bits through Q feedback",
     );
@@ -81,6 +93,12 @@ FSM
         $hdl,
         qr/\bRI_HOLD\s*=\s*\{RI_HOLD_q\[3:1\],\s*LO\};/s,
         "partial '<=' writes retain untouched register bits through q feedback",
+    );
+
+    like(
+        $hdl,
+        qr/\bRIP_HOLD\s*=\s*\{RIP_HOLD_q\[3:1\],\s*LO\};/s,
+        "partial '<=-' writes retain untouched register bits through q feedback",
     );
 };
 

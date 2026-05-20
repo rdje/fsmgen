@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R8 language-contract hardening — preferred partial-LHS coverage shipped
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`.
+- Focused tests and maintained corpus fixtures now prove preferred `<=-`
+  partial indexed/sliced writes, full-width `*_r` outputs, and inferred-width
+  behavior alongside existing legacy `<=+` alias compatibility.
+- The mdBook language-basics chapter now describes that supported
+  partial-LHS surface explicitly.
+- No production code changed.
+
 ## 2026-05-20: R8 language-contract hardening — preferred partial-LHS coverage selected
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1`.
 - Activated the R8 task tree and selected direct preferred `<=-` partial-LHS

@@ -55,17 +55,27 @@ record the remaining delayed-pulse/vector widening decision explicitly.
   directly prove the preferred '<=-' spelling, and '.2' is selected as the
   bounded implementation leaf.`
   Verification: `static roadmap/test/book coverage audit`; `git diff --check`; `mdbook build docs/book`
-  Commit: `pending`
+  Commit: `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1: select preferred partial-LHS coverage`
 
 - ID: `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`
-  Status: `pending`
+  Status: `done`
   Goal: `Add preferred '<=-' partial-LHS dual-output coverage.`
   Acceptance: `Focused language-contract tests and maintained regression
   corpus coverage prove partial indexed/sliced '<=-' writes assemble full-width
   D-input expressions, keep full-width '*_r' auxiliary outputs, and keep the
   existing '<=+' compatibility coverage intact.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c t/258-partial-lhs-assignment-lowering.t`;
+  `perl -Iperl -c t/259-partial-dual-output-lhs-lowering.t`;
+  `perl -Iperl -c t/260-partial-target-width-inference.t`;
+  `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`;
+  `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`;
+  `prove -Iperl t/258-partial-lhs-assignment-lowering.t
+  t/259-partial-dual-output-lhs-lowering.t
+  t/260-partial-target-width-inference.t`;
+  `prove -Iperl t/248-regression-corpus-accounting.t
+  t/261-regression-corpus-supported-language-features.t`;
+  `git diff --check`; `mdbook build docs/book`
+  Commit: `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2: cover preferred partial-LHS writes`
 
 - ID: `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`
   Status: `pending`
@@ -81,8 +91,8 @@ record the remaining delayed-pulse/vector widening decision explicitly.
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` | `done` | Selected the concrete coverage gap before implementation. |
-| 2 | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` | `pending` | Preferred `<=-` is the forward spelling and should be directly proven before deciding pulse/vector widening. |
-| 3 | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` | `pending` | The broader pulse/vector question should be closed or split only after the preferred-spelling gap is guarded. |
+| 2 | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` | `done` | Preferred `<=-` is now directly proven while existing legacy `<=+` coverage remains intact. |
+| 3 | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` | `pending` | The broader pulse/vector question should be closed or split now that the preferred-spelling gap is guarded. |
 
 ## Decisions
 
@@ -95,6 +105,10 @@ record the remaining delayed-pulse/vector widening decision explicitly.
   coverage without removing the legacy alias.
 - `2026-05-20`: Validation for `.1` passed with static coverage searches,
   `git diff --check`, and `mdbook build docs/book`.
+- `2026-05-20`: Completed `.2` by adding preferred `<=-` partial-LHS
+  coverage to focused lowering tests, dual-output width tests, inferred-width
+  tests, maintained regression corpus fixtures, and book/corpus documentation.
+  Legacy `<=+` compatibility coverage remains present.
 
 ## Open Questions
 
@@ -112,14 +126,18 @@ record the remaining delayed-pulse/vector widening decision explicitly.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` | `rg -n '<=-|partial.*<=-|delayed pulse|delayed-pulse|<1 \\\\(' t perl docs/book/src/02-language-basics.md docs/book/src/03-decision-trees-and-fsms.md docs/book/src/10-errors-strict-mode-and-troubleshooting.md docs/USER_GUIDE.md`; `rg -n 'partial|slice|index|lhs|delayed|pulse|operator_symbol|<=-' perl/FSM`; `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` | `perl -Iperl -c t/258-partial-lhs-assignment-lowering.t`; `perl -Iperl -c t/259-partial-dual-output-lhs-lowering.t`; `perl -Iperl -c t/260-partial-target-width-inference.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `prove -Iperl t/258-partial-lhs-assignment-lowering.t t/259-partial-dual-output-lhs-lowering.t t/260-partial-target-width-inference.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1: select preferred partial-LHS coverage` | Selects preferred `<=-` partial-LHS coverage as the next R8 implementation leaf. |
+| `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2: cover preferred partial-LHS writes` | Adds focused/corpus/book coverage for preferred `<=-` partial-LHS behavior while preserving `<=+` alias coverage. |
 
 ## Changelog
 
 - `2026-05-20`: Created and activated the R8 task tree, completed `.1`, and
   selected `.2` for preferred `<=-` partial-LHS dual-output coverage.
+- `2026-05-20`: Completed `.2` implementation; `.3` now owns the remaining
+  delayed-pulse/vector widening decision.
