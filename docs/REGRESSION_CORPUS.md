@@ -511,6 +511,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.guard_shorthand` | [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.relational_operator_chains` | [t/corpus/relational_operator_chains.fsm](t/corpus/relational_operator_chains.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.computed_test_selector` | [t/corpus/computed_test_selector.fsm](t/corpus/computed_test_selector.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.plain_test_signal_selectors` | [t/corpus/plain_test_signal_selectors.fsm](t/corpus/plain_test_signal_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.test_branch_selectors` | [t/corpus/test_branch_selectors.fsm](t/corpus/test_branch_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_intent_integer_literals` | [t/corpus/direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.composition_intent_integer_literals` | [t/corpus/composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
@@ -689,7 +690,10 @@ manifest output while keeping the exact file lists widenable.
   relational chains through emitted HDL comparisons and enables. The
   `feature.computed_test_selector` entry proves that `?(expr)` selectors create
   a computed intermediate and reuse it across explicit and default branch
-  enables. The `feature.test_branch_selectors` entry proves that relational
+  enables. The `feature.plain_test_signal_selectors` entry proves that
+  HDL-compatible plain `?SIG` selector names lower equality branches directly
+  into branch-local enables. The `feature.test_branch_selectors` entry proves
+  that relational
   `?SIG` branch selectors such as `!=`, `>`, and `<=` lower through width-safe
   nonzero reduction and factored comparison enables. The
   `feature.direct_intent_integer_literals` and

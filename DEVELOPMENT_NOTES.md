@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Plain test-signal support accounting proves equality-branch lowering
+- `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.2` promotes plain `?SIG` equality
+  selectors into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for false/true selector branches and
+  branch-local assignment enables so support accounting proves the basic
+  compact selector behavior rather than only parser acceptance.
+
 ## 2026-05-20: Plain test-signal corpus widening stays selector-local
 - `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.1` selects supported plain `?SIG`
   equality selectors for support-accounting promotion.

@@ -1,0 +1,23 @@
+(?fsm:plain_test_signal_selectors
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (SEL 1)
+    (LOW 1)
+    (HIGH 1)
+  )
+
+  (idle
+    (?SEL
+      (=0
+        (= (LOW 1))
+      )
+      (=1
+        (= (HIGH 1))
+      )
+    )
+  )
+)

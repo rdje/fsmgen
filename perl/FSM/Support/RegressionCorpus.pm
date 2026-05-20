@@ -326,6 +326,22 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.plain_test_signal_selectors',
+        relpath => 't/corpus/plain_test_signal_selectors.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'plain_test_signal_selectors',
+        expected_hdl_patterns => [
+            qr/\bidle_low_1_en\s*=\s*idle_en\s*&\s*!SEL\s*;/s,
+            qr/\bidle_high_1_en\s*=\s*idle_en\s*&\s*SEL\s*;/s,
+            qr/\blow_1_en\s*=\s*idle_low_1_en\s*;/s,
+            qr/\bhigh_1_en\s*=\s*idle_high_1_en\s*;/s,
+        ],
+    },
+    {
         id => 'feature.test_branch_selectors',
         relpath => 't/corpus/test_branch_selectors.fsm',
         family => 'language_feature_fixture',
