@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — condition-expression widening selected
+- Completed `R12-CONDITION-EXPRESSION-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-CONDITION-EXPRESSION-CORPUS-WIDENING.2`.
+- The selected implementation will promote malformed guard shorthand payloads
+  and malformed inline comparison tokens into maintained expected-failure
+  corpus entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — RHS expression widening shipped
 - Completed `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has three additional RHS expression
