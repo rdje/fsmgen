@@ -152,6 +152,21 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.implicit_system_defaults',
+        relpath => 't/corpus/implicit_system_defaults.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'implicit_system_defaults',
+        expected_hdl_patterns => [
+            qr/\binput\s+wire\s+clk\b/s,
+            qr/\binput\s+wire\s+rst_n\b/s,
+            qr/always_ff\s*@\(posedge\s+clk\s+or\s+negedge\s+rst_n\)\s*begin\s+if\s*\(!rst_n\)\s*begin/s,
+        ],
+    },
+    {
         id => 'feature.direct_areset_active_low',
         relpath => 't/corpus/direct_areset_active_low.fsm',
         family => 'language_feature_fixture',

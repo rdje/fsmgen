@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — implicit system defaults widening shipped
+- Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added one named supported-smoke fixture and catalog entry for direct `?fsm`
+  sources that omit `+system`.
+- Added strict-supported metadata and HDL-shape expectations for the new entry
+  and widened supported corpus accounting, manifest, check JSON, normalized
+  semantic JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — implicit system defaults widening selected
 - Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained supported-smoke corpus

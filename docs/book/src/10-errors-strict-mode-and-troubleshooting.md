@@ -199,9 +199,10 @@ HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
 only proving that generation completed. Current supported direct
 language-feature coverage includes direct-root `+system` contracts with
 HDL-compatible authored clock names such as `core_clk`, using canonical
-active-high synchronous reset spelling `(sreset reset)`. It also includes
-canonical assignment pairs and update-shorthand `+=` / `-=` variants with
-implicit and explicit deltas, plus
+active-high synchronous reset spelling `(sreset reset)`, plus direct
+omitted-`+system` defaults that lower to `clk`, async active-low `rst_n`, and
+`!rst_n` reset tests. It also includes canonical assignment pairs and
+update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
 compound update variants such as `++`, `--`, compact `+=N` / `-=N`, and inline
 `(+= N)` / `(-= N)` modifiers. It also includes
 arithmetic and XOR operator variants such as n-ary `+`, `-`, `*`, `add`, `^`,

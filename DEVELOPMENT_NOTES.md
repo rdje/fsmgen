@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Implicit system defaults support accounting proves fallback timing projection
+- `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` promotes omitted direct
+  `+system` defaults into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for implicit `clk`, async active-low
+  `rst_n`, and `always_ff @(posedge clk or negedge rst_n)` blocks with
+  `!rst_n` reset tests.
+
 ## 2026-05-21: Implicit system defaults corpus widening stays direct-root scoped
 - `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1` selects direct omitted
   `+system` defaults for support-accounting promotion.

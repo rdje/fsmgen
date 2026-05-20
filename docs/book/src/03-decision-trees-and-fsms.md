@@ -79,6 +79,12 @@ reset spelling still matters: `(sreset reset)` is the canonical active-high
 synchronous reset form, while legacy reset-name combinations such as
 `(sreset rstn)` stay outside the strict-supported corpus.
 
+If a direct `?fsm` omits `+system`, FSMGen applies the implicit direct-root
+system default: clock `clk` plus asynchronous active-low reset `rst_n`. A
+sequential omitted-`+system` FSM emits `clk` and `rst_n` as generated
+SystemVerilog inputs, uses event controls such as
+`always_ff @(posedge clk or negedge rst_n)`, and tests reset with `!rst_n`.
+
 ## `?dt:name`
 
 Use `?dt:name` for a standalone decision tree, especially when the logic is:

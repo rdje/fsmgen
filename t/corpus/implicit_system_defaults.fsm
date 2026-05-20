@@ -1,0 +1,12 @@
+(?fsm:implicit_system_defaults
+  (+size
+    (START 1)
+    (DONE 1)
+  )
+
+  (idle
+    (<START
+      (<= (DONE 1'b1))
+    )
+  )
+)

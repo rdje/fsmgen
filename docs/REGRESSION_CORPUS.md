@@ -501,6 +501,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.direct_lhs_deconstruct_pack` | [t/corpus/direct_lhs_deconstruct_pack.fsm](t/corpus/direct_lhs_deconstruct_pack.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_sreset_active_high` | [t/corpus/direct_sreset_active_high.fsm](t/corpus/direct_sreset_active_high.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.custom_system_clock` | [t/corpus/custom_system_clock.fsm](t/corpus/custom_system_clock.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.implicit_system_defaults` | [t/corpus/implicit_system_defaults.fsm](t/corpus/implicit_system_defaults.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_areset_active_low` | [t/corpus/direct_areset_active_low.fsm](t/corpus/direct_areset_active_low.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.reset_state_aliases` | [t/corpus/reset_state_aliases.fsm](t/corpus/reset_state_aliases.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_canonical_init_directive` | [t/corpus/direct_canonical_init_directive.fsm](t/corpus/direct_canonical_init_directive.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -691,6 +692,9 @@ manifest output while keeping the exact file lists widenable.
   proves that direct-root `+system` accepts HDL-compatible authored clock names
   such as `core_clk` under strict mode while the reset spelling remains the
   canonical active-high synchronous `(sreset reset)` form. The
+  `feature.implicit_system_defaults` entry proves that direct `?fsm` sources
+  that omit `+system` lower through strict mode with implicit `clk` and async
+  active-low `rst_n` system ports and reset tests using `!rst_n`. The
   `feature.direct_assignment_pair_form` entry proves that canonical
   `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
   as infix compatibility assignments, including guarded nested RHS

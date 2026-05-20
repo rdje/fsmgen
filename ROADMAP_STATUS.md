@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1` selected the next task tree
-  for promoting already-focused direct implicit system defaults into the
-  maintained supported-smoke corpus. The next frontier is
-  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2`.
+  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` closed the latest implicit
+  system-default support-accounting tree. The next PNT step is to select the
+  next inactive or ongoing task-tree frontier before any implementation work.
+- Recent R12 implicit system defaults corpus-widening completion:
+  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` added one named
+  supported-smoke corpus entry for omitted direct-root `+system` metadata that
+  lowers to `clk`, async active-low `rst_n`, and `!rst_n` reset tests. The
+  entry carries strict-supported metadata and HDL-shape expectations, and is
+  covered through default/strict pipeline/CLI behavior, check JSON, normalized
+  semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 implicit system defaults corpus-widening selection:
   `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1` selected a
   behavior-neutral support-accounting slice for promoting omitted direct-root
@@ -7511,6 +7517,21 @@ Done:
     and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
     now records `32` named supported-smoke entries and `32`
+    strict-supported entries.
+- The supported-language-feature corpus now also covers direct implicit
+  system defaults:
+  - [t/corpus/implicit_system_defaults.fsm](t/corpus/implicit_system_defaults.fsm)
+    now exists as a named `supported_smoke` direct-root corpus asset for a
+    `?fsm` source that omits `+system`,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.implicit_system_defaults` with strict-supported
+    metadata and semantic HDL-shape expectations for implicit `clk`, async
+    active-low `rst_n`, and `!rst_n` reset tests,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    checks the fixture through pipeline and CLI in default and strict mode,
+    and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `33` named supported-smoke entries and `33`
     strict-supported entries.
 - The direct-generation failure side of the corpus now also covers a pre-generation assignment contract rejection:
   - [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) now exists as a named `expected_failure` direct-root corpus asset for a direct RHS `(concat ...)` assignment whose summed RHS width is too small for the LHS,
