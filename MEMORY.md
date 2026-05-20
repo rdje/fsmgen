@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Expression AST ownership classification completed
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.2`.
+- Classified `CoreAST`, backend `FSM::AST::*`, structural `ConnectionExpr`,
+  composition source-expression specs, actual literal lowering, aggregate
+  type support, and private ISF expression payloads as deliberate
+  phase-specific boundaries, not candidates for a universal expression node.
+- Selected only concrete ownership risks for `.3` follow-up leaf creation:
+  `ExpressionNamer` legacy hash/string boundaries, `GlobalASTManager` legacy
+  status, duplicate `FSM::AST::Utils`, and tracked `ExpressionNamer.pm.new`.
+- The active frontier is `IR-EXPRESSION-AST-OWNERSHIP.3`.
+- No compiler behavior changed.
+
 ## 2026-05-20: Expression AST ownership inventory completed
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.1`.
 - The task tree now inventories the live expression surfaces and handoffs:

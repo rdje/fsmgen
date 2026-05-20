@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — Expression AST ownership classification completed
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.2`.
+- Deliberate phase boundaries remain separate: direct `CoreAST`, backend
+  `FSM::AST::*`, structural `ConnectionExpr`, composition specs, actual
+  literal lowering, aggregate type support, and private ISF expression
+  payloads.
+- `.3` is now selected to create concrete follow-up leaves for the real
+  ownership risks: legacy `ExpressionNamer` parsing, `GlobalASTManager`,
+  duplicate `FSM::AST::Utils`, and `ExpressionNamer.pm.new`.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — Expression AST ownership inventory completed
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.1`.
 - The task tree now lists direct `CoreAST`, backend `FSM::AST::*`,

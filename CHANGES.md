@@ -1,6 +1,19 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — Expression AST ownership classification completed
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.2`.
+- Classified direct semantic `CoreAST`, backend `FSM::AST::*`, structural
+  `ConnectionExpr`, composition source-expression specs, actual literal
+  lowering, aggregate type support, and private ISF expression payloads as
+  deliberate phase-specific expression boundaries.
+- Selected actionable ownership risks for `.3` follow-up leaf creation:
+  `ExpressionNamer` legacy hash/string boundaries, `GlobalASTManager` legacy
+  status, duplicate `FSM::AST::Utils`, and tracked `ExpressionNamer.pm.new`.
+- Advanced the active architecture frontier to
+  `IR-EXPRESSION-AST-OWNERSHIP.3`.
+- No compiler behavior changed.
+
 ### Architecture backlog — Expression AST ownership inventory completed
 - Completed `IR-EXPRESSION-AST-OWNERSHIP.1`.
 - Inventoried live expression representations and handoffs across direct

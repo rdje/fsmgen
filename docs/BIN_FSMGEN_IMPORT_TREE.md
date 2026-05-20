@@ -835,8 +835,14 @@ IR audit checkpoint:
   `GlobalASTManager`, enable-graph capture/render/factorization handoffs,
   structural `ConnectionExpr`, composition source-expression specs, actual
   literal lowering, aggregate type consumers, and private ISF scalar/list
-  expression payloads. The active architecture frontier is `.2`, which
-  classifies deliberate phase separation versus actionable duplication.
+  expression payloads.
+- `IR-EXPRESSION-AST-OWNERSHIP.2` classified the deliberate phase boundaries:
+  source semantics, backend enable/factorization, structural bindings,
+  composition planning, actual literal lowering, aggregate type inference, and
+  private ISF scheduling payloads stay separate. The active architecture
+  frontier is `.3`, which creates concrete follow-up leaves for the actionable
+  residue: `ExpressionNamer` hash/string compatibility, `GlobalASTManager`,
+  duplicate `FSM::AST::Utils`, and tracked `ExpressionNamer.pm.new`.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

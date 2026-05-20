@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `IR-EXPRESSION-AST-OWNERSHIP` | `active` | `architecture backlog` | `IR-EXPRESSION-AST-OWNERSHIP.2` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
+| `IR-EXPRESSION-AST-OWNERSHIP` | `active` | `architecture backlog` | `IR-EXPRESSION-AST-OWNERSHIP.3` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
 
 ## Proposed Task Trees
 

@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Expression AST duplication is mostly phase separation
+- `IR-EXPRESSION-AST-OWNERSHIP.2` deliberately does not choose one universal
+  expression AST.
+- The useful distinction is phase ownership: source semantics live in
+  `CoreAST`, backend enable/factorization lives in `FSM::AST::*`, structural
+  bindings live in `ConnectionExpr`, composition endpoint specs stay
+  planner-local until lowered, actual literals stay in their literal owner,
+  and ISF scalar/list expression payloads stay scheduler-private until
+  scheduled `.fsm` text re-enters the direct parser.
+- The cleanup candidates are therefore specific residue, not architectural
+  unification: `ExpressionNamer` hash/string compatibility, legacy
+  `GlobalASTManager`, duplicate `FSM::AST::Utils`, and tracked
+  `ExpressionNamer.pm.new`. `.3` should create concrete leaves for those
+  concerns before any code changes.
+
 ## 2026-05-20: Expression ownership starts with an inventory, not a rewrite
 - `IR-EXPRESSION-AST-OWNERSHIP.1` records the current expression surfaces
   before any ownership cleanup is selected.

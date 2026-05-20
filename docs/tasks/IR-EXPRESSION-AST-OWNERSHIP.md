@@ -50,19 +50,19 @@ conversion owner, and public/private boundary.
   FSM::AST nodes, structural ConnectionExpr nodes, and conversion/reporting
   sites with owners and consumers.`
   Verification: `git diff --check`; `mdbook build docs/book`
-  Commit: `pending`
+  Commit: `74456538 IR-EXPRESSION-AST-OWNERSHIP.1: inventory expression surfaces`
 
 - ID: `IR-EXPRESSION-AST-OWNERSHIP.2`
-  Status: `active`
+  Status: `done`
   Goal: `Classify deliberate versus accidental expression duplication.`
   Acceptance: `Each representation is marked deliberate phase separation or
   actionable duplication, with no behavior-bearing refactor selected without
   a follow-up leaf.`
-  Verification: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
   Commit: `pending`
 
 - ID: `IR-EXPRESSION-AST-OWNERSHIP.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Create implementation leaves for actionable expression ownership fixes.`
   Acceptance: `Only concrete redundant conversions or unsafe ownership gaps
   become executable follow-up leaves with verification plans.`
@@ -71,14 +71,14 @@ conversion owner, and public/private boundary.
 
 ## Current Frontier
 
-This tree is active. The current PNT frontier classifies deliberate phase
-separation versus accidental expression duplication now that the inventory is
-complete.
+This tree is active. The current PNT frontier creates concrete implementation
+leaves for the actionable ownership fixes selected by `.2`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `IR-EXPRESSION-AST-OWNERSHIP.1` | `done` | Expression surfaces and conversion sites are inventoried. |
-| 2 | `IR-EXPRESSION-AST-OWNERSHIP.2` | `active` | The inventory now needs deliberate-versus-accidental classification before implementation leaves are selected. |
+| 2 | `IR-EXPRESSION-AST-OWNERSHIP.2` | `done` | Deliberate phase boundaries and actionable duplication are classified. |
+| 3 | `IR-EXPRESSION-AST-OWNERSHIP.3` | `active` | Actionable concerns need concrete behavior-preserving follow-up leaves before code changes. |
 
 ## Expression Representation Inventory
 
@@ -102,6 +102,41 @@ and handoff points. This inventory is factual only; classification happens in
 | Composition actual literals | [perl/FSM/Composition/ActualLiteralSupport.pm](../../perl/FSM/Composition/ActualLiteralSupport.pm) | Composition actual payload parser/lowerer for open and numeric actuals. | Parses `=open`, scalar bits, sized/unsized binary/octal/decimal/hex, signed variants, and aggregate literal payloads. | `LinkedPlanBuilder` asks for target-width-bound `connection_expr` values, usually `open_expr` or `bit_vector_literal_expr`. | This is a literal-lowering owner, not a general expression AST. |
 | ISF expression payloads | [perl/FSM/Adapter/ISF/Parser.pm](../../perl/FSM/Adapter/ISF/Parser.pm), [perl/FSM/Scheduler/ISF/LoweringIR.pm](../../perl/FSM/Scheduler/ISF/LoweringIR.pm), [perl/FSM/Scheduler/ISF/Emitter/FSM.pm](../../perl/FSM/Scheduler/ISF/Emitter/FSM.pm) | Intent-scheduler local expression payloads represented as Lispish scalars/arrays until emitted as scheduled `.fsm` text or schedule metadata. | ISF parser validates rule guards/actions, activation bindings, wait counts, drive bodies, ATL data movement, and enum/aggregate-path restrictions over raw scalar/list expression shapes. | `LoweringIR` stringifies with `_format_isf_expr`, validates domain reads/widths, builds guards/assignments, and emits scheduled `.fsm` where the direct parser later rebuilds `CoreAST`; schedule JSON carries formatted expression text and metadata. | This is a private scheduler expression representation. It should not be conflated with direct `CoreAST` unless the handoff has crossed into generated `.fsm` parsing. |
 
+## Expression Ownership Classification
+
+`IR-EXPRESSION-AST-OWNERSHIP.2` classifies the inventory into deliberate phase
+separation, deliberate compatibility seams, and actionable ownership concerns.
+No behavior-bearing cleanup is selected here; `.3` owns the follow-up leaf
+creation.
+
+| Surface / concern | Classification | Rationale | Follow-up disposition |
+| --- | --- | --- | --- |
+| Direct semantic `CoreAST` expression family | Deliberate phase boundary | It is the source semantic expression model for parsed `.fsm` and for scheduled `.isf` once the generated `.fsm` text re-enters the direct parser. It carries signal/type/width context and richer source constructs than backend enable ASTs or structural binding expressions. | Keep as the direct semantic owner. No consolidation selected. |
+| Backend `FSM::AST::*` node family in `Node.pm` | Deliberate phase boundary | The backend only needs a compact enable/factorization model for signal refs, literals, logical constants, unary/binary operations, and generated enable trees. Keeping it smaller than `CoreAST` avoids forcing backend-only enable structure into source semantic nodes. | Keep, but route constructor ownership through one utility surface in a follow-up. |
+| Structural `ConnectionExpr` hash family | Deliberate phase boundary | These nodes model structural binding expressions for ports, child carriers, aggregate paths, literals, open bindings, concat, and repeat in composition/structural RTL. They are not source semantic expressions and should remain backend-neutral structural projections. | Keep as structural binding owner. No consolidation selected. |
+| Composition source-expression specs | Deliberate private planner boundary | They preserve endpoint text, child-base discovery, top/child inference, and width/type resolution before lowering to `ConnectionExpr`. This is a planner-local step, not a public expression model. | Keep private and continue lowering into `ConnectionExpr`. |
+| Composition actual literal support | Deliberate literal-lowering owner | It owns actual payload parsing and target-width-bound literal/open connection expression creation. That is narrower than a general expression AST and does not duplicate `CoreAST`. | Keep as literal owner. No consolidation selected. |
+| Package aggregate expression type support | Deliberate `CoreAST` consumer | It infers list/record/scalar type shape from `CoreAST` expressions but does not define another expression representation. | Keep as a consumer. No follow-up needed. |
+| Private ISF scalar/list expression payloads | Deliberate scheduler-private boundary | ISF parser/lowerer validates raw Lispish scalars/arrays for guards, waits, activations, drive bodies, enum/aggregate restrictions, and schedule metadata before stringifying to scheduled `.fsm`. It becomes `CoreAST` only after the generated `.fsm` handoff. | Keep private. Do not expose as downstream expression IR. |
+| EnableGraph `CoreAST` to backend-AST condition conversion | Deliberate conversion seam | Conditions/tests are captured into backend enable trees so direct backend passes can factor and render them independently of full source nodes. | Keep, but follow-up leaves should make string/RHS reparsing boundaries explicit. |
+| `ExpressionNamer` object-AST plus legacy hash/string paths | Deliberate compatibility seam with ownership risk | The object-AST naming paths are live, but the same owner also carries a legacy hash parser and fallback string parsing. That overlap is tolerable only as private compatibility, not as another canonical AST. | `.3` should create a behavior-preserving audit/guard leaf around `parse_expression` callers and accepted return forms before any parser change. |
+| `GlobalASTManager` | Actionable legacy ownership concern | Static search found no runtime import/use outside its own module and a compatibility audit test. Its `run_global_factorization` path parses strings through `ExpressionNamer`, while `collect_ast` drops unblessed values; that conflicts with its "single authority" header and with the current live SystemVerilog `GlobalFactorizationSupport` owner. | `.3` should create a leaf to either retire this legacy manager or prove and document its remaining supported boundary. |
+| Standalone [perl/FSM/AST/Utils.pm](../../perl/FSM/AST/Utils.pm) versus in-file `FSM::AST::Utils` in `Node.pm` | Actionable duplicate owner | Callers use the in-file package loaded by `FSM::AST::Node`; the standalone file defines the same package and references `FSM::AST::Node::Literal` / `BinaryOp` / `UnaryOp`, which do not match the actual classes. | `.3` should create a small cleanup/guard leaf to collapse this to one constructor owner or turn the standalone file into a correct compatibility shim. |
+| Tracked [perl/FSM/ExpressionNamer.pm.new](../../perl/FSM/ExpressionNamer.pm.new) | Actionable tracked residue | It declares the same package as the live module, is tracked, and no references load it. It creates source-of-truth ambiguity for review even if runtime cannot load it through normal `use FSM::ExpressionNamer`. | `.3` should create a cleanup leaf to remove it or explicitly reclassify it as archival test data with a non-package-bearing name. |
+
+### Classification Result
+
+- Keep multiple expression representations where they match real compiler
+  phase boundaries: direct source semantics, backend enable/factorization,
+  structural binding, composition planning, literal lowering, and private ISF
+  scheduling.
+- Do not introduce a universal expression node type.
+- Do not expose any private expression representation as a downstream API in
+  this task tree.
+- Create follow-up leaves only for concrete ownership risks:
+  `ExpressionNamer` legacy hash/string boundaries, `GlobalASTManager` legacy
+  status, duplicate `FSM::AST::Utils`, and tracked `ExpressionNamer.pm.new`.
+
 ## Decisions
 
 - `2026-05-20`: Selected as an actionable follow-up from
@@ -111,18 +146,16 @@ and handoff points. This inventory is factual only; classification happens in
 - `2026-05-20`: Completed `.1` as documentation/inventory only. No
   expression semantics, parser behavior, backend rendering, generated HDL,
   schedule JSON, or public contract changed.
+- `2026-05-20`: Completed `.2` by classifying phase-specific expression
+  representations as deliberate, and selecting only concrete legacy/duplicate
+  ownership concerns for `.3` follow-up leaf creation.
 
 ## Open Questions
 
-- Are the two `FSM::AST::Utils` definitions deliberate compatibility residue
-  or an actionable source of backend AST constructor drift?
-- Should [perl/FSM/ExpressionNamer.pm.new](../../perl/FSM/ExpressionNamer.pm.new)
-  remain tracked when no references load it?
-- Is [perl/FSM/GlobalASTManager.pm](../../perl/FSM/GlobalASTManager.pm) still a
-  live owner, given that it collects blessed ASTs but currently asks
-  `ExpressionNamer` for legacy hash ASTs?
-- Which `ExpressionNamer` paths remain deliberate compatibility, and which
-  should become follow-up leaves?
+- Which implementation leaves in `.3` should be done as removals versus
+  compatibility shims?
+- Should `ExpressionNamer` hash parsing be guarded as private compatibility
+  before any behavior-preserving caller cleanup?
 
 ## Blockers
 
@@ -133,16 +166,20 @@ and handoff points. This inventory is factual only; classification happens in
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `IR-EXPRESSION-AST-OWNERSHIP.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `IR-EXPRESSION-AST-OWNERSHIP.2` | `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `IR-EXPRESSION-AST-OWNERSHIP.1` | `pending` | `pending` |
+| `IR-EXPRESSION-AST-OWNERSHIP.1` | `74456538 IR-EXPRESSION-AST-OWNERSHIP.1: inventory expression surfaces` | Inventory committed; no compiler behavior changed. |
+| `IR-EXPRESSION-AST-OWNERSHIP.2` | `pending` | `pending` |
 
 ## Changelog
 
 - `2026-05-20`: Completed `.1` inventory and advanced the active frontier to
   `.2` classification.
+- `2026-05-20`: Completed `.2` classification and advanced the active frontier
+  to `.3` follow-up leaf creation.
 - `2026-05-20`: Created proposed follow-up task tree from
   `FSMGEN-IR-AUDIT.4`.
