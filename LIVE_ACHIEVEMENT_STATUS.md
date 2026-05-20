@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — RHS expression widening selected
+- Completed `R12-RHS-EXPRESSION-CORPUS-WIDENING.1`.
+- The active R12 frontier is now `R12-RHS-EXPRESSION-CORPUS-WIDENING.2`.
+- The selected implementation will promote unsupported RHS expression
+  operators, malformed RHS operator arity, and guard-only RHS tokens into
+  maintained expected-failure corpus entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — FSM-root body widening shipped
 - Completed `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has two additional structured `?fsm` root-body

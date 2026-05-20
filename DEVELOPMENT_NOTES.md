@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: RHS expression corpus widening stays behavior-neutral
+- `R12-RHS-EXPRESSION-CORPUS-WIDENING.1` selects RHS expression diagnostics
+  for support-accounting promotion.
+- The implementation should promote existing unsupported-operator,
+  malformed-arity, and guard-only RHS token rejections into stable-code-backed
+  expected-failure entries without changing expression acceptance.
+
 ## 2026-05-20: FSM-root body support accounting separates empty root from bad item
 - `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` promotes existing structured-root
   diagnostics without changing parser acceptance.

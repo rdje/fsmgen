@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — RHS expression widening selected
+- Completed `R12-RHS-EXPRESSION-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused unsupported RHS expression operator, malformed
+  RHS operator arity, and guard-only RHS token rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — FSM-root body widening shipped
 - Completed `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2` and closed the task tree.
 - Added two named structured-root expected-failure fixtures and catalog
