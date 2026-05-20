@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route sink-expression boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94`.
+- Generated-child actor-to-actor route sink expressions such as
+  `((+ writer.payload 1) reader.payload)` now fail with a targeted ATL
+  sink-expression diagnostic.
+- The book, downstream handoff, spec, design proposal, backlog, and audit now
+  document route endpoint expressions as the symmetric source/sink deferred
+  boundary.
+
 ## 2026-05-19: R14 — ATL route sink-expression hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92`.
 - The active ATL frontier advances to

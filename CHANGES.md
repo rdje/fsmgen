@@ -1,6 +1,24 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL route sink-expression boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93`.
+- Added targeted parser coverage for generated-child actor-to-actor route
+  drive-body sink expressions such as
+  `((+ writer.payload 1) reader.payload)`.
+- Added focused fixture coverage proving the form fails before scheduled
+  `.fsm` emission with the ATL sink-expression diagnostic.
+- Synchronized the mdBook composition chapter, feature-support matrix,
+  downstream handoff, ISF spec, ATL design proposal, feature backlog, and
+  mdBook audit so route endpoint expressions are documented as a source/sink
+  deferred boundary.
+- No accepted source syntax, public report key, generated artifact shape,
+  runtime behavior, expression movement, payload protocol, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor
+  network, or permanent actor grouping behavior changed.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94`.
+
 ### R14 — ATL route sink-expression hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92` as a doc-only selection
   leaf.

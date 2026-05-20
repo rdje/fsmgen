@@ -1935,11 +1935,14 @@ For downstream implementation, the current route terms mean:
   buffering, or replay contract.
 - Payload protocols are not shipped beyond the current one-bit scalar
   drive-call-cycle value.
-- Source-side route expressions are not shipped. The route source must be the
+- Route endpoint expressions are not shipped. The route source must be the
   scalar endpoint `reader.payload`; a source expression such as
   `(+ reader.payload 1)` fails closed before expression movement, value
   transformation, width conversion, storage, or payload protocols are
-  inferred.
+  inferred. The route sink must likewise be the scalar endpoint
+  `writer.payload`; a sink expression such as `(+ writer.payload 1)` fails
+  closed before expression destinations, route-side transforms, width
+  conversion, storage, or payload protocols are inferred.
 
 ### 12.5.6. Generated Child Artifacts And Top Data Routes
 

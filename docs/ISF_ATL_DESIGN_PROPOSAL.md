@@ -1219,9 +1219,13 @@ with actual arguments fail closed before drive actual binding, expression
 movement, route mux/storage, ready/backpressure, or payload protocols are
 claimed.
 
-The route source side also remains one scalar endpoint. Source expressions
-such as `(writer.payload (+ reader.payload 1))` fail closed before FSMGen
-claims expression movement, value transformation, width conversion, storage,
+The route source and sink sides also remain scalar endpoints. Source
+expressions such as `(writer.payload (+ reader.payload 1))` fail closed
+before FSMGen claims expression movement, value transformation, width
+conversion, storage, route mux/storage, ready/backpressure, or payload
+protocols. Sink expressions such as
+`((+ writer.payload 1) reader.payload)` fail closed before FSMGen claims
+expression destinations, route-side transforms, width conversion, storage,
 route mux/storage, ready/backpressure, or payload protocols.
 
 ## Fail-Closed Boundaries

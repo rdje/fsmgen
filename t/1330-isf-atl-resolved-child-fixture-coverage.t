@@ -1109,6 +1109,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ sink_expression => 1 }),
+        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement sink expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when the route sink is an expression',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ extra_drive_pair => 1 }),
         qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement requires exactly one drive-body pair in the current subset/,
         'generated-child actor-to-actor data route fails closed when one route drive contains multiple endpoint pairs',
@@ -2298,6 +2304,9 @@ CLAUSES
     }
     elsif ($options->{source_expression}) {
         $drive_body = "    (writer.payload (+ reader.payload 1))";
+    }
+    elsif ($options->{sink_expression}) {
+        $drive_body = "    ((+ writer.payload 1) reader.payload)";
     }
     my $reader_self_route_ports = $options->{same_child_route}
         ? "      (input payload_in)\n      (output payload_out)\n"

@@ -256,7 +256,7 @@ sub _build_actor($self, $actor_ast, $source_label) {
         } elsif ($keyword eq 'priority') {
             push @{$result->{priorities}}, $self->_parse_priority($clause);
         } elsif ($keyword eq 'drive') {
-            $self->_parse_drive_def($clause, $result->{drives});
+            $self->_parse_drive_def($clause, $result->{drives}, $result);
         } elsif ($keyword eq 'phase') {
             my $phase = $self->_parse_phase($clause);
             confess "Error: duplicate actor phase '$phase->{name}'\n"
@@ -1008,6 +1008,8 @@ sub _accept_selected_atl_data_movement_drive {
         unless @$body == 1 && @endpoint_entries == 1;
 
     my ($sink, $source) = @{$endpoint_entries[0]}[0, 1];
+    confess "Error: $context ATL scalar actor-to-actor data movement sink expressions remain deferred\n"
+        if ref($sink);
     my ($sink_instance, $sink_endpoint) = _parse_qualified_atl_endpoint_token($sink, $actor_instances);
     my ($sink_pin) = _parse_qualified_atl_pin_endpoint_token($sink);
     my ($source_pin) = _parse_qualified_atl_pin_endpoint_token($source);
@@ -6029,7 +6031,7 @@ sub _parse_priority($self, $clause) {
     return [ @{$clause}[1 .. $#$clause] ];
 }
 
-sub _parse_drive_def($self, $clause, $drives) {
+sub _parse_drive_def($self, $clause, $drives, $actor) {
     confess "Error: (drive ...) requires a name\n" unless @$clause >= 2;
     my $spec = $clause->[1];
     my ($name, @params);
@@ -6052,10 +6054,15 @@ sub _parse_drive_def($self, $clause, $drives) {
             if $seen_params{$param}++;
     }
     confess "Error: duplicate drive '$name'\n" if exists $drives->{$name};
+    my %actor_instances = map { $_->{name} => 1 }
+        @{(($actor || {})->{actor_network} || {})->{instances} || []};
     my @body = @{$clause}[2 .. $#$clause];
     for my $entry (@body) {
         confess "Error: drive '$name' body entries must be list forms\n"
             unless ref($entry) eq 'ARRAY' && @$entry;
+        confess "Error: drive '$name' body ATL scalar actor-to-actor data movement sink expressions remain deferred\n"
+            if ref($entry->[0])
+                && _contains_atl_data_movement_endpoint_token($entry->[0], \%actor_instances);
         confess "Error: drive '$name' body entry heads must be scalar\n"
             unless defined($entry->[0]) && !ref($entry->[0]) && length($entry->[0]);
         confess "Error: drive '$name' body assignments require '(port value)'\n"

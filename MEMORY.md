@@ -1,5 +1,24 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route sink-expression boundary hardened
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93`.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94`.
+- Parser and fixture coverage now reject generated-child actor-to-actor route
+  drive bodies whose sink side is an expression such as
+  `(+ writer.payload 1)`.
+- The targeted diagnostic is
+  `ATL scalar actor-to-actor data movement sink expressions remain deferred`,
+  replacing the prior generic drive-body scalar-head failure for this ATL
+  route boundary.
+- The mdBook composition chapter and feature-support matrix, downstream
+  handoff, ISF spec, ATL design proposal, backlog, and mdBook audit now name
+  route endpoint expressions as a symmetric source/sink deferred boundary.
+- The accepted route remains `(writer.payload reader.payload)`. No source
+  syntax, public report key, generated artifact shape, runtime behavior,
+  expression movement, payload protocol, route mux/storage, fan-in/fan-out,
+  CDC/reset remapping, ready/backpressure, recursive actor network, or
+  permanent actor grouping behavior changed.
+
 ## 2026-05-19: ATL route sink-expression hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92` as a selection leaf.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93`.

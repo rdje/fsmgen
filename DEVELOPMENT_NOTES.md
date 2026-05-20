@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL route endpoint expressions are a symmetric boundary
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93` completes the sink-side counterpart
+  to the source-expression hardening.
+- The parser must not let an ATL sink expression fall through to the generic
+  drive-body "entry heads must be scalar" diagnostic. The selected
+  generated-child route owns that boundary and should report it in ATL terms.
+- This still does not select expression destinations. Both sides of the
+  shipped route remain scalar endpoints for one named drive-call cycle until
+  a later task tree explicitly selects expression movement, route-side
+  transforms, storage, muxing, or a payload protocol.
+- The book, downstream handoff, spec, design proposal, backlog, and audit now
+  all describe the boundary as route endpoint expressions, not only
+  source-side expressions.
+
 ## 2026-05-19: ATL sink expressions need symmetric diagnostics
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92` selects the sink-side counterpart
   to the source-expression route hardening.

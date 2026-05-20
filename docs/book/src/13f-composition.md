@@ -953,11 +953,16 @@ also outside this route. `(drive (forward_payload value) ...)` and
 actor-to-actor route subset before drive actual binding, expression movement,
 or payload protocols can be inferred.
 
-Source-side route expressions are also outside this route. The source half
-of the drive-body pair must be the scalar endpoint `reader.payload`; a source
+Route endpoint expressions are also outside this route. The source half of
+the drive-body pair must be the scalar endpoint `reader.payload`; a source
 expression such as `(+ reader.payload 1)` fails closed before FSMGen infers
 expression movement, value transformation, width conversion, storage, or a
 payload protocol.
+
+The sink half of the drive-body pair must likewise be the scalar endpoint
+`writer.payload`. A sink expression such as `(+ writer.payload 1)` fails
+closed before FSMGen infers expression destinations, route-side transforms,
+width conversion, storage, or a payload protocol.
 
 ##### Generated Handoffs
 
