@@ -2,11 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R8`.
-  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` proved preferred `<=-`
-  partial-LHS dual-output lowering directly while keeping existing legacy
-  `<=+` compatibility coverage intact. The active frontier is
-  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`, which must split or defer the
-  remaining delayed-pulse/vector widening decision.
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` closed the preferred partial-LHS
+  tree by splitting indexed/sliced delayed-pulse LHS rejection into the active
+  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` task tree. Vector-pulse semantics are
+  deferred until a real source construct exists.
+- Recent R8 language-contract hardening:
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` selected fail-closed rejection, not
+  semantic widening, for indexed/sliced delayed-pulse LHS targets. The current
+  behavior can reach a lower generation-time 1-bit target error; the follow-up
+  tree must move that to a targeted parser/pipeline/CLI language-contract
+  diagnostic.
 - Recent R8 language-contract hardening:
   `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` added preferred `<=-`
   partial-LHS coverage to focused lowering tests, dual-output width tests,
@@ -5606,11 +5611,15 @@ Done:
   and [t/corpus/partial_lhs_inferred_width.fsm](t/corpus/partial_lhs_inferred_width.fsm)
   now directly prove preferred `<=-` partial-LHS dual-output writes alongside
   legacy `<=+` alias compatibility.
+- [docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md](docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md)
+  now owns the delayed-pulse partial-LHS boundary. The selected direction is
+  fail-closed rejection for indexed/sliced `<N` targets, not new partial-pulse
+  semantics.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
-- Decide whether the same partial-LHS lowering contract should now also be widened into future pulse/vector edge cases beyond the current `=`, `<-`, `<=`, `<-=`, `<=-`, and legacy `<=+` family.
+- Add the targeted delayed-pulse partial-LHS fail-closed boundary; vector-pulse semantics remain deferred until a real source construct exists.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.
 

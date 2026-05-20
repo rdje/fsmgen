@@ -1,13 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R8 delayed-pulse partial-LHS boundary split
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`.
+- Decision: do not widen `<N` delayed-pulse semantics to indexed/sliced LHS
+  targets now. Split unsupported partial-pulse targets into
+  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` so they can fail closed with a targeted
+  language-contract diagnostic instead of a later generation-time width error.
+- Vector-pulse semantics are deferred until a real source construct exists.
+
 ## 2026-05-20: R8 preferred partial-LHS coverage shipped
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`.
 - Focused tests and maintained regression corpus fixtures now directly cover
   preferred `<=-` partial indexed/sliced writes, full-width `*_r` auxiliary
   outputs, and width inference from static slice/index bounds.
 - Existing legacy `<=+` compatibility coverage remains intact.
-- The next leaf is `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`, which must split
-  or defer the delayed-pulse/vector widening question.
+- The later `.3` decision split delayed-pulse partial-LHS rejection into
+  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`.
 
 ## 2026-05-20: R8 preferred partial-LHS coverage selected
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1`.

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Split partial delayed pulses into a fail-closed boundary
+- `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` deliberately does not widen
+  delayed-pulse `<N` semantics to indexed or sliced LHS targets.
+- Delayed pulses are one-bit pulse registers, not partial vector mux updates.
+  The current unsupported shape can drift to a later generation-time
+  "target must be 1-bit" error, so the next R8 slice should move that to a
+  targeted parser/pipeline/CLI language-contract rejection.
+- Vector-pulse semantics remain deferred because there is no distinct source
+  construct to specify yet.
+
 ## 2026-05-20: Preferred <=- partial-LHS behavior was already implemented
 - `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` added evidence rather than changing
   production code.

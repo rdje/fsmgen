@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R8 language-contract hardening — delayed-pulse partial-LHS boundary split
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`.
+- Closed the preferred partial-LHS tree after splitting indexed/sliced
+  delayed-pulse `<N` targets into the active
+  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` implementation leaf.
+- Decision: reject unsupported partial delayed pulses deliberately; do not
+  widen pulse semantics now.
+- No compiler behavior changed.
+
 ## 2026-05-20: R8 language-contract hardening — preferred partial-LHS coverage shipped
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`.
 - Focused tests and maintained corpus fixtures now prove preferred `<=-`

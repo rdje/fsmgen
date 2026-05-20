@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT` | `active` | `R8` | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` | [docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md](docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md) |
+| `R8-PARTIAL-LHS-PULSE-BOUNDARY` | `active` | `R8` | `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` | [docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md](docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +58,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT` | `done` | `R8` | `closed` | [docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md](docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md) |
 | `MODULE-INFO-PROJECTION-GUARD` | `done` | `architecture backlog` | `closed` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `done` | `architecture backlog` | `closed` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
 | `GLOBAL-AST-MANAGER-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |

@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R8 language-contract hardening — delayed-pulse partial-LHS boundary split
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`.
+- Closed the preferred partial-LHS tree and created
+  `R8-PARTIAL-LHS-PULSE-BOUNDARY` for the next implementation slice.
+- Selected targeted fail-closed rejection for indexed/sliced delayed-pulse
+  `<N` LHS targets instead of widening pulse semantics now.
+- No compiler behavior changed.
+
 ### R8 language-contract hardening — preferred partial-LHS coverage shipped
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`.
 - Added direct preferred `<=-` partial-LHS coverage to focused lowering,
