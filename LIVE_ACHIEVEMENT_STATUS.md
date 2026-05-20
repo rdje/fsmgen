@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R14 — Repeat-body switch-bound post-do await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
+- The active repeat-body frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
+- `.112` is selected to implement the direct top-level `switch` branch
+  analogue of the shipped when-contained bound generated-do post-do
+  `await_any` subset.
+- No compiler behavior changed in the selection leaf.
+
 ## 2026-05-20: R14 — ISF timing conventions completed
 - Completed `ISF-TIMING-CONVENTIONS.1`.
 - Omitted legacy single-clock actor timing now defaults to `clk`, async
@@ -10,8 +19,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   domain-owned clock/reset semantics.
 - The book, ISF spec, downstream handoff, public contract, live docs, and
   focused coverage now document the same convention.
-- The `ISF-TIMING-CONVENTIONS` tree is closed; active R14 frontiers remain
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+- The `ISF-TIMING-CONVENTIONS` tree is closed; active R14 frontiers are now
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 
 ## 2026-05-19: R14 — ATL accepted-route source-order coverage completed

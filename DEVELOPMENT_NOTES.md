@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Switch-bound post-do await_any is the next repeat slice
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` selects the switch-contained
+  counterpart to the when-contained bound generated-do post-do `await_any`
+  subset shipped by `.110`.
+- The selection keeps the pattern deliberately symmetric: the generated do
+  must complete before the post-do multi-pending `(await_any done)`
+  observation, generated-top input/output binding handoffs belong to the
+  lexical generated do site, and generated-spawn done handoffs remain live
+  until the later same-body `(await_all done)` drain.
+- Domain metadata and new spawn-after-do behavior stay separate because they
+  each change different scheduling facts. The next implementation leaf should
+  only transfer the already-understood bound generated-do post-do observation
+  from `when` containment to direct `switch`-branch containment.
+
 ## 2026-05-20: ISF timing omissions are parser-normalized conventions
 - `ISF-TIMING-CONVENTIONS.1` implements the user-requested
   convention-over-configuration defaults at parser finalization time so every

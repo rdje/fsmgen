@@ -2062,10 +2062,11 @@ Current lowering:
   `(do child (params ...) (bind ...))` supports the same post-do
   multi-pending observation and later-drain contract while also wiring the
   generated-top input/output binding handoffs for the generated do instance.
-  Domain-qualified generated-do post-do `await_any`, switch-contained bound
-  generated-do post-do `await_any`, new nested `spawn` after the do before
-  the drain, deeper branch/loop nesting, and cross-domain activation remain
-  fail-closed.
+  The direct switch-contained bound generated-do post-do `await_any` analogue
+  is selected as the next bounded implementation, but remains fail-closed
+  until that leaf ships. Domain-qualified generated-do post-do `await_any`,
+  new nested `spawn` after the do before the drain, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed.
   Top-level
   repeat bodies also accept generated
   blocking `(do child)` when the target child is already emitted as a

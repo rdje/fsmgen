@@ -1102,10 +1102,11 @@ Rules:
   while also wiring the generated-top input/output binding handoffs for the
   generated do instance.
 
-  Domain-qualified generated-do post-do `await_any`, switch-contained bound
-  generated-do post-do `await_any`, new nested `spawn` after the do before
-  the drain, deeper branch/loop nesting, and cross-domain activation remain
-  fail-closed.
+  The direct switch-contained bound generated-do post-do `await_any` analogue
+  is selected as the next bounded implementation, but remains fail-closed
+  until that leaf ships. Domain-qualified generated-do post-do `await_any`,
+  new nested `spawn` after the do before the drain, deeper branch/loop
+  nesting, and cross-domain activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
   `stage`, `contract`, deeper branch nesting, nested `while`, and nested

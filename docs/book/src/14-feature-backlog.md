@@ -748,10 +748,17 @@ generated do instance, requires that instance's fresh done handoff before the
 observation, and leaves the pending generated-spawn done set live for the
 later drain.
 
-Domain metadata on generated-do post-do `await_any`, the switch-contained
-bound analogue, new spawn after the do before the drain, cross-domain
-activation, deeper branch/loop nesting, and broader outstanding-child
-semantics remain backlog until their own leaves select and ship them.
+The direct switch-contained bound generated-do post-do `await_any` analogue is
+now selected as the next bounded implementation: a repeat directly inside a
+top-level `switch` branch may run `(do child (params ...) (bind ...))` while
+multiple generated spawns remain pending, then use post-do
+`(await_any done)` as an observation point before the later same-body
+`(await_all done)` drain. This selected subset is not shipped yet.
+
+Domain metadata on generated-do post-do `await_any`, new spawn after the do
+before the drain, cross-domain activation, deeper branch/loop nesting, and
+broader outstanding-child semantics remain backlog until their own leaves
+select and ship them.
 
 Dynamic repeat counts are compatible with this model because `count` is a
 runtime counter load value, not an elaboration count. They do make loop latency

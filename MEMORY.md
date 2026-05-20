@@ -1,5 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Repeat-body switch-bound post-do await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` as a selection leaf.
+- The active repeat-body frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
+- `.112` will implement the direct top-level `switch` branch analogue of the
+  shipped when-contained bound generated-do post-do `await_any` subset.
+- The selected source shape is a switch-branch nested repeat with multiple
+  generated spawns, then `(do child (params ...) (bind ...))`, then post-do
+  multi-pending `(await_any done)`, then mandatory same-body
+  `(await_all done)` before nested repeat re-entry.
+- The selected generated do uses static parameter overrides plus input/output
+  bind handoffs and no domain subclause. Domain metadata, new spawn after the
+  do before the drain, cross-domain activation, deeper branch/loop nesting,
+  and broader outstanding-child semantics remain unselected.
+- This leaf is documentation/selection only; no compiler behavior changed.
+
 ## 2026-05-20: ISF timing conventions completed
 - Completed `ISF-TIMING-CONVENTIONS.1`.
 - Legacy single-clock ISF actors that omit `(clock ...)` now normalize to
@@ -15,7 +31,7 @@ This is the live continuity document for fast session recovery after crashes, re
   downstream handoff, mdBook, and task-tree/live docs are synchronized.
 - Same-name reusable-library clock/reset bindings can be inferred when the
   defaulted parent timing policy exactly matches the child timing policy.
-- The active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`
+- The active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`
   and `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 
 ## 2026-05-19: ATL accepted-route source-order coverage completed
@@ -1938,8 +1954,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Synchronized README, the ISF spec focused-test index and CLI contract, the
   downstream integration spec, public interface contract, mdBook
   troubleshooting/feature-matrix text, task tree, roadmap board, and live
-  notes. The active R14 frontiers are now repeat-body child activation `.111`
-  and ATL actor-network orchestration `.2`.
+  notes. At that point the active R14 frontiers were repeat-body child
+  activation `.111` and ATL actor-network orchestration `.2`.
 - Validation passed after repairing the focused-test index: syntax check,
   focused check/stage/contract tests, exact SPECFORGE source and baseline
   checks, mdBook build, focused book/doc audits, spec focused-test index

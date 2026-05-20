@@ -626,9 +626,10 @@ child (params ...)
 contract while also wiring generated-top input/output binding handoffs for
 the generated do instance.
 
-Domain-qualified generated-do post-do `await_any`, switch-contained bound
-generated-do post-do `await_any`, and new nested `spawn` after the do before
-the drain remain fail-closed.
+The direct switch-contained bound generated-do post-do `await_any` analogue is
+selected as the next bounded implementation, but remains fail-closed until
+that leaf ships. Domain-qualified generated-do post-do `await_any` and new
+nested `spawn` after the do before the drain remain fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and

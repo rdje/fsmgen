@@ -1,6 +1,23 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R14 — Repeat-body switch-bound post-do await_any selected
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` as a documentation
+  selection leaf.
+- Selected `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` to implement the direct
+  top-level `switch` branch analogue of the shipped when-contained bound
+  generated-do post-do `await_any` subset.
+- The selected source shape is a switch-branch nested repeat with multiple
+  generated spawns, then `(do child (params ...) (bind ...))`, then post-do
+  multi-pending `(await_any done)`, then mandatory same-body
+  `(await_all done)` before nested repeat re-entry.
+- Domain metadata, new spawn after the do before the drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain unselected.
+- No compiler behavior changed in this selection leaf.
+- The active repeat-body frontier advances to
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
+
 ### R14 — ISF timing conventions completed
 - Completed `ISF-TIMING-CONVENTIONS.1`.
 - Legacy single-clock actors that omit `(clock ...)` now normalize to
@@ -17,7 +34,7 @@ This is the persistent technical change history for FSMGen.
 - Synchronized `ISF_SPEC.md`, the downstream integration handoff, the public
   interface contract, the mdBook, live docs, and focused tests.
 - The `ISF-TIMING-CONVENTIONS` task tree is now closed; the active R14
-  frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+  frontiers are `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 
 ## 2026-05-19

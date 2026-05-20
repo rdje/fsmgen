@@ -12,7 +12,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   deprecation warning cascade that polluted clean-stderr tests. The local
   quick, focused ISF, and full regression gates pass. The active R14
   frontiers remain
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 - Recent R14 timing conventions: `ISF-TIMING-CONVENTIONS` is closed. Legacy
   single-clock actors that omit `(clock ...)`, `(reset ...)`, or
@@ -24,7 +24,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   downstream handoff, mdBook, and live docs all describe the same convention.
   Same-name reusable-library clock/reset bindings can be inferred when the
   defaulted parent timing policy exactly matches the child timing policy. The
-  active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` and
+  active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
@@ -41,17 +41,21 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
   frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.111` and ATL actor-network orchestration `.9.98`.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`.
+  activation `.112` and ATL actor-network orchestration `.9.98`.
+- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
   Leaf `.110` shipped top-level `when` body nested repeat generated blocking
   `(do child (params ...) (bind ...))` before post-do multi-pending
   `(await_any done)`: the generated do instance completes before the
   observation, generated-top input/output binding handoffs are wired for that
   lexical generated do site, and the pending generated-spawn done set remains
   live for the later same-body `(await_all done)` drain before nested repeat
-  re-entry. Leaf `.111` must select the next bounded subset before further
-  implementation. Domain metadata on generated-do post-do `await_any`, the
-  switch-contained bound analogue, spawn-after-do, cross-domain activation,
+  re-entry. Leaf `.111` selected the direct switch-contained bound
+  generated-do post-do `await_any` analogue as the next bounded subset. Leaf
+  `.112` must implement a repeat directly inside a top-level `switch` branch
+  with multiple generated spawns, then `(do child (params ...) (bind ...))`,
+  then post-do multi-pending `(await_any done)`, then mandatory same-body
+  `(await_all done)` before nested repeat re-entry. Domain metadata on
+  generated-do post-do `await_any`, spawn-after-do, cross-domain activation,
   deeper branch/loop nesting, and broader outstanding-child semantics remain
   unselected.
 - Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` shipped the
@@ -1086,12 +1090,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   subset while preserving generated-top parameter binding and the
   generated-spawn lifetime proof. The next active frontier,
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.109`, selected the when-contained bound
-  generated-do-before-post-do-await_any subset. The next active frontier is
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`, which shipped that selected
+  generated-do-before-post-do-await_any subset. The next active frontier,
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.110`, shipped that selected
   when-contained bound subset while wiring generated-top input/output binding
   handoffs and preserving the generated-spawn lifetime proof. The next active
-  frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`, which selects the next
-  bounded subset before further implementation.
+  frontier, `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`, selected the direct
+  switch-contained bound generated-do-before-post-do-await_any analogue. The
+  next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`, which must
+  ship that selected subset before broader repeat-body activation widening.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is
