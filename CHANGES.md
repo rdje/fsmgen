@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — implicit system defaults widening selected
+- Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused direct implicit system defaults.
+- No compiler behavior changed.
+
 ### R12 regression corpus — custom system clock widening shipped
 - Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` and closed the task
   tree.

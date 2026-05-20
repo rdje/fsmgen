@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: R12 implicit system defaults corpus widening selected
+- Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused direct implicit
+  system defaults into maintained supported-smoke corpus coverage.
+- The next frontier is `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2`: add a
+  bounded fixture/catalog entry, strict-supported marker, HDL-shape checks,
+  and synchronized docs for omitted direct-root `+system` defaults.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 custom system clock corpus widening shipped
 - Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` and closed the tree.
 - Added one maintained supported-smoke corpus entry for supported custom

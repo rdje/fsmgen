@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — implicit system defaults widening selected
+- Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2`.
+- The selected implementation will promote direct omitted-`+system` defaults
+  into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 regression corpus — custom system clock widening shipped
 - Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has one additional supported-smoke entry for

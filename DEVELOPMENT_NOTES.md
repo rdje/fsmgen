@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Implicit system defaults corpus widening stays direct-root scoped
+- `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1` selects direct omitted
+  `+system` defaults for support-accounting promotion.
+- The implementation should promote existing `clk` plus async active-low
+  `rst_n` lowering without changing explicit `+system` reset semantics,
+  composition auto-wiring, or ISF actor timing defaults.
+
 ## 2026-05-21: Custom system clock support accounting proves authored clock projection
 - `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` promotes custom `+system` clock
   identifiers into the executable supported-smoke corpus.

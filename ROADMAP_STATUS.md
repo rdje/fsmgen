@@ -2,9 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` closed the latest custom
-  system-clock support-accounting tree. The next PNT step is to select the
-  next inactive or ongoing task-tree frontier before any implementation work.
+  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1` selected the next task tree
+  for promoting already-focused direct implicit system defaults into the
+  maintained supported-smoke corpus. The next frontier is
+  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2`.
+- Recent R12 implicit system defaults corpus-widening selection:
+  `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.1` selected a
+  behavior-neutral support-accounting slice for promoting omitted direct-root
+  `+system` metadata that lowers to `clk`, async active-low `rst_n`, and
+  `!rst_n` reset tests into strict-supported corpus coverage.
 - Recent R12 custom system clock corpus-widening completion:
   `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2` added one named supported-smoke
   corpus entry for canonical reset declarations with custom authored clock
