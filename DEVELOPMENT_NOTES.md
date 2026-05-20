@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Preferred partial-LHS coverage before broader pulse/vector work
+- `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` selects a narrow language-contract
+  gap before reopening broader assignment semantics.
+- The book recommends `<=-` as the forward spelling for D-input dual-output
+  assignments and keeps `<=+` as a legacy alias. Current partial-LHS coverage
+  directly exercises `<=+`, so the next implementation leaf should prove
+  `<=-` itself before deciding whether delayed-pulse `<N` or future
+  vector-pulse edge cases deserve widening.
+- This is intentionally a coverage/contract slice first. It should not remove
+  `<=+`, change delayed-pulse rules, or mix in unrelated parser-visible
+  gray-zone cleanup.
+
 ## 2026-05-20: Close module_info guard work without inventing churn
 - `MODULE-INFO-PROJECTION-GUARD.2` deliberately selects no guard or wording
   change.

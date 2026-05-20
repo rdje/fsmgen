@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R8 language-contract hardening — preferred partial-LHS coverage selected
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1`.
+- Activated the R8 task tree and selected direct preferred `<=-` partial-LHS
+  dual-output coverage as the next leaf.
+- Existing legacy `<=+` coverage stays in scope, and broader delayed-pulse or
+  vector widening is reserved for a separate decision after the preferred
+  spelling is guarded.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — module_info guard selection closed
 - Completed `MODULE-INFO-PROJECTION-GUARD.2`.
 - Selected no missing implementation guard or wording fix. The existing

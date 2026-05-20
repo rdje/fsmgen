@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R8 preferred partial-LHS coverage selected
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1`.
+- Activated the R8 task tree after the architecture backlog reached
+  exhaustion.
+- The current coverage gap is narrow: docs recommend `<=-` as the preferred
+  D-input dual-output spelling, while existing partial-LHS focused/corpus
+  coverage directly proves the legacy `<=+` alias. The next leaf is
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2`.
+
 ## 2026-05-20: module_info guard selection closed
 - Completed `MODULE-INFO-PROJECTION-GUARD.2`.
 - Selected no missing implementation guard or wording fix after the `.1`

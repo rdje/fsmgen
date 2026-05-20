@@ -1,7 +1,19 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `architecture backlog`.
+- Active lane: `R8`.
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` selected the next
+  language-contract hardening slice: prove preferred `<=-` partial-LHS
+  dual-output lowering directly while keeping existing legacy `<=+`
+  compatibility coverage intact.
+- Recent R8 language-contract hardening:
+  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1` activated a task tree for the
+  remaining partial-LHS contract frontier. Current focused/corpus coverage
+  proves the legacy `<=+` alias in partial dual-output writes; the next leaf
+  will add direct coverage for the preferred `<=-` spelling before deciding
+  whether delayed-pulse/vector edge cases should be widened, split, or
+  deferred.
+- Previous architecture backlog:
   `MODULE-INFO-PROJECTION-GUARD.2` closed the `module_info` projection guard
   tree after selecting no missing implementation guard or wording fix. The
   audited docs and book already state that `module_info` is a bounded
@@ -5578,6 +5590,10 @@ Done:
 - The book now has a consolidated feature backlog chapter for not-fully
   shipped/deferred user-visible work, and local caveat sections link back to
   that chapter instead of leaving future-work lists stranded only in prose.
+- [docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md](docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md)
+  now owns the next partial-LHS language-contract hardening slice. The selected
+  implementation leaf will prove preferred `<=-` partial-LHS dual-output
+  lowering directly while preserving legacy `<=+` compatibility coverage.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.

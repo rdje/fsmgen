@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R8 language-contract hardening — preferred partial-LHS coverage selected
+- Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.1`.
+- Activated a new R8 task tree for the remaining partial-LHS contract
+  frontier.
+- Selected preferred `<=-` partial-LHS dual-output coverage as the next
+  implementation leaf, while keeping legacy `<=+` compatibility coverage in
+  scope.
+- No compiler behavior changed.
+
 ### Architecture backlog — module_info guard selection closed
 - Completed `MODULE-INFO-PROJECTION-GUARD.2`.
 - Selected no missing implementation guard or wording fix after the `.1`

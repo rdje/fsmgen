@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT` | `active` | `R8` | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.2` | [docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md](docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md) |
 
 ## Proposed Task Trees
 
