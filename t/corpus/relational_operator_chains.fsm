@@ -1,0 +1,38 @@
+(?fsm:relational_operator_chains
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (lt_chain 1)
+    (le_chain 1)
+    (eq_chain 1)
+    (eq_alias 1)
+    (ne_chain 1)
+    (gt_chain 1)
+    (ge_alias 1)
+    (not_alias 1)
+    (guarded 1)
+    (a 8)
+    (b 8)
+    (c 8)
+    (d 8)
+    (low 8)
+    (mid 8)
+    (high 8)
+    (flag 1)
+  )
+
+  (-ops
+    (= (lt_chain (< low mid high)))
+    (= (le_chain (<= low mid high)))
+    (= (eq_chain (== a b c d)))
+    (= (eq_alias (eq a b c d)))
+    (= (ne_chain (!= a b c)))
+    (= (gt_chain (> high mid low)))
+    (= (ge_alias (ge high mid low)))
+    (= (not_alias (not flag)))
+    (= (guarded 1) <(<= low mid high))
+  )
+)

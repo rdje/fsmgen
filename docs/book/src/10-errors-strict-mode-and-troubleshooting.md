@@ -202,7 +202,9 @@ update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
 regular-state header DTE guards that must keep state-enable and DTE
 boundary-gating HDL shapes. It also includes guard shorthand such as `<req`,
 `<!full`, `<mode==3`, and suffix guards, with emitted HDL-shape checks for
-truthiness, negated truthiness, comparisons, and multibit reduction.
+truthiness, negated truthiness, comparisons, and multibit reduction. Relational
+operator chains and word aliases such as `eq`, `ge`, and `not` are also
+covered as supported-smoke entries with emitted comparison-shape checks.
 
 ## Diagnostic Codes
 

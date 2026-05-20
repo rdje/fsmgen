@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — relational-operator widening shipped
+- Completed `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has one additional supported-smoke entry for
+  n-ary relational chains, word aliases, unary `not`, and guarded
+  relational-chain lowering.
+- Strict-supported metadata, HDL-shape checks, supported corpus behavior,
+  check JSON, normalized semantic JSON, manifest coverage, regression-corpus
+  docs, and the mdBook are synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — relational-operator widening selected
 - Completed `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

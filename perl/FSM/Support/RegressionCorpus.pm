@@ -273,6 +273,23 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.relational_operator_chains',
+        relpath => 't/corpus/relational_operator_chains.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'relational_operator_chains',
+        expected_hdl_patterns => [
+            qr/\bintermediate_complex_expr_\d+\s*=\s*\(low\s*<\s*mid\)\s*&\s*\(mid\s*<\s*high\)\s*;/s,
+            qr/\bintermediate_complex_expr_\d+\s*=\s*\(a\s*==\s*b\)\s*&\s*\(b\s*==\s*c\)\s*&\s*\(c\s*==\s*d\)\s*;/s,
+            qr/\bintermediate_complex_expr_\d+\s*=\s*\(high\s*>=\s*mid\)\s*&\s*\(mid\s*>=\s*low\)\s*;/s,
+            qr/\bops_guarded_1_en\s*=\s*ops_en\s*&\s*intermediate_complex_expr_\d+\s*;/s,
+            qr/\bnot_alias\s*=\s*!\(flag\)\s*;/s,
+        ],
+    },
+    {
         id => 'feature.direct_intent_integer_literals',
         relpath => 't/corpus/direct_intent_integer_literals.fsm',
         family => 'language_feature_fixture',

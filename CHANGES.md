@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — relational-operator widening shipped
+- Completed `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` and closed the task
+  tree.
+- Added one named supported-smoke fixture and catalog entry for n-ary
+  relational chains, word aliases, unary `not`, and guarded relational-chain
+  lowering.
+- Added strict-supported metadata and HDL-shape expectations for the new entry
+  and widened supported corpus accounting, manifest, check JSON, normalized
+  semantic JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — relational-operator widening selected
 - Completed `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained supported-smoke corpus

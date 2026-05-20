@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -39,7 +39,7 @@ strict-supported coverage and public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for relational operator chains and aliases`
   Children: `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1`, `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2`
 
@@ -51,17 +51,17 @@ strict-supported coverage and public support-accounting visibility.
   Commit: `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1: select relational-operator widening`
 
 - ID: `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for relational operator chains and aliases`
   Acceptance: `named fixture/catalog entry covers n-ary relational chains, word aliases, unary not alias, and guarded relational chain lowering with strict-supported checks and HDL-shape expectations`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused relational-operator tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2: widen relational-operator corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` | `pending` | Promotes an already-focused supported expression-operator surface after ownership is committed. |
+| 1 | `closed` | `done` | `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` shipped the selected relational-operator corpus widening. |
 
 ## Decisions
 
@@ -86,14 +86,18 @@ strict-supported coverage and public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused relational-operator tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1` | `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1: select relational-operator widening` | Selection leaf; no compiler behavior changed. |
+| `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` | `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2: widen relational-operator corpus` | Adds one maintained supported relational-operator smoke entry. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Added a maintained supported-smoke entry for relational
+  operator chains and aliases, then closed the tree.
