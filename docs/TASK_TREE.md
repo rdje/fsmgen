@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY` | `active` | `R9` | `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` | [docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md](docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md) |
 
 ## Proposed Task Trees
 

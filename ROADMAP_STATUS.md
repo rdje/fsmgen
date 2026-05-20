@@ -1,12 +1,18 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R8`.
-  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` shipped the targeted delayed-pulse
-  partial-LHS fail-closed boundary. No active R8 task tree remains; the next
-  PNT pass should select another remaining language-contract gray-zone family
-  or move to the next in-progress roadmap lane if no bounded R8 leaf is
-  discoverable.
+- Active lane: `R9`.
+  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` selected the next strict-mode
+  support-tier cut: default mode should keep legacy `<=+` compatibility, but
+  strict mode should reject `<=+` and point users to the preferred `<=-`
+  spelling. The active frontier is
+  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2`.
+- Recent R9 strict-mode selection:
+  `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` activated a task tree for the legacy
+  `<=+` alias boundary. The selection depends on the just-completed R8
+  preferred `<=-` coverage: strict-supported fixtures can now prove the
+  forward spelling directly while a separate compatibility fixture can prove
+  default-mode `<=+` acceptance and strict-mode rejection.
 - Recent R8 language-contract hardening:
   `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` added parser-owned validation so indexed,
   sliced, aggregate, and deconstruct delayed-pulse `<N` targets reject with a
@@ -5637,6 +5643,13 @@ Deliverables:
 - User/developer docs that explain how strict mode interacts with support tiers.
 Status: `in progress`
 Done:
+- `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` selected the next high-signal
+  assignment-surface strict-mode cut before code:
+  - legacy `<=+` remains default-mode compatibility residue,
+  - strict mode should require preferred `<=-` for D-input dual-output intent,
+  - strict-supported partial-LHS fixtures must stop depending on `<=+`,
+  - and the implementation frontier is
+    [docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md](docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md).
 - The first live strict-mode slice is now shipped:
   - [bin/fsmgen](bin/fsmgen) now accepts `--strict`,
   - [perl/FSM/Pipeline/HDLGenerator.pm](perl/FSM/Pipeline/HDLGenerator.pm) now accepts `strict_mode => 1`,
@@ -5717,6 +5730,9 @@ Done:
   - checks expected direct module names, composition top/child modules, and recorded HDL-shape patterns,
   - and prevents future supported entries from depending only on family-specific tests for positive acceptance.
 Left:
+- Complete `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2`: implement the strict-mode
+  `<=+` rejection, keep default-mode compatibility, split or rewrite the
+  maintained corpus fixtures, and synchronize the mdBook plus live docs.
 - Widen strict-mode enforcement beyond the current canonical-root-family and current section-level compatibility cuts into more of the fully supported-vs-compatibility split.
 - Decide the next high-signal support-tier cuts after the current legacy root-family slices.
 - Continue documenting strict-mode behavior as the supported-tier boundary widens.

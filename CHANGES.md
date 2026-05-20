@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R9 strict mode — legacy <=+ boundary selected
+- Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1`.
+- Activated a new R9 task tree for the next assignment-surface support-tier
+  cut.
+- Selected legacy `<=+` as default-mode-only compatibility residue for the
+  next implementation slice, with strict mode expected to point users to the
+  preferred `<=-` spelling.
+- No compiler behavior changed.
+
 ### R8 language-contract hardening — delayed-pulse partial-LHS boundary shipped
 - Completed `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`.
 - Added parser-owned validation for delayed-pulse `<N` LHS targets.

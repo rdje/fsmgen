@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R9 strict mode — legacy <=+ boundary selected
+- Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1`.
+- The active R9 frontier is now strict-mode rejection of the legacy `<=+`
+  assignment alias while preserving default-mode compatibility.
+- The next implementation leaf must keep preferred `<=-` strict-supported,
+  move `<=+` into explicit compatibility evidence, and sync the book plus
+  corpus docs.
+
 ## 2026-05-20: R8 language-contract hardening — delayed-pulse partial-LHS boundary shipped
 - Completed `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`.
 - Delayed-pulse `<N` targets are now scalar-only at the language boundary:

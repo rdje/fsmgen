@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Strict mode should prefer <=- over legacy <=+
+- `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1` selects a bounded strict-mode cut that
+  follows directly from the recent R8 coverage work.
+- Default mode still needs to accept `<=+` because existing sources use it as
+  a compatibility alias for D-input dual-output writes.
+- Strict mode is the right place to remove that ambiguity: the forward
+  contract already names `<=-` as the preferred spelling, and focused plus
+  corpus coverage now proves preferred partial-LHS behavior directly.
+- The implementation leaf should reject both pair and infix `<=+` occurrences
+  before HDL generation, keep canonical `<=-` accepted, and reshape the
+  maintained corpus so strict-supported fixtures no longer rely on the legacy
+  alias.
+
 ## 2026-05-20: Delayed pulse targets are scalar-only at the language boundary
 - `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` moves unsupported delayed-pulse partial
   LHS targets out of backend fallout and into parser-owned contract

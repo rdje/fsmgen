@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R9 legacy <=+ strict boundary selected
+- Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.1`.
+- Activated the R9 task tree for moving legacy `<=+` out of the
+  strict-supported assignment surface while preserving default-mode
+  compatibility.
+- The next frontier is `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2`: reject `<=+`
+  through the shared strict-mode frontend, keep `<=-` accepted, and split the
+  maintained corpus so strict-supported fixtures no longer depend on the
+  legacy alias.
+
 ## 2026-05-20: R8 delayed-pulse partial-LHS boundary shipped
 - Completed `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`.
 - Indexed, sliced, aggregate, and deconstruct delayed-pulse `<N` LHS targets

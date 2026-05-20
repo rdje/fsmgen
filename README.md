@@ -192,6 +192,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
+- `docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md` — active `R9` task tree for strict-mode rejection of the legacy `<=+` assignment alias.
 - `docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md` — completed `R8` task tree for the delayed-pulse partial-LHS fail-closed boundary.
 - `docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md` — completed `R8` task tree for preferred `<=-` partial-LHS dual-output coverage and the remaining pulse/vector decision split.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
