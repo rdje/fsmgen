@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 RHS expression corpus widening shipped
+- Completed `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` and closed the tree.
+- Added three maintained expected-failure corpus entries for unsupported RHS
+  expression operators such as `(bogus B C)`, malformed RHS operator arity such
+  as `(== B)`, and guard-only RHS tokens such as `<start`.
+- Each new entry carries stable diagnostic-code metadata and is covered by
+  corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 RHS expression corpus widening selected
 - Completed `R12-RHS-EXPRESSION-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused unsupported RHS

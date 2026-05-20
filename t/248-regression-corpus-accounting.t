@@ -146,6 +146,9 @@ for my $required_id (qw(
     contract.malformed_empty_standalone_dt_body
     contract.malformed_transition_target
     contract.unknown_transition_target
+    contract.rhs_expression_unsupported_operator
+    contract.rhs_expression_bad_arity
+    contract.rhs_expression_guard_token
     contract.assignment_delayed_pulse_bad_rhs
     contract.assignment_mixed_comb_seq
     contract.assignment_mixed_pulse_nonpulse
@@ -307,8 +310,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    80,
-    'catalog now records eighty explicit expected-failure entries',
+    83,
+    'catalog now records eighty-three explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

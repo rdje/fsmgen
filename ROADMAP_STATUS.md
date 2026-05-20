@@ -2,9 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-RHS-EXPRESSION-CORPUS-WIDENING.1` activated the task tree for adding
-  maintained expected-failure corpus coverage for malformed RHS expression
-  forms. The current frontier is `R12-RHS-EXPRESSION-CORPUS-WIDENING.2`.
+  `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` completed the latest maintained
+  expected-failure corpus widening slice. The next PNT step must select fresh
+  task-tree ownership before any new code, test, source, generated-artifact, or
+  config change.
+- Recent R12 RHS expression corpus-widening completion:
+  `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` added three named expected-failure
+  corpus entries for unsupported RHS expression operators such as
+  `(bogus B C)`, malformed RHS operator arity such as `(== B)`, and guard-only
+  RHS tokens such as `<start`. Each entry carries stable diagnostic-code
+  metadata and is covered through pipeline/CLI behavior, check JSON,
+  normalized semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 RHS expression corpus-widening selection:
   `R12-RHS-EXPRESSION-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting already-focused unsupported RHS

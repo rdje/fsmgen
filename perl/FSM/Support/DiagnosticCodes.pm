@@ -271,6 +271,24 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A transition target referenced no declared state.',
     },
+    FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_OPERATOR => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An RHS expression used an unsupported operator.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_RHS_EXPRESSION_ARITY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An RHS expression operator used an unsupported operand count.',
+    },
+    FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_TOKEN => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An RHS expression used a token that is not valid in value position.',
+    },
     FSMGEN_LANGUAGE_DELAYED_PULSE_RHS => {
         severity => 'error',
         stability => 'stable',

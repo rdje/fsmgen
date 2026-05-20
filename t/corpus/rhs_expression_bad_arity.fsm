@@ -1,0 +1,13 @@
+(?fsm:rhs_expression_bad_arity
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (A 8)
+    (B 8)
+  )
+  (-dt
+    (A = (== B))
+  )
+)

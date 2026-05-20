@@ -143,6 +143,9 @@ such as `(?fsm:empty_root_body)`, scalar top-level body items such as
 malformed state or standalone-DT names, malformed transition targets, and
 unknown transition targets. State-body entries cover empty regular state blocks
 such as `(idle)` and empty standalone-DT blocks such as `(-misc)`.
+RHS-expression entries cover unsupported expression operators such as
+`(bogus B C)`, malformed operator arity such as `(== B)`, and guard-only
+tokens such as `<start` in ordinary value position.
 Assignment-boundary entries cover malformed delayed-pulse RHS values, mixed
 combinational/sequential assignment families, mixed pulse and non-pulse
 sequential writes, multiple pulse delays for one signal, combinational
@@ -193,6 +196,9 @@ FSMGEN_LANGUAGE_MALFORMED_FSM_ROOT_BODY_ITEM
 FSMGEN_LANGUAGE_MALFORMED_STATE_NAME
 FSMGEN_LANGUAGE_MALFORMED_STATE_DT_BLOCK
 FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET
+FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_OPERATOR
+FSMGEN_LANGUAGE_MALFORMED_RHS_EXPRESSION_ARITY
+FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_TOKEN
 FSMGEN_LANGUAGE_DELAYED_PULSE_RHS
 FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY
 FSMGEN_LANGUAGE_UNSUPPORTED_ASSIGNMENT_OPERATOR

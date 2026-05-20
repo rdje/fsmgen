@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: RHS expression support accounting follows author fixes
+- `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` promotes existing RHS expression
+  diagnostics without changing expression semantics.
+- Unsupported operators, malformed operand counts, and guard-only tokens use
+  separate stable codes because the author fixes are different: choose a
+  supported operator, provide the required operands, or move the guard token
+  into a guard/test context.
+
 ## 2026-05-20: RHS expression corpus widening stays behavior-neutral
 - `R12-RHS-EXPRESSION-CORPUS-WIDENING.1` selects RHS expression diagnostics
   for support-accounting promotion.

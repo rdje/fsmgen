@@ -1,0 +1,14 @@
+(?fsm:rhs_expression_unsupported_operator
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (A 8)
+    (B 8)
+    (C 8)
+  )
+  (-dt
+    (A = (bogus B C))
+  )
+)

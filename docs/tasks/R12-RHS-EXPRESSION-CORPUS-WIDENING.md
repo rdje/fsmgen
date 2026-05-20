@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-RHS-EXPRESSION-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -40,7 +40,7 @@ coverage.
 ## Task Tree
 
 - ID: `R12-RHS-EXPRESSION-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained expected-failure corpus coverage for RHS expression failures`
   Children: `R12-RHS-EXPRESSION-CORPUS-WIDENING.1`, `R12-RHS-EXPRESSION-CORPUS-WIDENING.2`
 
@@ -52,17 +52,17 @@ coverage.
   Commit: `R12-RHS-EXPRESSION-CORPUS-WIDENING.1: select RHS expression widening`
 
 - ID: `R12-RHS-EXPRESSION-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add maintained expected-failure entries for unsupported operators, malformed arity, and guard-only RHS tokens`
   Acceptance: `named fixtures/catalog entries cover unsupported RHS operators, malformed RHS operator arity, and guard-only RHS tokens with stable diagnostics and corpus behavior checks`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused RHS expression tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-RHS-EXPRESSION-CORPUS-WIDENING.2: widen RHS expression corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` | `pending` | Focused tests already cover these RHS expression failures through parser, pipeline, and CLI entry points; the maintained corpus does not yet carry them as stable support-accounting entries. |
+| 1 | `closed` | `done` | `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` shipped the selected RHS expression corpus widening. |
 
 ## Decisions
 
@@ -84,15 +84,18 @@ coverage.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-RHS-EXPRESSION-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused RHS expression tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-RHS-EXPRESSION-CORPUS-WIDENING.1` | `R12-RHS-EXPRESSION-CORPUS-WIDENING.1: select RHS expression widening` | Selection leaf; no compiler behavior changed. |
-| `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` | `pending` | Implementation leaf pending. |
+| `R12-RHS-EXPRESSION-CORPUS-WIDENING.2` | `R12-RHS-EXPRESSION-CORPUS-WIDENING.2: widen RHS expression corpus` | Adds three maintained RHS expression expected-failure entries. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Shipped the selected RHS expression corpus widening and closed
+  the task tree.

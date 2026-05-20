@@ -1,0 +1,12 @@
+(?fsm:rhs_expression_guard_token
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (A 8)
+  )
+  (-dt
+    (A = <start)
+  )
+)
