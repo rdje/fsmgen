@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Guard-shorthand corpus widening stays guard-surface-local
+- `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1` selects supported guard shorthand
+  for support-accounting promotion.
+- The implementation should promote existing truthiness, negated truthiness,
+  inline comparison, and suffix-guard lowering without changing malformed
+  guard diagnostics or the state-DTE header guard surface.
+
 ## 2026-05-20: State-DTE guard support accounting proves boundary gating
 - `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2` promotes regular-state header DTE
   guards into the executable supported-smoke corpus.

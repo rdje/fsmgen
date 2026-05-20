@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — guard-shorthand widening selected
+- Completed `R12-GUARD-SHORTHAND-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused guard shorthand and suffix guard forms.
+- No compiler behavior changed.
+
 ### R12 regression corpus — state-DTE guard widening shipped
 - Completed `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2` and closed the task tree.
 - Added one named supported-smoke fixture and catalog entry for regular-state
