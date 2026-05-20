@@ -179,6 +179,12 @@ for my $required_id (qw(
     contract.symbol_params_ambiguous_bitstring_value
     contract.params_dependency_cycle
     contract.params_duplicate_declaration
+    contract.params_aggregate_arithmetic_mixed_operand
+    contract.params_aggregate_bitwise_mixed_operand
+    contract.params_aggregate_shape_mismatch
+    contract.params_aggregate_overflow
+    contract.params_aggregate_underflow
+    contract.params_aggregate_divide_by_zero
     contract.test_signal_bad_hyphen
     contract.test_signal_numeric
     contract.computed_test_missing_expr
@@ -330,8 +336,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    103,
-    'catalog now records one hundred three explicit expected-failure entries',
+    109,
+    'catalog now records one hundred nine explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

@@ -1,0 +1,16 @@
+(?fsm:params_aggregate_divide_by_zero
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (DIVISOR (8'h01 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (/ LANES DIVISOR))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

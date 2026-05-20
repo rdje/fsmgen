@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Aggregate parameter-expression support accounting keeps math failures explicit
+- `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2` promotes existing
+  aggregate `+params` expression diagnostics without changing accepted
+  expression semantics.
+- Mixed operands, shape mismatches, overflow, underflow, and divide-by-zero
+  use separate stable codes so downstream tools can map each failure to a
+  precise remediation.
+
 ## 2026-05-20: Aggregate parameter-expression corpus widening is value-local
 - `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1` selects aggregate
   `+params` expression diagnostics for support-accounting promotion.

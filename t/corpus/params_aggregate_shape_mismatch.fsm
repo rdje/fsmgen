@@ -1,0 +1,16 @@
+(?fsm:params_aggregate_shape_mismatch
+  (+constants
+    (LANES (8'hA5 8'h3C))
+    (FRAME ((mode 2'b10) (flag 1)))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (and LANES FRAME))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

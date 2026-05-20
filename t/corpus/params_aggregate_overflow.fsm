@@ -1,0 +1,16 @@
+(?fsm:params_aggregate_overflow
+  (+constants
+    (LANES (8'hFF 8'h00))
+    (LANE_INC (8'h01 8'h00))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (+ LANES LANE_INC))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

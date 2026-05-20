@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — aggregate parameter-expression widening shipped
+- Completed `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2` and closed the
+  tree.
+- The maintained corpus now has six additional aggregate parameter-expression
+  expected-failure entries for mixed operands, shape mismatches, arithmetic
+  overflow, underflow, and divide-by-zero.
+- Stable diagnostic code metadata, corpus behavior checks, check JSON,
+  normalized semantic JSON, manifest coverage, regression-corpus docs, and the
+  mdBook are synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — aggregate parameter-expression widening selected
 - Completed `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

@@ -1,0 +1,15 @@
+(?fsm:params_aggregate_bitwise_mixed_operand
+  (+constants
+    (LANES (8'hA5 8'h3C))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (and LANES 1))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

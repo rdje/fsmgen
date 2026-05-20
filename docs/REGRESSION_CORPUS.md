@@ -103,9 +103,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   unsupported compact `:=` directive shapes, empty symbol-definition sections,
   malformed symbol-definition entries, unresolved `+params` value names,
   ambiguous bare bitstring-like `+constants` / `+params` values, cyclic
-  `+params` dependency graphs, duplicate `+params` declarations, malformed
-  plain test-signal names, malformed computed test selectors, malformed inline
-  compound modifier
+  `+params` dependency graphs, duplicate `+params` declarations, aggregate
+  `+params` expression mixed operands, shape mismatches, overflow, underflow,
+  and divide-by-zero, malformed plain test-signal names, malformed computed
+  test selectors, malformed inline compound modifier
   payloads, duplicate inline compound modifiers, malformed update-shorthand
   targets, and malformed update-shorthand tails.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
@@ -589,6 +590,12 @@ manifest output while keeping the exact file lists widenable.
 | `contract.symbol_params_ambiguous_bitstring_value` | [t/corpus/symbol_params_ambiguous_bitstring_value.fsm](t/corpus/symbol_params_ambiguous_bitstring_value.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.params_dependency_cycle` | [t/corpus/params_dependency_cycle.fsm](t/corpus/params_dependency_cycle.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.params_duplicate_declaration` | [t/corpus/params_duplicate_declaration.fsm](t/corpus/params_duplicate_declaration.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.params_aggregate_arithmetic_mixed_operand` | [t/corpus/params_aggregate_arithmetic_mixed_operand.fsm](t/corpus/params_aggregate_arithmetic_mixed_operand.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.params_aggregate_bitwise_mixed_operand` | [t/corpus/params_aggregate_bitwise_mixed_operand.fsm](t/corpus/params_aggregate_bitwise_mixed_operand.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.params_aggregate_shape_mismatch` | [t/corpus/params_aggregate_shape_mismatch.fsm](t/corpus/params_aggregate_shape_mismatch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.params_aggregate_overflow` | [t/corpus/params_aggregate_overflow.fsm](t/corpus/params_aggregate_overflow.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.params_aggregate_underflow` | [t/corpus/params_aggregate_underflow.fsm](t/corpus/params_aggregate_underflow.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.params_aggregate_divide_by_zero` | [t/corpus/params_aggregate_divide_by_zero.fsm](t/corpus/params_aggregate_divide_by_zero.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.test_signal_bad_hyphen` | [t/corpus/test_signal_bad_hyphen.fsm](t/corpus/test_signal_bad_hyphen.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.test_signal_numeric` | [t/corpus/test_signal_numeric.fsm](t/corpus/test_signal_numeric.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.computed_test_missing_expr` | [t/corpus/computed_test_missing_expr.fsm](t/corpus/computed_test_missing_expr.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

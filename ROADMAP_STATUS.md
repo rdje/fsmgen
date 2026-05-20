@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1` selected a fresh task
-  tree for promoting already-focused aggregate parameter-expression diagnostics
-  into the maintained expected-failure corpus. The next implementation leaf is
-  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2`.
+  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2` completed the latest
+  maintained expected-failure corpus widening slice. The next PNT step must
+  select fresh task-tree ownership before any new code, test, source,
+  generated-artifact, or config change.
+- Recent R12 aggregate parameter-expression corpus-widening completion:
+  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2` added six named
+  expected-failure corpus entries for aggregate `+params` expression mixed
+  operands, shape mismatches, arithmetic overflow, underflow, and
+  divide-by-zero. Each entry carries stable diagnostic-code metadata and is
+  covered through pipeline/CLI behavior, check JSON, normalized semantic JSON,
+  manifest, corpus accounting, and docs.
 - Recent R12 aggregate parameter-expression corpus-widening selection:
   `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1` selected a
   behavior-neutral support-accounting slice for promoting aggregate `+params`
@@ -7156,9 +7163,15 @@ Done:
   - [t/corpus/params_dependency_cycle.fsm](t/corpus/params_dependency_cycle.fsm) records cyclic parameter dependency graphs as an expected failure with `FSMGEN_LANGUAGE_PARAM_DEPENDENCY_CYCLE`,
   - [t/corpus/params_duplicate_declaration.fsm](t/corpus/params_duplicate_declaration.fsm) records duplicate parameter declarations as an expected failure with `FSMGEN_LANGUAGE_DUPLICATE_PARAM_DECLARATION`,
   - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
+- The maintained aggregate parameter-expression expected-failure corpus now
+  accounts for already-focused `+params` aggregate expression failures:
+  - [t/corpus/params_aggregate_arithmetic_mixed_operand.fsm](t/corpus/params_aggregate_arithmetic_mixed_operand.fsm) and [t/corpus/params_aggregate_bitwise_mixed_operand.fsm](t/corpus/params_aggregate_bitwise_mixed_operand.fsm) record mixed aggregate/scalar operand failures as expected failures with stable diagnostic codes,
+  - [t/corpus/params_aggregate_shape_mismatch.fsm](t/corpus/params_aggregate_shape_mismatch.fsm) records mismatched aggregate shapes as an expected failure with `FSMGEN_LANGUAGE_PARAM_AGGREGATE_SHAPE_MISMATCH`,
+  - [t/corpus/params_aggregate_overflow.fsm](t/corpus/params_aggregate_overflow.fsm), [t/corpus/params_aggregate_underflow.fsm](t/corpus/params_aggregate_underflow.fsm), and [t/corpus/params_aggregate_divide_by_zero.fsm](t/corpus/params_aggregate_divide_by_zero.fsm) record aggregate arithmetic overflow, underflow, and divide-by-zero as expected failures with stable diagnostic codes,
+  - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive, generic/template placeholder, bare condition suffix, malformed source/body/test-form, malformed system-section entries, current symbol-definition section/entry/value and parameter-dependency entries, current direct-generation contract entries, and the current composition-contract rejection families.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive, generic/template placeholder, bare condition suffix, malformed source/body/test-form, malformed system-section entries, current symbol-definition section/entry/value and parameter-dependency/expression entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:

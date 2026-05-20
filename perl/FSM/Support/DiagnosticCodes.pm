@@ -439,6 +439,42 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A +params section declared the same parameter more than once.',
     },
+    FSMGEN_LANGUAGE_PARAM_AGGREGATE_ARITHMETIC_MIXED_OPERAND => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An aggregate arithmetic +params expression mixed aggregate and scalar operands.',
+    },
+    FSMGEN_LANGUAGE_PARAM_AGGREGATE_BITWISE_MIXED_OPERAND => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An aggregate bitwise +params expression mixed aggregate and scalar operands.',
+    },
+    FSMGEN_LANGUAGE_PARAM_AGGREGATE_SHAPE_MISMATCH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An aggregate +params expression used operands with incompatible aggregate shapes.',
+    },
+    FSMGEN_LANGUAGE_PARAM_AGGREGATE_OVERFLOW => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An aggregate +params arithmetic expression overflowed a leaf width.',
+    },
+    FSMGEN_LANGUAGE_PARAM_AGGREGATE_UNDERFLOW => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An aggregate +params arithmetic expression underflowed a leaf width.',
+    },
+    FSMGEN_LANGUAGE_PARAM_AGGREGATE_DIVIDE_BY_ZERO => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An aggregate +params arithmetic expression divided by zero.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

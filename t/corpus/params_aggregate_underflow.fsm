@@ -1,0 +1,16 @@
+(?fsm:params_aggregate_underflow
+  (+constants
+    (LANES (8'h00 8'h02))
+    (LANE_DEC (8'h01 8'h01))
+  )
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_BAD (- LANES LANE_DEC))
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

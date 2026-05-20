@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — aggregate parameter-expression widening shipped
+- Completed `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added six named aggregate parameter-expression expected-failure fixtures and
+  catalog entries for mixed operands, shape mismatches, arithmetic overflow,
+  underflow, and divide-by-zero.
+- Added stable diagnostic codes for the new expected-failure families and
+  widened corpus accounting, manifest, check JSON, normalized semantic JSON,
+  regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — aggregate parameter-expression widening selected
 - Completed `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure corpus
