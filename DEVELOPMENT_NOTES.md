@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: FSM-root body corpus widening stays source-shape only
+- `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1` selects malformed structured `?fsm`
+  root bodies for support-accounting promotion.
+- The implementation should promote existing empty-root and scalar-body-item
+  rejections into stable-code-backed expected-failure entries without changing
+  the supported structured root grammar.
+
 ## 2026-05-20: State-body support accounting keeps empty blocks fail-closed
 - `R12-STATE-BODY-CORPUS-WIDENING.2` promotes existing empty state/DT block
   diagnostics without changing state/DT syntax.

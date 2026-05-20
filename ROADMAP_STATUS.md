@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-STATE-BODY-CORPUS-WIDENING.2` completed the latest maintained
-  expected-failure corpus widening slice. The next PNT step must select fresh
-  task-tree ownership before any new code, test, source, generated-artifact, or
-  config change.
+  `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1` activated the task tree for adding
+  maintained expected-failure corpus coverage for malformed structured `?fsm`
+  root bodies. The current frontier is
+  `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2`.
+- Recent R12 FSM-root body corpus-widening selection:
+  `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting already-focused empty structured
+  `?fsm` roots and scalar top-level body item diagnostics into
+  stable-code-backed expected-failure corpus entries.
 - Recent R12 state-body corpus-widening completion:
   `R12-STATE-BODY-CORPUS-WIDENING.2` added two named expected-failure corpus
   entries for malformed empty regular state bodies such as `(idle)` and empty

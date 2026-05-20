@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — FSM-root body widening selected
+- Completed `R12-FSM-ROOT-BODY-CORPUS-WIDENING.1`.
+- The active R12 frontier is now `R12-FSM-ROOT-BODY-CORPUS-WIDENING.2`.
+- The selected implementation will promote malformed empty structured `?fsm`
+  roots and scalar top-level body items into maintained expected-failure corpus
+  entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — state-body widening shipped
 - Completed `R12-STATE-BODY-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has two additional state-body expected-failure
