@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — duplicate default selector widening shipped
+- Completed `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` and closed the task
+  tree.
+- Added one named duplicate default test-selector expected-failure fixture and
+  catalog entry for selector nodes that contain both `default` and `_`
+  branches.
+- Added stable diagnostic-code metadata for the new expected-failure family
+  and widened corpus accounting, manifest, check JSON, normalized semantic
+  JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — duplicate default selector widening selected
 - Completed `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure corpus

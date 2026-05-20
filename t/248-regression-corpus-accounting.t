@@ -132,6 +132,7 @@ for my $required_id (qw(
     contract.malformed_empty_test_branch
     contract.malformed_bare_symbolic_test_selector
     contract.malformed_bare_numeric_test_selector
+    contract.test_selector_duplicate_default
     contract.system_incomplete_section
     contract.system_duplicate_clock_entry
     contract.system_duplicate_reset_declaration
@@ -347,8 +348,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    120,
-    'catalog now records one hundred twenty explicit expected-failure entries',
+    121,
+    'catalog now records one hundred twenty-one explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

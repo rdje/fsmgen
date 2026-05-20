@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1` selected a fresh task tree for
-  promoting already-focused duplicate default test-selector diagnostics into
-  the maintained expected-failure corpus. The next implementation leaf is
-  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2`.
+  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` promoted duplicate default
+  test-selector diagnostics into the maintained expected-failure corpus and
+  closed the tree. The next PNT step should select the next remaining
+  roadmap-aligned R12 support-accounting frontier before implementation.
+- Recent R12 duplicate default selector corpus-widening completion:
+  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` added one named
+  expected-failure corpus entry for selector nodes that contain both
+  `default` and `_` branches. The entry carries stable diagnostic-code
+  metadata and is covered through pipeline/CLI behavior, check JSON,
+  normalized semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 duplicate default selector corpus-widening selection:
   `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting duplicate `default` / `_`
@@ -4500,8 +4506,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R12`:
   [docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md](docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md)
-  is active. `.1` selects the duplicate default test-selector
-  support-accounting slice before implementation; `.2` will promote the
+  is closed. `.1` selected the duplicate default test-selector
+  support-accounting slice before implementation; `.2` promoted the
   already-focused duplicate `default` / `_` branch failure into a maintained
   expected-failure corpus entry.
 - Closed architecture backlog context:
@@ -5749,6 +5755,10 @@ Done:
 - [t/42-language-contract-test-selector-boundary.t](t/42-language-contract-test-selector-boundary.t) now locks the explicit-selector boundary for test-node branches:
   - operator-prefixed selectors such as `=0`, `=OTHER`, and `!=8'0` remain supported,
   - while malformed bare selectors such as `BUSY` or `0` are now rejected explicitly.
+- The maintained R12 expected-failure corpus now also accounts for duplicate
+  default selector branches in the same selector node, such as `default`
+  together with `_`, using a stable duplicate-default diagnostic code instead
+  of folding that case into malformed bare selector labels.
 - [t/69-language-contract-test-selector-entrypoints.t](t/69-language-contract-test-selector-entrypoints.t) now locks pipeline and CLI no-output behavior for the same malformed test-selector family, so bare symbolic and numeric branch selectors now have end-to-end entrypoint coverage instead of parser-only coverage.
 - [t/43-language-contract-top-level-form-boundary.t](t/43-language-contract-top-level-form-boundary.t) now locks explicit rejection of unsupported top-level bare forms inside `(?fsm:name ...)`, so future-looking forms such as `(lhs := value)` or malformed bare entries no longer disappear silently.
 - [docs/USER_GUIDE.md](docs/USER_GUIDE.md) now also promotes the symbol-definition families into the fully supported bucket and documents their current normative contract:

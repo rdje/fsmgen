@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Duplicate default selector support accounting is distinct from malformed selector labels
+- `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` promotes existing duplicate
+  default selector rejection without changing selector lowering.
+- Duplicate `default` / `_` branches use a separate stable diagnostic code
+  from malformed bare selector labels because the repair is to keep exactly
+  one default branch, not to add an explicit comparison operator.
+
 ## 2026-05-20: Duplicate default selector corpus widening stays selector-local
 - `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1` selects duplicate default
   selector diagnostics for support-accounting promotion.

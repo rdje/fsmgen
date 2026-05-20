@@ -87,8 +87,9 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   directive, or body forms, legacy generic/template placeholders, and bare
   condition suffixes. It also covers malformed top-level source roots,
   malformed action and guard forms, malformed test branches, malformed test
-  selectors, and malformed `+system` sections such as incomplete sections,
-  duplicate clock/reset entries, malformed entry structures, invalid clock/reset
+  selectors, duplicate default test-selector branches, and malformed `+system`
+  sections such as incomplete sections, duplicate clock/reset entries,
+  malformed entry structures, invalid clock/reset
   identifiers, malformed direct/composition source names, malformed structured
   `?fsm` root bodies and body items, malformed state or standalone-DT names,
   malformed empty state/standalone-DT bodies, malformed transition targets,
@@ -545,6 +546,7 @@ manifest output while keeping the exact file lists widenable.
 | `contract.malformed_empty_test_branch` | [t/corpus/malformed_empty_test_branch.fsm](t/corpus/malformed_empty_test_branch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_bare_symbolic_test_selector` | [t/corpus/malformed_bare_symbolic_test_selector.fsm](t/corpus/malformed_bare_symbolic_test_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_bare_numeric_test_selector` | [t/corpus/malformed_bare_numeric_test_selector.fsm](t/corpus/malformed_bare_numeric_test_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.test_selector_duplicate_default` | [t/corpus/test_selector_duplicate_default.fsm](t/corpus/test_selector_duplicate_default.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.system_incomplete_section` | [t/corpus/system_incomplete_section.fsm](t/corpus/system_incomplete_section.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.system_duplicate_clock_entry` | [t/corpus/system_duplicate_clock_entry.fsm](t/corpus/system_duplicate_clock_entry.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.system_duplicate_reset_declaration` | [t/corpus/system_duplicate_reset_declaration.fsm](t/corpus/system_duplicate_reset_declaration.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

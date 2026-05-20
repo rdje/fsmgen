@@ -136,7 +136,7 @@ entries for unsupported top-level source wrappers, unsupported top-level
 directives, unsupported top-level FSM body forms, legacy generic/template
 placeholders, and bare condition suffixes. It also includes malformed
 top-level source roots, malformed action/guard forms, malformed test branches,
-malformed bare test selectors, and malformed
+malformed bare test selectors, duplicate default test selectors, and malformed
 `+system` sections. It also carries source-shape and name/reference boundary
 entries for malformed direct `?fsm:name` roots, empty structured `?fsm` roots
 such as `(?fsm:empty_root_body)`, scalar top-level body items such as
@@ -214,6 +214,7 @@ FSMGEN_LANGUAGE_GENERIC_PLACEHOLDER_TOKEN
 FSMGEN_LANGUAGE_BARE_CONDITION_SUFFIX
 FSMGEN_LANGUAGE_UNSUPPORTED_ACTION_FORM
 FSMGEN_LANGUAGE_MALFORMED_TEST_SELECTOR
+FSMGEN_LANGUAGE_DUPLICATE_DEFAULT_TEST_SELECTOR
 FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION
 FSMGEN_LANGUAGE_DUPLICATE_SYSTEM_RESET
 FSMGEN_LANGUAGE_MALFORMED_FSM_ROOT_BODY
@@ -312,6 +313,8 @@ contract. Current out-of-support examples include:
   `(-misc)`
 - malformed selector branches without actions, such as `(?MODE (=0))`
 - bare selector labels such as `(?MODE (BUSY ...))` or `(?MODE (0 ...))`
+- duplicate default selector branches in the same selector node, such as
+  `(default ...)` together with `(_ ...)`
 - computed test nodes without a selector expression or without branches, such
   as `(? (=0 ...))` or `(?(| A B))`
 - unsupported expression operators, malformed operator arity, or guard-only

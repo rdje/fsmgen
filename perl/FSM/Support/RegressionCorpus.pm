@@ -690,6 +690,16 @@ my @REGRESSION_CORPUS = (
         expected_error_pattern => qr/Malformed test selector '0'/s,
     },
     {
+        id => 'contract.test_selector_duplicate_default',
+        relpath => 't/corpus/test_selector_duplicate_default.fsm',
+        family => 'language_contract_fixture',
+        classification => 'expected_failure',
+        coverage => 'language_contract_rejection_pipeline_cli',
+        source_kind => 'fsm',
+        diagnostic_code => 'FSMGEN_LANGUAGE_DUPLICATE_DEFAULT_TEST_SELECTOR',
+        expected_error_pattern => qr/at most one default selector branch/s,
+    },
+    {
         id => 'contract.system_incomplete_section',
         relpath => 't/corpus/system_incomplete_section.fsm',
         family => 'language_contract_fixture',

@@ -1,0 +1,20 @@
+(?fsm:test_selector_duplicate_default
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (MODE 2)
+    (A 1)
+  )
+  (s0
+    (?MODE
+      (default
+        (A = 1)
+      )
+      (_
+        (A = 0)
+      )
+    )
+  )
+)

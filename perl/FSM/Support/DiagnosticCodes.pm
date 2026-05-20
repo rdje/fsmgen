@@ -193,6 +193,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A test selector used an unsupported bare selector shape.',
     },
+    FSMGEN_LANGUAGE_DUPLICATE_DEFAULT_TEST_SELECTOR => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A test selector declared more than one default branch.',
+    },
     FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION => {
         severity => 'error',
         stability => 'stable',
