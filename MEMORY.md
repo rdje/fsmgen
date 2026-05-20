@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Expression AST ownership inventory completed
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.1`.
+- The task tree now inventories the live expression surfaces and handoffs:
+  direct semantic `CoreAST`, backend `FSM::AST::*`, `ExpressionNamer`
+  object/hash/string paths, `GlobalASTManager`, enable-graph
+  capture/render/factorization boundaries, structural `ConnectionExpr`,
+  composition source-expression specs, actual literal lowering, aggregate
+  type consumers, and private ISF scalar/list expression payloads.
+- The inventory flags classification targets for `.2`: duplicate
+  `FSM::AST::Utils` package definitions, tracked `ExpressionNamer.pm.new`,
+  and the `GlobalASTManager` blessed-AST collector versus legacy hash parser
+  mismatch.
+- The active frontier is `IR-EXPRESSION-AST-OWNERSHIP.2`.
+- No compiler behavior changed.
+
 ## 2026-05-20: Direct structural projection guard completed
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` and closed the tree.
 - Added [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t).

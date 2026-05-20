@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — Expression AST ownership inventory completed
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.1`.
+- Inventoried live expression representations and handoffs across direct
+  semantic `CoreAST`, backend `FSM::AST::*`, `ExpressionNamer`
+  object/hash/string paths, `GlobalASTManager`, enable-graph
+  capture/render/factorization boundaries, structural `ConnectionExpr`,
+  composition source-expression specs, actual literal lowering, aggregate
+  type consumers, and private ISF scalar/list expression payloads.
+- Flagged the classification targets for `.2`: duplicate `FSM::AST::Utils`
+  package definitions, tracked `ExpressionNamer.pm.new`, and the
+  `GlobalASTManager` blessed-AST collector versus legacy hash parser mismatch.
+- Advanced the active architecture frontier to
+  `IR-EXPRESSION-AST-OWNERSHIP.2`.
+- No compiler behavior changed.
+
 ### Architecture backlog — Direct structural projection guard completed
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` and closed the tree.
 - Added [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t),

@@ -2,12 +2,22 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` is closed after the no-op direct
-  structural projection guard. Remaining proposed architecture follow-ups are
-  `IR-EXPRESSION-AST-OWNERSHIP`,
-  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION`, and
-  `MODULE-INFO-PROJECTION-GUARD`.
+  `IR-EXPRESSION-AST-OWNERSHIP` is active. `.1` completed the factual
+  expression-surface inventory, and `.2` is the current frontier for
+  deliberate phase-boundary versus actionable-duplication classification.
+  Remaining proposed architecture follow-ups are
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` and `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `IR-EXPRESSION-AST-OWNERSHIP.1` inventoried direct `CoreAST` expressions,
+  backend `FSM::AST::*` nodes, `ExpressionNamer` object/hash/string naming
+  paths, `GlobalASTManager`, enable-graph capture/render/factorization
+  handoffs, structural `ConnectionExpr` nodes, composition source-expression
+  specs, actual literal lowering, and private ISF scalar/list expression
+  payloads. The inventory explicitly flags tracked residues for `.2`
+  classification: duplicate `FSM::AST::Utils` definitions, tracked
+  `ExpressionNamer.pm.new`, and the `GlobalASTManager` blessed-AST versus
+  legacy-hash parse mismatch. No compiler behavior changed.
+- Previous architecture backlog:
   `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` added
   [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t),
   proving the current direct `structural_rtl_ir` projection matches generated
@@ -2710,6 +2720,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   direct-backend, expression-AST, private ISF `LoweringIR`, and `module_info`
   projection work.
 - Active architecture follow-up:
+  [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
+  is active. `.1` completed the expression-surface inventory and `.2` is now
+  classifying deliberate phase separation versus accidental duplication before
+  any behavior-bearing cleanup is selected.
+- Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed after `.3` added a no-op projection guard. Future direct-root
   behavior modeling beyond ports needs a new task tree or reopened follow-up.
@@ -4064,6 +4079,14 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `architecture backlog`:
+  [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
+  is active. `.1` inventoried direct semantic `CoreAST`, backend
+  `FSM::AST::*`, `ExpressionNamer` object/hash/string paths,
+  `GlobalASTManager`, enable-graph conversion handoffs, structural
+  `ConnectionExpr`, composition source-expression specs, actual literal
+  lowering, and private ISF expression payloads. `.2` is now classifying
+  deliberate phase boundaries versus actionable duplication.
+- Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op
   convergence guard; `.3` implemented it with coverage only.

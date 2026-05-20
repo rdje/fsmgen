@@ -788,7 +788,7 @@ Current layer meaning:
 - `ConnectionExpr`: typed actual-connection AST and binding-summary/query helpers
 
 IR audit checkpoint:
-- [docs/tasks/FSMGEN-IR-AUDIT.md](tasks/FSMGEN-IR-AUDIT.md) is the active
+- [docs/tasks/FSMGEN-IR-AUDIT.md](tasks/FSMGEN-IR-AUDIT.md) is the closed
   architecture task tree for IR inventory and consolidation policy.
 - `FSMGEN-IR-AUDIT.1` confirmed that `IntentHIR`, `LoweredRTLIR`, and
   `StructuralRTLIR` are the only named forward IR classes with explicit
@@ -829,6 +829,14 @@ IR audit checkpoint:
   [t/1333-direct-structural-rtl-ir-projection.t](../t/1333-direct-structural-rtl-ir-projection.t).
   Direct HDL emission still goes through `GeneratedModuleEmitter ->
   FlattenedDT`; the guard only locks the current projection boundary.
+- `IR-EXPRESSION-AST-OWNERSHIP.1` inventoried the live expression surfaces
+  reachable from this import tree: direct semantic `CoreAST`,
+  backend-local `FSM::AST::*`, `ExpressionNamer` object/hash/string paths,
+  `GlobalASTManager`, enable-graph capture/render/factorization handoffs,
+  structural `ConnectionExpr`, composition source-expression specs, actual
+  literal lowering, aggregate type consumers, and private ISF scalar/list
+  expression payloads. The active architecture frontier is `.2`, which
+  classifies deliberate phase separation versus actionable duplication.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

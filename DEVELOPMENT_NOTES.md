@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Expression ownership starts with an inventory, not a rewrite
+- `IR-EXPRESSION-AST-OWNERSHIP.1` records the current expression surfaces
+  before any ownership cleanup is selected.
+- The inventory confirms that several expression families are legitimate phase
+  boundaries: `CoreAST` is the direct source semantic model, `FSM::AST::*`
+  is a smaller backend enable/factorization model, `ConnectionExpr` is a
+  structural binding expression model, composition source-expression specs are
+  planner-local pre-structural specs, and ISF scalar/list expressions are
+  private scheduler payloads until emitted `.fsm` text re-enters the direct
+  parser.
+- The same inventory also exposes likely residue: tracked
+  `ExpressionNamer.pm.new`, duplicate `FSM::AST::Utils` definitions, and
+  `GlobalASTManager` collecting only blessed ASTs while using a legacy hash
+  parser. `.2` must classify those before any code changes.
+
 ## 2026-05-20: Direct structural projection guard lands as coverage only
 - `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` adds a focused regression guard
   for the direct `structural_rtl_ir` projection without changing production

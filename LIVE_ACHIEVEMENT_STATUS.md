@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — Expression AST ownership inventory completed
+- Completed `IR-EXPRESSION-AST-OWNERSHIP.1`.
+- The task tree now lists direct `CoreAST`, backend `FSM::AST::*`,
+  `ExpressionNamer`, `GlobalASTManager`, enable-graph expression handoffs,
+  structural `ConnectionExpr`, composition source-expression specs, actual
+  literal lowering, and private ISF expression payloads.
+- The active frontier is `IR-EXPRESSION-AST-OWNERSHIP.2` for deliberate versus
+  accidental duplication classification.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — Direct structural projection guard completed
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` and closed the tree.
 - Added [t/1333-direct-structural-rtl-ir-projection.t](t/1333-direct-structural-rtl-ir-projection.t).
