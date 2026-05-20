@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — module_info mirrors audited
+- Completed `MODULE-INFO-PROJECTION-GUARD.1`.
+- The audit maps direct, composition, generated-child, public-contract, and
+  normalized semantic report `module_info` mirrors to existing owners and
+  tests.
+- The active frontier is `MODULE-INFO-PROJECTION-GUARD.2` for selecting a
+  concrete guard/wording fix or closing without implementation.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — ISF LoweringIR extraction deferred
 - Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`.
 - Current IR phase boundaries remain unchanged. No private `LoweringIR`

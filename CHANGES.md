@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — module_info mirrors audited
+- Completed `MODULE-INFO-PROJECTION-GUARD.1`.
+- Audited direct, composition, generated-child, public-contract, and
+  normalized semantic report `module_info` mirror families against their
+  canonical owners and existing guard coverage.
+- Advanced the active frontier to `MODULE-INFO-PROJECTION-GUARD.2` for
+  selecting a concrete guard/wording fix or closing without implementation.
+- No compiler behavior changed.
+
 ### Architecture backlog — ISF LoweringIR extraction deferred
 - Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`.
 - Selected no private `LoweringIR` extraction candidate now. The current IR

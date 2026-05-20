@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `MODULE-INFO-PROJECTION-GUARD`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -36,21 +36,21 @@ make it look like a second canonical compiler IR.
 ## Task Tree
 
 - ID: `MODULE-INFO-PROJECTION-GUARD`
-  Status: `proposed`
+  Status: `active`
   Goal: `Guard module_info as a bounded compatibility projection.`
   Children: `MODULE-INFO-PROJECTION-GUARD.1`,
   `MODULE-INFO-PROJECTION-GUARD.2`, `MODULE-INFO-PROJECTION-GUARD.3`
 
 - ID: `MODULE-INFO-PROJECTION-GUARD.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Audit module_info mirrors and contract key families.`
   Acceptance: `Direct, composition, generated-child, and semantic forward-IR
   mirrors are mapped to their canonical owner or report projection.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `static module_info owner/contract/test inventory`; `git diff --check`; `mdbook build docs/book`
+  Commit: `MODULE-INFO-PROJECTION-GUARD.1: audit module_info mirrors`
 
 - ID: `MODULE-INFO-PROJECTION-GUARD.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Select missing guard or wording fixes.`
   Acceptance: `Only concrete aliasing, contract, or documentation risks are
   selected as follow-up leaves, with tests/docs scoped before code changes.`
@@ -67,11 +67,15 @@ make it look like a second canonical compiler IR.
 
 ## Current Frontier
 
-This tree is proposed, not active.
+The active frontier is `MODULE-INFO-PROJECTION-GUARD.2`, which must decide
+whether any concrete guard or wording leaf is still justified before source or
+book changes begin.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `MODULE-INFO-PROJECTION-GUARD.1` | `proposed` | Mirror and contract inventory must precede any guard implementation. |
+| 1 | `MODULE-INFO-PROJECTION-GUARD.1` | `done` | Mirror and contract inventory completed before selecting any guard. |
+| 2 | `MODULE-INFO-PROJECTION-GUARD.2` | `active` | Select only concrete missing guards or wording fixes, or close without implementation if none are justified. |
+| 3 | `MODULE-INFO-PROJECTION-GUARD.3` | `proposed` | Implement only if `.2` selects a concrete guard or wording fix. |
 
 ## Decisions
 
@@ -79,29 +83,73 @@ This tree is proposed, not active.
   `FSMGEN-IR-AUDIT.4` because `module_info` is useful and compatibility-bound
   but overlaps forward IR and normalized report projections enough to require
   periodic guard coverage.
+- `2026-05-20`: Completed `.1` by auditing direct, composition, generated
+  child, public contract, and normalized semantic report `module_info` mirrors.
+  The audited surface is already owner-split and heavily guarded; `.2` will
+  decide whether any concrete extra guard or wording fix is still justified.
 
 ## Open Questions
 
-- Which remaining `module_info` mirrors need additional mutation or contract
-  guards beyond the existing coverage?
+- Does the `.1` inventory reveal a concrete missing guard or misleading wording
+  fix, or should this tree close without code changes?
 
 ## Blockers
 
-- None while proposed.
+- None.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-20` | `MODULE-INFO-PROJECTION-GUARD` | `pending` | `pending` |
+| `2026-05-20` | `MODULE-INFO-PROJECTION-GUARD.1` | `rg -n 'module_info|GeneratedModuleInfoBuilder|ResultMetadataBuilder|HDLGeneratorModuleInfoContract|forward_ir|intent_hir|lowered_rtl_ir|structural_rtl_ir' perl docs t`; `rg -n 'module_info.*alias|alias.*module_info|mutation.*module_info|module_info.*mutation|contaminate.*module_info|module_info.*contaminate|separate mutable|fresh module_info' t docs/book/src docs/COMPOSITION_SCOPE.md docs/IR_POLICY.md`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `MODULE-INFO-PROJECTION-GUARD` | `pending` | `pending` |
+| `MODULE-INFO-PROJECTION-GUARD.1` | `MODULE-INFO-PROJECTION-GUARD.1: audit module_info mirrors` | Maps mirror families to canonical owners and existing guard coverage. |
 
 ## Changelog
 
 - `2026-05-20`: Created proposed follow-up task tree from
   `FSMGEN-IR-AUDIT.4`.
+- `2026-05-20`: Activated `.1`, inventoried module-info mirror owners and
+  guard coverage, and advanced `.2` for selection.
+
+## Module Info Mirror Inventory
+
+`module_info` remains a compatibility/result projection. It is not compiler
+truth and should not become a second canonical IR. The current implementation
+already splits most ownership across direct-result, composition-result,
+contract, and normalized-report owners.
+
+| Mirror family | Producer / owner | Canonical owner or source | Public projection status | Existing guard coverage |
+| --- | --- | --- | --- | --- |
+| Direct generated-module identity and semantic summaries | `FSM::Pipeline::GeneratedModuleInfoBuilder::build_from_fsm_module`, called by `FSM::Pipeline::DirectGenerationOrchestrator`. | `FSM::CoreAST` for direct semantics, then `FSM::IR::IntentHIR` for module identity, state/signal summaries, system contract, parameters, and symbol contract. | Bounded in-process `HDLGeneratorResult.module_info` identity/summary keys; top-level `intent_hir` and normalized semantic JSON are preferred for structured downstream inspection. | `t/560-generated-module-info-top-level-intent-projection-defensive-copy-boundary-audit.t`, `t/589-direct-generation-module-info-forward-ir-alias-boundary-audit.t`, `t/574-direct-generation-semantic-ir-alias-boundary-audit.t`, `t/596-hdl-generator-stateful-module-info-alias-boundary-audit.t`, and `t/620-hdl-generator-stateful-standalone-dt-module-info-alias-boundary-audit.t`. |
+| Direct lowered summaries | `FSM::Pipeline::GeneratedModuleInfoBuilder::enrich_with_generated_analysis`. | `FSM::IR::LoweredRTLIR` built from generated-module analysis/backend state. | `module_info` mirrors selected output-drive, selector-conflict, and standalone-DT grouped-target summaries; top-level `lowered_rtl_ir` and normalized semantic JSON remain the structured projection. | `t/561-generated-module-info-lowered-projection-defensive-copy-boundary-audit.t`, `t/590-direct-generation-module-info-lowered-ir-alias-boundary-audit.t`, and `t/574-direct-generation-semantic-ir-alias-boundary-audit.t`. |
+| Direct structural mirror | `FSM::Pipeline::DirectGenerationOrchestrator` attaches `structural_rtl_ir` after `FSM::IR::StructuralRTLIRBuilder`. | `FSM::IR::StructuralRTLIR` is the structural/connectivity boundary. | `module_info.structural_rtl_ir` mirrors the bounded structural projection for compatibility; top-level `structural_rtl_ir` and normalized semantic JSON remain preferred. | `t/1333-direct-structural-rtl-ir-projection.t` and `t/574-direct-generation-semantic-ir-alias-boundary-audit.t`. |
+| Composition module identity, child, and semantic summaries | `FSM::Composition::ResultMetadataBuilder::build_module_info`, called by `FSM::Composition::GenerationOrchestrator`. | `FSM::Composition::Plan`, `FSM::IR::StructuralRTLIR`, and `FSM::IR::IntentHIR`; child export summaries are built by `FSM::Composition::ChildExportBuilder`. | `module_info` mirrors bounded composition counters and child summaries for compatibility; semantic composition JSON and top-level `intent_hir` remain the structured projection. | `t/555-composition-result-metadata-forward-ir-alias-defensive-copy-boundary-audit.t`, `t/581-composition-generation-module-info-forward-ir-alias-boundary-audit.t`, `t/579-composition-generation-semantic-ir-alias-boundary-audit.t`, `t/160-composition-top-forward-ir-surface.t`, `t/165-composition-child-forward-ir-exports.t`, and `t/614-hdl-generator-stateful-composition-module-info-alias-boundary-audit.t`. |
+| Composition lowered and structural summaries | `FSM::Composition::ResultMetadataBuilder::build_module_info`. | `FSM::IR::LoweredRTLIR` for internal-net, instance, auxiliary-assignment, output-drive, and shared-datapath summaries; `FSM::IR::StructuralRTLIR` for ports, nets, instances, and resolved links. | `module_info` carries compatibility counters/lists and embedded forward-IR mirrors; top-level forward IR and normalized semantic JSON remain preferred. | `t/582-composition-generation-module-info-lowered-ir-alias-boundary-audit.t`, `t/162-composition-top-structural-rtl-ir-surface.t`, and `t/579-composition-generation-semantic-ir-alias-boundary-audit.t`. |
+| Composition provenance mirror | `FSM::Composition::ResultMetadataBuilder::build_module_info` and `build_statistics`. | `FSM::Composition::ProvenanceReportBuilder` plus `FSM::Support::CompositionReportContract` for serialized provenance. | `module_info.composition_provenance` and `statistics.composition_provenance` are compatibility mirrors; normalized semantic composition provenance is the serializable downstream path. | `t/553-composition-result-metadata-provenance-defensive-copy-boundary-audit.t` and `t/580-composition-generation-provenance-alias-boundary-audit.t`. |
+| Realized child module_info | `FSM::Composition::GeneratedChildRealizer`, `FSM::Composition::RTLChildRealizer`, and `FSM::Composition::RealizedInstance`. | Generated children reuse their direct `module_info`; external RTL children use loaded interface metadata as a composition planning carrier. | Realized child `module_info` is a private/in-process planning carrier exposed through bounded parent summaries and composition reports. | `t/500-realized-instance-accessor-defensive-copy-boundary-audit.t`, `t/184-composition-generated-child-realizer.t`, `t/185-composition-rtl-child-realizer.t`, `t/158-composition-generated-child-forward-ir-exports.t`, and `t/164-realized-child-interface-ports-from-structural-rtl-ir.t`. |
+| Public nested module_info contract | `FSM::Support::HDLGeneratorModuleInfoContract`, reused by `FSM::Support::HDLGeneratorResultContract` and the capability manifest. | Contract owners advertise only identity keys, scalar summary keys, optional composition scalar summaries, and stable subsurface names. | `full_hash_stable` is false; whole-hash JSON safety is false; embedders should target advertised subsurfaces or normalized semantic JSON. | `t/305-hdl-generator-result-contract.t`, `t/355-hdl-generator-leaf-runtime-contract-audit.t`, `t/729-hdl-generator-result-contract-module-info-keys-json-roundtrip-audit.t`, `t/738-hdl-generator-result-contract-module-info-keys-defensive-copy-audit.t`, `t/770-capability-manifest-hdl-result-module-info-keys-json-roundtrip-audit.t`, `t/1075-hdl-generator-module-info-contract-full-surface-json-roundtrip-audit.t`, and `t/1076-hdl-generator-module-info-contract-full-surface-defensive-copy-audit.t`. |
+| Normalized semantic report fallback | `FSM::Support::NormalizedSemanticReport`. | Top-level `intent_hir`, `lowered_rtl_ir`, and `structural_rtl_ir` are preferred; `module_info` is fallback/compatibility input for module and composition summaries. | Normalized semantic JSON is the downstream machine interchange surface, not `module_info` as a raw tree. | `t/641-serializable-generation-result-snapshot-defensive-copy-boundary-audit.t`, `t/642-normalized-semantic-generation-snapshot-alias-boundary-audit.t`, and normalized semantic contract tests under the `NormalizedSemantic*Contract` families. |
+
+## Audit Notes For `.2`
+
+The audit did not find an obvious unowned `module_info` family. Existing code
+and tests already cover the highest-risk aliasing boundaries:
+
+- same-result top-level semantic IR versus `module_info` mirrors,
+- `module_info` top-level summaries versus embedded `intent_hir` /
+  `lowered_rtl_ir` mirrors,
+- composition provenance versus `module_info` / `statistics` mirrors,
+- realized-instance constructor/accessor copy boundaries,
+- stateful `HDLGenerator` reuse across direct, standalone-DT, and composition
+  module-info containers,
+- public contract key lists, stable-subsurface maps, JSON round trips, and
+  defensive rebuilds.
+
+The main `.2` decision is therefore whether to close the tree with no code
+changes, or add a small wording guard if a stale document still implies that
+the whole `module_info` hash is canonical or stable.

@@ -2,13 +2,19 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` closed the private `LoweringIR`
-  extraction lane by decision: keep the current IR phase boundaries as they
-  are for now. No extraction candidate is selected, `.3` is deferred, and no
-  compiler behavior changed. No active architecture task tree remains;
-  `MODULE-INFO-PROJECTION-GUARD.1` remains proposed and is not PNT-eligible
-  until explicitly selected.
+  `MODULE-INFO-PROJECTION-GUARD.1` audited direct, composition,
+  generated-child, public-contract, and normalized semantic report
+  `module_info` mirrors. The audited surface is already owner-split and
+  heavily guarded; the active frontier is
+  `MODULE-INFO-PROJECTION-GUARD.2` for selecting any concrete missing guard or
+  wording fix, or closing without implementation if none is justified.
 - Recent architecture backlog:
+  `MODULE-INFO-PROJECTION-GUARD.1` mapped `module_info` mirror families to
+  `GeneratedModuleInfoBuilder`, `ResultMetadataBuilder`, realized-child
+  carriers, `HDLGeneratorModuleInfoContract`, `HDLGeneratorResultContract`,
+  forward IR owners, composition provenance, and normalized semantic report
+  fallbacks. No compiler behavior changed.
+- Previous architecture backlog:
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` recorded the architecture decision to
   leave the current IRs alone for now. The `.1` inventory remains as factual
   recovery context, but no implementation leaf will run from this tree.

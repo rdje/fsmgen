@@ -191,7 +191,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md` — completed architecture follow-up for guarding `ExpressionNamer` legacy hash/string parse boundaries.
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
-- `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — proposed architecture follow-up for keeping `module_info` a bounded compatibility projection.
+- `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — active architecture follow-up for keeping `module_info` a bounded compatibility projection.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.
 - `docs/IR_POLICY.md` — repo-local policy for adding, extending, exposing, or retiring IR and IR-like compiler surfaces.
 - `docs/COMPOSITION_SCOPE.md` — concrete composition scope and acceptance boundary for the active architecture.

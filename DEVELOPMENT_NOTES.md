@@ -1,5 +1,19 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: module_info audit shows existing guard coverage is broad
+- `MODULE-INFO-PROJECTION-GUARD.1` confirms that `module_info` is already
+  split across the right owners for the current architecture:
+  `GeneratedModuleInfoBuilder` for direct/generated module summaries,
+  `ResultMetadataBuilder` for composition summaries, realized-child carriers
+  for planning payloads, explicit contract modules for bounded public keys,
+  and normalized semantic reporting for downstream JSON.
+- The highest-risk aliasing boundaries already have regression coverage:
+  top-level semantic IR versus `module_info` mirrors, embedded forward-IR
+  mirrors versus top-level `module_info` summaries, provenance mirrors,
+  stateful facade reuse, and contract key-list defensive rebuilds.
+- `.2` should not invent a cleanup. It should select only a concrete missing
+  guard or misleading wording fix, otherwise close the tree without code.
+
 ## 2026-05-20: Leave current IR phase boundaries intact for now
 - `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` records the architecture decision to
   stop after the factual `LoweringIR` inventory.

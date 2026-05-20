@@ -891,6 +891,15 @@ IR audit checkpoint:
   artifacts, and HDL behavior.
 - `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` selected no extraction candidate now.
   The current IR phase boundaries stay unchanged; `.3` is deferred.
+- `MODULE-INFO-PROJECTION-GUARD.1` audited `module_info` mirror families. The
+  direct/generated owner remains
+  [perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm](../perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm),
+  the composition result owner remains
+  [perl/FSM/Composition/ResultMetadataBuilder.pm](../perl/FSM/Composition/ResultMetadataBuilder.pm),
+  public bounded keys remain owned by
+  [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](../perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
+  and normalized semantic JSON remains the downstream machine interchange
+  surface rather than raw `module_info`.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

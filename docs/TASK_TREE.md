@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `MODULE-INFO-PROJECTION-GUARD` | `active` | `architecture backlog` | `MODULE-INFO-PROJECTION-GUARD.2` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 
 ## Proposed Task Trees
 
@@ -52,7 +53,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `MODULE-INFO-PROJECTION-GUARD` | `proposed` | `architecture backlog` | `MODULE-INFO-PROJECTION-GUARD.1` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 
 ## Completed Task Trees
 

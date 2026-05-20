@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: module_info mirror audit completed
+- Completed `MODULE-INFO-PROJECTION-GUARD.1`.
+- Audited direct, composition, generated-child, public-contract, and
+  normalized semantic report `module_info` mirrors. Existing owners and tests
+  already cover the main mirror and aliasing risks.
+- The active frontier is `MODULE-INFO-PROJECTION-GUARD.2`, which must either
+  select a concrete guard/wording fix or close the tree without code changes.
+- No compiler behavior changed.
+
 ## 2026-05-20: IR extraction deferred by architecture decision
 - Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`.
 - Decision: leave the current IR phase boundaries as they are for now. No
