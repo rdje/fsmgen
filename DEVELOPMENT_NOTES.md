@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: ExpressionNamer legacy parsing is hash-private
+- `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` confirms that
+  `FSM::ExpressionNamer->parse_expression` is not another object-AST producer.
+  It returns private legacy hash nodes for string compatibility.
+- The risk is caller ambiguity, not syntax ambiguity: some callers are
+  intentionally hash-aware, some only need a generated expression name, and
+  some legacy hooks currently check only for blessed ASTs and therefore no-op
+  on current hash output.
+- `.2` should guard those existing categories before any cleanup decides
+  whether to convert or retire blessed-only hooks.
+
 ## 2026-05-20: Backend AST utils now has one owner
 - `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` removes the standalone
   `perl/FSM/AST/Utils.pm` file after `.1` proved there was no live direct

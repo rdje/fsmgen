@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — ExpressionNamer legacy parse boundary audited
+- Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`.
+- `FSM::ExpressionNamer->parse_expression` is documented as a private
+  string-to-legacy-hash parser, not a `CoreAST` or `FSM::AST::*` producer.
+- The active frontier is `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` for focused
+  guard coverage before cleanup.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — Duplicate AST utils file removed
 - Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` and closed the tree.
 - Removed the standalone `perl/FSM/AST/Utils.pm` duplicate.

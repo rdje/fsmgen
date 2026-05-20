@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — ExpressionNamer legacy parse boundary audited
+- Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`.
+- Classified `FSM::ExpressionNamer->parse_expression` as a private
+  string-to-legacy-hash parser, not a `CoreAST` or `FSM::AST::*` producer.
+- Documented live callers as hash consumers, mixed hash/blessed collectors,
+  name-only string consumers, or blessed-only legacy hooks that currently
+  ignore the hash result.
+- Advanced the active frontier to `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` for
+  focused guard coverage.
+- No compiler behavior changed.
+
 ### Architecture backlog — Duplicate AST utils file removed
 - Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` and closed the tree.
 - Removed the standalone `perl/FSM/AST/Utils.pm` duplicate.

@@ -865,6 +865,13 @@ IR audit checkpoint:
   `perl/FSM/AST/Utils.pm` duplicate. This import tree now has a single
   backend AST utility owner:
   [perl/FSM/AST/Node.pm](../perl/FSM/AST/Node.pm).
+- `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` classified
+  [perl/FSM/ExpressionNamer.pm](../perl/FSM/ExpressionNamer.pm)
+  `parse_expression` as a private string-to-legacy-hash parser. Live callers
+  are now separated into hash consumers, mixed hash/blessed collectors,
+  name-only string consumers, and blessed-only legacy hooks that currently
+  ignore the hash result. `.2` is active to add focused guards for that
+  boundary before cleanup.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

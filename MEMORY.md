@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ExpressionNamer legacy parse boundary audited
+- Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`.
+- `FSM::ExpressionNamer->parse_expression` is now documented as a private
+  string-to-legacy-hash parser, not a `CoreAST` or `FSM::AST::*` producer.
+- Live callers are classified as hash consumers, mixed hash/blessed
+  collectors, name-only string consumers, or blessed-only legacy hooks that
+  currently ignore the hash result.
+- The active frontier is `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` for focused
+  guards around that current boundary.
+
 ## 2026-05-20: Duplicate AST utils file removed
 - Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` and closed the tree.
 - Removed the standalone `perl/FSM/AST/Utils.pm` duplicate.

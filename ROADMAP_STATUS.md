@@ -2,16 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `EXPR-AST-UTILS-OWNER-CONSOLIDATION` is closed. `.1` selected the in-file
-  `FSM::AST::Utils` package in
-  [perl/FSM/AST/Node.pm](perl/FSM/AST/Node.pm) as the sole live backend AST
-  constructor owner, and `.2` removed the standalone
-  `perl/FSM/AST/Utils.pm` duplicate. The next architecture PNT candidate is
-  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`, followed by
-  `GLOBAL-AST-MANAGER-BOUNDARY.1`.
+  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` classified
+  `FSM::ExpressionNamer->parse_expression` as a private
+  string-to-legacy-hash parser, not a `CoreAST` or `FSM::AST::*` producer.
+  The active frontier is `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2`, which must add
+  focused guards for the current hash, mixed hash/blessed, name-only, and
+  blessed-only caller boundaries before cleanup. The next queued architecture
+  follow-up after this tree is `GLOBAL-AST-MANAGER-BOUNDARY.1`.
   Remaining proposed architecture follow-ups are
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` and `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` audited live `ExpressionNamer`
+  legacy-parse callers. Hash-aware consumers, mixed hash/blessed collectors,
+  name-only string consumers, and blessed-only no-op legacy hooks are now
+  documented in the task tree. No compiler behavior changed.
+- Previous architecture backlog:
   `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` removed the standalone
   `perl/FSM/AST/Utils.pm` duplicate. Existing backend callers already load
   `FSM::AST::Node`, and no generated behavior changed.
@@ -2764,9 +2769,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md)
   completed `.1` by selecting deletion of the standalone `FSM::AST::Utils`
   duplicate and `.2` by removing it.
+- Active expression ownership follow-up:
+  [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md)
+  completed `.1` by classifying the current `ExpressionNamer`
+  string-to-legacy-hash boundary. `.2` is active for focused guard coverage.
 - Proposed expression ownership follow-ups:
-  [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md),
-  and [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
+  [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
   now own the concrete expression cleanup candidates.
 - Closed expression ownership follow-up:
   [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
@@ -4137,9 +4145,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
   has already removed the tracked duplicate, and
   [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md)
-  has removed the standalone `FSM::AST::Utils` duplicate. The next PNT
-  candidate is
-  [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md).
+  has removed the standalone `FSM::AST::Utils` duplicate.
+  [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md)
+  is now active at `.2` for guarding the current legacy hash parser boundary.
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op
