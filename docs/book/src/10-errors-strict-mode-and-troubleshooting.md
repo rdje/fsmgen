@@ -232,6 +232,10 @@ selectors plus `default` / `_` fallback selectors are covered for named
 equality, explicit fallback negation, and fallback-alias branch enables.
 Relational `?SIG` branch selectors such as `!=`, `>`, and `<=` are also
 covered with width-safe reduction and comparison-enable HDL-shape checks.
+Composition language-feature coverage includes implicit generated-child
+system-port auto-wiring, where child FSMs that omit `+system` expose implicit
+`clk` and `rst_n` ports and the generated top binds both children with
+`.clk(clk)` and `.rst_n(rst_n)`.
 
 ## Diagnostic Codes
 

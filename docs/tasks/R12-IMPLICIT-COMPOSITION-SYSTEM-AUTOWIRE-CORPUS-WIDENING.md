@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-21`
 - Last updated: `2026-05-21`
@@ -41,7 +41,7 @@ strict-supported coverage and public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for implicit composition system-port auto-wiring`
   Children: `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`, `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2`
 
@@ -53,17 +53,17 @@ strict-supported coverage and public support-accounting visibility.
   Commit: `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1: select implicit composition autowire widening`
 
 - ID: `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for implicit composition system auto-wiring`
   Acceptance: `named fixture/catalog entry covers child FSMs that omit +system with strict-supported checks and HDL-shape expectations for top-level clk/rst_n auto-wiring`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `./bin/fsmgen --strict --quiet -o /tmp/implicit_composition_system_autowire.sv t/corpus/implicit_composition_system_autowire.fsm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/74-language-contract-implicit-system-defaults.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2: widen implicit composition autowire corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` | `pending` | Ownership is selected; the next slice can promote already-focused composition implicit-system auto-wiring into the maintained corpus. |
+| 1 | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` | `done` | Promoted already-focused composition implicit-system auto-wiring after ownership was committed. |
 
 ## Decisions
 
@@ -86,15 +86,20 @@ strict-supported coverage and public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-21` | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-21` | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` | `./bin/fsmgen --strict --quiet -o /tmp/implicit_composition_system_autowire.sv t/corpus/implicit_composition_system_autowire.fsm`; `perl -Iperl -c perl/FSM/Support/RegressionCorpus.pm`; `perl -Iperl -c t/248-regression-corpus-accounting.t`; `perl -Iperl -c t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/74-language-contract-implicit-system-defaults.t`; `prove -Iperl t/248-regression-corpus-accounting.t t/261-regression-corpus-supported-language-features.t`; `prove -Iperl t/296-regression-corpus-supported-behavior.t t/301-check-json-supported-corpus.t t/302-normalized-semantic-json.t t/303-normalized-semantic-json-supported-corpus.t t/297-capability-manifest.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1: select implicit composition autowire widening` | Selection leaf; no compiler behavior changed. |
-| `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` | `pending` | `pending` |
+| `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2: widen implicit composition autowire corpus` | Added supported-smoke fixture/catalog coverage; no parser or HDL-generation behavior changed. |
 
 ## Changelog
 
 - `2026-05-21`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-21`: Added a maintained supported-smoke corpus entry for implicit
+  composition system-port auto-wiring, including strict-supported metadata,
+  HDL-shape expectations, support-accounting gates, regression-corpus docs,
+  and mdBook coverage.

@@ -288,6 +288,14 @@ readability in dense wiring blocks. The older `/source/target/` token remains
 accepted as compatibility input, but new examples and generated artifacts use
 the list form.
 
+When a generated child FSM omits `+system`, it still has the same direct-root
+implicit system defaults as a standalone FSM: `clk` and async active-low
+`rst_n`. In a composition top, those implicit child system ports participate in
+the shared system-input auto-wiring contract. If the top exposes `clk` and
+`rst_n`, generated child instances bind `.clk(clk)` and `.rst_n(rst_n)`
+without explicit `?wiring` entries for those system ports; ordinary data links
+still belong in `?wiring`.
+
 ## Same-Name Convention
 
 There are now several bounded same-name paths:

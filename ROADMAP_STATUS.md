@@ -2,11 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selected the
-  next task tree for promoting already-focused composition auto-wiring of
-  implicit child system ports into the maintained supported-smoke corpus. The
-  next frontier is
-  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2`.
+  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` closed the
+  latest implicit composition autowire support-accounting tree. The next PNT
+  step is to select the next inactive or ongoing task-tree frontier before
+  any implementation work.
+- Recent R12 implicit composition autowire corpus-widening completion:
+  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` added one named
+  supported-smoke corpus entry for generated-top `clk`/`rst_n` exposure and
+  child `.clk(clk)` / `.rst_n(rst_n)` auto-wiring. The entry carries
+  strict-supported metadata and HDL-shape expectations, and is covered through
+  default/strict pipeline/CLI behavior, check JSON, normalized semantic JSON,
+  manifest, corpus accounting, and docs.
 - Recent R12 implicit composition autowire corpus-widening selection:
   `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selected a
   behavior-neutral support-accounting slice for promoting generated-top
@@ -7539,6 +7545,22 @@ Done:
     and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
     now records `33` named supported-smoke entries and `33`
+    strict-supported entries.
+- The supported-language-feature corpus now also covers composition auto-wiring
+  of implicit child system ports:
+  - [t/corpus/implicit_composition_system_autowire.fsm](t/corpus/implicit_composition_system_autowire.fsm)
+    now exists as a named `supported_smoke` composition corpus asset for a
+    two-child generated top whose child FSMs omit `+system`,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.implicit_composition_system_autowire` with
+    strict-supported metadata and semantic HDL-shape expectations for
+    generated-top `clk`/`rst_n` exposure and child `.clk(clk)` /
+    `.rst_n(rst_n)` bindings,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    checks the fixture through pipeline and CLI in default and strict mode,
+    and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `34` named supported-smoke entries and `34`
     strict-supported entries.
 - The direct-generation failure side of the corpus now also covers a pre-generation assignment contract rejection:
   - [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) now exists as a named `expected_failure` direct-root corpus asset for a direct RHS `(concat ...)` assignment whose summed RHS width is too small for the LHS,

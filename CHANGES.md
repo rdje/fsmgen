@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — implicit composition autowire widening shipped
+- Completed
+  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added one named supported-smoke fixture and catalog entry for composition
+  auto-wiring of implicit child system ports.
+- Added strict-supported metadata and HDL-shape expectations for the new entry
+  and widened supported corpus accounting, manifest, check JSON, normalized
+  semantic JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — implicit composition autowire widening selected
 - Completed
   `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.

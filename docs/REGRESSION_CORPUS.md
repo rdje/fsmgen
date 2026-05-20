@@ -524,6 +524,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.test_branch_selectors` | [t/corpus/test_branch_selectors.fsm](t/corpus/test_branch_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_intent_integer_literals` | [t/corpus/direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.composition_intent_integer_literals` | [t/corpus/composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
+| `feature.implicit_composition_system_autowire` | [t/corpus/implicit_composition_system_autowire.fsm](t/corpus/implicit_composition_system_autowire.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.default_compat` | [fsm/mipicsi2_txccore_ulp.fsm](fsm/mipicsi2_txccore_ulp.fsm) | `legacy_out_of_scope` | `legacy_root_default_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.strict_rejection` | [fsm/mipicsi2_txccore_ulp.fsm](fsm/mipicsi2_txccore_ulp.fsm) | `expected_failure` | `strict_root_rejection_pipeline_cli` |
 | `legacy.empty_size_noop.default_compat` | [t/corpus/legacy_empty_size_noop.fsm](t/corpus/legacy_empty_size_noop.fsm) | `legacy_out_of_scope` | `legacy_section_default_pipeline_cli` |
@@ -736,7 +737,11 @@ manifest output while keeping the exact file lists widenable.
   `feature.composition_intent_integer_literals` entries prove that FSMGen
   intent-level sized spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`,
   and `20'x1` now belong to the maintained support contract on both direct and
-  composition actual paths. Every supported language-feature fixture is also
+  composition actual paths. The
+  `feature.implicit_composition_system_autowire` entry proves that composition
+  tops with child FSMs that omit `+system` expose `clk` and `rst_n` at the top
+  boundary and auto-wire those implicit child system ports to both generated
+  children under strict mode. Every supported language-feature fixture is also
   now a `strict_supported` positive acceptance asset, so this same test runs
   the whole family through both `strict_mode => 1` and `bin/fsmgen --strict`.
 - [t/309-intent-integer-literal-normalization.t](t/309-intent-integer-literal-normalization.t)

@@ -107,6 +107,7 @@ for my $required_id (qw(
     feature.test_branch_selectors
     feature.direct_intent_integer_literals
     feature.composition_intent_integer_literals
+    feature.implicit_composition_system_autowire
     legacy.mipicsi2_txccore_ulp.default_compat
     legacy.mipicsi2_txccore_ulp.strict_rejection
     legacy.empty_size_noop.default_compat
@@ -355,8 +356,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    33,
-    'catalog now keeps thirty-three named supported-smoke entries including direct and composition language-feature fixtures',
+    34,
+    'catalog now keeps thirty-four named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -370,8 +371,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    33,
-    'catalog now records thirty-three positive strict-mode supported-smoke acceptance entries',
+    34,
+    'catalog now records thirty-four positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -407,6 +408,7 @@ for my $strict_supported_id (qw(
     feature.test_branch_selectors
     feature.direct_intent_integer_literals
     feature.composition_intent_integer_literals
+    feature.implicit_composition_system_autowire
 )) {
     ok($by_id{$strict_supported_id}->{strict_supported}, "canonical strict-supported fixture $strict_supported_id stays marked");
 }

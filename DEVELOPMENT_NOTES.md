@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Implicit composition autowire support accounting proves generated-child system binding
+- `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` promotes
+  composition auto-wiring of implicit child system ports into the executable
+  supported-smoke corpus.
+- The entry records emitted HDL shapes for the top-level `clk`/`rst_n`
+  boundary, both generated child modules, and generated instance bindings for
+  `.clk(clk)` and `.rst_n(rst_n)`.
+
 ## 2026-05-21: Implicit composition autowire corpus widening stays composition-local
 - `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selects
   composition auto-wiring of implicit child `clk` and `rst_n` system ports for

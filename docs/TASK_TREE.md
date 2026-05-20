@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING` | `active` | `R12` | `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` | [docs/tasks/R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md](docs/tasks/R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md](docs/tasks/R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.md) |
 | `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.md](docs/tasks/R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.md) |
 | `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.md](docs/tasks/R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.md) |
 | `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.md](docs/tasks/R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.md) |
