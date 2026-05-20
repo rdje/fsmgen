@@ -199,6 +199,8 @@ HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
 only proving that generation completed. Current supported direct
 language-feature coverage includes canonical assignment pairs and
 update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
+arithmetic and XOR operator variants such as n-ary `+`, `-`, `*`, `add`, `^`,
+and `xor`. It also includes
 RHS expression variants such as inline scalar comparisons and negated n-ary
 bitwise forms `!&`, `!|`, and `xnor`. It also includes legacy reset-state
 alias DTs such as `-syncrst` and `-asyncreset`, which must lower as non-state

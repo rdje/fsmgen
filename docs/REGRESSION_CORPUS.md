@@ -505,6 +505,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.direct_canonical_init_directive` | [t/corpus/direct_canonical_init_directive.fsm](t/corpus/direct_canonical_init_directive.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_size_expression_widths` | [t/corpus/direct_size_expression_widths.fsm](t/corpus/direct_size_expression_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_runtime_div_mod` | [t/corpus/direct_runtime_div_mod.fsm](t/corpus/direct_runtime_div_mod.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.arithmetic_xor_operator_variants` | [t/corpus/arithmetic_xor_operator_variants.fsm](t/corpus/arithmetic_xor_operator_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.rhs_expression_supported_variants` | [t/corpus/rhs_expression_supported_variants.fsm](t/corpus/rhs_expression_supported_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_assignment_pair_form` | [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.update_shorthand_variants` | [t/corpus/update_shorthand_variants.fsm](t/corpus/update_shorthand_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -674,6 +675,9 @@ manifest output while keeping the exact file lists widenable.
   `feature.direct_runtime_div_mod` entry proves that runtime RHS `/`, `%`,
   `div`, and `mod` expressions lower through pipeline and CLI, including the
   left-associative n-ary shape for three-operand forms. The
+  `feature.arithmetic_xor_operator_variants` entry proves n-ary `+`, `-`, `*`,
+  `add`, `^`, and `xor` lowering through emitted arithmetic expressions and
+  XOR intermediate shapes. The
   `feature.rhs_expression_supported_variants` entry proves inline scalar
   comparisons such as `cnt[2:1]!=2'2` and negated n-ary bitwise RHS forms such
   as `!&`, `!|`, and `xnor` through emitted expression and intermediate

@@ -192,7 +192,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md` — completed architecture follow-up for resolving legacy `GlobalASTManager` ownership.
 - `docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md` — completed architecture follow-up that inventoried private ISF `LoweringIR` subfamilies and deferred helper-owner extraction.
 - `docs/tasks/MODULE-INFO-PROJECTION-GUARD.md` — completed architecture follow-up that audited `module_info` mirrors and closed without extra guard work.
-- `docs/tasks/R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.md` — active `R12` task tree for widening maintained supported arithmetic and XOR operator corpus coverage.
+- `docs/tasks/R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported arithmetic and XOR operator corpus coverage.
 - `docs/tasks/R12-RESET-STATE-ALIAS-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported reset-state alias corpus coverage.
 - `docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md` — completed `R9` task tree for strict-mode rejection of the legacy `<=+` assignment alias.
 - `docs/tasks/R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained supported RHS expression variant corpus coverage.

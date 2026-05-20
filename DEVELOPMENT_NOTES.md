@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Arithmetic and XOR operator support accounting proves emitted shapes
+- `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.2` promotes n-ary arithmetic
+  and XOR operator variants into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for n-ary `+`, `-`, `*`, `add`, `^`,
+  and `xor`, including parser-created XOR intermediates that remain live
+  through emission.
+
 ## 2026-05-21: Arithmetic and XOR operator corpus widening stays expression-local
 - `R12-ARITHMETIC-XOR-OPERATOR-CORPUS-WIDENING.1` selects n-ary arithmetic and
   XOR expression operators for support-accounting promotion.

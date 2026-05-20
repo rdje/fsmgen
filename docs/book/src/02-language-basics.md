@@ -341,6 +341,12 @@ composition ports.
 Examples:
 
 ```lisp
+(SUM = (+ A B C D))
+(DIFF = (- A B C D))       ; emits left-to-right as A - B - C - D
+(PROD = (* A B C D))
+(ALIAS_SUM = (add A B C D))
+(MASK = (^ X Y Z))
+(ALIAS_XOR = (xor X Y Z))
 (QUO = (/ A B))
 (REM = (% A B))
 (QUO_ALIAS = (div A B))

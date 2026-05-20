@@ -1,0 +1,31 @@
+(?fsm:arithmetic_xor_operator_variants
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (sum 8)
+    (diff 8)
+    (prod 8)
+    (alias_sum 8)
+    (mask 1)
+    (alias_xor 1)
+    (a 8)
+    (b 8)
+    (c 8)
+    (d 8)
+    (x 1)
+    (y 1)
+    (z 1)
+  )
+
+  (-math
+    (= (sum (+ a b c d)))
+    (= (diff (- a b c d)))
+    (= (prod (* a b c d)))
+    (= (alias_sum (add a b c d)))
+    (= (mask (^ x y z)))
+    (= (alias_xor (xor x y z)))
+  )
+)
