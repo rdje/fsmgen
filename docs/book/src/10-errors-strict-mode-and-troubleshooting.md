@@ -225,6 +225,7 @@ FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_TOKEN
 FSMGEN_LANGUAGE_MALFORMED_GUARD_CONDITION_PAYLOAD
 FSMGEN_LANGUAGE_MALFORMED_INLINE_COMPARISON_EXPRESSION
 FSMGEN_LANGUAGE_DELAYED_PULSE_RHS
+FSMGEN_LANGUAGE_DELAYED_PULSE_LHS_TARGET
 FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY
 FSMGEN_LANGUAGE_UNSUPPORTED_ASSIGNMENT_OPERATOR
 FSMGEN_LANGUAGE_UNSUPPORTED_INIT_RESET_VALUE
@@ -311,6 +312,8 @@ contract. Current out-of-support examples include:
   as `(? (=0 ...))` or `(?(| A B))`
 - unsupported expression operators, malformed operator arity, or guard-only
   tokens in ordinary RHS expression position
+- malformed delayed-pulse assignments with non-literal RHS values or
+  unsupported indexed, sliced, aggregate, or deconstruct LHS targets
 - legacy composition/template forms such as `?&...`, nested `?top`, nested
   `?ports` mapping directives, nested `?wiring`, multi-source `?fsmc`,
   placeholder selectors, repeat macros, and placeholder tokens

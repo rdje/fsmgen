@@ -154,6 +154,9 @@ for my $required_id (qw(
     contract.condition_inline_comparison_missing_rhs
     contract.condition_inline_comparison_missing_lhs
     contract.assignment_delayed_pulse_bad_rhs
+    contract.delayed_pulse_lhs_index
+    contract.delayed_pulse_lhs_range
+    contract.delayed_pulse_lhs_pair_index
     contract.assignment_mixed_comb_seq
     contract.assignment_mixed_pulse_nonpulse
     contract.assignment_multiple_pulse_delays
@@ -342,8 +345,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    115,
-    'catalog now records one hundred fifteen explicit expected-failure entries',
+    118,
+    'catalog now records one hundred eighteen explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

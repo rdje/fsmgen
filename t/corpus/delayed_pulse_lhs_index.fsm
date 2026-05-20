@@ -1,0 +1,12 @@
+(?fsm:delayed_pulse_lhs_index
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-dt
+    (P[0] <1 1)
+  )
+  (+size
+    (P 4)
+  )
+)

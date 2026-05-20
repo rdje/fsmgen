@@ -95,12 +95,13 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   unknown transition targets, unsupported RHS expression operators, malformed
   RHS expression arity, guard-only tokens in RHS value position, malformed
   guard shorthand payloads, and malformed inline comparison tokens. It also
-  covers malformed delayed-pulse RHS values, mixed
-  combinational/sequential assignment families, mixed pulse and non-pulse
-  sequential writes, multiple pulse delays for one signal, combinational
-  self-dependency, D-input self-dependency, unsupported assignment operators,
-  unsupported compact `:=` reset values, malformed `:=` directive payloads,
-  unsupported compact `:=` directive shapes, empty symbol-definition sections,
+  covers malformed delayed-pulse RHS values and delayed-pulse LHS targets,
+  mixed combinational/sequential assignment families, mixed pulse and
+  non-pulse sequential writes, multiple pulse delays for one signal,
+  combinational self-dependency, D-input self-dependency, unsupported
+  assignment operators, unsupported compact `:=` reset values, malformed `:=`
+  directive payloads, unsupported compact `:=` directive shapes, empty
+  symbol-definition sections,
   malformed symbol-definition entries, unresolved `+params` value names,
   ambiguous bare bitstring-like `+constants` / `+params` values, cyclic
   `+params` dependency graphs, duplicate `+params` declarations, aggregate
@@ -566,6 +567,9 @@ manifest output while keeping the exact file lists widenable.
 | `contract.condition_inline_comparison_missing_rhs` | [t/corpus/condition_inline_comparison_missing_rhs.fsm](t/corpus/condition_inline_comparison_missing_rhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.condition_inline_comparison_missing_lhs` | [t/corpus/condition_inline_comparison_missing_lhs.fsm](t/corpus/condition_inline_comparison_missing_lhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_delayed_pulse_bad_rhs` | [t/corpus/assignment_delayed_pulse_bad_rhs.fsm](t/corpus/assignment_delayed_pulse_bad_rhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.delayed_pulse_lhs_index` | [t/corpus/delayed_pulse_lhs_index.fsm](t/corpus/delayed_pulse_lhs_index.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.delayed_pulse_lhs_range` | [t/corpus/delayed_pulse_lhs_range.fsm](t/corpus/delayed_pulse_lhs_range.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.delayed_pulse_lhs_pair_index` | [t/corpus/delayed_pulse_lhs_pair_index.fsm](t/corpus/delayed_pulse_lhs_pair_index.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_mixed_comb_seq` | [t/corpus/assignment_mixed_comb_seq.fsm](t/corpus/assignment_mixed_comb_seq.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_mixed_pulse_nonpulse` | [t/corpus/assignment_mixed_pulse_nonpulse.fsm](t/corpus/assignment_mixed_pulse_nonpulse.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_multiple_pulse_delays` | [t/corpus/assignment_multiple_pulse_delays.fsm](t/corpus/assignment_multiple_pulse_delays.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Delayed-pulse target support accounting keeps route shape explicit
+- `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2` promotes existing malformed
+  delayed-pulse LHS target diagnostics without changing scalar delayed-pulse
+  support.
+- The pair-form fixture uses a distinct indexed target from the plain-index
+  fixture so support-accounting classifiers can map each corpus entry to its
+  own stable expected-failure id while preserving the same rejection family.
+
 ## 2026-05-20: Delayed-pulse target corpus widening follows the shipped R8 boundary
 - `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.1` selects delayed-pulse LHS
   target diagnostics for support-accounting promotion.

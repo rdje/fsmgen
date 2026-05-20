@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING` | `active` | `R12` | `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2` | [docs/tasks/R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.md](docs/tasks/R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.md](docs/tasks/R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.md) |
 | `R12-PLUS-FSM-BODY-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-PLUS-FSM-BODY-CORPUS-WIDENING.md](docs/tasks/R12-PLUS-FSM-BODY-CORPUS-WIDENING.md) |
 | `R12-SYMBOL-TOKEN-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-SYMBOL-TOKEN-CORPUS-WIDENING.md](docs/tasks/R12-SYMBOL-TOKEN-CORPUS-WIDENING.md) |
 | `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.md](docs/tasks/R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.md) |

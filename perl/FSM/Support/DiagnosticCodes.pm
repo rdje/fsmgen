@@ -307,6 +307,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A delayed-pulse assignment used an unsupported RHS value.',
     },
+    FSMGEN_LANGUAGE_DELAYED_PULSE_LHS_TARGET => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A delayed-pulse assignment used an unsupported LHS target.',
+    },
     FSMGEN_LANGUAGE_MIXED_ASSIGNMENT_FAMILIES => {
         severity => 'error',
         stability => 'stable',
