@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` promoted duplicate default
-  test-selector diagnostics into the maintained expected-failure corpus and
-  closed the tree. The next PNT step should select the next remaining
-  roadmap-aligned R12 support-accounting frontier before implementation.
+  `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` selected a fresh task tree
+  for promoting already-focused supported update-shorthand variants into the
+  maintained supported-smoke corpus. The next implementation leaf is
+  `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2`.
+- Recent R12 update-shorthand variant corpus-widening selection:
+  `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` selected a
+  behavior-neutral support-accounting slice for promoting implicit and
+  explicit-delta `+=` / `-=` update-shorthand variants into
+  strict-supported corpus coverage.
 - Recent R12 duplicate default selector corpus-widening completion:
   `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` added one named
   expected-failure corpus entry for selector nodes that contain both
@@ -4505,11 +4510,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `R12`:
-  [docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md](docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md)
-  is closed. `.1` selected the duplicate default test-selector
-  support-accounting slice before implementation; `.2` promoted the
-  already-focused duplicate `default` / `_` branch failure into a maintained
-  expected-failure corpus entry.
+  [docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md](docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md)
+  is active. `.1` selects the supported update-shorthand variant
+  support-accounting slice before implementation; `.2` will promote the
+  already-focused `+=` / `-=` implicit and explicit delta forms into a
+  maintained supported-smoke corpus entry.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

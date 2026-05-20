@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — update-shorthand variant widening selected
+- Completed `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused `+=` / `-=` update-shorthand variants.
+- No compiler behavior changed.
+
 ### R12 regression corpus — duplicate default selector widening shipped
 - Completed `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` and closed the task
   tree.

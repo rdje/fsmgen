@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 update-shorthand variant corpus widening selected
+- Completed `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused supported `+=` and
+  `-=` update-shorthand variants into maintained supported-smoke corpus
+  coverage.
+- The next frontier is `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2`: add a
+  bounded fixture/catalog entry, strict-supported marker, HDL-shape checks, and
+  synchronized docs for the selected supported variant family.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 duplicate default selector corpus widening shipped
 - Completed `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` and closed the
   tree.

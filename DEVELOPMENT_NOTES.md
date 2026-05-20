@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Update-shorthand variant corpus widening stays positive-surface-only
+- `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` selects supported `+=` /
+  `-=` update-shorthand variants for support-accounting promotion.
+- The implementation should promote the accepted implicit-delta and
+  explicit-delta forms without changing malformed target/tail diagnostics or
+  the canonical register-style assignment lowering.
+
 ## 2026-05-20: Duplicate default selector support accounting is distinct from malformed selector labels
 - `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2` promotes existing duplicate
   default selector rejection without changing selector lowering.
