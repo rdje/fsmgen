@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Relational-operator corpus widening stays expression-local
+- `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.1` selects supported relational
+  chains and word aliases for support-accounting promotion.
+- The implementation should promote existing n-ary comparison-chain lowering
+  and alias normalization without changing malformed operator diagnostics,
+  guard shorthand, or expression factoring behavior.
+
 ## 2026-05-20: Guard-shorthand support accounting proves truthiness lowering
 - `R12-GUARD-SHORTHAND-CORPUS-WIDENING.2` promotes guard shorthand into the
   executable supported-smoke corpus.
