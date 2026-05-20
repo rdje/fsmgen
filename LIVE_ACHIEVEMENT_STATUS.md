@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — empty symbol-section widening selected
+- Completed `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2`.
+- The selected implementation will promote empty `+constants`, `+define`,
+  `+params`, and `+enums` sections into maintained expected-failure corpus
+  entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — init-directive shape widening shipped
 - Completed `R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has three additional init-directive shape

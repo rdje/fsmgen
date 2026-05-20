@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Empty symbol-section corpus widening is deliberately narrow
+- `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.1` selects only empty
+  symbol-definition section diagnostics for support-accounting promotion.
+- Malformed symbol entries, unresolved symbols, ambiguous bitstrings, and
+  aggregate arithmetic failures remain outside this slice so the corpus
+  widening stays reviewable.
+
 ## 2026-05-20: Init-directive shape support accounting stays deterministic
 - `R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.2` promotes existing malformed
   `:=` directive shape diagnostics without changing init/reset behavior.
