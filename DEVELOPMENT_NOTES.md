@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Test-branch selector support accounting proves branch lowering
+- `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2` promotes relational `?SIG`
+  branch selectors into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for width-safe nonzero reduction,
+  factored comparison wires, and branch-local assignment enables so support
+  accounting proves the selector behavior rather than only parser acceptance.
+
 ## 2026-05-20: Test-branch selector corpus widening stays branch-local
 - `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.1` selects supported relational
   test-branch selectors for support-accounting promotion.

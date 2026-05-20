@@ -1,0 +1,27 @@
+(?fsm:test_branch_selectors
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (COUNT 8)
+    (NZ 1)
+    (GT 1)
+    (LE 1)
+  )
+
+  (s0
+    (?COUNT
+      (!=8'0
+        (= (NZ 1))
+      )
+      (>8'3
+        (= (GT 1))
+      )
+      (<=8'3
+        (= (LE 1))
+      )
+    )
+  )
+)

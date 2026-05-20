@@ -206,7 +206,9 @@ truthiness, negated truthiness, comparisons, and multibit reduction. Relational
 operator chains and word aliases such as `eq`, `ge`, and `not` are also
 covered as supported-smoke entries with emitted comparison-shape checks.
 Computed test selectors using `?(expr)` are covered as a positive supported
-entry that must emit and reuse the computed selector intermediate.
+entry that must emit and reuse the computed selector intermediate. Relational
+`?SIG` branch selectors such as `!=`, `>`, and `<=` are also covered with
+width-safe reduction and comparison-enable HDL-shape checks.
 
 ## Diagnostic Codes
 

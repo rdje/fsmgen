@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.1` selected a fresh task tree for
+  `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2` closed the latest task tree by
   promoting already-focused relational test-branch selectors into the
-  maintained supported-smoke corpus. The next implementation leaf is
-  `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2`.
+  maintained supported-smoke corpus. The next PNT pass should select a new
+  task tree before any further implementation.
+- Recent R12 test-branch selector corpus-widening completion:
+  `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2` added one named
+  supported-smoke corpus entry for relational `?SIG` branch selectors covering
+  nonzero reduction, greater-than, and less-or-equal lowering. The entry
+  carries strict-supported metadata and HDL-shape expectations, and is covered
+  through default/strict pipeline/CLI behavior, check JSON, normalized
+  semantic JSON, manifest, corpus accounting, and docs.
 - Recent R12 test-branch selector corpus-widening selection:
   `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting `!=`, `>`, and `<=` branch-selector
@@ -4567,10 +4574,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R12`:
   [docs/tasks/R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.md](docs/tasks/R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.md)
-  is active. `.1` selects the supported relational test-branch selector
-  support-accounting slice before implementation; `.2` will promote the
+  is closed. `.1` selected the supported relational test-branch selector
+  support-accounting slice before implementation; `.2` promoted the
   already-focused `!=`, `>`, and `<=` branch-selector forms into a maintained
-  supported-smoke corpus entry.
+  supported-smoke corpus entry. The next PNT pass should select a new R12
+  task tree before changing code, tests, sources, generated artifacts, or
+  config.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
@@ -7223,6 +7232,21 @@ Done:
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
     now records `21` named supported-smoke entries and `21` positive
     strict-supported entries.
+- That same supported-smoke language-feature family now also covers relational
+  test-branch selectors:
+  - [t/corpus/test_branch_selectors.fsm](t/corpus/test_branch_selectors.fsm)
+    records `?SIG` branch-selector forms for nonzero reduction, greater-than,
+    and less-or-equal comparisons as a supported direct-root feature through
+    pipeline and CLI,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.test_branch_selectors` with emitted-HDL
+    expectations for width-safe reduction, factored comparison wires, and
+    branch-local assignment enables,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    checks the generated HDL shape in default and strict mode, and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `22` named supported-smoke entries and `22` positive
+    strict-supported entries.
 - The scalar literal support family now also uses one consistent positive-integer width interpretation for common scalar forms:
   - [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm) is now the shared integer literal to `Math::BigInt` owner for scalar width symbols and direct `+size` constant-expression literal terms,
   - [perl/FSM/Package/ScalarWidthSupport.pm](perl/FSM/Package/ScalarWidthSupport.pm) resolves decimal, based SystemVerilog, `0x`, `0b`, and `0o` spellings for positive integer scalar width symbols,
@@ -7391,9 +7415,9 @@ Left:
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive/body-form, generic/template placeholder, bare condition suffix, malformed source/body/test-form and legacy `+fsm` body entries, malformed delayed-pulse RHS/target entries, malformed system-section entries, current symbol-definition section/entry/value/token and parameter-dependency/expression entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported
   language-feature entries, including the new supported update-shorthand
-  variant, state-DTE guard, guard-shorthand, and relational-operator entries,
-  computed test-selector entries, and the first protocol slice where simple
-  compile smoke is not enough.
+  variant, state-DTE guard, guard-shorthand, relational-operator,
+  computed test-selector, and test-branch selector entries, and the first
+  protocol slice where simple compile smoke is not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

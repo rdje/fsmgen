@@ -390,9 +390,9 @@ expression-backed widths, runtime div/mod expressions, canonical assignment
 pairs, update-shorthand `+=` / `-=` variants, regular-state header DTE guards,
 guard shorthand, relational operator chains and word aliases, and intent-level
 integer literal normalization on both direct and composition paths. Computed
-test selectors are also covered as a supported direct selector surface. Legacy
-`<=+` compatibility is tracked separately through paired default-compatible
-and strict-rejected corpus entries.
+test selectors and relational test-branch selectors are also covered as
+supported direct selector surfaces. Legacy `<=+` compatibility is tracked
+separately through paired default-compatible and strict-rejected corpus entries.
 
 ## Capability manifest
 
@@ -510,6 +510,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.guard_shorthand` | [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.relational_operator_chains` | [t/corpus/relational_operator_chains.fsm](t/corpus/relational_operator_chains.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.computed_test_selector` | [t/corpus/computed_test_selector.fsm](t/corpus/computed_test_selector.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.test_branch_selectors` | [t/corpus/test_branch_selectors.fsm](t/corpus/test_branch_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_intent_integer_literals` | [t/corpus/direct_intent_integer_literals.fsm](t/corpus/direct_intent_integer_literals.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.composition_intent_integer_literals` | [t/corpus/composition_intent_integer_literals.fsm](t/corpus/composition_intent_integer_literals.fsm) | `supported_smoke` | `composition_top_pipeline_cli` |
 | `legacy.mipicsi2_txccore_ulp.default_compat` | [fsm/mipicsi2_txccore_ulp.fsm](fsm/mipicsi2_txccore_ulp.fsm) | `legacy_out_of_scope` | `legacy_root_default_pipeline_cli` |
@@ -684,7 +685,9 @@ manifest output while keeping the exact file lists widenable.
   relational chains through emitted HDL comparisons and enables. The
   `feature.computed_test_selector` entry proves that `?(expr)` selectors create
   a computed intermediate and reuse it across explicit and default branch
-  enables. The
+  enables. The `feature.test_branch_selectors` entry proves that relational
+  `?SIG` branch selectors such as `!=`, `>`, and `<=` lower through width-safe
+  nonzero reduction and factored comparison enables. The
   `feature.direct_intent_integer_literals` and
   `feature.composition_intent_integer_literals` entries prove that FSMGen
   intent-level sized spellings such as `5'23`, `8'-10`, `8'-0xA`, `8'-0b1010`,

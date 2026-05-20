@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — test-branch selector widening shipped
+- Completed `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2` and closed the task
+  tree.
+- Added one named supported-smoke fixture and catalog entry for relational
+  `?SIG` branch selectors covering nonzero reduction, greater-than, and
+  less-or-equal lowering.
+- Added strict-supported metadata and HDL-shape expectations for the new entry
+  and widened supported corpus accounting, manifest, check JSON, normalized
+  semantic JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — test-branch selector widening selected
 - Completed `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained supported-smoke corpus

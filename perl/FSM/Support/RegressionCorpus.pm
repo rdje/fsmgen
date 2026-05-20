@@ -306,6 +306,23 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.test_branch_selectors',
+        relpath => 't/corpus/test_branch_selectors.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'test_branch_selectors',
+        expected_hdl_patterns => [
+            qr/\bs0_nz_1_en\s*=\s*s0_en\s*&\s*\(\|COUNT\)\s*;/s,
+            qr/\bCOUNT_gt_const_83\s*=\s*COUNT\s*>\s*8'd3\s*;/s,
+            qr/\bCOUNT_le_const_83\s*=\s*COUNT\s*<=\s*8'd3\s*;/s,
+            qr/\bs0_gt_1_en\s*=\s*s0_en\s*&\s*COUNT_gt_const_83\s*;/s,
+            qr/\bs0_le_1_en\s*=\s*s0_en\s*&\s*COUNT_le_const_83\s*;/s,
+        ],
+    },
+    {
         id => 'feature.direct_intent_integer_literals',
         relpath => 't/corpus/direct_intent_integer_literals.fsm',
         family => 'language_feature_fixture',
