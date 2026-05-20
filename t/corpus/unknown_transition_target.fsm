@@ -1,0 +1,12 @@
+(?fsm:unknown_transition_target
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (-> missing_state)
+  )
+  (busy
+    (OUT <= 1)
+  )
+)

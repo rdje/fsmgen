@@ -1,0 +1,9 @@
+(?fsm:malformed_standalone_dt_name
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-bad-name
+    (FLAG = 1)
+  )
+)

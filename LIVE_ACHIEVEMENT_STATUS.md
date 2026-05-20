@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — name/reference widening shipped
+- Completed `R12-NAME-REFERENCE-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has six additional name/reference expected-failure
+  entries for malformed direct FSM source names, malformed composition top
+  names, malformed state and standalone-DT names, malformed transition
+  targets, and unknown transition targets.
+- Stable diagnostic codes, corpus behavior checks, check JSON, normalized
+  semantic JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — name/reference widening selected
 - Completed `R12-NAME-REFERENCE-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

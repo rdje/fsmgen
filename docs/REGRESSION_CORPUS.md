@@ -88,8 +88,10 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   suffixes. It also covers malformed top-level source roots, malformed action
   and guard forms, malformed test branches, malformed test selectors, and
   malformed `+system` sections such as incomplete sections, duplicate
-  clock/reset entries, malformed entry structures, and invalid clock/reset
-  identifiers.
+  clock/reset entries, malformed entry structures, invalid clock/reset
+  identifiers, malformed direct/composition source names, malformed state or
+  standalone-DT names, malformed transition targets, and unknown transition
+  targets.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -528,6 +530,12 @@ manifest output while keeping the exact file lists widenable.
 | `contract.system_malformed_entry_structure` | [t/corpus/system_malformed_entry_structure.fsm](t/corpus/system_malformed_entry_structure.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.system_bad_clock_identifier` | [t/corpus/system_bad_clock_identifier.fsm](t/corpus/system_bad_clock_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.system_bad_reset_identifier` | [t/corpus/system_bad_reset_identifier.fsm](t/corpus/system_bad_reset_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_fsm_source_name` | [t/corpus/malformed_fsm_source_name.fsm](t/corpus/malformed_fsm_source_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_top_source_name` | [t/corpus/malformed_top_source_name.fsm](t/corpus/malformed_top_source_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_state_name` | [t/corpus/malformed_state_name.fsm](t/corpus/malformed_state_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_standalone_dt_name` | [t/corpus/malformed_standalone_dt_name.fsm](t/corpus/malformed_standalone_dt_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_transition_target` | [t/corpus/malformed_transition_target.fsm](t/corpus/malformed_transition_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.unknown_transition_target` | [t/corpus/unknown_transition_target.fsm](t/corpus/unknown_transition_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |

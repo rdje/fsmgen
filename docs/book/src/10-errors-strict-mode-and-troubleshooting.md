@@ -136,9 +136,12 @@ entries for unsupported top-level source wrappers, unsupported top-level
 directives, legacy generic/template placeholders, and bare condition suffixes.
 It also includes malformed top-level source roots, malformed action/guard
 forms, malformed test branches, malformed bare test selectors, and malformed
-`+system` sections. Those entries are not only prose examples: pipeline, CLI,
-check JSON, and normalized semantic JSON regression tests all classify them
-through the same support-accounting path.
+`+system` sections. It also carries name/reference boundary entries for
+malformed direct `?fsm:name` roots, malformed `?top:name` composition roots,
+malformed state or standalone-DT names, malformed transition targets, and
+unknown transition targets. Those entries are not only prose examples:
+pipeline, CLI, check JSON, and normalized semantic JSON regression tests all
+classify them through the same support-accounting path.
 
 It also keeps positive acceptance markers for canonical supported surfaces.
 
@@ -169,6 +172,8 @@ FSMGEN_LANGUAGE_UNSUPPORTED_ACTION_FORM
 FSMGEN_LANGUAGE_MALFORMED_TEST_SELECTOR
 FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION
 FSMGEN_LANGUAGE_DUPLICATE_SYSTEM_RESET
+FSMGEN_LANGUAGE_MALFORMED_STATE_NAME
+FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 

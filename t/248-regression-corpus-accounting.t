@@ -136,6 +136,12 @@ for my $required_id (qw(
     contract.system_malformed_entry_structure
     contract.system_bad_clock_identifier
     contract.system_bad_reset_identifier
+    contract.malformed_fsm_source_name
+    contract.malformed_top_source_name
+    contract.malformed_state_name
+    contract.malformed_standalone_dt_name
+    contract.malformed_transition_target
+    contract.unknown_transition_target
     contract.direct_rhs_concat_width_mismatch
     contract.direct_aggregate_contract_mismatch
     contract.missing_rtl_metadata_sidecar
@@ -278,8 +284,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    51,
-    'catalog now records fifty-one explicit expected-failure entries',
+    57,
+    'catalog now records fifty-seven explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

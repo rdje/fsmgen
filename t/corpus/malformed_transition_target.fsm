@@ -1,0 +1,12 @@
+(?fsm:malformed_transition_target
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (-> bad-name)
+  )
+  (busy
+    (OUT <= 1)
+  )
+)

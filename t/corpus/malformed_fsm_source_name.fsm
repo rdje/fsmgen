@@ -1,0 +1,9 @@
+(?fsm:bad-name
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-dt
+    (A = 1)
+  )
+)

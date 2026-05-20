@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Name/reference support accounting preserves syntax boundaries
+- `R12-NAME-REFERENCE-CORPUS-WIDENING.2` promotes existing parser diagnostics
+  without broadening naming syntax or changing reference resolution.
+- The stable-code split separates malformed source-root names, malformed
+  state/DT declarations, malformed transition-target syntax, and unknown
+  transition-target membership because each failure family gives users and
+  downstream tools different recovery instructions.
+
 ## 2026-05-20: Name/reference corpus widening follows focused diagnostics
 - `R12-NAME-REFERENCE-CORPUS-WIDENING.1` selects another behavior-neutral
   corpus/accounting slice.

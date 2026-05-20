@@ -223,6 +223,36 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A +system reset identifier was malformed.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_FSM_SOURCE_NAME => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A top-level FSM source name was malformed.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_TOP_SOURCE_NAME => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A composition top source name was malformed.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_STATE_NAME => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A state or standalone-DT name was malformed.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_TRANSITION_TARGET => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A transition target name was malformed.',
+    },
+    FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A transition target referenced no declared state.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',
