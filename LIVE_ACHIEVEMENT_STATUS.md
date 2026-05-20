@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — reset-state alias widening selected
+- Completed `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2`.
+- The selected implementation will promote supported legacy reset-state
+  aliases into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — RHS expression supported variants widening shipped
 - Completed `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.2` and
   closed the tree.

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: R12 reset-state alias corpus widening selected
+- Completed `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused supported legacy
+  reset-state aliases into maintained supported-smoke corpus coverage.
+- The next frontier is `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2`: add a
+  bounded fixture/catalog entry, strict-supported marker, HDL-shape checks,
+  and synchronized docs for the selected reset-alias family.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 RHS expression supported variants corpus widening shipped
 - Completed `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.2` and
   closed the tree.

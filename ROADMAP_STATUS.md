@@ -2,10 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.2` closed the latest
-  task tree by promoting already-focused supported RHS expression variants
-  into the maintained supported-smoke corpus. The next PNT pass should select
-  a new task tree before any further implementation.
+  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1` selected the next task tree for
+  promoting already-focused supported legacy reset-state aliases into the
+  maintained supported-smoke corpus. The next frontier is
+  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2`.
+- Recent R12 reset-state alias corpus-widening selection:
+  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting legacy `-syncreset`, `-syncrst`, and
+  `-asyncreset` compatibility into strict-supported corpus coverage.
 - Recent R12 RHS expression supported variants corpus-widening completion:
   `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.2` added one named
   supported-smoke corpus entry for inline scalar comparisons and negated n-ary
@@ -4628,12 +4632,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `R12`:
-  [docs/tasks/R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.md](docs/tasks/R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.md)
-  is closed. `.1` selected the supported RHS expression variant
-  support-accounting slice before implementation; `.2` promoted inline scalar
-  comparisons plus `!&`, `!|`, and `xnor` RHS lowering into a maintained
-  supported-smoke corpus entry. The next PNT pass should select a new R12 task
-  tree before changing code, tests, sources, generated artifacts, or config.
+  [docs/tasks/R12-RESET-STATE-ALIAS-CORPUS-WIDENING.md](docs/tasks/R12-RESET-STATE-ALIAS-CORPUS-WIDENING.md)
+  is active. `.1` selected the reset-state alias support-accounting slice
+  before implementation. The current frontier is `.2`: promote legacy
+  `-syncreset`, `-syncrst`, and `-asyncreset` compatibility into a maintained
+  supported-smoke corpus entry with strict-supported metadata and HDL-shape
+  expectations.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

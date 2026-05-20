@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Reset-state alias corpus widening stays compatibility-local
+- `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1` selects legacy non-state reset
+  aliases for support-accounting promotion.
+- The implementation should promote existing `-syncreset`, `-syncrst`, and
+  `-asyncreset` behavior without changing reset semantics, state-register
+  planning, or malformed reset-state diagnostics.
+
 ## 2026-05-20: RHS expression variant support accounting proves emitted expression shape
 - `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.2` promotes inline
   scalar comparisons and negated n-ary bitwise RHS operators into the
