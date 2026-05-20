@@ -1,6 +1,21 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-19
+### R14 — ATL accepted-route source-order coverage selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96` as a doc-only selection
+  leaf.
+- Selected `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97` to prove the accepted
+  generated-child actor-to-actor route remains accepted when the named route
+  drive is authored before the corresponding direct static actor instances.
+- The next leaf must preserve the existing scalar route shape, generated ATL
+  top artifacts, route handoff metadata, and schedule JSON contract.
+- No new route syntax, public report key, generated artifact family, runtime
+  behavior, expression movement, payload protocol, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor
+  network, or permanent actor grouping behavior is selected.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
+
 ### R14 — ATL route sink-expression source-order boundary hardened
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95`.
 - Added deferred dotted-token validation for drive-body sink expressions so

@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL accepted-route source-order coverage selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96` as a selection leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.
+- `.9.97` will add positive coverage proving the accepted generated-child
+  actor-to-actor route remains accepted when the named route drive appears
+  before the direct static actor instances.
+- The accepted route remains `(writer.payload reader.payload)` with the same
+  source-trigger, source-wait, drive-call, sink-trigger, sink-wait sequence.
+- No new route syntax, report key, generated artifact family, runtime
+  behavior, expression movement, payload protocol, route mux/storage,
+  fan-in/fan-out, CDC/reset remapping, ready/backpressure, recursive actor
+  network, or permanent actor grouping is selected.
+
 ## 2026-05-19: ATL route sink-expression source-order boundary hardened
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96`.

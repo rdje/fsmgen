@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: Accepted ATL route order needs explicit coverage too
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.96` selects positive coverage for
+  drive-before-instance source order.
+- `.9.95` proved the malformed sink-expression diagnostic can wait for actor
+  context. The accepted route should have the same ordering guarantee in
+  regression coverage so future parser changes cannot accidentally make
+  examples depend on placing `(instance ...)` before `(drive ...)`.
+- The selected next leaf is coverage hardening, not new route behavior.
+
 ## 2026-05-19: ATL-looking malformed sinks can wait for actor context
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95` implements the source-order
   diagnostic hardening selected by `.9.94`.
