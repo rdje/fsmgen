@@ -1139,6 +1139,12 @@ LIBRARY
     );
 
     lower_source_fails_like(
+        generated_child_actor_route_fixture({ source_expression => 1, drive_before_instances => 1 }),
+        qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement source expressions remain deferred/,
+        'generated-child actor-to-actor data route fails closed when a route source expression appears before actor instances',
+    );
+
+    lower_source_fails_like(
         generated_child_actor_route_fixture({ sink_expression => 1 }),
         qr/drive 'forward_payload' body ATL scalar actor-to-actor data movement sink expressions remain deferred/,
         'generated-child actor-to-actor data route fails closed when the route sink is an expression',

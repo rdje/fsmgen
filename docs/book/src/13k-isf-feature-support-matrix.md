@@ -527,8 +527,9 @@ payload protocols, storage, muxing, fan-in/fan-out, or backpressure behavior
 is inferred. The sink-expression diagnostic is source-order independent for
 endpoint-looking malformed route sinks, while non-ATL malformed local drive
 targets such as `((out) 1)` keep the generic drive-body scalar-head
-diagnostic. Source-expression source-order hardening is selected next but is
-not shipped yet. The accepted scalar route is source-order independent too:
+diagnostic. The source-expression diagnostic is source-order independent too
+and uses the same targeted ATL source-expression diagnostic. The accepted
+scalar route is source-order independent too:
 placing the named `forward_payload` route drive before the `reader` and
 `writer` instances still emits the same generated ATL top handoffs and
 `actor_network.data_movements[]` metadata.

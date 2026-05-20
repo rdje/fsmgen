@@ -971,11 +971,11 @@ the actor instance set is known, then reports the same sink-expression
 diagnostic. Ordinary malformed local drive targets such as `((out) 1)` keep
 the generic drive-body scalar-head diagnostic.
 
-The source-expression counterpart is selected as the next diagnostic
-hardening slice, but is not shipped yet. Until that leaf lands,
-drive-before-instance source-expression routes remain outside the shipped
-contract even though source expressions already fail closed in the ordinary
-instance-before-drive order.
+The source-expression diagnostic is source-order independent too. If a drive
+body appears before the corresponding `(instance ...)` clauses, FSMGen defers
+that ATL-looking source expression until the actor instance set is known, then
+reports the same source-expression diagnostic. Expression movement itself
+remains outside the shipped contract.
 
 The accepted scalar route is source-order independent too. The named
 `forward_payload` drive may appear before or after the `reader` and `writer`

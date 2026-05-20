@@ -4100,14 +4100,13 @@ source-order independent: a drive body written before the matching
 expressions until actor instances are known, while ordinary malformed local
 drive targets such as `((out) 1)` keep the existing generic scalar-head
 diagnostic.
-`ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` selects the source-expression
-source-order counterpart as the next diagnostic hardening leaf: a drive body
-written before the matching `(instance ...)` clauses with a malformed source
-expression such as `(writer.payload (+ reader.payload 1))` should fail with
-the same targeted ATL source-expression diagnostic after actor instances are
-known. This is not shipped yet and does not select expression movement,
-route-side transforms, storage, route mux/storage, ready/backpressure, or
-payload protocols.
+`ISF-ACTOR-NETWORK-ORCHESTRATION.9.99` keeps that source-expression
+diagnostic source-order independent too: a drive body written before the
+matching `(instance ...)` clauses with a malformed source expression such as
+`(writer.payload (+ reader.payload 1))` fails with the same targeted ATL
+source-expression diagnostic after actor instances are known. This does not
+select expression movement, route-side transforms, storage, route
+mux/storage, ready/backpressure, or payload protocols.
 `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97` proves the accepted scalar route is
 source-order independent as well: the `forward_payload` drive may appear
 before the `reader` and `writer` instances and still resolves to the same

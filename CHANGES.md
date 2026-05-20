@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R14 — ATL source-expression source-order hardening completed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- Added focused regression coverage proving drive-before-instance
+  generated-child actor-to-actor route source expressions report the same
+  targeted ATL source-expression diagnostic after actor instances are known.
+- Source syntax, generated artifacts, schedule-report metadata, expression
+  movement, payload protocols, route mux/storage, fan-in/fan-out, CDC/reset
+  remap, ready/backpressure, recursive networks, and permanent grouping are
+  unchanged.
+- The `ISF-ACTOR-NETWORK-ORCHESTRATION` task tree is closed; no active R14
+  task-tree frontier remains in `docs/TASK_TREE.md`.
+
 ### R14 — Repeat-body switch-bound post-do await_any completed
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
 - Shipped the top-level `switch` branch nested-repeat analogue of the

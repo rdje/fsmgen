@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R14 — ATL source-expression source-order hardening completed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- Drive-before-instance generated-child actor-to-actor route source
+  expressions such as `(writer.payload (+ reader.payload 1))` now have
+  explicit coverage for the same targeted ATL source-expression diagnostic
+  after actor instances are known.
+- The accepted scalar route, sink-expression source-order diagnostic,
+  generated artifacts, and schedule-report shape are unchanged.
+- The `ISF-ACTOR-NETWORK-ORCHESTRATION` task tree is closed; no active R14
+  task-tree frontier remains in `docs/TASK_TREE.md`.
+
 ## 2026-05-20: R14 — Repeat-body switch-bound post-do await_any completed
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
 - Top-level `switch` branch nested repeats now support generated blocking
@@ -11,8 +22,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
 - The generated do wires input/output binding handoffs, waits for its fresh
   done handoff before the observation, and preserves generated-spawn done
   handoffs until the later drain.
-- The repeat-body child activation tree is closed; the active R14 frontier is
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- The repeat-body child activation tree is closed; the ATL frontier completed
+  next in `.9.99`.
 
 ## 2026-05-20: R14 — ATL source-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
@@ -39,8 +50,8 @@ This file tracks the latest completed roadmap-aligned slice for fast recovery.
   domain-owned clock/reset semantics.
 - The book, ISF spec, downstream handoff, public contract, live docs, and
   focused coverage now document the same convention.
-- The `ISF-TIMING-CONVENTIONS` tree is closed; active R14 frontiers are now
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
+- The `ISF-TIMING-CONVENTIONS` tree is closed. After that slice, the active
+  R14 frontiers were `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 
 ## 2026-05-19: R14 — ATL accepted-route source-order coverage completed

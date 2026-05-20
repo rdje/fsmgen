@@ -1,5 +1,19 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ATL source-expression source-order hardening completed
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- Drive-before-instance generated-child actor-to-actor route source
+  expressions such as `(writer.payload (+ reader.payload 1))` now fail with
+  the same targeted ATL source-expression diagnostic after actor instances
+  are known.
+- This is coverage/diagnostic hardening only: source syntax, generated
+  artifacts, schedule-report metadata, expression movement, payload
+  protocols, route mux/storage, fan-in/fan-out, CDC/reset remap,
+  ready/backpressure, recursive networks, and permanent grouping are
+  unchanged.
+- The `ISF-ACTOR-NETWORK-ORCHESTRATION` task tree is closed. There is no
+  active R14 task-tree frontier in `docs/TASK_TREE.md`.
+
 ## 2026-05-20: Repeat-body switch-bound post-do await_any completed
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
 - Top-level `switch` branch nested repeats now accept generated blocking
@@ -12,8 +26,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Domain metadata, new spawn after the do before the drain, cross-domain
   activation, deeper branch/loop nesting, and broader outstanding-child
   semantics remain fail-closed.
-- The `ISF-REPEAT-BODY-CHILD-ACTIVATION` task tree is closed. The active R14
-  frontier for this PNT batch is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- The `ISF-REPEAT-BODY-CHILD-ACTIVATION` task tree is closed. The ATL
+  frontier completed next in `.9.99`.
 
 ## 2026-05-20: ATL source-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` as a selection leaf.

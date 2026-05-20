@@ -1232,13 +1232,13 @@ endpoint-looking malformed route sinks: drive-before-instance source order
 defers that malformed ATL-looking sink until actor instances are known, while
 non-ATL malformed local drive targets such as `((out) 1)` keep the generic
 drive-body scalar-head diagnostic.
-The source-expression source-order counterpart is selected next: a malformed
+The source-expression diagnostic is source-order independent too: a malformed
 source expression such as `(writer.payload (+ reader.payload 1))` written
-before the relevant `(instance ...)` clauses should fail with the same
-targeted ATL source-expression diagnostic after actor instances are known.
-This is diagnostic hardening only; it does not select expression movement,
-route-side transforms, storage, route mux/storage, ready/backpressure, or
-payload protocols.
+before the relevant `(instance ...)` clauses fails with the same targeted ATL
+source-expression diagnostic after actor instances are known. This is
+diagnostic hardening only; it does not select expression movement, route-side
+transforms, storage, route mux/storage, ready/backpressure, or payload
+protocols.
 The accepted scalar route is source-order independent too: placing
 `forward_payload` before the `reader` and `writer` instance declarations still
 resolves to the same generated-child route, generated ATL top handoffs, and

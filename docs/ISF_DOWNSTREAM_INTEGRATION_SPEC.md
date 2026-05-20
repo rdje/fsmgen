@@ -1953,12 +1953,12 @@ For downstream implementation, the current route terms mean:
   expression until the full actor instance set is known, then reports the same
   ATL sink-expression diagnostic. Ordinary malformed local drive targets such
   as `((out) 1)` keep the generic drive-body scalar-head diagnostic.
-- The source-expression source-order counterpart is selected next, but is not
-  shipped yet. Until that leaf lands, malformed drive-before-instance source
-  expressions such as `(writer.payload (+ reader.payload 1))` remain outside
-  the shipped route subset; the planned hardening will keep the same targeted
-  source-expression diagnostic without selecting expression movement or
-  payload behavior.
+- The route source-expression diagnostic is source-order independent for
+  endpoint-looking route sources. If a drive body appears before the relevant
+  `(instance ...)` clauses, FSMGen defers that malformed ATL-looking source
+  expression until the full actor instance set is known, then reports the same
+  ATL source-expression diagnostic. This does not select expression movement
+  or payload behavior.
 - The accepted scalar route is also source-order independent. A named route
   drive such as `forward_payload` may appear before or after the relevant
   direct static actor instances; FSMGen resolves the same scalar

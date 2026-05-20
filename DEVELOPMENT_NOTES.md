@@ -1,5 +1,17 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: ATL source-expression source-order hardening needed coverage, not new lowering
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99` adds the missing
+  drive-before-instance source-expression regression for the generated-child
+  actor-to-actor route.
+- The parser already validates route drive bodies after the full actor body is
+  parsed, so the source expression `(writer.payload (+ reader.payload 1))`
+  reaches the same targeted ATL source-expression diagnostic once `reader` and
+  `writer` are known.
+- The slice deliberately avoids widening route semantics: expression-valued
+  route sources still remain outside the shipped subset, and generated
+  artifacts/report metadata are unchanged.
+
 ## 2026-05-20: Switch-bound post-do await_any uses the existing branch repeat machinery
 - `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` does not introduce a new scheduling
   primitive. It extends the existing branch-contained repeat validator so the
