@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Leave current IR phase boundaries intact for now
+- `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` records the architecture decision to
+  stop after the factual `LoweringIR` inventory.
+- No private scheduler subfamily is selected for extraction now. This avoids a
+  low-value movement of code while the existing phase boundaries remain
+  coherent: direct `CoreAST`, ISF parser/lowerer state, composition planning,
+  and named forward IRs stay as they are.
+- Future extraction remains possible, but it must be reopened explicitly with
+  task-tree ownership and a named unchanged-public-surface contract before any
+  source changes.
+
 ## 2026-05-20: LoweringIR extraction starts from boundaries, not line count
 - `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` keeps raw `LoweringIR` private and
   inventories subfamilies by invariants and public projections.
@@ -7,8 +18,9 @@ This document captures engineering rationale, design constraints, and working de
   surfaces. Domain/CDC partitioning is attractive because it already has a
   coherent `actor -> domain_partition` shape. ATL and storage/provenance are
   also stable but have broader blast radius.
-- `.2` must pick one candidate and name unchanged `.fsm`, schedule JSON,
-  generated composition, and HDL surfaces before `.3` changes source.
+- The later `.2` decision selected no candidate now; future extraction must
+  reopen task-tree ownership and name unchanged `.fsm`, schedule JSON,
+  generated composition, and HDL surfaces before source changes.
 
 ## 2026-05-20: GlobalASTManager wording now matches runtime ownership
 - `GLOBAL-AST-MANAGER-BOUNDARY.2` changes only the documentation/comments in

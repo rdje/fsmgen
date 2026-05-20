@@ -888,8 +888,9 @@ IR audit checkpoint:
   [perl/FSM/Scheduler/ISF/LoweringIR.pm](../perl/FSM/Scheduler/ISF/LoweringIR.pm)
   subfamilies and their projection points. Raw `LoweringIR` stays private;
   public truth remains scheduled `.fsm`, schedule JSON, generated composition
-  artifacts, and HDL behavior. `.2` is active for selecting one extraction
-  candidate.
+  artifacts, and HDL behavior.
+- `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` selected no extraction candidate now.
+  The current IR phase boundaries stay unchanged; `.3` is deferred.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

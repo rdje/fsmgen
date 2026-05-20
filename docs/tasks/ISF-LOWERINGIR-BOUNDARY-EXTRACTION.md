@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `ISF-LOWERINGIR-BOUNDARY-EXTRACTION`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -11,10 +11,11 @@
 
 ## Goal
 
-Reduce private ISF `LoweringIR` growth by identifying stable sub-boundaries
-that can move into helper owners or typed private carriers while preserving
+Assess private ISF `LoweringIR` growth by identifying stable sub-boundaries
+that could move into helper owners or typed private carriers while preserving
 the current public contract: emitted `.fsm`, schedule JSON, generated
-composition artifacts, and HDL behavior.
+composition artifacts, and HDL behavior. The current decision is to leave the
+existing IR phase boundaries unchanged for now.
 
 ## Non-Goals
 
@@ -40,8 +41,8 @@ composition artifacts, and HDL behavior.
 ## Task Tree
 
 - ID: `ISF-LOWERINGIR-BOUNDARY-EXTRACTION`
-  Status: `active`
-  Goal: `Extract stable private LoweringIR sub-boundaries where justified.`
+  Status: `done`
+  Goal: `Assess stable private LoweringIR sub-boundaries and defer extraction unless justified.`
   Children: `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`,
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`,
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.3`
@@ -56,32 +57,34 @@ composition artifacts, and HDL behavior.
   Commit: `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1: inventory LoweringIR subfamilies`
 
 - ID: `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`
-  Status: `active`
-  Goal: `Select one private extraction candidate.`
-  Acceptance: `The selected candidate names its owner, inputs, outputs,
-  invariants, unchanged public surfaces, and focused tests before code
-  changes begin.`
-  Verification: `pending`
-  Commit: `pending`
+  Status: `done`
+  Goal: `Decide whether to select a private extraction candidate now.`
+  Acceptance: `The decision records that no extraction candidate is selected
+  now, current IR phase boundaries remain unchanged, unchanged public surfaces
+  are named, and any future extraction requires a new or reactivated
+  task-tree leaf before source changes.`
+  Verification: `git diff --check`; `mdbook build docs/book`
+  Commit: `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2: defer LoweringIR extraction`
 
 - ID: `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.3`
-  Status: `proposed`
+  Status: `deferred`
   Goal: `Implement the selected private LoweringIR extraction.`
-  Acceptance: `The selected subfamily moves behind the new owner/carrier with
-  unchanged public schedule/artifact behavior and passing focused gates.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `No implementation runs from this tree because .2 selected no
+  extraction candidate now.`
+  Verification: `not run; deferred by architecture decision`
+  Commit: `deferred`
 
 ## Current Frontier
 
-The active frontier is `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`, which must
-select one private extraction candidate before source changes begin.
+This tree is closed. No private `LoweringIR` extraction implementation is
+PNT-eligible from this tree. Future extraction work must be explicitly
+reopened through a new or reactivated task-tree leaf.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` | `done` | Stable subfamily inventory completed before private extraction. |
-| 2 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` | `active` | Select one extraction candidate with unchanged public surfaces and focused tests. |
-| 3 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.3` | `proposed` | Implement only after `.2` selects the owner and invariants. |
+| 2 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` | `done` | Selected no extraction candidate now; current IR phase boundaries stay unchanged. |
+| 3 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.3` | `deferred` | No implementation runs until future work explicitly reopens an extraction leaf. |
 
 ## Decisions
 
@@ -93,27 +96,32 @@ select one private extraction candidate before source changes begin.
   raw `LoweringIR` remains private; public truth is still emitted `.fsm`,
   schedule JSON schema/versioned projections, generated composition artifacts,
   and HDL behavior.
+- `2026-05-20`: Completed `.2` by selecting no extraction candidate now. The
+  current IR phase boundaries stay unchanged; `.3` is deferred. Future
+  extraction work requires an explicit new or reactivated task-tree leaf.
 
 ## Open Questions
 
-- Which `LoweringIR` subfamily is stable enough to extract first without
-  widening public API?
+- None for this closed tree. The inventory remains available if future
+  roadmap direction reopens extraction.
 
 ## Blockers
 
-- None while proposed.
+- None; closed by architecture decision.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` | `rg -n 'LoweringIR|Emitter::FSM|Emitter::JSON|Emitter::CompositionTop|schedule JSON|lowering_ir' perl/FSM/Scheduler/ISF.pm perl/FSM/Scheduler/ISF docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md docs/tasks/FSMGEN-IR-AUDIT.md ROADMAP_STATUS.md`; `rg -n '^sub ' perl/FSM/Scheduler/ISF/LoweringIR.pm`; `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` | `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1: inventory LoweringIR subfamilies` | Inventories stable private subfamilies and projection points. |
+| `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2: defer LoweringIR extraction` | Selects no extraction candidate now and closes the tree. |
 
 ## Changelog
 
@@ -121,6 +129,8 @@ select one private extraction candidate before source changes begin.
   `FSMGEN-IR-AUDIT.4`.
 - `2026-05-20`: Activated `.1`, inventoried stable private subfamilies, and
   advanced `.2` for candidate selection.
+- `2026-05-20`: Completed `.2`, selected no extraction candidate now, deferred
+  `.3`, and closed the tree.
 
 ## LoweringIR Subfamily Inventory
 
@@ -139,10 +149,10 @@ candidate helper-owner boundaries, but none is a public API by itself.
 | Transaction control/data lowering | `_build_transaction`, `_validate_supported_transaction_clauses`, `_ir_*` state builders, branch/loop expansion, dynamic wait linking, rule builders. | `states`, `dt_blocks`, `counters`, transitions, guards, assignments, temporal contracts, dynamic-wait metadata. | Scheduled `.fsm` states/DTs and schedule JSON transaction, wait, loop, stage, and temporal-contract summaries. | State names, DT names, guard/assignment semantics, dynamic-wait zero-bypass behavior, and temporal-contract monitor behavior stay unchanged. |
 | Actor/package/type metadata | `_actor_package_imports`, `_actor_type_declarations`, `_actor_enum_declarations`, `_actor_constant_declarations`, `_actor_param_declarations`, `_actor_metadata_declarations`. | `package_imports`, `package_roots`, `type_declarations`, `enum_declarations`, `constants`, `params`, `actor_phases`, `actor_stages`. | Scheduled `.fsm` import/type/enum/constant/param sections and schedule JSON actor metadata summaries. | Declarations remain source-owned and emitted in deterministic order; public schedule summaries remain projections. |
 
-## Candidate Notes For `.2`
+## Deferred Candidate Notes
 
-Likely safe first extraction candidates are the subfamilies with clear inputs
-and bounded public projections:
+The following notes are preserved as future context only. No candidate is
+selected by this tree.
 
 - Domain / CDC partitioning has a coherent input (`actor`) and output
   (`domain_partition`) consumed by scheduler/report/artifact paths.
@@ -152,5 +162,6 @@ and bounded public projections:
 - Storage/provenance is stable but high-blast-radius because many schedule
   report summaries consume the same fields.
 
-`.2` must choose one candidate and explicitly state unchanged public surfaces
-and focused tests before `.3` changes source.
+Future extraction work must choose one candidate through a new or reactivated
+task-tree leaf and explicitly state unchanged public surfaces and focused tests
+before source changes.

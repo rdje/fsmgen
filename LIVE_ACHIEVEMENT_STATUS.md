@@ -2,12 +2,19 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — ISF LoweringIR extraction deferred
+- Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`.
+- Current IR phase boundaries remain unchanged. No private `LoweringIR`
+  extraction candidate is selected now, `.3` is deferred, and no
+  behavior-bearing implementation leaf is PNT-eligible from this tree.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — ISF LoweringIR subfamilies inventoried
 - Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`.
 - Stable private `LoweringIR` subfamilies and public projection points are now
   mapped in the task tree.
-- The active frontier is `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for selecting
-  one extraction candidate.
+- The later `.2` decision selected no extraction candidate now and closed the
+  tree.
 - No compiler behavior changed.
 
 ## 2026-05-20: Architecture backlog — GlobalASTManager boundary corrected

@@ -2,13 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` inventoried stable private
-  `LoweringIR` subfamilies and their public projection points. Raw
-  `LoweringIR` remains private; public truth stays emitted `.fsm`, schedule
-  JSON, generated composition artifacts, and HDL behavior. The active
-  frontier is `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for selecting one
-  private extraction candidate before source changes.
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` closed the private `LoweringIR`
+  extraction lane by decision: keep the current IR phase boundaries as they
+  are for now. No extraction candidate is selected, `.3` is deferred, and no
+  compiler behavior changed. No active architecture task tree remains;
+  `MODULE-INFO-PROJECTION-GUARD.1` remains proposed and is not PNT-eligible
+  until explicitly selected.
 - Recent architecture backlog:
+  `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` recorded the architecture decision to
+  leave the current IRs alone for now. The `.1` inventory remains as factual
+  recovery context, but no implementation leaf will run from this tree.
+- Previous architecture backlog:
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` mapped scheduler/emitter handoff,
   actor-network/ATL metadata, domain/CDC partitioning, activation handoffs and
   generated children, storage/provenance, conflict/fan-in/priority/resource
@@ -2798,10 +2802,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
   completed `.1` by classifying the module as compatibility-only and `.2` by
   correcting stale ownership wording.
-- Active architecture follow-up:
+- Closed architecture follow-up:
   [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md)
-  completed `.1` by inventorying stable private `LoweringIR` subfamilies.
-  `.2` is active for selecting one extraction candidate.
+  completed `.1` by inventorying stable private `LoweringIR` subfamilies and
+  `.2` by selecting no extraction candidate now. `.3` is deferred and the tree
+  is closed with no compiler behavior change.
 - Closed expression ownership follow-up:
   [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
   removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate.
@@ -4177,7 +4182,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
   is closed after correcting stale ownership wording.
   [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md)
-  is active at `.2` for selecting one private extraction candidate.
+  is closed after `.2` selected no private extraction candidate now and
+  deferred implementation.
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op

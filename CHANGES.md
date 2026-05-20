@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — ISF LoweringIR extraction deferred
+- Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`.
+- Selected no private `LoweringIR` extraction candidate now. The current IR
+  phase boundaries stay unchanged, `.3` is deferred, and future extraction
+  work must be explicitly reopened through task-tree tracking before source
+  changes.
+- No compiler behavior changed.
+
 ### Architecture backlog — ISF LoweringIR subfamilies inventoried
 - Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`.
 - Inventoried stable private `LoweringIR` subfamilies and their public
@@ -8,8 +16,9 @@ This is the persistent technical change history for FSMGen.
   domain/CDC, activation/generated children, storage/provenance,
   conflict/fan-in/priority/resource resolution, transaction lowering, and
   actor/package/type metadata.
-- Advanced the active frontier to `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for
-  selecting one private extraction candidate.
+- Advanced the active frontier to `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` at
+  the time; the later `.2` decision selected no extraction candidate now and
+  closed the tree.
 - No compiler behavior changed.
 
 ### Architecture backlog — GlobalASTManager boundary corrected

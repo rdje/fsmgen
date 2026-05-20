@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `active` | `architecture backlog` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
 
 ## Proposed Task Trees
 
@@ -59,6 +58,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `done` | `architecture backlog` | `closed` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
 | `GLOBAL-AST-MANAGER-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) |
 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) |

@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: IR extraction deferred by architecture decision
+- Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2`.
+- Decision: leave the current IR phase boundaries as they are for now. No
+  private `LoweringIR` extraction candidate is selected, and no
+  behavior-bearing implementation leaf is PNT-eligible from this tree.
+- `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.3` is deferred; the tree is closed after
+  the factual inventory. Future extraction work must be explicitly reopened
+  through a new or reactivated task-tree leaf.
+- No compiler behavior changed.
+
 ## 2026-05-20: ISF LoweringIR subfamilies inventoried
 - Completed `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1`.
 - Inventoried stable private `LoweringIR` subfamilies: scheduler/emitter
@@ -9,8 +19,8 @@ This is the live continuity document for fast session recovery after crashes, re
   metadata.
 - Raw `LoweringIR` remains private; public truth stays emitted `.fsm`,
   schedule JSON, generated composition artifacts, and HDL behavior.
-- The active frontier is `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.2` for selecting
-  one private extraction candidate before source changes.
+- The later `.2` decision selected no extraction candidate now and closed the
+  tree.
 
 ## 2026-05-20: GlobalASTManager boundary corrected
 - Completed `GLOBAL-AST-MANAGER-BOUNDARY.2` and closed the tree.
