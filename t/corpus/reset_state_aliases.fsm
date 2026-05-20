@@ -1,0 +1,31 @@
+(?fsm:reset_state_aliases
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (force_sync 1)
+    (force_async 1)
+    (SYNC_OUT 1)
+    (ASYNC_OUT 1)
+    (REG_OUT 1)
+    (IN 1)
+  )
+
+  (-syncrst <force_sync
+    (<reset
+      (<= (SYNC_OUT 0))
+    )
+  )
+
+  (-asyncreset <!force_async
+    (<reset
+      (<= (ASYNC_OUT 1))
+    )
+  )
+
+  (s0
+    (<= (REG_OUT IN))
+  )
+)

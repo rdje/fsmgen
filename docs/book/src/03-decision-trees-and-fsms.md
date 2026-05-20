@@ -293,6 +293,41 @@ Random combinational logic on an asynchronous reset path is glitch-prone and is
 outside the DT model. Actual clock/reset policy belongs to the `+system` reset
 contract and explicit reset/default metadata.
 
+## Legacy Reset Alias DTs
+
+FSMGen also preserves a small legacy `.fsm` compatibility surface for
+reset-named non-state DT blocks:
+
+```lisp
+(-syncrst <force_sync
+  (<reset
+    (<= (SYNC_OUT 0))))
+
+(-asyncreset <!force_async
+  (<reset
+    (<= (ASYNC_OUT 1))))
+```
+
+These blocks are not `+system` reset declarations, and they are not encoded FSM
+states. They normalize onto the existing internal `syncreset` and `asyncreset`
+DT identities, generate DT-style enables such as `syncreset_en` and
+`asyncreset_en`, and stay out of `current_state == STATE` comparisons. Use
+`+system` to declare the real clock/reset policy; use these reset alias DTs
+only when you need compatibility with an existing `.fsm` source that already
+uses those names as non-state DT regions.
+
+The accepted reset-alias spellings are:
+
+- `-syncreset`
+- `-syncrst`
+- `-asyncreset`
+
+They follow the normal non-state DT rules: an optional header guard controls
+the whole DT, local guarded blocks inside the DT add selector predicates, and
+assignment operators inside the body decide whether the selected target is
+combinational or flopped. The same aliases are accepted in standalone `?dt`
+roots as non-state DT regions.
+
 ## State Transitions
 
 Transitions target named FSM states in the same root.

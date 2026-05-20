@@ -200,7 +200,10 @@ only proving that generation completed. Current supported direct
 language-feature coverage includes canonical assignment pairs and
 update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
 RHS expression variants such as inline scalar comparisons and negated n-ary
-bitwise forms `!&`, `!|`, and `xnor`. It also includes regular-state header
+bitwise forms `!&`, `!|`, and `xnor`. It also includes legacy reset-state
+alias DTs such as `-syncrst` and `-asyncreset`, which must lower as non-state
+DT-style `syncreset`/`asyncreset` enable regions rather than encoded FSM
+states. It also includes regular-state header
 DTE guards that must keep state-enable and DTE
 boundary-gating HDL shapes. It also includes standalone DT guards for
 non-state `(-name ...)` blocks, including always-on DT enables, scalar guards,

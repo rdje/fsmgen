@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Reset-state alias support accounting proves DT-style normalization
+- `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2` promotes legacy reset-state aliases
+  into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for normalized `syncreset` and
+  `asyncreset` DT enables so support accounting proves compatibility lowering
+  rather than only parser acceptance.
+
 ## 2026-05-21: Reset-state alias corpus widening stays compatibility-local
 - `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1` selects legacy non-state reset
   aliases for support-accounting promotion.

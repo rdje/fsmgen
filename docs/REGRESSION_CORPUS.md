@@ -501,6 +501,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.direct_lhs_deconstruct_pack` | [t/corpus/direct_lhs_deconstruct_pack.fsm](t/corpus/direct_lhs_deconstruct_pack.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_sreset_active_high` | [t/corpus/direct_sreset_active_high.fsm](t/corpus/direct_sreset_active_high.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_areset_active_low` | [t/corpus/direct_areset_active_low.fsm](t/corpus/direct_areset_active_low.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.reset_state_aliases` | [t/corpus/reset_state_aliases.fsm](t/corpus/reset_state_aliases.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_canonical_init_directive` | [t/corpus/direct_canonical_init_directive.fsm](t/corpus/direct_canonical_init_directive.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_size_expression_widths` | [t/corpus/direct_size_expression_widths.fsm](t/corpus/direct_size_expression_widths.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_runtime_div_mod` | [t/corpus/direct_runtime_div_mod.fsm](t/corpus/direct_runtime_div_mod.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -676,7 +677,10 @@ manifest output while keeping the exact file lists widenable.
   `feature.rhs_expression_supported_variants` entry proves inline scalar
   comparisons such as `cnt[2:1]!=2'2` and negated n-ary bitwise RHS forms such
   as `!&`, `!|`, and `xnor` through emitted expression and intermediate
-  shapes. The
+  shapes. The `feature.reset_state_aliases` entry proves that legacy
+  reset-state aliases such as `-syncrst` and `-asyncreset` normalize to
+  DT-style `syncreset`/`asyncreset` enable regions while ordinary states remain
+  the encoded state-register plan. The
   `feature.direct_assignment_pair_form` entry proves that canonical
   `(assign-op (lhs rhs))` syntax reaches the same pipeline and CLI HDL shapes
   as infix compatibility assignments, including guarded nested RHS

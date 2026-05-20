@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1` selected the next task tree for
+  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2` closed the latest task tree by
   promoting already-focused supported legacy reset-state aliases into the
-  maintained supported-smoke corpus. The next frontier is
-  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2`.
+  maintained supported-smoke corpus. The next PNT pass should select a new task
+  tree before any further implementation.
+- Recent R12 reset-state alias corpus-widening completion:
+  `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.2` added one named supported-smoke
+  corpus entry for legacy reset-state aliases that normalize to DT-style
+  `syncreset`/`asyncreset` enable regions. The entry carries strict-supported
+  metadata and HDL-shape expectations, and is covered through default/strict
+  pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, corpus
+  accounting, and docs.
 - Recent R12 reset-state alias corpus-widening selection:
   `R12-RESET-STATE-ALIAS-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting legacy `-syncreset`, `-syncrst`, and
@@ -4633,11 +4640,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R12`:
   [docs/tasks/R12-RESET-STATE-ALIAS-CORPUS-WIDENING.md](docs/tasks/R12-RESET-STATE-ALIAS-CORPUS-WIDENING.md)
-  is active. `.1` selected the reset-state alias support-accounting slice
-  before implementation. The current frontier is `.2`: promote legacy
-  `-syncreset`, `-syncrst`, and `-asyncreset` compatibility into a maintained
-  supported-smoke corpus entry with strict-supported metadata and HDL-shape
-  expectations.
+  is closed. `.1` selected the reset-state alias support-accounting slice
+  before implementation; `.2` promoted legacy `-syncrst` and `-asyncreset`
+  compatibility into a maintained supported-smoke corpus entry that proves
+  normalized `syncreset`/`asyncreset` DT-style enable lowering. The next PNT
+  pass should select a new R12 task tree before changing code, tests, sources,
+  generated artifacts, or config.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
