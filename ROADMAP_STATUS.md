@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` completed the latest maintained
-  expected-failure corpus widening slice. The next PNT step must select fresh
-  task-tree ownership before any new code, test, source, generated-artifact, or
-  config change.
+  `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.1` activated the task tree for
+  adding maintained expected-failure corpus coverage for malformed
+  symbol-definition entries. The current frontier is
+  `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.2`.
+- Recent R12 malformed symbol-entry corpus-widening selection:
+  `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting already-focused malformed
+  `+constants`, `+define`, `+params`, and `+enums` member diagnostics into
+  stable-code-backed expected-failure corpus entries.
 - Recent R12 empty symbol-section corpus-widening completion:
   `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` added four named
   expected-failure corpus entries for empty `+constants`, `+define`,

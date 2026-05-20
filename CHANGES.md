@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — malformed symbol-entry widening selected
+- Completed `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused malformed `+constants`, `+define`, `+params`,
+  and `+enums` member rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — empty symbol-section widening shipped
 - Completed `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.2` and closed the task
   tree.
