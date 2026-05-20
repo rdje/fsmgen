@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — IR inventory completed
+- Completed `FSMGEN-IR-AUDIT.1`.
+- Inventoried the current IR and IR-like surfaces across parser outputs, ISF
+  actor/scheduler metadata, direct `CoreAST`, composition specs/plans,
+  forward IR objects, report projections, and backend-local intermediate
+  state.
+- Advanced the active architecture frontier to `FSMGEN-IR-AUDIT.2`, which
+  classifies canonical boundaries versus local/private projections before any
+  consolidation policy or refactor follow-up is selected.
+- No compiler behavior changed.
+
 ### R14 — ATL documentation status truth sync completed
 - Completed `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1`.
 - Removed stale active-tree wording after

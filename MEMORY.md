@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: IR inventory completed
+- Completed `FSMGEN-IR-AUDIT.1`.
+- The inventory now records current IR and IR-like surfaces: raw Lispish AST,
+  direct `CoreAST`, backend expression AST, ISF typed actor metadata and
+  scheduler `LoweringIR`, domain/CDC metadata, package symbols, composition
+  specs/plans/realized children, structural connection expressions, forward
+  `IntentHIR` / `LoweredRTLIR` / `StructuralRTLIR`, `module_info`, normalized
+  semantic reports, serializable snapshots, and direct backend local state.
+- The active architecture frontier is now `FSMGEN-IR-AUDIT.2` for
+  canonical/private boundary classification.
+- No code or generated behavior changed in the inventory leaf.
+
 ## 2026-05-20: ATL documentation status truth sync completed
 - Completed `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1`.
 - Corrected stale "active ATL design tree" wording after

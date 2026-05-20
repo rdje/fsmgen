@@ -3,10 +3,10 @@
 ## Metadata
 
 - Tree ID: `FSMGEN-IR-AUDIT`
-- Status: `proposed`
+- Status: `active`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-14`
-- Last updated: `2026-05-14`
+- Last updated: `2026-05-20`
 - Owner: repo-local workflow
 
 ## Goal
@@ -48,23 +48,23 @@ set, lifecycle, and documented handoff contract.
 ## Task Tree
 
 - ID: `FSMGEN-IR-AUDIT`
-  Status: `proposed`
+  Status: `active`
   Goal: `Audit and rationalize FSMGen IR ownership, boundaries, and creation policy.`
   Children: `FSMGEN-IR-AUDIT.1`, `FSMGEN-IR-AUDIT.2`,
   `FSMGEN-IR-AUDIT.3`, `FSMGEN-IR-AUDIT.4`
 
 - ID: `FSMGEN-IR-AUDIT.1`
-  Status: `proposed`
+  Status: `done`
   Goal: `Inventory current IR and IR-like structures.`
   Acceptance: `The task file or companion doc lists all known IR structures,
   including ISF AST/lowering IR, CoreAST, IntentHIR, LoweredRTLIR,
   StructuralRTLIR, composition parse/plan objects, backend helper structures,
   and normalized report contracts, with producer and consumer notes.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
+  Commit: `FSMGEN-IR-AUDIT.1: inventory current IR surfaces`
 
 - ID: `FSMGEN-IR-AUDIT.2`
-  Status: `proposed`
+  Status: `active`
   Goal: `Classify canonical boundaries versus local projections.`
   Acceptance: `Every inventoried structure has a phase classification,
   source-of-truth status, public/private status, and reason it should be kept,
@@ -92,13 +92,13 @@ set, lifecycle, and documented handoff contract.
 
 ## Current Frontier
 
-This tree is proposed, not active. It is not PNT-eligible until explicitly
-activated or until the active roadmap lane selects architecture consolidation
-work.
+This tree is active. The current PNT frontier is canonical/private boundary
+classification over the factual inventory captured by `FSMGEN-IR-AUDIT.1`.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `FSMGEN-IR-AUDIT.1` | `proposed` | The first useful step is factual inventory before prescribing consolidation. |
+| 1 | `FSMGEN-IR-AUDIT.1` | `done` | Completed factual inventory before prescribing consolidation. |
+| 2 | `FSMGEN-IR-AUDIT.2` | `active` | Classify which inventoried structures are canonical phase boundaries versus private/local projections. |
 
 ## Initial IR Inventory Targets
 
@@ -118,6 +118,56 @@ The first inventory leaf should at least inspect these families:
 - Normalized public report contracts under `FSM::Support::NormalizedSemantic*`
   and related serializable snapshot helpers.
 
+## Inventory: Current IR And IR-Like Structures
+
+`FSMGEN-IR-AUDIT.1` inspected the named IR modules, parser outputs,
+composition planning objects, backend-local AST/intermediate structures, and
+public report projections. This is factual inventory only; canonical/private
+classification and consolidation decisions are left to later leaves.
+
+| Surface | Owners / files | Producers | Consumers | Serialized / report surface | Mutability and source-of-truth notes |
+| --- | --- | --- | --- | --- | --- |
+| Raw Lispish source AST | `Lispish::multi`, [FSM::Pipeline::SourceFrontend](../../perl/FSM/Pipeline/SourceFrontend.pm), [FSM::Adapter::ISF::Parser](../../perl/FSM/Adapter/ISF/Parser.pm) | Source-file parse for `.fsm`, `.dt`, `.top`, `.pkg`, and `.isf` roots | Source classifier, direct parser, composition parser, ISF Lispish adapter, extension `after_parse_source` context | In-process `raw_ast` result branch plus shell-only `HDLGeneratorRawASTContract`; not a stable external JSON schema | Mutable nested arrays treated as parser/debug input snapshots, not semantic truth. |
+| Direct `.fsm` / `.dt` semantic CoreAST | [FSM::CoreAST](../../perl/FSM/CoreAST.pm), [FSM::Adapter::FSMGenFull::Parser](../../perl/FSM/Adapter/FSMGenFull/Parser.pm), [FSM::Adapter::FSMGenFull](../../perl/FSM/Adapter/FSMGenFull.pm) | Direct source parser after source classification and package/type resolution | `IntentHIRBuilder`, `GeneratedModuleEmitter`, `FlattenedDT`, signal analyzer, direct-root checks | Raw object remains in-process only; public surfaces are semantic summaries and `HDLGeneratorFSMModuleContract` fallback keys | Blessed object graph is the canonical in-process direct-root semantic model before forward IR extraction. |
+| Legacy/backend expression AST | [FSM::AST::Node](../../perl/FSM/AST/Node.pm), [FSM::AST::Utils](../../perl/FSM/AST/Utils.pm), [FSM::ExpressionNamer](../../perl/FSM/ExpressionNamer.pm), [FSM::GlobalASTManager](../../perl/FSM/GlobalASTManager.pm) | Backend capture, expression naming, and factorization paths | `ASTFactorization`, `EnableGraph::*`, SystemVerilog backend support owners | No public report contract; some statistics expose counts or rendered expressions | Backend-local expression representation. It overlaps with `CoreAST` expression nodes but is not a source-level canonical IR. |
+| ISF normalized Lispish form | [FSM::Adapter::ISF::LispishAdapter](../../perl/FSM/Adapter/ISF/LispishAdapter.pm) | Raw Lispish parse normalization for `.isf` | `FSM::Adapter::ISF::Parser` | None | Short-lived parsed-syntax adapter shape. It is intentionally discarded after typed actor construction. |
+| ISF typed actor hash | [FSM::Adapter::ISF::Parser](../../perl/FSM/Adapter/ISF/Parser.pm), [FSM::Adapter::ISF](../../perl/FSM/Adapter/ISF.pm) | `.isf` parser after defaults, package/type/enum resolution, library resolution, ATL metadata resolution | [FSM::Scheduler::ISF::LoweringIR](../../perl/FSM/Scheduler/ISF/LoweringIR.pm), parser-focused tests | Raw actor hash is private. Bounded facts surface through schedule JSON, public contract metadata, and generated `.fsm` artifacts | Canonical parser output for ISF within the scheduler path, but not frozen for downstream consumers. |
+| ISF actor-network metadata | `actor_network` subhash from [FSM::Adapter::ISF::Parser](../../perl/FSM/Adapter/ISF/Parser.pm) and [FSM::Scheduler::ISF::LoweringIR](../../perl/FSM/Scheduler/ISF/LoweringIR.pm) | Direct ATL `(instance ...)`, `(group ...)`, `(trigger actor.tx)`, `(await actor.event)`, and selected route drive parsing/lowering | ISF lowerer, schedule JSON emitter, composition-top emitter for generated ATL tops | Bounded `actor_network.*` schedule-report keys and generated top `.fsm` / `?top` artifacts | Private metadata in the parser/lowerer; public truth is the bounded report/artifact subset, not the whole hash. |
+| ISF scheduler `LoweringIR` | [FSM::Scheduler::ISF::LoweringIR](../../perl/FSM/Scheduler/ISF/LoweringIR.pm) | ISF typed actor hash plus generated children, library uses, clock-domain partitioning, and rule/transaction lowering | [Emitter::FSM](../../perl/FSM/Scheduler/ISF/Emitter/FSM.pm), [Emitter::JSON](../../perl/FSM/Scheduler/ISF/Emitter/JSON.pm), [Emitter::CompositionTop](../../perl/FSM/Scheduler/ISF/Emitter/CompositionTop.pm), ISF module emitter | Scheduled `.fsm`, schedule JSON `schema_version: 1`, generated composition top source, generated child artifacts | Mutable hash assembled by the lowerer and finalized with assignment provenance/conflict data. The full hash is private. |
+| ISF domain partition and CDC metadata | `domain_partition` and `crossings` in [FSM::Scheduler::ISF::LoweringIR](../../perl/FSM/Scheduler/ISF/LoweringIR.pm), JSON emitter domain helpers | Parser clock-domain declarations and acknowledged-event crossing lowering | Multi-domain ISF emitter/report path, generated domain `.fsm` artifacts, CDC module emitter | Public schedule JSON `clock_domains[]` and `crossings[]`; generated domain/top artifacts | Private scheduler sub-IR for multi-clock planning; public report entries are bounded projections. |
+| Package/spec symbol model | [FSM::Package::Spec](../../perl/FSM/Package/Spec.pm), [FSM::Package::Symbols](../../perl/FSM/Package/Symbols.pm), package parser/support modules | `?pkg` roots, direct-root declarations, composition imports, ISF package imports | Direct parser, composition parser/planners, ISF parser/lowerer, `IntentHIRBuilder` symbol contract | Optional normalized `symbol_contract`, resolved-package-import shell contracts, generated package roots | In-process symbol tables and package specs are shared semantic support structures, not backend IR. |
+| Composition parsed spec | [FSM::Composition::Spec](../../perl/FSM/Composition/Spec.pm), [Top](../../perl/FSM/Composition/Top.pm), [Instance](../../perl/FSM/Composition/Instance.pm), [Port](../../perl/FSM/Composition/Port.pm), [PortsBlock](../../perl/FSM/Composition/PortsBlock.pm), [WiringBlock](../../perl/FSM/Composition/WiringBlock.pm), [Link](../../perl/FSM/Composition/Link.pm), composition parser | `?top` source parser after source classification and package import resolution | `PlanBuilder`, package import resolver, extension/source-info surfaces | Raw `composition_spec` branch is shell-only; sanitized summaries appear through semantic reports | Parsed composition syntax/semantic object graph. It is a pre-plan input, not final connectivity truth. |
+| Realized composition child carrier | [FSM::Composition::RealizedInstance](../../perl/FSM/Composition/RealizedInstance.pm), `GeneratedChildRealizer`, `RTLChildRealizer` | Child realization during `PlanBuilder` | `Composition::Plan`, `StructuralRTLIRBuilder`, composition top emitter/statistics/report builders | In-process child `module_info` and HDL payloads; public summary through composition reports and module info | Runtime carrier for one child instance. It normalizes bindings but is not itself a public IR. |
+| Composition plan | [FSM::Composition::Plan](../../perl/FSM/Composition/Plan.pm), [PlanBuilder](../../perl/FSM/Composition/PlanBuilder.pm), `C1PlanBuilder`, [LinkedPlanBuilder](../../perl/FSM/Composition/LinkedPlanBuilder.pm) | Composition parsed spec plus realized children, top-port inference, endpoint resolution, carrier-net allocation, same-name/explicit links | `StructuralRTLIRBuilder`, `IntentHIRBuilder`, `LoweredRTLIRBuilder`, `ProvenanceReportBuilder`, `ResultMetadataBuilder`, structural emitter | `composition_plan_snapshot`, sanitized composition provenance report, semantic composition summary | Canonical composition-planning object for the composition lane; raw plan remains in-process/private. |
+| Structural connection expressions | [FSM::IR::StructuralRTLIR::ConnectionExpr](../../perl/FSM/IR/StructuralRTLIR/ConnectionExpr.pm), `ActualLiteralSupport`, `SourceExpressionSpecSupport`, `LinkedPlanBuilder` | Composition link/source-expression and actual-literal lowering | `RealizedInstance`, `StructuralRTLIRBuilder`, structural emitter, provenance/report helpers | Binding summaries and rendered connection text in structural HDL/report projections | Hash-node expression family for structural actual connections. It is a meaningful structural API but not a full source AST. |
+| Forward semantic HIR | [FSM::IR::IntentHIR](../../perl/FSM/IR/IntentHIR.pm), [IntentHIRBuilder](../../perl/FSM/IR/IntentHIRBuilder.pm) | Direct CoreAST modules and composition plans | `GeneratedModuleInfoBuilder`, `LoweredRTLIRBuilder`, `ProvenanceReportBuilder`, `ResultMetadataBuilder`, normalized semantic report | `semantic.forward_ir.intent_hir`, `module_info.intent_hir`, contract owners under `NormalizedSemantic*` | Named forward IR. Object accessors clone payloads; public surface is bounded and sanitized. |
+| Forward lowered RTL IR | [FSM::IR::LoweredRTLIR](../../perl/FSM/IR/LoweredRTLIR.pm), [LoweredRTLIRBuilder](../../perl/FSM/IR/LoweredRTLIRBuilder.pm) | Direct generated-module analysis/backend state and composition plan plus structural/semantic/shared-datapath inputs | `GeneratedModuleInfoBuilder`, `ResultMetadataBuilder`, normalized semantic report, assertion postprocessing | `semantic.forward_ir.lowered_rtl_ir`, `module_info.lowered_rtl_ir`, storage/drive family summaries | Named forward IR for lowered grouped facts; object accessors clone payloads. |
+| Forward structural RTL IR | [FSM::IR::StructuralRTLIR](../../perl/FSM/IR/StructuralRTLIR.pm), [StructuralRTLIRBuilder](../../perl/FSM/IR/StructuralRTLIRBuilder.pm) | Direct generated-module info or composition plan | [StructuralRTLIREmitter](../../perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm), `ProvenanceReportBuilder`, `IntentHIRBuilder`, `LoweredRTLIRBuilder`, normalized semantic report | `semantic.forward_ir.structural_rtl_ir`, `module_info.structural_rtl_ir`, structural HDL module text | Named forward IR for netlist-like connectivity. It is the clearest backend-facing structural boundary today. |
+| Generated `module_info` compatibility surface | [GeneratedModuleInfoBuilder](../../perl/FSM/Pipeline/GeneratedModuleInfoBuilder.pm), [ResultMetadataBuilder](../../perl/FSM/Composition/ResultMetadataBuilder.pm) | Direct and composition orchestrators after IR extraction and backend/plan analysis | Runtime assertion augmentation, normalized reports, CLI/result consumers, contract modules | Public in-process result branch plus bounded `HDLGeneratorModuleInfoContract`; embeds forward IR hashes | Compatibility/result metadata surface. It overlaps with forward IR by design and should not become a second canonical IR. |
+| Composition provenance/report projection | [ProvenanceReportBuilder](../../perl/FSM/Composition/ProvenanceReportBuilder.pm), `CompositionReportContract` | Composition plan plus structural/intent IR | `ResultMetadataBuilder`, normalized semantic report, CLI summaries | Sanitized `semantic.composition` and composition report contracts | Report projection over plan/structural facts. It is public-facing evidence, not planning truth. |
+| Normalized semantic report | [FSM::Support::NormalizedSemanticReport](../../perl/FSM/Support/NormalizedSemanticReport.pm) and `NormalizedSemantic*Contract` modules | Successful or failed generation/check paths | Downstream tools, embedders, capability manifest, regression contracts | JSON `normalized_semantic_schema_version: 1` with `semantic.module`, `semantic.forward_ir`, `semantic.composition`, diagnostics, snapshots | Public sanitized contract. It freezes report shape, not raw compiler internals. |
+| Serializable snapshots | [SerializableCompositionPlanSnapshot](../../perl/FSM/Support/SerializableCompositionPlanSnapshot.pm), [SerializableGenerationResultSnapshot](../../perl/FSM/Support/SerializableGenerationResultSnapshot.pm), [SerializableDiagnosticSummary](../../perl/FSM/Support/SerializableDiagnosticSummary.pm) | Report builders from in-process plan/result/diagnostic objects | Normalized semantic report, public contract tests | JSON-safe bounded snapshots | Deliberately shallow projections that avoid exporting raw object graphs. |
+| Direct backend local intermediate state | [FSM::HDL::FlattenedDT](../../perl/FSM/HDL/FlattenedDT.pm), [FSM::Synthesis::EnableGraph](../../perl/FSM/Synthesis/EnableGraph.pm), `EnableGraph::*`, `ConsolidatedIntermediate*` backend support modules | Direct backend flattening, enable-graph capture, factorization, consolidated intermediate planning | SystemVerilog/Verilog backend emitters, generated-module statistics, lowered RTL metadata builders | HDL text, backend statistics, selected generated-module metadata | Backend-local mutable implementation state. It can inform lowered summaries, but it is not a stable cross-phase IR. |
+
+Inventory observations for later leaves:
+
+- `IntentHIR`, `LoweredRTLIR`, and `StructuralRTLIR` are the only currently
+  named forward IR classes with explicit builders and public normalized
+  semantic projections.
+- ISF `LoweringIR` is a real scheduler phase boundary, but it is currently a
+  private hash-based compiler IR whose public contract is the emitted `.fsm`,
+  schedule JSON, and generated composition artifacts.
+- `module_info` is intentionally a compatibility/result surface. It embeds or
+  mirrors forward IR facts and should be treated carefully in the policy leaf
+  to avoid making it a competing canonical IR.
+- Composition has both a raw parsed spec and a planned connectivity object.
+  `Composition::Plan` is the planner truth for composition lowering, while
+  `composition_plan_snapshot` and provenance reports are reviewable public
+  projections.
+- The backend still carries legacy pure-AST and consolidated-intermediate
+  state. Those structures are local implementation projections unless a later
+  leaf promotes one of them to an explicit phase boundary.
+
 ## Decisions
 
 - `2026-05-14`: Multiple IRs are acceptable when they represent distinct
@@ -132,6 +182,9 @@ The first inventory leaf should at least inspect these families:
   normal .fsm pipeline -> forward/backend IRs -> SV` flow is valid as a
   shipped boundary, but it should be audited as part of this tree because the
   textual `.fsm` handoff may or may not remain the best long-term boundary.
+- `2026-05-20`: Activated the tree after all active R14 task-tree frontiers
+  closed. The first leaf is inventory only; consolidation policy and refactor
+  follow-ups remain later leaves.
 
 ## Open Questions
 
@@ -145,23 +198,26 @@ The first inventory leaf should at least inspect these families:
 
 ## Blockers
 
-- None. This tree is proposed and intentionally does not block `R14` feature
-  delivery.
+- None.
 
 ## Verification Log
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-14` | `FSMGEN-IR-AUDIT` | `git diff --check -- docs/tasks/FSMGEN-IR-AUDIT.md docs/TASK_TREE.md README.md ROADMAP_STATUS.md CHANGES.md DEVELOPMENT_NOTES.md MEMORY.md LIVE_ACHIEVEMENT_STATUS.md` | `pass` |
+| `2026-05-20` | `FSMGEN-IR-AUDIT.1` | `git diff --check`; `mdbook build docs/book` | `pass` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `FSMGEN-IR-AUDIT` | `FSMGEN-IR-AUDIT: capture IR audit task tree` | Created proposed task tree. |
+| `FSMGEN-IR-AUDIT.1` | `FSMGEN-IR-AUDIT.1: inventory current IR surfaces` | Inventoried current IR and IR-like structures and advanced `.2` classification. |
 
 ## Changelog
 
+- `2026-05-20`: Completed `FSMGEN-IR-AUDIT.1` factual inventory and advanced
+  the active frontier to `FSMGEN-IR-AUDIT.2` classification.
 - `2026-05-14`: Created proposed task tree to capture IR inventory and
   consolidation audit work without interrupting active `R14` ISF feature
   delivery.

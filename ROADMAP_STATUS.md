@@ -1,7 +1,18 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R14`. Intent Scheduling `.isf` format and lowering compiler.
+- Active lane: `architecture backlog`. `FSMGEN-IR-AUDIT.1` completed the
+  factual IR inventory; `FSMGEN-IR-AUDIT.2` is the current frontier for
+  canonical/private boundary classification.
+- Recent architecture backlog:
+  `FSMGEN-IR-AUDIT.1` inventoried the current IR and IR-like structures,
+  including raw Lispish ASTs, direct `CoreAST`, backend expression ASTs, ISF
+  typed actor metadata and scheduler `LoweringIR`, domain/CDC metadata,
+  package symbols, composition specs/plans/realized children, structural
+  connection expressions, forward `IntentHIR` / `LoweredRTLIR` /
+  `StructuralRTLIR`, `module_info`, normalized semantic reports, serializable
+  snapshots, and direct backend local intermediate state. No code or public
+  behavior changed; the next step is classification.
 - Recent project operations: `CI-PERL-532-REGRESSION-COMPAT`,
   `CI-FULL-REGRESSION-GREEN`, and `CI-HOSTED-ISF-REGRESSION-CASCADE` are
   closed. The hosted `Perl FSM Regression` workflow remains on the
@@ -2643,9 +2654,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   intent or platform/resource mapping semantics above transactions, not for
   aliases, macros, wrappers, or syntax sugar without distinct runtime meaning.
 - Architecture backlog: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
-  now records the proposed audit of current IR structures and consolidation
-  policy. It is not the active PNT lane while `R14` ISF feature delivery
-  remains the selected focus.
+  is active. `.1` completed the factual inventory of current IR and IR-like
+  structures. `.2` now classifies which surfaces are canonical phase
+  boundaries versus local/private projections before any consolidation policy
+  or refactor follow-up is selected.
 - User-visible deferred/not-fully-shipped feature items now have a canonical
   mdBook backlog at [docs/book/src/14-feature-backlog.md](docs/book/src/14-feature-backlog.md),
   with [docs/FEATURE_BACKLOG.md](docs/FEATURE_BACKLOG.md) as the repo-level
@@ -3996,9 +4008,12 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `R14` Intent Scheduling (`.isf` format and lowering compiler), backed by the
-  explicit `.fsm` middle layer and the existing SystemVerilog/Verilog backend.
-- Current next decision point:
+- `architecture backlog`: [docs/tasks/FSMGEN-IR-AUDIT.md](docs/tasks/FSMGEN-IR-AUDIT.md)
+  is active after the R14 task-tree frontier closed. `FSMGEN-IR-AUDIT.1`
+  completed factual inventory. The current next decision point is
+  `FSMGEN-IR-AUDIT.2`, which classifies canonical phase boundaries versus
+  local/private projections before policy or refactor follow-up is selected.
+- Last R14 context:
   - [docs/ISF_SPEC.md](docs/ISF_SPEC.md) and the R14 mdBook chapters now match
     the shipped parser/scheduler surface instead of the older aspirational
     spec: deprecated `(handshake ...)` is compatibility-only, `(assign ...)`

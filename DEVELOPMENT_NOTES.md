@@ -1,5 +1,21 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: IR audit starts with factual inventory before policy
+- `FSMGEN-IR-AUDIT.1` deliberately avoided consolidation decisions. It first
+  records the current compiler/report surfaces so the next leaf can classify
+  canonical boundaries without guessing from names alone.
+- The only named forward IR classes with explicit builders and normalized
+  semantic projections are `IntentHIR`, `LoweredRTLIR`, and `StructuralRTLIR`.
+- ISF `LoweringIR` is a real scheduler phase boundary, but it is currently a
+  private hash-based compiler IR whose public contract is the emitted `.fsm`,
+  schedule JSON, and generated composition artifacts.
+- `module_info`, normalized semantic reports, and serializable snapshots are
+  compatibility/report projections. They should not accidentally become a
+  second canonical compiler IR.
+- Composition has a parsed-spec surface and a planned-connectivity surface;
+  `Composition::Plan` is the planner truth, while snapshots/provenance
+  reports are reviewable public projections.
+
 ## 2026-05-20: ATL status wording needs a guard after tree closure
 - `ISF-ATL-DOC-STATUS-TRUTH-SYNC.1` is a documentation truth-sync slice.
 - The implementation boundary did not change: the bounded ATL v0 public

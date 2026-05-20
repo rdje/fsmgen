@@ -787,6 +787,19 @@ Current layer meaning:
   generated-module analysis or an already-built composition plan
 - `ConnectionExpr`: typed actual-connection AST and binding-summary/query helpers
 
+IR audit checkpoint:
+- [docs/tasks/FSMGEN-IR-AUDIT.md](tasks/FSMGEN-IR-AUDIT.md) is the active
+  architecture task tree for IR inventory and consolidation policy.
+- `FSMGEN-IR-AUDIT.1` confirmed that `IntentHIR`, `LoweredRTLIR`, and
+  `StructuralRTLIR` are the only named forward IR classes with explicit
+  builders and normalized semantic projections.
+- ISF `LoweringIR` is a real private scheduler phase boundary. Its public
+  contract remains the emitted `.fsm`, schedule JSON, and generated
+  composition artifacts, not the full mutable lowerer hash.
+- `module_info`, normalized semantic reports, composition provenance, and
+  serializable snapshots are compatibility/report projections unless the next
+  classification leaf deliberately promotes a bounded subset.
+
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
 - [perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm](perl/FSM/Backend/VerilogFamily/TypeDeclarationSupport.pm)
