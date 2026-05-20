@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Symbolic/default selector corpus widening stays selector-local
+- `R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.1` selects supported
+  symbolic equality selectors and fallback selectors for support-accounting
+  promotion.
+- The implementation should promote existing named equality and default
+  predicate lowering without changing malformed bare selector or duplicate
+  fallback diagnostics.
+
 ## 2026-05-20: Plain test-signal support accounting proves equality-branch lowering
 - `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.2` promotes plain `?SIG` equality
   selectors into the executable supported-smoke corpus.
