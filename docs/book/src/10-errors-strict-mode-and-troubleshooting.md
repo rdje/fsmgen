@@ -166,6 +166,8 @@ entry shapes.
 Symbol-value entries cover unresolved `+params` value names and ambiguous bare
 bitstring-like `+constants` / `+params` values that must be written with an
 explicit numeric base or width.
+Parameter dependency entries cover cyclic `+params` dependency graphs and
+duplicate `+params` declarations.
 Test-selector entries cover malformed plain `?SIG` signal names and computed
 test selectors that omit their selector expression. Those entries are not only
 prose examples. Inline-modifier entries cover malformed compound modifier

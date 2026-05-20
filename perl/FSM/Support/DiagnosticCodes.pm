@@ -427,6 +427,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A +params value used an ambiguous bare integer literal.',
     },
+    FSMGEN_LANGUAGE_PARAM_DEPENDENCY_CYCLE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +params dependency graph contains a cycle.',
+    },
+    FSMGEN_LANGUAGE_DUPLICATE_PARAM_DECLARATION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +params section declared the same parameter more than once.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

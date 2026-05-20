@@ -1,0 +1,13 @@
+(?fsm:params_dependency_cycle
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (P_A P_B)
+    (P_B P_A)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

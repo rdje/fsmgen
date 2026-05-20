@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Parameter dependency support accounting remains structural
+- `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` promotes existing parameter graph
+  and duplicate-name diagnostics without changing parameter value semantics.
+- Cycles and duplicate declarations use separate stable codes because one is a
+  graph problem and the other is a section-local uniqueness problem.
+
 ## 2026-05-20: Parameter dependency corpus widening stays graph-local
 - `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.1` selects `+params` dependency and
   uniqueness diagnostics for support-accounting promotion.

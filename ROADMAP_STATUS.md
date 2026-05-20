@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.1` selected a fresh task tree for
-  promoting already-focused parameter dependency diagnostics into the
-  maintained expected-failure corpus. The next implementation leaf is
-  `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2`.
+  `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` completed the latest maintained
+  expected-failure corpus widening slice. The next PNT step must select fresh
+  task-tree ownership before any new code, test, source, generated-artifact, or
+  config change.
+- Recent R12 parameter dependency corpus-widening completion:
+  `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` added two named expected-failure
+  corpus entries for cyclic `+params` dependency graphs and duplicate
+  `+params` declarations. Each entry carries stable diagnostic-code metadata
+  and is covered through pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest, corpus accounting, and docs.
 - Recent R12 parameter dependency corpus-widening selection:
   `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.1` selected a behavior-neutral
   support-accounting slice for promoting cyclic `+params` dependency graphs
@@ -7139,9 +7145,14 @@ Done:
   - [t/corpus/symbol_constants_ambiguous_bitstring_value.fsm](t/corpus/symbol_constants_ambiguous_bitstring_value.fsm) records ambiguous bare bitstring-like `+constants` values as an expected failure with `FSMGEN_LANGUAGE_AMBIGUOUS_CONSTANT_VALUE`,
   - [t/corpus/symbol_params_ambiguous_bitstring_value.fsm](t/corpus/symbol_params_ambiguous_bitstring_value.fsm) records ambiguous bare bitstring-like `+params` values as an expected failure with `FSMGEN_LANGUAGE_AMBIGUOUS_PARAM_VALUE`,
   - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
+- The maintained parameter dependency expected-failure corpus now also
+  accounts for already-focused `+params` graph and uniqueness failures:
+  - [t/corpus/params_dependency_cycle.fsm](t/corpus/params_dependency_cycle.fsm) records cyclic parameter dependency graphs as an expected failure with `FSMGEN_LANGUAGE_PARAM_DEPENDENCY_CYCLE`,
+  - [t/corpus/params_duplicate_declaration.fsm](t/corpus/params_duplicate_declaration.fsm) records duplicate parameter declarations as an expected failure with `FSMGEN_LANGUAGE_DUPLICATE_PARAM_DECLARATION`,
+  - and the corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest, regression-corpus docs, and mdBook surfaces all classify those failures through the same support-accounting path.
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
-- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive, generic/template placeholder, bare condition suffix, malformed source/body/test-form, malformed system-section entries, current symbol-definition section/entry/value entries, current direct-generation contract entries, and the current composition-contract rejection families.
+- Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive, generic/template placeholder, bare condition suffix, malformed source/body/test-form, malformed system-section entries, current symbol-definition section/entry/value and parameter-dependency entries, current direct-generation contract entries, and the current composition-contract rejection families.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:

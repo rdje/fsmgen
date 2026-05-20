@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 parameter dependency corpus widening shipped
+- Completed `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` and closed the tree.
+- Added two maintained expected-failure corpus entries for cyclic `+params`
+  dependency graphs and duplicate `+params` declarations.
+- Each new entry carries stable diagnostic-code metadata and is covered by
+  corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 parameter dependency corpus widening selected
 - Completed `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused cyclic `+params`

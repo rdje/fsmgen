@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-PARAM-DEPENDENCY-CORPUS-WIDENING` | `active` | `R12` | `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` | [docs/tasks/R12-PARAM-DEPENDENCY-CORPUS-WIDENING.md](docs/tasks/R12-PARAM-DEPENDENCY-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-PARAM-DEPENDENCY-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-PARAM-DEPENDENCY-CORPUS-WIDENING.md](docs/tasks/R12-PARAM-DEPENDENCY-CORPUS-WIDENING.md) |
 | `R12-SYMBOL-VALUE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-SYMBOL-VALUE-CORPUS-WIDENING.md](docs/tasks/R12-SYMBOL-VALUE-CORPUS-WIDENING.md) |
 | `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.md](docs/tasks/R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.md) |
 | `R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.md](docs/tasks/R12-SYMBOL-SECTION-EMPTY-CORPUS-WIDENING.md) |
