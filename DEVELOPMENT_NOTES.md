@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Update-shorthand variant support accounting proves semantic HDL shape
+- `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` promotes supported
+  update-shorthand variants into the executable supported-smoke corpus.
+- The entry records exact enable and next-value HDL shapes for `+=` and `-=`
+  forms so support accounting proves register-style update mux semantics, not
+  merely parser acceptance.
+
 ## 2026-05-20: Update-shorthand variant corpus widening stays positive-surface-only
 - `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` selects supported `+=` /
   `-=` update-shorthand variants for support-accounting promotion.

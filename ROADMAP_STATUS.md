@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` selected a fresh task tree
-  for promoting already-focused supported update-shorthand variants into the
-  maintained supported-smoke corpus. The next implementation leaf is
-  `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2`.
+  `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` promoted supported
+  update-shorthand variants into the maintained supported-smoke corpus and
+  closed the tree. The next PNT step should select the next remaining
+  roadmap-aligned R12 support-accounting frontier before implementation.
+- Recent R12 update-shorthand variant corpus-widening completion:
+  `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` added one named
+  supported-smoke corpus entry for `+=` / `-=` update-shorthand variants with
+  implicit and explicit deltas. The entry carries strict-supported metadata
+  and HDL-shape expectations, and is covered through default/strict
+  pipeline/CLI behavior, check JSON, normalized semantic JSON, manifest,
+  corpus accounting, and docs.
 - Recent R12 update-shorthand variant corpus-widening selection:
   `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` selected a
   behavior-neutral support-accounting slice for promoting implicit and
@@ -4511,8 +4518,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 ## Current active lane
 - `R12`:
   [docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md](docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md)
-  is active. `.1` selects the supported update-shorthand variant
-  support-accounting slice before implementation; `.2` will promote the
+  is closed. `.1` selected the supported update-shorthand variant
+  support-accounting slice before implementation; `.2` promoted the
   already-focused `+=` / `-=` implicit and explicit delta forms into a
   maintained supported-smoke corpus entry.
 - Closed architecture backlog context:
@@ -7097,6 +7104,19 @@ Done:
   - [t/lib/FSM/Test/RegressionCorpus.pm](t/lib/FSM/Test/RegressionCorpus.pm) records it as `feature.direct_runtime_div_mod` with emitted-HDL expectations for binary and three-operand left-associative forms,
   - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t) now checks the generated HDL shape instead of relying only on parser-focused operator tests, and
   - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t) now records `50` catalog entries and `13` named supported-smoke entries.
+- That same supported-smoke language-feature family now also covers
+  update-shorthand variants:
+  - [t/corpus/update_shorthand_variants.fsm](t/corpus/update_shorthand_variants.fsm)
+    records `+=` and `-=` shorthand with implicit and explicit deltas as a
+    supported direct-root feature through pipeline and CLI,
+  - [perl/FSM/Support/RegressionCorpus.pm](perl/FSM/Support/RegressionCorpus.pm)
+    records it as `feature.update_shorthand_variants` with emitted-HDL
+    expectations for guarded enable and register-style update mux shapes,
+  - [t/261-regression-corpus-supported-language-features.t](t/261-regression-corpus-supported-language-features.t)
+    checks the generated HDL shape in default and strict mode, and
+  - [t/248-regression-corpus-accounting.t](t/248-regression-corpus-accounting.t)
+    now records `17` named supported-smoke entries and `17` positive
+    strict-supported entries.
 - The scalar literal support family now also uses one consistent positive-integer width interpretation for common scalar forms:
   - [perl/FSM/Package/IntegerLiteralSupport.pm](perl/FSM/Package/IntegerLiteralSupport.pm) is now the shared integer literal to `Math::BigInt` owner for scalar width symbols and direct `+size` constant-expression literal terms,
   - [perl/FSM/Package/ScalarWidthSupport.pm](perl/FSM/Package/ScalarWidthSupport.pm) resolves decimal, based SystemVerilog, `0x`, `0b`, and `0o` spellings for positive integer scalar width symbols,
@@ -7263,7 +7283,10 @@ Done:
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive/body-form, generic/template placeholder, bare condition suffix, malformed source/body/test-form and legacy `+fsm` body entries, malformed delayed-pulse RHS/target entries, malformed system-section entries, current symbol-definition section/entry/value/token and parameter-dependency/expression entries, current direct-generation contract entries, and the current composition-contract rejection families.
-- Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
+- Widen golden-output or semantic-check coverage beyond the current supported
+  language-feature entries, including the new supported update-shorthand
+  variant entry, and the first protocol slice where simple compile smoke is
+  not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:
 - Support claims can be backed by a maintained corpus and explicit classification, not only by ad hoc focused tests.

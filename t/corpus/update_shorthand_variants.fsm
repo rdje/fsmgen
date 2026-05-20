@@ -1,0 +1,23 @@
+(?fsm:update_shorthand_variants
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (ENABLE 1)
+    (counter 8)
+    (retry_count 8)
+    (byte_count 8)
+    (remaining 8)
+  )
+
+  (-updates
+    (<ENABLE
+      (+= counter)
+      (-= retry_count)
+      (+= byte_count 4)
+      (-= remaining 3)
+    )
+  )
+)

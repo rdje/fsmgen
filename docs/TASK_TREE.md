@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING` | `active` | `R12` | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` | [docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md](docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md](docs/tasks/R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.md) |
 | `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md](docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md) |
 | `R12-TOP-LEVEL-FORM-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md](docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md) |
 | `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.md](docs/tasks/R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.md) |

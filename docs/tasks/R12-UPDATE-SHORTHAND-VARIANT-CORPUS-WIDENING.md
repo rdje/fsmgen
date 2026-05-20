@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -39,7 +39,7 @@ coverage and public support-accounting visibility.
 ## Task Tree
 
 - ID: `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained supported-smoke corpus coverage for update-shorthand variants`
   Children: `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1`, `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2`
 
@@ -51,17 +51,17 @@ coverage and public support-accounting visibility.
   Commit: `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1: select update-shorthand variant widening`
 
 - ID: `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add a maintained supported-smoke entry for update-shorthand variants`
   Acceptance: `named fixture/catalog entry covers implicit and explicit +={delta}/-={delta} update shorthand with strict-supported checks and HDL-shape expectations`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused update-shorthand variant tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2: widen update-shorthand variant corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` | `pending` | Promotes an already-focused supported assignment-surface variant after ownership is committed. |
+| 1 | `closed` | `done` | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` shipped the selected update-shorthand variant corpus widening. |
 
 ## Decisions
 
@@ -85,14 +85,18 @@ coverage and public support-accounting visibility.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused update-shorthand variant tests; supported language-feature corpus tests; supported corpus behavior/check-json/semantic-json gates; capability manifest gate; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1` | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.1: select update-shorthand variant widening` | Selection leaf; no compiler behavior changed. |
+| `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` | `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2: widen update-shorthand variant corpus` | Adds one maintained supported update-shorthand variant smoke entry. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Added a maintained supported-smoke entry for update-shorthand
+  variants, then closed the tree.

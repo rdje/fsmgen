@@ -221,6 +221,23 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.update_shorthand_variants',
+        relpath => 't/corpus/update_shorthand_variants.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'update_shorthand_variants',
+        expected_hdl_patterns => [
+            qr/\bupdates_counter_counter_1_en\s*=\s*updates_en\s*&\s*ENABLE\s*;/s,
+            qr/\bcounter_next\s*=\s*counter\s*\+\s*1\s*;/s,
+            qr/\bretry_count_next\s*=\s*retry_count\s*-\s*1\s*;/s,
+            qr/\bbyte_count_next\s*=\s*byte_count\s*\+\s*4\s*;/s,
+            qr/\bremaining_next\s*=\s*remaining\s*-\s*3\s*;/s,
+        ],
+    },
+    {
         id => 'feature.direct_intent_integer_literals',
         relpath => 't/corpus/direct_intent_integer_literals.fsm',
         family => 'language_feature_fixture',

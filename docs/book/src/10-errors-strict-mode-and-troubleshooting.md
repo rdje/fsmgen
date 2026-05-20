@@ -196,7 +196,9 @@ strict pipeline API and `bin/fsmgen --strict`. These success contracts are
 checked at the catalog level even if a future entry belongs to a new fixture
 family. Supported direct language-feature entries must also carry explicit
 HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
-only proving that generation completed.
+only proving that generation completed. Current supported direct
+language-feature coverage includes canonical assignment pairs and
+update-shorthand `+=` / `-=` variants with implicit and explicit deltas.
 
 ## Diagnostic Codes
 
