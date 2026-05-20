@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Custom system clock corpus widening stays reset-policy-neutral
+- `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.1` selects custom authored clock
+  identifiers for support-accounting promotion.
+- The implementation should promote existing `+system` clock-name handling
+  with canonical reset spelling and without changing legacy reset spelling
+  strict-mode policy.
+
 ## 2026-05-21: Compound update variant support accounting proves preserved assignment families
 - `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.2` promotes compound update
   variants into the executable supported-smoke corpus.

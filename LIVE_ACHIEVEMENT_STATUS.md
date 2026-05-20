@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — custom system clock widening selected
+- Completed `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-CUSTOM-SYSTEM-CLOCK-CORPUS-WIDENING.2`.
+- The selected implementation will promote supported custom `+system` clock
+  names into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 regression corpus — compound update variant widening shipped
 - Completed `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.2` and closed the
   tree.
