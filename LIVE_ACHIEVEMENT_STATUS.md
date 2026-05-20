@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — test-selector widening shipped
+- Completed `R12-TEST-SELECTOR-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has three additional test-selector
+  expected-failure entries for malformed `?bad-name` and `?0` plain
+  test-signal names plus the unambiguous malformed computed selector that
+  omits its selector expression.
+- Stable diagnostic codes, corpus behavior checks, check JSON, normalized
+  semantic JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — test-selector widening selected
 - Completed `R12-TEST-SELECTOR-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

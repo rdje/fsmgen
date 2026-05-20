@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 test-selector corpus widening shipped
+- Completed `R12-TEST-SELECTOR-CORPUS-WIDENING.2` and closed the tree.
+- Added three maintained expected-failure corpus entries for malformed
+  `?bad-name` and `?0` plain test-signal names plus the unambiguous malformed
+  computed selector that omits its selector expression.
+- Each new entry carries stable diagnostic-code metadata and is covered by
+  corpus accounting, pipeline/CLI behavior, check JSON, normalized semantic
+  JSON, manifest checks, regression-corpus docs, and the mdBook.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 test-selector corpus widening selected
 - Completed `R12-TEST-SELECTOR-CORPUS-WIDENING.1`.
 - Activated the R12 task tree for promoting already-focused malformed plain

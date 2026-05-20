@@ -145,9 +145,11 @@ mixed pulse and non-pulse sequential writes, multiple pulse delays for one
 signal, combinational self-dependency, and D-input self-dependency. Authored
 operator/directive entries cover unsupported assignment operators such as `?=`
 and `=>`, plus unsupported compact `:=` reset values such as `[DATAIN]` and
-`<start`. Those entries are not only prose examples: pipeline, CLI, check
-JSON, and normalized semantic JSON regression tests all classify them through
-the same support-accounting path.
+`<start`. Test-selector entries cover malformed plain `?SIG` signal names and
+computed test selectors that omit their selector expression. Those entries are
+not only prose examples: pipeline, CLI, check JSON, and normalized semantic
+JSON regression tests all classify them through the same support-accounting
+path.
 
 It also keeps positive acceptance markers for canonical supported surfaces.
 
@@ -184,6 +186,8 @@ FSMGEN_LANGUAGE_DELAYED_PULSE_RHS
 FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY
 FSMGEN_LANGUAGE_UNSUPPORTED_ASSIGNMENT_OPERATOR
 FSMGEN_LANGUAGE_UNSUPPORTED_INIT_RESET_VALUE
+FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL
+FSMGEN_LANGUAGE_MALFORMED_COMPUTED_TEST_SELECTOR
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 

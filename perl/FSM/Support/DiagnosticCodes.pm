@@ -301,6 +301,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'An init directive used an unsupported reset value.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A plain test node used a malformed signal name.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_COMPUTED_TEST_SELECTOR => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A computed test selector omitted its expression or branches.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

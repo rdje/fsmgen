@@ -1,0 +1,12 @@
+(?fsm:test_signal_bad_hyphen
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (?bad-name
+      (=0 (OUT <= 0))
+      (=1 (OUT <= 1))
+    )
+  )
+)

@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — test-selector widening shipped
+- Completed `R12-TEST-SELECTOR-CORPUS-WIDENING.2` and closed the task tree.
+- Added three named test-selector expected-failure fixtures and catalog
+  entries for malformed `?bad-name` and `?0` plain test-signal names plus the
+  unambiguous malformed computed selector that omits its selector expression.
+- Added stable diagnostic codes for the new expected-failure families and
+  widened corpus accounting, manifest, check JSON, normalized semantic JSON,
+  regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — test-selector widening selected
 - Completed `R12-TEST-SELECTOR-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained expected-failure corpus

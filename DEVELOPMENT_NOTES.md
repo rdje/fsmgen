@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Test-selector support accounting avoids ambiguous matching
+- `R12-TEST-SELECTOR-CORPUS-WIDENING.2` promotes only unambiguously
+  classifiable test-selector diagnostics into the maintained corpus.
+- The branchless computed-selector focused test remains valid, but it currently
+  produces the same diagnostic text as the missing-expression computed selector
+  and therefore is not a separate support-accounting entry until the diagnostic
+  text becomes distinct.
+
 ## 2026-05-20: Test-selector corpus widening keeps selector grammar closed
 - `R12-TEST-SELECTOR-CORPUS-WIDENING.1` selects test-selector diagnostics for
   support-accounting promotion.

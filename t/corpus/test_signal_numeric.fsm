@@ -1,0 +1,12 @@
+(?fsm:test_signal_numeric
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (?0
+      (=0 (OUT <= 0))
+      (=1 (OUT <= 1))
+    )
+  )
+)

@@ -1,0 +1,12 @@
+(?fsm:computed_test_missing_expr
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (?
+      (=0 (OUT <= 0))
+      (=1 (OUT <= 1))
+    )
+  )
+)
