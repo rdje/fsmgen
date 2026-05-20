@@ -2,6 +2,16 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — assignment-boundary widening selected
+- Completed `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.2`.
+- The selected implementation will promote invalid delayed-pulse RHS values,
+  mixed assignment-family conflicts, incompatible pulse-delay mixes, and
+  illegal self-dependency families into maintained expected-failure corpus
+  entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — name/reference widening shipped
 - Completed `R12-NAME-REFERENCE-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has six additional name/reference expected-failure

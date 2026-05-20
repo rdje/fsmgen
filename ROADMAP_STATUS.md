@@ -2,10 +2,17 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-NAME-REFERENCE-CORPUS-WIDENING.2` widened the maintained
-  name/reference expected-failure corpus and closed the task tree. The next
-  PNT selection should choose a fresh active tree before any further source,
-  test, fixture, generated-artifact, or config changes.
+  `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.1` activated the task tree for
+  adding maintained expected-failure corpus coverage for delayed-pulse,
+  assignment-family conflict, pulse-delay conflict, and self-dependency
+  rejection families. The current frontier is
+  `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.2`.
+- Recent R12 assignment-boundary corpus-widening selection:
+  `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting already-focused invalid
+  delayed-pulse RHS values, mixed assignment-family conflicts, incompatible
+  pulse-delay mixes, and illegal self-dependency families into
+  stable-code-backed expected-failure corpus entries.
 - Recent R12 name/reference corpus-widening completion:
   `R12-NAME-REFERENCE-CORPUS-WIDENING.2` added six named expected-failure
   corpus entries for malformed direct FSM source names, malformed composition

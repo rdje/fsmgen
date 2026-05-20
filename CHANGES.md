@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — assignment-boundary widening selected
+- Completed `R12-ASSIGNMENT-BOUNDARY-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused delayed-pulse, assignment-family conflict,
+  pulse-delay conflict, and self-dependency rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — name/reference widening shipped
 - Completed `R12-NAME-REFERENCE-CORPUS-WIDENING.2` and closed the task tree.
 - Added six named name/reference expected-failure fixtures and catalog entries
