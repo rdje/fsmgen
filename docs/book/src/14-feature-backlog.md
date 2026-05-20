@@ -737,9 +737,7 @@ done set live for the later drain.
 
 The when-contained bound generated-do post-do `await_any` subset is now
 shipped: a repeat directly inside a top-level `when` body may run `(do child
-(params ...)
-
-(bind ...))` while multiple generated spawns remain pending, then use post-do
+(params ...) (bind ...))` while multiple generated spawns remain pending, then use post-do
 `(await_any done)` as an observation point before the later same-body
 `(await_all done)` drain.
 
@@ -749,11 +747,15 @@ observation, and leaves the pending generated-spawn done set live for the
 later drain.
 
 The direct switch-contained bound generated-do post-do `await_any` analogue is
-now selected as the next bounded implementation: a repeat directly inside a
-top-level `switch` branch may run `(do child (params ...) (bind ...))` while
-multiple generated spawns remain pending, then use post-do
-`(await_any done)` as an observation point before the later same-body
-`(await_all done)` drain. This selected subset is not shipped yet.
+now shipped: a repeat directly inside a top-level `switch` branch may run
+`(do child (params ...) (bind ...))` while multiple generated spawns remain
+pending, then use post-do `(await_any done)` as an observation point before
+the later same-body `(await_all done)` drain.
+
+That subset wires generated-top input/output binding handoffs for the
+generated do instance, requires that instance's fresh done handoff before the
+observation, and leaves the pending generated-spawn done set live for the
+later drain.
 
 Domain metadata on generated-do post-do `await_any`, new spawn after the do
 before the drain, cross-domain activation, deeper branch/loop nesting, and

@@ -3674,6 +3674,157 @@ ISF
     );
 };
 
+subtest 'switch branch nested repeat bound generated do can run before post-do multi-pending await_any before await_all' => sub {
+    my $source = <<'ISF';
+(actor switch_repeat_bound_do_before_await_any
+  (clock clk)
+  (reset rst_n)
+  (interface
+    (input start)
+    (input mode (width 2))
+    (input loops (width 3))
+    (input payload0 (width 8))
+    (input payload1 (width 8))
+    (input req_addr (width 8))
+    (input status)
+    (output done)
+    (output spawn_resp0 (width 8))
+    (output spawn_resp1 (width 8))
+    (output resp (width 8)))
+  (transaction parent
+    (on start)
+    (switch mode
+      (0
+        (repeat loops
+          (sample status as before)
+          (spawn worker as w0
+            (params
+              (WIDTH 16))
+            (bind
+              (input addr payload0)
+              (output data spawn_resp0)))
+          (spawn worker as w1
+            (params
+              (WIDTH 24))
+            (bind
+              (input addr payload1)
+              (output data spawn_resp1)))
+          (do worker
+            (params
+              (WIDTH 32))
+            (bind
+              (input addr req_addr)
+              (output data resp)))
+          (sample status as after_do)
+          (await_any done)
+          (sample status as after_any)
+          (await_all done)))
+      (1
+        (sample status as other)))
+    (complete done))
+  (transaction worker
+    (params
+      (WIDTH 8))
+    (ports
+      (input addr (width 8))
+      (output data (width 8)))
+    (update data addr)
+    (complete done)))
+ISF
+
+    my $actor = parse_source($source);
+    my $ir = FSM::Scheduler::ISF::LoweringIR->new()->build_module($actor);
+    is(scalar(@{$ir->{spawn_instances}}), 3,
+        'switch-branch bound do before post-do await_any records both pending spawns and the generated do instance');
+    my %instances = map { $_->{instance} => $_ } @{$ir->{spawn_instances}};
+    ok($instances{w0}, 'switch-branch bound do before post-do await_any preserves the first pending spawn');
+    ok($instances{w1}, 'switch-branch bound do before post-do await_any preserves the second pending spawn');
+    ok($instances{parent_worker_repeat_do_0}, 'switch-branch bound do before post-do await_any records the generated do instance');
+    is($instances{parent_worker_repeat_do_0}{activation_kind}, 'do',
+        'switch-branch bound do before post-do await_any preserves do activation provenance');
+    is($instances{parent_worker_repeat_do_0}{child}, 'worker',
+        'switch-branch bound do before post-do await_any targets the generated child transaction');
+    is_deeply($instances{parent_worker_repeat_do_0}{parameter_overrides}, [{ name => 'WIDTH', value => '32' }],
+        'switch-branch bound do before post-do await_any preserves static parameter overrides on the do instance');
+    is_deeply(
+        $instances{parent_worker_repeat_do_0}{port_bindings},
+        [
+            {
+                role             => 'input',
+                child_port       => 'addr',
+                parent_port      => 'parent_worker_repeat_do_0_addr',
+                actor_signal     => 'req_addr',
+                actor_expr       => 'req_addr',
+                actor_expression => 'req_addr',
+                width            => 8,
+            },
+            {
+                role             => 'output',
+                child_port       => 'data',
+                parent_port      => 'parent_worker_repeat_do_0_data',
+                actor_signal     => 'resp',
+                actor_expr       => 'resp',
+                actor_expression => 'resp',
+                width            => 8,
+            },
+        ],
+        'switch-branch bound do before post-do await_any exposes do-site binding handoffs',
+    );
+
+    my $lowered = FSM::Scheduler::ISF->new()->lower($actor);
+    my $parent_fsm = $lowered->{files}{'switch_repeat_bound_do_before_await_any.fsm'};
+    my $child_fsm = $lowered->{files}{'worker.fsm'};
+    my $top_fsm = $lowered->{files}{'switch_repeat_bound_do_before_await_any_top.fsm'};
+
+    ok(defined($parent_fsm), 'switch-branch bound do before post-do await_any parent scheduled .fsm is emitted');
+    ok(defined($child_fsm), 'generated child scheduled .fsm is emitted once for switch pre-await_any bound do');
+    ok(defined($top_fsm), 'switch-branch bound do before post-do await_any generated top .fsm is emitted');
+    like($parent_fsm, qr/\(parent_switch_\d+[\s\S]*\(=0 \(-> parent_repeat_init_\d+\)\)/,
+        'matching switch branch enters the bound-do-before-post-do-await_any nested repeat region');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(before status\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'sample before switch bound do before post-do await_any materializes before the first spawn');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w0_start> 1\)\)[\s\S]*\(-> parent_spawn_\d+\)/,
+        'first switch generated spawn starts before the second spawn in bound post-do await_any subset');
+    like($parent_fsm, qr/\(parent_spawn_\d+[\s\S]*\(= \(w1_start> 1\)\)[\s\S]*\(-> parent_do_\d+\)/,
+        'second switch generated spawn advances to the bound generated do before post-do await_any');
+    like($parent_fsm, qr/\(-parent_worker_repeat_do_0_port_bindings\s+\(= \(parent_worker_repeat_do_0_addr> req_addr\)\)\s+\(= \(resp> parent_worker_repeat_do_0_data\) <parent_worker_repeat_do_0_done\)\s+\)/s,
+        'switch bound generated do before post-do await_any keeps input and output binding handoffs reviewable');
+    like($parent_fsm, qr/\(parent_do_\d+[\s\S]*\(= \(parent_worker_repeat_do_0_start> 1\)\)[\s\S]*<parent_worker_repeat_do_0_done\s+\(-> parent_sample_\d+\)/,
+        'switch bound generated do completes before the post-do await_any observation can run');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_do status\)\)[\s\S]*\(-> parent_await_any_\d+\)/,
+        'sample after switch bound generated do materializes before the post-do await_any observation');
+    like($parent_fsm, qr/\(parent_await_any_\d+[\s\S]*<w0_done[\s\S]*\(-> parent_sample_\d+\)[\s\S]*<w1_done[\s\S]*\(-> parent_sample_\d+\)/,
+        'switch post-do await_any observes either generated child without draining the generated-spawn set');
+    like($parent_fsm, qr/\(parent_sample_\d+[\s\S]*\(<= \(after_any status\)\)[\s\S]*\(-> parent_await_all_\d+\)/,
+        'sample after switch bound post-do await_any materializes before the mandatory drain');
+    like($parent_fsm, qr/\(parent_await_all_\d+[\s\S]*\(-> parent_repeat_check_\d+ <\(& w0_done w1_done\)\)/,
+        'await_all after switch bound post-do await_any drains both generated spawns before nested repeat re-entry');
+    like($top_fsm, qr/\(\?fsmc:w0 worker\s+\(params\s+\(WIDTH 16\)\s+\)\s+\)/s,
+        'generated top keeps the first pending spawn instance before switch bound post-do await_any');
+    like($top_fsm, qr/\(\?fsmc:w1 worker\s+\(params\s+\(WIDTH 24\)\s+\)\s+\)/s,
+        'generated top keeps the second pending spawn instance before switch bound post-do await_any');
+    like($top_fsm, qr/\(\?fsmc:parent_worker_repeat_do_0 worker\s+\(params\s+\(WIDTH 32\)\s+\)\s+\)/s,
+        'generated top applies static parameter override to the switch bound generated do instance before post-do await_any');
+    like($top_fsm, qr/\(switch_repeat_bound_do_before_await_any\.parent_worker_repeat_do_0_addr parent_worker_repeat_do_0\.addr\)/,
+        'generated top wires switch bound do input handoff before post-do await_any');
+    like($top_fsm, qr/\(parent_worker_repeat_do_0\.data switch_repeat_bound_do_before_await_any\.parent_worker_repeat_do_0_data\)/,
+        'generated top wires switch bound do output handoff before post-do await_any');
+
+    my $report = decode_json(FSM::Scheduler::ISF->new()->report($actor));
+    is_deeply(
+        [ map { $_->{site_kind} . ':' . ($_->{instance} // '') . ':' . $_->{port} } @{$report->{transaction_port_bindings}} ],
+        [
+            'spawn:w0:addr',
+            'spawn:w0:data',
+            'spawn:w1:addr',
+            'spawn:w1:data',
+            'do:parent_worker_repeat_do_0:addr',
+            'do:parent_worker_repeat_do_0:data',
+        ],
+        'report exposes both switch pending spawns and bound do-before-post-do-await_any transaction port-binding provenance',
+    );
+};
+
 subtest 'switch branch nested repeat domain generated do can run after multi-pending await_any before await_all' => sub {
     my $source = <<'ISF';
 (actor switch_repeat_domain_do_after_await_any
@@ -6296,8 +6447,8 @@ ISF
     (complete done)))
 ISF
 
-    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do before post-do multi-pending await_any', qr/switch-branch nested repeat generated do with static params and bindings while generated spawns are pending requires same-body '\(await_all done\)' drain; '\(await_any done\)' after the do remains deferred/);
-(actor switch_nested_repeat_bound_generated_do_before_post_do_await_any
+    assert_lower_rejected(<<'ISF', 'switch nested repeat bound generated do before post-do multi-pending await_any without drain', qr/switch-branch nested repeat generated do with static params and bindings while generated spawns are pending requires later same-body '\(await_all done\)' before the nested repeat check can loop/);
+(actor switch_nested_repeat_bound_generated_do_before_post_do_await_any_without_drain
   (clock clk)
   (interface
     (input start)
@@ -6329,8 +6480,7 @@ ISF
             (bind
               (input data req_addr)
               (output resp resp)))
-          (await_any done)
-          (await_all done))))
+          (await_any done))))
     (complete done))
   (transaction worker
     (params

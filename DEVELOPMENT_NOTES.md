@@ -1,5 +1,20 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Switch-bound post-do await_any uses the existing branch repeat machinery
+- `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` does not introduce a new scheduling
+  primitive. It extends the existing branch-contained repeat validator so the
+  switch-contained static-parameter bound generated `do` is allowed in the
+  same post-do multi-pending `await_any` position already shipped for the
+  when-contained case.
+- The lowerer already kept multi-pending generated-spawn done handoffs live
+  across `await_any` until the mandatory same-body `await_all` drain. The
+  implementation therefore stays intentionally narrow: one validation
+  symmetry fix plus focused coverage proving binding handoffs, generated do
+  completion ordering, post-do observation, and later drain behavior.
+- Domain-qualified generated-do post-do `await_any`, post-do spawn, deeper
+  nesting, cross-domain activation, and broader outstanding-child lifetime
+  semantics remain separate future work with their own task-tree ownership.
+
 ## 2026-05-20: ATL source-expression ordering gets the same diagnostic policy
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` selects the source-expression
   counterpart to the earlier drive-before-instance sink-expression diagnostic

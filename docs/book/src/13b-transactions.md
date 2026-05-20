@@ -619,17 +619,14 @@ generated do waits for the deterministic generated do instance's fresh done
 handoff before the observation and preserves the static generated-top
 parameter override.
 
-The top-level `when` body nested repeat static-parameter bound generated `(do
-child (params ...)
+The top-level `when` body and top-level `switch` branch nested repeat
+static-parameter bound generated `(do child (params ...) (bind ...))` subsets
+support the same post-do observation and later-drain contract while also
+wiring generated-top input/output binding handoffs for the generated do
+instance.
 
-(bind ...))` subset supports the same post-do observation and later-drain
-contract while also wiring generated-top input/output binding handoffs for
-the generated do instance.
-
-The direct switch-contained bound generated-do post-do `await_any` analogue is
-selected as the next bounded implementation, but remains fail-closed until
-that leaf ships. Domain-qualified generated-do post-do `await_any` and new
-nested `spawn` after the do before the drain remain fail-closed.
+Domain-qualified generated-do post-do `await_any` and new nested `spawn` after
+the do before the drain remain fail-closed.
 
 The top-level `switch` branch nested repeat plain generated-child `(do
 child)` subset supports the same post-do multi-pending observation and
@@ -1411,12 +1408,11 @@ the later same-body `await_all` drain still gates nested repeat re-entry on
 every outstanding generated child.
 
 Both branch-contained forms also permit documented static-parameter bound
-generated `(do child (params ...)
-
-(bind ...))` while generated nested spawns are pending before that same later
-drain; the top-level `when` body subset also permits that bound generated do
-before a post-do multi-pending `await_any` observation while wiring the
-generated-top input/output binding handoffs for the generated do instance.
+generated `(do child (params ...) (bind ...))` while generated nested spawns
+are pending before that same later drain. Both branch-contained forms also
+permit that bound generated do before a post-do multi-pending `await_any`
+observation while wiring the generated-top input/output binding handoffs for
+the generated do instance.
 
 Both branch-contained forms also permit documented static-parameter generated
 `(do child (params ...))` while generated nested spawns are pending before

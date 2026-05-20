@@ -1039,20 +1039,15 @@ Rules:
   `(await_any done)` observation while still requiring the same later same-
   body `(await_all done)` drain.
 
-  Top-level `when` body nested-repeat generated `(do child (params ...)
-
-  (bind ...))` may also run either before or after a prior multi-pending
-  `(await_any done)` observation, provided the same later same-body
-  `(await_all done)` drain remains before nested repeat re-entry.
+  Top-level `when` body and top-level `switch` branch nested-repeat generated
+  `(do child (params ...) (bind ...))` may run before a post-do multi-pending
+  `(await_any done)` observation or after a prior multi-pending `(await_any
+  done)` observation, provided the same later same-body `(await_all done)`
+  drain remains before nested repeat re-entry.
 
   That generated do site wires generated-top input/output binding handoffs
   once, waits for its own fresh done handoff, and leaves the generated spawn
   done set live for the later drain.
-
-  Top-level `switch` branch nested-repeat generated `(do child (params ...)
-
-  (bind ...))` is supported with the same after-`await_any` observation and
-  later-drain contract.
 
   Top-level `when` body and top-level `switch` branch nested-repeat generated
   `(do child (params ...) [(bind ...)] (domain NAME))` may also run in that
@@ -1095,18 +1090,14 @@ Rules:
   its deterministic generated do instance's fresh done handoff and preserves
   static generated-top parameter binding.
 
-  Top-level `when` body static- parameter bound generated `(do child (params
-  ...)
+  Top-level `when` body and top-level `switch` branch static-parameter bound
+  generated `(do child (params ...) (bind ...))` support the same post-do
+  observation and later-drain contract while also wiring the generated-top
+  input/output binding handoffs for the generated do instance.
 
-  (bind ...))` supports the same post-do observation and later-drain contract
-  while also wiring the generated-top input/output binding handoffs for the
-  generated do instance.
-
-  The direct switch-contained bound generated-do post-do `await_any` analogue
-  is selected as the next bounded implementation, but remains fail-closed
-  until that leaf ships. Domain-qualified generated-do post-do `await_any`,
-  new nested `spawn` after the do before the drain, deeper branch/loop
-  nesting, and cross-domain activation remain fail-closed.
+  Domain-qualified generated-do post-do `await_any`, new nested `spawn` after
+  the do before the drain, deeper branch/loop nesting, and cross-domain
+  activation remain fail-closed.
 
   Cross-domain repeat-body `do`, broader outstanding-child semantics,
   `stage`, `contract`, deeper branch nesting, nested `while`, and nested
@@ -1469,8 +1460,9 @@ Rules:
   drain.
 
   Top-level `switch` branch nested repeats may run the same static-parameter
-  bound generated `do` after that prior observation with the same later drain
-  requirement.
+  bound generated `do` either before a post-do multi-pending `(await_any
+  done)` observation or after a prior multi-pending `(await_any done)`
+  observation with the same later drain requirement.
 
   Top-level `when` body and top-level `switch` branch nested repeats may also
   run static-parameter same-domain generated `(do child (params ...) [(bind

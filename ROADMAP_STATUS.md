@@ -10,10 +10,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   polluted strict CLI stderr checks, stale full-regression contracts exposed
   by the hosted rerun, and the hosted ISF parser `given` / `when`
   deprecation warning cascade that polluted clean-stderr tests. The local
-  quick, focused ISF, and full regression gates pass. The active R14
-  frontiers remain
-  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+  quick, focused ISF, and full regression gates pass. The active R14 frontier
+  is `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 - Recent R14 timing conventions: `ISF-TIMING-CONVENTIONS` is closed. Legacy
   single-clock actors that omit `(clock ...)`, `(reset ...)`, or
   `(watchdog ...)` now normalize to `clk`, async active-low `rst_n`, and
@@ -24,8 +22,7 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   downstream handoff, mdBook, and live docs all describe the same convention.
   Same-name reusable-library clock/reset bindings can be inferred when the
   defaulted parent timing policy exactly matches the child timing policy. The
-  active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
-  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+  active R14 frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 - Recent R14 downstream bug tree:
   `ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS` is closed. Leaf `.1` accepts
   the documented flat bounded-eventually contract spelling while preserving
@@ -40,8 +37,8 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   JSON failure surface: ISF parser, lowering, report-building, and downstream
   semantic check failures now emit `success: false` JSON in `--check --json`
   / `--check-json` mode instead of empty stdout. No active downstream bug
-  frontier remains; the current active R14 frontiers are repeat-body child
-  activation `.112` and ATL actor-network orchestration `.9.99`.
+  frontier remains; the current active R14 frontier is ATL actor-network
+  orchestration `.9.99`.
 - Recent R14 ATL selection: `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` selected
   source-order-independent source-expression diagnostic hardening as the next
   bounded ATL leaf. The selected `.9.99` scope is diagnostic-only: if a
@@ -53,22 +50,19 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   movement, payload protocol, route mux/storage, fan-in/fan-out, CDC/reset
   remapping, ready/backpressure, recursive network, or permanent grouping is
   selected.
-- Active R14 task-tree frontier: `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
-  Leaf `.110` shipped top-level `when` body nested repeat generated blocking
-  `(do child (params ...) (bind ...))` before post-do multi-pending
-  `(await_any done)`: the generated do instance completes before the
-  observation, generated-top input/output binding handoffs are wired for that
-  lexical generated do site, and the pending generated-spawn done set remains
-  live for the later same-body `(await_all done)` drain before nested repeat
-  re-entry. Leaf `.111` selected the direct switch-contained bound
-  generated-do post-do `await_any` analogue as the next bounded subset. Leaf
-  `.112` must implement a repeat directly inside a top-level `switch` branch
-  with multiple generated spawns, then `(do child (params ...) (bind ...))`,
-  then post-do multi-pending `(await_any done)`, then mandatory same-body
-  `(await_all done)` before nested repeat re-entry. Domain metadata on
-  generated-do post-do `await_any`, spawn-after-do, cross-domain activation,
-  deeper branch/loop nesting, and broader outstanding-child semantics remain
-  unselected.
+- Recent R14 repeat-body completion:
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` shipped the direct top-level
+  `switch` branch analogue of the when-contained bound generated-do post-do
+  `await_any` subset. A switch-contained nested repeat may run multiple
+  generated spawns, then `(do child (params ...) (bind ...))`, then post-do
+  multi-pending `(await_any done)`, and then mandatory same-body
+  `(await_all done)` before nested repeat re-entry. Generated-top input/output
+  binding handoffs are wired for the generated do instance, that instance
+  must complete before the observation, and generated-spawn done handoffs
+  remain live for the later drain. Domain metadata on generated-do post-do
+  `await_any`, spawn-after-do, cross-domain activation, deeper branch/loop
+  nesting, and broader outstanding-child semantics remain fail-closed. The
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION` task tree is closed.
 - Active R14 ATL axis: `ISF-ACTOR-NETWORK-ORCHESTRATION.4.4.2` shipped the
   first behavior-bearing actor-transaction trigger subset after `.4.3.2`
   shipped actor-event waits. A top-level actor can declare exactly one static
@@ -1108,9 +1102,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   when-contained bound subset while wiring generated-top input/output binding
   handoffs and preserving the generated-spawn lifetime proof. The next active
   frontier, `ISF-REPEAT-BODY-CHILD-ACTIVATION.111`, selected the direct
-  switch-contained bound generated-do-before-post-do-await_any analogue. The
-  next active frontier is `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`, which must
-  ship that selected subset before broader repeat-body activation widening.
+  switch-contained bound generated-do-before-post-do-await_any analogue.
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` then shipped that selected subset
+  and closed the repeat-body child activation widening tree.
   The workflow also requires
   task-tree ownership before any
   code, test, source, generated-artifact, or config change. Push cadence is

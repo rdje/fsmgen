@@ -1,5 +1,20 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Repeat-body switch-bound post-do await_any completed
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
+- Top-level `switch` branch nested repeats now accept generated blocking
+  `(do child (params ...) (bind ...))` while multiple generated spawns remain
+  pending, followed by post-do multi-pending `(await_any done)` and mandatory
+  same-body `(await_all done)` before nested repeat re-entry.
+- The generated do instance wires generated-top input/output binding
+  handoffs, waits for its own fresh done handoff before the observation, and
+  leaves all generated-spawn done handoffs live until the later drain.
+- Domain metadata, new spawn after the do before the drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain fail-closed.
+- The `ISF-REPEAT-BODY-CHILD-ACTIVATION` task tree is closed. The active R14
+  frontier for this PNT batch is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+
 ## 2026-05-20: ATL source-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` as a selection leaf.
 - The active ATL frontier advances to
@@ -17,10 +32,11 @@ This is the live continuity document for fast session recovery after crashes, re
 
 ## 2026-05-20: Repeat-body switch-bound post-do await_any selected
 - Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.111` as a selection leaf.
-- The active repeat-body frontier advances to
+- After that selection, the repeat-body frontier advanced to
   `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
-- `.112` will implement the direct top-level `switch` branch analogue of the
-  shipped when-contained bound generated-do post-do `await_any` subset.
+- `.112` was selected to implement the direct top-level `switch` branch
+  analogue of the shipped when-contained bound generated-do post-do
+  `await_any` subset.
 - The selected source shape is a switch-branch nested repeat with multiple
   generated spawns, then `(do child (params ...) (bind ...))`, then post-do
   multi-pending `(await_any done)`, then mandatory same-body
@@ -46,8 +62,9 @@ This is the live continuity document for fast session recovery after crashes, re
   downstream handoff, mdBook, and task-tree/live docs are synchronized.
 - Same-name reusable-library clock/reset bindings can be inferred when the
   defaulted parent timing policy exactly matches the child timing policy.
-- The active R14 frontiers remain `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`
-  and `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+- After that slice, the active R14 frontiers were
+  `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 
 ## 2026-05-19: ATL accepted-route source-order coverage completed
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.97`.

@@ -130,7 +130,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/ISF-DYNAMIC-WAIT-PHASE-SAMPLE.md` — completed `R14` task tree for transaction phase zero-bypass pending-sample dynamic waits.
 - `docs/tasks/ISF-SPAWN-IN-REPEAT.md` — completed `R14` task tree for static child spawn inside repeat bodies.
 - `docs/tasks/ISF-REPEAT-SPAWN-PARAMS.md` — completed `R14` task tree for repeat-body spawn parameter overrides.
-- `docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md` — active `R14` task tree for remaining repeat-body child activation widening.
+- `docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md` — completed `R14` task tree for repeat-body child activation widening.
 - `docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md` — active `R14` task tree for static ISF Actor Transfer Level actor-network orchestration.
 - `docs/tasks/ISF-SPECFORGE-REPORTED-STAGE-CONTRACT-BUGS.md` — active `R14` task tree for SPECFORGE-reported ISF stage/contract conformance bugs.
 - `docs/tasks/ISF-ACTIVATION-BIND-EXPRESSIONS.md` — completed `R14` task tree for expression-valued activation input bindings.

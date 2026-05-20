@@ -240,6 +240,10 @@ for my $path (@loop_docs) {
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter do before post-do multi-pending await_any subset",
     );
     ok(
+        documents_branch_post_do_await_any($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
+        "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do before post-do multi-pending await_any subset",
+    );
+    ok(
         documents_branch_await_any_before_do($content, 'switch', qr/static(?:[-\s]+parameter| params)|\(params \.\.\.\)/, qr/(?:bind|binding|handoff)/, qr/generated/, qr/\bdo\b/),
         "$path documents the shipped top-level switch-branch nested repeat generated static-parameter bound do after multi-pending await_any subset",
     );

@@ -45,7 +45,6 @@ first.
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
 | `ISF-ACTOR-NETWORK-ORCHESTRATION` | `active` | `R14` | `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99` | [docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md](docs/tasks/ISF-ACTOR-NETWORK-ORCHESTRATION.md) |
-| `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `active` | `R14` | `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
 
 ## Proposed Task Trees
 
@@ -60,6 +59,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `ISF-REPEAT-BODY-CHILD-ACTIVATION` | `done` | `R14` | `closed` | [docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md](docs/tasks/ISF-REPEAT-BODY-CHILD-ACTIVATION.md) |
 | `ISF-TIMING-CONVENTIONS` | `done` | `R14` | `closed` | [docs/tasks/ISF-TIMING-CONVENTIONS.md](docs/tasks/ISF-TIMING-CONVENTIONS.md) |
 | `MDBOOK-PARAGRAPH-SPACING` | `done` | `project documentation` | `closed` | [docs/tasks/MDBOOK-PARAGRAPH-SPACING.md](docs/tasks/MDBOOK-PARAGRAPH-SPACING.md) |
 | `CI-HOSTED-ISF-REGRESSION-CASCADE` | `done` | `project operations` | `closed` | [docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md](docs/tasks/CI-HOSTED-ISF-REGRESSION-CASCADE.md) |

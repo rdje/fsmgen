@@ -1,6 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R14 — Repeat-body switch-bound post-do await_any completed
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
+- Shipped the top-level `switch` branch nested-repeat analogue of the
+  when-contained bound generated-do post-do `await_any` subset.
+- A switch-contained nested repeat may now run multiple generated spawns,
+  then `(do child (params ...) (bind ...))`, then post-do multi-pending
+  `(await_any done)`, and then mandatory same-body `(await_all done)` before
+  nested repeat re-entry.
+- The generated do instance wires generated-top input/output binding
+  handoffs, waits for its own fresh done handoff before the observation, and
+  preserves the pending generated-spawn done set until the later drain.
+- Domain metadata, new spawn after the do before the drain, cross-domain
+  activation, deeper branch/loop nesting, and broader outstanding-child
+  semantics remain fail-closed.
+- The `ISF-REPEAT-BODY-CHILD-ACTIVATION` task tree is closed.
+
 ### R14 — ATL source-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98` as a documentation
   selection leaf.
@@ -50,8 +66,8 @@ This is the persistent technical change history for FSMGen.
   defaulted parent timing policy exactly matches the child timing policy.
 - Synchronized `ISF_SPEC.md`, the downstream integration handoff, the public
   interface contract, the mdBook, live docs, and focused tests.
-- The `ISF-TIMING-CONVENTIONS` task tree is now closed; the active R14
-  frontiers are `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
+- The `ISF-TIMING-CONVENTIONS` task tree is now closed. After that slice, the
+  active R14 frontiers were `ISF-REPEAT-BODY-CHILD-ACTIVATION.112` and
   `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
 
 ## 2026-05-19

@@ -2,6 +2,18 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R14 — Repeat-body switch-bound post-do await_any completed
+- Completed `ISF-REPEAT-BODY-CHILD-ACTIVATION.112`.
+- Top-level `switch` branch nested repeats now support generated blocking
+  `(do child (params ...) (bind ...))` before post-do multi-pending
+  `(await_any done)`, with a mandatory same-body `(await_all done)` drain
+  before nested repeat re-entry.
+- The generated do wires input/output binding handoffs, waits for its fresh
+  done handoff before the observation, and preserves generated-spawn done
+  handoffs until the later drain.
+- The repeat-body child activation tree is closed; the active R14 frontier is
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.99`.
+
 ## 2026-05-20: R14 — ATL source-expression source-order hardening selected
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.98`.
 - The active ATL frontier advances to
