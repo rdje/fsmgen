@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — ExpressionNamer legacy parse boundary guarded
+- Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` and closed the tree.
+- Added [t/521-expression-namer-legacy-parse-boundary-audit.t](t/521-expression-namer-legacy-parse-boundary-audit.t).
+- Guarded representative legacy hash AST shapes,
+  `parse_and_name_expression` hash-backed definitions, hash-aware collector
+  behavior, and blessed-only no-op hooks.
+- No production behavior changed.
+
 ### Architecture backlog — ExpressionNamer legacy parse boundary audited
 - Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`.
 - Classified `FSM::ExpressionNamer->parse_expression` as a private
@@ -9,7 +17,7 @@ This is the persistent technical change history for FSMGen.
   name-only string consumers, or blessed-only legacy hooks that currently
   ignore the hash result.
 - Advanced the active frontier to `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` for
-  focused guard coverage.
+  focused guard coverage; `.2` then added the guard and closed the tree.
 - No compiler behavior changed.
 
 ### Architecture backlog — Duplicate AST utils file removed

@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: ExpressionNamer legacy parse boundary guarded
+- Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` and closed the tree.
+- Added [t/521-expression-namer-legacy-parse-boundary-audit.t](t/521-expression-namer-legacy-parse-boundary-audit.t).
+- The guard locks representative legacy hash AST shapes,
+  `parse_and_name_expression` hash-backed definitions, hash-aware collector
+  behavior, and blessed-only no-op hooks.
+- No production behavior changed.
+- The next architecture PNT candidate is `GLOBAL-AST-MANAGER-BOUNDARY.1`.
+
 ## 2026-05-20: ExpressionNamer legacy parse boundary audited
 - Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`.
 - `FSM::ExpressionNamer->parse_expression` is now documented as a private
@@ -7,8 +16,8 @@ This is the live continuity document for fast session recovery after crashes, re
 - Live callers are classified as hash consumers, mixed hash/blessed
   collectors, name-only string consumers, or blessed-only legacy hooks that
   currently ignore the hash result.
-- The active frontier is `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` for focused
-  guards around that current boundary.
+- `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` then added focused guards and closed
+  the tree.
 
 ## 2026-05-20: Duplicate AST utils file removed
 - Completed `EXPR-AST-UTILS-OWNER-CONSOLIDATION.2` and closed the tree.

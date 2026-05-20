@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `EXPR-NAMER-LEGACY-PARSE-BOUNDARY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -33,7 +33,7 @@ before any caller cleanup changes behavior.
 ## Task Tree
 
 - ID: `EXPR-NAMER-LEGACY-PARSE-BOUNDARY`
-  Status: `active`
+  Status: `done`
   Goal: `Make ExpressionNamer legacy parse boundaries explicit.`
   Children: `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1`,
   `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2`
@@ -47,23 +47,23 @@ before any caller cleanup changes behavior.
   Commit: `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1: audit legacy parse boundary`
 
 - ID: `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2`
-  Status: `active`
+  Status: `done`
   Goal: `Add focused guards for the accepted legacy parse boundary.`
   Acceptance: `Regression coverage locks the accepted caller behavior before
   any cleanup or conversion leaf is selected.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `focused legacy parse boundary regression passed`
+  Commit: `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2: guard legacy parse boundary`
 
 ## Current Frontier
 
-The active frontier is `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2`, which must add
-focused guards for the current accepted boundary before any cleanup or
-conversion is selected.
+This tree is closed. The current accepted `ExpressionNamer` legacy parse
+boundary is documented and guarded before any cleanup or conversion is
+selected.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` | `done` | Caller classification completed before parser/caller cleanup. |
-| 2 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` | `active` | Add guard coverage for the accepted legacy hash and blessed-only boundaries. |
+| 2 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` | `done` | Guarded the accepted legacy hash and blessed-only boundaries. |
 
 ## Decisions
 
@@ -76,6 +76,11 @@ conversion is selected.
   or `FSM::AST::*` nodes today. Callers either consume that hash form, accept
   hash-or-blessed trees through recursive collectors, or currently no-op
   because they only act on blessed ASTs.
+- `2026-05-20`: Added
+  [t/521-expression-namer-legacy-parse-boundary-audit.t](../../t/521-expression-namer-legacy-parse-boundary-audit.t)
+  to guard the current boundary: representative hash shapes,
+  `parse_and_name_expression` hash-backed definitions, hash-aware collectors,
+  and blessed-only no-op hooks.
 
 ## Open Questions
 
@@ -92,12 +97,14 @@ conversion is selected.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` | `rg -n -- '->parse_expression|->parse_and_name_expression' perl/FSM`; `rg -n -- 'expr_namer.*parse_expression|parse_and_name_expression' perl/FSM`; `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` | `perl -Iperl -c t/521-expression-namer-legacy-parse-boundary-audit.t`; `prove -Iperl t/520-expression-namer-query-defensive-copy-boundary-audit.t t/521-expression-namer-legacy-parse-boundary-audit.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1: audit legacy parse boundary` | Classifies current hash, mixed, string-name, and blessed-only caller expectations. |
+| `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2: guard legacy parse boundary` | Adds focused regression coverage for the documented boundary and closes the tree. |
 
 ## Changelog
 
@@ -105,6 +112,8 @@ conversion is selected.
   `IR-EXPRESSION-AST-OWNERSHIP.3`.
 - `2026-05-20`: Activated `.1`, classified live `ExpressionNamer`
   legacy-parse callers, and advanced `.2` for focused guard coverage.
+- `2026-05-20`: Completed `.2` by adding focused guard coverage and closing
+  the tree.
 
 ## Legacy Parse Boundary Audit
 

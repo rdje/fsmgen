@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Legacy parse guards preserve current ambiguity explicitly
+- `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` adds regression coverage without
+  resolving the blessed-only hooks yet.
+- That is deliberate. The current project risk was undocumented behavior:
+  `parse_expression` produces hash ASTs, but a few legacy hooks still ask for
+  blessed ASTs. The guard makes that no-op boundary explicit so later cleanup
+  can retire or convert it with evidence.
+- Hash-aware collectors and name-only string consumers are also guarded, so a
+  future conversion cannot silently break the paths that do use the legacy
+  hash shape.
+
 ## 2026-05-20: ExpressionNamer legacy parsing is hash-private
 - `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.1` confirms that
   `FSM::ExpressionNamer->parse_expression` is not another object-AST producer.

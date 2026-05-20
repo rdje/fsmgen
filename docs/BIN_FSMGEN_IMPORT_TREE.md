@@ -870,8 +870,10 @@ IR audit checkpoint:
   `parse_expression` as a private string-to-legacy-hash parser. Live callers
   are now separated into hash consumers, mixed hash/blessed collectors,
   name-only string consumers, and blessed-only legacy hooks that currently
-  ignore the hash result. `.2` is active to add focused guards for that
-  boundary before cleanup.
+  ignore the hash result.
+- `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` added
+  [t/521-expression-namer-legacy-parse-boundary-audit.t](../t/521-expression-namer-legacy-parse-boundary-audit.t)
+  to guard that boundary before cleanup. No production behavior changed.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

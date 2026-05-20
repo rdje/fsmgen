@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` | `active` | `architecture backlog` | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` | [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) |
 
 ## Proposed Task Trees
 
@@ -61,6 +60,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) |
 | `EXPR-AST-UTILS-OWNER-CONSOLIDATION` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md](docs/tasks/EXPR-AST-UTILS-OWNER-CONSOLIDATION.md) |
 | `EXPR-NAMER-TRACKED-COPY-CLEANUP` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md) |
 | `IR-EXPRESSION-AST-OWNERSHIP` | `done` | `architecture backlog` | `closed` | [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md) |
