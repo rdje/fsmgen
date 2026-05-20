@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: State-DTE guard corpus widening stays activation-local
+- `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1` selects regular-state header DTE
+  guards for support-accounting promotion.
+- The implementation should promote existing state-enable and DTE
+  boundary-gating behavior without changing expression factoring,
+  non-state-DT behavior, or transition semantics.
+
 ## 2026-05-20: Update-shorthand variant support accounting proves semantic HDL shape
 - `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` promotes supported
   update-shorthand variants into the executable supported-smoke corpus.

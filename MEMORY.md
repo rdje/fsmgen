@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 state-DTE guard corpus widening selected
+- Completed `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused supported
+  regular-state header DTE guards into maintained supported-smoke corpus
+  coverage.
+- The next frontier is `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2`: add a bounded
+  fixture/catalog entry, strict-supported marker, HDL-shape checks, and
+  synchronized docs for the selected supported state activation family.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 update-shorthand variant corpus widening shipped
 - Completed `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` and closed the
   tree.

@@ -2,6 +2,13 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — state-DTE guard widening selected
+- Completed `R12-STATE-DTE-GUARD-CORPUS-WIDENING.1`.
+- The active R12 frontier is now `R12-STATE-DTE-GUARD-CORPUS-WIDENING.2`.
+- The selected implementation will promote supported regular-state header DTE
+  guards into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — update-shorthand variant widening shipped
 - Completed `R12-UPDATE-SHORTHAND-VARIANT-CORPUS-WIDENING.2` and closed the
   tree.
