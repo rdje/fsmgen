@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL sink expressions need symmetric diagnostics
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92` selects the sink-side counterpart
+  to the source-expression route hardening.
+- The source side already has a targeted deferred-expression diagnostic. The
+  sink side should not fall through to a generic malformed endpoint message
+  that stringifies parser internals; it should fail closed in ATL vocabulary.
+- This is diagnostic hardening only. A route sink remains one scalar endpoint
+  until a later leaf explicitly selects any expression-target or value-routing
+  contract.
+
 ## 2026-05-19: ATL source-expression boundary is now audit-backed
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91` turns the generated-child route
   source-expression boundary into explicit fixture coverage and synchronized

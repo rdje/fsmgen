@@ -1,5 +1,18 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-19: ATL route sink-expression hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92` as a selection leaf.
+- The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93`.
+- `.9.93` will harden the generated-child actor-to-actor route sink side:
+  a malformed sink expression such as `(+ writer.payload 1)` must receive a
+  targeted ATL sink-expression diagnostic instead of a generic stringified
+  endpoint diagnostic.
+- The selected positive route remains `(writer.payload reader.payload)`. No
+  route behavior, source syntax, report key, generated artifact, sink
+  expression movement, storage, muxing, fan-in/fan-out, ready/backpressure,
+  payload protocol, CDC/reset-remap, recursive network, or permanent grouping
+  is selected.
+
 ## 2026-05-19: ATL route source-expression boundary hardened
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.91`.
 - The active ATL frontier is now `ISF-ACTOR-NETWORK-ORCHESTRATION.9.92`.
