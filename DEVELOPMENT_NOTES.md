@@ -1,5 +1,16 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-19: ATL sink-expression diagnostics must not depend on clause order
+- `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94` selects a follow-up hardening leaf
+  for drive-before-instance source order.
+- The parser sees drive definitions before the final actor network is known
+  when authors place `(drive ...)` before `(instance ...)`. The selected
+  behavior should defer only ATL-looking sink expressions long enough to
+  diagnose them with actor-network context, while preserving immediate generic
+  diagnostics for ordinary malformed local drive targets.
+- This is still diagnostic hardening only. It does not make expression-valued
+  route sinks legal.
+
 ## 2026-05-19: ATL route endpoint expressions are a symmetric boundary
 - `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93` completes the sink-side counterpart
   to the source-expression hardening.

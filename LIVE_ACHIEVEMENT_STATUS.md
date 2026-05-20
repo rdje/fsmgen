@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-19: R14 — ATL route sink-expression source-order hardening selected
+- Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.94`.
+- The active ATL frontier advances to
+  `ISF-ACTOR-NETWORK-ORCHESTRATION.9.95`.
+- `.9.95` is selected to keep the targeted ATL sink-expression diagnostic
+  when a route drive body is authored before the static actor instances.
+- No compiler behavior changed in the selection leaf.
+
 ## 2026-05-19: R14 — ATL route sink-expression boundary hardened
 - Completed `ISF-ACTOR-NETWORK-ORCHESTRATION.9.93`.
 - The active ATL frontier advances to
