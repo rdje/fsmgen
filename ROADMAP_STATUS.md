@@ -2,10 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.2` promoted computed test
-  selectors into the maintained supported-smoke corpus and closed the tree.
-  The next PNT step should select the next remaining roadmap-aligned R12
-  support-accounting frontier before implementation.
+  `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.1` selected a fresh task tree for
+  promoting already-focused relational test-branch selectors into the
+  maintained supported-smoke corpus. The next implementation leaf is
+  `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2`.
+- Recent R12 test-branch selector corpus-widening selection:
+  `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting `!=`, `>`, and `<=` branch-selector
+  lowering into strict-supported corpus coverage.
 - Recent R12 computed test-selector corpus-widening completion:
   `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.2` added one named
   supported-smoke corpus entry for computed selector intermediate generation,
@@ -4562,11 +4566,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `R12`:
-  [docs/tasks/R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.md](docs/tasks/R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.md)
-  is closed. `.1` selected the supported computed test-selector
-  support-accounting slice before implementation; `.2` promoted the
-  already-focused computed-selector intermediate generation and branch reuse
-  forms into a maintained supported-smoke corpus entry.
+  [docs/tasks/R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.md](docs/tasks/R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.md)
+  is active. `.1` selects the supported relational test-branch selector
+  support-accounting slice before implementation; `.2` will promote the
+  already-focused `!=`, `>`, and `<=` branch-selector forms into a maintained
+  supported-smoke corpus entry.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

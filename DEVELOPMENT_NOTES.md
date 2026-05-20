@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Test-branch selector corpus widening stays branch-local
+- `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.1` selects supported relational
+  test-branch selectors for support-accounting promotion.
+- The implementation should promote existing `!=`, `>`, and `<=` selector
+  lowering without changing malformed bare selector diagnostics or computed
+  selector behavior.
+
 ## 2026-05-20: Computed test-selector support accounting proves intermediate reuse
 - `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.2` promotes computed test
   selectors into the executable supported-smoke corpus.
