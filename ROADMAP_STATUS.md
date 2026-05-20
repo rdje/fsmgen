@@ -2,10 +2,18 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
+  `R12-MALFORMED-FORM-CORPUS-WIDENING.1` selected the next bounded
+  support-accounting slice. The active frontier is
+  `R12-MALFORMED-FORM-CORPUS-WIDENING.2`, which will promote already-focused
+  malformed source/body/test-form failures into maintained expected-failure
+  corpus entries.
+- Recent R12 malformed-form corpus-widening selection:
+  `R12-MALFORMED-FORM-CORPUS-WIDENING.1` activated the task tree for adding
+  malformed source/body/test-form expected-failure corpus coverage before any
+  fixture, catalog, diagnostic-code, or test changes.
+- Previous R12 corpus-widening completion:
   `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` widened the maintained
-  language-contract expected-failure corpus and closed the task tree. The next
-  PNT selection should choose a fresh active tree before any further source,
-  test, fixture, generated-artifact, or config changes.
+  language-contract expected-failure corpus and closed the task tree.
 - Recent R12 corpus-widening completion:
   `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` added seven named
   language-contract expected-failure corpus entries for unsupported top-level
@@ -6923,6 +6931,11 @@ Done:
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current top-level source/directive, generic/template placeholder, and bare condition suffix entries, current direct-generation contract entries, and the current composition-contract rejection families.
+- Promote already-focused malformed source/body/test-form rejection families
+  such as bare top-level source roots, unsupported single-token actions,
+  empty guarded blocks, malformed test branches, and malformed test selectors
+  into maintained expected-failure corpus entries under
+  `R12-MALFORMED-FORM-CORPUS-WIDENING.2`.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:

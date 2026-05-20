@@ -1,5 +1,13 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 malformed-form corpus widening selected
+- Completed `R12-MALFORMED-FORM-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused malformed
+  source/body/test-form language-contract failures into maintained
+  expected-failure corpus entries.
+- The next frontier is `R12-MALFORMED-FORM-CORPUS-WIDENING.2`.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 language-contract corpus widening shipped
 - Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` and closed the tree.
 - Added seven maintained expected-failure corpus entries for unsupported

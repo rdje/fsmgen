@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Malformed-form corpus widening follows focused diagnostics
+- `R12-MALFORMED-FORM-CORPUS-WIDENING.1` selects another behavior-neutral
+  corpus/accounting slice.
+- The selected implementation should promote existing targeted diagnostics for
+  malformed roots, action forms, guards, test branches, and test selectors into
+  stable-code-backed corpus entries. It should not broaden syntax or rewrite
+  parser behavior unless a real blocker appears during classification.
+
 ## 2026-05-20: Language-contract corpus widening stays behavior-neutral
 - `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` deliberately promotes already
   focused failures instead of changing parser behavior.

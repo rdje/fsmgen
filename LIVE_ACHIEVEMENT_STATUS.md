@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — malformed-form widening selected
+- Completed `R12-MALFORMED-FORM-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-MALFORMED-FORM-CORPUS-WIDENING.2`.
+- The selected implementation will promote malformed source/body/test-form
+  failures into maintained expected-failure corpus entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — language-contract widening shipped
 - Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has seven additional language-contract
