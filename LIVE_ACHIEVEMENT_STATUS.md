@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — aggregate parameter-expression widening selected
+- Completed `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2`.
+- The selected implementation will promote aggregate `+params` expression
+  mixed operands, shape mismatches, arithmetic overflow, underflow, and
+  divide-by-zero into maintained expected-failure corpus entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — parameter dependency widening shipped
 - Completed `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has two additional parameter dependency

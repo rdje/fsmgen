@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` completed the latest maintained
-  expected-failure corpus widening slice. The next PNT step must select fresh
-  task-tree ownership before any new code, test, source, generated-artifact, or
-  config change.
+  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1` selected a fresh task
+  tree for promoting already-focused aggregate parameter-expression diagnostics
+  into the maintained expected-failure corpus. The next implementation leaf is
+  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2`.
+- Recent R12 aggregate parameter-expression corpus-widening selection:
+  `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1` selected a
+  behavior-neutral support-accounting slice for promoting aggregate `+params`
+  expression mixed operands, shape mismatches, arithmetic overflow,
+  underflow, and divide-by-zero into stable-code-backed expected-failure corpus
+  entries.
 - Recent R12 parameter dependency corpus-widening completion:
   `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` added two named expected-failure
   corpus entries for cyclic `+params` dependency graphs and duplicate

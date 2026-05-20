@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — aggregate parameter-expression widening selected
+- Completed `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused aggregate `+params` expression mixed-operand,
+  shape-mismatch, overflow, underflow, and divide-by-zero rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — parameter dependency widening shipped
 - Completed `R12-PARAM-DEPENDENCY-CORPUS-WIDENING.2` and closed the task
   tree.
