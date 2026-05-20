@@ -124,6 +124,12 @@ for my $required_id (qw(
     contract.generic_placeholder_token
     contract.bare_assignment_condition_suffix
     contract.bare_transition_condition_suffix
+    contract.malformed_top_level_system_root
+    contract.malformed_single_token_action
+    contract.malformed_empty_guard
+    contract.malformed_empty_test_branch
+    contract.malformed_bare_symbolic_test_selector
+    contract.malformed_bare_numeric_test_selector
     contract.direct_rhs_concat_width_mismatch
     contract.direct_aggregate_contract_mismatch
     contract.missing_rtl_metadata_sidecar
@@ -266,8 +272,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    39,
-    'catalog now records thirty-nine explicit expected-failure entries',
+    45,
+    'catalog now records forty-five explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

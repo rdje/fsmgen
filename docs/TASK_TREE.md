@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-MALFORMED-FORM-CORPUS-WIDENING` | `active` | `R12` | `R12-MALFORMED-FORM-CORPUS-WIDENING.2` | [docs/tasks/R12-MALFORMED-FORM-CORPUS-WIDENING.md](docs/tasks/R12-MALFORMED-FORM-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-MALFORMED-FORM-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-MALFORMED-FORM-CORPUS-WIDENING.md](docs/tasks/R12-MALFORMED-FORM-CORPUS-WIDENING.md) |
 | `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.md](docs/tasks/R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.md) |
 | `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY` | `done` | `R9` | `closed` | [docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md](docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md) |
 | `R8-PARTIAL-LHS-PULSE-BOUNDARY` | `done` | `R8` | `closed` | [docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md](docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md) |

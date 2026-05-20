@@ -157,6 +157,36 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A bare condition suffix was used where an explicit guard is required.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_SOURCE_ROOT => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A top-level source root did not match the supported source shape.',
+    },
+    FSMGEN_LANGUAGE_UNSUPPORTED_ACTION_FORM => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An action form did not match any supported action shape.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_GUARDED_BLOCK => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A guarded block omitted its required body.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_TEST_BRANCH => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A test branch omitted its required body.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_TEST_SELECTOR => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A test selector used an unsupported bare selector shape.',
+    },
     FSMGEN_DIRECT_RHS_WIDTH_MISMATCH => {
         severity => 'error',
         stability => 'stable',

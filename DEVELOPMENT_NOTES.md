@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Malformed-form support accounting remains focused
+- `R12-MALFORMED-FORM-CORPUS-WIDENING.2` keeps the same pattern as the
+  preceding R12 slice: no syntax changes, only maintained corpus truth for
+  failures that already had focused diagnostics.
+- The selector fixtures deliberately share `FSMGEN_LANGUAGE_MALFORMED_TEST_SELECTOR`
+  for symbolic and numeric bare selector labels because the stable contract
+  family is the malformed selector shape, not the spelling of the rejected
+  token.
+
 ## 2026-05-20: Malformed-form corpus widening follows focused diagnostics
 - `R12-MALFORMED-FORM-CORPUS-WIDENING.1` selects another behavior-neutral
   corpus/accounting slice.

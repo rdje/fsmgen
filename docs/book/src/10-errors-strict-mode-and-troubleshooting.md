@@ -134,8 +134,10 @@ the failure family.
 The maintained language-contract expected-failure corpus now includes named
 entries for unsupported top-level source wrappers, unsupported top-level
 directives, legacy generic/template placeholders, and bare condition suffixes.
-Those entries are not only prose examples: pipeline, CLI, check JSON, and
-normalized semantic JSON regression tests all classify them through the same
+It also includes malformed top-level source roots, malformed action/guard
+forms, malformed test branches, and malformed bare test selectors. Those
+entries are not only prose examples: pipeline, CLI, check JSON, and normalized
+semantic JSON regression tests all classify them through the same
 support-accounting path.
 
 It also keeps positive acceptance markers for canonical supported surfaces.
@@ -163,6 +165,8 @@ FSMGEN_LANGUAGE_BAD_SIZE_ENTRY
 FSMGEN_LANGUAGE_UNSUPPORTED_TOP_LEVEL_DIRECTIVE
 FSMGEN_LANGUAGE_GENERIC_PLACEHOLDER_TOKEN
 FSMGEN_LANGUAGE_BARE_CONDITION_SUFFIX
+FSMGEN_LANGUAGE_UNSUPPORTED_ACTION_FORM
+FSMGEN_LANGUAGE_MALFORMED_TEST_SELECTOR
 FSMGEN_COMPOSITION_MISSING_RTLIF
 ```
 

@@ -2,6 +2,17 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — malformed-form widening shipped
+- Completed `R12-MALFORMED-FORM-CORPUS-WIDENING.2` and closed the tree.
+- The maintained corpus now has six additional malformed-form expected-failure
+  entries for malformed top-level source roots, unsupported single-token
+  actions, empty guarded blocks, malformed test branches, and malformed bare
+  test selectors.
+- Stable diagnostic codes, corpus behavior checks, check JSON, normalized
+  semantic JSON, manifest coverage, regression-corpus docs, and the mdBook are
+  synchronized.
+- No parser acceptance or generation behavior changed.
+
 ## 2026-05-20: R12 regression corpus — malformed-form widening selected
 - Completed `R12-MALFORMED-FORM-CORPUS-WIDENING.1`.
 - The active R12 frontier is now

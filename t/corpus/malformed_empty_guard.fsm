@@ -1,0 +1,10 @@
+(?fsm:malformed_empty_guard
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (-dt
+    (<req)
+    (A = 1)
+  )
+)

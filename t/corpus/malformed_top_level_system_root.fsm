@@ -1,0 +1,7 @@
+(+system
+  (clock clk)
+  (sreset reset)
+)
+(idle
+  (OUT <= 1)
+)

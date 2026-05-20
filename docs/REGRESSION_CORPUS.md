@@ -85,7 +85,8 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   `+size` expressions, divide/modulo-by-zero width arithmetic, unsupported
   width operators or malformed operator arity, unsupported top-level source or
   directive forms, legacy generic/template placeholders, and bare condition
-  suffixes.
+  suffixes. It also covers malformed top-level source roots, malformed action
+  and guard forms, malformed test branches, and malformed test selectors.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
   intentionally rejected by the normal direct-generation contract through both
   the pipeline API and the CLI after parsing succeeds but before HDL is emitted,
@@ -512,6 +513,12 @@ manifest output while keeping the exact file lists widenable.
 | `contract.generic_placeholder_token` | [t/corpus/generic_placeholder_token.fsm](t/corpus/generic_placeholder_token.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.bare_assignment_condition_suffix` | [t/corpus/bare_assignment_condition_suffix.fsm](t/corpus/bare_assignment_condition_suffix.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.bare_transition_condition_suffix` | [t/corpus/bare_transition_condition_suffix.fsm](t/corpus/bare_transition_condition_suffix.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_top_level_system_root` | [t/corpus/malformed_top_level_system_root.fsm](t/corpus/malformed_top_level_system_root.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_single_token_action` | [t/corpus/malformed_single_token_action.fsm](t/corpus/malformed_single_token_action.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_empty_guard` | [t/corpus/malformed_empty_guard.fsm](t/corpus/malformed_empty_guard.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_empty_test_branch` | [t/corpus/malformed_empty_test_branch.fsm](t/corpus/malformed_empty_test_branch.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_bare_symbolic_test_selector` | [t/corpus/malformed_bare_symbolic_test_selector.fsm](t/corpus/malformed_bare_symbolic_test_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_bare_numeric_test_selector` | [t/corpus/malformed_bare_numeric_test_selector.fsm](t/corpus/malformed_bare_numeric_test_selector.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.direct_rhs_concat_width_mismatch` | [t/corpus/direct_rhs_concat_width_mismatch.fsm](t/corpus/direct_rhs_concat_width_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.direct_aggregate_contract_mismatch` | [t/corpus/direct_aggregate_contract_mismatch.fsm](t/corpus/direct_aggregate_contract_mismatch.fsm) | `expected_failure` | `direct_generation_contract_rejection_pipeline_cli` |
 | `contract.missing_rtl_metadata_sidecar` | [t/corpus/missing_rtl_metadata_top.fsm](t/corpus/missing_rtl_metadata_top.fsm) | `expected_failure` | `composition_contract_rejection_pipeline_cli` |
@@ -589,7 +596,8 @@ manifest output while keeping the exact file lists widenable.
   contract, including assignment-surface strict rejections, child-root
   compatibility residue that depends on explicit search-path realization,
   unsupported top-level source/directive language-contract failures,
-  generic/template placeholder failures, and bare condition suffix failures.
+  generic/template placeholder failures, bare condition suffix failures, and
+  malformed source/body/test-form failures.
 
 ## Working rule
 

@@ -1,0 +1,10 @@
+(?fsm:malformed_single_token_action
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (-dt
+    (BROKEN)
+    (A = 1)
+  )
+)

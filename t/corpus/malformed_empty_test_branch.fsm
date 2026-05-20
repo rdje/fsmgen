@@ -1,0 +1,12 @@
+(?fsm:malformed_empty_test_branch
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (-dt
+    (?MODE
+      (=0)
+      (=1 (A = 1))
+    )
+  )
+)

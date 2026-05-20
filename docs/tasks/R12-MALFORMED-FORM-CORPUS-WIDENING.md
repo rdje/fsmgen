@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R12-MALFORMED-FORM-CORPUS-WIDENING`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R12`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -39,7 +39,7 @@ corpus, with stable diagnostic codes and public report coverage.
 ## Task Tree
 
 - ID: `R12-MALFORMED-FORM-CORPUS-WIDENING`
-  Status: `active`
+  Status: `done`
   Goal: `widen maintained expected-failure corpus coverage for malformed source/body/test forms`
   Children: `R12-MALFORMED-FORM-CORPUS-WIDENING.1`, `R12-MALFORMED-FORM-CORPUS-WIDENING.2`
 
@@ -51,17 +51,17 @@ corpus, with stable diagnostic codes and public report coverage.
   Commit: `R12-MALFORMED-FORM-CORPUS-WIDENING.1: select malformed-form widening`
 
 - ID: `R12-MALFORMED-FORM-CORPUS-WIDENING.2`
-  Status: `pending`
+  Status: `done`
   Goal: `add maintained expected-failure entries for malformed source/body/test-form rejection families`
   Acceptance: `named fixtures/catalog entries cover malformed top-level source roots, malformed action/guard forms, malformed test branches, and malformed test selectors with stable diagnostics and corpus behavior checks`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c` for touched support/tests; focused malformed-form tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book`
+  Commit: `R12-MALFORMED-FORM-CORPUS-WIDENING.2: widen malformed-form corpus`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R12-MALFORMED-FORM-CORPUS-WIDENING.2` | `pending` | R12 still needs wider expected-failure coverage beyond the current malformed-size, top-level directive/source, generic/template, bare-suffix, direct-generation, and composition families. |
+| 1 | `closed` | `done` | `R12-MALFORMED-FORM-CORPUS-WIDENING.2` shipped the selected malformed-form corpus widening. |
 
 ## Decisions
 
@@ -83,15 +83,18 @@ corpus, with stable diagnostic codes and public report coverage.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `R12-MALFORMED-FORM-CORPUS-WIDENING.1` | `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `R12-MALFORMED-FORM-CORPUS-WIDENING.2` | `perl -Iperl -c` for touched support/tests; focused malformed-form tests; corpus accounting/behavior tests; manifest/check-json/semantic-json corpus gates; supported corpus gates; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `R12-MALFORMED-FORM-CORPUS-WIDENING.1` | `R12-MALFORMED-FORM-CORPUS-WIDENING.1: select malformed-form widening` | Selection leaf; no compiler behavior changed. |
-| `R12-MALFORMED-FORM-CORPUS-WIDENING.2` | `pending` | `pending` |
+| `R12-MALFORMED-FORM-CORPUS-WIDENING.2` | `R12-MALFORMED-FORM-CORPUS-WIDENING.2: widen malformed-form corpus` | Adds six maintained malformed-form expected-failure entries. |
 
 ## Changelog
 
 - `2026-05-20`: Created task tree and selected the next implementation
   frontier.
+- `2026-05-20`: Shipped the selected malformed-form corpus widening and closed
+  the task tree.

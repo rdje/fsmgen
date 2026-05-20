@@ -1,0 +1,17 @@
+(?fsm:malformed_bare_symbolic_test_selector
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (+size
+    (MODE 2)
+    (A 1)
+  )
+  (s0
+    (?MODE
+      (BUSY
+        (A = 1)
+      )
+    )
+  )
+)
