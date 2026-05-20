@@ -1,7 +1,16 @@
 # ROADMAP_STATUS
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
-- Active lane: `R9`.
+- Active lane: `R12`.
+  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1` selected the next
+  support-accounting slice. The active frontier is
+  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2`, which will promote already-focused
+  language-contract rejections into maintained expected-failure corpus entries.
+- Recent R12 corpus-widening selection:
+  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1` activated the task tree for adding
+  bounded language-contract expected-failure corpus coverage before any
+  fixture, catalog, diagnostic-code, or test changes.
+- Recent R9 strict-mode completion:
   `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` shipped the legacy `<=+` strict-mode
   support-tier cut. Default mode keeps `<=+` compatibility, strict mode now
   rejects `<=+` with a preferred `<=-` migration hint, and no active R9 task
@@ -6899,6 +6908,10 @@ Done:
 Left:
 - Curate and classify a wider corpus beyond the first protocol seeds.
 - Widen expected-failure and legacy-out-of-scope coverage beyond the first legacy-root pair, first section-level compatibility pairs, first assignment-surface compatibility pair, first child-root compatibility pair, current malformed-language/`+size` scalar/operator/arity/arithmetic-contract entries, current direct-generation contract entries, and the current composition-contract rejection families.
+- Promote already-focused language-contract rejection families such as
+  unsupported top-level source/directive forms, generic/template placeholder
+  forms, and bare condition suffix forms into maintained expected-failure
+  corpus entries under `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2`.
 - Widen golden-output or semantic-check coverage beyond the current supported language-feature entries and the first protocol slice where simple compile smoke is not enough.
 - Widen the capability manifest only when the added fields can be tied back to regression-backed support-accounting truth, as the diagnostic-code registry now does.
 Exit criteria:

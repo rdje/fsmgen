@@ -1,6 +1,15 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — language-contract widening selected
+- Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused language-contract rejection families.
+- Selected unsupported top-level source/directive forms, generic/template
+  placeholder forms, and bare condition suffix forms as the next bounded corpus
+  implementation frontier.
+- No compiler behavior changed.
+
 ### R9 strict mode — legacy <=+ boundary shipped
 - Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` and closed the task tree.
 - Added shared strict-mode rejection for pair and infix `<=+` assignments with

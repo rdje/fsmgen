@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 language-contract corpus widening selected
+- Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused language-contract rejection families.
+- The next frontier is `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2`: add bounded
+  fixtures/catalog entries, stable diagnostic codes, corpus behavior checks,
+  and synchronized docs for the selected rejection families.
+- No compiler behavior changed.
+
 ## 2026-05-20: R9 legacy <=+ strict boundary shipped
 - Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` and closed the tree.
 - Strict mode now rejects pair and infix `<=+` through the shared frontend

@@ -1,5 +1,18 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Widen R12 by promoting focused language-contract failures
+- `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1` selects a corpus/accounting slice,
+  not a language-semantics change.
+- Existing focused tests already cover several parser-visible rejection
+  families that are not yet first-class maintained corpus entries. Promoting a
+  small set of them into `expected_failure` support-accounting entries is the
+  next honest R12 move because it turns isolated diagnostics into public,
+  stable-code-backed contract evidence.
+- The implementation leaf should stay bounded to fixtures, catalog metadata,
+  diagnostic-code registry updates, behavior checks, and docs. It should not
+  alter parser acceptance or add a strict-mode cut unless a fixture exposes a
+  real bug that blocks corpus classification.
+
 ## 2026-05-20: Legacy <=+ is now default-mode-only compatibility
 - `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` completes the support-tier split for
   the D-input dual-output alias.

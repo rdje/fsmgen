@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — language-contract widening selected
+- Completed `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.2`.
+- The selected implementation will promote bounded, already-focused
+  language-contract rejections into maintained expected-failure corpus entries
+  with stable diagnostics and support-accounting checks.
+- No compiler behavior changed.
+
 ## 2026-05-20: R9 strict mode — legacy <=+ boundary shipped
 - Completed `R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.2` and closed the tree.
 - Strict mode now rejects legacy `<=+` pair and infix assignments with a
