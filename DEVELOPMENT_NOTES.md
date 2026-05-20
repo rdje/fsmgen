@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Standalone DT guard corpus widening stays DT-local
+- `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1` selects supported standalone DT
+  classification and DTE guards for support-accounting promotion.
+- The implementation should promote existing standalone DT enable and
+  output-gating behavior without changing regular-state guard support,
+  malformed standalone DT diagnostics, or encoded-state planning.
+
 ## 2026-05-20: Test-branch selector support accounting proves branch lowering
 - `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2` promotes relational `?SIG`
   branch selectors into the executable supported-smoke corpus.

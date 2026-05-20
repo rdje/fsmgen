@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — standalone DT guard widening selected
+- Completed `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused standalone DT classification and DTE guards.
+- No compiler behavior changed.
+
 ### R12 regression corpus — test-branch selector widening shipped
 - Completed `R12-TEST-BRANCH-SELECTOR-CORPUS-WIDENING.2` and closed the task
   tree.
