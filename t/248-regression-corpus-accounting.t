@@ -94,6 +94,7 @@ for my $required_id (qw(
     feature.guard_shorthand
     feature.relational_operator_chains
     feature.computed_test_selector
+    feature.computed_comparison_selector
     feature.plain_test_signal_selectors
     feature.test_selector_symbolic_default
     feature.test_branch_selectors
@@ -347,8 +348,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    25,
-    'catalog now keeps twenty-five named supported-smoke entries including direct and composition language-feature fixtures',
+    26,
+    'catalog now keeps twenty-six named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -362,8 +363,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    25,
-    'catalog now records twenty-five positive strict-mode supported-smoke acceptance entries',
+    26,
+    'catalog now records twenty-six positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -386,6 +387,7 @@ for my $strict_supported_id (qw(
     feature.guard_shorthand
     feature.relational_operator_chains
     feature.computed_test_selector
+    feature.computed_comparison_selector
     feature.plain_test_signal_selectors
     feature.test_selector_symbolic_default
     feature.test_branch_selectors

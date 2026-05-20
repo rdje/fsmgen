@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Computed comparison selector support accounting proves expression disambiguation
+- `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.2` promotes comparison
+  expressions inside computed selectors into the executable supported-smoke
+  corpus.
+- The entry records emitted HDL shapes for a comparison-expression
+  intermediate and branch-local enables, proving `?(== A B)` is treated as a
+  selector expression rather than a branch marker.
+
 ## 2026-05-20: Computed comparison selector corpus widening stays selector-local
 - `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.1` selects comparison
   expressions inside computed selectors for support-accounting promotion.

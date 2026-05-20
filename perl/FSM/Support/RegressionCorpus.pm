@@ -326,6 +326,21 @@ my @REGRESSION_CORPUS = (
         ],
     },
     {
+        id => 'feature.computed_comparison_selector',
+        relpath => 't/corpus/computed_comparison_selector.fsm',
+        family => 'language_feature_fixture',
+        classification => 'supported_smoke',
+        coverage => 'direct_root_pipeline_cli',
+        source_kind => 'fsm',
+        strict_supported => 1,
+        expected_module_name => 'computed_comparison_selector',
+        expected_hdl_patterns => [
+            qr/\bintermediate_complex_expr_\d+\s*=\s*A\s*==\s*B\s*;/s,
+            qr/\bs0_x_1_en\s*=\s*s0_en\s*&\s*!intermediate_complex_expr_\d+\s*;/s,
+            qr/\bs0_y_1_en\s*=\s*s0_en\s*&\s*intermediate_complex_expr_\d+\s*;/s,
+        ],
+    },
+    {
         id => 'feature.plain_test_signal_selectors',
         relpath => 't/corpus/plain_test_signal_selectors.fsm',
         family => 'language_feature_fixture',

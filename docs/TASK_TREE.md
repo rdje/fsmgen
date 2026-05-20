@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING` | `active` | `R12` | `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.2` | [docs/tasks/R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.md](docs/tasks/R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.md](docs/tasks/R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.md) |
 | `R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.md](docs/tasks/R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.md) |
 | `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.md](docs/tasks/R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.md) |
 | `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.md](docs/tasks/R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.md) |

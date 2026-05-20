@@ -511,6 +511,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.guard_shorthand` | [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.relational_operator_chains` | [t/corpus/relational_operator_chains.fsm](t/corpus/relational_operator_chains.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.computed_test_selector` | [t/corpus/computed_test_selector.fsm](t/corpus/computed_test_selector.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.computed_comparison_selector` | [t/corpus/computed_comparison_selector.fsm](t/corpus/computed_comparison_selector.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.plain_test_signal_selectors` | [t/corpus/plain_test_signal_selectors.fsm](t/corpus/plain_test_signal_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.test_selector_symbolic_default` | [t/corpus/test_selector_symbolic_default.fsm](t/corpus/test_selector_symbolic_default.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.test_branch_selectors` | [t/corpus/test_branch_selectors.fsm](t/corpus/test_branch_selectors.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -691,7 +692,10 @@ manifest output while keeping the exact file lists widenable.
   relational chains through emitted HDL comparisons and enables. The
   `feature.computed_test_selector` entry proves that `?(expr)` selectors create
   a computed intermediate and reuse it across explicit and default branch
-  enables. The `feature.plain_test_signal_selectors` entry proves that
+  enables. The `feature.computed_comparison_selector` entry proves that
+  comparison expressions such as `?(== A B)` are selector expressions, not
+  branch markers, and lower through a computed intermediate. The
+  `feature.plain_test_signal_selectors` entry proves that
   HDL-compatible plain `?SIG` selector names lower equality branches directly
   into branch-local enables. The `feature.test_selector_symbolic_default`
   entry proves named equality selectors and `default` / `_` fallback selector
