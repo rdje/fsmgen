@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — standalone DT explicit-system widening selected
+- Completed `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused direct standalone `?dt` explicit-system
+  behavior.
+- No compiler behavior changed.
+
 ### R12 regression corpus — implicit composition autowire widening shipped
 - Completed
   `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` and closed the

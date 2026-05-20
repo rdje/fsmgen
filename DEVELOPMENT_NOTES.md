@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Standalone DT explicit-system corpus widening adds source-kind coverage
+- `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` selects direct
+  standalone `?dt` explicit-system behavior for support-accounting promotion.
+- The implementation should add a bounded `dt` source-kind path to the
+  supported-corpus assertions while preserving existing `?fsm` and composition
+  checks.
+
 ## 2026-05-21: Implicit composition autowire support accounting proves generated-child system binding
 - `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` promotes
   composition auto-wiring of implicit child system ports into the executable

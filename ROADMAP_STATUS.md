@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` closed the
-  latest implicit composition autowire support-accounting tree. The next PNT
-  step is to select the next inactive or ongoing task-tree frontier before
-  any implementation work.
+  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` selected the next task
+  tree for promoting already-focused direct standalone `?dt` explicit-system
+  behavior into the maintained supported-smoke corpus. The next frontier is
+  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.2`.
+- Recent R12 standalone DT explicit-system corpus-widening selection:
+  `R12-STANDALONE-DT-EXPLICIT-SYSTEM-CORPUS-WIDENING.1` selected a
+  behavior-neutral support-accounting slice for promoting direct `?dt`
+  explicit-system generation and `dt` source-kind support into
+  strict-supported corpus coverage.
 - Recent R12 implicit composition autowire corpus-widening completion:
   `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2` added one named
   supported-smoke corpus entry for generated-top `clk`/`rst_n` exposure and
