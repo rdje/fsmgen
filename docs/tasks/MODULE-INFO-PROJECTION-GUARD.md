@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `MODULE-INFO-PROJECTION-GUARD`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `architecture backlog`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -36,7 +36,7 @@ make it look like a second canonical compiler IR.
 ## Task Tree
 
 - ID: `MODULE-INFO-PROJECTION-GUARD`
-  Status: `active`
+  Status: `done`
   Goal: `Guard module_info as a bounded compatibility projection.`
   Children: `MODULE-INFO-PROJECTION-GUARD.1`,
   `MODULE-INFO-PROJECTION-GUARD.2`, `MODULE-INFO-PROJECTION-GUARD.3`
@@ -50,32 +50,33 @@ make it look like a second canonical compiler IR.
   Commit: `MODULE-INFO-PROJECTION-GUARD.1: audit module_info mirrors`
 
 - ID: `MODULE-INFO-PROJECTION-GUARD.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select missing guard or wording fixes.`
-  Acceptance: `Only concrete aliasing, contract, or documentation risks are
-  selected as follow-up leaves, with tests/docs scoped before code changes.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `No implementation guard is selected because `.1` found the
+  current mirror ownership, contract wording, book wording, and alias guards
+  already aligned.`
+  Verification: `static module_info wording search`; `git diff --check`; `mdbook build docs/book`
+  Commit: `MODULE-INFO-PROJECTION-GUARD.2: close module_info guard selection`
 
 - ID: `MODULE-INFO-PROJECTION-GUARD.3`
-  Status: `proposed`
+  Status: `deferred`
   Goal: `Implement selected module_info projection guards.`
-  Acceptance: `Selected guards land with focused contract/mutation tests and
-  unchanged compatibility shape unless explicitly planned.`
-  Verification: `pending`
-  Commit: `pending`
+  Acceptance: `No implementation runs from this tree because `.2` selected no
+  missing guard or wording fix.`
+  Verification: `not run; deferred by selection decision`
+  Commit: `deferred`
 
 ## Current Frontier
 
-The active frontier is `MODULE-INFO-PROJECTION-GUARD.2`, which must decide
-whether any concrete guard or wording leaf is still justified before source or
-book changes begin.
+This tree is closed. No `module_info` implementation guard is PNT-eligible
+from this tree. Future `module_info` guard work must be explicitly reopened
+through a new or reactivated task-tree leaf.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `MODULE-INFO-PROJECTION-GUARD.1` | `done` | Mirror and contract inventory completed before selecting any guard. |
-| 2 | `MODULE-INFO-PROJECTION-GUARD.2` | `active` | Select only concrete missing guards or wording fixes, or close without implementation if none are justified. |
-| 3 | `MODULE-INFO-PROJECTION-GUARD.3` | `proposed` | Implement only if `.2` selects a concrete guard or wording fix. |
+| 2 | `MODULE-INFO-PROJECTION-GUARD.2` | `done` | Selected no missing guard or wording fix after the inventory and wording search. |
+| 3 | `MODULE-INFO-PROJECTION-GUARD.3` | `deferred` | No implementation runs until future work explicitly reopens a guard leaf. |
 
 ## Decisions
 
@@ -87,11 +88,15 @@ book changes begin.
   child, public contract, and normalized semantic report `module_info` mirrors.
   The audited surface is already owner-split and heavily guarded; `.2` will
   decide whether any concrete extra guard or wording fix is still justified.
+- `2026-05-20`: Completed `.2` by selecting no missing implementation guard
+  or wording fix. The audited docs and book already state that `module_info` is
+  a bounded compatibility/result projection, not whole-hash compiler truth.
+  `.3` is deferred.
 
 ## Open Questions
 
-- Does the `.1` inventory reveal a concrete missing guard or misleading wording
-  fix, or should this tree close without code changes?
+- None for this closed tree. Reopen only if future code changes add a new
+  `module_info` mirror or stale wording claims whole-hash stability.
 
 ## Blockers
 
@@ -102,12 +107,14 @@ book changes begin.
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
 | `2026-05-20` | `MODULE-INFO-PROJECTION-GUARD.1` | `rg -n 'module_info|GeneratedModuleInfoBuilder|ResultMetadataBuilder|HDLGeneratorModuleInfoContract|forward_ir|intent_hir|lowered_rtl_ir|structural_rtl_ir' perl docs t`; `rg -n 'module_info.*alias|alias.*module_info|mutation.*module_info|module_info.*mutation|contaminate.*module_info|module_info.*contaminate|separate mutable|fresh module_info' t docs/book/src docs/COMPOSITION_SCOPE.md docs/IR_POLICY.md`; `git diff --check`; `mdbook build docs/book` | `passed` |
+| `2026-05-20` | `MODULE-INFO-PROJECTION-GUARD.2` | `rg -n 'module_info.*canonical|canonical.*module_info|module_info.*stable|stable.*module_info|module_info.*truth|truth.*module_info|module_info.*public API|public API.*module_info|module_info.*full_hash_stable|full_hash_stable.*module_info|module_info.*JSON safe|JSON safe.*module_info|whole module_info|module_info hash' README.md docs docs/book/src perl/FSM/Support t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
 | `MODULE-INFO-PROJECTION-GUARD.1` | `MODULE-INFO-PROJECTION-GUARD.1: audit module_info mirrors` | Maps mirror families to canonical owners and existing guard coverage. |
+| `MODULE-INFO-PROJECTION-GUARD.2` | `MODULE-INFO-PROJECTION-GUARD.2: close module_info guard selection` | Selects no missing guard or wording fix and closes the tree. |
 
 ## Changelog
 
@@ -115,6 +122,8 @@ book changes begin.
   `FSMGEN-IR-AUDIT.4`.
 - `2026-05-20`: Activated `.1`, inventoried module-info mirror owners and
   guard coverage, and advanced `.2` for selection.
+- `2026-05-20`: Completed `.2`, selected no missing guard or wording fix,
+  deferred `.3`, and closed the tree.
 
 ## Module Info Mirror Inventory
 
@@ -150,6 +159,6 @@ and tests already cover the highest-risk aliasing boundaries:
 - public contract key lists, stable-subsurface maps, JSON round trips, and
   defensive rebuilds.
 
-The main `.2` decision is therefore whether to close the tree with no code
-changes, or add a small wording guard if a stale document still implies that
-the whole `module_info` hash is canonical or stable.
+`.2` closed the tree with no code changes. The wording search found only
+bounded-key and stable-subsurface claims, plus explicit statements that the
+whole `module_info` hash is not stable/canonical compiler truth.

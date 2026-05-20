@@ -900,6 +900,9 @@ IR audit checkpoint:
   [perl/FSM/Support/HDLGeneratorModuleInfoContract.pm](../perl/FSM/Support/HDLGeneratorModuleInfoContract.pm),
   and normalized semantic JSON remains the downstream machine interchange
   surface rather than raw `module_info`.
+- `MODULE-INFO-PROJECTION-GUARD.2` selected no missing implementation guard or
+  wording fix. The tree is closed with `module_info` still compatibility-bound
+  rather than canonical compiler truth.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

@@ -2,13 +2,20 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — module_info guard selection closed
+- Completed `MODULE-INFO-PROJECTION-GUARD.2`.
+- Selected no missing implementation guard or wording fix. The existing
+  docs/book/support-contract wording already keeps `module_info` bounded,
+  compatibility-oriented, and non-canonical as a whole hash.
+- Deferred `.3`, closed the tree, and changed no compiler behavior.
+
 ## 2026-05-20: Architecture backlog — module_info mirrors audited
 - Completed `MODULE-INFO-PROJECTION-GUARD.1`.
 - The audit maps direct, composition, generated-child, public-contract, and
   normalized semantic report `module_info` mirrors to existing owners and
   tests.
-- The active frontier is `MODULE-INFO-PROJECTION-GUARD.2` for selecting a
-  concrete guard/wording fix or closing without implementation.
+- The later `.2` decision selected no missing guard or wording fix and closed
+  the tree.
 - No compiler behavior changed.
 
 ## 2026-05-20: Architecture backlog — ISF LoweringIR extraction deferred

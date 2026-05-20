@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `MODULE-INFO-PROJECTION-GUARD` | `active` | `architecture backlog` | `MODULE-INFO-PROJECTION-GUARD.2` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `MODULE-INFO-PROJECTION-GUARD` | `done` | `architecture backlog` | `closed` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `done` | `architecture backlog` | `closed` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
 | `GLOBAL-AST-MANAGER-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
 | `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` | `done` | `architecture backlog` | `closed` | [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md) |

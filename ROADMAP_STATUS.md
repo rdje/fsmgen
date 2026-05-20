@@ -2,13 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `MODULE-INFO-PROJECTION-GUARD.1` audited direct, composition,
-  generated-child, public-contract, and normalized semantic report
-  `module_info` mirrors. The audited surface is already owner-split and
-  heavily guarded; the active frontier is
-  `MODULE-INFO-PROJECTION-GUARD.2` for selecting any concrete missing guard or
-  wording fix, or closing without implementation if none is justified.
+  `MODULE-INFO-PROJECTION-GUARD.2` closed the `module_info` projection guard
+  tree after selecting no missing implementation guard or wording fix. The
+  audited docs and book already state that `module_info` is a bounded
+  compatibility/result projection, not whole-hash compiler truth. No active
+  architecture task tree remains.
 - Recent architecture backlog:
+  `MODULE-INFO-PROJECTION-GUARD.2` searched current docs/book/support wording
+  and found no stale claim that the whole `module_info` hash is canonical,
+  stable, or JSON-safe. `.3` is deferred and no compiler behavior changed.
+- Previous architecture backlog:
   `MODULE-INFO-PROJECTION-GUARD.1` mapped `module_info` mirror families to
   `GeneratedModuleInfoBuilder`, `ResultMetadataBuilder`, realized-child
   carriers, `HDLGeneratorModuleInfoContract`, `HDLGeneratorResultContract`,
@@ -2813,6 +2816,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   completed `.1` by inventorying stable private `LoweringIR` subfamilies and
   `.2` by selecting no extraction candidate now. `.3` is deferred and the tree
   is closed with no compiler behavior change.
+- Closed architecture follow-up:
+  [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md)
+  completed `.1` by auditing mirror ownership and `.2` by selecting no
+  missing guard or wording fix. `.3` is deferred and the tree is closed with no
+  compiler behavior change.
 - Closed expression ownership follow-up:
   [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
   removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate.

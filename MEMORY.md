@@ -1,12 +1,21 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: module_info guard selection closed
+- Completed `MODULE-INFO-PROJECTION-GUARD.2`.
+- Selected no missing implementation guard or wording fix after the `.1`
+  audit and stale-wording search. Current docs/book/support contracts already
+  say the whole `module_info` hash is not compiler truth or stable JSON API.
+- `MODULE-INFO-PROJECTION-GUARD.3` is deferred; the tree is closed with no code
+  changes.
+- No active architecture task tree remains.
+
 ## 2026-05-20: module_info mirror audit completed
 - Completed `MODULE-INFO-PROJECTION-GUARD.1`.
 - Audited direct, composition, generated-child, public-contract, and
   normalized semantic report `module_info` mirrors. Existing owners and tests
   already cover the main mirror and aliasing risks.
-- The active frontier is `MODULE-INFO-PROJECTION-GUARD.2`, which must either
-  select a concrete guard/wording fix or close the tree without code changes.
+- The later `.2` decision selected no missing guard or wording fix and closed
+  the tree.
 - No compiler behavior changed.
 
 ## 2026-05-20: IR extraction deferred by architecture decision

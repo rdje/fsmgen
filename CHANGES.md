@@ -1,13 +1,22 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — module_info guard selection closed
+- Completed `MODULE-INFO-PROJECTION-GUARD.2`.
+- Selected no missing implementation guard or wording fix after the `.1`
+  mirror audit and stale-wording search. Existing docs/book/support contracts
+  already keep `module_info` compatibility-bound and avoid whole-hash stability
+  claims.
+- Deferred `.3` and closed the tree with no compiler behavior change.
+
 ### Architecture backlog — module_info mirrors audited
 - Completed `MODULE-INFO-PROJECTION-GUARD.1`.
 - Audited direct, composition, generated-child, public-contract, and
   normalized semantic report `module_info` mirror families against their
   canonical owners and existing guard coverage.
-- Advanced the active frontier to `MODULE-INFO-PROJECTION-GUARD.2` for
-  selecting a concrete guard/wording fix or closing without implementation.
+- Advanced the active frontier to `MODULE-INFO-PROJECTION-GUARD.2` at the
+  time; the later `.2` decision selected no missing guard or wording fix and
+  closed the tree.
 - No compiler behavior changed.
 
 ### Architecture backlog — ISF LoweringIR extraction deferred
