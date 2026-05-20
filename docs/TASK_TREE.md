@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `GLOBAL-AST-MANAGER-BOUNDARY` | `active` | `architecture backlog` | `GLOBAL-AST-MANAGER-BOUNDARY.2` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
 
 ## Proposed Task Trees
 
@@ -52,7 +53,6 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Proposed first leaf | File |
 | --- | --- | --- | --- | --- |
-| `GLOBAL-AST-MANAGER-BOUNDARY` | `proposed` | `architecture backlog` | `GLOBAL-AST-MANAGER-BOUNDARY.1` | [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md) |
 | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` | `proposed` | `architecture backlog` | `ISF-LOWERINGIR-BOUNDARY-EXTRACTION.1` | [docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md](docs/tasks/ISF-LOWERINGIR-BOUNDARY-EXTRACTION.md) |
 | `MODULE-INFO-PROJECTION-GUARD` | `proposed` | `architecture backlog` | `MODULE-INFO-PROJECTION-GUARD.1` | [docs/tasks/MODULE-INFO-PROJECTION-GUARD.md](docs/tasks/MODULE-INFO-PROJECTION-GUARD.md) |
 

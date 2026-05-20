@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — GlobalASTManager boundary classified
+- Completed `GLOBAL-AST-MANAGER-BOUNDARY.1`.
+- Classified `FSM::GlobalASTManager` as compatibility-only, not the live
+  runtime factorization owner.
+- Recorded
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm)
+  as the live direct SystemVerilog first-pass factorization owner.
+- Selected `.2` to correct stale ownership wording and guard the
+  compatibility boundary.
+- No compiler behavior changed.
+
 ### Architecture backlog — ExpressionNamer legacy parse boundary guarded
 - Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` and closed the tree.
 - Added [t/521-expression-namer-legacy-parse-boundary-audit.t](t/521-expression-namer-legacy-parse-boundary-audit.t).

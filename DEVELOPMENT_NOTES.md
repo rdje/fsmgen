@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: GlobalASTManager is compatibility support, not live owner
+- `GLOBAL-AST-MANAGER-BOUNDARY.1` separates historical naming from current
+  runtime ownership.
+- The live direct SystemVerilog first-pass factorization path is
+  `FlattenedDT -> GlobalFactorizationSupport`; `FSM::GlobalASTManager` has no
+  production import path and remains covered only by compatibility/audit tests.
+- The stale risk is its module header claiming "single authority" ownership.
+  `.2` should correct that wording and keep the existing blessed-AST
+  compatibility behavior stable.
+
 ## 2026-05-20: Legacy parse guards preserve current ambiguity explicitly
 - `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` adds regression coverage without
   resolving the blessed-only hooks yet.

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — GlobalASTManager boundary classified
+- Completed `GLOBAL-AST-MANAGER-BOUNDARY.1`.
+- `FSM::GlobalASTManager` is compatibility-only; the live direct
+  SystemVerilog first-pass factorization owner is
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm).
+- The active frontier is `GLOBAL-AST-MANAGER-BOUNDARY.2` for stale ownership
+  wording/guard cleanup.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — ExpressionNamer legacy parse boundary guarded
 - Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` and closed the tree.
 - Added [t/521-expression-namer-legacy-parse-boundary-audit.t](t/521-expression-namer-legacy-parse-boundary-audit.t).

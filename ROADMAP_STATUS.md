@@ -2,14 +2,21 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `architecture backlog`.
-  `EXPR-NAMER-LEGACY-PARSE-BOUNDARY` is closed. `.1` classified
-  `FSM::ExpressionNamer->parse_expression` as a private
-  string-to-legacy-hash parser, and `.2` added focused guards for the current
-  hash, mixed hash/blessed, name-only, and blessed-only caller boundaries.
-  The next architecture PNT candidate is `GLOBAL-AST-MANAGER-BOUNDARY.1`.
+  `GLOBAL-AST-MANAGER-BOUNDARY.1` classified `FSM::GlobalASTManager` as
+  compatibility-only, not the live runtime factorization owner. The live
+  direct SystemVerilog first-pass factorization owner is
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm).
+  The active frontier is `GLOBAL-AST-MANAGER-BOUNDARY.2` for stale ownership
+  wording/guard cleanup.
   Remaining proposed architecture follow-ups are
   `ISF-LOWERINGIR-BOUNDARY-EXTRACTION` and `MODULE-INFO-PROJECTION-GUARD`.
 - Recent architecture backlog:
+  `GLOBAL-AST-MANAGER-BOUNDARY.1` found no production `GlobalASTManager`
+  import path. Existing tests cover blessed legacy `FSM::AST::*` object
+  inputs, while the current `ExpressionNamer` string parser returns unblessed
+  hash ASTs that `GlobalASTManager::collect_ast` ignores. No compiler
+  behavior changed.
+- Previous architecture backlog:
   `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` added
   [t/521-expression-namer-legacy-parse-boundary-audit.t](t/521-expression-namer-legacy-parse-boundary-audit.t),
   guarding representative legacy hash AST shapes,
@@ -2777,9 +2784,10 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md)
   completed `.1` by classifying the current `ExpressionNamer`
   string-to-legacy-hash boundary and `.2` by adding focused guard coverage.
-- Proposed expression ownership follow-ups:
+- Active expression ownership follow-up:
   [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
-  now own the concrete expression cleanup candidates.
+  completed `.1` by classifying the module as compatibility-only. `.2` is
+  active for stale ownership wording/guard cleanup.
 - Closed expression ownership follow-up:
   [docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md](docs/tasks/EXPR-NAMER-TRACKED-COPY-CLEANUP.md)
   removed the formerly tracked `perl/FSM/ExpressionNamer.pm.new` duplicate.
@@ -4152,8 +4160,9 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   has removed the standalone `FSM::AST::Utils` duplicate.
   [docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md](docs/tasks/EXPR-NAMER-LEGACY-PARSE-BOUNDARY.md)
   is closed after guarding the current legacy hash parser boundary. The next
-  PNT candidate is
-  [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md).
+  active frontier is
+  [docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md](docs/tasks/GLOBAL-AST-MANAGER-BOUNDARY.md)
+  `.2` for correcting stale ownership wording/guards.
 - Closed architecture follow-up:
   [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md)
   is closed. `.1` mapped direct-root residues; `.2` selected the first no-op

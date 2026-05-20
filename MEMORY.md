@@ -1,5 +1,17 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: GlobalASTManager boundary classified
+- Completed `GLOBAL-AST-MANAGER-BOUNDARY.1`.
+- `FSM::GlobalASTManager` is classified as compatibility-only, not the live
+  runtime factorization owner.
+- Production direct SystemVerilog factorization is owned by
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm).
+- Existing compatibility coverage still exercises blessed `FSM::AST::*`
+  object inputs; current `ExpressionNamer` hash output is ignored by
+  `collect_ast`.
+- The active frontier is `GLOBAL-AST-MANAGER-BOUNDARY.2` for stale ownership
+  wording/guard cleanup.
+
 ## 2026-05-20: ExpressionNamer legacy parse boundary guarded
 - Completed `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` and closed the tree.
 - Added [t/521-expression-namer-legacy-parse-boundary-audit.t](t/521-expression-namer-legacy-parse-boundary-audit.t).

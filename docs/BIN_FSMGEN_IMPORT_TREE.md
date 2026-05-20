@@ -874,6 +874,12 @@ IR audit checkpoint:
 - `EXPR-NAMER-LEGACY-PARSE-BOUNDARY.2` added
   [t/521-expression-namer-legacy-parse-boundary-audit.t](../t/521-expression-namer-legacy-parse-boundary-audit.t)
   to guard that boundary before cleanup. No production behavior changed.
+- `GLOBAL-AST-MANAGER-BOUNDARY.1` classified
+  [perl/FSM/GlobalASTManager.pm](../perl/FSM/GlobalASTManager.pm) as
+  compatibility-only. The live runtime owner for direct SystemVerilog
+  first-pass AST factorization is
+  [perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm](../perl/FSM/HDL/FlattenedDT/Backend/SystemVerilog/GlobalFactorizationSupport.pm).
+  `.2` is active to correct stale ownership wording and guard that boundary.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)
