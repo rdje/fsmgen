@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R8 delayed-pulse partial-LHS boundary shipped
+- Completed `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`.
+- Indexed, sliced, aggregate, and deconstruct delayed-pulse `<N` LHS targets
+  now fail closed with a targeted scalar-target diagnostic before HDL
+  generation.
+- Parser, pipeline, and CLI entry points are covered; scalar delayed pulses
+  remain accepted.
+- No active R8 task tree remains after this slice.
+
 ## 2026-05-20: R8 delayed-pulse partial-LHS boundary split
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`.
 - Decision: do not widen `<N` delayed-pulse semantics to indexed/sliced LHS

@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Delayed pulse targets are scalar-only at the language boundary
+- `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` moves unsupported delayed-pulse partial
+  LHS targets out of backend fallout and into parser-owned contract
+  validation.
+- `<N` remains a one-bit pulse-register request. Indexed, sliced, aggregate,
+  and deconstruct targets are rejected because they imply partial-vector update
+  semantics that the pulse path does not define.
+- The focused tests cover parser, pipeline, and CLI entry points while keeping
+  scalar delayed-pulse acceptance covered by the existing assignment tests.
+
 ## 2026-05-20: Split partial delayed pulses into a fail-closed boundary
 - `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` deliberately does not widen
   delayed-pulse `<N` semantics to indexed or sliced LHS targets.

@@ -2,10 +2,16 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R8`.
-  `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` closed the preferred partial-LHS
-  tree by splitting indexed/sliced delayed-pulse LHS rejection into the active
-  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` task tree. Vector-pulse semantics are
-  deferred until a real source construct exists.
+  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` shipped the targeted delayed-pulse
+  partial-LHS fail-closed boundary. No active R8 task tree remains; the next
+  PNT pass should select another remaining language-contract gray-zone family
+  or move to the next in-progress roadmap lane if no bounded R8 leaf is
+  discoverable.
+- Recent R8 language-contract hardening:
+  `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` added parser-owned validation so indexed,
+  sliced, aggregate, and deconstruct delayed-pulse `<N` targets reject with a
+  targeted scalar-target diagnostic through parser, pipeline, and CLI entry
+  points. Scalar delayed pulses remain accepted.
 - Recent R8 language-contract hardening:
   `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` selected fail-closed rejection, not
   semantic widening, for indexed/sliced delayed-pulse LHS targets. The current
@@ -5612,14 +5618,13 @@ Done:
   now directly prove preferred `<=-` partial-LHS dual-output writes alongside
   legacy `<=+` alias compatibility.
 - [docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md](docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md)
-  now owns the delayed-pulse partial-LHS boundary. The selected direction is
-  fail-closed rejection for indexed/sliced `<N` targets, not new partial-pulse
-  semantics.
+  now closes the delayed-pulse partial-LHS boundary. Indexed, sliced,
+  aggregate, and deconstruct `<N` targets fail closed before HDL generation.
 Left:
 - Resolve the remaining gray-zone families, especially:
   - any remaining parser-accepted legacy constructs not yet cleanly bucketed.
 - Continue adding focused regression coverage per adopted construct family so support claims are continuously provable.
-- Add the targeted delayed-pulse partial-LHS fail-closed boundary; vector-pulse semantics remain deferred until a real source construct exists.
+- Vector-pulse semantics remain deferred until a real source construct exists.
 Exit criteria:
 - Every parser-visible active-language construct is bucketed clearly and documented normatively, with matching regression coverage for the supported tier.
 

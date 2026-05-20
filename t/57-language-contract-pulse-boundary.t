@@ -60,6 +60,71 @@ FSM
     );
 };
 
+subtest 'malformed delayed-pulse LHS targets are rejected explicitly' => sub {
+    my $slice_error = parse_failure(<<'FSM');
+(?fsm:bad_pulse_lhs_slice
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-dt
+    (P[0] <1 1)
+  )
+  (+size
+    (P 4)
+  )
+)
+FSM
+
+    like(
+        $slice_error,
+        qr/Malformed delayed pulse target 'P\[0\]'.*scalar 1-bit signal target/s,
+        'sliced delayed-pulse LHS gets a targeted diagnostic',
+    );
+
+    my $range_error = parse_failure(<<'FSM');
+(?fsm:bad_pulse_lhs_range
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-dt
+    (P[3:0] <1 1)
+  )
+  (+size
+    (P 4)
+  )
+)
+FSM
+
+    like(
+        $range_error,
+        qr/Malformed delayed pulse target 'P\[3:0\]'.*scalar 1-bit signal target/s,
+        'range-sliced delayed-pulse LHS gets a targeted diagnostic',
+    );
+
+    my $pair_error = parse_failure(<<'FSM');
+(?fsm:bad_pulse_lhs_pair
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-dt
+    (<1 (P[0] 1))
+  )
+  (+size
+    (P 4)
+  )
+)
+FSM
+
+    like(
+        $pair_error,
+        qr/Malformed delayed pulse target 'P\[0\]'.*Indexed, sliced, aggregate, and deconstruct LHS targets are not supported/s,
+        'pair-form sliced delayed-pulse LHS gets the same targeted diagnostic',
+    );
+};
+
 subtest 'pipeline and CLI do not emit HDL for malformed delayed-pulse RHS values' => sub {
     my $fsm_path = write_fsm('bad_pulse_rhs_cli.fsm', <<'FSM');
 (?fsm:bad_pulse_rhs_cli
@@ -97,6 +162,44 @@ FSM
     my $success = system($^X, '-I', 'perl', 'bin/fsmgen', '--output', $out_path, $fsm_path) == 0;
     ok(!$success, 'CLI rejects malformed delayed-pulse RHS value');
     ok(!-e $out_path, 'CLI does not emit output for malformed delayed-pulse RHS value');
+};
+
+subtest 'pipeline and CLI do not emit HDL for malformed delayed-pulse LHS targets' => sub {
+    my $fsm_path = write_fsm('bad_pulse_lhs_cli.fsm', <<'FSM');
+(?fsm:bad_pulse_lhs_cli
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-dt
+    (<1 (P[0] 1))
+  )
+  (+size
+    (P 4)
+  )
+)
+FSM
+
+    my $pipeline = FSM::Pipeline::HDLGenerator->new(
+        target_language => 'systemverilog',
+        debug => 0,
+    );
+    my $pipeline_error = eval {
+        $pipeline->generate_hdl_from_file($fsm_path);
+        undef;
+    };
+    $pipeline_error = $@ if !$pipeline_error;
+    ok($pipeline_error, 'pipeline rejects malformed delayed-pulse LHS target');
+    like(
+        $pipeline_error,
+        qr/Malformed delayed pulse target 'P\[0\]'/,
+        'pipeline surfaces the delayed-pulse LHS boundary clearly',
+    );
+
+    my $out_path = File::Spec->catfile($tempdir, 'bad_pulse_lhs_cli.sv');
+    my $success = system($^X, '-I', 'perl', 'bin/fsmgen', '--output', $out_path, $fsm_path) == 0;
+    ok(!$success, 'CLI rejects malformed delayed-pulse LHS target');
+    ok(!-e $out_path, 'CLI does not emit output for malformed delayed-pulse LHS target');
 };
 
 done_testing();

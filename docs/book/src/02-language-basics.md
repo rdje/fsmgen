@@ -228,6 +228,9 @@ retain the correct feedback source: Q/output-named families read the Q value,
 and D-input-named families read the generated `*_q` mirror. Dual-output partial
 writes keep their auxiliary `next_*` or `*_r` port at the full base-signal
 width even when that width is inferred only from static slice or bit indexes.
+Delayed-pulse `<N` assignments are not part of this partial-LHS contract: their
+target must be a scalar 1-bit signal, not an indexed, sliced, aggregate, or
+deconstruct LHS.
 
 Existing infix forms such as `(OUT = VALUE)` and `(Q <- D)` remain compatibility
 spellings. Both surfaces normalize into the same assignment AST/IR before HDL

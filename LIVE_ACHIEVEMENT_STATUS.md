@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R8 language-contract hardening — delayed-pulse partial-LHS boundary shipped
+- Completed `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`.
+- Delayed-pulse `<N` targets are now scalar-only at the language boundary:
+  indexed, sliced, aggregate, and deconstruct targets reject before HDL
+  generation with a targeted diagnostic.
+- Parser, pipeline, and CLI entry points are covered, and the mdBook now
+  documents the scalar-target-only rule.
+
 ## 2026-05-20: R8 language-contract hardening — delayed-pulse partial-LHS boundary split
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`.
 - Closed the preferred partial-LHS tree after splitting indexed/sliced

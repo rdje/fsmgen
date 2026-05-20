@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R8 language-contract hardening — delayed-pulse partial-LHS boundary shipped
+- Completed `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`.
+- Added parser-owned validation for delayed-pulse `<N` LHS targets.
+- Indexed, sliced, aggregate, and deconstruct pulse targets now reject through
+  parser, pipeline, and CLI entry points before HDL generation.
+- Updated the mdBook language-basics chapter with the scalar-target-only
+  delayed-pulse rule.
+
 ### R8 language-contract hardening — delayed-pulse partial-LHS boundary split
 - Completed `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3`.
 - Closed the preferred partial-LHS tree and created

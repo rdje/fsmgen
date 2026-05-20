@@ -3,7 +3,7 @@
 ## Metadata
 
 - Tree ID: `R8-PARTIAL-LHS-PULSE-BOUNDARY`
-- Status: `active`
+- Status: `done`
 - Roadmap lane: `R8`
 - Created: `2026-05-20`
 - Last updated: `2026-05-20`
@@ -37,24 +37,34 @@ target error.
 ## Task Tree
 
 - ID: `R8-PARTIAL-LHS-PULSE-BOUNDARY`
-  Status: `active`
+  Status: `done`
   Goal: `Reject partial delayed-pulse LHS targets explicitly.`
   Children: `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`
 
 - ID: `R8-PARTIAL-LHS-PULSE-BOUNDARY.1`
-  Status: `pending`
+  Status: `done`
   Goal: `Add the delayed-pulse partial-LHS fail-closed boundary.`
   Acceptance: `Indexed and sliced '<N' targets fail through parser, pipeline,
   and CLI entry points with a targeted diagnostic and no output, while scalar
   '<N' coverage remains accepted.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`;
+  `perl -Iperl -c t/57-language-contract-pulse-boundary.t`;
+  `perl -Iperl -c t/04-assignment-edge-cases.t`;
+  `prove -Iperl t/57-language-contract-pulse-boundary.t
+  t/04-assignment-edge-cases.t t/29-language-contract-core-forms.t`;
+  `git diff --check`; `mdbook build docs/book`
+  Commit: `R8-PARTIAL-LHS-PULSE-BOUNDARY.1: reject partial pulse targets`
 
 ## Current Frontier
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
-| 1 | `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` | `pending` | `R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.3` split this from the remaining pulse/vector decision. |
+This tree is closed. Indexed and sliced delayed-pulse `<N` LHS targets now
+fail at the language boundary before HDL generation.
+
+| Order | Leaf | Status | Why next |
+| --- | --- | --- | --- |
+| 1 | `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` | `done` | Added the targeted fail-closed boundary and closed the tree. |
 
 ## Decisions
 
@@ -66,6 +76,10 @@ target error.
   boundary instead of widening pulse semantics.
 - `2026-05-20`: Vector-pulse semantics remain deferred. There is no current
   distinct vector-pulse source construct to specify in this tree.
+- `2026-05-20`: Completed `.1` by adding a parser-owned delayed-pulse LHS
+  target validator. Indexed, sliced, aggregate, and deconstruct `<N` targets
+  now reject with a targeted diagnostic through parser, pipeline, and CLI
+  entry points.
 
 ## Open Questions
 
@@ -79,15 +93,16 @@ target error.
 
 | Date | Leaf | Checks | Result |
 | --- | --- | --- | --- |
-| `2026-05-20` | `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` | `pending` | `pending` |
+| `2026-05-20` | `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` | `perl -Iperl -c perl/FSM/Adapter/FSMGenFull/Parser.pm`; `perl -Iperl -c t/57-language-contract-pulse-boundary.t`; `perl -Iperl -c t/04-assignment-edge-cases.t`; `prove -Iperl t/57-language-contract-pulse-boundary.t t/04-assignment-edge-cases.t t/29-language-contract-core-forms.t`; `git diff --check`; `mdbook build docs/book` | `passed` |
 
 ## Commit Log
 
 | Leaf | Commit subject or reference | Notes |
 | --- | --- | --- |
-| `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` | `pending` | `pending` |
+| `R8-PARTIAL-LHS-PULSE-BOUNDARY.1` | `R8-PARTIAL-LHS-PULSE-BOUNDARY.1: reject partial pulse targets` | Adds parser/pipeline/CLI rejection for indexed and sliced delayed-pulse LHS targets. |
 
 ## Changelog
 
 - `2026-05-20`: Created and activated the tree for the delayed-pulse
   partial-LHS fail-closed boundary.
+- `2026-05-20`: Completed `.1` and closed the tree.

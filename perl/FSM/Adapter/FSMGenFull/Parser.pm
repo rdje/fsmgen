@@ -1799,6 +1799,22 @@ sub validate_assignment_lhs_target($self, $raw_target, $target_expr) {
         supported_boundary_hint();
 }
 
+sub validate_delayed_pulse_lhs_target($self, $raw_target, $target_expr) {
+    my $target_display = $self->describe_assignment_target($raw_target, $target_expr);
+
+    return
+        if $target_expr
+        && blessed($target_expr)
+        && $target_expr->isa('FSM::CoreAST::SignalRef')
+        && !$target_expr->slice;
+
+    Carp::confess
+        "Malformed delayed pulse target '$target_display'. ".
+        "Delayed pulse assignments require a scalar 1-bit signal target, for example '(P <1 1)' or '(<1 (P 1))'. ".
+        "Indexed, sliced, aggregate, and deconstruct LHS targets are not supported for '<N' delayed pulses. ".
+        supported_boundary_hint();
+}
+
 sub is_static_assignment_lvalue($self, $target_expr) {
     return 0 unless $target_expr && blessed($target_expr);
     return 1 if $target_expr->isa('FSM::CoreAST::SignalRef');
@@ -3191,6 +3207,8 @@ sub parse_signal_action($self, $action) {
     my $target_expr = $self->{expression_builder}->parse_signal_reference($signal_name);
     my $lhs_deconstruct_contract = $self->validate_assignment_lhs_target($signal_name, $target_expr);
     $signal_name_display = $self->describe_assignment_target($signal_name, $target_expr);
+    $self->validate_delayed_pulse_lhs_target($signal_name, $target_expr)
+        if defined($operator) && $operator =~ /^<\d+$/;
     my $source_expr = $self->{expression_builder}->parse_expression($value_expr);
     my $raw_source_expr_display;
     my ($compound_operator_used, $compound_delta_used);
