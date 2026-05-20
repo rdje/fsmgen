@@ -44,7 +44,6 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING` | `active` | `R12` | `R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.2` | [docs/tasks/R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 
@@ -58,6 +57,7 @@ PNT-eligible until explicitly activated or until the roadmap selects that lane.
 
 | Tree | Status | Roadmap lane | Completed frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.md](docs/tasks/R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.md) |
 | `R12-CONDITION-EXPRESSION-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-CONDITION-EXPRESSION-CORPUS-WIDENING.md](docs/tasks/R12-CONDITION-EXPRESSION-CORPUS-WIDENING.md) |
 | `R12-RHS-EXPRESSION-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-RHS-EXPRESSION-CORPUS-WIDENING.md](docs/tasks/R12-RHS-EXPRESSION-CORPUS-WIDENING.md) |
 | `R12-FSM-ROOT-BODY-CORPUS-WIDENING` | `done` | `R12` | `closed` | [docs/tasks/R12-FSM-ROOT-BODY-CORPUS-WIDENING.md](docs/tasks/R12-FSM-ROOT-BODY-CORPUS-WIDENING.md) |

@@ -163,6 +163,9 @@ for my $required_id (qw(
     contract.operator_unsupported_arrow
     contract.directive_init_placeholder_value
     contract.directive_init_guard_value
+    contract.init_directive_payload_extra
+    contract.init_directive_compact_broken
+    contract.init_directive_canonical_missing_value
     contract.test_signal_bad_hyphen
     contract.test_signal_numeric
     contract.computed_test_missing_expr
@@ -314,8 +317,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    87,
-    'catalog now records eighty-seven explicit expected-failure entries',
+    90,
+    'catalog now records ninety explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

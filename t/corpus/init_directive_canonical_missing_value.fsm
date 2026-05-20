@@ -1,0 +1,10 @@
+(?fsm:init_directive_canonical_missing_value
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+  (:= (tester_reset))
+  (idle
+    (A = 1)
+  )
+)

@@ -349,6 +349,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'An init directive used an unsupported reset value.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_INIT_DIRECTIVE_PAYLOAD => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An init directive payload did not match the supported shape.',
+    },
+    FSMGEN_LANGUAGE_UNSUPPORTED_INIT_DIRECTIVE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A compact init directive did not match the supported signal=value form.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

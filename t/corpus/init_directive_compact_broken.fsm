@@ -1,0 +1,10 @@
+(?fsm:init_directive_compact_broken
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (:= BROKEN)
+  (idle
+    (A = 1)
+  )
+)

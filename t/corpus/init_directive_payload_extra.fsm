@@ -1,0 +1,10 @@
+(?fsm:init_directive_payload_extra
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (:= (tester_reset=1 extra))
+  (idle
+    (A = 1)
+  )
+)
