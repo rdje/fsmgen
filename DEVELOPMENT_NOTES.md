@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Implicit composition autowire corpus widening stays composition-local
+- `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1` selects
+  composition auto-wiring of implicit child `clk` and `rst_n` system ports for
+  support-accounting promotion.
+- The implementation should promote existing composition top/child port
+  binding behavior without changing direct omitted-`+system` defaults,
+  explicit `+system` remapping, or ISF actor timing defaults.
+
 ## 2026-05-21: Implicit system defaults support accounting proves fallback timing projection
 - `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` promotes omitted direct
   `+system` defaults into the executable supported-smoke corpus.

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-21: R12 regression corpus — implicit composition autowire widening selected
+- Completed
+  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2`.
+- The selected implementation will promote composition auto-wiring of implicit
+  child system ports into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 regression corpus — implicit system defaults widening shipped
 - Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` and closed the
   tree.

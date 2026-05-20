@@ -1,6 +1,14 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-21
+### R12 regression corpus — implicit composition autowire widening selected
+- Completed
+  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused composition auto-wiring of implicit child
+  system ports.
+- No compiler behavior changed.
+
 ### R12 regression corpus — implicit system defaults widening shipped
 - Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` and closed the
   task tree.

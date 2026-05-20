@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-21: R12 implicit composition system autowire corpus widening selected
+- Completed `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused composition
+  auto-wiring of implicit child `clk` and `rst_n` system ports into maintained
+  supported-smoke corpus coverage.
+- The next frontier is
+  `R12-IMPLICIT-COMPOSITION-SYSTEM-AUTOWIRE-CORPUS-WIDENING.2`: add a bounded
+  fixture/catalog entry, strict-supported marker, HDL-shape checks, and
+  synchronized docs for implicit child system-port auto-wiring.
+- No compiler behavior changed.
+
 ## 2026-05-21: R12 implicit system defaults corpus widening shipped
 - Completed `R12-IMPLICIT-SYSTEM-DEFAULTS-CORPUS-WIDENING.2` and closed the
   tree.
