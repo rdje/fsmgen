@@ -92,6 +92,7 @@ for my $required_id (qw(
     feature.state_dte_guards
     feature.guard_shorthand
     feature.relational_operator_chains
+    feature.computed_test_selector
     feature.direct_intent_integer_literals
     feature.composition_intent_integer_literals
     legacy.mipicsi2_txccore_ulp.default_compat
@@ -342,8 +343,8 @@ for my $entry (@entries) {
 
 is(
     scalar(grep { $_->{classification} eq 'supported_smoke' } @entries),
-    20,
-    'catalog now keeps twenty named supported-smoke entries including direct and composition language-feature fixtures',
+    21,
+    'catalog now keeps twenty-one named supported-smoke entries including direct and composition language-feature fixtures',
 );
 is(
     scalar(grep { $_->{classification} eq 'legacy_out_of_scope' } @entries),
@@ -357,8 +358,8 @@ is(
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
-    20,
-    'catalog now records twenty positive strict-mode supported-smoke acceptance entries',
+    21,
+    'catalog now records twenty-one positive strict-mode supported-smoke acceptance entries',
 );
 for my $strict_supported_id (qw(
     protocol.apb_requester
@@ -379,6 +380,7 @@ for my $strict_supported_id (qw(
     feature.state_dte_guards
     feature.guard_shorthand
     feature.relational_operator_chains
+    feature.computed_test_selector
     feature.direct_intent_integer_literals
     feature.composition_intent_integer_literals
 )) {

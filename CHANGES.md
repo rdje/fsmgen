@@ -1,6 +1,17 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — computed test-selector widening shipped
+- Completed `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.2` and closed the
+  task tree.
+- Added one named supported-smoke fixture and catalog entry for computed
+  selector intermediate generation, explicit selector branches, and default
+  branch reuse.
+- Added strict-supported metadata and HDL-shape expectations for the new entry
+  and widened supported corpus accounting, manifest, check JSON, normalized
+  semantic JSON, regression-corpus docs, and mdBook coverage.
+- No parser acceptance or generation behavior changed.
+
 ### R12 regression corpus — computed test-selector widening selected
 - Completed `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.1`.
 - Activated a new R12 task tree for widening maintained supported-smoke corpus
