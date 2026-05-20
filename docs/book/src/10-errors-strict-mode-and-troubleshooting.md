@@ -171,6 +171,8 @@ duplicate `+params` declarations.
 Aggregate parameter-expression entries cover mixed aggregate/scalar operands,
 shape mismatches, arithmetic overflow, arithmetic underflow, and divide-by-zero
 inside aggregate `+params` expressions.
+Symbol-token entries cover malformed `+constants`, `+define`, and `+params`
+identifiers plus non-scalar `+enums` member values.
 Test-selector entries cover malformed plain `?SIG` signal names and computed
 test selectors that omit their selector expression. Those entries are not only
 prose examples. Inline-modifier entries cover malformed compound modifier

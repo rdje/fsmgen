@@ -105,8 +105,9 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   ambiguous bare bitstring-like `+constants` / `+params` values, cyclic
   `+params` dependency graphs, duplicate `+params` declarations, aggregate
   `+params` expression mixed operands, shape mismatches, overflow, underflow,
-  and divide-by-zero, malformed plain test-signal names, malformed computed
-  test selectors, malformed inline compound modifier
+  and divide-by-zero, malformed symbol identifiers, non-scalar enum member
+  values, malformed plain test-signal names, malformed computed test
+  selectors, malformed inline compound modifier
   payloads, duplicate inline compound modifiers, malformed update-shorthand
   targets, and malformed update-shorthand tails.
 - `direct_generation_contract_rejection_pipeline_cli`: the entry is
@@ -596,6 +597,10 @@ manifest output while keeping the exact file lists widenable.
 | `contract.params_aggregate_overflow` | [t/corpus/params_aggregate_overflow.fsm](t/corpus/params_aggregate_overflow.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.params_aggregate_underflow` | [t/corpus/params_aggregate_underflow.fsm](t/corpus/params_aggregate_underflow.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.params_aggregate_divide_by_zero` | [t/corpus/params_aggregate_divide_by_zero.fsm](t/corpus/params_aggregate_divide_by_zero.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_bad_constants_identifier` | [t/corpus/symbol_bad_constants_identifier.fsm](t/corpus/symbol_bad_constants_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_bad_define_identifier` | [t/corpus/symbol_bad_define_identifier.fsm](t/corpus/symbol_bad_define_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_bad_params_identifier` | [t/corpus/symbol_bad_params_identifier.fsm](t/corpus/symbol_bad_params_identifier.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.symbol_bad_enum_member_value` | [t/corpus/symbol_bad_enum_member_value.fsm](t/corpus/symbol_bad_enum_member_value.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.test_signal_bad_hyphen` | [t/corpus/test_signal_bad_hyphen.fsm](t/corpus/test_signal_bad_hyphen.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.test_signal_numeric` | [t/corpus/test_signal_numeric.fsm](t/corpus/test_signal_numeric.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.computed_test_missing_expr` | [t/corpus/computed_test_missing_expr.fsm](t/corpus/computed_test_missing_expr.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

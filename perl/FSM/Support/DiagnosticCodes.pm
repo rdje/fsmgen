@@ -475,6 +475,30 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'An aggregate +params arithmetic expression divided by zero.',
     },
+    FSMGEN_LANGUAGE_BAD_CONSTANTS_IDENTIFIER => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +constants entry used a malformed constant identifier.',
+    },
+    FSMGEN_LANGUAGE_BAD_DEFINE_IDENTIFIER => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +define entry used a malformed symbol identifier.',
+    },
+    FSMGEN_LANGUAGE_BAD_PARAMS_IDENTIFIER => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +params entry used a malformed parameter identifier.',
+    },
+    FSMGEN_LANGUAGE_BAD_ENUMS_MEMBER_VALUE => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A +enums member used a non-scalar value token.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

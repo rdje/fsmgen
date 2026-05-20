@@ -1,0 +1,12 @@
+(?fsm:symbol_bad_constants_identifier
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+constants
+    (bad-name 1)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)

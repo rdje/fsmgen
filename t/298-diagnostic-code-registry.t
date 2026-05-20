@@ -16,7 +16,7 @@ use FSM::Support::DiagnosticCodes qw(
 );
 
 my @codes = diagnostic_code_ids();
-ok(@codes >= 97, 'diagnostic registry starts with the current expected-failure corpus surface');
+ok(@codes >= 101, 'diagnostic registry starts with the current expected-failure corpus surface');
 is(scalar(diagnostic_code_ids()), scalar(@codes), 'diagnostic_code_ids is scalar-context safe');
 
 my %seen;

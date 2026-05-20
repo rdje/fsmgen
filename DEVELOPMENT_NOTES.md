@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Symbol-token support accounting keeps token failures specific
+- `R12-SYMBOL-TOKEN-CORPUS-WIDENING.2` promotes existing identifier and enum
+  scalar-token diagnostics without changing declaration syntax.
+- Constant, define, parameter, and enum-member token failures use separate
+  stable codes because the authoring surfaces and downstream repair hints are
+  different.
+
 ## 2026-05-20: Symbol-token corpus widening separates token shape from entry shape
 - `R12-SYMBOL-TOKEN-CORPUS-WIDENING.1` selects symbol identifier and enum
   scalar-token diagnostics for support-accounting promotion.

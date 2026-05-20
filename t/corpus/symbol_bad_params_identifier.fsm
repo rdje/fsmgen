@@ -1,0 +1,12 @@
+(?fsm:symbol_bad_params_identifier
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+params
+    (bad-name 8)
+  )
+  (-dt
+    (OUT = 1)
+  )
+)
