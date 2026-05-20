@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — symbol-value widening selected
+- Completed `R12-SYMBOL-VALUE-CORPUS-WIDENING.1`.
+- The active R12 frontier is now `R12-SYMBOL-VALUE-CORPUS-WIDENING.2`.
+- The selected implementation will promote unresolved `+params` value names
+  and ambiguous bare bitstring-like `+constants` / `+params` values into
+  maintained expected-failure corpus entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — malformed symbol-entry widening shipped
 - Completed `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.2` and closed the
   tree.

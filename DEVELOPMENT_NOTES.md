@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Symbol-value corpus widening separates value diagnostics
+- `R12-SYMBOL-VALUE-CORPUS-WIDENING.1` selects symbol-definition value
+  diagnostics for support-accounting promotion.
+- The implementation should promote unresolved parameter value names and
+  ambiguous bare bitstring-like symbol values into stable-code-backed
+  expected-failure entries without changing declaration acceptance.
+
 ## 2026-05-20: Malformed symbol-entry support accounting keeps fixes specific
 - `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.2` promotes existing malformed
   symbol-entry diagnostics without changing declaration syntax.

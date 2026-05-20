@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — symbol-value widening selected
+- Completed `R12-SYMBOL-VALUE-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused unresolved `+params` value names and ambiguous
+  bare bitstring-like `+constants` / `+params` value rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — malformed symbol-entry widening shipped
 - Completed `R12-SYMBOL-ENTRY-MALFORMED-CORPUS-WIDENING.2` and closed the
   task tree.
