@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — init-directive shape widening selected
+- Completed `R12-INIT-DIRECTIVE-SHAPE-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused malformed `:=` payload shape and malformed
+  compact `:=` directive rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — condition-expression widening shipped
 - Completed `R12-CONDITION-EXPRESSION-CORPUS-WIDENING.2` and closed the task
   tree.
