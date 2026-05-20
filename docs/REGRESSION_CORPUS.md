@@ -93,7 +93,8 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   `?fsm` root bodies and body items, malformed state or standalone-DT names,
   malformed empty state/standalone-DT bodies, malformed transition targets,
   unknown transition targets, unsupported RHS expression operators, malformed
-  RHS expression arity, and guard-only tokens in RHS value position. It also
+  RHS expression arity, guard-only tokens in RHS value position, malformed
+  guard shorthand payloads, and malformed inline comparison tokens. It also
   covers malformed delayed-pulse RHS values, mixed
   combinational/sequential assignment families, mixed pulse and non-pulse
   sequential writes, multiple pulse delays for one signal, combinational
@@ -553,6 +554,10 @@ manifest output while keeping the exact file lists widenable.
 | `contract.rhs_expression_unsupported_operator` | [t/corpus/rhs_expression_unsupported_operator.fsm](t/corpus/rhs_expression_unsupported_operator.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.rhs_expression_bad_arity` | [t/corpus/rhs_expression_bad_arity.fsm](t/corpus/rhs_expression_bad_arity.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.rhs_expression_guard_token` | [t/corpus/rhs_expression_guard_token.fsm](t/corpus/rhs_expression_guard_token.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.condition_guard_payload_missing_rhs` | [t/corpus/condition_guard_payload_missing_rhs.fsm](t/corpus/condition_guard_payload_missing_rhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.condition_guard_payload_missing_lhs` | [t/corpus/condition_guard_payload_missing_lhs.fsm](t/corpus/condition_guard_payload_missing_lhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.condition_inline_comparison_missing_rhs` | [t/corpus/condition_inline_comparison_missing_rhs.fsm](t/corpus/condition_inline_comparison_missing_rhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.condition_inline_comparison_missing_lhs` | [t/corpus/condition_inline_comparison_missing_lhs.fsm](t/corpus/condition_inline_comparison_missing_lhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_delayed_pulse_bad_rhs` | [t/corpus/assignment_delayed_pulse_bad_rhs.fsm](t/corpus/assignment_delayed_pulse_bad_rhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_mixed_comb_seq` | [t/corpus/assignment_mixed_comb_seq.fsm](t/corpus/assignment_mixed_comb_seq.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_mixed_pulse_nonpulse` | [t/corpus/assignment_mixed_pulse_nonpulse.fsm](t/corpus/assignment_mixed_pulse_nonpulse.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

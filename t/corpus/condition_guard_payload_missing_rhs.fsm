@@ -1,0 +1,11 @@
+(?fsm:condition_guard_payload_missing_rhs
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (idle
+    (<mode=
+      (A = 1)
+    )
+  )
+)

@@ -1,0 +1,12 @@
+(?fsm:condition_inline_comparison_missing_rhs
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (+size
+    (A 1)
+  )
+  (-dt
+    (A = cnt[2:1]!=)
+  )
+)

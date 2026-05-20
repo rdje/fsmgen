@@ -146,6 +146,9 @@ such as `(idle)` and empty standalone-DT blocks such as `(-misc)`.
 RHS-expression entries cover unsupported expression operators such as
 `(bogus B C)`, malformed operator arity such as `(== B)`, and guard-only
 tokens such as `<start` in ordinary value position.
+Condition-expression entries cover malformed guard shorthand payloads such as
+`<mode=` and `<==3`, plus malformed inline comparison tokens such as
+`cnt[2:1]!=` and `=3`.
 Assignment-boundary entries cover malformed delayed-pulse RHS values, mixed
 combinational/sequential assignment families, mixed pulse and non-pulse
 sequential writes, multiple pulse delays for one signal, combinational
@@ -199,6 +202,8 @@ FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET
 FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_OPERATOR
 FSMGEN_LANGUAGE_MALFORMED_RHS_EXPRESSION_ARITY
 FSMGEN_LANGUAGE_UNSUPPORTED_RHS_EXPRESSION_TOKEN
+FSMGEN_LANGUAGE_MALFORMED_GUARD_CONDITION_PAYLOAD
+FSMGEN_LANGUAGE_MALFORMED_INLINE_COMPARISON_EXPRESSION
 FSMGEN_LANGUAGE_DELAYED_PULSE_RHS
 FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY
 FSMGEN_LANGUAGE_UNSUPPORTED_ASSIGNMENT_OPERATOR

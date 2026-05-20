@@ -149,6 +149,10 @@ for my $required_id (qw(
     contract.rhs_expression_unsupported_operator
     contract.rhs_expression_bad_arity
     contract.rhs_expression_guard_token
+    contract.condition_guard_payload_missing_rhs
+    contract.condition_guard_payload_missing_lhs
+    contract.condition_inline_comparison_missing_rhs
+    contract.condition_inline_comparison_missing_lhs
     contract.assignment_delayed_pulse_bad_rhs
     contract.assignment_mixed_comb_seq
     contract.assignment_mixed_pulse_nonpulse
@@ -310,8 +314,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    83,
-    'catalog now records eighty-three explicit expected-failure entries',
+    87,
+    'catalog now records eighty-seven explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),

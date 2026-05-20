@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Condition-expression support accounting keeps grammar closed
+- `R12-CONDITION-EXPRESSION-CORPUS-WIDENING.2` promotes existing malformed
+  guard shorthand and inline comparison diagnostics without widening syntax.
+- Guard payload failures and inline comparison token failures use separate
+  stable codes because they sit in different authoring surfaces even though
+  both are condition-expression shape errors.
+
 ## 2026-05-20: Condition-expression corpus widening stays syntax-neutral
 - `R12-CONDITION-EXPRESSION-CORPUS-WIDENING.1` selects malformed guard
   shorthand and inline comparison diagnostics for support-accounting promotion.

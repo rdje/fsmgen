@@ -289,6 +289,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'An RHS expression used a token that is not valid in value position.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_GUARD_CONDITION_PAYLOAD => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A guard shorthand condition payload was malformed.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_INLINE_COMPARISON_EXPRESSION => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'An inline comparison expression token was malformed.',
+    },
     FSMGEN_LANGUAGE_DELAYED_PULSE_RHS => {
         severity => 'error',
         stability => 'stable',
