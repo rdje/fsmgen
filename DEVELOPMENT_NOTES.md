@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Plus-FSM body support accounting separates root residue from structured roots
+- `R12-PLUS-FSM-BODY-CORPUS-WIDENING.2` promotes existing malformed legacy
+  `+fsm` root-body diagnostics without changing the legacy root compatibility
+  surface.
+- The stable codes intentionally distinguish empty legacy root bodies from
+  scalar legacy body items, and from the previously shipped structured
+  `?fsm:name` root-body failures.
+
 ## 2026-05-20: Plus-FSM body corpus widening stays legacy-root-local
 - `R12-PLUS-FSM-BODY-CORPUS-WIDENING.1` selects malformed legacy `+fsm`
   root-body diagnostics for support-accounting promotion.

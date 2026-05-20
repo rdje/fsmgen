@@ -499,6 +499,18 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A +enums member used a non-scalar value token.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_LEGACY_FSM_ROOT_BODY => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A legacy +fsm root had no valid body.',
+    },
+    FSMGEN_LANGUAGE_MALFORMED_LEGACY_FSM_ROOT_BODY_ITEM => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A legacy +fsm root had a malformed body item.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TEST_SIGNAL => {
         severity => 'error',
         stability => 'stable',

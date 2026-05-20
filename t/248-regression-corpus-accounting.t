@@ -189,6 +189,8 @@ for my $required_id (qw(
     contract.symbol_bad_define_identifier
     contract.symbol_bad_params_identifier
     contract.symbol_bad_enum_member_value
+    contract.plus_fsm_empty_body
+    contract.plus_fsm_scalar_body_item
     contract.test_signal_bad_hyphen
     contract.test_signal_numeric
     contract.computed_test_missing_expr
@@ -340,8 +342,8 @@ is(
 );
 is(
     scalar(grep { $_->{classification} eq 'expected_failure' } @entries),
-    113,
-    'catalog now records one hundred thirteen explicit expected-failure entries',
+    115,
+    'catalog now records one hundred fifteen explicit expected-failure entries',
 );
 is(
     scalar(grep { $_->{strict_supported} } @entries),
