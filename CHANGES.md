@@ -1,6 +1,16 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — name/reference widening selected
+- Completed `R12-NAME-REFERENCE-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused source-name, state/DT-name, and
+  transition-target rejection families.
+- Selected malformed source roots, malformed state/DT names, malformed
+  transition targets, and unknown transition targets as the next bounded
+  corpus implementation frontier.
+- No compiler behavior changed.
+
 ### R12 regression corpus — system-section widening shipped
 - Completed `R12-SYSTEM-SECTION-CORPUS-WIDENING.2` and closed the task tree.
 - Added six named malformed `+system` expected-failure fixtures and catalog

@@ -1,5 +1,14 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Name/reference corpus widening follows focused diagnostics
+- `R12-NAME-REFERENCE-CORPUS-WIDENING.1` selects another behavior-neutral
+  corpus/accounting slice.
+- The selected implementation should promote existing targeted diagnostics for
+  malformed source roots, malformed state/DT names, malformed transition
+  targets, and unknown transition targets into stable-code-backed corpus
+  entries. It should not broaden naming syntax or rewrite reference
+  resolution unless a real blocker appears during classification.
+
 ## 2026-05-20: System-section support accounting keeps accepted forms stable
 - `R12-SYSTEM-SECTION-CORPUS-WIDENING.2` promotes malformed `+system`
   diagnostics without changing the accepted clock/reset surface.

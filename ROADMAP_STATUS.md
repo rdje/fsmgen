@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-SYSTEM-SECTION-CORPUS-WIDENING.2` widened the maintained malformed
-  `+system` expected-failure corpus and closed the task tree. The next PNT
-  selection should choose a fresh active tree before any further source, test,
-  fixture, generated-artifact, or config changes.
+  `R12-NAME-REFERENCE-CORPUS-WIDENING.1` activated the task tree for adding
+  maintained expected-failure corpus coverage for source-name, state/DT-name,
+  and transition-target language-contract failures. The current frontier is
+  `R12-NAME-REFERENCE-CORPUS-WIDENING.2`.
+- Recent R12 name/reference corpus-widening selection:
+  `R12-NAME-REFERENCE-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting already-focused malformed source
+  names, malformed state/DT names, malformed transition targets, and unknown
+  transition targets into stable-code-backed expected-failure corpus entries.
 - Recent R12 system-section corpus-widening completion:
   `R12-SYSTEM-SECTION-CORPUS-WIDENING.2` added six named malformed `+system`
   expected-failure corpus entries for incomplete sections, duplicate
