@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 computed comparison selector corpus widening selected
+- Completed `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused supported
+  computed comparison selectors into maintained supported-smoke corpus
+  coverage.
+- The next frontier is `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.2`:
+  add a bounded fixture/catalog entry, strict-supported marker, HDL-shape
+  checks, and synchronized docs for the selected computed selector family.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 symbolic/default selector corpus widening shipped
 - Completed `R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.2` and closed
   the tree.

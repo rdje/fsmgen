@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — computed comparison selector widening selected
+- Completed `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained supported-smoke corpus
+  coverage with already-focused computed comparison selectors.
+- No compiler behavior changed.
+
 ### R12 regression corpus — symbolic/default selector widening shipped
 - Completed `R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.2` and closed
   the task tree.

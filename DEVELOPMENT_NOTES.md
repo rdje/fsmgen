@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Computed comparison selector corpus widening stays selector-local
+- `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.1` selects comparison
+  expressions inside computed selectors for support-accounting promotion.
+- The implementation should promote existing `?(== A B)` intermediate
+  lowering without changing malformed computed-selector diagnostics or broader
+  expression-operator support.
+
 ## 2026-05-20: Symbolic/default selector support accounting proves fallback lowering
 - `R12-TEST-SELECTOR-SYMBOLIC-DEFAULT-CORPUS-WIDENING.2` promotes symbolic
   equality selectors and fallback selectors into the executable supported-smoke
