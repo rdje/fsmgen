@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.2` widened the maintained
-  operator/directive expected-failure corpus and closed the task tree. The
-  next PNT selection should choose a fresh active tree before any further
-  source, test, fixture, generated-artifact, or config changes.
+  `R12-TEST-SELECTOR-CORPUS-WIDENING.1` activated the task tree for adding
+  maintained expected-failure corpus coverage for malformed plain test-signal
+  names and malformed computed test selectors. The current frontier is
+  `R12-TEST-SELECTOR-CORPUS-WIDENING.2`.
+- Recent R12 test-selector corpus-widening selection:
+  `R12-TEST-SELECTOR-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting already-focused malformed plain test
+  signals and malformed computed test selectors into stable-code-backed
+  expected-failure corpus entries.
 - Recent R12 operator/directive corpus-widening completion:
   `R12-OPERATOR-DIRECTIVE-CORPUS-WIDENING.2` added four named
   expected-failure corpus entries for unsupported `?=` and `=>` assignment
