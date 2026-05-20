@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: System-section corpus widening is support accounting
+- `R12-SYSTEM-SECTION-CORPUS-WIDENING.1` selects malformed `+system` failures
+  for support-accounting promotion.
+- The implementation should keep accepted system-section behavior untouched and
+  promote only already-focused rejection shapes into stable-code-backed
+  expected-failure entries.
+
 ## 2026-05-20: Malformed-form support accounting remains focused
 - `R12-MALFORMED-FORM-CORPUS-WIDENING.2` keeps the same pattern as the
   preceding R12 slice: no syntax changes, only maintained corpus truth for

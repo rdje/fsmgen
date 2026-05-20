@@ -195,6 +195,7 @@ The project objective is robust, traceable FSM-to-HDL generation with clear assi
 - `docs/tasks/R9-STRICT-LEGACY-LTEPLUS-BOUNDARY.md` — completed `R9` task tree for strict-mode rejection of the legacy `<=+` assignment alias.
 - `docs/tasks/R12-LANGUAGE-CONTRACT-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained language-contract expected-failure corpus coverage.
 - `docs/tasks/R12-MALFORMED-FORM-CORPUS-WIDENING.md` — completed `R12` task tree for widening maintained malformed-form expected-failure corpus coverage.
+- `docs/tasks/R12-SYSTEM-SECTION-CORPUS-WIDENING.md` — active `R12` task tree for widening maintained malformed `+system` expected-failure corpus coverage.
 - `docs/tasks/R8-PARTIAL-LHS-PULSE-BOUNDARY.md` — completed `R8` task tree for the delayed-pulse partial-LHS fail-closed boundary.
 - `docs/tasks/R8-PARTIAL-LHS-PREFERRED-DUAL-OUTPUT.md` — completed `R8` task tree for preferred `<=-` partial-LHS dual-output coverage and the remaining pulse/vector decision split.
 - `docs/BIN_FSMGEN_IMPORT_TREE.md` — live `bin/fsmgen` import-tree and runtime-spine architecture snapshot.

@@ -1,6 +1,12 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — system-section widening selected
+- Completed `R12-SYSTEM-SECTION-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused malformed `+system` rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — malformed-form widening shipped
 - Completed `R12-MALFORMED-FORM-CORPUS-WIDENING.2` and closed the task tree.
 - Added six named malformed-form expected-failure fixtures and catalog entries
