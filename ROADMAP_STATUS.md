@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2` widened the maintained
-  expected-failure corpus for delayed-pulse LHS target diagnostics. The task
-  tree is closed; the next PNT step should select the next roadmap-aligned
-  support-accounting or stabilization slice before code changes.
+  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1` selected a fresh task tree for
+  promoting already-focused unsupported top-level form diagnostics into the
+  maintained expected-failure corpus. The next implementation leaf is
+  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2`.
+- Recent R12 top-level form corpus-widening selection:
+  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting unsupported top-level infix init and
+  malformed bare scalar body forms into stable-code-backed expected-failure
+  corpus entries.
 - Recent R12 delayed-pulse target corpus-widening completion:
   `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2` added three named
   expected-failure corpus entries for indexed, range-sliced, and pair-form
@@ -4482,7 +4487,13 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
   - Notes or terminology may exist, but they do not count as implementation progress.
 
 ## Current active lane
-- `architecture backlog`:
+- `R12`:
+  [docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md](docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md)
+  is active. `.1` selects the unsupported top-level form support-accounting
+  slice before implementation; `.2` will promote the already-focused
+  future-looking infix init and malformed bare scalar body-form failures into
+  maintained expected-failure corpus entries.
+- Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
   `FSM::AST::*`, `ExpressionNamer` object/hash/string paths,

@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — top-level form widening selected
+- Completed `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2`.
+- The selected implementation will promote unsupported top-level infix init
+  forms and malformed bare scalar body forms into maintained expected-failure
+  corpus entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — delayed-pulse target widening shipped
 - Completed `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has three additional delayed-pulse LHS target

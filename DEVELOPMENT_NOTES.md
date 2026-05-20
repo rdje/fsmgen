@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Top-level form corpus widening stays body-shape-local
+- `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1` selects unsupported top-level body
+  form diagnostics for support-accounting promotion.
+- The implementation should promote existing fail-closed behavior for
+  future-looking `(signal := value)` forms and malformed bare scalar body items
+  without changing supported direct FSM body syntax.
+
 ## 2026-05-20: Delayed-pulse target support accounting keeps route shape explicit
 - `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2` promotes existing malformed
   delayed-pulse LHS target diagnostics without changing scalar delayed-pulse

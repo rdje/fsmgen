@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — top-level form widening selected
+- Completed `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused unsupported top-level infix init and malformed
+  bare scalar body-form rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — delayed-pulse target widening shipped
 - Completed `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2` and closed the task
   tree.
