@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — duplicate default selector widening selected
+- Completed `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2`.
+- The selected implementation will promote duplicate `default` / `_`
+  test-selector branch failures into maintained expected-failure corpus
+  entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — top-level form widening shipped
 - Completed `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has two additional unsupported top-level form

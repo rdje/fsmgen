@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` widened the maintained
-  expected-failure corpus for unsupported top-level form diagnostics. The task
-  tree is closed; the next PNT step should select the next roadmap-aligned
-  support-accounting or stabilization slice before code changes.
+  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1` selected a fresh task tree for
+  promoting already-focused duplicate default test-selector diagnostics into
+  the maintained expected-failure corpus. The next implementation leaf is
+  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2`.
+- Recent R12 duplicate default selector corpus-widening selection:
+  `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting duplicate `default` / `_`
+  test-selector branch failures into stable-code-backed expected-failure
+  corpus entries.
 - Recent R12 top-level form corpus-widening completion:
   `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` added two named expected-failure
   corpus entries for unsupported top-level infix init and malformed bare
@@ -4494,11 +4499,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `R12`:
-  [docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md](docs/tasks/R12-TOP-LEVEL-FORM-CORPUS-WIDENING.md)
-  is closed. `.1` selected the unsupported top-level form support-accounting
-  slice before implementation; `.2` promoted the already-focused
-  future-looking infix init and malformed bare scalar body-form failures into
-  maintained expected-failure corpus entries.
+  [docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md](docs/tasks/R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.md)
+  is active. `.1` selects the duplicate default test-selector
+  support-accounting slice before implementation; `.2` will promote the
+  already-focused duplicate `default` / `_` branch failure into a maintained
+  expected-failure corpus entry.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend

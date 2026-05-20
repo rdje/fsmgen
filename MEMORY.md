@@ -1,5 +1,15 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 duplicate default selector corpus widening selected
+- Completed `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting the already-focused duplicate
+  `default` / `_` test-selector branch failure into a maintained
+  expected-failure corpus entry.
+- The next frontier is `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.2`: add a
+  bounded fixture/catalog entry, stable diagnostic code, corpus behavior
+  checks, and synchronized docs for the selected rejection family.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 top-level form corpus widening shipped
 - Completed `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` and closed the tree.
 - Added two maintained expected-failure corpus entries for unsupported

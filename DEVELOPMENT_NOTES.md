@@ -1,5 +1,11 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Duplicate default selector corpus widening stays selector-local
+- `R12-TEST-SELECTOR-DEFAULT-CORPUS-WIDENING.1` selects duplicate default
+  selector diagnostics for support-accounting promotion.
+- The implementation should promote the existing fail-closed behavior without
+  changing the supported single-default `default` / `_` selector lowering.
+
 ## 2026-05-20: Top-level form support accounting separates body residue from roots
 - `R12-TOP-LEVEL-FORM-CORPUS-WIDENING.2` promotes existing unsupported
   top-level body-form diagnostics without changing source-root handling.
