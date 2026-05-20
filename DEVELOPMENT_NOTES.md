@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: State-body support accounting keeps empty blocks fail-closed
+- `R12-STATE-BODY-CORPUS-WIDENING.2` promotes existing empty state/DT block
+  diagnostics without changing state/DT syntax.
+- Empty regular state blocks and empty standalone-DT blocks share one stable
+  code because both ask the author to add a real nested decision-tree body or
+  action form to the block.
+
 ## 2026-05-20: State-body corpus widening is a shape-accounting slice
 - `R12-STATE-BODY-CORPUS-WIDENING.1` selects malformed empty state/DT bodies
   for support-accounting promotion.

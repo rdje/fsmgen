@@ -139,21 +139,23 @@ forms, malformed test branches, malformed bare test selectors, and malformed
 `+system` sections. It also carries name/reference boundary entries for
 malformed direct `?fsm:name` roots, malformed `?top:name` composition roots,
 malformed state or standalone-DT names, malformed transition targets, and
-unknown transition targets. Assignment-boundary entries cover malformed
-delayed-pulse RHS values, mixed combinational/sequential assignment families,
-mixed pulse and non-pulse sequential writes, multiple pulse delays for one
-signal, combinational self-dependency, and D-input self-dependency. Authored
-operator/directive entries cover unsupported assignment operators such as `?=`
-and `=>`, plus unsupported compact `:=` reset values such as `[DATAIN]` and
-`<start`. Test-selector entries cover malformed plain `?SIG` signal names and
-computed test selectors that omit their selector expression. Those entries are
-not only prose examples. Inline-modifier entries cover malformed compound
-modifier payloads such as `(+= 2 3)` and duplicate modifier clauses such as
+unknown transition targets. State-body entries cover empty regular state
+blocks such as `(idle)` and empty standalone-DT blocks such as `(-misc)`.
+Assignment-boundary entries cover malformed delayed-pulse RHS values, mixed
+combinational/sequential assignment families, mixed pulse and non-pulse
+sequential writes, multiple pulse delays for one signal, combinational
+self-dependency, and D-input self-dependency. Authored operator/directive
+entries cover unsupported assignment operators such as `?=` and `=>`, plus
+unsupported compact `:=` reset values such as `[DATAIN]` and `<start`.
+Test-selector entries cover malformed plain `?SIG` signal names and computed
+test selectors that omit their selector expression. Those entries are not only
+prose examples. Inline-modifier entries cover malformed compound modifier
+payloads such as `(+= 2 3)` and duplicate modifier clauses such as
 `(+= 2) (-= 1)`. Update-shorthand entries cover nested targets such as
-`(++ (counter))` or `(+= (byte_count) 4)`, plus malformed positional tails
-such as `(+= counter 4 3)`. Pipeline, CLI, check JSON, and normalized semantic
-JSON regression tests all classify these failures through the same
-support-accounting path.
+`(++ (counter))` or `(+= (byte_count) 4)`, plus malformed positional tails such
+as `(+= counter 4 3)`. Pipeline, CLI, check JSON, and normalized semantic JSON
+regression tests all classify these failures through the same support-accounting
+path.
 
 It also keeps positive acceptance markers for canonical supported surfaces.
 
@@ -185,6 +187,7 @@ FSMGEN_LANGUAGE_MALFORMED_TEST_SELECTOR
 FSMGEN_LANGUAGE_INCOMPLETE_SYSTEM_SECTION
 FSMGEN_LANGUAGE_DUPLICATE_SYSTEM_RESET
 FSMGEN_LANGUAGE_MALFORMED_STATE_NAME
+FSMGEN_LANGUAGE_MALFORMED_STATE_DT_BLOCK
 FSMGEN_LANGUAGE_UNKNOWN_TRANSITION_TARGET
 FSMGEN_LANGUAGE_DELAYED_PULSE_RHS
 FSMGEN_LANGUAGE_D_INPUT_SELF_DEPENDENCY

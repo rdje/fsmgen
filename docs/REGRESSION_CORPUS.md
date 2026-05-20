@@ -90,8 +90,9 @@ or claim `expected_failure` while using a default-compatible coverage bucket.
   malformed `+system` sections such as incomplete sections, duplicate
   clock/reset entries, malformed entry structures, invalid clock/reset
   identifiers, malformed direct/composition source names, malformed state or
-  standalone-DT names, malformed transition targets, and unknown transition
-  targets. It also covers malformed delayed-pulse RHS values, mixed
+  standalone-DT names, malformed empty state/standalone-DT bodies, malformed
+  transition targets, and unknown transition targets. It also covers malformed
+  delayed-pulse RHS values, mixed
   combinational/sequential assignment families, mixed pulse and non-pulse
   sequential writes, multiple pulse delays for one signal, combinational
   self-dependency, D-input self-dependency, unsupported assignment operators,
@@ -541,6 +542,8 @@ manifest output while keeping the exact file lists widenable.
 | `contract.malformed_top_source_name` | [t/corpus/malformed_top_source_name.fsm](t/corpus/malformed_top_source_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_state_name` | [t/corpus/malformed_state_name.fsm](t/corpus/malformed_state_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_standalone_dt_name` | [t/corpus/malformed_standalone_dt_name.fsm](t/corpus/malformed_standalone_dt_name.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_empty_state_body` | [t/corpus/malformed_empty_state_body.fsm](t/corpus/malformed_empty_state_body.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
+| `contract.malformed_empty_standalone_dt_body` | [t/corpus/malformed_empty_standalone_dt_body.fsm](t/corpus/malformed_empty_standalone_dt_body.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.malformed_transition_target` | [t/corpus/malformed_transition_target.fsm](t/corpus/malformed_transition_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.unknown_transition_target` | [t/corpus/unknown_transition_target.fsm](t/corpus/unknown_transition_target.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |
 | `contract.assignment_delayed_pulse_bad_rhs` | [t/corpus/assignment_delayed_pulse_bad_rhs.fsm](t/corpus/assignment_delayed_pulse_bad_rhs.fsm) | `expected_failure` | `language_contract_rejection_pipeline_cli` |

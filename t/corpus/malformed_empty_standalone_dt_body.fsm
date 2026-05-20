@@ -1,0 +1,7 @@
+(?fsm:malformed_empty_standalone_dt_body
+  (+system
+    (clock clk)
+    (sreset rstn)
+  )
+  (-misc)
+)

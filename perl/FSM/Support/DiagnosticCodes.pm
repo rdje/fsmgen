@@ -241,6 +241,12 @@ my %DIAGNOSTIC_CODES = (
         family => 'language_contract',
         summary => 'A state or standalone-DT name was malformed.',
     },
+    FSMGEN_LANGUAGE_MALFORMED_STATE_DT_BLOCK => {
+        severity => 'error',
+        stability => 'stable',
+        family => 'language_contract',
+        summary => 'A state or standalone-DT block had no valid body.',
+    },
     FSMGEN_LANGUAGE_MALFORMED_TRANSITION_TARGET => {
         severity => 'error',
         stability => 'stable',
