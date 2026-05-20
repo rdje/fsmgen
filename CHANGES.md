@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — update-shorthand widening selected
+- Completed `R12-UPDATE-SHORTHAND-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused malformed update-shorthand target and
+  malformed update-shorthand tail rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — inline-modifier widening shipped
 - Completed `R12-INLINE-MODIFIER-CORPUS-WIDENING.2` and closed the task tree.
 - Added two named inline-modifier expected-failure fixtures and catalog entries
