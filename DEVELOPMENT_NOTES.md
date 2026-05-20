@@ -1,5 +1,13 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: RHS expression supported variant widening stays expression-local
+- `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.1` selects inline
+  scalar comparisons and negated n-ary bitwise RHS operators for
+  support-accounting promotion.
+- The implementation should promote existing lowering without changing
+  unsupported operator, malformed arity, guard-token, or ambiguous literal
+  diagnostics.
+
 ## 2026-05-20: Computed comparison selector support accounting proves expression disambiguation
 - `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.2` promotes comparison
   expressions inside computed selectors into the executable supported-smoke

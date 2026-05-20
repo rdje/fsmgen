@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — RHS expression supported variants widening selected
+- Completed `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-RHS-EXPRESSION-SUPPORTED-VARIANTS-CORPUS-WIDENING.2`.
+- The selected implementation will promote inline scalar comparisons and
+  negated n-ary bitwise RHS operators into maintained supported-smoke corpus
+  coverage.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — computed comparison selector widening shipped
 - Completed `R12-COMPUTED-COMPARISON-SELECTOR-CORPUS-WIDENING.2` and closed
   the tree.
