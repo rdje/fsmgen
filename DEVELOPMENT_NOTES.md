@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Computed test-selector corpus widening stays selector-local
+- `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.1` selects supported computed
+  test selectors for support-accounting promotion.
+- The implementation should promote existing intermediate signal generation
+  and branch reuse without changing malformed computed-selector diagnostics or
+  plain `?SIG` selector behavior.
+
 ## 2026-05-20: Relational-operator support accounting proves chain lowering
 - `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` promotes relational operator
   chains and word aliases into the executable supported-smoke corpus.

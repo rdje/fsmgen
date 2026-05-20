@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — computed test-selector widening selected
+- Completed `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-COMPUTED-TEST-SELECTOR-CORPUS-WIDENING.2`.
+- The selected implementation will promote supported computed test selectors
+  into maintained supported-smoke corpus coverage.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — relational-operator widening shipped
 - Completed `R12-RELATIONAL-OPERATOR-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has one additional supported-smoke entry for
