@@ -1,5 +1,15 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Direct structural guard selected before behavior work
+- `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` intentionally selects a guard
+  slice before any direct backend reroute.
+- The direct structural IR is not yet a behavior model. The next test should
+  lock only the projection that exists today: identity, source kind, target
+  language, ports, and absence of direct nets/instances/auxiliary assignments.
+- This keeps the future convergence path honest: once the port projection is
+  guarded, later work can select one concrete behavior family to model
+  structurally instead of pretending direct emission is already structural.
+
 ## 2026-05-20: Direct structural convergence must start with guards
 - `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` confirmed that direct-root HDL
   emission still happens before direct `StructuralRTLIR` exists.

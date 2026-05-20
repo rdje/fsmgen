@@ -1,5 +1,16 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: Direct structural guard selected
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`.
+- `.3` is selected as a no-op regression guard for the existing direct-root
+  `structural_rtl_ir` projection.
+- The implementation must prove direct `structural_rtl_ir` module identity,
+  target language, source kind, and ports agree with generated direct-result
+  public facts, including system ports, while `nets`, `instances`, and
+  `auxiliary_assignments` remain empty for direct roots.
+- Do not route direct-root HDL emission through `StructuralRTLIREmitter` in
+  `.3`; production behavior is expected to remain unchanged.
+
 ## 2026-05-20: Direct structural backend residue map completed
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1`.
 - The direct-root path still emits HDL through

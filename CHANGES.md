@@ -1,6 +1,18 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### Architecture backlog — Direct structural guard selected
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`.
+- Selected the first behavior-preserving convergence slice: add focused
+  regression coverage proving the existing direct-root `structural_rtl_ir`
+  projection matches generated direct-result public facts.
+- The selected implementation must keep generated HDL, normalized semantic
+  JSON, public contracts, and `module_info` shape unchanged, and must not
+  route direct-root emission through `StructuralRTLIREmitter`.
+- Advanced the active frontier to
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3`.
+- No compiler behavior changed.
+
 ### Architecture backlog — Direct structural backend residue map completed
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1`.
 - Activated the direct structural backend convergence follow-up and mapped the

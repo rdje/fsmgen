@@ -820,6 +820,11 @@ IR audit checkpoint:
   through `StructuralRTLIREmitter`. Direct `StructuralRTLIR` is currently a
   port/system-port projection, so the next convergence slice should be a
   guard rather than an emission reroute.
+- `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` selected that guard: focused
+  regression coverage for direct `structural_rtl_ir` identity/source/target
+  and port projection parity, while keeping direct nets, instances, and
+  auxiliary assignments empty until a later behavior-bearing slice widens the
+  model.
 
 ### New backend-emitter split
 - [perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm](perl/FSM/Backend/VerilogFamily/StructuralRTLIREmitter.pm)

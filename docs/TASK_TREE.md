@@ -44,7 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
-| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `active` | `architecture backlog` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
+| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `active` | `architecture backlog` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` | [docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md](docs/tasks/IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.md) |
 
 ## Proposed Task Trees
 

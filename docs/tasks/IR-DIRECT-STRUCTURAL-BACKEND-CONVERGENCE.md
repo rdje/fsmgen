@@ -56,15 +56,15 @@ debuggability.
   Commit: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1: map direct backend residues`
 
 - ID: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`
-  Status: `active`
+  Status: `done`
   Goal: `Select the first behavior-preserving convergence slice.`
   Acceptance: `The selected slice names the files, expected no-op behavior,
   focused tests, broad gate, and rollback boundary before implementation.`
-  Verification: `pending`
-  Commit: `pending`
+  Verification: `git diff --check`; `mdbook build docs/book`
+  Commit: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2: select direct structural guard`
 
 - ID: `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3`
-  Status: `proposed`
+  Status: `active`
   Goal: `Implement the selected direct-root structural convergence slice.`
   Acceptance: `Direct-root generation consumes the selected StructuralRTLIR
   boundary without behavior drift, and all selected gates pass.`
@@ -73,13 +73,14 @@ debuggability.
 
 ## Current Frontier
 
-This tree is active. The current PNT frontier selects the first
-behavior-preserving convergence slice from the residue map.
+This tree is active. The current PNT frontier implements the selected no-op
+direct structural projection guard.
 
 | Order | Leaf | Status | Why next |
 | --- | --- | --- | --- |
 | 1 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | `done` | Factual residue mapping completed before any direct-backend refactor. |
-| 2 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | `active` | Select the smallest no-op convergence slice and its gates before code changes. |
+| 2 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | `done` | Selected the smallest no-op convergence guard and its gates before code changes. |
+| 3 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3` | `active` | Implement the selected direct structural projection guard. |
 
 ## Direct Backend Residue Map
 
@@ -137,6 +138,59 @@ Smallest safe convergence candidate for `.2` to evaluate:
   `perl/FSM/IR/StructuralRTLIRBuilder.pm`, direct-root semantic/HDL tests, and
   the book/live docs if the user-visible inspection surface changes.
 
+## Selected First Slice
+
+`IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` selects a no-op guard slice:
+add focused regression coverage proving the existing direct-root
+`structural_rtl_ir` projection is stable and agrees with the generated direct
+result's public surfaces.
+
+Selected implementation goal for `.3`:
+
+- Add a focused direct-root test that generates at least one direct `.fsm`
+  source through the normal pipeline and inspects the returned
+  `structural_rtl_ir`.
+- Assert that direct `structural_rtl_ir.module_name`,
+  `source_root_kind`, `target_language`, and port entries match the generated
+  result's `module_info` / signal-analysis public facts.
+- Assert that explicit or implicit system ports present in generated output
+  are also represented in direct `structural_rtl_ir.ports`.
+- Assert that the direct structural IR remains a projection guard only:
+  direct `nets`, `instances`, and `auxiliary_assignments` stay empty until a
+  later behavior-bearing slice explicitly widens the direct structural model.
+- Do not route direct-root HDL emission through `StructuralRTLIREmitter` in
+  `.3`.
+
+Expected no-op behavior:
+
+- Generated HDL text is unchanged.
+- Normalized semantic JSON and schedule/report schemas are unchanged.
+- Direct `module_info` compatibility shape is unchanged.
+- The only intended new behavior is regression coverage for the already
+  shipped direct `structural_rtl_ir` projection.
+
+Initial write scope for `.3`:
+
+- Add one focused test under `t/`.
+- Update this task file and live docs for the implementation evidence.
+- Update the mdBook only if the test exposes a user-visible inspection nuance
+  that is not already described in the IR/metadata surfaces chapter.
+
+Focused and broad gates for `.3`:
+
+- `perl -Iperl -c <new direct structural projection test>`
+- `prove -Iperl <new direct structural projection test>`
+- `prove -Iperl t/162-composition-top-structural-rtl-ir-surface.t t/167-structural-connection-expr-helpers.t`
+- `mdbook build docs/book`
+- `git diff --check`
+
+Rollback boundary:
+
+- Revert the new focused test and documentation evidence only. No production
+  code should change in `.3`; if implementation discovers production behavior
+  must change, stop and create or select a more precise follow-up leaf before
+  editing production code.
+
 ## Decisions
 
 - `2026-05-20`: Selected as an actionable follow-up from
@@ -147,11 +201,14 @@ Smallest safe convergence candidate for `.2` to evaluate:
   `GeneratedModuleEmitter -> FlattenedDT` before direct `StructuralRTLIR`
   exists. The first convergence step should therefore guard the existing
   direct structural projection instead of attempting to reroute HDL emission.
+- `2026-05-20`: `.2` selected a no-op focused regression guard for direct
+  `structural_rtl_ir` projection parity. The next implementation must not
+  reroute direct HDL emission or widen direct structural semantics.
 
 ## Open Questions
 
-- Which direct-root HDL family is the smallest behavior-preserving candidate
-  for the first convergence slice?
+- After the `.3` guard lands, which direct-root behavior family is the first
+  safe candidate for structural modeling beyond ports?
 
 ## Blockers
 
@@ -163,6 +220,7 @@ Smallest safe convergence candidate for `.2` to evaluate:
 | --- | --- | --- | --- |
 | `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `pending` | `pending` |
 | `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | `git diff --check`; `mdbook build docs/book` | `pass` |
+| `2026-05-20` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | `git diff --check`; `mdbook build docs/book` | `pass` |
 
 ## Commit Log
 
@@ -170,6 +228,7 @@ Smallest safe convergence candidate for `.2` to evaluate:
 | --- | --- | --- |
 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE` | `pending` | `pending` |
 | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1: map direct backend residues` | Mapped direct-root bypasses and advanced `.2` selection. |
+| `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2` | `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2: select direct structural guard` | Selected no-op direct structural projection guard and advanced `.3` implementation. |
 
 ## Changelog
 
@@ -177,3 +236,5 @@ Smallest safe convergence candidate for `.2` to evaluate:
   `FSMGEN-IR-AUDIT.4`.
 - `2026-05-20`: Completed `.1` direct backend residue mapping and advanced
   the active frontier to `.2` selection.
+- `2026-05-20`: Completed `.2` direct structural guard selection and advanced
+  the active frontier to `.3` implementation.

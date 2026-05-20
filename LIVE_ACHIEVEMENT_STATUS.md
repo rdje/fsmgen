@@ -2,6 +2,14 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: Architecture backlog — Direct structural guard selected
+- Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.2`.
+- The active implementation frontier is
+  `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.3`.
+- `.3` must add a no-op regression guard for direct-root `structural_rtl_ir`
+  projection parity and must not reroute direct HDL emission.
+- No compiler behavior changed.
+
 ## 2026-05-20: Architecture backlog — Direct structural backend residue map completed
 - Completed `IR-DIRECT-STRUCTURAL-BACKEND-CONVERGENCE.1`.
 - Direct-root HDL still emits through `GeneratedModuleEmitter -> FlattenedDT`
