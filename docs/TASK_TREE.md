@@ -44,6 +44,7 @@ first.
 
 | Tree | Status | Roadmap lane | Current frontier | File |
 | --- | --- | --- | --- | --- |
+| `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING` | `active` | `R12` | `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.2` | [docs/tasks/R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.md](docs/tasks/R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.md) |
 
 ## Proposed Task Trees
 

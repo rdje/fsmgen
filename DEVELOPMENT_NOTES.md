@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Plain test-signal corpus widening stays selector-local
+- `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.1` selects supported plain `?SIG`
+  equality selectors for support-accounting promotion.
+- The implementation should promote existing equality-branch lowering without
+  changing malformed plain test-signal diagnostics, relational branch
+  selectors, or computed selectors.
+
 ## 2026-05-20: Standalone DT guard support accounting proves non-state DTE lowering
 - `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` promotes standalone DT guards
   into the executable supported-smoke corpus.

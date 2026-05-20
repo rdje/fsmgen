@@ -1,5 +1,14 @@
 # MEMORY
 This is the live continuity document for fast session recovery after crashes, restarts, or agent handoffs.
+## 2026-05-20: R12 plain test-signal corpus widening selected
+- Completed `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.1`.
+- Activated the R12 task tree for promoting already-focused supported plain
+  `?SIG` equality selectors into maintained supported-smoke corpus coverage.
+- The next frontier is `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.2`: add a
+  bounded fixture/catalog entry, strict-supported marker, HDL-shape checks,
+  and synchronized docs for the selected plain test-signal family.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 standalone DT guard corpus widening shipped
 - Completed `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` and closed the tree.
 - Added one maintained supported-smoke corpus entry for standalone DT

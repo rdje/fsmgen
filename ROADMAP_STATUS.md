@@ -2,10 +2,14 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` closed the latest task tree by
-  promoting already-focused standalone DT classification and DTE guards into
-  the maintained supported-smoke corpus. The next PNT pass should select a new
-  task tree before any further implementation.
+  `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.1` selected a fresh task tree for
+  promoting already-focused plain `?SIG` equality selectors into the
+  maintained supported-smoke corpus. The next implementation leaf is
+  `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.2`.
+- Recent R12 plain test-signal corpus-widening selection:
+  `R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting HDL-compatible plain test-node names
+  and equality branch lowering into strict-supported corpus coverage.
 - Recent R12 standalone DT guard corpus-widening completion:
   `R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.2` added one named supported-smoke
   corpus entry for standalone DT classification, always-on DT enables,
@@ -4585,13 +4589,11 @@ Use it to answer, at any time, what is done, what is left, and which lane is cur
 
 ## Current active lane
 - `R12`:
-  [docs/tasks/R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.md](docs/tasks/R12-STANDALONE-DT-GUARD-CORPUS-WIDENING.md)
-  is closed. `.1` selected the supported standalone DT guard
-  support-accounting slice before implementation; `.2` promoted standalone DT
-  classification, unguarded enables, guard-expression lowering, and guarded
-  output-enable boundaries into a maintained supported-smoke corpus entry. The
-  next PNT pass should select a new R12 task tree before changing code, tests,
-  sources, generated artifacts, or config.
+  [docs/tasks/R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.md](docs/tasks/R12-PLAIN-TEST-SIGNAL-CORPUS-WIDENING.md)
+  is active. `.1` selects the supported plain `?SIG` test-signal
+  support-accounting slice before implementation; `.2` will promote
+  HDL-compatible plain test-node names and equality branch lowering into a
+  maintained supported-smoke corpus entry.
 - Closed architecture backlog context:
   [docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md](docs/tasks/IR-EXPRESSION-AST-OWNERSHIP.md)
   is closed. `.1` inventoried direct semantic `CoreAST`, backend
