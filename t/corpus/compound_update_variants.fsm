@@ -1,0 +1,25 @@
+(?fsm:compound_update_variants
+  (+system
+    (clock clk)
+    (sreset reset)
+  )
+
+  (+size
+    (counter 8)
+    (retry_count 8)
+    (byte_count 8)
+    (remaining 8)
+    (SRC 8)
+    (ACC 8)
+    (COMB 8)
+  )
+
+  (-updates
+    (++ counter)
+    (-- retry_count)
+    (+=4 byte_count)
+    (-=1 remaining)
+    (<- (ACC SRC) (+= 2))
+    (= (COMB SRC) (-= 1))
+  )
+)

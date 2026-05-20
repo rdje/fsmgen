@@ -199,6 +199,8 @@ HDL-shape pattern metadata, so the corpus checks emitted semantics instead of
 only proving that generation completed. Current supported direct
 language-feature coverage includes canonical assignment pairs and
 update-shorthand `+=` / `-=` variants with implicit and explicit deltas, plus
+compound update variants such as `++`, `--`, compact `+=N` / `-=N`, and inline
+`(+= N)` / `(-= N)` modifiers. It also includes
 arithmetic and XOR operator variants such as n-ary `+`, `-`, `*`, `add`, `^`,
 and `xor`. It also includes
 RHS expression variants such as inline scalar comparisons and negated n-ary

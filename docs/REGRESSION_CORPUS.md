@@ -509,6 +509,7 @@ manifest output while keeping the exact file lists widenable.
 | `feature.rhs_expression_supported_variants` | [t/corpus/rhs_expression_supported_variants.fsm](t/corpus/rhs_expression_supported_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.direct_assignment_pair_form` | [t/corpus/direct_assignment_pair_form.fsm](t/corpus/direct_assignment_pair_form.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.update_shorthand_variants` | [t/corpus/update_shorthand_variants.fsm](t/corpus/update_shorthand_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
+| `feature.compound_update_variants` | [t/corpus/compound_update_variants.fsm](t/corpus/compound_update_variants.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.state_dte_guards` | [t/corpus/state_dte_guards.fsm](t/corpus/state_dte_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.standalone_dt_guards` | [t/corpus/standalone_dt_guards.fsm](t/corpus/standalone_dt_guards.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
 | `feature.guard_shorthand` | [t/corpus/guard_shorthand.fsm](t/corpus/guard_shorthand.fsm) | `supported_smoke` | `direct_root_pipeline_cli` |
@@ -693,6 +694,9 @@ manifest output while keeping the exact file lists widenable.
   deconstruct. The `feature.update_shorthand_variants` entry proves that
   `+=` and `-=` shorthand with implicit and explicit deltas lower to
   register-style update muxes through pipeline and CLI. The
+  `feature.compound_update_variants` entry proves `++`, `--`, compact
+  `+=N` / `-=N`, and inline `(+= N)` / `(-= N)` modifiers through emitted
+  register-style and combinational update shapes. The
   `feature.state_dte_guards` entry proves that regular-state header activation
   guards lower into state enable expressions and still gate assignment and
   transition enables at the DTE boundary. The `feature.standalone_dt_guards`

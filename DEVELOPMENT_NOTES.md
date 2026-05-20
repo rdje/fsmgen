@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-21: Compound update variant support accounting proves preserved assignment families
+- `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.2` promotes compound update
+  variants into the executable supported-smoke corpus.
+- The entry records emitted HDL shapes for `++`, `--`, compact `+=N` / `-=N`,
+  and inline `(+= N)` / `(-= N)` modifiers, including the distinction between
+  register-style update muxes and combinational inline modifier lowering.
+
 ## 2026-05-21: Compound update variant corpus widening stays update-local
 - `R12-COMPOUND-UPDATE-VARIANTS-CORPUS-WIDENING.1` selects supported compound
   update variants for support-accounting promotion.
