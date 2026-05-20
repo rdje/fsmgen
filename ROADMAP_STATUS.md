@@ -2,10 +2,15 @@
 This is the canonical live roadmap status board for FSMGen.
 Use it to answer, at any time, what is done, what is left, and which lane is currently active.
 - Active lane: `R12`.
-  `R12-PLUS-FSM-BODY-CORPUS-WIDENING.2` completed the latest maintained
-  expected-failure corpus widening slice. The next PNT step must select fresh
-  task-tree ownership before any new code, test, source, generated-artifact, or
-  config change.
+  `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.1` selected a fresh task tree for
+  promoting already-focused delayed-pulse LHS target diagnostics into the
+  maintained expected-failure corpus. The next implementation leaf is
+  `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2`.
+- Recent R12 delayed-pulse target corpus-widening selection:
+  `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.1` selected a behavior-neutral
+  support-accounting slice for promoting indexed, range-sliced, and pair-form
+  indexed delayed-pulse LHS target failures into stable-code-backed
+  expected-failure corpus entries.
 - Recent R12 plus-FSM body corpus-widening completion:
   `R12-PLUS-FSM-BODY-CORPUS-WIDENING.2` added two named expected-failure corpus
   entries for empty legacy `+fsm` root bodies and scalar nested `+fsm` body

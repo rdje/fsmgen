@@ -1,5 +1,12 @@
 # DEVELOPMENT_NOTES
 This document captures engineering rationale, design constraints, and working decisions behind recent FSMGen behavior.
+## 2026-05-20: Delayed-pulse target corpus widening follows the shipped R8 boundary
+- `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.1` selects delayed-pulse LHS
+  target diagnostics for support-accounting promotion.
+- The implementation should promote the already-shipped fail-closed R8
+  boundary without changing scalar delayed-pulse behavior or vector-pulse
+  deferrals.
+
 ## 2026-05-20: Plus-FSM body support accounting separates root residue from structured roots
 - `R12-PLUS-FSM-BODY-CORPUS-WIDENING.2` promotes existing malformed legacy
   `+fsm` root-body diagnostics without changing the legacy root compatibility

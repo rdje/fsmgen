@@ -2,6 +2,15 @@
 
 This file tracks the latest completed roadmap-aligned slice for fast recovery.
 
+## 2026-05-20: R12 regression corpus — delayed-pulse target widening selected
+- Completed `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.1`.
+- The active R12 frontier is now
+  `R12-DELAYED-PULSE-TARGET-CORPUS-WIDENING.2`.
+- The selected implementation will promote indexed, range-sliced, and
+  pair-form indexed delayed-pulse LHS target failures into maintained
+  expected-failure corpus entries.
+- No compiler behavior changed.
+
 ## 2026-05-20: R12 regression corpus — plus-FSM body widening shipped
 - Completed `R12-PLUS-FSM-BODY-CORPUS-WIDENING.2` and closed the tree.
 - The maintained corpus now has two additional plus-FSM body expected-failure
