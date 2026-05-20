@@ -1,6 +1,13 @@
 # CHANGES
 This is the persistent technical change history for FSMGen.
 ## 2026-05-20
+### R12 regression corpus — symbol-token widening selected
+- Completed `R12-SYMBOL-TOKEN-CORPUS-WIDENING.1`.
+- Activated a new R12 task tree for widening maintained expected-failure corpus
+  coverage with already-focused malformed symbol identifier and enum scalar
+  token rejection families.
+- No compiler behavior changed.
+
 ### R12 regression corpus — aggregate parameter-expression widening shipped
 - Completed `R12-PARAM-AGGREGATE-EXPRESSION-CORPUS-WIDENING.2` and closed the
   task tree.
